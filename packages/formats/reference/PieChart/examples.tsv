@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+proportions	Basic		[PieChart, [List, 35, 25, 20, 20], [Tuple, Labels, [List, "'A'", "'B'", "'C'", "'D'"]]]	[PieChart, [List, 35, 25, 20, 20], [Tuple, Labels, [List, "'A'", "'B'", "'C'", "'D'"]]]	Proportions of a value list, with a legend	{head: GraphicsBox, marks: {DiskBox: 4}, roles: {Wedge: 4}, options: {ChartKind: Pie}}

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+trig-field	Basic		[DensityPlot, [Multiply, [Sin, x], [Cos, y]], [Tuple, x, -3.14, 3.14], [Tuple, y, -3.14, 3.14]]	[DensityPlot, [Multiply, [Sin, x], [Cos, y]], [Tuple, x, -3.14, 3.14], [Tuple, y, -3.14, 3.14]]	A density plot of sin x cos y

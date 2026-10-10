@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+items	Basic		[Column, [List, 1, 2, 3]]	[Column, [List, 1, 2, 3]]	Items stacked

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+image-is-a-picture	Basic		[Rasterize, [Image, "'data:image/png;base64,AAA'"]]	[Image, "'data:image/png;base64,AAA'"]	An Image is already a picture, so it comes back as it is

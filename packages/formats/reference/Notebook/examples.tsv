@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+cells	Basic		[Notebook, [List, [Cell, [Add, 1, 1]]]]	[Notebook, [List, [Cell, [Add, 1, 1]]]]	A transcript: cells evaluated in order, in one shared scope

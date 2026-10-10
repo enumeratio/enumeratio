@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+merge-heights	Basic		[Dendrogram, {dict: {height: 2, children: [List, {dict: {label: "'x'"}}, {dict: {label: "'y'"}}]}}]	[Dendrogram, {dict: {height: 2, children: [List, {dict: {label: {str: "'x'"}}}, {dict: {label: {str: "'y'"}}}]}}]	A merge tree, brackets drawn at each merge height	{head: GraphicsBox, marks: {LineBox: 3, DiskBox: 2, InsetBox: 2}, roles: {Edge: 3, Vertex: 2, Label: 2}}

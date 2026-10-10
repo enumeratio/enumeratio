@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+slider-and-readout	Basic		[DynamicModule, [Column, [List, [Slider, k, [Tuple, 0, 5]], [Dynamic, k]]]]	[DynamicModule, [Column, [List, [Slider, k, [Tuple, 0, 5]], [Dynamic, k]]]]	A scope over a control and the readout that follows it

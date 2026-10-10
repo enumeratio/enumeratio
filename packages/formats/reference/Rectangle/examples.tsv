@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+corners	Basic		[Rectangle, [Tuple, 0, 0], [Tuple, 2, 1]]	[Rectangle, [Tuple, 0, 0], [Tuple, 2, 1]]	A rectangle between two corners

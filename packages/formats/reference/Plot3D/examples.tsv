@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+saddle	Basic		[Plot3D, [Subtract, [Power, x, 2], [Power, y, 2]], [Tuple, x, -2, 2], [Tuple, y, -2, 2]]	[Plot3D, [Add, [Power, x, 2], [Negate, [Power, y, 2]]], [Tuple, x, -2, 2], [Tuple, y, -2, 2]]	A saddle surface

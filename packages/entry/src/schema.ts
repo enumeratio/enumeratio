@@ -93,6 +93,19 @@ const REFERENCE_EXAMPLE: JsonSchema = {
     role: EXAMPLE_ROLE,
     triage: TRIAGE_BUCKET,
     volatile: { type: "array", items: { type: "string" } },
+    boxes: {
+      type: "object",
+      description: "The box a drawn value lowers to, asserted in Node: head, mark and role counts, options.",
+      properties: {
+        head: { type: "string" },
+        marks: { type: "object", additionalProperties: { type: "integer", minimum: 0 } },
+        roles: { type: "object", additionalProperties: { type: "integer", minimum: 0 } },
+        options: { type: "object" },
+        operands: { type: "array" },
+      },
+      required: ["head"],
+      additionalProperties: false,
+    },
     group: {
       type: "string",
       description: "Cases of one example: those sharing a group show as one cycling card.",

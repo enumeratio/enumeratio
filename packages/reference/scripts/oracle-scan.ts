@@ -56,6 +56,7 @@ import { updateHead } from "@enumeratio/entry/node";
 import { ownEngineEntries, ownEngineOf, referenceData, referenceEntries } from "../src/node.ts";
 import { libraryRecords } from "./library-records.ts";
 import { evaluateOwn } from "./own-engines.ts";
+import { showsPicture } from "./wolfram-examples.ts";
 import { asksForDigits, show } from "./oracle-verdict.ts";
 import { cappedVerdicts } from "./oracle-verdict-capped.ts";
 
@@ -220,9 +221,14 @@ const loaded = new Map([...records].map(([head, record]) => [head, structuredClo
 const scannedIdsBySystem = new Map<System, Set<string>>();
 
 for (const system of systems) {
+  // Wolfram doesn't answer a picture or a control with a value to compare, so its lane leaves them
+  // (and their rows) alone, unless `--ids` names one.
+  const asked = cases.filter(
+    (item) => system !== "wolfram" || idFilter?.has(item.id) === true || !showsPicture(item.head, item.expr),
+  );
   const casesForSystem = newOnly
-    ? cases.filter((item) => records.get(item.head)?.[item.key]?.[system] === undefined)
-    : cases;
+    ? asked.filter((item) => records.get(item.head)?.[item.key]?.[system] === undefined)
+    : asked;
   scannedIdsBySystem.set(system, new Set(casesForSystem.map((item) => item.id)));
   const emitted = casesForSystem.map((item) => ({ item, out: emit(item.expr, system, library?.mappings) }));
   const runnable = emitted.filter((row) => row.out.ok);
@@ -395,9 +401,10 @@ for (const system of systems) {
     for (const id of Object.keys(record)) if (!current.has(id) && record[id]?.[system]) put(id, undefined);
     const scanned = scannedIdsBySystem.get(system);
     for (const item of ofHead) {
-      // `--new-only` didn't ask this system about this case — its absence from `report` means
-      // "not scanned", not "unmapped", so leave whatever row is already there untouched.
-      if (newOnly && !scanned?.has(item.id)) continue;
+      // This system wasn't asked about this case (`--new-only`, or a picture in the Wolfram lane) —
+      // its absence from `report` means "not scanned", not "unmapped", so leave whatever row is
+      // already there untouched.
+      if (!scanned?.has(item.id)) continue;
       const outcome = outcomeByCaseId.get(item.id);
       const prior = record[item.key]?.[system];
       if (outcome === undefined || outcome.verdict === "unmapped") {

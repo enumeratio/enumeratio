@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+range	Basic		[VerticalSlider, k, [Tuple, 0, 5]]	[VerticalSlider, k, [Tuple, 0, 5]]	A slider drawn upright	{head: SliderBox, operands: [[DynamicBox, k], [Tuple, 0, 5]], options: {Appearance: Vertical}}

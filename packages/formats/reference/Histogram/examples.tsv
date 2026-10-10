@@ -1,3 +1,4 @@
-id	section	role	expr	expected	caption
-picture	Basic		[Histogram, [List, 1, 2, 2, 3, 3, 3]]	[Histogram, [List, 1, 2, 2, 3, 3, 3]]	Given data alone it is held inert, to be drawn as a histogram
-with-bins	Basic		[Histogram, [List, 1, 2, 2, 3, 3, 3], [List, 1, 2, 3, 4]]	[List, [Tuple, 1, 1], [Tuple, 2, 2], [Tuple, 3, 3]]	Given a bin spec it computes the counts, as compute-engine does
+id	section	role	expr	expected	caption	boxes
+picture	Basic		[Histogram, [List, 1, 2, 2, 3, 3, 3]]	[Histogram, [List, 1, 2, 2, 3, 3, 3]]	Given data alone it is held inert, to be drawn as a histogram	
+with-bins	Basic		[Histogram, [List, 1, 2, 2, 3, 3, 3], [List, 1, 2, 3, 4]]	[List, [Tuple, 1, 1], [Tuple, 2, 2], [Tuple, 3, 3]]	Given a bin spec it computes the counts, as compute-engine does	
+auto-bins	Basic		[Histogram, [List, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7]]	[Histogram, [List, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7]]	Data alone is held, then drawn with the bin count Sturges' rule picks	{head: GraphicsBox, marks: {RectangleBox: 5}, roles: {Bar: 5}, options: {ChartKind: Histogram, PlotRange: [[1, 7], [0, 4]]}}

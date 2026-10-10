@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+entries	Basic		[TogglerBar, c, [List, a, b, c]]	[TogglerBar, c, [List, a, b, c]]	A bar of togglers, one per entry	{head: GridBox, operands: [[[[SetterBox, [DynamicBox, [MemberQ, c, a]], [List, a]], [SetterBox, [DynamicBox, [MemberQ, c, b]], [List, b]], [SetterBox, [DynamicBox, [MemberQ, c, c]], [List, c]]]]]}

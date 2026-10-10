@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+entries	Basic		[RadioButtonBar, c, [List, a, b, c]]	[RadioButtonBar, c, [List, a, b, c]]	A bar of radio buttons, one per entry	{head: GridBox, operands: [[[[RowBox, [[RadioButtonBox, [DynamicBox, c], [List, a]], a]], [RowBox, [[RadioButtonBox, [DynamicBox, c], [List, b]], b]], [RowBox, [[RadioButtonBox, [DynamicBox, c], [List, c]], c]]]]]}

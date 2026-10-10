@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+flag	Basic		[Checkbox, on]	[Checkbox, on]	A checkbox bound to a variable	{head: CheckboxBox, operands: [[DynamicBox, on], Automatic]}

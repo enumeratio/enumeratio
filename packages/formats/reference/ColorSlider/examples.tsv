@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+color	Basic		[ColorSlider, c]	[ColorSlider, c]	A color picker bound to a variable	{head: ColorSetterBox, operands: [[DynamicBox, c], SwatchSpectrum]}

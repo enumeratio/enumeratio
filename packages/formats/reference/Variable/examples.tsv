@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+integer-start	Basic		[Variable, Integers, -5]	[Variable, Integers, -5]	A variable over a domain, with its starting value

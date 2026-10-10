@@ -90,6 +90,11 @@ export interface ReferenceExample {
    */
   readonly volatile?: readonly string[];
   /**
+   * For an example whose value draws: the shape of the box it lowers to, asserted in Node
+   * (`@enumeratio/frontend`'s `tests/example-boxes.test.ts`), never as pixels.
+   */
+  readonly boxes?: BoxShape;
+  /**
    * Cases of one example: examples sharing a `group` show as a single card, where the
    * first sits, cycling through the rest. Each case is still its own example -- its own
    * test, oracle row and `#example/<id>`; the card carries its first case's anchor, and a
@@ -112,6 +117,25 @@ export interface ReferenceExample {
   readonly role?: ExampleRole;
   /** Derived by the loader: each scanned system's run of this example, from the implementations record. */
   readonly others?: Readonly<Record<string, OtherSystemRun>>;
+}
+
+/**
+ * What a drawn value lowers to, in the terms a box is made of. Every field but `head` is
+ * asserted only when written, so a shape of `head` alone says the box is that kind and no more.
+ * `marks` and `roles` are exact (a kind or role not listed must not occur), `options` is the
+ * listed keys (numbers to a relative 1e-9), `operands` the box's operands before its options.
+ */
+export interface BoxShape {
+  /** The root box's head: `GraphicsBox`, `SliderBox`. */
+  readonly head: string;
+  /** Primitives in a drawing, by kind (`LineBox: 2`), counted through its styling and tags. */
+  readonly marks?: Readonly<Record<string, number>>;
+  /** A drawing's marks by the role their tag names (`Series`, `Bar`, `Vertex`). */
+  readonly roles?: Readonly<Record<string, number>>;
+  /** Options of the root box (`Axes`, `ScalingFunctions`, `PlotRange`, …), compared as listed. */
+  readonly options?: Readonly<Record<string, unknown>>;
+  /** The box's operands, options excluded, as MathJSON: a control's binding and range. */
+  readonly operands?: readonly unknown[];
 }
 
 /** What an example is for (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §5). */

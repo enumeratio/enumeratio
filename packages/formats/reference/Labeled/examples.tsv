@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+caption	Basic		[Labeled, x, "'caption'"]	[Labeled, x, "'caption'"]	An item with a caption

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+two-parameters	Basic		[Manipulate, [Plot, [Sin, [Add, [Multiply, a, x], b]], [Tuple, x, -6.283, 6.283]], [Tuple, a, 1, 5], [Tuple, b, 0, 6.283]]	[Manipulate, [Plot, [Sin, [Add, [Multiply, a, x], b]], [Tuple, x, -6.283, 6.283]], [Tuple, a, 1, 5], [Tuple, b, 0, 6.283]]	Each free parameter becomes its own slider

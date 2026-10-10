@@ -5,7 +5,6 @@ signature: ListLinePlot(...)
 summary: Wolfram's own ListLinePlot, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
 names:
   wolframIdentity: true
-stub: carrier
 signatures:
   - call: ListLinePlot(...)
     description: Wolfram's own ListLinePlot, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).

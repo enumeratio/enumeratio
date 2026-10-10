@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+connected	Basic		[ListLinePlot, [List, 3, 1, 4, 1, 5, 9, 2, 6]]	[ListLinePlot, [List, 3, 1, 4, 1, 5, 9, 2, 6]]	The same data, connected	{head: GraphicsBox, marks: {LineBox: 1}, roles: {Series: 1}, options: {Axes: true, ScalingFunctions: [linear, linear]}}

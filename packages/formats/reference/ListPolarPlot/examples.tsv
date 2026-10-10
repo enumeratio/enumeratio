@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+explicit-pairs	Basic		[ListPolarPlot, [List, [List, 0, 1], [List, 1.57, 2], [List, 3.14, 1], [List, 4.71, 2]], [Tuple, Closed, True]]	[ListPolarPlot, [List, [List, 0, 1], [List, 1.57, 2], [List, 3.14, 1], [List, 4.71, 2]], [Tuple, Closed, True]]	Explicit (θ, r) pairs, closed	{head: GraphicsBox, marks: {LineBox: 1, PointBox: 1}, roles: {Series: 2}, options: {PolarAxes: true}}

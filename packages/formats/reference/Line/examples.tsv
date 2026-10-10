@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+polyline	Basic		[Line, [List, [Tuple, 0, 0], [Tuple, 1, 1], [Tuple, 2, 0]]]	[Line, [List, [Tuple, 0, 0], [Tuple, 1, 1], [Tuple, 2, 0]]]	A polyline through points

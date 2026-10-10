@@ -1,0 +1,2 @@
+id	in
+two-parameters	Manipulate[Plot[Sin[Plus[Times[a, x], b]], List[x, -6.283, 6.283]], List[a, 1, 5], List[b, 0, 6.283]]

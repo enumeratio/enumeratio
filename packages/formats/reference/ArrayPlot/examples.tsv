@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+matrix	Basic		[ArrayPlot, [List, [List, 1, 2], [List, 3, 4]]]	[ArrayPlot, [List, [List, 1, 2], [List, 3, 4]]]	A matrix as colored cells	{head: GraphicsBox, marks: {RectangleBox: 4}, roles: {Cell: 4}, options: {ChartKind: Array, Frame: true, PlotRange: [[0, 2], [0, 2]]}}

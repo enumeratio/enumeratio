@@ -1,8 +1,8 @@
 // Build `@enumeratio/oracle`'s `defined-names-data.ts` (gitignored; oracle's `build` runs this
 // once every library is built, which is why oracle devDepends on them): every bare MathJSON symbol that
 // appears anywhere in a reference example, for which the fully-declared reference engine
-// (engines.ts's `declaredEngine`) counts as defined (`defined-names.ts`'s `isDefinedName` —
-// more than a bare `ce.lookupDefinition(name) !== undefined`, see its own doc).
+// (engines.ts's `declaredEngine`, less the graphics heads) counts as defined (`defined-names.ts`'s
+// `isDefinedName` — more than a bare `ce.lookupDefinition(name) !== undefined`, see its own doc).
 //
 // This is what `emit.ts` (oracle) uses to decide whether a bare symbol is a free variable
 // (no definition — carry it through symbolically) or a known name it shouldn't guess a value
@@ -29,7 +29,7 @@ for (const entry of referenceEntries(data)) {
   }
 }
 
-const ce = declaredEngine();
+const ce = declaredEngine({ graphics: false });
 const defined = [...names].filter((name) => isDefinedName(ce, name)).toSorted();
 
 await writeFormatted(

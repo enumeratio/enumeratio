@@ -5,7 +5,6 @@ signature: ColorSlider(...)
 summary: Wolfram's own ColorSlider, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
 names:
   wolframIdentity: true
-stub: carrier
 signatures:
   - call: ColorSlider(...)
     description: Wolfram's own ColorSlider, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).

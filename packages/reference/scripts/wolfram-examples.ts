@@ -2,6 +2,7 @@
 // it can't be. An input is kept only when every Wolfram name in it is one we map back to a
 // head or symbol of ours, so the example means here what it meant there.
 
+import { GRAPHICS_HEADS } from "@enumeratio/formats";
 import { fromWolfram, isSystemName, READ_SYMBOLS, REVERSE_HEADS, SYMBOLS } from "@enumeratio/wolfram";
 
 /** Wolfram's documentation sections, as our page's (`null`: not an example we'd show). */
@@ -72,6 +73,18 @@ const EFFECTS = new Set([
 ]);
 // Pictures, interactive output and random draws: an example's value here is one expression.
 const NOT_A_VALUE = /Plot|Graphics|Show|Chart|Legend|Animate|Manipulate|Image|Sound|Dynamic|Random/;
+
+const PICTURES: ReadonlySet<string> = new Set(GRAPHICS_HEADS);
+
+/**
+ * Whether an example is a picture or a control: its head, or the head of its value, is one of formats'
+ * graphics heads. Wolfram answers those with a `Graphics` or its own control, so the scan doesn't ask.
+ */
+export function showsPicture(head: string, expr: unknown): boolean {
+  let top = expr;
+  while (Array.isArray(top) && top[0] === "N" && top.length === 2) top = top[1];
+  return PICTURES.has(head) || (Array.isArray(top) && typeof top[0] === "string" && PICTURES.has(top[0]));
+}
 
 export type Adapted = { readonly ok: true; readonly expr: unknown } | { readonly ok: false; readonly reason: string };
 

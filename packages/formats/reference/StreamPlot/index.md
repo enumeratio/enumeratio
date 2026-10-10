@@ -5,7 +5,6 @@ signature: StreamPlot(...)
 summary: Wolfram's own StreamPlot, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
 names:
   wolframIdentity: true
-stub: carrier
 signatures:
   - call: StreamPlot(...)
     description: Wolfram's own StreamPlot, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).

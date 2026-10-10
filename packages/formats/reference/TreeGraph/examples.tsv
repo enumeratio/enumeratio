@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+rooted	Basic		[TreeGraph, {dict: {label: "'root'", children: [List, {dict: {label: "'a'"}}, {dict: {label: "'b'"}}]}}]	[TreeGraph, {dict: {label: "'root'", children: [List, {dict: {label: {str: "'a'"}}}, {dict: {label: {str: "'b'"}}}]}}]	A rooted tree, laid out by depth	{head: GraphicsBox, marks: {LineBox: 2, DiskBox: 3, InsetBox: 3}, roles: {Edge: 2, Vertex: 3, Label: 3}}

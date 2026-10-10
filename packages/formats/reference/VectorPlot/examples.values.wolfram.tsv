@@ -1,0 +1,2 @@
+id	in
+rotation	VectorPlot[List[Minus[y], x], List[x, -2, 2], List[y, -2, 2]]

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+content	Basic		[Panel, x]	[Panel, x]	Content in a bordered panel	{head: PanelBox, operands: [x]}

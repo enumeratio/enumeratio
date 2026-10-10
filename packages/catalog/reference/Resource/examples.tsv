@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+name-alone	Basic		[Resource, "'Subsets'"]	Subsets	A name alone resolves to the head itself
+with-arguments	Basic		[Count, [Resource, "'Subsets'", 3]]	8	Further arguments call the head

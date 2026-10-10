@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+unit	Basic		[Disk, [Tuple, 0, 0], 1]	[Disk, [Tuple, 0, 0], 1]	A filled disk by center and radius

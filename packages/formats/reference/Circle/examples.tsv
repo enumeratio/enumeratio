@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+unit	Basic		[Circle, [Tuple, 0, 0], 1]	[Circle, [Tuple, 0, 0], 1]	A circle by center and radius

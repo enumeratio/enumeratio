@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+range	Basic		[Slider, k, [Tuple, 0, 5]]	[Slider, k, [Tuple, 0, 5]]	A slider over a range, bound to a variable	{head: SliderBox, operands: [[DynamicBox, k], [Tuple, 0, 5]]}

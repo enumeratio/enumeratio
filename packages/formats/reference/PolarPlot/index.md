@@ -5,7 +5,6 @@ signature: PolarPlot(...)
 summary: Wolfram's own PolarPlot, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
 names:
   wolframIdentity: true
-stub: carrier
 signatures:
   - call: PolarPlot(...)
     description: Wolfram's own PolarPlot, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+height-grid	Basic		[ListPlot3D, [List, [List, 0, 1, 2, 3], [List, 1, 3, 4, 3], [List, 2, 4, 6, 4], [List, 1, 2, 3, 2]]]	[ListPlot3D, [List, [List, 0, 1, 2, 3], [List, 1, 3, 4, 3], [List, 2, 4, 6, 4], [List, 1, 2, 3, 2]]]	A surface through a grid of heights

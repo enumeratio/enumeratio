@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+segment	Basic		[Arrow, [List, [Tuple, 0, 0], [Tuple, 1, 1]]]	[Arrow, [List, [Tuple, 0, 0], [Tuple, 1, 1]]]	An arrow along a segment

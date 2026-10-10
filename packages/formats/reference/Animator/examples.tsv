@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+range	Basic		[Animator, t, [Tuple, 0, 1]]	[Animator, t, [Tuple, 0, 1]]	A clock stepping a variable through a range	{head: AnimatorBox, operands: [[DynamicBox, t], [Tuple, 0, 1]]}

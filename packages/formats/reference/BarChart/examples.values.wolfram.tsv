@@ -1,0 +1,3 @@
+id	in
+labelled	BarChart[List[12, 19, 7, 15, 10], List[Labels, List["Mon", "Tue", "Wed", "Thu", "Fri"]], List[enumeratio`Label, "Daily commits"]]
+negative	BarChart[List[3, -2, 5, -1, 4]]

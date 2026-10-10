@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+one-per-series	Basic		[BoxWhiskerChart, [List, [List, 2, 4, 4, 4, 5, 5, 7, 9], [List, 1, 2, 3, 3, 3, 4, 4, 10]]]	[BoxWhiskerChart, [List, [List, 2, 4, 4, 4, 5, 5, 7, 9], [List, 1, 2, 3, 3, 3, 4, 4, 10]]]	One box per series, from its five-number summary	{head: GraphicsBox, marks: {LineBox: 8, RectangleBox: 2}, roles: {Whisker: 2, Cap: 4, Box: 2, Median: 2}, options: {ChartKind: BoxWhisker}}

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+rotation	Basic		[StreamPlot, [Tuple, [Negate, y], x], [Tuple, x, -2, 2], [Tuple, y, -2, 2]]	[StreamPlot, [Tuple, [Negate, y], x], [Tuple, x, -2, 2], [Tuple, y, -2, 2]]	Streamlines of the rotation field	{head: GraphicsBox, marks: {LineBox: 80, ArrowBox: 80}, roles: {Series: 160}, options: {PlotRange: [[-2, 2], [-2, 2]]}}
