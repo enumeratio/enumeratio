@@ -1,75 +1,75 @@
-id	in	out	verdict
-cos-0	cos(0)	1	
-cos-pi-over-6	cos((pi / 6))	1/2*sqrt(3)	
-cos-pi-over-4	cos((pi / 4))	1/2*sqrt(2)	
-cos-pi-over-3	cos((pi / 3))	1/2	
-cos-pi-over-2	cos((pi / 2))	0	
-cos-pi	cos(pi)	-1	
-cos-30-circ-exactly			
-a-machine-precision-argument-evaluates	cos(1.2)	0.362357754476674	
-a-huge-24-40-argument	N(cos(((24)^40)))		
-a-huge-3-200-argument	N(cos(((3)^200)))		
-a-huge-neg-7-60-argument	N(cos((-((7)^60))))		
-a-huge-10-80-plus-1-over-3-argument	N(cos(((((10)^80) + 1) / 3)))		
-cos-2-5	cos(2.5)		
-series-cos-x-x-0-10			
-n-of-an-exact-argument-gives-an-arbitrary	N(cos((6/5)))	0.362357754476674	
-evaluates-at-a-complex-argument	cos((2.5 + 1*I))	-1.23622919885634 - 0.703325178113535*I	
-threads-element-wise-over-a-matrix	[[cos((5 * (pi / 6))), cos(0)], [cos((3 * (pi / 2))), cos((-(pi / 2)))]]	[[-1/2*sqrt(3), 1], [0, 0]]	
-cos-pi-12-frac-sqrt-6-sqrt-2-4	cos((pi / 12))	1/4*sqrt(6) + 1/4*sqrt(2)	
-cos-pi-8-frac-sqrt-2-sqrt-2-2	cos((pi / 8))	1/2*sqrt(sqrt(2) + 2)	
-cos-pi-10-frac-sqrt-10-2-sqrt-5-4	cos((pi / 10))	1/4*sqrt(2*sqrt(5) + 10)	
-cos-2-pi-5-frac-sqrt-5-1-4	cos(((2/5) * pi))	1/4*sqrt(5) - 1/4	
-cos-3-pi-5-frac-1-sqrt-5-4	cos(((3/5) * pi))	-1/4*sqrt(5) + 1/4	
-reduced-into-the-first-quadrant-by-symmetry	cos(((11/6) * pi))	1/2*sqrt(3)	
-interval-arithmetic-the-image-of-pi-3-pi-2-is-0			
-uncertainty-propagation-cos-2-pm-0-01-approx-0			
-cos-infty-should-be-the-oscillation-range-1-1	cos(oo)		
-an-imaginary-argument-rewrites-to-cosh-cos-ix	cos((I * SR.var("x")))	cosh(x)	disagree
-evenness-drops-the-sign-of-a-symbolic-argument	cos((-SR.var("x")))	True	
-cos-arccos-x-x-for-every-x			
-cos-arccos-2-2-past-the-real-domain			
-cos-arcsin-x-sqrt-1-x-2			
-cos-arctan-x-frac-1-sqrt-1-x-2			
-derivative-sin-x	diff(cos(SR.var("x")), SR.var("x"))		
-antiderivative			
-taylor-series-about-0-only-even-powers-appear			
-to-30-significant-digits-every-one-correctly	N(cos(1))	0.540302305868140	
-to-1-significant-digit	N(cos(1))	0.540302305868140	disagree
-a-huge-10-100-argument-reduces-exactly-mod-2-pi	N(cos(((10)^100)))	0.924724238751934	disagree
-n-cos-6-over-5-50	N(cos((6/5)))		
-functiondomain-cos-x-x			
-functionrange-cos-x-x-y			
-functionperiod-cos-x-x			
-functionanalytic-cos-x-x			
-functioninjective-cos-x-x			
-functionsurjective-cos-x-x			
-functionsingularities-cos-x-x			
-functiondiscontinuities-cos-x-x			
-matrixfunction-function-cos-1-1-list-list-5-over			
-assuming-m-in-integers-refine-cos-pi-times-1			
-assuming-m-in-integers-fullsimplify-refine-cos			
-threads-element-wise-over-a-list	[cos(0), cos((pi / 2)), cos(pi)]	[1, 0, -1]	
-even-function-cos-x-cos-x	bool(cos((-(pi / 3))) == cos((pi / 3)))	True	
-co-function-identity-cos-x-sin-pi-2-x	bool(cos((pi / 6)) == sin(((pi / 2) - (pi / 6))))	True	
-double-angle-formula-cos-2x-cos-2-x-sin-2-x			
-angle-addition-formula			
-power-reduction-cos-2-x-frac-1-cos-2x-2			
-euler-s-formula-cos-x-frac-e-ix-e-ix-2			
-cos-3-over-10-times-pi	cos(((3/10) * pi))		
-integrate-cos-t-pow-2-t-0-1-over-2-times-pi			
-product-neg-cos-1-over-4-times-pi-times-2k-minus			
-integrate-cos-t-pow-3-t-0-1-over-2-times-pi			
-n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2	N((((((0 + 1*I) * sin((1/2))) + cos((1/2))))^2))		
-product-neg-cos-1-over-6-times-pi-times-2k-minus			
-n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2	N((((((0 + 1*I) * sin((1/2))) + cos((1/2))))^2))		
-n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow	N((((((0 + -1*I) * sin((1/2))) + cos((1/2))))^2))		
-n-integrate-exponentiale-pow-neg-1-over-2-times			
-n-integrate-1-over-sqrt-cos-t-minus-cos-1-over-2			
-n-neg-2-times-cos-1-times-cos-1-over-2-pow-2	N(((-2 * cos(1) * ((cos((1/2)))^2)) + (2 * ((cos((1/2)))^2)) + ((cos(1))^2)))		
-n-cos-1-over-2-plus-1-over-2-times-pi-pow-2	N(((cos(((1/2) + ((1/2) * pi))))^2))		
-n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-3	N((((((0 + 1*I) * sin((1/2))) + cos((1/2))))^3))		
-as-with-sin-a-non-special-numeric-argument-stays	cos(2)	cos(2)	
-pi-24-is-past-the-automatic-special-angle-table	cos(((1/24) * pi))	1/4*sqrt(2*sqrt(6) + 2*sqrt(2) + 8)	
-cos-complexinfinity-is-indeterminate-for-the	cos(unsigned_infinity)		
-cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden	cos((pi / 5))	1/4*sqrt(5) + 1/4	
+id	in	out
+cos-0	cos(0)	1
+cos-pi-over-6	cos((pi / 6))	1/2*sqrt(3)
+cos-pi-over-4	cos((pi / 4))	1/2*sqrt(2)
+cos-pi-over-3	cos((pi / 3))	1/2
+cos-pi-over-2	cos((pi / 2))	0
+cos-pi	cos(pi)	-1
+cos-30-circ-exactly		
+a-machine-precision-argument-evaluates	cos(1.2)	0.362357754476674
+a-huge-24-40-argument	enumeratio_n(cos(((24)^40)))	
+a-huge-3-200-argument	enumeratio_n(cos(((3)^200)))	
+a-huge-neg-7-60-argument	enumeratio_n(cos((-((7)^60))))	
+a-huge-10-80-plus-1-over-3-argument	enumeratio_n(cos(((((10)^80) + 1) / 3)))	
+cos-2-5	cos(2.5)	
+series-cos-x-x-0-10		
+n-of-an-exact-argument-gives-an-arbitrary	enumeratio_n(cos((6/5)))	0.362357754476674
+evaluates-at-a-complex-argument	cos((2.5 + 1*I))	-1.23622919885634 - 0.703325178113535*I
+threads-element-wise-over-a-matrix	[[cos((5 * (pi / 6))), cos(0)], [cos((3 * (pi / 2))), cos((-(pi / 2)))]]	[[-1/2*sqrt(3), 1], [0, 0]]
+cos-pi-12-frac-sqrt-6-sqrt-2-4	cos((pi / 12))	1/4*sqrt(6) + 1/4*sqrt(2)
+cos-pi-8-frac-sqrt-2-sqrt-2-2	cos((pi / 8))	1/2*sqrt(sqrt(2) + 2)
+cos-pi-10-frac-sqrt-10-2-sqrt-5-4	cos((pi / 10))	1/4*sqrt(2*sqrt(5) + 10)
+cos-2-pi-5-frac-sqrt-5-1-4	cos(((2/5) * pi))	1/4*sqrt(5) - 1/4
+cos-3-pi-5-frac-1-sqrt-5-4	cos(((3/5) * pi))	-1/4*sqrt(5) + 1/4
+reduced-into-the-first-quadrant-by-symmetry	cos(((11/6) * pi))	1/2*sqrt(3)
+interval-arithmetic-the-image-of-pi-3-pi-2-is-0		
+uncertainty-propagation-cos-2-pm-0-01-approx-0		
+cos-infty-should-be-the-oscillation-range-1-1	cos(oo)	
+an-imaginary-argument-rewrites-to-cosh-cos-ix	cos((I * SR.var("x")))	True
+evenness-drops-the-sign-of-a-symbolic-argument	cos((-SR.var("x")))	True
+cos-arccos-x-x-for-every-x		
+cos-arccos-2-2-past-the-real-domain		
+cos-arcsin-x-sqrt-1-x-2		
+cos-arctan-x-frac-1-sqrt-1-x-2		
+derivative-sin-x	diff(cos(SR.var("x")), SR.var("x"))	
+antiderivative		
+taylor-series-about-0-only-even-powers-appear		
+to-30-significant-digits-every-one-correctly	enumeratio_n(cos(1), 30)	0.540302305868140
+to-1-significant-digit	enumeratio_n(cos(1), 1)	0.500000000000000
+a-huge-10-100-argument-reduces-exactly-mod-2-pi	enumeratio_n(cos(((10)^100)))	-0.928081905074655
+n-cos-6-over-5-50	enumeratio_n(cos((6/5)), 50)	
+functiondomain-cos-x-x		
+functionrange-cos-x-x-y		
+functionperiod-cos-x-x		
+functionanalytic-cos-x-x		
+functioninjective-cos-x-x		
+functionsurjective-cos-x-x		
+functionsingularities-cos-x-x		
+functiondiscontinuities-cos-x-x		
+matrixfunction-function-cos-1-1-list-list-5-over		
+assuming-m-in-integers-refine-cos-pi-times-1		
+assuming-m-in-integers-fullsimplify-refine-cos		
+threads-element-wise-over-a-list	[cos(0), cos((pi / 2)), cos(pi)]	[1, 0, -1]
+even-function-cos-x-cos-x	enumeratio_equal(cos((-(pi / 3))), cos((pi / 3)))	True
+co-function-identity-cos-x-sin-pi-2-x	enumeratio_equal(cos((pi / 6)), sin(((pi / 2) - (pi / 6))))	True
+double-angle-formula-cos-2x-cos-2-x-sin-2-x		
+angle-addition-formula		
+power-reduction-cos-2-x-frac-1-cos-2x-2		
+euler-s-formula-cos-x-frac-e-ix-e-ix-2		
+cos-3-over-10-times-pi	cos(((3/10) * pi))	
+integrate-cos-t-pow-2-t-0-1-over-2-times-pi		
+product-neg-cos-1-over-4-times-pi-times-2k-minus		
+integrate-cos-t-pow-3-t-0-1-over-2-times-pi		
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2	enumeratio_n((((((0 + 1*I) * sin((1/2))) + cos((1/2))))^2))	
+product-neg-cos-1-over-6-times-pi-times-2k-minus		
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2	enumeratio_n((((((0 + 1*I) * sin((1/2))) + cos((1/2))))^2))	
+n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow	enumeratio_n((((((0 + -1*I) * sin((1/2))) + cos((1/2))))^2))	
+n-integrate-exponentiale-pow-neg-1-over-2-times		
+n-integrate-1-over-sqrt-cos-t-minus-cos-1-over-2		
+n-neg-2-times-cos-1-times-cos-1-over-2-pow-2	enumeratio_n(((-2 * cos(1) * ((cos((1/2)))^2)) + (2 * ((cos((1/2)))^2)) + ((cos(1))^2)))	
+n-cos-1-over-2-plus-1-over-2-times-pi-pow-2	enumeratio_n(((cos(((1/2) + ((1/2) * pi))))^2))	
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-3	enumeratio_n((((((0 + 1*I) * sin((1/2))) + cos((1/2))))^3))	
+as-with-sin-a-non-special-numeric-argument-stays	cos(2)	cos(2)
+pi-24-is-past-the-automatic-special-angle-table	cos(((1/24) * pi))	1/4*sqrt(2*sqrt(6) + 2*sqrt(2) + 8)
+cos-complexinfinity-is-indeterminate-for-the	cos(unsigned_infinity)	
+cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden	cos((pi / 5))	1/4*sqrt(5) + 1/4

@@ -13,8 +13,8 @@ the-numeric-arguments-collapse-to-their-minimum	enumeratio_min(3, SR.var("x"), 5
 compares-exact-constants-numerically-min-e-pi-5	enumeratio_min([e, pi, 5])	e	
 the-min-of-two-intervals-is-the-interval-of			
 the-day-s-low-from-the-same-hourly-readings-see	enumeratio_min(68, 72, 65, 80, 74)	65	
-commutative-order-doesn-t-matter	bool(enumeratio_min(3, 7) == enumeratio_min(7, 3))	True	
-min-a-b-max-a-b-a-b-see-max	bool((enumeratio_min(4, 9) + enumeratio_max(4, 9)) == (4 + 9))	True	
+commutative-order-doesn-t-matter	enumeratio_equal(enumeratio_min(3, 7), enumeratio_min(7, 3))	True	
+min-a-b-max-a-b-a-b-see-max	enumeratio_equal((enumeratio_min(4, 9) + enumeratio_max(4, 9)), (4 + 9))	True	
 idempotent-min-x-x-x	enumeratio_min(SR.var("x"), SR.var("x"))	True	
 infinities-participate-directly-in-the	enumeratio_min(-oo, 3)		
 multiple-arguments-lists-included-are-flattened	enumeratio_min([3, 1], 0)	0	

@@ -32,7 +32,7 @@ bindings:
     note: "Wolfram's own ModularInverse (not PowerMod[a, -1, m]): PowerMod's negative-exponent path checks invertibility of a mod the NORM of a Gaussian m, not m itself, and wrongly declines some invertible cases ModularInverse gets right — e.g. ModularInverse(11 - 7i, 7 + 4i) = -1 + 2i, where PowerMod[11 - 7I, -1, 7 + 4I] errors because 11 - 7i shares a factor with N(7 + 4i) = 65."
   - origin: mapped
     form: sage
-    template: inverse_mod($1, $2)
+    template: enumeratio_inverse_mod($1, $2)
     arity: 2
 ---
 

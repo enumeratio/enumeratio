@@ -1,0 +1,39 @@
+id	in	out
+n-cosh-0	(cosh(0))	1.0
+n-cosh-1	(cosh(1))	1.54308063481524377847790562076
+cosh-0	cosh(0)	1.0
+a-float-argument-evaluates-directly-no-n-needed	cosh(1.2)	1.81065556732437472605432245592
+series-cosh-x-x-0-10		
+arbitrary-precision-via-n	(cosh((mpf(6)/5)))	1.81065556732437479308787251834
+evaluates-at-a-complex-argument	cosh(mpc(2.5, 1))	(3.31329014611322428950217407367 + 5.09107152294969824529688803328j)
+cosh-i-pi-cos-pi-1	cosh((mpc(0,1) * pi))	(-1.0 + 0.0j)
+element-wise-over-a-matrix-of-imaginary		
+interval-arithmetic-cosh-0-ln-3-1-frac-53-not		
+uncertainty-propagation-cosh-2-sqrt-3-pm-0-1		
+cosh-positiveinfinity	cosh(inf)	+inf
+evenness-drops-the-sign-of-a-symbolic-argument		
+cosh-arcosh-x-x-for-every-x		
+cosh-arcosh-2-2		
+cosh-arcosh-of-a-complex-argument		
+derivative-sinh-x		
+antiderivative		
+to-30-significant-digits-every-one-correctly	(cosh(1))	1.54308063481524377847790562076
+n-cosh-6-over-5-50	(cosh((mpf(6)/5)))	1.81065556732437479308787251834
+cosh-1-over-5-times-i-times-pi	cosh((mpc(0, (mpf(1)/5)) * pi))	(0.809016994374947424102293417183 + 0.0j)
+cosh-1-over-24-times-i-times-pi	cosh((mpc(0, (mpf(1)/24)) * pi))	(0.991444861373810411144557526929 + 0.0j)
+matrixfunction-function-cosh-1-1-list-list-1		
+even-function-cosh-x-cosh-x	almosteq(cosh((-1)), cosh(1), 1e-20)	True
+hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	almosteq((((cosh(1))**2) - ((sinh(1))**2)), 1, 1e-20)	True
+the-definition-cosh-x-frac-e-x-e-x-2		
+cosh-2-x-sinh-2-x-should-simplify-to-1		
+cosh-1-over-12-times-i-times-pi	cosh((mpc(0, (mpf(1)/12)) * pi))	(0.965925826289068286749743199729 + 0.0j)
+cosh-1-over-10-times-i-times-pi	cosh((mpc(0, (mpf(1)/10)) * pi))	(0.951056516295153572116439333379 + 0.0j)
+cosh-1-over-9-times-i-times-pi	cosh((mpc(0, (mpf(1)/9)) * pi))	(0.939692620785908384054109277325 + 0.0j)
+cosh-1-over-8-times-i-times-pi	cosh((mpc(0, (mpf(1)/8)) * pi))	(0.923879532511286756128183189397 + 0.0j)
+cosh-1-over-7-times-i-times-pi	cosh((mpc(0, (mpf(1)/7)) * pi))	(0.900968867902419126236102319507 + 0.0j)
+cosh-1-over-6-times-i-times-pi	cosh((mpc(0, (mpf(1)/6)) * pi))	(0.866025403784438646763723170753 + 0.0j)
+cosh-2-over-9-times-i-times-pi	cosh((mpc(0, (mpf(2)/9)) * pi))	(0.766044443118978035202392650555 + 0.0j)
+n-sinh-1-over-2-plus-cosh-1-over-2-pow-2	((((sinh((mpf(1)/2)) + cosh((mpf(1)/2))))**2))	2.71828182845904523536028747135
+n-neg-sinh-1-over-2-plus-cosh-1-over-2-pow-2	(((((-sinh((mpf(1)/2))) + cosh((mpf(1)/2))))**2))	0.367879441171442321595523770161
+n-neg-2-times-cosh-1-times-cosh-1-over-2-pow-2	(((-2 * cosh(1) * ((cosh((mpf(1)/2)))**2)) + (2 * ((cosh((mpf(1)/2)))**2)) + ((cosh(1))**2)))	1.0
+n-cosh-1-over-2-plus-1-over-2-times-i-times-pi	(((cosh(((mpf(1)/2) + (mpc(0, (mpf(1)/2)) * pi))))**2))	(-0.271540317407621889238952810379 + 9.96385830668815376149492298655e-32j)

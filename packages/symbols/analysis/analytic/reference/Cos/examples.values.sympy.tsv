@@ -25,7 +25,7 @@ reduced-into-the-first-quadrant-by-symmetry	cos((Rational(11, 6) * pi))	sqrt(3)/
 interval-arithmetic-the-image-of-pi-3-pi-2-is-0			
 uncertainty-propagation-cos-2-pm-0-01-approx-0			
 cos-infty-should-be-the-oscillation-range-1-1	cos(oo)	AccumBounds(-1, 1)	disagree
-an-imaginary-argument-rewrites-to-cosh-cos-ix	cos((I * Symbol("x")))	cosh(x)	disagree
+an-imaginary-argument-rewrites-to-cosh-cos-ix	cos((I * Symbol("x")))	True	
 evenness-drops-the-sign-of-a-symbolic-argument	cos((-Symbol("x")))	True	
 cos-arccos-x-x-for-every-x			
 cos-arccos-2-2-past-the-real-domain			

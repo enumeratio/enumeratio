@@ -7,7 +7,7 @@ floor-2p4	floor(2.4)	2
 floor-2p6	floor(2.6)	2	
 floor-2p7	floor(2.7)	2	
 floor-add-x-1-a-free-variable-is-untouched	floor((Symbol("x") + 1))	floor(x) + 1	disagree
-stays-symbolic	floor(Symbol("x"))	floor(x)	disagree
+stays-symbolic	floor(Symbol("x"))	True	
 exact-radicals-are-decided-numerically	floor(sqrt(50))	7	
 a-negative-radicand-inside-floor	floor(sqrt(-1))	I	
 evaluates-at-an-exact-constant-lfloor-pi-rfloor	floor(pi)	3	

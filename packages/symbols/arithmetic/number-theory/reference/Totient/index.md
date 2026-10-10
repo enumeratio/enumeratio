@@ -39,7 +39,7 @@ bindings:
     threadArg: 1
   - origin: mapped
     form: sage
-    template: euler_phi($1)
+    template: enumeratio_euler_phi($1)
     arity: 1
     threadArg: 1
   - origin: mapped

@@ -38,7 +38,7 @@ bindings:
     arity: 1
   - origin: mapped
     form: sage
-    template: factorial($1)
+    template: enumeratio_factorial($1)
     arity: 1
   - origin: mapped
     form: oscar

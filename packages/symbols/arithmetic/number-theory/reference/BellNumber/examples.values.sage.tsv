@@ -10,10 +10,10 @@ the-two-argument-form-gives-the-bell-touchard
 the-bell-polynomial-at-a-real-point-b-20-0-5			
 bellnumber-list-1-2-3-4-5-6	[bell_number(1), bell_number(2), bell_number(3), bell_number(4), bell_number(5), bell_number(6)]		
 the-number-of-ways-to-partition-a-4-element-set	bell_number(4)	15	
-recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	bool(bell_number(5) == ((binomial(4, 0) * bell_number(0)) + (binomial(4, 1) * bell_number(1)) + (binomial(4, 2) * bell_number(2)) + (binomial(4, 3) * bell_number(3)) + (binomial(4, 4) * bell_number(4))))	True	
+recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	enumeratio_equal(bell_number(5), ((binomial(4, 0) * bell_number(0)) + (binomial(4, 1) * bell_number(1)) + (binomial(4, 2) * bell_number(2)) + (binomial(4, 3) * bell_number(3)) + (binomial(4, 4) * bell_number(4))))	True	
 the-bell-polynomial-at-1-is-the-bell-number-b-n			
 dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac			
-touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	bool((bell_number(9) % 7) == ((bell_number(2) + bell_number(3)) % 7))	True	
+touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	enumeratio_equal(enumeratio_mod(bell_number(9), 7), enumeratio_mod((bell_number(2) + bell_number(3)), 7))	True	
 exponentialgeneratingfunction-bellnumber-n-n-x			
 bellnumber-2	bell_number(2)		
 bellnumber-6	bell_number(6)		
@@ -23,5 +23,5 @@ bellnumber-9	bell_number(9)
 bellnumber-1-0			
 bellnumber-2-0			
 a-negative-argument-is-left-unevaluated	bell_number(-1)	ArithmeticError: Bell numbers not defined for negative indices	error
-a-zero-modulus-inside-a-congruence-check-is-nan	bool((bell_number(9) % 23) == ((bell_number(4) + bell_number(5)) % 0))	ZeroDivisionError: Integer modulo by zero	error
+a-zero-modulus-inside-a-congruence-check-is-nan	enumeratio_equal(enumeratio_mod(bell_number(9), 23), enumeratio_mod((bell_number(4) + bell_number(5)), 0))	ZeroDivisionError: Integer modulo by zero	error
 bellnumber-range-1-10			

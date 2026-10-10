@@ -1,2 +1,2 @@
 id	in
-euler-gamma-to-20-digits	N(euler_gamma)
+euler-gamma-to-20-digits	enumeratio_n(euler_gamma, 20)

@@ -47,9 +47,8 @@ bindings:
     threadArg: 2
   - origin: mapped
     form: sage
-    template: ($1 % $2)
+    template: enumeratio_mod($1, $2)
     arity: 2
-    threadArg: 2
   - origin: mapped
     form: oscar
     template: mod($1, $2)

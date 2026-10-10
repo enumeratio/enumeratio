@@ -48,7 +48,7 @@ bindings:
     arity: 1
   - origin: mapped
     form: sage
-    template: floor($1)
+    template: enumeratio_floor($1)
     arity: 1
   - origin: mapped
     form: rust

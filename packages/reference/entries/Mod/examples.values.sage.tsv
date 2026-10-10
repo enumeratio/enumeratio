@@ -1,88 +1,88 @@
 id	in	out	verdict
-17-mod-5	(17 % 5)	2	
-100-mod-7	(100 % 7)	2	
-the-result-takes-the-sign-of-the-modulus	(-7 % 3)	2	
-threads-element-wise-over-a-list	([1, 2, 3, 4, 5] % 3)	TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'	error
-mod-7-3	(7 % 3)	1	
-5-mod-3	(5 % 3)		
-1-plus-4-mod-3	(1 + (4 % 3))		
-integermod-keeps-the-modulus	Mod(17, 5)	2	inconclusive
+17-mod-5	enumeratio_mod(17, 5)	2	
+100-mod-7	enumeratio_mod(100, 7)	2	
+the-result-takes-the-sign-of-the-modulus	enumeratio_mod(-7, 3)	2	
+threads-element-wise-over-a-list	enumeratio_mod([1, 2, 3, 4, 5], 3)	[1, 2, 0, 1, 2]	
+mod-7-3	enumeratio_mod(7, 3)	1	
+5-mod-3	enumeratio_mod(5, 3)		
+1-plus-4-mod-3	(1 + enumeratio_mod(4, 3))		
+integermod-keeps-the-modulus	Mod(17, 5)	2	
 a-third-argument-offsets-the-range-the-result			
 with-offset-1-the-residues-run-1-2-3-rather-than			
-rationals-are-reduced-exactly	((5/2) % 2)	ZeroDivisionError: inverse of Mod(0, 2) does not exist	error
-3p14-mod-2	(3.14 % 2)	-0.860000000000000	disagree
-an-exact-irrational-reduces-exactly-to-2-sqrt-7	(sqrt(28) % 3)	TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'	error
-a-symbolic-constant-reduces-exactly-to-pi-2	(pi % 2)	TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'	error
-a-10-001-digit-dividend	(((10)^10000) % 10007)	6333	
-threads-over-a-list-of-moduli	[(10 % 3), (10 % 4), (10 % 7)]	[1, 2, 3]	
-a-gaussian-integer-5-3i-2-2-2i	((5 + 3*I) % 2)	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
-1-i-divides-5-3i-1-i-4-i	((5 + 3*I) % (1 + 1*I))	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
-gaussian-integers-the-quotient-rounds-so-each	((7 + 5*I) % 3)	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
-a-gaussian-modulus-7-5i-2-i-4-i-i	((7 + 5*I) % (2 + 1*I))	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
-exact-in-both-parts-past-2-53	((100000000000000000001 + 9007199254740993*I) % (2 + 1*I))	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
-eulers-number-mod-2-reduces-exactly	(e % 2)	TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'	error
-gaussian-reduced-by-a-unit-modulus-is-always-0	((3 + 4*I) % 1)		
-gaussian-reduced-by-i-is-always-0	((3 + 4*I) % (0 + 1*I))		
-a-zero-dividend-reduces-to-0	(0 % (2 + 1*I))		
-reducing-by-a-gaussian-prime-norm-5	((3 + 4*I) % (2 + 1*I))		
-reducing-by-the-other-prime-above-5	((3 + 4*I) % (2 + -1*I))		
-reducing-by-a-real-prime-3-mod-4	((3 + 4*I) % 3)		
-reducing-a-real-dividend-by-a-gaussian-modulus	(5 % (2 + 1*I))		
-reducing-by-an-associate-gives-a-remainder	((8 + 2*I) % (-4 + 3*I))		
-reducing-by-a-negative-real-modulus	((3 + 4*I) % -7)		
-reducing-by-a-composite-gaussian-modulus-norm-25	((123 + 456*I) % (3 + 4*I))		
-a-gaussian-modulus-past-2-53-in-both-parts	((100000000000000000001 + 9007199254740993*I) % (4 + 1*I))		
-reducing-by-1-4i-the-other-prime-above-17	((8 + 2*I) % (1 + 4*I))		
-a-real-dividend-mod-a-real-modulus-stays-plain	(9 % 3)		
-reducing-a-large-norm-gaussian-by-a-small-unit	((1000 + 1*I) % (1 + 1*I))		
-reducing-by-1-a-unit-is-always-0	((2 + 1*I) % -1)		
-reducing-by-i-a-unit-is-always-0	((5 + 5*I) % (0 + -1*I))		
-a-negative-real-dividend-gaussian-modulus	((-5 + -5*I) % (2 + 1*I))		
-reducing-0-by-0-is-undefined-like-the-rational	(0 % 0)		
-reducing-by-an-associate-times-1	((8 + 2*I) % (-3 + -4*I))		
-reducing-by-an-associate-times-i	((8 + 2*I) % (4 + -3*I))		
-reducing-by-the-other-prime-above-13	((6 + 8*I) % (2 + 3*I))		
-reducing-by-a-prime-above-13	((6 + 8*I) % (3 + 2*I))		
-reducing-a-real-prime-s-associate-by-the-unit-i	((3 + 4*I) % (0 + 7*I))		
-reducing-by-a-real-composite-5-squared	((3 + 4*I) % 25)		
-a-negative-associate-as-the-modulus	((6 + 8*I) % (-2 + -3*I))		
-reducing-by-a-real-prime-19	((123 + 456*I) % 19)		
-1-plus-16-mod-5	(1 + (16 % 5))		
+rationals-are-reduced-exactly	enumeratio_mod((5/2), 2)	1/2	
+3p14-mod-2	enumeratio_mod(3.14, 2)	1.14000000000000	
+an-exact-irrational-reduces-exactly-to-2-sqrt-7	enumeratio_mod(sqrt(28), 3)	2*sqrt(7) - 3	
+a-symbolic-constant-reduces-exactly-to-pi-2	enumeratio_mod(pi, 2)	pi - 2	
+a-10-001-digit-dividend	enumeratio_mod(((10)^10000), 10007)	6333	
+threads-over-a-list-of-moduli	[enumeratio_mod(10, 3), enumeratio_mod(10, 4), enumeratio_mod(10, 7)]	[1, 2, 3]	
+a-gaussian-integer-5-3i-2-2-2i	enumeratio_mod((5 + 3*I), 2)	-I + 1	
+1-i-divides-5-3i-1-i-4-i	enumeratio_mod((5 + 3*I), (1 + 1*I))	0	
+gaussian-integers-the-quotient-rounds-so-each	enumeratio_mod((7 + 5*I), 3)	-I + 1	
+a-gaussian-modulus-7-5i-2-i-4-i-i	enumeratio_mod((7 + 5*I), (2 + 1*I))	-I	
+exact-in-both-parts-past-2-53	enumeratio_mod((100000000000000000001 + 9007199254740993*I), (2 + 1*I))	0	
+eulers-number-mod-2-reduces-exactly	enumeratio_mod(e, 2)	e - 2	
+gaussian-reduced-by-a-unit-modulus-is-always-0	enumeratio_mod((3 + 4*I), 1)		
+gaussian-reduced-by-i-is-always-0	enumeratio_mod((3 + 4*I), (0 + 1*I))		
+a-zero-dividend-reduces-to-0	enumeratio_mod(0, (2 + 1*I))		
+reducing-by-a-gaussian-prime-norm-5	enumeratio_mod((3 + 4*I), (2 + 1*I))		
+reducing-by-the-other-prime-above-5	enumeratio_mod((3 + 4*I), (2 + -1*I))		
+reducing-by-a-real-prime-3-mod-4	enumeratio_mod((3 + 4*I), 3)		
+reducing-a-real-dividend-by-a-gaussian-modulus	enumeratio_mod(5, (2 + 1*I))		
+reducing-by-an-associate-gives-a-remainder	enumeratio_mod((8 + 2*I), (-4 + 3*I))		
+reducing-by-a-negative-real-modulus	enumeratio_mod((3 + 4*I), -7)		
+reducing-by-a-composite-gaussian-modulus-norm-25	enumeratio_mod((123 + 456*I), (3 + 4*I))		
+a-gaussian-modulus-past-2-53-in-both-parts	enumeratio_mod((100000000000000000001 + 9007199254740993*I), (4 + 1*I))		
+reducing-by-1-4i-the-other-prime-above-17	enumeratio_mod((8 + 2*I), (1 + 4*I))		
+a-real-dividend-mod-a-real-modulus-stays-plain	enumeratio_mod(9, 3)		
+reducing-a-large-norm-gaussian-by-a-small-unit	enumeratio_mod((1000 + 1*I), (1 + 1*I))		
+reducing-by-1-a-unit-is-always-0	enumeratio_mod((2 + 1*I), -1)		
+reducing-by-i-a-unit-is-always-0	enumeratio_mod((5 + 5*I), (0 + -1*I))		
+a-negative-real-dividend-gaussian-modulus	enumeratio_mod((-5 + -5*I), (2 + 1*I))		
+reducing-0-by-0-is-undefined-like-the-rational	enumeratio_mod(0, 0)		
+reducing-by-an-associate-times-1	enumeratio_mod((8 + 2*I), (-3 + -4*I))		
+reducing-by-an-associate-times-i	enumeratio_mod((8 + 2*I), (4 + -3*I))		
+reducing-by-the-other-prime-above-13	enumeratio_mod((6 + 8*I), (2 + 3*I))		
+reducing-by-a-prime-above-13	enumeratio_mod((6 + 8*I), (3 + 2*I))		
+reducing-a-real-prime-s-associate-by-the-unit-i	enumeratio_mod((3 + 4*I), (0 + 7*I))		
+reducing-by-a-real-composite-5-squared	enumeratio_mod((3 + 4*I), 25)		
+a-negative-associate-as-the-modulus	enumeratio_mod((6 + 8*I), (-2 + -3*I))		
+reducing-by-a-real-prime-19	enumeratio_mod((123 + 456*I), 19)		
+1-plus-16-mod-5	(1 + enumeratio_mod(16, 5))		
 generatingfunction-n-mod-4-n-x			
-282-475-249-mod-11	(282475249 % 11)		
-7-pow-totient-12-mod-12	(((7)^euler_phi(12)) % 12)		
+282-475-249-mod-11	enumeratio_mod(282475249, 11)		
+7-pow-totient-12-mod-12	enumeratio_mod(((7)^enumeratio_euler_phi(12)), 12)		
 list-a-b-c-list-1-plus-neg-1-plus-range-1-10-mod			
-periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	bool((17 % 5) == ((17 + (3 * 5)) % 5))	True	
-a-negative-modulus-gives-a-result-in-n-0	(-5 % -3)	-2	
+periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	enumeratio_equal(enumeratio_mod(17, 5), enumeratio_mod((17 + (3 * 5)), 5))	True	
+a-negative-modulus-gives-a-result-in-n-0	enumeratio_mod(-5, -3)	-2	
 the-remainder-of-quotient			
-5-mod-3-eq-2-mod-3	bool((5 % 3) == (2 % 3))		
-2-mod-3-eq-8-mod-3	bool((2 % 3) == (8 % 3))		
-0-mod-1	(0 % 1)		
-1-mod-2	(1 % 2)		
-1-mod-3	(1 % 3)		
-2-mod-3	(2 % 3)		
-3-mod-3	(3 % 3)		
-4-mod-3	(4 % 3)		
-8-mod-3-eq-5-mod-3	bool((8 % 3) == (5 % 3))		
-8-mod-2	(8 % 2)		
-17-mod-6	(17 % 6)		
-12-mod-8	(12 % 8)		
-neg-3-mod-neg-2	(-3 % -2)		
-neg-27-over-10-mod-23-over-5	((-27/10) % (23/5))		
-0-mod-2	(0 % 2)		
-1-mod-1	(1 % 1)		
-15-mod-7	(15 % 7)		
-pi-mod-exponentiale	(pi % e)		
-2-pow-totient-3-mod-3	(((2)^euler_phi(3)) % 3)		
+5-mod-3-eq-2-mod-3	enumeratio_equal(enumeratio_mod(5, 3), enumeratio_mod(2, 3))		
+2-mod-3-eq-8-mod-3	enumeratio_equal(enumeratio_mod(2, 3), enumeratio_mod(8, 3))		
+0-mod-1	enumeratio_mod(0, 1)		
+1-mod-2	enumeratio_mod(1, 2)		
+1-mod-3	enumeratio_mod(1, 3)		
+2-mod-3	enumeratio_mod(2, 3)		
+3-mod-3	enumeratio_mod(3, 3)		
+4-mod-3	enumeratio_mod(4, 3)		
+8-mod-3-eq-5-mod-3	enumeratio_equal(enumeratio_mod(8, 3), enumeratio_mod(5, 3))		
+8-mod-2	enumeratio_mod(8, 2)		
+17-mod-6	enumeratio_mod(17, 6)		
+12-mod-8	enumeratio_mod(12, 8)		
+neg-3-mod-neg-2	enumeratio_mod(-3, -2)		
+neg-27-over-10-mod-23-over-5	enumeratio_mod((-27/10), (23/5))		
+0-mod-2	enumeratio_mod(0, 2)		
+1-mod-1	enumeratio_mod(1, 1)		
+15-mod-7	enumeratio_mod(15, 7)		
+pi-mod-exponentiale	enumeratio_mod(pi, e)		
+2-pow-totient-3-mod-3	enumeratio_mod(((2)^enumeratio_euler_phi(3)), 3)		
 1-plus-neg-1-plus-nthprime-2-factorial-mod			
 2-minus-jacobisymbol-2-3-mod-3			
 1-plus-neg-1-plus-nthprime-3-factorial-mod			
-2pi-mod-exponentiale	((2 * pi) % e)		
-neg-pi-mod-2	((-pi) % 2)		
-division-by-a-0-modulus-yields-nan-rather-than	(5 % 0)	ZeroDivisionError: Integer modulo by zero	error
-periodicity-with-a-zero-modulus-on-one-side	bool((35 % 13) == ((17 + (3 * 5)) % 0))	ZeroDivisionError: Integer modulo by zero	error
-rounding-ties-to-even-means-1-and-1-both-appear	[((1 + 2*I) % 2), ((3 + 2*I) % 2)]	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
-a-free-symbol-is-untouched	(SR.var("x") % 2)	TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'	error
-an-infinite-dividend-has-no-remainder	(oo % 3)		
-an-infinite-modulus-leaves-the-dividend-whole	(5 % oo)		
-mod-with-complexinfinity-stays-unevaluated	(unsigned_infinity % 3)		
+2pi-mod-exponentiale	enumeratio_mod((2 * pi), e)		
+neg-pi-mod-2	enumeratio_mod((-pi), 2)		
+division-by-a-0-modulus-yields-nan-rather-than	enumeratio_mod(5, 0)	ZeroDivisionError: Integer modulo by zero	error
+periodicity-with-a-zero-modulus-on-one-side	enumeratio_equal(enumeratio_mod(35, 13), enumeratio_mod((17 + (3 * 5)), 0))	ZeroDivisionError: Integer modulo by zero	error
+rounding-ties-to-even-means-1-and-1-both-appear	[enumeratio_mod((1 + 2*I), 2), enumeratio_mod((3 + 2*I), 2)]	[1, -1]	
+a-free-symbol-is-untouched	enumeratio_mod(SR.var("x"), 2)	TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'	error
+an-infinite-dividend-has-no-remainder	enumeratio_mod(oo, 3)		
+an-infinite-modulus-leaves-the-dividend-whole	enumeratio_mod(5, oo)		
+mod-with-complexinfinity-stays-unevaluated	enumeratio_mod(unsigned_infinity, 3)		

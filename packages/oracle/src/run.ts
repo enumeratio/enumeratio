@@ -423,12 +423,38 @@ export function collectWolfram(output: string, count: number): Result[] {
   return results;
 }
 
+// Whether the kernel's value `a` is the call ours holds, `held` being ours' source text (never
+// evaluated, or a kernel that computes where ours holds would agree with itself). Equal as Python
+// expressions, so spacing, redundant parentheses, a symbol's constructor, a helper's prefix and Sage's sgn for sign don't matter; else the
+// marker that sends the row to the plain comparison.
+const HELD_ALIKE = `
+def enumeratio_held_alike(a, held):
+    import ast, re
+    def parsed(text):
+        text = re.sub(r'(?:Symbol|SR\\.var)\\("([A-Za-z_0-9]+)"\\)', r'\\1', text)
+        text = re.sub(r'\\bsgn\\(', 'sign(', text.replace("enumeratio_", ""))
+        try:
+            tree = ast.parse(text.strip(), mode="eval")
+        except SyntaxError:
+            return " ".join(text.split())
+        # SymPy prints x % 2 held as Mod(x, 2).
+        class Mod(ast.NodeTransformer):
+            def visit_BinOp(self, node):
+                self.generic_visit(node)
+                if isinstance(node.op, ast.Mod):
+                    return ast.Call(func=ast.Name(id="Mod", ctx=ast.Load()), args=[node.left, node.right], keywords=[])
+                return node
+        return ast.dump(Mod().visit(tree))
+    return True if parsed(str(a)) == parsed(held) else "NotNumeric"
+`;
+
 // SymPy helpers: `stirling` lives outside `from sympy import *`, and an identity is decided by
 // simplifying the difference, then numerically — `bool(Eq(…))` refuses anything it can't
 // settle syntactically.
-const SYMPY_PREAMBLE = `
+export const SYMPY_PREAMBLE = `
 from sympy.functions.combinatorial.numbers import stirling
 
+${HELD_ALIKE}
 def enumeratio_equal(a, b):
     try:
         d = a - b
@@ -578,6 +604,360 @@ def enumeratio_primitive_root_list(n):
         return []
     phi = euler_phi(n)
     return sorted(int(power_mod(g, k, n)) for k in range(1, phi + 1) if gcd(k, phi) == 1)
+
+${HELD_ALIKE}
+# A Gaussian integer a + bi (b != 0) written as a symbolic-ring number has no gcd, divisors or
+# factorization there; ZZ[I] does. Anything that is not an exact Gaussian integer comes back
+# unchanged.
+def enumeratio_gi(x):
+    try:
+        re, im = x.real(), x.imag()
+        if im != 0:
+            return GaussianIntegers()([ZZ(re), ZZ(im)])
+    except (AttributeError, TypeError, ValueError):
+        pass
+    return x
+
+def _enumeratio_is_gi(x):
+    return hasattr(x, "parent") and x.parent() is GaussianIntegers()
+
+# Gaussian integers are defined up to a unit; compute-engine and Wolfram write each in the first
+# quadrant (Re > 0, Im >= 0), and so do these. The unit that took g there comes back with it.
+def _enumeratio_first_quadrant(g):
+    G = GaussianIntegers()
+    if g == 0:
+        return g, G(1)
+    for k in range(4):
+        u = G([0, 1]) ** k
+        h = g * u
+        if h.real() > 0 and h.imag() >= 0:
+            return h, u
+    return g, G(1)
+
+# A Gaussian result in the first quadrant; any other value as it is.
+def _enumeratio_associate(g):
+    return _enumeratio_first_quadrant(g)[0] if _enumeratio_is_gi(g) else g
+
+# Sage defines no \`%\` on ZZ[I] or on the symbolic ring. Mod is a - b * floor(a / b); over ZZ[I]
+# the quotient is rounded to the nearest Gaussian integer, ties to even, as Round does.
+def _enumeratio_round_half_even(x):
+    n = floor(x)
+    d = x - n
+    return n + 1 if d > 1 / 2 or (d == 1 / 2 and n % 2 == 1) else n
+
+def _enumeratio_mod(a, b):
+    a, b = enumeratio_gi(a), enumeratio_gi(b)
+    if _enumeratio_is_gi(a) or _enumeratio_is_gi(b):
+        G = GaussianIntegers()
+        a, b = G(a), G(b)
+        z = a / b
+        return a - G([_enumeratio_round_half_even(z.real()), _enumeratio_round_half_even(z.imag())]) * b
+    # Sage has no remainder on the symbolic ring, and none is made up here: its own TypeError stands.
+    if not (_enumeratio_is_numeric(a) and _enumeratio_is_numeric(b)):
+        return a % b
+    # Only integers take the integer \`%\`: for 4.0 it is centered, where Mod is a - b * floor(a / b).
+    if isinstance(a, (Integer, int)) and isinstance(b, (Integer, int)):
+        return a % b
+    return a - b * floor(a / b)
+
+def enumeratio_mod(a, b):
+    return enumeratio_broadcast(_enumeratio_mod, a, b)
+
+def _enumeratio_gcd(a, b):
+    return _enumeratio_associate(gcd(enumeratio_gi(a), enumeratio_gi(b)))
+
+def enumeratio_gcd(a, b):
+    return enumeratio_broadcast(_enumeratio_gcd, a, b)
+
+# lcm has no ZZ[I] method: a * b / gcd(a, b).
+def _enumeratio_lcm(a, b):
+    a, b = enumeratio_gi(a), enumeratio_gi(b)
+    G = GaussianIntegers()
+    if _enumeratio_is_gi(a) or _enumeratio_is_gi(b):
+        a, b = G(a), G(b)
+        return G(0) if a == 0 or b == 0 else _enumeratio_associate(G(a * b / gcd(a, b)))
+    return lcm(a, b)
+
+def enumeratio_lcm(a, b):
+    return enumeratio_broadcast(_enumeratio_lcm, a, b)
+
+# Divisors over ZZ[I]: each in the first quadrant, once, in order of real part then imaginary part.
+def _enumeratio_divisors(n):
+    n = enumeratio_gi(n)
+    if not _enumeratio_is_gi(n):
+        return divisors(n)
+    G = GaussianIntegers()
+    found = {_enumeratio_associate(G(d)) for d in divisors(n)}
+    return sorted(found, key=lambda d: (d.real(), d.imag()))
+
+def enumeratio_divisors(n):
+    return enumeratio_broadcast(_enumeratio_divisors, n)
+
+# FactorInteger lists the unit first when it is not 1 (-1 over ZZ; -1, i or -i over ZZ[I]); the
+# primes of ZZ[I] sit in the first quadrant, by norm and then real part. 1 and 0 are their own factor.
+def _enumeratio_factor_integer(n):
+    n = enumeratio_gi(n)
+    if n == 1 or n == 0:
+        return [(n, 1)]
+    f = factor(n)
+    if not _enumeratio_is_gi(n):
+        unit = f.unit()
+        return ([(unit, 1)] if unit != 1 else []) + [(p, e) for p, e in f]
+    unit, primes = f.unit(), []
+    for p, e in f:
+        q, w = _enumeratio_first_quadrant(p)
+        unit = unit * w.inverse_of_unit() ** e
+        primes.append((q, e))
+    primes.sort(key=lambda t: (t[0].norm(), t[0].real()))
+    return ([(unit, 1)] if unit != 1 else []) + primes
+
+def enumeratio_factor_integer(n):
+    return enumeratio_broadcast(_enumeratio_factor_integer, n)
+
+# The residue Wolfram answers for an inverse modulo m: the parts in [0, m) (the sign of m) when m
+# is real, else the remainder of the nearest-quotient division.
+def _enumeratio_inverse_mod(a, m):
+    a, m = enumeratio_gi(a), enumeratio_gi(m)
+    if not (_enumeratio_is_gi(a) or _enumeratio_is_gi(m)):
+        return inverse_mod(a, m) % m
+    G = GaussianIntegers()
+    a, m = G(a), G(m)
+    r = G(inverse_mod(a, m))
+    if m.imag() == 0:
+        k = ZZ(m.real())
+        return G([ZZ(r.real()) % k, ZZ(r.imag()) % k])
+    return _enumeratio_mod(r, m)
+
+def enumeratio_inverse_mod(a, m):
+    return enumeratio_broadcast(_enumeratio_inverse_mod, a, m)
+
+# a^e mod m by squaring, over ZZ[I] where Sage has no power_mod: a negative exponent inverts first.
+# Wolfram's residue is in the sign of m (as \`%\` is), so an exponent of 0 gives 1 mod m.
+def _enumeratio_power_mod(a, e, m):
+    a, m = enumeratio_gi(a), enumeratio_gi(m)
+    if not (_enumeratio_is_gi(a) or _enumeratio_is_gi(m)):
+        return power_mod(a, e, m) % m
+    G = GaussianIntegers()
+    a, m = G(a), G(m)
+    if e < 0:
+        a, e = G(_enumeratio_inverse_mod(a, m)), -e
+    result, base = G(1), a
+    while e > 0:
+        if e % 2 == 1:
+            result = G(_enumeratio_mod(result * base, m))
+        base = G(_enumeratio_mod(base * base, m))
+        e //= 2
+    reduced = _enumeratio_mod(result, m)
+    # A real residue reads like an integer's: into [0, m) in the sign of m, not centered.
+    if reduced.imag() == 0 and m.imag() == 0:
+        return ZZ(reduced.real()) % ZZ(m.real())
+    return reduced
+
+def enumeratio_power_mod(a, e, m):
+    return enumeratio_broadcast(_enumeratio_power_mod, a, e, m)
+
+# A number, not an expression in a variable or an unevaluated call of a function of its own (f(2)).
+def _enumeratio_is_numeric(x):
+    if hasattr(x, "variables") and x.variables():
+        return False
+    if hasattr(x, "operator"):
+        from sage.symbolic.function import SymbolicFunction
+        return not isinstance(x.operator(), SymbolicFunction) and all(_enumeratio_is_numeric(o) for o in x.operands())
+    return True
+
+# The bits of the least precise inexact number x holds (a float, an RR or CC element, a numeric
+# leaf of an expression), or None for an exact value: an inexact operand has no more bits to give.
+def _enumeratio_bits(x):
+    from sage.rings.real_mpfr import RealNumber
+    from sage.rings.complex_mpfr import ComplexNumber
+    if isinstance(x, (float, complex)):
+        return 53
+    if isinstance(x, (RealNumber, ComplexNumber)):
+        return x.prec()
+    if not hasattr(x, "operands"):
+        return None
+    if x.is_numeric():
+        return _enumeratio_bits(x.pyobject())
+    found = [b for b in map(_enumeratio_bits, x.operands()) if b is not None]
+    return min(found) if found else None
+
+# N at the precision the value needs: Sage rounds an exact argument to 53 bits first, so cos(10^100)
+# comes out wrong. Raise the precision until two evaluations agree to 2^-40; a symbolic expression
+# stays as it is, as in Wolfram. The digit count only sets the starting precision, because the lanes
+# compare numbers to a relative tolerance.
+def _enumeratio_n(x, digits=None):
+    if not _enumeratio_is_numeric(x):
+        return x
+    # {precision, accuracy}: the accuracy counts digits after the point, so a value of magnitude
+    # 10^k has k + 1 + accuracy significant ones.
+    accuracy = None
+    if isinstance(digits, (list, tuple)):
+        accuracy, digits = digits[1], None
+    start = 53 if digits is None or digits <= 15 else int(digits * 3.33) + 20
+    bits = _enumeratio_bits(x)
+    if bits is not None:
+        v = N(x, prec=min(start, bits))
+        # Its digits are all it has, so asking for fewer does not round them away.
+        digits = None
+    else:
+        previous = None
+        for prec in (start, start * 8, start * 64):
+            v = N(x, prec=prec)
+            if previous is not None and abs(v - previous) <= abs(v) * 2 ** -40:
+                break
+            previous = v
+    if accuracy is not None and v != 0:
+        digits = max(int(accuracy + floor(log(abs(v), 10)) + 1), 1)
+    return _enumeratio_digits(v, digits)
+
+# A numeric value at the digits asked for (ties to even, as N does) or, with none, as a double: a
+# value at thousands of bits would print in full.
+def _enumeratio_digits(v, digits):
+    def part(r):
+        r = RealField(53)(r)
+        return RealField(53)(r.str(digits=digits)) if digits is not None and digits <= 15 else r
+    if hasattr(v, "imag") and v.imag() != 0:
+        return ComplexField(53)(part(v.real()), part(v.imag()))
+    return part(v.real() if hasattr(v, "real") else v)
+
+def enumeratio_n(x, digits=None):
+    return enumeratio_broadcast(lambda v: _enumeratio_n(v, digits), x)
+
+# Equal as the identity ours checks: Sage's == compares forms (log(2) + log(3) == log(6) is False),
+# so a difference it cannot reduce to 0 is sampled at three exact points (one positive, one negative,
+# one complex) when it holds a variable, and never trusted to a simplifier that assumes reals
+# (abs(x)^2 == x^2). Exact operands agree to a relative 2^-150 of their size (so exp(-200) != 0);
+# an inexact operand (a float, or a float in an expression) to a relative 1e-12, as Wolfram's Equal does.
+# A point where an operand is undefined is skipped; no point at all is an error, not a verdict.
+def _enumeratio_at(v, point):
+    return v.subs(point) if point and hasattr(v, "subs") else v
+
+def _enumeratio_sample(j, i):
+    t = QQ(8137) * i / 10000
+    return [QQ(37) / 100 + t, -(QQ(19) / 10 + t), QQ(37) / 100 + t + (QQ(61) / 100 + t) * I][j]
+
+def _enumeratio_equal(a, b):
+    try:
+        if bool(a == b):
+            return True
+    except (TypeError, ValueError):
+        pass
+    # Without a difference (an idele) == was the whole test.
+    try:
+        d = a - b
+    except TypeError:
+        return False
+    names = d.variables() if hasattr(d, "variables") else ()
+    if not names and hasattr(d, "simplify_full") and d.simplify_full() == 0:
+        return True
+    approximate = _enumeratio_bits(a) is not None or _enumeratio_bits(b) is not None
+    agreed = []
+    for j in range(3) if names else [0]:
+        point = {v: _enumeratio_sample(j, i) for i, v in enumerate(names)}
+        try:
+            value = _enumeratio_at(d, point)
+            if approximate:
+                scale = max(abs(CC(_enumeratio_at(a, point))), abs(CC(_enumeratio_at(b, point))), 1e-300)
+                agreed.append(abs(CC(value)) <= scale * 1e-12)
+            else:
+                C = ComplexField(300)
+                scale = max(abs(C(N(_enumeratio_at(a, point), prec=300))), abs(C(N(_enumeratio_at(b, point), prec=300))))
+                agreed.append(abs(C(N(value, prec=300))) <= scale * 2 ** -150)
+        except (ArithmeticError, ValueError):
+            continue
+        except TypeError:
+            # A difference with no variable and no numeric value (a profinite number): == was the whole test.
+            if names:
+                raise
+            return False
+    if not agreed:
+        raise ValueError("no sample point could be evaluated")
+    return all(agreed)
+
+def enumeratio_equal(a, b):
+    return _enumeratio_equal(a, b)
+
+# Zeta[s, a] sums ((n + a)^2)^(-s/2) over n >= 0 and skips n + a = 0, where Sage's hurwitz_zeta
+# continues (n + a)^(-s) and meets a pole at a nonpositive integer. For a rational a <= 0 the
+# terms before n + a turns positive are added by hand and hurwitz_zeta takes the rest.
+def _enumeratio_zeta_pair(s, a):
+    if getattr(a, "parent", lambda: None)() in (ZZ, QQ) and a <= 0:
+        m = ceil(-a)
+        if m > 10000:
+            raise ValueError("too many terms before the sum turns positive")
+        b = a + m
+        head = sum(((n + a) ** 2) ** (-s / 2) for n in range(m))
+        # n + a = 0 is skipped, except that 0^0 is 1 at s = 0.
+        if b == 0:
+            return head + (1 if s == 0 else 0) + hurwitz_zeta(s, 1)
+        return head + hurwitz_zeta(s, b)
+    return hurwitz_zeta(s, a)
+
+def enumeratio_zeta_pair(s, a):
+    return enumeratio_broadcast(_enumeratio_zeta_pair, s, a)
+
+# A factorial passes an infinity through and threads over a list.
+def enumeratio_factorial(n):
+    return enumeratio_broadcast(lambda v: v if str(v) == "+Infinity" else factorial(v), n)
+
+# Length counts operands: a string is an atom, a list its entries, a symbolic expression its .operands().
+def enumeratio_length(x):
+    if isinstance(x, str):
+        return 0
+    if hasattr(x, "__len__"):
+        return len(x)
+    if hasattr(x, "operands"):
+        return len(x.operands())
+    return 0
+
+# Sign of a complex number is z / |z|, as in Wolfram; Sage leaves sgn(z) held.
+def _enumeratio_sign(x):
+    try:
+        if _enumeratio_is_numeric(x) and x.imag() != 0:
+            return x / abs(x)
+    except (AttributeError, TypeError, ValueError):
+        pass
+    return sign(x)
+
+def enumeratio_sign(x):
+    return enumeratio_broadcast(_enumeratio_sign, x)
+
+# Floor and Ceiling of a complex number act on its real and imaginary parts, as in Wolfram; an infinity or NaN
+# passes through, where Sage raises.
+def _enumeratio_round_parts(f, x):
+    if str(x) in ("+Infinity", "-Infinity", "Infinity", "NaN"):
+        return x
+    try:
+        if _enumeratio_is_numeric(x) and x.imag() != 0:
+            return f(x.real()) + I * f(x.imag())
+    except (AttributeError, TypeError, ValueError):
+        pass
+    return f(x)
+
+def enumeratio_floor(x):
+    return enumeratio_broadcast(lambda v: _enumeratio_round_parts(floor, v), x)
+
+def enumeratio_ceil(x):
+    return enumeratio_broadcast(lambda v: _enumeratio_round_parts(ceil, v), x)
+
+# |z| is never negative: the unsigned infinity has the magnitude +Infinity.
+def _enumeratio_abs(x):
+    r = abs(x)
+    return oo if str(r) == "Infinity" else r
+
+def enumeratio_abs(x):
+    return enumeratio_broadcast(_enumeratio_abs, x)
+
+# PrimeQ and EulerPhi take the magnitude of a negative integer: -7 is prime, phi(-10) = phi(10).
+def _enumeratio_magnitude(n):
+    n = enumeratio_gi(n)
+    return n if _enumeratio_is_gi(n) or n not in ZZ else abs(n)
+
+def enumeratio_is_prime(n):
+    return enumeratio_broadcast(lambda v: is_prime(_enumeratio_magnitude(v)), n)
+
+def enumeratio_euler_phi(n):
+    return enumeratio_broadcast(lambda v: euler_phi(_enumeratio_magnitude(v)), n)
 
 enumeratio_ring = PolynomialRing(ZZ, "delta")
 enumeratio_delta = enumeratio_ring.gen()
@@ -733,14 +1113,32 @@ def enumeratio_value(x):
         return "combination:" + json.dumps(_enumeratio_terms(x))
     if isinstance(x, list):
         return "[" + ", ".join(enumeratio_value(e) for e in x) + "]"
-    if isinstance(x, (bool, int, tuple)):
+    if isinstance(x, tuple):
+        return "(" + ", ".join(repr(e) if isinstance(e, str) else enumeratio_value(e) for e in x) + ("," if len(x) == 1 else "") + ")"
+    if isinstance(x, (bool, int)):
         return str(x)
+    # The infinities and NaN by the names ours uses, as PY_VALUE does for SymPy and mpmath: Sage
+    # prints +oo as +Infinity and the unsigned infinity as Infinity, which text comparison
+    # cannot line up with ours.
+    named = {"+Infinity": "PositiveInfinity", "-Infinity": "NegativeInfinity", "Infinity": "ComplexInfinity", "NaN": "NaN"}
+    if str(x) in named:
+        return named[str(x)]
+    # Nothing decided prints as nothing: CC(None) would be 0.0.
+    if x is None:
+        return "None"
+    # A residue class keeps its modulus, as ours does; CC would turn it into a float.
+    from sage.rings.finite_rings.integer_mod import IntegerMod_abstract
+    if isinstance(x, IntegerMod_abstract):
+        return "ResidueClass(%s, %s)" % (x.lift(), x.modulus())
     try:
         if x in QQ:
             return str(x)
         z = CC(x)
         if z.imag() == 0:
-            return repr(float(z.real()))
+            re = float(z.real())
+            if re != re or re in (float("inf"), float("-inf")):
+                return named.get(str(x), "PositiveInfinity" if re > 0 else "NegativeInfinity" if re < 0 else "NaN")
+            return repr(re)
         # A complex as a Python literal, which parsePython reads (as for SymPy and mpmath).
         re, im = float(z.real()), float(z.imag())
         return "(" + repr(re) + ("+" if im >= 0 else "-") + repr(abs(im)) + "j)"
@@ -768,6 +1166,22 @@ def enumeratio_min(*args):
 # Sage's own version of the SymPy helper above (run.ts, SYMPY_PREAMBLE): simplify_full() of
 # the difference proves agreement outright when it can, else the fixed-rational trials decide.
 def enumeratio_symbolic_agree(a, b, trials):
+    # Lists agree element by element: False if any pair is, True only if every pair is.
+    if isinstance(a, list) and isinstance(b, list):
+        if len(a) != len(b):
+            return False
+        verdicts = []
+        for i in range(len(a)):
+            sub = []
+            for trial in trials:
+                try:
+                    sub.append(None if trial is None else (trial[0][i], trial[1][i]))
+                except (TypeError, IndexError):
+                    sub.append(None)
+            verdicts.append(enumeratio_symbolic_agree(a[i], b[i], sub))
+        if any(v is False for v in verdicts):
+            return False
+        return True if all(v is True for v in verdicts) else None
     try:
         d = (a - b).simplify_full()
         if bool(d == 0):

@@ -25,6 +25,22 @@ references:
 names:
   dlmf: hyperbolic cosine function
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: cosh($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: cosh($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: cosh($1)
+    arity: 1
+    threadArg: 1
 ---
 
 - Defined in terms of [[Exp]]: $\cosh(x) = \frac{e^x + e^{-x}}{2}$.

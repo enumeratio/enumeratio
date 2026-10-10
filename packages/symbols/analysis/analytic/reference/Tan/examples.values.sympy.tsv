@@ -24,12 +24,12 @@ tan-5-pi-12-2-sqrt-3	tan((Rational(5, 12) * pi))	sqrt(3) + 2
 tan-3-over-4-times-pi	tan((Rational(3, 4) * pi))	-1	
 interval-arithmetic-the-image-of-0-pi-3-is-0			
 uncertainty-propagation-tan-2-pm-0-02-approx-2			
-tan-ix-i-tanh-x	tan((I * Symbol("x")))	I*tanh(x)	disagree
+tan-ix-i-tanh-x	tan((I * Symbol("x")))	True	
 oddness-pulls-the-sign-out-of-a-symbolic	tan((-Symbol("x")))	True	
 tan-arctan-x-x-for-every-x			
 tan-arctan-2-2-for-every-x			
 tan-arcsin-x-frac-x-sqrt-1-x-2			
-derivative-sec-2-x	diff(tan(Symbol("x")), Symbol("x"))	tan(x)**2 + 1	disagree
+derivative-sec-2-x	diff(tan(Symbol("x")), Symbol("x"))	True	
 antiderivative-ln-sec-x			
 taylor-series-about-0			
 to-30-significant-digits-every-one-correctly	N(tan(1), 30)	1.55740772465490223050697480746	

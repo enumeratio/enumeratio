@@ -32,7 +32,7 @@ listable-threads-elementwise-over-a-matrix-and
 interval-arithmetic-the-image-of-1-4-1-5-whose			
 uncertainty-propagation-gamma-2-5-pm-0-01-1-3293			
 to-40-significant-digits-every-one-correctly	N(gamma(Rational(1, 3)), 30)	2.67893853470774763365569294097	
-gamma-neg-infty-indeterminate	gamma(-oo)	gamma(-oo)	disagree
+gamma-neg-infty-indeterminate	gamma(-oo)	gamma(-oo)	
 gamma-complex-infinity-indeterminate	gamma(zoo)	gamma(zoo)	disagree
 gamma-i-infty-0			
 gamma-directed-infinity-i			

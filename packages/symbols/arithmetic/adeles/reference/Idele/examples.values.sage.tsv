@@ -10,8 +10,8 @@ principal-idele-of-negative-rational	Ideles(QQ)([(-5/2)], (-5/2))	Idèle with va
 real-and-finite-parts-can-differ-in-sign	Ideles(QQ)([-1], 3)	Idèle with values:
 multiplying-by-the-identity-idele	(Ideles(QQ)([5], 2) * Ideles(QQ)([1], 1))	Idèle with values:
 squaring-an-idele	((Ideles(QQ)([2], 3))^2)	Idèle with values:
-equal-ideles	bool(Ideles(QQ)([2], 3) == Ideles(QQ)([2], 3))	True
-unequal-ideles-differ-in-finite-part	bool(Ideles(QQ)([2], 3) == Ideles(QQ)([2], 5))	False
+equal-ideles	enumeratio_equal(Ideles(QQ)([2], 3), Ideles(QQ)([2], 3))	True
+unequal-ideles-differ-in-finite-part	enumeratio_equal(Ideles(QQ)([2], 3), Ideles(QQ)([2], 5))	False
 inverting-an-idele	(Ideles(QQ)([1], 1) / Ideles(QQ)([-2], (3/5)))	Idèle with values:
 a-listed-component-carries-its-valuation-into		
 a-unit-known-mod-2-says-nothing-at-2		

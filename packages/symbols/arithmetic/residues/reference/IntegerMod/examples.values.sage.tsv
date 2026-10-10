@@ -1,27 +1,27 @@
 id	in	out	verdict
-integermod-10-7	Mod(10, 7)	3	inconclusive
-adding-two-classes-mod-7	(Mod(5, 7) + Mod(4, 7))	2	inconclusive
-adding-a-plain-integer-to-a-class	(Mod(5, 7) + 3)	1	inconclusive
-inverse-of-3-mod-7	((Mod(3, 7))^-1)	5	inconclusive
-sum-of-classes-mod-4-and-mod-6	(Mod(2, 4) + Mod(1, 6))	1	inconclusive
-product-of-classes-mod-4-and-mod-6	(Mod(2, 4) * Mod(1, 6))	0	inconclusive
-difference-of-classes-mod-4-and-mod-6	(Mod(2, 4) - Mod(1, 6))	1	inconclusive
-quotient-of-classes-mod-6-and-mod-3	(Mod(1, 3) / Mod(2, 6))	2	inconclusive
-a-plain-integer-keeps-the-class-modulus	(Mod(2, 4) * 5)	2	inconclusive
-three-moduli-meet-in-their-gcd	(Mod(4, 8) + Mod(3, 12) + Mod(1, 4))	0	inconclusive
-equal-where-they-agree-in-the-common-ring	bool(Mod(2, 4) == Mod(0, 2))	True	
-unequal-where-they-disagree-in-the-common-ring	bool(Mod(2, 4) == Mod(1, 6))	False	
-a-product-of-classes-mod-7	(Mod(5, 7) * Mod(3, 7))	1	inconclusive
-a-plain-integer-is-absorbed	(Mod(3, 7) * 5)	1	inconclusive
-dividing-by-a-unit-mod-7	(Mod(1, 7) / Mod(3, 7))	5	inconclusive
-a-large-power-reduces-mod-13	((Mod(2, 13))^1000)	3	inconclusive
-a-large-power-reduces-mod-7	((Mod(3, 7))^100)	4	inconclusive
-a-chain-reduces-step-by-step	(((((Mod(5, 7) + Mod(4, 7)) * Mod(3, 7)) + Mod(6, 7)))^3)	6	inconclusive
-a-product-of-three-classes-mod-9	(Mod(2, 9) * Mod(5, 9) * Mod(7, 9))	7	inconclusive
-a-product-of-classes-mod-12-and-mod-8	(Mod(7, 12) * Mod(5, 8))	3	inconclusive
-a-plain-integer-reduces-in-the-class-ring	(Mod(1, 3) + 5)	0	inconclusive
-equal-across-moduli-mod-6-and-mod-3	bool(Mod(5, 6) == Mod(2, 3))	True	
-mod-is-the-remainder-integermod-is-the-class	(17 % 5)	2	
+integermod-10-7	Mod(10, 7)	3	
+adding-two-classes-mod-7	(Mod(5, 7) + Mod(4, 7))	2	
+adding-a-plain-integer-to-a-class	(Mod(5, 7) + 3)	1	
+inverse-of-3-mod-7	((Mod(3, 7))^-1)	5	
+sum-of-classes-mod-4-and-mod-6	(Mod(2, 4) + Mod(1, 6))	1	
+product-of-classes-mod-4-and-mod-6	(Mod(2, 4) * Mod(1, 6))	0	
+difference-of-classes-mod-4-and-mod-6	(Mod(2, 4) - Mod(1, 6))	1	
+quotient-of-classes-mod-6-and-mod-3	(Mod(1, 3) / Mod(2, 6))	2	
+a-plain-integer-keeps-the-class-modulus	(Mod(2, 4) * 5)	2	
+three-moduli-meet-in-their-gcd	(Mod(4, 8) + Mod(3, 12) + Mod(1, 4))	0	
+equal-where-they-agree-in-the-common-ring	enumeratio_equal(Mod(2, 4), Mod(0, 2))	True	
+unequal-where-they-disagree-in-the-common-ring	enumeratio_equal(Mod(2, 4), Mod(1, 6))	False	
+a-product-of-classes-mod-7	(Mod(5, 7) * Mod(3, 7))	1	
+a-plain-integer-is-absorbed	(Mod(3, 7) * 5)	1	
+dividing-by-a-unit-mod-7	(Mod(1, 7) / Mod(3, 7))	5	
+a-large-power-reduces-mod-13	((Mod(2, 13))^1000)	3	
+a-large-power-reduces-mod-7	((Mod(3, 7))^100)	4	
+a-chain-reduces-step-by-step	(((((Mod(5, 7) + Mod(4, 7)) * Mod(3, 7)) + Mod(6, 7)))^3)	6	
+a-product-of-three-classes-mod-9	(Mod(2, 9) * Mod(5, 9) * Mod(7, 9))	7	
+a-product-of-classes-mod-12-and-mod-8	(Mod(7, 12) * Mod(5, 8))	3	
+a-plain-integer-reduces-in-the-class-ring	(Mod(1, 3) + 5)	0	
+equal-across-moduli-mod-6-and-mod-3	enumeratio_equal(Mod(5, 6), Mod(2, 3))	True	
+mod-is-the-remainder-integermod-is-the-class	enumeratio_mod(17, 5)	2	
 chineseremainder-integermod-2-3-and-3-5			
 coprime-moduli-have-no-common-ring	(Mod(3, 4) + Mod(5, 7))	TypeError: unsupported operand parent(s) for +: 'Ring of integers modulo 4' and 'Ring of integers modulo 7'	error
 2-mod-4-over-1-mod-6-has-no-inverse	(Mod(1, 6) / Mod(2, 4))	ZeroDivisionError: inverse of Mod(0, 2) does not exist	error

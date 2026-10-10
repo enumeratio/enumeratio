@@ -1,0 +1,39 @@
+id	in	out
+n-cosh-0	enumeratio_n(cosh(0))	1.00000000000000
+n-cosh-1	enumeratio_n(cosh(1))	1.54308063481524
+cosh-0	cosh(0)	1
+a-float-argument-evaluates-directly-no-n-needed	cosh(1.2)	1.81065556732437
+series-cosh-x-x-0-10		
+arbitrary-precision-via-n	enumeratio_n(cosh((6/5)))	1.81065556732437
+evaluates-at-a-complex-argument	cosh((2.5 + 1*I))	3.31329014611322 + 5.09107152294970*I
+cosh-i-pi-cos-pi-1	cosh((I * pi))	-1
+element-wise-over-a-matrix-of-imaginary	[[cosh((I * ((1 * pi) / 3))), cosh((-(I * ((1 * pi) / 3))))], [cosh(0), cosh((-(I * ((1 * pi) / 6))))]]	[[1/2, 1/2], [1, 1/2*sqrt(3)]]
+interval-arithmetic-cosh-0-ln-3-1-frac-53-not		
+uncertainty-propagation-cosh-2-sqrt-3-pm-0-1		
+cosh-positiveinfinity	cosh(oo)	+Infinity
+evenness-drops-the-sign-of-a-symbolic-argument	cosh((-SR.var("x")))	True
+cosh-arcosh-x-x-for-every-x		
+cosh-arcosh-2-2		
+cosh-arcosh-of-a-complex-argument		
+derivative-sinh-x	diff(cosh(SR.var("x")), SR.var("x"))	True
+antiderivative		
+to-30-significant-digits-every-one-correctly	enumeratio_n(cosh(1), 30)	1.54308063481524
+n-cosh-6-over-5-50	enumeratio_n(cosh((6/5)), 50)	1.81065556732437
+cosh-1-over-5-times-i-times-pi	cosh(((0 + (1/5)*I) * pi))	1/4*sqrt(5) + 1/4
+cosh-1-over-24-times-i-times-pi	cosh(((0 + (1/24)*I) * pi))	1/4*sqrt(2*sqrt(6) + 2*sqrt(2) + 8)
+matrixfunction-function-cosh-1-1-list-list-1		
+even-function-cosh-x-cosh-x	enumeratio_equal(cosh((-1)), cosh(1))	True
+hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	enumeratio_equal((((cosh(1))^2) - ((sinh(1))^2)), 1)	True
+the-definition-cosh-x-frac-e-x-e-x-2		
+cosh-2-x-sinh-2-x-should-simplify-to-1		
+cosh-1-over-12-times-i-times-pi	cosh(((0 + (1/12)*I) * pi))	1/4*sqrt(6) + 1/4*sqrt(2)
+cosh-1-over-10-times-i-times-pi	cosh(((0 + (1/10)*I) * pi))	1/4*sqrt(2*sqrt(5) + 10)
+cosh-1-over-9-times-i-times-pi	cosh(((0 + (1/9)*I) * pi))	cos(1/9*pi)
+cosh-1-over-8-times-i-times-pi	cosh(((0 + (1/8)*I) * pi))	1/2*sqrt(sqrt(2) + 2)
+cosh-1-over-7-times-i-times-pi	cosh(((0 + (1/7)*I) * pi))	cos(1/7*pi)
+cosh-1-over-6-times-i-times-pi	cosh(((0 + (1/6)*I) * pi))	1/2*sqrt(3)
+cosh-2-over-9-times-i-times-pi	cosh(((0 + (2/9)*I) * pi))	cos(2/9*pi)
+n-sinh-1-over-2-plus-cosh-1-over-2-pow-2	enumeratio_n((((sinh((1/2)) + cosh((1/2))))^2))	2.71828182845905
+n-neg-sinh-1-over-2-plus-cosh-1-over-2-pow-2	enumeratio_n(((((-sinh((1/2))) + cosh((1/2))))^2))	0.367879441171442
+n-neg-2-times-cosh-1-times-cosh-1-over-2-pow-2	enumeratio_n(((-2 * cosh(1) * ((cosh((1/2)))^2)) + (2 * ((cosh((1/2)))^2)) + ((cosh(1))^2)))	1.00000000000000
+n-cosh-1-over-2-plus-1-over-2-times-i-times-pi	enumeratio_n(((cosh(((1/2) + ((0 + (1/2)*I) * pi))))^2))	-0.271540317407622 + 2.01496993061430e-128*I

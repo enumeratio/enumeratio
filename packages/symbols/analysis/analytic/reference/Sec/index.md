@@ -18,6 +18,22 @@ seeAlso:
 names:
   dlmf: secant function
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: sec($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: sec($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: sec($1)
+    arity: 1
+    threadArg: 1
 ---
 
 - $\sec(x) = \frac{1}{\cos(x)}$.

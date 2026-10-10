@@ -10,12 +10,12 @@ listable-over-a-range
 moebiusmu-15-factorial-eq-0			
 divisorsum-1-function-moebiusmu-1-1			
 sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	(moebius(1) + moebius(2) + moebius(3) + moebius(4) + moebius(6) + moebius(12))	0	
-moebiusmu-253-eq-moebiusmu-11-times-moebiusmu-23	bool(moebius(253) == (moebius(11) * moebius(23)))		
+moebiusmu-253-eq-moebiusmu-11-times-moebiusmu-23	enumeratio_equal(moebius(253), (moebius(11) * moebius(23)))		
 moebiusmu-5-187	moebius(5187)		
 moebiusmu-32-538	moebius(32538)		
 moebiusmu-1-440	moebius(1440)		
 list-isprimepower-121-iscomposite-121-moebiusmu			
-list-isprime-11-moebiusmu-11	[is_prime(11), moebius(11)]		
+list-isprime-11-moebiusmu-11	[enumeratio_is_prime(11), moebius(11)]		
 moebiusmu-2	moebius(2)		
 moebiusmu-3	moebius(3)		
 moebiusmu-4	moebius(4)		

@@ -25,6 +25,22 @@ references:
 names:
   dlmf: hyperbolic sine function
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: sinh($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: sinh($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: sinh($1)
+    arity: 1
+    threadArg: 1
 ---
 
 - Defined in terms of [[Exp]]: $\sinh(x) = \frac{e^x - e^{-x}}{2}$.

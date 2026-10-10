@@ -1,0 +1,39 @@
+id	in	out
+n-forces-the-numeric-result-that-plain	(tanh(0))	0.0
+n-tanh-1	(tanh(1))	0.761594155955764888119458282605
+stays-symbolic-even-at-0-same-as-sinh-and-cosh	tanh(0)	0.0
+a-float-argument-evaluates-directly-no-n-needed	tanh(2.2)	0.975743130031451528927557962423
+series-tanh-x-x-0-10		
+series-tanh-x-x-1-over-2-times-i-times-pi-3		
+arbitrary-precision-via-n	(tanh((mpf(11)/5)))	0.97574313003145152041430666803
+evaluates-at-a-complex-argument	tanh(mpc(2.5, 1))	(1.00554801189505998367293290432 + 0.0123221382558283535409696393086j)
+interval-arithmetic-tanh-is-increasing-so-tanh-0		
+uncertainty-propagation-tanh-2-sqrt-3-pm-0-1		
+the-horizontal-asymptote-at-infty	tanh(inf)	1.0
+tanh-i-pi-4-i-tan-pi-4-i		
+oddness-pulls-the-sign-out-of-a-symbolic		
+tanh-artanh-x-x-for-every-x		
+tanh-artanh-2-2-past-the-real-domain		
+derivative-sech-2-x		
+antiderivative-ln-cosh-x		
+tanh-has-no-limit-at-complex-infinity-undefined		
+to-30-significant-digits-every-one-correctly	(tanh(1))	0.761594155955764888119458282605
+n-tanh-11-over-5-50	(tanh((mpf(11)/5)))	0.97574313003145152041430666803
+tanh-list-list-1-over-3-times-i-times-pi-neg-1	[[tanh((mpc(0, (mpf(1)/3)) * pi)), tanh((mpc(0, (mpf(-1)/3)) * pi))], [tanh(0), tanh((mpc(0, (mpf(-1)/6)) * pi))]]	[[mpc(real='0.0', imag='1.73205080756887729352744634150544'), mpc(real='0.0', imag='-1.73205080756887729352744634150544')], [mpf('0.0'), mpc(real='0.0', imag='-0.57735026918962576450914878050188')]]
+tanh-1-over-5-times-i-times-pi	tanh((mpc(0, (mpf(1)/5)) * pi))	(0.0 + 0.726542528005360885895466757481j)
+tanh-1-over-24-times-i-times-pi	tanh((mpc(0, (mpf(1)/24)) * pi))	(0.0 + 0.13165249758739585347152645741j)
+matrixfunction-function-tanh-1-1-list-list-1		
+functionmeromorphic-tanh-x-x		
+tanh-x-frac-sinh-x-cosh-x		
+in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x		
+tanh-1-over-12-times-i-times-pi	tanh((mpc(0, (mpf(1)/12)) * pi))	(0.0 + 0.267949192431122706472553658494j)
+tanh-1-over-10-times-i-times-pi	tanh((mpc(0, (mpf(1)/10)) * pi))	(0.0 + 0.324919696232906326155871412215j)
+tanh-1-over-9-times-i-times-pi	tanh((mpc(0, (mpf(1)/9)) * pi))	(0.0 + 0.363970234266202361351047882777j)
+tanh-1-over-8-times-i-times-pi	tanh((mpc(0, (mpf(1)/8)) * pi))	(0.0 + 0.41421356237309504880168872421j)
+tanh-1-over-7-times-i-times-pi	tanh((mpc(0, (mpf(1)/7)) * pi))	(0.0 + 0.481574618807528644332162353057j)
+tanh-1-over-6-times-i-times-pi	tanh((mpc(0, (mpf(1)/6)) * pi))	(0.0 + 0.577350269189625764509148780502j)
+tanh-2-over-9-times-i-times-pi	tanh((mpc(0, (mpf(2)/9)) * pi))	(0.0 + 0.839099631177280011763127298123j)
+n-1-plus-tanh-1-over-2-pow-2-times-tanh-1	(((1 + ((tanh((mpf(1)/2)))**2)) * tanh(1)))	0.924234314520019517004636967287
+n-tanh-1-over-2-plus-1-over-2-times-i-times-pi	(tanh(((mpf(1)/2) + (mpc(0, (mpf(1)/2)) * pi))))	(2.16395341373865284877000401022 + 3.1223457869210393382351074492e-31j)
+n-1-plus-tanh-2-pow-2-times-tanh-4	(((1 + ((tanh(2))**2)) * tanh(4)))	1.9280551601516337678928274482
+n-tanh-2-plus-1-over-2-times-i-times-pi	(tanh((2 + (mpc(0, (mpf(1)/2)) * pi))))	(1.03731472072754809587780976477 + 6.4454558489095975491675651396e-33j)

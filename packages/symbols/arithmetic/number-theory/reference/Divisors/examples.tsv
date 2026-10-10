@@ -3,11 +3,11 @@ divisors-1-729			[Divisors, 1729]	[List, 1, 7, 13, 19, 91, 133, 247, 1729]
 divisors-20			[Divisors, 20]	[List, 1, 2, 4, 5, 10, 20]									
 a-prime-s-only-divisors-are-1-and-itself			[Divisors, 13]	[List, 1, 13]			A prime's only divisors are 1 and itself						
 divisors-6			[Divisors, 6]	[List, 1, 2, 3, 6]									
-threads-element-wise-over-a-list-as-wolfram-s	Scope		[Divisors, [List, 4, 6]]	[List, [List, 1, 2, 4], [List, 1, 2, 3, 6]]			Threads element-wise over a list, as Wolfram's Listable heads do					threading	compute-engine's Divisors is Listable and threads over the list; Sage's divisors() takes a scalar only and raises a TypeError trying to factor the list.
-divisors-3-plus-4i	Scope		[Divisors, [Complex, 3, 4]]	[List, 1, [Complex, 2, 1], [Complex, 3, 4]]								domain	A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Divisors over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[Divisors, [List, 4, 6]]	[List, [List, 1, 2, 4], [List, 1, 2, 3, 6]]			Threads element-wise over a list, as Wolfram's Listable heads do						
+divisors-3-plus-4i	Scope		[Divisors, [Complex, 3, 4]]	[List, 1, [Complex, 2, 1], [Complex, 3, 4]]									
 13-2-3i-3-2i-splits-so-it-gains-two-divisors	Scope		[Divisors, 13, [KeyValuePair, Over, GaussianIntegers]]	[List, 1, [Complex, 2, 3], [Complex, 3, 2], 13]			$13 = (2 + 3i)(3 - 2i)$ splits, so it gains two divisors						
-6-4i-i-1-i-2-3-2i	Scope		[Divisors, [Complex, 6, 4]]	[List, 1, [Complex, 1, 1], [Complex, 1, 5], 2, [Complex, 3, 2], [Complex, 6, 4]]			$6+4i=-i(1+i)^2(3+2i)$					convention	A Gaussian divisor list is defined up to a unit; compute-engine normalises each divisor into the first quadrant, as Wolfram does, and Sage's divisors() returns a different, unnormalised set of associates.
-listable-threads-over-a-list	Scope		[Divisors, [List, 605, 871, 824]]	[List, [List, 1, 5, 11, 55, 121, 605], [List, 1, 13, 67, 871], [List, 1, 2, 4, 8, 103, 206, 412, 824]]			Listable: threads over a list					threading	compute-engine's Divisors is Listable and threads over the list; Sage's divisors() takes a scalar only and raises a TypeError trying to factor the list.
+6-4i-i-1-i-2-3-2i	Scope		[Divisors, [Complex, 6, 4]]	[List, 1, [Complex, 1, 1], [Complex, 1, 5], 2, [Complex, 3, 2], [Complex, 6, 4]]			$6+4i=-i(1+i)^2(3+2i)$						
+listable-threads-over-a-list	Scope		[Divisors, [List, 605, 871, 824]]	[List, [List, 1, 5, 11, 55, 121, 605], [List, 1, 13, 67, 871], [List, 1, 2, 4, 8, 103, 206, 412, 824]]			Listable: threads over a list						
 5-in-the-gaussian-integers	Scope	test	[Divisors, 5, [KeyValuePair, Over, GaussianIntegers]]	[List, 1, [Complex, 1, 2], [Complex, 2, 1], 5]			5 in the Gaussian integers						
 a-unit-s-only-divisor-is-1-its-own-normalisation	Scope	test	[Divisors, [Complex, 0, 1]]	[List, 1]			a unit's only divisor is 1, its own normalisation						
 a-gaussian-prime-s-only-divisors-are-1-and	Scope	test	[Divisors, [Complex, 1, 1]]	[List, 1, [Complex, 1, 1]]			a Gaussian prime's only divisors are 1 and itself						

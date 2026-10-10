@@ -7,7 +7,7 @@ threads-element-wise-over-a-list	[ceiling(1.2), ceiling(-1.2), ceiling(3.7)]	[2,
 ceil-2p4	ceiling(2.4)	3	
 ceil-2p6	ceiling(2.6)	3	
 idempotent-lceil-lceil-x-rceil-rceil	ceiling(ceiling(Symbol("x")))	True	
-stays-symbolic	ceiling(Symbol("x"))	ceiling(x)	disagree
+stays-symbolic	ceiling(Symbol("x"))	True	
 exact-radicals-are-decided-numerically	ceiling(sqrt(50))	8	
 evaluates-at-an-exact-constant-lceil-pi-rceil-4	ceiling(pi)	4	
 a-second-argument-rounds-up-to-a-multiple-of-it			

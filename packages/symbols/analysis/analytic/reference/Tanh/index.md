@@ -24,6 +24,22 @@ references:
 names:
   dlmf: hyperbolic tangent function
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: tanh($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: tanh($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: tanh($1)
+    arity: 1
+    threadArg: 1
 ---
 
 - $\tanh(x) = \frac{\sinh(x)}{\cosh(x)}$, ranging over $(-1, 1)$.

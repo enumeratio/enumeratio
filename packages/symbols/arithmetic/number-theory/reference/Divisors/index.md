@@ -30,7 +30,7 @@ bindings:
     arity: 1
   - origin: mapped
     form: sage
-    template: divisors($1)
+    template: enumeratio_divisors($1)
     arity: 1
 ---
 

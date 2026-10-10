@@ -1,67 +1,67 @@
 id	in	out	verdict
-powermod-2-10-3	power_mod(2, 10, 3)	1	
-powermod-3-50-11	power_mod(3, 50, 11)	1	
-powermod-3-2-7	power_mod(3, 2, 7)	2	
-a-negative-exponent-gives-the-modular-inverse	power_mod(2, -1, 7)	4	
-3-1-equiv-5-and-5-2-25-equiv-4	power_mod(3, -2, 7)	4	
-a-square-root-of-3-equiv-1-pmod-2	power_mod(3, (1/2), 2)	TypeError: no conversion of this rational to integer	error
-threads-over-a-list-of-bases	power_mod([2, 3, 4], 2, 5)	TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'	error
-exponent-0-evaluates-even-at-a-negative-modulus	power_mod(-2, 0, -14)	1	disagree
-a-rational-exponent-is-a-modular-root-the-least	power_mod(4, (1/2), 7)	TypeError: no conversion of this rational to integer	error
-threads-over-lists-the-period-is-the-order-of-2	power_mod(2, [10, 11, 12, 13, 14], 5)	TypeError: unable to coerce <class 'list'> to an integer	error
-a-301-digit-base	power_mod((((10)^300) + 1), 7, 5)	1	
-a-square-root-of-3-modulo-the-prime-10-30-57	power_mod(3, (1/2), (((10)^30) + 57))	TypeError: no conversion of this rational to integer	error
-a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod	power_mod((2/3), 1, 7)	3	
-gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3	power_mod((2 + 1*I), 2, 3)	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
-a-gaussian-modulus-and-an-exponent-of-10-30	power_mod((1 + 2*I), ((10)^30), (7 + 2*I))	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
-11-7i-is-a-unit-mod-7-4i-so-it-has-negative	power_mod((11 + -7*I), -4, (7 + 4*I))	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
-a-square-root-of-3-mod-2-is-1-trivially	power_mod(3, (1/2), 2)	TypeError: no conversion of this rational to integer	error
-exponent-0-base-minus-4-modulus-minus-2	power_mod(-4, 0, -2)	1	disagree
-exponent-0-base-5-modulus-minus-7	power_mod(5, 0, -7)	1	disagree
-exponent-0-with-a-positive-modulus	power_mod(2, 0, 14)	1	
-base-a-unit-any-exponent	power_mod((0 + 1*I), 5, (3 + 4*I))		
-exponent-0-is-always-1	power_mod((2 + 1*I), 0, 7)		
-a-negative-exponent-inverts-first	power_mod((2 + 1*I), -1, (2 + -1*I))		
-a-negative-exponent-past-the-first-power	power_mod((2 + 1*I), -3, (2 + -1*I))		
-modulus-a-real-prime-3-mod-4	power_mod((3 + 4*I), 4, 3)		
-modulus-a-negative-real-prime	power_mod((3 + 4*I), 3, -7)		
-modulus-a-composite-gaussian-norm-25	power_mod((1 + 1*I), 6, (3 + 4*I))		
-no-inverse-for-a-negative-exponent-when-the-base	power_mod((3 + 4*I), -2, (2 + 1*I))		
-a-bignum-exponent-base-and-modulus-small	power_mod((2 + 1*I), 100000000000000000000, 7)		
-a-negative-bignum-exponent	power_mod((1 + 1*I), -123456789012345678901, 11)		
-modulus-past-2-53	power_mod((4 + 1*I), 10, (100000000000000000001 + 9007199254740993*I))		
-a-real-base-and-modulus-need-no-gaussian	power_mod(5, 5, 7)		
-result-comes-out-real-reduced-into-0-m-like-an	power_mod((1 + 1*I), 4, 5)		
-modulus-1-4i-the-other-prime-above-17	power_mod((8 + 2*I), 3, (1 + 4*I))		
-large-norm-base-and-modulus	power_mod((123 + 456*I), 7, (1000 + 1*I))		
-base-an-associate-times-1	power_mod((-3 + -4*I), 5, 7)		
-base-an-associate-times-i	power_mod((4 + -3*I), 5, 7)		
-modulus-a-prime-above-13	power_mod((6 + 8*I), 3, (3 + 2*I))		
-modulus-the-other-prime-above-13	power_mod((6 + 8*I), 3, (2 + 3*I))		
-base-a-real-prime-s-associate-by-the-unit-i	power_mod((0 + 7*I), 3, (3 + 2*I))		
-modulus-a-real-composite-5-squared	power_mod((1 + 1*I), 4, 25)		
-a-negative-unit-exponent-is-its-own-inverse	power_mod((0 + 1*I), -1, 7)		
-modulus-a-negative-associate	power_mod((2 + 1*I), 5, (-2 + -3*I))		
+powermod-2-10-3	enumeratio_power_mod(2, 10, 3)	1	
+powermod-3-50-11	enumeratio_power_mod(3, 50, 11)	1	
+powermod-3-2-7	enumeratio_power_mod(3, 2, 7)	2	
+a-negative-exponent-gives-the-modular-inverse	enumeratio_power_mod(2, -1, 7)	4	
+3-1-equiv-5-and-5-2-25-equiv-4	enumeratio_power_mod(3, -2, 7)	4	
+a-square-root-of-3-equiv-1-pmod-2	enumeratio_power_mod(3, (1/2), 2)	TypeError: no conversion of this rational to integer	error
+threads-over-a-list-of-bases	enumeratio_power_mod([2, 3, 4], 2, 5)	[4, 4, 1]	
+exponent-0-evaluates-even-at-a-negative-modulus	enumeratio_power_mod(-2, 0, -14)	-13	
+a-rational-exponent-is-a-modular-root-the-least	enumeratio_power_mod(4, (1/2), 7)	TypeError: no conversion of this rational to integer	error
+threads-over-lists-the-period-is-the-order-of-2	enumeratio_power_mod(2, [10, 11, 12, 13, 14], 5)	[4, 3, 1, 2, 4]	
+a-301-digit-base	enumeratio_power_mod((((10)^300) + 1), 7, 5)	1	
+a-square-root-of-3-modulo-the-prime-10-30-57	enumeratio_power_mod(3, (1/2), (((10)^30) + 57))	TypeError: no conversion of this rational to integer	error
+a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod	enumeratio_power_mod((2/3), 1, 7)	3	
+gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3	enumeratio_power_mod((2 + 1*I), 2, 3)	I	
+a-gaussian-modulus-and-an-exponent-of-10-30	enumeratio_power_mod((1 + 2*I), ((10)^30), (7 + 2*I))	2*I + 1	
+11-7i-is-a-unit-mod-7-4i-so-it-has-negative	enumeratio_power_mod((11 + -7*I), -4, (7 + 4*I))	-I - 2	
+a-square-root-of-3-mod-2-is-1-trivially	enumeratio_power_mod(3, (1/2), 2)	TypeError: no conversion of this rational to integer	error
+exponent-0-base-minus-4-modulus-minus-2	enumeratio_power_mod(-4, 0, -2)	-1	
+exponent-0-base-5-modulus-minus-7	enumeratio_power_mod(5, 0, -7)	-6	
+exponent-0-with-a-positive-modulus	enumeratio_power_mod(2, 0, 14)	1	
+base-a-unit-any-exponent	enumeratio_power_mod((0 + 1*I), 5, (3 + 4*I))		
+exponent-0-is-always-1	enumeratio_power_mod((2 + 1*I), 0, 7)		
+a-negative-exponent-inverts-first	enumeratio_power_mod((2 + 1*I), -1, (2 + -1*I))		
+a-negative-exponent-past-the-first-power	enumeratio_power_mod((2 + 1*I), -3, (2 + -1*I))		
+modulus-a-real-prime-3-mod-4	enumeratio_power_mod((3 + 4*I), 4, 3)		
+modulus-a-negative-real-prime	enumeratio_power_mod((3 + 4*I), 3, -7)		
+modulus-a-composite-gaussian-norm-25	enumeratio_power_mod((1 + 1*I), 6, (3 + 4*I))		
+no-inverse-for-a-negative-exponent-when-the-base	enumeratio_power_mod((3 + 4*I), -2, (2 + 1*I))		
+a-bignum-exponent-base-and-modulus-small	enumeratio_power_mod((2 + 1*I), 100000000000000000000, 7)		
+a-negative-bignum-exponent	enumeratio_power_mod((1 + 1*I), -123456789012345678901, 11)		
+modulus-past-2-53	enumeratio_power_mod((4 + 1*I), 10, (100000000000000000001 + 9007199254740993*I))		
+a-real-base-and-modulus-need-no-gaussian	enumeratio_power_mod(5, 5, 7)		
+result-comes-out-real-reduced-into-0-m-like-an	enumeratio_power_mod((1 + 1*I), 4, 5)		
+modulus-1-4i-the-other-prime-above-17	enumeratio_power_mod((8 + 2*I), 3, (1 + 4*I))		
+large-norm-base-and-modulus	enumeratio_power_mod((123 + 456*I), 7, (1000 + 1*I))		
+base-an-associate-times-1	enumeratio_power_mod((-3 + -4*I), 5, 7)		
+base-an-associate-times-i	enumeratio_power_mod((4 + -3*I), 5, 7)		
+modulus-a-prime-above-13	enumeratio_power_mod((6 + 8*I), 3, (3 + 2*I))		
+modulus-the-other-prime-above-13	enumeratio_power_mod((6 + 8*I), 3, (2 + 3*I))		
+base-a-real-prime-s-associate-by-the-unit-i	enumeratio_power_mod((0 + 7*I), 3, (3 + 2*I))		
+modulus-a-real-composite-5-squared	enumeratio_power_mod((1 + 1*I), 4, 25)		
+a-negative-unit-exponent-is-its-own-inverse	enumeratio_power_mod((0 + 1*I), -1, 7)		
+modulus-a-negative-associate	enumeratio_power_mod((2 + 1*I), 5, (-2 + -3*I))		
 sum-powermod-a-2-7-a-nothing-7			
 findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0			
-one-step-of-rsa-style-modular-exponentiation-7	power_mod(7, 13, 33)	13	
-341-11-cdot-31-passes-fermat-s-test-to-base-2	power_mod(2, 340, 341)	1	
-diffie-hellman-both-parties-reach-the-shared-key	bool(power_mod(power_mod(5, 6, 23), 15, 23) == power_mod(power_mod(5, 15, 23), 6, 23))	True	
-by-definition-a-b-bmod-m-computed-without-ever	bool(power_mod(2, 10, 3) == (((2)^10) % 3))	True	
-euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	power_mod(7, euler_phi(19), 19)	1	
-list-powermod-7-2-5-powermod-12-2-5	[power_mod(7, 2, 5), power_mod(12, 2, 5)]		
-list-powermod-2-3-5-8-mod-5	[power_mod(2, 3, 5), (8 % 5)]		
-list-powermod-2-neg-1-5-modularinverse-2-5	[power_mod(2, -1, 5), inverse_mod(2, 5)]		
+one-step-of-rsa-style-modular-exponentiation-7	enumeratio_power_mod(7, 13, 33)	13	
+341-11-cdot-31-passes-fermat-s-test-to-base-2	enumeratio_power_mod(2, 340, 341)	1	
+diffie-hellman-both-parties-reach-the-shared-key	enumeratio_equal(enumeratio_power_mod(enumeratio_power_mod(5, 6, 23), 15, 23), enumeratio_power_mod(enumeratio_power_mod(5, 15, 23), 6, 23))	True	
+by-definition-a-b-bmod-m-computed-without-ever	enumeratio_equal(enumeratio_power_mod(2, 10, 3), enumeratio_mod(((2)^10), 3))	True	
+euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	enumeratio_power_mod(7, enumeratio_euler_phi(19), 19)	1	
+list-powermod-7-2-5-powermod-12-2-5	[enumeratio_power_mod(7, 2, 5), enumeratio_power_mod(12, 2, 5)]		
+list-powermod-2-3-5-8-mod-5	[enumeratio_power_mod(2, 3, 5), enumeratio_mod(8, 5)]		
+list-powermod-2-neg-1-5-modularinverse-2-5	[enumeratio_power_mod(2, -1, 5), enumeratio_inverse_mod(2, 5)]		
 list-divides-2-8-powermod-8-3-2-eq-0			
-powermod-7-totient-19-19-eq-1	bool(power_mod(7, euler_phi(19), 19) == 1)		
-powermod-2-16-17	power_mod(2, 16, 17)		
-powermod-list-5-neg-5-2-3	power_mod([5, -5], 2, 3)		
-powermod-list-5-neg-5-2-neg-3	power_mod([5, -5], 2, -3)		
-no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	power_mod(2, -1, 4)	ZeroDivisionError: inverse of Mod(2, 4) does not exist	error
-a-nonzero-exponent-at-the-same-negative-modulus	power_mod(-2, 3, -14)	-8	inconclusive
-2-is-not-a-square-mod-5-so-there-is-no-root	power_mod(2, (1/2), 5)	TypeError: no conversion of this rational to integer	error
-a-positive-exponent-at-a-negative-modulus-1-2	power_mod(1, 2, -2)	-1	inconclusive
-a-positive-exponent-at-a-negative-modulus-3-2-7	power_mod(3, 2, -7)	-5	inconclusive
-a-positive-exponent-at-a-negative-modulus-341	power_mod(-1, 340, -2)	-1	inconclusive
-a-positive-exponent-at-a-negative-modulus-5-1-7	power_mod(5, 1, -7)	-2	inconclusive
-a-negative-exponent-at-a-negative-modulus-2-1-5	power_mod(2, -1, -5)	3	inconclusive
+powermod-7-totient-19-19-eq-1	enumeratio_equal(enumeratio_power_mod(7, enumeratio_euler_phi(19), 19), 1)		
+powermod-2-16-17	enumeratio_power_mod(2, 16, 17)		
+powermod-list-5-neg-5-2-3	enumeratio_power_mod([5, -5], 2, 3)		
+powermod-list-5-neg-5-2-neg-3	enumeratio_power_mod([5, -5], 2, -3)		
+no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	enumeratio_power_mod(2, -1, 4)	ZeroDivisionError: inverse of Mod(2, 4) does not exist	error
+a-nonzero-exponent-at-the-same-negative-modulus	enumeratio_power_mod(-2, 3, -14)	-8	inconclusive
+2-is-not-a-square-mod-5-so-there-is-no-root	enumeratio_power_mod(2, (1/2), 5)	TypeError: no conversion of this rational to integer	error
+a-positive-exponent-at-a-negative-modulus-1-2	enumeratio_power_mod(1, 2, -2)	-1	inconclusive
+a-positive-exponent-at-a-negative-modulus-3-2-7	enumeratio_power_mod(3, 2, -7)	-5	inconclusive
+a-positive-exponent-at-a-negative-modulus-341	enumeratio_power_mod(-1, 340, -2)	-1	inconclusive
+a-positive-exponent-at-a-negative-modulus-5-1-7	enumeratio_power_mod(5, 1, -7)	-2	inconclusive
+a-negative-exponent-at-a-negative-modulus-2-1-5	enumeratio_power_mod(2, -1, -5)	3	inconclusive

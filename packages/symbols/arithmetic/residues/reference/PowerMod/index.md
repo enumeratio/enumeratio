@@ -44,9 +44,9 @@ bindings:
     note: For a negative exponent and a Gaussian modulus m, Wolfram checks invertibility of a mod N(m) (a rational integer) rather than mod m itself, so it occasionally declines a case ours answers — e.g. PowerMod[11 - 7I, -4, 7 + 4I] errors since 11 - 7i shares a factor with N(7 + 4i) = 65, though gcd(11 - 7i, 7 + 4i) = 1.
   - origin: mapped
     form: sage
-    template: power_mod($1, $2, $3)
+    template: enumeratio_power_mod($1, $2, $3)
     arity: 3
-    note: Sage's power_mod takes a negative exponent, like ours; no rational base or exponent.
+    note: Sage's power_mod takes a negative exponent, like ours; no rational base or exponent. The helper reduces into the sign of the modulus and runs over the Gaussian integers, where power_mod has no method.
   - origin: mapped
     form: rust
     template: powermod($1, $2, $3)

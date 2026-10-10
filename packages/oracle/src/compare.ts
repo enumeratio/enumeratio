@@ -64,6 +64,8 @@ export function compare(ours: string, theirs: string, tolerance = 1e-9): Verdict
   // answers, same as None/Null/$Failed below, EXCEPT when ours is itself NaN or Indeterminate
   // (both emit as the literal `Indeterminate` for wolfram, see emit.ts's CONSTANTS): then the
   // two sides are making the identical claim, and that's agreement, not a shrug.
+  // A Python-family NaN is the same claim as ours being NaN or Indeterminate.
+  if (/^nan$/i.test(theirs.trim()) && /^(nan|indeterminate)$/i.test(ours.trim())) return "agree";
   if (/^indeterminate$/i.test(theirs.trim())) {
     return /^indeterminate$/i.test(ours.trim()) ? "agree" : "inconclusive";
   }

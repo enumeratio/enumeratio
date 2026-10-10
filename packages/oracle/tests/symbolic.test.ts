@@ -1,4 +1,6 @@
+import { spawnSync } from "node:child_process";
 import { expect, test } from "vite-plus/test";
+import { preludeFor, SYMPY_PREAMBLE } from "../src/run.ts";
 import {
   alignFunctions,
   boundVariables,
@@ -570,3 +572,126 @@ test("rootsAsPowers: a root is its power, and a reciprocal base moves to its pos
   // 2^(1/4) and 2^(1/3) are different numbers and stay unequal.
   expect(rootsAsPowers(["Root", 2, 4] as never)).not.toEqual(rootsAsPowers(["Power", 2, ["Rational", 1, 3]] as never));
 });
+
+// A kernel that holds the call ours holds prints it as ours is written; one that computes where ours
+// holds must not agree with its own second evaluation of the same call.
+const sympyHeldAlike = (source: string): string | undefined => {
+  const run = spawnSync("python3", ["-c", `from sympy import *\n${SYMPY_PREAMBLE}\nprint(${source})`], {
+    encoding: "utf8",
+  });
+  return run.status === 0 ? run.stdout.trim() : undefined;
+};
+const hasSympy = spawnSync("python3", ["-c", "import sympy"]).status === 0;
+
+test("a Python-family kernel's answer is compared with the held call as text, not evaluated again", () => {
+  const held = symbolicAgreementSource("sympy", ["Floor", "x"], ["Floor", "x"], ["x"]);
+  expect(held).toBe('enumeratio_held_alike(floor(Symbol("x")), "floor(Symbol(\\"x\\"))")');
+  expect(symbolicAgreementSource("sage", ["GCD", "x", "y"], ["GCD", "x", "y"], ["x", "y"])).toMatch(
+    /^enumeratio_held_alike\(enumeratio_gcd\(.*\), ".*enumeratio_gcd\(.*\)"\)$/,
+  );
+});
+
+test.skipIf(!hasSympy)("held alike: kernel holds the call, agrees; kernel evaluates where ours holds, does not", () => {
+  const verdict = (expr: never, ours: never, free: string[]): string | undefined =>
+    sympyHeldAlike(symbolicAgreementSource("sympy", expr, ours, free) as string);
+  // Held on both sides: the same call.
+  expect(verdict(["Floor", "x"] as never, ["Floor", "x"] as never, ["x"])).toBe("True");
+  // SymPy computes gcd(x, y) = 1 where ours holds GCD(x, y).
+  expect(verdict(["GCD", "x", "y"] as never, ["GCD", "x", "y"] as never, ["x", "y"])).toBe("NotNumeric");
+  // SymPy pulls the constant out of Abs where ours holds Abs(-3x).
+  expect(verdict(["Abs", ["Multiply", -3, "x"]] as never, ["Abs", ["Multiply", -3, "x"]] as never, ["x"])).toBe(
+    "NotNumeric",
+  );
+  // A rewrite ours handed back unchanged: held only if the kernel left the form alone too.
+  expect(
+    sympyHeldAlike('enumeratio_held_alike(Symbol("x") + Symbol("y"), "(Symbol(\\"x\\") + Symbol(\\"y\\"))")'),
+  ).toBe("True");
+  // SymPy prints a held remainder as Mod(x, 2).
+  expect(sympyHeldAlike('enumeratio_held_alike(Mod(Symbol("x"), 2), "(Symbol(\\"x\\") % 2)")')).toBe("True");
+  expect(sympyHeldAlike('enumeratio_held_alike(expand(Symbol("x") * (Symbol("y") + 1)), "x*(y+1)")')).toBe(
+    "NotNumeric",
+  );
+});
+
+const hasPython = spawnSync("python3", ["-c", "pass"]).status === 0;
+
+// The held call reaches Python as a JSON string literal; whatever ours' source holds must survive it.
+test.skipIf(!hasPython)("a held call's text round-trips through its Python literal", () => {
+  const text = `f("a", 'b')\n\\ \\n #   é`;
+  const literal = JSON.stringify(text);
+  const run = spawnSync(
+    "python3",
+    ["-I", "-c", `import sys\nsys.stdout.write("1" if ${literal} == sys.stdin.read() else "0")`],
+    { encoding: "utf8", input: text },
+  );
+  expect(run.stdout).toBe("1");
+});
+
+// The Sage helpers, run in Sage itself. Skipped without it: the weekly Sage job (and any machine with
+// `sage` on PATH) runs them.
+const hasSage = spawnSync("sage", ["--version"]).status === 0;
+const sage = (cases: readonly string[]): string[] => {
+  const program = [
+    preludeFor("sage").preamble,
+    "import json",
+    `cases = json.loads(${JSON.stringify(JSON.stringify(cases))})`,
+    "out = []",
+    "for c in cases:",
+    "    try:",
+    "        out.append(repr(sage_eval(c, locals=globals())))",
+    "    except Exception as e:",
+    '        out.append("ERROR " + type(e).__name__)',
+    'print("RESULT" + json.dumps(out))',
+  ].join("\n");
+  const run = spawnSync("sage", ["-c", program], { encoding: "utf8", timeout: 240_000 });
+  const line = run.stdout.split("\n").find((l) => l.startsWith("RESULT"));
+  if (line === undefined) throw new Error(`sage said nothing: ${run.stderr}`);
+  return JSON.parse(line.slice("RESULT".length)) as string[];
+};
+
+test.skipIf(!hasSage)(
+  "sage helpers: Equal, N, Mod, Sign, Floor and Ceil decide what their comments say",
+  () => {
+    const equal = (a: string, b: string): string => `enumeratio_equal(${a}, ${b})`;
+    const x = 'var("x")';
+    const cases: [string, string][] = [
+      // Approximate operands compare to a relative 1e-12, including floats inside an expression.
+      [equal("0.1 + 0.2", "0.3"), "True"],
+      [equal("polylog(2, 0.5) + 0.5*log(2)^2", "0.582240526465012 + 0.5*log(2)^2"), "True"],
+      [equal(`0.1*${x} + 1e-15*${x}`, `0.100000000000001*${x}`), "True"],
+      [equal(`0.1*${x} + 1e-15*${x}`, `0.2*${x}`), "False"],
+      // Exact operands compare relative to their size, so a tiny value is not zero.
+      [equal("exp(-200)", "0"), "False"],
+      [equal("exp(-200)*log(2)", "exp(-200)*log(3)"), "False"],
+      [equal("log(2) + log(3)", "log(6)"), "True"],
+      // A negative and a complex point are sampled, and no simplifier that assumes reals is trusted.
+      [equal(`abs(${x})^2`, `${x}^2`), "False"],
+      [equal(`sqrt(${x}^2)`, x), "False"],
+      [equal('log(var("a")*var("b"))', 'log(var("a")) + log(var("b"))'), "False"],
+      [equal(`sin(${x})^2 + cos(${x})^2`, "1"), "True"],
+      // N: an approximate argument keeps the bits it has at any digits; a symbolic one stays as it is.
+      ["enumeratio_n(polylog(2, 0.5), 30)", "0.582240526465012"],
+      ["enumeratio_n(cos(10^100))", "-0.928081905074655"],
+      [`enumeratio_n(${x})`, "x"],
+      ['enumeratio_n(function("f")(2))', "f(2)"],
+      // Mod is a - b floor(a/b) off the integers, and has no symbolic form.
+      ["enumeratio_mod(3.0, 2)", "1.00000000000000"],
+      ["enumeratio_mod(4.0, -3)", "-2.00000000000000"],
+      ["enumeratio_mod(-4.0, 3)", "2.00000000000000"],
+      [`enumeratio_mod(${x}, 2)`, "ERROR TypeError"],
+      // A symbolic argument, or an unevaluated call, is left alone.
+      [`enumeratio_sign(${x})`, "sgn(x)"],
+      ['enumeratio_sign(function("f")(2))', "sgn(f(2))"],
+      ["enumeratio_sign(-3 + 4*I)", "4/5*I - 3/5"],
+      [`enumeratio_floor(${x})`, "floor(x)"],
+      ['enumeratio_floor(function("f")(2))', "floor(f(2))"],
+      [`enumeratio_ceil(${x})`, "ceil(x)"],
+      ["enumeratio_ceil(2.5 + 3.5*I)", "4*I + 3"],
+      // Sage prints sign as sgn; a spaced pair of names is not one name.
+      [`enumeratio_held_alike(sgn(${x}), 'enumeratio_sign(SR.var("x"))')`, "True"],
+      ["enumeratio_held_alike(1, 'x y')", "'NotNumeric'"],
+    ];
+    expect(sage(cases.map(([source]) => source))).toEqual(cases.map(([, answer]) => answer));
+  },
+  300_000,
+);

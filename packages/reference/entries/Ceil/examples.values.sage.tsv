@@ -1,43 +1,43 @@
 id	in	out	verdict
-ceil-7-over-2	ceil((7/2))	4	
-ceil-3p2	ceil(3.2)	4	
-ceil-3p7	ceil(3.7)	4	
-integers-pass-through-unchanged	ceil(5)	5	
-threads-element-wise-over-a-list	[ceil(1.2), ceil(-1.2), ceil(3.7)]	TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression	error
-ceil-2p4	ceil(2.4)	3	
-ceil-2p6	ceil(2.6)	3	
-idempotent-lceil-lceil-x-rceil-rceil	ceil(ceil(SR.var("x")))	True	
-stays-symbolic	ceil(SR.var("x"))	True	
-exact-radicals-are-decided-numerically	ceil(sqrt(50))	8	
-evaluates-at-an-exact-constant-lceil-pi-rceil-4	ceil(pi)	4	
+ceil-7-over-2	enumeratio_ceil((7/2))	4	
+ceil-3p2	enumeratio_ceil(3.2)	4	
+ceil-3p7	enumeratio_ceil(3.7)	4	
+integers-pass-through-unchanged	enumeratio_ceil(5)	5	
+threads-element-wise-over-a-list	[enumeratio_ceil(1.2), enumeratio_ceil(-1.2), enumeratio_ceil(3.7)]	[2, -1, 4]	
+ceil-2p4	enumeratio_ceil(2.4)	3	
+ceil-2p6	enumeratio_ceil(2.6)	3	
+idempotent-lceil-lceil-x-rceil-rceil	enumeratio_ceil(enumeratio_ceil(SR.var("x")))	True	
+stays-symbolic	enumeratio_ceil(SR.var("x"))	True	
+exact-radicals-are-decided-numerically	enumeratio_ceil(sqrt(50))	8	
+evaluates-at-an-exact-constant-lceil-pi-rceil-4	enumeratio_ceil(pi)	4	
 a-second-argument-rounds-up-to-a-multiple-of-it			
 the-step-needn-t-be-an-integer-3-5-cdot-lceil-10			
 nor-rational-2-pi-e-approx-3-57-rounds-up-to-the			
-rounds-the-real-and-imaginary-parts-up	ceil((5.37 + -1.3*I))	ceil(5.37000000000000 - 1.30000000000000*I)	disagree
-ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	[[ceil((1/2)), ceil(-1)], [ceil(0), ceil((-1/2))]]		
+rounds-the-real-and-imaginary-parts-up	enumeratio_ceil((5.37 + -1.3*I))	-I + 6	
+ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	[[enumeratio_ceil((1/2)), enumeratio_ceil(-1)], [enumeratio_ceil(0), enumeratio_ceil((-1/2))]]		
 matrixfunction-ceil-list-list-1-over-2-neg-1			
-ceil-0	ceil(0)		
-ceil-positiveinfinity	ceil(oo)		
+ceil-0	enumeratio_ceil(0)		
+ceil-positiveinfinity	enumeratio_ceil(oo)		
 piecewiseexpand-ceil-x-2-0-lt-x-lt-4			
-d-ceil-x-x	diff(ceil(SR.var("x")), SR.var("x"))		
-how-many-5-seat-vans-are-needed-to-carry-17	ceil((17 / 5))	4	
+d-ceil-x-x	diff(enumeratio_ceil(SR.var("x")), SR.var("x"))		
+how-many-5-seat-vans-are-needed-to-carry-17	enumeratio_ceil((17 / 5))	4	
 ten-bits-are-enough-to-number-1000-items-lceil			
-lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	bool(ceil((7/2)) == (floor((7/2)) + 1))	True	
-floor-and-ceil-agree-exactly-on-integers	bool(ceil(5) == floor(5))	True	
+lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	enumeratio_equal(enumeratio_ceil((7/2)), (enumeratio_floor((7/2)) + 1))	True	
+floor-and-ceil-agree-exactly-on-integers	enumeratio_equal(enumeratio_ceil(5), enumeratio_floor(5))	True	
 ceil-16-3			
 piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2			
 generatingfunction-ceil-n-4-n-x			
-ceil-1	ceil(1)		
-ceil-neg-1	ceil(-1)		
-ceil-neg-i	ceil((0 + -1*I))		
-ceil-23-over-10	ceil((23/10))		
-ceil-neg-3	ceil(-3)		
+ceil-1	enumeratio_ceil(1)		
+ceil-neg-1	enumeratio_ceil(-1)		
+ceil-neg-i	enumeratio_ceil((0 + -1*I))		
+ceil-23-over-10	enumeratio_ceil((23/10))		
+ceil-neg-3	enumeratio_ceil(-3)		
 piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1			
-ceil-neg-pi	ceil((-pi))		
-ceil-neg-27-over-10	ceil((-27/10))		
-ceil-negativeinfinity	ceil(-oo)		
-ceil-23-over-10-plus-neg-i-times-exponentiale	ceil(((23/10) + ((0 + -1*I) * e)))		
-ceil-i	ceil((0 + 1*I))		
-a-zero-divisor-inside-ceil	ceil((16 / 0))	ZeroDivisionError: rational division by zero	error
-rounds-toward-infty-not-toward-0-ceil-3-7-is-3	ceil(-3.7)	-3	
-nan-propagates-rather-than-erroring	ceil(NaN)		
+ceil-neg-pi	enumeratio_ceil((-pi))		
+ceil-neg-27-over-10	enumeratio_ceil((-27/10))		
+ceil-negativeinfinity	enumeratio_ceil(-oo)		
+ceil-23-over-10-plus-neg-i-times-exponentiale	enumeratio_ceil(((23/10) + ((0 + -1*I) * e)))		
+ceil-i	enumeratio_ceil((0 + 1*I))		
+a-zero-divisor-inside-ceil	enumeratio_ceil((16 / 0))	ZeroDivisionError: rational division by zero	error
+rounds-toward-infty-not-toward-0-ceil-3-7-is-3	enumeratio_ceil(-3.7)	-3	
+nan-propagates-rather-than-erroring	enumeratio_ceil(NaN)		
