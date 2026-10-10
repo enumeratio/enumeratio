@@ -22,6 +22,7 @@ import type { CombinatorialMap } from "./map-helpers.ts";
 import { MAP_LAWS } from "./maps-laws.generated.ts";
 import { COMPOSITIONS_MAPS } from "../compositions/src/maps.ts";
 import { LATTICE_PATHS_MAPS } from "../lattice-paths/src/maps.ts";
+import { PARTITIONS_MAPS } from "../partitions/src/maps.ts";
 import { declareCycleConversions } from "../permutations/src/cycles-conversion.ts";
 import { PERMUTATIONS_MAPS } from "../permutations/src/maps.ts";
 import { SET_PARTITIONS_MAPS } from "../set-partitions/src/maps.ts";
@@ -43,6 +44,7 @@ export const MAPS: readonly CombinatorialMap[] = [
   ...PERMUTATIONS_MAPS,
   ...TREES_MAPS,
   ...LATTICE_PATHS_MAPS,
+  ...PARTITIONS_MAPS,
   ...SET_PARTITIONS_MAPS,
   ...COMPOSITIONS_MAPS,
   ...WORDS_MAPS,

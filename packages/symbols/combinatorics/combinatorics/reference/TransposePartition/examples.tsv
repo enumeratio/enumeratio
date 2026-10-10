@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-partition-4-2-1			[TransposePartition, [IntegerPartition, [List, 4, 2, 1]]]	[IntegerPartition, [List, 3, 2, 1, 1]]	the partition $4 + 2 + 1$

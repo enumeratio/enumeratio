@@ -17,6 +17,7 @@ import { readEntry, writeFormatted } from "@enumeratio/entry/node";
 import type { Law } from "@enumeratio/structures";
 import { COMPOSITIONS_MAPS } from "../compositions/src/maps.ts";
 import { LATTICE_PATHS_MAPS } from "../lattice-paths/src/maps.ts";
+import { PARTITIONS_MAPS } from "../partitions/src/maps.ts";
 import { PERMUTATIONS_MAPS } from "../permutations/src/maps.ts";
 import { SET_PARTITIONS_MAPS } from "../set-partitions/src/maps.ts";
 import { TREES_MAPS } from "../trees/src/maps.ts";
@@ -26,6 +27,7 @@ const MAPS = [
   ...PERMUTATIONS_MAPS,
   ...TREES_MAPS,
   ...LATTICE_PATHS_MAPS,
+  ...PARTITIONS_MAPS,
   ...SET_PARTITIONS_MAPS,
   ...COMPOSITIONS_MAPS,
   ...WORDS_MAPS,

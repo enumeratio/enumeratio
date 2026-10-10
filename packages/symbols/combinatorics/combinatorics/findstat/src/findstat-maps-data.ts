@@ -113,4 +113,10 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     to: "BinaryTree",
     findstat: [{ id: "Mp00034", rows: 1200, compared: 196, skipped: 0 }],
   },
+  {
+    name: "TransposePartition",
+    from: "IntegerPartition",
+    to: "IntegerPartition",
+    findstat: [{ id: "Mp00044", rows: 1200, compared: 29, skipped: 0 }],
+  },
 ];

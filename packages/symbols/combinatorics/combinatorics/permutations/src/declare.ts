@@ -9,6 +9,7 @@ import { liftFamily } from "../../collections/src/families/epsil.ts";
 import { declareStats } from "../../collections/src/stats.ts";
 import { declareStatistics } from "../../src/statistics/declare.ts";
 import { PERMUTATIONS_CARRIERS } from "./carrier-data.ts";
+import { declareMahonianNumber } from "./mahonian.ts";
 import { coreFamilies, permutationClassesEntries, permutationsEntries } from "./families/index.ts";
 import { PERMUTATION_STATISTICS } from "./statistics.ts";
 import { declarePermutationOperations } from "./operations.ts";
@@ -25,4 +26,5 @@ export function declarePermutations(ce: Engine): void {
   // registry the carriers call above just populated (#458).
   declareStatistics(ce, PERMUTATION_STATISTICS);
   declarePermutationOperations(ce);
+  declareMahonianNumber(ce);
 }
