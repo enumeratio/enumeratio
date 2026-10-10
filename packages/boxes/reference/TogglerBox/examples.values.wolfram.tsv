@@ -1,2 +1,2 @@
-id	in
-inert	TogglerBox[DynamicBox[s], List[off, on]]
+id	in	out	tex.in	tex.out
+inert	TogglerBox[DynamicBox[s], List[off, on]]	TogglerBox[DynamicBox[s], {off, on}]	\text{TogglerBox}[\text{DynamicBox}[s],\{\text{off},\text{on}\}]	\text{TogglerBox}[\text{DynamicBox}[s],\{\text{off},\text{on}\}]

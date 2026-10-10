@@ -14,8 +14,14 @@ seeAlso:
   - RowSource
   - GridBox
   - PaneBox
-names:
-  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: Wolfram has no TableViewBox (its TableView is a front-end construct with no box head); this box is ours.
+    checked:
+      version: 15.0.0
+      on: 2026-10-10
 ---
 
 - `CollectionTable` and `TableView` lower to it. The source is held: the page registers it with the kernel and asks for rows by range, so only the expression travels.

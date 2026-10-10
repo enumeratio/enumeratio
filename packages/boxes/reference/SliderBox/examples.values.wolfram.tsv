@@ -1,2 +1,2 @@
-id	in
-inert	SliderBox[DynamicBox[k], List[0, 5]]
+id	in	out	tex.in	tex.out
+inert	SliderBox[DynamicBox[k], List[0, 5]]	SliderBox[DynamicBox[k], {0, 5}]	\text{SliderBox}[\text{DynamicBox}[k],\{0,5\}]	\text{SliderBox}[\text{DynamicBox}[k],\{0,5\}]

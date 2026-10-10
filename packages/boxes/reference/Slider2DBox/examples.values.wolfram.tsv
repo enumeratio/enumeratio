@@ -1,2 +1,2 @@
-id	in
-inert	Slider2DBox[DynamicBox[p], List[List[0, 0], List[1, 1]]]
+id	in	out	tex.in	tex.out
+inert	Slider2DBox[DynamicBox[p], List[List[0, 0], List[1, 1]]]	Slider2DBox[DynamicBox[p], {{0, 0}, {1, 1}}]	\text{Slider2DBox}\left[\text{DynamicBox}[p],\left( \begin{array}{cc}  0 & 0 \\  1 & 1 \\ \end{array} \right)\right]	\text{Slider2DBox}\left[\text{DynamicBox}[p],\left( \begin{array}{cc}  0 & 0 \\  1 & 1 \\ \end{array} \right)\right]

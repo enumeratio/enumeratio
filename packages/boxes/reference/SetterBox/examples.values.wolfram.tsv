@@ -1,2 +1,2 @@
-id	in
-inert	SetterBox[DynamicBox[c], List[a, b, c]]
+id	in	out	tex.in	tex.out
+inert	SetterBox[DynamicBox[c], List[a, b, c]]	SetterBox[DynamicBox[c], {a, b, c}]	\text{SetterBox}[\text{DynamicBox}[c],\{a,b,c\}]	\text{SetterBox}[\text{DynamicBox}[c],\{a,b,c\}]
