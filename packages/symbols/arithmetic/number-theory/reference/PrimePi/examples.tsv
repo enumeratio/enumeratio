@@ -9,8 +9,9 @@ real-arguments	Scope		[PrimePi, 15.25]	6			Real arguments						domain	The Rust a
 the-primes-below-a-million	Scope		[PrimePi, 1000000]	78498			The primes below a million							
 listable-threads-over-a-list	Scope		[PrimePi, [List, 3, 5, 17, 25]]	[List, 2, 3, 7, 9]			Listable: threads over a list						threading	compute-engine's PrimePi is Listable and threads over the list; the Rust crates take scalars only.
 primepi-10-11	Scope		[PrimePi, 100000000000]	4118054813			Exact at $10^{11}$							
-primepi-10-12	Scope	test	[PrimePi, 1000000000000]	37607912018			Exact at $10^{12}$, the last size answered							
-primepi-1-plus-10-pow-17	Scope	triage	[PrimePi, [Add, 1, [Power, 10, 17]]]	[PrimePi, {num: "100000000000000001"}]				gap	unevaluated	Ours counts exactly up to 10^12 (Lucy_Hedgehog, O(x^(3/4))) and leaves PrimePi past it symbolic; 10^17 + 1 needs a Lagarias-Miller-Odlyzko or Deleglise-Rivat count. Wolfram answers 2623557157654233.				
+primepi-10-12	Scope	test	[PrimePi, 1000000000000]	37607912018			Exact at $10^{12}$							
+primepi-10-13	Scope		[PrimePi, 10000000000000]	346065536839			Exact at $10^{13}$, by the combinatorial count				resource	SymPy's primepi hit the scan's 30 s cap at 10^13.		
+primepi-1-plus-10-pow-17	Scope	triage	[PrimePi, [Add, 1, [Power, 10, 17]]]	[PrimePi, {num: "100000000000000001"}]				gap	unevaluated	Ours counts exactly up to 10^15 (Lucy_Hedgehog, then the Deleglise-Rivat combinatorial count at about 5 s for 10^15) and leaves PrimePi past it symbolic: the same count takes minutes at 10^17, over the scan's cap. Wolfram answers 2623557157654233 (the same as π(10^17)); the nightly deep test reproduces it.				
 nthprime-range-1-primepi-100	Applications		[NthPrime, [Range, 1, [PrimePi, 100]]]	[List, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]			The 25 primes below 100, via the count							
 primepi-5-000	Applications		[PrimePi, 5000]	669			669 primes up to 5000							
 same-inverse-relation-viewed-from-primepi-s-side	Properties		[Equal, [PrimePi, [NthPrime, 50]], 50]	True			Same inverse relation viewed from PrimePi's side. See [[NthPrime]]							
@@ -32,4 +33,4 @@ primepi-16	Properties	test	[PrimePi, 16]	6	6	Wolfram MathematicalFunctionData, P
 primepi-17	Properties	test	[PrimePi, 17]	7	7	Wolfram MathematicalFunctionData, PrimePi	Jumps to 7 at 17							
 primepi-18	Properties	test	[PrimePi, 18]	7	7	Wolfram MathematicalFunctionData, PrimePi	Remains 7 until 19							
 no-primes-are-a-negative-number	Possible issues		[PrimePi, -1]	0			No primes are ≤ a negative number						domain	primal takes non-negative machine-size integers; compute-engine's PrimePi answers the rest.
-past-10-12-the-call-stays-symbolic	Possible issues		[PrimePi, 10000000000000]	[PrimePi, 10000000000000]			Past $10^{12}$ the exact tiers decline, so the call stays unevaluated at once instead of counting natively until an iteration cap		unevaluated	Wolfram counts it (346065536839); ours declines past 10^12, the limit of the Lucy_Hedgehog tier.	resource	SymPy's primepi hit the scan's 30 s cap at 10^13; ours declines past 10^12.		
+past-10-15-the-call-stays-symbolic	Possible issues		[PrimePi, 10000000000000000]	[PrimePi, 10000000000000000]			Past $10^{15}$ the exact tiers decline, so the call stays unevaluated at once instead of counting for minutes		unevaluated	Wolfram counts it (279238341033925); ours declines past 10^15, where the combinatorial count passes five seconds.	resource	SymPy's primepi exceeds the scan's 1 GiB memory cap at 10^16; ours declines past 10^15.		

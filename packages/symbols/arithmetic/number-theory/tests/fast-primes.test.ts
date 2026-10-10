@@ -36,9 +36,17 @@ test("compute-engine's native Prime (derivative notation) is untouched", () => {
   expect(result.operator).toBe("Prime");
 });
 
+test("PrimePi past Lucy_Hedgehog's range counts combinatorially (BL-156)", () => {
+  expect(run(["PrimePi", 1000000000000])).toBe(37607912018);
+  expect(run(["PrimePi", 10 ** 13])).toBe(346065536839);
+  expect(run(["PrimePi", 2 ** 40])).toBe(41203088796);
+});
+
 test("PrimePi/NthPrime past the exact tiers decline at once instead of grinding natively", () => {
   const start = Date.now();
-  expect(ce.box(["PrimePi", 10 ** 13]).evaluate().operator).toBe("PrimePi");
+  expect(ce.box(["PrimePi", 10 ** 16]).evaluate().operator).toBe("PrimePi");
+  expect(ce.box(["PrimePi", 10 ** 15 + 1]).evaluate().operator).toBe("PrimePi");
+  expect(ce.box(["PrimePi", { num: "100000000000000001" }]).evaluate().operator).toBe("PrimePi");
   expect(ce.box(["NthPrime", 10 ** 13]).evaluate().operator).toBe("NthPrime");
   expect(Date.now() - start).toBeLessThan(2000);
 });

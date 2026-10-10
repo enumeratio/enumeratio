@@ -56,5 +56,6 @@ bindings:
 
 - Inverse of [[NthPrime]]: $\pi(p_n)=n$.
 - Asymptotically $\pi(x)\sim x/\ln x$, the prime number theorem.
+- Counts exactly up to $10^{15}$ (the Deléglise–Rivat combinatorial count, seconds at the top); past that the call stays unevaluated.
 - n need not be an integer or prime itself -- PrimePi(n) counts primes up to whatever real value is given.
 - Threads element-wise over a list, as Wolfram's Listable heads do.

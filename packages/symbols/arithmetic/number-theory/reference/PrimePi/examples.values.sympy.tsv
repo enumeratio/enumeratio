@@ -10,6 +10,7 @@ the-primes-below-a-million	primepi(1000000)	78498
 listable-threads-over-a-list	[primepi(3), primepi(5), primepi(17), primepi(25)]	[2, 3, 7, 9]	
 primepi-10-11	primepi(100000000000)		
 primepi-10-12	primepi(1000000000000)	37607912018	
+primepi-10-13	primepi(10000000000000)	TimeoutError: over 30s	error
 primepi-1-plus-10-pow-17			
 nthprime-range-1-primepi-100			
 primepi-5-000	primepi(5000)		
@@ -32,4 +33,4 @@ primepi-16	primepi(16)
 primepi-17	primepi(17)		
 primepi-18	primepi(18)		
 no-primes-are-a-negative-number	primepi(-1)	0	
-past-10-12-the-call-stays-symbolic	primepi(10000000000000)	TimeoutError: over 30s	error
+past-10-15-the-call-stays-symbolic	primepi(10000000000000000)	MemoryError: over 1024 MiB	error
