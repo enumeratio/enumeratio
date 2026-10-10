@@ -33,6 +33,10 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: oscar
+    template: sign($1)
+    arity: 1
+  - origin: mapped
     form: wolfram
     template: Sign[$1]
     arity: 1

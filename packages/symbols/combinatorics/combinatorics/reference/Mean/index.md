@@ -21,6 +21,11 @@ seeAlso:
   - Mode
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: oscar
+    template: (sum($1) // length($1))
+    arity: 1
 ---
 
 - $Mean(c) = \dfrac{\sum c}{Length(c)}$. See [[Length]].

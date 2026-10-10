@@ -1,0 +1,52 @@
+id	in	out
+abs-neg-5	abs(-5)	5
+abs-5	abs(5)	5
+0-is-the-only-value-with-x-0	abs(0)	0
+abs-neg-7-over-2	abs((-7 // 2))	3.5
+the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	abs(complex(3, 4))	5.0
+threads-element-wise-over-a-list	abs([-1, 2, -3])	
+abs-neg-2p5	abs(-2.5)	2.5
+the-modulus-of-a-complex-number-with-approximate	abs(complex(1.4, 2.3))	2.692582403567252
+threads-over-a-matrix-entry-by-entry	abs([[(1 // 2), -1], [(-5 // 3), (1 // 2)]])	
+exact-numeric-constants		
+an-exact-complex-number-gives-an-exact-radical	abs(complex(1, 1))	1.4142135623730951
+abs-imaginaryunit		
+e-i-pi-3-lies-on-the-unit-circle		
+abs-negativeinfinity		
+complex-infinity-has-infinite-magnitude-in-every		
+an-interval-maps-to-the-interval-of-absolute		
+an-interval-straddling-0-maps-to-0-the-larger		
+decides-the-sign-of-an-exact-numeric-expression		
+a-complex-radicand-inside-the-subtraction		
+n-abs-pi-plus-i-times-catalan-25		
+fullsimplify-matrixfunction-abs-list-list-1-over		
+abs-positiveinfinity		
+abs-positiveinfinity-times-i		
+piecewiseexpand-abs-imaginaryunit-times-x-neg-2		
+complexexpand-abs-x		
+complexexpand-abs-x-plus-i-times-y		
+apply-derivative-abs-1-x		
+the-gap-between-two-temperatures-70-and-95	abs((70 - 95))	25
+the-distance-between-the-points-1-i-and-4-5i-of	abs((complex(1, 1) - complex(4, 5)))	5.0
+even-function-x-x	(abs(-8) == abs(8))	true
+triangle-inequality-a-b-le-a-b		
+z-2-z-bar-z		
+multiplicative-ab-a-b	(abs((complex(1, 2) * complex(3, -1))) == (abs(complex(1, 2)) * abs(complex(3, -1))))	
+abs-1	abs(1)	1
+abs-neg-1	abs(-1)	1
+abs-neg-i	abs(complex(0, -1))	1.0
+abs-neg-1-plus-i	abs(complex(-1, 1))	1.4142135623730951
+abs-neg-1-minus-i	abs(complex(-1, -1))	1.4142135623730951
+abs-1-minus-i	abs(complex(1, -1))	1.4142135623730951
+abs-sqrt-3-plus-i		
+abs-1-plus-sqrt-3-times-i		
+abs-neg-1-plus-sqrt-3-times-i		
+abs-neg-sqrt-3-plus-i		
+abs-neg-sqrt-3-minus-i		
+abs-neg-1-plus-neg-sqrt-3-times-i		
+abs-1-plus-neg-sqrt-3-times-i		
+abs-sqrt-3-minus-i		
+abs-2	abs(2)	2
+abs-1-over-2-pow-2	(big(abs((1 // 2)))^2)	0.25
+abs-2-pow-2	(big(abs(2))^2)	4
+doesn-t-factor-constants-out-of-a-symbolic		

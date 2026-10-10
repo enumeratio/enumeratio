@@ -22,6 +22,10 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: oscar
+    template: collect(gcdx(ZZ($1), ZZ($2)))
+    arity: 2
+  - origin: mapped
     form: wolfram
     template: ExtendedGCD[$1, $2]
     arity: 2

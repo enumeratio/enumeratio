@@ -1,0 +1,8 @@
+id	in	out
+variance-list-1-2-3-4	(let v = [1, 2, 3, 4], m = sum(v) // length(v); sum((x - m)^2 for x in v) // (length(v) - 1) end)	1.6666666666666667
+variance-n-list-1-2-3-4-30	(let v = ([1, 2, 3, 4]), m = sum(v) // length(v); sum((x - m)^2 for x in v) // (length(v) - 1) end)	1.6666666666666667
+n-variance-ts		
+variance-binomialdistribution-n-p		
+variance-probabilitydistribution-sqrt-2-times-1		
+n-list-mean-data-variance-data		
+n-variance-heights		

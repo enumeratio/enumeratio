@@ -27,6 +27,10 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: oscar
+    template: abs($1)
+    arity: 1
+  - origin: mapped
     form: sympy
     template: Abs($1)
     arity: 1
