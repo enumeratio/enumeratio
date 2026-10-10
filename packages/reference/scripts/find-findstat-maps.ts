@@ -12,7 +12,12 @@ import { homedir } from "node:os";
 import { join } from "node:path";
 import { parseArgs } from "node:util";
 import { CARRIERS, MAPS } from "@enumeratio/combinatorics";
-import { readObject } from "../../symbols/combinatorics/combinatorics/findstat/src/objects.ts";
+import {
+  COLLECTION_CARRIER,
+  objectSize,
+  readableCarriers,
+  readObject,
+} from "../../symbols/combinatorics/combinatorics/findstat/src/objects.ts";
 import { declaredEngine } from "./engines.ts";
 
 const { values } = parseArgs({
@@ -20,24 +25,14 @@ const { values } = parseArgs({
 });
 
 /** FindStat's collections whose objects we read. */
-const COLLECTION: Readonly<Record<string, string>> = {
-  Permutations: "Permutation",
-  "Dyck paths": "DyckPath",
-  "Integer partitions": "IntegerPartition",
-  "Set partitions": "SetPartition",
-};
+const READABLE = new Set(readableCarriers());
+const COLLECTION: Readonly<Record<string, string>> = Object.fromEntries(
+  Object.entries(COLLECTION_CARRIER).filter(([, carrier]) => READABLE.has(carrier)),
+);
 /** The largest object compared: a full check of the rows FindStat's tables hold through this size. */
 const MAX_SIZE = 6;
 /** Every row this small must be read and agree for a match: the 153 permutations of at most five entries. */
 const FLOOR_SIZE = 5;
-
-/** An object's size from FindStat's text: a permutation's length, a partition's sum, a Dyck path's semilength, a set partition's element count. */
-const SIZE: Readonly<Record<string, (text: string) => number>> = {
-  Permutation: (text) => (JSON.parse(text) as number[]).length,
-  IntegerPartition: (text) => (JSON.parse(text) as number[]).reduce((a, b) => a + b, 0),
-  DyckPath: (text) => (JSON.parse(text) as number[]).length / 2,
-  SetPartition: (text) => (text.match(/\d+/g) ?? []).length,
-};
 
 const carrierName = (type: string): string => CARRIERS.find((c) => c.type === type)?.name ?? type;
 /** The carrier value of FindStat's text, or `undefined` when it isn't one we read or doesn't parse. */
@@ -50,7 +45,7 @@ const readable = (carrier: string, text: string): unknown => {
 };
 const sizeOf = (carrier: string, text: string): number => {
   try {
-    return SIZE[carrier]?.(text) ?? Number.NaN;
+    return objectSize(carrier, text) ?? Number.NaN;
   } catch {
     return Number.NaN;
   }

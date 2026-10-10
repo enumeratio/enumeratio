@@ -82,6 +82,7 @@ export { CARDINALITIES, type Cardinality } from "../partitions/src/cardinalities
 export { NATIVE_TO_ENGINE, type NativeStatistic } from "../partitions/src/native-statistics.ts";
 export { findstat, type FindStatMatch } from "../findstat/src/findstat-data.ts";
 export { type FindStatAgreement, findstatMaps, type FindStatMapMatch } from "../findstat/src/findstat-maps-data.ts";
+export { COLLECTION_CARRIER, objectSize, readableCarriers, readObject } from "../findstat/src/objects.ts";
 
 /**
  * Declares the carriers and the families typed by them on `ce`: each area's own `declare<Area>`,

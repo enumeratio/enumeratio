@@ -60,10 +60,22 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     findstat: [{ id: "Mp00279", rows: 1200, compared: 873, skipped: 0 }],
   },
   {
+    name: "RskInsertion",
+    from: "Permutation",
+    to: "StandardTableau",
+    findstat: [{ id: "Mp00059", rows: 1200, compared: 873, skipped: 0 }],
+  },
+  {
     name: "RskShape",
     from: "Permutation",
     to: "IntegerPartition",
     findstat: [{ id: "Mp00060", rows: 1200, compared: 873, skipped: 0 }],
+  },
+  {
+    name: "RskRecording",
+    from: "Permutation",
+    to: "StandardTableau",
+    findstat: [{ id: "Mp00070", rows: 1200, compared: 873, skipped: 0 }],
   },
   {
     name: "CyclePartition",
@@ -72,9 +84,33 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     findstat: [{ id: "Mp00151", rows: 1200, compared: 873, skipped: 0 }],
   },
   {
+    name: "DescentComposition",
+    from: "Permutation",
+    to: "Composition",
+    findstat: [{ id: "Mp00071", rows: 1200, compared: 873, skipped: 0 }],
+  },
+  {
+    name: "BinarySearchTree",
+    from: "Permutation",
+    to: "BinaryTree",
+    findstat: [{ id: "Mp00072", rows: 1200, compared: 873, skipped: 0 }],
+  },
+  {
     name: "Foata",
     from: "Permutation",
     to: "Permutation",
     findstat: [{ id: "Mp00087", rows: 1200, compared: 873, skipped: 0 }],
+  },
+  {
+    name: "DyckPath",
+    from: "BinaryTree",
+    to: "DyckPath",
+    findstat: [{ id: "Mp00012", rows: 1200, compared: 196, skipped: 0 }],
+  },
+  {
+    name: "BinaryTree",
+    from: "DyckPath",
+    to: "BinaryTree",
+    findstat: [{ id: "Mp00034", rows: 1200, compared: 196, skipped: 0 }],
   },
 ];
