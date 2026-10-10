@@ -14,6 +14,7 @@ import { HEAD_MAP_AUDIT } from "../src/head-map-audit-data.ts";
  *  category — remove the line once the engine declares it, don't add one preemptively. */
 const ALLOWED_UNDECLARED: Record<string, string> = {
   C: "declared as a value, not an operator, but the head map emits it as a call",
+  Point: "left undeclared on purpose: structures' geometric Point and the graphics primitive both read the bare head; declaring it inert breaks Midpoint (#833)",
 };
 
 test("no head-map entry is undeclared unless the allowlist says so", () => {
