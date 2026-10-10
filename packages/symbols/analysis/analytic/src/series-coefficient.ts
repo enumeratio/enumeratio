@@ -1,6 +1,7 @@
 import { isNumber, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { isRealInt } from "@enumeratio/ce-patches";
+import { powerSeriesCoefficient } from "./power-orders.ts";
 import { fractionFactors } from "./transforms.ts";
 
 // SeriesCoefficient(f, {x, x0, n}) — the coefficient of (x − x0)^n in the Taylor series of
@@ -148,7 +149,8 @@ export function declareSeriesCoefficient(ce: ComputeEngine): void {
       const xName = xSym && symbolNameOf(xSym);
       if (!xName || !x0 || !nExpr) return undefined;
       const bessel = besselCoefficient(ce, f, xName, x0, nExpr);
-      if (bessel !== undefined || !isRealInt(nExpr)) return bessel;
+      if (bessel !== undefined) return bessel;
+      if (!isRealInt(nExpr)) return powerSeriesCoefficient(ce, f, xName, x0, nExpr);
       return seriesCoefficient(ce, f, xName, x0, nExpr.re);
     },
   });

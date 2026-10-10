@@ -10,6 +10,7 @@ import {
   leavesCall,
   lookThroughConditions,
   notNumeric,
+  orderVariables,
   positiveVariables,
   rootsAsPowers,
   seriesVariables,
@@ -228,6 +229,51 @@ test("a step variable is sampled at integers, and substituted after the call is 
   // `k` stays the call's own variable inside it, and is a whole number only afterwards.
   expect(source).toContain("DifferenceDelta[QFactorial[k, Rational[");
   expect(source).toMatch(/\/\. \{k -> \d+\}/);
+});
+
+test("a derivative's order and a series coefficient's index are the symbols in that slot alone", () => {
+  const derivative = ["D", ["Power", "x", "a"], ["List", "x", "k"]];
+  expect(orderVariables(derivative as never)).toEqual(new Set(["k"]));
+  const coefficient = ["SeriesCoefficient", ["Power", "x", "a"], ["List", "x", 1, "n"]];
+  expect(orderVariables(coefficient as never)).toEqual(new Set(["n"]));
+  // Substitution is by name: a `k` that is also in the function is no order.
+  expect(orderVariables(["D", ["Power", "x", "k"], ["List", "x", "k"]] as never)).toEqual(new Set());
+  expect(orderVariables(["D", ["Power", "x", "a"], ["List", "x", 2]] as never)).toEqual(new Set());
+});
+
+/** The numeric trials of an agreement source, after its symbolic attempt. */
+const trials = (source: string): string =>
+  source.slice(source.indexOf("Module[{s = {"), source.indexOf("s = Flatten[s]"));
+
+test("an order is sampled at integers from 0, and the derivative variable still at negatives", () => {
+  const derivative = ["D", ["Power", "x", "a"], ["List", "x", "k"]];
+  const ours = ["Multiply", ["FallingFactorial", "a", "k"], ["Power", "x", ["Subtract", "a", "k"]]];
+  const source = symbolicAgreementSource("wolfram", derivative as never, ours as never, ["a", "k", "x"]) as string;
+  const orders = [...trials(source).matchAll(/D\[[^\n]*?List\[x, (\w+)\]\]/g)].map((m) => m[1]);
+  expect(orders).toContain("0");
+  expect(orders).toContain("1");
+  expect(orders).toContain("2");
+  expect(orders.every((order) => /^\d+$/.test(order as string))).toBe(true);
+  // x stays the call's own and is a number only afterwards, negative at some trial.
+  expect(source).toMatch(/\/\. \{x -> Rational\[-\d+, \d+\]\}/);
+});
+
+test("a series coefficient's variable is held and its index is an integer from 0", () => {
+  const coefficient = ["SeriesCoefficient", ["Power", "x", "a"], ["List", "x", 1, "n"]];
+  const ours = ["Piecewise", ["List", ["List", ["Binomial", "a", "n"], ["GreaterEqual", "n", 0]]], 0];
+  const source = symbolicAgreementSource("wolfram", coefficient as never, ours as never, ["a", "n", "x"]) as string;
+  const indices = [...trials(source).matchAll(/SeriesCoefficient\[[^\n]*?List\[x, 1, (\w+)\]\]/g)].map((m) => m[1]);
+  expect(indices).toEqual(expect.arrayContaining(["0", "1", "2"]));
+  expect(indices.every((index) => /^\d+$/.test(index as string))).toBe(true);
+});
+
+test("a row with no order still samples its variable at negatives", () => {
+  const plain = symbolicAgreementSource("wolfram", ["Add", "x", "x"] as never, ["Multiply", 2, "x"] as never, ["x"]);
+  expect(plain).toMatch(/Rational\[-\d+, \d+\]/);
+  const fixed = ["D", ["Power", "x", "a"], ["List", "x", 2]];
+  const ours = ["Multiply", ["Multiply", "a", ["Subtract", "a", 1]], ["Power", "x", ["Subtract", "a", 2]]];
+  const source = symbolicAgreementSource("wolfram", fixed as never, ours as never, ["a", "x"]) as string;
+  expect(source).toMatch(/\/\. \{x -> Rational\[-\d+, \d+\]\}/);
 });
 
 test("DiscreteShift steps its variable like the other step heads", () => {
