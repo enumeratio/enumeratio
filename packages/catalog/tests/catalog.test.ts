@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareCombinatorics } from "@enumeratio/combinatorics";
+import { declareCombinatorics, MAPS as DECLARED_MAPS } from "@enumeratio/combinatorics";
 import { expect, test } from "vite-plus/test";
 import { CARRIERS, COLLECTIONS, MAPS, STATS } from "../src/catalog-records-data.ts";
 import { declareCatalog } from "../src/declare.ts";
@@ -23,6 +23,13 @@ test("the catalog is the measured shape, folded to names", () => {
   // Folded to names: one row per stat name, however many carriers it is on.
   expect(new Set(STATS.map((s) => s.name)).size).toBe(STATS.length);
   expect(new Set(MAPS.map((m) => m.name)).size).toBe(MAPS.length);
+});
+
+test("every map combinatorics declares is catalogued", () => {
+  // Conversions (convert: true) are carrier constructor overloads; only some have a catalog record.
+  const catalogued = new Set(MAPS.map((m) => m.name));
+  const maps = DECLARED_MAPS.filter((m) => m.convert !== true);
+  expect(maps.map((m) => m.name).filter((name) => !catalogued.has(name))).toEqual([]);
 });
 
 test("a stat is one name defined on several carriers", () => {

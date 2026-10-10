@@ -3,6 +3,8 @@ name: BinarySearchTreeParentArray
 domain: Combinatorial maps
 signature: BinarySearchTreeParentArray(Permutation)
 summary: "The binary search tree of σ as its parent array: entry v is the value v is inserted under, 0 for the root."
+mapOn:
+  - Permutation
 signatures:
   - call: BinarySearchTreeParentArray(Permutation)
     description: "The binary search tree of σ as its parent array: entry v is the value v is inserted under, 0 for the root."

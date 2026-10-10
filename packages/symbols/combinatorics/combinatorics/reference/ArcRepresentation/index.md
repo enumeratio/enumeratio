@@ -3,6 +3,8 @@ name: ArcRepresentation
 domain: Combinatorial maps
 signature: ArcRepresentation(SetPartition)
 summary: Each position linked to the next in its block, or to itself when last.
+mapOn:
+  - SetPartition
 signatures:
   - call: ArcRepresentation(SetPartition)
     description: Each position linked to the next in its block, or to itself when last.
