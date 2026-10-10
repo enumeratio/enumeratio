@@ -5,6 +5,7 @@
 // holds the line.
 
 export * from "./assert.ts";
+export { BOX_LAYOUT_CSS } from "./box-styles.ts";
 export * from "./barchart3d.ts";
 export * from "./chart.ts";
 export * from "./clock.ts";

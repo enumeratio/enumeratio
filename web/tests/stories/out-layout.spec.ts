@@ -16,6 +16,13 @@ test("an evaluated Grid of closed formulas is a grid-box of typeset leaves", asy
   await expect(grid.locator("dynamic-box")).toHaveCount(0);
 });
 
+test("a Grid in a cell is drawn as the same grid-box once the cell takes over", async ({ page }) => {
+  await page.goto("/docs/components/out");
+  const grid = page.locator('notatio-cell[value^="Grid([[1/2, Sqrt(2)], [Pi"]').locator("notatio-out grid-box");
+  await expect(grid).toBeVisible();
+  await expect(grid.locator(":scope > form-box .katex")).toHaveCount(4);
+});
+
 test("a cell with a free symbol stays a readout", async ({ page }) => {
   await page.goto("/docs/components/out");
   const grid = page.locator('notatio-out[value^="Grid([[k"]').locator("grid-box");

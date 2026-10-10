@@ -45,6 +45,8 @@ interface Evaluated {
   plot?: PlotInfo;
   /** The display a kernel built for the answer: rendered as it is, with no engine here. */
   display?: Display;
+  /** The picture the build drew for the answer (a closed layout), as this Out draws it. */
+  visual?: string;
 }
 
 /**
@@ -477,7 +479,7 @@ export class NotatioOut extends LitElement {
       this.#codeAsked = true;
       void this.#recompute();
     }
-    if (changed.has("env") && changed.get("env") !== undefined) this.#visualize();
+    if (changed.has("env") && changed.get("env") !== undefined) void this.#visualize();
 
     // Escape stops a running Worker-evaluator call (`stop()`) -- only listened for
     // while actually busy, and only matters when there is something to abort.
@@ -542,7 +544,9 @@ export class NotatioOut extends LitElement {
     if (this.format !== "mathjson" || this.value !== JSON.stringify(pre.json)) return undefined;
     // Its typeset HTML is the markup for its TeX: nothing needs typesetting again.
     if (pre.html !== undefined) markupCache.set(pre.latex, pre.html.output);
-    return { latex: pre.latex, json: pre.value, messages: [], display: pre.display };
+    // Its layout, when it drew one, is what this Out draws first: adopted, so nothing reflows.
+    const visual = this.evaluate ? pre.visual : undefined;
+    return { latex: pre.latex, json: pre.value, messages: [], display: pre.display, ...(visual && { visual }) };
   }
 
   /**
@@ -670,7 +674,7 @@ export class NotatioOut extends LitElement {
   // so a slow earlier evaluation can't overwrite it when it finally lands.
   async #compute(run: number): Promise<void> {
     try {
-      const { latex, json, messages, name, plot, display } = await this.#evaluate();
+      const { latex, json, messages, name, plot, display, visual } = await this.#evaluate();
       const convert = await loadMarkup();
       if (run !== this.#runs) return;
       this._messages = messages;
@@ -693,7 +697,8 @@ export class NotatioOut extends LitElement {
       // Without a kernel's display the page's engine writes the boxes (below); drawing waits for
       // them, so a layout's math doesn't flash in without the packages' notation first.
       this.#awaitingBoxes = display === undefined && json !== undefined;
-      this.#visualize();
+      if (visual !== undefined) this._visual = visual;
+      void this.#visualize();
       this._wolfram = "";
       this._mathml = "";
       void this.#writeTextForms();
@@ -724,7 +729,7 @@ export class NotatioOut extends LitElement {
         this._traditional = convert(traditional);
         this.#written = boxes;
         this.#awaitingBoxes = false;
-        this.#visualize();
+        void this.#visualize();
         // TeXForm is the TeX of TraditionalForm, as in Wolfram.
         this._tex = portableTeX(traditional);
         // MatrixForm: lay a List value out as a matrix via compute-engine's
@@ -877,13 +882,14 @@ export class NotatioOut extends LitElement {
   #page: Environment = pageEnvironment();
   #unwatch = (): void => {};
 
-  #visualize(): void {
+  /** Draws the value's picture; settles once it has, or at once when there is none to draw. */
+  #visualize(): Promise<void> {
     const value = this.#value;
     if (value === undefined || !this.#draws) {
       this._visual = "";
-      return;
+      return Promise.resolve();
     }
-    if (this.#awaitingBoxes) return;
+    if (this.#awaitingBoxes) return Promise.resolve();
     // Own attribute, then the nearest ancestor that forces one, then the page.
     const env =
       environmentNamed(this.env) ??
@@ -893,7 +899,7 @@ export class NotatioOut extends LitElement {
     // picture's elements are defined with it. Its math is typeset by the page's typesetter.
     const written = this.#written;
     const evaluated = this.evaluate;
-    Promise.all([import("./visual.ts"), defineEverything(), loadMarkup()])
+    return Promise.all([import("./visual.ts"), defineEverything(), loadMarkup()])
       .then(([{ visualMarkup }, , convert]) => {
         if (this.#value !== value) return;
         this._visual = visualMarkup(value, env, {
@@ -914,11 +920,11 @@ export class NotatioOut extends LitElement {
     this.#page = pageEnvironment();
     const unwatch = watchPageEnvironment((env) => {
       this.#page = env;
-      this.#visualize();
+      void this.#visualize();
     });
     // A forcing ancestor can switch environment too (a preview card's picker).
     const forcing = this.parentElement?.closest("[env]");
-    const observer = new MutationObserver(() => this.#visualize());
+    const observer = new MutationObserver(() => void this.#visualize());
     if (forcing) observer.observe(forcing, { attributes: true, attributeFilter: ["env"] });
     this.#unwatch = () => {
       unwatch();

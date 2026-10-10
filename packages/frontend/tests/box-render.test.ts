@@ -92,3 +92,13 @@ test("a collection table's collection keeps the name it is declared under, so a 
   const drawn = renderingOf(["CollectionTable", "NonNegativeIntegers"] as never);
   expect(drawn?.attributes.expr).toBe("NonNegativeIntegers");
 });
+
+test("markup never writes a name that could break out of its tag, whatever the option key", () => {
+  const evil = 'x" onmouseover="alert(1)';
+  const markup = markupOf({
+    tag: "graphics-box",
+    attributes: { value: "a", [evil]: "1", "data-ok": "b" },
+    children: [{ tag: 'b onclick="alert(1)"', attributes: {}, text: "t" }],
+  });
+  expect(markup).toBe('<graphics-box value="a" data-ok="b"><span>t</span></graphics-box>');
+});

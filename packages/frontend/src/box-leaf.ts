@@ -25,20 +25,26 @@ export function typesetLeaf(box: Box, form: string): Rendering {
 /** Escape a value for a double-quoted HTML attribute. */
 const attr = (value: string): string => value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
+/** A name safe to write as a tag or attribute name: an option key or a head is data, not markup. */
+const SAFE_NAME = /^[a-z][a-z0-9-]*$/;
+
 /**
  * A rendering as markup, for a host that can only take HTML. `typeset` turns a math run's TeX
  * into markup; without one a run shows its text.
  */
 export function markupOf(rendering: Rendering, typeset?: (tex: string) => string): string {
+  // An attribute whose name could break out of the tag is dropped, never written.
   const attributes = Object.entries(rendering.attributes)
+    .filter(([k]) => SAFE_NAME.test(k))
     .map(([k, v]) => ` ${k}="${attr(v)}"`)
     .join("");
-  if (rendering.tag === "img") return `<img${attributes}>`;
+  const tag = SAFE_NAME.test(rendering.tag) ? rendering.tag : "span";
+  if (tag === "img") return `<img${attributes}>`;
   const inner =
     rendering.tex !== undefined && typeset !== undefined
       ? typeset(rendering.tex)
       : rendering.text !== undefined
         ? rendering.text.replace(/&/g, "&amp;").replace(/</g, "&lt;")
         : (rendering.children?.map((c) => markupOf(c, typeset)).join("") ?? "");
-  return `<${rendering.tag}${attributes}>${inner}</${rendering.tag}>`;
+  return `<${tag}${attributes}>${inner}</${tag}>`;
 }
