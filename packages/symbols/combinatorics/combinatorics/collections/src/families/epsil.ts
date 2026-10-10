@@ -376,7 +376,8 @@ export function kernelOn(
 
   const valid = (element: unknown, p: number[]): boolean => {
     if (!wellFormed(family.kind, element)) return false;
-    if (quick !== undefined && (declinePastDoubles === "count" ? wellParamed(p) : fits(p))) {
+    // Membership never reads the count: the fast path answers at any params it reads as written.
+    if (quick !== undefined && wellParamed(p)) {
       try {
         const answer = quick.valid(element, p);
         if (typeof answer === "boolean") return answer;
@@ -384,7 +385,12 @@ export function kernelOn(
     }
     const fast = run("valid", p, { _x: element });
     if (typeof fast === "boolean") return fast;
-    return interpret("valid", p, { _x: elementJson(element) }) === "True";
+    // An interpreter that fails declines, as past 2^53, rather than raising out of `Element`.
+    try {
+      return interpret("valid", p, { _x: elementJson(element) }) === "True";
+    } catch {
+      return decline(p);
+    }
   };
 
   return {

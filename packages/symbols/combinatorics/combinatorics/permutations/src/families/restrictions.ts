@@ -355,6 +355,76 @@ const adjacentTranspositionInvolutions: EpsilFamily = permutationRestriction({
   ),
 });
 
+// Boolean permutations, Av(321, 3412): direct sums of blocks, each a cycle that rises to its largest
+// entry and falls back (1 → a₁ → … → k → b₁ → … → 1), so a block of size k ≥ 2 has 2^(k−2)
+// members and there are F(2n − 1) permutations of n. Read left to right, a block's entries are
+// forced but for its up steps: its first position is up and its entry names P, the position of the
+// next up step. Positions before P are down steps, each taking the position of the down step
+// before it (the block's first position for the first one), so nothing is chosen there. At P the
+// entry is either a larger one, naming the next up position, or what a down step takes, which ends
+// the block at P. The state is [bad, positions in closed blocks, P (0 between blocks), the last
+// down position]. With P pending, the rest of the permutation is the up steps still to come and
+// the free blocks after them: T(n − P + 1), where T(m) counts the permutations of m positions
+// (1, 1, 2, 5, 13, …, 3 T(m − 1) − T(m − 2)). Between blocks it is T(n − positions closed).
+const booleanTable = fold(
+  ["Join", "bo_t", ["List", sub(mul(3, at("bo_t", "bo_k")), at("bo_t", sub("bo_k", 1)))]],
+  "bo_t",
+  "bo_k",
+  ["List", 1, 1],
+  upTo(2, n),
+);
+const booleans = (size: MathJSON): MathJSON => at("booleans", add(size, 1));
+const booleanPermutations: EpsilFamily = permutationRestriction({
+  head: "BooleanPermutations",
+  carrier: "Permutation",
+  paramCount: 1,
+  params: [n],
+  declared: polynomial(),
+  tables: ["booleans", booleanTable],
+  state: {
+    init: ["List", 0, 0, 0, 1],
+    step: lets(
+      [
+        ["bo_bad", at("pstate", 1), "integer"],
+        ["bo_s", at("pstate", 2), "integer"],
+        ["bo_p", at("pstate", 3), "integer"],
+        ["bo_d", at("pstate", 4), "integer"],
+      ],
+      iff(
+        ["NotEqual", "bo_bad", 0],
+        "pstate",
+        iff(
+          equal("bo_p", 0),
+          // A block's first position: the entry is the block alone, or the next up position.
+          iff(
+            equal("value", add("bo_s", 1)),
+            ["List", 0, "slot", 0, add("slot", 1)],
+            iff(
+              less(add("bo_s", 1), "value"),
+              ["List", 0, "bo_s", "value", add("bo_s", 1)],
+              ["List", 1, "bo_s", 0, "bo_d"],
+            ),
+          ),
+          iff(
+            less("slot", "bo_p"),
+            iff(equal("value", "bo_d"), ["List", 0, "bo_s", "bo_p", "slot"], ["List", 1, "bo_s", "bo_p", "bo_d"]),
+            iff(
+              less("bo_p", "value"),
+              ["List", 0, "bo_s", "value", "bo_d"],
+              iff(equal("value", "bo_d"), ["List", 0, "slot", 0, add("slot", 1)], ["List", 1, "bo_s", "bo_p", "bo_d"]),
+            ),
+          ),
+        ),
+      ),
+    ),
+  },
+  completions: iff(
+    ["NotEqual", at("pstate", 1), 0],
+    0,
+    iff(equal(at("pstate", 3), 0), booleans(sub(n, at("pstate", 2))), booleans(add(sub(n, at("pstate", 3)), 1))),
+  ),
+});
+
 const catalan = (r: MathJSON): MathJSON => quotient(["Binomial", mul(2, r), r], add(r, 1));
 
 // The permutations below the long cycle: cycles that rise (each member goes to the next greater
@@ -1258,6 +1328,7 @@ export const grassmannianPermutations = atMostOneTurn("GrassmannianPermutations"
 export const cograssmannianPermutations = atMostOneTurn("CograssmannianPermutations", true);
 export {
   adjacentTranspositionInvolutions,
+  booleanPermutations,
   nonCrossingPermutations,
   alternatingPermutations,
   connectedPermutations,

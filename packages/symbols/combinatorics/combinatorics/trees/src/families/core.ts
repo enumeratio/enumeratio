@@ -6,9 +6,11 @@
 // BinaryTree's own shape (`integer | list<any>`, https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible,
 // #401), since both families' elements already are (kind "nested": KTree = 0 | KTree[], OrdTree
 // = OrdTree[]). The generic kernel math stays in collections/src/families/kernels*.ts.
-import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import { binaryTreeParentArrays } from "./binary-tree-parents.ts";
+import { binaryTrees, fullKAryTrees } from "./kary-trees.ts";
+import { orderedTrees } from "./ordered-trees.ts";
 import {
   BinaryTreeCount,
   BinaryTreeUnrank,
@@ -46,38 +48,30 @@ export const binaryTreeParentArraysKernel: NumberKernel = {
   rank: (e) => BinaryTreeRank(BinaryTreeOfParentArray(e as number[]) ?? 0),
 };
 
-// The nested families stay TS kernels: a nested element has no compiled type, so an Epsil
-// definition would only be interpreted, and recursing over the tree is what the kernels do natively.
+// The nested families are Epsil definitions interpreted (a nested element has no compiled type), with
+// the TS kernels, which recurse over the tree natively, as their `fast` paths.
+export const binaryTreesFast: FastKernel = {
+  count: ([n]) => BinaryTreeCount(n),
+  unrank: ([n], r) => BinaryTreeUnrank(n, r),
+  valid: (e, [n]) => IsBinaryTree(e, n),
+  rank: (e) => BinaryTreeRank(e as BinTree),
+};
+export const fullKAryTreesFast: FastKernel = {
+  count: ([n, k]) => KAryTreeCount(n, k),
+  unrank: ([n, k], r) => KAryTreeUnrank(n, k, r),
+  valid: (e, [n, k]) => IsKAryTree(e, n, k),
+  rank: (e, [, k]) => KAryTreeRank(e as KTree, k),
+};
+export const orderedTreesFast: FastKernel = {
+  count: ([n]) => OrderedTreeCount(n),
+  unrank: ([n], r) => OrderedTreeUnrank(n, r),
+  valid: (e, [n]) => IsOrderedTree(e, n),
+  rank: (e) => OrderedTreeRank(e as OrdTree),
+};
+
 export const entries: (NumberKernel | EpsilFamily)[] = [
-  {
-    head: "BinaryTrees",
-    paramCount: 1,
-    kind: "nested",
-    carrier: "BinaryTree",
-    count: ([n]) => BinaryTreeCount(n),
-    unrank: ([n], r) => BinaryTreeUnrank(n, r),
-    valid: (e, [n]) => IsBinaryTree(e, n),
-    rank: (e) => BinaryTreeRank(e as BinTree),
-  },
+  { ...binaryTrees, fast: binaryTreesFast },
   { ...binaryTreeParentArrays, fast: binaryTreeParentArraysKernel },
-  {
-    head: "FullKAryTrees",
-    paramCount: 2,
-    kind: "nested",
-    carrier: "FullKAryTree",
-    count: ([n, k]) => KAryTreeCount(n, k),
-    unrank: ([n, k], r) => KAryTreeUnrank(n, k, r),
-    valid: (e, [n, k]) => IsKAryTree(e, n, k),
-    rank: (e, [, k]) => KAryTreeRank(e as KTree, k),
-  },
-  {
-    head: "OrderedTrees",
-    paramCount: 1,
-    kind: "nested",
-    carrier: "OrderedTree",
-    count: ([n]) => OrderedTreeCount(n),
-    unrank: ([n], r) => OrderedTreeUnrank(n, r),
-    valid: (e, [n]) => IsOrderedTree(e, n),
-    rank: (e) => OrderedTreeRank(e as OrdTree),
-  },
+  { ...fullKAryTrees, fast: fullKAryTreesFast },
+  { ...orderedTrees, fast: orderedTreesFast },
 ];

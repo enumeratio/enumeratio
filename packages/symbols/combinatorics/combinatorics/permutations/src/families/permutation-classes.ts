@@ -1,9 +1,9 @@
-// Permutation classes in the symmetric group's lex order. Boolean permutations are Fibonacci
-// words in disguise. Grassmannian, Cograssmannian, NonCrossing, Separable and Vexillary are
-// completion counts (./restrictions.ts). Baxter, Simple and Smooth still filter all n!
-// permutations in lex order (PermutationUnrank) by an independently written predicate, and index
-// the filtered list: Simple has no polynomial completion count known to us, and the exact ones for
-// Baxter and Smooth have list-valued or exponential state (wiki Speculative-Restrictions).
+// Permutation classes in the symmetric group's lex order. Boolean, Grassmannian, Cograssmannian,
+// NonCrossing, Separable and Vexillary are completion counts (./restrictions.ts). Baxter, Simple
+// and Smooth still filter all n! permutations in lex order (PermutationUnrank) by an independently
+// written predicate, and index the filtered list: Simple has no polynomial completion count known
+// to us, and the exact ones for Baxter and Smooth have list-valued or exponential state (wiki
+// Speculative-Restrictions).
 import { binomial } from "../../../collections/src/families/shared.ts";
 import { Factorial, IsPermutationOf, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
 import {
@@ -14,6 +14,7 @@ import {
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {
   adjacentTranspositionInvolutions,
+  booleanPermutations,
   cograssmannianPermutations,
   grassmannianPermutations,
   nonCrossingCycleSupportPermutations,
@@ -179,19 +180,8 @@ function booleanRank(perm: readonly number[]): number {
 // ─── NonCrossingCycleSupportPermutations(n): cycles forming a non-crossing partition, by completion counts
 // (./restrictions.ts).
 
-// ─── BooleanPermutations(n): Tenner's Boolean permutations, Av(321, 3412) — the permutations whose
-// principal Bruhat ideal is a Boolean lattice, A001519: F(2n − 1) (1, 1, 2, 5, 13, 34, …). Enumerated by
-// filtering all n! permutations, like Baxter; the count is closed.
-function isBooleanPermutationOfTenner(perm: readonly number[]): boolean {
-  return !containsAnyPattern3(perm, ["321"]) && !containsAnyPattern4(perm, ["3412"]);
-}
-function booleanTennerCount(n: number): number {
-  if (n === 0) return 1;
-  let [a, b] = [0, 1]; // F(0), F(1)
-  for (let i = 1; i < 2 * n - 1; i++) [a, b] = [b, a + b];
-  return b; // F(2n − 1)
-}
-const booleanTennerClass = makeBruteForceClass((p) => isBooleanPermutationOfTenner(p), booleanTennerCount);
+// ─── BooleanPermutations(n): Tenner's Boolean permutations, Av(321, 3412), by completion counts
+// (./restrictions.ts).
 
 // ─── NonCrossingPermutations(n): the permutations below the long cycle, by completion counts
 // (./restrictions.ts).
@@ -201,17 +191,6 @@ function patternOf4(a: number, b: number, c: number, d: number): string {
   const sorted = [a, b, c, d];
   sorted.sort((x, y) => x - y);
   return [a, b, c, d].map((v) => sorted.indexOf(v) + 1).join("");
-}
-function containsAnyPattern3(perm: readonly number[], patterns: readonly string[]): boolean {
-  const n = perm.length;
-  for (let i = 0; i < n; i++)
-    for (let j = i + 1; j < n; j++)
-      for (let k = j + 1; k < n; k++) {
-        const [a, b, c] = [perm[i], perm[j], perm[k]];
-        const pattern = `${1 + (b < a ? 1 : 0) + (c < a ? 1 : 0)}${1 + (a < b ? 1 : 0) + (c < b ? 1 : 0)}${1 + (a < c ? 1 : 0) + (b < c ? 1 : 0)}`;
-        if (patterns.includes(pattern)) return true;
-      }
-  return false;
 }
 function containsAnyPattern4(perm: readonly number[], patterns: readonly string[]): boolean {
   const n = perm.length;
@@ -251,18 +230,7 @@ const simpleClass = makeBruteForceClass((p) => !hasNonTrivialInterval(p));
 const smoothClass = makeBruteForceClass((p) => !containsAnyPattern4(p, ["3412", "4231"]));
 
 export const entries: (NumberKernel | EpsilFamily)[] = [
-  {
-    ...ints(
-      "BooleanPermutations",
-      1,
-      ([n]) => booleanTennerClass.count(n),
-      ([n], r) => booleanTennerClass.unrank(n, r),
-      (a, [n]) => booleanTennerClass.valid(a, n),
-      (a) => booleanTennerClass.rank(a),
-    ),
-    declared: booleanTennerClass.declared,
-    carrier: "Permutation",
-  },
+  booleanPermutations,
   nonCrossingPermutations,
   {
     ...ints(

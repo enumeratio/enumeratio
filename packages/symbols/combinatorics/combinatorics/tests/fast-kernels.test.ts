@@ -82,6 +82,12 @@ function edgeAlong(
   return below !== undefined && countOf(family, below)! > 2n ** 32n ? { below } : undefined;
 }
 
+// Nested elements have no compiled type, so these families' definitions are interpreted, a few
+// hundred milliseconds an operation: the standard run takes small params and a few ranks of each,
+// and DEEP_TESTS the full grid. Their own tests (trees/tests, collections/tests) check more.
+const INTERPRETED = new Set(["BinaryTrees", "FullKAryTrees", "OrderedTrees", "IncreasingBinaryTrees"]);
+const interpreted = (family: EpsilFamily): boolean => !DEEP && INTERPRETED.has(family.head);
+
 const grids = new Map<string, { grid: number[][]; above: number[][] }>();
 
 /** The params to try: small ones, and the edges where the fast path stops answering: params whose
@@ -90,7 +96,7 @@ const grids = new Map<string, { grid: number[][]; above: number[][] }>();
 function paramGrid(family: EpsilFamily): { grid: number[][]; above: number[][] } {
   const cached = grids.get(family.head);
   if (cached !== undefined) return cached;
-  const small = DEEP ? [0, 1, 2, 3, 4, 5, 6, 8, 10, 13] : [0, 1, 2, 3, 5, 8];
+  const small = DEEP ? [0, 1, 2, 3, 4, 5, 6, 8, 10, 13] : interpreted(family) ? [0, 1, 2] : [0, 1, 2, 3, 5, 8];
   const walks: ((x: number) => number[])[] = [];
   if (family.paramCount === 1) walks.push((n) => [n]);
   else
@@ -104,7 +110,7 @@ function paramGrid(family: EpsilFamily): { grid: number[][]; above: number[][] }
     .map((at) => edgeAlong(family, at))
     .filter((edge) => edge !== undefined)
     .toSorted((a, b) => size(a.below) - size(b.below))
-    .slice(0, DEEP ? 4 : 1);
+    .slice(0, DEEP ? 4 : interpreted(family) ? 0 : 1);
   const grid: number[][] =
     family.paramCount === 1 ? small.map((n) => [n]) : small.flatMap((a) => small.map((b) => [a, b]));
   const above: number[][] = [];
@@ -126,7 +132,8 @@ function random(below: bigint): bigint {
 }
 
 /** Ranks of a fiber of `total`: all when small, else both ends, the middle and pseudo-random ones. */
-function ranksOf(total: bigint): bigint[] {
+function ranksOf(total: bigint, few = false): bigint[] {
+  if (few && total > 6n) return [...new Set([0n, total / 2n, total - 1n])];
   if (total <= (DEEP ? 120n : 24n)) return Array.from({ length: Number(total) }, (_, i) => BigInt(i));
   const ranks = new Set<bigint>([0n, 1n, total - 2n, total - 1n, total / 2n]);
   for (let i = 0; i < (DEEP ? 24 : 3); i++) ranks.add(random(total));
@@ -193,7 +200,7 @@ for (const family of fastFamilies) {
       expect([where, fast.count(p)]).toEqual([where, total]);
       if (typeof total !== "bigint" || total > MAX_SAFE) continue;
       const members: Element[] = [];
-      for (const r of ranksOf(total)) {
+      for (const r of ranksOf(total, interpreted(family))) {
         const element = fast.unrank(p, r);
         expect([where, r, element]).toEqual([where, r, epsil.unrank(p, r)]);
         expect([where, r, fast.rank(element, p)]).toEqual([where, r, r]);
@@ -202,7 +209,7 @@ for (const family of fastFamilies) {
         members.push(element);
       }
       for (const member of members.filter((_, i) => i % Math.ceil(members.length / 3) === 0)) {
-        for (const near of mutations(member).slice(0, DEEP ? 60 : 14)) {
+        for (const near of mutations(member).slice(0, DEEP ? 60 : interpreted(family) ? 4 : 14)) {
           const expected = epsil.valid(near, p);
           if (!expected) rejected++;
           expect([where, near, fast.valid(near, p)]).toEqual([where, near, expected]);
@@ -265,7 +272,8 @@ for (const family of fastFamilies.filter(
       expect([where, r, outcome(() => kernel.unrank(p, r))]).toEqual([where, r, element]);
       if (typeof element !== "string") expect([where, r, kernel.rank(element as Element, p)]).toEqual([where, r, r]);
     }
-    expect(new Set(calls)).toEqual(new Set(["count"]));
+    // Membership never reads the count, so the fast path answers it; unrank and rank are Epsil's.
+    expect(new Set(calls.filter((call) => call !== "valid"))).toEqual(new Set(["count"]));
   });
 }
 
@@ -373,8 +381,9 @@ test("past 2^53 the fast path is skipped and Epsil answers exactly", () => {
     expect(kernel.valid(element, p)).toBe(true);
     expect(kernel.rank(element, p)).toBe(r);
   }
-  // Only the count is asked of the fast path: it is not a safe integer, so nothing more is.
-  expect(new Set(calls)).toEqual(new Set(["count"]));
+  // Only the count and membership are asked of the fast path: the count is not a safe integer, so
+  // neither unrank nor rank is.
+  expect(new Set(calls.filter((call) => call !== "valid"))).toEqual(new Set(["count"]));
 });
 
 test("a fast path that throws or declines leaves the question to Epsil", () => {

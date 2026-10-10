@@ -117,7 +117,7 @@ const hasLength = (list: MathJSON, length: MathJSON, then: MathJSON): MathJSON =
 
 /** The symmetric group: the permutations of n in lex order. Its count passes 2^53 at n = 19,
  *  where compiled code gives way to exact integers. */
-const symmetricGroup: EpsilFamily = {
+export const symmetricGroup: EpsilFamily = {
   head: "SymmetricGroup",
   carrier: "Permutation",
   paramCount: 1,

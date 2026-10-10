@@ -10,7 +10,8 @@
 // three now carry "Tournament"/"LabeledGraph". PruferSequences moved to
 // trees/src/families/prufer-sequences.ts (§4 step 5): it now carries "PruferSequence".
 import type { NumberKernel } from "./types.ts";
-import type { EpsilFamily } from "./epsil.ts";
+import type { EpsilFamily, FastKernel } from "./epsil.ts";
+import { increasingBinaryTrees } from "./increasing-binary-trees.ts";
 import {
   add,
   all,
@@ -530,9 +531,15 @@ const twoRow = (head: string): EpsilFamily => {
   };
 };
 
-// IncreasingBinaryTrees and StandardTableaux stay TS kernels: the first is a nested element (no
-// compiled type) built by Cartesian-tree recursion, the second sums hook lengths over every shape
-// of n and removes corners recursively.
+export const increasingBinaryTreesFast: FastKernel = {
+  count: ([n]) => IncreasingBinaryTreeCount(n),
+  unrank: ([n], r) => IncreasingBinaryTreeUnrank(n, r),
+  valid: (e, [n]) => IsIncreasingBinaryTree(e, n),
+  rank: (e) => IncreasingBinaryTreeRank(e as LabTree),
+};
+
+// StandardTableaux stays a TS kernel: it sums hook lengths over every shape of n and removes corners
+// recursively.
 //
 // Kept separate from `entriesAfterNonDecreasingParkingFunctions` below only so
 // collections/src/families/index.ts can splice `wordsTableauxTreesEntries` (ParkingFunctions,
@@ -540,16 +547,7 @@ const twoRow = (head: string): EpsilFamily => {
 // area move — §4 step 5.
 export const entriesAfterNonDecreasingParkingFunctions: (NumberKernel | EpsilFamily)[] = [
   recursiveTrees,
-  {
-    head: "IncreasingBinaryTrees",
-    paramCount: 1,
-    kind: "nested",
-    count: ([n]) => IncreasingBinaryTreeCount(n),
-    unrank: ([n], r) => IncreasingBinaryTreeUnrank(n, r),
-    valid: (e, [n]) => IsIncreasingBinaryTree(e, n),
-    rank: (e) => IncreasingBinaryTreeRank(e as LabTree),
-    carrier: "IncreasingBinaryTree",
-  },
+  { ...increasingBinaryTrees, fast: increasingBinaryTreesFast },
   {
     head: "StandardTableaux",
     paramCount: 1,
