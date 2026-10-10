@@ -51,6 +51,9 @@ export interface EpsilFamily extends FamilyShape {
    *  reach there too, so it declines as well, and the fast path alone answers unrank (a small
    *  rank) and rank (a rank a double holds) there. Membership never reads the count. */
   readonly declinePastDoubles?: true | "count";
+  /** The interpreter's answers are reduced once more before they are read (`settled`): for a
+   *  definition whose last fold step compute-engine leaves unreduced, which would read as no answer. */
+  readonly settle?: true;
   readonly epsil: FamilyEpsil;
   /** A verified fast path: used while the fiber's count is a safe integer, ahead of Epsil.
    *  The definitions stay the meaning; this is not part of `familyHash`. */
@@ -156,6 +159,17 @@ export function evaluateTables(ce: ComputeEngine, tables: unknown, params: Recor
   );
 }
 
+/** An interpreted answer with any step compute-engine left unreduced (the last of a fold's, whose
+ *  body it evaluates lazily) reduced, so an answer that is a number, a boolean or a list of them is
+ *  read as one. */
+function settled(ce: ComputeEngine, json: unknown, rounds = 3): unknown {
+  if (!Array.isArray(json)) return json;
+  if (json[0] === "List") return ["List", ...json.slice(1).map((item) => settled(ce, item, rounds))];
+  if (rounds === 0) return json;
+  const again = evaluateEpsil(ce, json, {});
+  return JSON.stringify(again) === JSON.stringify(json) ? json : settled(ce, again, rounds - 1);
+}
+
 /** An interpreted element as plain JS; undefined when it isn't one. */
 export function elementOf(json: unknown): Element | undefined {
   if (isInteger(json)) return json;
@@ -206,7 +220,8 @@ export function kernelOn(
   options: KernelOptions = {},
 ): FamilyKernel {
   if (!isEpsilFamily(family)) return family;
-  const { params, epsil, elementType: _, declinePastDoubles, fast: fastKernel, ...shape } = family;
+  const { params, epsil, elementType: _, declinePastDoubles, settle, fast: fastKernel, ...shape } = family;
+  const maybeSettled = (json: unknown): unknown => (settle === true ? settled(ce, json) : json);
   const quick = options.fast === false ? undefined : fastKernel;
   const ahead = generated[family.head];
   const current = ahead?.hash === familyHash(family) ? ahead : undefined;
@@ -248,11 +263,13 @@ export function kernelOn(
     }
   };
   const interpret = (operation: Operation, p: number[], extra: Record<string, unknown>): unknown =>
-    evaluateEpsil(ce, epsil[operation], {
-      ...bind(p),
-      ...extra,
-      ...(reads(operation) ? { _tables: exactTables(p) } : {}),
-    });
+    maybeSettled(
+      evaluateEpsil(ce, epsil[operation], {
+        ...bind(p),
+        ...extra,
+        ...(reads(operation) ? { _tables: exactTables(p) } : {}),
+      }),
+    );
 
   // A table depends on the params alone, so it is computed once per params and read by every
   // call. Compiled code reads it as doubles, the interpreter as compute-engine's exact integers
@@ -385,12 +402,15 @@ export function kernelOn(
     }
     const fast = run("valid", p, { _x: element });
     if (typeof fast === "boolean") return fast;
-    // An interpreter that fails declines, as past 2^53, rather than raising out of `Element`.
+    // An interpreter that fails declines, as past 2^53, rather than raising out of `Element`; so does
+    // an answer that is neither True nor False, which is no reading of the element as a non-member.
+    let answer: unknown;
     try {
-      return interpret("valid", p, { _x: elementJson(element) }) === "True";
+      answer = interpret("valid", p, { _x: elementJson(element) });
     } catch {
       return decline(p);
     }
+    return answer === "True" ? true : answer === "False" ? false : decline(p);
   };
 
   return {

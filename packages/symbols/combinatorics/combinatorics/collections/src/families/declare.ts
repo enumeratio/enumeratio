@@ -21,8 +21,10 @@ type BoxInput = Parameters<Engine["box"]>[0];
 
 const asBoxed = (c: Expr): Boxed => c as unknown as Boxed;
 
-/** Elements a kernel may generate to answer one call on the engine. Past it, a family whose
- *  unrank or rank enumerates declines with `Head::toobig` rather than exhausting the heap. */
+/** Elements a kernel may generate to answer one call on the engine, and the most a collection of
+ *  a walking family is iterated over. Past it, a family whose unrank or rank enumerates declines
+ *  with `Head::toobig` (a walking one, past that many steps, with `Head::toolong`) rather than
+ *  exhausting the heap. */
 export const ENUMERATION_LIMIT = 2_000_000n;
 
 // Collection type an operator call returns: an indexed_collection of the family's own
@@ -112,20 +114,6 @@ function handlersOf(ce: Engine, family: FamilyKernel, carrier?: string): Collect
       throw error;
     }
   };
-  // Whether reaching an element (or, for `count`, the count) would enumerate past the limit.
-  const cost = family.declared?.cost;
-  const tooBig = (p: number[], ops: readonly ("count" | "unrank")[]): boolean => {
-    const work = family.declared?.work;
-    if (cost === undefined || work === undefined || !ops.some((op) => cost[op] === "enumerative")) return false;
-    const w = work(p);
-    if (w <= ENUMERATION_LIMIT) return false;
-    emit(ce, family.head, "toobig", [
-      `${family.head}(${p.join(", ")})`,
-      w.toLocaleString("en-US"),
-      ENUMERATION_LIMIT.toLocaleString("en-US"),
-    ]);
-    return true;
-  };
   // The count, or undefined where a kernel still in plain numbers can't carry it exactly.
   const countAt = (p: number[]): bigint | number | undefined => {
     try {
@@ -134,6 +122,24 @@ function handlersOf(ce: Engine, family: FamilyKernel, carrier?: string): Collect
       if (needsBigint(error)) return undefined;
       throw error;
     }
+  };
+  // Whether reaching an element (or, for `count`, the count) would take past the limit: by the
+  // work bound, which for a family whose unrank and rank walk (`declared.walks`) counts their steps.
+  // Iterating all of a walking family's elements is bounded by the fiber instead, its exact count.
+  const cost = family.declared?.cost;
+  const walks = family.declared?.walks === true;
+  const tooBig = (p: number[], ops: readonly ("count" | "unrank")[], iterating = false): boolean => {
+    const work = family.declared?.work;
+    if (cost === undefined || work === undefined || !ops.some((op) => cost[op] === "enumerative")) return false;
+    const fiber = iterating && walks;
+    const total = fiber ? countAt(p) : work(p);
+    if (typeof total !== "bigint" || total <= ENUMERATION_LIMIT) return false;
+    emit(ce, family.head, walks && !fiber ? "toolong" : "toobig", [
+      `${family.head}(${p.join(", ")})`,
+      total.toLocaleString("en-US"),
+      ENUMERATION_LIMIT.toLocaleString("en-US"),
+    ]);
+    return true;
   };
   return {
     count: (c) => {
@@ -150,19 +156,20 @@ function handlersOf(ce: Engine, family: FamilyKernel, carrier?: string): Collect
       return typeof total === "bigint" ? true : Number.isNaN(total) ? undefined : false;
     },
     isLazy: () => true,
-    isEnumerable: (c) => !tooBig(params(c), ["count", "unrank"]),
+    isEnumerable: (c) => !tooBig(params(c), ["count", "unrank"], true),
     isEmpty: (c) => {
       const p = params(c);
       return tooBig(p, ["count"]) ? undefined : countAt(p) === 0n ? true : countAt(p) === undefined ? undefined : false;
     },
     iterator: (c) => {
       const p = params(c);
-      if (tooBig(p, ["count", "unrank"])) return undefined;
+      if (tooBig(p, ["count", "unrank"], true)) return undefined;
       const total = countAt(p);
       if (total === undefined) return undefined;
+      // A kernel declines every element of a fiber past 2^53 alike: that is unknown, not an empty fiber.
+      if (typeof total === "bigint" && total > 0n && element(p, 0n) === undefined) return undefined;
       let i = 0n;
       // Only a finite count ends the iteration; ∞ and unknown (NaN) run on.
-      // A kernel declining an element (past 2^53) ends the iteration there.
       return {
         next: () => {
           const value = typeof total !== "bigint" || i < total ? element(p, i++) : undefined;
@@ -218,7 +225,10 @@ export function declareFamilies(ce: Engine, families: readonly AnyFamily[]): voi
     const elementType = carrier === undefined ? undefined : carrierTypeForName(ce, carrier);
     const collection = handlersOf(ce, family, elementType === undefined ? undefined : carrier);
     if (family.declared?.work !== undefined) {
-      defineMessages(ce, family.head, { toobig: "`1` would enumerate about `2` elements; the limit is `3`." });
+      defineMessages(ce, family.head, {
+        toobig: "`1` would enumerate about `2` elements; the limit is `3`.",
+        ...(family.declared.walks === true ? { toolong: "`1` would take about `2` steps; the limit is `3`." } : {}),
+      });
     }
     if (family.paramCount === 0) {
       ce.declare(family.head, { type: "indexed_collection<integer>", collection });

@@ -2,10 +2,11 @@
 import type { Engine } from "@enumeratio/engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { declareFamilies } from "../../collections/src/families/declare.ts";
-import { numberKernel } from "../../collections/src/families/types.ts";
+import { liftFamily } from "../../collections/src/families/epsil.ts";
 import { TABLEAUX_CARRIERS } from "./carrier-data.ts";
 import {
   standardTableauPairsEntries,
+  standardTableauxEntries,
   tableauxPlaneBeforeSkewStandardTableauxEntries,
   tableauxPlanePlanePartitionsEntries,
   tableauxPlaneShiftedStandardTableauxEntries,
@@ -19,9 +20,10 @@ export function declareTableaux(ce: Engine): void {
     [
       ...tableauxPlaneBeforeSkewStandardTableauxEntries,
       ...tableauxPlaneSkewStandardTableauxEntries,
+      ...standardTableauxEntries,
       ...tableauxPlaneShiftedStandardTableauxEntries,
       ...standardTableauPairsEntries,
       ...tableauxPlanePlanePartitionsEntries,
-    ].map(numberKernel),
+    ].map(liftFamily),
   );
 }

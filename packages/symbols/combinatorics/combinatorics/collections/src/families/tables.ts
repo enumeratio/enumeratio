@@ -149,3 +149,38 @@ export const cell =
   (name: string, width: MathJSON, offset?: MathJSON) =>
   (s: MathJSON, c: MathJSON): MathJSON =>
     at(name, add(...(offset === undefined ? [] : [offset]), mul(s, width), c, 1));
+
+/**
+ * The integer ∏ (numerator factors) / ∏ (denominator factors), as the product of p^e over the
+ * primes p ≤ `bound`, where e sums, over the prime powers q = p, p², … up to `bound`, how many
+ * numerator factors q divides (`above(q)`) less how many denominator factors it divides
+ * (`below(q)`); no factor passes `bound`. The primes go in ascending order, so each partial
+ * product divides the result and an exact result is never reached through an inexact one, as
+ * a product of hooks divided into n! is.
+ */
+export function primeQuotient(
+  tag: string,
+  bound: MathJSON,
+  above: (q: MathJSON) => MathJSON,
+  below: (q: MathJSON) => MathJSON,
+): MathJSON {
+  const [p, d, acc, state, j, q, e, w, k] = ["p", "d", "acc", "st", "j", "q", "e", "w", "k"].map((x) => `${tag}_${x}`);
+  const isPrime = all((x) => ["NotEqual", ["Mod", p, x], 0], upTo(2, sub(p, 1)), d);
+  // The state is [exponent so far, the next prime power]; past `bound` it stays put.
+  const exponent = at(
+    fold(
+      iff(
+        ["Greater", at(state, 2), bound],
+        state,
+        lets([[q, at(state, 2), "integer"]], ["List", add(at(state, 1), sub(above(q), below(q))), mul(q, p)]),
+      ),
+      state,
+      j,
+      ["List", 0, p],
+      upTo(1, bound),
+    ),
+    1,
+  );
+  const times = lets([[e, exponent, "integer"]], fold(mul(w, p), w, k, acc, upTo(1, e)));
+  return fold(iff(isPrime, times, acc), acc, p, 1, upTo(2, bound));
+}

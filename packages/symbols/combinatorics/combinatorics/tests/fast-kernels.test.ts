@@ -85,7 +85,13 @@ function edgeAlong(
 // Nested elements have no compiled type, so these families' definitions are interpreted, a few
 // hundred milliseconds an operation: the standard run takes small params and a few ranks of each,
 // and DEEP_TESTS the full grid. Their own tests (trees/tests, collections/tests) check more.
-const INTERPRETED = new Set(["BinaryTrees", "FullKAryTrees", "OrderedTrees", "IncreasingBinaryTrees"]);
+const INTERPRETED = new Set([
+  "BinaryTrees",
+  "FullKAryTrees",
+  "OrderedTrees",
+  "IncreasingBinaryTrees",
+  "StandardTableauPairs",
+]);
 const interpreted = (family: EpsilFamily): boolean => !DEEP && INTERPRETED.has(family.head);
 
 const grids = new Map<string, { grid: number[][]; above: number[][] }>();
@@ -209,7 +215,7 @@ for (const family of fastFamilies) {
         members.push(element);
       }
       for (const member of members.filter((_, i) => i % Math.ceil(members.length / 3) === 0)) {
-        for (const near of mutations(member).slice(0, DEEP ? 60 : interpreted(family) ? 4 : 14)) {
+        for (const near of mutations(member).slice(0, DEEP ? 60 : interpreted(family) ? 2 : 14)) {
           const expected = epsil.valid(near, p);
           if (!expected) rejected++;
           expect([where, near, fast.valid(near, p)]).toEqual([where, near, expected]);
@@ -423,7 +429,15 @@ test("params the fast kernels don't read as written are left to Epsil", () => {
   const k = byHead("KPermutations");
   const wrongArity = { fast: kernelOn(ce, k), epsil: epsilKernelOn(ce, k) };
   expect(wrongArity.fast.count([4])).toBe(wrongArity.epsil.count([4]));
-  expect(wrongArity.fast.valid([1, 2, 3, 4], [4])).toBe(wrongArity.epsil.valid([1, 2, 3, 4], [4]));
+  // Epsil can't read a membership with a param missing as True or False, so it declines, as does the kernel.
+  const verdict = (kernel: typeof wrongArity.fast): unknown => {
+    try {
+      return kernel.valid([1, 2, 3, 4], [4]);
+    } catch (error) {
+      return (error as Error).constructor;
+    }
+  };
+  expect(verdict(wrongArity.fast)).toBe(verdict(wrongArity.epsil));
   const s = byHead("SymmetricGroup");
   expect(kernelOn(ce, s).count([-1])).toBe(epsilKernelOn(ce, s).count([-1]));
   expect(kernelOn(ce, s).count([2.5])).toBe(epsilKernelOn(ce, s).count([2.5]));

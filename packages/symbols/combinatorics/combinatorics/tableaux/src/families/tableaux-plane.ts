@@ -10,15 +10,18 @@
 // `normRank`, `cmpNumArrays`, `cmpRowsShapeThenEntries`, `keyOf`, `indexedFamily`, `axis`,
 // `enumerated` are small local helpers duplicated from the source file (mirrors the permutations
 // pilot's `ints`); `factorialBig` is used ONLY by SkewStandardTableaux and moved outright.
+import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
 import type { Cost, Declared, NumberKernel, Param } from "../../../collections/src/families/types.ts";
-import { Factorial } from "../../../collections/src/families/kernels.ts";
-import { PartitionsP, IntegerPartitionUnrank } from "../../../collections/src/families/kernels-combinatorics.ts";
 import {
   PartitionsQ,
   DistinctPartitionUnrank,
   DistinctPartitionRank,
 } from "../../../collections/src/families/kernels-extra.ts";
 import { IsSkewPartitionOf, skewPart } from "../../../partitions/src/families/tableaux-plane.ts";
+import { alternatingSignMatrices } from "./alternating-sign-matrices.ts";
+import { gelfandTsetlin } from "./gelfand-tsetlin.ts";
+import { semistandardTableaux } from "./semistandard-tableaux.ts";
+import { shiftedStandardTableaux } from "./standard-tableaux.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
@@ -69,242 +72,14 @@ const enumerated = (count: Cost): Declared["cost"] => ({
   valid: "polynomial",
 });
 
-// Stays TS: the order is shape then entries, and the fillings that extend a partly built tableau
-// depend on the whole of it, not a few integers an Epsil table could hold.
-// ═══ SemistandardTableaux(size, max_entry) — SSYT over every shape λ⊢size, entries in 1..max_entry ═══
-// Count: the hook-content formula s_λ(1^k) = Π (k + col − row) / hook(row,col), summed over shapes —
-// exact and closed-form (a cell needing col−row ≤ −k forces a zero factor, so shapes needing more than k
-// rows correctly contribute 0 without a separate guard). Unrank/rank: enumerate-then-index per (n,k) —
-// no simple closed-form unrank for a sum-over-shapes family; sizes stay small enough that full
-// enumeration (cross-checked against the hook-content count in tests) is cheap and safe.
-function conjugateOf(shape: number[]): number[] {
-  const width = shape[0] ?? 0;
-  return Array.from({ length: width }, (_, c) => shape.filter((row) => row > c).length);
-}
-function hookContentCount(shape: number[], k: number): number {
-  const conj = conjugateOf(shape);
-  let num = 1,
-    den = 1;
-  for (let r = 0; r < shape.length; r++)
-    for (let c = 0; c < shape[r]; c++) {
-      num *= k + c - r;
-      den *= shape[r] - c + (conj[c] - r) - 1;
-    }
-  return Math.round(num / den);
-}
-function ssytFillingsOfShape(shape: number[], k: number): number[][][] {
-  const results: number[][][] = [];
-  const grid: number[][] = shape.map((len) => Array.from({ length: len }, () => 0));
-  const nRows = shape.length;
-  function cell(r: number, c: number): void {
-    if (r === nRows) {
-      results.push(grid.map((row) => row.slice()));
-      return;
-    }
-    if (c === shape[r]) {
-      cell(r + 1, 0);
-      return;
-    }
-    const leftBound = c > 0 ? grid[r][c - 1] : 1;
-    const aboveBound = r > 0 && c < shape[r - 1] ? grid[r - 1][c] + 1 : 1;
-    const lo = Math.max(leftBound, aboveBound);
-    for (let v = lo; v <= k; v++) {
-      grid[r][c] = v;
-      cell(r, c + 1);
-    }
-  }
-  cell(0, 0);
-  return results;
-}
-export function SemistandardTableauxCount(n: number, k: number): number {
-  let total = 0;
-  for (let idx = 0; idx < PartitionsP(n); idx++) total += hookContentCount(IntegerPartitionUnrank(n, idx), k);
-  return total;
-}
-const ssyt = indexedFamily<number[][]>((key) => {
-  const [n, k] = key.split("|").map(Number);
-  const out: number[][][] = [];
-  for (let idx = 0; idx < PartitionsP(n); idx++) out.push(...ssytFillingsOfShape(IntegerPartitionUnrank(n, idx), k));
-  out.sort(cmpRowsShapeThenEntries);
-  return out;
-});
-export function SemistandardTableauxUnrank(n: number, k: number, rank: number): number[][] {
-  return ssyt.unrank(`${n}|${k}`, rank);
-}
-export function SemistandardTableauxRank(e: number[][], n: number, k: number): number {
-  return ssyt.rank(`${n}|${k}`, e);
-}
-export function IsSemistandardTableauOf(e: unknown, n: number, k: number): boolean {
-  if (!Array.isArray(e)) return false;
-  const rows = e as number[][];
-  let total = 0;
-  for (let r = 0; r < rows.length; r++) {
-    const row = rows[r];
-    if (!Array.isArray(row) || row.length === 0) return false;
-    if (r > 0 && rows[r - 1].length < row.length) return false;
-    for (let c = 0; c < row.length; c++) {
-      const v = row[c];
-      if (!Number.isInteger(v) || v < 1 || v > k) return false;
-      if (c > 0 && row[c - 1] > v) return false;
-      if (r > 0 && rows[r - 1][c] >= v) return false;
-      total++;
-    }
-  }
-  return total === n;
-}
+// SemistandardTableaux, GelfandTsetlin and AlternatingSignMatrices are defined in Epsil
+// (./semistandard-tableaux.ts, ./gelfand-tsetlin.ts, ./alternating-sign-matrices.ts).
 
-// Stays TS: the patterns below a row depend on the whole row (a Weyl-dimension product), not a table index.
-// ═══ GelfandTsetlin(n, k) — triangular interlacing arrays, n rows, entries in 0..k ═══
-// Count: Π_{1≤i≤j≤n} (k+i+j−1)/(i+j−1) — the dimension formula (sum of hook-content over every top-row
-// shape fitting the n×k box), exact and closed-form. Element: rows top (length n) to bottom (length 1).
-export function GelfandTsetlinCount(n: number, k: number): number {
-  let num = 1,
-    den = 1;
-  for (let i = 1; i <= n; i++)
-    for (let j = i; j <= n; j++) {
-      num *= k + i + j - 1;
-      den *= i + j - 1;
-    }
-  return Math.round(num / den);
-}
-function gtRowsBelow(above: number[] | null, len: number, k: number): number[][] {
-  const out: number[][] = [];
-  function rec(idx: number, cur: number[]): void {
-    if (idx === len) {
-      out.push(cur.slice());
-      return;
-    }
-    const hi = above ? Math.min(above[idx], idx > 0 ? cur[idx - 1] : above[idx]) : idx > 0 ? cur[idx - 1] : k;
-    const lo = above ? above[idx + 1] : 0;
-    for (let v = lo; v <= hi; v++) {
-      cur.push(v);
-      rec(idx + 1, cur);
-      cur.pop();
-    }
-  }
-  rec(0, []);
-  return out;
-}
-const gt = indexedFamily<number[][]>((key) => {
-  const [n, k] = key.split("|").map(Number);
-  const results: number[][][] = [];
-  const rows: number[][] = [];
-  function backtrack(above: number[] | null, len: number): void {
-    if (len === 0) {
-      results.push(rows.map((r) => r.slice()));
-      return;
-    }
-    for (const row of gtRowsBelow(above, len, k)) {
-      rows.push(row);
-      backtrack(row, len - 1);
-      rows.pop();
-    }
-  }
-  backtrack(null, n);
-  return results;
-});
-export function GelfandTsetlinUnrank(n: number, k: number, rank: number): number[][] {
-  return gt.unrank(`${n}|${k}`, rank);
-}
-export function GelfandTsetlinRank(e: number[][], n: number, k: number): number {
-  return gt.rank(`${n}|${k}`, e);
-}
-export function IsGelfandTsetlinOf(e: unknown, n: number, k: number): boolean {
-  if (!Array.isArray(e)) return false;
-  const rows = e as number[][];
-  if (rows.length !== n) return false;
-  let above: number[] | null = null;
-  for (let i = 0; i < n; i++) {
-    const row = rows[i];
-    if (!Array.isArray(row) || row.length !== n - i) return false;
-    for (let j = 0; j < row.length; j++) {
-      const v = row[j];
-      if (!Number.isInteger(v) || v < 0 || v > k) return false;
-      if (j > 0 && v > row[j - 1]) return false;
-      if (above && !(above[j] >= v && v >= above[j + 1])) return false;
-    }
-    above = row;
-  }
-  return true;
-}
-
-// Stays TS: the rows still to come depend on every column's partial sum, a 2^n-state table.
-// ═══ AlternatingSignMatrices(size) — n×n, entries {-1,0,1}, row/col partial sums and totals in {0,1}/1 ═══
-// Count: A(n) = Π_{j<n} (3j+1)!/(n+j)! — the ASM numbers (A005130), exact and closed-form.
-export function AlternatingSignMatrixCount(n: number): number {
-  let num = 1,
-    den = 1;
-  for (let j = 0; j < n; j++) {
-    num *= Factorial(3 * j + 1);
-    den *= Factorial(n + j);
-  }
-  return Math.round(num / den);
-}
-const asm = indexedFamily<number[][]>((key) => {
-  const n = Number(key);
-  const results: number[][][] = [];
-  const rows: number[][] = [];
-  const colPartial = Array.from({ length: n }, () => 0);
-  function backtrack(): void {
-    if (rows.length === n) {
-      results.push(rows.map((r) => r.slice()));
-      return;
-    }
-    const row: number[] = [];
-    const build = (c: number, rowPrefix: number): void => {
-      if (c === n) {
-        if (rowPrefix === 1) {
-          rows.push(row.slice());
-          backtrack();
-          rows.pop();
-        }
-        return;
-      }
-      for (const v of [-1, 0, 1]) {
-        const nc = colPartial[c] + v;
-        const nr = rowPrefix + v;
-        if (nc < 0 || nc > 1 || nr < 0 || nr > 1) continue;
-        colPartial[c] = nc;
-        row.push(v);
-        build(c + 1, nr);
-        row.pop();
-        colPartial[c] = nc - v;
-      }
-    };
-    build(0, 0);
-  }
-  backtrack();
-  return results;
-});
-export function AlternatingSignMatrixUnrank(n: number, rank: number): number[][] {
-  return asm.unrank(String(n), rank);
-}
-export function AlternatingSignMatrixRank(e: number[][], n: number): number {
-  return asm.rank(String(n), e);
-}
-export function IsAlternatingSignMatrixOf(e: unknown, n: number): boolean {
-  if (!Array.isArray(e) || e.length !== n) return false;
-  const rows = e as number[][];
-  for (const row of rows) {
-    if (!Array.isArray(row) || row.length !== n) return false;
-    let pref = 0;
-    for (const v of row) {
-      if (v !== -1 && v !== 0 && v !== 1) return false;
-      pref += v;
-      if (pref < 0 || pref > 1) return false;
-    }
-    if (pref !== 1) return false;
-  }
-  for (let j = 0; j < n; j++) {
-    let pref = 0;
-    for (let i = 0; i < n; i++) {
-      pref += rows[i][j];
-      if (pref < 0 || pref > 1) return false;
-    }
-    if (pref !== 1) return false;
-  }
-  return true;
-}
+const binomialBig = (n: number, k: number): bigint => {
+  let c = 1n;
+  for (let i = 1; i <= k; i++) c = (c * BigInt(n - k + i)) / BigInt(i);
+  return c;
+};
 
 const factorialBig = (n: number): bigint => {
   let f = 1n;
@@ -561,50 +336,40 @@ export function IsBoxedPlanePartitionOf(e: unknown, a: number, b: number, c: num
   return true;
 }
 
-export const entriesBeforeSkewStandardTableaux: NumberKernel[] = [
+export const entriesBeforeSkewStandardTableaux: (NumberKernel | EpsilFamily)[] = [
   {
-    head: "SemistandardTableaux",
-    paramCount: 2,
-    kind: "blocks",
-    count: ([n, k]) => SemistandardTableauxCount(n, k),
-    unrank: ([n, k], r) => SemistandardTableauxUnrank(n, k, r),
-    valid: (e, [n, k]) => IsSemistandardTableauOf(e, n, k),
-    rank: (e, [n, k]) => SemistandardTableauxRank(e as number[][], n, k),
+    ...semistandardTableaux,
     declared: {
       carrier: "SemistandardTableau",
       params: [axis("size"), axis("max_entry")],
-      cost: enumerated("polynomial"),
-      work: ([n, k]) => BigInt(SemistandardTableauxCount(n, k)),
+      // Unrank and rank tabulate the rows of each level of a shape: the two levels of two equal
+      // rows are the largest, the rows C(m + k − 1, m) of them with m = n/2 (rounded up).
+      cost: { count: "polynomial", unrank: "enumerative", rank: "enumerative", valid: "polynomial" },
+      work: ([n, k]) => binomialBig(Math.ceil(n / 2) + k - 1, Math.ceil(n / 2)) ** 2n,
+      walks: true,
     },
   },
   {
-    head: "GelfandTsetlin",
-    paramCount: 2,
-    kind: "blocks",
-    count: ([n, k]) => GelfandTsetlinCount(n, k),
-    unrank: ([n, k], r) => GelfandTsetlinUnrank(n, k, r),
-    valid: (e, [n, k]) => IsGelfandTsetlinOf(e, n, k),
-    rank: (e, [n, k]) => GelfandTsetlinRank(e as number[][], n, k),
+    ...gelfandTsetlin,
     declared: {
       carrier: "GelfandTsetlinPattern",
       params: [axis("n"), axis("k")],
-      cost: enumerated("closed"),
-      work: ([n, k]) => BigInt(GelfandTsetlinCount(n, k)),
+      // Unrank and rank walk the rows that fit under each row of the triangle, the top row's the
+      // multisets of n from 0..k: at most n of those lists, not the triangles themselves.
+      cost: { count: "closed", unrank: "enumerative", rank: "enumerative", valid: "polynomial" },
+      work: ([n, k]) => BigInt(n) * binomialBig(n + k, n),
+      walks: true,
     },
   },
   {
-    head: "AlternatingSignMatrices",
-    paramCount: 1,
-    kind: "blocks",
-    count: ([n]) => AlternatingSignMatrixCount(n),
-    unrank: ([n], r) => AlternatingSignMatrixUnrank(n, r),
-    valid: (e, [n]) => IsAlternatingSignMatrixOf(e, n),
-    rank: (e, [n]) => AlternatingSignMatrixRank(e as number[][], n),
+    ...alternatingSignMatrices,
     declared: {
       carrier: "AlternatingSignMatrix",
       params: [axis("size")],
-      cost: enumerated("closed"),
-      work: ([n]) => BigInt(AlternatingSignMatrixCount(n)),
+      // Unrank and rank read a table over the subsets of the columns, 4^n steps to build.
+      cost: { count: "closed", unrank: "enumerative", rank: "enumerative", valid: "polynomial" },
+      work: ([n]) => 4n ** BigInt(n),
+      walks: true,
     },
   },
 ];
@@ -627,7 +392,6 @@ export const skewStandardTableauxEntries: NumberKernel[] = [
   },
 ];
 
-// Stays TS: shapes come from DistinctPartitions (TS), and a shape's count is a recursion over shapes.
 // ═══ ShiftedStandardTableaux(size) — standard tableaux on shifted diagrams of STRICT partitions ═══
 // Row i (0-indexed) occupies columns i..i+shape[i]-1, so row i's k-th cell shares a column with row
 // (i-1)'s (k+1)-th cell. Same recursive-corner-removal scheme as StandardTableaux in tableaux-trees.ts
@@ -736,17 +500,16 @@ export function IsShiftedStandardTableauOf(e: unknown, n: number): boolean {
   return total === n;
 }
 
-export const shiftedStandardTableauxEntries: NumberKernel[] = [
-  {
-    head: "ShiftedStandardTableaux",
-    paramCount: 1,
-    kind: "blocks",
-    carrier: "ShiftedStandardTableau",
-    count: ([n]) => ShiftedStandardTableauxCount(n),
-    unrank: ([n], r) => ShiftedStandardTableauxUnrank(n, r),
-    valid: (e, [n]) => IsShiftedStandardTableauOf(e, n),
-    rank: (e, [n]) => ShiftedStandardTableauxRank(e as number[][], n),
-  },
+// Defined in Epsil (./standard-tableaux.ts); the kernel above is its fast path, in the same order.
+export const shiftedStandardTableauxFast: FastKernel = {
+  count: ([n]) => ShiftedStandardTableauxCount(n),
+  unrank: ([n], r) => ShiftedStandardTableauxUnrank(n, r),
+  rank: (e, [n]) => ShiftedStandardTableauxRank(e as number[][], n),
+  valid: (e, [n]) => IsShiftedStandardTableauOf(e, n),
+};
+
+export const shiftedStandardTableauxEntries: EpsilFamily[] = [
+  { ...shiftedStandardTableaux, fast: shiftedStandardTableauxFast },
 ];
 
 export const planePartitionsEntries: NumberKernel[] = [

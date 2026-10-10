@@ -7,7 +7,6 @@
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareCombinatorics } from "../src/index.ts";
-import { numberKernel } from "../collections/src/families/types.ts";
 import type { FamilyKernel } from "../collections/src/families/types.ts";
 import { collectionsEntries } from "../collections/src/families/index.ts";
 import { kernelsOn, liftFamily } from "../collections/src/families/epsil.ts";
@@ -50,6 +49,7 @@ import {
 } from "../set-partitions/src/families/index.ts";
 import {
   standardTableauPairsEntries,
+  standardTableauxEntries,
   tableauxPlaneBeforeSkewStandardTableauxEntries,
   tableauxPlanePlanePartitionsEntries,
   tableauxPlaneShiftedStandardTableauxEntries,
@@ -107,13 +107,17 @@ const allFamilies: readonly FamilyKernel[] = [
       ...setPartitionsMatchingsEntries,
     ].map(liftFamily),
   ),
-  ...[
-    ...tableauxPlaneBeforeSkewStandardTableauxEntries,
-    ...tableauxPlaneSkewStandardTableauxEntries,
-    ...tableauxPlaneShiftedStandardTableauxEntries,
-    ...standardTableauPairsEntries,
-    ...tableauxPlanePlanePartitionsEntries,
-  ].map(numberKernel),
+  ...kernelsOn(
+    bareEngine(),
+    [
+      ...tableauxPlaneBeforeSkewStandardTableauxEntries,
+      ...tableauxPlaneSkewStandardTableauxEntries,
+      ...standardTableauxEntries,
+      ...tableauxPlaneShiftedStandardTableauxEntries,
+      ...standardTableauPairsEntries,
+      ...tableauxPlanePlanePartitionsEntries,
+    ].map(liftFamily),
+  ),
   ...kernelsOn(bareEngine(), graphsCoreEntries.map(liftFamily)),
   ...kernelsOn(bareEngine(), collectionsEntries),
 ];

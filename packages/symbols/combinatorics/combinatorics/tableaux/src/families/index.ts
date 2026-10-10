@@ -9,3 +9,4 @@ export {
   planePartitionsEntries as tableauxPlanePlanePartitionsEntries,
 } from "./tableaux-plane.ts";
 export { entries as standardTableauPairsEntries } from "./standard-tableau-pairs.ts";
+export { standardTableauxEntries } from "./standard-tableaux.ts";

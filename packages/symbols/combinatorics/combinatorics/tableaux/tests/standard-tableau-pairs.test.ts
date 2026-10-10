@@ -1,13 +1,24 @@
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/families/standard-tableau-pairs.ts";
+import { standardTableauPairsFast as fast } from "../src/families/standard-tableau-pairs.ts";
 
 // Moved out of collections/tests/tableaux-plane.test.ts alongside the family (§4 step 5,
 // https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible):
 // StandardTableauPairs now carries "StandardTableauPair". These tests exercise the pure kernel
 // (count/unrank/rank/valid over plain JS values) -- unaffected by the carrier wiring, which is
 // declare.ts's concern (see tableaux/tests/carrier.test.ts or the collections declare tests for
-// the CE-level typed-element check).
-const byHead = new Map(entries.map((e) => [e.head, e]));
+// the CE-level typed-element check). The family is defined in Epsil, interpreted (a nested element
+// has no compiled type): these read its TS kernel, the fast path, and ./rsk-pairs.test.ts holds the two together.
+const byHead = new Map([
+  [
+    "StandardTableauPairs",
+    {
+      count: (p: number[]) => Number(fast.count(p)),
+      unrank: (p: number[], r: number) => fast.unrank(p, r),
+      rank: (e: unknown, p: number[]) => fast.rank(e as never, p),
+      valid: (e: unknown, p: number[]) => fast.valid(e as never, p),
+    },
+  ],
+]);
 
 const PARAMS: Record<string, number[][]> = {
   StandardTableauPairs: [[0], [1], [2], [3], [4], [5]],

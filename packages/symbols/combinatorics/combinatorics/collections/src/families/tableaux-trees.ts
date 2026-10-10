@@ -538,26 +538,19 @@ export const increasingBinaryTreesFast: FastKernel = {
   rank: (e) => IncreasingBinaryTreeRank(e as LabTree),
 };
 
-// StandardTableaux stays a TS kernel: it sums hook lengths over every shape of n and removes corners
-// recursively.
+// StandardTableaux, defined in Epsil with these kernels as its fast path, is the tableaux area's
+// (tableaux/src/families/standard-tableaux.ts); it sits between the two lists below.
 //
-// Kept separate from `entriesAfterNonDecreasingParkingFunctions` below only so
+// Kept separate from `entriesAfterNonDecreasingParkingFunctions` only so
 // collections/src/families/index.ts can splice `wordsTableauxTreesEntries` (ParkingFunctions,
 // NonDecreasingParkingFunctions) back in at the exact interior position it held before the words-
 // area move — §4 step 5.
-export const entriesAfterNonDecreasingParkingFunctions: (NumberKernel | EpsilFamily)[] = [
+export const entriesBeforeStandardTableaux: (NumberKernel | EpsilFamily)[] = [
   recursiveTrees,
   { ...increasingBinaryTrees, fast: increasingBinaryTreesFast },
-  {
-    head: "StandardTableaux",
-    paramCount: 1,
-    kind: "blocks",
-    count: ([n]) => StandardTableauxCount(n),
-    unrank: ([n], r) => StandardTableauxUnrank(n, r),
-    valid: (e, [n]) => IsStandardTableauOf(e, n),
-    rank: (e, [n]) => StandardTableauxRank(e as number[][], n),
-    carrier: "StandardTableau",
-  },
+];
+
+export const entriesAfterStandardTableaux: (NumberKernel | EpsilFamily)[] = [
   hookShape,
   twoRow("SytTwoRow"),
   // The TS kernel reads the transpose as the very same pair of rows as SytTwoRow.
