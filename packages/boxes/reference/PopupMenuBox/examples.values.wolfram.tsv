@@ -1,2 +1,2 @@
-id	in	out	tex.in	tex.out
-inert	PopupMenuBox[DynamicBox[c], List[a, b, c]]	PopupMenuBox[DynamicBox[c], {a, b, c}]	\text{PopupMenuBox}[\text{DynamicBox}[c],\{a,b,c\}]	\text{PopupMenuBox}[\text{DynamicBox}[c],\{a,b,c\}]
+id	in	out	tex.in	tex.out	verdict
+inert	PopupMenuBox[DynamicBox[c], List[a, b, c]]	PopupMenuBox[DynamicBox[c], {a, b, c}]	\text{PopupMenuBox}[\text{DynamicBox}[c],\{a,b,c\}]	\text{PopupMenuBox}[\text{DynamicBox}[c],\{a,b,c\}]	disagree

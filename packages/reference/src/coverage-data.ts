@@ -559,6 +559,7 @@ export const coverage: Readonly<Record<string, readonly string[]>> = {
   Surd: ["wolfram"],
   Switch: ["wolfram"],
   SymmetricGroup: ["wolfram"],
+  TableViewBox: ["wolfram"],
   TagBox: ["wolfram"],
   Take: ["wolfram", "sympy"],
   Tan: ["wolfram", "sympy", "mpmath"],

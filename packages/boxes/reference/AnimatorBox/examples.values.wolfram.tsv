@@ -1,2 +1,2 @@
-id	in	out	tex.in	tex.out
-inert	AnimatorBox[DynamicBox[t], List[0, 6]]	AnimatorBox[DynamicBox[t], {0, 6}]	\text{AnimatorBox}[\text{DynamicBox}[t],\{0,6\}]	\text{AnimatorBox}[\text{DynamicBox}[t],\{0,6\}]
+id	in	out	tex.in	tex.out	verdict
+inert	AnimatorBox[DynamicBox[t], List[0, 6]]	AnimatorBox[DynamicBox[t], {0, 6}]	\text{AnimatorBox}[\text{DynamicBox}[t],\{0,6\}]	\text{AnimatorBox}[\text{DynamicBox}[t],\{0,6\}]	disagree

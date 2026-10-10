@@ -17,7 +17,6 @@ seeAlso:
 bindings:
   - origin: mapped
     form: wolfram
-    counterpart: false
     note: Wolfram's TableViewBox takes a list of rows of boxes; this one takes a held row source, so it is ours.
     checked:
       version: 15.0.0
