@@ -10,6 +10,12 @@
 // `normRank`, `cmpNumArrays`, `cmpRowsShapeThenEntries`, `keyOf`, `indexedFamily`, `axis`,
 // `enumerated` are small local helpers duplicated from the source file (mirrors the permutations
 // pilot's `ints`); `factorialBig` is used ONLY by SkewStandardTableaux and moved outright.
+//
+// Stays TS here, each as an enumeration cached per params (a larger size is bounded by `work`):
+// - SkewStandardTableaux: a shape's fillings are counted over its order ideals, up to 2^n of them.
+// - PlanePartitions: the layers left below a row depend on the whole row above, so a table over rows
+//   and sums is far larger than the family (a row-by-row DP does 100x its count's work at n = 28).
+// SkewPartitions and BoxedPlanePartitions are defined in Epsil (./boxed-plane-partitions.ts).
 import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
 import type { Cost, Declared, NumberKernel, Param } from "../../../collections/src/families/types.ts";
 import {
@@ -17,8 +23,9 @@ import {
   DistinctPartitionUnrank,
   DistinctPartitionRank,
 } from "../../../collections/src/families/kernels-extra.ts";
-import { IsSkewPartitionOf, skewPart } from "../../../partitions/src/families/tableaux-plane.ts";
+import { IsSkewPartitionOf, skewShapeCount, skewShapeUnrank } from "../../../partitions/src/families/skew-shapes.ts";
 import { alternatingSignMatrices } from "./alternating-sign-matrices.ts";
+import { boxedPlanePartitions } from "./boxed-plane-partitions.ts";
 import { gelfandTsetlin } from "./gelfand-tsetlin.ts";
 import { semistandardTableaux } from "./semistandard-tableaux.ts";
 import { shiftedStandardTableaux } from "./standard-tableaux.ts";
@@ -87,7 +94,9 @@ const factorialBig = (n: number): bigint => {
   return f;
 };
 
-// Stays TS: shapes come from SkewPartitions (TS), and the fillings left depend on every row's count.
+// Stays TS: its shapes are SkewPartitions' (unranked, in that order), and a shape's fillings are listed
+// by their row words, which a DP can count only over the order ideals of the shape, as many as 2^n:
+// that would take Epsil from n = 5 to n = 9 for a few hundred lines, so the enumeration stays.
 // ═══ SkewStandardTableaux(size) — standard tableaux on reduced skew shapes λ/μ, summed over every shape ═══
 // No closed form. Element: `[lam, mu, rowWord]` — rowWord[i] = 0-based row of entry i+1 (placement order),
 // same convention as shifted below. A cell (row r, running count c) is legal to place next iff row r isn't
@@ -132,9 +141,10 @@ function skewFillingsOfShape(lam: readonly number[], mu: readonly number[]): num
 const skewStd = indexedFamily<[number[], number[], number[]]>((key) => {
   const n = Number(key);
   const out: [number[], number[], number[]][] = [];
-  const shapeList: [number[], number[]][] = [];
-  for (let r = 0; r < skewPart.count(String(n)); r++) shapeList.push(skewPart.unrank(String(n), r));
-  for (const [lam, mu] of shapeList) for (const w of skewFillingsOfShape(lam, mu)) out.push([lam, mu, w]);
+  for (let r = 0; r < skewShapeCount(n); r++) {
+    const [lam, mu] = skewShapeUnrank(n, r);
+    for (const w of skewFillingsOfShape(lam, mu)) out.push([lam, mu, w]);
+  }
   return out;
 });
 export function SkewStandardTableauxUnrank(n: number, rank: number): [number[], number[], number[]] {
@@ -166,7 +176,7 @@ export function IsSkewStandardTableauOf(e: unknown, n: number): boolean {
   return true;
 }
 
-// PlanePartitions stays TS: ordered by shape then entries, and the layers left depend on the whole row above.
+// PlanePartitions(n): stays TS (see the header). Ordered by shape then entries.
 function partitionsUnder(ceiling: readonly number[], maxSum: number): number[][] {
   const results: number[][] = [];
   function rec(idx: number, cur: number[], sum: number): void {
@@ -250,90 +260,6 @@ export function IsPlanePartitionOf(e: unknown, n: number): boolean {
     }
   }
   return total === n;
-}
-
-// Stays TS: same as PlanePartitions.
-// ═══ BoxedPlanePartitions(a, b, c) — plane partitions (any size) fitting in an a×b×c box ═══
-// Count: MacMahon's box formula, Π_{i=1..a} Π_{j=1..b} Π_{k=1..c} (i+j+k−1)/(i+j+k−2) — exact and
-// closed-form; accumulated as bigint numerator/denominator (not Math.round'd like the other formulas
-// above) since the box formula's intermediate factors don't individually cancel to integers. Element:
-// PlanePartitions' ragged-rows carrier (ragged number[][], nonincreasing along rows and down columns,
-// trailing zeros trimmed) with the box's bounds standing in for the fixed-size target — IsPlanePartitionOf's
-// structural checks plus ≤a rows, each row ≤b long, entries ≤c. Unrank/rank: enumerate-then-index
-// (indexedFamily), same shape-then-entries order as PlanePartitions — small boxes only.
-export function BoxedPlanePartitionsCount(a: number, b: number, c: number): number {
-  let num = 1n;
-  let den = 1n;
-  for (let i = 1; i <= a; i++)
-    for (let j = 1; j <= b; j++)
-      for (let k = 1; k <= c; k++) {
-        num *= BigInt(i + j + k - 1);
-        den *= BigInt(i + j + k - 2);
-      }
-  return Number(num / den);
-}
-// Every weakly-decreasing positive sequence of length ≤ min(maxLen, ceiling.length), entry i bounded by
-// ceiling[i] (the column above), maxVal (the box height c), and the previous entry in the row.
-function rowsUnder(ceiling: readonly number[], maxLen: number, maxVal: number): number[][] {
-  const results: number[][] = [];
-  function rec(idx: number, cur: number[]): void {
-    results.push(cur.slice());
-    if (idx === maxLen || idx === ceiling.length) return;
-    const prevVal = idx > 0 ? cur[idx - 1] : maxVal;
-    const hi = Math.min(prevVal, ceiling[idx], maxVal);
-    for (let v = 1; v <= hi; v++) {
-      cur.push(v);
-      rec(idx + 1, cur);
-      cur.pop();
-    }
-  }
-  rec(0, []);
-  return results;
-}
-const boxedPlanePart = indexedFamily<number[][]>((key) => {
-  const [a, b, c] = key.split("|").map(Number);
-  const results: number[][][] = [];
-  const rows: number[][] = [];
-  // Every prefix (0..a rows) is itself a box-confined plane partition — push on entry, then extend.
-  function backtrack(ceiling: readonly number[], rowsLeft: number): void {
-    results.push(rows.map((r) => r.slice()));
-    if (rowsLeft === 0) return;
-    for (const nr of rowsUnder(ceiling, b, c)) {
-      if (nr.length === 0) continue;
-      rows.push(nr);
-      backtrack(nr, rowsLeft - 1);
-      rows.pop();
-    }
-  }
-  backtrack(
-    Array.from({ length: b }, () => c),
-    a,
-  );
-  results.sort(cmpRowsShapeThenEntries);
-  return results;
-});
-export function BoxedPlanePartitionsUnrank(a: number, b: number, c: number, rank: number): number[][] {
-  return boxedPlanePart.unrank(`${a}|${b}|${c}`, rank);
-}
-export function BoxedPlanePartitionsRank(e: number[][], a: number, b: number, c: number): number {
-  return boxedPlanePart.rank(`${a}|${b}|${c}`, e);
-}
-export function IsBoxedPlanePartitionOf(e: unknown, a: number, b: number, c: number): boolean {
-  if (!Array.isArray(e)) return false;
-  const rows = e as number[][];
-  if (rows.length > a) return false;
-  for (let r = 0; r < rows.length; r++) {
-    const row = rows[r];
-    if (!Array.isArray(row) || row.length === 0 || row.length > b) return false;
-    if (r > 0 && rows[r - 1].length < row.length) return false;
-    for (let ci = 0; ci < row.length; ci++) {
-      const v = row[ci];
-      if (!Number.isInteger(v) || v < 1 || v > c) return false;
-      if (ci > 0 && row[ci - 1] < v) return false;
-      if (r > 0 && rows[r - 1][ci] < v) return false;
-    }
-  }
-  return true;
 }
 
 export const entriesBeforeSkewStandardTableaux: (NumberKernel | EpsilFamily)[] = [
@@ -512,7 +438,26 @@ export const shiftedStandardTableauxEntries: EpsilFamily[] = [
   { ...shiftedStandardTableaux, fast: shiftedStandardTableauxFast },
 ];
 
-export const planePartitionsEntries: NumberKernel[] = [
+/**
+ * The steps of a call on a box: the table of what goes below each row tests every row against the rows no
+ * longer than it, each test as long as the shorter row, once per row of the box (a layers); the shape
+ * and entries passes cost no more, so a call (the table built too) is twice it. A thin tall box has many
+ * rows, N = C(b + c, b) of them, though few partitions.
+ */
+function boxedWalkSteps(a: number, b: number, c: number): bigint {
+  if (a < 1 || b < 1 || c < 1) return 0n;
+  let rows = 1n; // rows of length l: C(l + c − 1, l)
+  let tested = 0n; // Σ over the rows σ of length ≤ l of len(σ)
+  let table = 0n;
+  for (let l = 1; l <= b; l++) {
+    rows = (rows * BigInt(l + c - 1)) / BigInt(l);
+    tested += rows * BigInt(l);
+    table += rows * tested;
+  }
+  return 2n * BigInt(a) * table;
+}
+
+export const planePartitionsEntries: (NumberKernel | EpsilFamily)[] = [
   {
     head: "PlanePartitions",
     paramCount: 1,
@@ -529,18 +474,13 @@ export const planePartitionsEntries: NumberKernel[] = [
     },
   },
   {
-    head: "BoxedPlanePartitions",
-    paramCount: 3,
-    kind: "blocks",
-    count: ([a, b, c]) => BoxedPlanePartitionsCount(a, b, c),
-    unrank: ([a, b, c], r) => BoxedPlanePartitionsUnrank(a, b, c, r),
-    valid: (e, [a, b, c]) => IsBoxedPlanePartitionOf(e, a, b, c),
-    rank: (e, [a, b, c]) => BoxedPlanePartitionsRank(e as number[][], a, b, c),
+    ...boxedPlanePartitions,
     declared: {
       carrier: "PlanePartition",
       params: [axis("a"), axis("b"), axis("c")],
-      cost: enumerated("closed"),
-      work: ([a, b, c]) => BigInt(BoxedPlanePartitionsCount(a, b, c)),
+      cost: { count: "closed", unrank: "enumerative", rank: "enumerative", valid: "polynomial" },
+      work: ([a, b, c]) => boxedWalkSteps(a, b, c),
+      walks: true,
     },
   },
 ];

@@ -29,12 +29,16 @@ test("an affordable call still answers", () => {
   expect(run(["Count", ["BoxedPlanePartitions", 3, 3, 3]]).json).toBe(980);
 });
 
-test("past the limit, At declines and says why", () => {
-  // BoxedPlanePartitions(5, 5, 5) has 267,227,532 elements: a count a double carries, and far
-  // more than unrank should build to hand back one of them.
-  const { texts } = run(["At", ["BoxedPlanePartitions", 5, 5, 5], 1]);
-  expect(texts.join(" ")).toContain("BoxedPlanePartitions(5, 5, 5) would enumerate about 267,227,532 elements");
-  expect(run(["Count", ["BoxedPlanePartitions", 5, 5, 5]]).json).toBe(267227532); // the count is closed-form
+test("a walking family answers far past what it could enumerate, and past its limit At says why", () => {
+  // BoxedPlanePartitions(5, 5, 5) has 267,227,532 elements, and a call walks about 1.7 million steps.
+  expect(run(["At", ["BoxedPlanePartitions", 5, 5, 5], 1]).json).toEqual(["List"]);
+  expect(
+    (run(["At", ["BoxedPlanePartitions", 5, 5, 5], 200_000_000]).json as unknown as unknown[]).length,
+  ).toBeGreaterThan(1);
+  // (6, 6, 6) walks about 34 million.
+  const { texts } = run(["At", ["BoxedPlanePartitions", 6, 6, 6], 1]);
+  expect(texts.join(" ")).toContain("BoxedPlanePartitions(6, 6, 6) would take about 33,578,928 steps");
+  expect(run(["Count", ["BoxedPlanePartitions", 6, 6, 6]]).json).toBe(1478619421136); // the count is closed-form
 });
 
 test("filtering the permutations counts n!, not the survivors", () => {
@@ -55,7 +59,7 @@ test("Take and RandomChoice leave a huge family unevaluated", () => {
 });
 
 test("a count past 2^53 in a plain-number kernel is unknown, not an internal error", () => {
-  expect(run(["Count", ["BoxedPlanePartitions", 7, 7, 7]]).json).toEqual(["Count", ["BoxedPlanePartitions", 7, 7, 7]]);
+  expect(run(["Count", ["PlanePartitions", 100]]).json).toEqual(["Count", ["PlanePartitions", 100]]);
 });
 
 test("a bigint kernel's count past 2^53 is exact, and its first 2^53 elements index", () => {
