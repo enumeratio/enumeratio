@@ -425,18 +425,18 @@ export function collectWolfram(output: string, count: number): Result[] {
 
 // Whether the kernel's value `a` is the call ours holds, `held` being ours' source text (never
 // evaluated, or a kernel that computes where ours holds would agree with itself). Equal as Python
-// expressions, so spacing, redundant parentheses, a symbol's constructor and a helper's prefix don't matter; else the
+// expressions, so spacing, redundant parentheses, a symbol's constructor, a helper's prefix and Sage's sgn for sign don't matter; else the
 // marker that sends the row to the plain comparison.
 const HELD_ALIKE = `
 def enumeratio_held_alike(a, held):
     import ast, re
     def parsed(text):
         text = re.sub(r'(?:Symbol|SR\\.var)\\("([A-Za-z_0-9]+)"\\)', r'\\1', text)
-        text = text.replace("enumeratio_", "")
+        text = re.sub(r'\\bsgn\\(', 'sign(', text.replace("enumeratio_", ""))
         try:
             tree = ast.parse(text.strip(), mode="eval")
         except SyntaxError:
-            return "".join(text.split())
+            return " ".join(text.split())
         # SymPy prints x % 2 held as Mod(x, 2).
         class Mod(ast.NodeTransformer):
             def visit_BinOp(self, node):
@@ -652,6 +652,9 @@ def _enumeratio_mod(a, b):
         a, b = G(a), G(b)
         z = a / b
         return a - G([_enumeratio_round_half_even(z.real()), _enumeratio_round_half_even(z.imag())]) * b
+    # Sage has no remainder on the symbolic ring, and none is made up here: its own TypeError stands.
+    if not (_enumeratio_is_numeric(a) and _enumeratio_is_numeric(b)):
+        return a % b
     # Only integers take the integer \`%\`: for 4.0 it is centered, where Mod is a - b * floor(a / b).
     if isinstance(a, (Integer, int)) and isinstance(b, (Integer, int)):
         return a % b
@@ -753,9 +756,30 @@ def _enumeratio_power_mod(a, e, m):
 def enumeratio_power_mod(a, e, m):
     return enumeratio_broadcast(_enumeratio_power_mod, a, e, m)
 
-# A number, not an expression in a variable.
+# A number, not an expression in a variable or an unevaluated call of a function of its own (f(2)).
 def _enumeratio_is_numeric(x):
-    return not (hasattr(x, "variables") and x.variables())
+    if hasattr(x, "variables") and x.variables():
+        return False
+    if hasattr(x, "operator"):
+        from sage.symbolic.function import SymbolicFunction
+        return not isinstance(x.operator(), SymbolicFunction) and all(_enumeratio_is_numeric(o) for o in x.operands())
+    return True
+
+# The bits of the least precise inexact number x holds (a float, an RR or CC element, a numeric
+# leaf of an expression), or None for an exact value: an inexact operand has no more bits to give.
+def _enumeratio_bits(x):
+    from sage.rings.real_mpfr import RealNumber
+    from sage.rings.complex_mpfr import ComplexNumber
+    if isinstance(x, (float, complex)):
+        return 53
+    if isinstance(x, (RealNumber, ComplexNumber)):
+        return x.prec()
+    if not hasattr(x, "operands"):
+        return None
+    if x.is_numeric():
+        return _enumeratio_bits(x.pyobject())
+    found = [b for b in map(_enumeratio_bits, x.operands()) if b is not None]
+    return min(found) if found else None
 
 # N at the precision the value needs: Sage rounds an exact argument to 53 bits first, so cos(10^100)
 # comes out wrong. Raise the precision until two evaluations agree to 2^-40; a symbolic expression
@@ -770,18 +794,18 @@ def _enumeratio_n(x, digits=None):
     if isinstance(digits, (list, tuple)):
         accuracy, digits = digits[1], None
     start = 53 if digits is None or digits <= 15 else int(digits * 3.33) + 20
-    previous = None
-    for prec in (start, start * 8, start * 64):
-        try:
+    bits = _enumeratio_bits(x)
+    if bits is not None:
+        v = N(x, prec=min(start, bits))
+        # Its digits are all it has, so asking for fewer does not round them away.
+        digits = None
+    else:
+        previous = None
+        for prec in (start, start * 8, start * 64):
             v = N(x, prec=prec)
-        except TypeError:
-            # An approximate argument (polylog(2, 0.5)) holds no more bits than it has.
-            if previous is None:
-                raise
-            break
-        if previous is not None and abs(v - previous) <= abs(v) * 2 ** -40:
-            break
-        previous = v
+            if previous is not None and abs(v - previous) <= abs(v) * 2 ** -40:
+                break
+            previous = v
     if accuracy is not None and v != 0:
         digits = max(int(accuracy + floor(log(abs(v), 10)) + 1), 1)
     return _enumeratio_digits(v, digits)
@@ -800,10 +824,11 @@ def enumeratio_n(x, digits=None):
     return enumeratio_broadcast(lambda v: _enumeratio_n(v, digits), x)
 
 # Equal as the identity ours checks: Sage's == compares forms (log(2) + log(3) == log(6) is False),
-# so a difference it cannot reduce to 0 is sampled: at three exact points (one positive, one negative,
-# one complex) when it holds a variable, so an identity that holds only for positive reals is not
-# one. A point where an operand is undefined is skipped; no point at all is an error, not a verdict.
-# An approximate operand compares to a relative 1e-12, as Wolfram's Equal does.
+# so a difference it cannot reduce to 0 is sampled at three exact points (one positive, one negative,
+# one complex) when it holds a variable, and never trusted to a simplifier that assumes reals
+# (abs(x)^2 == x^2). Exact operands agree to a relative 2^-150 of their size (so exp(-200) != 0);
+# an inexact operand (a float, or a float in an expression) to a relative 1e-12, as Wolfram's Equal does.
+# A point where an operand is undefined is skipped; no point at all is an error, not a verdict.
 def _enumeratio_at(v, point):
     return v.subs(point) if point and hasattr(v, "subs") else v
 
@@ -822,10 +847,10 @@ def _enumeratio_equal(a, b):
         d = a - b
     except TypeError:
         return False
-    if hasattr(d, "simplify_full") and d.simplify_full() == 0:
-        return True
-    approximate = any(isinstance(v, (float, complex)) or hasattr(v, "prec") for v in (a, b))
     names = d.variables() if hasattr(d, "variables") else ()
+    if not names and hasattr(d, "simplify_full") and d.simplify_full() == 0:
+        return True
+    approximate = _enumeratio_bits(a) is not None or _enumeratio_bits(b) is not None
     agreed = []
     for j in range(3) if names else [0]:
         point = {v: _enumeratio_sample(j, i) for i, v in enumerate(names)}
@@ -835,7 +860,9 @@ def _enumeratio_equal(a, b):
                 scale = max(abs(CC(_enumeratio_at(a, point))), abs(CC(_enumeratio_at(b, point))), 1e-300)
                 agreed.append(abs(CC(value)) <= scale * 1e-12)
             else:
-                agreed.append(abs(ComplexField(300)(N(value, prec=300))) <= 2 ** -150)
+                C = ComplexField(300)
+                scale = max(abs(C(N(_enumeratio_at(a, point), prec=300))), abs(C(N(_enumeratio_at(b, point), prec=300))))
+                agreed.append(abs(C(N(value, prec=300))) <= scale * 2 ** -150)
         except (ArithmeticError, ValueError):
             continue
         except TypeError:

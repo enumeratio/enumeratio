@@ -124,6 +124,8 @@ jobs:
           cache: pip
           cache-dependency-path: packages/oracle/python/requirements.txt
       - run: pip install -r packages/oracle/python/requirements.txt
+      # The SymPy helpers run in SymPy (the gate has none, so these skip there).
+      - run: pnpm --filter @enumeratio/oracle exec vp test run tests/symbolic.test.ts
       - uses: ./.github/actions/oracle-drift
         with:
           system: mpmath
@@ -268,6 +270,8 @@ jobs:
           SH
           sudo chmod +x /usr/local/bin/sage
           sage --version
+      # The Sage helpers run in Sage (the gate has none, so these skip there).
+      - run: pnpm --filter @enumeratio/oracle exec vp test run tests/symbolic.test.ts
       - uses: ./.github/actions/oracle-drift
         with:
           system: sage
