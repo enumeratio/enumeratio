@@ -5,8 +5,8 @@ signature: Foata(Permutation)
 summary: "Foata's fundamental bijection: cycles rotated to their max, ordered by increasing max, parentheses erased."
 catalog:
   - system: findstat
-    identity: Mp00067
-    url: https://www.findstat.org/Mp00067
+    identity: Mp00087
+    url: https://www.findstat.org/Mp00087
     on: Permutation
 mapOn:
   - Permutation
