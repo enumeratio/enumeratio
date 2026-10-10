@@ -1,5 +1,5 @@
 id	in
-const-glaisher-numeric-value	N(glaisher)
-n-constglaisher-50	N(glaisher)
+const-glaisher-numeric-value	enumeratio_n(glaisher)
+n-constglaisher-50	enumeratio_n(glaisher, 50)
 round-constglaisher-pow-100	
 1-lt-constglaisher-lt-2	

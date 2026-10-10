@@ -29,7 +29,7 @@ bindings:
     note: mpmath and the Julia libraries are numeric already; SymPy and Sage evaluate exactly unless asked.
   - origin: mapped
     form: sage
-    template: N($1)
+    template: enumeratio_n($1)
     arity: 1
     note: mpmath and the Julia libraries are numeric already; SymPy and Sage evaluate exactly unless asked.
   - origin: mapped
@@ -59,9 +59,9 @@ bindings:
     note: "The digit count is dropped: lanes compare numbers to a relative tolerance, so the full-precision value is the better witness."
   - origin: mapped
     form: sage
-    template: N($1)
+    template: enumeratio_n($1, $2)
     arity: 2
-    note: "The digit count is dropped: lanes compare numbers to a relative tolerance, so the full-precision value is the better witness."
+    note: "The digit count only sets the starting precision, and the value is evaluated until stable: lanes compare numbers to a relative tolerance, so the full-precision value is the better witness."
   - origin: mapped
     form: oscar
     template: ($1)

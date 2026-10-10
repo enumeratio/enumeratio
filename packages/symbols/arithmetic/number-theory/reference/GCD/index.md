@@ -39,9 +39,8 @@ bindings:
     threadArg: 2
   - origin: mapped
     form: sage
-    template: gcd($1, $2)
+    template: enumeratio_gcd($1, $2)
     arity: 2
-    threadArg: 2
   - origin: mapped
     form: oscar
     template: gcd(ZZ($1), ZZ($2))

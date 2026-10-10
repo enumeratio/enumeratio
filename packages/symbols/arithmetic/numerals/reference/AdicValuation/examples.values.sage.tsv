@@ -1,17 +1,17 @@
-id	in	out	verdict
-adicvaluation-adicnumeral-5-75	(Qp(5, 60)(QQ(75))).valuation()	2	
-the-valuation-of-zero-is-positive-infinity	(Qp(5, 60)(QQ(0))).valuation()	+Infinity	disagree
-adicnorm-adicnumeral-5-75			
-adicunitpart-adicnumeral-5-75			
-adicvaluation-adicnumeral-2-minus1	(Qp(2, 60)(QQ(-1))).valuation()	0	
-adicvaluation-adicnumeral-2-100	(Qp(2, 60)(QQ(100))).valuation()	2	
-adicvaluation-adicnumeral-3-third-negative	(Qp(3, 60)(QQ((1/3)))).valuation()	-1	
-adicvaluation-adicnumeral-3-minus4-9	(Qp(3, 60)(QQ((-4/9)))).valuation()	-2	
-adicvaluation-adicnumeral-5-7-25	(Qp(5, 60)(QQ((7/25)))).valuation()	-2	
-adicvaluation-adicnumeral-5-100	(Qp(5, 60)(QQ(100))).valuation()	2	
-adicvaluation-adicnumeral-7-2-7	(Qp(7, 60)(QQ((2/7)))).valuation()	-1	
-adicvaluation-adicnumeral-11-minus1	(Qp(11, 60)(QQ(-1))).valuation()	0	
-adicvaluation-adicnumeral-11-100	(Qp(11, 60)(QQ(100))).valuation()	0	
-adicvaluation-adicnumeral-2-minus4-9	(Qp(2, 60)(QQ((-4/9)))).valuation()	2	
-adicvaluation-adicnumeral-7-minus1-3	(Qp(7, 60)(QQ((-1/3)))).valuation()	0	
-negative-in-q-5	(Qp(5, 60)(QQ((3/25)))).valuation()	-2	
+id	in	out
+adicvaluation-adicnumeral-5-75	(Qp(5, 60)(QQ(75))).valuation()	2
+the-valuation-of-zero-is-positive-infinity	(Qp(5, 60)(QQ(0))).valuation()	+Infinity
+adicnorm-adicnumeral-5-75		
+adicunitpart-adicnumeral-5-75		
+adicvaluation-adicnumeral-2-minus1	(Qp(2, 60)(QQ(-1))).valuation()	0
+adicvaluation-adicnumeral-2-100	(Qp(2, 60)(QQ(100))).valuation()	2
+adicvaluation-adicnumeral-3-third-negative	(Qp(3, 60)(QQ((1/3)))).valuation()	-1
+adicvaluation-adicnumeral-3-minus4-9	(Qp(3, 60)(QQ((-4/9)))).valuation()	-2
+adicvaluation-adicnumeral-5-7-25	(Qp(5, 60)(QQ((7/25)))).valuation()	-2
+adicvaluation-adicnumeral-5-100	(Qp(5, 60)(QQ(100))).valuation()	2
+adicvaluation-adicnumeral-7-2-7	(Qp(7, 60)(QQ((2/7)))).valuation()	-1
+adicvaluation-adicnumeral-11-minus1	(Qp(11, 60)(QQ(-1))).valuation()	0
+adicvaluation-adicnumeral-11-100	(Qp(11, 60)(QQ(100))).valuation()	0
+adicvaluation-adicnumeral-2-minus4-9	(Qp(2, 60)(QQ((-4/9)))).valuation()	2
+adicvaluation-adicnumeral-7-minus1-3	(Qp(7, 60)(QQ((-1/3)))).valuation()	0
+negative-in-q-5	(Qp(5, 60)(QQ((3/25)))).valuation()	-2

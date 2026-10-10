@@ -13,8 +13,8 @@ the-numeric-arguments-collapse-to-their-maximum	enumeratio_max(3, SR.var("x"), 5
 compares-exact-constants-numerically-max-e-pi-2	enumeratio_max([e, pi, 2])	pi	
 the-max-of-two-intervals-is-the-interval-of			
 the-day-s-high-from-a-handful-of-hourly-readings	enumeratio_max(68, 72, 65, 80, 74)	80	
-commutative-order-doesn-t-matter	bool(enumeratio_max(3, 7) == enumeratio_max(7, 3))	True	
-multiple-list-arguments-are-flattened-into-one	bool(enumeratio_max([3, 1, 4], [9, 2]) == 9)	True	
+commutative-order-doesn-t-matter	enumeratio_equal(enumeratio_max(3, 7), enumeratio_max(7, 3))	True	
+multiple-list-arguments-are-flattened-into-one	enumeratio_equal(enumeratio_max([3, 1, 4], [9, 2]), 9)	True	
 idempotent-max-x-x-x	enumeratio_max(SR.var("x"), SR.var("x"))	True	
 with-no-arguments-compute-engine-returns-nan	enumeratio_max()	ValueError: max() iterable argument is empty	error
 nan-poisons-the-result-overriding-every-other	enumeratio_max(NaN, 3)		

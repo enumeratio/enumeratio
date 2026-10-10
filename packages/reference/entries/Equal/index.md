@@ -43,7 +43,7 @@ bindings:
     note: "The single most valuable row: a large share of documented examples are identities written as Equal."
   - origin: mapped
     form: sage
-    template: bool($1 == $2)
+    template: enumeratio_equal($1, $2)
     arity: 2
     note: "The single most valuable row: a large share of documented examples are identities written as Equal."
   - origin: mapped

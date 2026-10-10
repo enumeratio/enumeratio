@@ -1,30 +1,30 @@
 id	in	out
-length-list-1-2-3-4	(len([1, 2, 3, 4]) if hasattr([1, 2, 3, 4], '__len__') else (len([1, 2, 3, 4].operands()) if hasattr([1, 2, 3, 4], 'operands') else 0))	4
-length-list-1-2-3-4-5	(len([1, 2, 3, 4, 5]) if hasattr([1, 2, 3, 4, 5], '__len__') else (len([1, 2, 3, 4, 5].operands()) if hasattr([1, 2, 3, 4, 5], 'operands') else 0))	5
+length-list-1-2-3-4	enumeratio_length([1, 2, 3, 4])	4
+length-list-1-2-3-4-5	enumeratio_length([1, 2, 3, 4, 5])	5
 works-on-any-collection-not-just-list		
-length-list-a-b-c-d	(len([SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")]) if hasattr([SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")], '__len__') else (len([SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")].operands()) if hasattr([SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")], 'operands') else 0))	4
+length-list-a-b-c-d	enumeratio_length([SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")])	4
 length-of-association-counts-values		
 length-association		
-an-atom-has-no-parts-so-its-length-is-0	(len(5) if hasattr(5, '__len__') else (len(5.operands()) if hasattr(5, 'operands') else 0))	0
-the-empty-list-has-length-0	(len([]) if hasattr([], '__len__') else (len([].operands()) if hasattr([], 'operands') else 0))	0
-of-a-matrix-the-number-of-rows	(len([[1, 2], [3, 4], [5, 6]]) if hasattr([[1, 2], [3, 4], [5, 6]], '__len__') else (len([[1, 2], [3, 4], [5, 6]].operands()) if hasattr([[1, 2], [3, 4], [5, 6]], 'operands') else 0))	3
+an-atom-has-no-parts-so-its-length-is-0	enumeratio_length(5)	0
+the-empty-list-has-length-0	enumeratio_length([])	0
+of-a-matrix-the-number-of-rows	enumeratio_length([[1, 2], [3, 4], [5, 6]])	3
 a-set-holds-each-element-once-so-a-repeated		
-any-expression-the-number-of-terms-in-a-sum	(len((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d"))) if hasattr((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")), '__len__') else (len((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")).operands()) if hasattr((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")), 'operands') else 0))	4
+any-expression-the-number-of-terms-in-a-sum	enumeratio_length((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")))	4
 the-number-of-arguments-of-a-call-counting-only		
-a-symbol-such-as-pi-is-an-atom-of-length-0	(len(pi) if hasattr(pi, '__len__') else (len(pi.operands()) if hasattr(pi, 'operands') else 0))	0
+a-symbol-such-as-pi-is-an-atom-of-length-0	enumeratio_length(pi)	0
 a-lazy-range-is-counted-without-being		
-length-x	(len(SR.var("x")) if hasattr(SR.var("x"), '__len__') else (len(SR.var("x").operands()) if hasattr(SR.var("x"), 'operands') else 0))	
-length-123-456	(len(123456) if hasattr(123456, '__len__') else (len(123456.operands()) if hasattr(123456, 'operands') else 0))	
-length-1-over-10	(len((1/10)) if hasattr((1/10), '__len__') else (len((1/10).operands()) if hasattr((1/10), 'operands') else 0))	
-length-3-plus-i	(len((3 + 1*I)) if hasattr((3 + 1*I), '__len__') else (len((3 + 1*I).operands()) if hasattr((3 + 1*I), 'operands') else 0))	
-length-string	(len("string") if hasattr("string", '__len__') else (len("string".operands()) if hasattr("string", 'operands') else 0))	
-length-x-pow-9-plus-x-pow-2-plus-x-plus-1	(len((((SR.var("x"))^9) + ((SR.var("x"))^2) + SR.var("x") + 1)) if hasattr((((SR.var("x"))^9) + ((SR.var("x"))^2) + SR.var("x") + 1), '__len__') else (len((((SR.var("x"))^9) + ((SR.var("x"))^2) + SR.var("x") + 1).operands()) if hasattr((((SR.var("x"))^9) + ((SR.var("x"))^2) + SR.var("x") + 1), 'operands') else 0))	
+length-x	enumeratio_length(SR.var("x"))	
+length-123-456	enumeratio_length(123456)	
+length-1-over-10	enumeratio_length((1/10))	
+length-3-plus-i	enumeratio_length((3 + 1*I))	
+length-string	enumeratio_length("string")	
+length-x-pow-9-plus-x-pow-2-plus-x-plus-1	enumeratio_length((((SR.var("x"))^9) + ((SR.var("x"))^2) + SR.var("x") + 1))	
 length-integerdigits-1-000-factorial		
 map-length-list-list-a-b-list-a-b-c-list-x		
-length-list-list-a-b-c-list-d-k-f	(len([[SR.var("a"), SR.var("b"), SR.var("c")], [SR.var("d"), SR.var("k"), SR.var("f")]]) if hasattr([[SR.var("a"), SR.var("b"), SR.var("c")], [SR.var("d"), SR.var("k"), SR.var("f")]], '__len__') else (len([[SR.var("a"), SR.var("b"), SR.var("c")], [SR.var("d"), SR.var("k"), SR.var("f")]].operands()) if hasattr([[SR.var("a"), SR.var("b"), SR.var("c")], [SR.var("d"), SR.var("k"), SR.var("f")]], 'operands') else 0))	
+length-list-list-a-b-c-list-d-k-f	enumeratio_length([[SR.var("a"), SR.var("b"), SR.var("c")], [SR.var("d"), SR.var("k"), SR.var("f")]])	
 length-join-a-b-length-a-length-b-see-join		
 length-filter-issquarefree-past-iteration-budget		
-length-1-over-3	(len((1/3)) if hasattr((1/3), '__len__') else (len((1/3).operands()) if hasattr((1/3), 'operands') else 0))	
-length-2-plus-i	(len((2 + 1*I)) if hasattr((2 + 1*I), '__len__') else (len((2 + 1*I).operands()) if hasattr((2 + 1*I), 'operands') else 0))	
-length-7	(len(7) if hasattr(7, '__len__') else (len(7.operands()) if hasattr(7, 'operands') else 0))	
-length-sqrt-7	(len(sqrt(7)) if hasattr(sqrt(7), '__len__') else (len(sqrt(7).operands()) if hasattr(sqrt(7), 'operands') else 0))	
+length-1-over-3	enumeratio_length((1/3))	
+length-2-plus-i	enumeratio_length((2 + 1*I))	
+length-7	enumeratio_length(7)	
+length-sqrt-7	enumeratio_length(sqrt(7))	

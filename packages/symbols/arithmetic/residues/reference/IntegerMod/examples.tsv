@@ -1,25 +1,25 @@
 id	section	role	expr	expected	caption	sage.kind	sage.note
-integermod-10-7			[IntegerMod, 10, 7]	[IntegerMod, 3, 7]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-adding-two-classes-mod-7	Scope	test	[Add, [IntegerMod, 5, 7], [IntegerMod, 4, 7]]	[IntegerMod, 2, 7]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-adding-a-plain-integer-to-a-class	Scope	test	[Add, [IntegerMod, 5, 7], 3]	[IntegerMod, 1, 7]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-inverse-of-3-mod-7	Scope	test	[Power, [IntegerMod, 3, 7], -1]	[IntegerMod, 5, 7]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-sum-of-classes-mod-4-and-mod-6	Scope		[Add, [IntegerMod, 2, 4], [IntegerMod, 1, 6]]	[IntegerMod, 1, 2]	classes of different moduli meet in $\mathbb{Z}/\gcd(4, 6)$: the sum is 1 mod 2, as in Sage	convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-product-of-classes-mod-4-and-mod-6	Scope		[Multiply, [IntegerMod, 2, 4], [IntegerMod, 1, 6]]	[IntegerMod, 0, 2]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-difference-of-classes-mod-4-and-mod-6	Scope	test	[Subtract, [IntegerMod, 2, 4], [IntegerMod, 1, 6]]	[IntegerMod, 1, 2]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-quotient-of-classes-mod-6-and-mod-3	Scope	test	[Divide, [IntegerMod, 1, 3], [IntegerMod, 2, 6]]	[IntegerMod, 2, 3]	the divisor reads as 2 in $\mathbb{Z}/3$, a unit	convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-a-plain-integer-keeps-the-class-modulus	Scope	test	[Multiply, [IntegerMod, 2, 4], 5]	[IntegerMod, 2, 4]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-three-moduli-meet-in-their-gcd	Scope	test	[Add, [IntegerMod, 4, 8], [IntegerMod, 3, 12], [IntegerMod, 1, 4]]	[IntegerMod, 0, 4]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
+integermod-10-7			[IntegerMod, 10, 7]	[IntegerMod, 3, 7]			
+adding-two-classes-mod-7	Scope	test	[Add, [IntegerMod, 5, 7], [IntegerMod, 4, 7]]	[IntegerMod, 2, 7]			
+adding-a-plain-integer-to-a-class	Scope	test	[Add, [IntegerMod, 5, 7], 3]	[IntegerMod, 1, 7]			
+inverse-of-3-mod-7	Scope	test	[Power, [IntegerMod, 3, 7], -1]	[IntegerMod, 5, 7]			
+sum-of-classes-mod-4-and-mod-6	Scope		[Add, [IntegerMod, 2, 4], [IntegerMod, 1, 6]]	[IntegerMod, 1, 2]	classes of different moduli meet in $\mathbb{Z}/\gcd(4, 6)$: the sum is 1 mod 2, as in Sage		
+product-of-classes-mod-4-and-mod-6	Scope		[Multiply, [IntegerMod, 2, 4], [IntegerMod, 1, 6]]	[IntegerMod, 0, 2]			
+difference-of-classes-mod-4-and-mod-6	Scope	test	[Subtract, [IntegerMod, 2, 4], [IntegerMod, 1, 6]]	[IntegerMod, 1, 2]			
+quotient-of-classes-mod-6-and-mod-3	Scope	test	[Divide, [IntegerMod, 1, 3], [IntegerMod, 2, 6]]	[IntegerMod, 2, 3]	the divisor reads as 2 in $\mathbb{Z}/3$, a unit		
+a-plain-integer-keeps-the-class-modulus	Scope	test	[Multiply, [IntegerMod, 2, 4], 5]	[IntegerMod, 2, 4]			
+three-moduli-meet-in-their-gcd	Scope	test	[Add, [IntegerMod, 4, 8], [IntegerMod, 3, 12], [IntegerMod, 1, 4]]	[IntegerMod, 0, 4]			
 equal-where-they-agree-in-the-common-ring	Scope		[Equal, [IntegerMod, 2, 4], [IntegerMod, 0, 2]]	True	2 mod 4 and 0 mod 2 agree in $\mathbb{Z}/2$		
 unequal-where-they-disagree-in-the-common-ring	Scope	test	[Equal, [IntegerMod, 2, 4], [IntegerMod, 1, 6]]	False			
-a-product-of-classes-mod-7	Scope	test	[Multiply, [IntegerMod, 5, 7], [IntegerMod, 3, 7]]	[IntegerMod, 1, 7]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-a-plain-integer-is-absorbed	Scope		[Multiply, [IntegerMod, 3, 7], 5]	[IntegerMod, 1, 7]	the integer reads in $\mathbb{Z}/7$, so the answer keeps the modulus	convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-dividing-by-a-unit-mod-7	Scope	test	[Divide, [IntegerMod, 1, 7], [IntegerMod, 3, 7]]	[IntegerMod, 5, 7]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-a-large-power-reduces-mod-13	Scope	test	[Power, [IntegerMod, 2, 13], 1000]	[IntegerMod, 3, 13]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-a-large-power-reduces-mod-7	Scope		[Power, [IntegerMod, 3, 7], 100]	[IntegerMod, 4, 7]	$3^{100} \bmod 7$, reduced without forming the integer	convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-a-chain-reduces-step-by-step	Scope		[Power, [Add, [Multiply, [Add, [IntegerMod, 5, 7], [IntegerMod, 4, 7]], [IntegerMod, 3, 7]], [IntegerMod, 6, 7]], 3]	[IntegerMod, 6, 7]	every step stays in $\mathbb{Z}/7$: $((5 + 4)\cdot 3 + 6)^3 = 6$	convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-a-product-of-three-classes-mod-9	Scope	test	[Multiply, [IntegerMod, 2, 9], [IntegerMod, 5, 9], [IntegerMod, 7, 9]]	[IntegerMod, 7, 9]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-a-product-of-classes-mod-12-and-mod-8	Scope	test	[Multiply, [IntegerMod, 7, 12], [IntegerMod, 5, 8]]	[IntegerMod, 3, 4]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
-a-plain-integer-reduces-in-the-class-ring	Scope	test	[Add, [IntegerMod, 1, 3], 5]	[IntegerMod, 0, 3]		convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.
+a-product-of-classes-mod-7	Scope	test	[Multiply, [IntegerMod, 5, 7], [IntegerMod, 3, 7]]	[IntegerMod, 1, 7]			
+a-plain-integer-is-absorbed	Scope		[Multiply, [IntegerMod, 3, 7], 5]	[IntegerMod, 1, 7]	the integer reads in $\mathbb{Z}/7$, so the answer keeps the modulus		
+dividing-by-a-unit-mod-7	Scope	test	[Divide, [IntegerMod, 1, 7], [IntegerMod, 3, 7]]	[IntegerMod, 5, 7]			
+a-large-power-reduces-mod-13	Scope	test	[Power, [IntegerMod, 2, 13], 1000]	[IntegerMod, 3, 13]			
+a-large-power-reduces-mod-7	Scope		[Power, [IntegerMod, 3, 7], 100]	[IntegerMod, 4, 7]	$3^{100} \bmod 7$, reduced without forming the integer		
+a-chain-reduces-step-by-step	Scope		[Power, [Add, [Multiply, [Add, [IntegerMod, 5, 7], [IntegerMod, 4, 7]], [IntegerMod, 3, 7]], [IntegerMod, 6, 7]], 3]	[IntegerMod, 6, 7]	every step stays in $\mathbb{Z}/7$: $((5 + 4)\cdot 3 + 6)^3 = 6$		
+a-product-of-three-classes-mod-9	Scope	test	[Multiply, [IntegerMod, 2, 9], [IntegerMod, 5, 9], [IntegerMod, 7, 9]]	[IntegerMod, 7, 9]			
+a-product-of-classes-mod-12-and-mod-8	Scope	test	[Multiply, [IntegerMod, 7, 12], [IntegerMod, 5, 8]]	[IntegerMod, 3, 4]			
+a-plain-integer-reduces-in-the-class-ring	Scope	test	[Add, [IntegerMod, 1, 3], 5]	[IntegerMod, 0, 3]			
 equal-across-moduli-mod-6-and-mod-3	Scope	test	[Equal, [IntegerMod, 5, 6], [IntegerMod, 2, 3]]	True			
 mod-is-the-remainder-integermod-is-the-class	Scope		[Mod, 17, 5]	2	[[Mod]] gives the remainder, a plain integer; `IntegerMod(17, 5)` is the class and keeps its modulus		
 chineseremainder-integermod-2-3-and-3-5	Applications	test	[ChineseRemainder, [IntegerMod, 2, 3], [IntegerMod, 3, 5]]	[IntegerMod, 8, 15]			

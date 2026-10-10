@@ -1,37 +1,37 @@
-id	in	out	verdict
-n-pi-30	N(pi)	3.14159265358979	
-the-last-digit-correctly-rounded-computing-at-30			
-a-list-number-by-number	N([pi, e, sqrt(2)])	ValueError: too many values to unpack (expected 2)	error
-n-1-over-7	N((1/7))		
-n-1-over-7-50	N((1/7))		
-n-gamma-33-over-10-50	N(gamma((33/10)))		
-n-pi-50	N(pi)		
-n-khinchin-50	N(khinchin)		
-n-arcsin-3			
-n-c	N(SR.var("c"))		
-n-c-47	N(SR.var("c"))		
-n-poly	N(SR.var("poly"))		
-n-x-pow-3-over-2	N(((SR.var("x"))^(3/2)))		
-n-pi-pow-x	N(((pi)^SR.var("x")))		
-n-int	N(SR.var("int"))		
-n-neg-2-times-pit-plus-pi-list-positiveinfinity	N(((-2 * SR.var("pit")) + pi))		
-n-crt	N(SR.var("crt"))		
-n-crt-47	N(SR.var("crt"))		
-n-2-pow-1-000-000	N(((2)^1000000))		
-n-pi-pow-10-list-positiveinfinity-5	N(((pi)^10))		
-n-pi-pow-10-list-positiveinfinity-1	N(((pi)^10))		
-n-1-over-neg-x-plus-exponentiale-times-2x-plus	N(((1 / ((-SR.var("x")) + e)) * ((2 * SR.var("x")) + pi)))		
-n-1-minus-sqrt-1-minus-exponentiale-pow-neg-1	N((1 + (-sqrt((1 + (-((e)^-1000)))))))		
-n-k-25	N(SR.var("k"))		
-n-exponentiale-pow-x-plus-pi	N(((e)^(SR.var("x") + pi)))		
-n-k	N(SR.var("k"))		
-n-1-000-factorial	N(factorial(1000))		
-n-1-minus-goldenratio-plus-1-over-goldenratio-20	N((1 + (-golden_ratio) + (1 / golden_ratio)))		
-n-1-minus-goldenratio-plus-1-over-goldenratio	N((1 + (-golden_ratio) + (1 / golden_ratio)))		
-n-exponentiale-pow-100-list-positiveinfinity-neg	N(((e)^100))		
-n-10-000-000-000-times-neg-exponentiale-pow-999	N((10000000000 * ((-((e)^(999999999999/10000000000))) + ((e)^100))))		
-n-exponentiale-pow-sin-1-000	N(((e)^sin(1000)))		
-n-exponentiale-pow-sin-1-000-47	N(((e)^sin(1000)))		
-an-exact-tie-rounds-to-the-even-digit-0-125	N((1/8))	0.125000000000000	disagree
-and-0-375-to-0-38	N((3/8))	0.375000000000000	disagree
-n-pi-1-digit	N(pi)	3.14159265358979	disagree
+id	in	out
+n-pi-30	enumeratio_n(pi, 30)	3.14159265358979
+the-last-digit-correctly-rounded-computing-at-30	enumeratio_n(sinh(1), 30)	1.17520119364380
+a-list-number-by-number	enumeratio_n([pi, e, sqrt(2)], 5)	[3.14160000000000, 2.71830000000000, 1.41420000000000]
+n-1-over-7	enumeratio_n((1/7))	
+n-1-over-7-50	enumeratio_n((1/7), 50)	
+n-gamma-33-over-10-50	enumeratio_n(gamma((33/10)), 50)	
+n-pi-50	enumeratio_n(pi, 50)	
+n-khinchin-50	enumeratio_n(khinchin, 50)	
+n-arcsin-3		
+n-c	enumeratio_n(SR.var("c"))	
+n-c-47	enumeratio_n(SR.var("c"), 47)	
+n-poly	enumeratio_n(SR.var("poly"))	
+n-x-pow-3-over-2	enumeratio_n(((SR.var("x"))^(3/2)))	
+n-pi-pow-x	enumeratio_n(((pi)^SR.var("x")))	
+n-int	enumeratio_n(SR.var("int"))	
+n-neg-2-times-pit-plus-pi-list-positiveinfinity	enumeratio_n(((-2 * SR.var("pit")) + pi), [oo, 20])	
+n-crt	enumeratio_n(SR.var("crt"))	
+n-crt-47	enumeratio_n(SR.var("crt"), 47)	
+n-2-pow-1-000-000	enumeratio_n(((2)^1000000))	
+n-pi-pow-10-list-positiveinfinity-5	enumeratio_n(((pi)^10), [oo, 5])	
+n-pi-pow-10-list-positiveinfinity-1	enumeratio_n(((pi)^10), [oo, 1])	
+n-1-over-neg-x-plus-exponentiale-times-2x-plus	enumeratio_n(((1 / ((-SR.var("x")) + e)) * ((2 * SR.var("x")) + pi)), 20)	
+n-1-minus-sqrt-1-minus-exponentiale-pow-neg-1	enumeratio_n((1 + (-sqrt((1 + (-((e)^-1000)))))), 20)	
+n-k-25	enumeratio_n(SR.var("k"), 25)	
+n-exponentiale-pow-x-plus-pi	enumeratio_n(((e)^(SR.var("x") + pi)))	
+n-k	enumeratio_n(SR.var("k"))	
+n-1-000-factorial	enumeratio_n(enumeratio_factorial(1000))	
+n-1-minus-goldenratio-plus-1-over-goldenratio-20	enumeratio_n((1 + (-golden_ratio) + (1 / golden_ratio)), 20)	
+n-1-minus-goldenratio-plus-1-over-goldenratio	enumeratio_n((1 + (-golden_ratio) + (1 / golden_ratio)), [oo, 20])	
+n-exponentiale-pow-100-list-positiveinfinity-neg	enumeratio_n(((e)^100), [oo, -10])	
+n-10-000-000-000-times-neg-exponentiale-pow-999	enumeratio_n((10000000000 * ((-((e)^(999999999999/10000000000))) + ((e)^100))), [oo, 20])	
+n-exponentiale-pow-sin-1-000	enumeratio_n(((e)^sin(1000)))	
+n-exponentiale-pow-sin-1-000-47	enumeratio_n(((e)^sin(1000)), 47)	
+an-exact-tie-rounds-to-the-even-digit-0-125	enumeratio_n((1/8), 2)	0.120000000000000
+and-0-375-to-0-38	enumeratio_n((3/8), 2)	0.380000000000000
+n-pi-1-digit	enumeratio_n(pi, 1)	3.00000000000000

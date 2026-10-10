@@ -60,9 +60,9 @@ bindings:
     note: Two arguments is Hurwitz. Wolfram's Zeta[s, a] drops the n+a=0 term like ours does (its HurwitzZeta[s, 0] diverges); Sage spells it hurwitz_zeta; SymPy and mpmath overload zeta.
   - origin: mapped
     form: sage
-    template: hurwitz_zeta($1, $2)
+    template: enumeratio_zeta_pair($1, $2)
     arity: 2
-    note: Two arguments is Hurwitz. Wolfram's Zeta[s, a] drops the n+a=0 term like ours does (its HurwitzZeta[s, 0] diverges); Sage spells it hurwitz_zeta; SymPy and mpmath overload zeta.
+    note: Two arguments is Hurwitz. Wolfram's Zeta[s, a] drops the n+a=0 term like ours does (its HurwitzZeta[s, 0] diverges) and sums ((n+a)^2)^(-s/2); Sage spells the plain Hurwitz sum hurwitz_zeta, so the helper adds the terms before n+a turns positive and lets hurwitz_zeta take the rest. SymPy and mpmath overload zeta.
 summary: The Riemann zeta function $\zeta(s) = \sum_{n=1}^{\infty} n^{-s}$ for $\operatorname{Re}(s) > 1$, continued analytically elsewhere.
 signatures:
   - call: Zeta(s)

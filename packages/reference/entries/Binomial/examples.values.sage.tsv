@@ -9,7 +9,7 @@ symbolic-n-binom-n-0-1-for-any-n	binomial(SR.var("n"), 0)	1
 symbolic-n-binom-n-1-n	binomial(SR.var("n"), 1)	True	
 binom-n-n-1-n-for-symbolic-n	binomial(SR.var("n"), (SR.var("n") - 1))	True	
 binom-m-m-1-m-for-symbolic-m	binomial(SR.var("m"), (SR.var("m") + -1))	True	
-n-binomial-7-over-3-1-over-5-1-digit	N(binomial((7/3), (1/5)))		
+n-binomial-7-over-3-1-over-5-1-digit	enumeratio_n(binomial((7/3), (1/5)), 1)		
 threads-element-wise-over-a-list-as-wolfram-s	[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]	[0, 1, 10, 35, 165]	
 half-integer-arguments-evaluate-exactly-through	binomial((9/2), (7/2))	9/2	
 real-arguments-evaluate-through-the-gamma	binomial(8.5, -4.2)	TypeError: either m or x-m must be an integer	error
@@ -21,18 +21,18 @@ binom-m-m-1-for-symbolic-m	binomial(SR.var("m"), SR.var("m"))	1
 a-gaussian-integer-n-binom-1-i-5-frac-1-i-12	binomial((1 + 1*I), 5)	-1/12*I - 1/12	
 complex-n-and-k-evaluate-through-the-gamma	binomial((2 + 1*I), (7 + -3*I))	TypeError: either m or x-m must be an integer	error
 interval-arithmetic-in-k-binom-1-2-k-is			
-n-binomial-7-over-3-1-over-5-20	N(binomial((7/3), (1/5)))		
+n-binomial-7-over-3-1-over-5-20	enumeratio_n(binomial((7/3), (1/5)), 20)		
 binomial-n-4	binomial(SR.var("n"), 4)		
 matrixfunction-function-binomial-1-2-1-list-list			
 the-number-of-distinct-5-card-hands-dealt-from-a	binomial(52, 5)	2598960	
 the-probability-of-exactly-3-heads-in-10-fair	(binomial(10, 3) / ((2)^10))	15/128	
-symmetry-binom-n-k-binom-n-n-k	bool(binomial(10, 3) == binomial(10, 7))	True	
-pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n	bool((binomial(9, 2) + binomial(9, 3)) == binomial(10, 3))	True	
-row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4	bool((binomial(4, 0) + binomial(4, 1) + binomial(4, 2) + binomial(4, 3) + binomial(4, 4)) == ((2)^4))	True	
+symmetry-binom-n-k-binom-n-n-k	enumeratio_equal(binomial(10, 3), binomial(10, 7))	True	
+pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n	enumeratio_equal((binomial(9, 2) + binomial(9, 3)), binomial(10, 3))	True	
+row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4	enumeratio_equal((binomial(4, 0) + binomial(4, 1) + binomial(4, 2) + binomial(4, 3) + binomial(4, 4)), ((2)^4))	True	
 sum-of-squares-along-a-row-sum-k-binom-n-k-2			
 vandermonde-s-identity-sum-k-binom-m-k-binom-n-r			
 the-alternating-row-sum-vanishes-sum-k-1-k-binom			
-the-factorial-form-binom-n-k-frac-n-k-n-k-see	bool(binomial(7, 3) == (factorial(7) / (factorial(3) * factorial(4))))	True	
+the-factorial-form-binom-n-k-frac-n-k-n-k-see	enumeratio_equal(binomial(7, 3), (enumeratio_factorial(7) / (enumeratio_factorial(3) * enumeratio_factorial(4))))	True	
 binomial-1-over-2-neg-1-over-2-plus-binomial-1	(binomial((1/2), (-1/2)) + binomial((1/2), (1/2)))		
 sum-binomial-2-k-pow-2-times-binomial-k-plus-2-k			
 sum-binomial-2-2k-plus-1-times-2-pow-k-k-0-floor			
@@ -50,7 +50,7 @@ a-negative-n-again-binom-neg-4-1	binomial(-4, 1)	-4
 a-negative-k-with-n-2-binom-2-neg-2	binomial(-2, 2)	3	
 a-negative-n-zero-k-binom-neg-1-0	binomial(-1, 0)	1	
 a-negative-k-past-n-binom-100-neg-50	binomial(100, -50)	0	
-symmetry-doesn-t-hold-across-mismatched-n	bool(binomial(2, 6) == binomial(-18, 2))	False	
-not-pascal-s-rule-across-mismatched-n	bool((binomial(-23, 2) + binomial(-2, 3)) == binomial(-20, 6))	False	
+symmetry-doesn-t-hold-across-mismatched-n	enumeratio_equal(binomial(2, 6), binomial(-18, 2))	False	
+not-pascal-s-rule-across-mismatched-n	enumeratio_equal((binomial(-23, 2) + binomial(-2, 3)), binomial(-20, 6))	False	
 both-arguments-negative-binom-1-7	binomial(-1, -7)		
 the-central-binomial-coefficient-binom-100-50	binomial(100, 50)	100891344545564193334812497256	

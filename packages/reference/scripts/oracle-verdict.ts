@@ -77,6 +77,10 @@ export const show = (expr: MathJSON): string => {
   if (Array.isArray(expr) && typeof expr[0] === "string" && CARRIER_NAMES.has(expr[0]) && expr.length === 2) {
     return show(expr[1] as MathJSON);
   }
+  // A residue class keeps its modulus, as Sage's value printer writes it.
+  if (Array.isArray(expr) && (expr[0] === "ResidueClass" || expr[0] === "IntegerMod") && expr.length === 3) {
+    return `ResidueClass(${show(expr[1] as MathJSON)}, ${show(expr[2] as MathJSON)})`;
+  }
   // A list prints as the systems print one, element by element.
   if (Array.isArray(expr) && expr[0] === "List") return `[${expr.slice(1).map(show).join(", ")}]`;
   // A bignum keeps its digits: as a double, 5.57e+373 would print as Infinity.

@@ -50,8 +50,8 @@ a-single-argument-is-returned-unchanged
 with-no-arguments-compute-engine-returns-0-the			
 0-is-absorbed-every-integer-divides-it-so-gcd-0	gcd(0, 5)	5	
 signs-are-discarded-before-computing-the-gcd			
-equal-length-lists-thread-element-wise	[gcd([2, 4], 6), gcd([2, 4], 8)]	AttributeError: 'int' object has no attribute 'is_commutative'	error
+equal-length-lists-thread-element-wise	enumeratio_broadcast(lambda _a0, _a1: gcd(_a0, _a1), [2, 4], [6, 8])	[2, 4]	
 gcd-0-0-0-by-convention	gcd(0, 0)	0	
-symbolic-arguments-stay-unevaluated	gcd(Symbol("x"), Symbol("y"))	1	inconclusive
+symbolic-arguments-stay-unevaluated	gcd(Symbol("x"), Symbol("y"))	True	
 gcd-neg-3-9	gcd(-3, 9)		
 gcd-with-an-infinite-argument-stays-unevaluated	gcd(oo, 6)	1	inconclusive

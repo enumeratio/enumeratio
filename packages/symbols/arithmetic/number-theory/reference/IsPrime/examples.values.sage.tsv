@@ -1,31 +1,31 @@
 id	in	out	verdict
-1-is-not-prime-by-definition	is_prime(1)	False	
-2-is-the-only-even-prime	is_prime(2)	True	
-isprime-13	is_prime(13)	True	
-isprime-4	is_prime(4)	False	
-isprime-97	is_prime(97)	True	
-threads-element-wise-over-a-list	is_prime([1, 2, 3, 4, 5, 6])	TypeError: unable to coerce <class 'list'> to an integer	error
-isprime-5	is_prime(5)	True	
-isprime-7	is_prime(7)	True	
-threads-element-wise-over-a-short-list	is_prime([2, 3, 4])	TypeError: unable to coerce <class 'list'> to an integer	error
-7-is-prime-its-associate-7-is-matching-wolfram-s	is_prime(-7)	False	disagree
-a-gaussian-prime-its-norm-5-is-prime	is_prime((2 + 1*I))	True	
+1-is-not-prime-by-definition	enumeratio_is_prime(1)	False	
+2-is-the-only-even-prime	enumeratio_is_prime(2)	True	
+isprime-13	enumeratio_is_prime(13)	True	
+isprime-4	enumeratio_is_prime(4)	False	
+isprime-97	enumeratio_is_prime(97)	True	
+threads-element-wise-over-a-list	enumeratio_is_prime([1, 2, 3, 4, 5, 6])	[False, True, True, False, True, False]	
+isprime-5	enumeratio_is_prime(5)	True	
+isprime-7	enumeratio_is_prime(7)	True	
+threads-element-wise-over-a-short-list	enumeratio_is_prime([2, 3, 4])	[True, True, False]	
+7-is-prime-its-associate-7-is-matching-wolfram-s	enumeratio_is_prime(-7)	True	
+a-gaussian-prime-its-norm-5-is-prime	enumeratio_is_prime((2 + 1*I))	True	
 5-2-i-2-i-splits-in-z-i			
-large-integers-10-3000-1-is-divisible-by-10-8-1	is_prime((((10)^3000) + 1))	False	
-isprime-neg-1-is-false	is_prime(-1)	False	
-isprime-neg-4-is-false	is_prime(-4)	False	
-isprime-neg-2-is-true	is_prime(-2)	False	disagree
-a-unit-is-not-prime	is_prime(1)		
-i-a-unit-is-not-prime	is_prime((0 + 1*I))		
-0-is-not-prime	is_prime(0)		
-the-ramified-prime-above-2	is_prime((1 + 1*I))		
-a-prime-above-5	is_prime((2 + 1*I))		
-the-other-prime-above-5	is_prime((2 + -1*I))		
-a-prime-above-13	is_prime((3 + 2*I))		
-a-composite-of-norm-25	is_prime((3 + 4*I))		
-an-associate-of-a-composite-is-still-composite	is_prime((-3 + -4*I))		
-a-real-prime-s-associate-by-the-unit-i-is-still	is_prime((0 + 7*I))		
-a-large-norm-composite	is_prime((123 + 456*I))		
+large-integers-10-3000-1-is-divisible-by-10-8-1	enumeratio_is_prime((((10)^3000) + 1))	False	
+isprime-neg-1-is-false	enumeratio_is_prime(-1)	False	
+isprime-neg-4-is-false	enumeratio_is_prime(-4)	False	
+isprime-neg-2-is-true	enumeratio_is_prime(-2)	True	
+a-unit-is-not-prime	enumeratio_is_prime(1)		
+i-a-unit-is-not-prime	enumeratio_is_prime((0 + 1*I))		
+0-is-not-prime	enumeratio_is_prime(0)		
+the-ramified-prime-above-2	enumeratio_is_prime((1 + 1*I))		
+a-prime-above-5	enumeratio_is_prime((2 + 1*I))		
+the-other-prime-above-5	enumeratio_is_prime((2 + -1*I))		
+a-prime-above-13	enumeratio_is_prime((3 + 2*I))		
+a-composite-of-norm-25	enumeratio_is_prime((3 + 4*I))		
+an-associate-of-a-composite-is-still-composite	enumeratio_is_prime((-3 + -4*I))		
+a-real-prime-s-associate-by-the-unit-i-is-still	enumeratio_is_prime((0 + 7*I))		
+a-large-norm-composite	enumeratio_is_prime((123 + 456*I))		
 3-3-mod-4-stays-prime-in-z-i			
 7-3-mod-4-stays-prime-in-z-i			
 19-3-mod-4-stays-prime-in-z-i			
@@ -37,26 +37,26 @@ a-negative-prime-3-mod-4-stays-prime
 a-real-composite-5-squared-is-not-prime			
 1-is-not-prime-gaussian-or-not			
 0-is-not-prime-gaussian-or-not			
-a-common-choice-of-prime-modulus-for-hashing	is_prime(1000000007)	True	
-isprime-257	is_prime(257)		
-isprime-1-plus-2-pow-128	is_prime((1 + ((2)^128)))		
+a-common-choice-of-prime-modulus-for-hashing	enumeratio_is_prime(1000000007)	True	
+isprime-257	enumeratio_is_prime(257)		
+isprime-1-plus-2-pow-128	enumeratio_is_prime((1 + ((2)^128)))		
 filter-range-1-100-function-isprimepower-1			
 an-odd-prime-stays-prime-in-z-i-exactly-when-p			
-isprime-37	is_prime(37)		
-isprime-29	is_prime(29)		
-isprime-17	is_prime(17)		
-isprime-12	is_prime(12)		
-isprime-23	is_prime(23)		
-isprime-24	is_prime(24)		
-isprime-list-7-11	is_prime([7, 11])		
-isprime-list-5-7-2	is_prime([5, 7, 2])		
-isprime-19	is_prime(19)		
+isprime-37	enumeratio_is_prime(37)		
+isprime-29	enumeratio_is_prime(29)		
+isprime-17	enumeratio_is_prime(17)		
+isprime-12	enumeratio_is_prime(12)		
+isprime-23	enumeratio_is_prime(23)		
+isprime-24	enumeratio_is_prime(24)		
+isprime-list-7-11	enumeratio_is_prime([7, 11])		
+isprime-list-5-7-2	enumeratio_is_prime([5, 7, 2])		
+isprime-19	enumeratio_is_prime(19)		
 divisorsum-19-function-1-1-isprime			
 filter-divisors-625-isprime			
 filter-divisors-2-434-500-isprime			
 filter-divisors-65-isprime			
-non-integers-are-not-prime	is_prime((1/2))	False	
-another-non-integer-3-halves	is_prime((3/2))	False	
-a-symbol-stays-unevaluated	is_prime(SR.var("x"))	TypeError: unable to convert x to an integer	error
-the-mersenne-prime-2-31-1	is_prime((((2)^31) + -1))	True	
-the-fermat-number-f-5-2-32-1-is-composite-641	is_prime((((2)^32) + 1))	False	
+non-integers-are-not-prime	enumeratio_is_prime((1/2))	False	
+another-non-integer-3-halves	enumeratio_is_prime((3/2))	False	
+a-symbol-stays-unevaluated	enumeratio_is_prime(SR.var("x"))	TypeError: unable to convert x to an integer	error
+the-mersenne-prime-2-31-1	enumeratio_is_prime((((2)^31) + -1))	True	
+the-fermat-number-f-5-2-32-1-is-composite-641	enumeratio_is_prime((((2)^32) + 1))	False	

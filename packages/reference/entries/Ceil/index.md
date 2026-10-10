@@ -48,7 +48,7 @@ bindings:
     arity: 1
   - origin: mapped
     form: sage
-    template: ceil($1)
+    template: enumeratio_ceil($1)
     arity: 1
   - origin: mapped
     form: rust

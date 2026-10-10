@@ -1,49 +1,49 @@
 id	in	out	verdict
-lcm-4-6	lcm(4, 6)	12	
+lcm-4-6	enumeratio_lcm(4, 6)	12	
 lcm-is-variadic-it-accepts-any-number-of			
 lcm-2-3-5			
 over-the-rationals-the-lcm-of-the-numerators			
-1-3i-i-3-i-associates-share-their-multiples	lcm((3 + 1*I), (-1 + 3*I))	1	inconclusive
+1-3i-i-3-i-associates-share-their-multiples	enumeratio_lcm((3 + 1*I), (-1 + 3*I))	I + 3	
 negative-integers			
-gaussian-primes-of-norm-41-and-13-the-lcm-is-the	lcm((-4 + 5*I), (2 + 3*I))	1	inconclusive
-gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3	lcm(((1/2) + (3/5)*I), ((1/3) + 1*I))	1	inconclusive
-big-integers-the-exact-118-digit-lcm-past-where	lcm(factorial(20), (((10)^100) + 3))	3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000	
-listable-a-single-list-argument-threads-element	[lcm(12, 3), lcm(12, 7), lcm(12, 40)]	[12, 84, 120]	
-a-large-integer-against-a-negative-rational	lcm(factorial(20), (((10)^-1) + -2))	2432902008176640000	
-lcm-with-a-unit-is-the-other-argument-normalised	lcm((3 + 4*I), 1)		
-lcm-with-i-a-unit-is-the-other-argument	lcm((3 + 4*I), (0 + 1*I))		
-lcm-with-0-is-0	lcm(0, (-4 + 3*I))		
-two-gaussian-primes-above-5-multiply-straight	lcm((2 + 1*I), (2 + -1*I))		
-a-gaussian-prime-and-a-real-prime-3-mod-4	lcm((2 + 1*I), 3)		
-an-associate-pair-has-lcm-equal-to-their-common	lcm((3 + 4*I), (-4 + 3*I))		
-another-associate-pair-by-1	lcm((3 + 4*I), (-3 + -4*I))		
-two-unrelated-composites-of-norm-25	lcm((3 + 4*I), (4 + 3*I))		
-lcm-with-a-negative-real-prime	lcm((3 + 4*I), -7)		
-lcm-of-two-large-norm-gaussians	lcm((123 + 456*I), (1000 + 1*I))		
-lcm-past-2-53-in-both-parts	lcm((100000000000000000001 + 9007199254740993*I), (4 + 1*I))		
-a-real-split-prime-and-its-gaussian-factor	lcm(5, (2 + 1*I))		
-lcm-of-two-real-composites-plain-integer-case	lcm(4, 9)		
-lcm-with-a-negative-real-composite	lcm(-15, (5 + 5*I))		
-lcm-with-an-associate-times-1	lcm((8 + 2*I), (-3 + -4*I))		
-lcm-with-an-associate-times-i	lcm((8 + 2*I), (4 + -3*I))		
-two-primes-above-13-multiply-straight-through	lcm((3 + 2*I), (2 + 3*I))		
-lcm-with-a-real-prime-s-associate-by-the-unit-i	lcm((3 + 4*I), (0 + 7*I))		
-lcm-with-a-real-composite-5-squared	lcm((3 + 4*I), 25)		
-lcm-with-a-negative-associate	lcm((6 + 8*I), (-2 + -3*I))		
-lcm-of-a-large-norm-gaussian-and-a-real-prime-19	lcm((123 + 456*I), 19)		
-lcm-of-two-composites-sharing-the-prime-above-13	lcm((6 + 8*I), (9 + 6*I))		
+gaussian-primes-of-norm-41-and-13-the-lcm-is-the	enumeratio_lcm((-4 + 5*I), (2 + 3*I))	2*I + 23	
+gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3	enumeratio_lcm(((1/2) + (3/5)*I), ((1/3) + 1*I))	1	inconclusive
+big-integers-the-exact-118-digit-lcm-past-where	enumeratio_lcm(enumeratio_factorial(20), (((10)^100) + 3))	3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000	
+listable-a-single-list-argument-threads-element	[enumeratio_lcm(12, 3), enumeratio_lcm(12, 7), enumeratio_lcm(12, 40)]	[12, 84, 120]	
+a-large-integer-against-a-negative-rational	enumeratio_lcm(enumeratio_factorial(20), (((10)^-1) + -2))	2432902008176640000	
+lcm-with-a-unit-is-the-other-argument-normalised	enumeratio_lcm((3 + 4*I), 1)		
+lcm-with-i-a-unit-is-the-other-argument	enumeratio_lcm((3 + 4*I), (0 + 1*I))		
+lcm-with-0-is-0	enumeratio_lcm(0, (-4 + 3*I))		
+two-gaussian-primes-above-5-multiply-straight	enumeratio_lcm((2 + 1*I), (2 + -1*I))		
+a-gaussian-prime-and-a-real-prime-3-mod-4	enumeratio_lcm((2 + 1*I), 3)		
+an-associate-pair-has-lcm-equal-to-their-common	enumeratio_lcm((3 + 4*I), (-4 + 3*I))		
+another-associate-pair-by-1	enumeratio_lcm((3 + 4*I), (-3 + -4*I))		
+two-unrelated-composites-of-norm-25	enumeratio_lcm((3 + 4*I), (4 + 3*I))		
+lcm-with-a-negative-real-prime	enumeratio_lcm((3 + 4*I), -7)		
+lcm-of-two-large-norm-gaussians	enumeratio_lcm((123 + 456*I), (1000 + 1*I))		
+lcm-past-2-53-in-both-parts	enumeratio_lcm((100000000000000000001 + 9007199254740993*I), (4 + 1*I))		
+a-real-split-prime-and-its-gaussian-factor	enumeratio_lcm(5, (2 + 1*I))		
+lcm-of-two-real-composites-plain-integer-case	enumeratio_lcm(4, 9)		
+lcm-with-a-negative-real-composite	enumeratio_lcm(-15, (5 + 5*I))		
+lcm-with-an-associate-times-1	enumeratio_lcm((8 + 2*I), (-3 + -4*I))		
+lcm-with-an-associate-times-i	enumeratio_lcm((8 + 2*I), (4 + -3*I))		
+two-primes-above-13-multiply-straight-through	enumeratio_lcm((3 + 2*I), (2 + 3*I))		
+lcm-with-a-real-prime-s-associate-by-the-unit-i	enumeratio_lcm((3 + 4*I), (0 + 7*I))		
+lcm-with-a-real-composite-5-squared	enumeratio_lcm((3 + 4*I), 25)		
+lcm-with-a-negative-associate	enumeratio_lcm((6 + 8*I), (-2 + -3*I))		
+lcm-of-a-large-norm-gaussian-and-a-real-prime-19	enumeratio_lcm((123 + 456*I), 19)		
+lcm-of-two-composites-sharing-the-prime-above-13	enumeratio_lcm((6 + 8*I), (9 + 6*I))		
 lcm-of-a-lazy-range-1-10-not-a-materialised-list			
 reduceconditions-lcm-a-3-lt-3a-neg-10-lt-a-lt-10			
 the-smallest-number-divisible-by-each-of-1			
-lcm-10-15	lcm(10, 15)		
+lcm-10-15	enumeratio_lcm(10, 15)		
 foldlist-lcm-1-range-2-10			
 ln-lcm-range-1-10			
-gcd-a-b-cdot-lcm-a-b-ab-see-gcd	bool((gcd(27, 81) * lcm(27, 81)) == (27 * 81))	True	
-lcm-27-81	lcm(27, 81)		
+gcd-a-b-cdot-lcm-a-b-ab-see-gcd	enumeratio_equal((enumeratio_gcd(27, 81) * enumeratio_lcm(27, 81)), (27 * 81))	True	
+lcm-27-81	enumeratio_lcm(27, 81)		
 lcm-6-11-25-eq-1-650			
 lcm-5-7-2-eq-70			
 ln-1-over-lcm-range-1-4-times-lcm-range-1-5			
 a-single-argument-is-returned-unchanged			
-0-absorbs-the-lcm-with-0-is-0	lcm(0, 5)	0	
-signs-are-discarded-before-computing-the-lcm	lcm(-3, 7)	21	
-lcm-with-an-infinite-argument-stays-unevaluated	lcm(oo, 6)		
+0-absorbs-the-lcm-with-0-is-0	enumeratio_lcm(0, 5)	0	
+signs-are-discarded-before-computing-the-lcm	enumeratio_lcm(-3, 7)	21	
+lcm-with-an-infinite-argument-stays-unevaluated	enumeratio_lcm(oo, 6)		

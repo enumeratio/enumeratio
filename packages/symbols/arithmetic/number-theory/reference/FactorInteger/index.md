@@ -33,7 +33,7 @@ names:
 bindings:
   - origin: mapped
     form: sage
-    template: list(factor($1))
+    template: enumeratio_factor_integer($1)
     arity: 1
     note: Sage has no unit factor for 1, 0 or a negative n — a shape difference from compute-engine's explicit 1^1/0^1/-1^1, not a bug.
 ---

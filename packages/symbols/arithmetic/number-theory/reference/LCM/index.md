@@ -40,9 +40,8 @@ bindings:
     note: compute-engine extends LCM to rationals (lcm of the numerators over the gcd of the denominators); Nemo/Oscar's ZZ conversion only accepts integers, so a rational operand here is a domain gap in the mapping, not a bug on either side.
   - origin: mapped
     form: sage
-    template: lcm($1, $2)
+    template: enumeratio_lcm($1, $2)
     arity: 2
-    threadArg: 2
     note: compute-engine extends LCM to rationals (lcm of the numerators over the gcd of the denominators); Nemo/Oscar's ZZ conversion only accepts integers, so a rational operand here is a domain gap in the mapping, not a bug on either side.
   - origin: mapped
     form: oscar

@@ -1,0 +1,42 @@
+id	in	out
+sec-0	sec(0)	1
+sec-pi-over-4	sec((S(pi) / 4))	sqrt(2)
+sec-pi-over-3	sec((S(pi) / 3))	2
+sec-pi	sec(pi)	-1
+sec-30-circ-frac-2-sqrt-3-3-exactly		
+a-machine-precision-argument-evaluates	sec(1.2)	2.75970360133241
+a-huge-24-40-argument	N(sec((S(24)**40)), 30)	1.09113266159701750054556753403
+a-huge-10-100-argument	N(sec((S(10)**100)), 30)	-1.07749110776980349733081982972
+a-huge-3-200-argument	N(sec((S(3)**200)), 30)	-2.90150456845050309487976411335
+a-huge-neg-7-60-argument	N(sec((-(S(7)**60))), 30)	-1.07416019568312309199066631103
+a-huge-10-80-plus-1-over-3-argument	N(sec((S(((S(10)**80) + 1)) / 3)), 30)	
+sec-3-under-n	N(sec(3), 30)	-1.01010866590799375130303648146
+series-sec-x-x-0-10		
+series-sec-x-x-3-over-2-times-pi-5		
+n-of-an-exact-argument-gives-an-arbitrary	N(sec(Rational(6, 5)), 30)	2.75970360133240645688343293924
+evaluates-at-a-complex-argument	sec((2.5 + 1*I))	-0.611108564155232 + 0.347676660710496*I
+threads-element-wise-over-a-matrix	[[sec((5 * (S(pi) / 6))), sec(0)], [sec((S(pi) / 6)), sec((-(S(pi) / 4)))]]	[[-2*sqrt(3)/3, 1], [2*sqrt(3)/3, sqrt(2)]]
+sec-pi-12-sqrt-6-sqrt-2	sec((S(pi) / 12))	1/(sqrt(2)/4 + sqrt(6)/4)
+sec-pi-5-sqrt-5-1	sec((S(pi) / 5))	1/(1/4 + sqrt(5)/4)
+sec-pi-8-sqrt-4-2-sqrt-2	sec((S(pi) / 8))	1/sqrt(sqrt(2)/4 + 1/2)
+interval-arithmetic-the-image-of-pi-6-pi-3-is		
+uncertainty-propagation-sec-2-pm-0-01-approx-2		
+evenness-drops-the-sign-of-a-symbolic-argument	sec((-Symbol("x")))	True
+derivative-sec-x-tan-x	diff(sec(Symbol("x")), Symbol("x"))	True
+antiderivative-ln-sec-x-tan-x		
+n-sec-6-over-5-50	N(sec(Rational(6, 5)), 30)	2.75970360133240645688343293924
+matrixfunction-function-sec-1-1-list-list-5-over		
+sec-positiveinfinity	sec(oo)	
+assuming-m-in-integers-refine-sec-pi-times-1		
+assuming-m-in-integers-fullsimplify-refine-sec		
+functionmeromorphic-sec-x-x		
+reciprocal-of-cos-sec-x-frac-1-cos-x	enumeratio_equal(sec((S(pi) / 3)), (S(1) / cos((S(pi) / 3))))	True
+pythagorean-identity-1-tan-2-x-sec-2-x	enumeratio_equal((1 + (S(tan((S(pi) / 6)))**2)), (S(sec((S(pi) / 6)))**2))	True
+sec-1-over-10-times-pi	sec((Rational(1, 10) * pi))	1/sqrt(sqrt(5)/8 + 5/8)
+sec-3-over-10-times-pi	sec((Rational(3, 10) * pi))	1/sqrt(5/8 - sqrt(5)/8)
+n-2-minus-sec-1-over-2-pow-2-times-sec-1	N(((2 + (-(S(sec(Rational(1, 2)))**2))) * sec(1)), 30)	1.29844641040952483688376649885
+n-2-times-sec-1-times-sec-1-over-2-pow-2-plus	N(((2 * sec(1) * (S(sec(Rational(1, 2)))**2)) + (((-2 * (S(sec(Rational(1, 2)))**2)) + (S(sec(Rational(1, 2)))**4)) * (S(sec(1))**2)) + (-(S(sec(Rational(1, 2)))**4))), 30)	0.e-165
+n-sec-1-over-2-plus-1-over-2-times-pi-pow-2	N((S(sec((Rational(1, 2) + (Rational(1, 2) * pi))))**2), 30)	4.35068529934004282155357351931
+n-2-minus-sec-2-pow-2-times-sec-4	N(((2 + (-(S(sec(2))**2))) * sec(4)), 30)	5.77439920404191761241276760432
+a-pole-cos-pi-2-0	sec((S(pi) / 2))	zoo
+sec-complexinfinity-is-indeterminate-for-the	sec(zoo)	

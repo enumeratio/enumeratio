@@ -42,7 +42,7 @@ bindings:
     threadArg: 1
   - origin: mapped
     form: sage
-    template: abs($1)
+    template: enumeratio_abs($1)
     arity: 1
     threadArg: 1
   - origin: mapped

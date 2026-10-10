@@ -1,0 +1,13 @@
+id	in	out
+series-sech-x-x-0-10		
+n-sech-9-over-5-50	enumeratio_n(sech((9/5)), 50)	0.321804869506588
+sech-list-list-1-over-3-times-i-times-pi-neg-1	[[sech(((0 + (1/3)*I) * pi)), sech(((0 + (-1/3)*I) * pi))], [sech(0), sech(((0 + (-1/6)*I) * pi))]]	[[2, 2], [1, 2/3*sqrt(3)]]
+sech-positiveinfinity	sech(oo)	0
+sech-0	sech(0)	1
+d-sech-x-x	diff(sech(SR.var("x")), SR.var("x"))	True
+matrixfunction-function-sech-1-1-list-list-1		
+functionmeromorphic-sech-x-x		
+n-2-minus-sech-1-over-2-pow-2-times-sech-1	enumeratio_n(((2 + (-((sech((1/2)))^2))) * sech(1)))	0.786447732965927
+n-2-times-sech-1-times-sech-1-over-2-pow-2-plus	enumeratio_n(((2 * sech(1) * ((sech((1/2)))^2)) + (((-2 * ((sech((1/2)))^2)) + ((sech((1/2)))^4)) * ((sech(1))^2)) + (-((sech((1/2)))^4))))	0.000000000000000
+n-sech-1-over-2-plus-1-over-2-times-i-times-pi	enumeratio_n(((sech(((1/2) + ((0 + (1/2)*I) * pi))))^2))	-3.68269437683117 - 2.73275006818505e-127*I
+n-2-minus-sech-2-pow-2-times-sech-4	enumeratio_n(((2 + (-((sech(2))^2))) * sech(4)))	0.0706508248531645

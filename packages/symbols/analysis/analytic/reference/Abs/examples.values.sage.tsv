@@ -1,52 +1,52 @@
 id	in	out
-abs-neg-5	abs(-5)	5
-abs-5	abs(5)	5
-0-is-the-only-value-with-x-0	abs(0)	0
-abs-neg-7-over-2	abs((-7/2))	7/2
-the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	abs((3 + 4*I))	5
-threads-element-wise-over-a-list	[abs(-1), abs(2), abs(-3)]	[1, 2, 3]
-abs-neg-2p5	abs(-2.5)	2.50000000000000
-the-modulus-of-a-complex-number-with-approximate	abs((1.4 + 2.3*I))	2.69258240356725
-threads-over-a-matrix-entry-by-entry	[[abs((1/2)), abs(-1)], [abs((-5/3)), abs((1/2))]]	[[1/2, 1], [5/3, 1/2]]
-exact-numeric-constants	abs((-pi))	pi
-an-exact-complex-number-gives-an-exact-radical	abs((1 + 1*I))	sqrt(2)
-abs-imaginaryunit	abs(I)	1
-e-i-pi-3-lies-on-the-unit-circle	abs(exp((I * (pi / 3))))	abs(1/2*I*sqrt(3) + 1/2)
-abs-negativeinfinity	abs(-oo)	
-complex-infinity-has-infinite-magnitude-in-every	abs(unsigned_infinity)	
+abs-neg-5	enumeratio_abs(-5)	5
+abs-5	enumeratio_abs(5)	5
+0-is-the-only-value-with-x-0	enumeratio_abs(0)	0
+abs-neg-7-over-2	enumeratio_abs((-7/2))	7/2
+the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	enumeratio_abs((3 + 4*I))	5
+threads-element-wise-over-a-list	[enumeratio_abs(-1), enumeratio_abs(2), enumeratio_abs(-3)]	[1, 2, 3]
+abs-neg-2p5	enumeratio_abs(-2.5)	2.50000000000000
+the-modulus-of-a-complex-number-with-approximate	enumeratio_abs((1.4 + 2.3*I))	2.69258240356725
+threads-over-a-matrix-entry-by-entry	[[enumeratio_abs((1/2)), enumeratio_abs(-1)], [enumeratio_abs((-5/3)), enumeratio_abs((1/2))]]	[[1/2, 1], [5/3, 1/2]]
+exact-numeric-constants	enumeratio_abs((-pi))	pi
+an-exact-complex-number-gives-an-exact-radical	enumeratio_abs((1 + 1*I))	sqrt(2)
+abs-imaginaryunit	enumeratio_abs(I)	1
+e-i-pi-3-lies-on-the-unit-circle	enumeratio_abs(exp((I * (pi / 3))))	abs(1/2*I*sqrt(3) + 1/2)
+abs-negativeinfinity	enumeratio_abs(-oo)	
+complex-infinity-has-infinite-magnitude-in-every	enumeratio_abs(unsigned_infinity)	
 an-interval-maps-to-the-interval-of-absolute		
 an-interval-straddling-0-maps-to-0-the-larger		
-decides-the-sign-of-an-exact-numeric-expression	abs((sqrt(2) - 2))	abs(sqrt(2) - 2)
-a-complex-radicand-inside-the-subtraction	abs((sqrt(-10) - 2))	abs(sqrt(-10) - 2)
+decides-the-sign-of-an-exact-numeric-expression	enumeratio_abs((sqrt(2) - 2))	abs(sqrt(2) - 2)
+a-complex-radicand-inside-the-subtraction	enumeratio_abs((sqrt(-10) - 2))	abs(sqrt(-10) - 2)
 n-abs-pi-plus-i-times-catalan-25		
 fullsimplify-matrixfunction-abs-list-list-1-over		
-abs-positiveinfinity	abs(oo)	
-abs-positiveinfinity-times-i	abs((oo * (0 + 1*I)))	
+abs-positiveinfinity	enumeratio_abs(oo)	
+abs-positiveinfinity-times-i	enumeratio_abs((oo * (0 + 1*I)))	
 piecewiseexpand-abs-imaginaryunit-times-x-neg-2		
 complexexpand-abs-x		
 complexexpand-abs-x-plus-i-times-y		
 apply-derivative-abs-1-x		
-the-gap-between-two-temperatures-70-and-95	abs((70 - 95))	25
-the-distance-between-the-points-1-i-and-4-5i-of	abs(((1 + 1*I) - (4 + 5*I)))	5
-even-function-x-x	bool(abs(-8) == abs(8))	True
+the-gap-between-two-temperatures-70-and-95	enumeratio_abs((70 - 95))	25
+the-distance-between-the-points-1-i-and-4-5i-of	enumeratio_abs(((1 + 1*I) - (4 + 5*I)))	5
+even-function-x-x	enumeratio_equal(enumeratio_abs(-8), enumeratio_abs(8))	True
 triangle-inequality-a-b-le-a-b		
 z-2-z-bar-z		
-multiplicative-ab-a-b	bool(abs(((1 + 2*I) * (3 + -1*I))) == (abs((1 + 2*I)) * abs((3 + -1*I))))	True
-abs-1	abs(1)	
-abs-neg-1	abs(-1)	
-abs-neg-i	abs((0 + -1*I))	
-abs-neg-1-plus-i	abs((-1 + 1*I))	
-abs-neg-1-minus-i	abs((-1 + -1*I))	
-abs-1-minus-i	abs((1 + -1*I))	
-abs-sqrt-3-plus-i	abs((sqrt(3) + (0 + 1*I)))	
-abs-1-plus-sqrt-3-times-i	abs((1 + (0 + sqrt(3)*I)))	
-abs-neg-1-plus-sqrt-3-times-i	abs((-1 + (0 + sqrt(3)*I)))	
-abs-neg-sqrt-3-plus-i	abs(((-sqrt(3)) + (0 + 1*I)))	
-abs-neg-sqrt-3-minus-i	abs(((-sqrt(3)) + (0 + -1*I)))	
-abs-neg-1-plus-neg-sqrt-3-times-i	abs((-1 + (0 + (-sqrt(3))*I)))	
-abs-1-plus-neg-sqrt-3-times-i	abs((1 + (0 + (-sqrt(3))*I)))	
-abs-sqrt-3-minus-i	abs((sqrt(3) + (0 + -1*I)))	
-abs-2	abs(2)	
-abs-1-over-2-pow-2	((abs((1/2)))^2)	
-abs-2-pow-2	((abs(2))^2)	
-doesn-t-factor-constants-out-of-a-symbolic	abs((-3 * SR.var("x")))	True
+multiplicative-ab-a-b	enumeratio_equal(enumeratio_abs(((1 + 2*I) * (3 + -1*I))), (enumeratio_abs((1 + 2*I)) * enumeratio_abs((3 + -1*I))))	True
+abs-1	enumeratio_abs(1)	
+abs-neg-1	enumeratio_abs(-1)	
+abs-neg-i	enumeratio_abs((0 + -1*I))	
+abs-neg-1-plus-i	enumeratio_abs((-1 + 1*I))	
+abs-neg-1-minus-i	enumeratio_abs((-1 + -1*I))	
+abs-1-minus-i	enumeratio_abs((1 + -1*I))	
+abs-sqrt-3-plus-i	enumeratio_abs((sqrt(3) + (0 + 1*I)))	
+abs-1-plus-sqrt-3-times-i	enumeratio_abs((1 + (0 + sqrt(3)*I)))	
+abs-neg-1-plus-sqrt-3-times-i	enumeratio_abs((-1 + (0 + sqrt(3)*I)))	
+abs-neg-sqrt-3-plus-i	enumeratio_abs(((-sqrt(3)) + (0 + 1*I)))	
+abs-neg-sqrt-3-minus-i	enumeratio_abs(((-sqrt(3)) + (0 + -1*I)))	
+abs-neg-1-plus-neg-sqrt-3-times-i	enumeratio_abs((-1 + (0 + (-sqrt(3))*I)))	
+abs-1-plus-neg-sqrt-3-times-i	enumeratio_abs((1 + (0 + (-sqrt(3))*I)))	
+abs-sqrt-3-minus-i	enumeratio_abs((sqrt(3) + (0 + -1*I)))	
+abs-2	enumeratio_abs(2)	
+abs-1-over-2-pow-2	((enumeratio_abs((1/2)))^2)	
+abs-2-pow-2	((enumeratio_abs(2))^2)	
+doesn-t-factor-constants-out-of-a-symbolic	enumeratio_abs((-3 * SR.var("x")))	True

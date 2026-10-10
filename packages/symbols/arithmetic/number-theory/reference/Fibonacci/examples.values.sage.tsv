@@ -14,7 +14,7 @@ f-3-x-x-2-1-threads-element-wise-over-a-matrix
 threads-element-wise-over-a-list-as-wolfram-s	[fibonacci(1), fibonacci(2), fibonacci(3), fibonacci(4)]	[1, 1, 2, 3]	
 fibonacci-n-x-symbolic-order-stays-exact			
 fibonacci-half-x-exact-closed-form			
-n-fibonacci-15-over-17-50	N(fibonacci((15/17)))		
+n-fibonacci-15-over-17-50	enumeratio_n(fibonacci((15/17)), 50)		
 n-fibonacci-5-8-minus-i			
 functionexpand-fibonacci-n-x			
 functionexpand-fibonacci-1-over-2-x			
@@ -26,10 +26,10 @@ fibonacci-1-conjugate-z-eq-conjugate-fibonacci-1
 matrixfunction-function-fibonacci-3-1-1-list			
 consecutive-ratios-f-n-1-f-n-converge-to-the	(fibonacci(20) / fibonacci(19))	6765/4181	
 sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143			
-the-doubling-identity-f-2n-f-n-l-n-see-lucasl	bool(fibonacci(20) == (fibonacci(10) * lucas_number2(10, 1, -1)))	True	
-the-defining-recurrence-f-10-f-9-f-8	bool(fibonacci(10) == (fibonacci(9) + fibonacci(8)))	True	
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl	enumeratio_equal(fibonacci(20), (fibonacci(10) * lucas_number2(10, 1, -1)))	True	
+the-defining-recurrence-f-10-f-9-f-8	enumeratio_equal(fibonacci(10), (fibonacci(9) + fibonacci(8)))	True	
 cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	((fibonacci(5) * fibonacci(7)) - ((fibonacci(6))^2))	1	
-gcd-f-12-f-18-f-gcd-12-18	bool(gcd(fibonacci(12), fibonacci(18)) == fibonacci(gcd(12, 18)))	True	
+gcd-f-12-f-18-f-gcd-12-18	enumeratio_equal(enumeratio_gcd(fibonacci(12), fibonacci(18)), fibonacci(enumeratio_gcd(12, 18)))	True	
 negative-indices-are-supported-via-f-n-1-n-1-f-n	fibonacci(-5)	5	
 fibonacci-2	fibonacci(2)		
 fibonacci-3	fibonacci(3)		

@@ -2,20 +2,20 @@ id	in	out	verdict
 zeta-2-1-zeta-2-pi-2-6-reduces-to-the-ordinary	hurwitz_zeta(2, 1)	1/6*pi^2	
 zeta-2-2-pi-2-6-1	hurwitz_zeta(2, 2)	1/6*pi^2 - 1	
 an-inexact-a-evaluates-numerically-without-n	hurwitz_zeta(3, 0.2)	125.739018057218	
-inside-the-critical-strip-under-n	N(hurwitz_zeta(0.51, 0.87))	-1.32015502369496	
-precise-zeta-s-neg-41-2-a-3-10-d80	N(hurwitz_zeta((-41/2), (3/10)))		
-precise-zeta-s-neg-81-2-a-2-5-d40	N(hurwitz_zeta((-81/2), (2/5)))		
-precise-zeta-s-neg-81-2-a-2-5-d80	N(hurwitz_zeta((-81/2), (2/5)))		
-precise-zeta-s-neg-21-2-a-3-10-d40	N(hurwitz_zeta((-21/2), (3/10)))		
-precise-zeta-s-neg-21-2-a-3-10-d80	N(hurwitz_zeta((-21/2), (3/10)))		
-precise-zeta-s-neg-11-2-a-27-10-d40	N(hurwitz_zeta((-11/2), (27/10)))		
-precise-zeta-s-neg-11-2-a-27-10-d80	N(hurwitz_zeta((-11/2), (27/10)))		
-precise-zeta-s-neg-5-2-a-3-10-d40	N(hurwitz_zeta((-5/2), (3/10)))		
-precise-zeta-s-neg-5-2-a-3-10-d80	N(hurwitz_zeta((-5/2), (3/10)))		
-precise-zeta-s-neg-1-2-a-1-20-d40	N(hurwitz_zeta((-1/2), (1/20)))		
-precise-zeta-s-neg-1-2-a-1-20-d80	N(hurwitz_zeta((-1/2), (1/20)))		
-precise-zeta-s-1-2-a-5-4-d40	N(hurwitz_zeta((1/2), (5/4)))		
-precise-zeta-s-1-2-a-5-4-d80	N(hurwitz_zeta((1/2), (5/4)))		
+inside-the-critical-strip-under-n	enumeratio_n(hurwitz_zeta(0.51, 0.87))	-1.32015502369496	
+precise-zeta-s-neg-41-2-a-3-10-d80	enumeratio_n(hurwitz_zeta((-41/2), (3/10)), 80)		
+precise-zeta-s-neg-81-2-a-2-5-d40	enumeratio_n(hurwitz_zeta((-81/2), (2/5)), 40)		
+precise-zeta-s-neg-81-2-a-2-5-d80	enumeratio_n(hurwitz_zeta((-81/2), (2/5)), 80)		
+precise-zeta-s-neg-21-2-a-3-10-d40	enumeratio_n(hurwitz_zeta((-21/2), (3/10)), 40)		
+precise-zeta-s-neg-21-2-a-3-10-d80	enumeratio_n(hurwitz_zeta((-21/2), (3/10)), 80)		
+precise-zeta-s-neg-11-2-a-27-10-d40	enumeratio_n(hurwitz_zeta((-11/2), (27/10)), 40)		
+precise-zeta-s-neg-11-2-a-27-10-d80	enumeratio_n(hurwitz_zeta((-11/2), (27/10)), 80)		
+precise-zeta-s-neg-5-2-a-3-10-d40	enumeratio_n(hurwitz_zeta((-5/2), (3/10)), 40)		
+precise-zeta-s-neg-5-2-a-3-10-d80	enumeratio_n(hurwitz_zeta((-5/2), (3/10)), 80)		
+precise-zeta-s-neg-1-2-a-1-20-d40	enumeratio_n(hurwitz_zeta((-1/2), (1/20)), 40)		
+precise-zeta-s-neg-1-2-a-1-20-d80	enumeratio_n(hurwitz_zeta((-1/2), (1/20)), 80)		
+precise-zeta-s-1-2-a-5-4-d40	enumeratio_n(hurwitz_zeta((1/2), (5/4)), 40)		
+precise-zeta-s-1-2-a-5-4-d80	enumeratio_n(hurwitz_zeta((1/2), (5/4)), 80)		
 zeta-0-a-exact-at-a-3	hurwitz_zeta(0, 3)	-5/2	
 zeta-0-a-exact-at-a-5-over-2	hurwitz_zeta(0, (5/2))	-2	
 zeta-neg-1-a-exact-at-a-3	hurwitz_zeta(-1, 3)	-37/12	
@@ -25,174 +25,174 @@ zeta-neg-2-a-exact-at-a-5-over-2	hurwitz_zeta(-2, (5/2))	-5/2
 zeta-neg-3-a-exact-at-a-5-over-2	hurwitz_zeta(-3, (5/2))	-3367/960	
 zeta-neg-4-a-exact-at-a-5-over-2	hurwitz_zeta(-4, (5/2))	-41/8	
 pole-at-s-1-for-symbolic-a	hurwitz_zeta(1, SR.var("a"))	hurwitz_zeta(1, a)	disagree
-pole-at-a-neg-2-re-s-positive	N(hurwitz_zeta(2, -2))	ValueError: psi2_eval(): pole	error
-pole-at-a-neg-1-inexact-s	N(hurwitz_zeta(0.158, -1))	ValueError: Hurwitz zeta complex infinity	error
-pole-at-a-0-re-s-positive	N(hurwitz_zeta(3, 0))	ValueError: psi2_eval(): pole	error
-re-s-0-a-neg-1-is-indeterminate	N(hurwitz_zeta((0 + -1*I), -1))	ValueError: Hurwitz zeta complex infinity	error
-re-s-positive-complex-s-is-a-pole	N(hurwitz_zeta((2 + 1*I), 0))	2.15035570325490 - 0.437530865919608*I	disagree
-n-hurwitzzeta-2-1	N(hurwitz_zeta(2, 1))	1.64493406684823	
-n-hurwitzzeta-2-2	N(hurwitz_zeta(2, 2))	0.644934066848226	
-n-hurwitzzeta-2-3	N(hurwitz_zeta(2, 3))	0.394934066848226	
-n-hurwitzzeta-2-0p5	N(hurwitz_zeta(2, 0.5))	4.93480220054468	
-n-hurwitzzeta-2-0p25	N(hurwitz_zeta(2, 0.25))	17.1973291545071	
-n-hurwitzzeta-2-1p3	N(hurwitz_zeta(2, 1.3))	1.13425343499662	
-n-hurwitzzeta-2-7-over-3	N(hurwitz_zeta(2, (7/3)))	0.533097125427094	
-n-hurwitzzeta-2-1-plus-i	N(hurwitz_zeta(2, (1 + 1*I)))	0.463000096622764 - 0.794233542759319*I	
-n-hurwitzzeta-2-2-plus-neg-0p5-times-i	N(hurwitz_zeta(2, (2 + -0.5*I)))	0.588197890950061 + 0.185041972433791*I	
-n-hurwitzzeta-2-neg-0p5	N(hurwitz_zeta(2, -0.5))	8.93480220054468	
-n-hurwitzzeta-2-neg-1p5	N(hurwitz_zeta(2, -1.5))	9.37924664498912	
-n-hurwitzzeta-3-1	N(hurwitz_zeta(3, 1))	1.20205690315959	
-n-hurwitzzeta-3-2	N(hurwitz_zeta(3, 2))	0.202056903159594	
-n-hurwitzzeta-3-3	N(hurwitz_zeta(3, 3))	0.0770569031595942	
-n-hurwitzzeta-3-0p5	N(hurwitz_zeta(3, 0.5))	8.41439832211716	
-n-hurwitzzeta-3-0p25	N(hurwitz_zeta(3, 0.25))	64.6638699687685	
-n-hurwitzzeta-3-1p3	N(hurwitz_zeta(3, 1.3))	0.599231257325978	
-n-hurwitzzeta-3-7-over-3	N(hurwitz_zeta(3, (7/3)))	0.139186199700804	
-n-hurwitzzeta-3-1-plus-i	N(hurwitz_zeta(3, (1 + 1*I)))	-0.184276465793968 - 0.383326425172533*I	
-n-hurwitzzeta-3-2-plus-neg-0p5-times-i	N(hurwitz_zeta(3, (2 + -0.5*I)))	0.153693633730308 + 0.104226347413733*I	
-n-hurwitzzeta-3-neg-0p5	N(hurwitz_zeta(3, -0.5))	0.414398322117160	
-n-hurwitzzeta-3-neg-1p5	N(hurwitz_zeta(3, -1.5))	0.118102025820864	
-n-hurwitzzeta-5-1	N(hurwitz_zeta(5, 1))	1.03692775514337	
-n-hurwitzzeta-5-2	N(hurwitz_zeta(5, 2))	0.0369277551433700	
-n-hurwitzzeta-5-3	N(hurwitz_zeta(5, 3))	0.00567775514336999	
-n-hurwitzzeta-5-0p5	N(hurwitz_zeta(5, 0.5))	32.1447604094445	
-n-hurwitzzeta-5-0p25	N(hurwitz_zeta(5, 0.25))	1024.34897452658	
-n-hurwitzzeta-5-1p3	N(hurwitz_zeta(5, 1.3))	0.288556067518527	
-n-hurwitzzeta-5-7-over-3	N(hurwitz_zeta(5, (7/3)))	0.0179852769188751	
-n-hurwitzzeta-5-1-plus-i	N(hurwitz_zeta(5, (1 + 1*I)))	-0.136646173710169 + 0.107525502140082*I	
-n-hurwitzzeta-5-2-plus-neg-0p5-times-i	N(hurwitz_zeta(5, (2 + -0.5*I)))	0.0129935730830699 + 0.0288772717953141*I	
-n-hurwitzzeta-5-neg-0p5	N(hurwitz_zeta(5, -0.5))	0.144760409444468	
-n-hurwitzzeta-5-neg-1p5	N(hurwitz_zeta(5, -1.5))	0.0130731666461138	
-n-hurwitzzeta-neg-1-1	N(hurwitz_zeta(-1, 1))	-0.0833333333333333	
-n-hurwitzzeta-neg-1-2	N(hurwitz_zeta(-1, 2))	-1.08333333333333	
-n-hurwitzzeta-neg-1-3	N(hurwitz_zeta(-1, 3))	-3.08333333333333	
-n-hurwitzzeta-neg-1-0p5	N(hurwitz_zeta(-1, 0.5))	0.0416666666666667	
-n-hurwitzzeta-neg-1-0p25	N(hurwitz_zeta(-1, 0.25))	0.0104166666666667	
-n-hurwitzzeta-neg-1-1p3	N(hurwitz_zeta(-1, 1.3))	-0.278333333333333	
-n-hurwitzzeta-neg-1-7-over-3	N(hurwitz_zeta(-1, (7/3)))	-1.63888888888889	
-n-hurwitzzeta-neg-1-1-plus-i	N(hurwitz_zeta(-1, (1 + 1*I)))	0.416666666666667 - 0.500000000000000*I	
-n-hurwitzzeta-neg-1-2-plus-neg-0p5-times-i	N(hurwitz_zeta(-1, (2 + -0.5*I)))	-0.958333333333333 + 0.750000000000000*I	
-n-hurwitzzeta-neg-1-neg-0p5	N(hurwitz_zeta(-1, -0.5))	-0.458333333333333	
-n-hurwitzzeta-neg-1-neg-1p5	N(hurwitz_zeta(-1, -1.5))	-1.95833333333333	
-n-hurwitzzeta-neg-2-1	N(hurwitz_zeta(-2, 1))	0.000000000000000	
-n-hurwitzzeta-neg-2-2	N(hurwitz_zeta(-2, 2))	-1.00000000000000	
-n-hurwitzzeta-neg-2-3	N(hurwitz_zeta(-2, 3))	-5.00000000000000	
-n-hurwitzzeta-neg-2-0p5	N(hurwitz_zeta(-2, 0.5))	0.000000000000000	
-n-hurwitzzeta-neg-2-0p25	N(hurwitz_zeta(-2, 0.25))	-0.0156250000000000	
-n-hurwitzzeta-neg-2-1p3	N(hurwitz_zeta(-2, 1.3))	-0.104000000000000	
-n-hurwitzzeta-neg-2-7-over-3	N(hurwitz_zeta(-2, (7/3)))	-1.90123456790123	
-n-hurwitzzeta-neg-2-1-plus-i	N(hurwitz_zeta(-2, (1 + 1*I)))	0.500000000000000 + 0.166666666666667*I	
-n-hurwitzzeta-neg-2-2-plus-neg-0p5-times-i	N(hurwitz_zeta(-2, (2 + -0.5*I)))	-0.625000000000000 + 1.04166666666667*I	
-n-hurwitzzeta-neg-2-neg-0p5	N(hurwitz_zeta(-2, -0.5))	0.250000000000000	
-n-hurwitzzeta-neg-2-neg-1p5	N(hurwitz_zeta(-2, -1.5))	2.50000000000000	
-n-hurwitzzeta-neg-3-1	N(hurwitz_zeta(-3, 1))	0.00833333333333333	
-n-hurwitzzeta-neg-3-2	N(hurwitz_zeta(-3, 2))	-0.991666666666667	
-n-hurwitzzeta-neg-3-3	N(hurwitz_zeta(-3, 3))	-8.99166666666667	
-n-hurwitzzeta-neg-3-0p5	N(hurwitz_zeta(-3, 0.5))	-0.00729166666666667	
-n-hurwitzzeta-neg-3-0p25	N(hurwitz_zeta(-3, 0.25))	-0.000455729166666667	
-n-hurwitzzeta-neg-3-1p3	N(hurwitz_zeta(-3, 1.3))	-0.0296916666666667	
-n-hurwitzzeta-neg-3-7-over-3	N(hurwitz_zeta(-3, (7/3)))	-2.41141975308642	
-n-hurwitzzeta-neg-3-1-plus-i	N(hurwitz_zeta(-3, (1 + 1*I)))	0.00833333333333333 + 0.500000000000000*I	
-n-hurwitzzeta-neg-3-2-plus-neg-0p5-times-i	N(hurwitz_zeta(-3, (2 + -0.5*I)))	-0.194791666666667 + 1.31250000000000*I	
-n-hurwitzzeta-neg-3-neg-0p5	N(hurwitz_zeta(-3, -0.5))	-0.132291666666667	
-n-hurwitzzeta-neg-3-neg-1p5	N(hurwitz_zeta(-3, -1.5))	-3.50729166666667	
-n-hurwitzzeta-0p5-1	N(hurwitz_zeta(0.5, 1))	-1.46035450880959	
-n-hurwitzzeta-0p5-2	N(hurwitz_zeta(0.5, 2))	-2.46035450880959	
-n-hurwitzzeta-0p5-3	N(hurwitz_zeta(0.5, 3))	-3.16746128999613	
-n-hurwitzzeta-0p5-0p5	N(hurwitz_zeta(0.5, 0.5))	-0.604898643421630	
-n-hurwitzzeta-0p5-0p25	N(hurwitz_zeta(0.5, 0.25))	0.239963524495631	
-n-hurwitzzeta-0p5-1p3	N(hurwitz_zeta(0.5, 1.3))	-1.81458907804058	
-n-hurwitzzeta-0p5-7-over-3	N(hurwitz_zeta(0.5, (7/3)))	-2.71615953928754	
-n-hurwitzzeta-0p5-1-plus-i	N(hurwitz_zeta(0.5, (1 + 1*I)))	-1.79881374448649 - 1.09357687572111*I	
-n-hurwitzzeta-0p5-2-plus-neg-0p5-times-i	N(hurwitz_zeta(0.5, (2 + -0.5*I)))	-2.49147423528801 + 0.398328078684049*I	
-n-hurwitzzeta-0p5-neg-0p5	N(hurwitz_zeta(0.5, -0.5))	-0.604898643421630 - 1.41421356237310*I	
-n-hurwitzzeta-0p5-neg-1p5	N(hurwitz_zeta(0.5, -1.5))	-0.604898643421630 - 2.23071014330082*I	
-n-hurwitzzeta-1p5-1	N(hurwitz_zeta(1.5, 1))	2.61237534868549	
-n-hurwitzzeta-1p5-2	N(hurwitz_zeta(1.5, 2))	1.61237534868549	
-n-hurwitzzeta-1p5-3	N(hurwitz_zeta(1.5, 3))	1.25882195809221	
-n-hurwitzzeta-1p5-0p5	N(hurwitz_zeta(1.5, 0.5))	4.77653794755483	
-n-hurwitzzeta-1p5-0p25	N(hurwitz_zeta(1.5, 0.25))	10.2130553604666	
-n-hurwitzzeta-1p5-1p3	N(hurwitz_zeta(1.5, 1.3))	2.15195547695788	
-n-hurwitzzeta-1p5-7-over-3	N(hurwitz_zeta(1.5, (7/3)))	1.46425424919949	
-n-hurwitzzeta-1p5-1-plus-i	N(hurwitz_zeta(1.5, (1 + 1*I)))	1.65093475194937 - 0.967357065698768*I	
-n-hurwitzzeta-1p5-2-plus-neg-0p5-times-i	N(hurwitz_zeta(1.5, (2 + -0.5*I)))	1.55659577776575 + 0.242106322325134*I	
-n-hurwitzzeta-1p5-neg-0p5	N(hurwitz_zeta(1.5, -0.5))	4.77653794755483 + 2.82842712474619*I	
-n-hurwitzzeta-1p5-neg-1p5	N(hurwitz_zeta(1.5, -1.5))	4.77653794755483 + 3.37275817869801*I	
-n-hurwitzzeta-2p5-1	N(hurwitz_zeta(2.5, 1))	1.34148725725092	
-n-hurwitzzeta-2p5-2	N(hurwitz_zeta(2.5, 2))	0.341487257250917	
-n-hurwitzzeta-2p5-3	N(hurwitz_zeta(2.5, 3))	0.164710561954280	
-n-hurwitzzeta-2p5-0p5	N(hurwitz_zeta(2.5, 0.5))	6.24711063456881	
-n-hurwitzzeta-2p5-0p25	N(hurwitz_zeta(2.5, 0.25))	32.8474519546977	
-n-hurwitzzeta-2p5-1p3	N(hurwitz_zeta(2.5, 1.3))	0.783218553908237	
-n-hurwitzzeta-2p5-7-over-3	N(hurwitz_zeta(2.5, (7/3)))	0.257447605150206	
-n-hurwitzzeta-2p5-1-plus-i	N(hurwitz_zeta(2.5, (1 + 1*I)))	0.0187398370957182 - 0.589547708338162*I	
-n-hurwitzzeta-2p5-2-plus-neg-0p5-times-i	N(hurwitz_zeta(2.5, (2 + -0.5*I)))	0.287820164365366 + 0.139696684393936*I	
-n-hurwitzzeta-2p5-neg-0p5	N(hurwitz_zeta(2.5, -0.5))	6.24711063456881 - 5.65685424949238*I	
-n-hurwitzzeta-2p5-neg-1p5	N(hurwitz_zeta(2.5, -1.5))	6.24711063456881 - 6.01974161879359*I	
-n-hurwitzzeta-neg-0p5-1	N(hurwitz_zeta(-0.5, 1))	-0.207886224977355	
-n-hurwitzzeta-neg-0p5-2	N(hurwitz_zeta(-0.5, 2))	-1.20788622497735	
-n-hurwitzzeta-neg-0p5-3	N(hurwitz_zeta(-0.5, 3))	-2.62209978735045	
-n-hurwitzzeta-neg-0p5-0p5	N(hurwitz_zeta(-0.5, 0.5))	0.0608884655805949	
-n-hurwitzzeta-neg-0p5-0p25	N(hurwitz_zeta(-0.5, 0.25))	0.0903222587612462	
-n-hurwitzzeta-neg-0p5-1p3	N(hurwitz_zeta(-0.5, 1.3))	-0.454363742420251	
-n-hurwitzzeta-neg-0p5-7-over-3	N(hurwitz_zeta(-0.5, (7/3)))	-1.63960452469901	
-n-hurwitzzeta-neg-0p5-1-plus-i	N(hurwitz_zeta(-0.5, (1 + 1*I)))	0.0878459278201809 - 0.795101413593407*I	
-n-hurwitzzeta-neg-0p5-2-plus-neg-0p5-times-i	N(hurwitz_zeta(-0.5, (2 + -0.5*I)))	-1.15780111352733 + 0.617711202310648*I	
-n-hurwitzzeta-neg-0p5-neg-0p5	N(hurwitz_zeta(-0.5, -0.5))	0.0608884655805949 + 0.707106781186548*I	
-n-hurwitzzeta-neg-0p5-neg-1p5	N(hurwitz_zeta(-0.5, -1.5))	0.0608884655805949 + 1.93185165257814*I	
-n-hurwitzzeta-2-plus-i-1	N(hurwitz_zeta((2 + 1*I), 1))	1.15035570325490 - 0.437530865919608*I	
-n-hurwitzzeta-2-plus-i-2	N(hurwitz_zeta((2 + 1*I), 2))	0.150355703254903 - 0.437530865919608*I	
-n-hurwitzzeta-2-plus-i-3	N(hurwitz_zeta((2 + 1*I), 3))	-0.0419540220860904 - 0.277790546841199*I	
-n-hurwitzzeta-2-plus-i-0p5	N(hurwitz_zeta((2 + 1*I), 0.5))	3.50749884820183 + 2.03139880893399*I	
-n-hurwitzzeta-2-plus-i-0p25	N(hurwitz_zeta((2 + 1*I), 0.25))	3.63422079882474 + 15.1953701855705*I	
-n-hurwitzzeta-2-plus-i-1p3	N(hurwitz_zeta((2 + 1*I), 1.3))	0.634178650268900 - 0.536110383539213*I	
-n-hurwitzzeta-2-plus-i-7-over-3	N(hurwitz_zeta((2 + 1*I), (7/3)))	0.0551333896367952 - 0.376862655048367*I	
-n-hurwitzzeta-2-plus-i-1-plus-i	N(hurwitz_zeta((2 + 1*I), (1 + 1*I)))	-0.635304343440012 - 1.65884864360589*I	
-n-hurwitzzeta-2-plus-i-2-plus-neg-0p5-times-i	N(hurwitz_zeta((2 + 1*I), (2 + -0.5*I)))	0.185393489012995 - 0.270373692422874*I	
-n-hurwitzzeta-2-plus-i-neg-0p5	N(hurwitz_zeta((2 + 1*I), -0.5))	74.7103827587638 + 61.1754248066227*I	
-n-hurwitzzeta-2-plus-i-neg-1p5	N(hurwitz_zeta((2 + 1*I), -1.5))	84.1612374150554 + 57.1186433542858*I	
-n-hurwitzzeta-0p5-plus-3i-1	N(hurwitz_zeta((0.5 + 3*I), 1))	0.532736670974233 - 0.0788965134258334*I	
-n-hurwitzzeta-0p5-plus-3i-2	N(hurwitz_zeta((0.5 + 3*I), 2))	-0.467263329025767 - 0.0788965134258334*I	
-n-hurwitzzeta-0p5-plus-3i-3	N(hurwitz_zeta((0.5 + 3*I), 3))	-0.122906273682167 + 0.538694142619969*I	
-n-hurwitzzeta-0p5-plus-3i-0p5	N(hurwitz_zeta((0.5 + 3*I), 0.5))	-0.802188434581937 + 0.791260035759494*I	
-n-hurwitzzeta-0p5-plus-3i-0p25	N(hurwitz_zeta((0.5 + 3*I), 0.25))	-0.821315995611798 - 2.11791354690107*I	
-n-hurwitzzeta-0p5-plus-3i-1p3	N(hurwitz_zeta((0.5 + 3*I), 1.3))	0.157370174830999 - 0.442640214770042*I	
-n-hurwitzzeta-0p5-plus-3i-7-over-3	N(hurwitz_zeta((0.5 + 3*I), (7/3)))	-0.453727021657172 + 0.204440194003099*I	
-n-hurwitzzeta-0p5-plus-3i-1-plus-i	N(hurwitz_zeta((0.5 + 3*I), (1 + 1*I)))	-1.41730150592913 - 8.33564356221338*I	
-n-hurwitzzeta-0p5-plus-3i-2-plus-neg-0p5-times-i	N(hurwitz_zeta((0.5 + 3*I), (2 + -0.5*I)))	-0.181016361585114 + 0.00931234027233906*I	
-n-hurwitzzeta-0p5-plus-3i-neg-0p5	N(hurwitz_zeta((0.5 + 3*I), -0.5))	15305.1296099250 + 8535.09396001410*I	
-n-hurwitzzeta-0p5-plus-3i-neg-1p5	N(hurwitz_zeta((0.5 + 3*I), -1.5))	5816.16316701183 + 5023.94892708940*I	
-n-hurwitzzeta-neg-0p5-plus-i-1	N(hurwitz_zeta((-0.5 + 1*I), 1))	-0.000817893132952545 - 0.223071688697778*I	
-n-hurwitzzeta-neg-0p5-plus-i-2	N(hurwitz_zeta((-0.5 + 1*I), 2))	-1.00081789313295 - 0.223071688697778*I	
-n-hurwitzzeta-neg-0p5-plus-i-3	N(hurwitz_zeta((-0.5 + 1*I), 3))	-2.08868598014686 + 0.680556014096187*I	
-n-hurwitzzeta-neg-0p5-plus-i-0p5	N(hurwitz_zeta((-0.5 + 1*I), 0.5))	0.101159892022161 + 0.101365867626040*I	
-n-hurwitzzeta-neg-0p5-plus-i-0p25	N(hurwitz_zeta((-0.5 + 1*I), 0.25))	-0.105599710390196 + 0.172605566681921*I	
-n-hurwitzzeta-neg-0p5-plus-i-1p3	N(hurwitz_zeta((-0.5 + 1*I), 1.3))	-0.243310938687762 - 0.330441278258437*I	
-n-hurwitzzeta-neg-0p5-plus-i-7-over-3	N(hurwitz_zeta((-0.5 + 1*I), (7/3)))	-1.38218514408714 - 0.00905630825006346*I	
-n-hurwitzzeta-neg-0p5-plus-i-1-plus-i	N(hurwitz_zeta((-0.5 + 1*I), (1 + 1*I)))	1.04095754311853 - 1.79991043233683*I	
-n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5	N(hurwitz_zeta((-0.5 + 1*I), (2 + -0.5*I)))	-0.746153397257610 + 0.249257816033080*I	
-n-hurwitzzeta-neg-0p5-plus-i-neg-0p5	N(hurwitz_zeta((-0.5 + 1*I), -0.5))	-10.3541255703876 + 12.6883763809253*I	
-n-hurwitzzeta-neg-0p5-plus-i-neg-1p5	N(hurwitz_zeta((-0.5 + 1*I), -1.5))	0.825049555351030 + 38.7318693646864*I	
+pole-at-a-neg-2-re-s-positive	enumeratio_n(hurwitz_zeta(2, -2))	ValueError: psi2_eval(): pole	error
+pole-at-a-neg-1-inexact-s	enumeratio_n(hurwitz_zeta(0.158, -1))	ValueError: Hurwitz zeta complex infinity	error
+pole-at-a-0-re-s-positive	enumeratio_n(hurwitz_zeta(3, 0))	ValueError: psi2_eval(): pole	error
+re-s-0-a-neg-1-is-indeterminate	enumeratio_n(hurwitz_zeta((0 + -1*I), -1))	ValueError: Hurwitz zeta complex infinity	error
+re-s-positive-complex-s-is-a-pole	enumeratio_n(hurwitz_zeta((2 + 1*I), 0))	2.15035570325490 - 0.437530865919608*I	disagree
+n-hurwitzzeta-2-1	enumeratio_n(hurwitz_zeta(2, 1))	1.64493406684823	
+n-hurwitzzeta-2-2	enumeratio_n(hurwitz_zeta(2, 2))	0.644934066848226	
+n-hurwitzzeta-2-3	enumeratio_n(hurwitz_zeta(2, 3))	0.394934066848226	
+n-hurwitzzeta-2-0p5	enumeratio_n(hurwitz_zeta(2, 0.5))	4.93480220054468	
+n-hurwitzzeta-2-0p25	enumeratio_n(hurwitz_zeta(2, 0.25))	17.1973291545071	
+n-hurwitzzeta-2-1p3	enumeratio_n(hurwitz_zeta(2, 1.3))	1.13425343499662	
+n-hurwitzzeta-2-7-over-3	enumeratio_n(hurwitz_zeta(2, (7/3)))	0.533097125427094	
+n-hurwitzzeta-2-1-plus-i	enumeratio_n(hurwitz_zeta(2, (1 + 1*I)))	0.463000096622764 - 0.794233542759319*I	
+n-hurwitzzeta-2-2-plus-neg-0p5-times-i	enumeratio_n(hurwitz_zeta(2, (2 + -0.5*I)))	0.588197890950061 + 0.185041972433791*I	
+n-hurwitzzeta-2-neg-0p5	enumeratio_n(hurwitz_zeta(2, -0.5))	8.93480220054468	
+n-hurwitzzeta-2-neg-1p5	enumeratio_n(hurwitz_zeta(2, -1.5))	9.37924664498912	
+n-hurwitzzeta-3-1	enumeratio_n(hurwitz_zeta(3, 1))	1.20205690315959	
+n-hurwitzzeta-3-2	enumeratio_n(hurwitz_zeta(3, 2))	0.202056903159594	
+n-hurwitzzeta-3-3	enumeratio_n(hurwitz_zeta(3, 3))	0.0770569031595942	
+n-hurwitzzeta-3-0p5	enumeratio_n(hurwitz_zeta(3, 0.5))	8.41439832211716	
+n-hurwitzzeta-3-0p25	enumeratio_n(hurwitz_zeta(3, 0.25))	64.6638699687685	
+n-hurwitzzeta-3-1p3	enumeratio_n(hurwitz_zeta(3, 1.3))	0.599231257325978	
+n-hurwitzzeta-3-7-over-3	enumeratio_n(hurwitz_zeta(3, (7/3)))	0.139186199700804	
+n-hurwitzzeta-3-1-plus-i	enumeratio_n(hurwitz_zeta(3, (1 + 1*I)))	-0.184276465793968 - 0.383326425172533*I	
+n-hurwitzzeta-3-2-plus-neg-0p5-times-i	enumeratio_n(hurwitz_zeta(3, (2 + -0.5*I)))	0.153693633730308 + 0.104226347413733*I	
+n-hurwitzzeta-3-neg-0p5	enumeratio_n(hurwitz_zeta(3, -0.5))	0.414398322117160	
+n-hurwitzzeta-3-neg-1p5	enumeratio_n(hurwitz_zeta(3, -1.5))	0.118102025820864	
+n-hurwitzzeta-5-1	enumeratio_n(hurwitz_zeta(5, 1))	1.03692775514337	
+n-hurwitzzeta-5-2	enumeratio_n(hurwitz_zeta(5, 2))	0.0369277551433700	
+n-hurwitzzeta-5-3	enumeratio_n(hurwitz_zeta(5, 3))	0.00567775514336999	
+n-hurwitzzeta-5-0p5	enumeratio_n(hurwitz_zeta(5, 0.5))	32.1447604094445	
+n-hurwitzzeta-5-0p25	enumeratio_n(hurwitz_zeta(5, 0.25))	1024.34897452658	
+n-hurwitzzeta-5-1p3	enumeratio_n(hurwitz_zeta(5, 1.3))	0.288556067518527	
+n-hurwitzzeta-5-7-over-3	enumeratio_n(hurwitz_zeta(5, (7/3)))	0.0179852769188751	
+n-hurwitzzeta-5-1-plus-i	enumeratio_n(hurwitz_zeta(5, (1 + 1*I)))	-0.136646173710169 + 0.107525502140082*I	
+n-hurwitzzeta-5-2-plus-neg-0p5-times-i	enumeratio_n(hurwitz_zeta(5, (2 + -0.5*I)))	0.0129935730830699 + 0.0288772717953141*I	
+n-hurwitzzeta-5-neg-0p5	enumeratio_n(hurwitz_zeta(5, -0.5))	0.144760409444468	
+n-hurwitzzeta-5-neg-1p5	enumeratio_n(hurwitz_zeta(5, -1.5))	0.0130731666461138	
+n-hurwitzzeta-neg-1-1	enumeratio_n(hurwitz_zeta(-1, 1))	-0.0833333333333333	
+n-hurwitzzeta-neg-1-2	enumeratio_n(hurwitz_zeta(-1, 2))	-1.08333333333333	
+n-hurwitzzeta-neg-1-3	enumeratio_n(hurwitz_zeta(-1, 3))	-3.08333333333333	
+n-hurwitzzeta-neg-1-0p5	enumeratio_n(hurwitz_zeta(-1, 0.5))	0.0416666666666667	
+n-hurwitzzeta-neg-1-0p25	enumeratio_n(hurwitz_zeta(-1, 0.25))	0.0104166666666667	
+n-hurwitzzeta-neg-1-1p3	enumeratio_n(hurwitz_zeta(-1, 1.3))	-0.278333333333333	
+n-hurwitzzeta-neg-1-7-over-3	enumeratio_n(hurwitz_zeta(-1, (7/3)))	-1.63888888888889	
+n-hurwitzzeta-neg-1-1-plus-i	enumeratio_n(hurwitz_zeta(-1, (1 + 1*I)))	0.416666666666667 - 0.500000000000000*I	
+n-hurwitzzeta-neg-1-2-plus-neg-0p5-times-i	enumeratio_n(hurwitz_zeta(-1, (2 + -0.5*I)))	-0.958333333333333 + 0.750000000000000*I	
+n-hurwitzzeta-neg-1-neg-0p5	enumeratio_n(hurwitz_zeta(-1, -0.5))	-0.458333333333333	
+n-hurwitzzeta-neg-1-neg-1p5	enumeratio_n(hurwitz_zeta(-1, -1.5))	-1.95833333333333	
+n-hurwitzzeta-neg-2-1	enumeratio_n(hurwitz_zeta(-2, 1))	0.000000000000000	
+n-hurwitzzeta-neg-2-2	enumeratio_n(hurwitz_zeta(-2, 2))	-1.00000000000000	
+n-hurwitzzeta-neg-2-3	enumeratio_n(hurwitz_zeta(-2, 3))	-5.00000000000000	
+n-hurwitzzeta-neg-2-0p5	enumeratio_n(hurwitz_zeta(-2, 0.5))	0.000000000000000	
+n-hurwitzzeta-neg-2-0p25	enumeratio_n(hurwitz_zeta(-2, 0.25))	-0.0156250000000000	
+n-hurwitzzeta-neg-2-1p3	enumeratio_n(hurwitz_zeta(-2, 1.3))	-0.104000000000000	
+n-hurwitzzeta-neg-2-7-over-3	enumeratio_n(hurwitz_zeta(-2, (7/3)))	-1.90123456790123	
+n-hurwitzzeta-neg-2-1-plus-i	enumeratio_n(hurwitz_zeta(-2, (1 + 1*I)))	0.500000000000000 + 0.166666666666667*I	
+n-hurwitzzeta-neg-2-2-plus-neg-0p5-times-i	enumeratio_n(hurwitz_zeta(-2, (2 + -0.5*I)))	-0.625000000000000 + 1.04166666666667*I	
+n-hurwitzzeta-neg-2-neg-0p5	enumeratio_n(hurwitz_zeta(-2, -0.5))	0.250000000000000	
+n-hurwitzzeta-neg-2-neg-1p5	enumeratio_n(hurwitz_zeta(-2, -1.5))	2.50000000000000	
+n-hurwitzzeta-neg-3-1	enumeratio_n(hurwitz_zeta(-3, 1))	0.00833333333333333	
+n-hurwitzzeta-neg-3-2	enumeratio_n(hurwitz_zeta(-3, 2))	-0.991666666666667	
+n-hurwitzzeta-neg-3-3	enumeratio_n(hurwitz_zeta(-3, 3))	-8.99166666666667	
+n-hurwitzzeta-neg-3-0p5	enumeratio_n(hurwitz_zeta(-3, 0.5))	-0.00729166666666667	
+n-hurwitzzeta-neg-3-0p25	enumeratio_n(hurwitz_zeta(-3, 0.25))	-0.000455729166666667	
+n-hurwitzzeta-neg-3-1p3	enumeratio_n(hurwitz_zeta(-3, 1.3))	-0.0296916666666667	
+n-hurwitzzeta-neg-3-7-over-3	enumeratio_n(hurwitz_zeta(-3, (7/3)))	-2.41141975308642	
+n-hurwitzzeta-neg-3-1-plus-i	enumeratio_n(hurwitz_zeta(-3, (1 + 1*I)))	0.00833333333333333 + 0.500000000000000*I	
+n-hurwitzzeta-neg-3-2-plus-neg-0p5-times-i	enumeratio_n(hurwitz_zeta(-3, (2 + -0.5*I)))	-0.194791666666667 + 1.31250000000000*I	
+n-hurwitzzeta-neg-3-neg-0p5	enumeratio_n(hurwitz_zeta(-3, -0.5))	-0.132291666666667	
+n-hurwitzzeta-neg-3-neg-1p5	enumeratio_n(hurwitz_zeta(-3, -1.5))	-3.50729166666667	
+n-hurwitzzeta-0p5-1	enumeratio_n(hurwitz_zeta(0.5, 1))	-1.46035450880959	
+n-hurwitzzeta-0p5-2	enumeratio_n(hurwitz_zeta(0.5, 2))	-2.46035450880959	
+n-hurwitzzeta-0p5-3	enumeratio_n(hurwitz_zeta(0.5, 3))	-3.16746128999613	
+n-hurwitzzeta-0p5-0p5	enumeratio_n(hurwitz_zeta(0.5, 0.5))	-0.604898643421630	
+n-hurwitzzeta-0p5-0p25	enumeratio_n(hurwitz_zeta(0.5, 0.25))	0.239963524495631	
+n-hurwitzzeta-0p5-1p3	enumeratio_n(hurwitz_zeta(0.5, 1.3))	-1.81458907804058	
+n-hurwitzzeta-0p5-7-over-3	enumeratio_n(hurwitz_zeta(0.5, (7/3)))	-2.71615953928754	
+n-hurwitzzeta-0p5-1-plus-i	enumeratio_n(hurwitz_zeta(0.5, (1 + 1*I)))	-1.79881374448649 - 1.09357687572111*I	
+n-hurwitzzeta-0p5-2-plus-neg-0p5-times-i	enumeratio_n(hurwitz_zeta(0.5, (2 + -0.5*I)))	-2.49147423528801 + 0.398328078684049*I	
+n-hurwitzzeta-0p5-neg-0p5	enumeratio_n(hurwitz_zeta(0.5, -0.5))	-0.604898643421630 - 1.41421356237310*I	
+n-hurwitzzeta-0p5-neg-1p5	enumeratio_n(hurwitz_zeta(0.5, -1.5))	-0.604898643421630 - 2.23071014330082*I	
+n-hurwitzzeta-1p5-1	enumeratio_n(hurwitz_zeta(1.5, 1))	2.61237534868549	
+n-hurwitzzeta-1p5-2	enumeratio_n(hurwitz_zeta(1.5, 2))	1.61237534868549	
+n-hurwitzzeta-1p5-3	enumeratio_n(hurwitz_zeta(1.5, 3))	1.25882195809221	
+n-hurwitzzeta-1p5-0p5	enumeratio_n(hurwitz_zeta(1.5, 0.5))	4.77653794755483	
+n-hurwitzzeta-1p5-0p25	enumeratio_n(hurwitz_zeta(1.5, 0.25))	10.2130553604666	
+n-hurwitzzeta-1p5-1p3	enumeratio_n(hurwitz_zeta(1.5, 1.3))	2.15195547695788	
+n-hurwitzzeta-1p5-7-over-3	enumeratio_n(hurwitz_zeta(1.5, (7/3)))	1.46425424919949	
+n-hurwitzzeta-1p5-1-plus-i	enumeratio_n(hurwitz_zeta(1.5, (1 + 1*I)))	1.65093475194937 - 0.967357065698768*I	
+n-hurwitzzeta-1p5-2-plus-neg-0p5-times-i	enumeratio_n(hurwitz_zeta(1.5, (2 + -0.5*I)))	1.55659577776575 + 0.242106322325134*I	
+n-hurwitzzeta-1p5-neg-0p5	enumeratio_n(hurwitz_zeta(1.5, -0.5))	4.77653794755483 + 2.82842712474619*I	
+n-hurwitzzeta-1p5-neg-1p5	enumeratio_n(hurwitz_zeta(1.5, -1.5))	4.77653794755483 + 3.37275817869801*I	
+n-hurwitzzeta-2p5-1	enumeratio_n(hurwitz_zeta(2.5, 1))	1.34148725725092	
+n-hurwitzzeta-2p5-2	enumeratio_n(hurwitz_zeta(2.5, 2))	0.341487257250917	
+n-hurwitzzeta-2p5-3	enumeratio_n(hurwitz_zeta(2.5, 3))	0.164710561954280	
+n-hurwitzzeta-2p5-0p5	enumeratio_n(hurwitz_zeta(2.5, 0.5))	6.24711063456881	
+n-hurwitzzeta-2p5-0p25	enumeratio_n(hurwitz_zeta(2.5, 0.25))	32.8474519546977	
+n-hurwitzzeta-2p5-1p3	enumeratio_n(hurwitz_zeta(2.5, 1.3))	0.783218553908237	
+n-hurwitzzeta-2p5-7-over-3	enumeratio_n(hurwitz_zeta(2.5, (7/3)))	0.257447605150206	
+n-hurwitzzeta-2p5-1-plus-i	enumeratio_n(hurwitz_zeta(2.5, (1 + 1*I)))	0.0187398370957182 - 0.589547708338162*I	
+n-hurwitzzeta-2p5-2-plus-neg-0p5-times-i	enumeratio_n(hurwitz_zeta(2.5, (2 + -0.5*I)))	0.287820164365366 + 0.139696684393936*I	
+n-hurwitzzeta-2p5-neg-0p5	enumeratio_n(hurwitz_zeta(2.5, -0.5))	6.24711063456881 - 5.65685424949238*I	
+n-hurwitzzeta-2p5-neg-1p5	enumeratio_n(hurwitz_zeta(2.5, -1.5))	6.24711063456881 - 6.01974161879359*I	
+n-hurwitzzeta-neg-0p5-1	enumeratio_n(hurwitz_zeta(-0.5, 1))	-0.207886224977355	
+n-hurwitzzeta-neg-0p5-2	enumeratio_n(hurwitz_zeta(-0.5, 2))	-1.20788622497735	
+n-hurwitzzeta-neg-0p5-3	enumeratio_n(hurwitz_zeta(-0.5, 3))	-2.62209978735045	
+n-hurwitzzeta-neg-0p5-0p5	enumeratio_n(hurwitz_zeta(-0.5, 0.5))	0.0608884655805949	
+n-hurwitzzeta-neg-0p5-0p25	enumeratio_n(hurwitz_zeta(-0.5, 0.25))	0.0903222587612462	
+n-hurwitzzeta-neg-0p5-1p3	enumeratio_n(hurwitz_zeta(-0.5, 1.3))	-0.454363742420251	
+n-hurwitzzeta-neg-0p5-7-over-3	enumeratio_n(hurwitz_zeta(-0.5, (7/3)))	-1.63960452469901	
+n-hurwitzzeta-neg-0p5-1-plus-i	enumeratio_n(hurwitz_zeta(-0.5, (1 + 1*I)))	0.0878459278201809 - 0.795101413593407*I	
+n-hurwitzzeta-neg-0p5-2-plus-neg-0p5-times-i	enumeratio_n(hurwitz_zeta(-0.5, (2 + -0.5*I)))	-1.15780111352733 + 0.617711202310648*I	
+n-hurwitzzeta-neg-0p5-neg-0p5	enumeratio_n(hurwitz_zeta(-0.5, -0.5))	0.0608884655805949 + 0.707106781186548*I	
+n-hurwitzzeta-neg-0p5-neg-1p5	enumeratio_n(hurwitz_zeta(-0.5, -1.5))	0.0608884655805949 + 1.93185165257814*I	
+n-hurwitzzeta-2-plus-i-1	enumeratio_n(hurwitz_zeta((2 + 1*I), 1))	1.15035570325490 - 0.437530865919608*I	
+n-hurwitzzeta-2-plus-i-2	enumeratio_n(hurwitz_zeta((2 + 1*I), 2))	0.150355703254903 - 0.437530865919608*I	
+n-hurwitzzeta-2-plus-i-3	enumeratio_n(hurwitz_zeta((2 + 1*I), 3))	-0.0419540220860904 - 0.277790546841199*I	
+n-hurwitzzeta-2-plus-i-0p5	enumeratio_n(hurwitz_zeta((2 + 1*I), 0.5))	3.50749884820183 + 2.03139880893399*I	
+n-hurwitzzeta-2-plus-i-0p25	enumeratio_n(hurwitz_zeta((2 + 1*I), 0.25))	3.63422079882474 + 15.1953701855705*I	
+n-hurwitzzeta-2-plus-i-1p3	enumeratio_n(hurwitz_zeta((2 + 1*I), 1.3))	0.634178650268900 - 0.536110383539213*I	
+n-hurwitzzeta-2-plus-i-7-over-3	enumeratio_n(hurwitz_zeta((2 + 1*I), (7/3)))	0.0551333896367952 - 0.376862655048367*I	
+n-hurwitzzeta-2-plus-i-1-plus-i	enumeratio_n(hurwitz_zeta((2 + 1*I), (1 + 1*I)))	-0.635304343440012 - 1.65884864360589*I	
+n-hurwitzzeta-2-plus-i-2-plus-neg-0p5-times-i	enumeratio_n(hurwitz_zeta((2 + 1*I), (2 + -0.5*I)))	0.185393489012995 - 0.270373692422874*I	
+n-hurwitzzeta-2-plus-i-neg-0p5	enumeratio_n(hurwitz_zeta((2 + 1*I), -0.5))	74.7103827587638 + 61.1754248066227*I	
+n-hurwitzzeta-2-plus-i-neg-1p5	enumeratio_n(hurwitz_zeta((2 + 1*I), -1.5))	84.1612374150554 + 57.1186433542858*I	
+n-hurwitzzeta-0p5-plus-3i-1	enumeratio_n(hurwitz_zeta((0.5 + 3*I), 1))	0.532736670974233 - 0.0788965134258334*I	
+n-hurwitzzeta-0p5-plus-3i-2	enumeratio_n(hurwitz_zeta((0.5 + 3*I), 2))	-0.467263329025767 - 0.0788965134258334*I	
+n-hurwitzzeta-0p5-plus-3i-3	enumeratio_n(hurwitz_zeta((0.5 + 3*I), 3))	-0.122906273682167 + 0.538694142619969*I	
+n-hurwitzzeta-0p5-plus-3i-0p5	enumeratio_n(hurwitz_zeta((0.5 + 3*I), 0.5))	-0.802188434581937 + 0.791260035759494*I	
+n-hurwitzzeta-0p5-plus-3i-0p25	enumeratio_n(hurwitz_zeta((0.5 + 3*I), 0.25))	-0.821315995611798 - 2.11791354690107*I	
+n-hurwitzzeta-0p5-plus-3i-1p3	enumeratio_n(hurwitz_zeta((0.5 + 3*I), 1.3))	0.157370174830999 - 0.442640214770042*I	
+n-hurwitzzeta-0p5-plus-3i-7-over-3	enumeratio_n(hurwitz_zeta((0.5 + 3*I), (7/3)))	-0.453727021657172 + 0.204440194003099*I	
+n-hurwitzzeta-0p5-plus-3i-1-plus-i	enumeratio_n(hurwitz_zeta((0.5 + 3*I), (1 + 1*I)))	-1.41730150592913 - 8.33564356221338*I	
+n-hurwitzzeta-0p5-plus-3i-2-plus-neg-0p5-times-i	enumeratio_n(hurwitz_zeta((0.5 + 3*I), (2 + -0.5*I)))	-0.181016361585114 + 0.00931234027233906*I	
+n-hurwitzzeta-0p5-plus-3i-neg-0p5	enumeratio_n(hurwitz_zeta((0.5 + 3*I), -0.5))	15305.1296099250 + 8535.09396001410*I	
+n-hurwitzzeta-0p5-plus-3i-neg-1p5	enumeratio_n(hurwitz_zeta((0.5 + 3*I), -1.5))	5816.16316701183 + 5023.94892708940*I	
+n-hurwitzzeta-neg-0p5-plus-i-1	enumeratio_n(hurwitz_zeta((-0.5 + 1*I), 1))	-0.000817893132952545 - 0.223071688697778*I	
+n-hurwitzzeta-neg-0p5-plus-i-2	enumeratio_n(hurwitz_zeta((-0.5 + 1*I), 2))	-1.00081789313295 - 0.223071688697778*I	
+n-hurwitzzeta-neg-0p5-plus-i-3	enumeratio_n(hurwitz_zeta((-0.5 + 1*I), 3))	-2.08868598014686 + 0.680556014096187*I	
+n-hurwitzzeta-neg-0p5-plus-i-0p5	enumeratio_n(hurwitz_zeta((-0.5 + 1*I), 0.5))	0.101159892022161 + 0.101365867626040*I	
+n-hurwitzzeta-neg-0p5-plus-i-0p25	enumeratio_n(hurwitz_zeta((-0.5 + 1*I), 0.25))	-0.105599710390196 + 0.172605566681921*I	
+n-hurwitzzeta-neg-0p5-plus-i-1p3	enumeratio_n(hurwitz_zeta((-0.5 + 1*I), 1.3))	-0.243310938687762 - 0.330441278258437*I	
+n-hurwitzzeta-neg-0p5-plus-i-7-over-3	enumeratio_n(hurwitz_zeta((-0.5 + 1*I), (7/3)))	-1.38218514408714 - 0.00905630825006346*I	
+n-hurwitzzeta-neg-0p5-plus-i-1-plus-i	enumeratio_n(hurwitz_zeta((-0.5 + 1*I), (1 + 1*I)))	1.04095754311853 - 1.79991043233683*I	
+n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5	enumeratio_n(hurwitz_zeta((-0.5 + 1*I), (2 + -0.5*I)))	-0.746153397257610 + 0.249257816033080*I	
+n-hurwitzzeta-neg-0p5-plus-i-neg-0p5	enumeratio_n(hurwitz_zeta((-0.5 + 1*I), -0.5))	-10.3541255703876 + 12.6883763809253*I	
+n-hurwitzzeta-neg-0p5-plus-i-neg-1p5	enumeratio_n(hurwitz_zeta((-0.5 + 1*I), -1.5))	0.825049555351030 + 38.7318693646864*I	
 normal-series-hurwitzzeta-2-x-x-positiveinfinity			
-n-hurwitzzeta-neg-27-2-over-5-1-digit	N(hurwitz_zeta(-27, (2/5)))		
+n-hurwitzzeta-neg-27-2-over-5-1-digit	enumeratio_n(hurwitz_zeta(-27, (2/5)), 1)		
 a-positive-integer-a-peels-off-the-first-terms	hurwitz_zeta(7, 5)	zeta(7) - 36130315/35831808	
-complex-a	N(hurwitz_zeta(2.3, (8 + 1*I)))	0.0544700827321307 - 0.00944851533647025*I	
+complex-a	enumeratio_n(hurwitz_zeta(2.3, (8 + 1*I)))	0.0544700827321307 - 0.00944851533647025*I	
 listable-threads-over-a-list-of-orders	hurwitz_zeta([2, 3, 4], 0.5)	TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring	error
 uncertainty-in-a			
 zeta-2-1-2-pi-2-2-the-s-2-instance-of-zeta-s-1-2	hurwitz_zeta(2, (1/2))	1/2*pi^2	
-zeta-2-1-4-pi-2-8g-with-catalan-s-constant-g	hurwitz_zeta(2, (1/4))	psi(1, 1/4)	inconclusive
-to-30-significant-digits-not-yet-the-last-digit	N(hurwitz_zeta(3, (1/3)))	27.5610611997008	
-far-left-of-the-strip-all-40-digits-agree-with	N(hurwitz_zeta((-41/2), (3/10)))	136.361935791831	
-left-of-the-strip-at-a-non-integer-a	N(hurwitz_zeta(-20, 0.7))	-80.0909738762536	
-left-of-the-strip-at-a-non-integer-a-and-s	N(hurwitz_zeta(-40.5, 0.4))	7.72499748409159e15	
-a-negative-a-frac-12-5-is-real-and-so-is-the	N(hurwitz_zeta(5, (-1/2)))	0.144760409444473	
-n-hurwitzzeta-1-over-3-8-over-7-50	N(hurwitz_zeta((1/3), (8/7)))		
+zeta-2-1-4-pi-2-8g-with-catalan-s-constant-g	hurwitz_zeta(2, (1/4))	psi(1, 1/4)	
+to-30-significant-digits-not-yet-the-last-digit	enumeratio_n(hurwitz_zeta(3, (1/3)), 30)	27.5610611997008	
+far-left-of-the-strip-all-40-digits-agree-with	enumeratio_n(hurwitz_zeta((-41/2), (3/10)), 40)	136.361935791831	
+left-of-the-strip-at-a-non-integer-a	enumeratio_n(hurwitz_zeta(-20, 0.7))	-80.0909738762536	
+left-of-the-strip-at-a-non-integer-a-and-s	enumeratio_n(hurwitz_zeta(-40.5, 0.4))	7.72499748409159e15	
+a-negative-a-frac-12-5-is-real-and-so-is-the	enumeratio_n(hurwitz_zeta(5, (-1/2)))	0.144760409444473	
+n-hurwitzzeta-1-over-3-8-over-7-50	enumeratio_n(hurwitz_zeta((1/3), (8/7)), 50)		
 hurwitzzeta-neg-1-list-list-1-over-2-1-list-1-1	[[hurwitz_zeta(-1, (1/2)), hurwitz_zeta(-1, 1)], [hurwitz_zeta(-1, 1), hurwitz_zeta(-1, (1/2))]]		
 functionexpand-hurwitzzeta-neg-2-a			
 functionexpand-hurwitzzeta-0-a			
 fullsimplify-matrixfunction-function-hurwitzzeta			
 series-hurwitzzeta-s-a-a-0-3			
-certified-digits-zeta-1-2-1-3	N(hurwitz_zeta((1/2), (1/3)))	-0.118083327934222	
+certified-digits-zeta-1-2-1-3	enumeratio_n(hurwitz_zeta((1/2), (1/3)), 40)	-0.118083327934222	
 zeta-0-a-frac-12-a-exact-and-symbolic-in-a	hurwitz_zeta(0, SR.var("a"))	True	
 zeta-1-a-b-2-a-2-frac-1-12-6a-2-6a-1	hurwitz_zeta(-1, SR.var("a"))	True	
 pole-at-s-1-for-every-a	hurwitz_zeta(1, 3)	hurwitz_zeta(1, 3)	disagree
@@ -216,6 +216,6 @@ hurwitzzeta-2-9	hurwitz_zeta(2, 9)
 hurwitzzeta-2-10	hurwitz_zeta(2, 10)		
 hurwitzzeta-4-1	hurwitz_zeta(4, 1)		
 zeta-3-7-3-b-4-7-3-4-7813-3240-exact-via-the	hurwitz_zeta(-3, (7/3))	-7813/3240	
-re-s-0-a-0-is-indeterminate	N(hurwitz_zeta((0 + -1*I), 0))	1.00330022368532 + 0.418155449141322*I	disagree
-re-s-negative-a-drops-the-term-cleanly	N(hurwitz_zeta((-1.5 + 0.5*I), -2))	ValueError: Hurwitz zeta complex infinity	error
+re-s-0-a-0-is-indeterminate	enumeratio_n(hurwitz_zeta((0 + -1*I), 0))	1.00330022368532 + 0.418155449141322*I	disagree
+re-s-negative-a-drops-the-term-cleanly	enumeratio_n(hurwitz_zeta((-1.5 + 0.5*I), -2))	ValueError: Hurwitz zeta complex infinity	error
 hurwitzzeta-2-neg-2	hurwitz_zeta(2, -2)		

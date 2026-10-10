@@ -36,10 +36,10 @@ bindings:
     note: Signed in Wolfram and compute-engine; Sage's stirling_number1, Combinatorics.jl's stirlings1 and Mathlib's Nat.stirlingFirst are UNSIGNED, so a sign difference here is expected, not a bug. Combinatorics.jl's stirlings1 also needs n as a BigInt past its Int64 lookup table (n > 20).
   - origin: mapped
     form: sage
-    template: stirling_number1($1, $2)
+    template: ((-1) ** ($1 - $2) * stirling_number1($1, $2))
     arity: 2
     threadArg: 1
-    note: Signed in Wolfram and compute-engine; Sage's stirling_number1, Combinatorics.jl's stirlings1 and Mathlib's Nat.stirlingFirst are UNSIGNED, so a sign difference here is expected, not a bug. Combinatorics.jl's stirlings1 also needs n as a BigInt past its Int64 lookup table (n > 20).
+    note: Signed in Wolfram and compute-engine; Sage's stirling_number1 is unsigned, so the template carries the sign (-1)^(n-k). Combinatorics.jl's stirlings1 and Mathlib's Nat.stirlingFirst are UNSIGNED, so a sign difference there is expected, not a bug. Combinatorics.jl's stirlings1 also needs n as a BigInt past its Int64 lookup table (n > 20).
   - origin: mapped
     form: julia
     template: Combinatorics.stirlings1(big($1), $2)

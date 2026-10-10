@@ -11,7 +11,7 @@ the-first-power-of-3-to-reach-pm-1-3-3-27-equiv
 a-discrete-log-mod-the-mersenne-prime-2-61-1			
 3-has-order-p-1-3-modulo-2-127-1	Mod(3, (((2)^127) - 1)).multiplicative_order()	56713727820156410577229101238628035242	
 1-is-the-only-element-of-order-1	Mod(1, 7).multiplicative_order()	1	
-the-multiplicative-order-always-divides-varphi-n	bool((euler_phi(7) % Mod(3, 7).multiplicative_order()) == 0)	True	
+the-multiplicative-order-always-divides-varphi-n	enumeratio_equal(enumeratio_mod(enumeratio_euler_phi(7), Mod(3, 7).multiplicative_order()), 0)	True	
 the-discrete-log-inverts-powermod			
 divides-multiplicativeorder-5-12-totient-12			
 multiplicativeorder-5-3	Mod(5, 3).multiplicative_order()		

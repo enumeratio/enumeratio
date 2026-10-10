@@ -1,60 +1,60 @@
-id	in	out	verdict
-ln-1	log(1)	0	
-ln-exponentiale	log(e)	1	
-ln-0	log(0)	-Infinity	disagree
-a-machine-precision-argument-evaluates	log(1.5)	0.405465108108164	
-a-machine-precision-negative-argument	log(-4.705)	1.54862577303734 + 3.14159265358979*I	
-series-ln-x-plus-1-x-0-10			
-ln-1-i-pi-the-principal-value-past-the-branch	log(-1)	I*pi	
-n-for-a-decimal-value	N(log(1000))	6.90775527898214	
-arbitrary-precision-via-n	N(log((5/2)))	0.916290731874155	
-evaluates-at-a-complex-argument	log((2.5 + 1*I))	0.990500734433292 + 0.380506377112365*I	
-a-negative-float-gives-the-principal-complex	log(-2.5)	0.916290731874155 + 3.14159265358979*I	
-threads-element-wise-over-a-list	[log(1), log(2.1), log(3.1), log(4.1)]	[0, 0.741937344729377, 1.13140211149110, 1.41098697371026]	
-an-integer-power-is-pulled-out-ln-1000-3-ln-10	log(1000)	3*log(10)	
-ln-exponentiale-pow-3	log(((e)^3))	3	
-ln-positiveinfinity	log(oo)		
-ln-z-to-infty-and-its-real-part-goes-to-infty-ln	log(unsigned_infinity)		
-ln-i-i-pi-2-exactly	log(I)	1/2*I*pi	
-a-unit-fraction-becomes-a-negated-logarithm-ln	log((1/2))	log(1/2)	
-interval-arithmetic-ln-is-increasing-so-ln-frac			
-uncertainty-propagation-ln-2-pm-0-01-approx-0			
-ln-exp-x	log(exp(SR.var("x")))	True	
-derivative-1-x	diff(log(SR.var("x")), SR.var("x"))		
-antiderivative-x-ln-x-x			
-mercator-series-for-ln-1-x			
-to-40-significant-digits-every-one-correctly	N(log(2))	0.693147180559945	
-ln-frac-12-i-pi-ln-2-a-negative-rational-folded	log((-1/2))	I*pi + log(1/2)	
-n-decimalizes-ln-i-not-just-the-exact-form	N(log(I))	1.57079632679490*I	
-an-integer-power-negative-argument	log(-2)	I*pi + log(2)	
-n-of-a-negative-integer-argument	N(log(-2))	0.693147180559945 + 3.14159265358979*I	
-ln-neg-6	log(-6)	I*pi + log(6)	
-n-of-a-negative-rational-argument	N(log((-1/2)))	-0.693147180559945 + 3.14159265358979*I	
-ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	log(-oo)		
-n-ln-5-over-2-50	N(log((5/2)))		
-functiondomain-ln-x-x			
-functionrange-ln-x-x-y			
-functionanalytic-ln-x-x			
-functionmeromorphic-ln-x-x			
-functioninjective-ln-x-x			
-functionsurjective-ln-x-x			
-d-ln-z-z	diff(log(SR.var("z")), SR.var("z"))		
-d-ln-ln-x-x	diff(log(log(SR.var("x"))), SR.var("x"))		
-ln-exponentiale-pow-n	log(((e)^SR.var("n")))		
-series-ln-x-x-1-4			
-series-ln-x-x-neg-2-3			
-inverse-of-exp-ln-e-x-x	bool(log(exp(5)) == 5)	True	
-product-rule-ln-ab-ln-a-ln-b	bool((log(2) + log(3)) == log(6))	False	disagree
-powerexpand-splits-a-logarithm-of-a-product			
-n-ln-2-pow-2	N(((log(2))^2))		
-n-ln-2-pow-3	N(((log(2))^3))		
-n-ln-2-pow-4	N(((log(2))^4))		
-n-ln-2-pow-5	N(((log(2))^5))		
-n-ln-2-pow-2-2	N(((log(2))^2))		
-n-ln-2-pow-3-2	N(((log(2))^3))		
-n-ln-2-pow-4-2	N(((log(2))^4))		
-n-ln-2-pow-5-2	N(((log(2))^5))		
-n-integrate-1-over-t-minus-1-times-ln-t-pow-2-t			
-n-integrate-exponentiale-pow-neg-t-times-ln-t			
-n-integrate-1-over-neg-x-times-y-plus-1-times-ln			
-n-integrate-1-over-t-minus-1-times-ln-t-pow-3-t			
+id	in	out
+ln-1	log(1)	0
+ln-exponentiale	log(e)	1
+ln-0	log(0)	-Infinity
+a-machine-precision-argument-evaluates	log(1.5)	0.405465108108164
+a-machine-precision-negative-argument	log(-4.705)	1.54862577303734 + 3.14159265358979*I
+series-ln-x-plus-1-x-0-10		
+ln-1-i-pi-the-principal-value-past-the-branch	log(-1)	I*pi
+n-for-a-decimal-value	enumeratio_n(log(1000))	6.90775527898214
+arbitrary-precision-via-n	enumeratio_n(log((5/2)))	0.916290731874155
+evaluates-at-a-complex-argument	log((2.5 + 1*I))	0.990500734433292 + 0.380506377112365*I
+a-negative-float-gives-the-principal-complex	log(-2.5)	0.916290731874155 + 3.14159265358979*I
+threads-element-wise-over-a-list	[log(1), log(2.1), log(3.1), log(4.1)]	[0, 0.741937344729377, 1.13140211149110, 1.41098697371026]
+an-integer-power-is-pulled-out-ln-1000-3-ln-10	log(1000)	3*log(10)
+ln-exponentiale-pow-3	log(((e)^3))	3
+ln-positiveinfinity	log(oo)	
+ln-z-to-infty-and-its-real-part-goes-to-infty-ln	log(unsigned_infinity)	
+ln-i-i-pi-2-exactly	log(I)	1/2*I*pi
+a-unit-fraction-becomes-a-negated-logarithm-ln	log((1/2))	log(1/2)
+interval-arithmetic-ln-is-increasing-so-ln-frac		
+uncertainty-propagation-ln-2-pm-0-01-approx-0		
+ln-exp-x	log(exp(SR.var("x")))	True
+derivative-1-x	diff(log(SR.var("x")), SR.var("x"))	
+antiderivative-x-ln-x-x		
+mercator-series-for-ln-1-x		
+to-40-significant-digits-every-one-correctly	enumeratio_n(log(2), 40)	0.693147180559945
+ln-frac-12-i-pi-ln-2-a-negative-rational-folded	log((-1/2))	I*pi + log(1/2)
+n-decimalizes-ln-i-not-just-the-exact-form	enumeratio_n(log(I))	1.57079632679490*I
+an-integer-power-negative-argument	log(-2)	I*pi + log(2)
+n-of-a-negative-integer-argument	enumeratio_n(log(-2), 10)	0.693147180559945 + 3.14159265358979*I
+ln-neg-6	log(-6)	I*pi + log(6)
+n-of-a-negative-rational-argument	enumeratio_n(log((-1/2)))	-0.693147180559945 + 3.14159265358979*I
+ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	log(-oo)	
+n-ln-5-over-2-50	enumeratio_n(log((5/2)), 50)	
+functiondomain-ln-x-x		
+functionrange-ln-x-x-y		
+functionanalytic-ln-x-x		
+functionmeromorphic-ln-x-x		
+functioninjective-ln-x-x		
+functionsurjective-ln-x-x		
+d-ln-z-z	diff(log(SR.var("z")), SR.var("z"))	
+d-ln-ln-x-x	diff(log(log(SR.var("x"))), SR.var("x"))	
+ln-exponentiale-pow-n	log(((e)^SR.var("n")))	
+series-ln-x-x-1-4		
+series-ln-x-x-neg-2-3		
+inverse-of-exp-ln-e-x-x	enumeratio_equal(log(exp(5)), 5)	True
+product-rule-ln-ab-ln-a-ln-b	enumeratio_equal((log(2) + log(3)), log(6))	True
+powerexpand-splits-a-logarithm-of-a-product		
+n-ln-2-pow-2	enumeratio_n(((log(2))^2))	
+n-ln-2-pow-3	enumeratio_n(((log(2))^3))	
+n-ln-2-pow-4	enumeratio_n(((log(2))^4))	
+n-ln-2-pow-5	enumeratio_n(((log(2))^5))	
+n-ln-2-pow-2-2	enumeratio_n(((log(2))^2))	
+n-ln-2-pow-3-2	enumeratio_n(((log(2))^3))	
+n-ln-2-pow-4-2	enumeratio_n(((log(2))^4))	
+n-ln-2-pow-5-2	enumeratio_n(((log(2))^5))	
+n-integrate-1-over-t-minus-1-times-ln-t-pow-2-t		
+n-integrate-exponentiale-pow-neg-t-times-ln-t		
+n-integrate-1-over-neg-x-times-y-plus-1-times-ln		
+n-integrate-1-over-t-minus-1-times-ln-t-pow-3-t		

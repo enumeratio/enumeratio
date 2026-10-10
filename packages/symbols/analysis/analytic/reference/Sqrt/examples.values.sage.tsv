@@ -18,15 +18,15 @@ threads-element-wise-over-a-list	[sqrt(1), sqrt(4), sqrt(9)]	[1, 2, 3]
 threads-over-a-matrix-entry-by-entry-this-is-not	[[sqrt((1/2)), sqrt(-1)], [sqrt(0), sqrt((1/2))]]	[[sqrt(1/2), I], [0, sqrt(1/2)]]
 interval-arithmetic-sqrt-is-increasing-so-sqrt-1		
 uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1		
-to-45-significant-digits-every-one-correctly	N(sqrt(2))	1.41421356237310
+to-45-significant-digits-every-one-correctly	enumeratio_n(sqrt(2), 45)	1.41421356237310
 an-approximate-negative-radicand-stays-complex	sqrt(-2.875)	1.69558249578132*I
 sqrt-neg-4-over-9	sqrt((-4/9))	2/3*I
 sqrt-neg-1-half	sqrt((-1/2))	sqrt(-1/2)
 sqrt-neg-1	sqrt(-1)	I
 sqrt-neg-12-over-5	sqrt((-12/5))	2*sqrt(-3/5)
 the-pythagorean-hypotenuse-of-a-3-4-5-triangle	sqrt(((3)^2 + (4)^2))	5
-sqrt-x-2-x-for-a-perfect-square-see-square	bool((sqrt(16))^2 == 16)	True
-sqrt-x-x-1-2	bool(sqrt(16) == ((16)^(1/2)))	True
+sqrt-x-2-x-for-a-perfect-square-see-square	enumeratio_equal((sqrt(16))^2, 16)	True
+sqrt-x-x-1-2	enumeratio_equal(sqrt(16), ((16)^(1/2)))	True
 sqrt-x-2-x-for-every-x	((sqrt(SR.var("x")))^2)	True
 negative-but-not-a-perfect-square-stays-symbolic	sqrt(-2)	sqrt(-2)
 a-negative-rational-still-evaluates-exactly-when	sqrt((-4/9))	2/3*I

@@ -884,7 +884,14 @@ export function symbolicAgreementSource(
   symbolicSeconds: number = SYMBOLIC_SECONDS,
 ): string | undefined {
   // Ours left the call unevaluated: the identity holds trivially, so the plain verdict decides.
-  if (leavesCall(expr, expected) || echoesInput(expr, expected)) return undefined;
+  if (leavesCall(expr, expected) || echoesInput(expr, expected)) {
+    // A Python-family kernel that holds the same call prints it as it prints ours, spelled for it
+    // (`floor(x)`); one that computes something else falls through to the plain verdict.
+    const held = system === "wolfram" ? undefined : { theirs: emit(expr, system), ours: emit(expected, system) };
+    return held?.theirs.ok && held.ours.ok
+      ? `enumeratio_held_alike(${held.theirs.source}, ${held.ours.source})`
+      : undefined;
+  }
   // A series ours holds is no polynomial to check: the kernel evaluates ours too, so any difference
   // from its own `Normal` of it would be zero. Undecided, not agreed.
   if (system === "wolfram" && leavesCall(seriesOfNormal(expr), expected)) return "Indeterminate";

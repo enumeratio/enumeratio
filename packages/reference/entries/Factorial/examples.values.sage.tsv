@@ -1,22 +1,22 @@
 id	in	out	verdict
-5-factorial	factorial(5)	120	
-6-factorial	factorial(6)	720	
-the-empty-product-is-1-by-convention	factorial(0)	1	
-10-factorial	factorial(10)	3628800	
-threads-element-wise-over-a-list	factorial([1, 2, 3, 4])	TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring	error
+5-factorial	enumeratio_factorial(5)	120	
+6-factorial	enumeratio_factorial(6)	720	
+the-empty-product-is-1-by-convention	enumeratio_factorial(0)	1	
+10-factorial	enumeratio_factorial(10)	3628800	
+threads-element-wise-over-a-list	enumeratio_factorial([1, 2, 3, 4])	[1, 2, 6, 24]	
 frac-n-n-1-simplifies-to-n-under-simplify-plain			
-real-arguments-evaluate-as-gamma-n-1	factorial(3.5)	11.6317283965674	
-negative-non-integers-are-defined-too-2-5-gamma	factorial(-2.5)	2.36327180120735	
-complex-arguments-1-i-gamma-2-i	factorial((1 + 1*I))	factorial(I + 1)	disagree
-frac-12-gamma-frac-12-sqrt-pi-returned-as-a	factorial((-1/2))	sqrt(pi)	
-infty-infty	factorial(oo)		
-the-number-of-ways-to-arrange-8-distinct-books	factorial(8)	40320	
-recurrence-n-n-n-1	bool(factorial(5) == (5 * factorial(4)))	True	
-extends-to-non-integers-via-the-gamma-function	factorial((1/2))	1/2*sqrt(pi)	
-n-gamma-n-1-see-gamma	bool(factorial(5) == gamma(6))	True	
+real-arguments-evaluate-as-gamma-n-1	enumeratio_factorial(3.5)	11.6317283965674	
+negative-non-integers-are-defined-too-2-5-gamma	enumeratio_factorial(-2.5)	2.36327180120735	
+complex-arguments-1-i-gamma-2-i	enumeratio_factorial((1 + 1*I))	factorial(I + 1)	disagree
+frac-12-gamma-frac-12-sqrt-pi-returned-as-a	enumeratio_factorial((-1/2))	sqrt(pi)	
+infty-infty	enumeratio_factorial(oo)		
+the-number-of-ways-to-arrange-8-distinct-books	enumeratio_factorial(8)	40320	
+recurrence-n-n-n-1	enumeratio_equal(enumeratio_factorial(5), (5 * enumeratio_factorial(4)))	True	
+extends-to-non-integers-via-the-gamma-function	enumeratio_factorial((1/2))	1/2*sqrt(pi)	
+n-gamma-n-1-see-gamma	enumeratio_equal(enumeratio_factorial(5), gamma(6))	True	
 the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e			
 sum-k-factorial-pow-neg-4-times-k-plus-2			
 sum-k-factorial-pow-neg-4-times-k-plus-3			
-negative-integers-are-poles-of-the-gamma	factorial(-1)	ValueError: factorial only defined for nonnegative integers	error
-factorials-grow-fast-20-already-exceeds-2-times	factorial(20)	2432902008176640000	
-30-has-33-digits-and-ends-in-seven-zeros	factorial(30)	265252859812191058636308480000000	
+negative-integers-are-poles-of-the-gamma	enumeratio_factorial(-1)	ValueError: factorial only defined for nonnegative integers	error
+factorials-grow-fast-20-already-exceeds-2-times	enumeratio_factorial(20)	2432902008176640000	
+30-has-33-digits-and-ends-in-seven-zeros	enumeratio_factorial(30)	265252859812191058636308480000000	

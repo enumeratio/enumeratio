@@ -1,0 +1,13 @@
+id	in	out
+series-sech-x-x-0-10		
+n-sech-9-over-5-50	N(sech(Rational(9, 5)), 30)	0.321804869506587868350220885542
+sech-list-list-1-over-3-times-i-times-pi-neg-1	[[sech(((0 + Rational(1, 3)*I) * pi)), sech(((0 + Rational(-1, 3)*I) * pi))], [sech(0), sech(((0 + Rational(-1, 6)*I) * pi))]]	[[2, 2], [1, 2*sqrt(3)/3]]
+sech-positiveinfinity	sech(oo)	0
+sech-0	sech(0)	1
+d-sech-x-x	diff(sech(Symbol("x")), Symbol("x"))	True
+matrixfunction-function-sech-1-1-list-list-1		
+functionmeromorphic-sech-x-x		
+n-2-minus-sech-1-over-2-pow-2-times-sech-1	N(((2 + (-(S(sech(Rational(1, 2)))**2))) * sech(1)), 30)	0.786447732965927410149698934344
+n-2-times-sech-1-times-sech-1-over-2-pow-2-plus	N(((2 * sech(1) * (S(sech(Rational(1, 2)))**2)) + (((-2 * (S(sech(Rational(1, 2)))**2)) + (S(sech(Rational(1, 2)))**4)) * (S(sech(1))**2)) + (-(S(sech(Rational(1, 2)))**4))), 30)	-0.e-165
+n-sech-1-over-2-plus-1-over-2-times-i-times-pi	N((S(sech((Rational(1, 2) + ((0 + Rational(1, 2)*I) * pi))))**2), 30)	-3.68269437683116927578165409087
+n-2-minus-sech-2-pow-2-times-sech-4	N(((2 + (-(S(sech(2))**2))) * sech(4)), 30)	0.0706508248531644656862476558611

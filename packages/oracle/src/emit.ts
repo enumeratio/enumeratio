@@ -327,10 +327,15 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     if (template !== undefined) {
       const threadArg = mapping?.threadArg;
       const threaded = threadArg !== undefined ? operands[threadArg - 1] : undefined;
+      // With two list operands `threadOver` would thread one and leave the other a list in every
+      // call (`gcd([2, 4], 6)`); the Python family broadcasts them together instead.
+      const lists = operands.filter((op) => isCall(op) && op[0] === "List").length;
+      const broadcastBoth = lists > 1 && threadArg !== undefined && PYTHON_FAMILY.includes(system);
       if (
         threadArg !== undefined &&
         threaded !== undefined &&
         THREADS_MANUALLY.includes(system) &&
+        !broadcastBoth &&
         isCall(threaded) &&
         threaded[0] === "List"
       ) {
@@ -340,7 +345,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       // Arithmetic over a list: Python's `+` concatenates and `*` repeats, where compute-engine
       // and Wolfram work element by element.
       if (
-        BROADCAST_HEADS.has(head) &&
+        (BROADCAST_HEADS.has(head) || broadcastBoth) &&
         PYTHON_FAMILY.includes(system) &&
         operands.some((op) => isCall(op) && op[0] === "List")
       ) {

@@ -1,6 +1,6 @@
 id	in	out	verdict
 n-pi-30	(pi)	3.14159265358979323846264338328	
-the-last-digit-correctly-rounded-computing-at-30			
+the-last-digit-correctly-rounded-computing-at-30	(sinh(1))	1.1752011936438014568823818506	
 a-list-number-by-number	([pi, e, sqrt(2)])	[<pi: 3.14159~>, <e = exp(1): 2.71828~>, mpf('1.41421356237309504880168872420977')]	disagree
 n-1-over-7	((mpf(1)/7))		
 n-1-over-7-50	((mpf(1)/7))		
