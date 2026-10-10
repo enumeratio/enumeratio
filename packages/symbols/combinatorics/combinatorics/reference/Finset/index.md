@@ -9,8 +9,6 @@ catalog:
     identity: Finset
     url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Finset/Defs.html
 catalogCarrier: true
-mapOn:
-  - Finset
 domain: Collections
 signature: Finset(tuple)
 summary: The singular-inhabitant constructor for a subset of $\{1, \dots, n\}$, as $n$ and its members.
