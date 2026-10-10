@@ -30,6 +30,10 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: oscar
+    template: floor(BigInt, $1)
+    arity: 1
+  - origin: mapped
     form: wolfram
     template: Floor[$1]
     arity: 1

@@ -25,6 +25,10 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: oscar
+    template: sort(divisors(ZZ($1)))
+    arity: 1
+  - origin: mapped
     form: sage
     template: divisors($1)
     arity: 1

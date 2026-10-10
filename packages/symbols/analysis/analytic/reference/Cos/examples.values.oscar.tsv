@@ -1,0 +1,75 @@
+id	in	out
+cos-0	cos(0)	1.0
+cos-pi-over-6		
+cos-pi-over-4		
+cos-pi-over-3		
+cos-pi-over-2		
+cos-pi		
+cos-30-circ-exactly		
+a-machine-precision-argument-evaluates	cos(1.2)	0.3623577544766736
+a-huge-24-40-argument	(cos((big(24)^40)))	0.91647884367824463046141232096677428809380434160322162966114084238113070637529
+a-huge-3-200-argument		
+a-huge-neg-7-60-argument	(cos((-((big(7)^60)))))	-0.9309598363622474747028740555482155638273794575636691475318932276433213640150929
+a-huge-10-80-plus-1-over-3-argument		
+cos-2-5	cos(2.5)	-0.8011436155469337
+series-cos-x-x-0-10		
+n-of-an-exact-argument-gives-an-arbitrary	(cos((6 // 5)))	0.3623577544766736
+evaluates-at-a-complex-argument	cos(complex(2.5, 1))	(-1.236229198856342-0.7033251781135347j)
+threads-element-wise-over-a-matrix		
+cos-pi-12-frac-sqrt-6-sqrt-2-4		
+cos-pi-8-frac-sqrt-2-sqrt-2-2		
+cos-pi-10-frac-sqrt-10-2-sqrt-5-4		
+cos-2-pi-5-frac-sqrt-5-1-4		
+cos-3-pi-5-frac-1-sqrt-5-4		
+reduced-into-the-first-quadrant-by-symmetry		
+interval-arithmetic-the-image-of-pi-3-pi-2-is-0		
+uncertainty-propagation-cos-2-pm-0-01-approx-0		
+cos-infty-should-be-the-oscillation-range-1-1		
+an-imaginary-argument-rewrites-to-cosh-cos-ix		
+evenness-drops-the-sign-of-a-symbolic-argument		
+cos-arccos-x-x-for-every-x		
+cos-arccos-2-2-past-the-real-domain		
+cos-arcsin-x-sqrt-1-x-2		
+cos-arctan-x-frac-1-sqrt-1-x-2		
+derivative-sin-x		
+antiderivative		
+taylor-series-about-0-only-even-powers-appear		
+to-30-significant-digits-every-one-correctly	(cos(1))	0.5403023058681398
+to-1-significant-digit		
+a-huge-10-100-argument-reduces-exactly-mod-2-pi	(cos((big(10)^100)))	-0.9280819050746553434561946437769559281831820764390503933251142095425212220307955
+n-cos-6-over-5-50	(cos((6 // 5)))	0.3623577544766736
+functiondomain-cos-x-x		
+functionrange-cos-x-x-y		
+functionperiod-cos-x-x		
+functionanalytic-cos-x-x		
+functioninjective-cos-x-x		
+functionsurjective-cos-x-x		
+functionsingularities-cos-x-x		
+functiondiscontinuities-cos-x-x		
+matrixfunction-function-cos-1-1-list-list-5-over		
+assuming-m-in-integers-refine-cos-pi-times-1		
+assuming-m-in-integers-fullsimplify-refine-cos		
+threads-element-wise-over-a-list		
+even-function-cos-x-cos-x		
+co-function-identity-cos-x-sin-pi-2-x		
+double-angle-formula-cos-2x-cos-2-x-sin-2-x		
+angle-addition-formula		
+power-reduction-cos-2-x-frac-1-cos-2x-2		
+euler-s-formula-cos-x-frac-e-ix-e-ix-2		
+cos-3-over-10-times-pi		
+integrate-cos-t-pow-2-t-0-1-over-2-times-pi		
+product-neg-cos-1-over-4-times-pi-times-2k-minus		
+integrate-cos-t-pow-3-t-0-1-over-2-times-pi		
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2	((big(((complex(0, 1) * sin((1 // 2))) + cos((1 // 2))))^2))	(0.5403023058681397873176557160738732206186115762627115356622579944723128164696391+0.8414709848078965564800653750864870744377746014204027733256879839629505113407504j)
+product-neg-cos-1-over-6-times-pi-times-2k-minus		
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2	((big(((complex(0, 1) * sin((1 // 2))) + cos((1 // 2))))^2))	(0.5403023058681397873176557160738732206186115762627115356622579944723128164696391+0.8414709848078965564800653750864870744377746014204027733256879839629505113407504j)
+n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow	((big(((complex(0, -1) * sin((1 // 2))) + cos((1 // 2))))^2))	(0.5403023058681397873176557160738732206186115762627115356622579944723128164696391-0.8414709848078965564800653750864870744377746014204027733256879839629505113407504j)
+n-integrate-exponentiale-pow-neg-1-over-2-times		
+n-integrate-1-over-sqrt-cos-t-minus-cos-1-over-2		
+n-neg-2-times-cos-1-times-cos-1-over-2-pow-2	(((-2 * cos(1) * (big(cos((1 // 2)))^2)) + (2 * (big(cos((1 // 2)))^2)) + (big(cos(1))^2)))	1.000000000000000046894582839332716986017402491917506804394370422233829863411579
+n-cos-1-over-2-plus-1-over-2-times-pi-pow-2		
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-3	((big(((complex(0, 1) * sin((1 // 2))) + cos((1 // 2))))^3))	(0.07073720166770296629182068155991034999241116094883369864485156810153160171594273+0.9974949866040545468132151010919445742435339526791895958980310264563814240380149j)
+as-with-sin-a-non-special-numeric-argument-stays	cos(2)	-0.4161468365471424
+pi-24-is-past-the-automatic-special-angle-table		
+cos-complexinfinity-is-indeterminate-for-the		
+cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden		

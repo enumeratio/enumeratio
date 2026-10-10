@@ -1,0 +1,43 @@
+id	in	out
+3-cdot-5-15-equiv-1	invmod(ZZ(3), ZZ(7))	5
+modularinverse-2-11	invmod(ZZ(2), ZZ(11))	6
+modularinverse-3-5	invmod(ZZ(3), ZZ(5))	2
+a-negative-argument-3-cdot-2-6-equiv-1	invmod(ZZ(-3), ZZ(7))	2
+a-21-digit-modulus	invmod(ZZ(3), ZZ(((big(10)^20) + 1)))	33333333333333333334
+listable-threads-over-a-list		
+2-i-6-4i-8-14i-equiv-1-pmod-7		
+modularinverse-11-plus-neg-7-times-i-7-plus-4i		
+a-gaussian-base-and-a-gaussian-modulus		
+inverse-mod-a-unit-is-always-0		
+inverse-mod-i-is-always-0		
+a-unit-is-its-own-inverse-mod-anything-it-s-a		
+inverse-of-a-gaussian-prime-mod-a-coprime		
+inverse-mod-a-real-prime-3-mod-4		
+no-inverse-when-the-gcd-isn-t-a-unit-shared		
+inverse-mod-a-negative-real-prime		
+inverse-mod-a-composite-gaussian-modulus-norm-25		
+inverse-mod-a-modulus-past-2-53		
+inverse-mod-1-4i-the-other-prime-above-17		
+a-real-base-inverted-mod-a-gaussian-modulus		
+inverse-mod-a-large-norm-gaussian		
+inverse-mod-a-negative-real-composite-has-none		
+inverse-of-a-prime-above-13-mod-the-other-prime		
+inverse-mod-a-negative-associate		
+inverse-mod-a-real-composite-5-squared-has-none		
+inverse-of-a-real-prime-s-associate-by-i-mod-a		
+inverse-mod-a-real-prime-19		
+no-inverse-mod-0		
+a-real-base-with-no-inverse-mod-a-shared-factor		
+modularinverse-neg-5-7	invmod(ZZ(-5), ZZ(7))	4
+modularinverse-10-pow-100-000-nextprime-1-000		
+the-same-as-powermod-with-exponent-1	(invmod(ZZ(3), ZZ(7)) == powermod(ZZ(3), ZZ(-1), ZZ(7)))	true
+a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	mod((12345 * invmod(ZZ(12345), ZZ(((big(2)^61) - 1)))), ((big(2)^61) - 1))	1
+list-modularinverse-2-5-modularinverse-7-5	[invmod(ZZ(2), ZZ(5)), invmod(ZZ(7), ZZ(5))]	[3, 3]
+list-modularinverse-3-5-powermod-3-neg-1-5	[invmod(ZZ(3), ZZ(5)), powermod(ZZ(3), ZZ(-1), ZZ(5))]	[2, 2]
+modularinverse-5-7	invmod(ZZ(5), ZZ(7))	3
+modularinverse-5-neg-7		
+modularinverse-7-12	invmod(ZZ(7), ZZ(12))	7
+modularinverse-modularinverse-7-9-9	invmod(ZZ(invmod(ZZ(7), ZZ(9))), ZZ(9))	7
+gcd-2-4-2-no-inverse		
+modularinverse-10-21	invmod(ZZ(10), ZZ(21))	19
+modularinverse-21-10	invmod(ZZ(21), ZZ(10))	1

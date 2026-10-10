@@ -15,6 +15,10 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: oscar
+    template: kronecker_symbol(ZZ($1), ZZ($2))
+    arity: 2
+  - origin: mapped
     form: wolfram
     template: KroneckerSymbol[$1, $2]
     arity: 2

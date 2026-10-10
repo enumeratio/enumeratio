@@ -1,0 +1,51 @@
+id	in	out
+integerdigits-1-234	reverse(digits(BigInt(1234)))	[1, 2, 3, 4]
+integerdigits-2-147-2	reverse(digits(BigInt(2147), base=2))	[1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1]
+integerdigits-58-127	reverse(digits(BigInt(58127)))	[5, 8, 1, 2, 7]
+integerdigits-58-127-2	reverse(digits(BigInt(58127), base=2))	[1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1]
+93-784-seconds-as-days-hours-minutes-seconds		
+100-89-8-3-with-no-two-adjacent-ones		
+integerdigits-102-341-mixedradixnumerals-list-24		
+digits-past-9-are-plain-integers-58127-e30f-16	reverse(digits(BigInt(58127), base=16))	[14, 3, 0, 15]
+a-mixed-radix-spelled-mixedradix-102-341-seconds		
+the-leading-digit-is-unbounded-137-3-cdot-3-2		
+a-width-longer-than-the-numeral-pads-with		
+listable-in-the-base-one-digit-list-per-base		
+listable-threads-over-a-range-of-integers		
+threads-element-wise-over-a-list-as-wolfram-s		
+ordinary-base-2-as-a-system-value-same-digits-as		
+the-same-20-13-5-2-over-a-continued-fraction-s		
+a-negative-integer-with-no-sign		
+spreadsheet-column-aaa		
+independent-residues-no-place-values		
+the-10-adic-truncation-a-negative-is-spelled-by		
+factoradic-5-is-the-lehmer-code-2-1-0		
+factoradic-463-a-longer-lehmer-code		
+balanced-ternary-5-is-1-1-1		
+negativenumerals-2-3-is-1-1-1		
+negativenumerals-2-minus-2-is-1-0		
+combinatorial-base-3-zero-is-2-1-0		
+primorial-base-30-is-1-0-0-0		
+ostrowski-12-over-all-ones-convergents		
+zeckendorf-12-is-8-3-1		
+ostrowski-9-over-2-2-2-is-1-2-0		
+bijective-base-26-27-is-aa		
+bijective-base-26-702-is-zz		
+integerdigits-137-mixedradixnumerals-list-3-12		
+integerdigits-1-084-mixedradixnumerals-list-17		
+the-3-argument-form-keeps-only-the-4-least		
+all-3-bit-words-by-threading-a-padded-form-over		
+the-lehmer-code-of-the-6th-permutation-of-four		
+an-integer-base-is-still-the-native-handler	reverse(digits(BigInt(255), base=16))	[15, 15]
+integerdigits-98-534-mixedradixnumerals-list-24		
+unlike-integerstring-there-s-always-at-least-one	reverse(digits(BigInt(0)))	[0]
+the-sign-is-discarded		
+no-numeral-for-a-negative-in-a-system-that		
+fixed-base-2-drops-the-sign-of-minus-5		
+positionalnumerals-declines-a-negative		
+an-even-balanced-base-declines		
+an-unrecognized-system-symbol-leaves-the-call		
+ostrowski-declines-past-its-ceiling		
+past-the-product-there-is-no-residue-numeral		
+bijective-base-26-zero-is-the-empty-numeral		
+100-has-158-digits	length(reverse(digits(BigInt(factorial(ZZ(100))))))	158

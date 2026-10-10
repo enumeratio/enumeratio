@@ -30,6 +30,10 @@ names:
   wolfram: Ceiling
 bindings:
   - origin: mapped
+    form: oscar
+    template: ceil(BigInt, $1)
+    arity: 1
+  - origin: mapped
     form: wolfram
     template: Ceiling[$1]
     arity: 1

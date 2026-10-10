@@ -1,0 +1,37 @@
+id	in	out
+quotient-17-5	fld(ZZ(17), ZZ(5))	3
+the-floor-not-truncation	fld(ZZ(-7), ZZ(2))	-4
+the-remainder-takes-the-sign-of-n	fld(ZZ(17), ZZ(-5))	-4
+7-5i-2-i-3-8-0-6i-rounded		
+real-arguments-lfloor-7-5-2-rfloor		
+rational-arguments-lfloor-21-2-rfloor		
+exact-past-2-53	fld(ZZ((factorial(ZZ(25)) - 1)), ZZ(factorial(ZZ(24))))	24
+quotient-m-n-d-is-lfloor-m-d-n-rfloor-so-m-n-q		
+listable-threads-over-a-list		
+quotient-by-a-unit-is-the-dividend-itself-up-to		
+a-zero-dividend-quotients-to-0		
+quotient-by-a-gaussian-prime-norm-5		
+quotient-by-the-other-prime-above-5		
+quotient-by-a-real-prime-3-mod-4		
+a-real-dividend-by-a-gaussian-divisor		
+quotient-by-an-associate		
+quotient-by-a-negative-real-divisor		
+quotient-by-a-composite-gaussian-divisor-norm-25		
+a-gaussian-divisor-past-2-53-in-both-parts		
+quotient-by-1-4i-the-other-prime-above-17		
+a-large-norm-gaussian-divided-by-a-small-unit		
+quotient-by-1-negates-each-part		
+quotient-by-i-rotates-by-that-unit		
+a-negative-real-dividend-gaussian-divisor		
+quotient-by-an-associate-times-1		
+quotient-by-an-associate-times-i		
+quotient-by-the-other-prime-above-13		
+quotient-by-a-prime-above-13		
+quotient-by-a-real-prime-s-associate-by-the-unit		
+quotient-by-a-real-composite-5-squared		
+a-negative-associate-as-the-divisor		
+dividing-a-large-norm-gaussian-by-a-real-prime		
+dividing-by-zero-is-undefined		
+dividing-zero-by-zero-is-undefined		
+m-n-quotient-m-n-mod-m-n-see-mod	((5 * fld(ZZ(17), ZZ(5))) + mod(17, 5))	17
+2-5-2-5i-rounds-to-even-in-each-part		

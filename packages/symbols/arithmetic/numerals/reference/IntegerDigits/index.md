@@ -30,6 +30,15 @@ references:
     identity: Sum digits of an integer
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: oscar
+    template: reverse(digits(BigInt($1)))
+    arity: 1
+  - origin: mapped
+    form: oscar
+    template: reverse(digits(BigInt($1), base=$2))
+    arity: 2
 ---
 
 - Digits come out most significant first, matching ordinary positional notation.

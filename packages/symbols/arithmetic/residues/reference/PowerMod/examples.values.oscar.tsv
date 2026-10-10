@@ -1,0 +1,67 @@
+id	in	out
+powermod-2-10-3	powermod(ZZ(2), ZZ(10), ZZ(3))	1
+powermod-3-50-11	powermod(ZZ(3), ZZ(50), ZZ(11))	1
+powermod-3-2-7	powermod(ZZ(3), ZZ(2), ZZ(7))	2
+a-negative-exponent-gives-the-modular-inverse	powermod(ZZ(2), ZZ(-1), ZZ(7))	4
+3-1-equiv-5-and-5-2-25-equiv-4	powermod(ZZ(3), ZZ(-2), ZZ(7))	4
+a-square-root-of-3-equiv-1-pmod-2		
+threads-over-a-list-of-bases		
+exponent-0-evaluates-even-at-a-negative-modulus		
+a-rational-exponent-is-a-modular-root-the-least		
+threads-over-lists-the-period-is-the-order-of-2		
+a-301-digit-base	powermod(ZZ(((big(10)^300) + 1)), ZZ(7), ZZ(5))	1
+a-square-root-of-3-modulo-the-prime-10-30-57		
+a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod		
+gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3		
+a-gaussian-modulus-and-an-exponent-of-10-30		
+11-7i-is-a-unit-mod-7-4i-so-it-has-negative		
+a-square-root-of-3-mod-2-is-1-trivially		
+exponent-0-base-minus-4-modulus-minus-2		
+exponent-0-base-5-modulus-minus-7		
+exponent-0-with-a-positive-modulus	powermod(ZZ(2), ZZ(0), ZZ(14))	1
+base-a-unit-any-exponent		
+exponent-0-is-always-1		
+a-negative-exponent-inverts-first		
+a-negative-exponent-past-the-first-power		
+modulus-a-real-prime-3-mod-4		
+modulus-a-negative-real-prime		
+modulus-a-composite-gaussian-norm-25		
+no-inverse-for-a-negative-exponent-when-the-base		
+a-bignum-exponent-base-and-modulus-small		
+a-negative-bignum-exponent		
+modulus-past-2-53		
+a-real-base-and-modulus-need-no-gaussian	powermod(ZZ(5), ZZ(5), ZZ(7))	3
+result-comes-out-real-reduced-into-0-m-like-an		
+modulus-1-4i-the-other-prime-above-17		
+large-norm-base-and-modulus		
+base-an-associate-times-1		
+base-an-associate-times-i		
+modulus-a-prime-above-13		
+modulus-the-other-prime-above-13		
+base-a-real-prime-s-associate-by-the-unit-i		
+modulus-a-real-composite-5-squared		
+a-negative-unit-exponent-is-its-own-inverse		
+modulus-a-negative-associate		
+sum-powermod-a-2-7-a-nothing-7		
+findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0		
+one-step-of-rsa-style-modular-exponentiation-7	powermod(ZZ(7), ZZ(13), ZZ(33))	13
+341-11-cdot-31-passes-fermat-s-test-to-base-2	powermod(ZZ(2), ZZ(340), ZZ(341))	1
+diffie-hellman-both-parties-reach-the-shared-key	(powermod(ZZ(powermod(ZZ(5), ZZ(6), ZZ(23))), ZZ(15), ZZ(23)) == powermod(ZZ(powermod(ZZ(5), ZZ(15), ZZ(23))), ZZ(6), ZZ(23)))	true
+by-definition-a-b-bmod-m-computed-without-ever	(powermod(ZZ(2), ZZ(10), ZZ(3)) == mod((big(2)^10), 3))	true
+euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	powermod(ZZ(7), ZZ(euler_phi(ZZ(19))), ZZ(19))	1
+list-powermod-7-2-5-powermod-12-2-5	[powermod(ZZ(7), ZZ(2), ZZ(5)), powermod(ZZ(12), ZZ(2), ZZ(5))]	[4, 4]
+list-powermod-2-3-5-8-mod-5	[powermod(ZZ(2), ZZ(3), ZZ(5)), mod(8, 5)]	[3, 3]
+list-powermod-2-neg-1-5-modularinverse-2-5	[powermod(ZZ(2), ZZ(-1), ZZ(5)), invmod(ZZ(2), ZZ(5))]	[3, 3]
+list-divides-2-8-powermod-8-3-2-eq-0		
+powermod-7-totient-19-19-eq-1	(powermod(ZZ(7), ZZ(euler_phi(ZZ(19))), ZZ(19)) == 1)	true
+powermod-2-16-17	powermod(ZZ(2), ZZ(16), ZZ(17))	1
+powermod-list-5-neg-5-2-3		
+powermod-list-5-neg-5-2-neg-3		
+no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2		
+a-nonzero-exponent-at-the-same-negative-modulus		
+2-is-not-a-square-mod-5-so-there-is-no-root		
+a-positive-exponent-at-a-negative-modulus-1-2		
+a-positive-exponent-at-a-negative-modulus-3-2-7		
+a-positive-exponent-at-a-negative-modulus-341		
+a-positive-exponent-at-a-negative-modulus-5-1-7		
+a-negative-exponent-at-a-negative-modulus-2-1-5		

@@ -14,4 +14,9 @@ signatures:
 names:
   wolframIdentity: true
 stub: engine
+bindings:
+  - origin: mapped
+    form: oscar
+    template: (let v = $1, m = sum(v) // length(v); sum((x - m)^2 for x in v) // (length(v) - 1) end)
+    arity: 1
 ---

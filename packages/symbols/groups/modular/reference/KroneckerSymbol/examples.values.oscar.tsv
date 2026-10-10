@@ -1,0 +1,55 @@
+id	in	out
+kroneckersymbol-17-6	kronecker_symbol(ZZ(17), ZZ(6))	-1
+kroneckersymbol-10-13	kronecker_symbol(ZZ(10), ZZ(13))	1
+0-whenever-a-1-and-n-0	kronecker_symbol(ZZ(5), ZZ(0))	0
+a-1-is-the-sign-of-a-here-a-0	kronecker_symbol(ZZ(-3), ZZ(-1))	-1
+a-2-odd-a-and-3-mod-8-3-one-of-the-two-residues	kronecker_symbol(ZZ(3), ZZ(2))	-1
+a-n-0	kronecker_symbol(ZZ(0), ZZ(0))	0
+n-0-a-1	kronecker_symbol(ZZ(1), ZZ(0))	1
+n-0-even-a-not-a-unit	kronecker_symbol(ZZ(2), ZZ(0))	0
+n-0-odd-a-1	kronecker_symbol(ZZ(3), ZZ(0))	0
+a-0-n-1	kronecker_symbol(ZZ(0), ZZ(1))	1
+n-1-is-always-1	kronecker_symbol(ZZ(5), ZZ(1))	1
+n-1-negative-a	kronecker_symbol(ZZ(-7), ZZ(1))	1
+a-0-n-1-2	kronecker_symbol(ZZ(0), ZZ(-1))	1
+n-1-positive-a	kronecker_symbol(ZZ(3), ZZ(-1))	1
+n-1-negative-a-sign-of-a	kronecker_symbol(ZZ(-5), ZZ(-1))	-1
+a-0-odd-n-1	kronecker_symbol(ZZ(0), ZZ(5))	0
+a-0-even-n	kronecker_symbol(ZZ(0), ZZ(4))	0
+a-0-negative-odd-n	kronecker_symbol(ZZ(0), ZZ(-5))	0
+a-0-n-prime	kronecker_symbol(ZZ(0), ZZ(7))	0
+a-1-is-always-1	kronecker_symbol(ZZ(1), ZZ(7))	1
+a-1-negative-n	kronecker_symbol(ZZ(1), ZZ(-7))	1
+1-p-p-7-3-mod-4	kronecker_symbol(ZZ(-1), ZZ(7))	-1
+1-p-p-5-1-mod-4	kronecker_symbol(ZZ(-1), ZZ(5))	1
+2-n-character-n-7-7-mod-8	kronecker_symbol(ZZ(2), ZZ(7))	1
+2-n-character-n-3-3-mod-8	kronecker_symbol(ZZ(2), ZZ(3))	-1
+2-n-character-n-5-5-mod-8	kronecker_symbol(ZZ(2), ZZ(5))	-1
+2-n-character	kronecker_symbol(ZZ(-2), ZZ(7))	-1
+a-2-odd-a-5-5-mod-8	kronecker_symbol(ZZ(5), ZZ(2))	-1
+a-2-odd-a-9-1-mod-8	kronecker_symbol(ZZ(9), ZZ(2))	1
+a-2-even-a-0	kronecker_symbol(ZZ(4), ZZ(2))	0
+even-a-and-even-n	kronecker_symbol(ZZ(6), ZZ(4))	0
+odd-square-a-9-mod-2-3	kronecker_symbol(ZZ(9), ZZ(8))	1
+even-composite-n-2-3-negative	kronecker_symbol(ZZ(7), ZZ(-6))	1
+even-a-negative-even-n	kronecker_symbol(ZZ(10), ZZ(-6))	0
+negative-odd-n	kronecker_symbol(ZZ(5), ZZ(-3))	-1
+negative-a-negative-odd-n	kronecker_symbol(ZZ(-5), ZZ(-9))	-1
+perfect-square-a-qr	kronecker_symbol(ZZ(4), ZZ(7))	1
+non-square-a-qnr-mod-7	kronecker_symbol(ZZ(3), ZZ(7))	-1
+both-at-negative-grid-edge	kronecker_symbol(ZZ(-10), ZZ(-10))	0
+mixed-sign-edge	kronecker_symbol(ZZ(10), ZZ(-10))	0
+composite-a-prime-n	kronecker_symbol(ZZ(10), ZZ(7))	-1
+negative-a-odd-square-n-9	kronecker_symbol(ZZ(-10), ZZ(9))	1
+threads-element-wise-over-a-list-as-wolfram-s		
+larger-arguments-10-11-1-against-the-2000th		
+even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	kronecker_symbol(ZZ(7), ZZ(6))	1
+generatingfunction-kroneckersymbol-n-7-n-x		
+the-character-mod-4-4-p-1-for-primes-p-equiv-3	kronecker_symbol(ZZ(-4), ZZ(7))	-1
+kroneckersymbol-2-7-eq-kroneckersymbol-23-7	(kronecker_symbol(ZZ(2), ZZ(7)) == kronecker_symbol(ZZ(23), ZZ(7)))	true
+kroneckersymbol-neg-4-list-1-5-7-11		
+completely-multiplicative-in-n	(kronecker_symbol(ZZ(7), ZZ((3 * 5))) == (kronecker_symbol(ZZ(7), ZZ(3)) * kronecker_symbol(ZZ(7), ZZ(5))))	true
+kroneckersymbol-9-12	kronecker_symbol(ZZ(9), ZZ(12))	0
+kroneckersymbol-12-7-eq-kroneckersymbol-3-7	(kronecker_symbol(ZZ(12), ZZ(7)) == (kronecker_symbol(ZZ(3), ZZ(7)) * kronecker_symbol(ZZ(4), ZZ(7))))	true
+kroneckersymbol-3-63-eq-kroneckersymbol-3-9	(kronecker_symbol(ZZ(3), ZZ(63)) == (kronecker_symbol(ZZ(3), ZZ(9)) * kronecker_symbol(ZZ(3), ZZ(7))))	true
+a-0-1-for-a-pm-1	kronecker_symbol(ZZ(-1), ZZ(0))	1

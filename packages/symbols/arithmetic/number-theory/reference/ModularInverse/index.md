@@ -19,6 +19,10 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: oscar
+    template: invmod(ZZ($1), ZZ($2))
+    arity: 2
+  - origin: mapped
     form: wolfram
     template: ModularInverse[$1, $2]
     arity: 2

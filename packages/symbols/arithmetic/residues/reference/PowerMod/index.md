@@ -31,6 +31,10 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: oscar
+    template: powermod(ZZ($1), ZZ($2), ZZ($3))
+    arity: 3
+  - origin: mapped
     form: wolfram
     template: PowerMod[$1, $2, $3]
     arity: 3

@@ -1,12 +1,12 @@
 id	in	out
-extendedgcd-2-3		
-extendedgcd-12-18		
-extendedgcd-3-5		
-extendedgcd-6-4		
+extendedgcd-2-3	collect(gcdx(ZZ(2), ZZ(3)))	[1, -1, 1]
+extendedgcd-12-18	collect(gcdx(ZZ(12), ZZ(18)))	[6, -1, 1]
+extendedgcd-3-5	collect(gcdx(ZZ(3), ZZ(5)))	[1, 2, -1]
+extendedgcd-6-4	collect(gcdx(ZZ(6), ZZ(4)))	[2, 1, -1]
 any-number-of-arguments-folding-pairwise-6-times		
 gaussian-integers-by-euclid-with-the-rounded		
-negative-arguments-12-18-6		
-big-integers-the-coefficients-stay-minimal-x-b		
+negative-arguments-12-18-6	collect(gcdx(ZZ(-12), ZZ(18)))	[6, 1, 1]
+big-integers-the-coefficients-stay-minimal-x-b	collect(gcdx(ZZ((big(2)^100)), ZZ((big(3)^50))))	[1, 208475958620489751737959, -368122879029235364752383564167]
 three-arguments-4-cdot-4-6-cdot-4-9-1		
 listable-threads-over-a-list		
 gaussian-integer-and-a-plain-integer		
@@ -23,7 +23,7 @@ with-a-negative-real-prime
 two-large-norm-gaussians		
 past-2-53-in-both-parts		
 a-real-split-prime-and-its-gaussian-factor		
-two-real-composites-plain-integer-case		
+two-real-composites-plain-integer-case	collect(gcdx(ZZ(4), ZZ(9)))	[1, -2, 1]
 with-a-negative-real-composite		
 the-larger-norm-argument-given-first		
 with-an-associate-times-1		
@@ -34,10 +34,10 @@ with-a-real-prime-s-associate-by-the-unit-i
 with-a-real-composite-5-squared		
 with-a-negative-associate		
 a-large-norm-gaussian-and-a-real-prime-19		
-the-modular-inverse-of-3-mod-11-is-4-since-3		
+the-modular-inverse-of-3-mod-11-is-4-since-3	collect(gcdx(ZZ(3), ZZ(11)))	[1, 4, -1]
 confirms-the-coefficients-above-satisfy-2x-3y	((2 * -1) + (3 * 1))	1
-extendedgcd-6-21		
-bezout-coefficients-when-a-0-0-times-0-5-times-1		
+extendedgcd-6-21	collect(gcdx(ZZ(6), ZZ(21)))	[3, -3, 1]
+bezout-coefficients-when-a-0-0-times-0-5-times-1	collect(gcdx(ZZ(0), ZZ(5)))	[5, 0, 1]
 a-real-two-argument-case-stays-unevaluated		
 a-gaussian-third-argument-past-two-declines		
 a-real-argument-past-two-also-declines		

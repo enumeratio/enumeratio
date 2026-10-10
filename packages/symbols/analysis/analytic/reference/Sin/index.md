@@ -28,6 +28,10 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: oscar
+    template: sin($1)
+    arity: 1
+  - origin: mapped
     form: wolfram
     template: Sin[$1]
     arity: 1
