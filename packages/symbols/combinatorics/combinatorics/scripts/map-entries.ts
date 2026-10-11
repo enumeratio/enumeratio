@@ -13,12 +13,10 @@ import { bareEngine } from "@enumeratio/engine/testing";
 import type { ReferenceEntry, ReferenceExample } from "@enumeratio/entry";
 import type { GeneratedEntries } from "@enumeratio/entry/node";
 import { captionId, dedupeId } from "@enumeratio/entry";
-import { ALL_STATISTICS } from "../src/statistics/all.ts";
-import { declareStatistics } from "../src/statistics/declare.ts";
 import {
   CARRIERS,
   type CombinatorialMap,
-  declareCombinatoricsCarriers,
+  declareCombinatorics,
   declareMaps,
   MAPS,
   UNDEFINED_MAPS,
@@ -45,17 +43,20 @@ const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
   },
   surjection: { contents: ["List", 2, 1, 3, 1], caption: "the surjection $2131$" },
   composition: { contents: ["List", 2, 1, 3], caption: "the composition $2 + 1 + 3$" },
+  standard_tableau_pair: {
+    contents: [
+      "Tuple",
+      ["StandardTableau", ["List", ["List", 1, 3], ["List", 2]]],
+      ["StandardTableau", ["List", ["List", 1, 2], ["List", 3]]],
+    ],
+    caption: "the pair of tableaux $13/2$ and $12/3$",
+  },
   binary_word: { contents: ["List", 0, 1, 1, 0, 0], caption: "the binary word $01100$" },
 };
 
 const constructorFor = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
 const ce = bareEngine();
-declareCombinatoricsCarriers(ce);
-// A guard may read a statistic (KrewerasComplement's counts cycles), so the statistics go in
-// before the maps — the same order tests/entries.test.ts uses.
-declareStatistics(ce, ALL_STATISTICS, {
-  domainTypes: Object.fromEntries(CARRIERS.map((c) => [c.name, c.type])),
-});
+declareCombinatorics(ce);
 declareMaps(ce, constructorFor);
 
 /** Ids for a head's examples, from their captions (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §3). */
