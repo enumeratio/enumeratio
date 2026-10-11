@@ -34,6 +34,7 @@ import {
 import { between as edgeBiased } from "@enumeratio/plausible";
 import { isSettled } from "@enumeratio/entry";
 import { referenceEntries } from "../src/node.ts";
+import { agreesInNorm, associates, roundsTo, undecidedIdentity } from "./plausible-compare.ts";
 import { cappedVerdicts } from "./oracle-verdict-capped.ts";
 
 const entries = referenceEntries();
@@ -325,68 +326,6 @@ function boolsAsInts(ours: MathJSON, theirs: string): boolean {
   }
 }
 
-const isBigNumber = (x: unknown): x is { num: string } =>
-  typeof x === "object" && x !== null && typeof (x as { num?: unknown }).num === "string";
-
-/** A value as its parts: a real, or a Python complex literal `(a+bj)`, or ours' `Complex`. */
-function parts(value: unknown): number[] | undefined {
-  const real = (x: unknown): number | undefined =>
-    typeof x === "number" ? x : isBigNumber(x) ? Number(x.num) : undefined;
-  if (real(value) !== undefined) return [real(value) as number];
-  if (Array.isArray(value) && value[0] === "Complex" && value.length === 3) {
-    const [re, im] = [real(value[1]), real(value[2])];
-    return re !== undefined && im !== undefined ? [re, im] : undefined;
-  }
-  if (typeof value !== "string") return undefined;
-  const complex = /^\(?\s*([-+]?[\d.]+(?:e[-+]?\d+)?)\s*([-+]\s*[\d.]+(?:e[-+]?\d+)?)j\)?$/i.exec(value.trim());
-  if (complex !== null) return [Number(complex[1]), Number((complex[2] as string).replace(/\s/g, ""))];
-  const plain = Number(value);
-  return value.trim() !== "" && Number.isFinite(plain) ? [plain] : undefined;
-}
-
-/** Whether two numbers, real or complex, are within 1e-9 of each other relative to their size. */
-function agreesInNorm(ours: MathJSON, theirs: string): boolean {
-  const [a, b] = [parts(ours), parts(theirs)];
-  if (a === undefined || b === undefined) return false;
-  const [ar, ai = 0] = a;
-  const [br, bi = 0] = b;
-  return Math.hypot(ar - br, ai - bi) <= 1e-9 * Math.max(Math.hypot(ar, ai), Math.hypot(br, bi));
-}
-
-/** Whether two values differ by a Gaussian unit (1, -1, i or -i). */
-function associates(ours: MathJSON, theirs: string): boolean {
-  const [a, b] = [parts(ours), parts(theirs)];
-  if (a === undefined || b === undefined) return false;
-  const [ar, ai = 0] = a;
-  const [br, bi = 0] = b;
-  const close = (x: number, y: number) => Math.abs(x - y) <= 1e-9 * Math.max(1, Math.abs(x), Math.abs(y));
-  return [
-    [br, bi],
-    [-br, -bi],
-    [-bi, br],
-    [bi, -br],
-  ].some(([r, i]) => close(r as number, ar) && close(i as number, ai));
-}
-
-/** Whether `theirs` (full precision) rounds to `ours` at the precision `N` was asked for: `d`
- * significant figures, or for `{precision, accuracy}` that many decimals. */
-function roundsTo(spec: MathJSON, ours: MathJSON, theirs: string): boolean {
-  const mine = parts(ours);
-  const other = parts(theirs);
-  if (mine === undefined || other === undefined || mine.length !== other.length) return false;
-  const accuracy = Array.isArray(spec) && spec[0] === "List" ? spec[2] : undefined;
-  const digits = typeof spec === "number" ? spec : Array.isArray(spec) && spec[0] === "List" ? spec[1] : undefined;
-  return other.every((x, i) => {
-    let scale: number;
-    if (typeof accuracy === "number") scale = 10 ** accuracy;
-    else if (typeof digits === "number") scale = x === 0 ? 1 : 10 ** (digits - 1 - Math.floor(Math.log10(Math.abs(x))));
-    else return false;
-    return (
-      Math.abs(Math.round(x * scale) / scale - (mine[i] as number)) <= 1e-9 * Math.max(1, Math.abs(mine[i] as number))
-    );
-  });
-}
-
 /** The kinds a sample earns without a person: both sides decline, in different words, or the
  * other system ran out of time or memory. Anything else is a finding. */
 function autoKind(
@@ -395,12 +334,12 @@ function autoKind(
   result: { value?: string; error?: string },
   source: string,
   system: System,
+  symbolic: boolean,
 ): string | undefined {
   const theirs = result.error ?? result.value ?? "";
   // The crate takes scalars where ours threads over a list.
   if (result.error !== undefined && /threading|::Vector/i.test(theirs)) return "threading";
-  // The identity check's own "could not decide" (no point it could evaluate), not a disagreement.
-  if (result.error === undefined && theirs.trim() === "None") return "undecided";
+  if (result.error === undefined && undecidedIdentity(symbolic, theirs)) return "undecided";
   // Julia's array literal promotes a Bool beside an Int, so `[false, -1]` prints `[0, -1]`.
   if (result.error === undefined && boolsAsInts(ours, theirs)) return "convention";
   // A double can't hold the exact huge argument that ours reduces exactly.
@@ -604,7 +543,14 @@ for (const system of systems) {
     }
     const auto = unchecked.has(i)
       ? "unchecked"
-      : autoKind(row.sample.expr, expected, result, (row.out as { source: string }).source, system);
+      : autoKind(
+          row.sample.expr,
+          expected,
+          result,
+          (row.out as { source: string }).source,
+          system,
+          symbolicMode[i] === true,
+        );
     if (auto !== undefined) {
       autos.set(auto, (autos.get(auto) ?? 0) + 1);
       automatic++;

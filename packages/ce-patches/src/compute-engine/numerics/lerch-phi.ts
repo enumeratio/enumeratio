@@ -249,6 +249,9 @@ export function lerchPhi(z: Cx, s: Cx, a: Cx): Cx {
   return value;
 }
 
-/** Real-valued Φ(z, s, a) for real z, s, a — for compiled (JS/GPU) plotting. */
-export const lerchPhiReal = (z: number, s: number, a: number): number =>
-  lerchPhi({ re: z, im: 0 }, { re: s, im: 0 }, { re: a, im: 0 }).re;
+/** Real-valued Φ(z, s, a) for real z, s, a — for compiled (JS/GPU) plotting. NaN where the value
+ * is not real (a^(−s) at a < 0 and a non-integer s). */
+export const lerchPhiReal = (z: number, s: number, a: number): number => {
+  const v = lerchPhi({ re: z, im: 0 }, { re: s, im: 0 }, { re: a, im: 0 });
+  return Math.abs(v.im) > 1e-12 * Math.abs(v.re) + 1e-300 ? Number.NaN : v.re;
+};
