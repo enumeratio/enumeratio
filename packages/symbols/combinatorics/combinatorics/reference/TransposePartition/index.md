@@ -17,6 +17,11 @@ signatures:
     type: (integer_partition) -> integer_partition
 laws:
   - involution
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: TransposePartition[$1]
+    arity: 1
 ---
 
 - Takes a `IntegerPartition` and returns a `IntegerPartition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

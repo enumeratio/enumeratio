@@ -10,4 +10,10 @@ signatures:
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
 seeAlso:
   - IntegerCompositions
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: Compositions[$1, $2]
+    arity: 2
+    note: "Combinatorica's Compositions[n, k] allows zero parts: ours is WeakCompositions, not the strict IntegerCompositions."
 ---

@@ -327,6 +327,11 @@ jobs:
         uses: ./.github/actions/oracle-drift
         with:
           system: wolfram
+      # Combinatorica rides the same kernel and license, in its own process after the Wolfram scan.
+      - if: ${{ !cancelled() && steps.licensed.outputs.yes == 'true' }}
+        uses: ./.github/actions/oracle-drift
+        with:
+          system: combinatorica
       # Benchmarks while the kernel is installed, with our side in the same job as the
       # same-machine anchor (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §6).
       - if: ${{ !cancelled() && steps.licensed.outputs.yes == 'true' }}

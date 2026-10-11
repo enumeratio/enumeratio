@@ -52,6 +52,11 @@ bindings:
     arity: 2
     threadArg: 1
     note: Signed in Wolfram and compute-engine; Sage's stirling_number1, Combinatorics.jl's stirlings1 and Mathlib's Nat.stirlingFirst are UNSIGNED, so a sign difference here is expected, not a bug. Combinatorics.jl's stirlings1 also needs n as a BigInt past its Int64 lookup table (n > 20).
+  - origin: mapped
+    form: combinatorica
+    template: (-1)^($1 - $2) StirlingFirst[$1, $2]
+    arity: 2
+    note: Signed in Wolfram and compute-engine; Combinatorica's StirlingFirst, like Sage's stirling_number1, is UNSIGNED, so the template carries the sign (-1)^(n-k). Combinatorics.jl's stirlings1 and Mathlib's Nat.stirlingFirst are UNSIGNED too, so a sign difference there is expected, not a bug. Combinatorics.jl's stirlings1 also needs n as a BigInt past its Int64 lookup table (n > 20).
 catalog:
   - system: wolfram
     identity: StirlingS1

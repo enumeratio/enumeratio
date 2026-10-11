@@ -20,6 +20,7 @@ export type CrosswalkSystem =
   | "dlmf"
   | "oeis"
   | "findstat"
+  | "combinatorica"
   | "sage"
   | "sympy"
   | "mpmath"
@@ -61,6 +62,7 @@ export const SOURCES: Readonly<Record<CrosswalkSystem, CrosswalkSource>> = {
   dlmf: { label: "DLMF", href: (id) => `https://dlmf.nist.gov/${id}` },
   oeis: { label: "OEIS", href: (id) => `https://oeis.org/${id}` },
   findstat: { label: "FindStat", href: (id) => `https://www.findstat.org/${id}` },
+  combinatorica: { label: "Combinatorica" },
   sage: { label: "SageMath" },
   sympy: { label: "SymPy" },
   mpmath: { label: "mpmath" },
@@ -93,6 +95,7 @@ export const SYSTEM_ORDER: readonly CrosswalkSystem[] = [
   "oeis",
   "findstat",
   "wolfram",
+  "combinatorica",
   "sage",
   "sympy",
   "mpmath",

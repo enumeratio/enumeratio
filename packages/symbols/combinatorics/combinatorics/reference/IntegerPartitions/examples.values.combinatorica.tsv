@@ -1,0 +1,19 @@
+id	in	out	tex.in	tex.out
+the-partitions-of-8-into-at-most-3-parts	If[IntegerQ[3], Reverse[Sort[Map[TransposePartition, Partitions[8, 3]], Function[{a, b}, OrderedQ[{PadRight[a, 8], PadRight[b, 8]}]]]], Missing["NotCombinatorica"]]	{{8}, {7, 1}, {6, 2}, {6, 1, 1}, {5, 3}, {5, 2, 1}, {4, 4}, {4, 3, 1}, {4, 2, 2}, {3, 3, 2}}	\text{If}[\text{IntegerQ}[3],\text{Reverse}[\text{Sort}[\text{TransposePartition}\text{/@}\text{Partitions}(8,3),\{a,b\}\unicode{f4a1}\text{OrderedQ}[\{\text{PadRight}[a,8],\text{PadRight}[b,8]\}]]],---]	\{\{8\},\{7,1\},\{6,2\},\{6,1,1\},\{5,3\},\{5,2,1\},\{4,4\},\{4,3,1\},\{4,2,2\},\{3,3,2\}\}
+integerpartitions-5	Partitions[5]	{{5}, {4, 1}, {3, 2}, {3, 1, 1}, {2, 2, 1}, {2, 1, 1, 1}, {1, 1, 1, 1, 1}}	\text{Partitions}(5)	\{\{5\},\{4,1\},\{3,2\},\{3,1,1\},\{2,2,1\},\{2,1,1,1\},\{1,1,1,1,1\}\}
+p-6	Length[Partitions[6]]	11	\text{Length}[\text{Partitions}(6)]	11
+the-single-part-6	Part[Partitions[6], 1]	{6}	\text{Partitions}(6)[[1]]	\{6\}
+exactly-3-parts	If[IntegerQ[List[3]], Reverse[Sort[Map[TransposePartition, Partitions[8, List[3]]], Function[{a, b}, OrderedQ[{PadRight[a, 8], PadRight[b, 8]}]]]], Missing["NotCombinatorica"]]			
+parts-restricted-to-1-2-5				
+integerpartitions-6-list-2-positiveinfinity-2	If[IntegerQ[List[2, Infinity, 2]], Reverse[Sort[Map[TransposePartition, Partitions[6, List[2, Infinity, 2]]], Function[{a, b}, OrderedQ[{PadRight[a, 6], PadRight[b, 6]}]]]], Missing["NotCombinatorica"]]			
+integerpartitions-3-10-list-1-1-over-3-3-over-4				
+integerpartitions-5-10-list-1-neg-1				
+the-ways-to-make-change-for-a-dollar-from-1-5-10				
+integerpartitions-156-10-list-1-5-10-25				
+the-family-has-p-8-22-members-compute-engine-s				
+integerpartitions-4	Partitions[4]	{{4}, {3, 1}, {2, 2}, {2, 1, 1}, {1, 1, 1, 1}}	\text{Partitions}(4)	\{\{4\},\{3,1\},\{2,2\},\{2,1,1\},\{1,1,1,1\}\}
+length-integerpartitions-10	Length[Partitions[10]]	42	\text{Length}[\text{Partitions}(10)]	42
+count-integerpartitions-10	Length[Partitions[10]]	42	\text{Length}[\text{Partitions}(10)]	42
+euler-partitions-into-odd-parts-are-as-many-as				
+by-largest-part				
+by-distinct-part-sizes				

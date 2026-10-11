@@ -22,6 +22,12 @@ catalog:
   - system: oeis
     identity: A008302
     url: https://oeis.org/A008302
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: NumberOfPermutationsByInversions[$1, $2]
+    arity: 2
+    note: Combinatorica calls the Mahonian numbers NumberOfPermutationsByInversions.
 ---
 
 - Equals $Count(KInversionPermutations(n, k))$, and the number of permutations $p$ with $Inversions(p) = k$.

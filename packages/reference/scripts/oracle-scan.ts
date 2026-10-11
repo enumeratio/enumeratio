@@ -37,6 +37,7 @@ import {
   emit,
   interpretSymbolicAgreement,
   isSymbolicSystem,
+  isWolframFamily,
   ITEM_SECONDS,
   kernelVersion,
   type MathJSON,
@@ -223,8 +224,11 @@ const scannedIdsBySystem = new Map<System, Set<string>>();
 for (const system of systems) {
   // Wolfram doesn't answer a picture or a control with a value to compare, so its lane leaves them
   // (and their rows) alone, unless `--ids` names one.
+  // Combinatorica is asked only about the heads its map covers; everything else is the Wolfram lane's.
   const asked = cases.filter(
-    (item) => system !== "wolfram" || idFilter?.has(item.id) === true || !showsPicture(item.head, item.expr),
+    (item) =>
+      (!isWolframFamily(system) || idFilter?.has(item.id) === true || !showsPicture(item.head, item.expr)) &&
+      (system !== "combinatorica" || emit(item.expr, system, library?.mappings).ok),
   );
   const casesForSystem = newOnly
     ? asked.filter((item) => records.get(item.head)?.[item.key]?.[system] === undefined)
@@ -356,6 +360,12 @@ if (!digestOnly && library === undefined)
 const kernelOf: Partial<Record<System, string>> = {};
 if (systems.includes("wolfram")) {
   kernelOf.wolfram = (await runKernel("wolframscript", ["-code", "$Version"])).trim();
+}
+if (systems.includes("combinatorica")) {
+  // The same kernel as `wolfram`, asked after it has loaded the package: a pin that fails to load names that.
+  kernelOf.combinatorica = (
+    await runKernel("wolframscript", ["-code", 'Quiet[Needs["Combinatorica`"]]; $Version'])
+  ).trim();
 }
 if (systems.includes("sage")) {
   kernelOf.sage = (await runKernel("sage", ["-c", "print(version())"])).trim();

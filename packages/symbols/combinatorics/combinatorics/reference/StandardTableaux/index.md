@@ -29,4 +29,10 @@ signatures:
     description: "Standard Young tableaux: fillings of a partition shape, weakly increasing along rows and columns."
     library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<standard_tableau>
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: Flatten[Map[Tableaux, Partitions[$1]], 1]
+    arity: 1
+    note: Combinatorica lists the tableaux of one shape; ours are all standard tableaux with n cells, the union over the partitions of n.
 ---

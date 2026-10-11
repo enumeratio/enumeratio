@@ -61,6 +61,17 @@ grades:
   - name: n
     role: axis
 carrier: SetPartition
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: SetPartitions[If[ListQ[$1], $1, Range[$1]]]
+    arity: 1
+    note: Combinatorica lists set partitions in a different order than ours, so a listing may differ where the count agrees.
+  - origin: mapped
+    form: combinatorica
+    template: KSetPartitions[Range[$1], $2]
+    arity: 2
+    note: Combinatorica lists set partitions in a different order than ours, so a listing may differ where the count agrees.
 ---
 
 - A lazy indexed collection; the count is the Bell number $B_n$ — $B_4 = 15$. See [[BellNumber]].

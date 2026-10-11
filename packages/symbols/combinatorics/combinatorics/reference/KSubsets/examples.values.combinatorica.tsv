@@ -1,0 +1,4 @@
+id	in	out	tex.in	tex.out
+binom-5-2	Length[KSubsets[Range[5], 2]]	10	\text{Length}[\text{KSubsets}(\text{Range}[5],2)]	10
+ksubsets-5-2-list-1	Part[KSubsets[Range[5], 2], 1]	{1, 2}	\text{KSubsets}(\text{Range}[5],2)[[1]]	\{1,2\}
+lex-order-the-third-2-subset-of-5-is-1-4	Part[KSubsets[Range[5], 2], 3]	{1, 4}	\text{KSubsets}(\text{Range}[5],2)[[3]]	\{1,4\}

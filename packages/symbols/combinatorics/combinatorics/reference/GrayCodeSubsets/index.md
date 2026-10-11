@@ -11,4 +11,10 @@ signatures:
 seeAlso:
   - Subsets
   - GrayCodes
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: "Map[Sort[$1 + 1 - #] &, GrayCodeSubsets[Range[$1]]]"
+    arity: 1
+    note: Combinatorica's Gray code runs the other way round, from the last element; reflecting each element i to n + 1 - i gives ours.
 ---

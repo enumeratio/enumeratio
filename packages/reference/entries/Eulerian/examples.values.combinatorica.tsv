@@ -1,0 +1,9 @@
+id	in	out	tex.in	tex.out
+row-4-of-the-triangle				
+row-5-of-the-triangle				
+11-permutations-of-4-have-1-descent	Eulerian[4, 1]	11	\text{Eulerian}(4,1)	11
+the-empty-permutation	Eulerian[0, 0]	1	\text{Eulerian}(0,0)	1
+too-many-descents	Eulerian[3, 3]	0	\text{Eulerian}(3,3)	0
+a-bigint-row-entry	Eulerian[30, 10]	1269070526794311849099687878550	\text{Eulerian}(30,10)	1269070526794311849099687878550
+the-symmetry-of-the-rows	Equal[Eulerian[12, 5], Eulerian[12, 6]]	True	\text{Eulerian}(12,5)=\text{Eulerian}(12,6)	\text{True}
+agrees-with-the-count-of-the-collection				

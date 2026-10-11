@@ -18,7 +18,7 @@ import {
 import { CARRIER_NAMES, CARRIER_PARAMS } from "./carrier-names-data.ts";
 import { DEFINED_NAMES } from "./defined-names-data.ts";
 import { type Mapping, mappingFor, THREADS_MANUALLY } from "./mappings.ts";
-import type { System } from "./systems.ts";
+import { isWolframFamily, type System } from "./systems.ts";
 
 export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 
@@ -154,6 +154,7 @@ function bigO(given: MathJSON, walk: (node: MathJSON) => string): string {
 /** `expr` as `system`'s source. `extra` maps a library's heads (`mappingsFromBindings`), which an
  *  expression calls by namespace: `MemberCall(ns, "Name", …)` is emitted as `ns.Name(…)`. */
 export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] = []): Emitted {
+  const wl = isWolframFamily(system);
   const missing: string[] = [];
   // Variables an enclosing Sum/Product iterator binds — not free, so not missing.
   const bound = new Set<string>();
@@ -161,10 +162,14 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
   // report it as missing, but the caller (a symbolic-agreement check) needs the names either way.
   const free = new Set<string>();
 
+  // Combinatorica is the Wolfram transpiler plus its own head map: an expression with no map row
+  // in it would only run in core Wolfram, which the `wolfram` lane already does.
+  let fromCombinatorica = false;
+
   const walk = (node: MathJSON): string => {
     // Wolfram's exponent marker is `*^`, and `1e-11` there is `1 * e - 11`.
     if (typeof node === "number") {
-      if (system === "wolfram") return toWolfram(node);
+      if (wl) return toWolfram(node);
       // Lean reads `f -1` as `f - 1`.
       // Rust values are the prelude's dynamic `V` (rust/src/prelude.rs).
       if (system === "rust") return Number.isSafeInteger(node) ? `n(${node})` : `x(${node})`;
@@ -178,7 +183,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       if (constant !== undefined) return constant;
       // Wolfram also knows the rest of the constants, the slots a Function binds, and a
       // mapped head passed as a value (`Fold(Add, 0, xs)`).
-      if (system === "wolfram" && (node in SYMBOLS || node in HEADS || /^_\d+$/.test(node))) return toWolfram(node);
+      if (wl && (node in SYMBOLS || node in HEADS || /^_\d+$/.test(node))) return toWolfram(node);
       if (!bound.has(node)) {
         // A symbol is unknown (a free variable) exactly when compute-engine has no
         // definition for it — DEFINED_NAMES (defined-names-data.ts) is generated from the
@@ -196,16 +201,21 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
           return node;
         }
         // Wolfram's own name for one of our number sets is that set there too.
-        if (system === "wolfram" && NUMBER_SET_NAMES.has(node)) return node;
+        if (wl && NUMBER_SET_NAMES.has(node)) return node;
         // So is a name that means Wolfram's own (`Infinity`, `Orderless`, `FontWeight`): not a variable.
-        if (system === "wolfram" && isWolframOwnName(node)) return toWolfram(node);
+        if (wl && isWolframOwnName(node)) return toWolfram(node);
         // A genuinely unknown lowercase bare symbol is a free variable. A symbolic system can
         // carry it through — Wolfram verbatim (toWolfram passes an unmapped name through
         // unchanged), SymPy and Sage as an explicit symbolic value, since neither
         // auto-declares a bare name the way Wolfram does. A numeric-only lane has nothing to
         // do with a name, so it stays missing.
+        // Combinatorica answers values, not identities: a free symbol is unmapped there.
+        if (system === "combinatorica") {
+          missing.push(`symbol:${node}`);
+          return node;
+        }
         free.add(node);
-        if (system === "wolfram") return wolframFree(node);
+        if (wl) return wolframFree(node);
         if (system === "sympy") return `Symbol(${JSON.stringify(node)})`;
         if (system === "sage") return `SR.var(${JSON.stringify(node)})`;
         missing.push(`symbol:${node}`);
@@ -215,7 +225,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     if (!isCall(node)) {
       const value = (node as { num?: unknown }).num;
       if (typeof value === "string") {
-        if (system === "wolfram") return toWolfram({ num: value });
+        if (wl) return toWolfram({ num: value });
         if (system === "rust") return /^-?\d+$/.test(value) ? `big("${value}")` : `x(${value})`;
         // A Python float literal holds 53 bits; SymPy keeps every digit of a longer decimal.
         if (system === "sympy" && /[.e]/i.test(value) && value.replace(/e.*$/i, "").replace(/\D/g, "").length > 15)
@@ -261,7 +271,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
   const walkCall = (head: string, operands: readonly MathJSON[]): string => {
     const qualified = head === "MemberCall" ? qualifiedName(operands) : undefined;
     // The generic walk below would hand `toWolfram` an already-printed operand.
-    if (system === "wolfram" && head === "BigO" && operands.length === 1) return bigO(operands[0]!, walk);
+    if (wl && head === "BigO" && operands.length === 1) return bigO(operands[0]!, walk);
     if (qualified !== undefined && mappingFor(qualified, operands.length - 2, extra) !== undefined)
       return walkCall(qualified, operands.slice(2));
     // A head of a library `extra` maps, with no mapping of its own here: unmapped, not a free
@@ -286,7 +296,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     // call before the outer one ever saw its head, losing exactly that distinction. A BARE
     // `Permutation(list)`/`CycleDecomposition(list)` (not composed) falls through to the
     // unwrap below exactly as before.
-    if (system === "wolfram" && (head === "CycleDecomposition" || head === "Permutation") && operands.length === 1) {
+    if (wl && (head === "CycleDecomposition" || head === "Permutation") && operands.length === 1) {
       const inner = operands[0];
       const complement = head === "CycleDecomposition" ? "Permutation" : "CycleDecomposition";
       if (isCall(inner) && inner[0] === complement && inner.length === 2) {
@@ -302,7 +312,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     // Bypassing straight to `toWolfram` on the untouched node, as CycleDecomposition/
     // Permutation above, sidesteps the mapping template the same way it sidesteps the
     // carrier unwrap.
-    if (system === "wolfram" && head === "Thread" && operands.length === 1) {
+    if (wl && head === "Thread" && operands.length === 1) {
       const inner = operands[0];
       if (isCall(inner) && inner[0] === "Equal" && inner.length === 3) {
         return toWolfram([head, ...operands] as Parameters<typeof toWolfram>[0]);
@@ -316,7 +326,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     // contents first (the CARRIER_NAMES fallback further down, same mechanism the
     // CycleDecomposition/Permutation case above dodges), losing that distinction before
     // `Sign`'s own dispatch ever runs.
-    if (system === "wolfram" && head === "Sign" && operands.length === 1) {
+    if (wl && head === "Sign" && operands.length === 1) {
       const inner = operands[0];
       if (isCall(inner) && inner[0] === "Permutation") {
         return toWolfram([head, ...operands] as Parameters<typeof toWolfram>[0]);
@@ -325,6 +335,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     const mapping = mappingFor(head, operands.length, extra);
     const template = mapping?.emit[system];
     if (template !== undefined) {
+      if (system === "combinatorica") fromCombinatorica = true;
       const threadArg = mapping?.threadArg;
       const threaded = threadArg !== undefined ? operands[threadArg - 1] : undefined;
       // With two list operands `threadOver` would thread one and leave the other a list in every
@@ -400,7 +411,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     // raw tree — the generic fallback below hands it pre-walked (already-stringified)
     // operands, which is opaque to that rewrite, so this rewrite has to happen before
     // walking, on the raw operand tree, leaf-by-leaf through `walk` (for `missing` tracking).
-    if (system === "wolfram" && (head === "Module" || head === "With") && operands.length === 2) {
+    if (wl && (head === "Module" || head === "With") && operands.length === 2) {
       const [vars, body] = operands;
       const rewriteBinding = (v: MathJSON): string =>
         isCall(v) && v[0] === "Equal" && v.length === 3 ? `Set[${walk(v[1])}, ${walk(v[2])}]` : walk(v);
@@ -412,12 +423,12 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     }
     // compute-engine's canonical Function wraps its body in a scoping Block, which Wolfram's
     // has no counterpart for: `Function(Block(f(_1)), _1)` is `Function[f[#]]`.
-    if (system === "wolfram" && head === "Function" && isCall(operands[0]) && operands[0][0] === "Block") {
+    if (wl && head === "Function" && isCall(operands[0]) && operands[0][0] === "Block") {
       return walk([head, ...operands[0].slice(1), ...operands.slice(1)] as MathJSON);
     }
     // An integrand, summand or factor is canonically a Function of the iteration variable;
     // Wolfram takes the body itself, over its iterator.
-    if (system === "wolfram" && ["Integrate", "Sum", "Product"].includes(head) && isCall(operands[0])) {
+    if (wl && ["Integrate", "Sum", "Product"].includes(head) && isCall(operands[0])) {
       const [f, ...rest] = operands;
       if (f[0] === "Function") {
         const body = isCall(f[1]) && f[1][0] === "Block" ? f[1][1] : f[1];
@@ -426,7 +437,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     }
     // An iterator: `Limits(x, a, b)` is `{x, a, b}`; `Limits(x, Nothing, b)`, a sum from 1,
     // is `{x, b}`; `Limits(x, Nothing, Nothing)`, an indefinite integral's, is `x` alone.
-    if (system === "wolfram" && head === "Limits" && operands.length === 3) {
+    if (wl && head === "Limits" && operands.length === 3) {
       const [x, a, b] = operands;
       if (a === "Nothing" && b === "Nothing") return walk(x!);
       return `List[${(a === "Nothing" ? [x!, b!] : [x!, a!, b!]).map(walk).join(", ")}]`;
@@ -435,7 +446,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     // the same function, so it is not a free variable. `Over` is ours: translated where Wolfram has
     // the ring as an option, ours alone (contexted) where it doesn't.
     if (
-      system === "wolfram" &&
+      wl &&
       (head === "Rule" || head === "KeyValuePair") &&
       operands.length === 2 &&
       typeof operands[0] === "string" &&
@@ -461,7 +472,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     // Wolfram has a whole transpiler behind it; a signature row here only overrides it.
     // The operands are already Wolfram source, and `toWolfram` passes an unknown bare
     // symbol through verbatim, so handing them back as symbols yields the head's shape.
-    if (system === "wolfram" && isWolframHead(head)) return toWolfram([head, ...operands.map(walk)]);
+    if (wl && isWolframHead(head)) return toWolfram([head, ...operands.map(walk)]);
     // An undefined head used AS a function — `Y(x)` for DSolveValue's unknown solution `Y` —
     // is the same "free variable" case as a bare undefined symbol, just called instead of
     // referenced. Wolfram reads `Y[x]` with an undefined `Y` exactly as compute-engine means
@@ -479,6 +490,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
 
   const source = walk(expr);
   if (missing.length > 0) return { ok: false, missing };
+  if (system === "combinatorica" && !fromCombinatorica) return { ok: false, missing: [] };
   return { ok: true, source, ...(free.size > 0 ? { freeSymbols: [...free].toSorted() } : {}) };
 }
 

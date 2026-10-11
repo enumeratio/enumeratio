@@ -18,6 +18,12 @@ seeAlso:
   - GroupElements
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: If[ListQ[$2] && PermutationQ[$2] && Length[$1] == Length[$2], Permute[$1, InversePermutation[$2]], Missing["NotCombinatorica"]]
+    arity: 2
+    note: Combinatorica's Permute applies the inverse of the permutation ours applies. Covered for a one-line permutation of the same length, not Cycles or a padded word.
 ---
 
 - `Permute` and [[PermutationCycles]]/[[InversePermutation]] all read $\sigma$ the same way: a one-line word `{v1, ..., vn}` means $\sigma(i) = v_i$

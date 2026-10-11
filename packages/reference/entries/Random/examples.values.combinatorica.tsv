@@ -1,0 +1,4 @@
+id	in
+a-permutation-of-4-seeded	
+a-count-draws-that-many	Length[Last[List[SeedRandom[1], RandomChoice[Partitions[10], 3]]]]
+randominteger-is-random-over-a-range	
