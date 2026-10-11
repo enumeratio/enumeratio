@@ -7,7 +7,7 @@ signatures:
   - call: CheckboxBox(binding, domain, options)
     description: "A box that is ticked or not: `Checkbox` lowers to it."
     library: enumeratio-boxes
-    type: (boxes, expression, expression*) -> boxes
+    type: (expression, expression, expression*) -> boxes
 seeAlso:
   - TogglerBox
   - SliderBox
@@ -17,3 +17,4 @@ names:
 
 - The binding holds `True` or `False`; the domain is `Automatic`.
 - Its intent is a toggle.
+- Where no values are given the domain is `Automatic`; Wolfram leaves the argument out (`CheckboxBox[Dynamic[b]]`).

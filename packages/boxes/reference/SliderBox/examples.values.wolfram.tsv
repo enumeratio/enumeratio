@@ -1,2 +1,2 @@
-id	in	out	tex.in	tex.out	verdict
-inert	SliderBox[DynamicBox[k], List[0, 5]]	SliderBox[DynamicBox[k], {0, 5}]	\text{SliderBox}[\text{DynamicBox}[k],\{0,5\}]	\text{SliderBox}[\text{DynamicBox}[k],\{0,5\}]	disagree
+id	in	out	tex.in	tex.out
+inert	SliderBox[Dynamic[k], List[0, 5]]	SliderBox[Dynamic[k], {0, 5}]	\text{SliderBox}[k,\{0,5\}]	\text{SliderBox}[k,\{0,5\}]

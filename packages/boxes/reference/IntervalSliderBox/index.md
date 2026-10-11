@@ -7,7 +7,7 @@ signatures:
   - call: IntervalSliderBox(binding, domain, options)
     description: "A track with two thumbs that bound an interval: `IntervalSlider` lowers to it."
     library: enumeratio-boxes
-    type: (boxes, expression, expression*) -> boxes
+    type: (expression, expression, expression*) -> boxes
 seeAlso:
   - SliderBox
   - Slider2DBox

@@ -7,7 +7,7 @@ signatures:
   - call: KnobBox(binding, domain, options)
     description: "A number you drag in place, with a ladder of step sizes: `Knob` lowers to it."
     library: enumeratio-boxes
-    type: (boxes, expression, expression*) -> boxes
+    type: (expression, expression, expression*) -> boxes
 seeAlso:
   - SliderBox
   - StepperBox

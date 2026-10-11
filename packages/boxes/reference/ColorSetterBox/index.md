@@ -7,7 +7,7 @@ signatures:
   - call: ColorSetterBox(binding, domain, options)
     description: "A swatch or a spectrum to pick a color from: `ColorSlider` lowers to it."
     library: enumeratio-boxes
-    type: (boxes, expression, expression*) -> boxes
+    type: (expression, expression, expression*) -> boxes
 seeAlso:
   - SliderBox
   - DynamicBox

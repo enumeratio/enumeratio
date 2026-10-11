@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-inert	Basic		[LocatorBox, [DynamicBox, p], Automatic]	[LocatorBox, [DynamicBox, p], Automatic]	a box is inert: it evaluates to itself
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+inert	Basic		[LocatorBox, [Dynamic, p], Automatic]	[LocatorBox, [Dynamic, p], Automatic]	a box is inert: it evaluates to itself	convention	Wolfram has no LocatorBox head (Locator[Dynamic[p]] boxes as a RowBox) and the corners come from the figure; ours carries Automatic, which Wolfram only echoes as an unknown symbol.

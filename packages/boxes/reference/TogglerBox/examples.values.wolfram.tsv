@@ -1,2 +1,2 @@
-id	in	out	tex.in	tex.out	verdict
-inert	TogglerBox[DynamicBox[s], List[off, on]]	TogglerBox[DynamicBox[s], {off, on}]	\text{TogglerBox}[\text{DynamicBox}[s],\{\text{off},\text{on}\}]	\text{TogglerBox}[\text{DynamicBox}[s],\{\text{off},\text{on}\}]	disagree
+id	in	out	tex.in	tex.out
+inert	TogglerBox[Dynamic[s], List[Rule[off, "off"], Rule[on, "on"]], DynamicBox[ToBoxes[s, StandardForm]]]	TogglerBox[Dynamic[s], {off -> "off", on -> "on"}, DynamicBox[ToBoxes[s, StandardForm]]]	\text{TogglerBox}[s,\{\text{off}\to \text{off},\text{on}\to \text{on}\},\text{DynamicBox}[\text{ToBoxes}[s,\text{StandardForm}]]]	\text{TogglerBox}[s,\{\text{off}\to \text{off},\text{on}\to \text{on}\},\text{DynamicBox}[\text{ToBoxes}[s,\text{StandardForm}]]]

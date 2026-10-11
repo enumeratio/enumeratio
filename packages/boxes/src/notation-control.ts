@@ -1,19 +1,34 @@
-// The interface heads as `makeBoxes` rules, as in Wolfram: `Slider` is a `SliderBox` over a
-// `DynamicBox` of its variable, `Dynamic` a `DynamicBox`, `DynamicModule` a `DynamicModuleBox`.
-// A control's domain (its range, entries or corners) rides as written; a host reads it back. The
-// bars lower to rows of single-entry boxes (`control-group.ts`), which a host groups by binding.
+// The interface heads as `makeBoxes` rules, as in Wolfram: `Slider` is a `SliderBox` over
+// `Dynamic(x)` of its variable, `Dynamic` a `DynamicBox`, `DynamicModule` a `DynamicModuleBox`.
+// A control's domain (its range or corners) rides as written, its entries as a `value -> label`
+// rule list; a host reads it back (`controlOperands`). The bars lower to rows of single-entry
+// boxes (`control-group.ts`), which a host groups by binding.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import {
   type Box,
+  binding,
   type ControlBoxHead,
   control,
   dynamic,
   dynamicModule,
+  isControlBoxHead,
   type Options,
   type OptionValue,
+  SHOWN_CONTROL_HEADS,
+  text,
 } from "./box.ts";
-import { type BarKind, bindingVariable, entriesOf, lowerBar } from "./control-group.ts";
+import {
+  type BarKind,
+  bindingVariable,
+  displayText,
+  entriesOf,
+  entriesOfRules,
+  entryOfLabeled,
+  lowerBar,
+  plainText,
+  entryRule,
+} from "./control-group.ts";
 import { headOf, opsOf, optionOf } from "./notation-layout.ts";
 import type { Notation, NotationRule } from "./notation.ts";
 
@@ -48,20 +63,59 @@ function split(args: readonly Json[]): { ops: Json[]; options: Options } {
 const domainOf = (rest: readonly Json[]): Json =>
   rest.length === 0 ? "Automatic" : rest.length === 1 ? rest[0]! : (["Sequence", ...rest] as Json);
 
-/** The operands a control was written with: its variable, then what its domain holds. */
-export function controlOperands(binding: Box, domain: Json): Json[] {
-  const variable = bindingVariable(binding);
+/** The heads whose entries are a `value -> label` rule list. */
+const RULE_LIST_HEADS: ReadonlySet<string> = new Set(["PopupMenuBox", "ListPickerBox", "TogglerBox"]);
+
+/** A control's domain as Wolfram boxes it: entries written out become a rule list; anything else rides as written. */
+function boxedDomain(head: ControlBoxHead, domain: Json): Json {
+  const entries = RULE_LIST_HEADS.has(head) ? entriesOf(domain) : undefined;
+  return entries === undefined ? domain : (["List", ...entries.map(entryRule)] as unknown as Json);
+}
+
+/** The variable's name as a toggler shows it: `x` of `(x, start)`. */
+const nameOf = (variable: Json): Json => (headOf(variable) === "Tuple" ? opsOf(variable)[0]! : variable);
+
+/** The domain a control was written with, read back from its box: entries, not rules, and the setter's value with its label. */
+function writtenDomain(box: Extract<Box, readonly [ControlBoxHead, ...unknown[]]>): Json {
+  const domain = box[2] as Json;
+  if (RULE_LIST_HEADS.has(box[0])) return entriesOfRules(domain) ?? domain;
+  if (box[0] === "SetterBox") {
+    const values = entriesOf(domain);
+    const label = plainText(box[3] as Box);
+    if (values?.length === 1 && label !== undefined)
+      return ["List", entryOfLabeled(values[0]!, label)] as unknown as Json;
+  }
+  return domain;
+}
+
+/** The operands a control was written with, read back from its box: its variable, then what its domain holds. */
+export function controlOperands(box: Box): Json[] {
+  if (typeof box === "string" || !isControlBoxHead(box[0])) return [];
+  const node = box as Extract<Box, readonly [ControlBoxHead, ...unknown[]]>;
+  const variable = bindingVariable(node[1] as Json);
+  // A binding that names no variable leaves nothing to bind: the domain is not its operands.
+  if (variable === undefined) return [];
+  const domain = writtenDomain(node);
   const rest = headOf(domain) === "Sequence" ? opsOf(domain) : domain === "Automatic" ? [] : [domain];
-  return variable === undefined ? rest : [variable, ...rest];
+  return [variable, ...rest];
 }
 
 const controlRule =
   (head: ControlBoxHead, fixed: Options = {}, domain?: Json): NotationRule =>
   (args) => {
     const { ops, options } = split(args);
-    return ops.length === 0
-      ? undefined
-      : control(head, dynamic(ops[0]!), domain ?? domainOf(ops.slice(1)), { ...fixed, ...options });
+    if (ops.length === 0) return undefined;
+    // A toggler also shows its variable's value.
+    const shown = (SHOWN_CONTROL_HEADS as readonly string[]).includes(head)
+      ? dynamic(["ToBoxes", nameOf(ops[0]!), "StandardForm"] as unknown as Json)
+      : undefined;
+    return control(
+      head,
+      binding(ops[0]!),
+      boxedDomain(head, domain ?? domainOf(ops.slice(1))),
+      { ...fixed, ...options },
+      shown,
+    );
   };
 
 /**
@@ -73,18 +127,24 @@ const barRule =
   (kind: BarKind): NotationRule =>
   (args, write) => {
     const { ops, options } = split(args);
+    // An environment may write a label as a hole; text is what a reader gets the entry's label back from.
+    const shown = (label: Json): Box => {
+      const box = write.box(label);
+      const words = displayText(label);
+      if (plainText(box) !== undefined || words === undefined) return box;
+      return typeof label === "object" ? text(words, { ShowStringCharacters: true }) : words;
+    };
     if (ops.length === 0) return undefined;
     const entries = ops.length === 2 ? entriesOf(ops[1]!) : undefined;
     if (entries !== undefined && entries.length > 0) {
-      return lowerBar(kind, ops[0]!, entries, options, (label) => write.box(label));
+      return lowerBar(kind, ops[0]!, entries, options, shown);
     }
     if (kind === "TogglerBar") return undefined;
-    return control(
-      kind === "SetterBar" ? "SetterBox" : "RadioButtonBox",
-      dynamic(ops[0]!),
-      domainOf(ops.slice(1)),
-      options,
-    );
+    const entry = domainOf(ops.slice(1));
+    const rest = ["List", entry] as unknown as Json;
+    return kind === "SetterBar"
+      ? control("SetterBox", binding(ops[0]!), rest, options, shown(entry))
+      : control("RadioButtonBox", binding(ops[0]!), rest, options);
   };
 
 const Dynamic: NotationRule = (args) => {

@@ -1,2 +1,2 @@
-id	in	out	tex.in	tex.out	verdict
-inert	SetterBox[DynamicBox[c], List[a, b, c]]	SetterBox[DynamicBox[c], {a, b, c}]	\text{SetterBox}[\text{DynamicBox}[c],\{a,b,c\}]	\text{SetterBox}[\text{DynamicBox}[c],\{a,b,c\}]	disagree
+id	in	out	tex.in	tex.out
+inert	SetterBox[Dynamic[c], List[a], "a"]	SetterBox[Dynamic[c], {a}, "a"]	\text{SetterBox}[c,\{a\},\text{a}]	\text{SetterBox}[c,\{a\},\text{a}]

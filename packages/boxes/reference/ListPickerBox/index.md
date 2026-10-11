@@ -7,7 +7,7 @@ signatures:
   - call: ListPickerBox(binding, domain, options)
     description: "A list of entries to pick from: `ListPicker` lowers to it."
     library: enumeratio-boxes
-    type: (boxes, expression, expression*) -> boxes
+    type: (expression, expression, expression*) -> boxes
 seeAlso:
   - PopupMenuBox
   - SetterBox
@@ -16,5 +16,5 @@ names:
   wolframIdentity: true
 ---
 
-- The domain is the list of entries, as for a `PopupMenuBox`; `Multiselection -> True` picks several.
+- The domain is a rule list of `value -> label`, as for a `PopupMenuBox`; `Multiselection -> True` picks several.
 - Its intent is a choice.

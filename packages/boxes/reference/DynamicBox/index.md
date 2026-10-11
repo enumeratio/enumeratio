@@ -17,5 +17,5 @@ names:
   wolframIdentity: true
 ---
 
-- The expression is held. Inside a control box it is the binding: the variable, or `(x, start)`.
+- The expression is held. A control box's binding is `Dynamic(x)`, an expression as in Wolfram, not this box.
 - It is its own element: a readout re-draws without its parent.

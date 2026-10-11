@@ -32,9 +32,9 @@ test("a bar row is drawn as the one bar element, with the attributes the bar had
 });
 
 test("a lone single-entry box is its own element, and a lone toggle a toggler bar of one", () => {
-  expect(renderBox(["SetterBox", ["DynamicBox", "k"], ["List", 3]]).tag).toBe("setter-box");
-  expect(renderBox(["RadioButtonBox", ["DynamicBox", "k"], ["List", 3]]).tag).toBe("radio-button-box");
-  expect(renderBox(["SetterBox", ["DynamicBox", ["MemberQ", "s", 3]], ["List", 3]])).toMatchObject({
+  expect(renderBox(["SetterBox", ["Dynamic", "k"], ["List", 3], "3"]).tag).toBe("setter-box");
+  expect(renderBox(["RadioButtonBox", ["Dynamic", "k"], ["List", 3]]).tag).toBe("radio-button-box");
+  expect(renderBox(["SetterBox", ["Dynamic", ["MemberQ", "s", 3]], ["List", "True"], "3"])).toMatchObject({
     tag: "toggler-bar-box",
     attributes: { name: "s", values: "3" },
   });
@@ -62,4 +62,17 @@ test("reduce declares a bar as the head it was written with", () => {
     ["q", "RadioButtonBar", "listed"],
     ["s", "TogglerBar", "listed"],
   ]);
+});
+
+test("a toggler's and a menu's drawn choices read back through boxControls", () => {
+  const [toggler] = boxControls(boxes('Toggler((n, 6), [Labeled(4, "square"), Labeled(6, "hexagon")])'));
+  expect(toggler).toMatchObject({ head: "TogglerBox", name: "n", intent: "toggle" });
+  const labeled = (toggler!.domain as unknown as unknown[]).slice(1) as unknown[][];
+  expect(labeled.map((entry) => entry[0])).toEqual(["Labeled", "Labeled"]);
+  expect(labeled.map((entry) => entry[2])).toEqual([{ str: "square" }, { str: "hexagon" }]);
+  const [menu] = boxControls(boxes('PopupMenu(c, ["a", "b"])'));
+  expect(menu).toMatchObject({ head: "PopupMenuBox", name: "c", intent: "choice" });
+  expect(JSON.stringify(menu!.domain)).toContain('"List"');
+  const drawn = renderBox(boxes('PopupMenu((n, 6), [Labeled(4, "square"), Labeled(6, "hexagon")])'));
+  expect(drawn.attributes).toMatchObject({ name: "n", values: "4 -> square|6 -> hexagon" });
 });

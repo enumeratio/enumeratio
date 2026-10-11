@@ -7,7 +7,7 @@ signatures:
   - call: Slider2DBox(binding, domain, options)
     description: "A square with a draggable point that moves a pair: `Slider2D` lowers to it."
     library: enumeratio-boxes
-    type: (boxes, expression, expression*) -> boxes
+    type: (expression, expression, expression*) -> boxes
 seeAlso:
   - SliderBox
   - DynamicBox

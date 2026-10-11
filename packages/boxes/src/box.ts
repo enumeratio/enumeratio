@@ -10,10 +10,13 @@ export type Options = Readonly<Record<string, OptionValue>>;
 export type Box = string | BoxNode;
 
 /**
- * The interface boxes that take input, one per kind as in Wolfram. Each holds a binding (a
- * `DynamicBox` over the variable, which may be `(x, start)`), a domain (the range, the entries or
- * the corners, as written, `Automatic` when there is none) and options. A `SetterBox` and a
- * `RadioButtonBox` hold one entry; the bars are rows of them (`barOf`).
+ * The interface boxes that take input, one per kind as in Wolfram. Each holds a binding (the
+ * expression `Dynamic(x)`, where `x` may be `(x, start)`), a domain and options. The domain is
+ * as Wolfram boxes it: a range, the corners, a rule list of `value -> label` for a menu or a
+ * picker or a toggler, a list of the one value for a `SetterBox` and a `RadioButtonBox`
+ * (`Automatic` when there is none, where Wolfram leaves the argument out). A `SetterBox` and a
+ * `TogglerBox` add the box they show as a third argument. The bars are rows of single-entry
+ * boxes (`barOf`).
  */
 export const CONTROL_BOX_HEADS = [
   "SliderBox",
@@ -34,6 +37,10 @@ export const CONTROL_BOX_HEADS = [
 ] as const;
 
 export type ControlBoxHead = (typeof CONTROL_BOX_HEADS)[number];
+
+/** The control boxes that show a box of their own, their third argument. */
+export const SHOWN_CONTROL_HEADS = ["SetterBox", "TogglerBox"] as const;
+export type ShownControlHead = (typeof SHOWN_CONTROL_HEADS)[number];
 
 export type BoxNode =
   | readonly ["RowBox", readonly Box[]]
@@ -77,10 +84,12 @@ export type BoxNode =
   | readonly ["ButtonBox", Box, Options?]
   // Interface boxes (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives, slice 3). A `DynamicBox`
   // holds an expression the environment re-evaluates when what it reads moves; a `DynamicModuleBox`
-  // owns the scope its controls bind in; a control box binds one variable.
+  // owns the scope its controls bind in; a control box binds one variable, `Dynamic(x)`, an
+  // expression rather than a box as in Wolfram.
   | readonly ["DynamicBox", MathJsonExpression, Options?]
   | readonly ["DynamicModuleBox", Box, Options?]
-  | readonly [ControlBoxHead, Box, MathJsonExpression, Options?]
+  | readonly [Exclude<ControlBoxHead, ShownControlHead>, MathJsonExpression, MathJsonExpression, Options?]
+  | readonly [ShownControlHead, MathJsonExpression, MathJsonExpression, Box, Options?]
   // `form` is how the box reads: `TeXForm` holds TeX as written (its leaves are TeX, never
   // parsed); `TraditionalForm`/`StandardForm` hold formula boxes.
   | readonly ["FormBox", Box, string]
@@ -132,8 +141,8 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   CheckboxBox: 2,
   PopupMenuBox: 2,
   InputFieldBox: 2,
-  SetterBox: 2,
-  TogglerBox: 2,
+  SetterBox: 3,
+  TogglerBox: 3,
   AnimatorBox: 2,
   KnobBox: 2,
   StepperBox: 2,
@@ -216,8 +225,17 @@ export const dynamic = (expr: MathJsonExpression, options?: Options): Box =>
   ["DynamicBox", ...withOptions([expr] as const, options)] as Box;
 export const dynamicModule = (body: Box, options?: Options): Box =>
   ["DynamicModuleBox", ...withOptions([body] as const, options)] as Box;
-export const control = (head: ControlBoxHead, binding: Box, domain: MathJsonExpression, options?: Options): Box =>
-  [head, ...withOptions([binding, domain] as const, options)] as Box;
+/** A control box over a binding (`Dynamic(x)`) and its domain; a `SetterBox` or `TogglerBox` also shows `shown`. */
+export const control = (
+  head: ControlBoxHead,
+  binding: MathJsonExpression,
+  domain: MathJsonExpression,
+  options?: Options,
+  shown?: Box,
+): Box =>
+  [head, ...withOptions(shown === undefined ? [binding, domain] : [binding, domain, shown], options)] as unknown as Box;
+/** The binding a control box holds: `Dynamic(variable)`. */
+export const binding = (variable: MathJsonExpression): MathJsonExpression => ["Dynamic", variable];
 export const form = (box: Box, name: string): Box => ["FormBox", box, name];
 export const slot = (name: string, options?: Options): Box =>
   ["TemplateSlot", ...withOptions([name] as const, options)] as Box;
@@ -277,7 +295,9 @@ export function isBox(value: unknown): value is Box {
     case "DynamicBox":
       return args[0] !== undefined;
     default:
-      if (isControlBoxHead(head)) return isBox(args[0]) && args[1] !== undefined;
+      if (isControlBoxHead(head)) {
+        return args[0] !== undefined && args[1] !== undefined && (arity === 2 || isBox(args[2]));
+      }
       return args.every(isBox);
   }
 }

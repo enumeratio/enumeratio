@@ -196,7 +196,7 @@ export function controlElement(box: Box): { tag: string; attributes: Record<stri
   if (bar !== undefined) return barElement(bar);
   if (typeof box === "string" || !isControlBoxHead(box[0])) throw new Error("not a control box");
   const control = box as Extract<Box, readonly [ControlBoxHead, ...unknown[]]>;
-  const attributes = ATTRIBUTES[control[0]](controlOperands(control[1], control[2]));
+  const attributes = ATTRIBUTES[control[0]](controlOperands(control));
   return { tag: boxTag(control[0]), attributes: withOptionAttributes(attributes, optionsOfBox(control)) };
 }
 
@@ -245,7 +245,7 @@ export function boxControls(box: Box, into: BoxControl[] = []): BoxControl[] {
   }
   if (isControlBoxHead(box[0])) {
     const control = box as Extract<Box, readonly [ControlBoxHead, ...unknown[]]>;
-    const [binding, ...rest] = controlOperands(control[1], control[2]);
+    const [binding, ...rest] = controlOperands(control);
     const { name, init } = variable(binding);
     const reading = optionsOfBox(control).Static;
     if (name !== undefined) {
