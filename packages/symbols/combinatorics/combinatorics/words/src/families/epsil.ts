@@ -3,6 +3,7 @@
 //   - closed form: BinaryWordsByWeight (a walk over the binomials), StirlingPermutations (mixed radix)
 //   - completion table (`FamilyEpsil.tables`): FibStrings, LucasStrings, NonDecreasingParkingFunctions
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { catalanExact } from "../../../collections/src/families/exact-counts.ts";
 import {
   add,
   all,
@@ -278,6 +279,8 @@ export const nonDecreasingParkingFunctions: EpsilFamily = {
   paramCount: 1,
   kind: "ints",
   params: ["_n"],
+  // The Catalan number, where the table is out of the interpreter's reach.
+  fastCount: ([n]) => catalanExact(n),
   epsil: {
     tables: rowTable(
       "pf",

@@ -5,9 +5,9 @@ import { readFileSync } from "node:fs";
 import { collectMessages } from "@enumeratio/engine";
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
-import { epsilKernelOn } from "../../collections/src/families/epsil.ts";
+import { epsilKernelOn, kernelOn } from "../../collections/src/families/epsil.ts";
 import { declareCombinatorics } from "../../src/index.ts";
-import { boxedPlanePartitions } from "../src/families/boxed-plane-partitions.ts";
+import { boxedCount, boxedPlanePartitions } from "../src/families/boxed-plane-partitions.ts";
 
 const DEEP = process.env.DEEP_TESTS === "1";
 const kernel = epsilKernelOn(bareEngine(), boxedPlanePartitions);
@@ -127,6 +127,44 @@ test("the counts are MacMahon's, exact, also where no enumeration reaches", () =
   ])
     expect([p, kernel.count(p)]).toEqual([p, macMahon(p[0], p[1], p[2])]);
   expect(kernel.count([5, 5, 5])).toBe(267227532n);
+});
+
+/** MacMahon's formula over the a × b cells of the floor, Π (i + j + c − 1)/(i + j − 1), one exact division at the end:
+ *  the same product as above, grouped differently from the kernel's. */
+function macMahonByCells(a: number, b: number, c: number): bigint {
+  let num = 1n;
+  let den = 1n;
+  for (let i = 1; i <= a; i++)
+    for (let j = 1; j <= b; j++) {
+      num *= BigInt(i + j + c - 1);
+      den *= BigInt(i + j - 1);
+    }
+  expect(num % den).toBe(0n);
+  return num / den;
+}
+
+test("the fast count is MacMahon's, an exact bigint, however far past 2^53", () => {
+  const fast = kernelOn(bareEngine(), boxedPlanePartitions);
+  for (const p of [
+    [7, 7, 7],
+    [100, 100, 100],
+    [30, 60, 90],
+    [90, 30, 60],
+    [1, 1000, 500],
+    [200, 3, 1000],
+    [2, 2, 300],
+    [1, 1, 1000000],
+  ]) {
+    const total = fast.count(p) as bigint;
+    expect(typeof total).toBe("bigint");
+    expect([p, total]).toEqual([p, macMahonByCells(p[0], p[1], p[2])]);
+  }
+  expect(fast.count([100, 100, 100]) > 2n ** 53n).toBe(true);
+  // Every side but the empty one is the same box in any order, and an empty side leaves one partition.
+  expect(fast.count([5, 20, 10])).toBe(fast.count([20, 10, 5]));
+  expect(fast.count([0, 100, 100])).toBe(1n);
+  // Past its limit the fast count leaves the question to Epsil.
+  expect(boxedCount([5000, 5000, 5000])).toBeUndefined();
 });
 
 test("past 2^53 unrank and rank decline, and membership still answers", () => {

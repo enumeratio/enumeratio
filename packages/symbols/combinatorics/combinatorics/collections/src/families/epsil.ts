@@ -71,6 +71,9 @@ export interface EpsilFamily extends FamilyShape {
   /** A verified fast path: used while the fiber's count is a safe integer, ahead of Epsil.
    *  The definitions stay the meaning; this is not part of `familyHash`. */
   readonly fast?: FastKernel;
+  /** A fast count alone, for a family whose unrank, rank and membership stay Epsil's: read as
+   *  `fast.count` is (a bigint where the count is exact past 2^53), and ignored where `fast` is set. */
+  readonly fastCount?: FastKernel["count"];
 }
 
 /** A family's definitions compiled ahead of time, with the hash of the definitions they came from. */
@@ -233,9 +236,20 @@ export function kernelOn(
   options: KernelOptions = {},
 ): FamilyKernel {
   if (!isEpsilFamily(family)) return family;
-  const { params, epsil, elementType: _, declinePastDoubles, settle, early, fast: fastKernel, ...shape } = family;
+  const {
+    params,
+    epsil,
+    elementType: _,
+    declinePastDoubles,
+    settle,
+    early,
+    fast: fastKernel,
+    fastCount,
+    ...shape
+  } = family;
   const maybeSettled = (json: unknown): unknown => (settle === true ? settled(ce, json) : json);
   const quick = options.fast === false ? undefined : fastKernel;
+  const quickCounter = options.fast === false ? undefined : (fastKernel?.count ?? fastCount);
   const ahead = generated[family.head];
   const current = ahead?.hash === familyHash(family) ? ahead : undefined;
   // An operation that never reads `_tables` (a closed-form count) doesn't wait for the table.
@@ -336,9 +350,9 @@ export function kernelOn(
   };
   // A fast operation that throws or answers undefined leaves the question to Epsil.
   const quickCount = (p: number[]): bigint | undefined => {
-    if (quick === undefined || !wellParamed(p)) return undefined;
+    if (quickCounter === undefined || !wellParamed(p)) return undefined;
     try {
-      const total = quick.count(p);
+      const total = quickCounter(p);
       if (typeof total === "bigint") return total;
       return typeof total === "number" && Number.isSafeInteger(total) ? BigInt(total) : undefined;
     } catch {
@@ -348,9 +362,9 @@ export function kernelOn(
 
   // The fast count is a double past 2^53: for a family that declines there, no need to run its table.
   const pastDoubles = (p: number[]): boolean => {
-    if (quick === undefined || !wellParamed(p)) return false;
+    if (quickCounter === undefined || !wellParamed(p)) return false;
     try {
-      const total = quick.count(p);
+      const total = quickCounter(p);
       return typeof total === "number" && Number.isFinite(total) && !Number.isSafeInteger(total);
     } catch {
       return false;
@@ -436,7 +450,7 @@ export function kernelOn(
 
   return {
     ...shape,
-    ...(quick === undefined ? {} : { fast: true as const }),
+    ...(quickCounter === undefined ? {} : { fast: true as const }),
     count,
     valid,
     unrank: (p, r) => {

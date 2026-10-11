@@ -11,6 +11,7 @@
 // trees/src/families/prufer-sequences.ts (§4 step 5): it now carries "PruferSequence".
 import type { NumberKernel } from "./types.ts";
 import type { EpsilFamily, FastKernel } from "./epsil.ts";
+import { binomialExact } from "./exact-counts.ts";
 import { increasingBinaryTrees } from "./increasing-binary-trees.ts";
 import {
   add,
@@ -502,7 +503,8 @@ const twoRow = (head: string): EpsilFamily => {
     // The interpreter takes seconds to build the table at n = 59, past 2^53.
     declinePastDoubles: true,
     // No `fast`: the TS kernel rebuilds its completions on every call, twice as slow as the
-    // table from n = 20.
+    // table from n = 20. The count alone is C(n, ⌊n/2⌋), exact where the table is out of reach.
+    fastCount: ([n]) => binomialExact(n, Math.floor(n / 2)),
     epsil: {
       count: ballot("_n", 0),
       tables: twoRowTable,
