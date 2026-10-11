@@ -59,6 +59,8 @@ export interface PlotHost extends HTMLElement {
 const MIN_ZOOM = 1e-6;
 /** Wheel travel (px) per e-fold of zoom. */
 const WHEEL_RATE = 0.0015;
+/** Milliseconds before a resample runs without waiting for a frame. */
+const FRAME_FALLBACK_MS = 50;
 /** Pixels a wheel line is worth, where the browser reports lines (Firefox). */
 const LINE_PIXELS = 16;
 /** Fallback plot width (px) before the SVG has a layout. */
@@ -130,6 +132,8 @@ export class PlotView {
   /** Samples the curves again for a window (undefined: the whole plot) and redraws. */
   #redo: ((window: PlotWindow | undefined) => void) | undefined;
   #frameRequest = 0;
+  #timer: ReturnType<typeof setTimeout> | undefined;
+  #pending = false;
   /** A press on a zoomed plot: where it began, and the window and geometry it began on. */
   #drag: { x: number; y: number; id: number; moved: boolean; window: PlotWindow; frame: PlotFrame } | undefined;
 
@@ -216,7 +220,8 @@ export class PlotView {
   /** Release what the view holds on the page: its clock. */
   dispose(): void {
     cancelAnimationFrame(this.#frameRequest);
-    this.#frameRequest = 0;
+    clearTimeout(this.#timer);
+    this.#pending = false;
     this.#unwatch?.();
     this.#unwatch = undefined;
   }
@@ -504,11 +509,18 @@ export class PlotView {
   /** Redraw at the window, once per frame however many wheel ticks or pointer moves came. */
   #show(window: PlotWindow | undefined): void {
     this.#window = window;
-    if (this.#frameRequest !== 0) return;
-    this.#frameRequest = requestAnimationFrame(() => {
-      this.#frameRequest = 0;
+    if (this.#pending) return;
+    // A frame, or the timer where the page is hidden and frames are paused.
+    const run = (): void => {
+      if (!this.#pending) return;
+      this.#pending = false;
+      cancelAnimationFrame(this.#frameRequest);
+      clearTimeout(this.#timer);
       this.#redo?.(this.#window);
-    });
+    };
+    this.#pending = true;
+    this.#frameRequest = requestAnimationFrame(run);
+    this.#timer = setTimeout(run, FRAME_FALLBACK_MS);
   }
 
   /** A wheel's travel in px: lines and pages (`deltaMode`) are scaled to pixels. */
