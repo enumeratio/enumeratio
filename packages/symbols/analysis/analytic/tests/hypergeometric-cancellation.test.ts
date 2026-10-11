@@ -92,3 +92,8 @@ test.skipIf(process.env["DEEP_TESTS"] !== "1")(
     }
   },
 );
+
+test("a lower parameter whose 1/Γ overflows declines rather than answering Infinity", () => {
+  const expr = ["Hypergeometric1F1Regularized", 1, -200.5, 1];
+  expect(ce.box(expr as never).N().operator).toBe(expr[0]);
+});
