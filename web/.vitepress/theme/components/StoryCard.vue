@@ -19,8 +19,10 @@ const live = () => toVNode(vdomOf(props.story.expr as never), h, typeset.value);
 
 // The page's KaTeX, as `notatio-out` typesets; a form-box shows its text until it arrives.
 const typeset = shallowRef<((tex: string) => string) | undefined>();
-onMounted(async () => {
-  typeset.value = await loadMarkup();
+onMounted(() => {
+  loadMarkup()
+    .then((convert) => (typeset.value = convert))
+    .catch(() => {});
 });
 
 const root = ref<HTMLElement | null>(null);

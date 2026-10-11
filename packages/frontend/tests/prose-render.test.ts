@@ -77,6 +77,15 @@ test("consecutive item cells are one list; a deeper item nests, a numbered one s
   );
 });
 
+test("a list that opens below level 0 sits in a placeholder item with no bullet", () => {
+  expect(markup(row([textCell("deep", "Subsubitem")]))).toBe(
+    '<row-box><ul data-cell-list=""><li data-placeholder="">' +
+      '<ul data-cell-list=""><li data-placeholder="">' +
+      '<ul data-cell-list=""><li data-cell-style="Subsubitem"><span>deep</span></li></ul>' +
+      "</li></ul></li></ul></row-box>",
+  );
+});
+
 test("a hole nothing filled is the page's: a variable by name, a readout by its expression", () => {
   expect(markup(textData(["n = ", slot("n", { random: "" }), ", ", ["TemplateExpression", "N(_n^2)"] as never]))).toBe(
     '<span><span>n = </span><template-slot name="n" random=""></template-slot><span>, </span><dynamic-box value="N(_n^2)"></dynamic-box></span>',

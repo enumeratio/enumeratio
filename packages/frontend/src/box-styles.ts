@@ -68,6 +68,7 @@ pane-box[data-scrollbars] { overflow: auto; }
    it; after, only the selected one. */
 [data-cell-list] { margin-block: 0.2em; padding-inline-start: 1.4em; list-style: disc; }
 ol[data-cell-list] { list-style: decimal; }
+[data-cell-list] > li[data-placeholder] { list-style: none; }
 p[data-cell-style="DisplayFormula"] { text-align: center; }
 tooltip-box, button-box, template-slot { display: inline; }
 pane-selector-box { display: contents; }

@@ -92,6 +92,9 @@ test("a control inside a tooltip, a pane selector or running text is declared to
 test("reduce sees a control nested in a tooltip or pane selector", () => {
   const expr = json('Column([Tooltip(Slider(a, (0, 5)), "tip"), PaneSelector([1 -> Slider(b, (0, 5))], Dynamic(a))])');
   expect(boxDeclarations(expr).map((d) => d.name)).toEqual(["a", "b"]);
+  // The same variable in two panes is declared once.
+  const twice = json("PaneSelector([1 -> Slider(b, (0, 5)), 2 -> Slider(b, (0, 9))], Dynamic(a))");
+  expect(boxDeclarations(twice).map((d) => d.name)).toEqual(["b"]);
   // The terminal driver pins them out of the expression it shows.
   const pinned = pin(expr, new Map([["a", 2 as never]]));
   expect(JSON.stringify(pinned)).not.toContain("Slider(a");

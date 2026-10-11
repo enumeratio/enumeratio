@@ -356,7 +356,8 @@ function siblings(boxes: readonly Box[], holes: Holes): Rendering[] {
     // A list of the other kind at this level ends here.
     if (open.length === depth + 1 && open[depth]!.tag !== tag) close(depth);
     // A level skipped is a bullet list that opens an item of its own.
-    while (open.length < depth) open.push({ tag: "ul", items: [{ tag: "li", attributes: {}, children: [] }] });
+    while (open.length < depth)
+      open.push({ tag: "ul", items: [{ tag: "li", attributes: { "data-placeholder": "" }, children: [] }] });
     if (open.length === depth) open.push({ tag, items: [] });
     open[depth]!.items.push({
       tag: "li",
