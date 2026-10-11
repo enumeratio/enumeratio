@@ -20,3 +20,29 @@ checkAgainstEngine([
   "BlocksSizeTwo",
   "LastBlockSize",
 ]);
+
+// FindStat statistics (their values are checked by scripts/check-findstat.ts).
+checkAgainstEngine([
+  "SetPartitionRank",
+  "DimensionIndex",
+  "SumOfBlockMinima",
+  "SumOfBlockMaxima",
+  "Antisingletons",
+  "SingletonsAndAntisingletons",
+  "BlocksAndAntisingletons",
+  "Successions",
+  "MaximalBlockDifference",
+  "FirstBlockCardinality",
+  "LargestElementInFirstBlock",
+  "InternalPoints",
+  "OverlappingBlockPairs",
+  "SameBlockPairs",
+  "SameBlockTriples",
+  "DistinctBlockPairs",
+  "DimensionExponent",
+  "LargestOpener",
+  "SmallestCloser",
+  "TerminalClosers",
+  "BlocksWithOddMinimum",
+  "BlocksWithEvenMinimum",
+]);

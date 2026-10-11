@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-partition-1-3-mid-2			[InternalPoints, [SetPartition, [List, [List, 1, 3], [List, 2]]]]	0			the partition $\{1,3\} \mid \{2\}$
+the-partition-1-mid-2-4-mid-3			[InternalPoints, [SetPartition, [List, [List, 1], [List, 2, 4], [List, 3]]]]	0			the partition $\{1\} \mid \{2,4\} \mid \{3\}$
+findstat-st000562-1	Properties		[CombinatorialStat, [SetPartition, [List, [List, 1, 2]]], "'InternalPoints'"]	0	0	FindStat St000562	FindStat's value for {{1,2}}
+findstat-st000562-2	Properties		[CombinatorialStat, [SetPartition, [List, [List, 1, 2, 3]]], "'InternalPoints'"]	0	0	FindStat St000562	FindStat's value for {{1,2,3}}
+findstat-st000562-3	Properties		[CombinatorialStat, [SetPartition, [List, [List, 1], [List, 2]]], "'InternalPoints'"]	0	0	FindStat St000562	FindStat's value for {{1},{2}}

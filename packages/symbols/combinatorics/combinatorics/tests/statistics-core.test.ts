@@ -20,6 +20,7 @@ import { core, cycles, headUsage, tower } from "../src/statistics/core.ts";
  * statistics, and it is the head that makes a fold accumulator GROW: every time the core has
  * grown it has been to close a frontier entry. `LessEqual` entered with Denert, which reads
  * non-excedances as `p(i) <= i` — no fold this time, just a same-block filtered sum.
+ * `Contains` entered with the set-partition internal points, which find the block holding an element.
  * `ReplaceAt` entered with the patience piles, which replace a pile rather than rebuild the list.
  */
 const CORE = [
@@ -27,6 +28,7 @@ const CORE = [
   "Add",
   "And",
   "At",
+  "Contains",
   "Count",
   "Divide",
   "Equal",
