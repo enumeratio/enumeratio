@@ -26,6 +26,7 @@ import {
   type PolarPlotOptions,
   plotSeries,
   plotSeriesIn,
+  slideInterval,
   polarFrameOf,
   polarPlotBox,
   polarPlotBoxSvg,
@@ -129,7 +130,8 @@ export class PlotView {
   /** Samples the curves again for a window (undefined: the whole plot) and redraws. */
   #redo: ((window: PlotWindow | undefined) => void) | undefined;
   #frameRequest = 0;
-  #drag: { x: number; y: number; id: number; moved: boolean } | undefined;
+  /** A press on a zoomed plot: where it began, and the window and geometry it began on. */
+  #drag: { x: number; y: number; id: number; moved: boolean; window: PlotWindow; frame: PlotFrame } | undefined;
 
   constructor(readonly host: PlotHost) {}
 
@@ -531,7 +533,9 @@ export class PlotView {
     if (!this.#zoomable || this.#window === undefined || e.button !== 0 || e.pointerType === "touch") return;
     const at = this.#inView(e);
     if (!at) return;
-    this.#drag = { x: at[0], y: at[1], id: e.pointerId, moved: false };
+    const frame = this.#geometry;
+    if (!frame) return;
+    this.#drag = { x: at[0], y: at[1], id: e.pointerId, moved: false, window: this.#window, frame };
     (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
   };
 
@@ -542,24 +546,19 @@ export class PlotView {
   /** Pan: the data under the pointer stays under it. */
   #dragTo(e: PointerEvent): boolean {
     const drag = this.#drag;
-    const frame = this.#geometry;
-    const now = this.#window;
     const home = this.#home;
     const at = this.#inView(e);
-    if (!drag || !frame || !now || !home || !at) return false;
+    if (!drag || !home || !at) return false;
     drag.moved ||= Math.hypot(at[0] - drag.x, at[1] - drag.y) > SLOP;
     if (!drag.moved) return true;
-    const [x0, y0] = frame.toData(drag.x, drag.y);
-    const [x1, y1] = frame.toData(at[0], at[1]);
-    const slide = (iv: readonly [number, number], whole: readonly [number, number], by: number): [number, number] => {
-      const lo = Math.min(whole[1] - (iv[1] - iv[0]), Math.max(whole[0], iv[0] + by));
-      return [lo, lo + (iv[1] - iv[0])];
-    };
-    drag.x = at[0];
-    drag.y = at[1];
+    // The whole drag so far, on the window and geometry it began on: the plot redraws between
+    // moves, so the live frame is not the one the pointer is moving across.
+    const [x0, y0] = drag.frame.toData(drag.x, drag.y);
+    const [x1, y1] = drag.frame.toData(at[0], at[1]);
+    const start = drag.window;
     this.#show({
-      x: slide(now.x, home.x, x0 - x1),
-      ...(now.y && home.y && this.#fitsY && { y: slide(now.y, home.y, y0 - y1) }),
+      x: slideInterval(start.x, home.x, x0 - x1),
+      ...(start.y && home.y && this.#fitsY && { y: slideInterval(start.y, home.y, y0 - y1) }),
     });
     return true;
   }

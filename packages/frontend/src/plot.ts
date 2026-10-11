@@ -343,3 +343,14 @@ export function plotSeriesIn(
     return { points: sampled, style, label: items.length > 1 ? item.label : undefined };
   });
 }
+
+/** `iv` moved by `by`, kept within `whole`. */
+export function slideInterval(
+  iv: readonly [number, number],
+  whole: readonly [number, number],
+  by: number,
+): [number, number] {
+  const width = iv[1] - iv[0];
+  const lo = Math.min(whole[1] - width, Math.max(whole[0], iv[0] + by));
+  return [lo, lo + width];
+}

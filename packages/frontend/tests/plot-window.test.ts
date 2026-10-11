@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { budgeted, MAX_WINDOW_SAMPLES, plotSeries, plotSeriesIn, type SeriesItem } from "../src/plot.ts";
+import { budgeted, MAX_WINDOW_SAMPLES, plotSeries, plotSeriesIn, slideInterval, type SeriesItem } from "../src/plot.ts";
 import { polarPlotBox, polarPlotBoxSvg, samplePolar, samplePolarIn } from "../src/polarplot.ts";
 import type { BoxNode } from "@enumeratio/boxes";
 
@@ -80,4 +80,10 @@ test("run budgets scale down together", () => {
   const counts = budgeted(Array.from({ length: 50 }, () => 1000));
   expect(counts.reduce((a, b) => a + b, 0)).toBeLessThanOrEqual(MAX_WINDOW_SAMPLES);
   expect(budgeted([10, 20])).toEqual([10, 20]);
+});
+
+test("sliding an interval keeps its width and stays within the whole", () => {
+  expect(slideInterval([1, 3], [0, 10], 2)).toEqual([3, 5]);
+  expect(slideInterval([1, 3], [0, 10], -5)).toEqual([0, 2]);
+  expect(slideInterval([1, 3], [0, 10], 50)).toEqual([8, 10]);
 });
