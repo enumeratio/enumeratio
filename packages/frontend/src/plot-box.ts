@@ -66,6 +66,8 @@ export interface PlotOptions extends ColorOptions {
   hover?: number;
   /** Force the y-window (data space), overriding the automatic one (PlotRange). */
   plotRange?: readonly [number, number];
+  /** Force the x-window (data space), where the samples are a zoomed view's rather than the whole curve's. */
+  xRange?: readonly [number, number];
   /** Draw light gridlines at nice tick positions (GridLines). */
   gridLines?: boolean;
   /** Fill each line series down to the zero axis (Filling -> Axis). */
@@ -255,8 +257,9 @@ export function plotBox(input: readonly PlotPoint[] | readonly PlotSeries[], opt
     .filter(Number.isFinite);
   if (txs.length === 0 || tys.length === 0) return graphics(row([]), options);
 
-  const txmin = Math.min(...txs);
-  const txmax = Math.max(...txs);
+  const [txmin, txmax] = opts.xRange
+    ? [X.fwd(opts.xRange[0]), X.fwd(opts.xRange[1])]
+    : [Math.min(...txs), Math.max(...txs)];
   let tymin: number;
   let tymax: number;
   if (opts.tight) {

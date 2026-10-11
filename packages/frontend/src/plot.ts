@@ -206,3 +206,151 @@ export function plotSeries(
     };
   });
 }
+
+// ── Sampling a view ──────────────────────────────────────────────────────────────────────
+
+/** The part of the plane a zoomed plot shows; `y` is absent where the plot fits it to the samples. */
+export interface PlotWindow {
+  readonly x: readonly [number, number];
+  readonly y?: readonly [number, number];
+}
+
+/** Most samples one pass takes (as `plotSeries`' own cap). */
+const MAX_SAMPLES = 1000;
+/** A curve's coarse pass, when finding where it crosses a window. */
+const COARSE_SAMPLES = 400;
+/** Pixels between samples along a curve in view. */
+const PIXELS_PER_SAMPLE = 2;
+/** How far past the window (as a fraction of it) a run of samples reaches, so a pan has no gap at its edge. */
+const REACH = 0.05;
+
+const clampCount = (n: number): number => Math.max(2, Math.min(MAX_SAMPLES, Math.round(n)));
+
+/** A gap between runs of samples; `plotBox` breaks the curve there. */
+const GAP: PlotPoint = { x: Number.NaN, y: Number.NaN };
+
+/** A stretch of a curve's parameter, and the length of curve (in the plane) it covers. */
+export interface CurveRun {
+  readonly lo: number;
+  readonly hi: number;
+  readonly length: number;
+}
+
+/**
+ * The runs of `[lo, hi]` where the curve `trace` passes through `window`, found from a coarse
+ * pass of `count` samples.
+ */
+export function runsThrough(
+  trace: (t: number) => readonly [number, number],
+  lo: number,
+  hi: number,
+  count: number,
+  window: Required<PlotWindow>,
+): CurveRun[] {
+  const [wx, wy] = [window.x, window.y];
+  const [px, py] = [(wx[1] - wx[0]) * REACH, (wy[1] - wy[0]) * REACH];
+  const inside = (a: readonly [number, number], b: readonly [number, number]): boolean =>
+    [a[0], a[1], b[0], b[1]].every(Number.isFinite) &&
+    Math.max(a[0], b[0]) >= wx[0] - px &&
+    Math.min(a[0], b[0]) <= wx[1] + px &&
+    Math.max(a[1], b[1]) >= wy[0] - py &&
+    Math.min(a[1], b[1]) <= wy[1] + py;
+  const ts = Array.from({ length: count }, (_, i) => lo + ((hi - lo) * i) / (count - 1));
+  const ps = ts.map((t) => trace(t));
+  const runs: CurveRun[] = [];
+  let run: { lo: number; hi: number; length: number } | undefined;
+  for (let i = 0; i < count - 1; i++) {
+    if (inside(ps[i]!, ps[i + 1]!)) {
+      run ??= { lo: ts[i]!, hi: ts[i]!, length: 0 };
+      run.hi = ts[i + 1]!;
+      run.length += Math.hypot(ps[i + 1]![0] - ps[i]![0], ps[i + 1]![1] - ps[i]![1]);
+    } else if (run) {
+      runs.push(run);
+      run = undefined;
+    }
+  }
+  if (run) runs.push(run);
+  return runs;
+}
+
+/** Samples along a run for a window `pixels` wide: one every couple of pixels of curve in view. */
+export const samplesFor = (run: CurveRun, window: PlotWindow, pixels: number): number =>
+  clampCount((run.length / (window.x[1] - window.x[0])) * (pixels / PIXELS_PER_SAMPLE));
+
+/** The coarse pass a window's runs are found from. */
+export const coarseSamples = (samples: number): number => clampCount(Math.max(COARSE_SAMPLES, samples));
+
+/** Most samples a window's runs take together in one pass, however many runs there are. */
+export const MAX_WINDOW_SAMPLES = 4000;
+
+/** `counts` (one per run) scaled down together so they sum to at most `MAX_WINDOW_SAMPLES`. */
+export function budgeted(counts: readonly number[]): number[] {
+  const total = counts.reduce((a, b) => a + b, 0);
+  if (total <= MAX_WINDOW_SAMPLES) return [...counts];
+  return counts.map((n) => Math.max(2, Math.floor((n * MAX_WINDOW_SAMPLES) / total)));
+}
+
+/**
+ * `plotSeries` over a window of the plane, at the density of `pixels` across it. A curve of `x`
+ * is sampled over the window's x-range alone, `pixels` points wide; a parametric curve over the
+ * runs of `t` that pass through the window. No window is `plotSeries` itself.
+ */
+export function plotSeriesIn(
+  items: readonly SeriesItem[],
+  at: (k: number) => (t: number) => number,
+  options: SeriesOptions,
+  window?: PlotWindow,
+  pixels = 340,
+): PlotSeries[] {
+  if (window === undefined || (items.length > 0 && items.every((item) => item.point !== undefined)))
+    return plotSeries(items, at, options);
+  const [lo, hi] = options.domain;
+  const style = options.mode === "points" ? "points" : "line";
+  const refine = options.adaptive !== false && style === "line";
+  if (options.parametric === true && items.length === 2) {
+    if (window.y === undefined) return plotSeries(items, at, options);
+    const [fxn, fyn] = [at(0), at(1)];
+    const trace = (t: number): [number, number] => [fxn(t), fyn(t)];
+    const runs = runsThrough(trace, lo, hi, coarseSamples(options.samples), window as Required<PlotWindow>);
+    const inits = budgeted(runs.map((run) => samplesFor(run, window, pixels)));
+    const points = runs
+      .flatMap((run, i) => {
+        const init = inits[i]!;
+        const sampled = refine
+          ? adaptiveParam(trace, run.lo, run.hi, { init, maxPoints: init * 2 })
+          : Array.from({ length: init }, (_, i) => {
+              const [x, y] = trace(run.lo + ((run.hi - run.lo) * i) / (init - 1));
+              return { x, y };
+            });
+        return [GAP, ...sampled];
+      })
+      .slice(1);
+    return [{ points, style }];
+  }
+  // A curve of x exists over its domain only.
+  const [a, b] = [Math.max(lo, window.x[0]), Math.min(hi, window.x[1])];
+  const count = clampCount(pixels);
+  return items.map((item, k) => {
+    const en = at(k);
+    const sampled = !(a < b)
+      ? []
+      : refine
+        ? adaptiveSample(en, a, b, { init: count })
+        : Array.from({ length: count }, (_, i) => {
+            const x = a + ((b - a) * i) / (count - 1);
+            return { x, y: en(x) };
+          });
+    return { points: sampled, style, label: items.length > 1 ? item.label : undefined };
+  });
+}
+
+/** `iv` moved by `by`, kept within `whole`. */
+export function slideInterval(
+  iv: readonly [number, number],
+  whole: readonly [number, number],
+  by: number,
+): [number, number] {
+  const width = iv[1] - iv[0];
+  const lo = Math.min(whole[1] - width, Math.max(whole[0], iv[0] + by));
+  return [lo, lo + width];
+}
