@@ -1,2 +1,2 @@
-id	in	out	tex.in	tex.out
-inert	TooltipBox["x", "the unknown"]	TooltipBox["x", "the unknown"]	\text{TooltipBox}[\text{x},\text{the unknown}]	\text{TooltipBox}[\text{x},\text{the unknown}]
+id	in
+inert	TooltipBox["x", "the unknown"]

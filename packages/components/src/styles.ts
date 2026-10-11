@@ -1373,29 +1373,6 @@ notatio-worksheet {
   outline-offset: -2px;
 }
 
-/* --- Tooltips: [data-tip] shows its text on hover and keyboard focus, at once ------- */
-[data-tip] {
-  position: relative;
-}
-[data-tip]:hover::after,
-[data-tip]:focus-visible::after {
-  content: attr(data-tip);
-  position: absolute;
-  z-index: 30;
-  top: calc(100% + 0.35rem);
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
-  background: var(--vp-c-text-1, #222);
-  color: var(--vp-c-bg, #fff);
-  font-size: 0.75rem;
-  font-weight: 400;
-  line-height: 1.3;
-  white-space: pre;
-  pointer-events: none;
-}
-
 /* --- Palette picker: one menu for a plot's gradient and category colors ------------- */
 .notatio-palette { position: relative; display: inline-block; }
 .notatio-palette-button { display: inline-flex; align-items: center; gap: 0.45rem; }

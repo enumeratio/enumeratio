@@ -180,7 +180,7 @@ export function renderBox(box: Box, holes: Holes = {}): Rendering {
     case "PaneSelectorBox": {
       const selector = box[2];
       const watched: Record<string, string> =
-        isNode(selector) && selector[0] === "DynamicBox" ? { selector: epsil(selector[1]) } : {};
+        isNode(selector) && selector[0] === "DynamicBox" ? { selector: selectorText(epsil(selector[1])) } : {};
       return element(
         "PaneSelectorBox",
         undefined,
@@ -246,6 +246,10 @@ function tagged(box: Extract<BoxNode, readonly ["TagBox", ...unknown[]]>, holes:
   return renderBox(inner, holes);
 }
 
+/** A selector that is a bare name reads that variable, as `Dynamic(level)` does; the scope fills `_level`. */
+const selectorText = (text: string): string =>
+  /^[A-Za-z]\w*$/.test(text) && text !== "True" && text !== "False" ? `_${text}` : text;
+
 /** A hole nothing filled: a variable's control (or its readout), which the page's scope picks. */
 function slotElement(box: Extract<BoxNode, readonly ["TemplateSlot", ...unknown[]]>): Rendering {
   const options = Object.fromEntries(
@@ -282,11 +286,19 @@ function button(box: Extract<BoxNode, readonly ["ButtonBox", ...unknown[]]>, hol
     );
   }
   const target = string(options.ButtonData);
-  if (target === undefined) return label;
+  if (target === undefined || (options.BaseStyle !== "Link" && !isSafeTarget(target))) return label;
   // A head's page is the host's to find: the anchor names the head.
   const link: Record<string, string> = options.BaseStyle === "Link" ? { "data-link": target } : { href: target };
   return { tag: "a", attributes: link, children: [label] };
 }
+
+/** A link target the page may follow: `http:`, `https:`, `mailto:`, a fragment, or a relative path. */
+const isSafeTarget = (target: string): boolean => {
+  let t = "";
+  for (let i = 0; i < target.length; i++) if (target.charCodeAt(i) > 32) t += target[i];
+  const scheme = /^([a-z][a-z0-9+.-]*):/i.exec(t)?.[1]?.toLowerCase();
+  return scheme === undefined || scheme === "http" || scheme === "https" || scheme === "mailto";
+};
 
 /** A `TextCell` as its block. */
 function cell(box: Extract<BoxNode, readonly ["TextCell", ...unknown[]]>, holes: Holes): Rendering {

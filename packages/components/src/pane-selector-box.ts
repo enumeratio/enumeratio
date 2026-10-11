@@ -52,6 +52,7 @@ export class PaneSelectorBox extends LitElement {
     const key = await this.#value(this.selector);
     // A later change has overtaken this one, or the selector isn't known yet: keep what shows.
     if (key === undefined || ticket !== this.#pending) return;
+    this.setAttribute("data-picked", "");
     for (const pane of this.querySelectorAll(":scope > [data-pane]")) {
       pane.toggleAttribute("data-selected", pane.getAttribute("data-pane") === key);
     }
@@ -69,7 +70,8 @@ export class PaneSelectorBox extends LitElement {
     if (typeof json === "string") return keyOf(json);
     const atom = json as { num?: string | number; str?: string; sym?: string };
     const text = atom.num ?? atom.str ?? atom.sym;
-    return text === undefined ? undefined : keyOf(String(text));
+    // A value no key names (a rational, a complex number) picks no pane.
+    return text === undefined ? "" : keyOf(String(text));
   }
 
   protected override render(): unknown {

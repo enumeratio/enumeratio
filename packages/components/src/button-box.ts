@@ -6,8 +6,7 @@ import { scopeOf } from "./scope.ts";
 function valueOf(text: string): MathJsonExpression {
   const quoted = /^"(.*)"$/s.exec(text);
   if (quoted) return `'${quoted[1]}'`;
-  const n = Number(text);
-  return Number.isFinite(n) ? n : text;
+  return /^-?\d+(?:\.\d+)?$/.test(text) ? Number(text) : text;
 }
 
 /**

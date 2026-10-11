@@ -40,14 +40,37 @@ pane-box[data-scrollbars] { overflow: auto; }
 [data-head="Labeled"]:has(> graphics-box) > [data-head="StringTemplate"] { display: block; line-height: 1.7; }
 .style-box-label { font-size: 0.85em; color: var(--vp-c-text-2, #666); }
 
+/* --- Tooltips: [data-tip] shows its text on hover and keyboard focus, at once ------- */
+[data-tip] {
+  position: relative;
+}
+[data-tip]:hover::after,
+[data-tip]:focus-visible::after {
+  content: attr(data-tip);
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 0.35rem);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  background: var(--vp-c-text-1, #222);
+  color: var(--vp-c-bg, #fff);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.3;
+  white-space: pre;
+  pointer-events: none;
+}
+
 /* --- prose boxes: TextCell, TooltipBox, PaneSelectorBox --------------------------------
-   A pane shows only once the element has picked it (data-selected), so a page that is read
-   before the element loads never shows both halves of an either/or. */
+   Until the element has picked (data-picked) the first pane shows, as the static writers write
+   it; after, only the selected one. */
 p[data-cell-style^="Item"], p[data-cell-style^="Subitem"], p[data-cell-style^="Subsubitem"] { margin-block: 0.2em; padding-inline-start: 1.4em; }
 p[data-cell-style^="Item"]::before { content: "\\2022"; margin-inline-start: -1em; margin-inline-end: 0.4em; }
 p[data-cell-style="DisplayFormula"] { text-align: center; }
 tooltip-box, button-box, template-slot { display: inline; }
 pane-selector-box { display: contents; }
 pane-selector-box > [data-pane] { display: none; }
-pane-selector-box > [data-pane][data-selected] { display: contents; }
+pane-selector-box:not([data-picked]) > [data-pane]:first-child, pane-selector-box > [data-pane][data-selected] { display: contents; }
 `;

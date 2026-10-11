@@ -261,7 +261,13 @@ export class TemplateSlot extends LitElement {
   }
 
   protected override render(): unknown {
-    if (this.parts) return this.#islandOf(JSON.parse(this.parts) as TexPart[]);
+    if (this.parts) {
+      try {
+        return this.#islandOf(JSON.parse(this.parts) as TexPart[]);
+      } catch {
+        return nothing;
+      }
+    }
     if (this.name === SETTINGS) return this.#settings();
     return this.#control(this.name, this.#options);
   }

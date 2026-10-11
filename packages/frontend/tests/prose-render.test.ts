@@ -74,6 +74,13 @@ test("a tooltip is a tab stop whose tip is its text", () => {
   );
 });
 
+test("a link target the page may not follow draws as its label", () => {
+  expect(markup(button("x", { ButtonData: "javascript:alert(1)" }))).toBe("<span>x</span>");
+  expect(markup(button("x", { ButtonData: " JaVa\tScript:alert(1)" }))).toBe("<span>x</span>");
+  expect(markup(button("x", { ButtonData: "/docs/a" }))).toBe('<a href="/docs/a"><span>x</span></a>');
+  expect(markup(button("x", { ButtonData: "#top" }))).toBe('<a href="#top"><span>x</span></a>');
+});
+
 test("a pane selector is its selector and its panes under their keys", () => {
   expect(
     markup(
@@ -88,6 +95,11 @@ test("a pane selector is its selector and its panes under their keys", () => {
   ).toBe(
     '<pane-selector-box selector="_n > 5"><span data-pane="True"><span>big</span></span><span data-pane="False"><span>small</span></span></pane-selector-box>',
   );
+});
+
+test("a bare name as the selector reads that variable", () => {
+  const drawn = renderBox(paneSelector([["low", text("small")]], dynamic("level" as never)));
+  expect(drawn.attributes.selector).toBe("_level");
 });
 
 test("a StringTemplate is its text with the holes in it, the head riding on it", () => {
