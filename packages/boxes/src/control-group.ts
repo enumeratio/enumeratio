@@ -63,9 +63,12 @@ function memberOf(expr: Json): { variable: Json; entry: Json } | undefined {
     : undefined;
 }
 
+/** `Dynamic(x)`, or the `DynamicBox(x)` a record written before bindings were expressions holds. */
+const isBindingHead = (head: string | undefined): boolean => head === "Dynamic" || head === "DynamicBox";
+
 /** The variable a binding (`Dynamic(x)`, or a toggle's `Dynamic(MemberQ(x, a))`) names, as written. */
 export function bindingVariable(binding: Json): Json | undefined {
-  if (headOf(binding) !== "Dynamic") return undefined;
+  if (!isBindingHead(headOf(binding))) return undefined;
   const expr = opsOf(binding)[0];
   return expr === undefined ? undefined : (memberOf(expr)?.variable ?? expr);
 }
@@ -76,7 +79,7 @@ export const toggleBinding = (variable: Json, entry: Json): Json =>
 
 /** Whether a binding is a toggle's. */
 export const isToggleBinding = (binding: Json): boolean => {
-  const expr = headOf(binding) === "Dynamic" ? opsOf(binding)[0] : undefined;
+  const expr = isBindingHead(headOf(binding)) ? opsOf(binding)[0] : undefined;
   return expr !== undefined && memberOf(expr) !== undefined;
 };
 

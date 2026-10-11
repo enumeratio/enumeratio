@@ -93,3 +93,24 @@ test("every control box has an intent, and boxes round-trip through MathJSON", (
   expect(fromMathJson(toMathJson(box))).toEqual(box);
   expect(toText(box)).toBe("-Checkbox-");
 });
+
+test("a record written with a DynamicBox binding or without a shown box still reads (the binding stays as written)", () => {
+  const legacy = fromMathJson(json(["SetterBox", ["DynamicBox", "c"], ["List", ["Labeled", 1, { str: "one" }]]]));
+  expect(legacy).toEqual([
+    "SetterBox",
+    ["DynamicBox", "c"],
+    ["List", 1],
+    ["TextBox", "one", { ShowStringCharacters: true }],
+  ]);
+  expect(controlOperands(legacy)).toEqual(["c", ["List", ["Labeled", 1, { str: "one" }]]]);
+  const toggler = fromMathJson(json(["TogglerBox", ["DynamicBox", ["Tuple", "s", "off"]], ["List", "off", "on"]]));
+  expect(controlOperands(toggler)).toEqual([
+    ["Tuple", "s", "off"],
+    ["List", "off", "on"],
+  ]);
+  expect(() => fromMathJson(json(["SetterBox", ["Dynamic", "c"], "choices"]))).toThrow();
+});
+
+test("a binding that names no variable leaves no operands", () => {
+  expect(controlOperands(["SliderBox", "k", ["Tuple", 0, 5]] as never)).toEqual([]);
+});

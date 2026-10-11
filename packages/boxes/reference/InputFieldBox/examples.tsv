@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-inert	Basic		[InputFieldBox, [Dynamic, x], Automatic]	[InputFieldBox, [Dynamic, x], Automatic]	a box is inert: it evaluates to itself
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+inert	Basic		[InputFieldBox, [Dynamic, x], Automatic]	[InputFieldBox, [Dynamic, x], Automatic]	a box is inert: it evaluates to itself	convention	Wolfram's InputFieldBox[Dynamic[s]] has no second argument; ours carries Automatic where the type is unstated, and Wolfram only echoes the unknown symbol, which is no agreement on it.

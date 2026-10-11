@@ -63,3 +63,16 @@ test("reduce declares a bar as the head it was written with", () => {
     ["s", "TogglerBar", "listed"],
   ]);
 });
+
+test("a toggler's and a menu's drawn choices read back through boxControls", () => {
+  const [toggler] = boxControls(boxes('Toggler((n, 6), [Labeled(4, "square"), Labeled(6, "hexagon")])'));
+  expect(toggler).toMatchObject({ head: "TogglerBox", name: "n", intent: "toggle" });
+  const labeled = (toggler!.domain as unknown as unknown[]).slice(1) as unknown[][];
+  expect(labeled.map((entry) => entry[0])).toEqual(["Labeled", "Labeled"]);
+  expect(labeled.map((entry) => entry[2])).toEqual([{ str: "square" }, { str: "hexagon" }]);
+  const [menu] = boxControls(boxes('PopupMenu(c, ["a", "b"])'));
+  expect(menu).toMatchObject({ head: "PopupMenuBox", name: "c", intent: "choice" });
+  expect(JSON.stringify(menu!.domain)).toContain('"List"');
+  const drawn = renderBox(boxes('PopupMenu((n, 6), [Labeled(4, "square"), Labeled(6, "hexagon")])'));
+  expect(drawn.attributes).toMatchObject({ name: "n", values: "4 -> square|6 -> hexagon" });
+});

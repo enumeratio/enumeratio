@@ -93,9 +93,11 @@ export function controlOperands(box: Box): Json[] {
   if (typeof box === "string" || !isControlBoxHead(box[0])) return [];
   const node = box as Extract<Box, readonly [ControlBoxHead, ...unknown[]]>;
   const variable = bindingVariable(node[1] as Json);
+  // A binding that names no variable leaves nothing to bind: the domain is not its operands.
+  if (variable === undefined) return [];
   const domain = writtenDomain(node);
   const rest = headOf(domain) === "Sequence" ? opsOf(domain) : domain === "Automatic" ? [] : [domain];
-  return variable === undefined ? rest : [variable, ...rest];
+  return [variable, ...rest];
 }
 
 const controlRule =

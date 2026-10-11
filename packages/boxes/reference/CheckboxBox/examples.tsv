@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-inert	Basic		[CheckboxBox, [Dynamic, on], Automatic]	[CheckboxBox, [Dynamic, on], Automatic]	a box is inert: it evaluates to itself
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+inert	Basic		[CheckboxBox, [Dynamic, on], Automatic]	[CheckboxBox, [Dynamic, on], Automatic]	a box is inert: it evaluates to itself	convention	Wolfram's CheckboxBox[Dynamic[b]] has no second argument; ours carries Automatic where the values are unstated, and Wolfram only echoes the unknown symbol, which is no agreement on it.

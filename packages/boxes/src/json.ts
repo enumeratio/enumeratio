@@ -15,6 +15,7 @@ import {
   type OptionValue,
   optionsOfBox,
 } from "./box.ts";
+import { bindingVariable, displayText, entriesOf, entryLabel, entryValue } from "./control-group.ts";
 
 type Json = MathJsonExpression;
 
@@ -109,6 +110,28 @@ function ruleOf(node: Json): [string, Json] | undefined {
   return name !== undefined && /^[A-Z]/.test(name) ? [name, ops[1]] : undefined;
 }
 
+/**
+ * The box a `SetterBox` or `TogglerBox` shows when a record written without one (two arguments)
+ * is read: a setter's is its entry's label, and a toggler's its variable's value. Without
+ * either, no label is made up and the record is refused.
+ */
+function legacyShown(head: "SetterBox" | "TogglerBox", ops: Json[]): Box {
+  if (head === "TogglerBox") {
+    const variable = bindingVariable(ops[0]!);
+    if (variable === undefined) return fail("SetterBox or TogglerBox without a binding", ops[0]);
+    return [
+      "DynamicBox",
+      ["ToBoxes", Array.isArray(variable) && variable[0] === "Tuple" ? variable[1]! : variable, "StandardForm"] as Json,
+    ];
+  }
+  const entry = entriesOf(ops[1]!)?.[0];
+  const text = entry === undefined ? undefined : displayText(entryLabel(entry));
+  if (text === undefined) return fail("SetterBox without a label to show", ops[1]);
+  const label = entryLabel(entry!);
+  ops[1] = list([entryValue(entry!)]);
+  return typeof label === "object" ? ["TextBox", text, { ShowStringCharacters: true }] : text;
+}
+
 /** A MathJSON expression read as boxes. Throws `BoxFormError` when it is not one. */
 export function fromMathJson(json: Json): Box {
   const leaf = stringOf(json);
@@ -120,6 +143,7 @@ export function fromMathJson(json: Json): Box {
   let split = all.length;
   while (split > 0 && ruleOf(all[split - 1]) !== undefined) split--;
   const ops = all.slice(0, split);
+  if ((head === "SetterBox" || head === "TogglerBox") && ops.length === 2) ops.push(toMathJson(legacyShown(head, ops)));
   const raw = Object.fromEntries(all.slice(split).map((op) => ruleOf(op)!));
   const arity = ARITY[head];
   if (ops.length !== arity) fail(`${head} takes ${arity} argument(s)`, json);
