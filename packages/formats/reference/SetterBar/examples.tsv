@@ -1,2 +1,2 @@
 id	section	role	expr	expected	caption	boxes
-entries	Basic		[SetterBar, c, [List, a, b, c]]	[SetterBar, c, [List, a, b, c]]	A bar of setters, one per entry	{head: GridBox, operands: [[[[SetterBox, [DynamicBox, c], [List, a]], [SetterBox, [DynamicBox, c], [List, b]], [SetterBox, [DynamicBox, c], [List, c]]]]]}
+entries	Basic		[SetterBar, c, [List, a, b, c]]	[SetterBar, c, [List, a, b, c]]	A bar of setters, one per entry	{head: GridBox, operands: [[[[SetterBox, [Dynamic, c], [List, a], a], [SetterBox, [Dynamic, c], [List, b], b], [SetterBox, [Dynamic, c], [List, c], c]]]]}

@@ -1,2 +1,2 @@
-id	in
-inert	RadioButtonBox[DynamicBox[c], List[a]]
+id	in	out	tex.in	tex.out
+inert	RadioButtonBox[Dynamic[c], List[a]]	RadioButtonBox[Dynamic[c], {a}]	\text{RadioButtonBox}[c,\{a\}]	\text{RadioButtonBox}[c,\{a\}]

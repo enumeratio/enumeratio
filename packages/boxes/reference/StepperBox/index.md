@@ -7,7 +7,7 @@ signatures:
   - call: StepperBox(binding, domain, options)
     description: An integer in a sentence, stepped in place with arrows.
     library: enumeratio-boxes
-    type: (boxes, expression, expression*) -> boxes
+    type: (expression, expression, expression*) -> boxes
 seeAlso:
   - KnobBox
   - SliderBox

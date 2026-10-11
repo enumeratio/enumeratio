@@ -14,8 +14,18 @@ test("a SetterBar is a GridBox row of single-entry SetterBoxes", () => {
     "GridBox",
     [
       [
-        ["SetterBox", ["DynamicBox", ["Tuple", "c", { str: "b" }]], ["List", { str: "a" }]],
-        ["SetterBox", ["DynamicBox", ["Tuple", "c", { str: "b" }]], ["List", { str: "b" }]],
+        [
+          "SetterBox",
+          ["Dynamic", ["Tuple", "c", { str: "b" }]],
+          ["List", { str: "a" }],
+          ["TextBox", "a", { ShowStringCharacters: true }],
+        ],
+        [
+          "SetterBox",
+          ["Dynamic", ["Tuple", "c", { str: "b" }]],
+          ["List", { str: "b" }],
+          ["TextBox", "b", { ShowStringCharacters: true }],
+        ],
       ],
     ],
   ]);
@@ -28,8 +38,8 @@ test("a TogglerBar is the same row over MemberQ, each entry toggling in and out 
     "GridBox",
     [
       [
-        ["SetterBox", ["DynamicBox", ["MemberQ", "s", 2]], ["List", 2]],
-        ["SetterBox", ["DynamicBox", ["MemberQ", "s", 3]], ["List", 3]],
+        ["SetterBox", ["Dynamic", ["MemberQ", "s", 2]], ["List", "True"], "2"],
+        ["SetterBox", ["Dynamic", ["MemberQ", "s", 3]], ["List", "True"], "3"],
       ],
     ],
   ]);
@@ -70,11 +80,11 @@ test("a row of single-entry boxes that share a binding reads back as one bar", (
 });
 
 test("boxes on different variables or kinds are not one bar; a lone toggle is a bar of one", () => {
-  const cell = (name: string): Box => ["SetterBox", ["DynamicBox", name], ["List", 1]];
+  const cell = (name: string): Box => ["SetterBox", ["Dynamic", name], ["List", 1], "1"];
   expect(barOf(["GridBox", [[cell("a"), cell("b")]]])).toBeUndefined();
   expect(barOf(["GridBox", [[cell("a")], [cell("a")]]])).toBeUndefined();
   expect(barOf(cell("a"))).toBeUndefined();
-  expect(barOf(["SetterBox", ["DynamicBox", ["MemberQ", "a", 1]], ["List", 1]])).toMatchObject({
+  expect(barOf(["SetterBox", ["Dynamic", ["MemberQ", "a", 1]], ["List", "True"], "1"])).toMatchObject({
     kind: "TogglerBar",
     entries: [1],
   });
@@ -89,6 +99,11 @@ test("a bar is one leaf to the layout and one word to the text writers", () => {
 });
 
 test("entries that are not written out as a list are not split", () => {
-  expect(makeBoxes(json(["SetterBar", "c", "choices"]))).toEqual(["SetterBox", ["DynamicBox", "c"], "choices"]);
+  expect(makeBoxes(json(["SetterBar", "c", "choices"]))).toEqual([
+    "SetterBox",
+    ["Dynamic", "c"],
+    ["List", "choices"],
+    "choices",
+  ]);
   expect((makeBoxes(json(["TogglerBar", "s", "choices"])) as readonly unknown[])[0]).not.toBe("GridBox");
 });

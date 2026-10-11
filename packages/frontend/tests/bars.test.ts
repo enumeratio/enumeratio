@@ -32,9 +32,9 @@ test("a bar row is drawn as the one bar element, with the attributes the bar had
 });
 
 test("a lone single-entry box is its own element, and a lone toggle a toggler bar of one", () => {
-  expect(renderBox(["SetterBox", ["DynamicBox", "k"], ["List", 3]]).tag).toBe("setter-box");
-  expect(renderBox(["RadioButtonBox", ["DynamicBox", "k"], ["List", 3]]).tag).toBe("radio-button-box");
-  expect(renderBox(["SetterBox", ["DynamicBox", ["MemberQ", "s", 3]], ["List", 3]])).toMatchObject({
+  expect(renderBox(["SetterBox", ["Dynamic", "k"], ["List", 3], "3"]).tag).toBe("setter-box");
+  expect(renderBox(["RadioButtonBox", ["Dynamic", "k"], ["List", 3]]).tag).toBe("radio-button-box");
+  expect(renderBox(["SetterBox", ["Dynamic", ["MemberQ", "s", 3]], ["List", "True"], "3"])).toMatchObject({
     tag: "toggler-bar-box",
     attributes: { name: "s", values: "3" },
   });

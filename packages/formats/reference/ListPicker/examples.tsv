@@ -1,2 +1,2 @@
 id	section	role	expr	expected	caption	boxes
-entries	Basic		[ListPicker, c, [List, a, b, c]]	[ListPicker, c, [List, a, b, c]]	A list to pick from	{head: ListPickerBox, operands: [[DynamicBox, c], [List, a, b, c]]}
+entries	Basic		[ListPicker, c, [List, a, b, c]]	[ListPicker, c, [List, a, b, c]]	A list to pick from	{head: ListPickerBox, operands: [[Dynamic, c], [List, [KeyValuePair, a, {str: a}], [KeyValuePair, b, {str: b}], [KeyValuePair, c, {str: c}]]]}

@@ -1,2 +1,2 @@
-id	in
-inert	ColorSetterBox[DynamicBox[c], SwatchSpectrum]
+id	in	out	tex.in	tex.out
+inert	ColorSetterBox[Dynamic[c], SwatchSpectrum]	ColorSetterBox[Dynamic[c], SwatchSpectrum]	\text{ColorSetterBox}[c,\text{SwatchSpectrum}]	\text{ColorSetterBox}[c,\text{SwatchSpectrum}]

@@ -7,7 +7,7 @@ signatures:
   - call: AnimatorBox(binding, domain, options)
     description: "A slider that plays: `Animator` lowers to it."
     library: enumeratio-boxes
-    type: (boxes, expression, expression*) -> boxes
+    type: (expression, expression, expression*) -> boxes
 seeAlso:
   - SliderBox
   - DynamicBox
