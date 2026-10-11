@@ -58,6 +58,29 @@ export const countArcPairs = (blocks: number[][], kind: "crossing" | "nesting"):
   return n;
 };
 
+const total = (b: number[][]): number => sizes(b).reduce((a, c) => a + c, 0);
+const choose2 = (s: number): number => (s < 2 ? 0 : (s * (s - 1)) / 2);
+const sum = (xs: number[]): number => xs.reduce((a, c) => a + c, 0);
+const successions = (b: number[][]): number =>
+  sum(b.map((block) => block.slice(1).filter((v, i) => v - block[i]! === 1).length));
+const antisingletons = (b: number[][]): number =>
+  b.length === 0 ? 0 : successions(b) + (b[0]!.at(-1) === total(b) ? 1 : 0);
+/** Opener of each element's block, for 1..n. */
+const openers = (b: number[][]): number[] =>
+  Array.from({ length: total(b) }, (_, k) => b.find((block) => block.includes(k + 1))![0]!);
+const internalPoints = (b: number[][]): number => {
+  const m = openers(b);
+  return m.filter((v, e) => m.slice(0, e).some((u) => u > v) && m.slice(e + 1).some((u) => u > v)).length;
+};
+const terminalClosers = (b: number[][]): number => {
+  const closers = b.map((block) => block.at(-1)!);
+  const n = total(b);
+  return closers.filter((c) => {
+    for (let e = c + 1; e <= n; e++) if (!closers.includes(e)) return false;
+    return true;
+  }).length;
+};
+
 export const EXPECTED: Record<string, (b: number[][]) => number> = {
   Blocks: (b) => b.length,
   LargestBlock: (b) => (b.length === 0 ? 0 : Math.max(...sizes(b))),
@@ -67,6 +90,29 @@ export const EXPECTED: Record<string, (b: number[][]) => number> = {
   BlocksAtLeastTwo: (b) => sizes(b).filter((s) => s >= 2).length,
   BlocksSizeTwo: (b) => sizes(b).filter((s) => s === 2).length,
   LastBlockSize: (b) => (b.length === 0 ? 0 : b.at(-1)!.length),
+  SetPartitionRank: (b) => total(b) - b.length,
+  DimensionIndex: (b) => sum(b.map((k) => k.at(-1)! - k[0]! + 1)),
+  SumOfBlockMinima: (b) => sum(b.map((k) => k[0]!)),
+  SumOfBlockMaxima: (b) => sum(b.map((k) => k.at(-1)!)),
+  Antisingletons: antisingletons,
+  SingletonsAndAntisingletons: (b) => antisingletons(b) + sizes(b).filter((s) => s === 1).length,
+  BlocksAndAntisingletons: (b) => (b.length === 0 ? 0 : antisingletons(b) + b.length),
+  Successions: successions,
+  MaximalBlockDifference: (b) => (b.length === 0 ? 0 : Math.max(...b.map((k) => k.at(-1)! - k[0]!))),
+  FirstBlockCardinality: (b) => b[0]?.length ?? 0,
+  LargestElementInFirstBlock: (b) => b[0]?.at(-1) ?? 0,
+  InternalPoints: internalPoints,
+  OverlappingBlockPairs: (b) =>
+    b.flatMap((a, i) => b.slice(i + 1).filter((c) => c[0]! < a.at(-1)! && a.at(-1)! < c.at(-1)!)).length,
+  SameBlockPairs: (b) => sum(sizes(b).map(choose2)),
+  SameBlockTriples: (b) => sum(sizes(b).map((s) => (s * (s - 1) * (s - 2)) / 6)),
+  DistinctBlockPairs: (b) => choose2(total(b)) - sum(sizes(b).map(choose2)),
+  DimensionExponent: (b) => sum(b.map((k) => k.at(-1)! - k[0]! - (k.length - 1))),
+  LargestOpener: (b) => (b.length === 0 ? 0 : Math.max(...b.map((k) => k[0]!))),
+  SmallestCloser: (b) => (b.length === 0 ? 0 : Math.min(...b.map((k) => k.at(-1)!))),
+  TerminalClosers: terminalClosers,
+  BlocksWithOddMinimum: (b) => b.filter((k) => k[0]! % 2 === 1).length,
+  BlocksWithEvenMinimum: (b) => b.filter((k) => k[0]! % 2 === 0).length,
   Crossings: (b) => countArcPairs(b, "crossing"),
   Nestings: (b) => countArcPairs(b, "nesting"),
   CrossingNestingTotal: (b) => countArcPairs(b, "crossing") + countArcPairs(b, "nesting"),
