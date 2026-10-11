@@ -175,6 +175,9 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
   // ulps) into every term: Hypergeometric2F1Regularized(1, 2, −1, ½) came out 24 − 1.4e-14.
   const integerLower = lower.map((b) => b.im === 0 && Number.isInteger(b.re));
   const exactInvGamma = lower.map((b, i) => (integerLower[i] ? exactInvGammaAt(b.re) : cx(1)));
+  // A non-integer b steps the same way from 1/Γ(b), so lnΓ's few-ulp error enters once, not per term
+  // (1F1(½; 3/2; −8)/Γ(3/2) lost 5e-13 against 3e-13 allowed).
+  const steppedInvGamma = lower.map((b, i) => (integerLower[i] ? cx(1) : invGamma(b)));
   let previous: number | undefined;
   let run = 0;
   let worstRatio = 0;
@@ -184,11 +187,12 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
     if (k > 0) {
       lower.forEach((b, i) => {
         if (integerLower[i]) exactInvGamma[i] = exactInvGammaAt(b.re + k);
+        else steppedInvGamma[i] = div(steppedInvGamma[i]!, add(b, cx(k - 1)));
       });
     }
     let invG = cx(1, 0);
     lower.forEach((b, i) => {
-      invG = mul(invG, integerLower[i] ? exactInvGamma[i] : invGamma(add(b, cx(k))));
+      invG = mul(invG, integerLower[i] ? exactInvGamma[i] : steppedInvGamma[i]!);
     });
     const term = mul(core, invG);
     sum = add(sum, term);
