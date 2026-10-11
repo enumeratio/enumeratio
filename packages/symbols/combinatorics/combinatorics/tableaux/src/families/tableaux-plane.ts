@@ -9,13 +9,13 @@
 // `carrierElements` (declare.ts) -- see ./standard-tableau-pairs.ts.
 // `normRank`, `cmpNumArrays`, `cmpRowsShapeThenEntries`, `keyOf`, `indexedFamily`, `axis`,
 // `enumerated` are small local helpers duplicated from the source file (mirrors the permutations
-// pilot's `ints`); `factorialBig` is used ONLY by SkewStandardTableaux and moved outright.
+// pilot's `ints`).
 //
-// Stays TS here, each as an enumeration cached per params (a larger size is bounded by `work`):
-// - SkewStandardTableaux: a shape's fillings are counted over its order ideals, up to 2^n of them.
+// Stays TS here, as an enumeration cached per params (a larger size is bounded by `work`):
 // - PlanePartitions: the layers left below a row depend on the whole row above, so a table over rows
 //   and sums is far larger than the family (a row-by-row DP does 100x its count's work at n = 28).
-// SkewPartitions and BoxedPlanePartitions are defined in Epsil (./boxed-plane-partitions.ts).
+// SkewPartitions, SkewStandardTableaux and BoxedPlanePartitions are defined in Epsil
+// (../../../partitions/src/families/skew-partitions.ts, ./skew-standard-tableaux.ts, ./boxed-plane-partitions.ts).
 import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
 import type { Cost, Declared, NumberKernel, Param } from "../../../collections/src/families/types.ts";
 import {
@@ -23,7 +23,6 @@ import {
   DistinctPartitionUnrank,
   DistinctPartitionRank,
 } from "../../../collections/src/families/kernels-extra.ts";
-import { IsSkewPartitionOf, skewShapeCount, skewShapeUnrank } from "../../../partitions/src/families/skew-shapes.ts";
 import { alternatingSignMatrices } from "./alternating-sign-matrices.ts";
 import { boxedPlanePartitions } from "./boxed-plane-partitions.ts";
 import { gelfandTsetlin } from "./gelfand-tsetlin.ts";
@@ -87,94 +86,6 @@ const binomialBig = (n: number, k: number): bigint => {
   for (let i = 1; i <= k; i++) c = (c * BigInt(n - k + i)) / BigInt(i);
   return c;
 };
-
-const factorialBig = (n: number): bigint => {
-  let f = 1n;
-  for (let i = 2n; i <= BigInt(n); i++) f *= i;
-  return f;
-};
-
-// Stays TS: its shapes are SkewPartitions' (unranked, in that order), and a shape's fillings are listed
-// by their row words, which a DP can count only over the order ideals of the shape, as many as 2^n:
-// that would take Epsil from n = 5 to n = 9 for a few hundred lines, so the enumeration stays.
-// ═══ SkewStandardTableaux(size) — standard tableaux on reduced skew shapes λ/μ, summed over every shape ═══
-// No closed form. Element: `[lam, mu, rowWord]` — rowWord[i] = 0-based row of entry i+1 (placement order),
-// same convention as shifted below. A cell (row r, running count c) is legal to place next iff row r isn't
-// full and the cell directly above it (row r−1, same absolute column) is either outside λ/μ's row r−1 or
-// already filled — the general column-strictness check (μ=0 recovers plain SYT; the shifted family below
-// is its μ_r=r case).
-function skewFillingsOfShape(lam: readonly number[], mu: readonly number[]): number[][] {
-  const l = lam.length;
-  const n = lam.reduce((a, b) => a + b, 0) - mu.reduce((a, b) => a + b, 0);
-  const counts = Array.from({ length: l }, () => 0);
-  const w: number[] = [];
-  const results: number[][] = [];
-  function legal(r: number): boolean {
-    const mr = mu[r] ?? 0;
-    if (counts[r] >= lam[r] - mr) return false;
-    if (r === 0) return true;
-    const newcol = mr + counts[r] + 1;
-    const aboveMu = mu[r - 1] ?? 0;
-    const aboveLam = lam[r - 1];
-    if (newcol <= aboveMu || newcol > aboveLam) return true;
-    return counts[r - 1] >= newcol - aboveMu;
-  }
-  function backtrack(): void {
-    if (w.length === n) {
-      results.push(w.slice());
-      return;
-    }
-    for (let r = 0; r < l; r++) {
-      if (legal(r)) {
-        counts[r]++;
-        w.push(r);
-        backtrack();
-        w.pop();
-        counts[r]--;
-      }
-    }
-  }
-  backtrack();
-  results.sort(cmpNumArrays);
-  return results;
-}
-const skewStd = indexedFamily<[number[], number[], number[]]>((key) => {
-  const n = Number(key);
-  const out: [number[], number[], number[]][] = [];
-  for (let r = 0; r < skewShapeCount(n); r++) {
-    const [lam, mu] = skewShapeUnrank(n, r);
-    for (const w of skewFillingsOfShape(lam, mu)) out.push([lam, mu, w]);
-  }
-  return out;
-});
-export function SkewStandardTableauxUnrank(n: number, rank: number): [number[], number[], number[]] {
-  return skewStd.unrank(String(n), rank);
-}
-export function SkewStandardTableauxRank(e: [number[], number[], number[]], n: number): number {
-  return skewStd.rank(String(n), e);
-}
-export function IsSkewStandardTableauOf(e: unknown, n: number): boolean {
-  if (!Array.isArray(e) || e.length !== 3) return false;
-  const [lam, mu, w] = e as [number[], number[], number[]];
-  if (!IsSkewPartitionOf([lam, mu], n)) return false;
-  if (!Array.isArray(w) || w.length !== n) return false;
-  const l = lam.length;
-  if (l === 0) return n === 0;
-  const counts = Array.from({ length: l }, () => 0);
-  for (const r of w) {
-    if (!Number.isInteger(r) || r < 0 || r >= l) return false;
-    const mr = mu[r] ?? 0;
-    if (counts[r] >= lam[r] - mr) return false;
-    if (r > 0) {
-      const newcol = mr + counts[r] + 1;
-      const aboveMu = mu[r - 1] ?? 0;
-      const aboveLam = lam[r - 1];
-      if (!(newcol <= aboveMu || newcol > aboveLam) && counts[r - 1] < newcol - aboveMu) return false;
-    }
-    counts[r]++;
-  }
-  return true;
-}
 
 // PlanePartitions(n): stays TS (see the header). Ordered by shape then entries.
 function partitionsUnder(ceiling: readonly number[], maxSum: number): number[][] {
@@ -300,23 +211,7 @@ export const entriesBeforeSkewStandardTableaux: (NumberKernel | EpsilFamily)[] =
   },
 ];
 
-export const skewStandardTableauxEntries: NumberKernel[] = [
-  {
-    head: "SkewStandardTableaux",
-    paramCount: 1,
-    kind: "blocks",
-    count: ([n]) => skewStd.count(String(n)),
-    unrank: ([n], r) => SkewStandardTableauxUnrank(n, r),
-    valid: (e, [n]) => IsSkewStandardTableauOf(e, n),
-    rank: (e, [n]) => SkewStandardTableauxRank(e as [number[], number[], number[]], n),
-    declared: {
-      carrier: "SkewTableau",
-      params: [axis("size")],
-      cost: enumerated("enumerative"),
-      work: ([n]) => factorialBig(n) * 4n ** BigInt(n),
-    },
-  },
-];
+export { entries as skewStandardTableauxEntries } from "./skew-standard-tableaux.ts";
 
 // ═══ ShiftedStandardTableaux(size) — standard tableaux on shifted diagrams of STRICT partitions ═══
 // Row i (0-indexed) occupies columns i..i+shape[i]-1, so row i's k-th cell shares a column with row

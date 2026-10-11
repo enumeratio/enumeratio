@@ -1,4 +1,3 @@
-import { readFileSync } from "node:fs";
 import { expect, test } from "vite-plus/test";
 import { asNumbers } from "../../collections/tests/number-kernels.ts";
 import {
@@ -185,43 +184,7 @@ test("AlternatingSignMatrices(n) matches an independent brute-force filter, n<=3
 
 // SkewPartitions' own tests moved to partitions/tests/tableaux-plane.test.ts with the family.
 
-test("SkewStandardTableaux(n) anchors match the archived checkout's hand-verified counts 1,1,4,24,194", () => {
-  const entry = byHead.get("SkewStandardTableaux")!;
-  expect([0, 1, 2, 3, 4].map((n) => entry.count([n]))).toEqual([1, 1, 4, 24, 194]);
-});
-// A frozen record of the order the TS kernel listed before its shapes came from SkewPartitions' new
-// kernel (λ/μ/row word, n ≤ 5): the shapes still come in the same order, and each shape's fillings after.
-const OLD_SKEW_STD = JSON.parse(
-  readFileSync(new URL("./golden/old-skew-standard-tableaux.json", import.meta.url), "utf8"),
-) as Record<string, string[]>;
-test("SkewStandardTableaux(n) lists the tableaux in the order it always did", () => {
-  const entry = byHead.get("SkewStandardTableaux")!;
-  for (const [n, list] of Object.entries(OLD_SKEW_STD)) {
-    expect(entry.count([Number(n)])).toBe(list.length);
-    const got = list.map((_, r) => {
-      const [lam, mu, w] = entry.unrank([Number(n)], r) as number[][];
-      return `${lam.join(",")}/${mu.join(",")}/${w.join("")}`;
-    });
-    expect(got).toEqual(list);
-    list.forEach((text, r) => {
-      const [lam, mu, w] = text
-        .split("/")
-        .map((part, i) => (i === 2 ? part.split("").map(Number) : part === "" ? [] : part.split(",").map(Number)));
-      expect(entry.rank([lam, mu, w], [Number(n)])).toBe(r);
-    });
-  }
-});
-test("SkewStandardTableaux(n) >= StandardTableaux count is not asserted here (no cross-package import); instead every element's row_word has length n and shape sums to n", () => {
-  const entry = byHead.get("SkewStandardTableaux")!;
-  for (let n = 0; n <= 4; n++) {
-    const total = entry.count([n]);
-    for (let r = 0; r < total; r++) {
-      const [lam, mu, w] = entry.unrank([n], r) as [number[], number[], number[]];
-      expect(w.length).toBe(n);
-      expect(lam.reduce((a, b) => a + b, 0) - mu.reduce((a, b) => a + b, 0)).toBe(n);
-    }
-  }
-});
+// SkewStandardTableaux is defined in Epsil; its tests are in skew-standard-tableaux.test.ts.
 
 // ShiftedStandardTableaux/StandardTableauPairs tests moved to collections/tests/tableaux-plane.test.ts
 // with the families (no carrier, step 5 rule 4).
