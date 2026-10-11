@@ -340,7 +340,7 @@ export function kernelOn(
     try {
       const total = quick.count(p);
       if (typeof total === "bigint") return total;
-      return isInteger(total) ? BigInt(total) : undefined;
+      return typeof total === "number" && Number.isSafeInteger(total) ? BigInt(total) : undefined;
     } catch {
       return undefined;
     }
