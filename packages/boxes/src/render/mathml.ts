@@ -127,7 +127,10 @@ function writeNode(box: BoxNode): string {
     case "PanelBox":
       return element("mrow", write(box[1]), { "data-box": box[0], style: FRAME_STYLE });
     case "PaneBox":
+    case "TooltipBox":
       return write(box[1]);
+    case "PaneSelectorBox":
+      return box[1][0] === undefined ? "" : write(box[1][0][1]);
     case "TagBox":
       return element("semantics", write(box[1]) + element("annotation", escape(box[2]), { encoding: TAG_ENCODING }));
     case "InterpretationBox":

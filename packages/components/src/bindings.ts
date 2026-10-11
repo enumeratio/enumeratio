@@ -28,6 +28,12 @@ export const takesBindings = (t: Template): boolean =>
   )?.elementProperties?.has("bindings") ??
     false);
 
+/** Attributes that carry data, never an expression over the scope's variables. */
+const OPAQUE: Readonly<Record<string, ReadonlySet<string>>> = {
+  "template-slot": new Set(["parts"]),
+  "button-box": new Set(["set", "to"]),
+};
+
 /** How long a scope waits for its templates' elements to be defined (they load on use). */
 const DEFINE_WAIT_MS = 2000;
 
@@ -79,14 +85,16 @@ export function captureTemplates(
     if (skipped(el)) continue;
     for (const attr of el.getAttributeNames()) {
       // A scope's declarations name its wildcards; they are not a template over them.
-      if (attr === "variables") continue;
+      if (attr === "variables" || OPAQUE[el.localName]?.has(attr)) continue;
       const list = holdsArguments(el, attr);
       const json = slotted(el.getAttribute(attr) ?? "", list);
       if (json !== undefined) templates.push({ el, attr, json, ...(list ? { list: true as const } : {}) });
     }
     if (el.tagName.includes("-")) {
       const props = (el.constructor as { properties?: Record<string, unknown> }).properties;
-      for (const prop of props ? Object.keys(props).filter((p) => p !== "variables") : []) {
+      for (const prop of props
+        ? Object.keys(props).filter((p) => p !== "variables" && !OPAQUE[el.localName]?.has(p))
+        : []) {
         const v = (el as unknown as Record<string, unknown>)[prop];
         const list = holdsArguments(el, prop);
         const json = typeof v === "string" ? slotted(v, list) : undefined;

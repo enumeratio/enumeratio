@@ -252,7 +252,11 @@ function writeNode(box: BoxNode): string {
     case "PanelBox":
       return `\\boxed{${write(box[1])}}`;
     case "PaneBox":
+    case "TooltipBox":
       return write(box[1]);
+    // Static output has no value to pick by; the first pane is the default reading.
+    case "PaneSelectorBox":
+      return box[1][0] === undefined ? "" : write(box[1][0][1]);
     case "TagBox":
       return write(box[1]);
     case "InterpretationBox":

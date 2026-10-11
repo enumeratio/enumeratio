@@ -30,6 +30,7 @@ export {
   controlOperands,
 } from "./notation-control.ts";
 export { LAYOUT_HEADS, LAYOUT_NOTATION, LAYOUT_OPTIONS } from "./notation-layout.ts";
+export { PROSE_HEADS, PROSE_NOTATION } from "./notation-prose.ts";
 export {
   combineNotation,
   fence,
@@ -45,4 +46,5 @@ export {
   subscripted,
   type Writer,
 } from "./notation.ts";
+export { parseHoleOptions, parseProse, type ProsePart } from "./template.ts";
 export { compileNotation } from "./notation-data.ts";

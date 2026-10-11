@@ -27,6 +27,7 @@ import { fromMathJson } from "./json.ts";
 import { ENGINE_NOTATION } from "./notation-engine.ts";
 import { CONTROL_NOTATION } from "./notation-control.ts";
 import { LAYOUT_NOTATION } from "./notation-layout.ts";
+import { PROSE_NOTATION } from "./notation-prose.ts";
 import type { Notation, Writer } from "./notation.ts";
 
 // Binding strength, loosest to tightest. A node binding at `ATOM` never needs parens.
@@ -631,7 +632,7 @@ function make(node: unknown): Made {
  *  every other head as `notation` (its packages', `notationOf(engine)`) says, or as a call. */
 export function makeBoxes(json: MathJsonExpression, extra: Notation = {}, options: MakeOptions = {}): Box {
   const outer = [notation, hostLeaf] as const;
-  notation = { ...ENGINE_NOTATION, ...LAYOUT_NOTATION, ...CONTROL_NOTATION, ...extra };
+  notation = { ...ENGINE_NOTATION, ...LAYOUT_NOTATION, ...PROSE_NOTATION, ...CONTROL_NOTATION, ...extra };
   hostLeaf = options.leaf;
   try {
     return make(json).box;

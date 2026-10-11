@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { isBoxTag } from "@enumeratio/frontend/box-tags";
+import { HOLE_TAGS, isBoxTag } from "@enumeratio/frontend/box-tags";
 import { defineConfig } from "vitepress";
 import { notatioMarkup, useLibraryParams } from "./notatio-markup.ts";
 import { libraryParams } from "./theme/libraries.ts";
@@ -409,7 +409,8 @@ const config = defineConfig({
     template: {
       compilerOptions: {
         // notatio-*, the box tags (row-box, table-view-box, …) and MathLive's math-field are custom elements, not Vue components.
-        isCustomElement: (tag: string) => tag.startsWith("notatio-") || isBoxTag(tag) || tag === "math-field",
+        isCustomElement: (tag: string) =>
+          tag.startsWith("notatio-") || isBoxTag(tag) || HOLE_TAGS.includes(tag) || tag === "math-field",
       },
     },
   },

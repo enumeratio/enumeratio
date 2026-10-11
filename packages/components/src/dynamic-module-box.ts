@@ -16,7 +16,7 @@ import { LitElement, nothing } from "lit";
 import "./dynamic-box.ts";
 import "./knob-box.ts";
 import "./toggler-box.ts";
-import "./notatio-when.ts";
+import "./pane-selector-box.ts";
 import { ReactiveModule } from "./reactive-module.ts";
 import { registerScope, Scope } from "./scope.ts";
 import { ensureStyles } from "./styles.ts";
@@ -85,14 +85,14 @@ const STOP_GRACE_MS = 300;
  * a `<Knob>` you drag, a `<Toggler>` you click — and each contributes
  * its `name` as a wildcard. Everything else in the subtree that is an Epsil expression
  * over those wildcards is a template, re-evaluated on every move: a `<Dynamic>`
- * readout, a `<When>` condition, or an attribute of any other component, so the
+ * readout, a `<PaneSelector>` selector, or an attribute of any other component, so the
  * same knob can drive a sentence and the plot beside it.
  *
  * ```html
  * <DynamicModule>
  *   A <Knob name="n" value="4" min="1" max="8" step="1" />-element set has
- *   <Dynamic value="2^_n" /> subsets<When test="_n > 5">, which is
- *   already more than you want to list</When>.
+ *   <Dynamic value="2^_n" /> subsets<PaneSelector selector="_n > 5"><span data-pane="True">, which is
+ *   already more than you want to list</span></PaneSelector>.
  *   <Figure kind="subset" value="[1,3]" n="_n" />
  * </DynamicModule>
  * ```

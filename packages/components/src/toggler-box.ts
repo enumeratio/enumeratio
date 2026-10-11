@@ -31,7 +31,7 @@ import { defineControl, emitControl } from "./define.ts";
  * `<DynamicModule>` the binding `_name` is the entry's value when it is a number, a
  * quoted string (`"several" -> several`, what `Toggler(size, ["several", …])` lowers
  * to) or a named value, and otherwise its **index**, so a toggle over words in prose
- * still drives the rest of the document (`<When test="_size > 1">`).
+ * still drives the rest of the document (`<PaneSelector selector="_size > 1">`).
  *
  * A toggler is a `<Knob>` **without an axis**, and that is the whole
  * difference: there is no direction to drag a word in, so a click steps it once, and a

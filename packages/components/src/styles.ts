@@ -1373,29 +1373,6 @@ notatio-worksheet {
   outline-offset: -2px;
 }
 
-/* --- Tooltips: [data-tip] shows its text on hover and keyboard focus, at once ------- */
-[data-tip] {
-  position: relative;
-}
-[data-tip]:hover::after,
-[data-tip]:focus-visible::after {
-  content: attr(data-tip);
-  position: absolute;
-  z-index: 30;
-  top: calc(100% + 0.35rem);
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
-  background: var(--vp-c-text-1, #222);
-  color: var(--vp-c-bg, #fff);
-  font-size: 0.75rem;
-  font-weight: 400;
-  line-height: 1.3;
-  white-space: pre;
-  pointer-events: none;
-}
-
 /* --- Palette picker: one menu for a plot's gradient and category colors ------------- */
 .notatio-palette { position: relative; display: inline-block; }
 .notatio-palette-button { display: inline-flex; align-items: center; gap: 0.45rem; }
@@ -1561,12 +1538,8 @@ graphics-box {
    disturb the line: no padding that changes the leading, no border that reserves
    width, and the hover arrows are positioned out of flow so nothing reflows when
    they appear. */
-/* A dynamic module wraps prose -- paragraphs, figures, whole sections -- so it is a block.
-   A conditional is a PHRASE inside a sentence and must contribute no box at all;
-   display:contents is what keeps it in the line it was written in. */
+/* A dynamic module wraps prose -- paragraphs, figures, whole sections -- so it is a block. */
 dynamic-module-box { display: block; }
-notatio-when { display: contents; }
-notatio-when[hidden] { display: none; }
 dynamic-box { display: inline; }
 dynamic-box[display] { display: block; text-align: center; margin: 1.1rem 0; }
 knob-box, toggler-box { display: inline; }

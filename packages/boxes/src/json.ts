@@ -36,7 +36,8 @@ export function toMathJson(box: Box): Json {
   const args = box.slice(1, ARITY[head] + 1) as unknown[];
   const encoded: Json[] = args.map((arg, i) => {
     if (head === "RowBox" || head === "TextData") return list((arg as Box[]).map(toMathJson));
-    if (head === "GridBox") return list((arg as Box[][]).map((r) => list(r.map(toMathJson))));
+    if (head === "GridBox" || (head === "PaneSelectorBox" && i === 0))
+      return list((arg as Box[][]).map((r) => list(r.map(toMathJson))));
     if (head === "TextBox" || head === "TemplateSlot" || head === "TemplateExpression") return { str: arg as string };
     // A tag that is no symbol's name (an address, "1,0") is a string.
     if ((head === "TagBox" || head === "FormBox") && i === 1)
@@ -149,7 +150,8 @@ export function fromMathJson(json: Json): Box {
   if (ops.length !== arity) fail(`${head} takes ${arity} argument(s)`, json);
   const args: unknown[] = ops.map((op, i) => {
     if (head === "RowBox" || head === "TextData") return listItems(op).map(fromMathJson);
-    if (head === "GridBox") return listItems(op).map((r) => listItems(r).map(fromMathJson));
+    if (head === "GridBox" || (head === "PaneSelectorBox" && i === 0))
+      return listItems(op).map((r) => listItems(r).map(fromMathJson));
     if (head === "TextBox" || head === "TemplateSlot" || head === "TemplateExpression")
       return stringOf(op) ?? fail(`${head} takes a string`, op);
     if ((head === "TagBox" || head === "FormBox") && i === 1)

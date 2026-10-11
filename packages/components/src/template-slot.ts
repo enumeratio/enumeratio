@@ -1,12 +1,4 @@
-import {
-  fillTex,
-  parseProse,
-  plainJson,
-  pointWords,
-  type ProsePart,
-  randomValue,
-  type VariableSpec,
-} from "@enumeratio/frontend/core";
+import { plainJson, pointWords, randomValue, type VariableSpec } from "@enumeratio/frontend/core";
 import katex from "katex";
 import { html, LitElement, nothing } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -41,47 +33,44 @@ function texOf(spec: VariableSpec | undefined, value: Json, ringOf: (ring: Json)
   return spec?.domain.kind === "points" ? words.replace(/−/g, "-").replace(/ω/g, "\\omega ") : `\\text{${words}}`;
 }
 
-/** A setter hole, Wolfram's `Setter(_e, value, "label")`: a link that sets the variable to the value. */
-const SETTER = /^Setter\(\s*_([A-Za-z]\w*)\s*,\s*(.+?)\s*,\s*"([^"]*)"\s*\)$/s;
-
-/** `{InputField(Variables)}`: the scope's variables as one editable, copyable sentence. */
-const SETTINGS = /^InputField\(\s*Variables\s*\)$/;
-
-/** A setter's value as MathJSON: a quoted string, a number, or a name. */
-function setterValue(text: string): Json {
-  const quoted = /^"(.*)"$/s.exec(text);
-  if (quoted) return `'${quoted[1]}'`;
-  const n = Number(text);
-  return Number.isFinite(n) ? n : text;
-}
+/** `{InputField(Variables)}`'s hole: the scope's variables as one editable, copyable sentence. */
+const SETTINGS = "Variables";
 
 /** A toggler entry for a choice: `value -> label`, the value as Epsil spells it. */
 const entryOf = (value: Json, label: string): string =>
   `${typeof value === "string" ? value.replace(/^'(.*)'$/s, '"$1"') : JSON.stringify(value)} -> ${label}`;
 
+/** A fragment of an island's TeX, or the variable standing in it. */
+type TexPart = string | { readonly slot: string };
+
+/** The attributes that are no option of the hole. */
+const NOT_OPTIONS = new Set(["name", "parts", "class", "style", "id"]);
+
 /**
- * `<notatio-string-template>Primes of $\mathbb{Q}(\sqrt{_d})$, d = {_d}, lighting the {_h} of the
- * selection.</notatio-string-template>` -- Wolfram's `StringTemplate`, with Epsil holes: prose
- * whose holes are the variables of the scope it sits in (the nearest element declaring
- * `Variables`, else the page).
+ * A hole in prose that the page's scope fills (`TemplateSlot` in a `TextData`, the text of a
+ * `StringTemplate`): the variables of the scope it sits in, the nearest element declaring
+ * `Variables`, else the page.
  *
- * - `{_d}` is the variable's own control, chosen by its declared domain: a stepper for integers,
- *   a knob for reals, a word that cycles for choices or booleans. `{_d | stepper}`,
- *   `{_d | knob}` or `{_d | toggler}` picks another.
- * - Any other hole, `{N(_d^2)}`, is a readout, refilled as the variables move.
- * - In a `$…$` island, `_d` or `_{name}` standing alone (`\sqrt{_d}`) is the variable's value.
- * - `{Setter(_e, "twindragon", "the twindragon")}` (Wolfram's `Setter`) is a link that sets `_e`.
- * - `{InputField(Variables)}` (Wolfram's `InputField`) holds every declared variable as one
- *   sentence of Epsil, to copy and keep, or to paste back and load.
+ * - `<template-slot name="d">` is the variable's own control, chosen by its declared domain: a
+ *   stepper for integers, a knob for reals, a word that cycles for choices or booleans. The
+ *   options `stepper`, `knob` or `toggler` pick another, and `random` puts a die beside it. A
+ *   name no declaration gives is a readout of the variable.
+ * - `<template-slot parts="…">` is a `$…$` island with variables in it (`\sqrt{_d}`): the
+ *   fragments in order, each variable standing for its value, typeset as it moves.
+ * - `<template-slot name="Variables">` holds every declared variable as one sentence of Epsil,
+ *   to copy and keep, or to paste back and load.
  */
-export class NotatioStringTemplate extends LitElement {
+export class TemplateSlot extends LitElement {
   static properties = {
-    /** The template; when absent, the element's text when it connects. */
-    template: { type: String },
+    /** The variable (without its `_`). */
+    name: { type: String },
+    /** The TeX of an island as JSON: strings, and `{"slot": name}` for each variable. */
+    parts: { type: String },
     _tick: { state: true },
   };
 
-  declare template: string;
+  declare name: string;
+  declare parts: string;
   declare _tick: number;
 
   #scope: Scope | undefined;
@@ -90,7 +79,8 @@ export class NotatioStringTemplate extends LitElement {
 
   constructor() {
     super();
-    this.template = "";
+    this.name = "";
+    this.parts = "";
     this._tick = 0;
     ensureStyles();
   }
@@ -100,11 +90,6 @@ export class NotatioStringTemplate extends LitElement {
   }
 
   override connectedCallback(): void {
-    // Authored as text: take it as the template before rendering replaces it.
-    if (!this.template && this.textContent?.trim()) {
-      this.template = this.textContent.trim().replace(/\s+/g, " ");
-      this.replaceChildren();
-    }
     super.connectedCallback();
     this.#scope = scopeOf(this);
     this.#unsubscribe = this.#scope?.subscribe(() => this._tick++);
@@ -117,6 +102,15 @@ export class NotatioStringTemplate extends LitElement {
     this.#unsubscribe = undefined;
   }
 
+  /** The hole's options: its other attributes, `random` and the like. */
+  get #options(): Readonly<Record<string, string>> {
+    return Object.fromEntries(
+      this.getAttributeNames()
+        .filter((n) => !NOT_OPTIONS.has(n) && !n.startsWith("data-"))
+        .map((n) => [n, this.getAttribute(n) ?? ""]),
+    );
+  }
+
   /** A ring the declarations name, or the value of the variable that holds it (`_r`). */
   #ringOf = (ring: Json): Json =>
     typeof ring === "string" && ring.startsWith("_") ? this.#scope?.values.get(ring.slice(1)) : ring;
@@ -125,15 +119,20 @@ export class NotatioStringTemplate extends LitElement {
     return this.#scope?.declarations.find((s) => s.name === name);
   }
 
-  #texOf(latex: string): unknown {
-    const values = new Map<string, string>();
-    for (const [name, value] of this.#scope?.values ?? [])
-      values.set(name, texOf(this.#spec(name), value, this.#ringOf));
-    const filled = fillTex(latex, values);
-    let markup = this.#tex.get(filled);
+  /** An island with each variable filled: a variable no scope holds is left as written. */
+  #islandOf(parts: readonly TexPart[]): unknown {
+    const latex = parts
+      .map((part) => {
+        if (typeof part === "string") return part;
+        const value = this.#scope?.values.get(part.slot);
+        if (value === undefined) return part.slot.length === 1 ? `_${part.slot}` : `_{${part.slot}}`;
+        return `{${texOf(this.#spec(part.slot), value, this.#ringOf)}}`;
+      })
+      .join("");
+    let markup = this.#tex.get(latex);
     if (markup === undefined) {
-      markup = katex.renderToString(filled, { throwOnError: false });
-      this.#tex.set(filled, markup);
+      markup = katex.renderToString(latex, { throwOnError: false });
+      this.#tex.set(latex, markup);
     }
     return unsafeHTML(markup);
   }
@@ -157,22 +156,24 @@ export class NotatioStringTemplate extends LitElement {
   }
 
   #control(name: string, options: Readonly<Record<string, string>>): unknown {
-    // `{_d | random}`: the variable's control with a die beside it.
+    // `random`: the variable's control with a die beside it.
     if ("random" in options && !("stepper" in options)) {
       const { random: _, ...rest } = options;
       return html`${this.#control(name, rest)}${this.#die(name)}`;
     }
     const spec = this.#spec(name);
+    // A name no declaration gives is read, not set.
+    if (spec === undefined) return html`<dynamic-box value=${`_${name}`}></dynamic-box>`;
     const value = this.#scope?.values.get(name);
-    const domain = spec?.domain;
+    const domain = spec.domain;
     const kind =
       "stepper" in options || "knob" in options || "toggler" in options
         ? Object.keys(options).find((k) => k === "stepper" || k === "knob" || k === "toggler")
-        : domain?.kind === "integers"
+        : domain.kind === "integers"
           ? "stepper"
-          : domain?.kind === "reals"
+          : domain.kind === "reals"
             ? "knob"
-            : domain?.kind === "choices" || domain?.kind === "booleans"
+            : domain.kind === "choices" || domain.kind === "booleans"
               ? "toggler"
               : undefined;
     switch (kind) {
@@ -180,20 +181,20 @@ export class NotatioStringTemplate extends LitElement {
         return html`<stepper-box
           name=${name}
           .value=${Number(value ?? 0)}
-          .domain=${domain?.kind === "integers" ? domain : undefined}
-          ?random=${"random" in options || domain?.kind === "integers"}
+          .domain=${domain.kind === "integers" ? domain : undefined}
+          ?random=${"random" in options || domain.kind === "integers"}
         ></stepper-box>`;
       case "knob":
         return html`<knob-box
           name=${name}
           .value=${typeof value === "number" ? String(value) : "0"}
-          min=${domain?.kind === "reals" ? domain.min : 0}
-          max=${domain?.kind === "reals" ? domain.max : 1}
-          step=${domain?.kind === "reals" ? domain.step : 0.01}
+          min=${domain.kind === "reals" ? domain.min : 0}
+          max=${domain.kind === "reals" ? domain.max : 1}
+          step=${domain.kind === "reals" ? domain.step : 0.01}
         ></knob-box>`;
       case "toggler": {
         const values =
-          domain?.kind === "choices" ? domain.values.map((v, k) => entryOf(v, domain.labels[k]!)).join("|") : undefined;
+          domain.kind === "choices" ? domain.values.map((v, k) => entryOf(v, domain.labels[k]!)).join("|") : undefined;
         return html`<toggler-box
           name=${name}
           values=${values ?? nothing}
@@ -259,40 +260,17 @@ export class NotatioStringTemplate extends LitElement {
     </span>`;
   }
 
-  #part(part: ProsePart): unknown {
-    switch (part.kind) {
-      case "text":
-        return part.text;
-      case "tex":
-        return this.#texOf(part.latex);
-      case "knob":
-        return this.#control(part.name.replace(/^_/, ""), part.options);
-      case "dynamic": {
-        if (SETTINGS.test(part.value.trim())) return this.#settings();
-        const setter = SETTER.exec(part.value.trim());
-        if (setter) {
-          const [, name, value, label] = setter;
-          return html`<a
-            href="#"
-            class="notatio-setter"
-            @click=${(e: Event) => {
-              e.preventDefault();
-              this.#scope?.set(name!, setterValue(value!) as never);
-            }}
-            >${label}</a
-          >`;
-        }
-        return html`<dynamic-box value=${part.value}></dynamic-box>`;
+  protected override render(): unknown {
+    if (this.parts) {
+      try {
+        return this.#islandOf(JSON.parse(this.parts) as TexPart[]);
+      } catch {
+        return nothing;
       }
     }
-    return nothing;
-  }
-
-  protected override render(): unknown {
-    const names = new Set((this.#scope?.declarations ?? []).map((s) => `_${s.name}`));
-    return html`${parseProse(this.template, names).map((p) => this.#part(p))}`;
+    if (this.name === SETTINGS) return this.#settings();
+    return this.#control(this.name, this.#options);
   }
 }
 
-if (!customElements.get("notatio-string-template"))
-  customElements.define("notatio-string-template", NotatioStringTemplate);
+if (!customElements.get("template-slot")) customElements.define("template-slot", TemplateSlot);

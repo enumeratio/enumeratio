@@ -1,0 +1,2 @@
+id	in
+panes	PaneSelector[List[Rule["low", "small"], Rule["high", "big"]], Dynamic[level]]

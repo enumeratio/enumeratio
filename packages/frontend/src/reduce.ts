@@ -9,7 +9,7 @@
 // See https://github.com/enumeratio/enumeratio/wiki/Rendering-Environments.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { type ControlBoxHead, LAYOUT_HEADS, makeBoxes } from "@enumeratio/boxes";
+import { type ControlBoxHead, LAYOUT_HEADS, makeBoxes, PROSE_HEADS } from "@enumeratio/boxes";
 import { optionsOf, withOptions } from "@enumeratio/formats";
 import { serializeExpression } from "@enumeratio/formats/expression";
 import { type BoxControl, boxControls } from "./control-box.ts";
@@ -475,7 +475,7 @@ export function reduce(expr: Json, env: Environment): Json {
 }
 
 /** Heads that only arrange their operands: what they hold draws as written when each operand does. */
-const ARRANGING = new Set(["List", "Rule", "KeyValuePair", ...LAYOUT_HEADS]);
+const ARRANGING = new Set(["List", "Rule", "KeyValuePair", ...LAYOUT_HEADS, ...PROSE_HEADS]);
 
 /** Every head in `expr` draws (or holds its contents), so evaluating it would change nothing. */
 function asWritten(expr: Json): boolean {

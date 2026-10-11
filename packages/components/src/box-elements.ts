@@ -21,6 +21,8 @@ export const INTERACTIVE_BOX_TAGS: ReadonlySet<string> = new Set([
   "graphics-box",
   "dynamic-box",
   "dynamic-module-box",
+  "button-box",
+  "pane-selector-box",
   ...CONTROL_BOX_HEADS.map(boxTag),
 ]);
 

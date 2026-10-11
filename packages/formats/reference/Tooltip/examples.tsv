@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+label	Basic		[Tooltip, x, "'the unknown'"]	[Tooltip, x, "'the unknown'"]	An item with a label that shows on hover or focus	{head: TooltipBox, operands: [x, [TextBox, the unknown]]}

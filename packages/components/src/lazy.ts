@@ -6,7 +6,7 @@
 // `tests/lazy.test.ts` holds this table to every tag the package defines, and the modules a page
 // of cells or plots loads to no engine.
 
-import { BAR_TAGS } from "@enumeratio/frontend/box-tags";
+import { BAR_TAGS, HOLE_TAGS } from "@enumeratio/frontend/box-tags";
 import { defineBoxElements, INTERACTIVE_BOX_TAGS } from "./box-elements.ts";
 
 export { configureMacros } from "./mathlive.ts";
@@ -29,13 +29,14 @@ const ELEMENTS: Readonly<Record<string, () => Promise<unknown>>> = {
   "notatio-complex-plot-3d": () => import("./notatio-complex-plot-3d.ts"),
   "graphics-box": () => import("./graphics-box.ts"),
   "stepper-box": () => import("./stepper-box.ts"),
-  "notatio-string-template": () => import("./notatio-string-template.ts"),
+  "template-slot": () => import("./template-slot.ts"),
+  "button-box": () => import("./button-box.ts"),
   "notatio-gradient": () => import("./notatio-gradient.ts"),
   "notatio-palette": () => import("./notatio-palette.ts"),
   "notatio-manipulate": () => import("./notatio-manipulate.ts"),
   "dynamic-module-box": () => import("./dynamic-module-box.ts"),
   "dynamic-box": () => import("./dynamic-box.ts"),
-  "notatio-when": () => import("./notatio-when.ts"),
+  "pane-selector-box": () => import("./pane-selector-box.ts"),
   "slider-box": () => import("./slider-box.ts"),
   "animator-box": () => import("./animator-box.ts"),
   "slider-2d-box": () => import("./slider-2d-box.ts"),
@@ -80,7 +81,12 @@ let generics: Promise<typeof import("./generic.ts")> | undefined;
 function define(el: Element): void {
   const tag = el.localName;
   if (
-    !(tag.startsWith("notatio-") || INTERACTIVE_BOX_TAGS.has(tag) || BAR_TAGS.includes(tag)) ||
+    !(
+      tag.startsWith("notatio-") ||
+      INTERACTIVE_BOX_TAGS.has(tag) ||
+      BAR_TAGS.includes(tag) ||
+      HOLE_TAGS.includes(tag)
+    ) ||
     customElements.get(tag) !== undefined
   )
     return;

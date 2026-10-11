@@ -230,7 +230,7 @@ const bringsBindings = (records: readonly MutationRecord[]): boolean =>
       const el = node as Element;
       return (
         el.localName.startsWith("notatio-") ||
-        el.querySelector(`${controlSelector()}, dynamic-box, notatio-when, [value*="_"], [variables]`) !== null
+        el.querySelector(`${controlSelector()}, dynamic-box, pane-selector-box, [value*="_"], [variables]`) !== null
       );
     }),
   );

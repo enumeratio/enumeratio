@@ -27,5 +27,8 @@ export const BOX_TAGS: readonly string[] = BOX_TAG_HEADS.map(boxTag);
  */
 export const BAR_TAGS: readonly string[] = BAR_KINDS.map((kind) => boxTag(`${kind}Box`));
 
+/** The element the page's scope fills a `TemplateSlot` with: a hole in prose, which is no box. */
+export const HOLE_TAGS: readonly string[] = ["template-slot"];
+
 /** Whether `tag` is a box's, or a bar's. */
 export const isBoxTag = (tag: string): boolean => BOX_TAGS.includes(tag) || BAR_TAGS.includes(tag);

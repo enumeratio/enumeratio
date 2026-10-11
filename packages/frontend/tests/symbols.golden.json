@@ -1066,14 +1066,27 @@
           }
         },
         {
-          "tag": "notatio-string-template",
+          "tag": "span",
           "attributes": {
-            "template": "d = {_d}"
-          }
+            "data-head": "StringTemplate"
+          },
+          "children": [
+            {
+              "tag": "span",
+              "attributes": {},
+              "text": "d = "
+            },
+            {
+              "tag": "template-slot",
+              "attributes": {
+                "name": "d"
+              }
+            }
+          ]
         }
       ]
     },
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\" variables=\"[_d -> -5, _s -> []]\"><graphics-box value=\"Show(\n      LatticeTiles(QuadraticIntegers(_d), ColorRules -> [isPrime -> Teal]),\n      Selection -> _s,\n    )\" style=\"display:block;min-height:480px\"></graphics-box><notatio-string-template template=\"d = {_d}\"></notatio-string-template></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\" variables=\"[_d -> -5, _s -> []]\"><graphics-box value=\"Show(\n      LatticeTiles(QuadraticIntegers(_d), ColorRules -> [isPrime -> Teal]),\n      Selection -> _s,\n    )\" style=\"display:block;min-height:480px\"></graphics-box><span data-head=\"StringTemplate\"><span>d = </span><template-slot name=\"d\"></template-slot></span></grid-box>"
   },
   "TestResultObject(KeyValuePair(\"Outcome\", \"Success\"), KeyValuePair(\"Input\", 1 + 1), KeyValuePair(\"ActualOutput\", 2), KeyValuePair(\"AbsoluteTimeUsed\", 0))": {
     "rendering": {
