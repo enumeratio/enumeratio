@@ -1,7 +1,15 @@
 import { chooseChartType } from "./chart.ts";
 import { CHART_HEADS, PLOT_HEADS } from "./plot-lowering.ts";
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { type Box, CONTROL_NOTATION_HEADS, LAYOUT_HEADS, LAYOUT_OPTIONS, makeBoxes, slot } from "@enumeratio/boxes";
+import {
+  type Box,
+  CONTROL_NOTATION_HEADS,
+  LAYOUT_HEADS,
+  LAYOUT_OPTIONS,
+  makeBoxes,
+  PROSE_HEADS,
+  slot,
+} from "@enumeratio/boxes";
 import { optionsOf } from "@enumeratio/formats";
 import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
 import { FRAME_HEIGHT, figureLayerOf, VALUE_FRAMES } from "./figure-frames.ts";
@@ -915,13 +923,6 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
       }),
     },
   },
-  {
-    // `StringTemplate("… {_d} …")`: Wolfram's template, with Epsil holes over the variables of
-    // the scope it sits in.
-    head: "StringTemplate",
-    tag: "notatio-string-template",
-    attributes: (ops) => ({ template: strOf(ops[0]) ?? "" }),
-  },
 ];
 
 /** An option's value as attribute text: a string bare, `True` as `true`, the rest Epsil. */
@@ -1046,10 +1047,13 @@ export function renderingOf(expr: Json, inManipulate = false): Rendering | undef
 
 /**
  * Heads that are boxes end to end -- `makeBoxes` writes them and the box renderer draws them: the
- * controls and `Dynamic`. (`DynamicModule` can hold a transcript of cells, so its element still
+ * controls, `Dynamic` and `StringTemplate`. (`DynamicModule` can hold a transcript of cells, so its element still
  * comes from the symbol map; the box is what other environments read.)
  */
-const BOXED_HEADS: ReadonlySet<string> = new Set([...CONTROL_NOTATION_HEADS].filter((h) => h !== "DynamicModule"));
+const BOXED_HEADS: ReadonlySet<string> = new Set([
+  ...[...CONTROL_NOTATION_HEADS].filter((h) => h !== "DynamicModule"),
+  ...PROSE_HEADS,
+]);
 const isBoxed = (head: string, expr: Json): boolean => BOXED_HEADS.has(head) && optionsOf(expr).ops.length > 0;
 
 function render(expr: Json, inScope: boolean): Rendering | undefined {

@@ -372,7 +372,11 @@ class Layout {
       case "ErrorBox":
       case "ButtonBox":
       case "TextCell":
+      case "TooltipBox":
         return this.lay(box[1], style);
+      case "PaneSelectorBox":
+        // A static layout has no value to pick by: the first pane.
+        return box[1][0] === undefined ? this.text("", style) : this.lay(box[1][0][1], style);
       case "FormBox":
         return box[2] === "TeXForm" ? this.slot(box) : this.lay(box[1], style);
       case "TemplateSlot":
@@ -802,8 +806,11 @@ function plain(box: Box): string {
     case "ErrorBox":
     case "ButtonBox":
     case "TextCell":
+    case "TooltipBox":
     case "FormBox":
       return plain(box[1]);
+    case "PaneSelectorBox":
+      return box[1][0] === undefined ? "" : plain(box[1][0][1]);
     case "FractionBox":
       return `${plain(box[1])}/${plain(box[2])}`;
     case "SuperscriptBox":

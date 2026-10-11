@@ -37,6 +37,17 @@ pane-box[data-scrollbars] { overflow: auto; }
 /* A plot with a caption: the plot takes the width, the caption reads as a paragraph under it. */
 [data-head="Labeled"]:has(> graphics-box) { display: flex; gap: 0.5rem; text-align: start; }
 [data-head="Labeled"] > graphics-box { align-self: stretch; }
-[data-head="Labeled"]:has(> graphics-box) > notatio-string-template { display: block; line-height: 1.7; }
+[data-head="Labeled"]:has(> graphics-box) > [data-head="StringTemplate"] { display: block; line-height: 1.7; }
 .style-box-label { font-size: 0.85em; color: var(--vp-c-text-2, #666); }
+
+/* --- prose boxes: TextCell, TooltipBox, PaneSelectorBox --------------------------------
+   A pane shows only once the element has picked it (data-selected), so a page that is read
+   before the element loads never shows both halves of an either/or. */
+p[data-cell-style^="Item"], p[data-cell-style^="Subitem"], p[data-cell-style^="Subsubitem"] { margin-block: 0.2em; padding-inline-start: 1.4em; }
+p[data-cell-style^="Item"]::before { content: "\\2022"; margin-inline-start: -1em; margin-inline-end: 0.4em; }
+p[data-cell-style="DisplayFormula"] { text-align: center; }
+tooltip-box, button-box, template-slot { display: inline; }
+pane-selector-box { display: contents; }
+pane-selector-box > [data-pane] { display: none; }
+pane-selector-box > [data-pane][data-selected] { display: contents; }
 `;

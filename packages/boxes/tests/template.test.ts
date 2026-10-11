@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { parseHoleOptions, parseProse } from "../src/prose.ts";
+import { parseHoleOptions, parseProse } from "../src/template.ts";
 
 const NAMES = new Set(["k", "a"]);
 

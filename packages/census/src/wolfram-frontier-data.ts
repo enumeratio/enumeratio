@@ -181,10 +181,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 57,
   },
   {
-    head: "Tooltip",
-    uses: 54,
-  },
-  {
     head: "HoldForm",
     uses: 52,
   },

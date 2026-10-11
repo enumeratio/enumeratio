@@ -21,7 +21,7 @@ Five components come out of that, and they are all inline:
 | `<knob-box>`           | a number you drag inside the prose           | `TKAdjustableNumber` |
 | `<toggler-box>`        | a word that cycles when clicked              | Wolfram's `Toggler`  |
 | `<dynamic-box>`        | a derived readout                            | Wolfram's `Dynamic`  |
-| `<notatio-when>`       | a phrase that appears only under a condition | Tangle's `TKIf`      |
+| `<pane-selector-box>`  | a phrase that appears only under a condition | Tangle's `TKIf`      |
 
 The binding machinery is the one `<notatio-manipulate>` already uses: a knob
 named `a` publishes the wildcard `_a`, and **any** expression in the
@@ -296,12 +296,12 @@ condition.
 <Story
   title="A toggler and a conditional">
 <template #description>
-Click the phrase to cycle it. The clause after it belongs to a
-<code>&lt;notatio-when&gt;</code>, and appears only on the last entry.
+Click the phrase to cycle it. The clause after it is a pane of a
+<code>&lt;pane-selector-box&gt;</code> keyed <code>True</code>, and appears only on the last entry.
 </template>
 <dynamic-module-box>
 <p>
-There are <toggler-box name="crowd" values="a few|several|rather a lot of" /> people here<notatio-when test="_crowd > 1">, which is more than the room was built for</notatio-when>.
+There are <toggler-box name="crowd" values="a few|several|rather a lot of" /> people here<pane-selector-box selector="_crowd > 1"><span data-pane="True">, which is more than the room was built for</span></pane-selector-box>.
 </p>
 </dynamic-module-box>
 </Story>
@@ -309,15 +309,14 @@ There are <toggler-box name="crowd" values="a few|several|rather a lot of" /> pe
 <Story
   title="Both branches of an either/or">
 <template #description>
-<code>invert</code> is the other half of the sentence: the same test, shown when
-it fails. Two conditionals rather than an if/else attribute, because each half is
-prose with its own markup in it.
+The other half of the sentence is the pane keyed <code>False</code>: one selector,
+two panes, each of them prose with its own markup in it.
 </template>
 <dynamic-module-box>
 <p>
 A graph on <knob-box name="v" value="4" min="2" max="10" step="1" /> vertices has
 <dynamic-box value="Binomial(_v, 2)" /> possible edges, which is
-<notatio-when test="_v > 5">more than you want to draw by hand</notatio-when><notatio-when test="_v > 5" invert>still a picture you can draw</notatio-when>.
+<pane-selector-box selector="_v > 5"><span data-pane="True">more than you want to draw by hand</span><span data-pane="False">still a picture you can draw</span></pane-selector-box>.
 </p>
 </dynamic-module-box>
 </Story>

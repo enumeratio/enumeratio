@@ -151,6 +151,8 @@ export const GRAPHICS_HEADS: readonly string[] = [
   "Column",
   "Grid",
   "Panel",
+  "Tooltip",
+  "PaneSelector",
   "Labeled",
   // Graphics primitives: marks a plot draws in its own coordinates (`Epilog -> Point(…)`).
   "Point",

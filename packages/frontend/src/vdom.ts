@@ -10,7 +10,7 @@ import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { optionsOf } from "@enumeratio/formats";
 import { serializeExpression } from "@enumeratio/formats/expression";
 import { stripMetadata, tokenOf } from "@enumeratio/formats/markup";
-import { LAYOUT_HEADS } from "@enumeratio/boxes";
+import { LAYOUT_HEADS, PROSE_HEADS } from "@enumeratio/boxes";
 import { isBoxTag } from "./box-tags.ts";
 import { CHART_HEADS, PLOT_HEADS } from "./plot-lowering.ts";
 import { layoutRendering, optionAttribute, type Rendering, renderingOf, visualSymbol } from "./symbols.ts";
@@ -89,8 +89,9 @@ export function structuralOf(expr: Json): StructuralNode {
   if (head === undefined) {
     return { tag: "notatio-symbol", attributes: { value: JSON.stringify(expr) } };
   }
-  // A layout is boxes drawn as plain DOM; its entries are the structural tree again.
-  if (LAYOUT_HEADS.has(head)) return layoutRendering(expr, (entry) => structuralOf(entry) as Rendering);
+  // A layout (or a template) is boxes drawn as plain DOM; its entries are the structural tree again.
+  if (LAYOUT_HEADS.has(head) || PROSE_HEADS.has(head))
+    return layoutRendering(expr, (entry) => structuralOf(entry) as Rendering);
   const { ops, options } = optionsOf(expr);
   const attributes: Record<string, string> = {};
   const children: (StructuralNode | string)[] = [];

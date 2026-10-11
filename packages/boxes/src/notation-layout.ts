@@ -1,9 +1,23 @@
 // The layout formatters as `makeBoxes` rules, as in Wolfram: `Row` is a `RowBox`; `Column`, `Grid`
-// and `Labeled` a `GridBox`; `Panel` a `PanelBox`. The first three carry the head as a `TagBox`, so
+// and `Labeled` a `GridBox`; `Panel` a `PanelBox`; `Tooltip` a `TooltipBox`; `PaneSelector` a
+// `PaneSelectorBox`. The first three carry the head as a `TagBox`, so
 // the head reads back and an environment can give each its own look.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { type Box, grid, type Options, type OptionValue, panel, row, style, tag, text } from "./box.ts";
+import {
+  type Box,
+  dynamic,
+  grid,
+  type Options,
+  type OptionValue,
+  paneSelector,
+  panel,
+  row,
+  style,
+  tag,
+  text,
+  tooltip,
+} from "./box.ts";
 import type { Notation, NotationRule, Writer } from "./notation.ts";
 
 type Json = MathJsonExpression;
@@ -18,7 +32,7 @@ export const opsOf = (node: unknown): Json[] => {
   return Array.isArray(fn) ? (fn.slice(1) as Json[]) : [];
 };
 
-const stringOf = (node: unknown): string | undefined => {
+export const stringOf = (node: unknown): string | undefined => {
   if (typeof node === "string") return /^'.*'$/s.test(node) ? node.slice(1, -1) : undefined;
   const s = (node as { str?: unknown })?.str;
   return typeof s === "string" ? s : undefined;
@@ -156,6 +170,34 @@ const Panel: NotationRule = (args, write) => {
   );
 };
 
+/** `Tooltip(body, label)`: the body, and what shows on hover or focus. */
+const Tooltip: NotationRule = (args, write) => {
+  const { ops } = split(args);
+  const [body, label] = ops;
+  return body === undefined || label === undefined ? undefined : tooltip(cell(write, body), cell(write, label));
+};
+
+/** `PaneSelector([value -> pane, …], selector)`: the pane whose value the selector (a `Dynamic`, or an expression) holds. */
+const PaneSelector: NotationRule = (args, write) => {
+  const { ops } = split(args);
+  const [panes, selector] = ops;
+  const entries = listOf(panes)?.map((entry): [string, Json] | undefined => {
+    const head = headOf(entry);
+    const [key, pane] = opsOf(entry);
+    const name = atomText(key);
+    return (head === "KeyValuePair" || head === "Rule" || head === "Tuple") && name !== undefined && pane !== undefined
+      ? [name, pane]
+      : undefined;
+  });
+  if (selector === undefined || entries === undefined || entries.some((e) => e === undefined)) return undefined;
+  const bound = headOf(selector) === "Dynamic" ? opsOf(selector)[0] : selector;
+  if (bound === undefined) return undefined;
+  return paneSelector(
+    (entries as [string, Json][]).map(([key, pane]) => [key, cell(write, pane)] as const),
+    dynamic(bound),
+  );
+};
+
 /** Where `Labeled`'s label goes, as the grid's shape: beside the body or stacked with it. */
 const LABEL_AT: Readonly<Record<string, "above" | "below" | "before" | "after">> = {
   Top: "above",
@@ -191,7 +233,7 @@ const Labeled: NotationRule = (args, write) => {
 };
 
 /** The layout formatters' rules: add them to what `makeBoxes` writes with. */
-export const LAYOUT_NOTATION: Notation = { Row, Column, Grid, Panel, Labeled };
+export const LAYOUT_NOTATION: Notation = { Row, Column, Grid, Panel, Labeled, Tooltip, PaneSelector };
 
 /** The options the rules above consume; any other a layout is given is left for its host. */
 export const LAYOUT_OPTIONS: ReadonlySet<string> = new Set([

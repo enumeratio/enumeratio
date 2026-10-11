@@ -52,6 +52,10 @@ export type BoxNode =
   | readonly ["FrameBox", Box, Options?]
   | readonly ["PanelBox", Box, Options?]
   | readonly ["PaneBox", Box, Options?]
+  // A box and what shows on hover or focus; alternatives (`key, pane` rows) and the `DynamicBox`
+  // whose value picks the one shown.
+  | readonly ["TooltipBox", Box, Box, Options?]
+  | readonly ["PaneSelectorBox", readonly (readonly [Box, Box])[], Box, Options?]
   // A scrolling grid over a row source held as an expression (`RowSource(…)`); the rows
   // reach it by range, never as operands (https://github.com/enumeratio/enumeratio/wiki/Speculative-Lazy-Grid).
   | readonly ["TableViewBox", MathJsonExpression, Options?]
@@ -108,6 +112,8 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   FrameBox: 1,
   PanelBox: 1,
   PaneBox: 1,
+  TooltipBox: 2,
+  PaneSelectorBox: 2,
   TableViewBox: 1,
   TagBox: 2,
   InterpretationBox: 2,
@@ -189,6 +195,10 @@ export const style = (box: Box, options: Options): Box => ["StyleBox", box, opti
 export const frame = (box: Box, options?: Options): Box => ["FrameBox", ...withOptions([box] as const, options)] as Box;
 export const panel = (box: Box, options?: Options): Box => ["PanelBox", ...withOptions([box] as const, options)] as Box;
 export const pane = (box: Box, options?: Options): Box => ["PaneBox", ...withOptions([box] as const, options)] as Box;
+export const tooltip = (box: Box, tip: Box, options?: Options): Box =>
+  ["TooltipBox", ...withOptions([box, tip] as const, options)] as Box;
+export const paneSelector = (panes: readonly (readonly [Box, Box])[], selector: Box, options?: Options): Box =>
+  ["PaneSelectorBox", ...withOptions([panes, selector] as const, options)] as Box;
 export const tableView = (source: MathJsonExpression, options?: Options): Box =>
   ["TableViewBox", ...withOptions([source] as const, options)] as Box;
 export const tag = (box: Box, name: string): Box => ["TagBox", box, name];
@@ -263,6 +273,12 @@ export function isBox(value: unknown): value is Box {
       return Array.isArray(args[0]) && args[0].every(isBox);
     case "GridBox":
       return Array.isArray(args[0]) && args[0].every((r: unknown) => Array.isArray(r) && r.every(isBox));
+    case "PaneSelectorBox":
+      return (
+        Array.isArray(args[0]) &&
+        args[0].every((r: unknown) => Array.isArray(r) && r.length === 2 && r.every(isBox)) &&
+        isBox(args[1])
+      );
     case "TextBox":
     case "TemplateSlot":
     case "TemplateExpression":

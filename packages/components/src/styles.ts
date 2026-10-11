@@ -1561,12 +1561,8 @@ graphics-box {
    disturb the line: no padding that changes the leading, no border that reserves
    width, and the hover arrows are positioned out of flow so nothing reflows when
    they appear. */
-/* A dynamic module wraps prose -- paragraphs, figures, whole sections -- so it is a block.
-   A conditional is a PHRASE inside a sentence and must contribute no box at all;
-   display:contents is what keeps it in the line it was written in. */
+/* A dynamic module wraps prose -- paragraphs, figures, whole sections -- so it is a block. */
 dynamic-module-box { display: block; }
-notatio-when { display: contents; }
-notatio-when[hidden] { display: none; }
 dynamic-box { display: inline; }
 dynamic-box[display] { display: block; text-align: center; margin: 1.1rem 0; }
 knob-box, toggler-box { display: inline; }

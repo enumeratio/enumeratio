@@ -131,12 +131,15 @@ class Writer {
       case "FrameBox":
       case "PanelBox":
       case "PaneBox":
+      case "TooltipBox":
       case "TagBox":
       case "InterpretationBox":
       case "ErrorBox":
       case "ButtonBox":
       case "TextCell":
         return this.write(box[1]);
+      case "PaneSelectorBox":
+        return box[1][0] === undefined ? "" : this.write(box[1][0][1]);
       // Running text: its leaves are words, not tokens.
       case "TextData":
         return box[1].map((b) => (typeof b === "string" ? b : this.write(b))).join("");

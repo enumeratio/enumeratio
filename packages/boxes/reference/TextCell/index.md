@@ -17,3 +17,4 @@ names:
 
 - What a markdown block reads as: a paragraph is `Text`, a heading `Title` to `Subsubsubsubsection`, a list item `Item`/`Subitem`/`Subsubitem` (`…Numbered` in a numbered list), a `$$` block `DisplayFormula`, a fenced block `Program` with its `Language`, a block quote `Quote`.
 - A document is a sequence of them, as a notebook's cells are.
+- The web draws a heading style as `h1` to `h6`, `Quote` as a block quote, `Program` as `pre`, and any other as a paragraph that keeps its style in `data-cell-style`.

@@ -11,6 +11,7 @@ import { parseExpression } from "@enumeratio/formats/expression";
 import { readMarkupText } from "@enumeratio/formats/markup";
 import { drawnAsWritten, markupOf } from "@enumeratio/frontend";
 import { SYMBOLS } from "@enumeratio/manifest";
+import { tex } from "./prose.ts";
 
 /** The components a page can use by a PascalCase tag: the theme's, VitePress's and Vue's. */
 export const VUE_COMPONENTS: ReadonlySet<string> = new Set([
@@ -134,7 +135,11 @@ export function outOf(json: unknown, display: boolean): string {
   const drawn = drawnAsWritten(json as never);
   const out =
     drawn !== undefined
-      ? block(markupOf({ ...drawn, attributes: { ...drawn.attributes, "data-mathjson": JSON.stringify(json) } }))
+      ? block(
+          markupOf({ ...drawn, attributes: { ...drawn.attributes, "data-mathjson": JSON.stringify(json) } }, (latex) =>
+            tex(latex, false),
+          ),
+        )
       : `<notatio-out format="mathjson" evaluate ${display ? "display" : "inline"} value="${attribute(JSON.stringify(json))}"></notatio-out>`;
   return display ? out : `<span>${out}</span>`;
 }

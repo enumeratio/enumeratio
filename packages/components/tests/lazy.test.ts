@@ -42,7 +42,7 @@ test("lazy.ts loads every element the package defines, by its own module", () =>
     .filter((f) => f.endsWith(".ts"))
     .flatMap((f) => [
       ...readFileSync(`${src}/${f}`, "utf8").matchAll(
-        /(?:customElements\.define|defineControl)\(\s*"((?:notatio-[a-z0-9-]+)|(?:[a-z0-9]+(?:-[a-z0-9]+)*-box))"/g,
+        /(?:customElements\.define|defineControl)\(\s*"((?:notatio-[a-z0-9-]+)|template-slot|(?:[a-z0-9]+(?:-[a-z0-9]+)*-box))"/g,
       ),
     ])
     .map((m) => m[1]);

@@ -6,6 +6,8 @@
 // rows. Pure: boxes in, a `Rendering` out, which any host turns into markup or a framework's vnodes.
 //
 // A hole (`TemplateSlot`) is where the environment draws a leaf itself: a control, a plot, a readout.
+// One the layout left unfilled is the page's to fill from its scope (`template-slot`), and a
+// `TemplateExpression` is a readout of its expression (`dynamic-box`).
 // A math run is a leaf too: one `form-box` holding its TeX (`Rendering.tex`), which the host
 // typesets (`box-leaf.ts`); everything around a run is drawn here.
 
@@ -67,6 +69,20 @@ function isMath(box: Box): boolean {
       return false;
   }
 }
+
+/** A `TextCell`'s style as the block it is; any other is a paragraph that keeps its style for the stylesheet. */
+const CELL_TAGS: Readonly<Record<string, string>> = {
+  Title: "h1",
+  Section: "h2",
+  Subsection: "h3",
+  Subsubsection: "h4",
+  Subsubsubsection: "h5",
+  Subsubsubsubsection: "h6",
+  Quote: "blockquote",
+};
+
+/** A setter's `ButtonFunction`: `Set(_e, value)`. */
+const SET_FUNCTION = /^Set\(\s*_([A-Za-z]\w*)\s*,\s*(.+?)\s*\)$/s;
 
 /** A run of text, which is no box worth naming in the DOM. */
 const run = (text: string): Rendering => ({ tag: "span", attributes: {}, text });
@@ -149,17 +165,48 @@ export function renderBox(box: Box, holes: Holes = {}): Rendering {
     case "DynamicModuleBox":
       return element("DynamicModuleBox", undefined, scopeAttributes(optionsOfBox(box)), children([box[1]]));
     case "TemplateSlot":
-      return holes[box[1]] ?? run("");
+      return Object.hasOwn(holes, box[1]) ? holes[box[1]]! : slotElement(box);
+    case "TemplateExpression":
+      return { tag: boxTag("DynamicBox"), attributes: { value: box[1] } };
+    // Running text: a string leaf is words here, not a token.
     case "TextData":
-      return { tag: "span", attributes: {}, ...children(box[1]) };
+      return {
+        tag: "span",
+        attributes: {},
+        children: box[1].map((b) => (typeof b === "string" ? run(b) : renderBox(b, holes))),
+      };
+    case "TooltipBox":
+      return element("TooltipBox", undefined, { "data-tip": toText(box[2]), tabindex: "0" }, children([box[1]]));
+    case "PaneSelectorBox": {
+      const selector = box[2];
+      const watched: Record<string, string> =
+        isNode(selector) && selector[0] === "DynamicBox" ? { selector: epsil(selector[1]) } : {};
+      return element(
+        "PaneSelectorBox",
+        undefined,
+        watched,
+        // Each pane under its key, for the element to show the one the selector reads.
+        {
+          children: box[1].map(([key, pane]) => ({
+            tag: "span",
+            attributes: { "data-pane": toText(key) },
+            children: [renderBox(pane, holes)],
+          })),
+        },
+      );
+    }
+    case "ButtonBox":
+      return button(box, holes);
+    case "TextCell":
+      return cell(box, holes);
     case "InterpretationBox":
       return isMath(box) ? typesetLeaf(box, "TraditionalForm") : renderBox(box[1], holes);
     case "FormBox":
+      if (box[2] === "TeXForm" && isNode(box[1]) && box[1][0] === "RowBox" && box[1][1].some(isNode))
+        return liveTeX(box[1][1]);
       if (box[2] === "TeXForm") return typesetLeaf(box, "TeXForm");
       return isMath(box[1]) ? typesetLeaf(box[1], box[2]) : renderBox(box[1], holes);
     case "ErrorBox":
-    case "ButtonBox":
-    case "TextCell":
       return renderBox(box[1], holes);
     default: {
       if (isControlElement(box)) {
@@ -192,7 +239,74 @@ function tagged(box: Extract<BoxNode, readonly ["TagBox", ...unknown[]]>, holes:
     return element("RowBox", name, {}, { children: inner[1].map((b) => renderBox(b, holes)) });
   }
   if (isNode(inner) && inner[0] === "GridBox") return grid(inner, holes, name);
+  // A `StringTemplate` is its text, the head riding on it as on a layout.
+  if (isNode(inner) && inner[0] === "TextData" && name === "StringTemplate") {
+    return { ...renderBox(inner, holes), attributes: { "data-head": name } };
+  }
   return renderBox(inner, holes);
+}
+
+/** A hole nothing filled: a variable's control (or its readout), which the page's scope picks. */
+function slotElement(box: Extract<BoxNode, readonly ["TemplateSlot", ...unknown[]]>): Rendering {
+  const options = Object.fromEntries(
+    Object.entries(optionsOfBox(box)).flatMap(([k, v]) => (typeof v === "string" ? [[k.toLowerCase(), v]] : [])),
+  );
+  return { tag: "template-slot", attributes: { name: box[1], ...options } };
+}
+
+/**
+ * TeX with variables in it (a `$…$` island in a template): the page's scope fills each and
+ * typesets the result as it moves. The fragments ride as JSON, a hole as `{"slot": name}`.
+ */
+function liveTeX(items: readonly Box[]): Rendering {
+  const parts = items.map((item) => (isNode(item) && item[0] === "TemplateSlot" ? { slot: item[1] } : item));
+  return { tag: "template-slot", attributes: { parts: JSON.stringify(parts) } };
+}
+
+/**
+ * A link is an anchor; a setter (`ButtonFunction -> Set(_e, value)`) keeps its anchor, and the
+ * `button-box` around it sets the variable. No attribute holds the `_e`: the page would read it as
+ * a template over the variable.
+ */
+function button(box: Extract<BoxNode, readonly ["ButtonBox", ...unknown[]]>, holes: Holes): Rendering {
+  const options = optionsOfBox(box);
+  // A label that is a string is words, not a token.
+  const label = typeof box[1] === "string" ? run(box[1]) : renderBox(box[1], holes);
+  const set = SET_FUNCTION.exec(string(options.ButtonFunction) ?? "");
+  if (set) {
+    return element(
+      "ButtonBox",
+      undefined,
+      { set: set[1]!, to: set[2]! },
+      { children: [{ tag: "a", attributes: { href: "#", class: "notatio-setter" }, children: [label] }] },
+    );
+  }
+  const target = string(options.ButtonData);
+  if (target === undefined) return label;
+  // A head's page is the host's to find: the anchor names the head.
+  const link: Record<string, string> = options.BaseStyle === "Link" ? { "data-link": target } : { href: target };
+  return { tag: "a", attributes: link, children: [label] };
+}
+
+/** A `TextCell` as its block. */
+function cell(box: Extract<BoxNode, readonly ["TextCell", ...unknown[]]>, holes: Holes): Rendering {
+  const [, content, style] = box;
+  if (style === "Program") {
+    const language = string(optionsOfBox(box).Language);
+    return {
+      tag: "pre",
+      attributes: {},
+      children: [
+        {
+          tag: "code",
+          attributes: language === undefined ? {} : { class: `language-${language}` },
+          text: typeof content === "string" ? content : toText(content),
+        },
+      ],
+    };
+  }
+  const inner = typeof content === "string" ? run(content) : renderBox(content, holes);
+  return { tag: CELL_TAGS[style] ?? "p", attributes: { "data-cell-style": style }, children: [inner] };
 }
 
 const JUSTIFY: Readonly<Record<string, string>> = { Left: "start", Center: "center", Right: "end" };
