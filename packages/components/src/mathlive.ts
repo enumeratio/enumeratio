@@ -7,8 +7,7 @@
 // This module owns the whole MathLive integration (fonts, CSS) so hosts depend on
 // @enumeratio/components alone, not on mathlive.
 
-import { katexStrict, trustExpression } from "@enumeratio/boxes/render";
-import { portableTeX, registerTeXMacros, texMacros } from "@enumeratio/formats/tex";
+import { registerTeXMacros, texMacros } from "@enumeratio/formats/tex";
 
 // The engine itself lives in the base (`@enumeratio/frontend`); re-exported here so
 // the elements' imports read as before.
@@ -59,19 +58,18 @@ export async function loadEditor(): Promise<Readonly<Record<string, string>>> {
 }
 
 /**
- * Load the typesetter: LaTeX to HTML, by KaTeX, with its stylesheet. compute-engine's
+ * Load the typesetter: LaTeX to HTML, with its stylesheet. compute-engine's
  * LaTeX is written for MathLive, so it goes through `portableTeX` first.
  */
 export function loadMarkup(): Promise<(latex: string) => string> {
-  markupPromise ??= Promise.all([import("katex"), import("katex/dist/katex.min.css"), macrosPromise]).then(([m]) => {
-    const katex = m.default;
-    return (latex: string): string =>
-      katex.renderToString(portableTeX(latex), {
-        throwOnError: false,
-        output: "htmlAndMathml",
-        strict: katexStrict(),
-        trust: trustExpression,
-      });
-  });
+  markupPromise ??= Promise.all([
+    import("@enumeratio/formats/typeset"),
+    import("katex/dist/katex.min.css"),
+    macrosPromise,
+  ]).then(
+    ([m]) =>
+      (latex: string): string =>
+        m.typeset(latex, { expression: true }),
+  );
   return markupPromise;
 }

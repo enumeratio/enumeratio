@@ -2,9 +2,21 @@
 // What the manifest says of a head: the table `About(Head)` answers, read without a kernel.
 import type { Description, Overload } from "@enumeratio/manifest";
 import { describe } from "@enumeratio/manifest";
-import { ref, watch } from "vue";
+import {
+  groupBySystem,
+  isCrosswalkSystem,
+  type ReferenceEntry,
+  type ResolvedReference,
+  SOURCES,
+} from "@enumeratio/reference";
+import { computed, ref, watch } from "vue";
 
-const props = defineProps<{ name: string }>();
+const props = defineProps<{
+  name: string;
+  /** The page's own data, summarized Information-style; nothing is shown of what it lacks. */
+  entry?: ReferenceEntry;
+  references?: readonly ResolvedReference[];
+}>();
 
 const about = ref<Description>();
 const failed = ref(false);
@@ -26,6 +38,40 @@ watch(
   { immediate: true },
 );
 
+// The summary reads what the page already holds: no manifest, so it is there as the panel opens.
+const VERDICTS = [
+  ["agree", "agree"],
+  ["disagree", "differ"],
+  ["inconclusive", "unevaluated"],
+  ["error", "error"],
+] as const;
+const examples = computed(() => props.entry?.examples.length ?? 0);
+const checked = computed(() => {
+  const bySystem = new Map<string, Record<string, number>>();
+  for (const ex of props.entry?.examples ?? []) {
+    for (const [system, run] of Object.entries(ex.others ?? {})) {
+      const counts = bySystem.get(system) ?? {};
+      counts[run.verdict] = (counts[run.verdict] ?? 0) + 1;
+      bySystem.set(system, counts);
+    }
+  }
+  return [...bySystem].map(([system, counts]) => ({
+    label: isCrosswalkSystem(system) ? SOURCES[system].label : system,
+    verdicts: VERDICTS.filter(([verdict]) => counts[verdict]).map(([verdict, word]) => ({
+      verdict,
+      text: `${counts[verdict]} ${word}`,
+    })),
+  }));
+});
+const crosswalk = computed(() =>
+  groupBySystem(props.references ?? []).map((g) => ({
+    label: g.label,
+    count: g.references.length,
+    href: g.references.find((r) => r.href)?.href,
+  })),
+);
+const summarized = computed(() => examples.value > 0 || checked.value.length > 0 || crosswalk.value.length > 0);
+
 const ENGINE = "compute-engine";
 const findStatUrl = (id: string): string =>
   `https://www.findstat.org/${id.startsWith("Mp") ? "MapsDatabase" : "StatisticsDatabase"}/${id}`;
@@ -42,6 +88,41 @@ const defaults = (d?: Readonly<Record<string, unknown>>): [string, string][] =>
 <template>
   <details id="about" class="about" @toggle="open = ($event.target as HTMLDetailsElement).open">
     <summary>About</summary>
+    <table v-if="summarized" class="about-table about-summary">
+      <tbody>
+        <tr v-if="examples">
+          <th>Examples</th>
+          <td>{{ examples }}</td>
+        </tr>
+        <tr v-if="checked.length">
+          <th>Checked against</th>
+          <td>
+            <span v-for="c in checked" :key="c.label" class="about-default"
+              >{{ c.label }}
+              <span
+                v-for="v in c.verdicts"
+                :key="v.verdict"
+                class="about-chip about-verdict"
+                :class="`is-${v.verdict}`"
+                >{{ v.text }}</span
+              ></span
+            >
+          </td>
+        </tr>
+        <tr v-if="crosswalk.length">
+          <th>Crosswalk</th>
+          <td>
+            <template v-for="c in crosswalk" :key="c.label"
+              ><a v-if="c.href" :href="c.href" target="_blank" rel="noopener noreferrer" class="about-chip"
+                >{{ c.label }}<span v-if="c.count > 1"> ×{{ c.count }}</span></a
+              ><span v-else class="about-chip"
+                >{{ c.label }}<span v-if="c.count > 1"> ×{{ c.count }}</span></span
+              ></template
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <p v-if="failed" class="about-note">The manifest has nothing on {{ name }}.</p>
     <p v-else-if="open && !about" class="about-note">Reading the manifest…</p>
     <table v-else-if="about" class="about-table">
@@ -113,7 +194,7 @@ const defaults = (d?: Readonly<Record<string, unknown>>): [string, string][] =>
             >
           </td>
         </tr>
-        <tr v-if="about.examples">
+        <tr v-if="about.examples && !examples">
           <th>Examples</th>
           <td>{{ about.examples }} held to its record</td>
         </tr>
@@ -149,6 +230,7 @@ const defaults = (d?: Readonly<Record<string, unknown>>): [string, string][] =>
   font-size: 0.85rem;
 }
 .about-table th {
+  width: 7.5rem;
   padding: 0.25rem 0.75rem 0.25rem 0;
   text-align: left;
   vertical-align: top;
@@ -193,7 +275,16 @@ a.about-chip:hover {
   margin: 0.15rem 0;
 }
 .about-default {
+  display: inline-block;
   margin-right: 0.75rem;
+  white-space: nowrap;
+}
+.about-verdict.is-agree {
+  color: var(--vp-c-green-1);
+}
+.about-verdict.is-disagree,
+.about-verdict.is-error {
+  color: var(--vp-c-danger-1);
 }
 .about-note {
   color: var(--vp-c-text-3);

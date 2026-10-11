@@ -1,11 +1,11 @@
 // Record prose (summaries, details, captions, notes) through the prose boxes
 // (https://github.com/enumeratio/enumeratio/wiki/Speculative-Prose-Pipeline): markdown read into boxes, then HTML, with `$…$`
-// typeset by KaTeX from its TeX as written. Synchronous, so the same call renders at build
+// typeset from its TeX as written. Synchronous, so the same call renders at build
 // and in the browser.
 
 import { type Box } from "@enumeratio/boxes";
-import { katexStrict, readInlineMarkdown, readMarkdown, toHtml } from "@enumeratio/boxes/render";
-import katex from "katex";
+import { readInlineMarkdown, readMarkdown, toHtml } from "@enumeratio/boxes/render";
+import { typeset as typesetTeX } from "@enumeratio/formats/typeset";
 
 const typeset = new Map<string, string>();
 
@@ -14,12 +14,7 @@ export function tex(latex: string, display: boolean): string {
   const key = `${display ? "D" : "I"}${latex}`;
   let html = typeset.get(key);
   if (html === undefined) {
-    html = katex.renderToString(latex, {
-      displayMode: display,
-      throwOnError: false,
-      output: "htmlAndMathml",
-      strict: katexStrict(),
-    });
+    html = typesetTeX(latex, { display });
     typeset.set(key, html);
   }
   return html;
