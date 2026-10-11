@@ -6,7 +6,6 @@
 
 export * from "./assert.ts";
 export { BOX_LAYOUT_CSS } from "./box-styles.ts";
-export * from "./barchart3d.ts";
 export * from "./chart.ts";
 export * from "./clock.ts";
 export * from "./collection-table.ts";
@@ -22,7 +21,6 @@ export * from "./diagram-lowering.ts";
 export * from "./ipynb.ts";
 export * from "./heads.ts";
 export * from "./highlight.ts";
-export * from "./listplot3d.ts";
 export * from "./manipulate.ts";
 export * from "./orbit.ts";
 export * from "./gestures.ts";
@@ -50,6 +48,9 @@ export * from "./plot-lowering.ts";
 export * from "./plot3d.ts";
 export * from "./polarplot.ts";
 export * from "./project3d.ts";
+export * from "./graphics-3d-box.ts";
+export * from "./graphics-3d-draw.ts";
+export * from "./graphics-3d-lowering.ts";
 export * from "./prose.ts";
 export * from "./reactive.ts";
 export * from "./scales.ts";

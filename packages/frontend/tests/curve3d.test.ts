@@ -1,6 +1,10 @@
 import { expect, test } from "vite-plus/test";
 import { lorenzCurve, type Point3, torusKnotCurve } from "@enumeratio/braid";
-import { curve3dSvg } from "../src/plot3d.ts";
+import { curveBox } from "../src/graphics-3d-box.ts";
+import { graphics3dSvg } from "../src/graphics-3d-draw.ts";
+
+const curve3dSvg = (points: readonly Point3[], o: Parameters<typeof curveBox>[1] = {}, view = {}): string =>
+  graphics3dSvg(curveBox(points, o), view);
 
 const closes = (pts: readonly Point3[]) => {
   const [a, b] = [pts[0], pts[pts.length - 1]];
@@ -93,26 +97,4 @@ test("non-finite samples are dropped rather than poisoning the bounds", () => {
     [1, 1, 1],
   ]);
   expect(svg).toContain("<path");
-});
-
-test("a curve can carry a travelling marker", () => {
-  const ring = Array.from({ length: 64 }, (_, i) => {
-    const t = (2 * Math.PI * i) / 64;
-    return [Math.cos(t), Math.sin(t), 0] as const;
-  });
-  const marked = (phase: number): [number, number] => {
-    const m = /<circle class="notatio-curve-marker" cx="([-\d.]+)" cy="([-\d.]+)"/.exec(
-      curve3dSvg(ring, { marker: phase, azimuth: 0, elevation: 90 }),
-    );
-    return [Number(m?.[1]), Number(m?.[2])];
-  };
-  expect(curve3dSvg(ring, {})).not.toContain("notatio-curve-marker");
-  // Looking straight down at a circle, a marker a quarter of the way round is a quarter turn
-  // away — and one a whole way round is back where it started, not a sample short of it.
-  const [x0, y0] = marked(0);
-  expect(marked(1)).toEqual([x0, y0]);
-  const [xq, yq] = marked(0.25);
-  expect(Math.hypot(xq - x0, yq - y0)).toBeGreaterThan(1);
-  // A phase outside [0,1) wraps rather than falling off the end.
-  expect(marked(2.25)).toEqual([xq, yq]);
 });

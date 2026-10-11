@@ -38,6 +38,8 @@ const CORPUS = [
   'Chart([1, 2, 3], "pie")',
   "ListPlot3D([[1, 2], [3, 4]])",
   "BarChart3D([[1, 2], [3, 4]])",
+  "Plot3D(Sin(x) * y, (x, 0, 3), (y, 0, 3), PlotLegends -> True)",
+  "Graphics3D(Line(KnotCurve(TorusKnot(2, 3))), Closed -> True, Torus -> (2, 1))",
   "GraphPlot([[1, 2], [2, 3]])",
   "TreeGraph([[1, 2], [1, 3]])",
   'LayeredGraphPlot([[1, 2], [2, 3]], PlotLabel -> "layers")',
@@ -139,6 +141,7 @@ const FAMILY_TAGS = [
   "notatio-density-plot",
   "slider-box", // VerticalSlider: a SliderBox standing up
   "color-setter-box", // ColorSlider: Wolfram boxes it as a ColorSetterBox
+  "graphics-3d-box", // Plot3D, ListPlot3D, BarChart3D and Graphics3D lower to their data, drawn by one element
   "graphics-box", // Plot, BarChart and kin lower to their data; Permutahedron(4) and kin display as Show(PolytopeFaces(…)); values as Show(frame(…))
 ];
 

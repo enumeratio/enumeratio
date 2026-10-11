@@ -102,7 +102,7 @@ same attribute and panel serve a worksheet's bindings.
 <Story
   title="Sweep a surface frequency">
 <notatio-manipulate v-pre params="{ {k, 1}, 0.5, 3}">
-<notatio-plot-3d value="Sin(_k * x) * Cos(_k * y)" x-domain="-3.14,3.14" y-domain="-3.14,3.14" />
+<graphics-3d-box value="Plot3D(Sin(_k * x) * Cos(_k * y), (x, -3.14, 3.14), (y, -3.14, 3.14))" />
 </notatio-manipulate>
 </Story>
 

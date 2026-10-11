@@ -5,11 +5,11 @@ import "./notatio-cell.ts";
 import "./dynamic-module-box.ts";
 import "./notatio-complex-plot.ts";
 import "./graphics-box.ts";
-import "./notatio-plot-3d.ts";
+import "./graphics-3d-box.ts";
 import { imageUri } from "@enumeratio/formats";
 import { toInputForm } from "@enumeratio/formats/inputform";
 import { parseExpression } from "@enumeratio/formats/expression";
-import { pointsOf } from "./notatio-curve-3d.ts";
+import { pointsOf } from "./curve-points.ts";
 import { loadEngine } from "./mathlive.ts";
 import { LONG_PRESS_MS } from "./choice-menu.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
@@ -955,23 +955,19 @@ function paneFor(d: Drawable, view: SpaceView | undefined): unknown {
     return html`<img class="ws-image" src=${d.source} alt="" />`;
   }
   if (d.kind === "curve3d") {
-    return html`<notatio-curve-3d
-      .value=${d.source}
+    // The worksheet has evaluated the curve already: re-parsing and re-evaluating the same
+    // expression here would double the cost of every frame.
+    return html`<graphics-3d-box
       .points=${d.points}
-      azimuth=${v.azimuth}
-      elevation=${v.elevation}
-    ></notatio-curve-3d>`;
+      .value=${`Graphics3D(Line(points), Closed -> True, Azimuth -> ${v.azimuth}, Elevation -> ${v.elevation})`}
+    ></graphics-3d-box>`;
   }
   if (d.kind === "curve") {
     return html`<graphics-box .value=${`Plot(${d.source}, (x, ${x[0]}, ${x[1]}))`}></graphics-box>`;
   }
-  return html`<notatio-plot-3d
-    .value=${d.source}
-    x-domain=${`${x[0]},${x[1]}`}
-    y-domain=${`${y[0]},${y[1]}`}
-    azimuth=${v.azimuth}
-    elevation=${v.elevation}
-  ></notatio-plot-3d>`;
+  return html`<graphics-3d-box
+    .value=${`Plot3D(${d.source}, (x, ${x[0]}, ${x[1]}), (y, ${y[0]}, ${y[1]}), Azimuth -> ${v.azimuth}, Elevation -> ${v.elevation})`}
+  ></graphics-3d-box>`;
 }
 
 if (!customElements.get("notatio-worksheet")) {

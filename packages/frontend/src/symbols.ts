@@ -1,5 +1,6 @@
 import { chooseChartType } from "./chart.ts";
 import { CHART_HEADS, PLOT_HEADS } from "./plot-lowering.ts";
+import { GRAPHICS_3D_HEADS } from "./graphics-3d-lowering.ts";
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import {
   type Box,
@@ -476,7 +477,66 @@ export const PLOT_SETTINGS: readonly VisualSymbol[] = [
   },
 ];
 
-const SETTINGS_BY_HEAD = new Map(PLOT_SETTINGS.map((p) => [p.head, p]));
+/** `ScalingFunctions -> ("Log", "Linear", "Log")`: the x, y and z axes, in that order (one function is the z axis, the height). */
+function scalingFunctions3(value: Json): Record<string, string> {
+  const names = tupleOf(value) ?? [value];
+  const keys = names.length === 1 ? ["z-scale"] : ["x-scale", "y-scale", "z-scale"];
+  const out: Record<string, string> = {};
+  names.forEach((n, k) => {
+    const name = scalingFunctionName(n);
+    if (name && keys[k]) out[keys[k]!] = name;
+  });
+  return out;
+}
+
+/** What a figure in space reads as options: its view, its chrome and its color. */
+const GRAPHICS_3D_OPTIONS = {
+  PlotLabel: "label",
+  ColorFunction: colorFunction,
+  ScalingFunctions: scalingFunctions3,
+  // `False` lowers to no attribute, and these default to on: they say `false`.
+  Axes: (value: Json): Record<string, string> => (isOff(value) ? { axes: "false" } : {}),
+  PlotLegends: (value: Json): Record<string, string> => ({ "color-legend": isOff(value) ? "false" : "true" }),
+};
+
+/**
+ * The figures in space that lower to `<graphics-3d-box>`: the element reads the expression it holds
+ * (`value`, as a 2-D plot does) and takes these rows' attributes from it, so each option keeps the
+ * name its sampling code was written in.
+ */
+export const GRAPHICS_3D_SETTINGS: readonly VisualSymbol[] = [
+  {
+    head: "Plot3D",
+    tag: "graphics-3d-box",
+    attributes: (ops) =>
+      twoVariables(ops, { value: "value", x: "xvar", y: "yvar", xrange: "x-domain", yrange: "y-domain" }),
+    options: GRAPHICS_3D_OPTIONS,
+  },
+  { head: "ListPlot3D", tag: "graphics-3d-box", attributes: dataOnly, options: GRAPHICS_3D_OPTIONS },
+  { head: "BarChart3D", tag: "graphics-3d-box", attributes: dataOnly, options: GRAPHICS_3D_OPTIONS },
+  {
+    // `Graphics3D(Line(points), …)`: a curve in space, its points the value of an expression the page
+    // evaluates. The rest of Wolfram's `Graphics3D` has no drawer yet.
+    head: "Graphics3D",
+    tag: "graphics-3d-box",
+    attributes: (ops): Record<string, string> => {
+      const line = headOf(ops[0]) === "Line" ? opsOf(ops[0])[0] : undefined;
+      return line === undefined ? {} : { value: epsil(line) };
+    },
+    options: {
+      ...GRAPHICS_3D_OPTIONS,
+      // `Torus -> (2, 1)`: the tube the curve lies on, faintly behind it.
+      Torus: (value: Json): Record<string, string> => {
+        const parts = tupleOf(value);
+        return parts?.length === 2 ? { torus: parts.map(epsil).join(",") } : {};
+      },
+      Closed: (value: Json): Record<string, string> => ({ closed: isOff(value) ? "false" : "true" }),
+      Clock: (value: Json): Record<string, string> => ({ clock: isOff(value) ? "false" : "true" }),
+    },
+  },
+];
+
+const SETTINGS_BY_HEAD = new Map([...PLOT_SETTINGS, ...GRAPHICS_3D_SETTINGS].map((p) => [p.head, p]));
 
 /** `Chart`'s member for settings that name none (or `auto`): the data's shape picks it. */
 function chosenType(settings: Record<string, string>): Record<string, string> {
@@ -516,31 +576,38 @@ export function plotOfText(text: string): { json: Json; settings: Record<string,
   return settings && { json: plain, settings };
 }
 
+/**
+ * A figure in space's settings: the attributes its sampling or its data reads, from the expression
+ * as written, or undefined when the head is none. A curve's `value` is its points' expression.
+ */
+export function graphics3dSettingsOf(expr: Json): Record<string, string> | undefined {
+  const head = headOf(expr);
+  const symbol = head === undefined || !GRAPHICS_3D_HEADS.includes(head) ? undefined : SETTINGS_BY_HEAD.get(head);
+  if (symbol === undefined) return undefined;
+  const { ops, options } = optionsOf(expr);
+  return { ...symbol.fixed, ...symbol.attributes(ops), ...lowerOptions(symbol, options).attributes };
+}
+
+/** What `<graphics-3d-box value>` makes of its text: the expression as plain MathJSON and its settings, if it is a figure in space. */
+export function graphics3dOfText(text: string): { json: Json; settings: Record<string, string> } | undefined {
+  const { json, errors } = parseExpression(text);
+  if (errors.length > 0) return undefined;
+  const plain = plainJson(json as never) as Json;
+  const settings = graphics3dSettingsOf(plain);
+  return settings && { json: plain, settings };
+}
+
 /** A plot head as a visual symbol: the whole expression, options and all, in the element's `value`. */
-const plotSymbol = (head: string): VisualSymbol => ({
+const plotSymbol = (head: string, tag = "graphics-box"): VisualSymbol => ({
   head,
-  tag: "graphics-box",
+  tag,
   holdsOptions: true,
   attributes: (ops) => ({ value: epsil([head, ...ops] as Json) }),
 });
 
 export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
-  ...[...PLOT_HEADS, ...CHART_HEADS].map(plotSymbol),
-  {
-    head: "Plot3D",
-    tag: "notatio-plot-3d",
-    attributes: (ops) =>
-      twoVariables(ops, {
-        value: "value",
-        x: "xvar",
-        y: "yvar",
-        xrange: "x-domain",
-        yrange: "y-domain",
-      }),
-    // `PlotLabel -> "…"`: same idea as `Plot`'s, but this component's caption attribute
-    // is `label`, not the two-word kebab `optionAttribute` would default to.
-    options: { PlotLabel: "label", ColorFunction: colorFunction },
-  },
+  ...[...PLOT_HEADS, ...CHART_HEADS].map((head) => plotSymbol(head)),
+  ...GRAPHICS_3D_HEADS.map((head) => plotSymbol(head, "graphics-3d-box")),
   {
     head: "ContourPlot",
     tag: "notatio-contour-plot",
@@ -674,8 +741,6 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     },
     options: { ColorFunction: colorFunction },
   },
-  { head: "ListPlot3D", tag: "notatio-list-plot-3d", attributes: dataOnly, options: { ColorFunction: colorFunction } },
-  { head: "BarChart3D", tag: "notatio-bar-chart-3d", attributes: dataOnly, options: { ColorFunction: colorFunction } },
   {
     head: "CollectionTable",
     tag: "notatio-collection-table",

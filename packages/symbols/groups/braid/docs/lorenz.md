@@ -23,13 +23,8 @@ Drag to turn the attractor over — from the side it is a pair of wings, from ab
 of spirals. <code>LorenzCurve(n)</code> integrates n steps and evaluates to the points.
 </template>
 <ClientOnly>
-<notatio-curve-3d
-  value="LorenzCurve(7000)"
-  open
-  azimuth="0"
-  elevation="2"
-  zoom="1.15"
-  label="30 seconds of flow, in the x–z plane"
+<graphics-3d-box
+  value='Graphics3D(Line(LorenzCurve(7000)), Azimuth -> 0, Elevation -> 2, Zoom -> 1.15, Caption -> "30 seconds of flow, in the x–z plane")'
 />
 </ClientOnly>
 </Story>

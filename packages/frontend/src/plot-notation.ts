@@ -1,4 +1,4 @@
-// The 2-D plots and charts as `makeBoxes` rules (the wiki's Speculative-Box-Primitives, §6 slice 4).
+// The plots, charts and figures in space as `makeBoxes` rules (the wiki's Speculative-Box-Primitives, §6 slice 4).
 // A plot of data is a finite list and lowers whole; so does a chart. A plot of an expression is a
 // producer, like a lattice: sampling needs a compiled kernel (the page's, or a session's), so the
 // box holds the expression it came from and `Producer -> head`, and an environment that can sample
@@ -21,7 +21,9 @@ import {
 } from "./plot-lowering.ts";
 import { polarPlotBox } from "./polarplot.ts";
 import { FIGURE_NOTATION } from "./show-box.ts";
-import { plotSettingsOf } from "./symbols.ts";
+import { barBoxOfSettings, GRAPHICS_3D_HEADS, listBoxOfSettings, literalCurveBox } from "./graphics-3d-lowering.ts";
+import { unsampledGraphics3dBox } from "./graphics-3d-box.ts";
+import { plotSettingsOf, graphics3dSettingsOf } from "./symbols.ts";
 
 const plotRule =
   (head: string): NotationRule =>
@@ -62,8 +64,24 @@ const chartRule =
     return head === "ArrayPlot" ? FIGURE_NOTATION["ArrayPlot"]?.(args, ...rest) : undefined;
   };
 
+/**
+ * A figure in space's rule: `ListPlot3D` and `BarChart3D` hold their data and lower whole; a `Plot3D`
+ * or a curve is sampled by the page, so its box holds the expression it came from.
+ */
+const graphics3dRule =
+  (head: string): NotationRule =>
+  (args) => {
+    const expr = plainJson([head, ...args] as never);
+    const settings = graphics3dSettingsOf(expr as never);
+    if (settings === undefined) return undefined;
+    if (head === "ListPlot3D") return listBoxOfSettings(settings);
+    if (head === "BarChart3D") return barBoxOfSettings(settings);
+    return (head === "Graphics3D" ? literalCurveBox(settings) : undefined) ?? unsampledGraphics3dBox(head, expr);
+  };
+
 /** The plot and chart heads as `makeBoxes` rules. */
 export const PLOT_NOTATION: Notation = {
   ...Object.fromEntries(PLOT_HEADS.map((head) => [head, plotRule(head)])),
   ...Object.fromEntries(CHART_HEADS.map((head) => [head, chartRule(head)])),
+  ...Object.fromEntries(GRAPHICS_3D_HEADS.map((head) => [head, graphics3dRule(head)])),
 };
