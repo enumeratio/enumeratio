@@ -163,7 +163,7 @@ const unrank = (() => {
     "shape",
     "t",
   ].map(fresh);
-  // The shape is the first whose count holds the rank: the state is [rank left, the shape's place, −1 until found].
+  // The shape is the first whose count holds the rank: the state is the pair [rank left, the shape's place or −1 until found].
   const findShape = fold(
     iff(
       greaterEqual(at(state, 2), 0),
@@ -294,21 +294,37 @@ const valid = (() => {
   );
 })();
 
+/** The count at n = 0..14, exact (summed per shape over the tables above, in doubles: each is below 2^53). */
+export const EXACT_COUNTS = [
+  1, 1, 4, 24, 194, 1960, 23770, 336322, 5438496, 98936250, 1999814916, 44464855512, 1078530770196, 28340682384300,
+  801997011421320,
+];
+
+/** The first size whose count is surely past 2^53. A tableau of n cells gives n + 1 tableaux of n + 1: a new top
+ *  row of one cell, touching the shape's corner, with its entry put anywhere in the word. So the count of n + 1 is
+ *  at least n + 1 times that of n, from the last exact one (n = 14: 15 times 8.0e14 passes 2^53). */
+const PAST_DOUBLES = (() => {
+  let size = EXACT_COUNTS.length - 1;
+  let bound = BigInt(EXACT_COUNTS[size]);
+  while (bound <= BigInt(Number.MAX_SAFE_INTEGER)) bound *= BigInt(++size);
+  return size;
+})();
+
 export const skewStandardTableaux: EpsilFamily = {
   head: "SkewStandardTableaux",
   paramCount: 1,
   kind: "blocks",
   params: [n],
   elementType: "tuple<list<integer>, list<integer>, list<integer>>",
-  // Past 2^53 (the count passes n! at the antichain shape, 19! > 2^53) the table is out of the interpreter's reach.
+  // Past 2^53 the table is out of the interpreter's reach, so the count declines, before any table is built.
   declinePastDoubles: "count",
-  early: { pastDoubles: ([size]) => size >= 19 },
+  early: { pastDoubles: ([size]) => size >= PAST_DOUBLES },
   epsil: { tables, count, unrank, rank, valid },
 };
 
 // ─── the fast path: the same table in plain numbers ───
 
-/** Past this size no table is built (a size or two past what `work` allows, tens of milliseconds), and the question is left to Epsil. */
+/** Past this size the fast path builds no table (its cost is a size or two past what `work` allows) and leaves the question to Epsil. */
 const TABLE_LIMIT = 8;
 
 interface Plan {

@@ -95,6 +95,10 @@ const INTERPRETED = new Set([
 ]);
 const interpreted = (family: EpsilFamily): boolean => !DEEP && INTERPRETED.has(family.head);
 
+// Families whose fast path stops at a table limit, a size or two past what Epsil does quickly, not at
+// 2^53: the edge scan would find the limit, and Epsil takes seconds a call there (minutes, past it).
+const NO_EDGE = new Set(["SkewStandardTableaux"]);
+
 const grids = new Map<string, { grid: number[][]; above: number[][] }>();
 
 /** The params to try: small ones, and the edges where the fast path stops answering: params whose
@@ -113,7 +117,7 @@ function paramGrid(family: EpsilFamily): { grid: number[][]; above: number[][] }
         (n) => [n, fixed],
       );
   const size = (p: number[]): number => p.reduce((sum, x) => sum + x, 0);
-  const edges = walks
+  const edges = (NO_EDGE.has(family.head) ? [] : walks)
     .map((at) => edgeAlong(family, at))
     .filter((edge) => edge !== undefined)
     .toSorted((a, b) => size(a.below) - size(b.below))
