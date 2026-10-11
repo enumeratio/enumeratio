@@ -2,6 +2,12 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
 import { emitComplexWGSL, type Json, MAX_SLOTS } from "@enumeratio/ce-patches";
+import { zetaWGSL } from "../src/shader.ts";
+
+test("the real Lerch wrapper in the shader returns NaN where Φ is complex", () => {
+  expect(zetaWGSL).toContain("fn lerchPhiReal(");
+  expect(zetaWGSL).toContain("bitcast<f32>(0x7fc00000u)");
+});
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);

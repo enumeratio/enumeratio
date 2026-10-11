@@ -1,6 +1,7 @@
 import { wrapOperator } from "@enumeratio/engine";
 import type { Patch } from "../patch.ts";
-import { DEFAULT_DIGITS, evaluateLerch, principalAtZero } from "../compute-engine/library/special-functions.ts";
+import { ComputeEngine } from "@cortex-js/compute-engine";
+import { evaluateLerch, principalAtZero } from "../compute-engine/library/special-functions.ts";
 import { wantsNumber } from "../support/box.ts";
 
 // compute-engine evaluates LerchPhi natively, exactly for rational arguments and to the engine's
@@ -9,6 +10,10 @@ import { wantsNumber } from "../support/box.ts";
 // The native handler answers first and this answers where it declines, except Φ(0, s, a) at a
 // negative or complex a and a non-integer s: native reads that as a real root, so this answers
 // first, with the principal branch.
+/** The engine's default `precision`, which a double-based kernel is allowed to answer at. */
+let defaultPrecision: number | undefined;
+const defaultDigits = (): number => (defaultPrecision ??= new ComputeEngine().precision);
+
 export const lerchPhiPatch: Patch = {
   id: "lerch-phi",
   issue: "https://github.com/cortex-js/compute-engine/issues/340",
@@ -35,7 +40,7 @@ export const lerchPhiPatch: Patch = {
         // Native reads a negative base to a float power as a real root.
         if (principalAtZero(ops, wantsNumber(ops, options)))
           // The kernel is a double's worth: past the engine's default digits, stay unevaluated.
-          return ce.precision > DEFAULT_DIGITS ? undefined : evaluateLerch(ce, ops, true);
+          return ce.precision > defaultDigits() ? undefined : evaluateLerch(ce, ops, true);
         const answer = native?.(ops, options);
         if (answer !== undefined && answer.operator !== "LerchPhi") return answer;
         return evaluateLerch(ce, ops, wantsNumber(ops, options)) ?? answer;

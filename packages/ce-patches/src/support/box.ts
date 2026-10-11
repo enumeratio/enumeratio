@@ -63,7 +63,7 @@ export const declined = (r: BoxedExpression | undefined, head: string): boolean 
  * target has one) take over instead. GLSL and other targets fall through the same way.
  */
 export const realCompile =
-  (arity: number, emit: { js?: string; wgsl?: string }) =>
+  (arity: number, emit: { js?: string; wgsl?: string; wgslReal?: string }) =>
   (
     args: readonly BoxedExpression[],
     compile: (e: BoxedExpression) => string,
@@ -73,6 +73,9 @@ export const realCompile =
     if (ops.length < arity || ops.some((o) => o === undefined)) return undefined;
     const cs = ops.map(compile);
     if (ctx.language === "javascript" && emit.js) return `_.${emit.js}(${cs.join(", ")})`;
+    // A kernel with a real-valued wrapper (NaN where the value is not real) is called as is.
+    if (ctx.language === "wgsl" && emit.wgslReal)
+      return `${emit.wgslReal}(${cs.map((c) => `vec2f(${c}, 0.0)`).join(", ")})`;
     if (ctx.language === "wgsl" && emit.wgsl) return `${emit.wgsl}(${cs.map((c) => `vec2f(${c}, 0.0)`).join(", ")}).x`;
     return undefined;
   };

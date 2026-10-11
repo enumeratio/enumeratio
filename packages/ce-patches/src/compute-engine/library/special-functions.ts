@@ -43,9 +43,6 @@ type Json = number | string | { num: string } | Json[];
 // cortex-js/compute-engine#340: the Lerch transcendent LerchPhi(z, s, a), which generalizes
 // both HurwitzZeta (z = 1) and PolyLog (a = 1). Wolfram has it; compute-engine does not.
 
-/** The engine's default `precision`, which a double-based kernel is allowed to answer at. */
-export const DEFAULT_DIGITS = 21;
-
 /**
  * Φ(0, s, a) at a negative or complex base and a non-integer numeric power: the principal branch
  * of a^(−s), which compute-engine's own Power and LerchPhi get wrong by reading (−2.664)^(−2.976)
@@ -124,7 +121,7 @@ export const lerchPhiLibrary: LibraryRecord = {
     signature: "(number, number, number) -> number",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
       evaluateLerch(options.engine, ops, wantsNumber(ops, options)),
-    compile: realCompile(3, { js: "__lp", wgsl: "lerchPhi" }),
+    compile: realCompile(3, { js: "__lp", wgsl: "lerchPhi", wgslReal: "lerchPhiReal" }),
   },
 };
 
