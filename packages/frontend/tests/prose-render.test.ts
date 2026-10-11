@@ -52,6 +52,31 @@ test("a TextCell is the block its style names", () => {
   );
 });
 
+test("consecutive item cells are one list; a deeper item nests, a numbered one starts an ol", () => {
+  const cells = row([
+    textCell("a", "Text"),
+    textCell("one", "Item"),
+    textCell("two", "Item"),
+    textCell("deep", "Subitem"),
+    textCell("three", "Item"),
+    textCell("first", "ItemNumbered"),
+    textCell("b", "Text"),
+  ]);
+  expect(markup(cells)).toBe(
+    '<row-box><p data-cell-style="Text"><span>a</span></p>' +
+      '<ul data-cell-list=""><li data-cell-style="Item"><span>one</span></li>' +
+      '<li data-cell-style="Item"><span>two</span>' +
+      '<ul data-cell-list=""><li data-cell-style="Subitem"><span>deep</span></li></ul></li>' +
+      '<li data-cell-style="Item"><span>three</span></li></ul>' +
+      '<ol data-cell-list=""><li data-cell-style="ItemNumbered"><span>first</span></li></ol>' +
+      '<p data-cell-style="Text"><span>b</span></p></row-box>',
+  );
+  // Alone, an item is still a list.
+  expect(markup(textCell("x", "Item"))).toBe(
+    '<ul data-cell-list=""><li data-cell-style="Item"><span>x</span></li></ul>',
+  );
+});
+
 test("a hole nothing filled is the page's: a variable by name, a readout by its expression", () => {
   expect(markup(textData(["n = ", slot("n", { random: "" }), ", ", ["TemplateExpression", "N(_n^2)"] as never]))).toBe(
     '<span><span>n = </span><template-slot name="n" random=""></template-slot><span>, </span><dynamic-box value="N(_n^2)"></dynamic-box></span>',

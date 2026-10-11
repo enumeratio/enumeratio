@@ -2,7 +2,8 @@
 // One story card: the live render in a canvas (which can take over the window), and its source
 // as a tab per written form. See Stories.vue for where the data comes from.
 import { toVNode, vdomOf } from "@enumeratio/frontend/vdom";
-import { h, ref } from "vue";
+import { loadMarkup } from "@enumeratio/components";
+import { h, onMounted, ref, shallowRef } from "vue";
 import { renderInline } from "../../prose.ts";
 import type { StoryData } from "../../data/stories.ts";
 import { useFullWindow } from "../composables/useFullWindow.ts";
@@ -14,7 +15,13 @@ const props = defineProps<{ story: StoryData }>();
 const prose = (text?: string): string => renderInline(text ?? "");
 
 /** A render-function component for the story: `<component :is="live" />`. */
-const live = () => toVNode(vdomOf(props.story.expr as never), h);
+const live = () => toVNode(vdomOf(props.story.expr as never), h, typeset.value);
+
+// The page's KaTeX, as `notatio-out` typesets; a form-box shows its text until it arrives.
+const typeset = shallowRef<((tex: string) => string) | undefined>();
+onMounted(async () => {
+  typeset.value = await loadMarkup();
+});
 
 const root = ref<HTMLElement | null>(null);
 const fullWindow = useFullWindow(root);

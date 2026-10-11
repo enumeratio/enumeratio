@@ -12,7 +12,7 @@
 // typesets (`box-leaf.ts`); everything around a run is drawn here.
 
 import { type Box, type BoxNode, gridCells, isNode, optionsOfBox, type OptionValue, rowsOf } from "@enumeratio/boxes";
-import { toText } from "@enumeratio/boxes/render";
+import { LIST_CELLS, toText } from "@enumeratio/boxes/render";
 import { typesetLeaf } from "./box-leaf.ts";
 import { boxTag } from "./box-tags.ts";
 import { controlElement, isControlElement } from "./control-box.ts";
@@ -103,9 +103,7 @@ const css = (declarations: Readonly<Record<string, string | undefined>>): Record
 /** A box as a rendering; `holes` fill the leaves the environment draws. */
 export function renderBox(box: Box, holes: Holes = {}): Rendering {
   if (typeof box === "string") return typesetLeaf(box, "TraditionalForm");
-  const children = (boxes: readonly Box[]): Pick<Rendering, "children"> => ({
-    children: boxes.map((b) => renderBox(b, holes)),
-  });
+  const children = (boxes: readonly Box[]): Pick<Rendering, "children"> => ({ children: siblings(boxes, holes) });
   switch (box[0]) {
     case "TextBox":
       return run(box[1]);
@@ -236,7 +234,7 @@ function scopeAttributes(options: Readonly<Record<string, OptionValue>>): Record
 function tagged(box: Extract<BoxNode, readonly ["TagBox", ...unknown[]]>, holes: Holes): Rendering {
   const [, inner, name] = box;
   if (isNode(inner) && inner[0] === "RowBox" && name === "Row") {
-    return element("RowBox", name, {}, { children: inner[1].map((b) => renderBox(b, holes)) });
+    return element("RowBox", name, {}, { children: siblings(inner[1], holes) });
   }
   if (isNode(inner) && inner[0] === "GridBox") return grid(inner, holes, name);
   // A `StringTemplate` is its text, the head riding on it as on a layout.
@@ -317,8 +315,57 @@ function cell(box: Extract<BoxNode, readonly ["TextCell", ...unknown[]]>, holes:
       ],
     };
   }
-  const inner = typeof content === "string" ? run(content) : renderBox(content, holes);
-  return { tag: CELL_TAGS[style] ?? "p", attributes: { "data-cell-style": style }, children: [inner] };
+  if (LIST_CELLS[style]) return siblings([box], holes)[0]!;
+  return {
+    tag: CELL_TAGS[style] ?? "p",
+    attributes: { "data-cell-style": style },
+    children: [cellContent(content, holes)],
+  };
+}
+
+const cellContent = (content: Box, holes: Holes): Rendering =>
+  typeof content === "string" ? run(content) : renderBox(content, holes);
+
+/**
+ * Boxes side by side, where consecutive item cells (`Item`, `Subitem`, `ItemNumbered`, …) make
+ * one list: a `ul` or `ol` of `li`, a deeper item a list inside the `li` above it.
+ */
+function siblings(boxes: readonly Box[], holes: Holes): Rendering[] {
+  const out: Rendering[] = [];
+  // The open lists, outermost first, each with its items so far.
+  const open: { tag: "ul" | "ol"; items: Rendering[] }[] = [];
+  const close = (depth: number): void => {
+    while (open.length > depth) {
+      const { tag, items } = open.pop()!;
+      const list: Rendering = { tag, attributes: { "data-cell-list": "" }, children: items };
+      const parent = open.at(-1)?.items.at(-1);
+      if (parent) (parent.children as Rendering[]).push(list);
+      else out.push(list);
+    }
+  };
+  for (const box of boxes) {
+    const level = isNode(box) && box[0] === "TextCell" ? LIST_CELLS[box[2]] : undefined;
+    if (!level) {
+      close(0);
+      out.push(renderBox(box, holes));
+      continue;
+    }
+    const [depth, tag] = level;
+    const [, content, style] = box as Extract<BoxNode, readonly ["TextCell", ...unknown[]]>;
+    close(depth + 1);
+    // A list of the other kind at this level ends here.
+    if (open.length === depth + 1 && open[depth]!.tag !== tag) close(depth);
+    // A level skipped is a bullet list that opens an item of its own.
+    while (open.length < depth) open.push({ tag: "ul", items: [{ tag: "li", attributes: {}, children: [] }] });
+    if (open.length === depth) open.push({ tag, items: [] });
+    open[depth]!.items.push({
+      tag: "li",
+      attributes: { "data-cell-style": style },
+      children: [cellContent(content, holes)],
+    });
+  }
+  close(0);
+  return out;
 }
 
 const JUSTIFY: Readonly<Record<string, string>> = { Left: "start", Center: "center", Right: "end" };
