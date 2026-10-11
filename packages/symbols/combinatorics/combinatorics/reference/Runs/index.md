@@ -16,6 +16,12 @@ signatures:
     description: Maximal increasing runs — one more than the number of descents.
     library: enumeratio-combinatorics
     type: (list<integer> | permutation) -> number
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: Length[Runs[$1]]
+    arity: 1
+    note: Combinatorica's Runs returns the runs themselves; ours is their count.
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

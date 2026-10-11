@@ -1,0 +1,6 @@
+id	in	out	tex.in	tex.out
+the-partition-4-2-1-of-7	DurfeeSquare[List[4, 2, 1]]	2	\text{DurfeeSquare}(\{4,2,1\})	2
+the-partition-3-3-1-of-7	DurfeeSquare[List[3, 3, 1]]	2	\text{DurfeeSquare}(\{3,3,1\})	2
+findstat-st000183-1				
+findstat-st000183-2				
+findstat-st000183-3				

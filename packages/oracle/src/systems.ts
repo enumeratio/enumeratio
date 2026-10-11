@@ -4,7 +4,16 @@
 // runner: a system with no mappings yet still belongs in the type, so a scan reports
 // "unmapped" for it rather than pretending the question was never asked.
 
-export type System = "wolfram" | "sympy" | "mpmath" | "sage" | "oscar" | "julia" | "mathlib4" | "rust";
+export type System =
+  | "wolfram"
+  | "combinatorica"
+  | "sympy"
+  | "mpmath"
+  | "sage"
+  | "oscar"
+  | "julia"
+  | "mathlib4"
+  | "rust";
 
 export interface SystemSpec {
   readonly name: System;
@@ -21,6 +30,13 @@ export const SYSTEMS: readonly SystemSpec[] = [
     label: "Wolfram Language",
     wired: true,
     strength: "broadest coverage; the naming baseline most of our heads follow",
+  },
+  {
+    name: "combinatorica",
+    label: "Combinatorica (Wolfram)",
+    wired: true,
+    strength:
+      "the legacy Wolfram package, ~40 combinatorial heads core Wolfram lacks (Eulerian, Mahonian, tableaux, partition tools); its own kernel process, since loading it shadows System names",
   },
   {
     name: "sympy",
@@ -77,3 +93,8 @@ export type SymbolicSystem = "wolfram" | "sympy" | "sage";
 export const SYMBOLIC_SYSTEMS: readonly SymbolicSystem[] = ["wolfram", "sympy", "sage"];
 export const isSymbolicSystem = (system: System): system is SymbolicSystem =>
   (SYMBOLIC_SYSTEMS as readonly System[]).includes(system);
+
+/** The systems that speak Wolfram Language through `wolframscript`: Combinatorica is the same
+ * kernel with a `Needs` preamble, so it emits and reads answers as Wolfram does. */
+export const isWolframFamily = (system: System): system is "wolfram" | "combinatorica" =>
+  system === "wolfram" || system === "combinatorica";

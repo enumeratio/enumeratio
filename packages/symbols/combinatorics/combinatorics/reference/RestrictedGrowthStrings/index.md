@@ -25,6 +25,12 @@ grades:
   - name: n
     role: axis
 carrier: SetPartition
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: Map[# - 1 &, RGFs[$1], {2}]
+    arity: 1
+    note: Combinatorica's growth strings start at 1; ours start at 0.
 ---
 
 - Count is the Bell number $B_n$ (A000110); the canonical RGS encoding of a set partition of $\{1, …, n\}$ used by [[SetPartitions]].

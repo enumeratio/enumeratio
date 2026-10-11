@@ -3,7 +3,20 @@ import { compare, compareCombination, linearCombination, normalise } from "../sr
 import { emit, unmappedHeads } from "../src/emit.ts";
 import { fromWolfram } from "@enumeratio/wolfram";
 import { MAPPINGS, mappingFor, mappingsFromBindings } from "../src/mappings.ts";
+import { wolframBatchCode } from "../src/run.ts";
 import { SYSTEMS, wiredSystems } from "../src/systems.ts";
+
+test("combinatorica emits only through its head map, as Wolfram source", () => {
+  expect(emit(["Eulerian", 4, 1], "combinatorica")).toEqual({ ok: true, source: "Eulerian[4, 1]" });
+  // A head with no row there belongs to the wolfram lane, not a second answer from the same kernel.
+  expect(emit(["Add", 1, 2], "combinatorica")).toEqual({ ok: false, missing: [] });
+  expect(emit(["Eulerian", "n", 1], "combinatorica").ok).toBe(false);
+});
+
+test("a batch with a preamble runs it before anything else", () => {
+  const preamble = 'Quiet[Needs["Combinatorica`"]]; ';
+  expect(wolframBatchCode(["1"], 5, preamble).startsWith(preamble)).toBe(true);
+});
 
 test("a mapping is chosen by signature, not by name alone", () => {
   // The whole reason this table is arity-keyed: one argument is Riemann, two is Hurwitz,
@@ -176,6 +189,7 @@ test("comparison is forgiving about spelling and strict about value", () => {
 test("every system is declared, and the unwired ones are honest about it", () => {
   expect(SYSTEMS.map((system) => system.name)).toEqual([
     "wolfram",
+    "combinatorica",
     "sympy",
     "mpmath",
     "sage",
@@ -184,7 +198,17 @@ test("every system is declared, and the unwired ones are honest about it", () =>
     "mathlib4",
     "rust",
   ]);
-  expect(wiredSystems()).toEqual(["wolfram", "sympy", "mpmath", "sage", "oscar", "julia", "mathlib4", "rust"]);
+  expect(wiredSystems()).toEqual([
+    "wolfram",
+    "combinatorica",
+    "sympy",
+    "mpmath",
+    "sage",
+    "oscar",
+    "julia",
+    "mathlib4",
+    "rust",
+  ]);
   // Naming an unwired system is the point: a scan then reports "unmapped" for it rather
   // than silently never asking.
   for (const system of SYSTEMS) expect(system.strength.length).toBeGreaterThan(20);

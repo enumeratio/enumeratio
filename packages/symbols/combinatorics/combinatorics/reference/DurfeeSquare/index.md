@@ -21,6 +21,11 @@ signatures:
     description: "The side of the Durfee square: the largest d with at least d parts of size at least d."
     library: enumeratio-combinatorics
     type: (integer_partition) -> number
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: DurfeeSquare[$1]
+    arity: 1
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

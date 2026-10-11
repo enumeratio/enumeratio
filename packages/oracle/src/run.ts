@@ -144,7 +144,11 @@ async function withFile<T>(name: string, program: string, run: (file: string) =>
  * symbol — corrupting that one item's output. `Module[{k}, Do[..., {k, 1, n}]]` renames the
  * counter to a Module-local `k$nnn` gensym, a name no transpiled source can ever spell, so no
  * batched item's own bare symbol — `i`, `k`, or anything else — can collide with it again. */
-export function wolframBatchCode(sources: readonly string[], itemSeconds: number = ITEM_SECONDS): string {
+export function wolframBatchCode(
+  sources: readonly string[],
+  itemSeconds: number = ITEM_SECONDS,
+  preamble: string = "",
+): string {
   // wolframscript reads `-code` byte by byte (`∑` arrives as three Latin-1 characters), so a
   // non-ASCII character goes in as Wolfram's own escape: `\:2211`, or `\|01f600` past the BMP.
   const escaped = (source: string): string =>
@@ -157,11 +161,16 @@ export function wolframBatchCode(sources: readonly string[], itemSeconds: number
   // Held, `Rational[7, 2]` is a call, not the number, and prints as `\text{Rational}[7,2]`;
   // rewritten as the division and sum it stands for, it prints as written.
   const tex = `tex[x_] := StringReplace[ToString[Quiet[TeXForm[x]]], "\\n" -> " "]; atoms = {Rational -> Divide, Complex[0, 1] :> I, Complex[a_, 1] :> a + I, Complex[0, b_] :> b I, Complex[a_, b_] :> a + b I};`;
-  return `${tex} Module[{k}, Do[Module[{v = Quiet[MemoryConstrained[TimeConstrained[ToExpression[{${list}}[[k]]], ${itemSeconds}, $Aborted], ${MAX_BYTES}, $Aborted]] ${stable}}, Print["<<", k, ">>", ToString[FullForm[v]]]; Print["<<", k, "#>>", ToString[FullForm[Quiet[TimeConstrained[N[v], ${itemSeconds}, v]]]]]; Print["<<", k, "|>>", ToString[InputForm[v]]]; If[NumberQ[Precision[v]], Print["<<", k, "~>>", ToString[NumberForm[v, ExponentFunction -> (Null &)]]]]; Print["<<", k, "^>>", tex[ToExpression[{${list}}[[k]], InputForm, HoldForm] /. atoms]]; Print["<<", k, "$>>", tex[v]]], {k, 1, ${sources.length}}]]`;
+  return `${preamble}${tex} Module[{k}, Do[Module[{v = Quiet[MemoryConstrained[TimeConstrained[ToExpression[{${list}}[[k]]], ${itemSeconds}, $Aborted], ${MAX_BYTES}, $Aborted]] ${stable}}, Print["<<", k, ">>", ToString[FullForm[v]]]; Print["<<", k, "#>>", ToString[FullForm[Quiet[TimeConstrained[N[v], ${itemSeconds}, v]]]]]; Print["<<", k, "|>>", ToString[InputForm[v]]]; If[NumberQ[Precision[v]], Print["<<", k, "~>>", ToString[NumberForm[v, ExponentFunction -> (Null &)]]]]; Print["<<", k, "^>>", tex[ToExpression[{${list}}[[k]], InputForm, HoldForm] /. atoms]]; Print["<<", k, "$>>", tex[v]]], {k, 1, ${sources.length}}]]`;
 }
 
-async function runWolfram(sources: readonly string[], itemSeconds: number): Promise<Result[]> {
-  const run = await transcript("wolframscript", ["-code", wolframBatchCode(sources, itemSeconds)], {
+/** Combinatorica goes in before anything else runs: it puts its own names ahead of `System`'s (41 of
+ * them are System names), which is why it gets a process of its own. Items reach the kernel as
+ * strings for `ToExpression`, so their unqualified names resolve against the loaded package. */
+const COMBINATORICA_PREAMBLE = 'Quiet[Needs["Combinatorica`"]]; ';
+
+async function runWolfram(sources: readonly string[], itemSeconds: number, preamble: string = ""): Promise<Result[]> {
+  const run = await transcript("wolframscript", ["-code", wolframBatchCode(sources, itemSeconds, preamble)], {
     timeoutMs: Math.max(600_000, itemSeconds * 20_000),
   });
   return "out" in run ? collectWolfram(run.out, sources.length) : failAll(sources.length, run.reason);
@@ -1222,6 +1231,8 @@ export function preludeFor(system: System): Prelude {
   switch (system) {
     case "wolfram":
       return { binary: "wolframscript", preamble: "" };
+    case "combinatorica":
+      return { binary: "wolframscript", preamble: COMBINATORICA_PREAMBLE };
     case "sympy":
       return {
         binary: "python3",
@@ -1307,6 +1318,8 @@ function runBatch(system: System, sources: readonly string[], itemSeconds: numbe
   switch (system) {
     case "wolfram":
       return runWolfram(sources, itemSeconds);
+    case "combinatorica":
+      return runWolfram(sources, itemSeconds, COMBINATORICA_PREAMBLE);
     case "sympy":
       return runPython(
         sources,

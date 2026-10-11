@@ -28,6 +28,11 @@ statOn:
   - PermutationCycles
   - PermutationInversion
   - SignedPermutation
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: Inversions[$1]
+    arity: 1
 ---
 
 - Ranges from $0$ (the identity) to $\binom{n}{2}$ (the reversal $n, n-1, \dots, 1$)

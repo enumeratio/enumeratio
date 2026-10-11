@@ -1,0 +1,5 @@
+id	in	out	tex.in	tex.out
+count-restrictedgrowthstrings-4	Length[Map[# - 1 &, RGFs[4], {2}]]	15	\text{Length}[\text{Map}[\text{$\#$1}-1\&,\text{RGFs}(4),\{2\}]]	15
+first-element-of-restrictedgrowthstrings-4	Part[Map[# - 1 &, RGFs[4], {2}], 1]	{0, 0, 0, 0}	\text{Map}[\text{$\#$1}-1\&,\text{RGFs}(4),\{2\}][[1]]	\{0,0,0,0\}
+every-element-of-restrictedgrowthstrings-4	Take[Map[# - 1 &, RGFs[4], {2}], 5]	{{0, 0, 0, 0}, {0, 0, 0, 1}, {0, 0, 1, 0}, {0, 0, 1, 1}, {0, 0, 1, 2}}	\text{Take}[\text{Map}[\text{$\#$1}-1\&,\text{RGFs}(4),\{2\}],5]	\left( \begin{array}{cccc}  0 & 0 & 0 & 0 \\  0 & 0 & 0 & 1 \\  0 & 0 & 1 & 0 \\  0 & 0 & 1 & 1 \\  0 & 0 & 1 & 2 \\ \end{array} \right)
+blocks-through-set-partitions				

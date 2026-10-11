@@ -34,6 +34,12 @@ grades:
   - name: size
     role: axis
 carrier: Permutation
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: Involutions[Range[$1]]
+    arity: 1
+    note: Combinatorica lists the involutions of a permutation; ours are those of 1..n.
 ---
 
 - Count satisfies $a(n) = a(n-1) + (n-1)\,a(n-2)$

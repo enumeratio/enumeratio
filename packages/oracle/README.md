@@ -25,6 +25,12 @@ emitter reuses.
   ran against, for a report's provenance. A pin compares the release only: `kernel-pin.ts`
   splits a kernel's version into that release and the platform, which is printed, not compared.
 
+`combinatorica` is `wolframscript` with the Combinatorica package loaded first, in a process of its own
+(loading it shadows System names). It is asked only about heads whose records carry a
+`form: combinatorica` binding; the binding template is where a convention gap (0-based ranks, the
+inverse `Permute`, `Partitions[n, k]` bounding the largest part, unsigned `StirlingFirst`) is adapted
+to ours, with a `note`.
+
 ## Commands
 
 ```sh

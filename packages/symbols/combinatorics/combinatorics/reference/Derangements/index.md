@@ -44,6 +44,12 @@ grades:
   - name: size
     role: axis
 carrier: Permutation
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: Derangements[Range[$1]]
+    arity: 1
+    note: Combinatorica lists the derangements of a permutation; ours are those of 1..n.
 ---
 
 - Count is the subfactorial $!n$ (see [[Subfactorial]])

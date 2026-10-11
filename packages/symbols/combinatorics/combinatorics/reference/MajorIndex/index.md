@@ -26,6 +26,11 @@ bindings:
     form: typescript
     environment: engine
     source: packages/symbols/combinatorics/combinatorics/collections/src/stats.ts:majorIndex
+  - origin: mapped
+    form: combinatorica
+    template: Index[$1]
+    arity: 1
+    note: "Combinatorica's Index is the major index: the sum of the descent positions, 1-based, as ours."
 signatures:
   - call: MajorIndex(p)
     description: the major index of a one-line permutation $p$

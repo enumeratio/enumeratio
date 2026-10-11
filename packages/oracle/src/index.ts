@@ -14,6 +14,7 @@ export {
 } from "@enumeratio/utils/bounded";
 export {
   isSymbolicSystem,
+  isWolframFamily,
   SYMBOLIC_SYSTEMS,
   SYSTEMS,
   type System,

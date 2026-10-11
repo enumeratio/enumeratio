@@ -51,6 +51,12 @@ grades:
   - name: k
     role: axis
 carrier: Finset
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: KSubsets[Range[$1], $2]
+    arity: 2
+    note: Combinatorica takes the set itself; ours is the k-subsets of 1..n.
 ---
 
 - Count is the binomial coefficient $\binom{n}{k}$

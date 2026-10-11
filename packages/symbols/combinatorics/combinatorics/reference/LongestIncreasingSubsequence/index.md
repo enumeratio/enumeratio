@@ -15,6 +15,12 @@ signatures:
     description: The length of a longest increasing subsequence.
     library: enumeratio-combinatorics
     type: (list<integer> | permutation) -> number
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: Length[LongestIncreasingSubsequence[$1]]
+    arity: 1
+    note: Combinatorica returns a longest subsequence; ours is its length.
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
