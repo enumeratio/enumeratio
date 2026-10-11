@@ -178,6 +178,8 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
   // A non-integer b steps the same way from 1/Γ(b), so lnΓ's few-ulp error enters once, not per term
   // (1F1(½; 3/2; −8)/Γ(3/2) lost 5e-13 against 3e-13 allowed).
   const steppedInvGamma = lower.map((b, i) => (integerLower[i] ? cx(1) : invGamma(b)));
+  // 1/Γ(b) overflows for b below about −171; every term would be Infinity, so decline.
+  if (steppedInvGamma.some((g) => !Number.isFinite(g.re) || !Number.isFinite(g.im))) return undefined;
   let previous: number | undefined;
   let run = 0;
   let worstRatio = 0;
