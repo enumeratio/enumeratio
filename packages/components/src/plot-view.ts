@@ -457,9 +457,15 @@ export class PlotView {
     return this.#redo !== undefined && this.#home !== undefined;
   }
 
+  /** The SVG on screen: a prerendered one may sit beside it with no size. */
+  #liveSvg(): SVGSVGElement | null {
+    const all = [...this.host.querySelectorAll("svg")];
+    return all.find((svg) => svg.getBoundingClientRect().width > 0) ?? all[0] ?? null;
+  }
+
   /** The plot's width in CSS px, which the samples' density matches. */
   #pixels(): number {
-    const width = this.host.querySelector("svg")?.getBoundingClientRect().width;
+    const width = this.#liveSvg()?.getBoundingClientRect().width;
     return Math.max(2, Math.round(width || DEFAULT_PIXELS));
   }
 
@@ -470,7 +476,7 @@ export class PlotView {
 
   /** A pointer's place in the SVG's viewBox units. */
   #inView(e: { clientX: number; clientY: number }): [number, number] | undefined {
-    const svg = this.host.querySelector("svg");
+    const svg = this.#liveSvg();
     if (!svg) return undefined;
     const rect = svg.getBoundingClientRect();
     const [, , vw, vh] = (svg.getAttribute("viewBox") ?? "0 0 340 200").split(" ").map(Number);
@@ -582,7 +588,7 @@ export class PlotView {
   #onPointerMove = (e: PointerEvent): void => {
     if (this.#dragTo(e)) return;
     if (this.#polar || this.#field || this.#diagram || this.#charted) return;
-    const svg = this.host.querySelector("svg");
+    const svg = this.#liveSvg();
     if (!svg) return;
     // Map the pointer into viewBox units; the SVG scales to fit its box.
     const rect = svg.getBoundingClientRect();
