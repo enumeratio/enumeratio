@@ -520,8 +520,10 @@ def enumeratio_symbolic_agree(a, b, trials):
             continue
         ta, tb = trial
         try:
-            delta = complex(N(ta - tb, 30))
-        except (TypeError, ValueError):
+            # Each side alone: evalf of the difference chases cancellation to its own digits (about 7 s a
+            # trial for LerchPhi vs PolyLog at s < 0), which put the item over its cap on slower machines.
+            delta = complex(N(ta, 30) - N(tb, 30))
+        except (TypeError, ValueError, AttributeError):
             continue
         results.append(abs(delta) < 1e-9)
     return all(results) if results else None
