@@ -45,7 +45,7 @@ import {
   TupleUnrank,
 } from "../collections/src/families/kernels-extra.ts";
 import { floorDiv, ipow, modRank, PermutationRank, PermutationUnrank } from "../collections/src/families/kernels.ts";
-import type { Element } from "../collections/src/families/types.ts";
+import type { Element, NumberKernel } from "../collections/src/families/types.ts";
 import { PhylogeneticTreeUnrank } from "../trees/src/families/unlabeled-trees.ts";
 
 const DEEP = process.env.DEEP_TESTS === "1";
@@ -60,7 +60,8 @@ const fastFamilies = allFamilies.filter(isEpsilFamily).filter((family) => family
 function countOf(family: EpsilFamily, p: number[]): bigint | undefined {
   try {
     const total = family.fast!.count(p);
-    return Number.isSafeInteger(total) ? BigInt(total) : undefined;
+    if (typeof total === "bigint") return total <= MAX_SAFE ? total : undefined;
+    return typeof total === "number" && Number.isSafeInteger(total) ? BigInt(total) : undefined;
   } catch {
     return undefined;
   }
@@ -283,7 +284,7 @@ for (const family of fastFamilies.filter(
   });
 }
 
-type Reading = Pick<FastKernel, "count" | "unrank" | "rank">;
+type Reading = Pick<NumberKernel, "count" | "unrank" | "rank">;
 
 /** TS kernels that list a family's members in another order than its Epsil definition, so they
  *  are not its fast path. */

@@ -37,7 +37,10 @@ export interface FamilyEpsil {
 /** A hand-written reading of a family in plain numbers, in the same order as its Epsil
  *  definition (tests/fast-kernels.test.ts holds the two together). Each operation takes the
  *  family's params in order; any may throw or answer undefined to leave the question to Epsil. */
-export type FastKernel = Pick<NumberKernel, "count" | "unrank" | "rank" | "valid">;
+export type FastKernel = Pick<NumberKernel, "unrank" | "rank" | "valid"> & {
+  /** A bigint where the count is exact past 2^53; undefined leaves it to Epsil. */
+  readonly count: (p: number[]) => number | bigint | undefined;
+};
 
 export interface EpsilFamily extends FamilyShape {
   /** The names the definitions give the family's params, in order. */
@@ -332,11 +335,12 @@ export function kernelOn(
     return true;
   };
   // A fast operation that throws or answers undefined leaves the question to Epsil.
-  const quickCount = (p: number[]): number | undefined => {
+  const quickCount = (p: number[]): bigint | undefined => {
     if (quick === undefined || !wellParamed(p)) return undefined;
     try {
       const total = quick.count(p);
-      return isInteger(total) && total <= FAST_LIMIT ? total : undefined;
+      if (typeof total === "bigint") return total;
+      return isInteger(total) ? BigInt(total) : undefined;
     } catch {
       return undefined;
     }
@@ -369,7 +373,8 @@ export function kernelOn(
     if (total === undefined) {
       if (declinePastDoubles === "count" && (pastDoubles(p) || early?.pastDoubles?.(p) === true)) return decline(p);
       const fast = quickCount(p) ?? run("count", p, {});
-      if (isInteger(fast)) total = BigInt(fast);
+      if (typeof fast === "bigint") total = fast;
+      else if (isInteger(fast)) total = BigInt(fast);
       else if (declinePastDoubles === "count") return decline(p);
       else {
         const json = interpret("count", p, {});
