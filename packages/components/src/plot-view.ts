@@ -58,6 +58,8 @@ export interface PlotHost extends HTMLElement {
 const MIN_ZOOM = 1e-6;
 /** Wheel travel (px) per e-fold of zoom. */
 const WHEEL_RATE = 0.0015;
+/** Pixels a wheel line is worth, where the browser reports lines (Firefox). */
+const LINE_PIXELS = 16;
 /** Fallback plot width (px) before the SVG has a layout. */
 const DEFAULT_PIXELS = 340;
 /** Pointer travel (px) below which a press is a click, not a drag. */
@@ -145,7 +147,10 @@ export class PlotView {
     if (generation !== this.#generation) return;
     if (plot === undefined) return this.#clear();
     const { json: plain, settings } = plot;
-    if (text !== this.#text) this.#window = undefined;
+    if (text !== this.#text) {
+      this.#window = undefined;
+      this.#unzoomable();
+    }
     this.#text = text;
     this.#settings = settings;
     this.#reset();
@@ -165,6 +170,7 @@ export class PlotView {
 
   /** A chart of data: lowered whole, so nothing is sampled and the pointer reads nothing out. */
   #chart(box: BoxNode): void {
+    this.#unzoomable();
     this.#charted = true;
     this.#series = [];
     this.#box = box;
@@ -176,6 +182,7 @@ export class PlotView {
 
   #clear(): void {
     this.#reset();
+    this.#unzoomable();
     this.#series = [];
     this.#polar = this.#box = undefined;
     this.#svg = "";
@@ -185,10 +192,14 @@ export class PlotView {
   /** Forget the last plot's mode, so a plot of another kind starts clean. */
   #reset(): void {
     this.#stop();
-    this.#redo = undefined;
-    this.#home = undefined;
     this.#charted = false;
     this.#field = false;
+  }
+
+  /** Forget how to resample: the plot is no longer one the reader can zoom. */
+  #unzoomable(): void {
+    this.#redo = undefined;
+    this.#home = undefined;
     this.#polar = undefined;
   }
 
@@ -210,6 +221,7 @@ export class PlotView {
 
   /** Draw a diagram, and with it a torus square's point as the page's clock moves it. */
   #diagramize(settings: Readonly<Record<string, string>>): void {
+    this.#unzoomable();
     this.#series = [];
     this.#box = undefined;
     this.#frame = undefined;
@@ -260,7 +272,10 @@ export class PlotView {
         this.#series = plotSeriesIn(plot.items, at, options, window, this.#pixels());
         this.#rebuild();
       };
-    } else this.#series = data;
+    } else {
+      this.#series = data;
+      this.#unzoomable();
+    }
     this.#marked = marks;
     this.#polar = undefined;
     this.#field = false;
@@ -301,6 +316,7 @@ export class PlotView {
     let points;
     let sample: ((t: number) => number) | undefined;
     if (head === "ListPolarPlot") {
+      this.#unzoomable();
       let data: unknown;
       try {
         data = JSON.parse(settings["data"] ?? "null");
@@ -379,6 +395,7 @@ export class PlotView {
     Object.assign(scopeV, this.host.bindings);
     const su = lu.samplers[0];
     const sv = lv.samplers[0];
+    this.#unzoomable();
     if (!su || !sv) return this.#clear();
     const field: Field2d = (x, y) => {
       scopeU[vx] = x;
@@ -492,6 +509,13 @@ export class PlotView {
     });
   }
 
+  /** A wheel's travel in px: lines and pages (`deltaMode`) are scaled to pixels. */
+  #wheelPixels(e: WheelEvent): number {
+    if (e.deltaMode === WheelEvent.DOM_DELTA_LINE) return e.deltaY * LINE_PIXELS;
+    if (e.deltaMode === WheelEvent.DOM_DELTA_PAGE) return e.deltaY * (this.host.clientHeight || DEFAULT_PIXELS);
+    return e.deltaY;
+  }
+
   #onWheel = (e: WheelEvent): void => {
     if (!this.#zoomable || !wheelZooms(e, e.currentTarget as Element, gestureHandlingOf(this.host.gestureHandling)))
       return;
@@ -500,7 +524,7 @@ export class PlotView {
     if (!at || !frame) return;
     e.preventDefault();
     const [ax, ay] = frame.toData(at[0], at[1]);
-    this.#show(this.#zoomed([ax, ay], Math.exp(e.deltaY * WHEEL_RATE)));
+    this.#show(this.#zoomed([ax, ay], Math.exp(this.#wheelPixels(e) * WHEEL_RATE)));
   };
 
   #onPointerDown = (e: PointerEvent): void => {
@@ -571,6 +595,7 @@ export class PlotView {
       @pointerdown=${this.#onPointerDown}
       @pointerup=${this.#onPointerUp}
       @pointercancel=${this.#onPointerUp}
+      @lostpointercapture=${this.#onPointerUp}
       @wheel=${this.#onWheel}
       @dblclick=${this.#onDoubleClick}
       >${unsafeHTML(this.#svg)}</span

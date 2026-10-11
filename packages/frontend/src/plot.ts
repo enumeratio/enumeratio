@@ -278,7 +278,17 @@ export const samplesFor = (run: CurveRun, window: PlotWindow, pixels: number): n
   clampCount((run.length / (window.x[1] - window.x[0])) * (pixels / PIXELS_PER_SAMPLE));
 
 /** The coarse pass a window's runs are found from. */
-export const coarseSamples = (samples: number): number => Math.max(COARSE_SAMPLES, samples);
+export const coarseSamples = (samples: number): number => clampCount(Math.max(COARSE_SAMPLES, samples));
+
+/** Most samples a window's runs take together in one pass, however many runs there are. */
+export const MAX_WINDOW_SAMPLES = 4000;
+
+/** `counts` (one per run) scaled down together so they sum to at most `MAX_WINDOW_SAMPLES`. */
+export function budgeted(counts: readonly number[]): number[] {
+  const total = counts.reduce((a, b) => a + b, 0);
+  if (total <= MAX_WINDOW_SAMPLES) return [...counts];
+  return counts.map((n) => Math.max(2, Math.floor((n * MAX_WINDOW_SAMPLES) / total)));
+}
 
 /**
  * `plotSeries` over a window of the plane, at the density of `pixels` across it. A curve of `x`
@@ -302,11 +312,12 @@ export function plotSeriesIn(
     const [fxn, fyn] = [at(0), at(1)];
     const trace = (t: number): [number, number] => [fxn(t), fyn(t)];
     const runs = runsThrough(trace, lo, hi, coarseSamples(options.samples), window as Required<PlotWindow>);
+    const inits = budgeted(runs.map((run) => samplesFor(run, window, pixels)));
     const points = runs
-      .flatMap((run) => {
-        const init = samplesFor(run, window, pixels);
+      .flatMap((run, i) => {
+        const init = inits[i]!;
         const sampled = refine
-          ? adaptiveParam(trace, run.lo, run.hi, { init })
+          ? adaptiveParam(trace, run.lo, run.hi, { init, maxPoints: init * 2 })
           : Array.from({ length: init }, (_, i) => {
               const [x, y] = trace(run.lo + ((run.hi - run.lo) * i) / (init - 1));
               return { x, y };

@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { plotSeries, plotSeriesIn, type SeriesItem } from "../src/plot.ts";
+import { budgeted, MAX_WINDOW_SAMPLES, plotSeries, plotSeriesIn, type SeriesItem } from "../src/plot.ts";
 import { polarPlotBox, polarPlotBoxSvg, samplePolar, samplePolarIn } from "../src/polarplot.ts";
 import type { BoxNode } from "@enumeratio/boxes";
 
@@ -61,4 +61,23 @@ test("a zoomed polar box is clipped to its window; the whole one is as it was", 
     { window },
   ) as BoxNode;
   expect(polarPlotBoxSvg(zoomed)).toContain("clip-path");
+});
+
+test("a window's runs share one sample budget", () => {
+  let calls = 0;
+  // A tight spiral crosses a small window many times.
+  const spiral = (theta: number): number => {
+    calls++;
+    return theta;
+  };
+  const window = { center: [0, 0] as const, half: 30 };
+  const points = samplePolarIn(spiral, 0, 400 * Math.PI, window, 2000);
+  expect(points.length).toBeLessThan(10_000);
+  expect(calls).toBeLessThan(20_000);
+});
+
+test("run budgets scale down together", () => {
+  const counts = budgeted(Array.from({ length: 50 }, () => 1000));
+  expect(counts.reduce((a, b) => a + b, 0)).toBeLessThanOrEqual(MAX_WINDOW_SAMPLES);
+  expect(budgeted([10, 20])).toEqual([10, 20]);
 });

@@ -21,7 +21,7 @@ import {
 } from "@enumeratio/boxes";
 import type { Edge } from "./graphics-rules.ts";
 import { label, type PlotFrame } from "./plot-box.ts";
-import { runsThrough, samplesFor } from "./plot.ts";
+import { budgeted, runsThrough, samplesFor } from "./plot.ts";
 import { svg } from "./svg-draw.ts";
 import type { DisplayList, GraphicsPrimitive, MarkItem } from "./tiles-canvas.ts";
 
@@ -111,9 +111,9 @@ export function samplePolarIn(
   const { center: c, half } = window;
   const box = { x: [c[0] - half, c[0] + half], y: [c[1] - half, c[1] + half] } as const;
   const gap: PolarPoint = { theta: Number.NaN, r: Number.NaN };
-  return runsThrough(trace, t0, t1, coarse, box)
-    .flatMap((run) => [gap, ...samplePolar(radius, run.lo, run.hi, samplesFor(run, box, pixels))])
-    .slice(1);
+  const runs = runsThrough(trace, t0, t1, Math.max(2, Math.min(1000, coarse)), box);
+  const counts = budgeted(runs.map((run) => samplesFor(run, box, pixels)));
+  return runs.flatMap((run, i) => [gap, ...samplePolar(radius, run.lo, run.hi, counts[i]!)]).slice(1);
 }
 
 const SIZE = 260;
