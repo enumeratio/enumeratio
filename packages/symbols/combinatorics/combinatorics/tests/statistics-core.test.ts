@@ -22,6 +22,7 @@ import { core, cycles, headUsage, tower } from "../src/statistics/core.ts";
  * non-excedances as `p(i) <= i` — no fold this time, just a same-block filtered sum.
  * `Contains` entered with the set-partition internal points, which find the block holding an element.
  * `ReplaceAt` entered with the patience piles, which replace a pile rather than rebuild the list.
+ * `Typed` entered with the Dyck-path rises, which bind a list once (`bind`) to filter it.
  */
 const CORE = [
   "Abs",
@@ -60,6 +61,7 @@ const CORE = [
   "Rest",
   "Subtract",
   "Sum",
+  "Typed",
 ];
 
 test("every definition rests on exactly the core", () => {

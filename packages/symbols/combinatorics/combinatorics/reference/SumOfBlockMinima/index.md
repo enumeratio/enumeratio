@@ -3,6 +3,13 @@ name: SumOfBlockMinima
 domain: Set partition statistics
 signature: SumOfBlockMinima(partition)
 summary: The sum of the smallest elements of the blocks.
+catalog:
+  - system: findstat
+    identity: St000230
+    url: https://www.findstat.org/St000230
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: SumOfBlockMinima(partition)
     description: The sum of the smallest elements of the blocks.

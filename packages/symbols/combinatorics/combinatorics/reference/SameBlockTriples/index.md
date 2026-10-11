@@ -3,6 +3,13 @@ name: SameBlockTriples
 domain: Set partition statistics
 signature: SameBlockTriples(partition)
 summary: Triples of elements in one block.
+catalog:
+  - system: findstat
+    identity: St000561
+    url: https://www.findstat.org/St000561
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: SameBlockTriples(partition)
     description: Triples of elements in one block.

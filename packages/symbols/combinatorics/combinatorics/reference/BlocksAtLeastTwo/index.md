@@ -5,6 +5,11 @@ signature: BlocksAtLeastTwo(partition)
 summary: Blocks containing at least two elements.
 statOn:
   - SetPartition
+catalog:
+  - system: findstat
+    identity: St000251
+    url: https://www.findstat.org/St000251
+    on: SetPartition
 signatures:
   - call: BlocksAtLeastTwo(partition)
     description: Blocks containing at least two elements.

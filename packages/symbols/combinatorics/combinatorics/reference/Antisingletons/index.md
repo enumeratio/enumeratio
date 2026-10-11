@@ -3,6 +3,13 @@ name: Antisingletons
 domain: Set partition statistics
 signature: Antisingletons(partition)
 summary: Elements i with i + 1 in the same block, counting n + 1 as 1.
+catalog:
+  - system: findstat
+    identity: St000248
+    url: https://www.findstat.org/St000248
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: Antisingletons(partition)
     description: Elements i with i + 1 in the same block, counting n + 1 as 1.

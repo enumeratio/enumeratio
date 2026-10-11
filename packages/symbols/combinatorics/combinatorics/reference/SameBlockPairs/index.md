@@ -3,6 +3,13 @@ name: SameBlockPairs
 domain: Set partition statistics
 signature: SameBlockPairs(partition)
 summary: Pairs of elements in one block.
+catalog:
+  - system: findstat
+    identity: St000558
+    url: https://www.findstat.org/St000558
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: SameBlockPairs(partition)
     description: Pairs of elements in one block.

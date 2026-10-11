@@ -3,6 +3,13 @@ name: Successions
 domain: Set partition statistics
 signature: Successions(partition)
 summary: Elements i with i + 1 in the same block.
+catalog:
+  - system: findstat
+    identity: St000502
+    url: https://www.findstat.org/St000502
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: Successions(partition)
     description: Elements i with i + 1 in the same block.

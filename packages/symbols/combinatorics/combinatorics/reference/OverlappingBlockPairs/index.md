@@ -3,6 +3,13 @@ name: OverlappingBlockPairs
 domain: Set partition statistics
 signature: OverlappingBlockPairs(partition)
 summary: Pairs of blocks A, B with min A < min B < max A < max B.
+catalog:
+  - system: findstat
+    identity: St000563
+    url: https://www.findstat.org/St000563
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: OverlappingBlockPairs(partition)
     description: Pairs of blocks A, B with min A < min B < max A < max B.

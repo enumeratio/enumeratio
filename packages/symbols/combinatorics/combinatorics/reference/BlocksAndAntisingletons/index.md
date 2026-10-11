@@ -3,6 +3,13 @@ name: BlocksAndAntisingletons
 domain: Set partition statistics
 signature: BlocksAndAntisingletons(partition)
 summary: Blocks plus antisingletons.
+catalog:
+  - system: findstat
+    identity: St000250
+    url: https://www.findstat.org/St000250
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: BlocksAndAntisingletons(partition)
     description: Blocks plus antisingletons.

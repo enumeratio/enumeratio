@@ -3,6 +3,13 @@ name: LargestOpener
 domain: Set partition statistics
 signature: LargestOpener(partition)
 summary: The largest of the blocks' smallest elements.
+catalog:
+  - system: findstat
+    identity: St000839
+    url: https://www.findstat.org/St000839
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: LargestOpener(partition)
     description: The largest of the blocks' smallest elements.

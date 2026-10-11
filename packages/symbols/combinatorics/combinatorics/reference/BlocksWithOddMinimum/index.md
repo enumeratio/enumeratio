@@ -3,6 +3,13 @@ name: BlocksWithOddMinimum
 domain: Set partition statistics
 signature: BlocksWithOddMinimum(partition)
 summary: Blocks whose smallest element is odd.
+catalog:
+  - system: findstat
+    identity: St001151
+    url: https://www.findstat.org/St001151
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: BlocksWithOddMinimum(partition)
     description: Blocks whose smallest element is odd.

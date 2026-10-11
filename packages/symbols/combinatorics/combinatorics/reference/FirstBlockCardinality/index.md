@@ -3,6 +3,13 @@ name: FirstBlockCardinality
 domain: Set partition statistics
 signature: FirstBlockCardinality(partition)
 summary: The size of the block containing 1.
+catalog:
+  - system: findstat
+    identity: St000504
+    url: https://www.findstat.org/St000504
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: FirstBlockCardinality(partition)
     description: The size of the block containing 1.

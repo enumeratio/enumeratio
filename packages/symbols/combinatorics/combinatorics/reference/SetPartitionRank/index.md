@@ -3,6 +3,13 @@ name: SetPartitionRank
 domain: Set partition statistics
 signature: SetPartitionRank(partition)
 summary: The number of elements minus the number of blocks.
+catalog:
+  - system: findstat
+    identity: St000211
+    url: https://www.findstat.org/St000211
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: SetPartitionRank(partition)
     description: The number of elements minus the number of blocks.

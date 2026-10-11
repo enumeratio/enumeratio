@@ -3,6 +3,13 @@ name: DistinctBlockPairs
 domain: Set partition statistics
 signature: DistinctBlockPairs(partition)
 summary: Pairs of elements in different blocks.
+catalog:
+  - system: findstat
+    identity: St000564
+    url: https://www.findstat.org/St000564
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: DistinctBlockPairs(partition)
     description: Pairs of elements in different blocks.
