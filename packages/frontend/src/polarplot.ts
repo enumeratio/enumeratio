@@ -20,7 +20,8 @@ import {
   tag,
 } from "@enumeratio/boxes";
 import type { Edge } from "./graphics-rules.ts";
-import { label } from "./plot-box.ts";
+import { label, type PlotFrame } from "./plot-box.ts";
+import { runsThrough, samplesFor } from "./plot.ts";
 import { svg } from "./svg-draw.ts";
 import type { DisplayList, GraphicsPrimitive, MarkItem } from "./tiles-canvas.ts";
 
@@ -71,6 +72,48 @@ export interface PolarPlotOptions {
   /** Explicit outer radius; otherwise the largest sampled |r|. */
   max?: number;
   title?: string;
+  /** A zoomed view: the square of the plane shown (it clips what lies past it). Overrides the outer radius. */
+  window?: PolarWindow;
+}
+
+/** The square of the plane a zoomed polar plot shows. */
+export interface PolarWindow {
+  readonly center: readonly [number, number];
+  /** Half its side. */
+  readonly half: number;
+}
+
+/**
+ * `samplePolar` for a zoomed view: only the stretches of `[t0, t1]` that pass through `window`,
+ * a sample every couple of pixels of curve across `pixels`, with a non-finite point between
+ * stretches so the path breaks there.
+ */
+export function samplePolarIn(
+  f: (theta: number) => number,
+  t0: number,
+  t1: number,
+  window: PolarWindow,
+  pixels: number,
+  coarse = 720,
+): PolarPoint[] {
+  const radius = (theta: number): number => {
+    try {
+      const r = f(theta);
+      return typeof r === "number" ? r : Number.NaN;
+    } catch {
+      return Number.NaN;
+    }
+  };
+  const trace = (theta: number): [number, number] => {
+    const c = polarToCartesian(theta, radius(theta));
+    return [c.x, c.y];
+  };
+  const { center: c, half } = window;
+  const box = { x: [c[0] - half, c[0] + half], y: [c[1] - half, c[1] + half] } as const;
+  const gap: PolarPoint = { theta: Number.NaN, r: Number.NaN };
+  return runsThrough(trace, t0, t1, coarse, box)
+    .flatMap((run) => [gap, ...samplePolar(radius, run.lo, run.hi, samplesFor(run, box, pixels))])
+    .slice(1);
 }
 
 const SIZE = 260;
@@ -103,11 +146,14 @@ export function polarPlotBox(points: readonly PolarPoint[], opts: PolarPlotOptio
     PolarAxes: opts.axes !== false,
     ...(opts.title && { PlotLabel: opts.title }),
   };
-  if (finite.length === 0) return graphics(row([]), options);
+  if (finite.length === 0 && !opts.window) return graphics(row([]), options);
+  const { center = [0, 0], half = rMax } = opts.window ?? {};
   options["PlotRange"] = [
-    [-rMax, rMax],
-    [-rMax, rMax],
+    [center[0] - half, center[0] + half],
+    [center[1] - half, center[1] + half],
   ];
+  if (opts.window) options["Clipped"] = true;
+  if (finite.length === 0) return graphics(row([]), options);
 
   const runs: PolarPoint[][] = [];
   let run: PolarPoint[] = [];
@@ -153,38 +199,63 @@ const numbers = (value: unknown): number[] | undefined =>
 
 const solid = (color: string, width: number, opacity: number): Edge => ({ color, width, opacity, dashing: [] });
 
+/** Where a polar plot's square sits in its SVG: the canvas, the square's center and its half side, in px. */
+function polarGeometry(o: Options): { W: number; H: number; cx: number; cy: number; R: number } {
+  const [W, H] = (numbers(o.ImageSize) ?? [SIZE, SIZE]) as [number, number];
+  const top = typeof o.PlotLabel === "string" ? 26 : PAD;
+  return { W, H, cx: W / 2, cy: top + (H - top - PAD) / 2, R: Math.min(W / 2 - PAD, (H - top - PAD) / 2) };
+}
+
+/** The plane a polar plot box shows and how it maps to the SVG (y down), for a pointer to read. */
+export function polarFrameOf(box: BoxNode): PlotFrame | undefined {
+  const o = optionsOfBox(box);
+  const range = Array.isArray(o.PlotRange) ? (o.PlotRange as number[][]) : undefined;
+  const { cx, cy, R } = polarGeometry(o);
+  if (!range || !(R > 0)) return undefined;
+  const [c0, c1] = [(range[0]![0]! + range[0]![1]!) / 2, (range[1]![0]! + range[1]![1]!) / 2];
+  const h = (range[0]![1]! - range[0]![0]!) / 2;
+  return {
+    box: [cx - R, cy - R, cx + R, cy + R],
+    toData: (px, py) => [c0 + ((px - cx) / R) * h, c1 - ((py - cy) / R) * h],
+    toPixel: (x, y) => [cx + ((x - c0) / h) * R, cy - ((y - c1) / h) * R],
+  };
+}
+
 /** A polar plot box drawn as SVG: the grid, then the curve, then its title. */
 export function polarPlotBoxSvg(box: BoxNode): string {
   const o = optionsOfBox(box);
-  const [W, H] = (numbers(o.ImageSize) ?? [SIZE, SIZE]) as [number, number];
-  const top = typeof o.PlotLabel === "string" ? 26 : PAD;
-  const cx = W / 2;
-  const cy = top + (H - top - PAD) / 2;
-  const R = Math.min(W / 2 - PAD, (H - top - PAD) / 2);
+  const { W, H, cx, cy, R } = polarGeometry(o);
   const marks: MarkItem[] = [];
   const at = (x: number, y: number): [number, number] => [x, H - y];
+  // A zoomed plot's marks are cut to its square.
+  const clipped = o.Clipped === true;
   const push = (mark: GraphicsPrimitive, look: MarkItem["style"]): void => {
-    marks.push({ address: [0, 0], at: [0, 0], mark, style: look, selected: false });
+    marks.push({ address: [0, 0], at: [0, 0], mark, style: look, selected: false, ...(clipped && { clipped }) });
   };
   const range = Array.isArray(o.PlotRange) ? (o.PlotRange as number[][]) : undefined;
   if (range && R > 0) {
-    const rMax = range[0]![1]!;
-    const px = (p: readonly number[]): [number, number] => at(cx + (p[0]! / rMax) * R, cy - (p[1]! / rMax) * R);
+    const [c0, c1] = [(range[0]![0]! + range[0]![1]!) / 2, (range[1]![0]! + range[1]![1]!) / 2];
+    // The window's half side; the rings and spokes reach its farthest corner when it is off the origin.
+    const rMax = (range[0]![1]! - range[0]![0]!) / 2;
+    const reach = c0 || c1 ? Math.hypot(Math.abs(c0) + rMax, Math.abs(c1) + rMax) : rMax;
+    const px = (p: readonly number[]): [number, number] =>
+      at(cx + ((p[0]! - c0) / rMax) * R, cy - ((p[1]! - c1) / rMax) * R);
     if (o.PolarAxes !== false) {
-      const step = ringStep(rMax);
-      for (let r = step; r <= rMax + step * 1e-9; r += step)
-        push({ head: "Disk", radius: (r / rMax) * R, center: at(cx, cy) }, { edges: [solid(AXIS, 1, 0.35)] });
+      const step = ringStep(reach);
+      const origin = px([0, 0]);
+      for (let r = step; r <= reach + step * 1e-9; r += step)
+        push({ head: "Disk", radius: (r / rMax) * R, center: origin }, { edges: [solid(AXIS, 1, 0.35)] });
       for (let k = 0; k < 12; k++) {
         const a = (k * Math.PI) / 6;
         push(
-          { head: "Line", points: [at(cx, cy), px([rMax * Math.cos(a), rMax * Math.sin(a)])] },
+          { head: "Line", points: [origin, px([reach * Math.cos(a), reach * Math.sin(a)])] },
           { edges: [solid(AXIS, 1, 0.2)] },
         );
       }
       push(
         {
           head: "Text",
-          text: label(rMax),
+          text: label(reach),
           size: 10,
           at: at(cx + R, cy - 4),
           look: { anchor: "end", mono: true, opacity: 0.6 },
@@ -226,7 +297,13 @@ export function polarPlotBoxSvg(box: BoxNode): string {
       { color: FG, edges: [] },
     );
   const list: DisplayList = { kind: "marks", view: "fixed", marks, links: [], complete: true };
-  return svg(list, W, H, { center: [W / 2, H / 2], extent: H / 2 }, { rounded: true, label: "polar plot" });
+  return svg(
+    list,
+    W,
+    H,
+    { center: [W / 2, H / 2], extent: H / 2 },
+    { rounded: true, label: "polar plot", ...(clipped && { clip: [cx - R, cy - R, 2 * R, 2 * R] as const }) },
+  );
 }
 
 /** Render polar `points` as a curve on a polar grid: `polarPlotBox` drawn. */

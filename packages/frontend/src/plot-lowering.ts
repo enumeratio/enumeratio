@@ -112,7 +112,13 @@ export function spanOf(text: string | undefined): [number, number] | undefined {
 /** What a plot's settings say about how to draw it: the chrome, the scales, the colors. */
 export function plotOptionsOf(
   settings: PlotSettings,
-  extra: { epilog?: readonly Primitive[]; prolog?: readonly Primitive[]; hover?: number } = {},
+  extra: {
+    epilog?: readonly Primitive[];
+    prolog?: readonly Primitive[];
+    hover?: number;
+    xRange?: readonly [number, number];
+    plotRange?: readonly [number, number];
+  } = {},
 ): PlotOptions {
   return {
     axes: settings["axes"] !== "false",
