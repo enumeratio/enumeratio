@@ -7,6 +7,7 @@
 // that follow S. The count is the product formula ∏ⱼ (3j + 1)!/(n + j)!.
 
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { alternatingSignMatricesExact } from "../../../collections/src/families/exact-counts.ts";
 import {
   add,
   all,
@@ -132,6 +133,7 @@ export const alternatingSignMatrices: EpsilFamily = {
   params: [n],
   // The table over every set of columns is out of the interpreter's reach past 2^53, from n = 12.
   declinePastDoubles: true,
+  fastCount: ([n]) => alternatingSignMatricesExact(n),
   epsil: {
     count: primeQuotient(
       "ac",

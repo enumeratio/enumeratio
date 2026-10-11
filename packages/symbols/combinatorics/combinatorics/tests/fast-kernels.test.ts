@@ -196,6 +196,42 @@ test("a fast path is not part of the definitions' hash", () => {
   }
 });
 
+// A family may carry a fast count alone, leaving unrank, rank and membership to Epsil.
+const countFamilies = allFamilies.filter(isEpsilFamily).filter((family) => family.fastCount !== undefined);
+
+test("some families carry a fast count alone, and a kernel says so", () => {
+  expect(countFamilies.length).toBeGreaterThan(0);
+  for (const family of countFamilies) {
+    expect(family.fast).toBeUndefined();
+    expect(kernelOn(ce, family).fast).toBe(true);
+    expect(epsilKernelOn(ce, family).fast).toBeUndefined();
+    const { fastCount: _, ...bare } = family;
+    expect(familyHash(family)).toBe(familyHash(bare as EpsilFamily));
+  }
+});
+
+for (const family of countFamilies) {
+  test(`${family.head}: the fast count agrees with Epsil, past 2^53 too`, () => {
+    const fast = kernelOn(ce, family);
+    const epsil = epsilKernelOn(ce, family);
+    const side = Array.from({ length: 6 }, (_, i) => i);
+    const grid = Array.from({ length: family.paramCount }, () => side).reduce<number[][]>(
+      (rest, axis) => rest.flatMap((p) => axis.map((x) => [...p, x])),
+      [[]],
+    );
+    // The smallest box of equal sides whose fast count passes 2^53, where only the interpreter can say.
+    let past = false;
+    for (let s = 1; s <= 60 && !past; s++) {
+      const p = Array<number>(family.paramCount).fill(s);
+      const total = family.fastCount!(p);
+      past = typeof total === "bigint" && total > MAX_SAFE;
+      if (past) grid.push(p);
+    }
+    expect(past).toBe(true);
+    for (const p of grid) expect([labelled(family, p), fast.count(p)]).toEqual([labelled(family, p), epsil.count(p)]);
+  });
+}
+
 for (const family of fastFamilies) {
   test(`${family.head}: the fast path agrees with Epsil`, () => {
     const fast = kernelOn(ce, family);
@@ -281,6 +317,25 @@ for (const family of fastFamilies.filter(
     }
     // Membership never reads the count, so the fast path answers it; unrank and rank are Epsil's.
     expect(new Set(calls.filter((call) => call !== "valid"))).toEqual(new Set(["count"]));
+  });
+}
+
+// A fast count may be a bigint past 2^53, trusted as exact: Epsil, a fraction of a second at the first
+// params past it, must say the same.
+const BIGINT_COUNTS: [string, number[]][] = [
+  ["BinaryTrees", [31]],
+  ["BinaryTreeParentArrays", [31]],
+  ["FullKAryTrees", [23, 3]],
+  ["NonCrossingTrees", [23]],
+  ...(DEEP ? ([["FullKAryTrees", [20, 5]]] as [string, number[]][]) : []),
+];
+for (const [head, p] of BIGINT_COUNTS) {
+  test(`${head}(${p.join(", ")}): the fast count past 2^53 is Epsil's`, () => {
+    const family = fastFamilies.find((f) => f.head === head)!;
+    const total = epsilKernelOn(ce, family).count(p);
+    expect(typeof total === "bigint" && total > MAX_SAFE).toBe(true);
+    expect(family.fast!.count(p)).toBe(total);
+    expect(kernelOn(ce, family).count(p)).toBe(total);
   });
 }
 

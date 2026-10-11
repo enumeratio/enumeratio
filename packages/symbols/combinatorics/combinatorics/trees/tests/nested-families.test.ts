@@ -113,15 +113,18 @@ test("at the 2^53 boundary the count is exact on both sides", () => {
   // C(30) is the last Catalan number a double holds, C(31) the first past it.
   const MAX = BigInt(Number.MAX_SAFE_INTEGER);
   expect(catalan(30) <= MAX && catalan(31) > MAX).toBe(true);
-  for (const [family, fast, at, past] of [
-    [binaryTrees, binaryTreesFast, [30], [31]],
-    [orderedTrees, orderedTreesFast, [30], [31]],
-    [fullKAryTrees, fullKAryTreesFast, [30, 2], [31, 2]],
+  for (const [family, fast, at, past, exactPast] of [
+    [binaryTrees, binaryTreesFast, [30], [31], true],
+    [orderedTrees, orderedTreesFast, [30], [31], false],
+    [fullKAryTrees, fullKAryTreesFast, [30, 2], [31, 2], true],
   ] as const) {
     const kernel = epsilKernelOn(ce, family);
     expect(kernel.count([...at])).toBe(catalan(30));
-    expect(fast.count([...at])).toBe(Number(catalan(30)));
+    expect(BigInt(fast.count([...at])!)).toBe(catalan(30));
     expect(kernel.count([...past])).toBe(catalan(31));
+    // A fast count past 2^53 is a bigint, exact, or else a double that the kernel does not trust.
+    if (exactPast) expect(fast.count([...past])).toBe(catalan(31));
+    else expect(typeof fast.count([...past])).toBe("number");
   }
 });
 

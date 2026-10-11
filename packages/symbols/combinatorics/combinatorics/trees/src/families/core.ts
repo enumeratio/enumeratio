@@ -7,6 +7,7 @@
 // #401), since both families' elements already are (kind "nested": KTree = 0 | KTree[], OrdTree
 // = OrdTree[]). The generic kernel math stays in collections/src/families/kernels*.ts.
 import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
+import { catalanExact, fussCatalanExact } from "../../../collections/src/families/exact-counts.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import { binaryTreeParentArrays } from "./binary-tree-parents.ts";
 import { binaryTrees, fullKAryTrees } from "./kary-trees.ts";
@@ -20,7 +21,6 @@ import {
   BinaryTreeOfParentArray,
   IsBinaryTreeParentArray,
   type BinTree,
-  KAryTreeCount,
   KAryTreeUnrank,
   KAryTreeRank,
   IsKAryTree,
@@ -51,13 +51,13 @@ export const binaryTreeParentArraysKernel: NumberKernel = {
 // The nested families are Epsil definitions interpreted (a nested element has no compiled type), with
 // the TS kernels, which recurse over the tree natively, as their `fast` paths.
 export const binaryTreesFast: FastKernel = {
-  count: ([n]) => BinaryTreeCount(n),
+  count: ([n]) => catalanExact(n),
   unrank: ([n], r) => BinaryTreeUnrank(n, r),
   valid: (e, [n]) => IsBinaryTree(e, n),
   rank: (e) => BinaryTreeRank(e as BinTree),
 };
 export const fullKAryTreesFast: FastKernel = {
-  count: ([n, k]) => KAryTreeCount(n, k),
+  count: ([n, k]) => fussCatalanExact(n, k),
   unrank: ([n, k], r) => KAryTreeUnrank(n, k, r),
   valid: (e, [n, k]) => IsKAryTree(e, n, k),
   rank: (e, [, k]) => KAryTreeRank(e as KTree, k),
@@ -71,7 +71,10 @@ export const orderedTreesFast: FastKernel = {
 
 export const entries: (NumberKernel | EpsilFamily)[] = [
   { ...binaryTrees, fast: binaryTreesFast },
-  { ...binaryTreeParentArrays, fast: binaryTreeParentArraysKernel },
+  {
+    ...binaryTreeParentArrays,
+    fast: { ...binaryTreeParentArraysKernel, count: ([n]) => catalanExact(n) },
+  },
   { ...fullKAryTrees, fast: fullKAryTreesFast },
   { ...orderedTrees, fast: orderedTreesFast },
 ];

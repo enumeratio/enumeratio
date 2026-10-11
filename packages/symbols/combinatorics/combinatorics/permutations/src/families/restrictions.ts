@@ -5,6 +5,7 @@
 // `taken` says in O(1) whether a value is used.
 
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { catalanExact } from "../../../collections/src/families/exact-counts.ts";
 import type { Declared } from "../../../collections/src/families/types.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
 import {
@@ -635,7 +636,11 @@ function permutationsAvoiding(pattern: string): EpsilFamily {
   });
 }
 
-export const permutationsAvoiding3 = ["123", "132", "213", "231", "312", "321"].map(permutationsAvoiding);
+// Each of the six patterns of length 3 is avoided by the Catalan number of permutations.
+export const permutationsAvoiding3 = ["123", "132", "213", "231", "312", "321"].map((pattern) => ({
+  ...permutationsAvoiding(pattern),
+  fastCount: ([n]: number[]) => catalanExact(n),
+}));
 
 // Separable: Av(2413, 3142), built from 1 by direct (⊕) and skew (⊖) sums, counted by the large
 // Schröder numbers. Completions follow the decomposition over a window of values [lo, lo + s − 1]

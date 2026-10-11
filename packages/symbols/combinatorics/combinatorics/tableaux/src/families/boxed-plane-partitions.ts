@@ -14,6 +14,7 @@
 // of the shape by W, the ways to finish the shape below each row.
 
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { EXACT_TOP_LIMIT, powerProduct } from "../../../collections/src/families/exact-counts.ts";
 import {
   add,
   all,
@@ -431,12 +432,31 @@ const divisible = (q: MathJSON, factor: (s: MathJSON) => MathJSON): MathJSON =>
     upTo(2, add(A, B)),
   );
 
+/**
+ * MacMahon's Π (i + j + c − 1)/(i + j − 1) over 1 ≤ i ≤ a, 1 ≤ j ≤ b, as an exact bigint, or
+ * undefined past the limit of `powerProduct`. The factors group by s = i + j, which has
+ * min(a, s − 1) − max(1, s − b) + 1 pairs; the sides are sorted so the shortest two are the pair axes.
+ */
+export function boxedCount(sides: readonly number[]): bigint | undefined {
+  const [a, b, c] = sides.toSorted((x, y) => x - y);
+  if (a < 1) return 1n;
+  if (a + b + c > EXACT_TOP_LIMIT) return undefined;
+  const weights = new Float64Array(a + b + c + 1);
+  for (let s = 2; s <= a + b; s++) {
+    const pairs = Math.min(a, s - 1) - Math.max(1, s - b) + 1;
+    weights[s + c - 1] += pairs;
+    weights[s - 1] -= pairs;
+  }
+  return powerProduct(weights);
+}
+
 export const boxedPlanePartitions: EpsilFamily = {
   head: "BoxedPlanePartitions",
   paramCount: 3,
   kind: "blocks",
   params: ["_a", "_b", "_c"],
   declinePastDoubles: true,
+  fastCount: boxedCount,
   epsil: {
     tables,
     // The factors (i + j + c − 1)/(i + j − 1) group by s = i + j: s has min(a, s − 1) − max(1, s − b) + 1 pairs.
