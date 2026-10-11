@@ -7,6 +7,7 @@ import { notatioMarkup, useLibraryParams } from "./notatio-markup.ts";
 import { libraryParams } from "./theme/libraries.ts";
 import { notatioMath } from "./notatio-math.ts";
 import { notatioSymbols } from "./notatio-symbols.ts";
+import { notatioSourceLinks } from "./notatio-source-links.ts";
 import { notationEntriesPlugin } from "./notation-entries.ts";
 import { docRoute, docsSidebar, workspacePackages } from "./data/repo-docs.ts";
 import { loaderWatchPlugin } from "./loader-watch.ts";
@@ -400,6 +401,7 @@ const config = defineConfig({
       notatioMath(md);
       notatioMarkup(md);
       notatioSymbols(md);
+      notatioSourceLinks(md);
       prerenderMarkup(md);
     },
   },
