@@ -20,6 +20,6 @@ grades:
 carrier: SkewTableau
 ---
 
-- A lazy indexed collection with no closed form, summed over every reduced skew shape from [[SkewPartitions]]. A shape's fillings are counted over its order ideals (the cells placed so far), a table with a state for each count of cells left in each row, so a place in the order is found by walking that table; the count is exact, and `At` answers up to $n = 7$ (the table's steps are the limit).
+- A lazy indexed collection with no closed form, summed over every reduced skew shape from [[SkewPartitions]]. A shape's fillings are counted over its order ideals (the cells placed so far), a table with a state for each count of cells left in each row, so a place in the order is found by walking that table; the count is exact, and `At` answers up to what `work` allows (the table's steps are the limit).
 - Each element packs `[λ, μ, rowWord]`, where `rowWord[i]` is the 0-based row entry $i{+}1$ was placed in, in placement order; $\mu = 0$ (every row) recovers a plain standard Young tableau. $\mu$ has no zero parts, as in [[SkewPartitions]].
 - Listed by shape ([[SkewPartitions]]'s $\lambda$-then-$\mu$ order), then by row-word, lexicographically within a shape.

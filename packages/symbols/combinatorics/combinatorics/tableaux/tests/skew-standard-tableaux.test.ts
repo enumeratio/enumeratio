@@ -7,10 +7,11 @@ import { readFileSync } from "node:fs";
 import { collectMessages } from "@enumeratio/engine";
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
+import { COMPILED_FAMILIES } from "../../collections/src/families/compiled-families.generated.js";
 import { epsilKernelOn, kernelOn } from "../../collections/src/families/epsil.ts";
 import { declareCombinatorics } from "../../src/index.ts";
 import { skewShapeCount, skewShapeUnrank } from "../../partitions/src/families/skew-shapes.ts";
-import { entries, TABLE_CELLS } from "../src/families/skew-standard-tableaux.ts";
+import { entries, EXACT_COUNTS, TABLE_CELLS } from "../src/families/skew-standard-tableaux.ts";
 
 const DEEP = process.env.DEEP_TESTS === "1";
 const [family] = entries;
@@ -64,18 +65,21 @@ for (const kernel of [epsil, fast]) {
       const r = i * every;
       expect([r, written(kernel.unrank([7], BigInt(r)))]).toEqual([r, line]);
       expect([r, kernel.rank(parse(line), [7])]).toEqual([r, BigInt(r)]);
+      expect([r, kernel.valid(parse(line), [7])]).toEqual([r, true]);
     });
   });
 }
 
-test("the fast path lists all of size 7 as the TS kernel did (a digest of every line)", () => {
-  const { count, sha256 } = OLD.seven;
-  // 336,322 unranks take a few seconds.
-  if (!DEEP) return;
-  const all: string[] = [];
-  for (let r = 0; r < count; r++) all.push(written(fast.unrank([7], BigInt(r))));
-  expect(createHash("sha256").update(all.join("\n")).digest("hex")).toBe(sha256);
-});
+// 336,322 unranks: a few seconds for the fast path, about two minutes for Epsil.
+for (const kernel of [fast, epsil]) {
+  test(`${kernel === epsil ? "Epsil" : "the fast path"} lists all of size 7 as the TS kernel did (a digest of every line)`, () => {
+    const { count, sha256 } = OLD.seven;
+    if (!DEEP) return;
+    const hash = createHash("sha256");
+    for (let r = 0; r < count; r++) hash.update(`${r === 0 ? "" : "\n"}${written(kernel.unrank([7], BigInt(r)))}`);
+    expect(hash.digest("hex")).toBe(sha256);
+  });
+}
 
 /** Whether [lam, mu, word] is a skew standard tableau of n cells, written independently of the family:
  *  the word fills each row left to right, and every cell must be larger than the one above it. */
@@ -171,38 +175,42 @@ test("membership over shapes near the size, with words near the right ones", () 
   expect(nearMisses).toBeGreaterThan(5);
 });
 
-test("things that are no tableau at all are not members", () => {
-  for (const kernel of [epsil, fast])
-    for (const bad of [
-      [[2, 1], [1], [0, 0]], // a word too short
-      [[2, 1], [1], [0, 0, 1, 1]], // too long
-      [[2, 1], [1], [0, 1, 1]], // a row with no cell left
-      [[2, 1], [1], [0, 1, 2]], // a row that is none
-      [[2, 1], [1], [0, 1, -1]],
-      [[2, 1], [1], [0, 1, 0.5]],
+test("things that are no tableau at all are not members, each for its own reason", () => {
+  // [n, element, why]: n is the element's cell count, so only the reason fails it.
+  const bad: [number, unknown, string][] = [
+    [2, [[2, 1], [1], [0]], "a word too short"],
+    [2, [[2, 1], [1], [0, 1, 0]], "a word too long"],
+    [2, [[2, 1], [1], [0, 0]], "a row with no cell left"],
+    [2, [[2, 1], [1], [0, 2]], "a row that is none"],
+    [2, [[2, 1], [1], [0, -1]], "a negative row"],
+    [2, [[2, 1], [1], [0, 0.5]], "a row that is no integer"],
+    [
+      2,
       [
         [2, 1],
         [1, 0],
-        [0, 1, 0],
-      ], // μ with a zero part
-      [
-        [2, 1],
-        [1, 1],
         [0, 1],
       ],
-      [[2, 2], [], [1, 0, 0, 1]], // a cell placed before the one above it
-      [[2, 2], [], [0, 0]],
-      [[2, 2], [], [0, 0, 1, 1], 0], // four parts
-      [[2, 2], []],
-    ])
-      expect([bad, kernel.valid(bad, [4])]).toEqual([bad, false]);
+      "μ with a zero part",
+    ],
+    [1, [[2, 1], [1, 1], [0]], "a row with no cell"],
+    [4, [[2, 2], [], [1, 0, 0, 1]], "a cell placed before the one above it"],
+    [4, [[2, 2], [], [0, 1, 1, 0]], "a cell placed before the one above it, later"],
+    [4, [[2, 2], [], [0, 0, 1, 1], 0], "four parts"],
+    [4, [[2, 2], []], "two parts"],
+    [3, [[2, 2], [], [0, 0, 1, 1]], "a size that is not the shape's"],
+    [0, [[1], [], [0]], "a size that is not the shape's, the empty size"],
+  ];
   for (const kernel of [epsil, fast]) {
+    for (const [n, element, why] of bad) expect([why, kernel.valid(element as never, [n])]).toEqual([why, false]);
+    // The same elements at their own size, mended, are members: each case fails for its reason alone.
+    expect(kernel.valid([[2, 1], [1], [0, 1]], [2])).toBe(true);
+    expect(kernel.valid([[2, 1], [1], [1, 0]], [2])).toBe(true);
+    expect(kernel.valid([[2, 1], [], [0, 0, 1]], [3])).toBe(true);
     expect(kernel.valid([[2, 2], [], [0, 0, 1, 1]], [4])).toBe(true);
     expect(kernel.valid([[2, 2], [], [0, 1, 0, 1]], [4])).toBe(true);
-    expect(kernel.valid([[2, 2], [], [0, 1, 1, 0]], [4])).toBe(false);
     expect(kernel.valid([[], [], []], [0])).toBe(true);
     expect(kernel.valid([[], [], []], [1])).toBe(false);
-    expect(kernel.valid([[1], [], [0]], [0])).toBe(false);
   }
 });
 
@@ -216,6 +224,23 @@ test("the counts are exact", () => {
   );
   expect(epsil.count([-3])).toBe(0n);
   expect(fast.count([-3])).toBe(0n);
+});
+
+test("the exact counts are what the tables give, and a size past 2^53 declines at once, building no table", () => {
+  expect(EXACT_COUNTS.slice(0, 9).map(BigInt)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8].map((n) => fast.count([n])));
+  // Each size has at least n times the tableaux of the one before (a one-cell row on top, its entry anywhere in the word).
+  EXACT_COUNTS.forEach((count, n) => expect(n === 0 || count >= n * EXACT_COUNTS[n - 1]).toBe(true));
+  expect(EXACT_COUNTS.at(-1)! * EXACT_COUNTS.length).toBeGreaterThan(Number.MAX_SAFE_INTEGER);
+  expect(EXACT_COUNTS.at(-1)!).toBeLessThan(Number.MAX_SAFE_INTEGER);
+  const built: unknown[] = [];
+  const quick = kernelOn(ce, family, COMPILED_FAMILIES, { fast: false, onTables: (p) => built.push(p) });
+  const started = Date.now();
+  for (const n of [15, 16, 40, 5000]) {
+    expect(() => quick.count([n])).toThrow(RangeError);
+    expect(() => quick.unrank([n], 0n)).toThrow(RangeError);
+  }
+  expect(built).toEqual([]);
+  expect(Date.now() - started).toBeLessThan(1000);
 });
 
 test("the first, middle and last tableaux of a large fiber round-trip", () => {
@@ -258,8 +283,11 @@ test("through the engine: an element comes out, Element asks membership, and a c
   expect(element(tableau([2, 2], [], [0, 1, 1, 0]), 4)).toBe("False");
   expect(element(tableau([2, 2], [], [0, 0, 1]), 4)).toBe("False");
   // μ with a zero part is not canonical.
-  expect(element(tableau([2, 1], [1, 0], [0, 1, 0]), 2)).toBe("False");
+  expect(element(tableau([2, 1], [1, 0], [0, 1]), 2)).toBe("False");
   expect(element(tableau([2, 1], [1], [0, 1]), 2)).toBe("True");
+  // A row that is no integer is no member: the kernel's check of an element's well-formedness refuses it before any definition runs.
+  expect(element(["List", ["List", 2, 1], ["List", 1], ["List", 0, 0.5]], 2)).toBe("False");
+  expect(element(["List", ["List", 2, 1], ["List", 1], ["List", 0, 1]], 2)).toBe("True");
   expect(run(["At", ["SkewStandardTableaux", 3], 5]).json).toEqual(tableau([2, 1, 1], [1], [1, 0, 2]));
   // A walk answers up to what `work` allows, and the count is refused as a walk's steps.
   expect(Array.isArray(run(["At", ["SkewStandardTableaux", 7], 123456]).json)).toBe(true);
