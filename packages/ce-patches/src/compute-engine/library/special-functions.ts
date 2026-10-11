@@ -43,6 +43,26 @@ type Json = number | string | { num: string } | Json[];
 // cortex-js/compute-engine#340: the Lerch transcendent LerchPhi(z, s, a), which generalizes
 // both HurwitzZeta (z = 1) and PolyLog (a = 1). Wolfram has it; compute-engine does not.
 
+/**
+ * Φ(0, s, a) at a negative or complex base and a non-integer numeric power: the principal branch
+ * of a^(−s), which compute-engine's own Power and LerchPhi get wrong by reading (−2.664)^(−2.976)
+ * as a real odd root. The kernel (numerics/lerch-phi.ts) takes the branch.
+ */
+export function principalAtZero(ops: readonly BoxedExpression[], numeric: boolean): boolean {
+  const [z, s, a] = ops;
+  return (
+    numeric &&
+    z !== undefined &&
+    s !== undefined &&
+    a !== undefined &&
+    z.is(0) &&
+    isFiniteNum(s) &&
+    isFiniteNum(a) &&
+    (a.re < 0 || a.im !== 0) &&
+    !(s.im === 0 && Number.isInteger(s.re))
+  );
+}
+
 export function evaluateLerch(
   ce: ComputeEngine,
   ops: readonly BoxedExpression[],
@@ -58,7 +78,11 @@ export function evaluateLerch(
   // Φ(1, s, a) = ζ(s, a) — flows into the HurwitzZeta closed forms.
   if (z.im === 0 && z.re === 1) return done(boxed(["HurwitzZeta", s.json, a.json]));
   // Φ(0, s, a) = a^(−s): only the n = 0 term survives (0⁰ = 1).
-  if (z.is(0)) return done(boxed(["Power", a.json, ["Negate", s.json]]));
+  if (z.is(0)) {
+    if (principalAtZero(ops, numeric))
+      return numberResult(ce, lerchPhi({ re: z.re, im: z.im }, { re: s.re, im: s.im }, { re: a.re, im: a.im }));
+    return done(boxed(["Power", a.json, ["Negate", s.json]]));
+  }
   // Φ(z, 0, a) = 1/(1 − z), independent of a (the geometric series and its continuation).
   if (s.im === 0 && Number.isInteger(s.re) && s.re === 0) return done(boxed(["Divide", 1, ["Subtract", 1, z.json]]));
   // Past |z| = 1 the series stops converging: continue by the integral representation

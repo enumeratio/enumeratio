@@ -1,6 +1,6 @@
 import { wrapOperator } from "@enumeratio/engine";
 import type { Patch } from "../patch.ts";
-import { evaluateLerch } from "../compute-engine/library/special-functions.ts";
+import { evaluateLerch, principalAtZero } from "../compute-engine/library/special-functions.ts";
 import { wantsNumber } from "../support/box.ts";
 
 // compute-engine evaluates LerchPhi natively, exactly for rational arguments and to the engine's
@@ -27,6 +27,8 @@ export const lerchPhiPatch: Patch = {
       ["LerchPhi"],
       () => true,
       (native) => (ops, options) => {
+        // Native reads a negative base to a float power as a real root.
+        if (principalAtZero(ops, wantsNumber(ops, options))) return evaluateLerch(ce, ops, true);
         const answer = native?.(ops, options);
         if (answer !== undefined && answer.operator !== "LerchPhi") return answer;
         return evaluateLerch(ce, ops, wantsNumber(ops, options)) ?? answer;

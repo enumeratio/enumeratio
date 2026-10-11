@@ -597,6 +597,15 @@ def enumeratio_value(x):
         return "PositiveInfinity" if z.real > 0 else "NegativeInfinity"
     if z.imag == 0:
         return repr(z.real)
+    if math.isinf(z.real) or math.isinf(z.imag):
+        # A finite complex past the double range (an mpc with a 1e361 part) keeps its own digits.
+        try:
+            re_, im_ = (x.real, x.imag) if hasattr(x, "imag") else x.as_real_imag()
+        except (AttributeError, TypeError, ValueError):
+            return "(" + repr(z.real) + ("+" if z.imag >= 0 else "-") + repr(abs(z.imag)) + "j)"
+        texts = [str(re_), str(abs(im_))]
+        if not any("inf" in t.lower() or t == "oo" for t in texts):
+            return "(" + texts[0] + ("+" if im_ >= 0 else "-") + texts[1] + "j)"
     return "(" + repr(z.real) + ("+" if z.imag >= 0 else "-") + repr(abs(z.imag)) + "j)"
 `;
 

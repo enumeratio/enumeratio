@@ -30,6 +30,8 @@ n-zeta-i-neg-2-complex-s	(zeta(mpc(0, 1), -2))	ComplexResult: logarithm of a neg
 fullsimplify-normal-series-zeta-x-x-0-2			
 normal-series-zeta-x-x-positiveinfinity-6			
 normal-series-zeta-x-x-1-2			
+zeta-inexact-s-negative-integer-a-abs-terms	zeta(-1.500000001, -3)	(-0.0254851734619685964516206101691 - 9.02457955512189576432353456959j)	inconclusive
+zeta-complex-a-left-of-imaginary-axis	zeta(mpc(-1.5, 1), mpc(-0.04412268481772066, 0.9990261201212289))	(-2.07051414112865070577799705004 + 3.28265267676807672758699911862j)	disagree
 on-the-critical-line-zeta-1-2-14i-0-02224-0	(zeta(mpc(0.5, 14)))	(0.022241142609993589246213199204 - 0.103258123266450057902363095553j)	
 two-argument-zeta-s-a-via-enumeratio-analytic	zeta(2, 1)	1.64493406684822643647241516665	
 zeta-2-2-zeta-2-1-pi-2-6-1	zeta(2, 2)	0.644934066848226436472415166646	

@@ -325,16 +325,23 @@ function boolsAsInts(ours: MathJSON, theirs: string): boolean {
   }
 }
 
+const isBigNumber = (x: unknown): x is { num: string } =>
+  typeof x === "object" && x !== null && typeof (x as { num?: unknown }).num === "string";
+
 /** A value as its parts: a real, or a Python complex literal `(a+bj)`, or ours' `Complex`. */
 function parts(value: unknown): number[] | undefined {
-  if (typeof value === "number") return [value];
-  if (Array.isArray(value) && value[0] === "Complex" && value.length === 3)
-    return typeof value[1] === "number" && typeof value[2] === "number" ? [value[1], value[2]] : undefined;
+  const real = (x: unknown): number | undefined =>
+    typeof x === "number" ? x : isBigNumber(x) ? Number(x.num) : undefined;
+  if (real(value) !== undefined) return [real(value) as number];
+  if (Array.isArray(value) && value[0] === "Complex" && value.length === 3) {
+    const [re, im] = [real(value[1]), real(value[2])];
+    return re !== undefined && im !== undefined ? [re, im] : undefined;
+  }
   if (typeof value !== "string") return undefined;
   const complex = /^\(?\s*([-+]?[\d.]+(?:e[-+]?\d+)?)\s*([-+]\s*[\d.]+(?:e[-+]?\d+)?)j\)?$/i.exec(value.trim());
   if (complex !== null) return [Number(complex[1]), Number((complex[2] as string).replace(/\s/g, ""))];
-  const real = Number(value);
-  return value.trim() !== "" && Number.isFinite(real) ? [real] : undefined;
+  const plain = Number(value);
+  return value.trim() !== "" && Number.isFinite(plain) ? [plain] : undefined;
 }
 
 /** Whether two numbers, real or complex, are within 1e-9 of each other relative to their size. */
@@ -392,6 +399,8 @@ function autoKind(
   const theirs = result.error ?? result.value ?? "";
   // The crate takes scalars where ours threads over a list.
   if (result.error !== undefined && /threading|::Vector/i.test(theirs)) return "threading";
+  // The identity check's own "could not decide" (no point it could evaluate), not a disagreement.
+  if (result.error === undefined && theirs.trim() === "None") return "undecided";
   // Julia's array literal promotes a Bool beside an Int, so `[false, -1]` prints `[0, -1]`.
   if (result.error === undefined && boolsAsInts(ours, theirs)) return "convention";
   // A double can't hold the exact huge argument that ours reduces exactly.
