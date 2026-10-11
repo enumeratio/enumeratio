@@ -1,0 +1,21 @@
+/* Quoted source that opens live (notatio-source-links.ts): code first, link second,
+   as a <Symbol> reads. */
+a.source-link {
+  text-decoration: none;
+}
+a.source-link code {
+  color: var(--vp-c-text-1);
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+a.source-link:hover code {
+  color: var(--vp-c-brand-1);
+  border-bottom-color: var(--vp-c-brand-1);
+}
+.source-link-try {
+  margin: -0.75rem 0 1rem;
+  font-size: 0.8em;
+  text-align: right;
+}
