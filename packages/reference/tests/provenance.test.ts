@@ -876,6 +876,7 @@ const NOVEL = [
   "TernaryGrayCodes",
   "TetraCompositions",
   "ThreeCycleCount",
+  "ToPermutation",
   "TorusBraid",
   "TorusKnot",
   "TorusSquare",

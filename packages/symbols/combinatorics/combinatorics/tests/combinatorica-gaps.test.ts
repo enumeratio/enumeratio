@@ -128,3 +128,11 @@ test("the bigint kernel is held to the Epsil definition", { timeout: 60_000 }, (
     expect(defined, `M(${n}, ${k})`).toEqual(num(mahonianNumber(BigInt(n), BigInt(k))!));
   }
 });
+
+test("ToPermutation inverts Rsk on every permutation up to n = 4 (5 under DEEP_TESTS)", { timeout: 120_000 }, () => {
+  const words = [0, 1, 2, 3, 4, ...(process.env.DEEP_TESTS === "1" ? [5] : [])].flatMap(permutations);
+  for (const word of words) {
+    const pair = value(["Rsk", ["Permutation", ["List", ...word]]]);
+    expect(value(["ToPermutation", pair]), `[${word.join(",")}]`).toEqual(["Permutation", ["List", ...word]]);
+  }
+});

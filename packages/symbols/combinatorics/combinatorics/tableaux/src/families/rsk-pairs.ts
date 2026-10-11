@@ -107,6 +107,16 @@ const unbump = lets(
   ),
 );
 
+/** The permutation whose RSK pair is `[p, q]` (inverse RSK), for tableaux of `size` cells. */
+export const inverseRsk = (p: MathJSON, q: MathJSON, size: MathJSON): MathJSON =>
+  lets(
+    [["rk_n", size, "integer"]],
+    at(
+      fold(renamed(unbump, n, "rk_n"), "rk_s", "rk_c", list(p, q, map(0, "rk_z", upTo(1, "rk_n"))), upTo(1, "rk_n")),
+      3,
+    ),
+  );
+
 /** Whether `m` is a list of lists of integers. */
 const shaped = (m: MathJSON): MathJSON =>
   iff(
