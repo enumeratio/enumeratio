@@ -2,6 +2,7 @@ import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { kernelsOn, liftFamily } from "../../collections/src/families/epsil.ts";
 import { entries as families } from "../src/families/permutations.ts";
+import { mahonianNumber } from "../src/mahonian.ts";
 
 const entries = kernelsOn(bareEngine(), families.map(liftFamily));
 
@@ -121,6 +122,11 @@ test("KDescentPermutations row n=4 = Eulerian triangle (A008292)", () => {
       [4, 3],
     ]),
   ).toEqual([1, 11, 11, 1]);
+});
+test("KInversionPermutations count is exact past 2^53 and equals MahonianNumber", () => {
+  expect(byHead.KInversionPermutations.count([6, 7])).toBe(101n);
+  expect(byHead.KInversionPermutations.count([30, 200])).toBe(mahonianNumber(30n, 200n));
+  expect(mahonianNumber(30n, 200n)).toBe(3099203467964807470998065439996n);
 });
 test("KInversionPermutations row n=4 = Mahonian triangle (A008302)", () => {
   expect(

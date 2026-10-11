@@ -20,6 +20,7 @@ import {
 import { IntegerPartitionRank } from "../../../collections/src/families/kernels-combinatorics.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
+import { mahonianNumber } from "../mahonian.ts";
 import { kCyclePermutations } from "./core.ts";
 import { permutationsAsCycles } from "./cycles.ts";
 import {
@@ -139,11 +140,6 @@ function mahonianTable(n: number): number[][] {
   mahonianCache.set(n, table);
   return table;
 }
-function mahonianCount(n: number, k: number): number {
-  if (n === 0) return k === 0 ? 1 : 0;
-  const poly = mahonianTable(n)[0];
-  return k >= 0 && k < poly.length ? poly[k] : 0;
-}
 function kInversionUnrank(n: number, k: number, r: number): number[] {
   if (n === 0) return [];
   const table = mahonianTable(n);
@@ -191,7 +187,7 @@ const withinMahonianTable = (n: number): number => {
 const kInversionPermutationsFast: EpsilFamily = {
   ...kInversionPermutations,
   fast: {
-    count: ([n, k]) => mahonianCount(withinMahonianTable(n), k),
+    count: ([n, k]) => mahonianNumber(BigInt(n), BigInt(k)),
     unrank: ([n, k], r) => kInversionUnrank(withinMahonianTable(n), k, r),
     rank: (x, [n]) => kInversionRank(x as number[], withinMahonianTable(n)),
     valid: (x, [n, k]) => IsPermutationOf(x as number[], n) && Inversions(x as number[]) === k,

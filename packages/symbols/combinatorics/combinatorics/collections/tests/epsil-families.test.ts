@@ -118,7 +118,7 @@ const READINGS: Record<string, Reading> = {
   TriStrings: {
     // The TS kernel is private to its module; its fast path, the family's own `fast`, reads it.
     params: sizes(9),
-    count: (p) => familyOf("TriStrings").fast!.count(p),
+    count: (p) => Number(familyOf("TriStrings").fast!.count(p)),
     unrank: (p, r) => familyOf("TriStrings").fast!.unrank(p, r),
     rank: (x, p) => familyOf("TriStrings").fast!.rank(x, p),
     valid: (x, p) => familyOf("TriStrings").fast!.valid(x, p),
@@ -140,7 +140,7 @@ const READINGS: Record<string, Reading> = {
   },
   RiordanPaths: {
     params: sizes(8),
-    count: (p) => familyOf("RiordanPaths").fast!.count(p),
+    count: (p) => Number(familyOf("RiordanPaths").fast!.count(p)),
     unrank: (p, r) => familyOf("RiordanPaths").fast!.unrank(p, r),
     rank: (x, p) => familyOf("RiordanPaths").fast!.rank(x, p),
     valid: (x, p) => familyOf("RiordanPaths").fast!.valid(x, p),
