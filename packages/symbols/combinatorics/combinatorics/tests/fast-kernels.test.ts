@@ -210,6 +210,24 @@ test("some families carry a fast count alone, and a kernel says so", () => {
   }
 });
 
+const EXTRA_PAST: Record<string, number[][]> = {
+  BoxedPlanePartitions: [
+    [2, 30, 30],
+    [30, 2, 30],
+    [30, 30, 2],
+  ],
+  SytTwoRow: [[58]],
+  SytTwoColumn: [[58]],
+  AlternatingSignMatrices: [[14]],
+  NonDecreasingParkingFunctions: [[32]],
+  PermutationsAvoiding123: [[36]],
+  PermutationsAvoiding132: [[37]],
+  PermutationsAvoiding213: [[38]],
+  PermutationsAvoiding231: [[40]],
+  PermutationsAvoiding312: [[41]],
+  PermutationsAvoiding321: [[36]],
+};
+
 for (const family of countFamilies) {
   test(`${family.head}: the fast count agrees with Epsil, past 2^53 too`, () => {
     const fast = kernelOn(ce, family);
@@ -220,6 +238,8 @@ for (const family of countFamilies) {
       [[]],
     );
     // The smallest box of equal sides whose fast count passes 2^53, where only the interpreter can say.
+    // More points past 2^53: unequal sides, even and odd n.
+    for (const p of EXTRA_PAST[family.head] ?? []) grid.push(p);
     let past = false;
     for (let s = 1; s <= 60 && !past; s++) {
       const p = Array<number>(family.paramCount).fill(s);
@@ -324,10 +344,13 @@ for (const family of fastFamilies.filter(
 // params past it, must say the same.
 const BIGINT_COUNTS: [string, number[]][] = [
   ["BinaryTrees", [31]],
+  ["BinaryTrees", [32]],
   ["BinaryTreeParentArrays", [31]],
+  ["BinaryTreeParentArrays", [33]],
   ["FullKAryTrees", [23, 3]],
+  ["FullKAryTrees", [18, 5]],
   ["NonCrossingTrees", [23]],
-  ...(DEEP ? ([["FullKAryTrees", [20, 5]]] as [string, number[]][]) : []),
+  ["NonCrossingTrees", [25]],
 ];
 for (const [head, p] of BIGINT_COUNTS) {
   test(`${head}(${p.join(", ")}): the fast count past 2^53 is Epsil's`, () => {

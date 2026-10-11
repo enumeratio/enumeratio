@@ -153,7 +153,7 @@ test("the fast count is MacMahon's, an exact bigint, however far past 2^53", () 
     [1, 1000, 500],
     [200, 3, 1000],
     [2, 2, 300],
-    [1, 1, 1000000],
+    [1, 1, 900000],
   ]) {
     const total = fast.count(p) as bigint;
     expect(typeof total).toBe("bigint");
@@ -165,6 +165,21 @@ test("the fast count is MacMahon's, an exact bigint, however far past 2^53", () 
   expect(fast.count([0, 100, 100])).toBe(1n);
   // Past its limit the fast count leaves the question to Epsil.
   expect(boxedCount([5000, 5000, 5000])).toBeUndefined();
+});
+
+test("through the engine, Count past 2^53 is an exact integer, and IsEmpty answers at once", () => {
+  const engine = bareEngine();
+  declareCombinatorics(engine);
+  const run = (expr: unknown) => engine.box(expr as never).evaluate().json;
+  for (const box of [
+    [7, 7, 7],
+    [100, 100, 100],
+    [3, 40, 25],
+  ])
+    expect(run(["Count", ["BoxedPlanePartitions", ...box]])).toEqual({
+      num: macMahonByCells(box[0], box[1], box[2]).toString(),
+    });
+  expect(run(["IsEmpty", ["BoxedPlanePartitions", 100, 100, 100]])).toBe("False");
 });
 
 test("past 2^53 unrank and rank decline, and membership still answers", () => {

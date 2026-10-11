@@ -303,9 +303,11 @@ test("Count past 2^53 is exact for Subsets and Permutations of a collection", ()
   expect(count(["Subsets", 60, ["List", 30]])).toEqual({ num: "118264581564861424" });
 });
 
-test("Count holds where a plain-number kernel would round", () => {
-  const held = ce.box(["Count", ["SetPartitions", 30]] as never).evaluate();
-  expect(held.operator).toBe("Count");
+test("Count past 2^53 is exact for any area's family, and holds where a plain-number kernel would round", () => {
+  const count = (expr: unknown) => ce.box(["Count", expr] as never).evaluate();
+  // The 30th Bell number.
+  expect(count(["SetPartitions", 30]).json).toEqual({ num: "846749014511809332450147" });
+  expect(count(["IntegerPartitions", 400]).operator).toBe("Count");
 });
 
 // A partition is its parts, never increasing: every way of asking, an unsorted list is not one.

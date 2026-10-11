@@ -209,6 +209,9 @@ function handlersOf(ce: Engine, family: FamilyKernel, carrier?: string): Collect
   };
 }
 
+/** The families declared on each engine that `Count` answers exactly for: every batch adds to one map. */
+const exactCountFamilies = new WeakMap<Engine, Map<string, FamilyKernel>>();
+
 /** Declare every family in `families` on `ce` (an Epsil family through its kernel on `ce`): an indexed-collection operator, or for paramCount 0
  *  an indexed-collection value (`PrimeNumbers`). A family's carrier, when it names one, has to already be declared on `ce` (its OWN
  *  area's declare runs its `declareCarriers` first) -- its minted type is read back through
@@ -238,10 +241,14 @@ export function declareFamilies(ce: Engine, families: readonly AnyFamily[]): voi
   }
 
   // The `count` handler can't carry an exact count past 2^53, but `Count` can: an exact
-  // integer, never a rounded one. Counts that cost enumeration stay with the handler.
-  // Guarded on SymmetricGroup being among THESE entries, so this only ever wraps once --
-  // permutations' own declare is the only caller whose entries include it.
-  if (!byHead.has("SymmetricGroup")) return;
+  // integer, never a rounded one. Counts that cost enumeration stay with the handler, which
+  // enforces the limit and says why. One wrapper per engine answers for every batch declared on it.
+  const known = exactCountFamilies.get(ce);
+  if (known !== undefined) {
+    for (const [head, family] of byHead) known.set(head, family);
+    return;
+  }
+  exactCountFamilies.set(ce, byHead);
   const exactCount = (op: Expr): bigint | undefined => {
     const family = byHead.get(op.operator);
     if (family === undefined || family.declared?.cost.count === "enumerative") return undefined;
