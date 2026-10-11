@@ -30,6 +30,10 @@
       "types": "./dist/tex.d.mts",
       "import": "./dist/tex.mjs"
     },
+    "./typeset": {
+      "types": "./dist/typeset.d.mts",
+      "import": "./dist/typeset.mjs"
+    },
     "./node": {
       "types": "./dist/node.d.mts",
       "import": "./dist/node.mjs"
@@ -54,7 +58,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack src/index.ts src/node.ts src/expression.ts src/inputform.ts src/asciimath.ts src/mathml.ts src/tex.ts src/markup.ts src/fullform.ts src/graphics-options.ts && enumeratio-collect-declares .",
+    "build": "vp pack src/index.ts src/node.ts src/expression.ts src/inputform.ts src/asciimath.ts src/mathml.ts src/tex.ts src/typeset.ts src/markup.ts src/fullform.ts src/graphics-options.ts && enumeratio-collect-declares .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
@@ -65,7 +69,8 @@
     "@enumeratio/raster": "workspace:*",
     "@enumeratio/wolfram": "workspace:*",
     "asciimath2tex": "catalog:",
-    "htm": "^3.1.1"
+    "htm": "^3.1.1",
+    "katex": "catalog:"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.151.0",

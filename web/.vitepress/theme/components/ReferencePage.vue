@@ -526,7 +526,7 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       </div>
     </details>
 
-    <AboutPanel :name="name" />
+    <AboutPanel :name="name" :entry="entry" :references="references" />
 
     <section v-if="entry.primitive || entry.bindings?.length" id="implementation">
       <h2>Implementation</h2>

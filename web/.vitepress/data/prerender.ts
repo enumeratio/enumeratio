@@ -9,13 +9,12 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
 import { combineNotation, type PackageNotation, registerNotation } from "@enumeratio/boxes";
-import { katexStrict, trustExpression } from "@enumeratio/boxes/render";
-import { portableTeX, registerTeXMacros } from "@enumeratio/formats/tex";
+import { registerTeXMacros } from "@enumeratio/formats/tex";
+import { typeset as typesetTeX } from "@enumeratio/formats/typeset";
 import { displayLatexSyntax } from "@enumeratio/frontend/display";
 import { outMarkup, type Prerendered, prerender } from "@enumeratio/frontend/prerender";
 import { createResolver, NOTATIONS } from "@enumeratio/manifest";
 import type { ReferenceEntry } from "@enumeratio/reference";
-import katex from "katex";
 import { CATALOGUE } from "../theme/worker-catalogue.ts";
 
 export type { Prerendered };
@@ -42,13 +41,7 @@ export function fillPrerendered(html: string, page: string): string {
 }
 
 /** TeX as the page's `<notatio-out>` typesets it (`@enumeratio/components`' `loadMarkup`). */
-export const typeset = (latex: string): string =>
-  katex.renderToString(portableTeX(latex), {
-    throwOnError: false,
-    output: "htmlAndMathml",
-    strict: katexStrict(),
-    trust: trustExpression,
-  });
+export const typeset = (latex: string): string => typesetTeX(latex, { expression: true });
 
 /** An engine as the site's worker kernel makes one: its dictionary and every package's notation. */
 export async function makeEngine(): Promise<ComputeEngine> {

@@ -620,6 +620,9 @@ importers:
       htm:
         specifier: ^3.1.1
         version: 3.1.1
+      katex:
+        specifier: 'catalog:'
+        version: 0.16.47
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.151.0

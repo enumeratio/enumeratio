@@ -1,5 +1,5 @@
+import { typeset } from "@enumeratio/formats/typeset";
 import { plainJson, pointWords, randomValue, type VariableSpec } from "@enumeratio/frontend/core";
-import katex from "katex";
 import { html, LitElement, nothing } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import "./knob-box.ts";
@@ -131,7 +131,7 @@ export class TemplateSlot extends LitElement {
       .join("");
     let markup = this.#tex.get(latex);
     if (markup === undefined) {
-      markup = katex.renderToString(latex, { throwOnError: false });
+      markup = typeset(latex);
       this.#tex.set(latex, markup);
     }
     return unsafeHTML(markup);
