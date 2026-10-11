@@ -190,6 +190,18 @@ fn lerchPhi(z: vec2f, s: vec2f, a: vec2f) -> vec2f {
   return sum;
 }
 
+// Largest |Im Φ| / |Re Φ| still read as real in f32: f32 rounding noise on a real value,
+// far below the imaginary part of a^(−s) at a < 0
+// and a non-integer s (ratio 0.08 for -2.664^-2.976).
+const LERCH_REAL_TOL: f32 = 1e-4;
+
+// Φ for real arguments: the real value, or NaN (no real value) where Φ is complex.
+fn lerchPhiReal(z: vec2f, s: vec2f, a: vec2f) -> f32 {
+  let w = lerchPhi(z, s, a);
+  if (abs(w.y) > LERCH_REAL_TOL * abs(w.x)) { return bitcast<f32>(0x7fc00000u); }
+  return w.x;
+}
+
 // Polylogarithm Liₛ(z) = z·Φ(z, s, 1). Same |z| < 1 limit as lerchPhi.
 fn polyLog(s: vec2f, z: vec2f) -> vec2f { return cmul(z, lerchPhi(z, s, vec2f(1.0, 0.0))); }
 
