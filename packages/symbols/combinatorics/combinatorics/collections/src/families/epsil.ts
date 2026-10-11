@@ -136,6 +136,8 @@ const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
  *  exactly. Its kernels are plain JS, written exact up to it: bits read as two 32-bit words, no
  *  rank plus count, no float quotient, no product that passes 2^53 on the way to a smaller answer. */
 export const FAST_LIMIT = MAX_SAFE;
+/** Counts of at least this many bits (16 KB) are not kept per params, only as the last one answered. */
+const MEMO_LIMIT = 1n << 131_072n;
 
 /** Whether `value` is a plain-JS element of this shape, every entry an exact integer. */
 function wellFormed(kind: FamilyShape["kind"], value: unknown): boolean {
@@ -394,7 +396,8 @@ export function kernelOn(
         const json = interpret("count", p, {});
         total = json === "PositiveInfinity" ? Number.POSITIVE_INFINITY : (integerOf(json) ?? Number.NaN);
       }
-      counts.set(key, total);
+      // A huge count is the last one's alone to keep, not the map's.
+      if (typeof total !== "bigint" || total < MEMO_LIMIT) counts.set(key, total);
     }
     lastParams = [...p];
     lastTotal = total;

@@ -3,11 +3,21 @@
 // so a fiber past 2^53 is answered here instead of by the interpreter. Epsil stays the meaning:
 // tests/fast-kernels.test.ts holds each of these to it.
 
-/** The largest integer a product reaches, and the most bits an answer takes (about 2 MB): past either,
- *  the tables are too big and the count too large to be one anyone asks for, so the kernel leaves
- *  the question to Epsil. */
-export const EXACT_TOP_LIMIT = 4_000_000;
-export const EXACT_BITS_LIMIT = 16_000_000;
+/** The largest integer a product reaches, and the most bits an answer takes (512 KB): past either, the
+ *  tables are too big and the count too large to be one anyone asks for, so the kernel leaves the
+ *  question to Epsil. */
+export const EXACT_TOP_LIMIT = 1_000_000;
+export const EXACT_BITS_LIMIT = 4_000_000;
+
+// The smallest prime factor of each integer up to a point, kept between calls and grown by doubling.
+let smallestFactors = new Uint32Array(0);
+function sieveTo(top: number): Uint32Array {
+  if (smallestFactors.length > top) return smallestFactors;
+  const size = Math.min(EXACT_TOP_LIMIT, Math.max(top, 1024, 2 * smallestFactors.length)) + 1;
+  const smallest = new Uint32Array(size);
+  for (let i = 2; i < size; i++) if (smallest[i] === 0) for (let j = i; j < size; j += i) smallest[j] ||= i;
+  return (smallestFactors = smallest);
+}
 
 /**
  * Π m^weights[m] over m = 2 … weights.length − 1, exact, or undefined past the limit. The weights are
@@ -17,8 +27,7 @@ export const EXACT_BITS_LIMIT = 16_000_000;
 export function powerProduct(weights: ArrayLike<number>): bigint | undefined {
   const top = weights.length - 1;
   if (top > EXACT_TOP_LIMIT) return undefined;
-  const smallest = new Uint32Array(top + 1);
-  for (let i = 2; i <= top; i++) if (smallest[i] === 0) for (let j = i; j <= top; j += i) smallest[j] ||= i;
+  const smallest = sieveTo(top);
   const exponent = new Float64Array(top + 1);
   for (let m = 2; m <= top; m++) {
     const weight = weights[m];
@@ -42,8 +51,12 @@ export function powerProduct(weights: ArrayLike<number>): bigint | undefined {
   return powers[0] ?? 1n;
 }
 
-/** Π up! / Π down!, exact: the ratio is taken to be an integer. Undefined past the limit. */
+const natural = (x: number): boolean => Number.isSafeInteger(x) && x >= 0;
+
+/** Π up! / Π down!, exact: the ratio is taken to be an integer. Undefined past the limit, and for an
+ *  argument that is no natural number. */
 export function factorialRatio(up: readonly number[], down: readonly number[]): bigint | undefined {
+  if (!up.every(natural) || !down.every(natural)) return undefined;
   const top = [...up, ...down].reduce((most, x) => Math.max(most, x), 0);
   if (top > EXACT_TOP_LIMIT) return undefined;
   // `weights[m]` is how many factorials of the numerator, less the denominator, reach m: a difference
@@ -63,21 +76,26 @@ export function factorialRatio(up: readonly number[], down: readonly number[]): 
   return powerProduct(weights);
 }
 
-/** C(n, k) for integers 0 ≤ k ≤ n, and 0 above. */
+/** C(n, k) for natural n and integer k: 0 outside 0 ≤ k ≤ n. */
 export const binomialExact = (n: number, k: number): bigint | undefined =>
-  k < 0 || k > n ? 0n : factorialRatio([n], [k, n - k]);
+  !natural(n) || !Number.isSafeInteger(k) ? undefined : k < 0 || k > n ? 0n : factorialRatio([n], [k, n - k]);
 
-/** The Catalan number C(2n, n)/(n + 1). */
-export const catalanExact = (n: number): bigint | undefined => factorialRatio([2 * n], [n, n + 1]);
+/** The Catalan number C(2n, n)/(n + 1), and 0 for a negative n. */
+export const catalanExact = (n: number): bigint | undefined =>
+  !Number.isSafeInteger(n) ? undefined : n < 0 ? 0n : factorialRatio([2 * n], [n, n + 1]);
 
-/** The Fuss–Catalan number C(kn, n)/((k − 1)n + 1) of the full k-ary trees with n internal nodes
- *  (k ≥ 1), and 0 where no node has a child. */
+/** The Fuss–Catalan number C(kn, n)/((k − 1)n + 1) of the full k-ary trees with n internal nodes,
+ *  and 0 for a negative n or where no node has a child (k < 1). */
 export const fussCatalanExact = (n: number, k: number): bigint | undefined =>
-  k < 1 ? 0n : factorialRatio([k * n], [n, (k - 1) * n + 1]);
+  !Number.isSafeInteger(n) || !Number.isSafeInteger(k)
+    ? undefined
+    : n < 0 || k < 1
+      ? 0n
+      : factorialRatio([k * n], [n, (k - 1) * n + 1]);
 
 /** The alternating sign matrices of order n: Π (3j + 1)!/(n + j)! over j = 0 … n − 1. */
 export const alternatingSignMatricesExact = (n: number): bigint | undefined =>
-  3 * n > EXACT_TOP_LIMIT
+  !natural(n) || 3 * n > EXACT_TOP_LIMIT
     ? undefined
     : factorialRatio(
         Array.from({ length: n }, (_, j) => 3 * j + 1),
