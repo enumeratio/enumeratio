@@ -6,7 +6,7 @@ import { parseExpression } from "@enumeratio/formats/expression";
 import { expect, test } from "vite-plus/test";
 import { renderBox } from "../src/box-render.ts";
 import { boxControls } from "../src/control-box.ts";
-import { boxDeclarations } from "../src/reduce.ts";
+import { boxDeclarations, pin } from "../src/reduce.ts";
 import { tupleOf } from "../src/mathjson.ts";
 
 const json = (src: string) => parseExpression(src).json as never;
@@ -75,4 +75,28 @@ test("a toggler's and a menu's drawn choices read back through boxControls", () 
   expect(JSON.stringify(menu!.domain)).toContain('"List"');
   const drawn = renderBox(boxes('PopupMenu((n, 6), [Labeled(4, "square"), Labeled(6, "hexagon")])'));
   expect(drawn.attributes).toMatchObject({ name: "n", values: "4 -> square|6 -> hexagon" });
+});
+
+test("a control inside a tooltip, a pane selector or running text is declared too", () => {
+  const nested = boxControls([
+    "RowBox",
+    [
+      ["TooltipBox", ["SliderBox", ["Dynamic", "a"], ["Tuple", 0, 5]], "tip"],
+      ["PaneSelectorBox", [["x", ["SliderBox", ["Dynamic", "b"], ["Tuple", 0, 5]]]], ["DynamicBox", "s"]],
+      ["TextCell", ["TextData", ["see ", ["SliderBox", ["Dynamic", "c"], ["Tuple", 0, 5]]]], "Text"],
+    ],
+  ] as never);
+  expect(nested.map((c) => c.name)).toEqual(["a", "b", "c"]);
+});
+
+test("reduce sees a control nested in a tooltip or pane selector", () => {
+  const expr = json('Column([Tooltip(Slider(a, (0, 5)), "tip"), PaneSelector([1 -> Slider(b, (0, 5))], Dynamic(a))])');
+  expect(boxDeclarations(expr).map((d) => d.name)).toEqual(["a", "b"]);
+  // The same variable in two panes is declared once.
+  const twice = json("PaneSelector([1 -> Slider(b, (0, 5)), 2 -> Slider(b, (0, 9))], Dynamic(a))");
+  expect(boxDeclarations(twice).map((d) => d.name)).toEqual(["b"]);
+  // The terminal driver pins them out of the expression it shows.
+  const pinned = pin(expr, new Map([["a", 2 as never]]));
+  expect(JSON.stringify(pinned)).not.toContain("Slider(a");
+  expect(JSON.stringify(pinned)).not.toContain('"Slider",');
 });

@@ -153,11 +153,22 @@ export function vdomOf(expr: Json): Rendering {
   );
 }
 
-/** Hand a rendering to a framework: `toVNode(vdomOf(expr), h)`. */
-export function toVNode<N>(rendering: Rendering | StructuralNode, h: VNodeFactory<N>): N {
+/**
+ * Hand a rendering to a framework: `toVNode(vdomOf(expr), h)`. A math run (`tex`) is typeset
+ * with `typeset` (the page's KaTeX, `loadMarkup()`) and rides as the `innerHTML` prop, which
+ * Vue's `h` takes; without one it reads as its text.
+ */
+export function toVNode<N>(
+  rendering: Rendering | StructuralNode,
+  h: VNodeFactory<N>,
+  typeset?: (tex: string) => string,
+): N {
+  if ("tex" in rendering && rendering.tex !== undefined && typeset !== undefined) {
+    return h(rendering.tag, { ...rendering.attributes, innerHTML: typeset(rendering.tex) }, []);
+  }
   const children: (N | string)[] =
     rendering.text !== undefined
       ? [rendering.text]
-      : (rendering.children?.map((c) => (typeof c === "string" ? c : toVNode(c, h))) ?? []);
+      : (rendering.children?.map((c) => (typeof c === "string" ? c : toVNode(c, h, typeset))) ?? []);
   return h(rendering.tag, rendering.attributes, children);
 }

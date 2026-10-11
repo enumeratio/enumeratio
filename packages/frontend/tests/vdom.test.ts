@@ -55,6 +55,16 @@ test("the realized tree lowers a component's arguments into props, and typesets 
   expect(plain.attributes.format).toBe("mathjson");
 });
 
+test("toVNode typesets a math run with the given typesetter, as innerHTML", () => {
+  const leaf = { tag: "form-box", attributes: { "data-form": "TeXForm" }, text: "x^2", tex: "x^2" };
+  expect(toVNode(leaf, h, (tex) => `<k>${tex}</k>`)).toEqual({
+    tag: "form-box",
+    props: { "data-form": "TeXForm", innerHTML: "<k>x^2</k>" },
+    children: [],
+  });
+  expect(toVNode(leaf, h).children).toEqual(["x^2"]);
+});
+
 test("toVNode hands the tree to any h, text as a lone child", () => {
   const v = toVNode({ tag: "div", attributes: {}, children: [{ tag: "span", attributes: {}, text: "so" }] }, h);
   expect(v).toEqual({

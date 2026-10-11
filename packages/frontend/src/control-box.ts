@@ -275,7 +275,15 @@ export function boxControls(box: Box, into: BoxControl[] = []): BoxControl[] {
     case "StyleBox":
     case "InterpretationBox":
     case "DynamicModuleBox":
+    case "TooltipBox": // (the tip is text)
+    case "TextCell":
       boxControls(box[1], into);
+      break;
+    case "TextData":
+      for (const item of box[1]) boxControls(item, into);
+      break;
+    case "PaneSelectorBox":
+      for (const [, pane] of box[1]) boxControls(pane, into);
       break;
   }
   return into;

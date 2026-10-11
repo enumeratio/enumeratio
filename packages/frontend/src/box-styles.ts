@@ -66,8 +66,9 @@ pane-box[data-scrollbars] { overflow: auto; }
 /* --- prose boxes: TextCell, TooltipBox, PaneSelectorBox --------------------------------
    Until the element has picked (data-picked) the first pane shows, as the static writers write
    it; after, only the selected one. */
-p[data-cell-style^="Item"], p[data-cell-style^="Subitem"], p[data-cell-style^="Subsubitem"] { margin-block: 0.2em; padding-inline-start: 1.4em; }
-p[data-cell-style^="Item"]::before { content: "\\2022"; margin-inline-start: -1em; margin-inline-end: 0.4em; }
+[data-cell-list] { margin-block: 0.2em; padding-inline-start: 1.4em; list-style: disc; }
+ol[data-cell-list] { list-style: decimal; }
+[data-cell-list] > li[data-placeholder] { list-style: none; }
 p[data-cell-style="DisplayFormula"] { text-align: center; }
 tooltip-box, button-box, template-slot { display: inline; }
 pane-selector-box { display: contents; }

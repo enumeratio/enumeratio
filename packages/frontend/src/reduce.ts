@@ -149,7 +149,10 @@ export function declarationOfControl(control: BoxControl): Declaration {
  * are still read as written.
  */
 export function boxDeclarations(expr: Json): Declaration[] {
-  const boxed = boxControls(makeBoxes(plainJson(expr) as Json)).map(declarationOfControl);
+  // (Panes of one selector may each hold a control on the same variable.)
+  const boxed = boxControls(makeBoxes(plainJson(expr) as Json))
+    .map(declarationOfControl)
+    .filter((d, i, all) => all.findIndex((o) => o.name === d.name && o.head === d.head) === i);
   const written = declarations(expr).filter((d) => d.head === "Manipulate" || !boxed.some((b) => b.name === d.name));
   return [...boxed, ...written];
 }

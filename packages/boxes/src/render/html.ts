@@ -28,7 +28,8 @@ const HEADING: Readonly<Record<string, string>> = {
   Subsubsubsection: "h5",
   Subsubsubsubsection: "h6",
 };
-const LIST: Readonly<Record<string, readonly [level: number, tag: "ul" | "ol"]>> = {
+/** The list-item cell styles: nesting level and list tag. */
+export const LIST_CELLS: Readonly<Record<string, readonly [level: number, tag: "ul" | "ol"]>> = {
   Item: [0, "ul"],
   Subitem: [1, "ul"],
   Subsubitem: [2, "ul"],
@@ -118,7 +119,7 @@ class Writer {
         continue;
       }
       const [, content, style] = box;
-      const list = LIST[style];
+      const list = LIST_CELLS[style];
       if (list) {
         const [level, tag] = list;
         closeTo(level + 1);
