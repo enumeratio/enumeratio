@@ -392,6 +392,10 @@ const BIGINT_COUNTS: [string, number[]][] = [
   ["FullKAryTrees", [18, 5]],
   ["NonCrossingTrees", [23]],
   ["NonCrossingTrees", [25]],
+  // The table families, whose Epsil count the interpreter takes seconds over just past 2^53.
+  ["KCyclePermutations", [19, 5]],
+  ["KCyclePermutations", [20, 5]],
+  ["AlternatingPermutations", [22]],
   // The recurrence families, at the first params past 2^53.
   ["MotzkinPaths", [39]],
   ["SchroederPaths", [24]],
@@ -422,7 +426,8 @@ const BIGINT_COUNTS: [string, number[]][] = [
 for (const [head, p] of BIGINT_COUNTS) {
   test(`${head}(${p.join(", ")}): the fast count past 2^53 is Epsil's`, () => {
     const family = fastFamilies.find((f) => f.head === head)!;
-    const total = epsilKernelOn(ce, family).count(p);
+    // A family that declines an Epsil count past 2^53 is interpreted for the reference.
+    const total = epsilKernelOn(ce, { ...family, declinePastDoubles: true }).count(p);
     expect(typeof total === "bigint" && total > MAX_SAFE).toBe(true);
     expect(family.fast!.count(p)).toBe(total);
     expect(kernelOn(ce, family).count(p)).toBe(total);

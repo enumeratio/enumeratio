@@ -387,7 +387,7 @@ export function kernelOn(
       const fast = fromQuick ?? run("count", p, {});
       if (typeof fast === "bigint") total = fast;
       else if (isInteger(fast)) total = BigInt(fast);
-      else if (declinePastDoubles === "count") return decline(p);
+      else if (declinePastDoubles === "count" && wellParamed(p)) return decline(p);
       else {
         const json = interpret("count", p, {});
         total = json === "PositiveInfinity" ? Number.POSITIVE_INFINITY : (integerOf(json) ?? Number.NaN);

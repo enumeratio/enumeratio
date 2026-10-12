@@ -7,6 +7,15 @@
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import { catalanExact } from "../../../collections/src/families/exact-counts.ts";
 import { booleanPermutationsExact } from "../../../collections/src/families/exact-recurrences.ts";
+import {
+  eulerianExact,
+  exactUpTo,
+  isAlternatingPermutation,
+  isKDescentPermutation,
+  isNonCrossingCycleSupport,
+  nonCrossingCycleSupportExact,
+  zigzagExact,
+} from "../../../collections/src/families/exact-triangles.ts";
 import type { Declared } from "../../../collections/src/families/types.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
 import {
@@ -118,7 +127,7 @@ const entringer = rowTable(
 
 /** The up-down permutations of n. After a prefix that alternates so far, the free values continue
  *  down-up from above the last entry (odd length) or up-down from below it (even length). */
-const alternatingPermutations: EpsilFamily = permutationRestriction({
+const alternatingDefinitions: EpsilFamily = permutationRestriction({
   head: "AlternatingPermutations",
   carrier: "Permutation",
   paramCount: 1,
@@ -160,6 +169,10 @@ const alternatingPermutations: EpsilFamily = permutationRestriction({
     ),
     0,
   ),
+});
+// E(n): the interpreter's table takes seconds from n = 22, Seidel's triangle milliseconds.
+const alternatingPermutations = exactUpTo(alternatingDefinitions, 1000, ([n]) => zigzagExact(n), {
+  valid: isAlternatingPermutation,
 });
 
 /**
@@ -253,7 +266,7 @@ const eulerianByFirst = rowTable(
 
 /** The permutations of n with exactly k descents (Eulerian numbers). The free values must add
  *  the descents still missing, counting one more at the join when they start below the last entry. */
-const kDescentPermutations: EpsilFamily = permutationRestriction({
+const kDescentDefinitions: EpsilFamily = permutationRestriction({
   head: "KDescentPermutations",
   carrier: "Permutation",
   paramCount: 2,
@@ -276,6 +289,11 @@ const kDescentPermutations: EpsilFamily = permutationRestriction({
       ),
     ),
   ),
+});
+// The Eulerian numbers, out of the interpreter's reach past 2^53 (from n = 19).
+const kDescentPermutations = exactUpTo(kDescentDefinitions, 1000, ([n, k]) => eulerianExact(n, k), {
+  trivial: ([n, k]) => (k === 0 || (n > 0 && k === n - 1) ? 1n : k >= n ? 0n : undefined),
+  valid: isKDescentPermutation,
 });
 
 // Exactly k inversions. A prefix's inversions are its Lehmer digits (the free values below each
@@ -1020,7 +1038,7 @@ const ncRows = fold(
   upTo(0, sub(n, 1)),
 );
 
-const nonCrossingCycleSupportPermutations: EpsilFamily = permutationRestriction({
+const nonCrossingCycleSupportDefinitions: EpsilFamily = permutationRestriction({
   head: "NonCrossingCycleSupportPermutations",
   carrier: "Permutation",
   paramCount: 1,
@@ -1041,6 +1059,13 @@ const nonCrossingCycleSupportPermutations: EpsilFamily = permutationRestriction(
     ),
   ),
 });
+// Out of the interpreter's reach past 2^53 (from n = 19); Lagrange inversion over the blocks gives it in n².
+const nonCrossingCycleSupportPermutations = exactUpTo(
+  nonCrossingCycleSupportDefinitions,
+  600,
+  ([n]) => nonCrossingCycleSupportExact(n),
+  { valid: isNonCrossingCycleSupport },
+);
 
 // Vexillary: Av(2143). Over the m free values' ranks, a prefix leaves two kinds of constraint:
 // past a prefix inversion b > a, the free ranks above b's (t, the least such) must come
