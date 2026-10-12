@@ -4,6 +4,11 @@
 // number for most, a fold peeling off the largest free label for involutions and derangements.
 
 import type { AnyFamily, EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import {
+  exactUpTo,
+  isKCyclePermutation,
+  stirlingFirstExact,
+} from "../../../collections/src/families/exact-triangles.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
 import { and, cell, equal, iff, lets, mul, rowTable } from "../../../collections/src/families/tables.ts";
 import {
@@ -310,7 +315,7 @@ const cyclicPermutations: EpsilFamily = permutationRestriction({
  *  paths close into the remaining k − q cycles in c(n − filled, k − q) ways. */
 const stirlingWidth = add("_n", 1);
 const stirling = cell("stirling", stirlingWidth);
-export const kCyclePermutations: EpsilFamily = permutationRestriction({
+const kCycleDefinitions: EpsilFamily = permutationRestriction({
   head: "KCyclePermutations",
   carrier: "Permutation",
   paramCount: 2,
@@ -338,6 +343,11 @@ export const kCyclePermutations: EpsilFamily = permutationRestriction({
     ],
     ["If", ["Or", ["Less", "left", 0], ["Greater", "left", "open"]], 0, stirling("open", "left")],
   ),
+});
+// The table is out of the interpreter's reach past 2^53 (from n = 19); c(n, k) is a row recurrence.
+export const kCyclePermutations = exactUpTo(kCycleDefinitions, 1000, ([n, k]) => stirlingFirstExact(n, k), {
+  trivial: ([n, k]) => (k > n || (k === 0 && n > 0) ? 0n : k === n ? 1n : undefined),
+  valid: isKCyclePermutation,
 });
 
 /** The permutations of n with no fixed point, D(n) of them. Of the open slots, m have their own

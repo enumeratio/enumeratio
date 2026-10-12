@@ -10,6 +10,7 @@
 import { modRank } from "../../../collections/src/families/kernels.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { exactUpTo, motzkinByPeaksExact } from "../../../collections/src/families/exact-triangles.ts";
 import {
   add,
   all,
@@ -247,13 +248,21 @@ export function isDyckPathsByHeightOf(e: unknown, n: number, h: number): boolean
 // up-step immediately followed by a down-step — the Motzkin triangle (A055151).
 // completions(s,h,prevUp,peaksLeft) tracks steps remaining, current height, whether the previous
 // step was an up-step (so an immediate down-step scores a peak), and peaks still to place. ──────
-const _mpbpMemo = new Map<string, number>();
+// States kept between calls, and the most one call may add before it gives up (a RangeError, which a
+// fast kernel reads as no answer): the table is cubic in n, so a large n would otherwise fill the heap.
+const MPBP_KEPT = 100_000;
+const MPBP_BUDGET = 400_000;
+const _mpbpMemo = new Map<number, number>();
 function mpbpCompletions(s: number, h: number, prevUp: boolean, peaksLeft: number): number {
-  if (h < 0 || peaksLeft < 0) return 0;
+  if (h < 0 || peaksLeft < 0 || h > s) return 0;
+  // Each peak still to come takes an up-step of the s − h steps left that aren't spent closing h
+  // (two to a pair), or is the down-step that closes the peak an up-step just made.
+  if (peaksLeft > Math.floor((s - h) / 2) + (prevUp ? 1 : 0)) return 0;
   if (s === 0) return h === 0 && peaksLeft === 0 ? 1 : 0;
-  const key = `${s},${h},${prevUp},${peaksLeft}`;
+  const key = ((peaksLeft * 10_000 + h) * 10_000 + s) * 2 + (prevUp ? 1 : 0);
   let v = _mpbpMemo.get(key);
   if (v === undefined) {
+    if (_mpbpMemo.size > MPBP_BUDGET) throw new RangeError("MotzkinPathsByPeaks: too many states for one call");
     const up = mpbpCompletions(s - 1, h + 1, true, peaksLeft);
     const level = mpbpCompletions(s - 1, h, false, peaksLeft);
     const down = h > 0 ? mpbpCompletions(s - 1, h - 1, false, peaksLeft - (prevUp ? 1 : 0)) : 0;
@@ -262,8 +271,14 @@ function mpbpCompletions(s: number, h: number, prevUp: boolean, peaksLeft: numbe
   }
   return v;
 }
+/** Starts a call: the keys read n and k below 10 000, and a table past `MPBP_KEPT` states is dropped. */
+function mpbpStart(n: number, k: number): void {
+  if (n >= 10_000 || k >= 10_000) throw new RangeError("MotzkinPathsByPeaks: n and k are past 10 000");
+  if (_mpbpMemo.size > MPBP_KEPT) _mpbpMemo.clear();
+}
 export function MotzkinPathsByPeaksCount(n: number, k: number): number {
   if (n < 0 || k < 0) return 0;
+  mpbpStart(n, k);
   return mpbpCompletions(n, 0, false, k);
 }
 export function MotzkinPathsByPeaksUnrank(n: number, k: number, rank: number): number[] {
@@ -297,6 +312,7 @@ export function MotzkinPathsByPeaksUnrank(n: number, k: number, rank: number): n
   return out;
 }
 export function MotzkinPathsByPeaksRank(path: number[], k: number): number {
+  mpbpStart(path.length, k);
   let r = 0,
     h = 0,
     prevUp = false,
@@ -522,7 +538,7 @@ const peakCompletions = (w: MathJSON, y: MathJSON, left: MathJSON, u: MathJSON):
   );
   return sub(read(w, peakColumn(y, left)), iff(and(equal(u, 1), ["Greater", y, 0], ["GreaterEqual", w, 1]), spent, 0));
 };
-const motzkinPathsByPeaks = walkFamily({
+const motzkinPeakDefinitions = walkFamily({
   head: "MotzkinPathsByPeaks",
   carrier: "MotzkinPath",
   fast: {
@@ -556,6 +572,10 @@ const motzkinPathsByPeaks = walkFamily({
   },
   final: (flag) => equal(quotient(flag, 2), "_k"),
   declinePastDoubles: true,
+});
+// The table's count is out of the interpreter's reach past 2^53 (from n = 44); the TS kernel counts in doubles.
+const motzkinPathsByPeaks = exactUpTo(motzkinPeakDefinitions, 600, ([n, k]) => motzkinByPeaksExact(n, k), {
+  trivial: ([n, k]) => (k > n / 2 ? 0n : undefined),
 });
 
 // Kept separate from `entries` below only so collections/src/families/index.ts can splice
