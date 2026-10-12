@@ -10,6 +10,7 @@
 // 0 … C(m + k − 1, m) − 1 in lex order, and the next row in order raises the last entry that can rise.
 
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { semistandardTableauxExact } from "../../../collections/src/families/exact-recurrences.ts";
 import {
   add,
   all,
@@ -405,6 +406,8 @@ export const semistandardTableaux: EpsilFamily = (() => {
     params: [n, k],
     // Interpreting the shape table past 2^53 takes the interpreter's minutes.
     declinePastDoubles: "count",
+    // The count over every shape is a closed sum, exact where the shape table is out of reach.
+    fastCount: ([n, k]) => semistandardTableauxExact(n, k),
     epsil: { count, tables, unrank, rank, valid },
   };
 })();

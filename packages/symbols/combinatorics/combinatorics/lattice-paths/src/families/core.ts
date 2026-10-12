@@ -17,13 +17,12 @@ import {
   IsDyckPath,
   IsMotzkinPath,
   IsSchroederPath,
-  MotzkinCount,
   MotzkinRank,
   MotzkinUnrank,
-  SchroederCount,
   SchroederRank,
   SchroederUnrank,
 } from "../../../collections/src/families/kernels-extra.ts";
+import { motzkinExact, schroederExact } from "../../../collections/src/families/exact-recurrences.ts";
 import { equal, iff, less, lets, mul, quotient, sub } from "../../../collections/src/families/tables.ts";
 import { completionsOf, completionsTable, type Step, walkFamily } from "./walks.ts";
 
@@ -87,7 +86,7 @@ const motzkinPaths = tableWalk(
   quotient("_n", 2),
   [UP, { token: 0, rise: 0, width: 1 }, DOWN],
   {
-    count: ([n]) => MotzkinCount(n),
+    count: ([n]) => motzkinExact(n),
     unrank: ([n], r) => MotzkinUnrank(n, r),
     rank: (x) => MotzkinRank(x as number[]),
     valid: (x, [n]) => IsMotzkinPath(x as number[], n),
@@ -101,7 +100,7 @@ const schroederPaths = tableWalk(
   "_n",
   [UP, { token: 2, rise: 0, width: 2 }, DOWN],
   {
-    count: ([n]) => SchroederCount(n),
+    count: ([n]) => schroederExact(n),
     unrank: ([n], r) => SchroederUnrank(n, r),
     rank: (x) => SchroederRank(x as number[]),
     valid: (x, [n]) => IsSchroederPath(x as number[], n),

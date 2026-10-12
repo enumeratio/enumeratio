@@ -23,6 +23,7 @@ import {
   DistinctPartitionUnrank,
   DistinctPartitionRank,
 } from "../../../collections/src/families/kernels-extra.ts";
+import { shiftedStandardTableauxExact } from "../../../collections/src/families/exact-recurrences.ts";
 import { alternatingSignMatrices } from "./alternating-sign-matrices.ts";
 import { boxedPlanePartitions } from "./boxed-plane-partitions.ts";
 import { gelfandTsetlin } from "./gelfand-tsetlin.ts";
@@ -323,7 +324,8 @@ export function IsShiftedStandardTableauOf(e: unknown, n: number): boolean {
 
 // Defined in Epsil (./standard-tableaux.ts); the kernel above is its fast path, in the same order.
 export const shiftedStandardTableauxFast: FastKernel = {
-  count: ([n]) => ShiftedStandardTableauxCount(n),
+  // The sum of Thrall's counts over the strict shapes: exact past 2^53, where the doubles are not.
+  count: ([n]) => shiftedStandardTableauxExact(n),
   unrank: ([n], r) => ShiftedStandardTableauxUnrank(n, r),
   rank: (e, [n]) => ShiftedStandardTableauxRank(e as number[][], n),
   valid: (e, [n]) => IsShiftedStandardTableauOf(e, n),

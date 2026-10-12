@@ -6,6 +6,7 @@
 
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import { catalanExact } from "../../../collections/src/families/exact-counts.ts";
+import { booleanPermutationsExact } from "../../../collections/src/families/exact-recurrences.ts";
 import type { Declared } from "../../../collections/src/families/types.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
 import {
@@ -375,7 +376,7 @@ const booleanTable = fold(
   upTo(2, n),
 );
 const booleans = (size: MathJSON): MathJSON => at("booleans", add(size, 1));
-const booleanPermutations: EpsilFamily = permutationRestriction({
+const booleanPermutationsDefinitions: EpsilFamily = permutationRestriction({
   head: "BooleanPermutations",
   carrier: "Permutation",
   paramCount: 1,
@@ -425,6 +426,12 @@ const booleanPermutations: EpsilFamily = permutationRestriction({
     iff(equal(at("pstate", 3), 0), booleans(sub(n, at("pstate", 2))), booleans(add(sub(n, at("pstate", 3)), 1))),
   ),
 });
+
+// The count alone is the recurrence T(m) = 3 T(m − 1) − T(m − 2), exact where the table is out of reach.
+const booleanPermutations: EpsilFamily = {
+  ...booleanPermutationsDefinitions,
+  fastCount: ([m]) => booleanPermutationsExact(m),
+};
 
 const catalan = (r: MathJSON): MathJSON => quotient(["Binomial", mul(2, r), r], add(r, 1));
 

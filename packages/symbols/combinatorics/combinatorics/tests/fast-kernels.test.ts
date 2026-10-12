@@ -248,7 +248,16 @@ for (const family of countFamilies) {
       if (past) grid.push(p);
     }
     expect(past).toBe(true);
-    for (const p of grid) expect([labelled(family, p), fast.count(p)]).toEqual([labelled(family, p), epsil.count(p)]);
+    for (const p of grid) {
+      const where = labelled(family, p);
+      const total = family.fastCount!(p);
+      if (family.declinePastDoubles === "count" && typeof total === "bigint" && total > MAX_SAFE) {
+        // Epsil's count declines there: the fast count is the only answer, held to an independent
+        // sum in collections/tests/exact-recurrences.test.ts.
+        expect(() => epsil.count(p)).toThrow(RangeError);
+        expect([where, fast.count(p)]).toEqual([where, total]);
+      } else expect([where, fast.count(p)]).toEqual([where, epsil.count(p)]);
+    }
   });
 }
 
@@ -351,6 +360,32 @@ const BIGINT_COUNTS: [string, number[]][] = [
   ["FullKAryTrees", [18, 5]],
   ["NonCrossingTrees", [23]],
   ["NonCrossingTrees", [25]],
+  // The recurrence families, at the first params past 2^53.
+  ["MotzkinPaths", [39]],
+  ["SchroederPaths", [24]],
+  ["RiordanPaths", [40]],
+  ["FinePaths", [32]],
+  ["DyckPathsByHeight", [33, 6]],
+  ["FibonacciWords", [77]],
+  ["FibonacciCompositions", [78]],
+  ["TriCompositions", [62]],
+  ["TetraCompositions", [57]],
+  ["TriStrings", [61]],
+  ["OddCompositions", [79]],
+  ["ProperCompositions", [80]],
+  ["DyadicCompositions", [66]],
+  ["SetPartitions", [23]],
+  ["RestrictedGrowthStrings", [23]],
+  ["SetPartitionsIntoKBlocks", [26, 5]],
+  ["SetCompositions", [17]],
+  ["Surjections", [23, 5]],
+  // Epsil takes seconds at these.
+  ...(DEEP
+    ? ([
+        ["TriangularCompositions", [86]],
+        ["PrimeCompositions", [98]],
+      ] as [string, number[]][])
+    : []),
 ];
 for (const [head, p] of BIGINT_COUNTS) {
   test(`${head}(${p.join(", ")}): the fast count past 2^53 is Epsil's`, () => {
