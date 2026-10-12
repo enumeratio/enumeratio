@@ -371,9 +371,10 @@ function waysOf(plan: Plan): Float64Array {
 const CACHED = 4;
 const cumulative = new Map<number, Float64Array>();
 
-/** sums[s]: the tableaux of the shapes before the one at place s, for s = 0..the number of shapes. */
-function cumulativeOf(size: number): Float64Array {
-  if (size > TABLE_LIMIT) throw new RangeError(`SkewStandardTableaux(${size}): past the table limit`);
+/** sums[s]: the tableaux of the shapes before the one at place s, for s = 0..the number of shapes; undefined
+ *  past the table limit, which the fast path declines to Epsil (a rank outside the fiber throws instead). */
+function cumulativeOf(size: number): Float64Array | undefined {
+  if (size > TABLE_LIMIT) return undefined;
   let sums = cumulative.get(size);
   if (sums !== undefined) {
     cumulative.delete(size);
@@ -392,16 +393,17 @@ function cumulativeOf(size: number): Float64Array {
   return sums;
 }
 
-function countFast(size: number): number {
+function countFast(size: number): number | undefined {
   if (size < 0) return 0;
   if (size === 0) return 1;
   const sums = cumulativeOf(size);
-  return sums[sums.length - 1];
+  return sums && sums[sums.length - 1];
 }
 
-function unrankFast(size: number, rank: number): [number[], number[], number[]] {
+function unrankFast(size: number, rank: number): [number[], number[], number[]] | undefined {
   if (size === 0) return [[], [], []];
   const sums = cumulativeOf(size);
+  if (sums === undefined) return undefined;
   if (!(rank >= 0 && rank < sums[sums.length - 1]))
     throw new RangeError(`SkewStandardTableaux(${size}): rank out of range`);
   // The last shape whose tableaux start at or before the rank.
@@ -433,10 +435,11 @@ function unrankFast(size: number, rank: number): [number[], number[], number[]] 
   return [lam, mu, word];
 }
 
-function rankFast(element: [number[], number[], number[]], size: number): number {
+function rankFast(element: [number[], number[], number[]], size: number): number | undefined {
   const [lam, mu, word] = element;
   if (size === 0) return 0;
   const sums = cumulativeOf(size);
+  if (sums === undefined) return undefined;
   const plan = planOf(lam, mu);
   const f = waysOf(plan);
   let place = sums[skewShapeRank(size, lam, mu)];

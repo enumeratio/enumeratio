@@ -37,9 +37,14 @@ export interface FamilyEpsil {
 /** A hand-written reading of a family in plain numbers, in the same order as its Epsil
  *  definition (tests/fast-kernels.test.ts holds the two together). Each operation takes the
  *  family's params in order; any may throw or answer undefined to leave the question to Epsil. */
-export type FastKernel = Pick<NumberKernel, "unrank" | "rank" | "valid"> & {
+export type FastKernel = {
   /** A bigint where the count is exact past 2^53; undefined leaves it to Epsil. */
   readonly count: (p: number[]) => number | bigint | undefined;
+  /** Undefined declines a fiber the kernel won't try; a throw reads as a bad argument (a rank outside
+   *  the fiber). Both leave the question to Epsil. */
+  readonly unrank: (p: number[], r: number) => ReturnType<NumberKernel["unrank"]> | undefined;
+  readonly rank: (element: unknown, p: number[]) => number | undefined;
+  readonly valid: (element: unknown, p: number[]) => boolean | undefined;
 };
 
 export interface EpsilFamily extends FamilyShape {

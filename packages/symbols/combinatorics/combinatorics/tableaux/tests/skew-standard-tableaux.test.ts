@@ -12,6 +12,7 @@ import { epsilKernelOn, kernelOn } from "../../collections/src/families/epsil.ts
 import { declareCombinatorics } from "../../src/index.ts";
 import { skewShapeCount, skewShapeUnrank } from "../../partitions/src/families/skew-shapes.ts";
 import { entries, EXACT_COUNTS, TABLE_CELLS } from "../src/families/skew-standard-tableaux.ts";
+import { standardTableaux } from "../src/families/standard-tableaux.ts";
 
 const DEEP = process.env.DEEP_TESTS === "1";
 const [family] = entries;
@@ -72,13 +73,15 @@ for (const kernel of [epsil, fast]) {
 
 // 336,322 unranks: a few seconds for the fast path, about two minutes for Epsil.
 for (const kernel of [fast, epsil]) {
-  test(`${kernel === epsil ? "Epsil" : "the fast path"} lists all of size 7 as the TS kernel did (a digest of every line)`, () => {
-    const { count, sha256 } = OLD.seven;
-    if (!DEEP) return;
-    const hash = createHash("sha256");
-    for (let r = 0; r < count; r++) hash.update(`${r === 0 ? "" : "\n"}${written(kernel.unrank([7], BigInt(r)))}`);
-    expect(hash.digest("hex")).toBe(sha256);
-  });
+  test.skipIf(!DEEP)(
+    `${kernel === epsil ? "Epsil" : "the fast path"} lists all of size 7 as the TS kernel did (a digest of every line)`,
+    () => {
+      const { count, sha256 } = OLD.seven;
+      const hash = createHash("sha256");
+      for (let r = 0; r < count; r++) hash.update(`${r === 0 ? "" : "\n"}${written(kernel.unrank([7], BigInt(r)))}`);
+      expect(hash.digest("hex")).toBe(sha256);
+    },
+  );
 }
 
 /** Whether [lam, mu, word] is a skew standard tableau of n cells, written independently of the family:
@@ -316,3 +319,24 @@ test("the steps a call is bounded by are the cells of the shapes' tables", () =>
   expect(family.declared!.work!([15])).toBe(2n * 105533129928n * 7n);
   expect(family.declared!.work!([-1])).toBe(0n);
 });
+
+test("past the table limit the fast path declines (undefined), and a rank outside the fiber still throws", () => {
+  const raw = family.fast!;
+  expect(raw.count([9])).toBeUndefined();
+  expect(raw.unrank([9], 0)).toBeUndefined();
+  expect(raw.rank([[9], [], Array.from({ length: 9 }, () => 0)], [9])).toBeUndefined();
+  expect(() => raw.unrank([4], 194)).toThrow(RangeError);
+  expect(() => raw.unrank([4], -1)).toThrow(RangeError);
+});
+
+// Listing every tableau of size 7 takes some seconds, so that size is a DEEP_TESTS one.
+test("with μ empty the tableaux are the standard tableaux (the involutions: 232 at n = 7)", () => {
+  const standard = kernelOn(ce, standardTableaux);
+  for (let n = 0; n <= (DEEP ? 7 : 6); n++) {
+    let straight = 0;
+    const total = Number(fast.count([n]));
+    for (let r = 0; r < total; r++) if ((fast.unrank([n], BigInt(r)) as number[][])[1].length === 0) straight++;
+    expect([n, BigInt(straight)]).toEqual([n, standard.count([n])]);
+  }
+  expect(standard.count([7])).toBe(232n);
+}, 60_000);
