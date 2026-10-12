@@ -8,6 +8,7 @@ import { collectMessages } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { epsilEntries } from "../../permutations/src/families/core.ts";
 import { kernelOn } from "../src/families/epsil.ts";
+import { vexillaryExact } from "../src/families/exact-recurrences.ts";
 import { declareCombinatorics } from "../../src/index.ts";
 
 // A-94: SymmetricGroup and BoxedPlanePartitions carry their own carriers now, so a bare
@@ -60,6 +61,26 @@ test("Take and RandomChoice leave a huge family unevaluated", () => {
 
 test("a count past 2^53 in a plain-number kernel is unknown, not an internal error", () => {
   expect(run(["Count", ["PlanePartitions", 100]]).json).toEqual(["Count", ["PlanePartitions", 100]]);
+});
+
+test("PlanePartitions walks a table by shape: At answers at the edge, n = 33, and past it refuses at once", () => {
+  // 19 million elements, far past what the whole list could be built; a call builds a table of about 270
+  // thousand entries (1,627,194 steps), the last size under the limit.
+  expect(run(["Count", ["PlanePartitions", 33]]).json).toBe(18_974_973);
+  expect(run(["At", ["PlanePartitions", 33], 1]).json).toEqual(["List", ["List", 33]]);
+  expect(run(["At", ["PlanePartitions", 34], 1]).texts.join(" ")).toContain(
+    "PlanePartitions(34) would take about 2,024,826 steps",
+  );
+  expect(run(["At", ["PlanePartitions", 34], 1]).json).toEqual(["At", ["PlanePartitions", 34], 1]);
+  // Counting is not walking: the count past the edge is still exact, and iterating the fiber is refused.
+  expect(run(["Count", ["PlanePartitions", 35]]).json).toBe(41_691_046);
+  expect(run(["Take", ["PlanePartitions", 33], 2]).json).toEqual(["Take", ["PlanePartitions", 33], 2]);
+});
+
+test("a fast count answers past 2^53 where the table is out of reach, and declines past its bound", () => {
+  // The table has 2^31 states at n = 30; the count is past 2^53.
+  expect(run(["Count", ["VexillaryPermutations", 30]]).json).toEqual({ num: String(vexillaryExact(30)) });
+  expect(run(["Count", ["VexillaryPermutations", 25_000]]).json).toEqual(["Count", ["VexillaryPermutations", 25_000]]);
 });
 
 test("a bigint kernel's count past 2^53 is exact, and its first 2^53 elements index", () => {

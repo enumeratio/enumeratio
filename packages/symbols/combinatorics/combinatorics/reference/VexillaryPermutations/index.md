@@ -26,6 +26,6 @@ grades:
 carrier: Permutation
 ---
 
-- A lazy indexed collection; the count is A005802 — $1, 2, 6, 23, 103, 513, …$
+- A lazy indexed collection; the count is A005802 — $1, 2, 6, 23, 103, 513, …$ — the same as for $1234$-avoiders, and exact well past $2^{53}$ by Gessel's recurrence.
 - Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding $2143$.
 - Vexillary ("flag") permutations are exactly those whose Schubert polynomial is a single Schur polynomial — the name is Lascoux and Schützenberger's.

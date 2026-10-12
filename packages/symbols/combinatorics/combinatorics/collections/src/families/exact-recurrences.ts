@@ -110,6 +110,22 @@ export function booleanPermutationsExact(n: number): bigint | undefined {
   return b;
 }
 
+/**
+ * Vexillary permutations, Av(2143): the same count as Av(1234) (A005802). The recurrence
+ * (m + 4)² u(m + 2) = (10m² + 42m + 41) u(m + 1) − 9 (m + 1)² u(m), u(0) = u(1) = 1, was fitted to the
+ * series of Gessel's Bessel determinant (collections/tests/av1234.ts), not taken from a source, and is
+ * held to it in tests (a wrong one would truncate the division silently). About 9^n, 3.2 bits a step.
+ */
+export function vexillaryExact(n: number): bigint | undefined {
+  if (!ok(n)) return undefined;
+  let [a, b] = [1n, 1n];
+  for (let m = 0; m + 2 <= n; m++) {
+    const k = BigInt(m);
+    [a, b] = [b, ((10n * k * k + 42n * k + 41n) * b - 9n * (k + 1n) ** 2n * a) / (k + 4n) ** 2n];
+  }
+  return b;
+}
+
 // ─── compositions from a set of parts ─────────────────────────────────────────────────────────
 
 /** Compositions of n with every part in `parts` (ascending, positive): c(0) = 1, c(m) = Σ c(m − p). */
