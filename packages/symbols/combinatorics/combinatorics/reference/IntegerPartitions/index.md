@@ -65,9 +65,9 @@ bindings:
     arity: 1
   - origin: mapped
     form: combinatorica
-    template: If[IntegerQ[$2], Reverse[Sort[Map[TransposePartition, Partitions[$1, $2]], Function[{a, b}, OrderedQ[{PadRight[a, $1], PadRight[b, $1]}]]]], Missing["NotCombinatorica"]]
+    template: If[IntegerQ[$2], Reverse[Sort[Map[TransposePartition, Partitions[$1, $2]], Function[{a, b}, OrderedQ[{PadRight[a, $1], PadRight[b, $1]}]]]], If[ListQ[$2] && 1 <= Length[$2] <= 3, Select[Partitions[$1], MemberQ[Switch[Length[$2], 1, $2, 2, Range[$2[[1]], Min[$2[[2]], $1]], 3, Range[$2[[1]], Min[$2[[2]], $1], $2[[3]]]], Length[#]] &], Missing["NotCombinatorica"]]]
     arity: 2
-    note: Combinatorica's Partitions[n, k] bounds the LARGEST part by k; ours (and Wolfram's) bound the number of parts, so the template transposes each partition and restores descending lexicographic order. Only an integer k is covered.
+    note: Combinatorica's Partitions[n, k] bounds the LARGEST part by k; ours (and Wolfram's) bound the number of parts, so the template transposes each partition and restores descending lexicographic order. A list `{k}`, `{kmin, kmax}` or `{kmin, kmax, dk}` selects the partitions of `Partitions[n]` by their number of parts.
 ---
 
 - A lazy indexed collection, unranked in reverse-lexicographic order; the count is the partition number $p(n)$ — $p(8) = 22$ — with no elementary closed form.
