@@ -4,7 +4,8 @@
 // and, for a plot in a Manipulate, the wildcards (`_a`) the controls fill. A plot's `Locator`
 // reads its geometry through `frame`. A diagram (`GraphPlot(…)`, `TorusSquare(2, 3)`) needs no
 // sampling: its box is lowered whole, and a torus square's point follows the page's clock. So does a
-// chart (`BarChart([3, 1, 4])`), which holds its data (`chartBox`).
+// chart (`BarChart([3, 1, 4])`), which holds its data (`chartBox`). A field plot (`ContourPlot`,
+// `DensityPlot`) is sampled on a grid and lowers to lines or a `RasterBox`.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { html, nothing } from "lit";
@@ -14,6 +15,10 @@ import {
   chartBoxOfSettings,
   debug,
   type Field2d,
+  FIELD_PLOT_HEADS,
+  fieldAxes,
+  fieldBoxOfData,
+  fieldBoxOfGrid,
   diagramBoxOf,
   followsClock,
   gestureHandlingOf,
@@ -167,6 +172,8 @@ export class PlotView {
     try {
       if (typeof head === "string" && POLAR.has(head)) await this.#polarize(head, settings, generation);
       else if (typeof head === "string" && FIELD.has(head)) await this.#vectorize(settings, generation);
+      else if (typeof head === "string" && FIELD_PLOT_HEADS.includes(head))
+        await this.#rasterize(head, settings, generation);
       else await this.#sample(settings, generation);
     } catch (error) {
       log("could not plot", text, error);
@@ -414,6 +421,47 @@ export class PlotView {
     const { x, y, options } = vectorOptionsOf(settings);
     this.#box = vectorPlotBox(field, x[0], x[1], y[0], y[1], options) as BoxNode;
     this.#polar = undefined;
+    this.#field = true;
+    this.#draw();
+  }
+
+  /**
+   * A contour or density plot: a grid of values, sampled from the compiled expression over its ranges
+   * (or the `data` it was given), as lines or cells. The wildcards come from a surrounding
+   * `Manipulate`'s bindings.
+   */
+  async #rasterize(head: string, settings: Readonly<Record<string, string>>, generation: number): Promise<void> {
+    this.#unzoomable();
+    this.#series = [];
+    this.#polar = undefined;
+    this.#frame = undefined;
+    const listed = fieldBoxOfData(head, settings);
+    if (listed !== undefined) {
+      this.#box = listed as BoxNode;
+      this.#field = true;
+      return this.#draw();
+    }
+    const raw = settings["expr"]?.trim();
+    if (!raw) return this.#clear();
+    const loaded = await plotFunctions(raw);
+    if (generation !== this.#generation) return;
+    const sampler = loaded.samplers[0];
+    if (!sampler) return this.#clear();
+    const scope = loaded.scope();
+    Object.assign(scope, this.host.bindings);
+    const free = loaded.plot.unknowns.filter((u) => !u.startsWith("_"));
+    const vx = settings["xvar"] || free[0] || "x";
+    const vy = settings["yvar"] || free.find((u) => u !== vx) || "y";
+    const { xs, ys } = fieldAxes(head, settings);
+    // Each sample is code the kernel compiled, read from the scope.
+    const grid = ys.map((y) =>
+      xs.map((x) => {
+        scope[vx] = x;
+        scope[vy] = y;
+        return sampler(scope);
+      }),
+    );
+    this.#box = fieldBoxOfGrid(head, settings, grid, xs, ys) as BoxNode;
     this.#field = true;
     this.#draw();
   }

@@ -11,3 +11,5 @@ signatures:
     library: enumeratio-formats
     type: (any*) -> any
 ---
+
+A grid of values as cells, lowered whole: row 0 is the least y, at the bottom of the frame. Options as `DensityPlot`'s.

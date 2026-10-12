@@ -1,37 +1,14 @@
-// Pure contour-plot geometry, mirroring plot.ts/chart.ts's shape: a sampled
-// grid of z-values in, iso-lines (or filled bands) out as an SVG string. The
-// marching-squares core (`marchingSquares`) is dependency-free and unit-tested
-// on its own; the element layer (notatio-contour-plot) does the compute-engine
-// grid sampling. `grid[j][i]` is z at the (i-th x, j-th y) sample -- the same
-// row-major convention as plot3d.ts's height grids.
+// Contour plots as a `GraphicsBox` (the wiki's Speculative-Box-Primitives, §6 slice 7): a sampled
+// grid of z-values in, iso-lines (a `LineBox` per level) or filled bands (a `RasterBox`) in data
+// coordinates out, with the frame as options. The marching-squares core (`marchingSquares`) is
+// dependency-free and unit-tested on its own; the element layer (`plot-view.ts`) does the
+// compute-engine grid sampling, and `renderPlot` draws the box. `grid[j][i]` is z at the (i-th x,
+// j-th y) sample -- the same row-major convention as plot3d.ts's height grids.
 
+import { type Box, type BoxNode, graphics, line, type OptionValue, raster, row, style, tag } from "@enumeratio/boxes";
 import { niceTicks } from "./plot.ts";
+import { renderPlot } from "./plot-box.ts";
 import { type ColorOptions, plotPalette, rampColor } from "./plot-color.ts";
-
-const AXIS = "var(--notatio-border, var(--vp-c-divider, currentColor))";
-const FG = "var(--notatio-fg, currentColor)";
-
-const n2 = (x: number): string => String(Math.round(x * 100) / 100);
-
-/** A tiny deterministic string hash (FNV-1a), for a clip-path id that's a pure
- * function of the render inputs rather than `Math.random`. */
-function fnv1a(s: string): string {
-  let h = 0x811c9dc5;
-  for (let i = 0; i < s.length; i++) {
-    h ^= s.charCodeAt(i);
-    h = Math.imul(h, 0x01000193);
-  }
-  return (h >>> 0).toString(36);
-}
-
-const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-function label(x: number): string {
-  if (!Number.isFinite(x)) return "";
-  if (x === 0) return "0";
-  const abs = Math.abs(x);
-  return abs >= 1000 || abs < 0.01 ? x.toExponential(1) : String(Math.round(x * 100) / 100);
-}
 
 export interface ContourPoint {
   x: number;
@@ -198,35 +175,54 @@ export interface ContourOptions extends ColorOptions {
   title?: string;
 }
 
-const frame = (w: number, h: number, body: string): string =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="contour plot">${body}</svg>`;
+const LINE_WIDTH = 1.3;
+const LINE_OPACITY = 0.85;
+
+/** The frame of a field plot (`ContourPlot`, `DensityPlot`): a frame with the range at its corners, no zero axes. */
+export function fieldFrame(
+  grid: Grid,
+  xs: readonly number[],
+  ys: readonly number[],
+  opts: { width?: number; height?: number; axes?: boolean; xLabel?: string; yLabel?: string; title?: string },
+  ready: boolean,
+): Record<string, OptionValue> {
+  const nx = grid[0]?.length ?? 0;
+  const ny = grid.length;
+  const options: Record<string, OptionValue> = {
+    ImageSize: [opts.width ?? 340, opts.height ?? 200],
+    Axes: false,
+    Frame: opts.axes !== false,
+    ScalingFunctions: ["linear", "linear"],
+    ViewKind: "fixed",
+    ...((opts.xLabel || opts.yLabel) && { AxesLabel: [opts.xLabel ?? null, opts.yLabel ?? null] }),
+    ...(opts.title && { PlotLabel: opts.title }),
+  };
+  if (ready)
+    options["PlotRange"] = [
+      [Math.min(...xs.slice(0, nx)), Math.max(...xs.slice(0, nx))],
+      [Math.min(...ys.slice(0, ny)), Math.max(...ys.slice(0, ny))],
+    ];
+  return options;
+}
 
 /**
- * Render `grid` (sampled at `xs` × `ys`) as a contour plot: iso-lines at
- * evenly spaced (or explicit) levels, or -- with `filled` -- shaded bands
- * between them. Pure function of its inputs: same grid in, byte-identical SVG
- * out, so it renders deterministically under SSR.
+ * `grid` (sampled at `xs` × `ys`) as a contour plot's `GraphicsBox`: iso-lines at evenly spaced (or
+ * explicit) levels, a `LineBox` each, or -- with `filled` -- the bands between them as a
+ * `RasterBox`, one cell per grid cell colored by its mean. A pure function of its inputs: same grid
+ * in, same box out, so it draws deterministically under SSR.
  */
-export function contourSvg(
+export function contourPlotBox(
   grid: Grid,
   xs: readonly number[],
   ys: readonly number[],
   opts: ContourOptions = {},
-): string {
-  const W = opts.width ?? 340;
-  const H = opts.height ?? 200;
-  const mL = 38;
-  const mR = 10;
-  const mT = opts.title ? 26 : 12;
-  const mB = 22;
-  const showAxes = opts.axes !== false;
-
+): Box {
   const ny = grid.length;
-  const nx = ny > 0 ? grid[0].length : 0;
-  if (nx < 2 || ny < 2 || xs.length < nx || ys.length < ny) return frame(W, H, titleSvg(W, opts.title));
-
+  const nx = ny > 0 ? grid[0]!.length : 0;
   const flat = grid.flat().filter(Number.isFinite);
-  if (flat.length === 0) return frame(W, H, titleSvg(W, opts.title));
+  const ready = nx >= 2 && ny >= 2 && xs.length >= nx && ys.length >= ny && flat.length > 0;
+  const options = fieldFrame(grid, xs, ys, opts, ready);
+  if (!ready) return graphics(row([]), options);
 
   const zmin = Math.min(...flat);
   const zmax = Math.max(...flat);
@@ -234,78 +230,71 @@ export function contourSvg(
     opts.levels && opts.levels.length > 0
       ? [...opts.levels].toSorted((a, b) => a - b)
       : autoLevels(zmin, zmax, opts.count ?? 8);
-
-  const xlo = Math.min(...xs.slice(0, nx));
-  const xhi = Math.max(...xs.slice(0, nx));
-  const ylo = Math.min(...ys.slice(0, ny));
-  const yhi = Math.max(...ys.slice(0, ny));
-
-  const plotW = W - mL - mR;
-  const plotH = H - mT - mB;
-  const sx = (x: number): number => mL + ((x - xlo) / (xhi - xlo || 1)) * plotW;
-  const syT = (y: number): number => mT + ((yhi - y) / (yhi - ylo || 1)) * plotH;
-
   const palette = plotPalette(opts);
-  let bands = "";
-  if (opts.filled && zmax > zmin) {
-    const numBands = levels.length + 1;
-    const ramp = (t: number): string => rampColor(palette, t);
-    const cw = plotW / (nx - 1);
-    const ch = plotH / (ny - 1);
-    for (let j = 0; j < ny - 1; j++) {
-      for (let i = 0; i < nx - 1; i++) {
-        const corners = [grid[j][i], grid[j][i + 1], grid[j + 1][i + 1], grid[j + 1][i]];
-        if (!corners.every(Number.isFinite)) continue;
-        const mean = corners.reduce((a, b) => a + b, 0) / 4;
-        let band = 0;
-        for (const lv of levels) if (mean >= lv) band++;
-        const t = numBands > 1 ? band / (numBands - 1) : 0.5;
-        const x = mL + i * cw;
-        const y = mT + j * ch;
-        bands += `<rect x="${n2(x)}" y="${n2(y)}" width="${n2(cw + 0.5)}" height="${n2(ch + 0.5)}" fill="${ramp(t)}"/>`;
-      }
+  const [xlo, xhi] = [Math.min(...xs.slice(0, nx)), Math.max(...xs.slice(0, nx))];
+  const [ylo, yhi] = [Math.min(...ys.slice(0, ny)), Math.max(...ys.slice(0, ny))];
+  const marks: Box[] = [];
+
+  if (opts.filled) {
+    if (zmax > zmin) {
+      const bands = levels.length + 1;
+      // Rows run from the least y up, columns from the least x: a descending axis is turned round.
+      let cells = Array.from({ length: ny - 1 }, (_, j) =>
+        Array.from({ length: nx - 1 }, (_, i) => {
+          const corners = [grid[j]![i]!, grid[j]![i + 1]!, grid[j + 1]![i + 1]!, grid[j + 1]![i]!];
+          if (!corners.every(Number.isFinite)) return "";
+          const mean = corners.reduce((a, b) => a + b, 0) / 4;
+          const band = levels.reduce((k, level) => (mean >= level ? k + 1 : k), 0);
+          return rampColor(palette, bands > 1 ? band / (bands - 1) : 0.5);
+        }),
+      );
+      if (ys[ny - 1]! < ys[0]!) cells = cells.toReversed();
+      if (xs[nx - 1]! < xs[0]!) cells = cells.map((r) => r.toReversed());
+      marks.push(
+        tag(
+          raster({
+            Colors: cells,
+            DataRange: [
+              [xlo, xhi],
+              [ylo, yhi],
+            ],
+          }),
+          "Raster",
+        ),
+      );
+    }
+  } else {
+    // One `LineBox` per level, its segments disjoint: the pen lifts at each pair of points.
+    for (const level of levels) {
+      const segments = marchingSquares(grid, xs.slice(0, nx), ys.slice(0, ny), level);
+      if (segments.length === 0) continue;
+      const color = rampColor(palette, (level - zmin) / (zmax - zmin || 1));
+      marks.push(
+        style(
+          tag(
+            line({
+              Points: segments.flatMap(([a, b]) => [
+                [a.x, a.y],
+                [b.x, b.y],
+              ]),
+              Breaks: segments.map((_, k) => 2 * k).filter((k) => k > 0),
+            }),
+            "Series",
+          ),
+          { EdgeForm: [[color, LINE_WIDTH, LINE_OPACITY, []]] },
+        ),
+      );
     }
   }
-
-  // One <path> per level, its subpaths the level's marching-squares segments.
-  let lines = "";
-  if (!opts.filled) {
-    for (const lv of levels) {
-      const segs = marchingSquares(grid, xs.slice(0, nx), ys.slice(0, ny), lv);
-      if (segs.length === 0) continue;
-      const d = segs.map(([a, b]) => `M${n2(sx(a.x))},${n2(syT(a.y))} L${n2(sx(b.x))},${n2(syT(b.y))}`).join(" ");
-      lines += `<path d="${d}" fill="none" stroke="${rampColor(palette, (lv - zmin) / (zmax - zmin || 1))}" stroke-width="1.3" stroke-linecap="round" opacity="0.85"/>`;
-    }
-  }
-
-  let chrome = "";
-  if (showAxes) {
-    chrome += `<rect x="${n2(mL)}" y="${n2(mT)}" width="${n2(plotW)}" height="${n2(plotH)}" fill="none" stroke="${AXIS}" stroke-width="1" opacity="0.5"/>`;
-    const text = (x: number, y: number, anchor: string, s: string): string =>
-      `<text x="${n2(x)}" y="${n2(y)}" text-anchor="${anchor}" font-size="10" font-family="ui-monospace, monospace" fill="${FG}" opacity="0.6">${s}</text>`;
-    chrome +=
-      text(mL, H - 6, "start", label(xlo)) +
-      text(W - mR, H - 6, "end", label(xhi)) +
-      text(mL - 4, mT + 6, "end", label(yhi)) +
-      text(mL - 4, H - mB, "end", label(ylo));
-    if (opts.xLabel)
-      chrome += `<text x="${n2(W - mR)}" y="${n2(mT + 10)}" text-anchor="end" font-size="10" font-style="italic" font-family="ui-monospace, monospace" fill="${FG}" opacity="0.75">${esc(opts.xLabel)}</text>`;
-    if (opts.yLabel)
-      chrome += `<text x="${n2(mL + 4)}" y="${n2(mT + 10)}" text-anchor="start" font-size="10" font-style="italic" font-family="ui-monospace, monospace" fill="${FG}" opacity="0.75">${esc(opts.yLabel)}</text>`;
-  }
-
-  // A deterministic id (not Math.random -- the whole pipeline must be a pure
-  // function of its inputs for SSR to render byte-identical output), unique
-  // enough to not collide with a sibling contour plot on the same page.
-  const clipId = `ncontour-${fnv1a(`${nx}x${ny}:${levels.join(",")}:${opts.filled ? 1 : 0}:${xlo},${xhi},${ylo},${yhi}`)}`;
-  const clip = `<clipPath id="${clipId}"><rect x="${n2(mL)}" y="${n2(mT)}" width="${n2(plotW)}" height="${n2(plotH)}"/></clipPath>`;
-  const clipped = `<g clip-path="url(#${clipId})">${bands}${lines}</g>`;
-
-  return frame(W, H, clip + clipped + chrome + titleSvg(W, opts.title));
+  return graphics(row(marks), options);
 }
 
-function titleSvg(w: number, title: string | undefined): string {
-  return title
-    ? `<text x="${n2(w / 2)}" y="14" text-anchor="middle" font-size="12" font-family="ui-sans-serif, system-ui, sans-serif" fill="${FG}">${esc(title)}</text>`
-    : "";
+/** `contourPlotBox` drawn: the SVG a page, a build or an export shows. */
+export function contourSvg(
+  grid: Grid,
+  xs: readonly number[],
+  ys: readonly number[],
+  opts: ContourOptions = {},
+): string {
+  return renderPlot(contourPlotBox(grid, xs, ys, opts) as BoxNode).svg;
 }

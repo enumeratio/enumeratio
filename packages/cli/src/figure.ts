@@ -5,7 +5,7 @@
 // A layout (`Row`, `Column`, `Grid`, `Panel`, `Labeled`) is boxes laid out on cells, with each
 // entry that is a figure a leaf the figure drawer fills.
 
-import { type Box, type BoxNode, LAYOUT_HEADS, makeBoxes, type Notation } from "@enumeratio/boxes";
+import { type Box, type BoxNode, LAYOUT_HEADS, makeBoxes, type Notation, optionsOfBox } from "@enumeratio/boxes";
 import {
   FIGURE_NOTATION,
   headOf,
@@ -68,5 +68,7 @@ export function figureText(json: Json, options: FigureOptions = {}): string | un
     return drawBoxes(makeBoxes(plainJson(json) as never, notation), options);
   }
   const box = makeBoxes(plainJson(json) as never, notation);
+  // A raster filled by a producer (a `ComplexPlot`) has no cells to draw on character cells yet.
+  if (box[0] === "GraphicsBox" && optionsOfBox(box).Producer === "ComplexPlot") return undefined;
   return box[0] === "GraphicsBox" ? drawGraphicsBox(box, options) : undefined;
 }

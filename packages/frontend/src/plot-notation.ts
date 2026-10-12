@@ -12,6 +12,8 @@ import { plotBox } from "./plot-box.ts";
 import {
   CHART_HEADS,
   chartBoxOfSettings,
+  FIELD_PLOT_HEADS,
+  fieldBoxOfData,
   PLOT_HEADS,
   plotDataSeries,
   plotOptionsOf,
@@ -23,7 +25,8 @@ import { polarPlotBox } from "./polarplot.ts";
 import { FIGURE_NOTATION } from "./show-box.ts";
 import { barBoxOfSettings, GRAPHICS_3D_HEADS, listBoxOfSettings, literalCurveBox } from "./graphics-3d-lowering.ts";
 import { unsampledGraphics3dBox } from "./graphics-3d-box.ts";
-import { plotSettingsOf, graphics3dSettingsOf } from "./symbols.ts";
+import { complexPlotOptionsOf, unsampledComplexPlotBox } from "./complex-plot-box.ts";
+import { complexPlot3dSettingsOf, complexPlotSettingsOf, plotSettingsOf, graphics3dSettingsOf } from "./symbols.ts";
 
 const plotRule =
   (head: string): NotationRule =>
@@ -44,6 +47,7 @@ const plotRule =
       const points = polarPointsOf(data, t0, t1);
       return polarPlotBox(points ?? [], { markers: true });
     }
+    if (FIELD_PLOT_HEADS.includes(head)) return fieldBoxOfData(head, settings) ?? unsampledBox(head, expr);
     const series = plotDataSeries(settings);
     return series === undefined ? unsampledBox(head, expr) : plotBox(series, plotOptionsOf(settings));
   };
@@ -79,8 +83,28 @@ const graphics3dRule =
     return (head === "Graphics3D" ? literalCurveBox(settings) : undefined) ?? unsampledGraphics3dBox(head, expr);
   };
 
+/**
+ * `ComplexPlot`'s rule: a raster whose producer is a shader on the web and `complex-eval.ts` anywhere
+ * else, so the box holds the expression it came from and the frame it is drawn in.
+ */
+const complexPlotRule: NotationRule = (args) => {
+  const expr = plainJson(["ComplexPlot", ...args] as never);
+  const settings = complexPlotSettingsOf(expr as never);
+  return settings === undefined ? undefined : unsampledComplexPlotBox(expr, complexPlotOptionsOf(settings));
+};
+
+/** `ComplexPlot3D`'s rule: a surface sampled by the page's shader or by `complex-eval.ts`, so the box holds the expression. */
+const complexPlot3dRule: NotationRule = (args) => {
+  const expr = plainJson(["ComplexPlot3D", ...args] as never);
+  return complexPlot3dSettingsOf(expr as never) === undefined
+    ? undefined
+    : unsampledGraphics3dBox("ComplexPlot3D", expr);
+};
+
 /** The plot and chart heads as `makeBoxes` rules. */
 export const PLOT_NOTATION: Notation = {
+  ComplexPlot: complexPlotRule,
+  ComplexPlot3D: complexPlot3dRule,
   ...Object.fromEntries(PLOT_HEADS.map((head) => [head, plotRule(head)])),
   ...Object.fromEntries(CHART_HEADS.map((head) => [head, chartRule(head)])),
   ...Object.fromEntries(GRAPHICS_3D_HEADS.map((head) => [head, graphics3dRule(head)])),

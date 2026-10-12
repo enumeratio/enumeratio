@@ -1,2 +1,3 @@
-id	section	role	expr	expected	caption
-essential-singularity	Basic		[ComplexPlot, [Exp, [Divide, 1, z]], [Tuple, Extent, 1.2], [Tuple, Height, 380]]	[ComplexPlot, [Power, ExponentialE, [Divide, 1, z]], [Tuple, Extent, 1.2], [Tuple, Height, 380]]	An essential singularity, colored by phase
+id	section	role	expr	expected	caption	boxes
+essential-singularity	Basic		[ComplexPlot, [Exp, [Divide, 1, z]], [Tuple, Extent, 1.2], [Tuple, Height, 380]]	[ComplexPlot, [Power, ExponentialE, [Divide, 1, z]], [Tuple, Extent, 1.2], [Tuple, Height, 380]]	An essential singularity, colored by phase	{head: GraphicsBox, marks: {RasterBox: 1}, roles: {Raster: 1}, options: {Frame: true, PlotRange: [[-0.6, 0.6], [-0.6, 0.6]]}}
+rational-function	Options		[ComplexPlot, [Divide, [Subtract, [Power, z, 3], 1], [Add, [Power, z, 2], 1]], [Tuple, Extent, 4]]	[ComplexPlot, [Divide, [Add, [Power, z, 3], -1], [Add, [Power, z, 2], 1]], [Tuple, Extent, 4]]	Three zeros and two poles, in a window four units high	{head: GraphicsBox, marks: {RasterBox: 1}, roles: {Raster: 1}, options: {Frame: true, PlotRange: [[-2, 2], [-2, 2]]}}

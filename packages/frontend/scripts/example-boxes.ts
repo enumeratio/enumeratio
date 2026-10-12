@@ -13,12 +13,28 @@ import { surfaceBox } from "../src/graphics-3d-box.ts";
 import { unsampledGraphics3d } from "../src/graphics-3d-draw.ts";
 import { plainJson } from "../src/graphics-rules.ts";
 import { type CompiledItem, compilePlot } from "../src/plot-compile.ts";
-import { plotBoxOfSamples, spanOf, unsampledPlot, vectorOptionsOf } from "../src/plot-lowering.ts";
+import {
+  FIELD_PLOT_HEADS,
+  fieldAxes,
+  fieldBoxOfGrid,
+  plotBoxOfSamples,
+  spanOf,
+  unsampledPlot,
+  vectorOptionsOf,
+} from "../src/plot-lowering.ts";
 import { PLOT_NOTATION } from "../src/plot-notation.ts";
 import { plotSeries } from "../src/plot.ts";
 import { polarPlotBox, samplePolar } from "../src/polarplot.ts";
 import { FIGURE_NOTATION } from "../src/show-box.ts";
-import { graphics3dSettingsOf, plotSettingsOf } from "../src/symbols.ts";
+import { complexFunction } from "../src/complex-eval.ts";
+import { complexPlotBox, complexPlotOptionsOf } from "../src/complex-plot-box.ts";
+import {
+  complexPlot3dSettingsOf,
+  complexPlotSettingsOf,
+  graphics3dSettingsOf,
+  plotSettingsOf,
+} from "../src/symbols.ts";
+import { complexSurfaceBox, parseComplexDomain, sampleComplexSurface } from "../src/complex-plot-3d.ts";
 import { vectorPlotBox } from "../src/vectorplot.ts";
 
 type Json = Parameters<typeof plainJson>[0];
@@ -53,7 +69,14 @@ function samplers(
 }
 
 /** The plots of an expression: a `Show`'s producers wait on a view, which a page gives them. */
-const SAMPLED: ReadonlySet<string> = new Set(["Plot", "ParametricPlot", "PolarPlot", "VectorPlot", "StreamPlot"]);
+const SAMPLED: ReadonlySet<string> = new Set([
+  "Plot",
+  "ParametricPlot",
+  "PolarPlot",
+  "VectorPlot",
+  "StreamPlot",
+  ...FIELD_PLOT_HEADS,
+]);
 
 /** A surface, sampled over its domain on the grid the page uses: the box a page draws once its kernel has answered. */
 function sampledSurface(ce: ComputeEngine, held: readonly unknown[]): Box {
@@ -70,11 +93,47 @@ function sampledSurface(ce: ComputeEngine, held: readonly unknown[]): Box {
   return surfaceBox(grids, xs, ys, graphics3dOptionsOf(settings));
 }
 
+/** A portrait, evaluated pixel by pixel on the CPU: the raster the page's shader would paint. */
+function sampledPortrait(ce: ComputeEngine, held: readonly unknown[]): Box {
+  const settings = complexPlotSettingsOf(held as never)!;
+  const f = complexFunction(ce.box(held[1] as never).json, settings["var"] || "z");
+  if (f === undefined) throw new Error(`no CPU evaluation of ${JSON.stringify(held[1])}`);
+  return complexPlotBox(f, complexPlotOptionsOf(settings));
+}
+
+/** A complex surface, evaluated on the CPU grid: |f| for heights, arg f for the faces' hues. */
+function sampledComplexSurface(ce: ComputeEngine, held: readonly unknown[]): Box {
+  const settings = complexPlot3dSettingsOf(held as never)!;
+  const f = complexFunction(ce.box(held[1] as never).json, settings["var"] || "z");
+  if (f === undefined) throw new Error(`no CPU evaluation of ${JSON.stringify(held[1])}`);
+  const surface = sampleComplexSurface(f, {
+    domain: parseComplexDomain(settings["domain"]),
+    samples: Number(settings["samples"]) || 40,
+    maxHeight: Number(settings["max-height"]) || undefined,
+  });
+  return complexSurfaceBox(surface, { gradient: settings["gradient"], reverse: on(settings["reverse"]) });
+}
+
 /** A plot of an expression, sampled over its domain: the box a page draws once its kernel has answered. */
 function sampled(ce: ComputeEngine, held: readonly unknown[]): Box {
   const settings = plotSettingsOf(held as never)!;
   if (settings["epilog"] || settings["prolog"]) throw new Error("an Epilog or Prolog is read by the page, not here");
   const body = held[1];
+  if (FIELD_PLOT_HEADS.includes(String(held[0]))) {
+    const { free, items } = samplers(ce, body);
+    const [vx, vy] = [
+      settings["xvar"] || free[0] || "x",
+      settings["yvar"] || free.find((u) => u !== (settings["xvar"] || free[0])) || "y",
+    ];
+    const { xs, ys } = fieldAxes(String(held[0]), settings);
+    return fieldBoxOfGrid(
+      String(held[0]),
+      settings,
+      ys.map((y) => xs.map((x) => items[0]!({ [vx]: x, [vy]: y }))),
+      xs,
+      ys,
+    );
+  }
   if (held[0] === "VectorPlot" || held[0] === "StreamPlot") {
     const [vx, vy] = [settings["xvar"] || "x", settings["yvar"] || "y"];
     const parts = Array.isArray(body) && body[0] === "Tuple" ? body.slice(1) : [];
@@ -127,8 +186,10 @@ export function boxOfExample(ce: ComputeEngine, expr: MathJSON): Box {
   const notation = { ...notationOf(ce), ...FIGURE_NOTATION, ...PLOT_NOTATION };
   const box = makeBoxes(value as never, notation);
   const held = unsampledPlot(box) as readonly unknown[] | undefined;
+  if (held !== undefined && held[0] === "ComplexPlot") return sampledPortrait(ce, held);
   if (held !== undefined && SAMPLED.has(String(held[0]))) return sampled(ce, held);
   const surface = unsampledGraphics3d(box) as readonly unknown[] | undefined;
+  if (surface !== undefined && surface[0] === "ComplexPlot3D") return sampledComplexSurface(ce, surface);
   return surface !== undefined && surface[0] === "Plot3D" ? sampledSurface(ce, surface) : box;
 }
 

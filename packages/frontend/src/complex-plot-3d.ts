@@ -1,4 +1,6 @@
+import type { Box } from "@enumeratio/boxes";
 import type { Complex, ComplexFunction } from "./complex-eval.ts";
+import { type Graphics3dOptions, surfaceBox } from "./graphics-3d-box.ts";
 import { DEFAULT_PHASE_GRADIENT, type Gradient, sampleGradient } from "./palettes.ts";
 import { gradientOf } from "./plot-color.ts";
 import { type Surface3dOptions, type SurfaceScene, surfaceScene, surfaceSceneSvg } from "./plot3d.ts";
@@ -12,13 +14,16 @@ import { type Surface3dOptions, type SurfaceScene, surfaceScene, surfaceSceneSvg
 
 // --- sampling -------------------------------------------------------------------------
 
+/** Most samples a side the CPU sampler takes: 150 is ~22k faces, where 400 is ~160k, too many to hand the DOM as paths. The GPU grid is not held to it. */
+export const MAX_SURFACE_SAMPLES = 150;
+
 /** The plane to sample: `[re0, re1, im0, im1]`. */
 export type ComplexDomain = readonly [number, number, number, number];
 
 export interface ComplexSurfaceOptions {
   /** Real and imaginary extents (default `[-2, 2, -2, 2]`). */
   domain?: ComplexDomain;
-  /** Samples per side, clamped to 2..400 (default 40). */
+  /** Samples per side, clamped to 2..400 (default 40); the CPU sampler stops at `MAX_SURFACE_SAMPLES`. */
   samples?: number;
   /**
    * Height ceiling. |f| is unbounded near a pole, and one spike would flatten the rest
@@ -95,7 +100,7 @@ export function complexSurfaceOf(
 
 /** Sample |f| and arg f over the domain. Never throws: a sample that blows up is NaN. */
 export function sampleComplexSurface(f: ComplexFunction, opts: ComplexSurfaceOptions = {}): ComplexSurface {
-  const { xs, ys } = complexGrid(opts);
+  const { xs, ys } = complexGrid({ ...opts, samples: Math.min(opts.samples ?? 40, MAX_SURFACE_SAMPLES) });
   const values: Complex[] = [];
   for (const y of ys) {
     for (const x of xs) {
@@ -180,6 +185,30 @@ export function complexSurfaceScene(surface: ComplexSurface, opts: ComplexSurfac
       const d = a + nx;
       const x = cx[a] + cx[b] + cx[c] + cx[d];
       const y = cy[a] + cy[b] + cy[c] + cy[d];
+      if (x === 0 && y === 0) return hueColor(Number.NaN, gradient);
+      const t = Math.atan2(y, x) / (2 * Math.PI);
+      return hueColor(t < 0 ? t + 1 : t, gradient);
+    },
+  });
+}
+
+/**
+ * The surface as a `Graphics3DBox` (the wiki's Speculative-Box-Primitives, §6 slice 7): the heights
+ * of a lone surface, each face colored by the circular mean of its corners' hues. This is the CPU
+ * producer; on the web `<notatio-complex-plot-3d>` samples the grid on the GPU.
+ */
+export function complexSurfaceBox(surface: ComplexSurface, opts: Graphics3dOptions = {}): Box {
+  const { heights, hues, xs, ys } = surface;
+  const gradient = gradientOf(opts, DEFAULT_PHASE_GRADIENT);
+  const unit = (t: number): [number, number] =>
+    Number.isFinite(t) ? [Math.cos(2 * Math.PI * t), Math.sin(2 * Math.PI * t)] : [0, 0];
+  return surfaceBox([heights], xs, ys, {
+    elevation: 25,
+    ...opts,
+    faceColor: (i, j) => {
+      const corners = [hues[j]![i]!, hues[j]![i + 1]!, hues[j + 1]![i + 1]!, hues[j + 1]![i]!].map(unit);
+      const x = corners.reduce((n, c) => n + c[0], 0);
+      const y = corners.reduce((n, c) => n + c[1], 0);
       if (x === 0 && y === 0) return hueColor(Number.NaN, gradient);
       const t = Math.atan2(y, x) / (2 * Math.PI);
       return hueColor(t < 0 ? t + 1 : t, gradient);

@@ -37,6 +37,13 @@ export type GraphicsPrimitive =
   /** `breaks` are indices into `points` where the pen lifts: the segment ending there is not drawn. */
   | { readonly head: "Line"; readonly points: readonly FramePoint[]; readonly breaks?: readonly number[] }
   | { readonly head: "Polygon"; readonly points: readonly FramePoint[] }
+  /** Cells of color between two corners: `colors` rows run from `from`'s y to `to`'s, each left to right. */
+  | {
+      readonly head: "Raster";
+      readonly from: FramePoint;
+      readonly to: FramePoint;
+      readonly colors: readonly (readonly string[])[];
+    }
   /** A solid shown as its boundary: the rings of its faces. */
   | { readonly head: "Polyhedron"; readonly faces: readonly (readonly FramePoint[])[] }
   | {
@@ -404,6 +411,7 @@ function extentOf(p: GraphicsPrimitive, place: Vec2): Vec2[] {
     ];
   }
   if (p.head === "Polyhedron") return p.faces.flatMap((ring) => ring.map(xy));
+  if (p.head === "Raster") return [xy(p.from), xy(p.to)];
   return p.head === "Line" || p.head === "Polygon" ? p.points.map(xy) : [place];
 }
 

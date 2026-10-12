@@ -20,8 +20,6 @@ test.each([
   "notatio-code",
   "plot-view",
   "graphics-3d-box",
-  "notatio-contour-plot",
-  "notatio-density-plot",
   "notatio-complex-plot",
   "notatio-complex-plot-3d",
   "slider-box",

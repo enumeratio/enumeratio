@@ -11,3 +11,7 @@ signatures:
     library: enumeratio-formats
     type: (any*) -> any
 ---
+
+Draws as a `GraphicsBox` of data coordinates: a `LineBox` per level, colored along the gradient (`ColorFunction`, `Reverse`), or with `Filled -> True` one `RasterBox` of the bands between them. `Levels` is a count or a list of values; `N` is the samples per side.
+
+`XLabel` and `YLabel` caption the frame, `PlotLabel` (`Label`) the figure.

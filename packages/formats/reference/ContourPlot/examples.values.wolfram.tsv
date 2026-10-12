@@ -1,2 +1,4 @@
 id	in
 saddle	ContourPlot[Subtract[Power[x, 2], Power[y, 2]], List[x, -3, 3], List[y, -3, 3]]
+filled-saddle	ContourPlot[Subtract[Power[x, 2], Power[y, 2]], List[x, -3, 3], List[y, -3, 3], List[Filled, True]]
+explicit-levels	ContourPlot[Plus[Power[x, 2], Power[y, 2]], List[x, -3, 3], List[y, -3, 3], List[Levels, List[1, 2, 4]]]

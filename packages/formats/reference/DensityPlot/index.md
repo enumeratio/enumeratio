@@ -11,3 +11,5 @@ signatures:
     library: enumeratio-formats
     type: (any*) -> any
 ---
+
+Draws as a `GraphicsBox` holding a `RasterBox`: one cell per sample, colored along the gradient by value (`ColorFunction`, `Reverse`). `PlotLegends -> True` adds a color bar, and `PlotRange -> (zmin, zmax)` pins the scale so several plots compare on one. `N` is the samples per side.
