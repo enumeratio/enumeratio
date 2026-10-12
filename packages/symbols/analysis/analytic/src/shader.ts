@@ -196,9 +196,10 @@ fn lerchPhi(z: vec2f, s: vec2f, a: vec2f) -> vec2f {
 const LERCH_REAL_TOL: f32 = 1e-4;
 
 // Φ for real arguments: the real value, or NaN (no real value) where Φ is complex.
+// The NaN is built from w's bits: a literal NaN is const-evaluated, which WGSL rejects.
 fn lerchPhiReal(z: vec2f, s: vec2f, a: vec2f) -> f32 {
   let w = lerchPhi(z, s, a);
-  if (abs(w.y) > LERCH_REAL_TOL * abs(w.x)) { return bitcast<f32>(0x7fc00000u); }
+  if (abs(w.y) > LERCH_REAL_TOL * abs(w.x)) { return bitcast<f32>(bitcast<u32>(w.x) | 0x7fc00000u); }
   return w.x;
 }
 
