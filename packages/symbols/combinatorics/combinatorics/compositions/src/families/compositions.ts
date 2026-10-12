@@ -12,6 +12,14 @@
 // n = 0 always has exactly one (empty) composition, matching IntegerCompositions(0) in ./core.ts.
 import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
 import {
+  dyadicCompositionsExact,
+  oddCompositionsExact,
+  primeCompositionsExact,
+  properCompositionsExact,
+  triangularCompositionsExact,
+  windowSumsExact,
+} from "../../../collections/src/families/exact-recurrences.ts";
+import {
   carlitzCompositions,
   dyadicCompositions,
   fibonacciCompositions,
@@ -292,10 +300,15 @@ function isZigzag(parts: unknown, n: number): boolean {
   return true;
 }
 
-const inSet = (family: EpsilFamily, builder: ReturnType<typeof partsInSet>): EpsilFamily => ({
+const inSet = (
+  family: EpsilFamily,
+  builder: ReturnType<typeof partsInSet>,
+  exact: (n: number) => bigint | undefined,
+): EpsilFamily => ({
   ...family,
   fast: {
-    count: ([n]) => builder.count(n),
+    // Exact past 2^53, where the builder's doubles are not.
+    count: ([n]) => exact(n),
     unrank: ([n], r) => builder.unrank(n, r),
     rank: (x) => builder.rank(x as number[]),
     valid: (x, [n]) => builder.valid(x, n),
@@ -329,14 +342,14 @@ const zigzagFast: FastKernel = {
 
 export const entries: EpsilFamily[] = [
   // ── parts drawn from an allowed set S ──
-  inSet(oddCompositions, oddComp),
-  inSet(properCompositions, properComp),
-  inSet(dyadicCompositions, dyadicComp),
-  inSet(fibonacciCompositions, fibComp),
-  inSet(triCompositions, triComp),
-  inSet(tetraCompositions, tetraComp),
-  inSet(triangularCompositions, triangularComp),
-  inSet(primeCompositions, primeComp),
+  inSet(oddCompositions, oddComp, oddCompositionsExact),
+  inSet(properCompositions, properComp, properCompositionsExact),
+  inSet(dyadicCompositions, dyadicComp, dyadicCompositionsExact),
+  inSet(fibonacciCompositions, fibComp, (n) => windowSumsExact(n, 2)),
+  inSet(triCompositions, triComp, (n) => windowSumsExact(n, 3)),
+  inSet(tetraCompositions, tetraComp, (n) => windowSumsExact(n, 4)),
+  inSet(triangularCompositions, triangularComp, triangularCompositionsExact),
+  inSet(primeCompositions, primeComp, primeCompositionsExact),
   { ...partSizeBoundedCompositions, fast: partSizeBoundedFast },
   { ...partCountBoundedCompositions, fast: partCountBoundedFast },
 

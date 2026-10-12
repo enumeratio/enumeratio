@@ -28,6 +28,7 @@ import {
   sub,
   upTo,
 } from "../../../collections/src/families/tables.ts";
+import { dyckPathsByHeightExact } from "../../../collections/src/families/exact-recurrences.ts";
 import { lukasiewiczPaths } from "./lukasiewicz.ts";
 import { completionsOf, completionsSize, completionsTable, type Step, walkFamily } from "./walks.ts";
 import {
@@ -346,7 +347,7 @@ const dyckPathsByHeight = walkFamily({
   head: "DyckPathsByHeight",
   carrier: "DyckPath",
   fast: {
-    count: ([n, h]) => DyckPathsByHeightCount(n, h),
+    count: ([n, h]) => dyckPathsByHeightExact(n, h),
     unrank: ([n, h], r) => DyckPathsByHeightUnrank(n, h, r),
     rank: (x, [, h]) => DyckPathsByHeightRank(x as number[], h),
     valid: (x, [n, h]) => isDyckPathsByHeightOf(x, n, h),

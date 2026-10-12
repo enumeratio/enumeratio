@@ -12,9 +12,9 @@ import {
   tuples,
 } from "./closed-forms.ts";
 import type { EpsilFamily } from "./epsil.ts";
+import { fibonacciWordsExact } from "./exact-recurrences.ts";
 import type { NumberKernel } from "./types.ts";
 import {
-  FibonacciWordCount,
   FibonacciWordRank,
   FibonacciWordUnrank,
   GrayCodeSubsetRank,
@@ -141,7 +141,7 @@ export const entriesBeforeSetPartitions: EpsilFamily[] = [
     head: "FibonacciWords",
     params: ["_n"],
     fast: {
-      count: ([n]) => FibonacciWordCount(n),
+      count: ([n]) => fibonacciWordsExact(n),
       unrank: ([n], r) => FibonacciWordUnrank(n, r),
       rank: (x) => FibonacciWordRank(x as number[]),
       valid: (x, [n]) => IsFibonacciWord(x as number[], n),

@@ -14,10 +14,14 @@
 // reading the agreement tests check against.
 import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
 import {
-  BellB,
+  bellExact,
+  fubiniExact,
+  stirlingSecondExact,
+  surjectionsExact,
+} from "../../../collections/src/families/exact-recurrences.ts";
+import {
   BlocksToLabels,
   BlocksToRgs,
-  Fubini,
   IsSetPartitionOf,
   LabelsToOrderedBlocks,
   RgsRank,
@@ -27,7 +31,6 @@ import {
   SetCompositionUnrank,
   SetPartitionsIntoKBlocksRank,
   SetPartitionsIntoKBlocksUnrank,
-  StirlingS2,
 } from "../../../collections/src/families/kernels-combinatorics.ts";
 import {
   IsPerfectMatchingOf,
@@ -35,7 +38,6 @@ import {
   PerfectMatchingCount,
   PerfectMatchingRank,
   PerfectMatchingUnrank,
-  SurjectionCount,
   SurjectionRank,
   SurjectionUnrank,
 } from "../../../collections/src/families/kernels-extra.ts";
@@ -185,13 +187,13 @@ function setPartitions(
 }
 
 const setPartitionsFamily = setPartitions("SetPartitions", ["_n"], "_n", () => 1, {
-  count: ([n]) => BellB(n),
+  count: ([n]) => bellExact(n),
   unrank: ([n], r) => RgsToBlocks(RgsUnrank(n, r)),
   rank: (x, [n]) => RgsRank(BlocksToRgs(x as number[][], n)),
   valid: (x, [n]) => IsSetPartitionOf(x as number[][], n),
 });
 const kBlocks = setPartitions("SetPartitionsIntoKBlocks", ["_n", "_k"], "_k", (open) => iff(equal(open, "_k"), 1, 0), {
-  count: ([n, k]) => StirlingS2(n, k),
+  count: ([n, k]) => stirlingSecondExact(n, k),
   unrank: ([n, k], r) => RgsToBlocks(SetPartitionsIntoKBlocksUnrank(n, k, r)),
   rank: (x, [n, k]) => SetPartitionsIntoKBlocksRank(BlocksToRgs(x as number[][], n), k),
   valid: (x, [n, k]) => IsSetPartitionOf(x as number[][], n, k),
@@ -293,7 +295,7 @@ const surjections: EpsilFamily = {
   kind: "ints",
   params: ["_n", "_k"],
   fast: {
-    count: ([n, k]) => SurjectionCount(n, k),
+    count: ([n, k]) => surjectionsExact(n, k),
     unrank: ([n, k], r) => SurjectionUnrank(n, k, r),
     rank: (x, [, k]) => SurjectionRank(x as number[], k),
     valid: (x, [n, k]) => IsSurjectionOf(x as number[], n, k),
@@ -358,7 +360,7 @@ const setCompositions: EpsilFamily = {
   kind: "blocks",
   params: ["_n"],
   fast: {
-    count: ([n]) => Fubini(n),
+    count: ([n]) => fubiniExact(n),
     unrank: ([n], r) => LabelsToOrderedBlocks(SetCompositionUnrank(n, r)),
     rank: (x, [n]) => SetCompositionRank(BlocksToLabels(x as number[][]), n),
     valid: (x, [n]) => IsSetPartitionOf(x as number[][], n),

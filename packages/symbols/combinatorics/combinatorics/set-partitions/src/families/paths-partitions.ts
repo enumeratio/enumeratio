@@ -13,7 +13,8 @@
 // collections/src/families/kernels-combinatorics.ts, and the check below) stays as the
 // independent reading the agreement tests check against. ─────────────────────────────────────
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
-import { BellB, RgsRank, RgsUnrank } from "../../../collections/src/families/kernels-combinatorics.ts";
+import { bellExact } from "../../../collections/src/families/exact-recurrences.ts";
+import { RgsRank, RgsUnrank } from "../../../collections/src/families/kernels-combinatorics.ts";
 import { restrictedGrowthStrings } from "./core.ts";
 
 export function isRestrictedGrowthStringOf(e: unknown, n: number): boolean {
@@ -30,7 +31,7 @@ export const entries: EpsilFamily[] = [
   {
     ...restrictedGrowthStrings,
     fast: {
-      count: ([n]) => BellB(n),
+      count: ([n]) => bellExact(n),
       unrank: ([n], r) => RgsUnrank(n, r),
       rank: (x) => RgsRank(x as number[]),
       valid: (x, [n]) => isRestrictedGrowthStringOf(x, n),

@@ -13,6 +13,7 @@ import type { NumberKernel } from "./types.ts";
 import type { EpsilFamily, FastKernel } from "./epsil.ts";
 import { latticePaths } from "./closed-forms.ts";
 import { floorDiv, modRank } from "./kernels.ts";
+import { fineExact, riordanExact } from "./exact-recurrences.ts";
 import { quotient } from "./tables.ts";
 import { dyckPaths } from "../../../lattice-paths/src/families/core.ts";
 import { finePaths } from "../../../lattice-paths/src/families/fine-paths.ts";
@@ -200,7 +201,7 @@ function isFinePathOf(e: unknown, n: number): boolean {
 }
 
 export const finePathsFast: FastKernel = {
-  count: ([n]) => FinePathCount(n),
+  count: ([n]) => fineExact(n),
   unrank: ([n], r) => FinePathUnrank(n, r),
   valid: (e, [n]) => isFinePathOf(e, n),
   rank: (e) => FinePathRank(e as number[]),
@@ -240,7 +241,7 @@ const riordanPaths = walkFamily({
   head: "RiordanPaths",
   carrier: "MotzkinPath",
   fast: {
-    count: ([n]) => RiordanPathCount(n),
+    count: ([n]) => riordanExact(n),
     unrank: ([n], r) => RiordanPathUnrank(n, r),
     rank: (e) => RiordanPathRank(e as number[]),
     valid: (e, [n]) => isRiordanPathOf(e, n),
