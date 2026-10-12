@@ -3,6 +3,13 @@ name: MaximalBlockDifference
 domain: Set partition statistics
 signature: MaximalBlockDifference(partition)
 summary: The largest difference between two elements of one block.
+catalog:
+  - system: findstat
+    identity: St000503
+    url: https://www.findstat.org/St000503
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: MaximalBlockDifference(partition)
     description: The largest difference between two elements of one block.

@@ -3,6 +3,13 @@ name: DimensionIndex
 domain: Set partition statistics
 signature: DimensionIndex(partition)
 summary: The sum over blocks of largest minus smallest element, plus one.
+catalog:
+  - system: findstat
+    identity: St000229
+    url: https://www.findstat.org/St000229
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: DimensionIndex(partition)
     description: The sum over blocks of largest minus smallest element, plus one.

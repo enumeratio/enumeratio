@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-step-word-uuddud			[PeakHeightSquareSum, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	5			the step word $UUDDUD$
+the-step-word-uduudd			[PeakHeightSquareSum, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]	5			the step word $UDUUDD$
+findstat-st001688-1	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0]], "'PeakHeightSquareSum'"]	1	1	FindStat St001688	FindStat's value for [1,0]
+findstat-st001688-2	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0]], "'PeakHeightSquareSum'"]	2	2	FindStat St001688	FindStat's value for [1,0,1,0]
+findstat-st001688-3	Properties		[CombinatorialStat, [DyckPath, [List, 1, 1, 0, 0]], "'PeakHeightSquareSum'"]	4	4	FindStat St001688	FindStat's value for [1,1,0,0]

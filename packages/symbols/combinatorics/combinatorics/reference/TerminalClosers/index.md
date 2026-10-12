@@ -3,6 +3,13 @@ name: TerminalClosers
 domain: Set partition statistics
 signature: TerminalClosers(partition)
 summary: Closers e with every larger element also a closer.
+catalog:
+  - system: findstat
+    identity: St001050
+    url: https://www.findstat.org/St001050
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: TerminalClosers(partition)
     description: Closers e with every larger element also a closer.

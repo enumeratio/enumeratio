@@ -3,6 +3,13 @@ name: SumOfBlockMaxima
 domain: Set partition statistics
 signature: SumOfBlockMaxima(partition)
 summary: The sum of the largest elements of the blocks.
+catalog:
+  - system: findstat
+    identity: St000231
+    url: https://www.findstat.org/St000231
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: SumOfBlockMaxima(partition)
     description: The sum of the largest elements of the blocks.

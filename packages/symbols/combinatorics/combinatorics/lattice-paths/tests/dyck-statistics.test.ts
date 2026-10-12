@@ -95,6 +95,31 @@ function bounceOf(w: number[]): number {
   return total;
 }
 
+/** Height at every vertex, the origin included. */
+const vertices = (w: number[]): number[] => [0, ...heights(w)];
+/** How often `pattern` (a 0/1 string) occurs in the word, overlaps included. */
+const occurrences = (w: number[], pattern: string): number => {
+  const word = w.join("");
+  let found = 0;
+  for (let k = 0; k + pattern.length <= word.length; k++) if (word.startsWith(pattern, k)) found++;
+  return found;
+};
+/** Height of each peak: the vertex where an up step meets a down step. */
+const peakHeights = (w: number[]): number[] => {
+  const h = vertices(w);
+  return w.flatMap((s, k) => (s === 1 && w[k + 1] === 0 ? [h[k + 1]!] : []));
+};
+/** Lengths of the maximal runs of up steps. */
+const riseLengths = (w: number[]): number[] =>
+  w
+    .join("")
+    .split("0")
+    .filter((run) => run.length > 0)
+    .map((run) => run.length);
+/** The 1-based positions k with w[k] = w[k+1] = value, summed. */
+const equalPositions = (w: number[], value: number): number =>
+  w.reduce((sum, s, k) => (s === value && w[k + 1] === value ? sum + k + 1 : sum), 0);
+
 const EXPECTED: Record<string, (w: number[]) => number> = {
   Height: (w) => (w.length === 0 ? 0 : Math.max(...heights(w))),
   Peaks: (w) => consecutive(w, 1, 0),
@@ -122,6 +147,47 @@ const EXPECTED: Record<string, (w: number[]) => number> = {
   },
   Dinv: (w) => dinvOf(areaSequence(w)),
   Bounce: (w) => bounceOf(w),
+
+  // FindStat statistics (their values are checked by find-findstat.ts --crawl). Each is read a
+  // second way, by string, run or vertex height, not by the step positions the definitions use.
+  FirstComponentSemilength: (w) => {
+    const h = vertices(w);
+    return w.length === 0 ? 0 : h.indexOf(0, 1) / 2;
+  },
+  DownStepHeightProduct: (w) => {
+    const h = vertices(w);
+    return w.reduce((product, s, k) => (s === 0 ? product * h[k]! : product), 1);
+  },
+  ValleysAboveAxis: (w) => {
+    const h = vertices(w);
+    return h.filter((height, k) => k > 0 && k < w.length && height > 0 && h[k - 1]! > height && h[k + 1]! > height)
+      .length;
+  },
+  OccurrencesOfDDU: (w) => occurrences(w, "001"),
+  OccurrencesOfUUU: (w) => occurrences(w, "111"),
+  OccurrencesOfUDU: (w) => occurrences(w, "101"),
+  PeakHeightSum: (w) => peakHeights(w).reduce((a, b) => a + b, 0),
+  PeakHeightExcess: (w) => peakHeights(w).reduce((a, b) => a + b - 1, 0),
+  PeakHeightSquareSum: (w) => peakHeights(w).reduce((a, b) => a + b * b, 0),
+  PeakHeightProduct: (w) => peakHeights(w).reduce((a, b) => a * b, 1),
+  LastUpStepPosition: (w) => w.lastIndexOf(1) + 1,
+  FirstDownStepPosition: (w) => w.indexOf(0) + 1,
+  LastDoubleRisePosition: (w) => w.join("").lastIndexOf("11") + 1,
+  RisesOfLengthOne: (w) => riseLengths(w).filter((r) => r === 1).length,
+  MinimalRise: (w) => (w.length === 0 ? 0 : Math.min(...riseLengths(w))),
+  RisesOfLengthAtLeastTwo: (w) => riseLengths(w).filter((r) => r >= 2).length,
+  UpStepsAtOddPositions: (w) => w.filter((s, k) => s === 1 && k % 2 === 0).length,
+  UpStepsAfterLastDoubleRise: (w) => {
+    const last = w.join("").lastIndexOf("11") + 1;
+    return w.slice(last).filter((s) => s === 1).length;
+  },
+  DoubleRisePositionSum: (w) => equalPositions(w, 1),
+  DoubleFallPositionSum: (w) => equalPositions(w, 0),
+  MacMahonEqualIndex: (w) => equalPositions(w, 1) + equalPositions(w, 0),
+  LogarithmicHeight: (w) => Math.floor(Math.log2(1 + Math.max(0, ...vertices(w)))),
+  FirstMaximalPeakPosition: (w) => (w.length === 0 ? 0 : vertices(w).indexOf(Math.max(...vertices(w)))),
+  GlobalMaxima: (w) => vertices(w).filter((h) => h === Math.max(...vertices(w))).length,
+  LargestAreaSequenceEntry: (w) => Math.max(0, ...areaSequence(w)),
 };
 
 test("every Dyck definition has an independent reading", () => {
@@ -134,6 +200,19 @@ for (const definition of DYCK_STATISTICS) {
     for (const w of ALL) expect(evaluate(definition.head, w), `[${w.join(", ")}]`).toBe(expected(w));
   });
 }
+
+// Longer paths run nightly (DEEP_TESTS=1).
+test.skipIf(!process.env.DEEP_TESTS)(
+  "every Dyck definition agrees over semilength 6..8",
+  () => {
+    for (const w of [6, 7, 8].flatMap(dyckWords))
+      for (const definition of DYCK_STATISTICS)
+        expect(evaluate(definition.head, w), `${definition.head} [${w.join(", ")}]`).toBe(
+          EXPECTED[definition.head]!(w),
+        );
+  },
+  600_000,
+);
 
 // The q,t-Catalan invariant (Haglund): (area, dinv) and (bounce, area) are equidistributed
 // over Dyck paths of a given semilength — both give the SAME bivariate polynomial

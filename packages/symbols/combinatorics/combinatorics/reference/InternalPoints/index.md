@@ -3,6 +3,13 @@ name: InternalPoints
 domain: Set partition statistics
 signature: InternalPoints(partition)
 summary: Elements with an earlier and a later element whose blocks open after theirs does.
+catalog:
+  - system: findstat
+    identity: St000562
+    url: https://www.findstat.org/St000562
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: InternalPoints(partition)
     description: Elements with an earlier and a later element whose blocks open after theirs does.

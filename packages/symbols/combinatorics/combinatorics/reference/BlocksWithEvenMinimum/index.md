@@ -3,6 +3,13 @@ name: BlocksWithEvenMinimum
 domain: Set partition statistics
 signature: BlocksWithEvenMinimum(partition)
 summary: Blocks whose smallest element is even.
+catalog:
+  - system: findstat
+    identity: St001153
+    url: https://www.findstat.org/St001153
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: BlocksWithEvenMinimum(partition)
     description: Blocks whose smallest element is even.

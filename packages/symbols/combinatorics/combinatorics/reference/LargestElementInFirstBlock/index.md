@@ -3,6 +3,13 @@ name: LargestElementInFirstBlock
 domain: Set partition statistics
 signature: LargestElementInFirstBlock(partition)
 summary: The largest element of the block containing 1.
+catalog:
+  - system: findstat
+    identity: St000505
+    url: https://www.findstat.org/St000505
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: LargestElementInFirstBlock(partition)
     description: The largest element of the block containing 1.

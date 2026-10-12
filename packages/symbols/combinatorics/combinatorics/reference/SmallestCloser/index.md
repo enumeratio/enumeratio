@@ -3,6 +3,13 @@ name: SmallestCloser
 domain: Set partition statistics
 signature: SmallestCloser(partition)
 summary: The smallest of the blocks' largest elements.
+catalog:
+  - system: findstat
+    identity: St000971
+    url: https://www.findstat.org/St000971
+    on: SetPartition
+statOn:
+  - SetPartition
 signatures:
   - call: SmallestCloser(partition)
     description: The smallest of the blocks' largest elements.

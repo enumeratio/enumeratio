@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-step-word-uuddud			[FirstComponentSemilength, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	2			the step word $UUDDUD$
+the-step-word-uduudd			[FirstComponentSemilength, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]	1			the step word $UDUUDD$
+findstat-st000026-1	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0]], "'FirstComponentSemilength'"]	1	1	FindStat St000026	FindStat's value for [1,0]
+findstat-st000026-2	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0]], "'FirstComponentSemilength'"]	1	1	FindStat St000026	FindStat's value for [1,0,1,0]
+findstat-st000026-3	Properties		[CombinatorialStat, [DyckPath, [List, 1, 1, 0, 0]], "'FirstComponentSemilength'"]	2	2	FindStat St000026	FindStat's value for [1,1,0,0]
