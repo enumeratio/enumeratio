@@ -32,6 +32,10 @@ normal-series-zeta-x-x-positiveinfinity-6
 normal-series-zeta-x-x-1-2			
 zeta-inexact-s-negative-integer-a-abs-terms	zeta(-1.500000001, -3)	nan	inconclusive
 zeta-complex-a-left-of-imaginary-axis	zeta((-1.5 + 1*I), (-0.04412268481772066 + 0.9990261201212289*I))	-2.07051414112865 + 3.28265267676808*I	disagree
+n-zeta-3-neg-2p5-sums-abs-terms	N(zeta(3, -2.5), 30)		
+n-zeta-2p5-neg-2p5	N(zeta(2.5, -2.5), 30)		
+n-zeta-3-neg-2p5-plus-i	N(zeta(3, (-2.5 + 1*I)), 30)		
+n-zeta-2p5-plus-i-neg-2p5	N(zeta((2.5 + 1*I), -2.5), 30)		
 on-the-critical-line-zeta-1-2-14i-0-02224-0	N(zeta((0.5 + 14*I)), 30)	0.0222411426099935888300862529832 - 0.103258123266450063670873760202*I	
 two-argument-zeta-s-a-via-enumeratio-analytic	zeta(2, 1)	pi**2/6	
 zeta-2-2-zeta-2-1-pi-2-6-1	zeta(2, 2)	-1 + pi**2/6	
