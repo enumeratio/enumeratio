@@ -232,6 +232,35 @@ const EXTRA_PAST: Record<string, number[][]> = {
   PermutationsAvoiding321: [[36]],
 };
 
+/** The partitions of n, parts descending. */
+const partitionsOf = (n: number, most = n): number[][] =>
+  n === 0
+    ? [[]]
+    : Array.from({ length: Math.min(n, most) }, (_, i) => i + 1).flatMap((part) =>
+        partitionsOf(n - part, part).map((rest) => [part, ...rest]),
+      );
+
+/** The semistandard tableaux of n cells with entries 1 … k: Σ over shapes of Π (k + content)/hook, each exact. */
+function semistandardByShapes([n, k]: number[]): bigint {
+  let total = 0n;
+  for (const shape of partitionsOf(n)) {
+    if (shape.length > k) continue;
+    let [up, down] = [1n, 1n];
+    shape.forEach((length, r) => {
+      for (let c = 0; c < length; c++) {
+        const legs = shape.filter((l) => l > c).length - r - 1;
+        up *= BigInt(k + c - r);
+        down *= BigInt(length - c + legs);
+      }
+    });
+    total += up / down;
+  }
+  return total;
+}
+
+/** Families whose Epsil count declines past 2^53, each with a count computed another way. */
+const INDEPENDENT_COUNTS: Record<string, (p: number[]) => bigint> = { SemistandardTableaux: semistandardByShapes };
+
 for (const family of countFamilies) {
   test(`${family.head}: the fast count agrees with Epsil, past 2^53 too`, () => {
     const fast = kernelOn(ce, family);
@@ -256,10 +285,9 @@ for (const family of countFamilies) {
       const where = labelled(family, p);
       const total = family.fastCount!(p);
       if (family.declinePastDoubles === "count" && typeof total === "bigint" && total > MAX_SAFE) {
-        // Epsil's count declines there: the fast count is the only answer, held to an independent
-        // sum in collections/tests/exact-recurrences.test.ts.
+        // Epsil's count declines there: the kernel's answer is held to a sum computed here instead.
         expect(() => epsil.count(p)).toThrow(RangeError);
-        expect([where, fast.count(p)]).toEqual([where, total]);
+        expect([where, fast.count(p)]).toEqual([where, INDEPENDENT_COUNTS[family.head]!(p)]);
       } else expect([where, fast.count(p)]).toEqual([where, epsil.count(p)]);
     }
   });
@@ -400,6 +428,44 @@ for (const [head, p] of BIGINT_COUNTS) {
     expect(kernelOn(ce, family).count(p)).toBe(total);
   });
 }
+
+// A family that declines past 2^53 keeps the fast path's unrank and rank for the ranks a double holds,
+// also when its fast count is a bigint there and the count itself is known.
+test("ShiftedStandardTableaux past 2^53: the count is exact, and unrank and rank answer small ranks", () => {
+  const family = fastFamilies.find((f) => f.head === "ShiftedStandardTableaux")!;
+  expect(family.declinePastDoubles).toBe("count");
+  const kernel = kernelOn(ce, family);
+  const p = [34];
+  const total = kernel.count(p);
+  expect(typeof total === "bigint" && total > MAX_SAFE).toBe(true);
+  for (const r of [0n, 1n, 12345n, 2n ** 40n, 2n ** 52n]) {
+    const element = kernel.unrank(p, r);
+    expect([r, element]).toEqual([r, family.fast!.unrank(p, Number(r))]);
+    expect(kernel.valid(element, p)).toBe(true);
+    expect([r, kernel.rank(element, p)]).toEqual([r, r]);
+  }
+  // A rank no double holds is still declined.
+  expect(() => kernel.unrank(p, MAX_SAFE + 1n)).toThrow(RangeError);
+});
+
+test("a cold count asks the fast count once, also in a family that declines past 2^53", () => {
+  for (const [head, p] of [
+    ["SemistandardTableaux", [10, 3]],
+    ["SemistandardTableaux", [24, 12]],
+  ] as const) {
+    const family = countFamilies.find((f) => f.head === head)!;
+    let calls = 0;
+    const counted = {
+      ...family,
+      fastCount: (q: number[]) => {
+        calls++;
+        return family.fastCount!(q);
+      },
+    };
+    kernelOn(ce, counted).count([...p]);
+    expect([head, p, calls]).toEqual([head, p, 1]);
+  }
+});
 
 type Reading = Pick<NumberKernel, "count" | "unrank" | "rank">;
 

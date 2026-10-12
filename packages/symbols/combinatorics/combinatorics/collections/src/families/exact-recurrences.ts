@@ -11,22 +11,27 @@ import { binomialExact, powerProduct } from "./exact-counts.ts";
 
 /** The most bits an answer takes (16 KB): the recurrences' cost grows with their size squared. */
 export const RECURRENCE_BITS_LIMIT = 131_072;
-/** The longest recurrence run: a tenth of a second or so, at 2.6 bits a step at most (Schröder's). */
-export const RECURRENCE_TOP = 20_000;
-/** The most 64-bit words a table's cells may touch in all: about a quarter of a second. */
-export const WORK_LIMIT = 2e8;
+/** The longest recurrence run, under 100 ms at the worst (Fine, Schröder: 2 to 2.6 bits a step). */
+export const RECURRENCE_TOP = 10_000;
+/** The most 64-bit words a table's cells may touch in all, about 0.1 s at the worst. */
+export const WORK_LIMIT = 7e7;
+
+/** The same for a sum of products of big numbers, in word-multiplications (about 0.1 s). */
+const SUM_WORK_LIMIT = 2e8;
 
 const natural = (x: number): boolean => Number.isSafeInteger(x) && x >= 0;
+/** The longest composition table kept whole: n² / 8 bytes or so. */
+const COMPOSITION_TOP = 10_000;
+/** A length the recurrences run to. */
 const ok = (n: number): boolean => natural(n) && n <= RECURRENCE_TOP;
 
 // ─── linear recurrences, O(n) steps ───────────────────────────────────────────────────────────
 
-/** c(0) = 1, c(m) = c(m − 1) + … + c(m − width): the compositions of m into parts of at most `width`. */
-export function windowSumsExact(n: number, width: number): bigint | undefined {
-  if (!ok(n)) return undefined;
+/** c(m) for c(0) = 1, c(m) = c(m − 1) + … + c(m − width), run to `steps`; the caller bounds `steps`. */
+function windowSums(steps: number, width: number): bigint {
   const window: bigint[] = [1n];
   let total = 1n;
-  for (let m = 1; m <= n; m++) {
+  for (let m = 1; m <= steps; m++) {
     const next = total;
     window.push(next);
     total += next;
@@ -34,6 +39,10 @@ export function windowSumsExact(n: number, width: number): bigint | undefined {
   }
   return window[window.length - 1];
 }
+
+/** c(0) = 1, c(m) = c(m − 1) + … + c(m − width): the compositions of m into parts of at most `width`. */
+export const windowSumsExact = (n: number, width: number): bigint | undefined =>
+  ok(n) ? windowSums(n, width) : undefined;
 
 /** F(n), F(0) = 0 and F(1) = 1. */
 export function fibonacciExact(n: number): bigint | undefined {
@@ -44,14 +53,15 @@ export function fibonacciExact(n: number): bigint | undefined {
 }
 
 /** The binary words of length n with no two 1s in a row: F(n + 2). */
-export const fibonacciWordsExact = (n: number): bigint | undefined => windowSumsExact(n + 1, 2);
+export const fibonacciWordsExact = (n: number): bigint | undefined => (ok(n) ? windowSums(n + 1, 2) : undefined);
 /** The binary words of length n with no three 1s in a row. */
-export const triStringsExact = (n: number): bigint | undefined => windowSumsExact(n + 1, 3);
+export const triStringsExact = (n: number): bigint | undefined => (ok(n) ? windowSums(n + 1, 3) : undefined);
 /** Compositions of n into odd parts: F(n) for n ≥ 1. */
-export const oddCompositionsExact = (n: number): bigint | undefined => (n === 0 ? 1n : fibonacciExact(n));
+export const oddCompositionsExact = (n: number): bigint | undefined =>
+  !ok(n) ? undefined : n === 0 ? 1n : fibonacciExact(n);
 /** Compositions of n into parts of at least 2: F(n − 1) for n ≥ 2. */
 export const properCompositionsExact = (n: number): bigint | undefined =>
-  n === 0 ? 1n : n === 1 ? 0n : fibonacciExact(n - 1);
+  !ok(n) ? undefined : n === 0 ? 1n : n === 1 ? 0n : fibonacciExact(n - 1);
 
 /** Motzkin numbers: (m + 2) M(m) = (2m + 1) M(m − 1) + 3 (m − 1) M(m − 2). */
 export function motzkinExact(n: number): bigint | undefined {
@@ -105,7 +115,7 @@ export function booleanPermutationsExact(n: number): bigint | undefined {
 /** Compositions of n with every part in `parts` (ascending, positive): c(0) = 1, c(m) = Σ c(m − p). */
 export function partsInSetExact(n: number, parts: readonly number[]): bigint | undefined {
   // Compositions of m are at most 2^(m − 1) and the table is kept whole, so n stays modest.
-  if (!natural(n) || n > 20_000) return undefined;
+  if (!natural(n) || n > COMPOSITION_TOP) return undefined;
   const usable = parts.filter((p) => p <= n);
   if (n * usable.length * (n / 64 + 1) > WORK_LIMIT) return undefined;
   const c: bigint[] = [1n];
@@ -134,7 +144,7 @@ const isTriangular = (p: number): boolean => {
 
 /** Parts 1, 2, 4, 8, …. */
 export const dyadicCompositionsExact = (n: number): bigint | undefined =>
-  natural(n) && n <= 20_000
+  natural(n) && n <= COMPOSITION_TOP
     ? partsInSetExact(
         n,
         upTo(n, (p) => (p & (p - 1)) === 0),
@@ -142,10 +152,10 @@ export const dyadicCompositionsExact = (n: number): bigint | undefined =>
     : undefined;
 /** Parts 1, 3, 6, 10, …. */
 export const triangularCompositionsExact = (n: number): bigint | undefined =>
-  natural(n) && n <= 20_000 ? partsInSetExact(n, upTo(n, isTriangular)) : undefined;
+  natural(n) && n <= COMPOSITION_TOP ? partsInSetExact(n, upTo(n, isTriangular)) : undefined;
 /** Parts 2, 3, 5, 7, …. */
 export const primeCompositionsExact = (n: number): bigint | undefined =>
-  natural(n) && n <= 20_000 ? partsInSetExact(n, upTo(n, isPrime)) : undefined;
+  natural(n) && n <= COMPOSITION_TOP ? partsInSetExact(n, upTo(n, isPrime)) : undefined;
 
 // ─── Dyck paths by height ─────────────────────────────────────────────────────────────────────
 
@@ -226,7 +236,9 @@ export function fubiniExact(n: number): bigint | undefined {
 /** The surjections of n onto k, k! S(n, k). */
 export function surjectionsExact(n: number, k: number): bigint | undefined {
   const stirling = stirlingSecondExact(n, k);
+  // None where k > n, before any loop over k; past that k ≤ n, and the Stirling row passed its work limit.
   if (stirling === undefined) return undefined;
+  if (stirling === 0n) return 0n;
   let factorial = 1n;
   for (let i = 2; i <= k; i++) factorial *= BigInt(i);
   return factorial * stirling;
@@ -242,8 +254,11 @@ export function surjectionsExact(n: number, k: number): bigint | undefined {
  */
 export function semistandardTableauxExact(n: number, k: number): bigint | undefined {
   if (!natural(n) || !natural(k)) return undefined;
-  if (k === 0) return n === 0 ? 1n : 0n;
-  if (n * Math.log2(Math.max(k, 2)) > RECURRENCE_BITS_LIMIT) return undefined;
+  if (n === 0) return 1n;
+  if (k === 0) return 0n;
+  // The answer is at most k^n, and each of n/2 steps multiplies numbers about that size (Karatsuba).
+  const bits = n * Math.log2(Math.max(k, 2));
+  if ((n / 2 + 1) * (bits / 64 + 1) ** 1.6 > SUM_WORK_LIMIT || bits > RECURRENCE_BITS_LIMIT) return undefined;
   const pairs = (k * (k - 1)) / 2;
   let rows = binomialExact(n + k - 1, k - 1);
   if (rows === undefined) return undefined;
@@ -257,8 +272,8 @@ export function semistandardTableauxExact(n: number, k: number): bigint | undefi
   return sum;
 }
 
-/** The strict partitions of n at most this many are summed over: a fraction of a second. */
-const STRICT_LIMIT = 30_000;
+/** The most strict partitions summed over (about 7 µs each), so n up to 61. */
+const STRICT_LIMIT = 12_000;
 
 /** How many strict partitions n has. */
 function strictPartitionCount(n: number): number {

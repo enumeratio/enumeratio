@@ -285,7 +285,8 @@ export function ShiftedStandardTableauxCount(n: number): number {
 }
 export function ShiftedStandardTableauxUnrank(n: number, rank: number): number[][] {
   const total = ShiftedStandardTableauxCount(n);
-  let r = normRank(rank, total);
+  // A rank in the fiber is read as it is: reducing it modulo a total past 2^53 would round it.
+  let r = rank >= 0 && rank < total ? rank : normRank(rank, total);
   for (let idx = 0; idx < PartitionsQ(n); idx++) {
     const shape = DistinctPartitionUnrank(n, idx);
     const w = shiftedSytCountForShape(shape);

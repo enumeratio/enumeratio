@@ -355,26 +355,13 @@ export function kernelOn(
     for (const x of p) if (!(Number.isSafeInteger(x) && x >= 0)) return false;
     return true;
   };
-  // A fast operation that throws or answers undefined leaves the question to Epsil.
-  const quickCount = (p: number[]): bigint | undefined => {
+  // The fast count as it answers, asked once per cold call; one that throws leaves the question to Epsil.
+  const quickTotal = (p: number[]): number | bigint | undefined => {
     if (quickCounter === undefined || !wellParamed(p)) return undefined;
     try {
-      const total = quickCounter(p);
-      if (typeof total === "bigint") return total;
-      return typeof total === "number" && Number.isSafeInteger(total) ? BigInt(total) : undefined;
+      return quickCounter(p);
     } catch {
       return undefined;
-    }
-  };
-
-  // The fast count is a double past 2^53: for a family that declines there, no need to run its table.
-  const pastDoubles = (p: number[]): boolean => {
-    if (quickCounter === undefined || !wellParamed(p)) return false;
-    try {
-      const total = quickCounter(p);
-      return typeof total === "number" && Number.isFinite(total) && !Number.isSafeInteger(total);
-    } catch {
-      return false;
     }
   };
 
@@ -392,8 +379,12 @@ export function kernelOn(
     const key = p.join(",");
     let total = counts.get(key);
     if (total === undefined) {
-      if (declinePastDoubles === "count" && (pastDoubles(p) || early?.pastDoubles?.(p) === true)) return decline(p);
-      const fast = quickCount(p) ?? run("count", p, {});
+      const raw = quickTotal(p);
+      // A fast count that is a double past 2^53, for a family that declines there: no need to run its table.
+      const doubled = typeof raw === "number" && Number.isFinite(raw) && !Number.isSafeInteger(raw);
+      if (declinePastDoubles === "count" && (doubled || early?.pastDoubles?.(p) === true)) return decline(p);
+      const fromQuick = typeof raw === "bigint" ? raw : Number.isSafeInteger(raw) ? BigInt(raw as number) : undefined;
+      const fast = fromQuick ?? run("count", p, {});
       if (typeof fast === "bigint") total = fast;
       else if (isInteger(fast)) total = BigInt(fast);
       else if (declinePastDoubles === "count") return decline(p);
@@ -466,8 +457,9 @@ export function kernelOn(
       // The definitions read a rank outside the fiber as garbage.
       if (typeof total === "bigint" && (r < 0n || r >= total))
         throw new RangeError(`${family.head}(${p.join(", ")}): rank ${r} is outside the fiber of ${total}`);
-      if (total === undefined) {
-        // Past 2^53 in a family that declines there: a small rank is still the fast path's to answer.
+      // Past 2^53 in a family that declines there, whether its count is unknown or only a fast count's
+      // bigint: a small rank is still the fast path's to answer.
+      if (total === undefined || (declinePastDoubles === "count" && typeof total === "bigint" && total > MAX_SAFE)) {
         if (quick !== undefined && wellParamed(p) && r >= 0n && r <= MAX_SAFE) {
           try {
             const element = quick.unrank(p, Number(r));
@@ -491,7 +483,8 @@ export function kernelOn(
     },
     rank: (element, p) => {
       if (!valid(element, p)) return -1n;
-      if (knownCount(p) === undefined) {
+      const known = knownCount(p);
+      if (known === undefined || (declinePastDoubles === "count" && typeof known === "bigint" && known > MAX_SAFE)) {
         // Past 2^53, as above: the fast rank answers where a double holds it.
         if (quick !== undefined && wellParamed(p)) {
           try {
