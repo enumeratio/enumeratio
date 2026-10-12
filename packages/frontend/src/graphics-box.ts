@@ -20,6 +20,7 @@ import {
   type OptionValue,
   polygon,
   polyhedron,
+  raster,
   row,
   style,
   tag,
@@ -60,6 +61,14 @@ function primitiveBox(p: GraphicsPrimitive): Box {
       return polygon({ Points: p.points.map(point) });
     case "Polyhedron":
       return polyhedron({ Faces: p.faces.map((ring) => ring.map(point)) });
+    case "Raster":
+      return raster({
+        Colors: p.colors.map((r) => [...r]),
+        DataRange: [
+          [p.from[0] ?? 0, p.to[0] ?? 0],
+          [p.from[1] ?? 0, p.to[1] ?? 0],
+        ],
+      });
     default:
       return inset(p.text, { Size: p.size, ...(p.at && { Center: point(p.at) }) });
   }
@@ -194,6 +203,13 @@ function primitiveOf(box: Box): GraphicsPrimitive | undefined {
       return { head: "Polygon", points: pointsOf(o.Points) };
     case "PolyhedronBox":
       return { head: "Polyhedron", faces: Array.isArray(o.Faces) ? o.Faces.map(pointsOf) : [] };
+    case "RasterBox": {
+      const [x, y] = Array.isArray(o.DataRange) ? o.DataRange.map(numbersOf) : [];
+      const colors = Array.isArray(o.Colors) ? o.Colors.filter(Array.isArray) : [];
+      return x?.length === 2 && y?.length === 2
+        ? { head: "Raster", from: [x[0]!, y[0]!], to: [x[1]!, y[1]!], colors: colors as string[][] }
+        : undefined;
+    }
     case "InsetBox": {
       const at = numbersOf(o.Center);
       return typeof box[1] === "string"

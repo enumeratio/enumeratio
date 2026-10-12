@@ -82,6 +82,10 @@ export type BoxNode =
   | readonly ["PolygonBox", Options?]
   | readonly ["PolyhedronBox", Options?]
   | readonly ["InsetBox", Box, Options?]
+  // A pixel grid in the frame's coordinates (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives, slice 7):
+  // `Colors` rows run from the bottom (`DataRange`'s least y) up, each left to right; a `Producer`
+  // names what fills a raster not held (`ComplexPlot`).
+  | readonly ["RasterBox", Options?]
   // Space (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives, slice 7): the same contract in three
   // dimensions. A primitive's geometry is its options; inside a `GraphicsComplex3DBox` a `Polygon3DBox`
   // or `Line3DBox` names its vertices by `Indices` into the complex's `Points`.
@@ -146,6 +150,7 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   PolygonBox: 0,
   PolyhedronBox: 0,
   InsetBox: 1,
+  RasterBox: 0,
   Graphics3DBox: 1,
   GraphicsComplex3DBox: 1,
   Polygon3DBox: 0,
@@ -239,6 +244,7 @@ export const arrow = (options?: Options): Box => ["ArrowBox", ...withOptions([] 
 export const rectangle = (options?: Options): Box => ["RectangleBox", ...withOptions([] as const, options)] as Box;
 export const polygon = (options?: Options): Box => ["PolygonBox", ...withOptions([] as const, options)] as Box;
 export const polyhedron = (options?: Options): Box => ["PolyhedronBox", ...withOptions([] as const, options)] as Box;
+export const raster = (options?: Options): Box => ["RasterBox", ...withOptions([] as const, options)] as Box;
 export const graphics3d = (content: Box, options?: Options): Box =>
   ["Graphics3DBox", ...withOptions([content] as const, options)] as Box;
 export const graphicsComplex3d = (content: Box, options?: Options): Box =>

@@ -324,7 +324,20 @@ const plotColorFunction = (value: Json): Record<string, string> => {
 };
 
 /** The 2-D field plots' options: the axis captions, and the gradient their values are drawn from. */
-const FIELD_OPTIONS = { ...AXES_LABEL_OPTIONS, ColorFunction: colorFunction };
+const FIELD_OPTIONS = { ...AXES_LABEL_OPTIONS, PlotLabel: "label", ColorFunction: colorFunction };
+
+/**
+ * `DensityPlot`'s options: the field options, Wolfram's `PlotLegends` for the color bar and its
+ * `PlotRange -> (zmin, zmax)` for the scale the colors span (`Legend` and `ZRange` name the same).
+ */
+const DENSITY_OPTIONS = {
+  ...FIELD_OPTIONS,
+  PlotLegends: (value: Json): Record<string, string> => ({ legend: isOff(value) ? "false" : "true" }),
+  PlotRange: (value: Json): Record<string, string> => {
+    const parts = tupleOf(value);
+    return parts?.length === 2 ? { zrange: parts.map(clean).join(",") } : {};
+  },
+};
 
 /**
  * A Wolfram scaling-function name (`"Log"`, `"Log10"`, `"Log2"`, `"Sqrt"`, `"Linear"`,
@@ -434,6 +447,21 @@ export const PLOT_SETTINGS: readonly VisualSymbol[] = [
     attributes: (ops) => vectorField(ops),
     options: FIELD_OPTIONS,
   },
+  ...["ContourPlot", "DensityPlot"].map((head): VisualSymbol => ({
+    head,
+    tag: "graphics-box",
+    attributes: (ops) => twoVariables(ops, { value: "expr", x: "xvar", y: "yvar", xrange: "xrange", yrange: "yrange" }),
+    options: head === "DensityPlot" ? DENSITY_OPTIONS : FIELD_OPTIONS,
+  })),
+  {
+    // `ListContourPlot(grid)`: a pre-sampled grid contoured directly, no expression or
+    // iterators -- the same `data` a `ListPlot3D` takes. `ListDensityPlot` shades it likewise.
+    head: "ListContourPlot",
+    tag: "graphics-box",
+    attributes: dataOnly,
+    options: FIELD_OPTIONS,
+  },
+  { head: "ListDensityPlot", tag: "graphics-box", attributes: dataOnly, options: DENSITY_OPTIONS },
   graph("GraphPlot", "graph"),
   graph("TreeGraph", "tree"),
   graph("LayeredGraphPlot", "layered"),
@@ -597,6 +625,58 @@ export function graphics3dOfText(text: string): { json: Json; settings: Record<s
   return settings && { json: plain, settings };
 }
 
+/**
+ * `ComplexPlot(f, z)`: a portrait, drawn on the web by `<notatio-complex-plot>`, the WebGPU producer of
+ * the raster it lowers to (`complexPlotSettingsOf` reads the same attributes for the CPU one).
+ */
+const COMPLEX_PLOT_SYMBOL: VisualSymbol = {
+  head: "ComplexPlot",
+  tag: "notatio-complex-plot",
+  attributes: (ops) => {
+    const out: Record<string, string> = {};
+    if (ops[0] !== undefined) out.value = epsil(ops[0]);
+    const variable = symOf(ops[1]) ?? iterator(ops[1]).variable;
+    if (variable) out.var = variable;
+    return out;
+  },
+  options: { ColorFunction: colorFunction },
+};
+
+/**
+ * `ComplexPlot3D(f, (z, a + b i, c + d i))`: the iterator's corners are complex, and the component
+ * takes the rectangle they span as `re0,re1,im0,im1`. Drawn on the web by `<notatio-complex-plot-3d>`.
+ */
+const COMPLEX_PLOT_3D_SYMBOL: VisualSymbol = {
+  head: "ComplexPlot3D",
+  tag: "notatio-complex-plot-3d",
+  attributes: (ops) => {
+    const out: Record<string, string> = {};
+    if (ops[0] !== undefined) out.value = epsil(ops[0]);
+    const parts = tupleOf(ops[1]);
+    const variable = symOf(ops[1]) ?? symOf(parts?.[0]);
+    if (variable) out.var = variable;
+    const lo = complexOf(parts?.[1]);
+    const hi = complexOf(parts?.[2]);
+    if (lo && hi) out.domain = `${lo[0]},${hi[0]},${lo[1]},${hi[1]}`;
+    return out;
+  },
+  options: { ColorFunction: colorFunction },
+};
+
+/** A complex surface's settings: the attributes its element reads (`value`, `var`, `domain`, `samples`, `max-height`, `gradient`), or undefined for another head. */
+export function complexPlot3dSettingsOf(expr: Json): Record<string, string> | undefined {
+  if (headOf(expr) !== COMPLEX_PLOT_3D_SYMBOL.head) return undefined;
+  const { ops, options } = optionsOf(expr);
+  return { ...COMPLEX_PLOT_3D_SYMBOL.attributes(ops), ...lowerOptions(COMPLEX_PLOT_3D_SYMBOL, options).attributes };
+}
+
+/** A portrait's settings: the attributes its element reads (`value`, `var`, `extent`, `center`, `mask`, `gradient`), or undefined for another head. */
+export function complexPlotSettingsOf(expr: Json): Record<string, string> | undefined {
+  if (headOf(expr) !== COMPLEX_PLOT_SYMBOL.head) return undefined;
+  const { ops, options } = optionsOf(expr);
+  return { ...COMPLEX_PLOT_SYMBOL.attributes(ops), ...lowerOptions(COMPLEX_PLOT_SYMBOL, options).attributes };
+}
+
 /** A plot head as a visual symbol: the whole expression, options and all, in the element's `value`. */
 const plotSymbol = (head: string, tag = "graphics-box"): VisualSymbol => ({
   head,
@@ -608,47 +688,6 @@ const plotSymbol = (head: string, tag = "graphics-box"): VisualSymbol => ({
 export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
   ...[...PLOT_HEADS, ...CHART_HEADS].map((head) => plotSymbol(head)),
   ...GRAPHICS_3D_HEADS.map((head) => plotSymbol(head, "graphics-3d-box")),
-  {
-    head: "ContourPlot",
-    tag: "notatio-contour-plot",
-    attributes: (ops) =>
-      twoVariables(ops, {
-        value: "expr",
-        x: "xvar",
-        y: "yvar",
-        xrange: "xrange",
-        yrange: "yrange",
-      }),
-    options: FIELD_OPTIONS,
-  },
-  {
-    // `ListContourPlot(grid)`: a pre-sampled grid contoured directly, no expression or
-    // iterators -- the same `data` a `ListPlot3D` takes.
-    head: "ListContourPlot",
-    tag: "notatio-contour-plot",
-    attributes: dataOnly,
-    options: { ColorFunction: colorFunction },
-  },
-  {
-    head: "DensityPlot",
-    tag: "notatio-density-plot",
-    attributes: (ops) =>
-      twoVariables(ops, {
-        value: "expr",
-        x: "xvar",
-        y: "yvar",
-        xrange: "xrange",
-        yrange: "yrange",
-      }),
-    options: FIELD_OPTIONS,
-  },
-  {
-    // `ListDensityPlot(grid)`: a pre-sampled grid shaded directly -- see `ListContourPlot`.
-    head: "ListDensityPlot",
-    tag: "notatio-density-plot",
-    attributes: dataOnly,
-    options: { ColorFunction: colorFunction },
-  },
   {
     // `Show(layer, …, options)`: the layers stay one expression, which the element reads; its
     // options lower to attributes (`Caption` to `caption`) like any plot's.
@@ -711,36 +750,8 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       style: `display:block;min-height:${FRAME_HEIGHT[frame]}px`,
     }),
   })),
-  {
-    head: "ComplexPlot",
-    tag: "notatio-complex-plot",
-    attributes: (ops) => {
-      const out: Record<string, string> = {};
-      if (ops[0] !== undefined) out.value = epsil(ops[0]);
-      const variable = symOf(ops[1]) ?? iterator(ops[1]).variable;
-      if (variable) out.var = variable;
-      return out;
-    },
-    options: { ColorFunction: colorFunction },
-  },
-  {
-    // `ComplexPlot3D(f, (z, a + b i, c + d i))`: the iterator's corners are complex, and
-    // the component takes the rectangle they span as `re0,re1,im0,im1`.
-    head: "ComplexPlot3D",
-    tag: "notatio-complex-plot-3d",
-    attributes: (ops) => {
-      const out: Record<string, string> = {};
-      if (ops[0] !== undefined) out.value = epsil(ops[0]);
-      const parts = tupleOf(ops[1]);
-      const variable = symOf(ops[1]) ?? symOf(parts?.[0]);
-      if (variable) out.var = variable;
-      const lo = complexOf(parts?.[1]);
-      const hi = complexOf(parts?.[2]);
-      if (lo && hi) out.domain = `${lo[0]},${hi[0]},${lo[1]},${hi[1]}`;
-      return out;
-    },
-    options: { ColorFunction: colorFunction },
-  },
+  COMPLEX_PLOT_SYMBOL,
+  COMPLEX_PLOT_3D_SYMBOL,
   {
     head: "CollectionTable",
     tag: "notatio-collection-table",

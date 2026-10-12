@@ -28,51 +28,39 @@
   },
   "ContourPlot(x^2 + y^2, (x, -2, 2), (y, -2, 2), XLabel -> \"x\", YLabel -> \"y\")": {
     "rendering": {
-      "tag": "notatio-contour-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "expr": "x ^ 2 + y ^ 2",
-        "xvar": "x",
-        "xrange": "-2,2",
-        "yvar": "y",
-        "yrange": "-2,2",
-        "x-label": "x",
-        "y-label": "y"
+        "value": "ContourPlot(x ^ 2 + y ^ 2, (x, -2, 2), (y, -2, 2), XLabel -> \"x\", YLabel -> \"y\")"
       }
     },
-    "markup": "<notatio-contour-plot expr=\"x ^ 2 + y ^ 2\" xvar=\"x\" xrange=\"-2,2\" yvar=\"y\" yrange=\"-2,2\" x-label=\"x\" y-label=\"y\"></notatio-contour-plot>"
+    "markup": "<graphics-box value=\"ContourPlot(x ^ 2 + y ^ 2, (x, -2, 2), (y, -2, 2), XLabel -> &quot;x&quot;, YLabel -> &quot;y&quot;)\"></graphics-box>"
   },
   "ListContourPlot([[0, 1], [1, 0]])": {
     "rendering": {
-      "tag": "notatio-contour-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "data": "[[0,1],[1,0]]"
+        "value": "ListContourPlot([[0, 1], [1, 0]])"
       }
     },
-    "markup": "<notatio-contour-plot data=\"[[0,1],[1,0]]\"></notatio-contour-plot>"
+    "markup": "<graphics-box value=\"ListContourPlot([[0, 1], [1, 0]])\"></graphics-box>"
   },
   "DensityPlot(Sin(x) * Cos(y), (x, 0, 6), (y, 0, 6), XLabel -> \"x\", YLabel -> \"y\")": {
     "rendering": {
-      "tag": "notatio-density-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "expr": "sin(x) * cos(y)",
-        "xvar": "x",
-        "xrange": "0,6",
-        "yvar": "y",
-        "yrange": "0,6",
-        "x-label": "x",
-        "y-label": "y"
+        "value": "DensityPlot(sin(x) * cos(y), (x, 0, 6), (y, 0, 6), XLabel -> \"x\", YLabel -> \"y\")"
       }
     },
-    "markup": "<notatio-density-plot expr=\"sin(x) * cos(y)\" xvar=\"x\" xrange=\"0,6\" yvar=\"y\" yrange=\"0,6\" x-label=\"x\" y-label=\"y\"></notatio-density-plot>"
+    "markup": "<graphics-box value=\"DensityPlot(sin(x) * cos(y), (x, 0, 6), (y, 0, 6), XLabel -> &quot;x&quot;, YLabel -> &quot;y&quot;)\"></graphics-box>"
   },
   "ListDensityPlot([[0, 1], [1, 0]])": {
     "rendering": {
-      "tag": "notatio-density-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "data": "[[0,1],[1,0]]"
+        "value": "ListDensityPlot([[0, 1], [1, 0]])"
       }
     },
-    "markup": "<notatio-density-plot data=\"[[0,1],[1,0]]\"></notatio-density-plot>"
+    "markup": "<graphics-box value=\"ListDensityPlot([[0, 1], [1, 0]])\"></graphics-box>"
   },
   "PolarPlot(1 + Cos(t), (t, 0, 2 * Pi))": {
     "rendering": {
@@ -1011,30 +999,21 @@
   },
   "DensityPlot(Sin(x) * Cos(y), (x, 0, 6), (y, 0, 6), ColorFunction -> ColorData(\"Turbo\"))": {
     "rendering": {
-      "tag": "notatio-density-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "expr": "sin(x) * cos(y)",
-        "xvar": "x",
-        "xrange": "0,6",
-        "yvar": "y",
-        "yrange": "0,6",
-        "gradient": "turbo"
+        "value": "DensityPlot(sin(x) * cos(y), (x, 0, 6), (y, 0, 6), ColorFunction ->\n                                                   ColorData(\"Turbo\"))"
       }
     },
-    "markup": "<notatio-density-plot expr=\"sin(x) * cos(y)\" xvar=\"x\" xrange=\"0,6\" yvar=\"y\" yrange=\"0,6\" gradient=\"turbo\"></notatio-density-plot>"
+    "markup": "<graphics-box value=\"DensityPlot(sin(x) * cos(y), (x, 0, 6), (y, 0, 6), ColorFunction ->\n                                                   ColorData(&quot;Turbo&quot;))\"></graphics-box>"
   },
   "DensityPlot(Sin(x) * Cos(y), (x, 0, 6), (y, 0, 6), ColorFunction -> \"Rainbow\")": {
     "rendering": {
-      "tag": "notatio-density-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "expr": "sin(x) * cos(y)",
-        "xvar": "x",
-        "xrange": "0,6",
-        "yvar": "y",
-        "yrange": "0,6"
+        "value": "DensityPlot(sin(x) * cos(y), (x, 0, 6), (y, 0, 6), ColorFunction -> \"Rainbow\")"
       }
     },
-    "markup": "<notatio-density-plot expr=\"sin(x) * cos(y)\" xvar=\"x\" xrange=\"0,6\" yvar=\"y\" yrange=\"0,6\"></notatio-density-plot>"
+    "markup": "<graphics-box value=\"DensityPlot(sin(x) * cos(y), (x, 0, 6), (y, 0, 6), ColorFunction -> &quot;Rainbow&quot;)\"></graphics-box>"
   },
   "ArrayPlot([[1, 0], [0, 2]], ColorFunction -> \"cividis\")": {
     "rendering": {

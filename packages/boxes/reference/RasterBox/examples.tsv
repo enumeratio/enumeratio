@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[RasterBox, [Tuple, DataRange, [List, [List, 0, 1], [List, 0, 1]]]]	[RasterBox, [Tuple, DataRange, [List, [List, 0, 1], [List, 0, 1]]]]	a box is inert: it evaluates to itself

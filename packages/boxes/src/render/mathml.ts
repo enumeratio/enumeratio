@@ -150,6 +150,7 @@ function writeNode(box: BoxNode): string {
     case "PolygonBox":
     case "PolyhedronBox":
     case "InsetBox":
+    case "RasterBox":
       return element("mtext", "-Graphics-");
     case "Graphics3DBox":
     case "GraphicsComplex3DBox":

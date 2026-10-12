@@ -1095,6 +1095,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
       "Line3DBox",
       "Point3DBox",
       "Polygon3DBox",
+      "RasterBox",
       "GrassmannAlgebra",
       "GridBox",
       "GridGraph",

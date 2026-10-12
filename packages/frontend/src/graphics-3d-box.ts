@@ -56,6 +56,8 @@ export interface Graphics3dOptions extends ColorOptions {
   zScale?: string;
   /** A height color key at the right (`PlotLegends`). */
   colorLegend?: boolean;
+  /** The color of the face at cell `(i, j)` of a lone surface, in place of its height on the gradient. */
+  faceColor?: (i: number, j: number) => string;
 }
 
 type Range = readonly [number, number];
@@ -192,14 +194,15 @@ export function surfaceBox(
         if (a < 0 || b < 0 || c < 0 || d < 0) continue;
         quads.push([a, b, c, d]);
         colors.push(
-          fill(
-            s,
-            (height(grid[j]![i]!) +
-              height(grid[j]![i + 1]!) +
-              height(grid[j + 1]![i + 1]!) +
-              height(grid[j + 1]![i]!)) /
-              4,
-          ),
+          (grids.length === 1 ? o.faceColor?.(i, j) : undefined) ??
+            fill(
+              s,
+              (height(grid[j]![i]!) +
+                height(grid[j]![i + 1]!) +
+                height(grid[j + 1]![i + 1]!) +
+                height(grid[j + 1]![i]!)) /
+                4,
+            ),
         );
       }
     return graphicsComplex3d(

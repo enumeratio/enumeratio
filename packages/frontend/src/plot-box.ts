@@ -117,6 +117,10 @@ const FILL_OPACITY = 0.12;
 const HEAD = 8;
 /** Margins around the plot area, in px. */
 const [M_LEFT, M_RIGHT, M_BOTTOM] = [38, 10, 22];
+/** The right margin that holds a color bar (`BarLegend`), in px. */
+const M_RIGHT_BAR = 44;
+/** A color bar's width and gap from the plot area, in px. */
+const [BAR_WIDTH, BAR_GAP] = [10, 8];
 const marginTop = (titled: boolean): number => (titled ? 26 : 12);
 
 /** The plot area's size in px inside an `ImageSize` of `width` × `height`. */
@@ -422,6 +426,36 @@ const numbers = (value: unknown): number[] | undefined =>
 const pointList = (value: unknown): number[][] =>
   Array.isArray(value) ? value.flatMap((p) => (numbers(p) ? [numbers(p)!] : [])) : [];
 
+/** Rows of colors, or undefined where the value is no grid of strings. */
+const colorRows = (value: unknown): string[][] | undefined =>
+  Array.isArray(value) &&
+  value.length > 0 &&
+  value.every((r) => Array.isArray(r) && r.every((c) => typeof c === "string"))
+    ? (value as string[][])
+    : undefined;
+
+/** `((xmin, xmax), (ymin, ymax))` as numbers. */
+const rangeOf = (value: unknown): [[number, number], [number, number]] | undefined => {
+  const [x, y] = Array.isArray(value) ? value : [];
+  const [nx, ny] = [numbers(x), numbers(y)];
+  return nx?.length === 2 && ny?.length === 2
+    ? [
+        [nx[0]!, nx[1]!],
+        [ny[0]!, ny[1]!],
+      ]
+    : undefined;
+};
+
+/** A color bar's option: `(colors from the least value up, (least, greatest))`. */
+const barLegendOf = (value: unknown): { colors: string[]; range: [number, number] } | undefined => {
+  if (!Array.isArray(value)) return undefined;
+  const colors = value[0];
+  const range = numbers(value[1]);
+  return Array.isArray(colors) && colors.length > 0 && colors.every((c) => typeof c === "string") && range?.length === 2
+    ? { colors: colors as string[], range: [range[0]!, range[1]!] }
+    : undefined;
+};
+
 /** Whether `box` is a plot's `GraphicsBox` (one `plotBox` made), as opposed to a figure's. */
 export const isPlotBox = (box: Box): box is BoxNode =>
   isNode(box) && box[0] === "GraphicsBox" && optionsOfBox(box).ScalingFunctions !== undefined;
@@ -469,7 +503,8 @@ export function drawPlot(box: BoxNode, hover?: number): PlotDrawing {
   const Y = scale(ys);
   const titled = typeof o.PlotLabel === "string";
   const mT = marginTop(titled);
-  const [mL, mR, mB] = [M_LEFT, M_RIGHT, M_BOTTOM];
+  const bar = barLegendOf(o.BarLegend);
+  const [mL, mR, mB] = [M_LEFT, bar ? M_RIGHT_BAR : M_RIGHT, M_BOTTOM];
   const plotW = W - mL - mR;
   const plotH = H - mT - mB;
   const clip = [mL - 3, mT, plotW + 6, plotH] as const;
@@ -585,6 +620,12 @@ export function drawPlot(box: BoxNode, hover?: number): PlotDrawing {
         }
         return;
       }
+      case "RasterBox": {
+        const colors = colorRows(p.Colors);
+        const [[x0, x1], [y0, y1]] = rangeOf(p.DataRange) ?? (range as [[number, number], [number, number]]);
+        if (colors) push({ head: "Raster", from: px([x0, y0]), to: px([x1, y1]), colors }, { edges: [] }, clipped);
+        return;
+      }
       case "InsetBox": {
         const c = numbers(p.Center);
         if (c && typeof prim[1] === "string" && color)
@@ -598,11 +639,20 @@ export function drawPlot(box: BoxNode, hover?: number): PlotDrawing {
     }
   };
   for (const { role, prim, look } of items) if (role === "Prolog") mark(prim, look, false);
+  for (const { role, prim, look } of items) if (role === "Raster") mark(prim, look, true);
 
-  if (o.Axes !== false) {
+  const framed = o.Frame === true;
+  if (o.Axes !== false || framed) {
     const axis = solid(AXIS, 1, 0.5);
-    stripe(mL, yZero, W - mR, yZero, axis);
-    stripe(xZero, mT, xZero, H - mB, axis);
+    if (framed)
+      push(
+        { head: "Polygon", points: [at(mL, mT), at(W - mR, mT), at(W - mR, H - mB), at(mL, H - mB)] },
+        { edges: [axis] },
+      );
+    else {
+      stripe(mL, yZero, W - mR, yZero, axis);
+      stripe(xZero, mT, xZero, H - mB, axis);
+    }
     const tick = { opacity: 0.6, mono: true };
     text(mL, H - 6, "start", label(X.inv(txmin)), 10, tick);
     text(W - mR, H - 6, "end", label(X.inv(txmax)), 10, tick);
@@ -617,6 +667,24 @@ export function drawPlot(box: BoxNode, hover?: number): PlotDrawing {
   for (const { role, prim, look } of items) if (role === "Fill") mark(prim, look, true);
   for (const { role, prim, look } of items) if (role === "Series") mark(prim, look, true);
   for (const { role, prim, look } of items) if (role === "Epilog") mark(prim, look, false);
+
+  if (bar) {
+    const bx = W - mR + BAR_GAP;
+    push(
+      { head: "Raster", from: at(bx, H - mB), to: at(bx + BAR_WIDTH, mT), colors: bar.colors.map((c) => [c]) },
+      { edges: [] },
+    );
+    push(
+      {
+        head: "Polygon",
+        points: [at(bx, mT), at(bx + BAR_WIDTH, mT), at(bx + BAR_WIDTH, H - mB), at(bx, H - mB)],
+      },
+      { edges: [solid(AXIS, 1, 0.5)] },
+    );
+    const tick = { opacity: 0.6, mono: true };
+    text(bx + BAR_WIDTH + 2, mT + 7, "start", label(bar.range[1]), 9, tick);
+    text(bx + BAR_WIDTH + 2, H - mB, "start", label(bar.range[0]), 9, tick);
+  }
 
   const legend = Array.isArray(o.PlotLegends) ? (o.PlotLegends as [string, string][]) : [];
   legend.forEach(([name, color], k) => {

@@ -8,11 +8,19 @@
 
 import { type Box, type BoxNode, graphics, interpretation, row } from "@enumeratio/boxes";
 import { chartBox, type ChartBoxOptions, isChartKind, isNumber } from "./chart.ts";
+import { type ContourOptions, contourPlotBox } from "./contour.ts";
+import { type DensityOptions, densityPlotBox } from "./densityplot.ts";
 import { DIAGRAM_HEADS } from "./diagram-lowering.ts";
 import { type PlotOptions, type PlotPoint, type PlotSeries, plotBox } from "./plot-box.ts";
 import type { Primitive } from "./primitives.ts";
 import type { PolarPoint } from "./polarplot.ts";
 import type { VectorPlotOptions } from "./vectorplot.ts";
+
+/**
+ * The heads of the field plots: a grid of values drawn as lines (`ContourPlot`) or cells
+ * (`DensityPlot`), a `GraphicsBox` holding a `RasterBox` or `LineBox`es in data coordinates.
+ */
+export const FIELD_PLOT_HEADS: readonly string[] = ["ContourPlot", "ListContourPlot", "DensityPlot", "ListDensityPlot"];
 
 /** The heads whose plots and diagrams are `GraphicsBox`es, drawn by `<graphics-box>`. */
 export const PLOT_HEADS: readonly string[] = [
@@ -24,6 +32,7 @@ export const PLOT_HEADS: readonly string[] = [
   "ListLinePlot",
   "VectorPlot",
   "StreamPlot",
+  ...FIELD_PLOT_HEADS,
   ...DIAGRAM_HEADS,
 ];
 
@@ -53,7 +62,10 @@ const valueOf = (heads: readonly string[]): RegExp =>
     `^\\s*(?:(?:${spellings([...heads, ...CHART_HEADS.filter((h) => h !== "ArrayPlot")])})\\s*\\(|(?:${spellings(["ArrayPlot"])})\\s*\\(\\s*\\[)`,
   );
 const PLOT_VALUE = valueOf(PLOT_HEADS);
-const SAMPLED_VALUE = valueOf(PLOT_HEADS.filter((head) => !DIAGRAM_HEADS.includes(head)));
+// The build samples a curve; a field plot (a grid, cell by cell) is drawn live.
+const SAMPLED_VALUE = valueOf(
+  PLOT_HEADS.filter((head) => !DIAGRAM_HEADS.includes(head) && !FIELD_PLOT_HEADS.includes(head)),
+);
 
 /** Whether `value` is a plot, a chart or a diagram (`Plot(…)`, `BarChart([…])`), which `<graphics-box>` draws as one. */
 export const holdsPlot = (value: string | undefined): boolean => PLOT_VALUE.test(value ?? "");
@@ -205,4 +217,76 @@ export function plotBoxOfSamples(
   extra: Parameters<typeof plotOptionsOf>[1] = {},
 ): Box {
   return plotBox(series, plotOptionsOf(settings, extra));
+}
+
+// ── Field plots ──────────────────────────────────────────────────────────────────────────
+
+const isDensity = (head: string): boolean => head === "DensityPlot" || head === "ListDensityPlot";
+
+/** A pre-sampled grid (`data`) as a rectangular matrix of numbers; undefined for anything else. */
+export function fieldMatrixOf(data: unknown): number[][] | undefined {
+  if (!Array.isArray(data) || data.length === 0 || !data.every((r) => Array.isArray(r))) return undefined;
+  const rows = (data as unknown[][]).map((r) => r.filter(isNumber));
+  return rows.every((r) => r.length === rows[0]!.length && r.length > 0) ? rows : undefined;
+}
+
+/** `levels`: a bare count, or a JSON list of values. */
+function levelsOf(raw: string | undefined): { levels?: readonly number[]; count?: number } {
+  const text = raw?.trim();
+  if (!text) return {};
+  const count = Number(text);
+  if (Number.isFinite(count) && !text.startsWith("[")) return { count };
+  const parsed = jsonOf(text);
+  return Array.isArray(parsed) && parsed.every(isNumber) ? { levels: parsed } : {};
+}
+
+/** What a field plot's settings say about how it is drawn: the chrome, the levels, the colors. */
+export function fieldOptionsOf(head: string, settings: PlotSettings): ContourOptions & DensityOptions {
+  return {
+    axes: settings["axes"] !== "false",
+    xLabel: settings["x-label"] || undefined,
+    yLabel: settings["y-label"] || undefined,
+    title: settings["label"] || undefined,
+    gradient: settings["gradient"],
+    reverse: on(settings["reverse"]),
+    ...(isDensity(head)
+      ? { legend: on(settings["legend"]), zRange: spanOf(settings["zrange"]) }
+      : { filled: on(settings["filled"]), ...levelsOf(settings["levels"]) }),
+  };
+}
+
+/** The axes a field plot of an expression is sampled on: `n` per side over `xrange` by `yrange`. */
+export function fieldAxes(head: string, settings: PlotSettings): { xs: number[]; ys: number[] } {
+  const [x0, x1] = spanOf(settings["xrange"]) ?? [-3, 3];
+  const [y0, y1] = spanOf(settings["yrange"]) ?? [-3, 3];
+  const [fallback, cap] = isDensity(head) ? [48, 160] : [40, 120];
+  const n = Math.max(2, Math.min(cap, Math.round(Number(settings["n"]) || fallback)));
+  const axis = (lo: number, hi: number): number[] =>
+    Array.from({ length: n }, (_, k) => lo + ((hi - lo) * k) / (n - 1));
+  return { xs: axis(x0, x1), ys: axis(y0, y1) };
+}
+
+/** A field plot of a grid of values, as a `GraphicsBox`. */
+export function fieldBoxOfGrid(
+  head: string,
+  settings: PlotSettings,
+  grid: readonly (readonly number[])[],
+  xs: readonly number[],
+  ys: readonly number[],
+): Box {
+  const options = fieldOptionsOf(head, settings);
+  return isDensity(head) ? densityPlotBox(grid, xs, ys, options) : contourPlotBox(grid, xs, ys, options);
+}
+
+/** A `ListContourPlot` or `ListDensityPlot`, lowered whole: its matrix is its data. Undefined for a plot of an expression. */
+export function fieldBoxOfData(head: string, settings: PlotSettings): Box | undefined {
+  const grid = fieldMatrixOf(jsonOf(settings["data"]));
+  if (grid === undefined) return undefined;
+  return fieldBoxOfGrid(
+    head,
+    settings,
+    grid,
+    grid[0]!.map((_, i) => i),
+    grid.map((_, j) => j),
+  );
 }

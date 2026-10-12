@@ -1,7 +1,22 @@
+import { type BoxNode, optionsOfBox } from "@enumeratio/boxes";
 import { expect, test } from "vite-plus/test";
-import { autoLevels, type ContourSegment, contourSvg, marchingSquares } from "../src/contour.ts";
+import { autoLevels, type ContourSegment, contourPlotBox, contourSvg, marchingSquares } from "../src/contour.ts";
+import { imagesIn } from "./png.ts";
 
 const count = (s: string, tag: string): number => s.split(`<${tag}`).length - 1;
+
+/** The primitives a plot box holds, by kind. */
+function marksOf(box: BoxNode): Record<string, number> {
+  const out: Record<string, number> = {};
+  const walk = (node: unknown): void => {
+    if (!Array.isArray(node) || typeof node[0] !== "string") return;
+    if (node[0] === "RowBox") return (node[1] as unknown[]).forEach(walk);
+    if (node[0] === "StyleBox" || node[0] === "TagBox") return walk(node[1]);
+    out[node[0]] = (out[node[0]] ?? 0) + 1;
+  };
+  walk(box[1]);
+  return out;
+}
 
 /** A small linear-ramp grid: z = x + y, so a level's contour is a straight
  * diagonal line with a known, hand-derivable crossing. */
@@ -139,31 +154,73 @@ test("autoLevels on a degenerate (flat) range yields nothing", () => {
 
 test("line contours draw one path per level with segments", () => {
   const { grid, xs, ys } = radialGrid(-2, 2, 20);
-  const s = contourSvg(grid, xs, ys, { levels: [1, 2, 3] });
+  const s = contourSvg(grid, xs, ys, { levels: [1, 2, 3], axes: false });
   expect(s).toContain('viewBox="0 0 340 200"');
-  expect(count(s, "path")).toBeGreaterThanOrEqual(1);
-  expect(count(s, "path")).toBeLessThanOrEqual(3);
+  expect(count(s, "path")).toBe(3);
 });
 
 test("a level outside the sampled range draws no path", () => {
   const { grid, xs, ys } = radialGrid(-1, 1, 6); // z in [0, 2]
-  const s = contourSvg(grid, xs, ys, { levels: [50] });
+  const s = contourSvg(grid, xs, ys, { levels: [50], axes: false });
   expect(count(s, "path")).toBe(0);
 });
 
-test("filled mode draws bands (rects), not line paths", () => {
+test("filled mode draws one raster, not line paths", () => {
   const { grid, xs, ys } = radialGrid(-2, 2, 10);
-  const s = contourSvg(grid, xs, ys, { levels: [2, 5], filled: true });
+  const s = contourSvg(grid, xs, ys, { levels: [2, 5], filled: true, axes: false });
   expect(count(s, "path")).toBe(0);
-  expect(count(s, "rect")).toBeGreaterThan(0);
+  expect(count(s, "image")).toBe(1);
+  const [image] = imagesIn(s);
+  expect([image!.width, image!.height]).toEqual([9, 9]);
 });
 
-test("axes:false drops the frame rect and labels", () => {
+test("the box is lines in data coordinates, or one raster over the whole range", () => {
+  const { grid, xs, ys } = radialGrid(-2, 2, 12);
+  const lines = contourPlotBox(grid, xs, ys, { levels: [1, 2] }) as BoxNode;
+  expect(lines[0]).toBe("GraphicsBox");
+  const o = optionsOfBox(lines);
+  expect(o.PlotRange).toEqual([
+    [-2, 2],
+    [-2, 2],
+  ]);
+  expect(o.Frame).toBe(true);
+  expect(marksOf(lines)).toEqual({ LineBox: 2 });
+  const filled = contourPlotBox(grid, xs, ys, { levels: [1, 2], filled: true }) as BoxNode;
+  expect(marksOf(filled)).toEqual({ RasterBox: 1 });
+});
+
+test("a line's segments are disjoint: the pen lifts between each pair of points", () => {
+  const { grid, xs, ys } = rampGrid(3);
+  const box = contourPlotBox(grid, xs, ys, { levels: [2] }) as BoxNode;
+  const line = ((box[1] as BoxNode)[1] as BoxNode[])[0] as BoxNode;
+  const mark = (line[1] as BoxNode)[1] as BoxNode;
+  const o = optionsOfBox(mark);
+  expect((o.Points as unknown[]).length).toBe(2 * (o.Breaks as unknown[]).length + 2);
+});
+
+test("filled bands are laid from the least y up, whichever way the axes run", () => {
+  const grid = [
+    [0, 0, 0],
+    [0, 0, 0],
+    [9, 9, 9],
+  ];
+  const colors = (g: number[][], xs: number[], ys: number[]): unknown => {
+    const box = contourPlotBox(g, xs, ys, { levels: [4], filled: true }) as BoxNode;
+    const raster = (((box[1] as BoxNode)[1] as BoxNode[])[0] as BoxNode)[1] as BoxNode;
+    return optionsOfBox(raster).Colors;
+  };
+  const up = colors(grid, [0, 1, 2], [0, 1, 2]) as string[][];
+  expect(up[0]![0]).not.toBe(up[1]![0]);
+  expect(colors(grid.toReversed(), [0, 1, 2], [2, 1, 0])).toEqual(up);
+});
+
+test("axes:false drops the frame and labels", () => {
   const { grid, xs, ys } = radialGrid(-2, 2, 8);
   const withAxes = contourSvg(grid, xs, ys, { levels: [1], axes: true });
   const without = contourSvg(grid, xs, ys, { levels: [1], axes: false });
   expect(count(withAxes, "text")).toBeGreaterThan(0);
   expect(count(without, "text")).toBe(0);
+  expect(count(withAxes, "path")).toBe(count(without, "path") + 1);
 });
 
 test("an empty/undersized grid yields a bare frame", () => {
@@ -175,6 +232,15 @@ test("a title renders centred above the frame", () => {
   const { grid, xs, ys } = radialGrid(-1, 1, 6);
   const s = contourSvg(grid, xs, ys, { levels: [0.5], title: "Saddle" });
   expect(s).toContain(">Saddle<");
+});
+
+test("a hostile title or axis label is escaped, not injected", () => {
+  const { grid, xs, ys } = radialGrid(-1, 1, 6);
+  const nasty = `"><script>alert('x')</script>&`;
+  const s = contourSvg(grid, xs, ys, { levels: [0.5], title: nasty, xLabel: nasty, yLabel: nasty });
+  expect(s).not.toContain("<script");
+  expect(s).not.toContain("alert('x')");
+  expect(s).toContain("&lt;script&gt;alert(&#39;x&#39;)&lt;/script&gt;&amp;");
 });
 
 test("determinism: the same grid renders byte-identical SVG twice", () => {

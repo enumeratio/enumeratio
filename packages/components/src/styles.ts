@@ -36,17 +36,6 @@ notatio-complex-plot-3d canvas { width: 360px; max-width: 100%; aspect-ratio: 36
 notatio-complex-plot-3d .notatio-plot-status { line-height: 1.4; font-size: 0.85em; opacity: 0.7; margin: 0.25em 0; }
 
 
-/* ContourPlot shares Plot's sizing -- a bare 2-D frame, no fixed width. */
-notatio-contour-plot { display: block; line-height: 0; }
-notatio-contour-plot .notatio-contour-plot-box { display: inline-block; max-width: 100%; }
-notatio-contour-plot svg { width: 340px; max-width: 100%; height: auto; overflow: hidden; }
-
-/* Field visualisations (DensityPlot). */
-
-notatio-density-plot { display: block; line-height: 0; }
-notatio-density-plot .notatio-density-plot-box { display: inline-block; max-width: 100%; }
-notatio-density-plot svg { width: 340px; max-width: 100%; height: auto; overflow: hidden; }
-
 graphics-box[data-plot] svg[aria-label="polar plot"] { width: 260px; }
 
 /* A figure in space: a projected surface, mesh, bars or curve whose axis labels can sit just outside

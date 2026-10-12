@@ -1,4 +1,6 @@
+import type { Box } from "@enumeratio/boxes";
 import type { Complex, ComplexFunction } from "./complex-eval.ts";
+import { type Graphics3dOptions, surfaceBox } from "./graphics-3d-box.ts";
 import { DEFAULT_PHASE_GRADIENT, type Gradient, sampleGradient } from "./palettes.ts";
 import { gradientOf } from "./plot-color.ts";
 import { type Surface3dOptions, type SurfaceScene, surfaceScene, surfaceSceneSvg } from "./plot3d.ts";
@@ -180,6 +182,30 @@ export function complexSurfaceScene(surface: ComplexSurface, opts: ComplexSurfac
       const d = a + nx;
       const x = cx[a] + cx[b] + cx[c] + cx[d];
       const y = cy[a] + cy[b] + cy[c] + cy[d];
+      if (x === 0 && y === 0) return hueColor(Number.NaN, gradient);
+      const t = Math.atan2(y, x) / (2 * Math.PI);
+      return hueColor(t < 0 ? t + 1 : t, gradient);
+    },
+  });
+}
+
+/**
+ * The surface as a `Graphics3DBox` (the wiki's Speculative-Box-Primitives, §6 slice 7): the heights
+ * of a lone surface, each face colored by the circular mean of its corners' hues. This is the CPU
+ * producer; on the web `<notatio-complex-plot-3d>` samples the grid on the GPU.
+ */
+export function complexSurfaceBox(surface: ComplexSurface, opts: Graphics3dOptions = {}): Box {
+  const { heights, hues, xs, ys } = surface;
+  const gradient = gradientOf(opts, DEFAULT_PHASE_GRADIENT);
+  const unit = (t: number): [number, number] =>
+    Number.isFinite(t) ? [Math.cos(2 * Math.PI * t), Math.sin(2 * Math.PI * t)] : [0, 0];
+  return surfaceBox([heights], xs, ys, {
+    elevation: 25,
+    ...opts,
+    faceColor: (i, j) => {
+      const corners = [hues[j]![i]!, hues[j]![i + 1]!, hues[j + 1]![i + 1]!, hues[j + 1]![i]!].map(unit);
+      const x = corners.reduce((n, c) => n + c[0], 0);
+      const y = corners.reduce((n, c) => n + c[1], 0);
       if (x === 0 && y === 0) return hueColor(Number.NaN, gradient);
       const t = Math.atan2(y, x) / (2 * Math.PI);
       return hueColor(t < 0 ? t + 1 : t, gradient);

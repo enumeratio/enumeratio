@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-grid	Basic		[ListContourPlot, [List, [List, 0, 1, 2], [List, 1, 2, 3], [List, 2, 3, 4]]]	[ListContourPlot, [List, [List, 0, 1, 2], [List, 1, 2, 3], [List, 2, 3, 4]]]	Contours of a grid of values
+id	section	role	expr	expected	caption	boxes
+grid	Basic		[ListContourPlot, [List, [List, 0, 1, 2], [List, 1, 2, 3], [List, 2, 3, 4]]]	[ListContourPlot, [List, [List, 0, 1, 2], [List, 1, 2, 3], [List, 2, 3, 4]]]	Contours of a grid of values	{head: GraphicsBox, marks: {LineBox: 7}, roles: {Series: 7}, options: {Frame: true, PlotRange: [[0, 2], [0, 2]]}}

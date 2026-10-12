@@ -3,6 +3,7 @@
 // the two agree; only the output differs, elements in the list's order rather than batched.
 
 import type { Edge } from "./graphics-rules.ts";
+import { rasterHref } from "./raster.ts";
 import { type LatticeView, type Vec2, voronoiCell } from "./lattice.ts";
 import type { DisplayList, FramePoint, GraphicsPrimitive, TextLook } from "./tiles-canvas.ts";
 
@@ -23,7 +24,15 @@ const LINE_WIDTH = 1.25;
 const xy = (p: FramePoint): Vec2 => [p[0] ?? 0, p[1] ?? 0];
 const n = (x: number): string => String(Math.round(x * 100) / 100);
 const escape = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+
+/**
+ * A color a display list holds, as an attribute value: a name, `#hex`, `rgb()`/`hsl()`,
+ * `color-mix()` or `var()` -- nothing with a quote or a bracket in it -- else `currentColor`.
+ * The SVG is markup, so a value out of a box is never trusted to stay inside its attribute.
+ */
+const SAFE_COLOR = /^[#\w\s.,%()/-]+$/;
+const ink = (value: string): string => (SAFE_COLOR.test(value) ? escape(value) : "currentColor");
 
 /** The path data of a primitive in screen coordinates; `inset` pulls a disk's rim in, for nested edges. */
 function pathData(p: GraphicsPrimitive, place: Vec2, toScreen: (v: Vec2) => Vec2, pixels: number, inset = 0): string {
@@ -64,7 +73,7 @@ function pathData(p: GraphicsPrimitive, place: Vec2, toScreen: (v: Vec2) => Vec2
 }
 
 const strokeOf = (e: Edge): string =>
-  `fill="none" stroke="${escape(e.color)}" stroke-width="${n(e.width)}" stroke-opacity="${n(e.opacity)}"` +
+  `fill="none" stroke="${ink(e.color)}" stroke-width="${n(e.width)}" stroke-opacity="${n(e.opacity)}"` +
   (e.dashing.length > 0 ? ` stroke-dasharray="${e.dashing.map(n).join(" ")}"` : "");
 
 /** `list` drawn at `view` into a `width` by `height` SVG. */
@@ -92,7 +101,7 @@ export function svg(
     };
     for (const { at, style } of list.tiles) {
       const [x, y] = toScreen(at);
-      if (style.color) out.push(`<path d="${tile(x, y, 0)}" fill="${escape(style.color)}"/>`);
+      if (style.color) out.push(`<path d="${tile(x, y, 0)}" fill="${ink(style.color)}"/>`);
       let inset = 0;
       for (const e of style.edges) {
         out.push(`<path d="${tile(x, y, inset + e.width / 2)}" ${strokeOf(e)}/>`);
@@ -104,10 +113,10 @@ export function svg(
       const [x, y] = toScreen(at);
       const family = look.mono ? "ui-monospace, monospace" : "system-ui, sans-serif";
       const halo = look.halo
-        ? ` paint-order="stroke" stroke="${escape(look.halo)}" stroke-width="3" stroke-linejoin="round"`
+        ? ` paint-order="stroke" stroke="${ink(look.halo)}" stroke-width="3" stroke-linejoin="round"`
         : "";
       const turn = look.angle ? ` transform="rotate(${n(-look.angle)} ${n(x)} ${n(y)})"` : "";
-      return `<text x="${n(x)}" y="${n(y)}"${turn} font-size="${n(size * pixels)}" fill="${escape(color)}" fill-opacity="${n(look.opacity ?? opacity)}" text-anchor="${look.anchor ?? "middle"}"${look.anchor ? "" : ' dominant-baseline="central"'}${look.italic ? ' font-style="italic"' : ""}${halo} font-family="${family}">${escape(label)}</text>`;
+      return `<text x="${n(x)}" y="${n(y)}"${turn} font-size="${n(size * pixels)}" fill="${ink(color)}" fill-opacity="${n(look.opacity ?? opacity)}" text-anchor="${look.anchor ?? "middle"}"${look.anchor ? "" : ' dominant-baseline="central"'}${look.italic ? ' font-style="italic"' : ""}${halo} font-family="${family}">${escape(label)}</text>`;
     };
     const texts: string[] = [];
     const round = options.rounded ? ' stroke-linejoin="round" stroke-linecap="round"' : "";
@@ -137,13 +146,23 @@ export function svg(
         if (style.color) texts.push(text(xy(mark.at ?? at), mark.text, mark.size, style.color, 1, mark.look));
         continue;
       }
+      if (mark.head === "Raster") {
+        const href = rasterHref(mark.colors);
+        if (href === undefined) continue;
+        const [a, b] = [toScreen(xy(mark.from)), toScreen(xy(mark.to))];
+        emit(
+          cut,
+          `<image x="${n(Math.min(a[0], b[0]))}" y="${n(Math.min(a[1], b[1]))}" width="${n(Math.abs(b[0] - a[0]))}" height="${n(Math.abs(b[1] - a[1]))}" preserveAspectRatio="none" style="image-rendering:pixelated" href="${href}"/>`,
+        );
+        continue;
+      }
       const d = (inset = 0): string => pathData(mark, at, toScreen, pixels, inset);
       if (style.color && mark.head === "Line")
-        emit(cut, `<path d="${d()}" fill="none" stroke="${escape(style.color)}" stroke-width="${LINE_WIDTH}"/>`);
+        emit(cut, `<path d="${d()}" fill="none" stroke="${ink(style.color)}" stroke-width="${LINE_WIDTH}"/>`);
       else if (style.color)
         emit(
           cut,
-          `<path d="${d()}" fill="${escape(style.color)}"${style.opacity === undefined ? "" : ` fill-opacity="${n(style.opacity)}"`}/>`,
+          `<path d="${d()}" fill="${ink(style.color)}"${style.opacity === undefined ? "" : ` fill-opacity="${n(style.opacity)}"`}/>`,
         );
       let inset = 0;
       for (const e of style.edges) {
@@ -156,7 +175,7 @@ export function svg(
     for (const { mark, edges } of list.links) {
       const d = pathData(mark, [0, 0], toScreen, pixels);
       if (mark.head === "Polygon")
-        out.push(`<path d="${d}" fill="${escape(edges[0]!.color)}" fill-opacity="${n(0.16 * edges[0]!.opacity)}"/>`);
+        out.push(`<path d="${d}" fill="${ink(edges[0]!.color)}" fill-opacity="${n(0.16 * edges[0]!.opacity)}"/>`);
       // The first rule on top: strokes run last to first.
       for (const e of edges.toReversed())
         out.push(`<path d="${d}" ${strokeOf(e)} stroke-linejoin="round" stroke-linecap="round"/>`);
