@@ -205,3 +205,15 @@ test("ConditionalExpression is compared by its value", () => {
   expect(verdictOf("wolfram", ["Power", "x", 2], { value: wrapped, numeric: wrapped })).toBe("agree");
   expect(verdictOf("wolfram", ["Power", "x", 3], { value: wrapped, numeric: wrapped })).toBe("disagree");
 });
+
+test('a Combinatorica template\'s Missing["NotCombinatorica"] is a decline, not a disagreement', () => {
+  const declined = { value: 'Missing["NotCombinatorica"]' };
+  expect(verdictOf("combinatorica", ["List", 1, 2, 3], declined)).toBe("inconclusive");
+  expect(verdictOf("combinatorica", ["Permute", ["List", 1], ["List", 1]], declined)).toBe("inconclusive");
+  expect(verdictOf("combinatorica", ["List", 1, 2, 3], { value: "List[1, 2, 3]", numeric: "List[1, 2, 3]" })).toBe(
+    "agree",
+  );
+  expect(verdictOf("combinatorica", ["List", 1, 2, 3], { value: "List[1, 2, 4]", numeric: "List[1, 2, 4]" })).toBe(
+    "disagree",
+  );
+});

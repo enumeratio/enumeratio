@@ -244,7 +244,10 @@ export function verdictOf(
   }
   const theirs = result.value ?? "";
   let verdict: Verdict;
-  if (isWolframFamily(system)) {
+  if (system === "combinatorica" && /^\s*Missing\[\s*"NotCombinatorica"\s*\]\s*$/.test(theirs)) {
+    // A template's own "outside what this map covers": a decline, not an answer to disagree with.
+    verdict = "inconclusive";
+  } else if (isWolframFamily(system)) {
     // Wolfram's answer is never evaluated by our engine on its behalf, or a call it
     // declined (`MatrixRank[{1, 2, 3}]`) comes back as our own answer and agrees. So its
     // exact form is compared as text — an unevaluated form we pinned too — and its
