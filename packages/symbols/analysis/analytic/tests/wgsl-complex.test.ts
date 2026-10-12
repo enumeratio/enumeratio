@@ -6,7 +6,12 @@ import { zetaWGSL } from "../src/shader.ts";
 
 test("the real Lerch wrapper in the shader returns NaN where Φ is complex", () => {
   expect(zetaWGSL).toContain("fn lerchPhiReal(");
-  expect(zetaWGSL).toContain("bitcast<f32>(0x7fc00000u)");
+});
+
+test("the shader has no const-evaluable NaN (WGSL rejects 'value nan cannot be represented as f32')", () => {
+  const src = zetaWGSL.replace(/\/\/.*$/gm, "");
+  expect(src).not.toMatch(/bitcast<f32>\(\s*0x7f[89a-f][0-9a-f]{5}u\s*\)/i);
+  expect(src).not.toMatch(/0\.0\s*\/\s*0\.0/);
 });
 
 const ce = new ComputeEngine();
