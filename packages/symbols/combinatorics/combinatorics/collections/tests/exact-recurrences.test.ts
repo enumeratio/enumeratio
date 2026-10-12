@@ -21,6 +21,7 @@ import {
   triangularCompositionsExact,
   triStringsExact,
   windowSumsExact,
+  RECURRENCE_TOP,
 } from "../src/families/exact-recurrences.ts";
 
 // Each is held to a different computation here (a convolution, a transform, a plain DP over the
@@ -142,6 +143,36 @@ test("Dyck paths by height sum over the heights to the Catalan numbers, and are 
   expect(dyckPathsByHeightExact(5, 0)).toBe(0n);
 });
 
+test("Dyck paths by height match a direct walk that tracks whether the height was reached", () => {
+  /** Walks of 2n steps from 0 to 0 never below 0, the state the height and whether h has been reached. */
+  const byWalk = (n: number, h: number): bigint => {
+    let at: bigint[][] = Array.from({ length: h + 2 }, () => [0n, 0n]);
+    at[0][h === 0 ? 1 : 0] = 1n;
+    for (let step = 0; step < 2 * n; step++) {
+      const next: bigint[][] = Array.from({ length: h + 2 }, () => [0n, 0n]);
+      for (let y = 0; y <= h; y++)
+        for (const reached of [0, 1]) {
+          const here = at[y][reached];
+          if (here === 0n) continue;
+          if (y < h) next[y + 1][reached || y + 1 === h ? 1 : 0] += here;
+          if (y > 0) next[y - 1][reached] += here;
+        }
+      at = next;
+    }
+    return at[0][1];
+  };
+  for (const [n, h] of [
+    [150, 1],
+    [150, 7],
+    [150, 40],
+    [150, 150],
+    [300, 12],
+    [300, 100],
+    [40, 41],
+  ] as const)
+    expect([n, h, dyckPathsByHeightExact(n, h)]).toEqual([n, h, n === 40 ? 0n : byWalk(n, h)]);
+});
+
 test("Stirling numbers and what they add up to match the explicit sums", () => {
   /** k! S(n, k) = Σ (−1)^(k − j) C(k, j) j^n. */
   const surjections = (n: number, k: number): bigint => {
@@ -247,13 +278,82 @@ test("shifted standard tableaux add Thrall's counts over the strict shapes", () 
 });
 
 test("a count past the work or size limit is left undefined", () => {
-  expect(motzkinExact(100_000)).toBeUndefined();
+  expect(motzkinExact(RECURRENCE_TOP)).toBeDefined();
+  expect(motzkinExact(RECURRENCE_TOP + 1)).toBeUndefined();
+  expect(fibonacciWordsExact(RECURRENCE_TOP)).toBeDefined();
+  expect(fibonacciWordsExact(RECURRENCE_TOP + 1)).toBeUndefined();
+  expect(triStringsExact(RECURRENCE_TOP + 1)).toBeUndefined();
+  expect(oddCompositionsExact(RECURRENCE_TOP + 1)).toBeUndefined();
+  expect(properCompositionsExact(RECURRENCE_TOP + 1)).toBeUndefined();
   expect(bellExact(5000)).toBeUndefined();
+  expect(fubiniExact(5000)).toBeUndefined();
   expect(stirlingSecondExact(20_000, 4000)).toBeUndefined();
   expect(dyckPathsByHeightExact(40_000, 20_000)).toBeUndefined();
   expect(semistandardTableauxExact(100_000, 1000)).toBeUndefined();
   expect(shiftedStandardTableauxExact(400)).toBeUndefined();
   expect(primeCompositionsExact(30_000)).toBeUndefined();
-  expect(motzkinExact(-1)).toBeUndefined();
-  expect(motzkinExact(2.5)).toBeUndefined();
+});
+
+test("a huge param is answered or declined at once, never looped over", () => {
+  const quick = (f: () => bigint | undefined): bigint | undefined => {
+    const start = performance.now();
+    const answer = f();
+    expect(performance.now() - start).toBeLessThan(50);
+    return answer;
+  };
+  // More blocks, letters or height than cells: none.
+  for (const k of [10, 300_000, 1e9, 2 ** 52]) {
+    expect(quick(() => surjectionsExact(5, k))).toBe(0n);
+    expect(quick(() => surjectionsExact(0, k))).toBe(0n);
+    expect(quick(() => stirlingSecondExact(5, k))).toBe(0n);
+    expect(quick(() => stirlingSecondExact(0, k))).toBe(0n);
+    expect(quick(() => dyckPathsByHeightExact(5, k))).toBe(0n);
+  }
+  // Too many cells for the table.
+  for (const [n, k] of [
+    [1e9, 5],
+    [2 ** 40, 2 ** 40],
+    [100_000, 100_000],
+  ] as const) {
+    expect(quick(() => surjectionsExact(n, k))).toBeUndefined();
+    expect(quick(() => stirlingSecondExact(n, k))).toBeUndefined();
+    expect(quick(() => dyckPathsByHeightExact(n, k))).toBeUndefined();
+    expect(quick(() => semistandardTableauxExact(n, k))).toBeUndefined();
+  }
+  expect(quick(() => semistandardTableauxExact(0, 1e9))).toBe(1n);
+  expect(quick(() => semistandardTableauxExact(5, 1e9))).toBeUndefined();
+  for (const n of [1e9, 2 ** 52]) {
+    for (const f of [bellExact, fubiniExact, shiftedStandardTableauxExact, primeCompositionsExact, motzkinExact])
+      expect(quick(() => f(n))).toBeUndefined();
+  }
+});
+
+test("no counter answers a negative, fractional or unsafe param", () => {
+  const unary = [
+    bellExact,
+    booleanPermutationsExact,
+    dyadicCompositionsExact,
+    fibonacciExact,
+    fibonacciWordsExact,
+    fineExact,
+    fubiniExact,
+    motzkinExact,
+    oddCompositionsExact,
+    primeCompositionsExact,
+    properCompositionsExact,
+    riordanExact,
+    schroederExact,
+    shiftedStandardTableauxExact,
+    triStringsExact,
+    triangularCompositionsExact,
+    (n: number) => windowSumsExact(n, 3),
+  ];
+  for (const bad of [-1, -2, -0.5, 0.5, 2.5, Number.NaN, Number.POSITIVE_INFINITY, 2 ** 53, -(2 ** 60)])
+    for (const f of unary) expect([bad, f(bad)]).toEqual([bad, undefined]);
+  const binary = [dyckPathsByHeightExact, semistandardTableauxExact, stirlingSecondExact, surjectionsExact];
+  for (const bad of [-1, 0.5, Number.NaN, Number.POSITIVE_INFINITY, 2 ** 53])
+    for (const f of binary) {
+      expect([bad, 3, f(bad, 3)]).toEqual([bad, 3, undefined]);
+      expect([3, bad, f(3, bad)]).toEqual([3, bad, undefined]);
+    }
 });
