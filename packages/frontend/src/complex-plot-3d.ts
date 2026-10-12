@@ -14,7 +14,7 @@ import { type Surface3dOptions, type SurfaceScene, surfaceScene, surfaceSceneSvg
 
 // --- sampling -------------------------------------------------------------------------
 
-/** Most samples a side: 150 is ~22k faces; the old 400 was ~160k, more than the DOM or a canvas pass should be handed. */
+/** Most samples a side the CPU sampler takes: 150 is ~22k faces, where 400 is ~160k, too many to hand the DOM as paths. The GPU grid is not held to it. */
 export const MAX_SURFACE_SAMPLES = 150;
 
 /** The plane to sample: `[re0, re1, im0, im1]`. */
@@ -23,7 +23,7 @@ export type ComplexDomain = readonly [number, number, number, number];
 export interface ComplexSurfaceOptions {
   /** Real and imaginary extents (default `[-2, 2, -2, 2]`). */
   domain?: ComplexDomain;
-  /** Samples per side, clamped to 2..`MAX_SURFACE_SAMPLES` (default 40). */
+  /** Samples per side, clamped to 2..400 (default 40); the CPU sampler stops at `MAX_SURFACE_SAMPLES`. */
   samples?: number;
   /**
    * Height ceiling. |f| is unbounded near a pole, and one spike would flatten the rest
@@ -59,7 +59,7 @@ export const hueOf = (z: Complex): number => {
 /** The sample coordinates of a domain, `samples` per side. */
 export function complexGrid(opts: ComplexSurfaceOptions = {}): { xs: number[]; ys: number[] } {
   const [re0, re1, im0, im1] = opts.domain ?? [-2, 2, -2, 2];
-  const n = Math.max(2, Math.min(MAX_SURFACE_SAMPLES, Math.round(opts.samples ?? 40)));
+  const n = Math.max(2, Math.min(400, Math.round(opts.samples ?? 40)));
   return {
     xs: Array.from({ length: n }, (_, i) => re0 + ((re1 - re0) * i) / (n - 1)),
     ys: Array.from({ length: n }, (_, j) => im0 + ((im1 - im0) * j) / (n - 1)),
@@ -100,7 +100,7 @@ export function complexSurfaceOf(
 
 /** Sample |f| and arg f over the domain. Never throws: a sample that blows up is NaN. */
 export function sampleComplexSurface(f: ComplexFunction, opts: ComplexSurfaceOptions = {}): ComplexSurface {
-  const { xs, ys } = complexGrid(opts);
+  const { xs, ys } = complexGrid({ ...opts, samples: Math.min(opts.samples ?? 40, MAX_SURFACE_SAMPLES) });
   const values: Complex[] = [];
   for (const y of ys) {
     for (const x of xs) {
