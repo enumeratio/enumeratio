@@ -315,3 +315,23 @@ test("Zeta(s, −n) at any s: Wolfram's values on evaluate, N and the compiled k
     expect(Math.abs(zetaGeneralizedReal(s, -n) - want)).toBeLessThan(1e-12);
   }
 });
+
+// Zeta(s, a) sums |n + a|^(−s) (Wolfram's crossed terms) and HurwitzZeta(s, a) the principal
+// (n + a)^(−s); the two part ways at a negative non-integer a. Values: mpmath, Σ|n + a|^(−s)
+// for Zeta and zeta(s, a) for HurwitzZeta.
+test("Zeta and HurwitzZeta at a negative non-integer a agree across routes", () => {
+  const zeta = 16.774694618413456; // Zeta(3, −2.5)
+  const hurwitz = 0.0541020258208637; // HurwitzZeta(3, −2.5)
+  expect(Math.abs(num(["Zeta", 3, -2.5]) - zeta)).toBeLessThan(1e-14);
+  expect(Math.abs(ce.box(["Zeta", 3, ["Rational", -5, 2]]).N().re - zeta)).toBeLessThan(1e-14);
+  expect(Math.abs(zetaGeneralizedReal(3, -2.5) - zeta)).toBeLessThan(1e-14);
+  expect(Math.abs(num(["HurwitzZeta", 3, -2.5]) - hurwitz)).toBeLessThan(1e-14);
+  expect(Math.abs(hurwitzZetaReal(3, -2.5) - hurwitz)).toBeLessThan(1e-14);
+  // Complex a, s = 3: the principal power for HurwitzZeta, the crossed terms for Zeta.
+  const h = zetaGeneralized(cx(3), cx(-2.5, 1));
+  expect(h.re).toBeCloseTo(-1.391271824811219, 13);
+  expect(h.im).toBeCloseTo(-0.02886396524976546, 13);
+  const p = hurwitzZeta(cx(3), cx(-2.5, 1));
+  expect(p.re).toBeCloseTo(0.03962992396995794, 13);
+  expect(p.im).toBeCloseTo(-0.20102299207474436, 13);
+});

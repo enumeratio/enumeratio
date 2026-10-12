@@ -32,6 +32,10 @@ normal-series-zeta-x-x-positiveinfinity-6
 normal-series-zeta-x-x-1-2		
 zeta-inexact-s-negative-integer-a-abs-terms	enumeratio_zeta_pair(-1.500000001, -3)	
 zeta-complex-a-left-of-imaginary-axis	enumeratio_zeta_pair((-1.5 + 1*I), (-0.04412268481772066 + 0.9990261201212289*I))	
+n-zeta-3-neg-2p5-sums-abs-terms	enumeratio_n(enumeratio_zeta_pair(3, -2.5))	
+n-zeta-2p5-neg-2p5	enumeratio_n(enumeratio_zeta_pair(2.5, -2.5))	
+n-zeta-3-neg-2p5-plus-i	enumeratio_n(enumeratio_zeta_pair(3, (-2.5 + 1*I)))	
+n-zeta-2p5-plus-i-neg-2p5	enumeratio_n(enumeratio_zeta_pair((2.5 + 1*I), -2.5))	
 on-the-critical-line-zeta-1-2-14i-0-02224-0	enumeratio_n(zeta((0.5 + 14*I)))	0.0222411426099936 - 0.103258123266450*I
 two-argument-zeta-s-a-via-enumeratio-analytic	enumeratio_zeta_pair(2, 1)	1/6*pi^2
 zeta-2-2-zeta-2-1-pi-2-6-1	enumeratio_zeta_pair(2, 2)	1/6*pi^2 - 1
