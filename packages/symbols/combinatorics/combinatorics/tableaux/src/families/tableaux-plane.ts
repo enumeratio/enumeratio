@@ -7,17 +7,16 @@
 // now carries the new "ShiftedStandardTableau" carrier (its element already is one, kind
 // "blocks" = rows). StandardTableauPairs now carries "StandardTableauPair" too, wired via
 // `carrierElements` (declare.ts) -- see ./standard-tableau-pairs.ts.
-// `normRank`, `cmpNumArrays`, `cmpRowsShapeThenEntries`, `keyOf`, `indexedFamily`, `axis`,
-// `enumerated` are small local helpers duplicated from the source file (mirrors the permutations
-// pilot's `ints`).
+// `normRank` and `axis` are small local helpers duplicated from the source file (mirrors the
+// permutations pilot's `ints`).
 //
-// Stays TS here, as an enumeration cached per params (a larger size is bounded by `work`):
-// - PlanePartitions: the layers left below a row depend on the whole row above, so a table over rows
-//   and sums is far larger than the family (a row-by-row DP does 100x its count's work at n = 28).
+// PlanePartitions stays TS (./plane-partitions.ts): the layers left below a row depend on the whole
+// row above, so a row-by-row table is far larger than the family; it walks a table of counts by shape
+// and enumerates the one shape instead.
 // SkewPartitions, SkewStandardTableaux and BoxedPlanePartitions are defined in Epsil
 // (../../../partitions/src/families/skew-partitions.ts, ./skew-standard-tableaux.ts, ./boxed-plane-partitions.ts).
 import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
-import type { Cost, Declared, NumberKernel, Param } from "../../../collections/src/families/types.ts";
+import type { NumberKernel, Param } from "../../../collections/src/families/types.ts";
 import {
   PartitionsQ,
   DistinctPartitionUnrank,
@@ -27,57 +26,19 @@ import { shiftedStandardTableauxExact } from "../../../collections/src/families/
 import { alternatingSignMatrices } from "./alternating-sign-matrices.ts";
 import { boxedPlanePartitions } from "./boxed-plane-partitions.ts";
 import { gelfandTsetlin } from "./gelfand-tsetlin.ts";
+import {
+  IsPlanePartitionOf,
+  PlanePartitionsCount,
+  PlanePartitionsRank,
+  PlanePartitionsUnrank,
+  planePartitionsWork,
+} from "./plane-partitions.ts";
 import { semistandardTableaux } from "./semistandard-tableaux.ts";
 import { shiftedStandardTableaux } from "./standard-tableaux.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
-const cmpNumArrays = (a: readonly number[], b: readonly number[]): number => {
-  const len = Math.min(a.length, b.length);
-  for (let i = 0; i < len; i++) if (a[i] !== b[i]) return a[i] - b[i];
-  return a.length - b.length;
-};
-
-// Canonical order for ragged number[][] element caches: shape (row lengths) first, then flattened
-// entries — matches every archived SQL floor's own `ORDER BY shape, entries` / `ORDER BY flat`.
-const cmpRowsShapeThenEntries = (a: readonly number[][], b: readonly number[][]): number => {
-  const s = cmpNumArrays(
-    a.map((r) => r.length),
-    b.map((r) => r.length),
-  );
-  if (s !== 0) return s;
-  return cmpNumArrays(a.flat(), b.flat());
-};
-
-const keyOf = (rows: unknown): string => JSON.stringify(rows);
-
-/** A memoized "enumerate every element, cache it, index into it" table -- see the source file's
- *  own doc comment for why this is correct by construction. */
-function indexedFamily<E>(generate: (key: string) => E[]) {
-  const cache = new Map<string, E[]>();
-  const elementsOf = (key: string): E[] => {
-    let v = cache.get(key);
-    if (!v) {
-      v = generate(key);
-      cache.set(key, v);
-    }
-    return v;
-  };
-  return {
-    count: (key: string) => elementsOf(key).length,
-    unrank: (key: string, rank: number) => elementsOf(key)[normRank(rank, elementsOf(key).length)],
-    rank: (key: string, element: unknown) => elementsOf(key).findIndex((e) => keyOf(e) === keyOf(element)),
-  };
-}
-
 const axis = (name: string): Param => ({ name, role: "axis", min: 0 });
-/** Every family here enumerates to unrank and rank (indexedFamily); `count` is its own. */
-const enumerated = (count: Cost): Declared["cost"] => ({
-  count,
-  unrank: "enumerative",
-  rank: "enumerative",
-  valid: "polynomial",
-});
 
 // SemistandardTableaux, GelfandTsetlin and AlternatingSignMatrices are defined in Epsil
 // (./semistandard-tableaux.ts, ./gelfand-tsetlin.ts, ./alternating-sign-matrices.ts).
@@ -87,92 +48,6 @@ const binomialBig = (n: number, k: number): bigint => {
   for (let i = 1; i <= k; i++) c = (c * BigInt(n - k + i)) / BigInt(i);
   return c;
 };
-
-// PlanePartitions(n): stays TS (see the header). Ordered by shape then entries.
-function partitionsUnder(ceiling: readonly number[], maxSum: number): number[][] {
-  const results: number[][] = [];
-  function rec(idx: number, cur: number[], sum: number): void {
-    results.push(cur.slice());
-    if (idx === ceiling.length) return;
-    const prevVal = idx > 0 ? cur[idx - 1] : Number.POSITIVE_INFINITY;
-    const hi = Math.min(prevVal, ceiling[idx]);
-    for (let v = 1; v <= hi; v++) {
-      if (sum + v > maxSum) break;
-      cur.push(v);
-      rec(idx + 1, cur, sum + v);
-      cur.pop();
-    }
-  }
-  rec(0, [], 0);
-  return results;
-}
-const planePart = indexedFamily<number[][]>((key) => {
-  const n = Number(key);
-  if (n === 0) return [[]];
-  const results: number[][][] = [];
-  const rows: number[][] = [];
-  function backtrack(ceiling: readonly number[], remaining: number): void {
-    if (remaining === 0) {
-      results.push(rows.map((r) => r.slice()));
-      return;
-    }
-    for (const nr of partitionsUnder(ceiling, remaining)) {
-      if (nr.length === 0) continue;
-      const cells = nr.reduce((a, b) => a + b, 0);
-      if (cells === 0) continue;
-      rows.push(nr);
-      backtrack(nr, remaining - cells);
-      rows.pop();
-    }
-  }
-  backtrack(
-    Array.from({ length: n }, () => n),
-    n,
-  );
-  results.sort(cmpRowsShapeThenEntries);
-  return results;
-});
-/** A000219 without enumerating: MacMahon's Π (1 − x^k)^(−k), through the Euler-transform
- *  recurrence n·PL(n) = Σ_{k=1..n} σ₂(k)·PL(n−k), exact in bigint. */
-export function PlanePartitionsCount(n: number): number {
-  if (n < 0) return 0;
-  const sigma2 = (k: number): bigint => {
-    let s = 0n;
-    for (let d = 1; d <= k; d++) if (k % d === 0) s += BigInt(d * d);
-    return s;
-  };
-  const pl: bigint[] = [1n];
-  for (let m = 1; m <= n; m++) {
-    let acc = 0n;
-    for (let k = 1; k <= m; k++) acc += sigma2(k) * (pl[m - k] as bigint);
-    pl.push(acc / BigInt(m));
-  }
-  return Number(pl[n]);
-}
-export function PlanePartitionsUnrank(n: number, rank: number): number[][] {
-  return planePart.unrank(String(n), rank);
-}
-export function PlanePartitionsRank(e: number[][], n: number): number {
-  return planePart.rank(String(n), e);
-}
-export function IsPlanePartitionOf(e: unknown, n: number): boolean {
-  if (!Array.isArray(e)) return false;
-  const rows = e as number[][];
-  let total = 0;
-  for (let r = 0; r < rows.length; r++) {
-    const row = rows[r];
-    if (!Array.isArray(row) || row.length === 0) return false;
-    if (r > 0 && rows[r - 1].length < row.length) return false;
-    for (let c = 0; c < row.length; c++) {
-      const v = row[c];
-      if (!Number.isInteger(v) || v < 1) return false;
-      if (c > 0 && row[c - 1] < v) return false;
-      if (r > 0 && rows[r - 1][c] < v) return false;
-      total += v;
-    }
-  }
-  return total === n;
-}
 
 export const entriesBeforeSkewStandardTableaux: (NumberKernel | EpsilFamily)[] = [
   {
@@ -367,8 +242,10 @@ export const planePartitionsEntries: (NumberKernel | EpsilFamily)[] = [
     declared: {
       carrier: "PlanePartition",
       params: [axis("size")],
-      cost: enumerated("polynomial"),
-      work: ([n]) => BigInt(PlanePartitionsCount(n)),
+      // Unrank and rank read a table of counts by shape, then enumerate the one shape they land in.
+      cost: { count: "polynomial", unrank: "enumerative", rank: "enumerative", valid: "polynomial" },
+      work: ([n]) => planePartitionsWork(n),
+      walks: true,
     },
   },
   {

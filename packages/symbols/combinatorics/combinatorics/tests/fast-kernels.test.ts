@@ -5,6 +5,7 @@
 
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
+import { gesselAv1234 } from "../collections/tests/av1234.ts";
 import { COMPILED_FAMILIES } from "../collections/src/families/compiled-families.generated.js";
 import {
   type EpsilFamily,
@@ -259,7 +260,15 @@ function semistandardByShapes([n, k]: number[]): bigint {
 }
 
 /** Families whose Epsil count declines past 2^53, each with a count computed another way. */
-const INDEPENDENT_COUNTS: Record<string, (p: number[]) => bigint> = { SemistandardTableaux: semistandardByShapes };
+const INDEPENDENT_COUNTS: Record<string, (p: number[]) => bigint> = {
+  SemistandardTableaux: semistandardByShapes,
+  VexillaryPermutations: ([n]) => gesselAv1234(n)[n],
+};
+
+/** Families whose Epsil count takes minutes to decline at the first size past 2^53 (Vexillary's table is 2^n
+ *  states: 170 s at n = 22, five times more every two sizes). Held to Epsil up to n = 14 in
+ *  permutations/tests/vexillary-count.test.ts and to the independent count past it. */
+const EPSIL_TOO_SLOW_PAST = new Set(["VexillaryPermutations"]);
 
 for (const family of countFamilies) {
   test(`${family.head}: the fast count agrees with Epsil, past 2^53 too`, () => {
@@ -286,7 +295,7 @@ for (const family of countFamilies) {
       const total = family.fastCount!(p);
       if (family.declinePastDoubles === "count" && typeof total === "bigint" && total > MAX_SAFE) {
         // Epsil's count declines there: the kernel's answer is held to a sum computed here instead.
-        expect(() => epsil.count(p)).toThrow(RangeError);
+        if (!EPSIL_TOO_SLOW_PAST.has(family.head)) expect(() => epsil.count(p)).toThrow(RangeError);
         expect([where, fast.count(p)]).toEqual([where, INDEPENDENT_COUNTS[family.head]!(p)]);
       } else expect([where, fast.count(p)]).toEqual([where, epsil.count(p)]);
     }

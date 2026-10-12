@@ -1,4 +1,5 @@
 import { expect, test } from "vite-plus/test";
+import { gesselAv1234 } from "./av1234.ts";
 import {
   bellExact,
   booleanPermutationsExact,
@@ -20,6 +21,7 @@ import {
   surjectionsExact,
   triangularCompositionsExact,
   triStringsExact,
+  vexillaryExact,
   windowSumsExact,
   RECURRENCE_TOP,
 } from "../src/families/exact-recurrences.ts";
@@ -277,6 +279,17 @@ test("shifted standard tableaux add Thrall's counts over the strict shapes", () 
   }
 });
 
+test("vexillary permutations count as the permutations avoiding 1234 do, A005802", () => {
+  const gessel = gesselAv1234(60);
+  expect(gessel.slice(0, 9)).toEqual([1n, 1n, 2n, 6n, 23n, 103n, 513n, 2761n, 15767n]);
+  for (const n of range(60)) expect([n, vexillaryExact(n)]).toEqual([n, gessel[n]]);
+  // Far out, where a wrong recurrence's truncating division would have drifted.
+  const far = gesselAv1234(250);
+  for (const n of [100, 249, 250]) expect([n, vexillaryExact(n)]).toEqual([n, far[n]]);
+  expect(vexillaryExact(-1)).toBeUndefined();
+  expect(vexillaryExact(1.5)).toBeUndefined();
+});
+
 test("a count past the work or size limit is left undefined", () => {
   expect(motzkinExact(RECURRENCE_TOP)).toBeDefined();
   expect(motzkinExact(RECURRENCE_TOP + 1)).toBeUndefined();
@@ -292,6 +305,7 @@ test("a count past the work or size limit is left undefined", () => {
   expect(semistandardTableauxExact(100_000, 1000)).toBeUndefined();
   expect(shiftedStandardTableauxExact(400)).toBeUndefined();
   expect(primeCompositionsExact(30_000)).toBeUndefined();
+  expect(vexillaryExact(RECURRENCE_TOP + 1)).toBeUndefined();
 });
 
 test("a huge param is answered or declined at once, never looped over", () => {
@@ -346,6 +360,7 @@ test("no counter answers a negative, fractional or unsafe param", () => {
     shiftedStandardTableauxExact,
     triStringsExact,
     triangularCompositionsExact,
+    vexillaryExact,
     (n: number) => windowSumsExact(n, 3),
   ];
   for (const bad of [-1, -2, -0.5, 0.5, 2.5, Number.NaN, Number.POSITIVE_INFINITY, 2 ** 53, -(2 ** 60)])

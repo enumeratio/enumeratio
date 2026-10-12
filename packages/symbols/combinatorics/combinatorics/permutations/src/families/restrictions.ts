@@ -6,7 +6,11 @@
 
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import { catalanExact } from "../../../collections/src/families/exact-counts.ts";
-import { booleanPermutationsExact } from "../../../collections/src/families/exact-recurrences.ts";
+import {
+  booleanPermutationsExact,
+  RECURRENCE_TOP,
+  vexillaryExact,
+} from "../../../collections/src/families/exact-recurrences.ts";
 import {
   eulerianExact,
   exactUpTo,
@@ -1152,7 +1156,7 @@ const vexTable = fold(
 /** Free values below v. */
 const freeUnder = (v: MathJSON): MathJSON => at("fr", v);
 const vexDescent = (i: string, j: string): MathJSON => ["Greater", pre(i), pre(j)];
-const vexillaryPermutations: EpsilFamily = permutationRestriction({
+const vexillaryDefinitions: EpsilFamily = permutationRestriction({
   head: "VexillaryPermutations",
   carrier: "Permutation",
   paramCount: 1,
@@ -1160,7 +1164,8 @@ const vexillaryPermutations: EpsilFamily = permutationRestriction({
   declared: {
     carrier: "Permutation",
     params: [{ name: "size", role: "axis", min: 0 }],
-    cost: { count: "enumerative", unrank: "enumerative", rank: "enumerative", valid: "polynomial" },
+    // The count is a recurrence (below); unrank and rank walk the table.
+    cost: { count: "polynomial", unrank: "enumerative", rank: "enumerative", valid: "polynomial" },
     // At least the count (Av(2143) is Wilf-equivalent to Av(1234), at most 9^n) and the table.
     work: ([size]) => 9n ** BigInt(size),
   },
@@ -1360,6 +1365,9 @@ const vexillaryPermutations: EpsilFamily = permutationRestriction({
     ),
   ),
 });
+
+// The table (2^n states) is out of the interpreter's reach well before the count (A005802) is: Gessel's recurrence.
+const vexillaryPermutations = exactUpTo(vexillaryDefinitions, RECURRENCE_TOP, ([n]) => vexillaryExact(n)!);
 
 export const grassmannianPermutations = atMostOneTurn("GrassmannianPermutations", false);
 export const cograssmannianPermutations = atMostOneTurn("CograssmannianPermutations", true);
