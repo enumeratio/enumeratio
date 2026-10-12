@@ -27,7 +27,7 @@ just use notatio in an app.
 ## Naming and rendering
 
 A symbol and its component are the same thing seen from two ends: kebab-case the head
-and prefix `notatio-` (`Plot3D` → `notatio-plot-3d`). A family head (`Chart`) leaves a
+and prefix `notatio-` (`Plot3D` → `notatio-plot-3d`, the structural spelling; a plot is drawn by `<graphics-3d-box>`). A family head (`Chart`) leaves a
 discriminating attribute unset and lets the component choose among the members it
 draws.
 

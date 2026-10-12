@@ -57,10 +57,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 242,
   },
   {
-    head: "Graphics3D",
-    uses: 234,
-  },
-  {
     head: "Hue",
     uses: 232,
   },

@@ -33,9 +33,9 @@ export interface AttributeDoc {
 }
 
 export interface ComponentDoc {
-  /** The custom-element tag, e.g. `notatio-plot-3d`. */
+  /** The custom-element tag, e.g. `notatio-complex-plot-3d`. */
   tag: string;
-  /** The exported class name, e.g. `NotatioPlot3D`. */
+  /** The exported class name, e.g. `NotatioComplexPlot3D`. */
   className: string;
   /** The source file, relative to the repo root. */
   source: string;
@@ -185,7 +185,7 @@ export function collectComponents(srcDir: string): ComponentDoc[] {
 }
 
 /**
- * `notatio-plot-3d` -> `Plot3D`, `notatio-collection-table` -> `CollectionTable`: `tagOf` backwards.
+ * `notatio-complex-plot-3d` -> `ComplexPlot3D`, `notatio-collection-table` -> `CollectionTable`: `tagOf` backwards.
  * A box's tag names the head it draws, so `slider-2d-box` is `Slider2D`, the page `Slider2D`.
  */
 export function headOfTag(tag: string): string {

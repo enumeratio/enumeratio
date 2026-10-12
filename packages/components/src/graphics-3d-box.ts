@@ -124,12 +124,29 @@ export class Graphics3DBoxElement extends LitElement {
     return this;
   }
 
+  override connectedCallback(): void {
+    super.connectedCallback();
+    document.addEventListener("visibilitychange", this.#onVisibility);
+    // Re-attached (a worksheet reparents its panes): what was running runs again.
+    if (this.#spinWanted) this.#spin(true);
+    if (this.#figure !== undefined) this.#watchClock();
+  }
+
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.#spin(false);
+    document.removeEventListener("visibilitychange", this.#onVisibility);
+    // An expression still being sampled must not come back and start a timer on a detached element.
+    this.#generation++;
+    this.#stopSpin();
     this.#unwatch?.();
     this.#unwatch = undefined;
   }
+
+  /** A hidden tab does not turn the figure: the interval would redraw what no one sees. */
+  #onVisibility = (): void => {
+    if (document.visibilityState === "hidden") this.#stopSpin();
+    else if (this.#spinWanted) this.#spin(true);
+  };
 
   protected override willUpdate(changed: PropertyValues): void {
     if (changed.has("value") || changed.has("points") || changed.has("box") || changed.has("bindings")) {
@@ -256,15 +273,20 @@ export class Graphics3DBoxElement extends LitElement {
     this.#curve = points;
     // Only a figure that asked for a marker watches the clock: an animated dot on every knot on a
     // site is not what a page that wanted none asked for.
+    this.#watchClock();
+    return this.#curveBox();
+  }
+
+  /** Follow the page's clock, for a curve whose marker is not pinned by `Phase`. */
+  #watchClock(): void {
     this.#unwatch?.();
     this.#unwatch = undefined;
-    if (on(settings["clock"]) && !Number.isFinite(Number(settings["phase"])))
-      this.#unwatch = this.#clock.watch((tick) => {
-        this.#phase = tick.phase;
-        this.#figure = this.#curveBox();
-        this.#draw();
-      });
-    return this.#curveBox();
+    if (!this.isConnected || !on(this.#settings["clock"]) || Number.isFinite(Number(this.#settings["phase"]))) return;
+    this.#unwatch = this.#clock.watch((tick) => {
+      this.#phase = tick.phase;
+      this.#figure = this.#curveBox();
+      this.#draw();
+    });
   }
 
   #curveBox(): Box {
@@ -290,16 +312,22 @@ export class Graphics3DBoxElement extends LitElement {
     });
   }
 
+  /** Whether the figure is meant to be turning, which a hidden tab or a detached element only suspends. */
+  #spinWanted = false;
+
   #spin(running: boolean): void {
-    if (running && !this.#spinTimer) {
+    this.#spinWanted = running;
+    if (running && !this.#spinTimer && this.isConnected && document.visibilityState !== "hidden") {
       this.#spinTimer = setInterval(() => {
         this.azimuth = (Number(this.azimuth) + SPIN_STEP) % 360;
       }, SPIN_INTERVAL_MS);
-    } else if (!running && this.#spinTimer) {
-      clearInterval(this.#spinTimer);
-      this.#spinTimer = undefined;
-    }
+    } else if (!running) this.#stopSpin();
     this.requestUpdate();
+  }
+
+  #stopSpin(): void {
+    if (this.#spinTimer) clearInterval(this.#spinTimer);
+    this.#spinTimer = undefined;
   }
 
   // Map a pointer event to the viewBox coordinates of the figure's SVG.
@@ -322,11 +350,11 @@ export class Graphics3DBoxElement extends LitElement {
     return html`<div class="notatio-toolbar">
       <button
         type="button"
-        class="notatio-spin ${this.#spinTimer ? "is-on" : ""}"
-        aria-pressed=${this.#spinTimer ? "true" : "false"}
+        class="notatio-spin ${this.#spinWanted ? "is-on" : ""}"
+        aria-pressed=${this.#spinWanted ? "true" : "false"}
         title="auto-rotate"
         aria-label="auto-rotate"
-        @click=${() => this.#spin(!this.#spinTimer)}
+        @click=${() => this.#spin(!this.#spinWanted)}
       >
         ⟳
       </button>

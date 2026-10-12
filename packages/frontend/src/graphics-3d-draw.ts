@@ -24,7 +24,17 @@ const SIDE_SHADE = 72;
 const HOVER_REACH = 40;
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
-const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const esc = (s: string): string =>
+  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+
+/**
+ * A color a box holds, as an attribute value: a name, `#hex`, `rgb()`/`hsl()`, `color-mix()` or
+ * `var()` -- nothing with a quote or a bracket in it -- else the fallback. The SVG is markup, so a
+ * value out of a box is never trusted to stay inside its attribute.
+ */
+const SAFE_COLOR = /^[#\w\s.,%()/-]+$/;
+const color = (value: unknown, fallback = "currentColor"): string =>
+  typeof value === "string" && SAFE_COLOR.test(value) ? esc(value) : fallback;
 
 /** The view a figure is turned to; what is absent is the box's own. */
 export interface Graphics3dView {
@@ -211,7 +221,7 @@ function legendSvg(width: number, value: unknown): string {
   return out;
 }
 
-const strokeOf = (o: Options, fallback: string): string => (typeof o.EdgeColor === "string" ? o.EdgeColor : fallback);
+const strokeOf = (o: Options, fallback: string): string => color(o.EdgeColor, fallback);
 
 function polygons(
   entry: Entry,
@@ -232,7 +242,7 @@ function polygons(
   faces.forEach((ring, k) => {
     if (ring.some((p) => p === undefined)) return;
     const pts = ring as Projected[];
-    const fill = colors[k] ?? (typeof o.FaceForm === "string" ? o.FaceForm : "currentColor");
+    const fill = color(colors[k] ?? o.FaceForm);
     const points = pts.map((p) => `${n2(p[0])},${n2(p[1])}`).join(" ");
     const look = wire
       ? `fill="none" stroke="${fill}" stroke-width="0.7" stroke-linejoin="round" opacity="0.8"`
@@ -258,7 +268,7 @@ function cuboidFaces(entry: Entry, at: (p: Triple) => Projected | undefined, out
   const [low, high] = [lo as Projected[], hi as Projected[]];
   const poly = (ps: readonly Projected[]): string => ps.map((p) => `${n2(p[0])},${n2(p[1])}`).join(" ");
   const depth = (ps: readonly Projected[]): number => mean(ps.map((p) => p[2]));
-  const top = typeof o.FaceForm === "string" ? o.FaceForm : "currentColor";
+  const top = color(o.FaceForm);
   const side = `color-mix(in srgb, ${top} ${SIDE_SHADE}%, black)`;
   const face = (ps: readonly Projected[], fill: string, d: number): Drawable => ({
     depth: d,
@@ -308,7 +318,7 @@ function lines(
     const inner = arc.slice(1, -1);
     if (o.Casing === true && inner.length >= 2)
       svg += `<path d="${path(inner)}" stroke="${CASING}" stroke-width="${(stroke * 3).toFixed(2)}" stroke-linecap="butt" stroke-linejoin="round" fill="none"/>`;
-    svg += `<path d="${path(arc)}" stroke="${colors[i] ?? "currentColor"}" stroke-width="${stroke.toFixed(2)}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
+    svg += `<path d="${path(arc)}" stroke="${color(colors[i])}" stroke-width="${stroke.toFixed(2)}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
     out.push({ depth: mean(arc.map((p) => p[2])), svg });
   }
 }
@@ -317,7 +327,7 @@ function dots(entry: Entry, at: (p: Triple) => Projected | undefined, out: Drawa
   const o = optionsOfBox(entry.node);
   const placed = triples(o.Points).flatMap((p, k) => {
     const q = at(p);
-    return q === undefined ? [] : [{ q, color: strings(o.PointColors)[k] ?? "currentColor" }];
+    return q === undefined ? [] : [{ q, color: color(strings(o.PointColors)[k]) }];
   });
   const size = typeof o.PointSize === "number" ? o.PointSize : 3.2;
   if (o.Role === "Marker") {
@@ -402,7 +412,7 @@ export function graphics3dSvg(box: Box, view: Graphics3dView = {}): string {
   let labels = "";
   for (const entry of entries) {
     const own = optionsOfBox(entry.node);
-    const layer = layers[own.Underlay === true ? "under" : own.Overlay === true ? "over" : "main"];
+    const layer = layers[own.Behind === true ? "under" : own.OnTop === true ? "over" : "main"];
     const known = entry.vertices && projectedVertices(entry.vertices);
     switch (entry.node[0]) {
       case "Polygon3DBox":

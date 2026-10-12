@@ -8,7 +8,7 @@
 // Options that are ours, not Wolfram's: `Azimuth`, `Elevation` and `Zoom` (the view as the drawer's
 // projection reads it, where Wolfram has `ViewPoint`), `Framing` (`Fixed`: a constant scale, as a
 // surface is framed; `Fit`: the whole cube fills the frame, as bars and meshes are), `Description`
-// (the figure's accessible name), and on a primitive `Underlay`/`Overlay` (drawn under or over the
+// (the figure's accessible name), and on a primitive `Behind`/`OnTop` (drawn under or over the
 // depth-sorted rest), `Casing`, `DepthCue` and `Role`.
 
 import {
@@ -465,7 +465,7 @@ export function curveBox(points: readonly Triple[], o: CurveOptions = {}): Box {
           EdgeWidth: 0.3,
           EdgeColor: "currentColor",
           EdgeOpacity: 0.05,
-          Underlay: true,
+          Behind: true,
         }),
         { Points: points3 },
       ),
@@ -489,7 +489,7 @@ export function curveBox(points: readonly Triple[], o: CurveOptions = {}): Box {
         Points: [[...loop[Math.round(phase * open) % open]!]],
         PointSize: o.stroke ?? 2.4,
         Role: "Marker",
-        Overlay: true,
+        OnTop: true,
       }),
     );
   }

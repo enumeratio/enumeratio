@@ -558,6 +558,32 @@ test("a Plot3D of an expression is a producer: the box holds the expression it c
   expect((unsampledGraphics3d(box) as unknown[])[0]).toBe("Plot3D");
 });
 
+test("what a box holds never leaves its attribute: a description and colors come out inert", () => {
+  const box = [
+    "Graphics3DBox",
+    [
+      "Polygon3DBox",
+      {
+        Points: [
+          [0, 0, 0],
+          [1, 0, 0],
+          [0, 1, 1],
+        ],
+        FaceForm: 'red" onload="x',
+        EdgeColor: "red' onclick='x",
+      },
+    ],
+    { Description: '" onmouseover="x', PlotLabel: "<b>" },
+  ] as never;
+  const s = graphics3dSvg(box);
+  expect(s).not.toContain('" onmouseover');
+  expect(s).not.toContain('" onload');
+  expect(s).not.toContain("' onclick");
+  expect(s).toContain('aria-label="&quot; onmouseover=&quot;x"');
+  expect(s).toContain('fill="currentColor"');
+  expect(s).toContain("&lt;b&gt;");
+});
+
 test("a head with no data to draw lowers to nothing", () => {
   expect(listBoxOfSettings({ data: "oops" })).toBeUndefined();
   expect(barBoxOfSettings({ data: "[]" })).toBeUndefined();
