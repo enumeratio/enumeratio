@@ -1,11 +1,11 @@
-// Exact bigint counts read off a triangle or a series (Stirling, Eulerian, Euler zigzag, Motzkin by
+// Exact bigint counts read off a triangle or a series (Stirling, Eulerian, Euler zigzag, telephone, Motzkin by
 // peaks, a weighted Kreweras series), for families whose Epsil count is a table the interpreter takes
 // seconds to minutes over past 2^53. Each is the `count` of a `fastCount` (see `exactUpTo`), held to
 // Epsil by tests/fast-kernels.test.ts and to a second route in tests/exact-triangles.test.ts. Each is
 // bounded to a size where it answers in about 0.1 s; past it the question is left unanswered rather
 // than hung on.
 
-import type { EpsilFamily } from "./epsil.ts";
+import type { EpsilFamily, FastKernel } from "./epsil.ts";
 
 const factorials: bigint[] = [1n];
 function factorialsTo(n: number): bigint[] {
@@ -167,13 +167,27 @@ export function isNonCrossingCycleSupport(x: unknown, [n]: number[]): boolean {
   return true;
 }
 
+/** The telephone number T(n), the involutions of n: T(i) = T(i − 1) + (i − 1) T(i − 2). */
+export function telephoneExact(n: number): bigint {
+  let previous = 1n;
+  let current = 1n;
+  for (let i = 2; i <= n; i++) [previous, current] = [current, current + BigInt(i - 1) * previous];
+  return current;
+}
+
+/** The self-inverse permutations of n. */
+export function isInvolutionPermutation(x: unknown, [n]: number[]): boolean {
+  return isPermutationOf(x, n) && x.every((image, i) => x[image - 1] === i + 1);
+}
+
 /**
  * `family` with an exact `count` while its first param is at most `limit`, and none past it: a count a
  * double can't hold is `count`'s to give, not Epsil's, whose interpreter takes minutes. `trivial` answers
- * the fibers that are 0 or 1 whatever the size, so they are answered past `limit` too. `valid` is a
- * direct membership test, for a family whose Epsil one builds a table that overflows doubles. Where the
- * family has a `fast` kernel only its count is replaced; unrank and rank decline past 2^53 (and past
- * `limit`) at once, and are Epsil's below.
+ * the fibers that are 0 or 1 whatever the size, so they are answered past `limit` too, and `only` is the
+ * member of a fiber `trivial` counts as 1, for `unrank`. `valid` is a direct membership test, for a
+ * family whose Epsil one builds a table that overflows doubles. Where the family has a `fast` kernel its
+ * count (and `valid` and `only` where given) replace its own; unrank and rank otherwise decline past
+ * 2^53 (and past `limit`) at once, and are Epsil's below.
  */
 export const exactUpTo = (
   family: EpsilFamily,
@@ -182,17 +196,30 @@ export const exactUpTo = (
   options: {
     trivial?: (p: number[]) => bigint | undefined;
     valid?: (element: unknown, p: number[]) => boolean;
+    only?: (p: number[]) => number[] | undefined;
   } = {},
 ): EpsilFamily => {
-  const { trivial = () => undefined, valid } = options;
+  const { trivial = () => undefined, valid, only } = options;
   const exact = (p: number[]): bigint | undefined => trivial(p) ?? (p[0] > limit ? undefined : count(p));
+  // Undefined leaves a question to Epsil.
+  const base: FastKernel = family.fast ?? {
+    count: exact,
+    unrank: () => undefined,
+    rank: () => undefined,
+    valid: () => undefined,
+  };
   const kernel =
-    family.fast !== undefined
-      ? { fast: { ...family.fast, count: exact } }
-      : valid === undefined
-        ? { fastCount: exact }
-        : // Unrank and rank stay Epsil's: undefined leaves them to it.
-          { fast: { count: exact, unrank: () => undefined, rank: () => undefined, valid } };
+    family.fast === undefined && valid === undefined && only === undefined
+      ? { fastCount: exact }
+      : {
+          fast: {
+            ...base,
+            count: exact,
+            unrank: (p: number[], r: number) =>
+              r === 0 && only !== undefined && trivial(p) === 1n ? only(p) : base.unrank(p, r),
+            valid: valid ?? base.valid,
+          },
+        };
   return {
     ...family,
     ...kernel,

@@ -298,6 +298,7 @@ const kDescentDefinitions: EpsilFamily = permutationRestriction({
 const kDescentPermutations = exactUpTo(kDescentDefinitions, 1000, ([n, k]) => eulerianExact(n, k), {
   trivial: ([n, k]) => (k === 0 || (n > 0 && k === n - 1) ? 1n : k >= n ? 0n : undefined),
   valid: isKDescentPermutation,
+  only: ([n, k]) => Array.from({ length: n }, (_, i) => (k === 0 ? i + 1 : n - i)), // no descents, or all of them
 });
 
 // Exactly k inversions. A prefix's inversions are its Lehmer digits (the free values below each
