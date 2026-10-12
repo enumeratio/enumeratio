@@ -20,6 +20,7 @@ export interface SvgOptions {
   readonly label?: string;
 }
 
+const ANCHORS: ReadonlySet<string> = new Set(["start", "middle", "end"]);
 const LINE_WIDTH = 1.25;
 const xy = (p: FramePoint): Vec2 => [p[0] ?? 0, p[1] ?? 0];
 const n = (x: number): string => String(Math.round(x * 100) / 100);
@@ -116,7 +117,7 @@ export function svg(
         ? ` paint-order="stroke" stroke="${ink(look.halo)}" stroke-width="3" stroke-linejoin="round"`
         : "";
       const turn = look.angle ? ` transform="rotate(${n(-look.angle)} ${n(x)} ${n(y)})"` : "";
-      return `<text x="${n(x)}" y="${n(y)}"${turn} font-size="${n(size * pixels)}" fill="${ink(color)}" fill-opacity="${n(look.opacity ?? opacity)}" text-anchor="${look.anchor ?? "middle"}"${look.anchor ? "" : ' dominant-baseline="central"'}${look.italic ? ' font-style="italic"' : ""}${halo} font-family="${family}">${escape(label)}</text>`;
+      return `<text x="${n(x)}" y="${n(y)}"${turn} font-size="${n(size * pixels)}" fill="${ink(color)}" fill-opacity="${n(look.opacity ?? opacity)}" text-anchor="${ANCHORS.has(look.anchor ?? "") ? look.anchor : "middle"}"${look.anchor ? "" : ' dominant-baseline="central"'}${look.italic ? ' font-style="italic"' : ""}${halo} font-family="${family}">${escape(label)}</text>`;
     };
     const texts: string[] = [];
     const round = options.rounded ? ' stroke-linejoin="round" stroke-linecap="round"' : "";

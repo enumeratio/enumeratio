@@ -87,8 +87,11 @@ function base64(bytes: Uint8Array): string {
   return out;
 }
 
-/** The most cells a raster draws (a side of 1024): past it the image is not built. */
-export const MAX_RASTER_CELLS = 1024 * 1024;
+/**
+ * The most cells a raster draws (a side of 512): the PNG is stored uncompressed, so a `data=` grid of
+ * 1024 a side would put a ~5.6 MB data URI in the DOM. Past it the image is not built.
+ */
+export const MAX_RASTER_CELLS = 512 * 512;
 
 /**
  * Rows of colors as a PNG data URI, the first row of `rows` at the BOTTOM of the image (the least y,
