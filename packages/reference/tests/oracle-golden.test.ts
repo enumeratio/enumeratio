@@ -45,6 +45,21 @@ test("every row that is not an agreement is classified, with a note", () => {
   }
 });
 
+// `<system>.skip` in examples.tsv: the scan leaves the row out of that lane, so it holds no answer
+// and no classification, only the reason.
+test("a skipped row says why and holds no scan", () => {
+  for (const { head, implementations } of records)
+    for (const [id, bySystem] of Object.entries(implementations!))
+      for (const [system, row] of Object.entries(bySystem)) {
+        if (row.skip === undefined) continue;
+        const label = `${head}/${id} (${system})`;
+        expect(row.skip, label).toBe(true);
+        expect(OWN_FORMS.has(system), label).toBe(false);
+        expect((row.note ?? "").length, label).toBeGreaterThan(20);
+        expect([row.out, row.verdict, row.kind], label).toEqual([undefined, undefined, undefined]);
+      }
+});
+
 test("every scanned row still describes a current, non-aspirational example", () => {
   for (const { head, entry, implementations } of records) {
     const ids = new Set(entry.examples.filter((e) => e.role !== "aspirational").map((e) => e.id));
