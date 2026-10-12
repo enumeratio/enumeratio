@@ -12,7 +12,7 @@
 //   - or, for a head of fixed arity whose parameters the reference names, the arguments
 //     are ATTRIBUTES: `<notatio-binomial n="5" k="2">`;
 //   - every other attribute is an OPTION, Wolfram's way: `<notatio-plot-3d plot-range="All">`
-//     is `Plot3D(…, PlotRange -> All)`, the name un-kebab-cased.
+//     is `Plot3D(…, PlotRange -> All)`, the name un-kebab-cased (a structural writing: `<graphics-3d-box>` draws it).
 //
 // Only the OUTERMOST generic element typesets, through `<notatio-out>`; the ones inside
 // it are structure -- they exist so the tree is addressable, not so each draws. Inside

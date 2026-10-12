@@ -19,16 +19,12 @@
   },
   "Plot3D(x * y, (x, -1, 1), (y, -1, 1))": {
     "rendering": {
-      "tag": "notatio-plot-3d",
+      "tag": "graphics-3d-box",
       "attributes": {
-        "value": "x * y",
-        "xvar": "x",
-        "x-domain": "-1,1",
-        "yvar": "y",
-        "y-domain": "-1,1"
+        "value": "Plot3D(x * y, (x, -1, 1), (y, -1, 1))"
       }
     },
-    "markup": "<notatio-plot-3d value=\"x * y\" xvar=\"x\" x-domain=\"-1,1\" yvar=\"y\" y-domain=\"-1,1\"></notatio-plot-3d>"
+    "markup": "<graphics-3d-box value=\"Plot3D(x * y, (x, -1, 1), (y, -1, 1))\"></graphics-3d-box>"
   },
   "ContourPlot(x^2 + y^2, (x, -2, 2), (y, -2, 2), XLabel -> \"x\", YLabel -> \"y\")": {
     "rendering": {
@@ -237,21 +233,39 @@
   },
   "ListPlot3D([[1, 2], [3, 4]])": {
     "rendering": {
-      "tag": "notatio-list-plot-3d",
+      "tag": "graphics-3d-box",
       "attributes": {
-        "data": "[[1,2],[3,4]]"
+        "value": "ListPlot3D([[1, 2], [3, 4]])"
       }
     },
-    "markup": "<notatio-list-plot-3d data=\"[[1,2],[3,4]]\"></notatio-list-plot-3d>"
+    "markup": "<graphics-3d-box value=\"ListPlot3D([[1, 2], [3, 4]])\"></graphics-3d-box>"
   },
   "BarChart3D([[1, 2], [3, 4]])": {
     "rendering": {
-      "tag": "notatio-bar-chart-3d",
+      "tag": "graphics-3d-box",
       "attributes": {
-        "data": "[[1,2],[3,4]]"
+        "value": "BarChart3D([[1, 2], [3, 4]])"
       }
     },
-    "markup": "<notatio-bar-chart-3d data=\"[[1,2],[3,4]]\"></notatio-bar-chart-3d>"
+    "markup": "<graphics-3d-box value=\"BarChart3D([[1, 2], [3, 4]])\"></graphics-3d-box>"
+  },
+  "Plot3D(Sin(x) * y, (x, 0, 3), (y, 0, 3), PlotLegends -> True)": {
+    "rendering": {
+      "tag": "graphics-3d-box",
+      "attributes": {
+        "value": "Plot3D(sin(x) * y, (x, 0, 3), (y, 0, 3), PlotLegends -> True)"
+      }
+    },
+    "markup": "<graphics-3d-box value=\"Plot3D(sin(x) * y, (x, 0, 3), (y, 0, 3), PlotLegends -> True)\"></graphics-3d-box>"
+  },
+  "Graphics3D(Line(KnotCurve(TorusKnot(2, 3))), Closed -> True, Torus -> (2, 1))": {
+    "rendering": {
+      "tag": "graphics-3d-box",
+      "attributes": {
+        "value": "Graphics3D(Line(KnotCurve(TorusKnot(2, 3))), closed -> True, Torus -> (2, 1))"
+      }
+    },
+    "markup": "<graphics-3d-box value=\"Graphics3D(Line(KnotCurve(TorusKnot(2, 3))), closed -> True, Torus -> (2, 1))\"></graphics-3d-box>"
   },
   "GraphPlot([[1, 2], [2, 3]])": {
     "rendering": {

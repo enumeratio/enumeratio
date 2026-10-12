@@ -8,6 +8,9 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
 import { type Box, type BoxNode, makeBoxes, notationOf } from "@enumeratio/boxes";
 import type { BoxShape, MathJSON } from "@enumeratio/entry";
+import { graphics3dOptionsOf, gridAxis, gridSide, sampleGrids, surfaceDomains } from "../src/graphics-3d-lowering.ts";
+import { surfaceBox } from "../src/graphics-3d-box.ts";
+import { unsampledGraphics3d } from "../src/graphics-3d-draw.ts";
 import { plainJson } from "../src/graphics-rules.ts";
 import { type CompiledItem, compilePlot } from "../src/plot-compile.ts";
 import { plotBoxOfSamples, spanOf, unsampledPlot, vectorOptionsOf } from "../src/plot-lowering.ts";
@@ -15,7 +18,7 @@ import { PLOT_NOTATION } from "../src/plot-notation.ts";
 import { plotSeries } from "../src/plot.ts";
 import { polarPlotBox, samplePolar } from "../src/polarplot.ts";
 import { FIGURE_NOTATION } from "../src/show-box.ts";
-import { plotSettingsOf } from "../src/symbols.ts";
+import { graphics3dSettingsOf, plotSettingsOf } from "../src/symbols.ts";
 import { vectorPlotBox } from "../src/vectorplot.ts";
 
 type Json = Parameters<typeof plainJson>[0];
@@ -51,6 +54,21 @@ function samplers(
 
 /** The plots of an expression: a `Show`'s producers wait on a view, which a page gives them. */
 const SAMPLED: ReadonlySet<string> = new Set(["Plot", "ParametricPlot", "PolarPlot", "VectorPlot", "StreamPlot"]);
+
+/** A surface, sampled over its domain on the grid the page uses: the box a page draws once its kernel has answered. */
+function sampledSurface(ce: ComputeEngine, held: readonly unknown[]): Box {
+  const settings = graphics3dSettingsOf(held as never)!;
+  const { compiled, free, items } = samplers(ce, held[1]);
+  const [vx, vy] = [
+    settings["xvar"] || free[0] || "x",
+    settings["yvar"] || free.find((u) => u !== (settings["xvar"] || free[0])) || "y",
+  ];
+  const [[xlo, xhi], [ylo, yhi]] = surfaceDomains(settings);
+  const side = gridSide(settings);
+  const [xs, ys] = [gridAxis(xlo, xhi, side), gridAxis(ylo, yhi, side)];
+  const grids = sampleGrids(compiled.length, xs, ys, (k, x, y) => items[k]!({ [vx]: x, [vy]: y }));
+  return surfaceBox(grids, xs, ys, graphics3dOptionsOf(settings));
+}
 
 /** A plot of an expression, sampled over its domain: the box a page draws once its kernel has answered. */
 function sampled(ce: ComputeEngine, held: readonly unknown[]): Box {
@@ -109,7 +127,9 @@ export function boxOfExample(ce: ComputeEngine, expr: MathJSON): Box {
   const notation = { ...notationOf(ce), ...FIGURE_NOTATION, ...PLOT_NOTATION };
   const box = makeBoxes(value as never, notation);
   const held = unsampledPlot(box) as readonly unknown[] | undefined;
-  return held !== undefined && SAMPLED.has(String(held[0])) ? sampled(ce, held) : box;
+  if (held !== undefined && SAMPLED.has(String(held[0]))) return sampled(ce, held);
+  const surface = unsampledGraphics3d(box) as readonly unknown[] | undefined;
+  return surface !== undefined && surface[0] === "Plot3D" ? sampledSurface(ce, surface) : box;
 }
 
 const isNode = (box: unknown): box is BoxNode => Array.isArray(box) && typeof box[0] === "string";
@@ -117,7 +137,14 @@ const isOptions = (x: unknown): x is Record<string, unknown> =>
   typeof x === "object" && x !== null && !Array.isArray(x);
 
 /** Boxes that only hold others: what a drawing's marks sit in. */
-const CONTAINERS = new Set(["RowBox", "StyleBox", "TagBox", "GraphicsComplexBox", "InterpretationBox"]);
+const CONTAINERS = new Set([
+  "RowBox",
+  "StyleBox",
+  "TagBox",
+  "GraphicsComplexBox",
+  "GraphicsComplex3DBox",
+  "InterpretationBox",
+]);
 
 const ADDRESS = /^\d+,\d+(;\d+,\d+)*$/;
 
@@ -150,7 +177,7 @@ export function shapeOf(box: Box, asked: BoxShape): BoxShape {
     } else if (node[0] === "RowBox" && Array.isArray(node[1])) for (const part of node[1]) walk(part, role);
     else walk(node[1]);
   };
-  if (box[0] === "GraphicsBox") walk(box[1]);
+  if (box[0] === "GraphicsBox" || box[0] === "Graphics3DBox") walk(box[1]);
   const shape: { -readonly [K in keyof BoxShape]: BoxShape[K] } = { head: box[0] };
   if (asked.marks !== undefined) shape.marks = marks;
   if (asked.roles !== undefined) shape.roles = roles;

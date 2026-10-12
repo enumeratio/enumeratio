@@ -16,8 +16,8 @@ import { expect, test } from "@playwright/test";
 // The elements' sources, beside the package's manifest (they are what `collectComponents` reads).
 const srcDir = fileURLToPath(new URL("./src/", import.meta.resolve("@enumeratio/components/package.json")));
 
-// STORIES_DATA is keyed by the Vue/React wrapper name (`BarChart3D`); the page route is the
-// custom-element tag (`notatio-bar-chart-3d`) -- the same rule ComponentPage.vue's `wrapper`
+// STORIES_DATA is keyed by the Vue/React wrapper name (`ComplexPlot3D`); the page route is the
+// custom-element tag (`notatio-complex-plot-3d`) -- the same rule ComponentPage.vue's `wrapper`
 // computed applies the other way.
 // A head with stories and no element of its own (`Plot`) is drawn by the tag its symbol names.
 const tagByName = new Map([

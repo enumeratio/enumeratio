@@ -1,2 +1,4 @@
 id	in
 saddle	Plot3D[Subtract[Power[x, 2], Power[y, 2]], List[x, -2, 2], List[y, -2, 2]]
+several-surfaces	Plot3D[List[Plus[Times[Sin[x], Cos[y]], 2], Subtract[Times[Cos[x], Sin[y]], 2]], List[x, -3, 3], List[y, -3, 3]]
+titled-without-axes	Plot3D[Times[Sin[x], Cos[y]], List[x, -3, 3], List[y, -3, 3], List[PlotLabel, "ripple"], List[Axes, False]]

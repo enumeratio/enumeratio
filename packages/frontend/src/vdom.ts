@@ -13,6 +13,7 @@ import { stripMetadata, tokenOf } from "@enumeratio/formats/markup";
 import { LAYOUT_HEADS, PROSE_HEADS } from "@enumeratio/boxes";
 import { isBoxTag } from "./box-tags.ts";
 import { CHART_HEADS, PLOT_HEADS } from "./plot-lowering.ts";
+import { GRAPHICS_3D_HEADS } from "./graphics-3d-lowering.ts";
 import { layoutRendering, optionAttribute, type Rendering, renderingOf, visualSymbol } from "./symbols.ts";
 
 type Json = MathJsonExpression;
@@ -35,8 +36,10 @@ export interface StructuralNode extends Omit<Rendering, "children"> {
  */
 export function tagOf(head: string): string {
   const drawn = visualSymbol(head)?.tag;
-  // A plot or chart is drawn by `graphics-box` but is not its tag: a `Plot` written structurally is the head.
-  if (drawn !== undefined && isBoxTag(drawn) && !PLOT_HEADS.includes(head) && !CHART_HEADS.includes(head)) return drawn;
+  // A plot, chart or figure in space is drawn by `graphics-box` or `graphics-3d-box` but is not its tag:
+  // a `Plot` written structurally is the head.
+  const family = PLOT_HEADS.includes(head) || CHART_HEADS.includes(head) || GRAPHICS_3D_HEADS.includes(head);
+  if (drawn !== undefined && isBoxTag(drawn) && !family) return drawn;
   // A digit run stays with its letter: `Plot3D` is `plot-3d`, as the symbols test pins.
   return `notatio-${head.replace(/([a-z])([A-Z0-9])/g, "$1-$2").toLowerCase()}`;
 }

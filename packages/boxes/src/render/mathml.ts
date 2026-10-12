@@ -151,6 +151,13 @@ function writeNode(box: BoxNode): string {
     case "PolyhedronBox":
     case "InsetBox":
       return element("mtext", "-Graphics-");
+    case "Graphics3DBox":
+    case "GraphicsComplex3DBox":
+    case "Polygon3DBox":
+    case "Line3DBox":
+    case "Point3DBox":
+    case "CuboidBox":
+      return element("mtext", "-Graphics3D-");
     case "TableViewBox":
       return element("mtext", "-TableView-");
     case "DynamicBox":

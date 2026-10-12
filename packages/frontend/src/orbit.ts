@@ -59,6 +59,11 @@ export class Orbit {
     this.#home ??= this.view;
   }
 
+  /** Make the view as it is now the one a double-click returns to: a figure whose expression changed has a new first view. */
+  rehome(): void {
+    this.#home = this.view;
+  }
+
   /** Is a drag in progress right now? A figure with its own hover readout needs to stop
    *  chasing the pointer while the view is being turned. */
   get dragging(): boolean {

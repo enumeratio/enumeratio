@@ -159,6 +159,13 @@ class Writer {
       case "PolyhedronBox":
       case "InsetBox":
         return "-Graphics-";
+      case "Graphics3DBox":
+      case "GraphicsComplex3DBox":
+      case "Polygon3DBox":
+      case "Line3DBox":
+      case "Point3DBox":
+      case "CuboidBox":
+        return "-Graphics3D-";
       case "TableViewBox":
         return "-TableView-";
       case "DynamicBox":

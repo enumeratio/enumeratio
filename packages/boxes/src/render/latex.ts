@@ -275,6 +275,13 @@ function writeNode(box: BoxNode): string {
     case "PolyhedronBox":
     case "InsetBox":
       return "\\text{-Graphics-}";
+    case "Graphics3DBox":
+    case "GraphicsComplex3DBox":
+    case "Polygon3DBox":
+    case "Line3DBox":
+    case "Point3DBox":
+    case "CuboidBox":
+      return "\\text{-Graphics3D-}";
     case "TableViewBox":
       return "\\text{-TableView-}";
     // An interface box has no TeX; it reads as Wolfram prints it, `-Slider-`.

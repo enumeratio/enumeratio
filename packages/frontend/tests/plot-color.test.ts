@@ -1,13 +1,12 @@
 import { expect, test } from "vite-plus/test";
-import { barChart3dSvg } from "../src/barchart3d.ts";
 import { chartSvg } from "../src/chart.ts";
 import { complexSurfaceSvg, hueColor, hueOf, type ComplexSurface } from "../src/complex-plot-3d.ts";
 import { gradientUniform, MAX_STOPS, portraitShader } from "../src/complex-plot.ts";
 import { contourSvg } from "../src/contour.ts";
 import { densitySvg } from "../src/densityplot.ts";
-import { mesh3dSvg, scatter3dSvg } from "../src/listplot3d.ts";
 import { GRADIENTS, gradientNamed, rgbToOklab, hexToRgb, sampleGradient } from "../src/palettes.ts";
-import { curve3dSvg, surfacesSvg } from "../src/plot3d.ts";
+import { barChart3dBox, curveBox, meshBox, scatterBox, surfaceBox } from "../src/graphics-3d-box.ts";
+import { graphics3dSvg } from "../src/graphics-3d-draw.ts";
 import { discreteName, gradientName, plotPalette } from "../src/plot-color.ts";
 import { linePlotSvg } from "../src/plot.ts";
 import { renderDiagram } from "../src/diagram.ts";
@@ -41,21 +40,25 @@ const continuous: Record<string, (o: { gradient?: string; reverse?: boolean }) =
   contourFilled: (o) => contourSvg(ramp, xs, xs, { filled: true, ...o }),
   contourLines: (o) => contourSvg(ramp, xs, xs, o),
   vector: (o) => renderPlot(vectorPlotBox((x, y) => [-y, x], -1, 1, -1, 1, o) as never).svg,
-  surface: (o) => surfacesSvg([ramp], { axes: false, xs, ys: xs, ...o }),
-  barChart3d: (o) => barChart3dSvg(ramp, o),
-  mesh: (o) => mesh3dSvg(ramp, o),
+  surface: (o) => graphics3dSvg(surfaceBox([ramp], xs, xs, { axes: false, ...o })),
+  barChart3d: (o) => graphics3dSvg(barChart3dBox(ramp, o)),
+  mesh: (o) => graphics3dSvg(meshBox(ramp, o)),
   scatter: (o) =>
-    scatter3dSvg(
-      [
-        { x: 0, y: 0, z: 0 },
-        { x: 1, y: 1, z: 1 },
-      ],
-      o,
+    graphics3dSvg(
+      scatterBox(
+        [
+          [0, 0, 0],
+          [1, 1, 1],
+        ],
+        o,
+      ),
     ),
   curve: (o) =>
-    curve3dSvg(
-      Array.from({ length: 64 }, (_, k) => [Math.cos(k / 10), Math.sin(k / 10), k / 64] as const),
-      o,
+    graphics3dSvg(
+      curveBox(
+        Array.from({ length: 64 }, (_, k) => [Math.cos(k / 10), Math.sin(k / 10), k / 64] as const),
+        o,
+      ),
     ),
 };
 
@@ -72,8 +75,8 @@ for (const [name, draw] of Object.entries(continuous)) {
 
 test("a curve in space colors along a cyclic rainbow unless told otherwise", () => {
   const points = Array.from({ length: 64 }, (_, k) => [Math.cos(k / 10), Math.sin(k / 10), k / 64] as const);
-  expect(curve3dSvg(points)).toContain(`stroke="${sampleGradient(gradientNamed("sinebow"), 0)}"`);
-  expect(curve3dSvg(points, { gradient: "viridis" })).toContain('stroke="#440154"');
+  expect(graphics3dSvg(curveBox(points))).toContain(`stroke="${sampleGradient(gradientNamed("sinebow"), 0)}"`);
+  expect(graphics3dSvg(curveBox(points, { gradient: "viridis" }))).toContain('stroke="#440154"');
 });
 
 test("series take the discrete scheme, one color each", () => {
@@ -95,14 +98,16 @@ test("series take the discrete scheme, one color each", () => {
   ).toContain("#377eb8");
   expect(renderDiagram(torusSquareBox(2, 3, { discrete: "set1" }) as never)).toContain("#377eb8");
   expect(renderDiagram(torusSquareBox(2, 3) as never)).toContain("#f28e2c");
-  const surfaces = surfacesSvg([ramp, ramp.map((r) => r.map((v) => 6 - v))], { axes: false, discrete: "set1" });
+  const surfaces = graphics3dSvg(
+    surfaceBox([ramp, ramp.map((r) => r.map((v) => 6 - v))], xs, xs, { axes: false, discrete: "set1" }),
+  );
   expect(surfaces).toContain("#e41a1c");
   expect(surfaces).toContain("#377eb8");
 });
 
 test("a lone surface takes the gradient; several keep a color each", () => {
-  expect(surfacesSvg([ramp], { axes: false })).not.toContain("color-mix");
-  expect(surfacesSvg([ramp, ramp], { axes: false })).toContain("color-mix");
+  expect(graphics3dSvg(surfaceBox([ramp], xs, xs, { axes: false }))).not.toContain("color-mix");
+  expect(graphics3dSvg(surfaceBox([ramp, ramp], xs, xs, { axes: false }))).toContain("color-mix");
 });
 
 test("the argument of a complex surface is colored on the phase wheel by default", () => {

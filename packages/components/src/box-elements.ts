@@ -19,6 +19,7 @@ type Registry = Pick<CustomElementRegistry, "define" | "get">;
 export const INTERACTIVE_BOX_TAGS: ReadonlySet<string> = new Set([
   "table-view-box",
   "graphics-box",
+  "graphics-3d-box",
   "dynamic-box",
   "dynamic-module-box",
   "button-box",

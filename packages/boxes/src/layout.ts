@@ -391,6 +391,12 @@ class Layout {
       case "PolygonBox":
       case "PolyhedronBox":
       case "InsetBox":
+      case "Graphics3DBox":
+      case "GraphicsComplex3DBox":
+      case "Polygon3DBox":
+      case "Line3DBox":
+      case "Point3DBox":
+      case "CuboidBox":
       case "TableViewBox":
       case "DynamicBox":
         return this.slot(box);

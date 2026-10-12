@@ -24,12 +24,9 @@ graphics-box.inline-figure .graphics-box-figure { margin: 0; border: 0; backgrou
 graphics-box.inline-figure .graphics-box-layers { background: none !important; }
 
 /* Plots are block figures sized to a max width; the viewBox drives the ratio. */
-notatio-plot-3d { display: block; line-height: 0; }
-notatio-plot-3d .notatio-plot-box { display: inline-block; max-width: 100%; }
 graphics-box[data-plot] { display: block; flex: 0 1 auto; width: auto; line-height: 0; position: relative; }
 graphics-box[data-plot] .graphics-box-plot { display: inline-block; max-width: 100%; }
 graphics-box[data-plot] svg { width: 340px; max-width: 100%; height: auto; overflow: hidden; }
-notatio-plot-3d svg { width: 360px; max-width: 100%; height: auto; overflow: visible; }
 
 /* ComplexPlot3D is a Plot3D with a hue per face; same frame. */
 notatio-complex-plot-3d { display: block; line-height: 0; }
@@ -52,15 +49,13 @@ notatio-density-plot svg { width: 340px; max-width: 100%; height: auto; overflow
 
 graphics-box[data-plot] svg[aria-label="polar plot"] { width: 260px; }
 
-/* 3-D list plots & bar charts share Plot3D's sizing -- a projected figure whose
-   axis labels can sit just outside the viewBox. */
-notatio-list-plot-3d { display: block; line-height: 0; }
-notatio-list-plot-3d .notatio-list-plot-3d-box { display: inline-block; max-width: 100%; }
-notatio-list-plot-3d svg { width: 360px; max-width: 100%; height: auto; overflow: visible; }
-
-notatio-bar-chart-3d { display: block; line-height: 0; }
-notatio-bar-chart-3d .notatio-bar-chart-3d-box { display: inline-block; max-width: 100%; }
-notatio-bar-chart-3d svg { width: 360px; max-width: 100%; height: auto; overflow: visible; }
+/* A figure in space: a projected surface, mesh, bars or curve whose axis labels can sit just outside
+   the viewBox. Dragging turns it. */
+graphics-3d-box { display: block; line-height: 0; }
+graphics-3d-box .graphics-3d-box-view { display: inline-block; max-width: 100%; cursor: grab; touch-action: none; user-select: none; }
+graphics-3d-box .graphics-3d-box-view:active { cursor: grabbing; }
+graphics-3d-box svg { width: 360px; max-width: 100%; height: auto; overflow: visible; }
+graphics-3d-box .graphics-3d-box-badge { margin-left: 0.5em; padding: 0.05em 0.4em; border-radius: 4px; font-size: 0.72em; font-weight: 600; letter-spacing: 0.04em; background: var(--notatio-accent, #d97706); color: #fff; }
 
 /* Diagrams (GraphPlot, TreeGraph, LayeredGraphPlot, Dendrogram and TorusSquare): block figures at a fixed width. */
 graphics-box[data-diagram] { display: block; flex: 0 1 auto; width: auto; line-height: 0; position: relative; }
@@ -685,32 +680,22 @@ notatio-out[busy] .notatio-render { opacity: 0.5; transition-delay: 0.15s; }
 /* The custom element itself, not just the div inside it. An unknown element is inline
    by default, and as a flex item it would then be sized by its contents -- which, with
    the inline-size containment below, are sized by *it*. That circle resolves to zero. */
-/* A curve in space. The host element carries no size of its own, so without this the
-   plot box stays inline and the figure collapses to whatever the SVG's intrinsic size
-   happens to be -- about a fifth of the room it has. */
-notatio-curve-3d {
-  display: block;
-  width: 100%;
-}
-.notatio-curve-3d {
+/* A captioned figure in space (a curve). The plot box stays a block, or the figure collapses to whatever
+   the SVG's intrinsic size happens to be -- about a fifth of the room it has. */
+graphics-3d-box .graphics-3d-box-figure {
   margin: 0.75rem 0;
   text-align: center;
+  line-height: normal;
 }
-.notatio-curve-3d .notatio-plot-box {
+graphics-3d-box .graphics-3d-box-figure .graphics-3d-box-view {
   display: block;
-  cursor: grab;
-  touch-action: none;
-  user-select: none;
 }
-.notatio-curve-3d .notatio-plot-box:active {
-  cursor: grabbing;
-}
-.notatio-curve-3d svg {
+graphics-3d-box .graphics-3d-box-figure svg {
   width: 100%;
   height: auto;
   max-width: 30rem;
 }
-.notatio-curve-3d figcaption {
+graphics-3d-box figcaption {
   font-size: 0.8rem;
   color: var(--vp-c-text-3, #999);
   padding-top: 0.2rem;

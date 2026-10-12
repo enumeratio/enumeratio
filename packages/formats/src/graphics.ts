@@ -95,6 +95,7 @@ export const GRAPHICS_HEADS: readonly string[] = [
   "Plot",
   "ParametricPlot",
   "Plot3D",
+  "Graphics3D",
   "ContourPlot",
   "ListContourPlot",
   "DensityPlot",

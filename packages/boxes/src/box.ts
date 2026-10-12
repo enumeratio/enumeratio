@@ -82,6 +82,15 @@ export type BoxNode =
   | readonly ["PolygonBox", Options?]
   | readonly ["PolyhedronBox", Options?]
   | readonly ["InsetBox", Box, Options?]
+  // Space (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives, slice 7): the same contract in three
+  // dimensions. A primitive's geometry is its options; inside a `GraphicsComplex3DBox` a `Polygon3DBox`
+  // or `Line3DBox` names its vertices by `Indices` into the complex's `Points`.
+  | readonly ["Graphics3DBox", Box, Options?]
+  | readonly ["GraphicsComplex3DBox", Box, Options?]
+  | readonly ["Polygon3DBox", Options?]
+  | readonly ["Line3DBox", Options?]
+  | readonly ["Point3DBox", Options?]
+  | readonly ["CuboidBox", Options?]
   // Prose (https://github.com/enumeratio/enumeratio/wiki/Speculative-Prose-Pipeline). Inside `TextData` a leaf is text, not a token.
   | readonly ["TextCell", Box, string, Options?]
   | readonly ["TextData", readonly Box[]]
@@ -137,6 +146,12 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   PolygonBox: 0,
   PolyhedronBox: 0,
   InsetBox: 1,
+  Graphics3DBox: 1,
+  GraphicsComplex3DBox: 1,
+  Polygon3DBox: 0,
+  Line3DBox: 0,
+  Point3DBox: 0,
+  CuboidBox: 0,
   TextCell: 2,
   TextData: 1,
   ButtonBox: 1,
@@ -224,6 +239,14 @@ export const arrow = (options?: Options): Box => ["ArrowBox", ...withOptions([] 
 export const rectangle = (options?: Options): Box => ["RectangleBox", ...withOptions([] as const, options)] as Box;
 export const polygon = (options?: Options): Box => ["PolygonBox", ...withOptions([] as const, options)] as Box;
 export const polyhedron = (options?: Options): Box => ["PolyhedronBox", ...withOptions([] as const, options)] as Box;
+export const graphics3d = (content: Box, options?: Options): Box =>
+  ["Graphics3DBox", ...withOptions([content] as const, options)] as Box;
+export const graphicsComplex3d = (content: Box, options?: Options): Box =>
+  ["GraphicsComplex3DBox", ...withOptions([content] as const, options)] as Box;
+export const polygon3d = (options?: Options): Box => ["Polygon3DBox", ...withOptions([] as const, options)] as Box;
+export const line3d = (options?: Options): Box => ["Line3DBox", ...withOptions([] as const, options)] as Box;
+export const point3d = (options?: Options): Box => ["Point3DBox", ...withOptions([] as const, options)] as Box;
+export const cuboid = (options?: Options): Box => ["CuboidBox", ...withOptions([] as const, options)] as Box;
 export const inset = (content: Box, options?: Options): Box =>
   ["InsetBox", ...withOptions([content] as const, options)] as Box;
 export const textCell = (content: Box, cellStyle: string, options?: Options): Box =>

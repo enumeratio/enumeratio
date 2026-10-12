@@ -24,8 +24,8 @@ import "@enumeratio/components";
   `<notatio-worksheet>` (a reactive sheet of cells built on `<dynamic-module-box>`).
 - **Plots and charts** — `<graphics-box>` (a `Show`, the 2-D function, list and vector-field plots, and
   the `Chart` family: `BarChart`, `Histogram`, `PieChart`, `BoxWhiskerChart`, `ArrayPlot` of a matrix
-  and `DiscretePlot`), `<notatio-plot-3d>`, `<notatio-contour-plot>`,
-  `<notatio-density-plot>`,
+  and `DiscretePlot`), `<graphics-3d-box>` (a `Plot3D`, `ListPlot3D`, `BarChart3D`, or a curve in space as
+  `Graphics3D(Line(points))`), `<notatio-contour-plot>`, `<notatio-density-plot>`,
   `<notatio-complex-plot>` (and `-3d`); graphs, trees and the torus square are `<graphics-box>` too.
 - **Controls** — `<slider-box>` (`axis="y"` stands it up; and `<slider-2d-box>`, `<interval-slider-box>`,
   `<color-setter-box>`), `<knob-box>`, `<toggler-box>` (and `<toggler-bar-box>`),
@@ -39,8 +39,7 @@ import "@enumeratio/components";
   `<dynamic-module-box>`: bind a body's controls to its own expression and re-render
   on change.
 - **Other** — `<notatio-code>`, `<notatio-terminal>` (a real terminal emulator running
-  `@enumeratio/cli`'s logic), `<notatio-collection-table>`, `<notatio-clock>`,
-  `<notatio-curve-3d>`.
+  `@enumeratio/cli`'s logic), `<notatio-collection-table>`, `<notatio-clock>`.
 
 `./define.ts`'s `defineControl` is how a new control registers its tag and joins
 `CONTROL_TAGS`, the set a scope's `querySelectorAll` reads.

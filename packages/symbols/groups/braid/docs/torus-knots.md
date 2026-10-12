@@ -19,12 +19,8 @@ $\sin qt$ push it in and out through the hole $q$ times.
 <Story
   title="T(2,3) — the trefoil, on the torus it lives on">
 <ClientOnly>
-<notatio-curve-3d
-  value="KnotCurve(TorusKnot(2, 3))"
-  torus="2,1"
-  azimuth="45"
-  elevation="25"
-  label="T(2,3) — the trefoil"
+<graphics-3d-box
+  value='Graphics3D(Line(KnotCurve(TorusKnot(2, 3))), Closed -> True, Torus -> (2, 1), Azimuth -> 45, Elevation -> 25, Caption -> "T(2,3) — the trefoil")'
 />
 </ClientOnly>
 </Story>
@@ -89,7 +85,7 @@ winds three times round the tube. The two dials count those windings as they hap
 <p><notatio-clock label="one clock for the page" /></p>
 <div class="torus-pair">
 <graphics-box value="TorusSquare(2, 3)" />
-<notatio-curve-3d value="KnotCurve(TorusKnot(2, 3))" torus="2,1" azimuth="35" elevation="30" clock label="T(2,3) — the trefoil" />
+<graphics-3d-box value='Graphics3D(Line(KnotCurve(TorusKnot(2, 3))), Closed -> True, Torus -> (2, 1), Azimuth -> 35, Elevation -> 30, Clock -> True, Caption -> "T(2,3) — the trefoil")' />
 </div>
 </Story>
 </ClientOnly>
@@ -109,7 +105,7 @@ the tube, and the slope $7/3$ <em>is</em> that sentence.
 </template>
 <div class="torus-pair">
 <graphics-box value="TorusSquare(3, 7)" />
-<notatio-curve-3d value="KnotCurve(TorusKnot(3, 7))" torus="2,1" azimuth="20" elevation="35" clock label="T(3,7)" />
+<graphics-3d-box value='Graphics3D(Line(KnotCurve(TorusKnot(3, 7))), Closed -> True, Torus -> (2, 1), Azimuth -> 20, Elevation -> 35, Clock -> True, Caption -> "T(3,7)")' />
 </div>
 </Story>
 </ClientOnly>
@@ -150,7 +146,7 @@ straight: $T(1, q)$ and $T(p, 1)$ are **unknots**, however large the other numbe
 
 <Story title="T(1,7) — a circle, wound seven times">
 <ClientOnly>
-<notatio-curve-3d value="KnotCurve(TorusKnot(1, 7))" azimuth="45" elevation="25" label="T(1,7) — a circle, wound seven times" />
+<graphics-3d-box value='Graphics3D(Line(KnotCurve(TorusKnot(1, 7))), Closed -> True, Azimuth -> 45, Elevation -> 25, Caption -> "T(1,7) — a circle, wound seven times")' />
 </ClientOnly>
 </Story>
 
@@ -165,8 +161,8 @@ $p$ and $q$ is reflecting the line in the diagonal.
 
 <Story title="T(2,3) and T(3,2)">
 <ClientOnly>
-<notatio-curve-3d value="KnotCurve(TorusKnot(2, 3))" azimuth="20" label="T(2,3)" />
-<notatio-curve-3d value="KnotCurve(TorusKnot(3, 2))" azimuth="20" label="T(3,2) — the same knot" />
+<graphics-3d-box value='Graphics3D(Line(KnotCurve(TorusKnot(2, 3))), Closed -> True, Azimuth -> 20, Caption -> "T(2,3)")' />
+<graphics-3d-box value='Graphics3D(Line(KnotCurve(TorusKnot(3, 2))), Closed -> True, Azimuth -> 20, Caption -> "T(3,2) — the same knot")' />
 </ClientOnly>
 </Story>
 
@@ -176,8 +172,8 @@ $\langle a, b \mid a^p = b^q \rangle$ remembers $p$ and $q$ and nothing else.
 
 <Story title="T(7,3) and T(5,4)">
 <ClientOnly>
-<notatio-curve-3d value="KnotCurve(TorusKnot(7, 3))" azimuth="30" label="T(7,3)" />
-<notatio-curve-3d value="KnotCurve(TorusKnot(5, 4))" azimuth="30" label="T(5,4) — genuinely different" />
+<graphics-3d-box value='Graphics3D(Line(KnotCurve(TorusKnot(7, 3))), Closed -> True, Azimuth -> 30, Caption -> "T(7,3)")' />
+<graphics-3d-box value='Graphics3D(Line(KnotCurve(TorusKnot(5, 4))), Closed -> True, Azimuth -> 30, Caption -> "T(5,4) — genuinely different")' />
 </ClientOnly>
 </Story>
 
