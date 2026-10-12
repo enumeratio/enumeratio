@@ -3,7 +3,8 @@ import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
 
 // The double series declines when cancellation leaves its sum without trustworthy digits: the terms
-// of 1F1(1/2; 3/2; −x²) and 0F1(; 1; −x²/4) grow far past the sum before they shrink.
+// of 1F1(1/2; 3/2; −x²) and 0F1(; 1; −x²/4) grow far past the sum before they shrink. 1F1 at z < 0 with
+// 0 < a < b avoids that through Kummer's e^z·1F1(b−a; b; −z), whose terms are all positive; 0F1 has no such map.
 // 1F1(1/2; 3/2; −x²) = √π·erf(x)/(2x) (DLMF 13.6.7) and 0F1(; 1; −x²/4) = J₀(x).
 // Reference values are an 80-digit sum of the series (the committed oracle has no row for these).
 
@@ -23,8 +24,11 @@ function matchesOrDeclines(expr: unknown[], want: number, digits: number): void 
   expect(Math.abs((got.re as number) - want) / Math.abs(want)).toBeLessThan(10 ** -digits);
 }
 
-test("1F1(1/2; 3/2; −40) regularized matches erf(√40)/√40 or declines", () => {
-  matchesOrDeclines(["Hypergeometric1F1Regularized", ["Rational", 1, 2], ["Rational", 3, 2], -40], REG_1F1_AT_40, 12);
+test("1F1(1/2; 3/2; −40) regularized matches erf(√40)/√40", () => {
+  // Kummer's positive series answers where the alternating one has no digits left.
+  const got = ce.box(["Hypergeometric1F1Regularized", ["Rational", 1, 2], ["Rational", 3, 2], -40]).N();
+  expect(got.operator).not.toBe("Hypergeometric1F1Regularized");
+  expect(Math.abs((got.re as number) - REG_1F1_AT_40) / REG_1F1_AT_40).toBeLessThan(3e-15);
 });
 
 test("0F1(; 1; −200) matches J₀(2√200) or declines", () => {
@@ -36,7 +40,7 @@ test("0F1(; 1; −200) matches J₀(2√200) or declines", () => {
 test("the cancelling cases decline rather than vouch for noise", () => {
   // Every route onto the double series, so none can answer where another declines.
   const declines = (expr: unknown[]) => expect(ce.box(expr as never).N().operator).toBe(expr[0]);
-  declines(["Hypergeometric1F1Regularized", ["Rational", 1, 2], ["Rational", 3, 2], -40]);
+  declines(["Hypergeometric1F1Regularized", 4, 2, -10]); // a > b: no Kummer map without sign changes
   declines(["Hypergeometric0F1", 1, -200]);
   declines(["Hypergeometric0F1Regularized", 1, -200]);
   declines(["HypergeometricPFQ", ["List"], ["List", 1], -200]);
@@ -52,7 +56,8 @@ test("ordinary arguments keep their answers", () => {
 
 // Where the threshold sits (`CANCELLATION_TOL`), against mpmath 1.3.0: [head, a, b, z, mpmath value].
 // A value row has peak/|sum| · EPS under 3e-14 and keeps its digits; a null row has it from 1e-11 up and
-// declines. 1F1 rows are the regularized 1F1(a; b; z)/Γ(b).
+// declines. 1F1 rows are the regularized 1F1(a; b; z)/Γ(b); those with 0 < a < b go through Kummer's positive
+// series and keep every digit whatever that figure is, to ~1e-15.
 type Row = [head: string, a: number | null, b: number, z: number, value: number | null];
 const GRID: Row[] = [
   ["0F1", null, 1, -1, 0.22389077914123567],
@@ -66,14 +71,19 @@ const GRID: Row[] = [
   ["0F1", null, 2.5, -100, null],
   ["1F1", 0.5, 1.5, -2, 0.674933236039655],
   ["1F1", 0.5, 1.5, -8, 0.35353099564340495],
-  ["1F1", 0.5, 1.5, -15, null],
-  ["1F1", 0.5, 1.5, -40, null],
+  ["1F1", 0.5, 1.5, -15, 0.2581988785917735],
+  ["1F1", 0.5, 1.5, -40, 0.15811388300841897],
   ["1F1", 1, 2, -5, 0.1986524106001829],
-  ["1F1", 1, 2, -15, null],
+  ["1F1", 1, 2, -15, 0.06666664627317863],
   ["1F1", 1, 3, -8, 0.10938024160356098],
-  ["1F1", 1, 3, -20, null],
+  ["1F1", 1, 3, -20, 0.047500000005152886],
   ["1F1", 2, 5, -8, 0.004637770974387957],
-  ["1F1", 2, 5, -15, null],
+  ["1F1", 2, 5, -15, 0.0016888887801236193],
+  // a > b: the alternating series itself, no Kummer map.
+  ["1F1", 4, 2, -1, 0.061313240195240384],
+  ["1F1", 3, 1, -2, -0.1353352832366127],
+  ["1F1", 4, 2, -10, null],
+  ["1F1", 5, 2.5, -12, null],
 ];
 
 test.skipIf(process.env["DEEP_TESTS"] !== "1")(
@@ -88,7 +98,8 @@ test.skipIf(process.env["DEEP_TESTS"] !== "1")(
         continue;
       }
       expect(got.operator, where).not.toBe(expr[0]);
-      expect(Math.abs((got.re as number) - value) / Math.abs(value), where).toBeLessThan(3e-13);
+      const tolerance = head === "1F1" && a! < b ? 3e-15 : 3e-13;
+      expect(Math.abs((got.re as number) - value) / Math.abs(value), where).toBeLessThan(tolerance);
     }
   },
 );
