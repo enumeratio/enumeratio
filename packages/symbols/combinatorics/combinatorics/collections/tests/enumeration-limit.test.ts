@@ -63,18 +63,18 @@ test("a count past 2^53 in a plain-number kernel is unknown, not an internal err
   expect(run(["Count", ["PlanePartitions", 100]]).json).toEqual(["Count", ["PlanePartitions", 100]]);
 });
 
-test("PlanePartitions walks a table by shape: At answers at the edge, n = 33, and past it refuses at once", () => {
-  // 19 million elements, far past what the whole list could be built; a call builds a table of about 270
-  // thousand entries (1,627,194 steps), the last size under the limit.
-  expect(run(["Count", ["PlanePartitions", 33]]).json).toBe(18_974_973);
-  expect(run(["At", ["PlanePartitions", 33], 1]).json).toEqual(["List", ["List", 33]]);
-  expect(run(["At", ["PlanePartitions", 34], 1]).texts.join(" ")).toContain(
-    "PlanePartitions(34) would take about 2,024,826 steps",
+test("PlanePartitions walks a table by shape: At answers at the edge, n = 46, and past it refuses at once", () => {
+  // 2.5 billion elements, far past what the whole list could be built; a call builds a table of about 3.8
+  // million entries (1,883,096 steps), the last size under the limit.
+  expect(run(["Count", ["PlanePartitions", 46]]).json).toBe(2_543_535_902);
+  expect(run(["At", ["PlanePartitions", 46], 1]).json).toEqual(["List", ["List", 46]]);
+  expect(run(["At", ["PlanePartitions", 47], 1]).texts.join(" ")).toContain(
+    "PlanePartitions(47) would take about 2,268,569 steps",
   );
-  expect(run(["At", ["PlanePartitions", 34], 1]).json).toEqual(["At", ["PlanePartitions", 34], 1]);
+  expect(run(["At", ["PlanePartitions", 47], 1]).json).toEqual(["At", ["PlanePartitions", 47], 1]);
   // Counting is not walking: the count past the edge is still exact, and iterating the fiber is refused.
-  expect(run(["Count", ["PlanePartitions", 35]]).json).toBe(41_691_046);
-  expect(run(["Take", ["PlanePartitions", 33], 2]).json).toEqual(["Take", ["PlanePartitions", 33], 2]);
+  expect(run(["Count", ["PlanePartitions", 48]]).json).toBe(5_191_304_973);
+  expect(run(["Take", ["PlanePartitions", 46], 2]).json).toEqual(["Take", ["PlanePartitions", 46], 2]);
 });
 
 test("a fast count answers past 2^53 where the table is out of reach, and declines past its bound", () => {

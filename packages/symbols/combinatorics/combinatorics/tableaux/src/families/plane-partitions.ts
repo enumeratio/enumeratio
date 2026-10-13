@@ -6,80 +6,138 @@
 // h(μ, s) its count by outer shape μ and sum s, h(μ, s) = [s = |μ|] + Σ_{∅≠ν⊆μ} h(ν, s − |μ|)
 // (ν⊆μ the shape of the layer above). F_μ(t) = Σ_{∅≠ν⊆μ} h(ν, t) is summed over the subshapes by
 // inclusion–exclusion over the removable corners, so no pair of shapes is tested.
+//
+// Shapes are integer ids, their preorder in a trie of row lengths (a prefix before its extensions, rows
+// ascending, which is the family's order, and every subshape before its shape). The counts live in one flat
+// array, a slice per shape; a shape's corner-removed subshapes are found by walking the trie, once per set
+// of corners.
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
 const sum = (a: readonly number[]): number => a.reduce((x, y) => x + y, 0);
 
-const cmpShapes = (a: readonly number[], b: readonly number[]): number => {
-  const len = Math.min(a.length, b.length);
-  for (let i = 0; i < len; i++) if (a[i] !== b[i]) return a[i] - b[i];
-  return a.length - b.length;
-};
-
 interface Table {
-  /** Every nonempty shape of at most n cells, in the family's order. */
-  readonly shapes: number[][];
-  /** offset[k] = the plane partitions of n on the shapes before shapes[k]; one past the end is the count. */
+  /** Shapes of at most n cells are the ids 1..count (0 is the empty shape), in the family's order. */
+  readonly count: number;
+  readonly parent: Int32Array; // the shape without its last row
+  readonly last: Uint8Array; // its last row (n for the empty shape)
+  readonly cells: Uint8Array;
+  /** The shape with last row v, extending id, is kids[firstKid[id] + v − 1]. */
+  readonly firstKid: Int32Array;
+  readonly kids: Int32Array;
+  /** offset[id] = the plane partitions of n on the shapes before id; offset[count + 1] is the count. */
   readonly offset: Float64Array;
 }
 
-/** Shapes of at most n cells, a prefix before its extensions, each part weakly under the last. */
-function shapesUpTo(n: number): number[][] {
-  const shapes: number[][] = [];
-  const cur: number[] = [];
-  (function gen(used: number): void {
-    if (cur.length > 0) shapes.push(cur.slice());
-    const cap = Math.min(cur.length > 0 ? cur[cur.length - 1] : n, n - used);
-    for (let v = 1; v <= cap; v++) {
-      cur.push(v);
-      gen(used + v);
-      cur.pop();
+/** p(0..n) by Euler's pentagonal recurrence. */
+function partitionNumbers(n: number): bigint[] {
+  const p: bigint[] = [1n];
+  for (let m = 1; m <= n; m++) {
+    let acc = 0n;
+    for (let k = 1; (k * (3 * k - 1)) / 2 <= m; k++) {
+      const s = k % 2 === 1 ? 1n : -1n;
+      acc += s * p[m - (k * (3 * k - 1)) / 2];
+      if ((k * (3 * k + 1)) / 2 <= m) acc += s * p[m - (k * (3 * k + 1)) / 2];
     }
-  })(0);
-  return shapes;
+    p.push(acc);
+  }
+  return p;
 }
 
 function buildTable(n: number): Table {
-  const shapes = shapesUpTo(n);
-  // F[t] for t in 0..n − |μ|, F[0] = 0.
-  const memo = new Map<string, Float64Array>();
-  const tableOf = (mu: readonly number[]): Float64Array => {
-    const key = mu.join(",");
-    const hit = memo.get(key);
-    if (hit) return hit;
-    const m = sum(mu);
-    const size = n - m + 1;
-    const corners: number[] = [];
-    for (let i = 0; i < mu.length; i++) if (i === mu.length - 1 || mu[i] > mu[i + 1]) corners.push(i);
-    // Σ over the nonempty sets C of corners, signed, of F_{μ − C}: the subshapes strictly inside μ.
-    const inside = new Float64Array(size);
-    for (let mask = 1; mask < 1 << corners.length; mask++) {
-      const nu = mu.slice();
-      let bits = 0;
-      for (let b = 0; b < corners.length; b++)
-        if (mask & (1 << b)) {
-          nu[corners[b]]--;
-          bits++;
-        }
-      while (nu.length > 0 && nu[nu.length - 1] === 0) nu.pop();
-      if (nu.length === 0) continue;
-      const below = tableOf(nu);
-      const sign = bits % 2 === 1 ? 1 : -1;
-      for (let t = 1; t < size; t++) inside[t] += sign * below[t];
+  const p = partitionNumbers(n).map(Number);
+  let nodes = 0;
+  let entries = 0;
+  for (let m = 0; m <= n; m++) {
+    nodes += p[m];
+    entries += p[m] * (n - m + 1);
+  }
+  const parent = new Int32Array(nodes);
+  const last = new Uint8Array(nodes);
+  const cells = new Uint8Array(nodes);
+  const firstKid = new Int32Array(nodes);
+  const kids = new Int32Array(nodes);
+  const offset = new Float64Array(nodes + 1);
+  last[0] = n;
+  // F_μ(t) for t in 0..n − |μ|, F(0) = 0, a slice at base[id]; the empty shape's stays zero.
+  const base = new Int32Array(nodes);
+  const f = new Float64Array(entries);
+  let top = n + 1;
+  // At most c(c + 1)/2 ≤ n cells make c corners.
+  const maxCorners = Math.floor((Math.sqrt(8 * n + 1) - 1) / 2);
+  const ids = new Int32Array(1 << maxCorners); // the subshape with the corner set (a mask) removed
+  const odd = new Uint8Array(1 << maxCorners);
+  for (let mask = 1; mask < odd.length; mask++) odd[mask] = odd[mask >> 1] ^ (mask & 1);
+  const row = new Int32Array(n + 1); // the shape being built
+  let len = 0;
+
+  // The corners are the last rows of the runs of equal rows. Per run, ids[0..2^j) become ids[0..2^(j+1)):
+  // each id takes the run kept, and with the run's last row shortened (bit j). Returns the corner count.
+  const subshapes = (): number => {
+    let corners = 0;
+    ids[0] = 0;
+    for (let r = 0; r < len;) {
+      let end = r;
+      while (end < len - 1 && row[end] === row[end + 1]) end++;
+      const v = row[end];
+      const bit = 1 << corners++;
+      for (let mask = 0; mask < bit; mask++) {
+        let node = ids[mask];
+        for (let q = r; q < end; q++) node = kids[firstKid[node] + v - 1];
+        // A one-cell last row, shortened, is gone.
+        ids[mask | bit] = v === 1 ? node : kids[firstKid[node] + v - 2];
+        ids[mask] = kids[firstKid[node] + v - 1];
+      }
+      r = end + 1;
     }
-    const f = new Float64Array(size);
-    for (let t = 1; t < size; t++) f[t] = (t >= m ? (t === m ? 1 : 0) + f[t - m] : 0) + inside[t];
-    memo.set(key, f);
-    return f;
+    return corners;
   };
-  const offset = new Float64Array(shapes.length + 1);
-  shapes.forEach((mu, k) => {
-    const m = sum(mu);
-    const f = tableOf(mu);
-    offset[k + 1] = offset[k] + (m === n ? 1 : 0) + f[n - m];
-  });
-  return { shapes, offset };
+
+  const fill = (id: number): void => {
+    const m = cells[id];
+    const size = n - m + 1;
+    const b = top;
+    top += size;
+    base[id] = b;
+    if (size === 1) {
+      // Nothing sits above a shape of n cells.
+      offset[id + 1] = offset[id] + 1;
+      return;
+    }
+    const corners = subshapes();
+    // Σ over the nonempty sets of corners, signed, of F_{μ − C}: the subshapes strictly inside μ.
+    for (let mask = 1; mask < 1 << corners; mask++) {
+      const nu = ids[mask];
+      if (nu === 0) continue;
+      const from = base[nu];
+      if (odd[mask]) for (let t = 1; t < size; t++) f[b + t] += f[from + t];
+      else for (let t = 1; t < size; t++) f[b + t] -= f[from + t];
+    }
+    for (let t = m; t < size; t++) f[b + t] += (t === m ? 1 : 0) + f[b + t - m];
+    offset[id + 1] = offset[id] + (m === n ? 1 : 0) + f[b + n - m];
+  };
+
+  let next = 1;
+  let kidAt = 0;
+  const grow = (id: number, used: number): void => {
+    const cap = Math.min(last[id], n - used);
+    firstKid[id] = kidAt;
+    kidAt += cap;
+    for (let v = 1; v <= cap; v++) {
+      const kid = next++;
+      kids[firstKid[id] + v - 1] = kid;
+      parent[kid] = id;
+      last[kid] = v;
+      cells[kid] = used + v;
+      row[len] = v;
+      len++;
+      fill(kid);
+      grow(kid, used + v);
+      len--;
+    }
+  };
+  grow(0, 0);
+  return { count: nodes - 1, parent, last, cells, firstKid, kids, offset };
 }
 
 // The last two tables: a table is a few MB at n = 30 and grows quickly.
@@ -172,41 +230,34 @@ export function PlanePartitionsCount(n: number): number {
 
 /**
  * The steps of a call: the table has an entry per nonempty shape of at most n cells and sum above it,
- * Σ_{m≤n} p(m)·(n − m + 1), each about 6 steps: a mask per set of the shape's removable corners
- * (2^corners), each a string key and a map lookup before its adds. That puts a cold call near half a second
- * at the limit. The walk within one shape is far less (tens of ms at n = 44).
+ * Σ_{m≤n} p(m)·(n − m + 1), each about half a step (0.1 µs: a few corner sets, each an integer lookup and
+ * an add or two). That puts a cold call near half a second at the limit, n = 46; the walk within the
+ * biggest shape's fiber adds at most 0.1 s there.
  */
 export function planePartitionsWork(n: number): bigint {
   if (n < 1) return 0n;
   if (n > 200) return 2n ** 64n; // far past the limit; p(m) up to n is not worth computing
-  const p: bigint[] = [1n]; // partition numbers, by Euler's pentagonal recurrence
-  for (let m = 1; m <= n; m++) {
-    let acc = 0n;
-    for (let k = 1; (k * (3 * k - 1)) / 2 <= m; k++) {
-      const s = k % 2 === 1 ? 1n : -1n;
-      acc += s * p[m - (k * (3 * k - 1)) / 2];
-      if ((k * (3 * k + 1)) / 2 <= m) acc += s * p[m - (k * (3 * k + 1)) / 2];
-    }
-    p.push(acc);
-  }
-  let steps = 0n;
-  for (let m = 1; m <= n; m++) steps += p[m] * BigInt(n - m + 1);
-  return 6n * steps;
+  const p = partitionNumbers(n);
+  let entries = 0n;
+  for (let m = 1; m <= n; m++) entries += p[m] * BigInt(n - m + 1);
+  return (entries + 1n) / 2n;
 }
 
 export function PlanePartitionsUnrank(n: number, rank: number): number[][] {
   if (n <= 0) return [];
-  const { shapes, offset } = tableOf(n);
-  const r = normRank(rank, offset[shapes.length]);
+  const { count, parent, last, offset } = tableOf(n);
+  const r = normRank(rank, offset[count + 1]);
   // The last shape whose offset is at most r.
-  let lo = 0;
-  let hi = shapes.length - 1;
+  let lo = 1;
+  let hi = count;
   while (lo < hi) {
     const mid = (lo + hi + 1) >> 1;
     if (offset[mid] <= r) lo = mid;
     else hi = mid - 1;
   }
-  const shape = shapes[lo];
+  const shape: number[] = [];
+  for (let id = lo; id !== 0; id = parent[id]) shape.push(last[id]);
+  shape.reverse();
   let left = r - offset[lo];
   let found: Int32Array | undefined;
   walkFiber(shape, n, (flat) => {
@@ -223,15 +274,12 @@ export function PlanePartitionsRank(e: number[][], n: number): number {
   if (!IsPlanePartitionOf(e, n)) return -1;
   if (n === 0) return 0;
   const shape = e.map((row) => row.length);
-  const { shapes, offset } = tableOf(n);
-  let lo = 0;
-  let hi = shapes.length - 1;
-  while (lo < hi) {
-    const mid = (lo + hi) >> 1;
-    if (cmpShapes(shapes[mid], shape) < 0) lo = mid + 1;
-    else hi = mid;
+  const { last, cells, firstKid, kids, offset } = tableOf(n);
+  let id = 0;
+  for (const v of shape) {
+    if (v > Math.min(last[id], n - cells[id])) return -1;
+    id = kids[firstKid[id] + v - 1];
   }
-  if (cmpShapes(shapes[lo], shape) !== 0) return -1;
   const target = e.flat();
   let index = 0;
   let hit = false;
@@ -240,7 +288,7 @@ export function PlanePartitionsRank(e: number[][], n: number): number {
     if (!hit) index++;
     return hit;
   });
-  return hit ? offset[lo] + index : -1;
+  return hit ? offset[id] + index : -1;
 }
 
 export function IsPlanePartitionOf(e: unknown, n: number): boolean {

@@ -87,7 +87,7 @@ test("every n up to 18 is the whole list a brute-force enumeration sorts to, mem
 });
 
 test("rank and unrank round-trip at larger n, at the ends and across shapes", () => {
-  for (const n of [22, 30, 36]) {
+  for (const n of [22, 30, 36, 44]) {
     const total = PlanePartitionsCount(n);
     const ranks = [
       0,
@@ -117,11 +117,11 @@ test("rank is -1 for what is no plane partition of n", () => {
   expect(PlanePartitionsRank([], 0)).toBe(0);
 });
 
-test("the work bound is 6 steps a table entry, past the engine's limit from n = 34", () => {
+test("the work bound is half a step a table entry, past the engine's limit from n = 47", () => {
   expect(planePartitionsWork(0)).toBe(0n);
-  expect(planePartitionsWork(28)).toBe(6n * 86_296n); // 2.5 million elements, a small table
-  expect(planePartitionsWork(33)).toBe(1_627_194n);
-  expect(planePartitionsWork(34)).toBe(2_024_826n);
+  expect(planePartitionsWork(28)).toBe(43_148n); // 86,296 entries, a small table
+  expect(planePartitionsWork(46)).toBe(1_883_096n);
+  expect(planePartitionsWork(47)).toBe(2_268_569n);
   expect(planePartitionsWork(10_000)).toBeGreaterThan(2_000_000n);
 });
 
