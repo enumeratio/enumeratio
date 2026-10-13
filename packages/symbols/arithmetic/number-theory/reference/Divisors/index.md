@@ -32,6 +32,15 @@ bindings:
     form: sage
     template: enumeratio_divisors($1)
     arity: 1
+  - origin: mapped
+    form: sympy
+    template: divisors($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: SymPy's divisors is over the integers (positive divisors of |n|); a Gaussian integer is not one, and the Over -> GaussianIntegers form has no counterpart.
 ---
 
 - Includes both 1 and $n$ itself; a prime's only divisors are those two.

@@ -161,8 +161,8 @@ test("an unmappable expression names exactly what is missing", () => {
   // …including when the gap is nested inside something we do know.
   expect(unmappedHeads(["Add", 1, ["JonesPolynomial", 2]], "sympy")).toEqual(["JonesPolynomial/1"]);
   // A head mapped for one system may be unmapped for another; that is not a maths claim.
-  expect(emit(["PowerMod", 2, 3, 7], "wolfram").ok).toBe(true);
-  expect(emit(["PowerMod", 2, 3, 7], "sympy").ok).toBe(false);
+  expect(emit(["Quotient", 7, 2], "wolfram").ok).toBe(true);
+  expect(emit(["Quotient", 7, 2], "sympy").ok).toBe(false);
 });
 
 test("SymPy keeps a residue class through Power and Divide, and reads an Interval's Abs with abs()", () => {

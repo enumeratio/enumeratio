@@ -19,6 +19,18 @@ references:
     identity: Jacobi symbol
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: jacobi_symbol($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: SymPy's jacobi_symbol raises unless the lower argument is odd and positive.
 ---
 
 - Generalizes the Legendre symbol from prime $m$ to any odd $m$, by multiplying the Legendre symbols of $m$'s prime factors.

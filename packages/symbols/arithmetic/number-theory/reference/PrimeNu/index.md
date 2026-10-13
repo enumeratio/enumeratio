@@ -24,6 +24,16 @@ references:
 names:
   dlmf: number of distinct primes dividing a number
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: primenu($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: primenu counts distinct prime factors of an integer; a Gaussian integer is not one.
 ---
 
 - Counts distinct primes only -- $\nu(2^5)=1$, not 5.

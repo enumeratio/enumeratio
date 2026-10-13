@@ -32,8 +32,8 @@ for (const { head, entry } of heads) {
     (row.emit as Record<string, string>)[b.form] = b.template!;
     if (b.threadArg !== undefined) (row as { threadArg?: number }).threadArg = b.threadArg;
     if (b.threadArgOnly !== undefined)
-      (row as { threadArgOnly?: Record<string, number> }).threadArgOnly = {
-        ...(row as { threadArgOnly?: Record<string, number> }).threadArgOnly,
+      (row as { threadArgOnly?: Record<string, number | readonly number[]> }).threadArgOnly = {
+        ...(row as { threadArgOnly?: Record<string, number | readonly number[]> }).threadArgOnly,
         [b.form]: b.threadArgOnly,
       };
     if (b.note !== undefined) (row as { note?: string }).note = b.note;

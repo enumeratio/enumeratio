@@ -162,7 +162,7 @@ const REFERENCE_IMPLEMENTATION: JsonSchema = {
     arity: { type: "integer" },
     template: { type: "string" },
     threadArg: { type: "integer" },
-    threadArgOnly: { type: "integer" },
+    threadArgOnly: { anyOf: [{ type: "integer" }, { type: "array", items: { type: "integer" } }] },
     note: { type: "string" },
     counterpart: { const: false },
     checked: {

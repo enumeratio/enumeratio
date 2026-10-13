@@ -25,6 +25,17 @@ bindings:
     checked:
       version: 15.0.0
       on: 2026-09-28
+  - origin: mapped
+    form: sympy
+    template: kronecker_symbol($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: kronecker_symbol is SymPy's extension of the Jacobi symbol to every integer n.
 ---
 
 - Agrees with [[JacobiSymbol]] wherever $n$ is odd and positive, and with [[LegendreSymbol]] where $n$ is also prime — this is the head above both.

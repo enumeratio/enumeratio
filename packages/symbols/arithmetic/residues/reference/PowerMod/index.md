@@ -52,6 +52,18 @@ bindings:
     template: powermod($1, $2, $3)
     arity: 3
     note: Sage's power_mod takes a negative exponent, like ours; no rational base or exponent.
+  - origin: mapped
+    form: sympy
+    template: pow(ZZ.convert($1), ZZ.convert($2), ZZ.convert($3))
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: "SymPy has no PowerMod function; this is Python's three-argument pow over SymPy's ZZ integers (pure-Python ones, as the runner pins), which takes a negative exponent through the modular inverse and gives the result the sign of the modulus, where ours declines a modulus below 1 unless the exponent is 0. The emit varies with the operands: a rational exponent s/r is the least root of x^r = a^s through nthroot_mod, as PowerModList (None where there is no root); a symbolic, rational or Gaussian operand goes to pow on SymPy numbers, which holds it (Mod((2 + I)**2, 3)) or ignores the modulus for a rational base. A list threads over whichever argument holds it."
 ---
 
 - Computed by repeated squaring, without ever forming $a^b$ directly -- efficient even for huge $b$.

@@ -42,6 +42,14 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: SymPy's gcdex returns (s, t, g), a different order from our (g, s, t); the template only reorders the three. The Bezout pair is whichever the Euclidean algorithm reaches, and its sign convention for a negative argument is SymPy's own.
+  - origin: mapped
+    form: sympy
+    counterpart: false
+    arity: 3
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: SymPy's gcdex takes two arguments and has no n-ary form; folding it pairwise would test our fold against itself, so the three-argument call is left unmapped.
 ---
 
 - Implements the extended Euclidean algorithm, the standard way to compute modular inverses. See [[PowerMod]].

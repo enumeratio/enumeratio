@@ -1,0 +1,30 @@
+id	in	out	verdict
+k-0-gives-the-number-of-divisors	divisor_sigma(20, 0)	6	
+k-1-gives-the-sum-of-divisors	divisor_sigma(20, 1)	42	
+divisorsigma-2-20	divisor_sigma(20, 2)	546	
+divisorsigma-2-6	divisor_sigma(6, 2)	50	
+a-negative-order-sums-reciprocal-powers-sigma-1	divisor_sigma(6, -1)	ValueError: k should be a nonnegative integer	error
+large-integers	divisor_sigma((S(10)**30), 2)	1388888888888888888587721618754026546109040824596043713112451	
+negative-k-1-frac-14-frac-1-25-frac-1-100	divisor_sigma(10, -2)	ValueError: k should be a nonnegative integer	error
+rational-k-the-square-roots-of-the-divisors-of	divisor_sigma(12, Rational(1, 2))	TypeError: k should be an integer	error
+gaussian-integers-1-1-i-1-2i-3-i-over-divisors	divisor_sigma((3 + 1*I), 1)	TypeError: n should be an integer	error
+gaussianintegers-true-squares-of-1-1-i-2-3-3-3i			
+listable-in-n	[divisor_sigma(1, 2), divisor_sigma(2, 2), divisor_sigma(3, 2), divisor_sigma(4, 2), divisor_sigma(5, 2)]	[1, 5, 10, 21, 26]	
+symbolic-k-expands-over-the-divisors	divisor_sigma(30, Symbol("k"))	TypeError: k should be an integer	error
+6-is-a-perfect-number-sigma-1-6-2-times-6	divisor_sigma(6, 1)	12	
+28-is-the-next-perfect-number-sigma-1-28-2-times	divisor_sigma(28, 1)	56	
+filter-range-1-30-function-divisorsigma-1-1-eq-2			
+filter-range-1-30-function-divisorsigma-1-1-lt-2			
+filter-range-1-30-function-2-times-1-lt			
+nestlist-function-neg-1-plus-divisorsigma-1-1-1			
+apply-function-divisorsigma-0-1-1-list-2-3-5-6-7			
+apply-function-divisorsigma-0-1-1-list-1-4-9			
+multiplicative-sigma-1-mn-sigma-1-m-sigma-1-n	enumeratio_equal((divisor_sigma(9, 1) * divisor_sigma(8, 1)), divisor_sigma(72, 1))	True	
+divisorsigma-5-100	divisor_sigma(100, 5)	10325569807	
+divisorsigma-3-18-times-divisorsigma-3-25-eq	enumeratio_equal((divisor_sigma(18, 3) * divisor_sigma(25, 3)), divisor_sigma(450, 3))	True	
+divisorsigma-neg-1-28	divisor_sigma(28, -1)	ValueError: k should be a nonnegative integer	error
+divisorsigma-0-1	divisor_sigma(1, 0)	1	
+divisorsigma-0-2	divisor_sigma(2, 0)	2	
+divisorsigma-0-3	divisor_sigma(3, 0)	2	
+map-function-divisorsigma-1-1-lt-2-times-1-1			
+the-trivial-base-case	divisor_sigma(1, 1)	1	
