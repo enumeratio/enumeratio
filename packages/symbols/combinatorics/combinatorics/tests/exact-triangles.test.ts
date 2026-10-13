@@ -191,6 +191,21 @@ test("non-crossing cycle supports, past 2^53 too", () => {
   expect(nonCrossingCycleSupportByFixedPoint(19) > MAX_SAFE).toBe(true);
 });
 
+/** The involutions of n by their pairs: Σₖ n! / ((n − 2k)! k! 2ᵏ). */
+function involutionsByPairs(n: number): bigint {
+  const fact = [1n];
+  for (let i = 1; i <= n; i++) fact.push(fact[i - 1] * BigInt(i));
+  let total = 0n;
+  for (let k = 0; 2 * k <= n; k++) total += fact[n] / (fact[n - 2 * k] * fact[k] * 2n ** BigInt(k));
+  return total;
+}
+
+test("involutions (telephone numbers), past 2^53 and past the doubles' range too", () => {
+  for (const n of [0, 1, 2, 3, 10, 23, 27, 28, 40, 100, 300, 400, 1000, 5000])
+    expect([n, countOf("Involutions", [n])]).toEqual([n, involutionsByPairs(n)]);
+  expect(involutionsByPairs(28) > MAX_SAFE && involutionsByPairs(27) <= MAX_SAFE).toBe(true);
+});
+
 test("Motzkin paths by peaks, past 2^53 too", () => {
   for (let n = 0; n <= 12; n++)
     for (let k = 0; k <= 7; k++)
@@ -236,6 +251,7 @@ const BOUNDED: { head: string; limit: number; params: (n: number) => number[]; m
     },
   },
   { head: "NonCrossingCycleSupportPermutations", limit: 600, params: (n) => [n], member: iota },
+  { head: "Involutions", limit: 5000, params: (n) => [n], member: iota },
   {
     head: "MotzkinPathsByPeaks",
     limit: 600,

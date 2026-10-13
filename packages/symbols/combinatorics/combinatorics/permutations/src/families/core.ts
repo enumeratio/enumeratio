@@ -6,8 +6,10 @@
 import type { AnyFamily, EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {
   exactUpTo,
+  isInvolutionPermutation,
   isKCyclePermutation,
   stirlingFirstExact,
+  telephoneExact,
 } from "../../../collections/src/families/exact-triangles.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
 import { and, cell, equal, iff, lets, mul, rowTable } from "../../../collections/src/families/tables.ts";
@@ -348,6 +350,7 @@ const kCycleDefinitions: EpsilFamily = permutationRestriction({
 export const kCyclePermutations = exactUpTo(kCycleDefinitions, 1000, ([n, k]) => stirlingFirstExact(n, k), {
   trivial: ([n, k]) => (k > n || (k === 0 && n > 0) ? 0n : k === n ? 1n : undefined),
   valid: isKCyclePermutation,
+  only: ([n]) => Array.from({ length: n }, (_, i) => i + 1), // k = n: the identity
 });
 
 /** The permutations of n with no fixed point, D(n) of them. Of the open slots, m have their own
@@ -406,7 +409,7 @@ const telephoneTable = fold(
 /** The self-inverse permutations of n, T(n) of them (telephone numbers). A prefix is consistent
  *  when each slot that points back into the prefix is pointed back at; the labels it hasn't
  *  touched (neither a filled slot nor pointed at by one) pair up or stay fixed in T(free) ways. */
-const involutions: EpsilFamily = permutationRestriction({
+const involutionDefinitions: EpsilFamily = permutationRestriction({
   head: "Involutions",
   carrier: "Permutation",
   paramCount: 1,
@@ -427,6 +430,11 @@ const involutions: EpsilFamily = permutationRestriction({
     ),
     0,
   ],
+});
+
+// T(n) past 2^53 (from n = 24) is a table the interpreter takes seconds over; the recurrence is O(n).
+const involutions = exactUpTo(involutionDefinitions, 5000, ([n]) => telephoneExact(n), {
+  valid: isInvolutionPermutation,
 });
 
 export const epsilEntries: readonly EpsilFamily[] = [

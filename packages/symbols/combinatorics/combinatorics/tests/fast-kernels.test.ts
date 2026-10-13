@@ -405,6 +405,8 @@ const BIGINT_COUNTS: [string, number[]][] = [
   ["KCyclePermutations", [19, 5]],
   ["KCyclePermutations", [20, 5]],
   ["AlternatingPermutations", [22]],
+  ["Involutions", [28]],
+  ["Involutions", [29]],
   // The recurrence families, at the first params past 2^53.
   ["MotzkinPaths", [39]],
   ["SchroederPaths", [24]],
@@ -539,7 +541,9 @@ const OTHER_ORDER: Record<string, { params: number[]; reading: Reading }> = {
 for (const [head, { params, reading }] of Object.entries(OTHER_ORDER)) {
   test(`${head}: its TS kernel lists the members in another order, so it carries no fast path`, () => {
     const family = allFamilies.filter(isEpsilFamily).find((f) => f.head === head)!;
-    expect(family.fast).toBeUndefined();
+    // A count or membership kernel may stand in front of Epsil, but not an order of its own.
+    expect(family.fast?.unrank(params, 0)).toBeUndefined();
+    expect(family.fast?.rank([], params)).toBeUndefined();
     const epsil = epsilKernelOn(ce, family);
     expect(reading.count(params)).toBe(Number(epsil.count(params)));
     const differs = Array.from({ length: reading.count(params) }, (_, r) => r).some(
