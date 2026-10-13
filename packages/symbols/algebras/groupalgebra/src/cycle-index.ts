@@ -11,8 +11,11 @@ export interface CycleIndex {
   readonly types: ReadonlyMap<string, { readonly exponents: readonly number[]; readonly count: bigint }>;
 }
 
-/** Most points a cycle index is built for: the sums are over the partitions of n (p(40) ≈ 37 000). */
-export const MAX_SYMMETRIC_DEGREE = 40;
+/** Most points S_n and A_n are built for: one term per partition of n, through the engine about 0.4 s at
+ *  n = 30, 0.8 s at 35 and 2.2 s at 40 (37 000 terms), so it declines past 35. */
+export const MAX_SYMMETRIC_DEGREE = 35;
+/** Most points a listed `PermutationGroup` is built for: each of up to 50 000 elements is a word of that length. */
+export const MAX_LISTED_DEGREE = 200;
 export const MAX_CYCLIC_DEGREE = 1000;
 
 class Types {

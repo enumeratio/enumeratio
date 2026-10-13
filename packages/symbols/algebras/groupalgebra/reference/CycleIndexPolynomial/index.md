@@ -21,6 +21,6 @@ names:
 ---
 
 - The groups act as Wolfram's do: [[CyclicGroup]] and [[DihedralGroup]] on the $n$ vertices of an $n$-gon (rotations, and with the reflections), [[SymmetricGroup]] and [[AlternatingGroup]] on $n$ points, a [[PermutationGroup]] on the points it moves. $D_1$ swaps two points and $D_2$ is the Klein four-group on four points
-- Those four are summed by closed formulas, not by listing their elements (the symmetric and alternating groups run over the partitions of $n$, up to $n = 40$); a [[PermutationGroup]] is listed
+- Those four are summed by closed formulas, not by listing their elements (the symmetric and alternating groups run over the partitions of $n$, up to $n = 35$); a [[PermutationGroup]] is listed
 - The variable list must reach the group's degree, or the call stays unevaluated (Wolfram answers with a polynomial in the wrong variables); extra variables are ignored
 - Pólya's count: setting every $x_i$ to $k$ gives the colorings with $k$ colors up to the group. For $C_n$ that is the necklace count of [[KNecklaces]], for $D_n$ the bracelet count of [[KBracelets]]
