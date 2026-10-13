@@ -109,6 +109,14 @@ describe(`set partitions of ${N} under refinement`, () => {
     expect(evaluate(["Max", SP([[1, 2], [3]]), SP([[1], [2, 3]])])).toEqual(SP([[1, 2, 3]]));
   });
 
+  it("leaves non-partitions unevaluated, and different ground sets incomparable", () => {
+    for (const bad of [SP([[1, 2], [2]]), SP([[1], []]), ["SetPartition", ["List", ["List", "x"]]]]) {
+      const input = ["Compare", bad, SP([[1, 2]])];
+      expect(evaluate(input)).toEqual(input);
+    }
+    expect(evaluate(["Compare", SP([[1, 2]]), SP([[1], [2], [3]])])).toEqual("NaN");
+  });
+
   it("has no meet across ground sets", () => {
     const input = ["Min", SP([[1, 2]]), SP([[1], [2], [3]])];
     expect(evaluate(input)).toEqual(input);
@@ -137,5 +145,13 @@ describe(`permutations of ${N} under the weak order`, () => {
   it("has no meet across lengths", () => {
     const input = ["Min", PERM([2, 1]), PERM([1, 2, 3])];
     expect(evaluate(input)).toEqual(input);
+  });
+
+  it("leaves non-permutation words unevaluated, and different lengths incomparable", () => {
+    for (const bad of [PERM([1, 1, 2]), PERM([1, 3]), ["Permutation", ["List", "x", 1]]]) {
+      const input = ["Compare", bad, PERM([1, 2, 3])];
+      expect(evaluate(input)).toEqual(input);
+    }
+    expect(evaluate(["Compare", PERM([2, 1]), PERM([1, 2, 3])])).toEqual("NaN");
   });
 });

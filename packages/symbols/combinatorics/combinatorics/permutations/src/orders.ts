@@ -14,7 +14,11 @@ type Pairs = Set<number>;
 
 const wordOf = (p: Expr): number[] | undefined => {
   const word = operandsOf(operandsOf(p)[0]).map(integerAt);
-  return word.every((x): x is number => x !== undefined) ? word : undefined;
+  // Only a permutation word: the integers 1..n, each once.
+  return word.every((x): x is number => x !== undefined && x >= 1 && x <= word.length) &&
+    new Set(word).size === word.length
+    ? word
+    : undefined;
 };
 
 /** The pairs of values (a, b) with b before a. */
@@ -47,13 +51,12 @@ function fromInversions(pairs: Pairs, n: number): number[] {
   return word;
 }
 
-/** Both words, 0-based; undefined unless both are permutations of one n. */
+/** Both words, 0-based; undefined unless they are permutations of one n. */
 function wordsOf(a: Expr, b: Expr): [number[], number[]] | undefined {
   const [x, y] = [wordOf(a), wordOf(b)];
-  if (x === undefined || y === undefined) return undefined;
-  const ok = (w: readonly number[]) =>
-    w.length === x.length && new Set(w).size === w.length && w.every((v) => v >= 1 && v <= w.length);
-  return ok(x) && ok(y) ? [x.map((v) => v - 1), y.map((v) => v - 1)] : undefined;
+  return x === undefined || y === undefined || x.length !== y.length
+    ? undefined
+    : [x.map((v) => v - 1), y.map((v) => v - 1)];
 }
 
 const subset = (a: Pairs, b: Pairs): boolean => [...a].every((p) => b.has(p));
@@ -70,6 +73,7 @@ export function declarePermutationOrders(ce: Engine): void {
   conform(ce, "permutation", {
     PartialOrder: {
       Compare: (a, b) => {
+        if (wordOf(a) === undefined || wordOf(b) === undefined) return undefined;
         const words = wordsOf(a, b);
         if (words === undefined) return ce.NaN;
         const [p, q] = [inversions(words[0]), inversions(words[1])];

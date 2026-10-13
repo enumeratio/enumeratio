@@ -12,7 +12,11 @@ type Blocks = readonly (readonly number[])[];
 
 const blocksOf = (p: Expr): Blocks | undefined => {
   const blocks = operandsOf(operandsOf(p)[0]).map((b) => operandsOf(b).map(integerAt));
-  return blocks.every((b) => b.every((x) => x !== undefined)) ? (blocks as Blocks) : undefined;
+  // Only a partition: integer elements, non-empty blocks, no element twice.
+  const all = blocks.flat();
+  return blocks.every((b) => b.length > 0 && b.every((x) => x !== undefined)) && new Set(all).size === all.length
+    ? (blocks as Blocks)
+    : undefined;
 };
 
 const labelsOf = (blocks: Blocks): Map<number, number> =>
@@ -82,9 +86,10 @@ export function declareSetPartitionOrders(ce: Engine): void {
     PartialOrder: {
       Compare: (a, b) => {
         const [x, y] = [blocksOf(a), blocksOf(b)];
-        const both = x === undefined || y === undefined ? undefined : labels(x, y);
+        if (x === undefined || y === undefined) return undefined;
+        const both = labels(x, y);
         if (both === undefined) return ce.NaN;
-        const [below, above] = [refines(x!, both[1]), refines(y!, both[0])];
+        const [below, above] = [refines(x, both[1]), refines(y, both[0])];
         return ce.number(below && above ? 0 : below ? -1 : above ? 1 : Number.NaN);
       },
     },

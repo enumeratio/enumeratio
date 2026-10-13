@@ -48,6 +48,7 @@ jobs:
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/statistics-compiled.test.ts
       # Hand-written kernels against the interpreter, and each family's Epsil counts past 2^53.
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/fast-kernels.test.ts
+      - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/lattice-orders.test.ts
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run words/tests/epsil-families trees/tests/epsil-families graphs/tests/epsil-families collections/tests/epsil-families permutations/tests/epsil-families permutations/tests/permutation-classes
       # Every member of the larger families, and the sizes the standard run skips (about six minutes together).
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run trees/tests/unlabeled-tree-classes trees/tests/nested-families collections/tests/increasing-binary-trees compositions/tests/epsil-families partitions/tests/epsil-families tableaux/tests/boxed-plane-partitions tableaux/tests/rsk-pairs tableaux/tests/skew-standard-tableaux words/tests/parking-functions
