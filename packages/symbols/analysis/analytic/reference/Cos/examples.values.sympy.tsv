@@ -22,7 +22,7 @@ cos-pi-10-frac-sqrt-10-2-sqrt-5-4	cos((S(pi) / 10))	sqrt(sqrt(5)/8 + 5/8)
 cos-2-pi-5-frac-sqrt-5-1-4	cos((Rational(2, 5) * pi))	-1/4 + sqrt(5)/4	
 cos-3-pi-5-frac-1-sqrt-5-4	cos((Rational(3, 5) * pi))	1/4 - sqrt(5)/4	
 reduced-into-the-first-quadrant-by-symmetry	cos((Rational(11, 6) * pi))	sqrt(3)/2	
-interval-arithmetic-the-image-of-pi-3-pi-2-is-0			
+interval-arithmetic-the-image-of-pi-3-pi-2-is-0	cos(AccumBounds((S(pi) / 3), (S(pi) / 2)))	AccumBounds(0, 1/2)	
 uncertainty-propagation-cos-2-pm-0-01-approx-0			
 cos-infty-should-be-the-oscillation-range-1-1	cos(oo)	AccumBounds(-1, 1)	disagree
 an-imaginary-argument-rewrites-to-cosh-cos-ix	cos((I * Symbol("x")))	True	

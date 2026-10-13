@@ -1,43 +1,43 @@
-id	in	out
-extendedgcd-2-3		
-extendedgcd-12-18		
-extendedgcd-3-5		
-extendedgcd-6-4		
-any-number-of-arguments-folding-pairwise-6-times		
-gaussian-integers-by-euclid-with-the-rounded		
-negative-arguments-12-18-6		
-big-integers-the-coefficients-stay-minimal-x-b		
-three-arguments-4-cdot-4-6-cdot-4-9-1		
-listable-threads-over-a-list		
-gaussian-integer-and-a-plain-integer		
-one-argument-a-unit-the-identity-bezout-pair		
-one-argument-i-a-unit		
-a-zero-first-argument		
-a-zero-second-argument		
-two-coprime-gaussian-primes-above-5		
-a-gaussian-prime-and-a-real-prime-3-mod-4		
-an-associate-pair-by-i		
-an-associate-pair-by-1		
-two-unrelated-composites-of-norm-25		
-with-a-negative-real-prime		
-two-large-norm-gaussians		
-past-2-53-in-both-parts		
-a-real-split-prime-and-its-gaussian-factor		
-two-real-composites-plain-integer-case		
-with-a-negative-real-composite		
-the-larger-norm-argument-given-first		
-with-an-associate-times-1		
-with-an-associate-times-i		
-two-coprime-primes-above-13		
-recovering-a-shared-prime-above-13		
-with-a-real-prime-s-associate-by-the-unit-i		
-with-a-real-composite-5-squared		
-with-a-negative-associate		
-a-large-norm-gaussian-and-a-real-prime-19		
-the-modular-inverse-of-3-mod-11-is-4-since-3		
-confirms-the-coefficients-above-satisfy-2x-3y	((2 * -1) + (3 * 1))	1
-extendedgcd-6-21		
-bezout-coefficients-when-a-0-0-times-0-5-times-1		
-a-real-two-argument-case-stays-unevaluated		
-a-gaussian-third-argument-past-two-declines		
-a-real-argument-past-two-also-declines		
+id	in	out	verdict
+extendedgcd-2-3	(lambda s, t, g: (g, s, t))(*gcdex(2, 3))	(1, -1, 1)	
+extendedgcd-12-18	(lambda s, t, g: (g, s, t))(*gcdex(12, 18))	(6, -1, 1)	
+extendedgcd-3-5	(lambda s, t, g: (g, s, t))(*gcdex(3, 5))	(1, 2, -1)	
+extendedgcd-6-4	(lambda s, t, g: (g, s, t))(*gcdex(6, 4))	(2, 1, -1)	
+any-number-of-arguments-folding-pairwise-6-times			
+gaussian-integers-by-euclid-with-the-rounded	(lambda s, t, g: (g, s, t))(*gcdex((7 + 2*I), (3 + -5*I)))	(1, -1 - 2*I, -2 + 2*I)	
+negative-arguments-12-18-6	(lambda s, t, g: (g, s, t))(*gcdex(-12, 18))	(6, 1, 1)	
+big-integers-the-coefficients-stay-minimal-x-b	(lambda s, t, g: (g, s, t))(*gcdex((S(2)**100), (S(3)**50)))	(1, 208475958620489751737959, -368122879029235364752383564167)	
+three-arguments-4-cdot-4-6-cdot-4-9-1			
+listable-threads-over-a-list	[(lambda s, t, g: (g, s, t))(*gcdex(3, 5)), (lambda s, t, g: (g, s, t))(*gcdex(3, 15))]	[(1, 2, -1), (3, 1, 0)]	
+gaussian-integer-and-a-plain-integer	(lambda s, t, g: (g, s, t))(*gcdex((3 + 1*I), 5))	(1 + 2*I, -I, I)	disagree
+one-argument-a-unit-the-identity-bezout-pair	(lambda s, t, g: (g, s, t))(*gcdex((3 + 4*I), 1))	(1, 0, 1)	
+one-argument-i-a-unit	(lambda s, t, g: (g, s, t))(*gcdex((3 + 4*I), (0 + 1*I)))	(1, 0, -I)	
+a-zero-first-argument	(lambda s, t, g: (g, s, t))(*gcdex(0, (-4 + 3*I)))	(3 + 4*I, 0, -I)	
+a-zero-second-argument	(lambda s, t, g: (g, s, t))(*gcdex((-4 + 3*I), 0))	(3 + 4*I, -I, 0)	
+two-coprime-gaussian-primes-above-5	(lambda s, t, g: (g, s, t))(*gcdex((2 + 1*I), (2 + -1*I)))	(1, -1, 1 + I)	
+a-gaussian-prime-and-a-real-prime-3-mod-4	(lambda s, t, g: (g, s, t))(*gcdex((2 + 1*I), 3))	(1, 1 + I, -I)	
+an-associate-pair-by-i	(lambda s, t, g: (g, s, t))(*gcdex((3 + 4*I), (-4 + 3*I)))	(3 + 4*I, 0, -I)	
+an-associate-pair-by-1	(lambda s, t, g: (g, s, t))(*gcdex((3 + 4*I), (-3 + -4*I)))	(3 + 4*I, 0, -1)	
+two-unrelated-composites-of-norm-25	(lambda s, t, g: (g, s, t))(*gcdex((3 + 4*I), (4 + 3*I)))	(1, 3*I, 1 - 3*I)	disagree
+with-a-negative-real-prime	(lambda s, t, g: (g, s, t))(*gcdex((3 + 4*I), -7))	(1, -1 - I, -I)	
+two-large-norm-gaussians	(lambda s, t, g: (g, s, t))(*gcdex((123 + 456*I), (1000 + 1*I)))	(1, 203 - 296*I, -160 - 56*I)	
+past-2-53-in-both-parts	(lambda s, t, g: (g, s, t))(*gcdex((100000000000000000001 + 9007199254740993*I), (4 + 1*I)))	(1, -2 - I, 52940116800087677531 + 11769474399605451114*I)	disagree
+a-real-split-prime-and-its-gaussian-factor	(lambda s, t, g: (g, s, t))(*gcdex(5, (2 + 1*I)))	(2 + I, 0, 1)	
+two-real-composites-plain-integer-case	(lambda s, t, g: (g, s, t))(*gcdex(4, 9))	(1, -2, 1)	
+with-a-negative-real-composite	(lambda s, t, g: (g, s, t))(*gcdex(-15, (5 + 5*I)))	(5, I, 2 + I)	disagree
+the-larger-norm-argument-given-first	(lambda s, t, g: (g, s, t))(*gcdex((2 + 1*I), (123 + 456*I)))	(1, -140 - 158*I, 1)	
+with-an-associate-times-1	(lambda s, t, g: (g, s, t))(*gcdex((8 + 2*I), (-3 + -4*I)))	(1, 3*I, 3 + 4*I)	disagree
+with-an-associate-times-i	(lambda s, t, g: (g, s, t))(*gcdex((8 + 2*I), (4 + -3*I)))	(1, -3 - I, 2 + 5*I)	disagree
+two-coprime-primes-above-13	(lambda s, t, g: (g, s, t))(*gcdex((3 + 2*I), (2 + 3*I)))	(1, 3*I, -1 - 3*I)	disagree
+recovering-a-shared-prime-above-13	(lambda s, t, g: (g, s, t))(*gcdex((6 + 8*I), (3 + 2*I)))	(1, -1 - 2*I, 1 + 6*I)	disagree
+with-a-real-prime-s-associate-by-the-unit-i	(lambda s, t, g: (g, s, t))(*gcdex((3 + 4*I), (0 + 7*I)))	(1, -1 - I, 1)	
+with-a-real-composite-5-squared	(lambda s, t, g: (g, s, t))(*gcdex((3 + 4*I), 25))	(3 + 4*I, 1, 0)	
+with-a-negative-associate	(lambda s, t, g: (g, s, t))(*gcdex((6 + 8*I), (-2 + -3*I)))	(1, I, 3*I)	
+a-large-norm-gaussian-and-a-real-prime-19	(lambda s, t, g: (g, s, t))(*gcdex((123 + 456*I), 19))	(1, -2, 13 + 48*I)	
+the-modular-inverse-of-3-mod-11-is-4-since-3	(lambda s, t, g: (g, s, t))(*gcdex(3, 11))	(1, 4, -1)	
+confirms-the-coefficients-above-satisfy-2x-3y	((2 * -1) + (3 * 1))	1	
+extendedgcd-6-21	(lambda s, t, g: (g, s, t))(*gcdex(6, 21))	(3, -3, 1)	
+bezout-coefficients-when-a-0-0-times-0-5-times-1	(lambda s, t, g: (g, s, t))(*gcdex(0, 5))	(5, 0, 1)	
+a-real-two-argument-case-stays-unevaluated	(lambda s, t, g: (g, s, t))(*gcdex(2.5, 3))	(1.00000000000000, 0.400000000000000, 0.0)	disagree
+a-gaussian-third-argument-past-two-declines			
+a-real-argument-past-two-also-declines			

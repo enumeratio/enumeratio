@@ -9,6 +9,15 @@ signatures:
 seeAlso:
   - CenteredInterval
   - Around
+bindings:
+  - origin: mapped
+    form: sympy
+    template: AccumBounds($1, $2)
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: "AccumBounds is SymPy's interval arithmetic for real endpoints, but it is mapped for every Interval, a set use included: a Union of AccumBounds raises, AccumBounds(a, a) collapses to the scalar a, and reversed bounds raise. It holds accumulation bounds, not a rigorous enclosure: an inexact endpoint is not rounded outward, and a function over it is not built from its critical points as ours is, so the rows on rigour agree on endpoints only. Abs over an Interval is emitted as abs() (emit.ts), since Abs() leaves an AccumBounds held."
 ---
 
 - Rigorous containment, as Wolfram's Interval promises: an exact endpoint is exactly right, and an inexact one is rounded outward -- a lower bound down, an upper bound up. Decimal arithmetic is exact in compute-engine, so Interval(1.4, 1.5) + 1 is exactly Interval(2.4, 2.5); a function value at an inexact point is rounded one double outward from its value at working precision.

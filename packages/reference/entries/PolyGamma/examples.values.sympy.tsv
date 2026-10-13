@@ -60,7 +60,7 @@ one-argument-digamma-at-a-complex-point
 complex-argument-integer-order	polygamma(1, (2.5 + 3*I))	polygamma(1, 2.5 + 3*I)	
 between-poles-psi-1-2-pi-2-2-4	polygamma(1, -0.5)	polygamma(1, -0.5)	
 psi-infty-0	polygamma(1, oo)	0	
-interval-arithmetic-the-trigamma-is-decreasing			
+interval-arithmetic-the-trigamma-is-decreasing	polygamma(1, AccumBounds(3.45, 3.46))	polygamma(1, AccumBounds(3.45, 3.46))	disagree
 to-30-significant-digits-every-one-correctly	N(polygamma(1, Rational(1, 3)), 30)	10.0955971254270940817920040999	
 to-25-significant-digits-not-yet-only-the-first	N(polygamma(3, 5), 30)	0.0214278281927550750219481051729	
 trigamma-at-1-is-pi-squared-over-6	polygamma(1, 1)	pi**2/6	

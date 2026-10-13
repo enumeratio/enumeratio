@@ -58,6 +58,14 @@ bindings:
     template: list(continued_fraction($1))
     arity: 1
     note: Sage's continued_fraction returns a ContinuedFraction object (str() is '[3; 7, 16]'); list(...) gives the plain quotients, like the SymPy row.
+  - origin: mapped
+    form: sympy
+    template: "[t for _, t in zip(range($2), continued_fraction_iterator($1))]"
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: "The first n terms of the expansion, as ours is (an irrational's is not folded into a periodic tail, which the one-argument form does). Exact arguments only: continued_fraction_iterator(3.245) expands the binary double, where ours reads a float as the rational it prints."
 catalogCarrier: true
 ---
 

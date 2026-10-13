@@ -25,7 +25,7 @@ generatingfunction-fibonacci-n-n-x
 fibonacci-1-conjugate-z-eq-conjugate-fibonacci-1		
 matrixfunction-function-fibonacci-3-1-1-list		
 consecutive-ratios-f-n-1-f-n-converge-to-the	(S(fibonacci(20)) / fibonacci(19))	6765/4181
-sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143		
+sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	summation(fibonacci(Symbol("k")), (Symbol("k"), 1, 10))	143
 the-doubling-identity-f-2n-f-n-l-n-see-lucasl	enumeratio_equal(fibonacci(20), (fibonacci(10) * lucas(10)))	True
 the-defining-recurrence-f-10-f-9-f-8	enumeratio_equal(fibonacci(10), (fibonacci(9) + fibonacci(8)))	True
 cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	((fibonacci(5) * fibonacci(7)) - (S(fibonacci(6))**2))	1
