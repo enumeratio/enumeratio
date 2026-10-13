@@ -1,11 +1,12 @@
 // PrimePi/NthPrime, tracked at https://github.com/enumeratio/enumeratio/issues/205: native
 // PrimePi is an O(n) trial-division loop, and native NthPrime the same past an ever-growing
-// candidate. Below `PRIME_SIEVE_LIMIT` a segmented sieve answers both exactly in
-// O(n log log n); past it, the Lucy_Hedgehog method counts (and, for NthPrime, brackets and
-// locates) in O(x^(3/4)) — see sieve.ts — up to `PRIME_PI_LIMIT` for NthPrime; PrimePi from
-// 10^11 on uses the combinatorial count in O(x^(2/3)) (prime-count.ts), up to
-// `PRIME_COUNT_LIMIT`. Exact, never approximate, on every tier; each declines past its limit
-// rather than run for minutes.
+// candidate. Both are exact, never approximate, and decline past their limit rather than run
+// for minutes (see the residues package: sieve.ts, prime-count.ts, nth-prime.ts):
+//   PrimePi: a segmented sieve of odd numbers for small n, Lucy_Hedgehog counting (O(x^(3/4)))
+//     from there, the Deléglise–Rivat combinatorial count (O(x^(2/3))) from a few billion, up
+//     to `PRIME_COUNT_LIMIT`.
+//   NthPrime: an exact count at an inverse-π estimate, then a short sieve to p_n, up to
+//     `PRIME_PI_LIMIT`.
 //
 // compute-engine's own "Prime" head is derivative notation (f′, f''), unrelated to nth-
 // prime -- an earlier version of this file widened it to answer a plain positive-integer

@@ -12,7 +12,7 @@ import type { Declared, NumberKernel } from "./types.ts";
 /** The k-th prime (1-indexed). */
 function nthPrime(k: number): number {
   const p = sieveNthPrime(k);
-  if (p === undefined) throw new RangeError(`nthPrime: ${k} past PRIME_SIEVE_LIMIT`);
+  if (p === undefined) throw new RangeError(`nthPrime: ${k} past PRIME_PI_LIMIT`);
   return p;
 }
 
