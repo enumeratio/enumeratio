@@ -37,6 +37,15 @@ bindings:
     template: enumeratio_power_mod_list($1, $2, $3)
     arity: 3
     note: Sage reaches this through Zmod(m)(a).nth_root(b, all=True) (run.ts's SAGE_PREAMBLE); no one-liner in SymPy.
+  - origin: mapped
+    form: sympy
+    template: nthroot_mod(pow(ZZ.convert($1), S($2).p, ZZ.convert($3)), S($2).q, $3, True)
+    arity: 3
+    threadArgOnly: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: x^r = a^s (mod m) is nthroot_mod's x^n = a (mod p) with n = r and a = pow(a, s, m) over ZZ, which takes a negative s through the modular inverse. SymPy takes integer residues, so a rational or Gaussian base is an error there. A list threads over the base only.
 ---
 
 - The problem splits over the prime powers of $m$ by the Chinese remainder theorem: a root mod $m$ is one root per channel $p^e$, every combination, so the count is the product of the channel counts.

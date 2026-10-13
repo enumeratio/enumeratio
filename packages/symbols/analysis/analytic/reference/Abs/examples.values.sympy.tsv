@@ -14,8 +14,8 @@ abs-imaginaryunit	Abs(I)	1
 e-i-pi-3-lies-on-the-unit-circle	Abs(exp((I * (S(pi) / 3))))	1	
 abs-negativeinfinity	Abs(-oo)	oo	
 complex-infinity-has-infinite-magnitude-in-every	Abs(zoo)	oo	
-an-interval-maps-to-the-interval-of-absolute			
-an-interval-straddling-0-maps-to-0-the-larger			
+an-interval-maps-to-the-interval-of-absolute	abs(AccumBounds(-3, 5))	AccumBounds(0, 5)	
+an-interval-straddling-0-maps-to-0-the-larger	abs(AccumBounds(-3, 2))	AccumBounds(0, 3)	
 decides-the-sign-of-an-exact-numeric-expression	Abs((sqrt(2) - 2))	2 - sqrt(2)	
 a-complex-radicand-inside-the-subtraction	Abs((sqrt(-10) - 2))	sqrt(14)	
 n-abs-pi-plus-i-times-catalan-25			

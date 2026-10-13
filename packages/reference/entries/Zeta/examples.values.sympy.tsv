@@ -50,7 +50,7 @@ two-complex-arguments-under-n-to-ten-digits	N(zeta((-1.5 + 1*I), (2.5 + -1*I)), 
 which-with-inexact-complex-arguments-should	zeta((-1.5 + 1*I), (2.5 + -1*I))	0.0184868091938107 + 1.67553378430177*I	
 zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of	zeta(20, Rational(1, 2))	zeta(20, 1/2)	
 zeta-2-1-2-3-zeta-2-pi-2-2	zeta(2, Rational(1, 2))	zeta(2, 1/2)	
-interval-arithmetic-zeta-is-decreasing-on-1			
+interval-arithmetic-zeta-is-decreasing-on-1	zeta(AccumBounds(1.1, 1.2))	zeta(AccumBounds(1.1, 1.2))	disagree
 uncertainty-in-a-propagated-with-partial-a-zeta			
 to-40-significant-digits-every-one-correctly	N(zeta(3), 30)	1.20205690315959428539973816151	
 n-zeta-5-over-4-50	N(zeta(Rational(5, 4)), 30)	4.59511182584294338068537803969	
@@ -81,8 +81,8 @@ zeta-2-9	zeta(2, 9)	-1077749/705600 + pi**2/6
 zeta-2-10	zeta(2, 10)	-9778141/6350400 + pi**2/6	
 zeta-4-1	zeta(4, 1)	pi**4/90	
 zeta-4-2	zeta(4, 2)	-1 + pi**4/90	
-sum-zeta-2k-times-zeta-neg-2-times-k-plus-4-k-1			
-sum-zeta-2k-times-zeta-neg-2-times-k-plus-6-k-1			
+sum-zeta-2k-times-zeta-neg-2-times-k-plus-4-k-1	summation((zeta((2 * Symbol("k"))) * zeta(((-2 * Symbol("k")) + 4))), (Symbol("k"), 1, 1))	pi**4/36	
+sum-zeta-2k-times-zeta-neg-2-times-k-plus-6-k-1	summation((zeta((2 * Symbol("k"))) * zeta(((-2 * Symbol("k")) + 6))), (Symbol("k"), 1, 2))	pi**6/270	
 zeta-0-0-the-n-a-0-term-is-0-0-kept	zeta(0, 0)	1/2	
 odd-integers-geq-3-have-no-known-closed-form	zeta(3)	zeta(3)	
 zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s	N(zeta(3, Rational(-1, 2)), 30)	0.414398322117159997798167130580	disagree

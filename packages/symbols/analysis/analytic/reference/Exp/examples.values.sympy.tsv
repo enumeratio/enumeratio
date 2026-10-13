@@ -17,7 +17,7 @@ exp-ln-of-a-complex-argument-is-that-argument	exp(log((1 + 2*I)))	1 + 2*I
 exp-negativeinfinity	exp(-oo)	0	
 exp-positiveinfinity	exp(oo)	oo	
 element-wise-over-a-matrix-not-the-matrix	[[exp(1), exp((I * (S(pi) / 2)))], [exp(0), exp(1)]]	[[E, I], [1, E]]	
-interval-arithmetic-exp-1-ln-2-e-1-2			
+interval-arithmetic-exp-1-ln-2-e-1-2	exp(AccumBounds(-1, log(2)))	AccumBounds(exp(-1), 2)	
 uncertainty-propagation-e-2-pm-0-01-approx-7-389			
 around-0-still-fires-the-e-base-power-rule			
 its-own-derivative	diff(exp(Symbol("x")), Symbol("x"))	True	

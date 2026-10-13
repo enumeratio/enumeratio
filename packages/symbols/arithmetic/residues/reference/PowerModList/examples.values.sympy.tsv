@@ -1,38 +1,38 @@
-id	in	out
-the-square-roots-of-3-modulo-11-5-2-25-and-6-2		
-the-cube-roots-of-unity-modulo-7-since-3-mid-6		
-an-integer-exponent-is-an-ordinary-power-2-10		
-a-general-exponent-s-r-every-x-with-x-2-equiv-2		
-the-three-cube-roots-of-2-2-4-since-3-mid-30		
-exponent-1-is-the-modular-inverse-3-cdot-5-15		
-a-prime-power-the-root-2-of-x-2-equiv-1-pmod-5		
-a-rational-base-reads-as-2-cdot-3-1-in-z-23		
-threads-over-lists-the-squares-mod-5-are-exactly		
-sqrt-1-modulo-the-31-digit-prime-10-30-57-no		
-the-cube-roots-of-2-modulo-the-mersenne-prime-2		
-forty-hensel-steps-up-from-sqrt-1-equiv-2-pmod-5		
-the-square-roots-of-1-modulo-the-product-of-the		
-the-1000th-roots-of-unity-mod-2-61-1-gcd-1000-2		
-a-square-root-of-i-in-z-i-7-the-field-of-49		
-10-20-39-is-inert-so-its-residue-field-is-f-p-2		
-a-gaussian-base-and-a-plain-modulus		
-cube-roots-of-8-modulo-13		
-an-integer-exponent-mod-100-not-1000		
-a-rational-base-with-integer-exponent-1		
-threads-over-a-shorter-list-of-bases		
-the-split-units-of-z-15-j-1-mapsto-4-is-a-ring		
-so-the-identity-1-j-1-j-0-transports-by-j-mapsto	(((1 + 4) * (1 - 4)) % 15)	0
-imaginary-units-of-z-65-exist-because-5-and-13		
-rabin-decryption-knowing-the-factors-of-n-the		
-mod-a-prime-there-are-exactly-gcd-r-p-1-r-th		
-for-odd-m-the-square-roots-of-1-are-the-2-omega		
-powermod-with-a-rational-exponent-is-the-least		
-the-cubes-mod-7-are-only-0-1-6-so-2-has-no-cube		
-no-square-root-of-1-3-equiv-3-pmod-4-blocks-its		
-no-inverse-when-gcd-a-m-ne-1-so-the-list-is		
-the-2-adic-channel-breaks-the-2-omega-m-law-z-2		
-a-product-of-two-21-digit-primes-cannot-be		
-x-2-equiv-0-pmod-3-40-has-3-20-roots-too-many-to		
-no-cube-root-of-4-modulo-13		
-a-symbolic-modulus-stays-unevaluated		
-the-moduli-with-four-or-more-square-roots-of-1		
+id	in	out	verdict
+the-square-roots-of-3-modulo-11-5-2-25-and-6-2	nthroot_mod(pow(ZZ.convert(3), S(Rational(1, 2)).p, ZZ.convert(11)), S(Rational(1, 2)).q, 11, True)	[5, 6]	
+the-cube-roots-of-unity-modulo-7-since-3-mid-6	nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 3)).p, ZZ.convert(7)), S(Rational(1, 3)).q, 7, True)	[1, 2, 4]	
+an-integer-exponent-is-an-ordinary-power-2-10	nthroot_mod(pow(ZZ.convert(2), S(10).p, ZZ.convert(1000)), S(10).q, 1000, True)	[24]	
+a-general-exponent-s-r-every-x-with-x-2-equiv-2	nthroot_mod(pow(ZZ.convert(2), S(Rational(3, 2)).p, ZZ.convert(17)), S(Rational(3, 2)).q, 17, True)	[5, 12]	
+the-three-cube-roots-of-2-2-4-since-3-mid-30	nthroot_mod(pow(ZZ.convert(2), S(Rational(2, 3)).p, ZZ.convert(31)), S(Rational(2, 3)).q, 31, True)	[16, 18, 28]	
+exponent-1-is-the-modular-inverse-3-cdot-5-15	nthroot_mod(pow(ZZ.convert(3), S(-1).p, ZZ.convert(7)), S(-1).q, 7, True)	[5]	
+a-prime-power-the-root-2-of-x-2-equiv-1-pmod-5	nthroot_mod(pow(ZZ.convert(-1), S(Rational(1, 2)).p, ZZ.convert(625)), S(Rational(1, 2)).q, 625, True)	[182, 443]	
+a-rational-base-reads-as-2-cdot-3-1-in-z-23	nthroot_mod(pow(ZZ.convert(Rational(2, 3)), S(Rational(1, 2)).p, ZZ.convert(23)), S(Rational(1, 2)).q, 23, True)	CoercionFailed: expected an integer, got 2/3	error
+threads-over-lists-the-squares-mod-5-are-exactly	[nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 2)).p, ZZ.convert(5)), S(Rational(1, 2)).q, 5, True), nthroot_mod(pow(ZZ.convert(2), S(Rational(1, 2)).p, ZZ.convert(5)), S(Rational(1, 2)).q, 5, True), nthroot_mod(pow(ZZ.convert(3), S(Rational(1, 2)).p, ZZ.convert(5)), S(Rational(1, 2)).q, 5, True), nthroot_mod(pow(ZZ.convert(4), S(Rational(1, 2)).p, ZZ.convert(5)), S(Rational(1, 2)).q, 5, True)]	[[1, 4], [], [], [2, 3]]	
+sqrt-1-modulo-the-31-digit-prime-10-30-57-no	nthroot_mod(pow(ZZ.convert(-1), S(Rational(1, 2)).p, ZZ.convert(((S(10)**30) + 57))), S(Rational(1, 2)).q, ((S(10)**30) + 57), True)	[164543371520667882579352850009, 835456628479332117420647150048]	
+the-cube-roots-of-2-modulo-the-mersenne-prime-2	nthroot_mod(pow(ZZ.convert(2), S(Rational(1, 3)).p, ZZ.convert(((S(2)**89) - 1))), S(Rational(1, 3)).q, ((S(2)**89) - 1), True)	[1073741824, 205880356524696485265270985, 413089663117993651110549302]	
+forty-hensel-steps-up-from-sqrt-1-equiv-2-pmod-5	nthroot_mod(pow(ZZ.convert(-1), S(Rational(1, 2)).p, ZZ.convert((S(5)**40))), S(Rational(1, 2)).q, (S(5)**40), True)	[2224618918409236552857702057, 6870328099320045826292688568]	
+the-square-roots-of-1-modulo-the-product-of-the	(len(nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 2)).p, ZZ.convert((2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53))), S(Rational(1, 2)).q, (2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53), True)) if hasattr(nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 2)).p, ZZ.convert((2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53))), S(Rational(1, 2)).q, (2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53), True), '__len__') else (len((nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 2)).p, ZZ.convert((2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53))), S(Rational(1, 2)).q, (2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53), True)).args) if hasattr(nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 2)).p, ZZ.convert((2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53))), S(Rational(1, 2)).q, (2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53), True), 'args') else 0))	32768	
+the-1000th-roots-of-unity-mod-2-61-1-gcd-1000-2	(len(nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 1000)).p, ZZ.convert(((S(2)**61) - 1))), S(Rational(1, 1000)).q, ((S(2)**61) - 1), True)) if hasattr(nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 1000)).p, ZZ.convert(((S(2)**61) - 1))), S(Rational(1, 1000)).q, ((S(2)**61) - 1), True), '__len__') else (len((nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 1000)).p, ZZ.convert(((S(2)**61) - 1))), S(Rational(1, 1000)).q, ((S(2)**61) - 1), True)).args) if hasattr(nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 1000)).p, ZZ.convert(((S(2)**61) - 1))), S(Rational(1, 1000)).q, ((S(2)**61) - 1), True), 'args') else 0))	50	
+a-square-root-of-i-in-z-i-7-the-field-of-49	nthroot_mod(pow(ZZ.convert((0 + 1*I)), S(Rational(1, 2)).p, ZZ.convert(7)), S(Rational(1, 2)).q, 7, True)	CoercionFailed: expected an integer, got I	error
+10-20-39-is-inert-so-its-residue-field-is-f-p-2	nthroot_mod(pow(ZZ.convert((3 + 4*I)), S(Rational(1, 2)).p, ZZ.convert(((S(10)**20) + 39))), S(Rational(1, 2)).q, ((S(10)**20) + 39), True)	CoercionFailed: expected an integer, got 3 + 4*I	error
+a-gaussian-base-and-a-plain-modulus	nthroot_mod(pow(ZZ.convert((2 + 1*I)), S(Rational(1, 2)).p, ZZ.convert(5)), S(Rational(1, 2)).q, 5, True)	CoercionFailed: expected an integer, got 2 + I	error
+cube-roots-of-8-modulo-13	nthroot_mod(pow(ZZ.convert(8), S(Rational(1, 3)).p, ZZ.convert(13)), S(Rational(1, 3)).q, 13, True)	[2, 5, 6]	
+an-integer-exponent-mod-100-not-1000	nthroot_mod(pow(ZZ.convert(2), S(10).p, ZZ.convert(100)), S(10).q, 100, True)	[24]	
+a-rational-base-with-integer-exponent-1	nthroot_mod(pow(ZZ.convert(Rational(2, 3)), S(1).p, ZZ.convert(7)), S(1).q, 7, True)	CoercionFailed: expected an integer, got 2/3	error
+threads-over-a-shorter-list-of-bases	[nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 2)).p, ZZ.convert(5)), S(Rational(1, 2)).q, 5, True), nthroot_mod(pow(ZZ.convert(4), S(Rational(1, 2)).p, ZZ.convert(5)), S(Rational(1, 2)).q, 5, True)]	[[1, 4], [2, 3]]	
+the-split-units-of-z-15-j-1-mapsto-4-is-a-ring	nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 2)).p, ZZ.convert(15)), S(Rational(1, 2)).q, 15, True)	[1, 4, 11, 14]	
+so-the-identity-1-j-1-j-0-transports-by-j-mapsto	(((1 + 4) * (1 - 4)) % 15)	0	
+imaginary-units-of-z-65-exist-because-5-and-13	nthroot_mod(pow(ZZ.convert(-1), S(Rational(1, 2)).p, ZZ.convert(65)), S(Rational(1, 2)).q, 65, True)	[8, 18, 47, 57]	
+rabin-decryption-knowing-the-factors-of-n-the			
+mod-a-prime-there-are-exactly-gcd-r-p-1-r-th	enumeratio_equal((len(nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 12)).p, ZZ.convert(1009)), S(Rational(1, 12)).q, 1009, True)) if hasattr(nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 12)).p, ZZ.convert(1009)), S(Rational(1, 12)).q, 1009, True), '__len__') else (len((nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 12)).p, ZZ.convert(1009)), S(Rational(1, 12)).q, 1009, True)).args) if hasattr(nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 12)).p, ZZ.convert(1009)), S(Rational(1, 12)).q, 1009, True), 'args') else 0)), gcd(12, 1008))	True	
+for-odd-m-the-square-roots-of-1-are-the-2-omega			
+powermod-with-a-rational-exponent-is-the-least			
+the-cubes-mod-7-are-only-0-1-6-so-2-has-no-cube	nthroot_mod(pow(ZZ.convert(2), S(Rational(1, 3)).p, ZZ.convert(7)), S(Rational(1, 3)).q, 7, True)	[]	
+no-square-root-of-1-3-equiv-3-pmod-4-blocks-its	nthroot_mod(pow(ZZ.convert(-1), S(Rational(1, 2)).p, ZZ.convert(15)), S(Rational(1, 2)).q, 15, True)	[]	
+no-inverse-when-gcd-a-m-ne-1-so-the-list-is	nthroot_mod(pow(ZZ.convert(2), S(-1).p, ZZ.convert(4)), S(-1).q, 4, True)	ValueError: base is not invertible for the given modulus	error
+the-2-adic-channel-breaks-the-2-omega-m-law-z-2	nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 2)).p, ZZ.convert(8)), S(Rational(1, 2)).q, 8, True)	[1, 3, 5, 7]	
+a-product-of-two-21-digit-primes-cannot-be	nthroot_mod(pow(ZZ.convert(4), S(Rational(1, 2)).p, ZZ.convert((((S(10)**20) + 39) * ((S(10)**20) + 129)))), S(Rational(1, 2)).q, (((S(10)**20) + 39) * ((S(10)**20) + 129)), True)	[2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10000000000000000016800000000000000005029]	disagree
+x-2-equiv-0-pmod-3-40-has-3-20-roots-too-many-to	nthroot_mod(pow(ZZ.convert(0), S(Rational(1, 2)).p, ZZ.convert((S(3)**40))), S(Rational(1, 2)).q, (S(3)**40), True)	MemoryError: over 1024 MiB	error
+no-cube-root-of-4-modulo-13	nthroot_mod(pow(ZZ.convert(2), S(Rational(2, 3)).p, ZZ.convert(13)), S(Rational(2, 3)).q, 13, True)	[]	
+a-symbolic-modulus-stays-unevaluated	nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 2)).p, ZZ.convert(Symbol("m"))), S(Rational(1, 2)).q, Symbol("m"), True)	CoercionFailed: expected an integer, got m	error
+the-moduli-with-four-or-more-square-roots-of-1	nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 2)).p, ZZ.convert([8, 15, 21, 24])), S(Rational(1, 2)).q, [8, 15, 21, 24], True)	CoercionFailed: Cannot convert [8, 15, 21, 24] of type <class 'list'> to ZZ	error

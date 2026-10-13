@@ -18,6 +18,9 @@ export interface Mapping {
    * function (which fails: e.g. sympy's `primepi([10, 2])` raises `AttributeError`).
    */
   readonly threadArg?: number;
+  /** `threadArg` for one system only, which wins over `threadArg` there; a system with no entry here
+   * takes `threadArg`, so declaring it leaves every other system's emission as it was. */
+  readonly threadArgOnly?: Partial<Record<System, number>>;
   /** A convention difference worth remembering when a scan disagrees. */
   readonly note?: string;
 }
@@ -29,6 +32,7 @@ interface MappedBinding {
   readonly arity?: number;
   readonly template?: string;
   readonly threadArg?: number;
+  readonly threadArgOnly?: number;
   readonly note?: string;
 }
 
@@ -42,7 +46,14 @@ export function mappingsFromBindings(
 ): Mapping[] {
   const byKey = new Map<
     string,
-    { head: string; arity?: number; emit: Record<string, string>; threadArg?: number; note?: string }
+    {
+      head: string;
+      arity?: number;
+      emit: Record<string, string>;
+      threadArg?: number;
+      threadArgOnly?: Record<string, number>;
+      note?: string;
+    }
   >();
   for (const entry of entries)
     for (const b of entry.bindings ?? []) {
@@ -51,6 +62,7 @@ export function mappingsFromBindings(
       const row = byKey.get(key) ?? { head: entry.name, arity: b.arity, emit: {} };
       row.emit[b.form] = b.template;
       if (b.threadArg !== undefined) row.threadArg = b.threadArg;
+      if (b.threadArgOnly !== undefined) row.threadArgOnly = { ...row.threadArgOnly, [b.form]: b.threadArgOnly };
       if (b.note !== undefined) row.note = b.note;
       byKey.set(key, row);
     }

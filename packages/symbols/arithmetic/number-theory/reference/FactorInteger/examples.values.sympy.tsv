@@ -1,44 +1,44 @@
-id	in	out
-factorinteger-360		
-factorinteger-84		
-factorinteger-120		
-factorinteger-36		
-threads-element-wise-over-a-list-as-wolfram-s		
-5-i-1-2i-2-i		
-3-4i-2-i-2		
-a-21-digit-gaussian-integer-through-its-norm		
-rationals-the-denominator-s-primes-get-negative		
-9-12i-3-2-i-2		
-36-1-i-4-cdot-3-2-2-ramifies-3-stays-prime		
-listable-threads-over-a-list		
-a-21-digit-prime-cubed-factors-at-once		
-factorinteger-of-a-negative-rational		
-a-unit-factors-as-itself		
-the-ramified-prime-above-2-factors-as-itself		
-a-prime-above-5-factors-as-itself		
-a-composite-of-norm-25-2-i-2		
-a-composite-of-norm-25-the-conjugate-family		
-an-associate-carries-its-normalising-unit-in		
-a-composite-with-a-real-and-a-gaussian-factor		
-a-large-norm-composite		
-an-associate-carries-its-unit-times-i		
-a-prime-above-13-factors-as-itself		
-a-real-prime-s-associate-by-the-unit-i-factors		
-a-negative-real-prime-complex-argument-form		
-a-composite-past-2-53-through-its-norm		
-7-3-mod-4-factors-as-itself-in-z-i		
-a-negative-prime-3-mod-4		
-13-1-mod-4-splits-into-two-gaussian-primes		
-a-real-composite-5-squared-factors-through-its		
-a-negative-real-composite		
-19-3-mod-4-factors-as-itself		
-2-ramifies-as-i-1-i-2		
-4-factors-through-the-ramified-prime		
-multiplying-the-p-e-factors-back-together	enumeratio_equal(((S(2)**3) * (S(3)**2) * 5), 360)	True
-compute-engine-returns-the-trivial-factor-1-1		
-0-is-represented-as-0-1		
-negative-numbers-carry-an-explicit-1-unit-factor		
-1-is-a-unit-and-factors-as-itself		
-factorinteger-neg-12		
-a-non-integer-real-stays-unevaluated		
-the-hardy-ramanujan-taxicab-number-7-times-13		
+id	in	out	verdict
+factorinteger-360	list(factorrat(S(360)).items())	[(2, 3), (3, 2), (5, 1)]	
+factorinteger-84	list(factorrat(S(84)).items())	[(2, 2), (3, 1), (7, 1)]	
+factorinteger-120	list(factorrat(S(120)).items())	[(2, 3), (3, 1), (5, 1)]	
+factorinteger-36	list(factorrat(S(36)).items())	[(2, 2), (3, 2)]	
+threads-element-wise-over-a-list-as-wolfram-s	[list(factorrat(S(12)).items()), list(factorrat(S(18)).items())]	[[(2, 2), (3, 1)], [(2, 1), (3, 2)]]	
+5-i-1-2i-2-i			
+3-4i-2-i-2			
+a-21-digit-gaussian-integer-through-its-norm			
+rationals-the-denominator-s-primes-get-negative	list(factorrat(S(Rational(3, 8))).items())	[(3, 1), (2, -3)]	disagree
+9-12i-3-2-i-2			
+36-1-i-4-cdot-3-2-2-ramifies-3-stays-prime			
+listable-threads-over-a-list	[list(factorrat(S(11)).items()), list(factorrat(S(101)).items()), list(factorrat(S(1001)).items())]	[[(11, 1)], [(101, 1)], [(7, 1), (11, 1), (13, 1)]]	
+a-21-digit-prime-cubed-factors-at-once	list(factorrat(S((S(100000000000000000039)**3))).items())	[(100000000000000000039, 3)]	
+factorinteger-of-a-negative-rational	list(factorrat(S(Rational(-3, 8))).items())	[(3, 1), (-1, 1), (2, -3)]	disagree
+a-unit-factors-as-itself			
+the-ramified-prime-above-2-factors-as-itself			
+a-prime-above-5-factors-as-itself			
+a-composite-of-norm-25-2-i-2			
+a-composite-of-norm-25-the-conjugate-family			
+an-associate-carries-its-normalising-unit-in			
+a-composite-with-a-real-and-a-gaussian-factor			
+a-large-norm-composite			
+an-associate-carries-its-unit-times-i			
+a-prime-above-13-factors-as-itself			
+a-real-prime-s-associate-by-the-unit-i-factors			
+a-negative-real-prime-complex-argument-form	list(factorrat(S(-7)).items())	[(7, 1), (-1, 1)]	disagree
+a-composite-past-2-53-through-its-norm			
+7-3-mod-4-factors-as-itself-in-z-i			
+a-negative-prime-3-mod-4			
+13-1-mod-4-splits-into-two-gaussian-primes			
+a-real-composite-5-squared-factors-through-its			
+a-negative-real-composite			
+19-3-mod-4-factors-as-itself			
+2-ramifies-as-i-1-i-2			
+4-factors-through-the-ramified-prime			
+multiplying-the-p-e-factors-back-together	enumeratio_equal(((S(2)**3) * (S(3)**2) * 5), 360)	True	
+compute-engine-returns-the-trivial-factor-1-1	list(factorrat(S(1)).items())	[]	disagree
+0-is-represented-as-0-1	list(factorrat(S(0)).items())	[(0, 1)]	
+negative-numbers-carry-an-explicit-1-unit-factor	list(factorrat(S(-60)).items())	[(2, 2), (3, 1), (5, 1), (-1, 1)]	disagree
+1-is-a-unit-and-factors-as-itself	list(factorrat(S(-1)).items())	[(-1, 1)]	
+factorinteger-neg-12	list(factorrat(S(-12)).items())	[(2, 2), (3, 1), (-1, 1)]	disagree
+a-non-integer-real-stays-unevaluated	list(factorrat(S(2.5)).items())	AttributeError: 'Float' object has no attribute 'p'	error
+the-hardy-ramanujan-taxicab-number-7-times-13	list(factorrat(S(1729)).items())	[(7, 1), (13, 1), (19, 1)]	

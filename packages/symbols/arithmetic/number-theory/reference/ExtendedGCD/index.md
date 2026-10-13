@@ -33,6 +33,15 @@ bindings:
       version: 15.0.0
       on: 2026-09-28
     note: "Shape difference, not a value one: Wolfram's ExtendedGCD returns {g, {s, t}}, nested; ours returns the flat Tuple(g, s, t) compute-engine's own Tuple head calls for. The Bezout coefficients also aren't unique, so an occasional case lands on another valid (s, t) pair than Wolfram's Euclid would pick; ours still satisfies s*a + t*b = g."
+  - origin: mapped
+    form: sympy
+    template: "(lambda s, t, g: (g, s, t))(*gcdex($1, $2))"
+    arity: 2
+    threadArgOnly: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: SymPy's gcdex returns (s, t, g), a different order from our (g, s, t); the template only reorders the three. The Bezout pair is whichever the Euclidean algorithm reaches, and its sign convention for a negative argument is SymPy's own.
 ---
 
 - Implements the extended Euclidean algorithm, the standard way to compute modular inverses. See [[PowerMod]].
