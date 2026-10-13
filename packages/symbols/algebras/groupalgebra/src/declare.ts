@@ -37,6 +37,7 @@ import {
   cyclicIndex,
   dihedralIndex,
   listedIndex,
+  MAX_LISTED_DEGREE,
   symmetricIndex,
 } from "./cycle-index.ts";
 import { GROUPALGEBRA_NOTATION } from "./notation.ts";
@@ -737,7 +738,8 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
           break;
         case "PermutationGroup": {
           const read = permutationGroupOf(group);
-          const closure = read && permutationGroupClosure(read.generators, read.degree);
+          const closure =
+            read && read.degree <= MAX_LISTED_DEGREE && permutationGroupClosure(read.generators, read.degree);
           index = read && closure ? listedIndex(closure, read.degree) : undefined;
           break;
         }
