@@ -1,7 +1,7 @@
 ---
-name: DiagonalIndex
+name: ContentSum
 domain: Partition statistics
-signature: DiagonalIndex(partition)
+signature: ContentSum(partition)
 summary: The sum of the contents j - i of the cells.
 catalog:
   - system: findstat
@@ -11,7 +11,7 @@ catalog:
 statOn:
   - IntegerPartition
 signatures:
-  - call: DiagonalIndex(partition)
+  - call: ContentSum(partition)
     description: The sum of the contents j - i of the cells.
     library: enumeratio-combinatorics
     type: (integer_partition) -> number

@@ -1,0 +1,13 @@
+id	in
+the-order-of-s-5-is-5	GroupOrder[Permutations[Range[5]]]
+4	Length[Permutations[Range[4]]]
+the-identity	Part[Permutations[Range[3]], 1]
+s-10-10	GroupOrder[Permutations[Range[10]]]
+the-one-line-words-are-compute-engine-s	
+inversions-are-mahonian	
+major-index-is-equidistributed	
+descents-are-eulerian	
+excedances-are-eulerian-too	
+cycles-are-stirling-numbers-of-the-first-kind	
+fixed-points-are-the-rencontres-numbers	
+half-are-even	

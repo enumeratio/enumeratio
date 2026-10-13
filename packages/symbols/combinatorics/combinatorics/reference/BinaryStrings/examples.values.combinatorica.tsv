@@ -1,0 +1,3 @@
+id	in
+count-binary-strings-4	Length[Map[Function[s, Table[Boole[MemberQ[s, i]], {i, 4}]], BinarySubsets[Range[4]]]]
+binary-strings-3	Take[Map[Function[s, Table[Boole[MemberQ[s, i]], {i, 3}]], BinarySubsets[Range[3]]], 8]

@@ -298,7 +298,7 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     nonEmpty(count(positions, greater(here, ones))),
   ),
   stat(
-    "DiagonalIndex",
+    "ContentSum",
     "The sum of the contents j - i of the cells.",
     nonEmpty(sumOver(positions, subtract(["Divide", ["Multiply", here, add(here, 1)], 2], ["Multiply", "i", here]))),
   ),

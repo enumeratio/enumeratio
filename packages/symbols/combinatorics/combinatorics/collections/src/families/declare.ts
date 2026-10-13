@@ -59,10 +59,18 @@ const encoderFor = (kind: FamilyKernel["kind"]) =>
 const decoderFor = (kind: FamilyKernel["kind"]) =>
   kind === "ints" ? asIntList : kind === "blocks" ? asBlockList : kind === "scalar" ? intOf : denest;
 
+/** The element after `target` in a family's own order, for the call `collection`; undefined at the
+ *  last element, for a non-member, or where the kernel declines. */
+type SuccessorOf = (collection: Expr, target: Expr) => Expr | undefined;
+
 /** A family's kernel as compute-engine collection handlers: Count, At and iteration by
  *  unranking, membership by `valid`. CE speaks plain numbers; a count past 2^53 answers
- *  `undefined` (unknown to CE) rather than a rounded one. */
-function handlersOf(ce: Engine, family: FamilyKernel, carrier?: string): CollectionHandlers {
+ *  `undefined` (unknown to CE) rather than a rounded one. Also its successor, by rank. */
+function handlersOf(
+  ce: Engine,
+  family: FamilyKernel,
+  carrier?: string,
+): { collection: CollectionHandlers; successor: SuccessorOf } {
   const bareEncode = encoderFor(family.kind);
   const bareDecode = decoderFor(family.kind);
   // How many of the family's own params (from the front) ride along inside the carrier's
@@ -128,7 +136,7 @@ function handlersOf(ce: Engine, family: FamilyKernel, carrier?: string): Collect
   // Iterating all of a walking family's elements is bounded by the fiber instead, its exact count.
   const cost = family.declared?.cost;
   const walks = family.declared?.walks === true;
-  const tooBig = (p: number[], ops: readonly ("count" | "unrank")[], iterating = false): boolean => {
+  const tooBig = (p: number[], ops: readonly ("count" | "unrank" | "rank")[], iterating = false): boolean => {
     const work = family.declared?.work;
     if (cost === undefined || work === undefined || !ops.some((op) => cost[op] === "enumerative")) return false;
     const fiber = iterating && walks;
@@ -141,7 +149,29 @@ function handlersOf(ce: Engine, family: FamilyKernel, carrier?: string): Collect
     ]);
     return true;
   };
-  return {
+  const successor: SuccessorOf = (c, target) => {
+    const p = params(c);
+    if (tooBig(p, ["count", "unrank", "rank"])) return undefined;
+    try {
+      const total = countAt(p);
+      if (total === undefined) return undefined;
+      let place: bigint;
+      try {
+        const decoded = decode(asBoxed(target));
+        if (!family.valid(decoded, p)) return undefined;
+        place = family.rank(decoded, p);
+      } catch {
+        // Not shaped like an element: not a member.
+        return undefined;
+      }
+      if (typeof total === "bigint" && place + 1n >= total) return undefined;
+      return element(p, place + 1n);
+    } catch (error) {
+      if (needsBigint(error)) return undefined;
+      throw error;
+    }
+  };
+  const collection: CollectionHandlers = {
     count: (c) => {
       const p = params(c);
       if (tooBig(p, ["count"])) return undefined;
@@ -207,10 +237,20 @@ function handlersOf(ce: Engine, family: FamilyKernel, carrier?: string): Collect
       }
     },
   };
+  return { collection, successor };
 }
 
 /** The families declared on each engine that `Count` answers exactly for: every batch adds to one map. */
 const exactCountFamilies = new WeakMap<Engine, Map<string, FamilyKernel>>();
+
+/** Each declared family's successor, by head, per engine. */
+const familySuccessors = new WeakMap<Engine, Map<string, SuccessorOf>>();
+
+/** A declared family's successor by rank, for the family `collection` is a call of; undefined for
+ *  anything else (a list, a head that is no family). */
+export function familySuccessor(ce: Engine, collection: Expr): SuccessorOf | undefined {
+  return familySuccessors.get(ce)?.get(collection.operator);
+}
 
 /** Declare every family in `families` on `ce` (an Epsil family through its kernel on `ce`): an indexed-collection operator, or for paramCount 0
  *  an indexed-collection value (`PrimeNumbers`). A family's carrier, when it names one, has to already be declared on `ce` (its OWN
@@ -226,7 +266,8 @@ export function declareFamilies(ce: Engine, families: readonly AnyFamily[]): voi
     const carrier = carrierOf(family);
     if (carrier !== undefined) registerCollectionCarrier(ce, family.head, carrier);
     const elementType = carrier === undefined ? undefined : carrierTypeForName(ce, carrier);
-    const collection = handlersOf(ce, family, elementType === undefined ? undefined : carrier);
+    const { collection, successor } = handlersOf(ce, family, elementType === undefined ? undefined : carrier);
+    familySuccessors.set(ce, (familySuccessors.get(ce) ?? new Map()).set(family.head, successor));
     if (family.declared?.work !== undefined) {
       defineMessages(ce, family.head, {
         toobig: "`1` would enumerate about `2` elements; the limit is `3`.",

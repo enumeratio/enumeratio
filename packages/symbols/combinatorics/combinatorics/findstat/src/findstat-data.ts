@@ -404,7 +404,7 @@ export const findstat: readonly FindStatMatch[] = [
     values: 272,
   },
   {
-    head: "DiagonalIndex",
+    head: "ContentSum",
     on: "IntegerPartition",
     findstat: ["St000509"],
     values: 270,

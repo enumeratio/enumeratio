@@ -108,6 +108,26 @@ so the order has to be stated. `KSubsets` is **lexicographic** — the 4th 3-sub
 <notatio-cell value="KSubsets(5, 3)[10]" />
 </Story>
 
+## The next one
+
+`Successor(F, x)` is the element after `x` in the family's own order: rank `x`, add one, unrank.
+It never builds the family, so it is as cheap as `At`.
+
+<Story title="The next 3-subset, and the next permutation of twelve">
+<template #description>After `{1,3,4}` comes `{1,3,5}`. The last permutation of twelve follows the one before it, found by rank rather than by walking 479 million of them.</template>
+<notatio-cell value="Successor(KSubsets(5, 3), KSubsets(5, 3)[4])" />
+<notatio-cell value="Successor(SymmetricGroup(12), SymmetricGroup(12)[479001599])" />
+</Story>
+
+The last element has no successor, and nor does a value that is not an element: the call stays as
+written. Wrapping around is yours to say, with `At` and `Mod`, as the slider above did.
+
+<Story title="Past the end, and around it">
+<template #description>The last 3-subset stays put; the same index taken modulo the count starts over.</template>
+<notatio-cell value="Successor(KSubsets(5, 3), KSubsets(5, 3)[10])" />
+<notatio-cell value="KSubsets(5, 3)[Mod(IndexOf(KSubsets(5, 3), KSubsets(5, 3)[10]), Count(KSubsets(5, 3))) + 1]" />
+</Story>
+
 ## Where this goes next
 
 Unranking is the same operation as writing a number in a numeral system whose places are
