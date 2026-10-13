@@ -10,6 +10,8 @@ import {
   isKCyclePermutation,
   stirlingFirstExact,
   telephoneExact,
+  transpositionPlace,
+  transpositionUnrank,
 } from "../../../collections/src/families/exact-triangles.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
 import { and, cell, equal, iff, lets, mul, rowTable } from "../../../collections/src/families/tables.ts";
@@ -348,9 +350,15 @@ const kCycleDefinitions: EpsilFamily = permutationRestriction({
 });
 // The table is out of the interpreter's reach past 2^53 (from n = 19); c(n, k) is a row recurrence.
 export const kCyclePermutations = exactUpTo(kCycleDefinitions, 1000, ([n, k]) => stirlingFirstExact(n, k), {
-  trivial: ([n, k]) => (k > n || (k === 0 && n > 0) ? 0n : k === n ? 1n : undefined),
+  // k = n − 1 cycles: one transposition, C(n, 2) of them.
+  trivial: ([n, k]) =>
+    k > n || (k === 0 && n > 0) ? 0n : k === n ? 1n : k === n - 1 ? (BigInt(n) * BigInt(n - 1)) / 2n : undefined,
   valid: isKCyclePermutation,
-  only: ([n]) => Array.from({ length: n }, (_, i) => i + 1), // k = n: the identity
+  only: ([n, k]) => (k === n ? Array.from({ length: n }, (_, i) => i + 1) : undefined), // the identity
+  listed: {
+    unrank: ([n, k], r) => (k === n - 1 && n >= 2 ? transpositionUnrank(n, r) : undefined),
+    rank: (x, [n, k]) => (k === n - 1 && n >= 2 ? transpositionPlace(x) : undefined),
+  },
 });
 
 /** The permutations of n with no fixed point, D(n) of them. Of the open slots, m have their own
