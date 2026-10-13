@@ -7,9 +7,10 @@ stays unevaluated — no such residue, an unfactorable modulus, more roots than 
 never approximate.
 
 Primality is Baillie–PSW; factoring is trial division then Pollard's rho, budgeted
-(`RHO_BUDGET`) so a hard semiprime declines rather than hangs. `NthPrime`/`PrimePi` sieve below
-`PRIME_SIEVE_LIMIT` and switch to Lucy_Hedgehog counting up to `PRIME_PI_LIMIT`; `PrimePi` goes on
-past 10^11 with the Deléglise–Rivat combinatorial count (`primeCountDR`), up to `PRIME_COUNT_LIMIT`.
+(`RHO_BUDGET`) so a hard semiprime declines rather than hangs. `PrimePi` sieves below
+`PRIME_SIEVE_LIMIT`, counts by Lucy_Hedgehog above it, and from a few billion on by the
+Deléglise–Rivat combinatorial count (`primeCountDR`), up to `PRIME_COUNT_LIMIT`. `NthPrime` counts
+exactly at an inverse-π estimate and sieves the short gap to p_n, up to `PRIME_PI_LIMIT`.
 
 ## Usage
 

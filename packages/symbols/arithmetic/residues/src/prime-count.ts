@@ -137,8 +137,9 @@ function defaultAlpha(x: number): number {
 export const PRIME_COUNT_LIMIT = 1e15;
 
 /** Below this the Lucy_Hedgehog tier of `primeCountUpTo` is as fast; above it the combinatorial
- *  count is faster (about 3× at 10^11, 6× at 10^12). */
-const DR_FROM = 1e11;
+ *  count is. A cold call pays tens of ms of JIT warm-up, so the two cross near 10^10 cold and
+ *  near 10^9 warm; DR then pulls away (about 5× at 10^10, 15× at 10^11). */
+export const DR_FROM = 5e9;
 
 /** π(n) for a safe integer n ≤ `PRIME_COUNT_LIMIT`, exactly; `undefined` past the limit. */
 export function primeCount(n: number): number | undefined {

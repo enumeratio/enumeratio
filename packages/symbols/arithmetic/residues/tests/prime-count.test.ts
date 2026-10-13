@@ -2,8 +2,11 @@
 // primeCountUpTo where they overlap, and against published values past them. The standard run
 // holds fixed cases at 10^12–10^13; DEEP_TESTS adds a wider cross-check and 10^14 … 10^17.
 import { expect, test } from "vite-plus/test";
-import { PRIME_COUNT_LIMIT, PRIME_COUNT_MAX, primeCount, primeCountDR } from "../src/prime-count.ts";
-import { primeCountUpTo } from "../src/sieve.ts";
+import { DR_FROM, PRIME_COUNT_LIMIT, PRIME_COUNT_MAX, primeCount, primeCountDR } from "../src/prime-count.ts";
+import { countPrimesIn, primeCountLucy } from "../src/sieve.ts";
+
+// Independent references: the segmented sieve while it is cheap, Lucy_Hedgehog past that.
+const primeCountUpTo = (x: number): number => (x <= 50_000_000 ? countPrimesIn(2, x) : primeCountLucy(x));
 
 const deep = process.env.DEEP_TESTS === "1";
 
@@ -35,6 +38,10 @@ test("agrees with Lucy_Hedgehog at 10^9 – 10^11", () => {
 test("π(10^12) and π(10^13), OEIS A006880", () => {
   expect(primeCountDR(10n ** 12n)).toBe(37607912018);
   expect(primeCountDR(10n ** 13n)).toBe(346065536839);
+});
+
+test("primeCount is continuous across the Lucy_Hedgehog / combinatorial seam", () => {
+  for (const x of [DR_FROM - 1, DR_FROM, DR_FROM + 1]) expect(primeCount(x)).toBe(primeCountLucy(x));
 });
 
 test("π(2^40), a non-power, against Wolfram's PrimePi", () => {
