@@ -5,6 +5,7 @@ import {
   type Expr,
   operandsOf,
   symbolNameOf,
+  widenSignature,
   wrapOperator,
 } from "@enumeratio/engine";
 
@@ -26,6 +27,18 @@ const hasSlot = (expr: Expr): boolean => (symbolNameOf(expr) ?? "").startsWith("
  *  `Fold(f, x)` is our unseeded `Fold(f, xs)`, so Wolfram's seeded operator form can't be told
  *  from it. */
 export function declareOperatorForms(ce: Engine): void {
+  // The one-operand callee is a valid call, not a missing operand: compute-engine boxes the
+  // callee of `Apply` before our hook runs, and flags the absent collection as `missing`.
+  for (const head of Object.keys(FORMS)) {
+    widenSignature(ce, head, "(any) -> any");
+    wrapOperator(
+      ce,
+      [head],
+      () => true,
+      () => () => undefined,
+      1,
+    );
+  }
   // A sum, product or power is no function, so `(f + g)[x]` stays a call, as in Wolfram. A slot
   // (`_1`) in the callee makes it a pure function body, which compute-engine's `Apply` reads.
   wrapOperator(
