@@ -10,7 +10,7 @@ signatures:
     description: "Exponentiation: raise a base to a power."
     library: enumeratio-analytic
     type: (complex | infinity, complex | signed_infinity) -> number
-    overrides: compute-engine
+    overrides: enumeratio-evaluation
     on:
       - Around
       - CenteredInterval
@@ -46,6 +46,11 @@ signatures:
       - Adele
       - Idele
       - ProfiniteNumber
+  - call: Power(complex | infinity, complex | signed_infinity) -> number
+    description: "Exponentiation: raise a base to a power."
+    library: enumeratio-evaluation
+    type: (complex | infinity, complex | signed_infinity) -> number
+    overrides: compute-engine
 names:
   fungrim: Pow
   wolframIdentity: true
