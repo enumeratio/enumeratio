@@ -9,14 +9,19 @@ import { catalanExact } from "../../../collections/src/families/exact-counts.ts"
 import {
   booleanPermutationsExact,
   RECURRENCE_TOP,
+  schroederExact,
   vexillaryExact,
 } from "../../../collections/src/families/exact-recurrences.ts";
 import {
+  connectedExact,
   eulerianExact,
   exactUpTo,
   isAlternatingPermutation,
+  isConnectedPermutation,
   isKDescentPermutation,
   isNonCrossingCycleSupport,
+  isSeparablePermutation,
+  isVexillaryPermutation,
   nonCrossingCycleSupportExact,
   zigzagExact,
 } from "../../../collections/src/families/exact-triangles.ts";
@@ -185,7 +190,7 @@ const alternatingPermutations = exactUpTo(alternatingDefinitions, 1000, ([n]) =>
  * values; with t₀ the first slot count that can cut, h(t) counts arrangements of t values with
  * no cut at t₀..t − 1, and the completions are m! less those whose first cut is at some t.
  */
-const connectedPermutations: EpsilFamily = permutationRestriction({
+const connectedDefinitions: EpsilFamily = permutationRestriction({
   head: "ConnectedPermutations",
   carrier: "Permutation",
   paramCount: 1,
@@ -232,6 +237,12 @@ const connectedPermutations: EpsilFamily = permutationRestriction({
       ),
     ),
   ),
+});
+// c(n) is a table the interpreter takes seconds over from n = 150, and the compiled one overflows doubles
+// from n = 171; the recurrence on factorials is O(n²) bigint steps, about 0.1 s at the limit.
+const CONNECTED_LIMIT = 600;
+const connectedPermutations = exactUpTo(connectedDefinitions, CONNECTED_LIMIT, ([n]) => connectedExact(n), {
+  valid: isConnectedPermutation,
 });
 
 // Exactly k descents. E(m, t, i) counts the arrangements of m values starting with the i-th
@@ -831,7 +842,7 @@ const suffixOf = (op: string, tag: string): MathJSON =>
     ["Max", "filled", 1],
   );
 
-const separablePermutations: EpsilFamily = permutationRestriction({
+const separableDefinitions: EpsilFamily = permutationRestriction({
   head: "SeparablePermutations",
   carrier: "Permutation",
   paramCount: 1,
@@ -857,6 +868,14 @@ const separablePermutations: EpsilFamily = permutationRestriction({
     ),
   ),
 });
+// Separable permutations of n are the large Schröder number S(n − 1); the table the definitions read
+// overflows doubles from n = 171, where its twin would take minutes.
+const separablePermutations = exactUpTo(
+  separableDefinitions,
+  RECURRENCE_TOP,
+  ([n]) => (n === 0 ? 1n : schroederExact(n - 1)!),
+  { valid: isSeparablePermutation },
+);
 
 // Non-crossing: the cycles, read as blocks of a set partition, don't cross. The prefix's edges
 // i → prefix(i) split 1..n into components: closed cycles, and paths (an untouched value is one)
@@ -1368,7 +1387,9 @@ const vexillaryDefinitions: EpsilFamily = permutationRestriction({
 });
 
 // The table (2^n states) is out of the interpreter's reach well before the count (A005802) is: Gessel's recurrence.
-const vexillaryPermutations = exactUpTo(vexillaryDefinitions, RECURRENCE_TOP, ([n]) => vexillaryExact(n)!);
+const vexillaryPermutations = exactUpTo(vexillaryDefinitions, RECURRENCE_TOP, ([n]) => vexillaryExact(n)!, {
+  valid: isVexillaryPermutation,
+});
 
 export const grassmannianPermutations = atMostOneTurn("GrassmannianPermutations", false);
 export const cograssmannianPermutations = atMostOneTurn("CograssmannianPermutations", true);

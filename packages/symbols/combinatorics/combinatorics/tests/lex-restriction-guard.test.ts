@@ -70,6 +70,27 @@ test("a fiber of one member, at any size, is unranked and ranked at once", () =>
   expect(at).toEqual(["Permutation", ["List", ...iota(200)]]);
 });
 
+test("a fiber of n − 1 cycles is C(n, 2) transpositions: unranked and ranked at once, at any size", () => {
+  for (const n of [200, 500, 2000]) {
+    const kernel = warmKernel("KCyclePermutations", [6, 5]);
+    const p = [n, n - 1];
+    const total = (BigInt(n) * BigInt(n - 1)) / 2n;
+    const first = timed(() => kernel.unrank(p, 0n));
+    const last = timed(() => kernel.unrank(p, total - 1n));
+    // The first in lex order swaps the last two, the last swaps the first two and moves 1 to the back.
+    expect([n, first.answer, last.answer]).toEqual([n, [...iota(n - 2), n, n - 1], [n, ...iota(n).slice(1, -1), 1]]);
+    const ranks = [first, last].map((r) => timed(() => kernel.rank(r.answer as number[], p)));
+    expect([n, ranks.map((r) => r.answer)]).toEqual([n, [0n, total - 1n]]);
+    expect(Math.max(first.ms, last.ms, ...ranks.map((r) => r.ms))).toBeLessThan(BUDGET_MS);
+    expect(() => kernel.unrank(p, total)).toThrow(RangeError);
+  }
+  const engine = bareEngine();
+  declareCombinatorics(engine);
+  expect(engine.box(["Count", ["KCyclePermutations", 200, 199]] as never).evaluate().json).toBe(19900);
+  const at = engine.box(["At", ["KCyclePermutations", 200, 199], 1] as never).evaluate().json;
+  expect(at).toEqual(["Permutation", ["List", ...iota(198), 200, 199]]);
+});
+
 test("an empty fiber at any size has no member to unrank", () => {
   const kernel = warmKernel("KCyclePermutations", [6, 6]);
   expect(kernel.count([200, 201])).toBe(0n);
@@ -95,6 +116,9 @@ for (const [head, small, p, member] of [
   ["NonCrossingCycleSupportPermutations", [6], [200], iota(200)],
   ["AdjacentTranspositionInvolutions", [6], [200], iota(200)],
   ["Involutions", [6], [500], iota(500)],
+  ["SeparablePermutations", [6], [500], iota(500)],
+  ["VexillaryPermutations", [6], [500], iota(500)],
+  ["ConnectedPermutations", [6], [500], iota(500).toReversed()],
 ] as [string, number[], number[], number[]][]) {
   test(`${head}(${p.join(", ")}): count, unrank, rank and membership answer or decline at once`, () => {
     const kernel = warmKernel(head, small);
@@ -111,6 +135,42 @@ for (const [head, small, p, member] of [
     expect([where, unrank.answer, rank.answer]).toEqual([where, "declined", "declined"]);
   });
 }
+
+test("Connected, Separable and Vexillary counts past doubles: exact where cheap, unknown at once past it", () => {
+  const engine = bareEngine();
+  declareCombinatorics(engine);
+  const count = (head: string, n: number): unknown => engine.box(["Count", [head, n]] as never).evaluate().json;
+  for (const [head, n] of [
+    ["ConnectedPermutations", 500],
+    ["SeparablePermutations", 500],
+    ["VexillaryPermutations", 500],
+  ] as [string, number][]) {
+    const { answer, ms } = timed(() => count(head, n));
+    expect([head, typeof (answer as { num?: unknown }).num, ms < BUDGET_MS]).toEqual([head, "string", true]);
+  }
+  // Past Connected's bound its table is out of reach, and the answer is unknown, not a hang.
+  const past = timed(() => count("ConnectedPermutations", 5000));
+  expect([past.answer, past.ms < BUDGET_MS]).toEqual([["Count", ["ConnectedPermutations", 5000]], true]);
+});
+
+test("SeparablePermutations(23), (24): a count a double holds, but a table it doesn't, declines at once and says so", () => {
+  const kernel = warmKernel("SeparablePermutations", [6]);
+  // n = 22 still unranks and ranks; from 23 the compiled table leaves the safe integers a size before the count does.
+  const small = kernel.unrank([22], 7n);
+  expect(kernel.rank(small, [22])).toBe(7n);
+  for (const n of [23, 24]) {
+    const p = [n];
+    const total = kernel.count(p) as bigint;
+    expect(total > 0n && total <= MAX_SAFE).toBe(true);
+    const x = iota(n);
+    expect(kernel.valid(x, p)).toBe(true);
+    for (const call of [() => kernel.unrank(p, 0n), () => kernel.rank(x, p)]) {
+      const start = performance.now();
+      expect(call).toThrow(/table doesn't fit in doubles, not bigint yet/);
+      expect(performance.now() - start).toBeLessThan(BUDGET_MS);
+    }
+  }
+});
 
 test("Involutions(500): the exact count, from the telephone recurrence", () => {
   const kernel = warmKernel("Involutions", [6]);

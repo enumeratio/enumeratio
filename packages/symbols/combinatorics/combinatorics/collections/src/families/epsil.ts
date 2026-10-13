@@ -309,8 +309,9 @@ export function kernelOn(
   // call. Compiled code reads it as doubles, the interpreter as compute-engine's exact integers
   // (a JSON list), each in its own cache.
   const tablesSize = options.tablesCacheSize ?? TABLES_CACHE_SIZE;
-  // "overflow" marks a compiled table that ran past what doubles hold (a number entry Infinity or NaN):
-  // one the compiled code can't use, and whose exact twin the interpreter takes minutes over.
+  // "overflow" marks a compiled table that ran past what doubles hold (a number entry Infinity or NaN, or
+  // compiled code stopping at the safe integers): one the compiled code can't use, and whose exact twin
+  // the interpreter takes minutes over.
   const doubleCache = new Lru<readonly number[] | null | "overflow">(tablesSize);
   const exactCache = new Lru<unknown>(tablesSize);
   function exactTables(p: number[]): unknown {
@@ -329,9 +330,22 @@ export function kernelOn(
     let table = doubleCache.get(key);
     if (table === undefined) {
       options.onTables?.(p, "double");
-      const value = attempt("tables", bind(p));
+      const code = compiled("tables");
+      let value: unknown;
+      try {
+        value = code?.(bind(p));
+      } catch (error) {
+        // Compiled code stops at the edge of the safe integers with this RangeError: past what doubles hold.
+        // Any other failure leaves the table unproduced, as before; a blown stack says nothing of the
+        // params, so it isn't kept.
+        if (error instanceof RangeError && error.message.includes("beyond the safe integer range")) value = "overflow";
+        else if (error instanceof RangeError && error.message.includes("call stack")) return undefined;
+      }
       table = Array.isArray(value) && value.every(Number.isInteger) ? (value as number[]) : null;
-      if (table === null && Array.isArray(value) && value.some((x) => typeof x === "number" && !Number.isFinite(x)))
+      if (
+        value === "overflow" ||
+        (Array.isArray(value) && value.some((x) => typeof x === "number" && !Number.isFinite(x)))
+      )
         table = "overflow";
       doubleCache.set(key, table);
     }
@@ -343,12 +357,14 @@ export function kernelOn(
     if (!reads(operation)) return attempt(operation, vars);
     const table = doubleTables(p);
     // Past what doubles hold, a family that declines there says so at once rather than interpret.
-    if (table === "overflow" && declinePastDoubles !== undefined && wellParamed(p)) return decline(p);
+    if (table === "overflow" && declinePastDoubles !== undefined && wellParamed(p)) return decline(p, "table");
     return table === undefined || table === "overflow" ? undefined : attempt(operation, { ...vars, _tables: table });
   };
   // The message `needsBigint` recognises: the handlers answer unknown.
-  const decline = (p: number[]): never => {
-    throw new RangeError(`${family.head}(${p.join(", ")}): past 2^53, not bigint yet`);
+  const decline = (p: number[], why: "count" | "table" = "count"): never => {
+    throw new RangeError(
+      `${family.head}(${p.join(", ")}): ${why === "count" ? "past 2^53" : "its table doesn't fit in doubles"}, not bigint yet`,
+    );
   };
   const fail = (operation: Operation, p: number[], json: unknown): never => {
     throw new Error(`${family.head}(${p.join(", ")}): its ${operation} definition gave ${JSON.stringify(json)}`);

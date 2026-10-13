@@ -252,6 +252,9 @@ const BOUNDED: { head: string; limit: number; params: (n: number) => number[]; m
   },
   { head: "NonCrossingCycleSupportPermutations", limit: 600, params: (n) => [n], member: iota },
   { head: "Involutions", limit: 5000, params: (n) => [n], member: iota },
+  { head: "SeparablePermutations", limit: 10_000, params: (n) => [n], member: iota },
+  { head: "VexillaryPermutations", limit: 10_000, params: (n) => [n], member: iota },
+  { head: "ConnectedPermutations", limit: 600, params: (n) => [n], member: (n) => iota(n).toReversed() },
   {
     head: "MotzkinPathsByPeaks",
     limit: 600,
@@ -362,7 +365,10 @@ test("the fibers that are 0 or 1 whatever the size are answered past the bound",
     countOf("KDescentPermutations", [5000, 4999]),
     countOf("KDescentPermutations", [5000, 5000]),
     countOf("MotzkinPathsByPeaks", [5000, 2501]),
-  ]).toEqual([1n, 0n, 0n, 1n, 1n, 0n, 0n]);
+    countOf("KCyclePermutations", [5000, 4999]),
+    countOf("KCyclePermutations", [2, 1]),
+    countOf("KCyclePermutations", [1, 0]),
+  ]).toEqual([1n, 0n, 0n, 1n, 1n, 0n, 0n, 12_497_500n, 1n, 0n]);
 });
 
 test("malformed params keep the interpreter's answer", () => {
