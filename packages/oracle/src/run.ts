@@ -457,11 +457,18 @@ def enumeratio_held_alike(a, held):
     return True if parsed(str(a)) == parsed(held) else "NotNumeric"
 `;
 
-// SymPy helpers: `stirling` lives outside `from sympy import *`, and an identity is decided by
+// Pure-Python integers for SymPy's `ZZ`, so an answer cannot move with whether gmpy2 is installed (it picks
+// `mpz` over `int`, which differ for a negative modulus). Set before SymPy is first imported.
+const SYMPY_IMPORT = `import os as _os
+_os.environ["SYMPY_GROUND_TYPES"] = "python"
+from sympy import *`;
+
+// SymPy helpers: `stirling` and `digits` live outside `from sympy import *`, and an identity is decided by
 // simplifying the difference, then numerically — `bool(Eq(…))` refuses anything it can't
 // settle syntactically.
 export const SYMPY_PREAMBLE = `
 from sympy.functions.combinatorial.numbers import stirling
+from sympy.ntheory.digits import digits
 
 ${HELD_ALIKE}
 def enumeratio_equal(a, b):
@@ -1278,7 +1285,7 @@ export function preludeFor(system: System): Prelude {
     case "sympy":
       return {
         binary: "python3",
-        preamble: `from sympy import *\n${SYMPY_PREAMBLE}\n${PY_VALUE}\n${PY_BROADCAST}`,
+        preamble: `${SYMPY_IMPORT}\n${SYMPY_PREAMBLE}\n${PY_VALUE}\n${PY_BROADCAST}`,
         printer: "enumeratio_value",
       };
     case "mpmath":
@@ -1366,7 +1373,7 @@ function runBatch(system: System, sources: readonly string[], itemSeconds: numbe
       return runPython(
         sources,
         "python3",
-        `from sympy import *\n${SYMPY_PREAMBLE}\n${PY_VALUE}\n${PY_BROADCAST}`,
+        `${SYMPY_IMPORT}\n${SYMPY_PREAMBLE}\n${PY_VALUE}\n${PY_BROADCAST}`,
         ["-c"],
         undefined,
         "enumeratio_value",

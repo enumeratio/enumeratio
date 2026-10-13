@@ -1,0 +1,67 @@
+id	in	out	verdict
+powermod-2-10-3	pow(ZZ.convert(2), ZZ.convert(10), ZZ.convert(3))	1	
+powermod-3-50-11	pow(ZZ.convert(3), ZZ.convert(50), ZZ.convert(11))	1	
+powermod-3-2-7	pow(ZZ.convert(3), ZZ.convert(2), ZZ.convert(7))	2	
+a-negative-exponent-gives-the-modular-inverse	pow(ZZ.convert(2), ZZ.convert(-1), ZZ.convert(7))	4	
+3-1-equiv-5-and-5-2-25-equiv-4	pow(ZZ.convert(3), ZZ.convert(-2), ZZ.convert(7))	4	
+a-square-root-of-3-equiv-1-pmod-2	min(nthroot_mod(pow(ZZ.convert(3), S(Rational(1, 2)).p, ZZ.convert(2)), S(Rational(1, 2)).q, 2, True) or [None])	1	
+threads-over-a-list-of-bases	[pow(ZZ.convert(2), ZZ.convert(2), ZZ.convert(5)), pow(ZZ.convert(3), ZZ.convert(2), ZZ.convert(5)), pow(ZZ.convert(4), ZZ.convert(2), ZZ.convert(5))]	[4, 4, 1]	
+exponent-0-evaluates-even-at-a-negative-modulus	pow(ZZ.convert(-2), ZZ.convert(0), ZZ.convert(-14))	-13	
+a-rational-exponent-is-a-modular-root-the-least	min(nthroot_mod(pow(ZZ.convert(4), S(Rational(1, 2)).p, ZZ.convert(7)), S(Rational(1, 2)).q, 7, True) or [None])	2	
+threads-over-lists-the-period-is-the-order-of-2	[pow(ZZ.convert(2), ZZ.convert(10), ZZ.convert(5)), pow(ZZ.convert(2), ZZ.convert(11), ZZ.convert(5)), pow(ZZ.convert(2), ZZ.convert(12), ZZ.convert(5)), pow(ZZ.convert(2), ZZ.convert(13), ZZ.convert(5)), pow(ZZ.convert(2), ZZ.convert(14), ZZ.convert(5))]	[4, 3, 1, 2, 4]	
+a-301-digit-base	pow(ZZ.convert(((S(10)**300) + 1)), ZZ.convert(7), ZZ.convert(5))	1	
+a-square-root-of-3-modulo-the-prime-10-30-57	min(nthroot_mod(pow(ZZ.convert(3), S(Rational(1, 2)).p, ZZ.convert(((S(10)**30) + 57))), S(Rational(1, 2)).q, ((S(10)**30) + 57), True) or [None])	492767688934650018614948489645	
+a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod	pow(ZZ.convert(Rational(2, 3)), ZZ.convert(1), ZZ.convert(7))	CoercionFailed: expected an integer, got 2/3	error
+gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3	pow(ZZ.convert((2 + 1*I)), ZZ.convert(2), ZZ.convert(3))	CoercionFailed: expected an integer, got 2 + I	error
+a-gaussian-modulus-and-an-exponent-of-10-30	pow(ZZ.convert((1 + 2*I)), ZZ.convert((S(10)**30)), ZZ.convert((7 + 2*I)))	CoercionFailed: expected an integer, got 1 + 2*I	error
+11-7i-is-a-unit-mod-7-4i-so-it-has-negative	pow(ZZ.convert((11 + -7*I)), ZZ.convert(-4), ZZ.convert((7 + 4*I)))	CoercionFailed: expected an integer, got 11 - 7*I	error
+a-square-root-of-3-mod-2-is-1-trivially	min(nthroot_mod(pow(ZZ.convert(3), S(Rational(1, 2)).p, ZZ.convert(2)), S(Rational(1, 2)).q, 2, True) or [None])	1	
+exponent-0-base-minus-4-modulus-minus-2	pow(ZZ.convert(-4), ZZ.convert(0), ZZ.convert(-2))	-1	
+exponent-0-base-5-modulus-minus-7	pow(ZZ.convert(5), ZZ.convert(0), ZZ.convert(-7))	-6	
+exponent-0-with-a-positive-modulus	pow(ZZ.convert(2), ZZ.convert(0), ZZ.convert(14))	1	
+base-a-unit-any-exponent	pow(ZZ.convert((0 + 1*I)), ZZ.convert(5), ZZ.convert((3 + 4*I)))	CoercionFailed: expected an integer, got I	error
+exponent-0-is-always-1	pow(ZZ.convert((2 + 1*I)), ZZ.convert(0), ZZ.convert(7))	CoercionFailed: expected an integer, got 2 + I	error
+a-negative-exponent-inverts-first	pow(ZZ.convert((2 + 1*I)), ZZ.convert(-1), ZZ.convert((2 + -1*I)))	CoercionFailed: expected an integer, got 2 + I	error
+a-negative-exponent-past-the-first-power	pow(ZZ.convert((2 + 1*I)), ZZ.convert(-3), ZZ.convert((2 + -1*I)))	CoercionFailed: expected an integer, got 2 + I	error
+modulus-a-real-prime-3-mod-4	pow(ZZ.convert((3 + 4*I)), ZZ.convert(4), ZZ.convert(3))	CoercionFailed: expected an integer, got 3 + 4*I	error
+modulus-a-negative-real-prime	pow(ZZ.convert((3 + 4*I)), ZZ.convert(3), ZZ.convert(-7))	CoercionFailed: expected an integer, got 3 + 4*I	error
+modulus-a-composite-gaussian-norm-25	pow(ZZ.convert((1 + 1*I)), ZZ.convert(6), ZZ.convert((3 + 4*I)))	CoercionFailed: expected an integer, got 1 + I	error
+no-inverse-for-a-negative-exponent-when-the-base	pow(ZZ.convert((3 + 4*I)), ZZ.convert(-2), ZZ.convert((2 + 1*I)))	CoercionFailed: expected an integer, got 3 + 4*I	error
+a-bignum-exponent-base-and-modulus-small	pow(ZZ.convert((2 + 1*I)), ZZ.convert(100000000000000000000), ZZ.convert(7))	CoercionFailed: expected an integer, got 2 + I	error
+a-negative-bignum-exponent	pow(ZZ.convert((1 + 1*I)), ZZ.convert(-123456789012345678901), ZZ.convert(11))	CoercionFailed: expected an integer, got 1 + I	error
+modulus-past-2-53	pow(ZZ.convert((4 + 1*I)), ZZ.convert(10), ZZ.convert((100000000000000000001 + 9007199254740993*I)))	CoercionFailed: expected an integer, got 4 + I	error
+a-real-base-and-modulus-need-no-gaussian	pow(ZZ.convert(5), ZZ.convert(5), ZZ.convert(7))	3	
+result-comes-out-real-reduced-into-0-m-like-an	pow(ZZ.convert((1 + 1*I)), ZZ.convert(4), ZZ.convert(5))	CoercionFailed: expected an integer, got 1 + I	error
+modulus-1-4i-the-other-prime-above-17	pow(ZZ.convert((8 + 2*I)), ZZ.convert(3), ZZ.convert((1 + 4*I)))	CoercionFailed: expected an integer, got 8 + 2*I	error
+large-norm-base-and-modulus	pow(ZZ.convert((123 + 456*I)), ZZ.convert(7), ZZ.convert((1000 + 1*I)))	CoercionFailed: expected an integer, got 123 + 456*I	error
+base-an-associate-times-1	pow(ZZ.convert((-3 + -4*I)), ZZ.convert(5), ZZ.convert(7))	CoercionFailed: expected an integer, got -3 - 4*I	error
+base-an-associate-times-i	pow(ZZ.convert((4 + -3*I)), ZZ.convert(5), ZZ.convert(7))	CoercionFailed: expected an integer, got 4 - 3*I	error
+modulus-a-prime-above-13	pow(ZZ.convert((6 + 8*I)), ZZ.convert(3), ZZ.convert((3 + 2*I)))	CoercionFailed: expected an integer, got 6 + 8*I	error
+modulus-the-other-prime-above-13	pow(ZZ.convert((6 + 8*I)), ZZ.convert(3), ZZ.convert((2 + 3*I)))	CoercionFailed: expected an integer, got 6 + 8*I	error
+base-a-real-prime-s-associate-by-the-unit-i	pow(ZZ.convert((0 + 7*I)), ZZ.convert(3), ZZ.convert((3 + 2*I)))	CoercionFailed: expected an integer, got 7*I	error
+modulus-a-real-composite-5-squared	pow(ZZ.convert((1 + 1*I)), ZZ.convert(4), ZZ.convert(25))	CoercionFailed: expected an integer, got 1 + I	error
+a-negative-unit-exponent-is-its-own-inverse	pow(ZZ.convert((0 + 1*I)), ZZ.convert(-1), ZZ.convert(7))	CoercionFailed: expected an integer, got I	error
+modulus-a-negative-associate	pow(ZZ.convert((2 + 1*I)), ZZ.convert(5), ZZ.convert((-2 + -3*I)))	CoercionFailed: expected an integer, got 2 + I	error
+sum-powermod-a-2-7-a-nothing-7	summation(pow(S(Symbol("a")), 2, 7), (Symbol("a"), 1, 7))	14	
+findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0			
+one-step-of-rsa-style-modular-exponentiation-7	pow(ZZ.convert(7), ZZ.convert(13), ZZ.convert(33))	13	
+341-11-cdot-31-passes-fermat-s-test-to-base-2	pow(ZZ.convert(2), ZZ.convert(340), ZZ.convert(341))	1	
+diffie-hellman-both-parties-reach-the-shared-key	enumeratio_equal(pow(ZZ.convert(pow(ZZ.convert(5), ZZ.convert(6), ZZ.convert(23))), ZZ.convert(15), ZZ.convert(23)), pow(ZZ.convert(pow(ZZ.convert(5), ZZ.convert(15), ZZ.convert(23))), ZZ.convert(6), ZZ.convert(23)))	True	
+by-definition-a-b-bmod-m-computed-without-ever	enumeratio_equal(pow(ZZ.convert(2), ZZ.convert(10), ZZ.convert(3)), ((S(2)**10) % 3))	True	
+euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	pow(ZZ.convert(7), ZZ.convert(totient(19)), ZZ.convert(19))	1	
+list-powermod-7-2-5-powermod-12-2-5	[pow(ZZ.convert(7), ZZ.convert(2), ZZ.convert(5)), pow(ZZ.convert(12), ZZ.convert(2), ZZ.convert(5))]	[4, 4]	
+list-powermod-2-3-5-8-mod-5	[pow(ZZ.convert(2), ZZ.convert(3), ZZ.convert(5)), (8 % 5)]	[3, 3]	
+list-powermod-2-neg-1-5-modularinverse-2-5	[pow(ZZ.convert(2), ZZ.convert(-1), ZZ.convert(5)), mod_inverse(2, 5)]	[3, 3]	
+list-divides-2-8-powermod-8-3-2-eq-0			
+powermod-7-totient-19-19-eq-1	enumeratio_equal(pow(ZZ.convert(7), ZZ.convert(totient(19)), ZZ.convert(19)), 1)	True	
+powermod-2-16-17	pow(ZZ.convert(2), ZZ.convert(16), ZZ.convert(17))	1	
+powermod-list-5-neg-5-2-3	[pow(ZZ.convert(5), ZZ.convert(2), ZZ.convert(3)), pow(ZZ.convert(-5), ZZ.convert(2), ZZ.convert(3))]	[1, 1]	
+powermod-list-5-neg-5-2-neg-3	[pow(ZZ.convert(5), ZZ.convert(2), ZZ.convert(-3)), pow(ZZ.convert(-5), ZZ.convert(2), ZZ.convert(-3))]	[-2, -2]	disagree
+no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	pow(ZZ.convert(2), ZZ.convert(-1), ZZ.convert(4))	ValueError: base is not invertible for the given modulus	error
+a-nonzero-exponent-at-the-same-negative-modulus	pow(ZZ.convert(-2), ZZ.convert(3), ZZ.convert(-14))	-8	inconclusive
+2-is-not-a-square-mod-5-so-there-is-no-root	min(nthroot_mod(pow(ZZ.convert(2), S(Rational(1, 2)).p, ZZ.convert(5)), S(Rational(1, 2)).q, 5, True) or [None])	None	inconclusive
+a-positive-exponent-at-a-negative-modulus-1-2	pow(ZZ.convert(1), ZZ.convert(2), ZZ.convert(-2))	-1	inconclusive
+a-positive-exponent-at-a-negative-modulus-3-2-7	pow(ZZ.convert(3), ZZ.convert(2), ZZ.convert(-7))	-5	inconclusive
+a-positive-exponent-at-a-negative-modulus-341	pow(ZZ.convert(-1), ZZ.convert(340), ZZ.convert(-2))	-1	inconclusive
+a-positive-exponent-at-a-negative-modulus-5-1-7	pow(ZZ.convert(5), ZZ.convert(1), ZZ.convert(-7))	-2	inconclusive
+a-negative-exponent-at-a-negative-modulus-2-1-5	pow(ZZ.convert(2), ZZ.convert(-1), ZZ.convert(-5))	-2	inconclusive

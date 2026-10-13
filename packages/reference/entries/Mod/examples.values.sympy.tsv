@@ -74,9 +74,9 @@ neg-27-over-10-mod-23-over-5	(Rational(-27, 10) % Rational(23, 5))	19/10
 15-mod-7	(15 % 7)	1	
 pi-mod-exponentiale	(pi % E)	pi - E	
 2-pow-totient-3-mod-3	((S(2)**totient(3)) % 3)	1	
-1-plus-neg-1-plus-nthprime-2-factorial-mod			
-2-minus-jacobisymbol-2-3-mod-3			
-1-plus-neg-1-plus-nthprime-3-factorial-mod			
+1-plus-neg-1-plus-nthprime-2-factorial-mod	((1 + factorial((-1 + prime(2)))) % prime(2))	0	
+2-minus-jacobisymbol-2-3-mod-3	((2 + (-jacobi_symbol(2, 3))) % 3)	0	
+1-plus-neg-1-plus-nthprime-3-factorial-mod	((1 + factorial((-1 + prime(3)))) % prime(3))	0	
 2pi-mod-exponentiale	((2 * pi) % E)	-2*E + 2*pi	
 neg-pi-mod-2	((-pi) % 2)	4 - pi	
 division-by-a-0-modulus-yields-nan-rather-than	(5 % 0)	ZeroDivisionError: integer modulo by zero	error

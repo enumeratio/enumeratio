@@ -1,0 +1,24 @@
+id	in	out	verdict
+nextprime-10	nextprime(10)	11	
+nextprime-100	nextprime(100)	101	
+the-second-prime-after-10	nextprime(10, 2)	13	
+nextprime-6	nextprime(6)	7	
+the-second-prime-after-50	nextprime(50, 2)	59	
+the-largest-prime-below-50	nextprime(50, -1)	ValueError: ith should be positive	error
+threads-element-wise-over-a-list-as-wolfram-s	[nextprime(1), nextprime(5), nextprime(10), nextprime(15)]	[2, 7, 11, 17]	
+large-integers-the-first-prime-past-a-googol-is	nextprime((S(10)**100))	10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000267	
+rational-n-the-next-prime-above-7-2	nextprime(Rational(7, 2))	5	
+real-n-the-next-prime-above-100-5	nextprime(100.5)	101	
+findinstance-nextprime-p-eq-p-plus-1-0-lt-p-lt			
+nextprime-1-25	nextprime(1, 25)	97	
+array-nextprime-100-mod-10			
+filter-range-1-100-function-isprime-1-nextprime			
+map-function-nextprime-10-pow-1-1-range-0-20			
+map-function-neg-10-pow-1-plus-nextprime-10-pow			
+nextprime-steps-from-p-n-to-p-n-1-see-nthprime	enumeratio_equal(nextprime(prime(20)), prime(21))	True	
+nextprime-1-39	nextprime(1, 39)	167	
+nextprime-15	nextprime(15)	17	
+nextprime-30-in-primes			
+a-negative-k-walks-backward-giving-the-prime	nextprime(10, -1)	ValueError: ith should be positive	error
+negative-n-wolfram-counts-7-as-prime-and-returns	nextprime(-10)	2	disagree
+nextprime-neg-2	nextprime(-2)	2	

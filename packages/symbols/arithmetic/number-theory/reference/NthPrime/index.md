@@ -21,6 +21,16 @@ references:
     identity: A000040
 names:
   wolfram: Prime
+bindings:
+  - origin: mapped
+    form: sympy
+    template: prime($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: prime(n) is SymPy's n-th prime.
 ---
 
 - Inverse of [[PrimePi]]: $\pi(p_n)=n$.

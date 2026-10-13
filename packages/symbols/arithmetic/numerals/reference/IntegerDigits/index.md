@@ -39,6 +39,26 @@ bindings:
     form: oscar
     template: reverse(digits(BigInt($1), base=$2))
     arity: 2
+  - origin: mapped
+    form: sympy
+    template: digits($1)[1:]
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: SymPy's digits returns the base first, then the digits, so the template drops that leading base; for a negative n the base is negated and the digits are those of |n|. A numeral system in the base slot has no counterpart.
+  - origin: mapped
+    form: sympy
+    template: digits($1, $2)[1:]
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: SymPy's digits returns the base first, then the digits, so the template drops that leading base; for a negative n the base is negated and the digits are those of |n|. A numeral system in the base slot has no counterpart.
 ---
 
 - Digits come out most significant first, matching ordinary positional notation.

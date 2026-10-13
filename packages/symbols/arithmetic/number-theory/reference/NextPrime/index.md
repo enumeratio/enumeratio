@@ -23,6 +23,27 @@ references:
     identity: NextPrime
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: nextprime($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: nextprime(n) is the least prime above n.
+  - origin: mapped
+    form: sympy
+    template: nextprime($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: nextprime(n, i) is the i-th prime above n; i must be positive, where ours takes a negative step to the primes below.
 ---
 
 - NextPrime(n) is the $(m+1)$th prime, where $m$ is the count of primes $\le n$.

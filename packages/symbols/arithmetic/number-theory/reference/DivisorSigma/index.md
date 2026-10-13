@@ -23,6 +23,18 @@ references:
 names:
   dlmf: sum of powers of divisors of a number
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: divisor_sigma($2, $1)
+    arity: 2
+    threadArgOnly:
+      - 2
+      - 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: SymPy's divisor_sigma takes (n, k), the reverse of our (k, n).
 ---
 
 - $k=0$ gives the divisor count $d(n)$; $k=1$ gives the ordinary sum of divisors.

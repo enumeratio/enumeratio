@@ -20,7 +20,7 @@ export interface Mapping {
   readonly threadArg?: number;
   /** `threadArg` for one system only, which wins over `threadArg` there; a system with no entry here
    * takes `threadArg`, so declaring it leaves every other system's emission as it was. */
-  readonly threadArgOnly?: Partial<Record<System, number>>;
+  readonly threadArgOnly?: Partial<Record<System, number | readonly number[]>>;
   /** A convention difference worth remembering when a scan disagrees. */
   readonly note?: string;
 }
@@ -32,7 +32,7 @@ interface MappedBinding {
   readonly arity?: number;
   readonly template?: string;
   readonly threadArg?: number;
-  readonly threadArgOnly?: number;
+  readonly threadArgOnly?: number | readonly number[];
   readonly note?: string;
 }
 
@@ -51,7 +51,7 @@ export function mappingsFromBindings(
       arity?: number;
       emit: Record<string, string>;
       threadArg?: number;
-      threadArgOnly?: Record<string, number>;
+      threadArgOnly?: Record<string, number | readonly number[]>;
       note?: string;
     }
   >();

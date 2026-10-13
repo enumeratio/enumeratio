@@ -1,0 +1,31 @@
+id	in	out	verdict
+carmichaellambda-10	reduced_totient(10)	4	
+listable	[reduced_totient(8), reduced_totient(15)]	[2, 4]	
+negative-n-lambda-n-lambda-n	reduced_totient(-100)	ValueError: n should be a positive integer	error
+listable-over-a-range			
+carmichaellambda-neg-10	reduced_totient(-10)	ValueError: n should be a positive integer	error
+carmichaellambda-list-2-4-7	[reduced_totient(2), reduced_totient(4), reduced_totient(7)]	[1, 2, 6]	
+561-mod-carmichaellambda-561	(561 % reduced_totient(561))	1	
+carmichaellambda-12	reduced_totient(12)	2	
+list-divides-8-24-divides-carmichaellambda-8			
+3-pow-1-plus-carmichaellambda-17-mod-17	((S(3)**(1 + reduced_totient(17))) % 17)	3	
+divides-multiplicativeorder-4-9-carmichaellambda			
+carmichaellambda-1	reduced_totient(1)	1	
+carmichaellambda-2	reduced_totient(2)	1	
+carmichaellambda-3	reduced_totient(3)	2	
+carmichaellambda-4	reduced_totient(4)	2	
+carmichaellambda-5	reduced_totient(5)	4	
+carmichaellambda-6	reduced_totient(6)	2	
+divides-carmichaellambda-8-totient-8			
+carmichaellambda-7	reduced_totient(7)	6	
+carmichaellambda-8	reduced_totient(8)	2	
+carmichaellambda-9	reduced_totient(9)	6	
+carmichaellambda-11	reduced_totient(11)	10	
+carmichaellambda-13	reduced_totient(13)	12	
+carmichaellambda-14	reduced_totient(14)	6	
+carmichaellambda-15	reduced_totient(15)	4	
+carmichaellambda-16	reduced_totient(16)	4	
+carmichaellambda-17	reduced_totient(17)	16	
+carmichaellambda-list-neg-2-neg-1-0-1-2	[reduced_totient(-2), reduced_totient(-1), reduced_totient(0), reduced_totient(1), reduced_totient(2)]	ValueError: n should be a positive integer	error
+list-lcm-carmichaellambda-list-3-8			
+carmichaellambda-0	reduced_totient(0)	ValueError: n should be a positive integer	error
