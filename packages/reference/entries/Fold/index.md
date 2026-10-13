@@ -9,8 +9,12 @@ signatures:
   - call: Fold(f, xs)
     description: "the same fold with no seed, starting from $xs$'s own first element: $f(\\ldots f(x_1, x_2)\\ldots, x_n)$."
     library: enumeratio-combinatorics
+    type: (any) -> any
+    overrides: compute-engine
 seeAlso:
   - Scan
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll
 ---

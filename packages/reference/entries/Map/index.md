@@ -9,12 +9,19 @@ signatures:
     type: "(mapping: (T) any -> U, collection<T>+) -> indexed_collection where T, U"
   - call: Map(f, xs, ys, …)
     description: combines several collections element-wise (like zip), to the length of the shortest — $[f(x_1, y_1), f(x_2, y_2), \ldots]$.
+  - call: Map(f)
+    description: the operator form, $\mathrm{Map}(f)(xs) = \mathrm{Map}(f, xs)$.
+    library: enumeratio-combinatorics
+    type: (any) -> any
+    overrides: compute-engine
 seeAlso:
   - Tabulate
   - Fold
   - Filter
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll
 ---
 
 - The mapping function is always the first argument, opposite `Fold`/`Scan`.
