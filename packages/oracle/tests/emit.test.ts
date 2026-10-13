@@ -1,6 +1,6 @@
 import { expect, test } from "vite-plus/test";
 import { compare, compareCombination, linearCombination, normalise } from "../src/compare.ts";
-import { emit, unmappedHeads } from "../src/emit.ts";
+import { emit, type MathJSON, unmappedHeads } from "../src/emit.ts";
 import { fromWolfram } from "@enumeratio/wolfram";
 import { MAPPINGS, mappingFor, mappingsFromBindings } from "../src/mappings.ts";
 import { wolframBatchCode } from "../src/run.ts";
@@ -161,8 +161,42 @@ test("an unmappable expression names exactly what is missing", () => {
   // …including when the gap is nested inside something we do know.
   expect(unmappedHeads(["Add", 1, ["JonesPolynomial", 2]], "sympy")).toEqual(["JonesPolynomial/1"]);
   // A head mapped for one system may be unmapped for another; that is not a maths claim.
-  expect(emit(["PowerModList", 2, 3, 7], "wolfram").ok).toBe(true);
-  expect(emit(["PowerModList", 2, 3, 7], "sympy").ok).toBe(false);
+  expect(emit(["PowerMod", 2, 3, 7], "wolfram").ok).toBe(true);
+  expect(emit(["PowerMod", 2, 3, 7], "sympy").ok).toBe(false);
+});
+
+test("SymPy keeps a residue class through Power and Divide, and reads an Interval's Abs with abs()", () => {
+  const source = (expr: MathJSON): string | undefined => {
+    const out = emit(expr, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  expect(source(["Power", ["IntegerMod", 3, 7], -1])).toBe("(GF(7, symmetric=False)(3)**-1)");
+  expect(source(["Divide", 1, 3])).toBe("(S(1) / 3)");
+  expect(source(["Abs", ["Interval", -3, 2]])).toBe("abs(AccumBounds(-3, 2))");
+  expect(source(["Abs", -3])).toBe("Abs(-3)");
+  // factorrat takes rationals, so a Gaussian integer is unmapped, not an AttributeError.
+  expect(source(["FactorInteger", ["Complex", 3, 4]])).toBeUndefined();
+});
+
+test("a binding's threadArgOnly threads for its own system alone", () => {
+  expect(emit(["FactorInteger", ["List", 12, 18]], "sympy")).toEqual({
+    ok: true,
+    source: "[list(factorrat(S(12)).items()), list(factorrat(S(18)).items())]",
+  });
+  expect(emit(["FactorInteger", ["List", 12, 18]], "sage")).toEqual({
+    ok: true,
+    source: "enumeratio_factor_integer([12, 18])",
+  });
+});
+
+test("a SymPy Sum takes its iterator as a tuple over a bound Symbol, from 1 when the start is left out", () => {
+  const sum = (iterator: MathJSON): string | undefined => {
+    const out = emit(["Sum", "k", iterator] as MathJSON, "sympy");
+    return out.ok && out.freeSymbols === undefined ? out.source : undefined;
+  };
+  expect(sum(["Limits", "k", 0, 5])).toBe('summation(Symbol("k"), (Symbol("k"), 0, 5))');
+  expect(sum(["Limits", "k", "Nothing", 10])).toBe('summation(Symbol("k"), (Symbol("k"), 1, 10))');
+  expect(sum(["Tuple", "k", 10])).toBe('summation(Symbol("k"), (Symbol("k"), 1, 10))');
 });
 
 test("comparison is forgiving about spelling and strict about value", () => {

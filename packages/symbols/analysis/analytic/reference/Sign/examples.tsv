@@ -14,7 +14,7 @@ exact-numeric-constants	Scope		[Sign, Pi]	1				Exact numeric constants
 sign-neg-exponentiale	Scope		[Sign, [Negate, ExponentialE]]	-1													
 sign-imaginaryunit	Scope		[Sign, ImaginaryUnit]	[Complex, 0, 1]													
 sign-positiveinfinity	Scope		[Sign, PositiveInfinity]	1													
-an-interval-entirely-above-0-has-sign-1	Scope		[Sign, [Interval, 1, 3]]	1				An [[Interval]] entirely above 0 has sign 1									
+an-interval-entirely-above-0-has-sign-1	Scope		[Sign, [Interval, 1, 3]]	1				An [[Interval]] entirely above 0 has sign 1						domain	SymPy leaves sign(...) over an AccumBounds unevaluated; ours computes the image.		
 decides-the-sign-of-the-exact-number-sqrt-2-2-by	Scope		[Sign, [Subtract, [Sqrt, 2], 2]]	-1				Decides the sign of the exact number $\sqrt{2}-2$ by certified bignum evaluation at increasing precision									
 2-sqrt-2-is-the-same-certified-decision-the	Scope		[Sign, [Subtract, 2, [Sqrt, 2]]]	1				$2-\sqrt{2}$ is the same certified decision, the other way									
 sign-123	Scope		[Sign, 123]	1				A positive number has sign 1									

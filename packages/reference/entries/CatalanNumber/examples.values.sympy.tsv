@@ -12,7 +12,7 @@ half-integer-arguments-evaluate-exactly-through	catalan(Rational(5, 2))	catalan(
 real-arguments-evaluate-as-frac-gamma-2n-1-gamma	catalan(2.3)	2.59035215401932	
 complex-arguments-evaluate-through-the-same	catalan((1.2 + 1*I))	0.730728624207284 + 0.569846406969343*I	
 c-1-2-frac-8-3-pi-by-analytic-continuation	catalan(Rational(1, 2))	catalan(1/2)	
-an-interval-argument-should-give-an-enclosing			
+an-interval-argument-should-give-an-enclosing	catalan(AccumBounds(0.5, 0.6))	catalan(AccumBounds(0.5, 0.6))	disagree
 the-5-ways-to-balance-3-pairs-of-parentheses	catalan(3)	5	
 the-14-triangulations-of-a-hexagon-and-the-14	catalan(4)	14	
 assuming-n-in-integers-n-gt-eq-0-fullsimplify			
@@ -20,7 +20,7 @@ closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n	(S(binomial((2 * 5), 5)) / (5 + 
 the-closed-form-through-a-negative-n-in-binomial	(S(binomial((2 * -13), 5)) / (4 + 1))	-142506/5	
 equivalently-c-n-binom-2n-n-binom-2n-n-1	(binomial(10, 5) - binomial(10, 6))	42	
 the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	(S(catalan(6)) / catalan(5))	22/7	
-segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i			
+segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i	enumeratio_equal(catalan(4), summation((catalan(Symbol("i")) * catalan((3 - Symbol("i")))), (Symbol("i"), 0, 3)))	True	
 generatingfunction-catalannumber-n-n-x			
 catalannumber-neg-10	catalan(-10)	0	
 catalannumber-neg-9	catalan(-9)	0	

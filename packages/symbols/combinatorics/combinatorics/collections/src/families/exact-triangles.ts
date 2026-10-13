@@ -180,14 +180,101 @@ export function isInvolutionPermutation(x: unknown, [n]: number[]): boolean {
   return isPermutationOf(x, n) && x.every((image, i) => x[image - 1] === i + 1);
 }
 
+/** The place of the transposition (i j), i < j, among the n(n − 1)/2 of them in lex order: i descending
+ *  (a later i keeps more of the identity up front), then j ascending. */
+export const transpositionRank = (n: number, i: number, j: number): number => ((n - 1 - i) * (n - i)) / 2 + (j - i - 1);
+
+/** The r-th transposition of n in lex order (`transpositionRank`'s inverse). */
+export function transpositionUnrank(n: number, r: number): number[] {
+  const x = Array.from({ length: n }, (_, i) => i + 1);
+  let rest = r;
+  for (let i = n - 1; i >= 1; i--) {
+    if (rest < n - i) {
+      [x[i - 1], x[i + rest]] = [x[i + rest], x[i - 1]];
+      return x;
+    }
+    rest -= n - i;
+  }
+  throw new RangeError(`transposition ${r} of ${n}`);
+}
+
+/** The place of a transposition of n, given as a permutation, in lex order. */
+export function transpositionPlace(x: readonly number[]): number {
+  const n = x.length;
+  const i = x.findIndex((image, at) => image !== at + 1) + 1;
+  return transpositionRank(n, i, x[i - 1]);
+}
+
+/** Separable permutations, Av(2413, 3142), in O(n): read left to right, the entries merge into blocks
+ *  of consecutive values (a stack of value intervals); a separating tree has a leaf pair that merges, so
+ *  the permutation is separable exactly when everything merges into one block. */
+export function isSeparablePermutation(x: unknown, [n]: number[]): boolean {
+  if (!isPermutationOf(x, n)) return false;
+  const low: number[] = [];
+  const high: number[] = [];
+  for (const entry of x) {
+    let [a, b] = [entry, entry];
+    while (low.length > 0) {
+      if (high[high.length - 1] + 1 === a) a = low[low.length - 1];
+      else if (b + 1 === low[low.length - 1]) b = high[high.length - 1];
+      else break;
+      low.pop();
+      high.pop();
+    }
+    low.push(a);
+    high.push(b);
+  }
+  return low.length <= 1;
+}
+
+/** Vexillary permutations, Av(2143), in O(n²): a 2143 is two descents `a b` and `c d`, b before c, with
+ *  the first one's top x[a] under the second one's bottom x[d]. So track the least top `floor` of any
+ *  descent ended before c, and look for a d after c below x[c] and above it. */
+export function isVexillaryPermutation(x: unknown, [n]: number[]): boolean {
+  if (!isPermutationOf(x, n)) return false;
+  let floor = Number.POSITIVE_INFINITY;
+  for (let c = 0; c < n; c++) {
+    if (floor < x[c]) for (let d = c + 1; d < n; d++) if (x[d] < x[c] && x[d] > floor) return false;
+    // The least top of a descent that ends at c.
+    for (let a = 0; a < c; a++) if (x[a] > x[c] && x[a] < floor) floor = x[a];
+  }
+  return true;
+}
+
+/** The permutations of n with no proper prefix on the values 1 … k (indecomposable). */
+export function isConnectedPermutation(x: unknown, [n]: number[]): boolean {
+  if (!isPermutationOf(x, n)) return false;
+  let top = 0;
+  for (let i = 0; i + 1 < n; i++) {
+    top = Math.max(top, x[i]);
+    if (top === i + 1) return false;
+  }
+  return true;
+}
+
+const connectedTerms: bigint[] = [1n];
+/** The indecomposable permutations of n, c(0) = c(1) = 1: every permutation is a first indecomposable
+ *  block of k then any of the n − k left, so n! = Σₖ c(k) (n − k)!, solved for c(n). O(n²) steps, the
+ *  terms kept: a sweep over n costs no more than its largest. The caller bounds n (`exactUpTo`). */
+export function connectedExact(n: number): bigint {
+  const fact = factorialsTo(n);
+  for (let m = connectedTerms.length; m <= n; m++) {
+    let total = fact[m];
+    for (let k = 1; k < m; k++) total -= fact[k] * connectedTerms[m - k];
+    connectedTerms.push(total);
+  }
+  return connectedTerms[n];
+}
+
 /**
  * `family` with an exact `count` while its first param is at most `limit`, and none past it: a count a
  * double can't hold is `count`'s to give, not Epsil's, whose interpreter takes minutes. `trivial` answers
  * the fibers that are 0 or 1 whatever the size, so they are answered past `limit` too, and `only` is the
- * member of a fiber `trivial` counts as 1, for `unrank`. `valid` is a direct membership test, for a
- * family whose Epsil one builds a table that overflows doubles. Where the family has a `fast` kernel its
- * count (and `valid` and `only` where given) replace its own; unrank and rank otherwise decline past
- * 2^53 (and past `limit`) at once, and are Epsil's below.
+ * member of a fiber `trivial` counts as 1, for `unrank`. `listed` unranks and ranks directly in a small
+ * fiber `trivial` counts (any size), each undefined where it has no say. `valid` is a direct membership
+ * test, for a family whose Epsil one builds a table that overflows doubles. Where the family has a `fast`
+ * kernel its count (and `valid`, `only` and `listed` where given) replace its own; unrank and rank
+ * otherwise decline past 2^53 (and past `limit`) at once, and are Epsil's below.
  */
 export const exactUpTo = (
   family: EpsilFamily,
@@ -197,9 +284,13 @@ export const exactUpTo = (
     trivial?: (p: number[]) => bigint | undefined;
     valid?: (element: unknown, p: number[]) => boolean;
     only?: (p: number[]) => number[] | undefined;
+    listed?: {
+      unrank: (p: number[], r: number) => number[] | undefined;
+      rank: (element: number[], p: number[]) => number | undefined;
+    };
   } = {},
 ): EpsilFamily => {
-  const { trivial = () => undefined, valid, only } = options;
+  const { trivial = () => undefined, valid, only, listed } = options;
   const exact = (p: number[]): bigint | undefined => trivial(p) ?? (p[0] > limit ? undefined : count(p));
   // Undefined leaves a question to Epsil.
   const base: FastKernel = family.fast ?? {
@@ -209,14 +300,15 @@ export const exactUpTo = (
     valid: () => undefined,
   };
   const kernel =
-    family.fast === undefined && valid === undefined && only === undefined
+    family.fast === undefined && valid === undefined && only === undefined && listed === undefined
       ? { fastCount: exact }
       : {
           fast: {
             ...base,
             count: exact,
             unrank: (p: number[], r: number) =>
-              r === 0 && only !== undefined && trivial(p) === 1n ? only(p) : base.unrank(p, r),
+              (r === 0 && trivial(p) === 1n ? only?.(p) : undefined) ?? listed?.unrank(p, r) ?? base.unrank(p, r),
+            rank: (element: unknown, p: number[]) => listed?.rank(element as number[], p) ?? base.rank(element, p),
             valid: valid ?? base.valid,
           },
         };

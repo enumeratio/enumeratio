@@ -147,6 +147,12 @@ export function parsePython(text: string): Tree | undefined {
       i += quoted[0].length;
       return `'${quoted[1] ?? quoted[2]}'`;
     }
+    // The non-finite values by the names the printers and `reduce` use.
+    const named = /^(?:PositiveInfinity|NegativeInfinity|ComplexInfinity|NaN)\b/.exec(s.slice(i));
+    if (named !== null) {
+      i += named[0].length;
+      return named[0];
+    }
     if (s.startsWith("True", i)) {
       i += 4;
       return true;

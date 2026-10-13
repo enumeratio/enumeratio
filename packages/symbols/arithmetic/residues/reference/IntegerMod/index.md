@@ -30,6 +30,14 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-05
+  - origin: mapped
+    form: sympy
+    template: GF($2, symmetric=False)($1)
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: SymPy's Mod is the plain remainder; the residue value is the element of GF(n), which for a composite n is Z/n. A class of one modulus does not combine with one of another, where Sage's coercion takes them to Z/gcd. Power and Divide over a residue skip their S() wrap (emit.ts), which would lift a class to its integer.
 attributes:
   - HoldAll
 ---

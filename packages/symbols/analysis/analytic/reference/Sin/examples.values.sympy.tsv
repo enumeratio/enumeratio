@@ -27,8 +27,8 @@ sin-4-pi-is-zero	sin((4 * pi))	0
 a-full-turn-shift-of-a-symbolic-argument-doesn-t	sin((Symbol("x") + (2 * pi)))	True	
 sin-i-pi-2-i-sinh-pi-2-exactly	sin((I * (S(pi) / 2)))	I*sinh(pi/2)	
 n-decimalizes-sin-i-pi-2-not-just-the-exact-form	N(sin((I * (S(pi) / 2))), 30)	2.30129890230729487346304002343*I	
-interval-arithmetic-the-image-of-pi-6-pi-6-is			
-the-image-of-the-whole-real-line-is-1-1			
+interval-arithmetic-the-image-of-pi-6-pi-6-is	sin(AccumBounds((-(S(pi) / 6)), (S(pi) / 6)))	AccumBounds(-1/2, 1/2)	
+the-image-of-the-whole-real-line-is-1-1	sin(AccumBounds(-oo, oo))	AccumBounds(-1, 1)	
 wolfram-answers-sin-infty-with-the-range-of-its	sin(oo)	AccumBounds(-1, 1)	disagree
 uncertainty-propagation-sin-2-pm-0-01-approx-0			
 an-imaginary-argument-rewrites-to-sinh-sin-ix-i	sin((I * Symbol("x")))	True	

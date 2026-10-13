@@ -562,10 +562,19 @@ if hasattr(sys, "set_int_max_str_digits"):
 def enumeratio_value(x):
     if isinstance(x, list):
         return "[" + ", ".join(enumeratio_value(e) for e in x) + "]"
+    # A tuple of numbers reads element by element, so a closed form (-1 - 2*I) is one a scan can compare.
+    if isinstance(x, tuple) and not any(isinstance(e, str) for e in x):
+        return "(" + ", ".join(enumeratio_value(e) for e in x) + ("," if len(x) == 1 else "") + ")"
     if isinstance(x, (bool, int, str, tuple)) or x is None:
         return str(x)
+    # A residue of GF(n) keeps its modulus, as ours does and as Sage's printer below does.
+    if type(x).__name__.startswith("ModularInteger"):
+        return "ResidueClass(%s, %s)" % (x.val, x.mod)
     try:
         import sympy
+        # An interval is its endpoints, as structural.ts reads ours.
+        if isinstance(x, sympy.AccumBounds):
+            return "(" + enumeratio_value(x.min) + ", " + enumeratio_value(x.max) + ")"
         if isinstance(x, sympy.Basic):
             if x.is_Rational:
                 return str(x)

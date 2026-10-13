@@ -17,7 +17,7 @@ ln-positiveinfinity	log(oo)	oo
 ln-z-to-infty-and-its-real-part-goes-to-infty-ln	log(zoo)	zoo	disagree
 ln-i-i-pi-2-exactly	log(I)	I*pi/2	
 a-unit-fraction-becomes-a-negated-logarithm-ln	log(Rational(1, 2))	-log(2)	
-interval-arithmetic-ln-is-increasing-so-ln-frac			
+interval-arithmetic-ln-is-increasing-so-ln-frac	log(AccumBounds(Rational(1, 3), E))	AccumBounds(-log(3), 1)	
 uncertainty-propagation-ln-2-pm-0-01-approx-0			
 ln-exp-x	log(exp(Symbol("x")))	True	
 derivative-1-x	diff(log(Symbol("x")), Symbol("x"))	True	

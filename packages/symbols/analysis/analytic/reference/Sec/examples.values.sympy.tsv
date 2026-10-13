@@ -19,7 +19,7 @@ threads-element-wise-over-a-matrix	[[sec((5 * (S(pi) / 6))), sec(0)], [sec((S(pi
 sec-pi-12-sqrt-6-sqrt-2	sec((S(pi) / 12))	1/(sqrt(2)/4 + sqrt(6)/4)	
 sec-pi-5-sqrt-5-1	sec((S(pi) / 5))	1/(1/4 + sqrt(5)/4)	
 sec-pi-8-sqrt-4-2-sqrt-2	sec((S(pi) / 8))	1/sqrt(sqrt(2)/4 + 1/2)	
-interval-arithmetic-the-image-of-pi-6-pi-3-is			
+interval-arithmetic-the-image-of-pi-6-pi-3-is	sec(AccumBounds((S(pi) / 6), (S(pi) / 3)))	AccumBounds(2*sqrt(3)/3, 2)	
 uncertainty-propagation-sec-2-pm-0-01-approx-2			
 evenness-drops-the-sign-of-a-symbolic-argument	sec((-Symbol("x")))	True	
 derivative-sec-x-tan-x	diff(sec(Symbol("x")), Symbol("x"))	True	

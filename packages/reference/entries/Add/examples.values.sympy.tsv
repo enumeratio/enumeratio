@@ -4,7 +4,7 @@ x-plus-list-1-2-3	enumeratio_broadcast(lambda _a0, _a1: (_a0 + _a1), Symbol("x")
 list-a-b-plus-list-c-d	enumeratio_broadcast(lambda _a0, _a1: (_a0 + _a1), [Symbol("a"), Symbol("b")], [Symbol("c"), Symbol("d")])	True
 x-plus-list-a-b-c	enumeratio_broadcast(lambda _a0, _a1: (_a0 + _a1), Symbol("x"), [Symbol("a"), Symbol("b"), Symbol("c")])	True
 x-plus-list-list-a-b-list-c-d	enumeratio_broadcast(lambda _a0, _a1: (_a0 + _a1), Symbol("x"), [[Symbol("a"), Symbol("b")], [Symbol("c"), Symbol("d")]])	True
-interval-0-1-plus-interval-neg-1-1		
+interval-0-1-plus-interval-neg-1-1	(AccumBounds(0, 1) + AccumBounds(-1, 1))	AccumBounds(-1, 2)
 list-list-a-b-list-c-d-plus-list-list-1-2-list-3	enumeratio_broadcast(lambda _a0, _a1: (_a0 + _a1), [[Symbol("a"), Symbol("b")], [Symbol("c"), Symbol("d")]], [[1, 2], [3, 4]])	True
 length-a-plus-b-plus-c-plus-d	(len((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d"))) if hasattr((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")), '__len__') else (len(((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d"))).args) if hasattr((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")), 'args') else 0))	4
 foldlist-add-0-list-a-b-c		
