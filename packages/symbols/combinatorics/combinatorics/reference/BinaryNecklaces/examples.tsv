@@ -1,4 +1,6 @@
-id	section	role	expr	expected	caption
-count-binarynecklaces-5	Basic		[Count, [BinaryNecklaces, 5]]	8	$Count(BinaryNecklaces(5)) = 8$
-first-element-of-binarynecklaces-5	Basic		[At, [BinaryNecklaces, 5], 1]	[BinaryWord, [List, 0, 0, 0, 0, 0]]	The first element in enumeration order
-every-element-of-binarynecklaces-5		test	[Take, [BinaryNecklaces, 5], 8]	[List, [BinaryWord, [List, 0, 0, 0, 0, 0]], [BinaryWord, [List, 1, 1, 1, 1, 1]], [BinaryWord, [List, 0, 0, 0, 0, 1]], [BinaryWord, [List, 0, 0, 0, 1, 1]], [BinaryWord, [List, 0, 0, 1, 0, 1]], [BinaryWord, [List, 0, 0, 1, 1, 1]], [BinaryWord, [List, 0, 1, 0, 1, 1]], [BinaryWord, [List, 0, 1, 1, 1, 1]]]	
+id	section	role	expr	expected	known	source	caption	epsil.back
+count-binarynecklaces-5	Basic		[Count, [BinaryNecklaces, 5]]	8			$Count(BinaryNecklaces(5)) = 8$	
+first-element-of-binarynecklaces-5	Basic		[At, [BinaryNecklaces, 5], 1]	[BinaryWord, [List, 0, 0, 0, 0, 0]]			The first element in enumeration order	
+every-element-of-binarynecklaces-5		test	[Take, [BinaryNecklaces, 5], 8]	[List, [BinaryWord, [List, 0, 0, 0, 0, 0]], [BinaryWord, [List, 1, 1, 1, 1, 1]], [BinaryWord, [List, 0, 0, 0, 0, 1]], [BinaryWord, [List, 0, 0, 0, 1, 1]], [BinaryWord, [List, 0, 0, 1, 0, 1]], [BinaryWord, [List, 0, 0, 1, 1, 1]], [BinaryWord, [List, 0, 1, 0, 1, 1]], [BinaryWord, [List, 0, 1, 1, 1, 1]]]				
+count-binarynecklaces-64-past-2-53	Scope		[Count, [BinaryNecklaces, 64]]	{num: "288230376218822676"}	{num: "288230376218822676"}	OEIS A000031 b-file	Exact past $2^{53}$: binary necklaces of 64 beads	
+count-binarynecklaces-oeis-a000031	Properties		[Map, [Function, [Count, [BinaryNecklaces, n]], n], [Range, 0, 19, 1]]	[List, 1, 2, 3, 4, 6, 8, 14, 20, 36, 60, 108, 188, 352, 632, 1182, 2192, 4116, 7712, 14602, 27596]	[List, 1, 2, 3, 4, 6, 8, 14, 20, 36, 60, 108, 188, 352, 632, 1182, 2192, 4116, 7712, 14602, 27596]	OEIS A000031	The binary necklaces of $n$ beads, $n = 0 \dots 19$	Unreadable

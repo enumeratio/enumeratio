@@ -12,6 +12,7 @@
 // duplicated from the source file (mirrors the permutations pilot's `ints`); `reversed` and
 // `eulerPhi` are used ONLY by the bracelet families and moved outright (removed from
 // collections' copy).
+import { braceletCountExact } from "../../../collections/src/families/exact-counts.ts";
 import { floorDiv, modRank } from "../../../collections/src/families/kernels.ts";
 import { ternaryGrayCodes } from "../../../collections/src/families/closed-forms.ts";
 import { stirlingPermutations } from "./epsil.ts";
@@ -311,6 +312,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
       (a, [n]) => braceletValid(a, n, 2),
       (a, [n]) => braceletRank(a, n, 2),
     ),
+    exactCount: ([n]) => braceletCountExact(n, 2),
     declared: wordClass("BinaryWord", 2),
     carrier: "BinaryWord",
   },
@@ -324,6 +326,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
       (a, [n, k]) => braceletValid(a, n, k),
       (a, [n, k]) => braceletRank(a, n, k),
     ),
+    exactCount: ([n, k]) => braceletCountExact(n, k),
     declared: wordClass("Word"),
   },
   ternaryGrayCodesFamily,

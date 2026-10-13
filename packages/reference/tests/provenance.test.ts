@@ -1035,6 +1035,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
       "Coproduct",
       "CubeRoot",
       "CycleGraph",
+      "CycleIndexPolynomial",
       "Cycles",
       "CyclicGroup",
       "DSolveValue",

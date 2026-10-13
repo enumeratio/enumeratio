@@ -112,6 +112,8 @@ export interface FamilyKernel extends Family {
 /** A family written in plain numbers — exact only below 2^53. */
 export interface NumberKernel extends Family {
   readonly count: (p: number[]) => number;
+  /** The count as an exact integer, past 2^53 too; `undefined` leaves the count to `count`. */
+  readonly exactCount?: (p: number[]) => bigint | undefined;
   readonly unrank: (p: number[], r: number) => Element;
   readonly rank: (element: unknown, p: number[]) => number;
 }
@@ -140,6 +142,8 @@ export function numberKernel(k: NumberKernel): FamilyKernel {
     ...(k.carrierElements === undefined ? {} : { carrierElements: k.carrierElements }),
     ...(k.declared === undefined ? {} : { declared: k.declared }),
     count: (p) => {
+      const exactly = k.exactCount?.(p);
+      if (exactly !== undefined) return exactly;
       const c = k.count(p);
       return Number.isNaN(c) || c === Number.POSITIVE_INFINITY ? c : exact(k.head, "count", c, p);
     },

@@ -31,7 +31,17 @@ import {
   permutationGroupClosure,
   permutationToCycles,
 } from "./permutations.ts";
+import {
+  alternatingIndex,
+  type CycleIndex,
+  cyclicIndex,
+  dihedralIndex,
+  listedIndex,
+  symmetricIndex,
+} from "./cycle-index.ts";
 import { GROUPALGEBRA_NOTATION } from "./notation.ts";
+
+const gcdBig = (a: bigint, b: bigint): bigint => (b === 0n ? a : gcdBig(b, a % b));
 
 // Wiring k[G] to compute-engine.
 //
@@ -699,6 +709,54 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     },
     { min: 1, max: 2 },
   );
+
+  // CycleIndexPolynomial(group, {x1, x2, …}): Wolfram's convention, x_i marking the i-cycles, so the
+  // variable list must reach the group's degree (a shorter one is left unevaluated; Wolfram answers
+  // with a polynomial in the wrong variables). Groups act as Wolfram's do: C_n and D_n on n points
+  // (D_1 on 2, D_2 on 4), S_n and A_n on n, a PermutationGroup on the points it moves.
+  ce.declare("CycleIndexPolynomial", {
+    signature: `(${anyGroupLike}, list) -> number`,
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const group = ops[0];
+      if (group === undefined || ops[1]?.operator !== "List") return undefined;
+      const variables = operandsOf(ops[1]);
+      const n = integerAt(operandsOf(group)[0]);
+      let index: CycleIndex | undefined;
+      switch (group.operator) {
+        case "CyclicGroup":
+          index = n === undefined ? undefined : cyclicIndex(n);
+          break;
+        case "DihedralGroup":
+          index = n === undefined ? undefined : dihedralIndex(n);
+          break;
+        case "SymmetricGroup":
+          index = n === undefined ? undefined : symmetricIndex(n);
+          break;
+        case "AlternatingGroup":
+          index = n === undefined ? undefined : alternatingIndex(n);
+          break;
+        case "PermutationGroup": {
+          const read = permutationGroupOf(group);
+          const closure = read && permutationGroupClosure(read.generators, read.degree);
+          index = read && closure ? listedIndex(closure, read.degree) : undefined;
+          break;
+        }
+      }
+      if (index === undefined || variables.length < index.degree) return undefined;
+      const { order } = index;
+      const terms = [...index.types.values()].map(({ exponents, count }) => {
+        const divisor = gcdBig(count, order);
+        const factors: BoxedExpression[] = [];
+        if (count !== order)
+          factors.push(ce.function("Divide", [ce.number(count / divisor), ce.number(order / divisor)]));
+        exponents.forEach((power, i) => {
+          if (power > 0) factors.push(ce.function("Power", [variables[i]!, ce.number(power)]));
+        });
+        return factors.length === 0 ? ce.number(1) : ce.function("Multiply", factors);
+      });
+      return ce.function("Add", terms);
+    },
+  });
 
   declareAlgebra(ce, {
     type: "group_algebra",
