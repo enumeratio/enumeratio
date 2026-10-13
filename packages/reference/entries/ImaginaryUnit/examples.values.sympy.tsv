@@ -1,2 +1,2 @@
-id	in
-i-squared	(I)**2
+id	in	out
+i-squared	(I)**2	-1

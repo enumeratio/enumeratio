@@ -1,2 +1,2 @@
-id	in
-golden-ratio-to-20-digits	N(GoldenRatio, 30)
+id	in	out
+golden-ratio-to-20-digits	N(GoldenRatio, 30)	1.61803398874989484820458683437

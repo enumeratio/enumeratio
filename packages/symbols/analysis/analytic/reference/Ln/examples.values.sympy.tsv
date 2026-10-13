@@ -13,14 +13,14 @@ a-negative-float-gives-the-principal-complex	log(-2.5)	0.916290731874155 + I*pi
 threads-element-wise-over-a-list	[log(1), log(2.1), log(3.1), log(4.1)]	[0, 0.741937344729377, 1.13140211149110, 1.41098697371026]	
 an-integer-power-is-pulled-out-ln-1000-3-ln-10	log(1000)	log(1000)	
 ln-exponentiale-pow-3	log((S(E)**3))	3	
-ln-positiveinfinity	log(oo)		
+ln-positiveinfinity	log(oo)	oo	
 ln-z-to-infty-and-its-real-part-goes-to-infty-ln	log(zoo)	zoo	disagree
 ln-i-i-pi-2-exactly	log(I)	I*pi/2	
 a-unit-fraction-becomes-a-negated-logarithm-ln	log(Rational(1, 2))	-log(2)	
 interval-arithmetic-ln-is-increasing-so-ln-frac			
 uncertainty-propagation-ln-2-pm-0-01-approx-0			
 ln-exp-x	log(exp(Symbol("x")))	True	
-derivative-1-x	diff(log(Symbol("x")), Symbol("x"))		
+derivative-1-x	diff(log(Symbol("x")), Symbol("x"))	True	
 antiderivative-x-ln-x-x			
 mercator-series-for-ln-1-x			
 to-40-significant-digits-every-one-correctly	N(log(2), 30)	0.693147180559945309417232121458	
@@ -31,29 +31,29 @@ n-of-a-negative-integer-argument	N(log(-2), 30)	0.693147180559945309417232121458
 ln-neg-6	log(-6)	log(6) + I*pi	
 n-of-a-negative-rational-argument	N(log(Rational(-1, 2)), 30)	-0.693147180559945309417232121458 + 3.14159265358979323846264338328*I	
 ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	log(-oo)	oo	disagree
-n-ln-5-over-2-50	N(log(Rational(5, 2)), 30)		
+n-ln-5-over-2-50	N(log(Rational(5, 2)), 30)	0.916290731874155065183527211768	
 functiondomain-ln-x-x			
 functionrange-ln-x-x-y			
 functionanalytic-ln-x-x			
 functionmeromorphic-ln-x-x			
 functioninjective-ln-x-x			
 functionsurjective-ln-x-x			
-d-ln-z-z	diff(log(Symbol("z")), Symbol("z"))		
-d-ln-ln-x-x	diff(log(log(Symbol("x"))), Symbol("x"))		
-ln-exponentiale-pow-n	log((S(E)**Symbol("n")))		
+d-ln-z-z	diff(log(Symbol("z")), Symbol("z"))	True	
+d-ln-ln-x-x	diff(log(log(Symbol("x"))), Symbol("x"))	True	
+ln-exponentiale-pow-n	log((S(E)**Symbol("n")))	True	
 series-ln-x-x-1-4			
 series-ln-x-x-neg-2-3			
 inverse-of-exp-ln-e-x-x	enumeratio_equal(log(exp(5)), 5)	True	
 product-rule-ln-ab-ln-a-ln-b	enumeratio_equal((log(2) + log(3)), log(6))	True	
 powerexpand-splits-a-logarithm-of-a-product			
-n-ln-2-pow-2	N((S(log(2))**2), 30)		
-n-ln-2-pow-3	N((S(log(2))**3), 30)		
-n-ln-2-pow-4	N((S(log(2))**4), 30)		
-n-ln-2-pow-5	N((S(log(2))**5), 30)		
-n-ln-2-pow-2-2	N((S(log(2))**2), 30)		
-n-ln-2-pow-3-2	N((S(log(2))**3), 30)		
-n-ln-2-pow-4-2	N((S(log(2))**4), 30)		
-n-ln-2-pow-5-2	N((S(log(2))**5), 30)		
+n-ln-2-pow-2	N((S(log(2))**2), 30)	0.480453013918201424667102526327	
+n-ln-2-pow-3	N((S(log(2))**3), 30)	0.333024651988929479718853582612	
+n-ln-2-pow-4	N((S(log(2))**4), 30)	0.230835098583083451887497717768	
+n-ln-2-pow-5	N((S(log(2))**5), 30)	0.160002697757141321080946663856	
+n-ln-2-pow-2-2	N((S(log(2))**2), 30)	0.480453013918201424667102526327	
+n-ln-2-pow-3-2	N((S(log(2))**3), 30)	0.333024651988929479718853582612	
+n-ln-2-pow-4-2	N((S(log(2))**4), 30)	0.230835098583083451887497717768	
+n-ln-2-pow-5-2	N((S(log(2))**5), 30)	0.160002697757141321080946663856	
 n-integrate-1-over-t-minus-1-times-ln-t-pow-2-t			
 n-integrate-exponentiale-pow-neg-t-times-ln-t			
 n-integrate-1-over-neg-x-times-y-plus-1-times-ln			
