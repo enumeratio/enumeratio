@@ -31,6 +31,7 @@ import {
   TupleUnrank,
 } from "../../../collections/src/families/kernels-extra.ts";
 import { binaryPalindromes, binaryStrings, grayCodes, words } from "../../../collections/src/families/closed-forms.ts";
+import { necklaceCountExact } from "../../../collections/src/families/exact-counts.ts";
 import { binaryWordsByWeight, fibStrings, lucasStrings } from "./epsil.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
@@ -496,6 +497,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
           2,
         ),
     ),
+    exactCount: ([n]) => necklaceCountExact(n, 2),
     declared: wordClass("BinaryWord", 2),
     carrier: "BinaryWord",
   },
@@ -533,6 +535,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
       (a, [n, k]) => necklacesValid(a, n, k),
       (a, [n, k]) => necklacesRank(a, n, k),
     ),
+    exactCount: ([n, k]) => necklaceCountExact(n, k),
     declared: wordClass("Word"),
   },
   // KLyndonWords(size, base): aperiodic base-letter necklaces.
