@@ -2,7 +2,6 @@
 // One story card: the live render in a canvas (which can take over the window), and its source
 // as a tab per written form. See Stories.vue for where the data comes from.
 import { toVNode, vdomOf } from "@enumeratio/frontend/vdom";
-import { loadMarkup } from "@enumeratio/components";
 import { h, onMounted, ref, shallowRef } from "vue";
 import { renderInline } from "../../prose.ts";
 import type { StoryData } from "../../data/stories.ts";
@@ -20,7 +19,10 @@ const live = () => toVNode(vdomOf(props.story.expr as never), h, typeset.value);
 // The page's KaTeX, as `notatio-out` typesets; a form-box shows its text until it arrives.
 const typeset = shallowRef<((tex: string) => string) | undefined>();
 onMounted(() => {
-  loadMarkup()
+  // Imported here, not at the top: the elements package needs `HTMLElement`, which a static import
+  // would pull into the server render and fail the whole page chunk there.
+  import("@enumeratio/components")
+    .then(({ loadMarkup }) => loadMarkup())
     .then((convert) => (typeset.value = convert))
     .catch(() => {});
 });
