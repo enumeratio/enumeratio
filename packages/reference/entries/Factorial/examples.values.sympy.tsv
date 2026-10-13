@@ -9,7 +9,7 @@ real-arguments-evaluate-as-gamma-n-1	factorial(3.5)	11.6317283965674
 negative-non-integers-are-defined-too-2-5-gamma	factorial(-2.5)	2.36327180120735	
 complex-arguments-1-i-gamma-2-i	factorial((1 + 1*I))	factorial(1 + I)	
 frac-12-gamma-frac-12-sqrt-pi-returned-as-a	factorial(Rational(-1, 2))	factorial(-1/2)	
-infty-infty	factorial(oo)		
+infty-infty	factorial(oo)	oo	
 the-number-of-ways-to-arrange-8-distinct-books	factorial(8)	40320	
 recurrence-n-n-n-1	enumeratio_equal(factorial(5), (5 * factorial(4)))	True	
 extends-to-non-integers-via-the-gamma-function	factorial(Rational(1, 2))	factorial(1/2)	

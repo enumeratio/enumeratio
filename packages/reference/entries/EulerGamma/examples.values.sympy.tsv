@@ -1,2 +1,2 @@
-id	in
-euler-gamma-to-20-digits	N(EulerGamma, 30)
+id	in	out
+euler-gamma-to-20-digits	N(EulerGamma, 30)	0.577215664901532860606512090082

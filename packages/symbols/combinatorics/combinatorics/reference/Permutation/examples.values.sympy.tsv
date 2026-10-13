@@ -1,2 +1,2 @@
-id	in
-one-line-word	[2, 3, 1]
+id	in	out
+one-line-word	[2, 3, 1]	[2, 3, 1]

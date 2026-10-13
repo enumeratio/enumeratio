@@ -10,36 +10,36 @@ gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3	lcm((Rational(1, 2) + Rational(3, 5)*I
 big-integers-the-exact-118-digit-lcm-past-where	lcm(factorial(20), ((S(10)**100) + 3))	3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000	
 listable-a-single-list-argument-threads-element	[lcm(12, 3), lcm(12, 7), lcm(12, 40)]	[12, 84, 120]	
 a-large-integer-against-a-negative-rational	lcm(factorial(20), ((S(10)**-1) + -2))	2432902008176640000	
-lcm-with-a-unit-is-the-other-argument-normalised	lcm((3 + 4*I), 1)		
+lcm-with-a-unit-is-the-other-argument-normalised	lcm((3 + 4*I), 1)	3 + 4*I	
 lcm-with-i-a-unit-is-the-other-argument	lcm((3 + 4*I), (0 + 1*I))	-4 + 3*I	disagree
-lcm-with-0-is-0	lcm(0, (-4 + 3*I))		
-two-gaussian-primes-above-5-multiply-straight	lcm((2 + 1*I), (2 + -1*I))		
-a-gaussian-prime-and-a-real-prime-3-mod-4	lcm((2 + 1*I), 3)		
+lcm-with-0-is-0	lcm(0, (-4 + 3*I))	0	
+two-gaussian-primes-above-5-multiply-straight	lcm((2 + 1*I), (2 + -1*I))	5	
+a-gaussian-prime-and-a-real-prime-3-mod-4	lcm((2 + 1*I), 3)	6 + 3*I	
 an-associate-pair-has-lcm-equal-to-their-common	lcm((3 + 4*I), (-4 + 3*I))	-4 + 3*I	disagree
 another-associate-pair-by-1	lcm((3 + 4*I), (-3 + -4*I))	-3 - 4*I	disagree
 two-unrelated-composites-of-norm-25	lcm((3 + 4*I), (4 + 3*I))	25*I	inconclusive
 lcm-with-a-negative-real-prime	lcm((3 + 4*I), -7)	-21 - 28*I	disagree
-lcm-of-two-large-norm-gaussians	lcm((123 + 456*I), (1000 + 1*I))		
-lcm-past-2-53-in-both-parts	lcm((100000000000000000001 + 9007199254740993*I), (4 + 1*I))		
-a-real-split-prime-and-its-gaussian-factor	lcm(5, (2 + 1*I))		
-lcm-of-two-real-composites-plain-integer-case	lcm(4, 9)		
+lcm-of-two-large-norm-gaussians	lcm((123 + 456*I), (1000 + 1*I))	122544 + 456123*I	
+lcm-past-2-53-in-both-parts	lcm((100000000000000000001 + 9007199254740993*I), (4 + 1*I))	399990992800745259011 + 100036028797018963973*I	
+a-real-split-prime-and-its-gaussian-factor	lcm(5, (2 + 1*I))	5	
+lcm-of-two-real-composites-plain-integer-case	lcm(4, 9)	36	
 lcm-with-a-negative-real-composite	lcm(-15, (5 + 5*I))	-15 - 15*I	disagree
 lcm-with-an-associate-times-1	lcm((8 + 2*I), (-3 + -4*I))	-16 - 38*I	disagree
 lcm-with-an-associate-times-i	lcm((8 + 2*I), (4 + -3*I))	38 - 16*I	disagree
 two-primes-above-13-multiply-straight-through	lcm((3 + 2*I), (2 + 3*I))	13*I	inconclusive
 lcm-with-a-real-prime-s-associate-by-the-unit-i	lcm((3 + 4*I), (0 + 7*I))	-28 + 21*I	disagree
-lcm-with-a-real-composite-5-squared	lcm((3 + 4*I), 25)		
+lcm-with-a-real-composite-5-squared	lcm((3 + 4*I), 25)	25	
 lcm-with-a-negative-associate	lcm((6 + 8*I), (-2 + -3*I))	12 - 34*I	disagree
-lcm-of-a-large-norm-gaussian-and-a-real-prime-19	lcm((123 + 456*I), 19)		
-lcm-of-two-composites-sharing-the-prime-above-13	lcm((6 + 8*I), (9 + 6*I))		
+lcm-of-a-large-norm-gaussian-and-a-real-prime-19	lcm((123 + 456*I), 19)	2337 + 8664*I	
+lcm-of-two-composites-sharing-the-prime-above-13	lcm((6 + 8*I), (9 + 6*I))	6 + 108*I	
 lcm-of-a-lazy-range-1-10-not-a-materialised-list			
 reduceconditions-lcm-a-3-lt-3a-neg-10-lt-a-lt-10			
 the-smallest-number-divisible-by-each-of-1			
-lcm-10-15	lcm(10, 15)		
+lcm-10-15	lcm(10, 15)	30	
 foldlist-lcm-1-range-2-10			
 ln-lcm-range-1-10			
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd	enumeratio_equal((gcd(27, 81) * lcm(27, 81)), (27 * 81))	True	
-lcm-27-81	lcm(27, 81)		
+lcm-27-81	lcm(27, 81)	81	
 lcm-6-11-25-eq-1-650			
 lcm-5-7-2-eq-70			
 ln-1-over-lcm-range-1-4-times-lcm-range-1-5			

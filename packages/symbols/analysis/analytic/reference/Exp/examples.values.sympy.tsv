@@ -14,17 +14,17 @@ exp-ln-2	exp(log(2))	2
 exp-ln-neg-1	exp(log(-1))	-1	
 inverse-of-ln-symbolically	exp(log(Symbol("x")))	True	
 exp-ln-of-a-complex-argument-is-that-argument	exp(log((1 + 2*I)))	1 + 2*I	
-exp-negativeinfinity	exp(-oo)		
-exp-positiveinfinity	exp(oo)		
+exp-negativeinfinity	exp(-oo)	0	
+exp-positiveinfinity	exp(oo)	oo	
 element-wise-over-a-matrix-not-the-matrix	[[exp(1), exp((I * (S(pi) / 2)))], [exp(0), exp(1)]]	[[E, I], [1, E]]	
 interval-arithmetic-exp-1-ln-2-e-1-2			
 uncertainty-propagation-e-2-pm-0-01-approx-7-389			
 around-0-still-fires-the-e-base-power-rule			
-its-own-derivative	diff(exp(Symbol("x")), Symbol("x"))		
+its-own-derivative	diff(exp(Symbol("x")), Symbol("x"))	True	
 its-own-antiderivative			
 taylor-series-about-0			
-n-decimalizes-a-combined-product	N((exp(1) * exp(2)), 30)		
-agrees-numerically-at-a-complex-point	N((exp((1.3 + 0.7*I)) * exp((-0.4 + 2.1*I))), 30)		
+n-decimalizes-a-combined-product	N((exp(1) * exp(2)), 30)	20.0855369231876677409285296546	
+agrees-numerically-at-a-complex-point	N((exp((1.3 + 0.7*I)) * exp((-0.4 + 2.1*I))), 30)	-2.31749300051021492155992283363 + 0.823937896324175626927563596246*I	
 to-50-significant-digits-every-one-correctly	N(exp(1), 30)	2.71828182845904523536028747135	
 to-1-significant-digit	N(exp(1), 30)	2.71828182845904523536028747135	disagree
 matrixfunction-exp-list-list-1-1-over-2-times-i			
@@ -38,8 +38,8 @@ functionsign-exp-x-x
 functionsingularities-exp-x-x			
 functiondiscontinuities-exp-x-x			
 functionconvexity-exp-x-x			
-n-exponentiale-pow-8-over-5-50	N((S(E)**Rational(8, 5)), 30)		
-exponentiale-pow-9-over-2-times-i-times-pi	(S(E)**((0 + Rational(9, 2)*I) * pi))		
+n-exponentiale-pow-8-over-5-50	N((S(E)**Rational(8, 5)), 30)	4.95303242439511480365428635642	
+exponentiale-pow-9-over-2-times-i-times-pi	(S(E)**((0 + Rational(9, 2)*I) * pi))	I	
 exptotrig-exponentiale-pow-1-over-5-times-i			
 assuming-n-in-integers-refine-exp-2-times-pi			
 assuming-n-in-integers-refine-exp-2-times-pi-2			

@@ -15,9 +15,9 @@ large-integers-10-3000-1-is-divisible-by-10-8-1	isprime(((S(10)**3000) + 1))	Fal
 isprime-neg-1-is-false	isprime(-1)	False	
 isprime-neg-4-is-false	isprime(-4)	False	
 isprime-neg-2-is-true	isprime(-2)	False	disagree
-a-unit-is-not-prime	isprime(1)		
+a-unit-is-not-prime	isprime(1)	False	
 i-a-unit-is-not-prime	isprime((0 + 1*I))	ValueError: I is not an integer	error
-0-is-not-prime	isprime(0)		
+0-is-not-prime	isprime(0)	False	
 the-ramified-prime-above-2	isprime((1 + 1*I))	ValueError: 1 + I is not an integer	error
 a-prime-above-5	isprime((2 + 1*I))	ValueError: 2 + I is not an integer	error
 the-other-prime-above-5	isprime((2 + -1*I))	ValueError: 2 - I is not an integer	error
@@ -38,19 +38,19 @@ a-real-composite-5-squared-is-not-prime
 1-is-not-prime-gaussian-or-not			
 0-is-not-prime-gaussian-or-not			
 a-common-choice-of-prime-modulus-for-hashing	isprime(1000000007)	True	
-isprime-257	isprime(257)		
-isprime-1-plus-2-pow-128	isprime((1 + (S(2)**128)))		
+isprime-257	isprime(257)	True	
+isprime-1-plus-2-pow-128	isprime((1 + (S(2)**128)))	False	
 filter-range-1-100-function-isprimepower-1			
 an-odd-prime-stays-prime-in-z-i-exactly-when-p			
-isprime-37	isprime(37)		
-isprime-29	isprime(29)		
-isprime-17	isprime(17)		
-isprime-12	isprime(12)		
-isprime-23	isprime(23)		
-isprime-24	isprime(24)		
+isprime-37	isprime(37)	True	
+isprime-29	isprime(29)	True	
+isprime-17	isprime(17)	True	
+isprime-12	isprime(12)	False	
+isprime-23	isprime(23)	True	
+isprime-24	isprime(24)	False	
 isprime-list-7-11	isprime([7, 11])	ValueError: [7, 11] is not an integer	error
 isprime-list-5-7-2	isprime([5, 7, 2])	ValueError: [5, 7, 2] is not an integer	error
-isprime-19	isprime(19)		
+isprime-19	isprime(19)	True	
 divisorsum-19-function-1-1-isprime			
 filter-divisors-625-isprime			
 filter-divisors-2-434-500-isprime			
