@@ -111,12 +111,13 @@ so the order has to be stated. `KSubsets` is **lexicographic** — the 4th 3-sub
 ## The next one
 
 `Successor(F, x)` is the element after `x` in the family's own order: rank `x`, add one, unrank.
-It never builds the family, so it is as cheap as `At`.
+It never builds the family, so it is as cheap as `At`. A family with no parameters, like `PrimeNumbers`, works the same way.
 
 <Story title="The next 3-subset, and the next permutation of twelve">
 <template #description>After `{1,3,4}` comes `{1,3,5}`. The last permutation of twelve follows the one before it, found by rank rather than by walking 479 million of them.</template>
 <notatio-cell value="Successor(KSubsets(5, 3), KSubsets(5, 3)[4])" />
 <notatio-cell value="Successor(SymmetricGroup(12), SymmetricGroup(12)[479001599])" />
+<notatio-cell value="Successor(PrimeNumbers, 7)" />
 </Story>
 
 The last element has no successor, and nor does a value that is not an element: the call stays as

@@ -59,9 +59,9 @@ const encoderFor = (kind: FamilyKernel["kind"]) =>
 const decoderFor = (kind: FamilyKernel["kind"]) =>
   kind === "ints" ? asIntList : kind === "blocks" ? asBlockList : kind === "scalar" ? intOf : denest;
 
-/** The element after `target` in a family's own order, for the call `collection`; undefined at the
- *  last element, for a non-member, or where the kernel declines. */
-type SuccessorOf = (collection: Expr, target: Expr) => Expr | undefined;
+/** The element after `target` in a family's own order, for the call `collection`: null at the last
+ *  element or for a non-member, undefined where the kernel declines. */
+type SuccessorOf = (collection: Expr, target: Expr) => Expr | null | undefined;
 
 /** A family's kernel as compute-engine collection handlers: Count, At and iteration by
  *  unranking, membership by `valid`. CE speaks plain numbers; a count past 2^53 answers
@@ -155,16 +155,17 @@ function handlersOf(
     try {
       const total = countAt(p);
       if (total === undefined) return undefined;
-      let place: bigint;
+      let decoded: unknown;
       try {
-        const decoded = decode(asBoxed(target));
-        if (!family.valid(decoded, p)) return undefined;
-        place = family.rank(decoded, p);
+        decoded = decode(asBoxed(target));
+        // Only a rejection here reads as "not an element".
+        if (!family.valid(decoded, p)) return null;
       } catch {
-        // Not shaped like an element: not a member.
-        return undefined;
+        return null;
       }
-      if (typeof total === "bigint" && place + 1n >= total) return undefined;
+      // A bug thrown by rank propagates; a kernel declining past 2^53 is a decline, not a verdict.
+      const place = family.rank(decoded, p);
+      if (typeof total === "bigint" && place + 1n >= total) return null;
       return element(p, place + 1n);
     } catch (error) {
       if (needsBigint(error)) return undefined;

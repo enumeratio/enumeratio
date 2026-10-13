@@ -55,10 +55,19 @@ test("the next of a list is the definition's", () => {
   expect(value(["Successor", ["List", 5, 7, 9], 4])).toEqual(["Successor", ["List", 5, 7, 9], 4]);
 });
 
-test("wrapping around is At and Mod", () => {
-  const n = 24;
-  const wrapped = (i: number): unknown => value(["At", ["Permutations", 4], ["Add", ["Mod", i, n], 1]]);
-  expect(wrapped(n)).toEqual(value(["At", ["Permutations", 4], 1]));
+test("wrapping around: Successor, and At with Mod where it stays unevaluated", () => {
+  const family = ["KSubsets", 5, 2];
+  const total = ce.box(["Count", family] as never).evaluate().re;
+  for (let i = 1; i <= total; i++) {
+    const x = value(["At", family, i]);
+    const after = value(["Successor", family, x]);
+    const wrapped = i === total ? value(["At", family, ["Add", ["Mod", ["IndexOf", family, x], total], 1]]) : after;
+    expect(wrapped, `after element ${i}`).toEqual(value(["At", family, (i % total) + 1]));
+  }
+});
+
+test("a family without params, used as a symbol, is ranked too", () => {
+  expect(value(["Successor", "PrimeNumbers", 7])).toEqual(11);
 });
 
 test("a large family is answered by rank, not by walking", () => {
