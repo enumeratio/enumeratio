@@ -20,3 +20,5 @@ laws:
       from: RestrictedGrowthStrings
       to: SetPartitions
 ---
+
+- Ordered by refinement: π is below σ when every block of π lies inside a block of σ. A lattice, so `Min` is the meet (common refinement) and `Max` the join (finest common coarsening), with `Compare` giving NaN for incomparable partitions.

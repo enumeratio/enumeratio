@@ -1,3 +1,5 @@
-id	section	role	expr	expected	caption
-of-integers	Basic		[LeastUpperBound, 3, 5]	5	In a linear order, the larger of the two
-of-partitions	Scope		[LeastUpperBound, [IntegerPartition, [List, 3, 1, 1, 1]], [IntegerPartition, [List, 2, 2, 2]]]	[IntegerPartition, [List, 3, 2, 1]]	Under dominance, the join of two incomparable partitions
+id	section	role	expr	expected	known	source	caption
+of-integers	Basic		[LeastUpperBound, 3, 5]	5			In a linear order, the larger of the two
+of-partitions	Scope		[LeastUpperBound, [IntegerPartition, [List, 3, 1, 1, 1]], [IntegerPartition, [List, 2, 2, 2]]]	[IntegerPartition, [List, 3, 2, 1]]			Under dominance, the join of two incomparable partitions
+of-set-partitions	Scope		[LeastUpperBound, [SetPartition, [List, [List, 1, 2], [List, 3]]], [SetPartition, [List, [List, 1], [List, 2, 3]]]]	[SetPartition, [List, [List, 1, 2, 3]]]	[SetPartition, [List, [List, 1, 2, 3]]]	Sage SetPartition.sup	Under refinement, the join is the finest common coarsening: blocks sharing an element are glued
+of-permutations	Scope		[LeastUpperBound, [Permutation, [List, 2, 1, 3]], [Permutation, [List, 1, 3, 2]]]	[Permutation, [List, 3, 2, 1]]	[Permutation, [List, 3, 2, 1]]	Sage LatticePoset of permutohedron_lequal join	Under the right weak order the join takes the transitive closure of the union of the inversion pairs
