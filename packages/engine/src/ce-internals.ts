@@ -1,13 +1,13 @@
 // The one place that reads compute-engine internals the compile stance (extend.ts) depends on:
 // which definition is the library's own, and which parts of one make an extension "a user definition"
-// to the compiler (`library-shadowing`, 0.151). A compute-engine bump has to re-check both:
+// to the compiler (`library-shadowing`, 0.152). A compute-engine bump has to re-check both:
 // tests/ce-internals.test.ts fails until `CHECKED_COMPUTE_ENGINE` is moved on with it.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { CompileHandler } from "./facade.ts";
 
 /** The compute-engine version whose shadow rules this file was checked against. */
-export const CHECKED_COMPUTE_ENGINE = "0.151.0";
+export const CHECKED_COMPUTE_ENGINE = "0.152.0";
 
 /** The fields of a definition that, replaced, make an extension a shadow of the library head. */
 export const SHADOWING_FIELDS = [

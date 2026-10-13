@@ -4,7 +4,7 @@
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
-import { expect, test } from "vite-plus/test";
+import { beforeAll, expect, test } from "vite-plus/test";
 import { CATALOGUE } from "../theme/worker-catalogue.ts";
 import { makeEngine } from "./prerender.ts";
 
@@ -65,14 +65,15 @@ function compileTyped(
   }
 }
 
-async function engine(): Promise<ComputeEngine> {
-  const ce = await makeEngine();
-  for (const library of CATALOGUE) await library.declare(ce);
-  return ce;
-}
+let ce: ComputeEngine;
 
-test("compiled code agrees with the interpreter, or fails to compile", async () => {
-  const ce = await engine();
+// Declaring the whole catalogue takes most of the run on CI, so it is setup, timed apart from the checks.
+beforeAll(async () => {
+  ce = await makeEngine();
+  for (const library of CATALOGUE) await library.declare(ce);
+}, 30_000);
+
+test("compiled code agrees with the interpreter, or fails to compile", () => {
   for (const { expr, types, at = {}, closed } of SAMPLES) {
     const names = Object.keys(at);
     const compiled = compileTyped(ce, expr, types ?? Object.fromEntries(names.map((name) => [name, "real"])));
@@ -93,8 +94,7 @@ test("compiled code agrees with the interpreter, or fails to compile", async () 
   }
 });
 
-test("the common numeric heads do compile on that engine", async () => {
-  const ce = await engine();
+test("the common numeric heads do compile on that engine", () => {
   for (const { expr, types, at = {} } of SAMPLES.slice(0, 3)) {
     const compiled = compileTyped(ce, expr, types ?? Object.fromEntries(Object.keys(at).map((name) => [name, "real"])));
     expect(compiled, JSON.stringify(expr)).toBeDefined();

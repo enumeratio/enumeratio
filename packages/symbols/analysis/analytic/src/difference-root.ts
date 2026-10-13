@@ -356,6 +356,34 @@ export function declareDifferenceRoot(ce: ComputeEngine): void {
   });
 
   attachDifferenceRootApply(ce);
+  attachReducedRootApply(ce);
+}
+
+const ROOTS = new Set(["DifferenceRoot", "DifferentialRoot"]);
+const REDUCES = new Set(["DifferenceRootReduce", "DifferentialRootReduce"]);
+
+/** The `Apply(Root(fn), v)` a reduction returns, for a callee that is that reduction (or its result). */
+const reducedRoot = (callee: BoxedExpression): BoxedExpression | undefined => {
+  const reduced = REDUCES.has(callee.operator) ? callee.evaluate() : callee;
+  const [root, variable] = operandsOf(reduced);
+  return reduced.operator === "Apply" && root !== undefined && ROOTS.has(root.operator) && isSymbol(variable)
+    ? reduced
+    : undefined;
+};
+
+// `DifferenceRootReduce(f(n), n)(20)`: the reduction is `Apply(Root(fn), n)`, a function of its free
+// variable. compute-engine holds a call on a callee it cannot type (cortex-js/compute-engine#426),
+// so the call to `Root(fn)` at the argument is made here.
+function attachReducedRootApply(ce: ComputeEngine): void {
+  wrapOperator(
+    ce,
+    ["Apply"],
+    ([callee]) => callee !== undefined && reducedRoot(callee) !== undefined,
+    () =>
+      ([callee, arg]) =>
+        ce.box(["Apply", j(operandsOf(reducedRoot(callee!)!)[0]!), j(arg!)] as never).evaluate(),
+    2,
+  );
 }
 
 // --- evaluation: DifferenceRoot(fn)(n0), attached onto the native `Apply` operator --------
