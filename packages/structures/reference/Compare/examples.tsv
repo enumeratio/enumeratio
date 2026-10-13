@@ -2,3 +2,7 @@ id	section	role	expr	expected	caption
 integers	Basic		[Compare, 3, 5]	-1	In a linear order: $-1$, $0$ or $1$
 dominance-comparable	Basic		[Compare, [IntegerPartition, [List, 3, 1]], [IntegerPartition, [List, 2, 2]]]	1	$[3,1]$ dominates $[2,2]$
 dominance-incomparable	Properties		[Compare, [IntegerPartition, [List, 3, 1, 1, 1]], [IntegerPartition, [List, 2, 2, 2]]]	NaN	$[3,1,1,1]$ and $[2,2,2]$ are incomparable under dominance: NaN
+refinement-comparable	Properties		[Compare, [SetPartition, [List, [List, 1], [List, 2], [List, 3]]], [SetPartition, [List, [List, 1, 2, 3]]]]	-1	The all-singletons partition refines every partition of its set
+refinement-incomparable	Properties		[Compare, [SetPartition, [List, [List, 1, 2], [List, 3]]], [SetPartition, [List, [List, 1], [List, 2, 3]]]]	NaN	$\{\{1,2\},\{3\}\}$ and $\{\{1\},\{2,3\}\}$ neither refines the other: NaN
+weak-order-comparable	Properties		[Compare, [Permutation, [List, 1, 3, 2]], [Permutation, [List, 3, 1, 2]]]	-1	Right weak order, as Sage's `permutohedron_lequal`: the inversion pairs of values $\{(2,3)\}$ lie inside $\{(1,3),(2,3)\}$
+weak-order-incomparable	Properties		[Compare, [Permutation, [List, 2, 1, 3]], [Permutation, [List, 1, 3, 2]]]	NaN	$213$ and $132$ invert different value pairs: NaN

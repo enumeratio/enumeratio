@@ -6,10 +6,12 @@ import { liftFamily } from "../../collections/src/families/epsil.ts";
 import { declareStatistics } from "../../src/statistics/declare.ts";
 import { SET_PARTITIONS_CARRIERS } from "./carrier-data.ts";
 import { coreEntries, coreSurjectionsEntries, matchingsEntries, pathsPartitionsEntries } from "./families/index.ts";
+import { declareSetPartitionOrders } from "./orders.ts";
 import { SET_PARTITION_STATISTICS } from "./statistics.ts";
 
 export function declareSetPartitions(ce: Engine): void {
   declareCarriers(ce, SET_PARTITIONS_CARRIERS, { plurals: false });
+  declareSetPartitionOrders(ce);
   declareFamilies(
     ce,
     [...coreSurjectionsEntries, ...coreEntries, ...pathsPartitionsEntries, ...matchingsEntries].map(liftFamily),
