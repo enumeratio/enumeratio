@@ -358,23 +358,26 @@ lerchphi-rim-theta-2p4-s-0-a-1	N(lerchphi((-0.7373937155412454 + 0.6754631805511
 lerchphi-rim-theta-2p4-s-0p5-a-1	N(lerchphi((-0.7373937155412454 + 0.675463180551151*I), 0.5, 1), 30)	0.615664394770336343862432076599 + 0.173226699667794066319060922481*I	
 lerchphi-rim-theta-2p4-s-1-a-1	N(lerchphi((-0.7373937155412454 + 0.675463180551151*I), 1, 1), 30)	0.70968348249077859746529270297 + 0.147233063131345636976332510419*I	
 lerchphi-rim-theta-2p4-s-1p5-a-1	N(lerchphi((-0.7373937155412454 + 0.675463180551151*I), 1.5, 1), 30)	0.783731331357530270376500713756 + 0.120757921412831669025433774527*I	
-lerch-continuation-z3-s2p5-a1p5	N(lerchphi(3, 2.5, 1.5), 30)		
-lerch-continuation-zneg5-s2-a1	N(lerchphi(-5, 2, 1), 30)		
-lerch-continuation-z2p3i-s1neg2i-a3	N(lerchphi((2 + 3*I), (1 + -2*I), 3), 30)		
-lerch-continuation-zneg3p0p5i-s1p5-a2	N(lerchphi((-3 + 0.5*I), 1.5, 2), 30)		
-lerch-continuation-z10-s0p5-a3	N(lerchphi(10, 0.5, 3), 30)		
-lerch-continuation-z4-s3-a0p3	N(lerchphi(4, 3, 0.3), 30)		
-lerch-continuation-zneg1p5p2p5i-s2neg1i-a0p7	N(lerchphi((-1.5 + 2.5*I), (2 + -1*I), 0.7), 30)		
-lerch-continuation-z100-sneg2-a1	N(lerchphi(100, -2, 1), 30)		
-lerch-continuation-z1p0001-s2-a1	N(lerchphi(1.0001, 2, 1), 30)		
-lerch-continuation-declines-neg2p54-0p1i	N(lerchphi((-2.54 + 0.1*I), 4.157, 4.724), 30)		
-lerch-continuation-declines-neg1p564-neg0p05i	N(lerchphi((-1.564 + -0.05*I), 5.785, 4.791), 30)		
-lerch-continuation-declines-neg1p939-0p5i	N(lerchphi((-1.939 + 0.5*I), 2.976, 3.846), 30)		
-lerch-continuation-declines-z-neg3-s3p118-a2p864	N(lerchphi(-3, 3.118, 2.864), 30)		
-lerch-continuation-declines-complex-s-z-neg4-1i	N(lerchphi((-4 + 1*I), (3 + 1*I), 2), 30)		
-lerch-continuation-declines-z-neg6-s2-a0p5	N(lerchphi(-6, 2, 0.5), 30)		
+lerch-continuation-z3-s2p5-a1p5	N(lerchphi(3, 2.5, 1.5), 30)	0.259043193993909540298934126628 - 0.523719168554283393277272866038*I	
+lerch-continuation-zneg5-s2-a1	N(lerchphi(-5, 2, 1), 30)	0.549855825212161658005117503075	
+lerch-continuation-z2p3i-s1neg2i-a3	N(lerchphi((2 + 3*I), (1 + -2*I), 3), 30)	-0.108147767607783295336729636068 - 0.0131434106268973124079563408879*I	
+lerch-continuation-zneg3p0p5i-s1p5-a2	N(lerchphi((-3 + 0.5*I), 1.5, 2), 30)	0.145493815105337939244094426002 + 0.0130712479883854981705173123528*I	
+lerch-continuation-z10-s0p5-a3	N(lerchphi(10, 0.5, 3), 30)	-0.0826967336410126929805988879001 - 0.00116806521814573408154703961184*I	
+lerch-continuation-z4-s3-a0p3	N(lerchphi(4, 3, 0.3), 30)	38.6892354242459661497280626852 - 1.99164895636857398697515968295*I	
+lerch-continuation-zneg1p5p2p5i-s2neg1i-a0p7	N(lerchphi((-1.5 + 2.5*I), (2 + -1*I), 0.7), 30)	1.4129936470544950821581822101 - 0.558305334451271056515333785948*I	
+lerch-continuation-z100-sneg2-a1	N(lerchphi(100, -2, 1), 30)	-0.000104091625364964820122457098276	
+lerch-continuation-z1p0001-s2-a1	N(lerchphi(1.0001, 2, 1), 30)	1.64579047328957414222826720656 - 0.000314112147228072992507307010068*I	
+lerch-continuation-declines-neg2p54-0p1i	N(lerchphi((-2.54 + 0.1*I), 4.157, 4.724), 30)	0.000764715863267331329850007293203 + 0.0000148225744539606943346631354186*I	
+lerch-continuation-declines-neg1p564-neg0p05i	N(lerchphi((-1.564 + -0.05*I), 5.785, 4.791), 30)	0.0000777586712175203499490538927574 - 0.000000780100574403767604343305427927*I	
+lerch-continuation-declines-neg1p939-0p5i	N(lerchphi((-1.939 + 0.5*I), 2.976, 3.846), 30)	0.00939428183519043849547536240152 + 0.00109970657675230259163468016226*I	
+lerch-continuation-declines-z-neg3-s3p118-a2p864	N(lerchphi(-3, 3.118, 2.864), 30)	0.0185704308192319756581843208801	
+lerch-continuation-declines-complex-s-z-neg4-1i	N(lerchphi((-4 + 1*I), (3 + 1*I), 2), 30)	0.0627068371983522364679028830952 - 0.0253920024666981243295079215185*I	
+lerch-continuation-declines-z-neg6-s2-a0p5	N(lerchphi(-6, 2, 0.5), 30)	2.95302526047750729477417839498	
 n-lerchphi-tiny-z-s-neg-12-5-over-2	N(lerchphi(-1e-12, -12, Rational(5, 2)), 30)	59605.825003210406944730402271 + 2.02291237315300883748921436298*I	inconclusive
 lerch-phi-0-negative-base-principal-branch	N(lerchphi(0, 2.976, -2.664), 30)	-0.0539976089936224916826730733253 - 0.00407905639770441509298355132863*I	
+n-lerchphi-tiny-z-complex-s-neg-1-neg-2i-2	N(lerchphi(-1e-12, (-1 + -2*I), 2), 30)	0.366913952543709303741777865252 + 1.96605548407881929474155035021*I	disagree
+n-lerchphi-s-0-is-1-over-1-minus-z-at-900000i	N(lerchphi((0 + 900000*I), 0, -6.677), 30)	-1207873536.0 + 297795584.0*I	disagree
+n-lerchphi-past-the-unit-disk-imaginary-s-and-a	N(lerchphi((1 + 2*I), (0 + 1*I), (0 + -2*I)), 30)	-224.432514456845492260578640648 + 76.132401746566745688797638503*I	disagree
 past-the-unit-disk-by-the-integral	N(lerchphi((1 + 2*I), (3 + -1*I), (4 + 2*I)), 30)	0.00202500995700990860053946871764 + 0.00332789753681355880743808908022*I	
 inexact-arguments-should-evaluate-numerically	lerchphi(0.5, 2, 3.5)	lerchphi(0.5, 2, 3.5)	
 s-0-far-outside-the-unit-disk-1-1-49-5	lerchphi(49.5, 0, 2)	lerchphi(49.5, 0, 2)	
@@ -397,7 +400,7 @@ phi-z-1-1-ln-1-z-z-the-s-1-instance-through-li-1	lerchphi(Symbol("z"), 1, 1)	Tru
 phi-1-2-1-4-zeta-2-1-4-pi-2-8g-through	lerchphi(1, 2, Rational(1, 4))	lerchphi(1, 2, 1/4)	
 phi-1-1-1-eta-1-ln-2-the-alternating-harmonic	lerchphi(-1, 1, 1)	lerchphi(-1, 1, 1)	
 phi-1-2-1-1-2-ln-2	lerchphi(Rational(1, 2), 1, 1)	lerchphi(1/2, 1, 1)	
-phi-1-2-1-2i-2-1-via-1	lerchphi((Rational(1, 2) + Rational(-1, 2)*I), 2, 1)		
+phi-1-2-1-2i-2-1-via-1	lerchphi((Rational(1, 2) + Rational(-1, 2)*I), 2, 1)	lerchphi(1/2 - I/2, 2, 1)	
 phi-1-2-1-2-4g-via-phi-1-s-1-2-2-s-beta-s-and	lerchphi(-1, 2, Rational(1, 2))	lerchphi(-1, 2, 1/2)	
 though-n-gets-4g-3-66386	N(lerchphi(-1, 2, Rational(1, 2)), 30)	3.66386237670887606021841405973	
 phi-1-3-frac-12-8-beta-3-pi-3-4-the-dirichlet	lerchphi(-1, 3, Rational(1, 2))	lerchphi(-1, 3, 1/2)	

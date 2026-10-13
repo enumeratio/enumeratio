@@ -375,6 +375,9 @@ lerch-continuation-declines-complex-s-z-neg4-1i	N[LerchPhi[Complex[-4, 1], Compl
 lerch-continuation-declines-z-neg6-s2-a0p5	N[LerchPhi[-6, 2, 0.5]]	2.9530252604775074 - 6.543354017627408*^-18*I		N[\Phi (-6,2,0.5)]	2.95303\, -\text{6.543354017627408$\grave{ }$*${}^{\wedge}$-18} i	
 n-lerchphi-tiny-z-s-neg-12-5-over-2	N[LerchPhi[-1*^-12, -12, Rational[5, 2]]]					
 lerch-phi-0-negative-base-principal-branch	N[LerchPhi[0, 2.976, -2.664]]					
+n-lerchphi-tiny-z-complex-s-neg-1-neg-2i-2	N[LerchPhi[-1*^-12, Complex[-1, -2], 2]]					
+n-lerchphi-s-0-is-1-over-1-minus-z-at-900000i	N[LerchPhi[Complex[0, 900000], 0, -6.677]]					
+n-lerchphi-past-the-unit-disk-imaginary-s-and-a	N[LerchPhi[Complex[1, 2], Complex[0, 1], Complex[0, -2]]]					
 past-the-unit-disk-by-the-integral	N[LerchPhi[Complex[1, 2], Complex[3, -1], Complex[4, 2]]]	0.0020250151909632203 + 0.003327898913888968*I		N[\Phi (1+2 i,3-i,4+2 i)]	0.00202502\, +0.0033279 i	disagree
 inexact-arguments-should-evaluate-numerically	LerchPhi[0.5, 2, 3.5]	0.11938622686982046		\Phi (0.5,2,3.5)	0.119386	
 s-0-far-outside-the-unit-disk-1-1-49-5	LerchPhi[49.5, 0, 2]	-0.020618556701030927		\Phi (49.5,0,2)	-0.0206186	

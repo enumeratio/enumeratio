@@ -3,6 +3,7 @@ moebiusmu-1	(ArithmeticFunction.moebius 1)	1
 moebiusmu-11	(ArithmeticFunction.moebius 11)	-1	
 12-22-3-is-not-squarefree	(ArithmeticFunction.moebius 12)	0	
 10-2-5-a-product-of-an-even-number-of-distinct	(ArithmeticFunction.moebius 10)	1	
+isprime-of-a-negative-beside-moebiusmu	[(decide (Nat.Prime (-2))), (ArithmeticFunction.moebius 11)]		
 threads-element-wise-over-a-list-as-wolfram-s	(ArithmeticFunction.moebius [1, 2, 3, 4])		
 gaussian-integers-5-6i-is-a-gaussian-prime-norm			
 listable-threads-over-a-list	(ArithmeticFunction.moebius [4, 10, 17, 20])		

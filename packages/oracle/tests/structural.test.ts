@@ -296,3 +296,12 @@ test("scaled reads a decimal's mantissa and exponent", () => {
   expect(scaled("0.0")).toEqual({ mantissa: 0, exponent: 0 });
   expect(scaled("abc")).toBeUndefined();
 });
+
+// Found by the oracle Plausible: mpmath prints LerchPhi(-1/2, -4, 500000) as 4.2e22 + 4e-7i.
+test("a complex answer is compared by its whole size, not part by part", () => {
+  const noisy = { re: 4.1666555555444446e22, im: 3.9e-7 };
+  expect(compareTrees(4.1666555555444446e22, noisy)).toBe("agree");
+  expect(compareTrees(noisy, 4.1666555555444446e22)).toBe("agree");
+  expect(compareTrees({ re: 1, im: 2 }, { re: 1, im: 2.0001 })).toBe("disagree");
+  expect(compareTrees(1, { re: 1, im: 1e-5 })).toBe("disagree");
+});
