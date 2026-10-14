@@ -268,6 +268,8 @@ test("Midpoint's two points travel as Wolfram's list of two", () => {
 
 test("a named character reads back as the character", () => {
   expect(fromWolfram('"\\[Limit]\\[Alpha]a"')).toBe("'\uf438\u03b1a'");
+  // The other two escapes a kernel prints: a UTF-16 unit and a code point.
+  expect(fromWolfram(String.raw`"\:03e8\|01f600"`)).toBe("'Ϩ\u{1f600}'");
   // A name the table lacks stays as the kernel wrote it.
   expect(fromWolfram('"\\[NoSuchName]"')).toBe("'\\[NoSuchName]'");
 });

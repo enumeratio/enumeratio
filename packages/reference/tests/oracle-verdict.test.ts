@@ -217,3 +217,35 @@ test('a Combinatorica template\'s Missing["NotCombinatorica"] is a decline, not 
     "disagree",
   );
 });
+
+// Answers whose shape, not value, once made them read as unreadable: Wolfram's cached SparseArray
+// graph, escaped string literals, and lists nested more than one level of bare symbols.
+
+test("a Graph answer agrees by vertices and edges, whatever form Wolfram caches them in", () => {
+  const ours = [
+    "Graph",
+    ["List", 1, 2, 3],
+    ["List", ["UndirectedEdge", 1, 2], ["UndirectedEdge", 1, 3], ["UndirectedEdge", 2, 3]],
+  ];
+  const theirs = {
+    value:
+      'Graph[List[1, 2, 3], List[Null, SparseArray[Automatic, List[3, 3], 0, List[1, List[List[0, 2, 4, 6], List[List[2], List[3], List[1], List[3], List[1], List[2]]], Pattern]]], List[Rule[GraphLayout, "StarEmbedding"]]]',
+  };
+  expect(verdictOf("wolfram", ours as never, theirs)).toBe("agree");
+  const missingEdge = ["Graph", ["List", 1, 2, 3], ["List", ["UndirectedEdge", 1, 2], ["UndirectedEdge", 1, 3]]];
+  expect(verdictOf("wolfram", missingEdge as never, theirs)).toBe("disagree");
+});
+
+test("strings compare as characters: Wolfram's escapes are the characters ours holds", () => {
+  const theirs = { value: 'List["\\:03e8", "\\[CurlyKappa]", "\\|01f600"]' };
+  expect(verdictOf("wolfram", ["List", "'Ϩ'", "'ϰ'", "'\u{1f600}'"], theirs)).toBe("agree");
+  expect(verdictOf("wolfram", ["List", "'Ϩ'", "'ϱ'", "'\u{1f600}'"], theirs)).toBe("disagree");
+});
+
+test("nested lists of symbols compare structurally, not by a simplified difference", () => {
+  const theirs = { value: "List[x, List[a, x], List[b, List[a, x]]]" };
+  const ours = ["List", "x", ["List", "a", "x"], ["List", "b", ["List", "a", "x"]]];
+  expect(verdictOf("wolfram", ours as never, theirs)).toBe("agree");
+  const swapped = ["List", "x", ["List", "x", "a"], ["List", "b", ["List", "a", "x"]]];
+  expect(verdictOf("wolfram", swapped as never, theirs)).toBe("disagree");
+});
