@@ -1,4 +1,4 @@
-import { box, type Engine, type Json } from "@enumeratio/engine";
+import { box, type Engine, type Expr, type Json } from "@enumeratio/engine";
 import { createEngine } from "@enumeratio/engine/testing";
 import { beforeEach, describe, expect, test } from "vite-plus/test";
 import { declareDistributions } from "../src/distributions.ts";
@@ -302,5 +302,44 @@ describe("HistogramDistribution", () => {
     const v = N(["Variance", dist]);
     expect(v).toBeGreaterThan(0);
     expect(Number.isFinite(v)).toBe(true);
+  });
+});
+
+describe("a float point or parameter", () => {
+  // `4.0 / 5` folds to the rational 4/5 inside the closed forms; the answer has to be a float.
+  test("PDF and CDF of a Weibull at an integer-valued float are floats", () => {
+    const weibull = ["WeibullDistribution", 2, 5];
+    expect((evalOf(["PDF", weibull, { num: "4.0" }]) as { isExact?: boolean }).isExact).toBe(false);
+    expect((evalOf(["CDF", weibull, { num: "4.0" }]) as { isExact?: boolean }).isExact).toBe(false);
+    expect(N(["PDF", weibull, { num: "4.0" }])).toBeCloseTo(0.1687335756937755, 12);
+    expect((evalOf(["PDF", weibull, 4]) as { isExact?: boolean }).isExact).toBeUndefined();
+  });
+
+  test("a float parameter with an exact point is a float", () => {
+    const weibull = ["WeibullDistribution", { num: "2.0" }, 5];
+    expect((evalOf(["PDF", weibull, 4]) as { isExact?: boolean }).isExact).toBe(false);
+    expect(N(["CDF", weibull, 4])).toBeCloseTo(0.4727075759569514, 12);
+  });
+
+  test("a symbolic point with a float parameter stays symbolic, with floats in it", () => {
+    const pdf = evalOf(["PDF", ["NormalDistribution", 0, 1.5], "x"]);
+    expect(pdf.operator).toBe("Multiply");
+    expect(JSON.stringify(pdf.json)).toContain('"x"');
+    expect(JSON.stringify(pdf.json)).toContain('"num":"0.26596152026762');
+  });
+
+  test("a list point threads, so only its float element is a float", () => {
+    const weibull = ["WeibullDistribution", 2, 5];
+    const [exact, float] = (evalOf(["PDF", weibull, ["List", 1, { num: "2.0" }]]) as unknown as { ops: Expr[] }).ops;
+    expect((exact as { isExact?: boolean }).isExact).toBeUndefined();
+    expect((float as { isExact?: boolean }).isExact).toBe(false);
+  });
+
+  test("a 30-digit float parameter keeps the digits the direct route gives", () => {
+    const dist = ["NegativeBinomialDistribution", 20, ["N", ["Rational", 1, 3], 30]];
+    expect(JSON.stringify(evalOf(["PDF", dist, 5]).json)).toBe(
+      '{"num":"0.00000160527119666359737391057426279527439933007952"}',
+    );
+    expect(JSON.stringify(evalOf(["CDF", dist, 5]).json)).toBe('{"num":"0.00000226866144378318082688"}');
   });
 });

@@ -542,10 +542,11 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     }
     // An option key (`Graph(…, EdgeWeight -> w)`) names the option, Wolfram's own where the head is
     // the same function, so it is not a free variable. `Over` is ours: translated where Wolfram has
-    // the ring as an option, ours alone (contexted) where it doesn't.
+    // the ring as an option, ours alone (contexted) where it doesn't. Canonical form writes
+    // the option `Over -> R` as `Tuple(Over, R)`.
     if (
       wl &&
-      (head === "Rule" || head === "KeyValuePair") &&
+      (head === "Rule" || head === "KeyValuePair" || (head === "Tuple" && operands[0] === "Over")) &&
       operands.length === 2 &&
       typeof operands[0] === "string" &&
       isSystemName(operands[0]) &&

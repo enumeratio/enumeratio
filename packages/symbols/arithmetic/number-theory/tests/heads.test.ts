@@ -30,6 +30,21 @@ test("GCD and LCM of Gaussian rationals: gcd(p1,p2)/lcm(q1,q2), lcm(p1,p2)/gcd(q
   expect(run(["LCM", c(3, 1), c(-1, 3)])).toEqual(c(3, 1));
 });
 
+test("Numerator and Denominator of a Gaussian rational put it over the common denominator", () => {
+  const c = (re: unknown, im: unknown) => ["Complex", re, im];
+  const r = (n: number, d: number) => ["Rational", n, d];
+  // 3/7 + i/11 = (33 + 7i)/77
+  expect(run(["Numerator", c(r(3, 7), r(1, 11))])).toEqual(c(33, 7));
+  expect(run(["Denominator", c(r(3, 7), r(1, 11))])).toBe(77);
+  // 1/2 + i/3 = (3 + 2i)/6, and a part that is a whole number scales too: 5/2 + i
+  expect(run(["Numerator", c(r(1, 2), r(1, 3))])).toEqual(c(3, 2));
+  expect(run(["Numerator", c(r(5, 2), 1)])).toEqual(c(5, 2));
+  expect(run(["Denominator", c(r(5, 2), 1)])).toBe(2);
+  // A Gaussian integer is its own numerator over 1.
+  expect(run(["Numerator", c(3, 1)])).toEqual(c(3, 1));
+  expect(run(["Denominator", c(3, 1)])).toBe(1);
+});
+
 test("FactorInteger and Divisors over the integers, as in Wolfram", () => {
   // p³ for a 21-digit prime: compute-engine's own rho gives up here. Checked through the
   // internal boxed representation (bigIntegerAt/operandsOf), not run()'s JSON, since the

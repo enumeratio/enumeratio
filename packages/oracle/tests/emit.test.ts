@@ -341,6 +341,10 @@ test("an option key and a number set go to Wolfram as its own names", () => {
   expect(emit(["IsPrime", 5, ["KeyValuePair", "Over", ["QuotientRing", "Integers", 7]]], "wolfram")).toMatchObject({
     source: "PrimeQ[5, Rule[Modulus, 7]]",
   });
+  // The option as canonical form writes it, a `Tuple`, is the same option.
+  expect(emit(["IsPrime", 5, ["Tuple", "Over", ["QuotientRing", "Integers", 7]]], "wolfram")).toMatchObject({
+    source: "PrimeQ[5, Rule[Modulus, 7]]",
+  });
 });
 
 // Found scanning the newly-emitting free-symbol rows against real kernels (#A-72 phase 2):

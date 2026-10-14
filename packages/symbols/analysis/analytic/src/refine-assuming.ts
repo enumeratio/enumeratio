@@ -73,7 +73,14 @@ function declareRefine(ce: ComputeEngine): void {
       const [expr, cond] = ops;
       if (!expr) return undefined;
       if (!cond) return expr.simplify();
-      return withAssumptions(ce, flattenConditions(cond), () => expr.simplify());
+      // A membership claim is decided by `evaluate` (which reads the assumptions), not `simplify`.
+      // Only a `True` is taken: a `False` there may mean "not known", and Refine never refutes.
+      return withAssumptions(ce, flattenConditions(cond), () => {
+        const refined = expr.simplify();
+        if (refined.operator !== "Element") return refined;
+        const decided = refined.evaluate();
+        return decided.json === "True" ? decided : refined;
+      });
     },
   });
 }
