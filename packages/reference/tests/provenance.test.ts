@@ -965,7 +965,7 @@ const NOVEL = [
   "LeftSubtreeSize",
   "LinearExtensionCount",
   "MaximalLeftBranches",
-  "MaximumOutDegree",
+  "LargestOutDegree",
   "NonRootInternalNodes",
   "PathLength",
   "Pitchforks",

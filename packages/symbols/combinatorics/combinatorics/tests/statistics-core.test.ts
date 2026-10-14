@@ -23,8 +23,7 @@ import { core, cycles, headUsage, tower } from "../src/statistics/core.ts";
  * `Contains` entered with the set-partition internal points, which find the block holding an element.
  * `ReplaceAt` entered with the patience piles, which replace a pile rather than rebuild the list.
  * `Typed` entered with the Dyck-path rises, which bind a list once (`bind`) to filter it.
- * `Element` (is this subtree empty), `Factorial` (linear extensions), `Not` and `Unique` (the distinct subtrees)
- * entered with the tree statistics.
+ * `Unique` entered with the distinct subtrees of the tree statistics.
  */
 const CORE = [
   "Abs",
@@ -34,9 +33,7 @@ const CORE = [
   "Contains",
   "Count",
   "Divide",
-  "Element",
   "Equal",
-  "Factorial",
   "Filter",
   "Flatten",
   "Fold",
@@ -57,7 +54,6 @@ const CORE = [
   "Most",
   "Multiply",
   "Negate",
-  "Not",
   "Or",
   "Power",
   "Product",

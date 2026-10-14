@@ -80,7 +80,7 @@ export const ORDERED_READINGS: Record<string, (t: Ordered) => number> = {
   Height: orderedHeight,
   Leaves: (t) => orderedSubtrees(t).filter((s) => s.length === 0).length,
   NonRootInternalNodes: (t) => orderedSubtrees(t).filter((s) => s !== t && s.length > 0).length,
-  MaximumOutDegree: (t) => maximum(orderedSubtrees(t).map((s) => s.length)),
+  LargestOutDegree: (t) => maximum(orderedSubtrees(t).map((s) => s.length)),
   StrahlerNumber: orderedStrahler,
   PathLength: (t) => sum(orderedDepths(t).map(([, d]) => d)),
   TreeFactorial: (t) => product(orderedSubtrees(t).map(orderedSize)),

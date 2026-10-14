@@ -19,4 +19,4 @@ signatures:
 
 - Defined over `OrderedTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
 - Takes a `OrderedTree` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
-- Each level is the list of its vertices; the next is their children, joined.
+- The largest number of nodes on one level, called breadth to keep width for posets.

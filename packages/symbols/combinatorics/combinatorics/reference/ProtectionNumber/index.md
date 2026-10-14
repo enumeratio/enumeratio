@@ -2,7 +2,7 @@
 name: ProtectionNumber
 domain: Tree statistics
 signature: ProtectionNumber(tree)
-summary: "BinaryTree: The number of nodes on a shortest path from the root to an empty subtree. OrderedTree: The distance from the root to the nearest leaf."
+summary: "BinaryTree: The edges from the root to the nearest leaf, a binary tree's empty subtree counting as a leaf. OrderedTree: The edges from the root to the nearest leaf."
 catalog:
   - system: findstat
     identity: St000701

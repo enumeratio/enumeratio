@@ -7,7 +7,7 @@
 
 import { isLeaf as leafTest, recurse as recurseOver, self as callSelf } from "../../src/recursion.ts";
 import type { Definition, MathJSON } from "../../src/statistics/types.ts";
-import { add, and, equals, fold, subtract, x } from "../../src/statistics/vocabulary.ts";
+import { add, and, equals, fold, less, subtract, x } from "../../src/statistics/vocabulary.ts";
 
 const isLeaf = leafTest as (tree: MathJSON) => MathJSON;
 const self = callSelf as (...args: readonly MathJSON[]) => MathJSON;
@@ -25,7 +25,6 @@ const binary = (head: string, summary: string, expr: MathJSON, note?: string) =>
 const ordered = (head: string, summary: string, expr: MathJSON, note?: string) =>
   stat("OrderedTree", head, summary, expr, note);
 
-const not = (a: MathJSON): MathJSON => ["Not", a];
 const ifThen = (test: MathJSON, then: MathJSON, otherwise: MathJSON = 0): MathJSON => ["If", test, then, otherwise];
 const list = (...items: MathJSON[]): MathJSON => ["List", ...items];
 
@@ -73,6 +72,9 @@ const smallest = (over: MathJSON): MathJSON => fold(over, "PositiveInfinity", ["
 /** `body` for each child of `t`, as a list; `c` is the child. */
 const overChildren = (t: MathJSON, body: MathJSON): MathJSON => ["Map", ["Function", body, "c"], t];
 const childless = (t: MathJSON): MathJSON => equals(["Length", t], 0);
+
+/** n!, with 0! and 1! stated: `Range(1, 0)` counts down. */
+const factorialOf = (n: MathJSON): MathJSON => ifThen(less(n, 2), 1, ["Product", ["Range", 1, n]]);
 
 const at = (list: MathJSON, index: number): MathJSON => ["At", list, index];
 
@@ -140,14 +142,20 @@ export const TREE_STATISTICS: readonly Definition[] = [
     "LeftSpine",
     "The number of nodes on the left spine: the root and its chain of left children.",
     recurse(ifThen(isLeaf("t"), 0, add(1, self(left("t")))), ["t"], x),
+    "Counts nodes, root included.",
   ),
   binary("Leaves", "The number of nodes with no children.", overNodes(ifThen(and(noLeft, noRight), 1))),
   binary(
     "UnaryNodes",
     "The number of nodes with exactly one child.",
-    overNodes(ifThen(["Or", and(noLeft, not(noRight)), and(not(noLeft), noRight)], 1)),
+    overNodes(ifThen(noLeft, ifThen(noRight, 0, 1), ifThen(noRight, 1, 0))),
   ),
-  binary("BinaryNodes", "The number of nodes with two children.", overNodes(ifThen(and(not(noLeft), not(noRight)), 1))),
+  binary(
+    "BinaryNodes",
+    "The number of nodes with two children.",
+    overNodes(ifThen(noLeft, 0, ifThen(noRight, 0, 1))),
+    "Nodes with two children; FindStat calls them branches.",
+  ),
   binary(
     "StrahlerNumber",
     "The Horton-Strahler number (register function): 0 for the empty tree, else the larger child's, plus one if the children tie.",
@@ -177,7 +185,7 @@ export const TREE_STATISTICS: readonly Definition[] = [
   binary(
     "LinearExtensionCount",
     "The number of linear extensions of the tree as a poset: n! over the tree factorial.",
-    ["Divide", ["Factorial", nodesOf(x)], treeFactorialOf(x)],
+    ["Divide", factorialOf(nodesOf(x)), treeFactorialOf(x)],
   ),
   binary(
     "CollessIndex",
@@ -190,7 +198,7 @@ export const TREE_STATISTICS: readonly Definition[] = [
     recurse(
       ifThen(isLeaf("t"), 0, [
         "Add",
-        ifThen(and(not(noLeft), equals("fromLeft", 0)), 1),
+        ifThen(noLeft, 0, ifThen(equals("fromLeft", 0), 1)),
         self(left("t"), 1),
         self(right("t"), 0),
       ]),
@@ -203,7 +211,7 @@ export const TREE_STATISTICS: readonly Definition[] = [
   binary("DistinctSubtrees", "The number of different nonempty subtrees.", ["Length", ["Unique", binarySubtrees]]),
   binary(
     "ProtectionNumber",
-    "The number of nodes on a shortest path from the root to an empty subtree.",
+    "The edges from the root to the nearest leaf, a binary tree's empty subtree counting as a leaf.",
     recurse(ifThen(isLeaf("t"), 0, add(1, ["Min", self(left("t")), self(right("t"))])), ["t"], x),
   ),
 
@@ -224,7 +232,7 @@ export const TREE_STATISTICS: readonly Definition[] = [
     overChildren(x, recurse(ifThen(childless("s"), 0, add(1, ["Sum", overChildren("s", self("c"))])), ["s"], "c")),
   ]),
   ordered(
-    "MaximumOutDegree",
+    "LargestOutDegree",
     "The most children any vertex has.",
     recurse(ifThen(childless("t"), 0, ["Max", ["Length", "t"], largest(overChildren("t", self("c")))]), ["t"], x),
   ),
@@ -268,14 +276,14 @@ export const TREE_STATISTICS: readonly Definition[] = [
     "The number of linear extensions of the tree as a poset: n! over the tree factorial.",
     [
       "Apply",
-      ["Function", ["Divide", ["Factorial", at("r", 1)], at("r", 2)], ["Typed", "r", "'collection'"]],
+      ["Function", ["Divide", factorialOf(at("r", 1)), at("r", 2)], ["Typed", "r", "'collection'"]],
       verticesAndTreeFactorial,
     ],
   ),
   ordered("DistinctSubtrees", "The number of different subtrees.", ["Length", ["Unique", orderedSubtrees]]),
   ordered(
     "ProtectionNumber",
-    "The distance from the root to the nearest leaf.",
+    "The edges from the root to the nearest leaf.",
     recurse(ifThen(childless("t"), 0, add(1, smallest(overChildren("t", self("c"))))), ["t"], x),
   ),
   ordered(
@@ -300,6 +308,6 @@ export const TREE_STATISTICS: readonly Definition[] = [
       ["level"],
       list(x),
     ),
-    "Each level is the list of its vertices; the next is their children, joined.",
+    "The largest number of nodes on one level, called breadth to keep width for posets.",
   ),
 ];

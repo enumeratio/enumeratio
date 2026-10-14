@@ -1,7 +1,7 @@
 ---
-name: MaximumOutDegree
+name: LargestOutDegree
 domain: Tree statistics
-signature: MaximumOutDegree(tree)
+signature: LargestOutDegree(tree)
 summary: The most children any vertex has.
 catalog:
   - system: findstat
@@ -11,7 +11,7 @@ catalog:
 statOn:
   - OrderedTree
 signatures:
-  - call: MaximumOutDegree(tree)
+  - call: LargestOutDegree(tree)
     description: The most children any vertex has.
     library: enumeratio-combinatorics
     type: (ordered_tree) -> number

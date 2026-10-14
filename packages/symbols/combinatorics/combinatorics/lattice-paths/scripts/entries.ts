@@ -6,6 +6,9 @@
 // one head, one owner, and permutations got there first in the old combined `ALL_STATISTICS`
 // order — its own generator owns those entries (with a footnote for this area's definition);
 // `omitHeads` excludes them here so this generator never touches that folder.
+//
+// `Height` is also defined on binary and ordered trees (trees' own kernel), so its record is
+// hand-written (`curatedHeads`): this generator only merges in `details`/`examples`.
 
 import { fileURLToPath } from "node:url";
 import type { GeneratedEntries } from "@enumeratio/entry/node";
@@ -28,5 +31,7 @@ export const generated: { standard: GeneratedEntries; curated: GeneratedEntries 
   frontier: LATTICE_PATHS_FRONTIER,
   samples: SAMPLES,
   declareArea: declareLatticePaths,
+  curatedHeads: ["Height"],
+  dir: REFERENCE_DIR,
   omitHeads: ["MajorIndex", "Peaks", "Valleys"],
 });

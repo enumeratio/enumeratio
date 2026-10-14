@@ -950,7 +950,7 @@ export const findstat: readonly FindStatMatch[] = [
     values: 196,
   },
   {
-    head: "MaximumOutDegree",
+    head: "LargestOutDegree",
     on: "OrderedTree",
     findstat: ["St000328"],
     values: 196,
