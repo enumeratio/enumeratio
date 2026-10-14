@@ -60,6 +60,12 @@ grades:
   - name: size
     role: axis
 carrier: Permutation
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: Permutations[Range[$1]]
+    arity: 1
+    note: Combinatorica's Permutations lists the arrangements of a list, lexicographically; ours is the collection for 1..n.
 ---
 
 - A lazy indexed collection: $Count(SymmetricGroup(n)) = n!$ and $At$ unranks the $i$-th permutation, so $SymmetricGroup(20)$ — over $2 \times 10^{18}$ rows — pages as cheaply as a small one.

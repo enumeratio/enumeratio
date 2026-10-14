@@ -126,7 +126,7 @@ const EXPECTED: Record<string, (l: number[]) => number> = {
     const ones = l.filter((p) => p === 1).length;
     return l.filter((p) => p > ones).length;
   },
-  DiagonalIndex: (l) => sum(cellData(l).map((cell) => cell.column - cell.row)),
+  ContentSum: (l) => sum(cellData(l).map((cell) => cell.column - cell.row)),
   LargestStaircaseSide: (l) => staircaseSide(l),
   ContainingSquareSide: (l) => (l.length === 0 ? 0 : Math.max(l[0]!, l.length)),
   CellsOutsideLargestStaircase: (l) => sum(l) - (staircaseSide(l) * (staircaseSide(l) + 1)) / 2,
