@@ -178,6 +178,11 @@ export async function cached(
   const shared = sharedStep(inputs.dir, name, hash, outputs);
   const fromShared = shared?.restore() === true;
   if (!fromShared) await run();
+  // An edit while `run` ran leaves outputs that match neither hash: record nothing, so the next run reruns.
+  if (!fromShared && hashInputs(inputs) !== hash) {
+    hashes.delete(inputs);
+    return true;
+  }
   mkdirSync(dirname(file), { recursive: true });
   if (restore) outputs.forEach((o, i) => cpSync(o, copy(i), { recursive: true }));
   writeFileSync(file, hash);

@@ -12,6 +12,7 @@
 // they read without importing, or every record, for the scanners), the keys of the units it reads,
 // and the inputs every build shares. A read that is none of these fails manifest's
 // tests/reads.test.ts.
+// Outputs are saved only if the key, recomputed after the build, is still the one computed before it.
 // What it saves is every gitignored file under its packages' directories, so generated data
 // (anything a build writes and git ignores) is picked up without being listed.
 //
@@ -291,6 +292,13 @@ async function build(requested: string[]): Promise<void> {
           throw e;
         }
       }
+    }
+    // An edit during the build (minutes, in a worktree someone is working in) makes the outputs
+    // belong to a different key than the one they'd be stored under: keep them for this checkout only.
+    if (computeKeys(all, unitMap).get(unit.id) !== keys.get(unit.id)) {
+      misses++;
+      console.log(`  built ${label} (${((Date.now() - t0) / 1000).toFixed(1)}s), inputs changed meanwhile: not cached`);
+      return;
     }
     const outputs = outputsOf(unit);
     const list = join(dir, `.tmp-${process.pid}-${keys.get(unit.id)}.list`);
