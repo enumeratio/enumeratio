@@ -16,6 +16,7 @@ const FIELDS = [
   "note",
   "issue",
   "tolerance",
+  "skip",
   "messages",
   "back",
   "backOut",

@@ -387,6 +387,7 @@ const SYSTEM_IMPLEMENTATION: JsonSchema = {
     note: { type: "string" },
     issue: { type: "integer" },
     tolerance: { type: "number" },
+    skip: { type: "boolean" },
     messages: { type: "array", items: { $ref: "#/$defs/EvaluationMessage" } },
     back: { $ref: "#/$defs/MathJSON" },
     backOut: { $ref: "#/$defs/MathJSON" },

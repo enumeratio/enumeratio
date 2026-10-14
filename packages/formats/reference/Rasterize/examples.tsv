@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-image-is-a-picture	Basic		[Rasterize, [Image, "'data:image/png;base64,AAA'"]]	[Image, "'data:image/png;base64,AAA'"]	An Image is already a picture, so it comes back as it is
+id	section	role	expr	expected	caption	wolfram.note	wolfram.skip
+image-is-a-picture	Basic		[Rasterize, [Image, "'data:image/png;base64,AAA'"]]	[Image, "'data:image/png;base64,AAA'"]	An Image is already a picture, so it comes back as it is	Not compared: our Image holds a data URI, Wolfram's is a bitmap object, so its Rasterize has no value to match.	true

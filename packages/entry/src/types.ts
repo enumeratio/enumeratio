@@ -466,7 +466,7 @@ export interface EvaluationMessage {
  * | ----------------------------------------------- | --------------------- | ------- |
  * | `in`                                            | `UPDATE_FORMS=1`      | what our transpiler emits for it |
  * | `out`, `tex`, `verdict`                         | the scan's `--accept` | absent for an own form, or until scanned |
- * | `kind`, `note`, `issue`, `tolerance`             | hand                  | the classification of a non-`agree` verdict, carried forward by the scan while it holds |
+ * | `kind`, `note`, `issue`, `tolerance`, `skip`     | hand                 | the classification of a non-`agree` verdict, carried forward by the scan while it holds |
  * | `messages`                                      | the scan               | what the evaluation itself emitted running it |
  */
 export interface SystemImplementation {
@@ -485,6 +485,9 @@ export interface SystemImplementation {
   readonly issue?: number;
   /** Relative tolerance for a numeric comparison, where 1e-9 is too strict for this row. */
   readonly tolerance?: number;
+  /** The oracle scan leaves this example out of this system's lane: its answer is a picture or a
+   * control, or has no value to compare. A `note` says why; never a divergence, so no `kind`. */
+  readonly skip?: boolean;
   readonly messages?: readonly EvaluationMessage[];
   /** Our own forms only: what `in` reads back as, where the trip loses something -- through
    * `parseEpsil` uncanonicalised for FullForm, a notebook cell for InputForm, the markup reader

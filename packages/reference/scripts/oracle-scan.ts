@@ -225,8 +225,10 @@ for (const system of systems) {
   // Wolfram doesn't answer a picture or a control with a value to compare, so its lane leaves them
   // (and their rows) alone, unless `--ids` names one.
   // Combinatorica is asked only about the heads its map covers; everything else is the Wolfram lane's.
+  // A row marked `<system>.skip` in examples.tsv opts out of the lane, even for a named `--ids`.
   const asked = cases.filter(
     (item) =>
+      records.get(item.head)?.[item.key]?.[system]?.skip !== true &&
       (!isWolframFamily(system) || idFilter?.has(item.id) === true || !showsPicture(item.head, item.expr)) &&
       (system !== "combinatorica" || emit(item.expr, system, library?.mappings).ok),
   );

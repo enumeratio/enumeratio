@@ -242,7 +242,7 @@ export function referenceData(
         // systems' notes explain their rows (a transpiler shape, a kernel's convention), and so
         // does a note on a row where Wolfram errored.
         const noted = Object.entries(rows).filter(
-          ([system, row]) => system === "wolfram" && row.note && row.verdict !== "error",
+          ([system, row]) => system === "wolfram" && row.note && row.verdict !== "error" && row.skip !== true,
         );
         return {
           ...example,

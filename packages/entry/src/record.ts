@@ -66,6 +66,7 @@ const HAND_FIELDS: readonly (readonly [string, Cell])[] = [
   ["note", "text"],
   ["issue", "flow"],
   ["tolerance", "flow"],
+  ["skip", "flow"],
 ];
 const HAND = new Set(HAND_FIELDS.map(([field]) => field));
 
