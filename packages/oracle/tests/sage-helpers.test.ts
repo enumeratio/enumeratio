@@ -32,3 +32,27 @@ test.skipIf(!hasSage)(
   },
   120_000,
 );
+
+test.skipIf(!hasSage)(
+  "a profinite number of modulus 0 prints as its rational, any other as ours spells it",
+  async () => {
+    const [rational, profinite] = await runIn("sage", ["Qhat((1/3), 0)", "Qhat(100, 24)"]);
+    expect(rational).toMatchObject({ value: "1/3" });
+    expect(profinite).toMatchObject({ value: '["ProfiniteNumber", 4, 24]' });
+  },
+  120_000,
+);
+
+test.skipIf(!hasSage)(
+  "Zeta(s, a) takes ((n + a)^2)^(-s/2) before the sum turns positive, whatever a's type",
+  async () => {
+    // Each is 2.5^-3 + 1.5^-3 + 0.5^-3 + zeta(3, 0.5) = 16.77...
+    const answers = await runIn("sage", [
+      "enumeratio_n(enumeratio_zeta_pair(3, (-5/2)))",
+      "enumeratio_n(enumeratio_zeta_pair(3, -2.5))",
+      "enumeratio_n(enumeratio_zeta_pair(3, (-2.5 + 0*I)))",
+    ]);
+    for (const answer of answers) expect(answer).toMatchObject({ value: expect.stringMatching(/^16\.7746946/) });
+  },
+  120_000,
+);

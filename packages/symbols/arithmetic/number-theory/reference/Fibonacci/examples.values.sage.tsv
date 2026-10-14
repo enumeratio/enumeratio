@@ -14,7 +14,7 @@ f-3-x-x-2-1-threads-element-wise-over-a-matrix
 threads-element-wise-over-a-list-as-wolfram-s	[fibonacci(1), fibonacci(2), fibonacci(3), fibonacci(4)]	[1, 1, 2, 3]	
 fibonacci-n-x-symbolic-order-stays-exact			
 fibonacci-half-x-exact-closed-form			
-n-fibonacci-15-over-17-50	enumeratio_n(fibonacci((15/17)), 50)		
+n-fibonacci-15-over-17-50	enumeratio_n(fibonacci((15/17)), 50)	TypeError: no conversion of this rational to integer	error
 n-fibonacci-5-8-minus-i			
 functionexpand-fibonacci-n-x			
 functionexpand-fibonacci-1-over-2-x			

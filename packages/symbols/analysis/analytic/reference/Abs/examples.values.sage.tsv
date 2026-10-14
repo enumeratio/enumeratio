@@ -21,7 +21,7 @@ a-complex-radicand-inside-the-subtraction	enumeratio_abs((sqrt(-10) - 2))	abs(sq
 n-abs-pi-plus-i-times-catalan-25			
 fullsimplify-matrixfunction-abs-list-list-1-over			
 abs-positiveinfinity	enumeratio_abs(oo)		
-abs-positiveinfinity-times-i	enumeratio_abs((oo * (0 + 1*I)))		
+abs-positiveinfinity-times-i	enumeratio_abs((oo * (0 + 1*I)))	abs((I)*Infinity)	disagree
 piecewiseexpand-abs-imaginaryunit-times-x-neg-2			
 complexexpand-abs-x			
 complexexpand-abs-x-plus-i-times-y			
