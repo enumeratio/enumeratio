@@ -6,6 +6,11 @@ summary: Airy function of the second kind
 signatures:
   - call: AiryBi(complex | infinity) -> number
     description: as compute-engine declares it
+  - call: AiryBi(complex | infinity) -> number
+    description: Airy function of the second kind
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
 references:
   - system: wikipedia
     identity: Airy function

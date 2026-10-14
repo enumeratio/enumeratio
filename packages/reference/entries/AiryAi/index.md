@@ -6,6 +6,11 @@ summary: Airy function of the first kind
 signatures:
   - call: AiryAi(complex | infinity) -> number
     description: as compute-engine declares it
+  - call: AiryAi(complex | infinity) -> number
+    description: Airy function of the first kind
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
 references:
   - system: wikipedia
     identity: Airy function
