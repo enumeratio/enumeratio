@@ -245,20 +245,24 @@ const READINGS: Record<string, Reading> = {
     ],
     (x, [, k]) => turns(x, (a, b) => a > b) === k,
   ),
-  KInversionPermutations: lexRestriction(
-    [
-      [0, 0],
-      [3, 0],
-      [3, 2],
-      [4, 3],
-      [5, 10],
-      [5, 4],
-      [2, 3],
-      // Seconds to filter 6! permutations: nightly.
-      ...(process.env.DEEP_TESTS ? [[6, 7]] : []),
-    ],
-    (x, [n, k]) => IsPermutationOf(x, n) && Inversions(x) === k,
-  ),
+  KInversionPermutations: {
+    ...lexRestriction(
+      [
+        [0, 0],
+        [3, 0],
+        [3, 2],
+        [4, 3],
+        [5, 10],
+        [5, 4],
+        [2, 3],
+        // Seconds to filter 6! permutations: nightly.
+        ...(process.env.DEEP_TESTS ? [[6, 7]] : []),
+      ],
+      (x, [n, k]) => IsPermutationOf(x, n) && Inversions(x) === k,
+    ),
+    // Not params.at(-2): that is the empty [2, 3] once DEEP_TESTS appends [6, 7].
+    interpretAt: [5, 4],
+  },
   // Every inversion is of adjacent entries. Seconds to filter 6! permutations: nightly.
   AdjacentTranspositionInvolutions: {
     ...lexRestriction([[0], [1], [2], [3], [4], [5], ...(process.env.DEEP_TESTS ? [[6]] : [])], (x) =>
