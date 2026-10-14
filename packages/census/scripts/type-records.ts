@@ -32,9 +32,10 @@ interface Located {
 const records = new Map<string, Located>();
 const dirOf = new Map<string, string>();
 // reference's own copy is the canonical one (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §9).
-const dirs = recordDirs(PACKAGES).toSorted(
-  (a, b) => Number(b.package === "reference") - Number(a.package === "reference"),
-);
+// Installed libraries' records are theirs to write.
+const dirs = recordDirs(PACKAGES)
+  .filter((r) => r.installed !== true)
+  .toSorted((a, b) => Number(b.package === "reference") - Number(a.package === "reference"));
 for (const { package: pkg, dir } of dirs) {
   dirOf.set(pkg, dir);
   for (const head of headNames(dir)) {
