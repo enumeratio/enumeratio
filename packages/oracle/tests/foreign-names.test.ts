@@ -3,7 +3,7 @@ import { fromWolfram, SYSTEM_NAMES } from "@enumeratio/wolfram";
 import { describe, expect, test } from "vite-plus/test";
 import { emit, type MathJSON } from "../src/emit.ts";
 import type { Mapping } from "../src/mappings.ts";
-import { reservedNames } from "../src/reserved.ts";
+import { reservedNames, restoreNames, SAGE_UNBINDABLE } from "../src/reserved.ts";
 import { runIn } from "../src/run.ts";
 import type { System } from "../src/systems.ts";
 
@@ -77,18 +77,41 @@ describe("bound names a lane holds are written under another name", () => {
   });
 });
 
+describe("a free variable Sage refuses is written under a spare name", () => {
+  test("a keyword, exec and print; the spare is one the expression doesn't use", () => {
+    for (const name of ["lambda", "class", "None", "exec", "print"]) {
+      expect(emit(["Add", name, 1], "sage")).toEqual({
+        ok: true,
+        source: `(SR.var("${name}_") + 1)`,
+        freeSymbols: [name],
+        renamed: { [name]: `${name}_` },
+      });
+    }
+    expect(emit(["Add", "lambda", "lambda_"], "sage")).toMatchObject({
+      freeSymbols: ["lambda", "lambda_"],
+      renamed: { lambda: "lambda__" },
+    });
+    // A name Sage binds fine, and every other lane, are untouched.
+    expect(emit(["Add", "sum", 1], "sage")).toEqual({ ok: true, source: '(SR.var("sum") + 1)', freeSymbols: ["sum"] });
+    expect(emit(["Add", "lambda", 1], "sympy")).toMatchObject({ source: '(Symbol("lambda") + 1)' });
+  });
+
+  test("the answer reads the names back", () => {
+    const renamed = { lambda: "lambda_", e: "e_" };
+    expect(restoreNames("lambda_ + e_*2 + lambda__ + x", renamed)).toBe("lambda + e*2 + lambda__ + x");
+    expect(restoreNames("x + 1", undefined)).toBe("x + 1");
+  });
+
+  const keywords = spawnSync("python3", ["-c", "import keyword; print(*keyword.kwlist, 'exec', 'print')"], {
+    encoding: "utf8",
+  });
+  test.skipIf(keywords.status !== 0)("the set is Python's keywords, and exec and print", () => {
+    expect([...SAGE_UNBINDABLE].toSorted()).toEqual(keywords.stdout.trim().split(" ").toSorted());
+  });
+});
+
 /** Names we write as values, not variables. */
 const CONSTANT_NAMES = new Set(["True", "False"]);
-/** What Sage's `SR.var` refuses: Python's keywords, and `exec` and `print`. */
-const UNBINDABLE = new Set(
-  (
-    spawnSync("python3", ["-c", "import keyword; print(*keyword.kwlist, 'exec', 'print')"], { encoding: "utf8" })
-      .stdout ?? ""
-  )
-    .trim()
-    .split(" "),
-);
-
 const hasPython = (module: string): boolean =>
   spawnSync("python3", ["-c", `import ${module}`], { stdio: "ignore" }).status === 0;
 const hasSage = spawnSync("sage", ["--version"], { stdio: "ignore" }).status === 0;
@@ -139,10 +162,16 @@ describe.skipIf(!hasPython("mpmath"))("mpmath", () => {
 
 describe.skipIf(!hasSage)("Sage", () => {
   test("every name it holds comes back a free variable with its own name; an index named `e` leaves the constant alone", async () => {
-    const names = variables("sage").filter((name) => !UNBINDABLE.has(name));
+    const names = variables("sage");
     expect(names.length).toBeGreaterThan(1000);
-    const list = emitted(["List", ...names], "sage");
-    expect(await value("sage", `[str(v) for v in ${list}] == ${JSON.stringify(names)}`)).toBe("True");
+    // The keywords `SR.var` refuses are written under a spare name.
+    expect(names).toContain("lambda");
+    const out = emit(["List", ...names], "sage");
+    if (!out.ok) throw new Error(`sage: unmapped ${out.missing.join(", ")}`);
+    expect(Object.keys(out.renamed ?? {}).toSorted()).toEqual(names.filter((n) => SAGE_UNBINDABLE.has(n)).toSorted());
+    const list = out.source;
+    const spelled = names.map((name) => out.renamed?.[name] ?? name);
+    expect(await value("sage", `[str(v) for v in ${list}] == ${JSON.stringify(spelled)}`)).toBe("True");
     expect(await value("sage", `all(v.is_symbol() for v in ${list})`)).toBe("True");
     const rows = sumRows("sage", "sum(($1) for $2 in range(1, 4))");
     const sum = emitted(["Sum", ["Multiply", "ExponentialE", "e"], ["Tuple", "e", 1, 3]], "sage", rows);

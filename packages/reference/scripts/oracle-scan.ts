@@ -49,6 +49,7 @@ import {
   symbolicAgreementSource,
   SYSTEMS,
   type System,
+  restoreNames,
   type Verdict,
   wiredSystems,
 } from "@enumeratio/oracle";
@@ -287,13 +288,20 @@ for (const system of systems) {
   }
   for (const [index, row] of runnable.entries()) {
     const source = plainSources[index] as string;
-    const result = results[index] as {
+    const answered = results[index] as {
       value?: string;
       display?: string;
       numeric?: string;
       shown?: string;
       tex?: { input: string; output: string };
       error?: string;
+    };
+    // A name written under a spare one (a Sage keyword) is its own name in the answer.
+    const renamed = row.out.ok ? row.out.renamed : undefined;
+    const result = {
+      ...answered,
+      ...(answered.value === undefined ? {} : { value: restoreNames(answered.value, renamed) }),
+      ...(answered.display === undefined ? {} : { display: restoreNames(answered.display, renamed) }),
     };
     if (result.error !== undefined) {
       outcomes.push({

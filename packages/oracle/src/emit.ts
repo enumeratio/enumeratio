@@ -18,7 +18,7 @@ import {
 import { CARRIER_NAMES, CARRIER_PARAMS } from "./carrier-names-data.ts";
 import { DEFINED_NAMES } from "./defined-names-data.ts";
 import { type Mapping, mappingFor, THREADS_MANUALLY } from "./mappings.ts";
-import { isReserved, spareName } from "./reserved.ts";
+import { isReserved, SAGE_UNBINDABLE, spareName } from "./reserved.ts";
 import { isWolframFamily, type System } from "./systems.ts";
 
 export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
@@ -28,7 +28,7 @@ export type Emitted =
       readonly ok: true;
       readonly source: string;
       readonly freeSymbols?: readonly string[];
-      /** Bound names written under another name, because the system holds theirs: name → spelling. */
+      /** Names written under another name, because the system holds theirs (or refuses them): name → spelling. */
       readonly renamed?: Readonly<Record<string, string>>;
     }
   | { readonly ok: false; readonly missing: readonly string[] };
@@ -190,18 +190,20 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
   // Every free bare symbol actually seen, regardless of system — the numeric-only lanes still
   // report it as missing, but the caller (a symbolic-agreement check) needs the names either way.
   const free = new Set<string>();
-  // A bound name the system's namespace already holds, written under a spare one: a `Sum` index
+  // A name the system's namespace already holds, written under a spare one: a `Sum` index
   // `e` would capture the `e` that `ExponentialE` emits. Computed once, so every use agrees.
   const renamed = new Map<string, string>();
   let taken: ReadonlySet<string> | undefined;
-  const boundName = (name: string): string => {
-    if (wl) return isSystemName(name) ? `${CONTEXT}${name}` : name;
-    if (system === "sympy") return `Symbol(${JSON.stringify(name)})`;
-    if (!isReserved(system, name)) return name;
+  const spared = (name: string): string => {
     taken ??= namesIn(expr);
     let spare = renamed.get(name);
     if (spare === undefined) renamed.set(name, (spare = spareName(system, name, taken)));
     return spare;
+  };
+  const boundName = (name: string): string => {
+    if (wl) return isSystemName(name) ? `${CONTEXT}${name}` : name;
+    if (system === "sympy") return `Symbol(${JSON.stringify(name)})`;
+    return isReserved(system, name) ? spared(name) : name;
   };
 
   // Combinatorica is the Wolfram transpiler plus its own head map: an expression with no map row
@@ -259,7 +261,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         free.add(node);
         if (wl) return wolframFree(node);
         if (system === "sympy") return `Symbol(${JSON.stringify(node)})`;
-        if (system === "sage") return `SR.var(${JSON.stringify(node)})`;
+        // `SR.var` refuses a keyword; it is written under a spare name, as a bound one is.
+        if (system === "sage") return `SR.var(${JSON.stringify(SAGE_UNBINDABLE.has(node) ? spared(node) : node)})`;
         missing.push(`symbol:${node}`);
         return node;
       }
