@@ -44,7 +44,7 @@
     "katex": "catalog:"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.152.0",
+    "@cortex-js/compute-engine": "^0.153.0",
     "@enumeratio/config": "workspace:*",
     "@playwright/test": "^1.55.0",
     "vitepress": "2.0.0-alpha.20",
