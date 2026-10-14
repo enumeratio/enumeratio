@@ -896,6 +896,42 @@ function extendCovariance6(ce: Engine): void {
   );
 }
 
+/** Nodes `hasFloat` looks at: a data-backed distribution (Histogram, a mixture) is not walked whole. */
+const FLOAT_SCAN_NODES = 64;
+
+/** Whether a float sits within the first `FLOAT_SCAN_NODES` nodes of `expr`. */
+function hasFloat(expr: Expr): boolean {
+  let left = FLOAT_SCAN_NODES;
+  const walk = (node: Expr): boolean => {
+    if (left-- <= 0) return false;
+    if ((node as { isNumberLiteral?: boolean }).isNumberLiteral === true)
+      return (node as { isExact?: boolean }).isExact === false;
+    return operandsOf(node).some(walk);
+  };
+  return walk(expr);
+}
+
+// A float point or parameter makes the answer a float. The closed forms are built with
+// `ce.function`, which folds an integer-valued float (`4.0 / 5`) into a rational, so the exact form
+// comes back; the last wrapper of PDF and CDF turns it numeric, at the engine's precision (an
+// `N(4, 25)` point's extra digits are not carried). A float inside a list point is left to the
+// element-wise threading: floating the whole list would float its exact elements too.
+// Outermost only because `declareDistributions6` is declared after every other wave: keep it last.
+function propagateFloats(ce: Engine): void {
+  for (const head of ["PDF", "CDF"]) {
+    wrapOperator(
+      ce,
+      [head],
+      ([dist, x]) => hasFloat(dist!) || (x!.operator !== "List" && hasFloat(x!)),
+      (native) => (ops, options) => {
+        const result = native?.(ops, options);
+        return result !== undefined && result.operator !== head ? result.N() : result;
+      },
+      2,
+    );
+  }
+}
+
 /** Declare the sixth-wave probability heads on `ce`: `MultinomialDistribution`,
  *  `MultinormalDistribution`, `MultivariatePoissonDistribution`, `ProbabilityDistribution`,
  *  `ParameterMixtureDistribution`, `HistogramDistribution` — plus extending
@@ -906,4 +942,5 @@ export function declareDistributions6(ce: Engine): void {
   declareConstructors6(ce);
   extendStats6(ce);
   extendCovariance6(ce);
+  propagateFloats(ce);
 }

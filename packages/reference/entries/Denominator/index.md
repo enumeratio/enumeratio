@@ -10,9 +10,14 @@ signatures:
     description: Denominator of an expression
     library: enumeratio-adeles
     type: (value) -> integer
-    overrides: compute-engine
+    overrides: enumeratio-number-theory
     on:
       - ProfiniteNumber
+  - call: Denominator(number) -> nothing | number
+    description: Denominator of an expression
+    library: enumeratio-number-theory
+    type: (number) -> nothing | number
+    overrides: compute-engine
 statOn:
   - BinaryWord
   - RationalNumber
