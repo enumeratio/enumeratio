@@ -39,6 +39,28 @@ const reduce2F1 = (ce: Engine, ops: readonly Expr[]): Expr | undefined => {
   return ce.function("Power", [ce.function("Subtract", [ce.One, z]), ce.function("Negate", [survivor])]);
 };
 
+/** n of `Derivative(EllipticK, n)`, for an exact integer n ≥ 1, else undefined. */
+function ellipticKDerivativeOrder(op: Expr | undefined): number | undefined {
+  if (op?.operator !== "Derivative") return undefined;
+  const [head, order] = operandsOf(op);
+  const n = head === undefined || symbolNameOf(head) !== "EllipticK" ? undefined : bigIntegerAt(order);
+  return n === undefined || n < 1n || n > 10_000n ? undefined : Number(n);
+}
+
+/** K⁽ⁿ⁾(0) = (π/2)·((½)ₙ)²/n!, the Taylor coefficients of K(m) = (π/2)·₂F₁(½, ½; 1; m). */
+function ellipticKDerivativeAtZero(ce: Engine, n: number): Expr {
+  let num = 1n;
+  let den = 2n;
+  for (let i = 1; i <= n; i++) {
+    const odd = BigInt(2 * i - 1);
+    num *= odd * odd;
+    den *= 4n * BigInt(i);
+  }
+  let [a, b] = [num, den];
+  while (b !== 0n) [a, b] = [b, a % b];
+  return ce.function("Multiply", [ce.number([num / a, den / a] as unknown as [number, number]), ce.symbol("Pi")]);
+}
+
 export function declareSpecialValues(ce: Engine): void {
   for (const [head, value] of Object.entries(AIRY_AT_ZERO)) {
     // compile builtin: the closed form at an exact 0; every other operand reaches the numeric kernel
@@ -50,6 +72,15 @@ export function declareSpecialValues(ce: Engine): void {
       { arity: 1, compile: "builtin" },
     );
   }
+
+  // compile builtin: the closed form at an exact 0; every other point stays the inert `Derivative` call
+  wrapOperator(
+    ce,
+    ["Apply", ["Derivative", "EllipticK", 1], 0],
+    (ops) => ellipticKDerivativeOrder(ops[0]) !== undefined && isInteger(ops[1], 0n),
+    () => (ops, options) => finish(ellipticKDerivativeAtZero(ce, ellipticKDerivativeOrder(ops[0])!), options),
+    { arity: 2, compile: "builtin" },
+  );
 
   // compile builtin: the reduction at matching exact parameters; the numeric kernel answers the rest
   wrapOperator(

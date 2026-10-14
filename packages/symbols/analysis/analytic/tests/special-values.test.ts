@@ -102,3 +102,40 @@ test("Series about a directed infinity stays unevaluated", () => {
   const series = ce.box(["Series", ["AiryBi", "x"], "x", ["DirectedInfinity", "z"], 1]).evaluate();
   expect(series.operator).toBe("Series");
 });
+
+test("EllipticK derivatives at 0 are exact, and agree with mpmath", () => {
+  // mpmath 1.3.0: n! · [m^n] ellipk(m)
+  const mpmath = [0.39269908169872414, 0.44178646691106466, 0.9203884727313847, 2.818689697739866];
+  mpmath.forEach((value, i) => {
+    const derivative = ce.box(["Apply", ["Derivative", "EllipticK", i + 1], 0]).evaluate();
+    expect(derivative.toString(), `K^(${i + 1})(0)`).not.toContain("Derivative");
+    expect(Math.abs(derivative.N().re - value), `K^(${i + 1})(0)`).toBeLessThan(1e-14);
+  });
+  // any other point stays the inert call
+  expect(
+    ce
+      .box(["Apply", ["Derivative", "EllipticK", 1], "m"])
+      .evaluate()
+      .toString(),
+  ).toContain("Derivative");
+});
+
+test("Series of EllipticK at 0 carries the closed-form coefficients", () => {
+  const series = ce.box(["Series", ["EllipticK", "m"], "m", 0, 3]).evaluate();
+  expect(series.toString()).not.toContain("Derivative");
+  // π/2 + πm/8 + 9πm²/128 + 25πm³/512: mpmath's Taylor coefficients of ellipk, over π
+  const json = JSON.stringify(series.json);
+  for (const [n, d] of [
+    [1, 2],
+    [1, 8],
+    [9, 128],
+    [25, 512],
+  ])
+    expect(json).toContain(`"Rational",${n},${d}`);
+});
+
+test("Series of a non-terminating 2F1 at 1 stays unevaluated, a terminating one expands", () => {
+  // 2F1(2, 3; 4; x) diverges like 1/(1−x) (c−a−b = −1), so it has no Taylor series at 1
+  expect(ce.box(["Series", ["Hypergeometric2F1", 2, 3, 4, "x"], "x", 1, 3]).evaluate().operator).toBe("Series");
+  expect(ce.box(["Series", ["Hypergeometric2F1", -2, 3, 4, "x"], "x", 1, 2]).evaluate().operator).not.toBe("Series");
+});
