@@ -6,6 +6,11 @@ summary: Gauss hypergeometric function ₂F₁(a, b; c; z).
 signatures:
   - call: Hypergeometric2F1(complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number
     description: as compute-engine declares it
+  - call: Hypergeometric2F1(complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number
+    description: Gauss hypergeometric function ₂F₁(a, b; c; z).
+    library: enumeratio-analytic
+    type: (complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number
+    overrides: compute-engine
 references:
   - system: wikipedia
     identity: Hypergeometric function

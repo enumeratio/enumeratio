@@ -188,6 +188,10 @@ const OVERRIDDEN = [
   // formula, and the decimal-digit-count identity), so Add is the corpus expression's own
   // outer head even though the divergence is Floor's.
   "Add",
+  "AiryAi",
+  "AiryAiPrime",
+  "AiryBi",
+  "AiryBiPrime",
   "All",
   "Any",
   // Also overridden itself (operator forms, a Function literal that would capture, a process
@@ -262,6 +266,7 @@ const OVERRIDDEN = [
   "GammaLn",
   "GammaRegularized",
   "Histogram",
+  "Hypergeometric1F1",
   // #340: HurwitzZeta/Zeta's own declarations landed in compute-engine 0.139, but only in
   // double precision -- the zeta-hurwitz patch still overrides both for the arbitrary-
   // precision N(x, d) path (see ce-patches/src/patches/zeta-hurwitz.ts), so

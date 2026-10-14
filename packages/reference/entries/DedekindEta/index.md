@@ -6,6 +6,11 @@ summary: Dedekind eta function η(τ), Im(τ) > 0.
 signatures:
   - call: DedekindEta(complex | infinity) -> number
     description: as compute-engine declares it
+  - call: DedekindEta(complex | infinity) -> number
+    description: Dedekind eta function η(τ), Im(τ) > 0.
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
 references:
   - system: wikipedia
     identity: Dedekind eta function

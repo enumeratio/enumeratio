@@ -6,6 +6,11 @@ summary: Kummer confluent hypergeometric function ₁F₁(a; b; z) = M(a, b, z).
 signatures:
   - call: Hypergeometric1F1(complex | infinity, complex | infinity, complex | infinity) -> number
     description: as compute-engine declares it
+  - call: Hypergeometric1F1(complex | infinity, complex | infinity, complex | infinity) -> number
+    description: Kummer confluent hypergeometric function ₁F₁(a; b; z) = M(a, b, z).
+    library: enumeratio-analytic
+    type: (complex | infinity, complex | infinity, complex | infinity) -> number
+    overrides: compute-engine
 stub: engine
 names:
   wolframIdentity: true
