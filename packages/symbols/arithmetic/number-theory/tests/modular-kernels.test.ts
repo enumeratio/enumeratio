@@ -1,13 +1,23 @@
 // `Mod(f(args), m)` computed modulo m (declare-modular-kernels.ts, issue #205): every fast
 // answer must equal `Mod` of the exact value, for moduli of every shape, and every call the
 // registry declines must run as it always did.
-import type { Json } from "@enumeratio/engine";
+import { type Json, registerModularKernel } from "@enumeratio/engine";
 import { createEngine } from "@enumeratio/engine/testing";
 import { declareNumerals } from "@enumeratio/numerals";
 import { declareResidues } from "@enumeratio/residues";
 import { expect, test } from "vite-plus/test";
 import { declareNumberTheory } from "../src/declare.ts";
-import { binomialMod, catalanMod, factorialMod } from "../src/modular-kernels.ts";
+import { MODULAR_KERNELS } from "../src/declare-modular-kernels.ts";
+import {
+  bellMod,
+  binomialMod,
+  catalanMod,
+  factorialMod,
+  multinomialMod,
+  pochhammerMod,
+  stirlingMod,
+  subfactorialMod,
+} from "../src/modular-kernels.ts";
 import { fibonacciMod, lucasLMod } from "../src/fast-recurrence.ts";
 
 const ce = createEngine(declareResidues, declareNumerals, declareNumberTheory);
@@ -166,4 +176,180 @@ test("a call the registry has no say in runs as it always did", () => {
     ce.box(["Mod", 2432902008176640000, 1000] as Json).N().json,
   );
   expect(run(["Mod", ["List", ["Factorial", 5], ["Factorial", 6]], 7])).toEqual(["List", 1, 6]);
+});
+
+// ─── Multinomial, Pochhammer, Subfactorial, StirlingS1/S2, BellNumber ───
+
+const mod = (a: bigint, m: bigint): bigint => ((a % m) + m) % m;
+const rising = (a: bigint, n: bigint): bigint => {
+  let r = 1n;
+  for (let i = 0n; i < n; i++) r *= a + i;
+  return r;
+};
+const multinomial = (parts: readonly bigint[]): bigint =>
+  parts.reduce((r, n) => r / factorial(n), factorial(parts.reduce((a, b) => a + b, 0n)));
+const derangements = (n: bigint): bigint => {
+  let [d, sign] = [1n, 1n];
+  for (let k = 1n; k <= n; k++) [d, sign] = [k * d - sign, -sign];
+  return d;
+};
+/** Row n of a Stirling triangle: second kind kS(n-1,k)+S(n-1,k-1); signed first kind S(n-1,k-1)-(n-1)S(n-1,k). */
+const stirlingRow = (n: number, kind: 1 | 2): bigint[] => {
+  let row = [1n];
+  for (let l = 1; l <= n; l++) {
+    const next = new Array<bigint>(l + 1).fill(0n);
+    for (let d = 1; d <= l; d++) {
+      const [above, aboveLeft] = [row[d] ?? 0n, row[d - 1] ?? 0n];
+      next[d] = kind === 2 ? BigInt(d) * above + aboveLeft : aboveLeft - BigInt(l - 1) * above;
+    }
+    row = next;
+  }
+  return row;
+};
+const bell = (n: number): bigint => {
+  let row = [1n];
+  for (let i = 1; i <= n; i++) {
+    const next = [row[i - 1]!];
+    for (let j = 0; j < i; j++) next.push(next[j]! + row[j]!);
+    row = next;
+  }
+  return row[0]!;
+};
+
+test("multinomialMod, pochhammerMod, subfactorialMod, stirlingMod, bellMod match the exact value reduced", () => {
+  const sizes = [0n, 1n, 2n, 3n, 4n, 5n, 7n, 9n];
+  const lists: bigint[][] = [[], ...sizes.map((a) => [a])];
+  for (const a of sizes) {
+    for (const b of sizes) {
+      lists.push([a, b]);
+      for (const c of [0n, 2n, 5n]) lists.push([a, b, c], [c, a, 1n, b]);
+    }
+  }
+  for (const m of MODULI) {
+    for (const parts of lists) {
+      expect(multinomialMod(parts, m), `Multinomial(${parts.join(", ")}) mod ${m}`).toBe(multinomial(parts) % m);
+    }
+    for (let a = -15n; a <= 15n; a += a < 8n ? 1n : 3n) {
+      for (let n = 0n; n <= 40n; n++) {
+        expect(pochhammerMod(a, n, m), `(${a})_${n} mod ${m}`).toBe(mod(rising(a, n), m));
+      }
+    }
+    for (let n = 0n; n <= 300n; n++) expect(subfactorialMod(n, m), `!${n} mod ${m}`).toBe(derangements(n) % m);
+    for (let n = 0; n <= 40; n++) expect(bellMod(BigInt(n), m), `B(${n}) mod ${m}`).toBe(bell(n) % m);
+  }
+  for (let n = 0; n <= 24; n++) {
+    const [first, second] = [stirlingRow(n, 1), stirlingRow(n, 2)];
+    for (const m of MODULI) {
+      for (let k = 0; k <= n + 1; k++) {
+        expect(stirlingMod(BigInt(n), BigInt(k), m, 2), `S2(${n}, ${k}) mod ${m}`).toBe(mod(second[k] ?? 0n, m));
+        expect(stirlingMod(BigInt(n), BigInt(k), m, 1), `S1(${n}, ${k}) mod ${m}`).toBe(mod(first[k] ?? 0n, m));
+      }
+    }
+  }
+});
+
+test("the new kernels decline outside their range or past the step budget", () => {
+  expect(multinomialMod([3n, -1n], 7n)).toBeUndefined();
+  expect(pochhammerMod(3n, -2n, 7n)).toBeUndefined();
+  expect(subfactorialMod(-1n, 7n)).toBeUndefined();
+  expect(bellMod(-1n, 7n)).toBeUndefined();
+  expect(stirlingMod(-1n, 2n, 7n, 2)).toBeUndefined();
+  const unfactorable = (2n ** 61n - 1n) * (2n ** 64n + 13n);
+  expect(multinomialMod([5n, 5n], unfactorable)).toBeUndefined();
+  expect(pochhammerMod(1n, 10n ** 9n, 10n ** 12n + 39n)).toBeUndefined(); // past the budget
+  expect(subfactorialMod(10n ** 12n, 2n ** 40n)).toBeUndefined();
+  expect(bellMod(10n ** 6n, 1000000007n)).toBeUndefined();
+  expect(stirlingMod(10n ** 6n, 5n * 10n ** 5n, 1000000007n, 2)).toBeUndefined();
+  expect(pochhammerMod(5n, 10n ** 12n, 1000000007n)).toBe(0n); // wraps past a multiple of m
+});
+
+test("known values at the bench sizes, from an independent computation", () => {
+  expect(run(["Mod", ["Multinomial", 20000, 20000, 20000], 1000000007])).toBe(539817501);
+  expect(run(["Mod", ["Multinomial", 3000, 2000, 1000, 500], 1000000007])).toBe(561853302);
+  expect(run(["Mod", ["Pochhammer", 100003, 100000], 1000000007])).toBe(321522096);
+  expect(run(["Mod", ["Pochhammer", 100000000, 1000000], 1000000007])).toBe(527220029);
+  expect(run(["Mod", ["Pochhammer", 500000000, 500000], 1000000007])).toBe(84772848);
+  // 10·11·…·(p − 11) = (p − 11)!/9!, which Wilson turns into −1/(10!·9!).
+  expect(run(["Mod", ["Pochhammer", 10, 999999987], 1000000007])).toBe(927374667);
+  expect(run(["Mod", ["Subfactorial", 100000], 1000000007])).toBe(183389504);
+  expect(run(["Mod", ["Subfactorial", 1000000], 1000000007])).toBe(102701088);
+  expect(run(["Mod", ["BellNumber", 1000], 1000000007])).toBe(465231251);
+  expect(run(["Mod", ["StirlingS2", 1000, 500], 1000000007])).toBe(596728287);
+  expect(run(["Mod", ["StirlingS1", 1000, 500], 1000000007])).toBe(761367694);
+});
+
+// A second engine whose every registered kernel counts its calls, so each agreement below also shows
+// the kernel was consulted rather than compute-engine's own evaluation.
+const counted = createEngine(declareResidues, declareNumerals, declareNumberTheory);
+const hits = new Map<string, number>();
+for (const [head, kernel, arity] of MODULAR_KERNELS) {
+  registerModularKernel(
+    counted,
+    head,
+    (args, m) => {
+      hits.set(head, (hits.get(head) ?? 0) + 1);
+      return kernel(args, m);
+    },
+    arity,
+  );
+}
+const total = (): number => [...hits.values()].reduce((a, b) => a + b, 0);
+/** `Mod(f, m)` on the counting engine, and how many kernel calls it took. */
+const asked = (f: Json, m: number | bigint): [unknown, number] => {
+  const before = total();
+  const value = counted.box(["Mod", f, typeof m === "bigint" ? { num: m.toString() } : m] as Json).evaluate().json;
+  return [value, total() - before];
+};
+
+const ENGINE_MODULI = [1, 2, 5, 12, 16, 27, 97, 360, 1000000007, 0, -7, -12, 2n ** 61n - 1n, 2n ** 64n + 13n];
+
+test("Mod(f(args), m) equals Mod of the exact value, and consults the kernel: Multinomial, Pochhammer, Subfactorial", () => {
+  const calls: Json[] = [];
+  for (const parts of [[], [4], [0, 0], [3, 2], [5, 0, 5], [2, 2, 2], [7, 3, 1, 1], [12, 8, 6]]) {
+    calls.push(["Multinomial", ...parts] as Json);
+  }
+  for (let a = -6; a <= 6; a += 2) for (let n = 0; n <= 9; n += 3) calls.push(["Pochhammer", a, n] as Json);
+  for (const n of [0, 1, 2, 5, 11, 30, 100]) calls.push(["Subfactorial", n] as Json);
+  for (const m of ENGINE_MODULI) {
+    for (const f of calls) {
+      const [value, consulted] = asked(f, m);
+      expect(value, `Mod(${JSON.stringify(f)}, ${m})`).toEqual(reference(f, m));
+      if (m !== 0) expect(consulted, `Mod(${JSON.stringify(f)}, ${m}) consulted`).toBeGreaterThan(0);
+    }
+  }
+});
+
+test("Mod(f(args), m) equals Mod of the exact value, and consults the kernel: Stirling and Bell numbers", () => {
+  const calls: Json[] = [];
+  for (let n = 0; n <= 12; n += 3) {
+    calls.push(["BellNumber", n] as Json);
+    for (let k = 0; k <= n + 1; k += 2) calls.push(["StirlingS2", n, k] as Json, ["StirlingS1", n, k] as Json);
+  }
+  for (const m of ENGINE_MODULI) {
+    for (const f of calls) {
+      const [value, consulted] = asked(f, m);
+      expect(value, `Mod(${JSON.stringify(f)}, ${m})`).toEqual(reference(f, m));
+      if (m !== 0) expect(consulted, `Mod(${JSON.stringify(f)}, ${m}) consulted`).toBeGreaterThan(0);
+    }
+  }
+  expect(hits.get("Stirling")).toBeGreaterThan(0);
+});
+
+test("a rational part declines: Mod of a rational is its rational remainder, not a modular inverse", () => {
+  const fibonacci5 = ["Power", ["Fibonacci", 5], -1] as Json; // 1/5, a rational once canonical
+  const calls: Json[] = [
+    ["Add", ["Fibonacci", 10], ["Rational", 1, 3]],
+    ["Add", ["Fibonacci", 10], ["Power", 3, -1]],
+    ["Add", ["Fibonacci", 10], ["Divide", 1, 3]],
+    ["Add", ["Factorial", 6], ["Power", 3, -300]],
+    ["Divide", ["Factorial", 6], 7],
+    fibonacci5,
+    ["Add", ["Fibonacci", 100], fibonacci5],
+  ];
+  for (const m of [1, 5, 7, 9, 97, 360, 1000000007, -7]) {
+    for (const f of calls) {
+      expect(fast(f, m), `Mod(${JSON.stringify(f)}, ${m})`).toEqual(reference(f, m));
+    }
+  }
+  expect(run(["Mod", ["Add", ["Fibonacci", 10], ["Rational", 1, 3]], 7])).toEqual(["Rational", 19, 3]); // 166/3 − 49
 });
