@@ -1,7 +1,6 @@
 import { declareAlgebra } from "@enumeratio/structures";
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { registerNotation } from "@enumeratio/boxes";
-import { integerAt, operandsOf } from "@enumeratio/engine";
+import { type Engine, type Expr, integerAt, operandsOf } from "@enumeratio/engine";
 import {
   completeToRibbon,
   conjugateComposition,
@@ -36,7 +35,7 @@ import { HOPF_NOTATION } from "./notation.ts";
 // be a conflation.
 
 /** Read a composition: a `List` of positive integers. */
-function compositionOf(expr: BoxedExpression | undefined): Composition | undefined {
+function compositionOf(expr: Expr | undefined): Composition | undefined {
   if (expr === undefined || expr.operator !== "List") return undefined;
   const parts = operandsOf(expr).map(integerAt);
   if (!parts.every((p): p is number => p !== undefined && p >= 1)) return undefined;
@@ -68,7 +67,7 @@ const ALGEBRA_HEADS: Record<string, { algebra: HopfAlgebra; basisHead: string }>
   QSymAlgebra: { algebra: qsym, basisHead: "QSymM" },
 };
 
-export function declareHopf(ce: ComputeEngine): void {
+export function declareHopf(ce: Engine): void {
   registerNotation(ce, HOPF_NOTATION);
   for (const head of Object.keys(BASIS_HEADS)) {
     ce.declare(head, { signature: "(list<integer>) -> number" });
@@ -78,7 +77,7 @@ export function declareHopf(ce: ComputeEngine): void {
   for (const head of algebraHeads) ce.declare(head, { signature: "(integer) -> graded_hopf_algebra" });
   ce.declare("HopfTensor", { signature: "(number, number) -> number" });
 
-  const basisExpression = (head: string, a: Composition): BoxedExpression =>
+  const basisExpression = (head: string, a: Composition): Expr =>
     ce.function(head, [
       ce.function(
         "List",
@@ -86,7 +85,7 @@ export function declareHopf(ce: ComputeEngine): void {
       ),
     ]);
 
-  const toExpression = (head: string, element: Element): BoxedExpression => {
+  const toExpression = (head: string, element: Element): Expr => {
     const shown = (BASIS_HEADS[head] as BasisSpec).fromNative(element);
     const terms = [...shown].toSorted(([a], [b]) => a.localeCompare(b));
     if (terms.length === 0) return ce.number(0);
@@ -98,7 +97,7 @@ export function declareHopf(ce: ComputeEngine): void {
   };
 
   /** Read an element of ONE of the algebras: which head it uses, and the combination. */
-  const toElement = (expr: BoxedExpression): { head: string; algebra: HopfAlgebra; element: Element } | undefined => {
+  const toElement = (expr: Expr): { head: string; algebra: HopfAlgebra; element: Element } | undefined => {
     const direct = BASIS_HEADS[expr.operator];
     if (direct !== undefined) {
       const a = compositionOf(operandsOf(expr)[0]);
@@ -110,15 +109,15 @@ export function declareHopf(ce: ComputeEngine): void {
     // Canonical form writes a −1 coefficient as `Negate`, and a difference as `Subtract`;
     // the signed basis expansions are full of both, so neither can be left unread.
     if (expr.operator === "Negate" && ops.length === 1) {
-      const inner = toElement(ops[0] as BoxedExpression);
+      const inner = toElement(ops[0] as Expr);
       if (inner === undefined) return undefined;
       const out = new Map<string, number>();
       for (const [key, c] of inner.element) out.set(key, -c);
       return { ...inner, element: out };
     }
     if (expr.operator === "Subtract" && ops.length === 2) {
-      const left = toElement(ops[0] as BoxedExpression);
-      const right = toElement(ops[1] as BoxedExpression);
+      const left = toElement(ops[0] as Expr);
+      const right = toElement(ops[1] as Expr);
       if (left === undefined || right === undefined || left.head !== right.head) return undefined;
       const out = new Map<string, number>(left.element);
       for (const [key, c] of right.element) {
@@ -179,7 +178,7 @@ export function declareHopf(ce: ComputeEngine): void {
   const conversion = (head: string, target: string): void => {
     ce.declare(head, {
       signature: "(number) -> number",
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expr[]) => {
         const read = ops[0] === undefined ? undefined : toElement(ops[0]);
         if (read === undefined) return undefined;
         const spec = BASIS_HEADS[target] as BasisSpec;
@@ -196,7 +195,7 @@ export function declareHopf(ce: ComputeEngine): void {
   /** The conjugate composition — the transpose of the ribbon's skew shape. */
   ce.declare("ConjugateComposition", {
     signature: "(list<integer>) -> list",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const a = compositionOf(ops[0]);
       if (a === undefined) return undefined;
       return ce.function(
@@ -208,7 +207,7 @@ export function declareHopf(ce: ComputeEngine): void {
 
   ce.declare("Coproduct", {
     signature: "(number) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const read = ops[0] === undefined ? undefined : toElement(ops[0]);
       if (read === undefined) return undefined;
       const spec = BASIS_HEADS[read.head] as BasisSpec;
@@ -227,7 +226,7 @@ export function declareHopf(ce: ComputeEngine): void {
 
   ce.declare("Antipode", {
     signature: "(number) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const read = ops[0] === undefined ? undefined : toElement(ops[0]);
       return read === undefined ? undefined : toExpression(read.head, antipode(read.algebra, read.element));
     },
@@ -235,7 +234,7 @@ export function declareHopf(ce: ComputeEngine): void {
 
   ce.declare("Counit", {
     signature: "(number) -> integer",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const read = ops[0] === undefined ? undefined : toElement(ops[0]);
       return read === undefined ? undefined : ce.number(counit(read.element));
     },
@@ -243,7 +242,7 @@ export function declareHopf(ce: ComputeEngine): void {
 
   ce.declare("HopfDegree", {
     signature: "(number) -> integer",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const read = ops[0] === undefined ? undefined : toElement(ops[0]);
       if (read === undefined) return undefined;
       const degrees = new Set([...read.element.keys()].map((k) => degree(fromKey(k))));
