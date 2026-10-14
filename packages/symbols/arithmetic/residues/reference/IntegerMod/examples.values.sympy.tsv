@@ -1,29 +1,29 @@
-id	in
-integermod-10-7	
-adding-two-classes-mod-7	
-adding-a-plain-integer-to-a-class	
-inverse-of-3-mod-7	
-sum-of-classes-mod-4-and-mod-6	
-product-of-classes-mod-4-and-mod-6	
-difference-of-classes-mod-4-and-mod-6	
-quotient-of-classes-mod-6-and-mod-3	
-a-plain-integer-keeps-the-class-modulus	
-three-moduli-meet-in-their-gcd	
-equal-where-they-agree-in-the-common-ring	
-unequal-where-they-disagree-in-the-common-ring	
-a-product-of-classes-mod-7	
-a-plain-integer-is-absorbed	
-dividing-by-a-unit-mod-7	
-a-large-power-reduces-mod-13	
-a-large-power-reduces-mod-7	
-a-chain-reduces-step-by-step	
-a-product-of-three-classes-mod-9	
-a-product-of-classes-mod-12-and-mod-8	
-a-plain-integer-reduces-in-the-class-ring	
-equal-across-moduli-mod-6-and-mod-3	
-mod-is-the-remainder-integermod-is-the-class	(17 % 5)
-chineseremainder-integermod-2-3-and-3-5	
-coprime-moduli-have-no-common-ring	
-2-mod-4-over-1-mod-6-has-no-inverse	
-integermod-and-residueclass-do-not-mix	
-residueclass-declines-the-same-mixed-sum	
+id	in	out	verdict
+integermod-10-7	GF(7, symmetric=False)(10)	3 mod 7	
+adding-two-classes-mod-7	(GF(7, symmetric=False)(5) + GF(7, symmetric=False)(4))	2 mod 7	
+adding-a-plain-integer-to-a-class	(GF(7, symmetric=False)(5) + 3)	1 mod 7	
+inverse-of-3-mod-7	(GF(7, symmetric=False)(3)**-1)	5 mod 7	
+sum-of-classes-mod-4-and-mod-6	(GF(4, symmetric=False)(2) + GF(6, symmetric=False)(1))	3 mod 4	disagree
+product-of-classes-mod-4-and-mod-6	(GF(4, symmetric=False)(2) * GF(6, symmetric=False)(1))	2 mod 4	disagree
+difference-of-classes-mod-4-and-mod-6	(GF(4, symmetric=False)(2) - GF(6, symmetric=False)(1))	1 mod 4	disagree
+quotient-of-classes-mod-6-and-mod-3	(GF(3, symmetric=False)(1) / GF(6, symmetric=False)(2))	2 mod 3	
+a-plain-integer-keeps-the-class-modulus	(GF(4, symmetric=False)(2) * 5)	2 mod 4	
+three-moduli-meet-in-their-gcd	(GF(8, symmetric=False)(4) + GF(12, symmetric=False)(3) + GF(4, symmetric=False)(1))	0 mod 8	disagree
+equal-where-they-agree-in-the-common-ring	enumeratio_equal(GF(4, symmetric=False)(2), GF(2, symmetric=False)(0))	False	disagree
+unequal-where-they-disagree-in-the-common-ring	enumeratio_equal(GF(4, symmetric=False)(2), GF(6, symmetric=False)(1))	False	
+a-product-of-classes-mod-7	(GF(7, symmetric=False)(5) * GF(7, symmetric=False)(3))	1 mod 7	
+a-plain-integer-is-absorbed	(GF(7, symmetric=False)(3) * 5)	1 mod 7	
+dividing-by-a-unit-mod-7	(GF(7, symmetric=False)(1) / GF(7, symmetric=False)(3))	5 mod 7	
+a-large-power-reduces-mod-13	(GF(13, symmetric=False)(2)**1000)	3 mod 13	
+a-large-power-reduces-mod-7	(GF(7, symmetric=False)(3)**100)	4 mod 7	
+a-chain-reduces-step-by-step	((((GF(7, symmetric=False)(5) + GF(7, symmetric=False)(4)) * GF(7, symmetric=False)(3)) + GF(7, symmetric=False)(6))**3)	6 mod 7	
+a-product-of-three-classes-mod-9	(GF(9, symmetric=False)(2) * GF(9, symmetric=False)(5) * GF(9, symmetric=False)(7))	7 mod 9	
+a-product-of-classes-mod-12-and-mod-8	(GF(12, symmetric=False)(7) * GF(8, symmetric=False)(5))	11 mod 12	disagree
+a-plain-integer-reduces-in-the-class-ring	(GF(3, symmetric=False)(1) + 5)	0 mod 3	
+equal-across-moduli-mod-6-and-mod-3	enumeratio_equal(GF(6, symmetric=False)(5), GF(3, symmetric=False)(2))	False	disagree
+mod-is-the-remainder-integermod-is-the-class	(17 % 5)	2	
+chineseremainder-integermod-2-3-and-3-5			
+coprime-moduli-have-no-common-ring	(GF(4, symmetric=False)(3) + GF(7, symmetric=False)(5))	0 mod 4	disagree
+2-mod-4-over-1-mod-6-has-no-inverse	(GF(6, symmetric=False)(1) / GF(4, symmetric=False)(2))	NotInvertible: zero divisor	error
+integermod-and-residueclass-do-not-mix			
+residueclass-declines-the-same-mixed-sum			

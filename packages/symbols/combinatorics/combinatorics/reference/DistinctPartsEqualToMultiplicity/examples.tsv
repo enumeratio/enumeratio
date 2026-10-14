@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-partition-4-2-1-of-7			[DistinctPartsEqualToMultiplicity, [IntegerPartition, [List, 4, 2, 1]]]	1			the partition $4 + 2 + 1$ of $7$
+the-partition-3-3-1-of-7			[DistinctPartsEqualToMultiplicity, [IntegerPartition, [List, 3, 3, 1]]]	1			the partition $3 + 3 + 1$ of $7$
+findstat-st001940-1	Properties		[CombinatorialStat, [IntegerPartition, [List, 1]], "'DistinctPartsEqualToMultiplicity'"]	1	1	FindStat St001940	FindStat's value for [1]
+findstat-st001940-2	Properties		[CombinatorialStat, [IntegerPartition, [List, 2]], "'DistinctPartsEqualToMultiplicity'"]	0	0	FindStat St001940	FindStat's value for [2]
+findstat-st001940-3	Properties		[CombinatorialStat, [IntegerPartition, [List, 3]], "'DistinctPartsEqualToMultiplicity'"]	0	0	FindStat St001940	FindStat's value for [3]

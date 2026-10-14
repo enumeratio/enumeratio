@@ -54,6 +54,7 @@ export function liftedToThree(layer: TileLayer, override?: Matrix): TileLayer {
       if (m.head === "Disk") return m.center ? { ...m, center: f(m.center) } : m;
       if (m.head === "Line" || m.head === "Polygon") return { head: m.head, points: m.points.map(f) };
       if (m.head === "Polyhedron") return { head: "Polyhedron", faces: m.faces.map((r) => r.map(f)) };
+      if (m.head === "Raster") return { ...m, from: f(m.from), to: f(m.to) };
       return m.at ? { ...m, at: f(m.at) } : m;
     },
     ...(layer.label
@@ -251,6 +252,7 @@ export function frameRadius(layer: TileLayer, center: Vec3): number {
 /** Back to front: a body's outline, then faces, then lines, then points and text. */
 const RANK: Readonly<Record<GraphicsPrimitive["head"], number>> = {
   Polyhedron: 0,
+  Raster: 0,
   Polygon: 1,
   Line: 2,
   Disk: 3,
@@ -297,7 +299,9 @@ export function throughCamera(
           ? { head: m.head, points: m.points.map(flat) }
           : m.head === "Polyhedron"
             ? { head: "Polyhedron", faces: m.faces.map((f) => f.map(flat)) }
-            : { head: "Text", text: m.text, size: m.size, at: flat(m.at ?? place(i, j)) };
+            : m.head === "Raster"
+              ? { ...m, from: flat(m.from), to: flat(m.to) }
+              : { head: "Text", text: m.text, size: m.size, at: flat(m.at ?? place(i, j)) };
     marks.set(key, mark);
     return mark;
   };

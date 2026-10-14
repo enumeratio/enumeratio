@@ -22,6 +22,16 @@ references:
     identity: A000166
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: subfactorial($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: subfactorial(n) is the number of derangements, !n.
 ---
 
 - Closed form $D_n = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!}$, so $D_n$ is n! divided by e and rounded to the nearest integer.

@@ -297,7 +297,7 @@ export function verdictOf(
   } else if (theirs.startsWith("combinations:")) {
     verdict = compareCombinations(expected, theirs);
   } else {
-    verdict = compare(show(expected, system === "sage"), theirs, tolerance);
+    verdict = compare(show(expected, system === "sage" || system === "sympy"), theirs, tolerance);
     // A text comparison that disagrees or can't decide (a complex against a real, say)
     // gets a second, structural look.
     if (verdict !== "agree") {

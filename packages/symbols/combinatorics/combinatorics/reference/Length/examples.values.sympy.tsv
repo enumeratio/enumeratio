@@ -19,7 +19,7 @@ length-1-over-10	(len(Rational(1, 10)) if hasattr(Rational(1, 10), '__len__') el
 length-3-plus-i	(len((3 + 1*I)) if hasattr((3 + 1*I), '__len__') else (len(((3 + 1*I)).args) if hasattr((3 + 1*I), 'args') else 0))	2	disagree
 length-string	(len("string") if hasattr("string", '__len__') else (len(("string").args) if hasattr("string", 'args') else 0))	6	disagree
 length-x-pow-9-plus-x-pow-2-plus-x-plus-1	(len(((S(Symbol("x"))**9) + (S(Symbol("x"))**2) + Symbol("x") + 1)) if hasattr(((S(Symbol("x"))**9) + (S(Symbol("x"))**2) + Symbol("x") + 1), '__len__') else (len((((S(Symbol("x"))**9) + (S(Symbol("x"))**2) + Symbol("x") + 1)).args) if hasattr(((S(Symbol("x"))**9) + (S(Symbol("x"))**2) + Symbol("x") + 1), 'args') else 0))	4	
-length-integerdigits-1-000-factorial			
+length-integerdigits-1-000-factorial	(len(digits(factorial(1000))[1:]) if hasattr(digits(factorial(1000))[1:], '__len__') else (len((digits(factorial(1000))[1:]).args) if hasattr(digits(factorial(1000))[1:], 'args') else 0))	2568	
 map-length-list-list-a-b-list-a-b-c-list-x			
 length-list-list-a-b-c-list-d-k-f	(len([[Symbol("a"), Symbol("b"), Symbol("c")], [Symbol("d"), Symbol("k"), Symbol("f")]]) if hasattr([[Symbol("a"), Symbol("b"), Symbol("c")], [Symbol("d"), Symbol("k"), Symbol("f")]], '__len__') else (len(([[Symbol("a"), Symbol("b"), Symbol("c")], [Symbol("d"), Symbol("k"), Symbol("f")]]).args) if hasattr([[Symbol("a"), Symbol("b"), Symbol("c")], [Symbol("d"), Symbol("k"), Symbol("f")]], 'args') else 0))	2	
 length-join-a-b-length-a-length-b-see-join			

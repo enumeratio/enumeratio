@@ -16,3 +16,5 @@ seeAlso:
 
 - The `Lattice` protocol's member, and what `Min` folds when its arguments' type is a lattice.
 - In a linear order it is the smaller of the two; under dominance it takes the partial sums' pointwise minimum.
+- Set partitions: the common refinement, the non-empty pairwise block intersections.
+- Permutations (right weak order): the complement of the transitive closure of the union of the complements of the inversion sets.

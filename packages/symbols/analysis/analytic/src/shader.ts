@@ -190,15 +190,24 @@ fn lerchPhi(z: vec2f, s: vec2f, a: vec2f) -> vec2f {
   return sum;
 }
 
-// Largest |Im Φ| / |Re Φ| still read as real in f32: f32 rounding noise on a real value,
-// far below the imaginary part of a^(−s) at a < 0
-// and a non-integer s (ratio 0.08 for -2.664^-2.976).
-const LERCH_REAL_TOL: f32 = 1e-4;
+// Largest |Im Φ| / |Re Φ| still read as real in f32. Measured by scripts/lerch-real-tol.ts
+// (f32 emulation of lerchPhi, mpmath for the true values) on z ∈ {±0.9, ±0.5, 0}, a ∈ [-7.9, 8],
+// s ∈ [-12, 16] for the real cases and s ∈ [-6.45, 8] for the complex ones:
+//   • noise, the spurious ratio on real Φ (a < 0, integer s; worst at z = -0.9, where Re cancels):
+//     max 2.7e-5 with correctly rounded transcendentals, 8.9e-5 at ±2 ulp, 1.6e-4 at ±8 ulp;
+//   • signal, the true ratio where Φ is complex (a < 0, non-integer s): as low as 3e-12, since
+//     Im comes from the few terms with n + a < 0 while Re sums the whole positive tail.
+// They overlap: no threshold separates them, and 8% of the complex grid is under 1e-4. Pick
+// above the noise (3.4x the ±2 ulp max) and no higher, so the overlap errs towards NaN, a hole,
+// rather than a wrong real. A complex point drawn real is off by < tol in Im/Re (|Φ| vs Re by
+// tol²/2), so the overlap is benign; a declined real point is a hole in the plot.
+const LERCH_REAL_TOL: f32 = 3e-4;
 
 // Φ for real arguments: the real value, or NaN (no real value) where Φ is complex.
+// The NaN is built from w's bits: a literal NaN is const-evaluated, which WGSL rejects.
 fn lerchPhiReal(z: vec2f, s: vec2f, a: vec2f) -> f32 {
   let w = lerchPhi(z, s, a);
-  if (abs(w.y) > LERCH_REAL_TOL * abs(w.x)) { return bitcast<f32>(0x7fc00000u); }
+  if (abs(w.y) > LERCH_REAL_TOL * abs(w.x)) { return bitcast<f32>(bitcast<u32>(w.x) | 0x7fc00000u); }
   return w.x;
 }
 

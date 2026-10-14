@@ -11,11 +11,13 @@ import { declareStatistics } from "../../src/statistics/declare.ts";
 import { PERMUTATIONS_CARRIERS } from "./carrier-data.ts";
 import { declareMahonianNumber } from "./mahonian.ts";
 import { coreFamilies, permutationClassesEntries, permutationsEntries } from "./families/index.ts";
+import { declarePermutationOrders } from "./orders.ts";
 import { PERMUTATION_STATISTICS } from "./statistics.ts";
 import { declarePermutationOperations } from "./operations.ts";
 
 export function declarePermutations(ce: Engine): void {
   declareCarriers(ce, PERMUTATIONS_CARRIERS, { plurals: false });
+  declarePermutationOrders(ce);
   declareFamilies(ce, [...coreFamilies, ...[...permutationsEntries, ...permutationClassesEntries].map(liftFamily)]);
   // Collections' fast permutation-statistic kernels (Inversions, Descents, …), BEFORE the
   // expr-based ones below: `declareStatistics`'s own "a kernel already claims this head" skip

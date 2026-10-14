@@ -27,6 +27,17 @@ bindings:
     form: sage
     template: Mod($1, $2).multiplicative_order()
     arity: 2
+  - origin: mapped
+    form: sympy
+    template: n_order($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: n_order raises where gcd(a, n) is not 1, as ours stays unevaluated. The three-argument discrete logarithm over a list of targets has no one-call SymPy form (discrete_log takes one target).
 ---
 
 - Also called the modulo order; defined only when $\gcd(a,n)=1$, since otherwise no power of $a$ can reach 1 mod $n$.

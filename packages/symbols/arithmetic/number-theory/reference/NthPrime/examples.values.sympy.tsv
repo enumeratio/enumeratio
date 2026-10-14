@@ -1,0 +1,43 @@
+id	in	out	verdict
+the-first-prime-is-2	prime(1)	2	
+nthprime-10	prime(10)	29	
+nthprime-100	prime(100)	541	
+threads-element-wise-over-a-list-as-wolfram-s	[prime(1), prime(3), prime(4), prime(10)]	[2, 5, 7, 29]	
+the-millionth-prime	prime(1000000)	15485863	
+a-prime-gap-p-31-p-30-127-113	(prime(31) - prime(30))	14	
+nthprime-25	prime(25)	97	
+array-nthprime-100-mod-10			
+n-100-times-last-foldlist-multiply-1-1-plus-neg			
+ismersenneprimeexponent-nthprime-4			
+isprime-neg-1-plus-2-pow-nthprime-4	isprime((-1 + (S(2)**prime(4))))	True	
+1-over-product-neg-nthprime-n-pow-neg-s-plus-1-n			
+primepi-and-nthprime-are-inverses-pi-p-n-n	enumeratio_equal(primepi(prime(100)), 100)	True	
+primepi-nthprime-100	primepi(prime(100))	100	
+nthprime-1-plus-primepi-30	prime((1 + primepi(30)))	31	
+primeomega-nthprime-5	primeomega(prime(5))	1	
+divisors-nthprime-5	divisors(prime(5))	[1, 11]	
+totient-nthprime-10	totient(prime(10))	28	
+nthprime-2	prime(2)	3	
+nthprime-3	prime(3)	5	
+nthprime-4	prime(4)	7	
+nthprime-5	prime(5)	11	
+nthprime-6	prime(6)	13	
+nthprime-7	prime(7)	17	
+nthprime-30-in-primes			
+neg-1-plus-nthprime-10	(-1 + prime(10))	28	
+nthprime-8	prime(8)	19	
+nthprime-9	prime(9)	23	
+nthprime-11	prime(11)	31	
+nthprime-12	prime(12)	37	
+nthprime-13	prime(13)	41	
+nthprime-14	prime(14)	43	
+nthprime-15	prime(15)	47	
+nthprime-16	prime(16)	53	
+nthprime-17	prime(17)	59	
+nthprime-18	prime(18)	61	
+sin-pi-times-1-over-nthprime-2-times-1-plus	((S(sin((pi * (S(1) / prime(2)) * (1 + gamma(prime(2))))))**2) + (S(sin((pi * prime(2))))**2))	0	
+1-over-neg-1-plus-exponentiale-pow-neg-2-times-i	((S(1) / (-1 + (S(E)**((0 + -2*I) * pi * (S(1) / prime(2)))))) * (-1 + (S(E)**((0 + 2*I) * pi * (S(1) / prime(2)) * gamma(prime(2))))))	1	
+sin-pi-times-1-over-nthprime-3-times-1-plus	((S(sin((pi * (S(1) / prime(3)) * (1 + gamma(prime(3))))))**2) + (S(sin((pi * prime(3))))**2))	0	
+1-over-neg-1-plus-exponentiale-pow-neg-2-times-2	((S(1) / (-1 + (S(E)**((0 + -2*I) * pi * (S(1) / prime(3)))))) * (-1 + (S(E)**((0 + 2*I) * pi * (S(1) / prime(3)) * gamma(prime(3))))))	1	
+n-must-be-a-positive-integer-compute-engine	prime(0)	ValueError: nth must be a positive integer; prime(1) == 2	error
+the-1000th-prime	prime(1000)	7919	

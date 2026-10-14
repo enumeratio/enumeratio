@@ -174,11 +174,10 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * unevaluated), and `Unique`'s second-argument sameness test — both additive, native for
  * anything not ours. `Mean`/`Median` on symbolic or exact-constant data is the same sweep,
  * already covered above since those heads were already overridden for their matrix form.
- * `Take(xs, UpTo(n))` and `Fold`'s unseeded 2-argument form are ALSO from that sweep but
- * don't appear here: a bare engine's own `.json` for the unmaterialized/rejected call is
- * textually identical to (`Take`) or excluded from comparison by (`Fold`, whose malformed
- * 2-argument call a bare engine's own canonical fails to validate) this ledger's plain,
- * non-materializing comparison — see their own overrides' comments in `list-stats.ts`.
+ * `Take(xs, UpTo(n))` is ALSO from that sweep but doesn't appear here: a bare
+ * engine's own `.json` for the unmaterialized call is textually identical to this ledger's plain,
+ * non-materializing comparison — see its override's comment in `list-stats.ts`. `Fold`'s unseeded
+ * 2-argument form is the sweep's other, and does diverge (listed below).
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -254,10 +253,8 @@ const OVERRIDDEN = [
   "FixedPoint",
   "Flatten",
   "Floor",
-  // compute-engine 0.139 changed Fold's own canonicalization/evaluation enough that a
-  // corpus example comparable against ours before (`compute-engine`) now genuinely
-  // diverges (`override`) -- see collect-provenance.ts's diff. Not something this upgrade
-  // set out to change; worth a closer look if it matters.
+  // The unseeded 2-argument `Fold(f, xs)`: a bare engine reports it as a missing operand, ours folds it.
+  "Fold",
   "FromContinuedFraction",
   "FromDigits",
   "GCD",
@@ -883,6 +880,7 @@ const NOVEL = [
   "SubexcedantSeqs",
   "SubsetsOfSizeAtMost",
   "SubsetsWithoutConsecutive",
+  "Successor",
   "Successions",
   "SumOfBlockMaxima",
   "SumOfBlockMinima",
@@ -893,7 +891,6 @@ const NOVEL = [
   "SytTwoColumn",
   "SytTwoRow",
   "TemperleyLiebAlgebra",
-  "TemplateExpression",
   "TerminalClosers",
   "TernaryGrayCodes",
   "TetraCompositions",
@@ -927,6 +924,36 @@ const NOVEL = [
   "Words",
   "XGCD",
   "ZigzagCompositions",
+  "AddableCells",
+  "Aft",
+  "CellsOutsideDurfeeSquare",
+  "CellsOutsideLargestStaircase",
+  "CellsWithEqualArmAndLeg",
+  "CohookLengthProduct",
+  "ContainingSquareSide",
+  "ContentSum",
+  "DiagonalHookLengthProduct",
+  "DiagonalInversionDefect",
+  "DiagonalInversions",
+  "DistinctMultiplicities",
+  "DistinctPartsEqualToMultiplicity",
+  "DistinctRepeatedParts",
+  "FirstRowHookLengthSum",
+  "FlooredHalfMultiplicitySum",
+  "HookLengthOfFirstCell",
+  "HookLengthOfLastDiagonalCell",
+  "HookLengthSquareSum",
+  "LargestMultiplicity",
+  "LargestRepeatedPart",
+  "LargestStaircaseSide",
+  "MultiplicityOfSmallestPart",
+  "PairwiseProductSum",
+  "PartsEqualToMultiplicity",
+  "PartsExceedingOnes",
+  "SingletonParts",
+  "SmallestMissingPart",
+  "SymmetricDiagonalHooks",
+  "WeightedSize",
 ];
 
 // What formats holds inert that is Wolfram's own (`Plot`, `Slider`, `Cell`): known elsewhere because
@@ -1009,6 +1036,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
       "Coproduct",
       "CubeRoot",
       "CycleGraph",
+      "CycleIndexPolynomial",
       "Cycles",
       "CyclicGroup",
       "DSolveValue",
@@ -1096,6 +1124,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
       "Line3DBox",
       "Point3DBox",
       "Polygon3DBox",
+      "RasterBox",
       "GrassmannAlgebra",
       "GridBox",
       "GridGraph",
@@ -1325,6 +1354,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
       "SymmetricGroup",
       "TableViewBox",
       "TagBox",
+      "TemplateExpression",
       "TemplateSlot",
       "TextBox",
       "TextCell",

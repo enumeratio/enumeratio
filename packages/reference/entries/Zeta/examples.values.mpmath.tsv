@@ -43,7 +43,7 @@ zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so	zeta(2, 0)	ZeroDivisionError: 	erro
 arbitrary-real-arguments	zeta(5.211111111111111)	1.03139179693438499240335921978	
 left-of-the-critical-strip-via-the-functional	zeta(-4.5)	-0.00309166924721583384482425674513	
 complex-s-under-n	(zeta(mpc(2, -5)))	(0.850962943624262957210878535908 - 0.0989969461348313472271774604848j)	
-zeta-infty-1-only-the-n-1-term-survives	zeta(inf)		
+zeta-infty-1-only-the-n-1-term-survives	zeta(inf)	1.0	
 two-arguments-at-a-nonpositive-integer-s-zeta-1	zeta(-1, 5)	-10.0833333333333333333333333333	
 two-arguments-inexact	zeta(-1.5, 5)	-17.0500647493426550141352594598	
 two-complex-arguments-under-n-to-ten-digits	(zeta(mpc(-1.5, 1), mpc(2.5, -1)))	(0.0184868091938106521569164857071 + 1.67553378430176592096139476727j)	
@@ -53,10 +53,10 @@ zeta-2-1-2-3-zeta-2-pi-2-2	zeta(2, (mpf(1)/2))	4.93480220054467930941724549994
 interval-arithmetic-zeta-is-decreasing-on-1			
 uncertainty-in-a-propagated-with-partial-a-zeta			
 to-40-significant-digits-every-one-correctly	(zeta(3))	1.20205690315959428539973816151	
-n-zeta-5-over-4-50	(zeta((mpf(5)/4)))		
-n-zeta-3-2-50	(zeta(3, 2))		
+n-zeta-5-over-4-50	(zeta((mpf(5)/4)))	4.59511182584294338068537803969	
+n-zeta-3-2-50	(zeta(3, 2))	0.202056903159594285399738161511	
 zeta-2-list-list-1-over-2-0-list-0-3-over-2	[[zeta(2, (mpf(1)/2)), zeta(2, 0)], [zeta(2, 0), zeta(2, (mpf(3)/2))]]	ZeroDivisionError: 	error
-zeta-4-5	zeta(4, 5)		
+zeta-4-5	zeta(4, 5)	0.00357130469879251250365801752882	
 zeta-list-1-2-3-4	[zeta(1), zeta(2), zeta(3), zeta(4)]	ValueError: zeta(1) pole	error
 matrixfunction-function-zeta-2-1-1-list-list-1			
 complex-s-on-the-critical-line	(zeta(mpc(0.5, 14)))	(0.022241142609993589246213199204 - 0.103258123266450057902363095553j)	
@@ -67,20 +67,20 @@ trivial-zero-zeta-2n-0-for-positive-integer-n	zeta(-2)	0.0
 zeta-3-b-4-4-1-120-via-the-bernoulli-number	zeta(-3)	0.00833333333333333333333333333333	
 pole-at-s-1-the-harmonic-series-sum-1-n-diverges	zeta(1)	ValueError: zeta(1) pole	error
 zeta-s-1-zeta-s-for-symbolic-s			
-zeta-0-1	zeta(0, 1)		
-zeta-neg-1-1	zeta(-1, 1)		
-zeta-0-1-over-4	zeta(0, (mpf(1)/4))		
-zeta-neg-1-1-over-4	zeta(-1, (mpf(1)/4))		
-zeta-2-3	zeta(2, 3)		
-zeta-2-4	zeta(2, 4)		
-zeta-2-5	zeta(2, 5)		
-zeta-2-6	zeta(2, 6)		
-zeta-2-7	zeta(2, 7)		
-zeta-2-8	zeta(2, 8)		
-zeta-2-9	zeta(2, 9)		
-zeta-2-10	zeta(2, 10)		
-zeta-4-1	zeta(4, 1)		
-zeta-4-2	zeta(4, 2)		
+zeta-0-1	zeta(0, 1)	-0.5	
+zeta-neg-1-1	zeta(-1, 1)	-0.0833333333333333333333333333333	
+zeta-0-1-over-4	zeta(0, (mpf(1)/4))	0.25	
+zeta-neg-1-1-over-4	zeta(-1, (mpf(1)/4))	0.0104166666666666666666666666667	
+zeta-2-3	zeta(2, 3)	0.394934066848226436472415166646	
+zeta-2-4	zeta(2, 4)	0.283822955737115325361304055535	
+zeta-2-5	zeta(2, 5)	0.221322955737115325361304055535	
+zeta-2-6	zeta(2, 6)	0.181322955737115325361304055535	
+zeta-2-7	zeta(2, 7)	0.153545177959337547583526277757	
+zeta-2-8	zeta(2, 8)	0.13313701469403142513454668592	
+zeta-2-9	zeta(2, 9)	0.11751201469403142513454668592	
+zeta-2-10	zeta(2, 10)	0.105166335681685746122201006908	
+zeta-4-1	zeta(4, 1)	1.08232323371113819151600369654	
+zeta-4-2	zeta(4, 2)	0.0823232337111381915160036965412	
 sum-zeta-2k-times-zeta-neg-2-times-k-plus-4-k-1			
 sum-zeta-2k-times-zeta-neg-2-times-k-plus-6-k-1			
 zeta-0-0-the-n-a-0-term-is-0-0-kept	zeta(0, 0)	0.5	

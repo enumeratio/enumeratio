@@ -25,8 +25,8 @@ export const DIVERGENCE_KINDS = {
   "undefined-form": "both decline, with a different spelling of undefined",
   /** Both are right under their own definition of the operation. */
   convention: "a different definition of the operation",
-  /** Wolfram's numeric evaluation is off; its symbolic evaluation and other oracles agree with us. */
-  precision: "a numeric-evaluation quirk on the Wolfram side",
+  /** The other system's numeric evaluation is off (Wolfram, Sage, Rust alike); the other oracles agree with us. */
+  precision: "the other system's numeric evaluation is off",
   /** compute-engine threads a Listable head over a list; the other system takes scalars only. */
   threading: "threaded over a list here, scalars only there",
   /** The other system hit the scan's time or memory cap, so said nothing either way. */

@@ -393,7 +393,14 @@ export function compareTrees(ours: Tree, theirs: Tree, tolerance = 1e-9): Verdic
     const ca = isComplex(a) ? a : typeof a === "number" ? { re: a, im: 0 } : undefined;
     const cb = isComplex(b) ? b : typeof b === "number" ? { re: b, im: 0 } : undefined;
     if (ca === undefined || cb === undefined) return "disagree";
-    return close(ca.re, cb.re, tolerance) && close(ca.im, cb.im, tolerance) ? "agree" : "disagree";
+    // By the size of the whole number: a real answer printed with roundoff noise in the
+    // imaginary part (4.2e22 + 4e-7i) is that real.
+    const finite = [ca.re, ca.im, cb.re, cb.im].every(Number.isFinite);
+    const size = Math.max(1, Math.hypot(ca.re, ca.im), Math.hypot(cb.re, cb.im));
+    const same = finite
+      ? Math.hypot(ca.re - cb.re, ca.im - cb.im) <= tolerance * size
+      : close(ca.re, cb.re, tolerance) && close(ca.im, cb.im, tolerance);
+    return same ? "agree" : "disagree";
   }
   // A value on one side and a symbol on the other IS a finding — one system evaluated
   // where the other declined — so it is a disagreement to classify, not a shrug.

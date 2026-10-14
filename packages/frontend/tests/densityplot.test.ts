@@ -1,5 +1,7 @@
+import { type BoxNode, optionsOfBox } from "@enumeratio/boxes";
 import { expect, test } from "vite-plus/test";
-import { densityColor, densitySvg, normalize } from "../src/densityplot.ts";
+import { densityColor, densityPlotBox, densitySvg, normalize } from "../src/densityplot.ts";
+import { imagesIn } from "./png.ts";
 
 const count = (s: string, tag: string): number => s.split(`<${tag}`).length - 1;
 
@@ -37,34 +39,45 @@ test("densityColor runs along the gradient, viridis by default", () => {
 });
 
 // ---------------------------------------------------------------------------
-// densitySvg
+// densityPlotBox / densitySvg
 // ---------------------------------------------------------------------------
 
-test("one cell per sample, on the default viewBox", () => {
+/** The `Colors` of a density box's raster, and its options. */
+function rasterOf(box: BoxNode): { colors: string[][]; range: unknown } {
+  const tagged = ((box[1] as BoxNode)[1] as BoxNode[])[0] as BoxNode;
+  const o = optionsOfBox(tagged[1] as BoxNode);
+  return { colors: o.Colors as string[][], range: o.DataRange };
+}
+
+test("one cell per sample, in one raster on the default viewBox", () => {
   const { grid, xs, ys } = rampGrid(5);
   const s = densitySvg(grid, xs, ys, { axes: false });
   expect(s).toContain('viewBox="0 0 340 200"');
-  expect(count(s, "rect")).toBe(25);
+  expect(count(s, "image")).toBe(1);
+  const [image] = imagesIn(s);
+  expect([image!.width, image!.height]).toEqual([5, 5]);
 });
 
-test("cell geometry is the plot area split evenly", () => {
+test("the raster is the plot area, and its rows run bottom to top", () => {
   const { grid, xs, ys } = rampGrid(2);
   const s = densitySvg(grid, xs, ys, { axes: false });
-  // 340 - 38 - 10 = 292 wide, 200 - 12 - 22 = 166 tall, over a 2x2 grid;
-  // cells overlap by a 0.4px hairline so no seam shows.
-  expect(s).toContain('width="146.4" height="83.4"');
-  // Row 0 is the smallest y, so it sits at the bottom: 12 + 83 = 95.
-  expect(s).toContain('x="38" y="95"');
-  expect(s).toContain('x="38" y="12"');
+  // 340 - 38 - 10 = 292 wide, 200 - 12 - 22 = 166 tall.
+  expect(s).toContain('x="38" y="12" width="292" height="166"');
+  // z = x + y: the least value is at the bottom left, the greatest at the top right.
+  const [image] = imagesIn(s);
+  expect(image!.pixels[1]![0]).toEqual([0x44, 0x01, 0x54, 255]);
+  expect(image!.pixels[0]![1]).toEqual([0xfd, 0xe7, 0x25, 255]);
 });
 
-test("a non-finite sample leaves its cell unpainted", () => {
+test("a non-finite sample leaves its cell clear", () => {
   const grid = [
     [0, 1],
     [Number.NaN, 3],
   ];
-  const s = densitySvg(grid, [0, 1], [0, 1], { axes: false });
-  expect(count(s, "rect")).toBe(3);
+  const [image] = imagesIn(densitySvg(grid, [0, 1], [0, 1], { axes: false }));
+  const clear = image!.pixels.flat().filter((p) => p[3] === 0);
+  expect(clear).toHaveLength(1);
+  expect(image!.pixels[0]![0]![3]).toBe(0);
 });
 
 test("the axis frame and its range labels appear by default", () => {
@@ -73,13 +86,16 @@ test("the axis frame and its range labels appear by default", () => {
   const without = densitySvg(grid, xs, ys, { axes: false });
   expect(count(withAxes, "text")).toBe(4);
   expect(count(without, "text")).toBe(0);
+  expect(count(withAxes, "path")).toBe(1);
+  expect(count(without, "path")).toBe(0);
 });
 
 test("legend adds a color bar with min/max labels", () => {
   const { grid, xs, ys } = rampGrid(3);
   const s = densitySvg(grid, xs, ys, { axes: false, legend: true });
-  // 9 cells + 16 bar bands + the bar's outline.
-  expect(count(s, "rect")).toBe(26);
+  expect(count(s, "image")).toBe(2);
+  const bar = imagesIn(s)[1]!;
+  expect([bar.width, bar.height]).toEqual([1, 16]);
   expect(s).toContain(">4<");
   expect(s).toContain(">0<");
 });
@@ -90,26 +106,29 @@ test("zRange pins the color scale instead of using the sampled extremes", () => 
   const pinned = densitySvg(grid, xs, ys, { axes: false, zRange: [-10, 10] });
   expect(auto).not.toBe(pinned);
   // With the scale pinned wide, nothing reaches either end of the ramp.
-  expect(pinned).not.toContain("100%");
-  expect(pinned).not.toContain(" 0%");
+  const colors = imagesIn(pinned)[0]!.pixels.flat();
+  expect(colors).not.toContainEqual([0x44, 0x01, 0x54, 255]);
+  expect(colors).not.toContainEqual([0xfd, 0xe7, 0x25, 255]);
 });
 
 test("an empty grid yields a bare frame", () => {
-  expect(count(densitySvg([], [], []), "rect")).toBe(0);
-  expect(count(densitySvg([[Number.NaN]], [0], [0]), "rect")).toBe(0);
+  expect(count(densitySvg([], [], []), "image")).toBe(0);
+  expect(count(densitySvg([[Number.NaN]], [0], [0]), "image")).toBe(0);
 });
 
-test("descending ys still render bottom-up", () => {
+test("descending axes still render bottom-up", () => {
   const grid = [
     [0, 0],
     [1, 1],
   ];
-  const rects = (svg: string): string[] => (svg.match(/<rect[^/]*\/>/g) ?? []).toSorted();
-  const asc = densitySvg(grid, [0, 1], [0, 1], { axes: false });
-  // The same field with its rows and `ys` both reversed must paint the same
-  // cells (only the emission order changes).
-  const desc = densitySvg([grid[1], grid[0]], [0, 1], [1, 0], { axes: false });
-  expect(rects(asc)).toEqual(rects(desc));
+  const asc = densityPlotBox(grid, [0, 1], [0, 1], { axes: false });
+  // The same field with its rows and `ys` both reversed is the same box.
+  const desc = densityPlotBox([grid[1]!, grid[0]!], [0, 1], [1, 0], { axes: false });
+  expect(rasterOf(desc as BoxNode)).toEqual(rasterOf(asc as BoxNode));
+  const swapped = densityPlotBox([[1, 0]], [1, 0], [0], { axes: false });
+  expect(rasterOf(swapped as BoxNode).colors[0]).toEqual(
+    rasterOf(densityPlotBox([[0, 1]], [0, 1], [0], {}) as BoxNode).colors[0],
+  );
 });
 
 test("a title renders centred above the frame", () => {
@@ -122,6 +141,18 @@ test("axis labels are escaped, not injected", () => {
   const s = densitySvg(grid, xs, ys, { yLabel: "<y>" });
   expect(s).toContain("&lt;y&gt;");
   expect(s).not.toContain("<y>");
+});
+
+test("a hostile title, label or gradient name cannot reach the markup", () => {
+  const { grid, xs, ys } = rampGrid(3);
+  const nasty = `"><script>alert('x')</script>&`;
+  const s = densitySvg(grid, xs, ys, { title: nasty, xLabel: nasty, yLabel: nasty, gradient: nasty, legend: true });
+  expect(s).not.toContain("<script");
+  expect(s).not.toContain("alert('x')");
+  expect(s).toContain("&lt;script&gt;alert(&#39;x&#39;)&lt;/script&gt;&amp;");
+  // The only attribute values besides numbers are the image's bytes.
+  for (const [, href] of s.matchAll(/href="([^"]*)"/g))
+    expect(href).toMatch(/^data:image\/png;base64,[A-Za-z0-9+/]+=*$/);
 });
 
 test("determinism: the same grid renders byte-identical SVG twice", () => {

@@ -22,6 +22,7 @@ import { declareLogicFrontier } from "./logic-frontier.ts";
 import { declareMiscFrontier } from "./misc-frontier.ts";
 import { declareOperatorForms } from "./operator-forms.ts";
 import { declareRoundingHeads } from "./rounding-heads.ts";
+import { declareSuccessor } from "./successor.ts";
 
 /**
  * Declare the enumeratio combinatorial collection heads on `ce` (SymmetricGroup,
@@ -43,6 +44,7 @@ import { declareRoundingHeads } from "./rounding-heads.ts";
  */
 export function declareCollections(ce: Engine): void {
   declareFamilies(ce, collectionsEntries);
+  declareSuccessor(ce);
   declareCallForms(ce);
   declareListOps(ce);
   declareListHeads(ce);

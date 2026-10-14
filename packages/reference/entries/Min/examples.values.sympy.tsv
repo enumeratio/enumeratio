@@ -11,12 +11,12 @@ nested-lists-are-flattened-into-the-pool	enumeratio_min(2, 3, [[Rational(1, 2), 
 exact-numbers-are-compared-numerically	enumeratio_min(sqrt(2), Rational(3, 2))	sqrt(2)	
 the-numeric-arguments-collapse-to-their-minimum	enumeratio_min(3, Symbol("x"), 5)	True	
 compares-exact-constants-numerically-min-e-pi-5	enumeratio_min([E, pi, 5])	E	
-the-min-of-two-intervals-is-the-interval-of			
+the-min-of-two-intervals-is-the-interval-of	enumeratio_min(AccumBounds(1, 3), AccumBounds(-3, 5))	Min(AccumBounds(-3, 5), AccumBounds(1, 3))	disagree
 the-day-s-low-from-the-same-hourly-readings-see	enumeratio_min(68, 72, 65, 80, 74)	65	
 commutative-order-doesn-t-matter	enumeratio_equal(enumeratio_min(3, 7), enumeratio_min(7, 3))	True	
 min-a-b-max-a-b-a-b-see-max	enumeratio_equal((enumeratio_min(4, 9) + enumeratio_max(4, 9)), (4 + 9))	True	
 idempotent-min-x-x-x	enumeratio_min(Symbol("x"), Symbol("x"))	True	
-infinities-participate-directly-in-the	enumeratio_min(-oo, 3)		
+infinities-participate-directly-in-the	enumeratio_min(-oo, 3)	-oo	
 multiple-arguments-lists-included-are-flattened	enumeratio_min([3, 1], 0)	0	
 with-no-arguments-it-returns-the-identity	enumeratio_min()	oo	
 the-min-of-an-empty-list-is-nan	enumeratio_min([])	oo	disagree

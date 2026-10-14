@@ -6,6 +6,11 @@ summary: Reduce a collection to one value, combining left to right from a seed.
 signatures:
   - call: Fold(f, init, xs)
     description: $f(\ldots f(f(init, x_1), x_2)\ldots, x_n)$ — $init$ combined with each element of $xs$ in turn.
+  - call: Fold(f)
+    description: the operator form, $\mathrm{Fold}(f)(xs) = \mathrm{Fold}(f, xs)$.
+    library: enumeratio-combinatorics
+    type: (any) -> any
+    overrides: compute-engine
   - call: Fold(f, xs)
     description: "the same fold with no seed, starting from $xs$'s own first element: $f(\\ldots f(x_1, x_2)\\ldots, x_n)$."
     library: enumeratio-combinatorics
@@ -13,4 +18,6 @@ seeAlso:
   - Scan
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll
 ---

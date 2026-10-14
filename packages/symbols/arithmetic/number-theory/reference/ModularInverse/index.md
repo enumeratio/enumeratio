@@ -34,6 +34,17 @@ bindings:
     form: sage
     template: enumeratio_inverse_mod($1, $2)
     arity: 2
+  - origin: mapped
+    form: sympy
+    template: mod_inverse($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: SymPy's mod_inverse raises where no inverse exists, and for a negative modulus gives a result in (m, 0] as ours does. It reads a non-integer argument (a Gaussian integer) as an ordinary number rather than reducing it in the Gaussian integers.
 ---
 
 - Exists exactly when $\gcd(a, m)$ is a unit; the call is otherwise left unevaluated.

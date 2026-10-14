@@ -63,12 +63,12 @@ const EPS = Number.EPSILON;
 /**
  * The most rounding error, relative to the sum, that a double series may keep: `peak / |sum| · EPS`
  * past this declines. Alternating series grow before they shrink, so their sums can be noise while
- * `TOL` still sees the last terms shrink: 1F1(1/2; 3/2; −40) has that figure at 0.28, 0F1(; 1; −200)
+ * `TOL` still sees the last terms shrink: 1F1(4; 2; −10) has that figure at 5e-8, 0F1(; 1; −200)
  * at 4.5e-5. Measured against mpmath 1.3.0 (0F1(; 1), 0F1(; 5/2) at z = −1/2…−200; 1F1 at five (a; b)
  * pairs, z = −1/2…−80), the actual relative error is within 1.5× of the figure wherever it is under
  * 1e-3: 1e-13 answers to about 13 digits (0F1(; 1; −8): figure 8e-14, error 9e-15) and declines past
- * it (1F1(1; 2; −10): 6e-13, error 1.4e-13). The sweep is `hypergeometric-cancellation.test.ts`
- * under `DEEP_TESTS=1`.
+ * it (1F1(1; 2; −10) by the plain series: 6e-13, error 1.4e-13; `regularizedKummer` now answers it).
+ * The sweep is `hypergeometric-cancellation.test.ts` under `DEEP_TESTS=1`.
  */
 const CANCELLATION_TOL = 1e-13;
 
@@ -104,6 +104,20 @@ const regularizedDiagonal = (a: Cx, z: Cx): Cx => mul(cexp(z), invGamma(a));
 
 /** Is b = a on the reals? */
 const isDiagonal = (a: Cx, b: Cx): boolean => a.im === 0 && b.im === 0 && a.re === b.re;
+
+/**
+ * 1F1(a; b; z)/Γ(b) for real z < 0 and 0 < a < b, as Kummer's e^z · 1F1(b−a; b; −z)/Γ(b) (DLMF 13.2.39).
+ * The series in z alternates and its terms outgrow the sum (peak/|sum| · EPS is the digits lost, and every
+ * term's rounding lands at the peak's scale); the one in −z has only positive terms, so no digit is lost.
+ * Undefined when e^z or the positive sum leaves the double range (|z| past a few hundred): the plain series answers or declines.
+ */
+function regularizedKummer(a: Cx, b: Cx, z: Cx): Cx | undefined {
+  if (a.im !== 0 || b.im !== 0 || z.im !== 0 || !(z.re < 0) || !(a.re > 0) || !(b.re > a.re)) return undefined;
+  const positive = pfqRegularizedSeries([cx(b.re - a.re)], [b], cx(-z.re));
+  const decay = Math.exp(z.re);
+  if (positive === undefined || !(decay > 1e-290) || !Number.isFinite(positive.re)) return undefined;
+  return cx(decay * positive.re);
+}
 
 /** 1/Γ(n) for an integer n: 0 at the poles n ≤ 0, else 1/(n − 1)! (infinite factorials flush to 0). */
 function exactInvGammaAt(n: number): Cx {
@@ -398,7 +412,7 @@ export function declareHypergeometric(ce: ComputeEngine): void {
       if (exceedsDoublePrecision(ce, options.numericApproximation)) return regularized1F1PastDouble(ce, ops);
       if (isMinusOneShift(a, b)) return numberResult(ce, regularizedMinusOne(a, z));
       if (isDiagonal(a, b)) return numberResult(ce, regularizedDiagonal(a, z));
-      const r = pfqRegularizedSeries([a], [b], z);
+      const r = regularizedKummer(a, b, z) ?? pfqRegularizedSeries([a], [b], z);
       return r === undefined ? undefined : numberResult(ce, r);
     },
   });

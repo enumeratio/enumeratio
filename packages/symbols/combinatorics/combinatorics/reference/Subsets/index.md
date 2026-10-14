@@ -66,6 +66,12 @@ grades:
   - name: n
     role: axis
 carrier: Finset
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: Subsets[If[ListQ[$1], $1, Range[$1]]]
+    arity: 1
+    note: Subsets of 1..n, or of a list, by size and then lexicographically.
 ---
 
 - A lazy indexed collection: $Count(Subsets(n)) = 2^n$ in closed form and $At(Subsets(n), i)$ unranks the $i$-th subset, so no subset beyond the page in view is built.

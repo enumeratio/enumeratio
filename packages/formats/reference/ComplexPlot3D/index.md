@@ -11,3 +11,5 @@ signatures:
     library: enumeratio-formats
     type: (any*) -> any
 ---
+
+Lowers to a `Graphics3DBox` with `Producer -> ComplexPlot3D`: |f| as heights over the window, each face colored by the argument of f. On the web the grid is evaluated on the GPU; elsewhere, on the CPU. A pole rises to `MaxHeight` rather than tearing a hole.

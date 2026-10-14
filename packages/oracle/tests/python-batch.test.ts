@@ -36,8 +36,8 @@ test("the default and Sage evaluators run against the per-item namespace, not `g
   expect(plain).toContain("eval(_enumeratio_src, _enumeratio_ns)");
   expect(plain).not.toMatch(/\beval\(_enumeratio_src, globals\(\)\)/);
 
-  const sage = pythonBatchCode(["1"], "", (src, ns) => `sage_eval(${src}, locals=${ns})`, "enumeratio_value");
-  expect(sage).toContain("sage_eval(_enumeratio_src, locals=_enumeratio_ns)");
+  const sage = pythonBatchCode(["1"], "", (src, ns) => `eval(preparse(${src}), ${ns})`, "enumeratio_value");
+  expect(sage).toContain("eval(preparse(_enumeratio_src), _enumeratio_ns)");
   expect(sage).not.toContain("locals=globals()");
 });
 

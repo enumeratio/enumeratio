@@ -72,11 +72,11 @@ polylog-rim-theta-2p4-s-0p5-z	N(polylog(0.5, (-0.7373937155412454 + 0.6754631805
 polylog-rim-theta-2p4-s-1-z	N(polylog(1, (-0.7373937155412454 + 0.675463180551151*I)), 30)	-0.622766653117112758665859429544 + 0.37079632679489664433848426139*I	
 polylog-rim-theta-2p4-s-1p5-z	N(polylog(1.5, (-0.7373937155412454 + 0.675463180551151*I)), 30)	-0.659486088090073474532459840702 + 0.440335525424699725238752989753*I	
 order-one-half-at-1-is-zeta-one-half	N(polylog(Rational(1, 2), 1), 30)	-1.46035450880958681288949915252	
-n-polylog-30-neg-4	N(polylog(30, -4), 30)		
-n-polylog-250-neg-4-a-large-order-past-z-1	N(polylog(250, -4), 30)		
-n-polylog-250-4-a-large-order-on-the-cut	N(polylog(250, 4), 30)		
-n-polylog-2500000-4-a-huge-order-returns	N(polylog(2500000, 4), 30)		
-n-polylog-40p5-2-plus-3i-a-large-complex-point	N(polylog(40.5, (2 + 3*I)), 30)		
+n-polylog-30-neg-4	N(polylog(30, -4), 30)	-3.99999998509914942907737761076	
+n-polylog-250-neg-4-a-large-order-past-z-1	N(polylog(250, -4), 30)	-4.00000000000000000000000000000	
+n-polylog-250-4-a-large-order-on-the-cut	N(polylog(250, 4), 30)	4.0 - 1.019863859497598374311260677e-454*I	
+n-polylog-2500000-4-a-huge-order-returns	N(polylog(2500000, 4), 30)	4.00000000000000000000000000003 - 1.91009646958618531905136366578e-14554472*I	
+n-polylog-40p5-2-plus-3i-a-large-complex-point	N(polylog(40.5, (2 + 3*I)), 30)	1.99999999999678444846009173589 + 3.00000000000771731888027005127*I	
 normal-series-polylog-2-x-x-positiveinfinity-6			
 polylog-s-tiny-negative-rim	N(polylog(-1e-12, (-0.12884449429552464 + 0.9916648104524686*I)), 30)	-0.500000000000052069459854919842 + 0.439238893322547396813604336785*I	disagree
 threads-over-a-list-of-arguments	[polylog(2, 0.5), polylog(2, 0.25)]	[polylog(2, 0.5), polylog(2, 0.25)]	
@@ -87,22 +87,22 @@ li-3-1-eta-3-frac-34-zeta-3	polylog(3, -1)	-dirichlet_eta(3)
 li-2-2-pi-2-4-i-pi-ln-2-exactly	polylog(2, 2)	pi**2/4 - I*pi*log(2)	
 li-n-1-1-2-1-n-zeta-n-for-symbolic-n	polylog(Symbol("n"), -1)	True	
 li-2-z-z-1-z-1-z-3	polylog(-2, Symbol("z"))	True	
-interval-arithmetic			
+interval-arithmetic	polylog(2, AccumBounds(0.7, 0.8))	polylog(2, AccumBounds(0.7, 0.8))	disagree
 three-arguments-the-nielsen-generalized			
 s-2-2-1-pi-4-360			
 s-1-2-1-2-zeta-3-8-ln-3-2-6			
 to-30-significant-digits-not-yet-the-requested	N(polylog(2, Rational(1, 2)), 30)	0.582240526465012505902656320160	
-image-order-2-over-0p7-to-0p8			
-image-order-2-over-neg-0p9-to-0p9			
-image-order-0p5-over-neg-0p5-to-0p95			
-image-order-neg-1p5-over-neg-0p3-to-0p3			
-image-order-neg-3-over-neg-0p5-to-0p2			
-image-order-5-over-neg-0p99-to-0p99			
-polylog-0-5	polylog(0, 5)		
-n-polylog-1-1-over-3-50	N(polylog(1, Rational(1, 3)), 30)		
-polylog-2-list-list-1-over-2-0-list-0-1-over-2	[[polylog(2, Rational(1, 2)), polylog(2, 0)], [polylog(2, 0), polylog(2, Rational(1, 2))]]		
-polylog-1-0	polylog(1, 0)		
-d-polylog-n-z-z	diff(polylog(Symbol("n"), Symbol("z")), Symbol("z"))		
+image-order-2-over-0p7-to-0p8	polylog(2, AccumBounds(0.7, 0.8))	polylog(2, AccumBounds(0.7, 0.8))	disagree
+image-order-2-over-neg-0p9-to-0p9	polylog(2, AccumBounds(-0.9, 0.9))	polylog(2, AccumBounds(-0.9, 0.9))	disagree
+image-order-0p5-over-neg-0p5-to-0p95	polylog(0.5, AccumBounds(-0.5, 0.95))	polylog(0.5, AccumBounds(-0.5, 0.95))	disagree
+image-order-neg-1p5-over-neg-0p3-to-0p3	polylog(-1.5, AccumBounds(-0.3, 0.3))	polylog(-1.5, AccumBounds(-0.3, 0.3))	disagree
+image-order-neg-3-over-neg-0p5-to-0p2	polylog(-3, AccumBounds(-0.5, 0.2))	polylog(-3, AccumBounds(-0.5, 0.2))	disagree
+image-order-5-over-neg-0p99-to-0p99	polylog(5, AccumBounds(-0.99, 0.99))	polylog(5, AccumBounds(-0.99, 0.99))	disagree
+polylog-0-5	polylog(0, 5)	-5/4	
+n-polylog-1-1-over-3-50	N(polylog(1, Rational(1, 3)), 30)	0.405465108108164381978013115464	
+polylog-2-list-list-1-over-2-0-list-0-1-over-2	[[polylog(2, Rational(1, 2)), polylog(2, 0)], [polylog(2, 0), polylog(2, Rational(1, 2))]]	[[-log(2)**2/2 + pi**2/12, 0], [0, -log(2)**2/2 + pi**2/12]]	
+polylog-1-0	polylog(1, 0)	0	
+d-polylog-n-z-z	diff(polylog(Symbol("n"), Symbol("z")), Symbol("z"))	True	
 matrixfunction-function-polylog-2-1-1-list-list			
 fullsimplify-series-polylog-n-x-x-x0-2			
 li-1-2-1-zeta-1-2-a-non-integer-order-from	polylog(0.5, 1)	-1.46035450880959	
@@ -114,13 +114,13 @@ li-1-z-ln-1-z-symbolically	polylog(1, Symbol("z"))	True
 li-1-z-z-1-z-2-negative-orders-are-rational	polylog(-1, Symbol("z"))	True	
 li-2-1-2-pi-2-12-ln-2-2-2	enumeratio_equal((polylog(2, 0.5) + (0.5 * (S(log(2))**2))), (S((S(pi)**2)) / 12))	True	
 li-s-1-zeta-s-for-symbolic-s	polylog(Symbol("s"), 1)	True	
-frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative	diff(polylog(Symbol("n"), Symbol("x")), Symbol("x"))		
-polylog-3-exponentiale-pow-1-over-3-times-i	polylog(3, (S(E)**((0 + Rational(1, 3)*I) * pi)))		
-polylog-3-exponentiale-pow-neg-1-over-3-times-i	polylog(3, (S(E)**((0 + Rational(-1, 3)*I) * pi)))		
-polylog-3-exponentiale-pow-2-over-3-times-i	polylog(3, (S(E)**((0 + Rational(2, 3)*I) * pi)))		
+frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative	diff(polylog(Symbol("n"), Symbol("x")), Symbol("x"))	True	
+polylog-3-exponentiale-pow-1-over-3-times-i	polylog(3, (S(E)**((0 + Rational(1, 3)*I) * pi)))	polylog(3, exp(I*pi/3))	
+polylog-3-exponentiale-pow-neg-1-over-3-times-i	polylog(3, (S(E)**((0 + Rational(-1, 3)*I) * pi)))	polylog(3, exp(-I*pi/3))	
+polylog-3-exponentiale-pow-2-over-3-times-i	polylog(3, (S(E)**((0 + Rational(2, 3)*I) * pi)))	polylog(3, exp(2*I*pi/3))	
 functionexpand-polylog-2-exponentiale-pow-1-over			
-neg-polylog-2-neg-1-plus-polylog-2-1-over-2	((-polylog(2, -1)) + polylog(2, Rational(1, 2)))		
-neg-1-over-2-times-polylog-2-neg-1-over-3-plus	((Rational(-1, 2) * polylog(2, Rational(-1, 3))) + polylog(2, -1) + polylog(2, Rational(1, 3)))		
-neg-2-times-polylog-2-neg-1-over-2-plus-polylog	((-2 * (polylog(2, Rational(-1, 2)) + polylog(2, Rational(1, 2)))) + polylog(2, Rational(1, 4)))		
-polylog-2-neg-1-plus-polylog-2-0-plus-polylog-2	(polylog(2, -1) + polylog(2, 0) + polylog(2, Rational(1, 2)))		
+neg-polylog-2-neg-1-plus-polylog-2-1-over-2	((-polylog(2, -1)) + polylog(2, Rational(1, 2)))	-log(2)**2/2 + pi**2/6	
+neg-1-over-2-times-polylog-2-neg-1-over-3-plus	((Rational(-1, 2) * polylog(2, Rational(-1, 3))) + polylog(2, -1) + polylog(2, Rational(1, 3)))	-pi**2/12 - polylog(2, -1/3)/2 + polylog(2, 1/3)	
+neg-2-times-polylog-2-neg-1-over-2-plus-polylog	((-2 * (polylog(2, Rational(-1, 2)) + polylog(2, Rational(1, 2)))) + polylog(2, Rational(1, 4)))	-pi**2/6 + polylog(2, 1/4) + log(2)**2 - 2*polylog(2, -1/2)	
+polylog-2-neg-1-plus-polylog-2-0-plus-polylog-2	(polylog(2, -1) + polylog(2, 0) + polylog(2, Rational(1, 2)))	-log(2)**2/2	
 an-exact-argument-stays-symbolic-under-plain	polylog(2, Rational(1, 2))	-log(2)**2/2 + pi**2/12	

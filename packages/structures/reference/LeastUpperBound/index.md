@@ -15,3 +15,5 @@ seeAlso:
 ---
 
 - The `Lattice` protocol's member, and what `Max` folds when its arguments' type is a lattice.
+- Set partitions under refinement: the finest common coarsening.
+- Permutations (right weak order): the transitive closure of the union of the inversion sets.

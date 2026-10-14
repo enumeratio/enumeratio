@@ -11,3 +11,5 @@ signatures:
     library: enumeratio-formats
     type: (any*) -> any
 ---
+
+Contours of a grid of values, lowered whole: row 0 is the least y, at the bottom of the frame. Options as `ContourPlot`'s.

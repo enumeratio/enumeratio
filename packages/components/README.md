@@ -24,9 +24,9 @@ import "@enumeratio/components";
   `<notatio-worksheet>` (a reactive sheet of cells built on `<dynamic-module-box>`).
 - **Plots and charts** — `<graphics-box>` (a `Show`, the 2-D function, list and vector-field plots, and
   the `Chart` family: `BarChart`, `Histogram`, `PieChart`, `BoxWhiskerChart`, `ArrayPlot` of a matrix
-  and `DiscretePlot`), `<graphics-3d-box>` (a `Plot3D`, `ListPlot3D`, `BarChart3D`, or a curve in space as
-  `Graphics3D(Line(points))`), `<notatio-contour-plot>`, `<notatio-density-plot>`,
-  `<notatio-complex-plot>` (and `-3d`); graphs, trees and the torus square are `<graphics-box>` too.
+  and `DiscretePlot`; and `ContourPlot` and `DensityPlot`, lines or a `RasterBox` over a sampled grid),
+  `<graphics-3d-box>` (a `Plot3D`, `ListPlot3D`, `BarChart3D`, or a curve in space as
+  `Graphics3D(Line(points))`), `<notatio-complex-plot>` (and `-3d`); graphs, trees and the torus square are `<graphics-box>` too.
 - **Controls** — `<slider-box>` (`axis="y"` stands it up; and `<slider-2d-box>`, `<interval-slider-box>`,
   `<color-setter-box>`), `<knob-box>`, `<toggler-box>` (and `<toggler-bar-box>`),
   `<radio-button-bar-box>`, `<setter-bar-box>`, `<checkbox-box>`,

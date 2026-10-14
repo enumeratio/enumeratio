@@ -1,3 +1,5 @@
-id	section	role	expr	expected	caption
-of-integers	Basic		[GreatestLowerBound, 3, 5]	3	In a linear order, the smaller of the two
-of-partitions	Scope		[GreatestLowerBound, [IntegerPartition, [List, 3, 1, 1, 1]], [IntegerPartition, [List, 2, 2, 2]]]	[IntegerPartition, [List, 2, 2, 1, 1]]	Under dominance, the meet of two incomparable partitions
+id	section	role	expr	expected	known	source	caption
+of-integers	Basic		[GreatestLowerBound, 3, 5]	3			In a linear order, the smaller of the two
+of-partitions	Scope		[GreatestLowerBound, [IntegerPartition, [List, 3, 1, 1, 1]], [IntegerPartition, [List, 2, 2, 2]]]	[IntegerPartition, [List, 2, 2, 1, 1]]			Under dominance, the meet of two incomparable partitions
+of-set-partitions	Scope		[GreatestLowerBound, [SetPartition, [List, [List, 1, 2], [List, 3]]], [SetPartition, [List, [List, 1], [List, 2, 3]]]]	[SetPartition, [List, [List, 1], [List, 2], [List, 3]]]	[SetPartition, [List, [List, 1], [List, 2], [List, 3]]]	Sage SetPartition.inf	Under refinement, the meet is the common refinement: the non-empty pairwise block intersections
+of-permutations	Scope		[GreatestLowerBound, [Permutation, [List, 2, 3, 1]], [Permutation, [List, 3, 1, 2]]]	[Permutation, [List, 1, 2, 3]]	[Permutation, [List, 1, 2, 3]]	Sage LatticePoset of permutohedron_lequal meet	Under the right weak order the meet of the two 3-cycles is the identity

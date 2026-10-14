@@ -4,6 +4,15 @@
 // number for most, a fold peeling off the largest free label for involutions and derangements.
 
 import type { AnyFamily, EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import {
+  exactUpTo,
+  isInvolutionPermutation,
+  isKCyclePermutation,
+  stirlingFirstExact,
+  telephoneExact,
+  transpositionPlace,
+  transpositionUnrank,
+} from "../../../collections/src/families/exact-triangles.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
 import { and, cell, equal, iff, lets, mul, rowTable } from "../../../collections/src/families/tables.ts";
 import {
@@ -310,7 +319,7 @@ const cyclicPermutations: EpsilFamily = permutationRestriction({
  *  paths close into the remaining k − q cycles in c(n − filled, k − q) ways. */
 const stirlingWidth = add("_n", 1);
 const stirling = cell("stirling", stirlingWidth);
-export const kCyclePermutations: EpsilFamily = permutationRestriction({
+const kCycleDefinitions: EpsilFamily = permutationRestriction({
   head: "KCyclePermutations",
   carrier: "Permutation",
   paramCount: 2,
@@ -338,6 +347,18 @@ export const kCyclePermutations: EpsilFamily = permutationRestriction({
     ],
     ["If", ["Or", ["Less", "left", 0], ["Greater", "left", "open"]], 0, stirling("open", "left")],
   ),
+});
+// The table is out of the interpreter's reach past 2^53 (from n = 19); c(n, k) is a row recurrence.
+export const kCyclePermutations = exactUpTo(kCycleDefinitions, 1000, ([n, k]) => stirlingFirstExact(n, k), {
+  // k = n − 1 cycles: one transposition, C(n, 2) of them.
+  trivial: ([n, k]) =>
+    k > n || (k === 0 && n > 0) ? 0n : k === n ? 1n : k === n - 1 ? (BigInt(n) * BigInt(n - 1)) / 2n : undefined,
+  valid: isKCyclePermutation,
+  only: ([n, k]) => (k === n ? Array.from({ length: n }, (_, i) => i + 1) : undefined), // the identity
+  listed: {
+    unrank: ([n, k], r) => (k === n - 1 && n >= 2 ? transpositionUnrank(n, r) : undefined),
+    rank: (x, [n, k]) => (k === n - 1 && n >= 2 ? transpositionPlace(x) : undefined),
+  },
 });
 
 /** The permutations of n with no fixed point, D(n) of them. Of the open slots, m have their own
@@ -396,7 +417,7 @@ const telephoneTable = fold(
 /** The self-inverse permutations of n, T(n) of them (telephone numbers). A prefix is consistent
  *  when each slot that points back into the prefix is pointed back at; the labels it hasn't
  *  touched (neither a filled slot nor pointed at by one) pair up or stay fixed in T(free) ways. */
-const involutions: EpsilFamily = permutationRestriction({
+const involutionDefinitions: EpsilFamily = permutationRestriction({
   head: "Involutions",
   carrier: "Permutation",
   paramCount: 1,
@@ -417,6 +438,11 @@ const involutions: EpsilFamily = permutationRestriction({
     ),
     0,
   ],
+});
+
+// T(n) past 2^53 (from n = 24) is a table the interpreter takes seconds over; the recurrence is O(n).
+const involutions = exactUpTo(involutionDefinitions, 5000, ([n]) => telephoneExact(n), {
+  valid: isInvolutionPermutation,
 });
 
 export const epsilEntries: readonly EpsilFamily[] = [

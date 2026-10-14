@@ -86,6 +86,11 @@ print(json.dumps(out))
 const wolfram = await askWolfram(names);
 const { sympy, mpmath } = await askPython(names);
 
+// The kernels answer by NAME, so a head that merely shares a spelling reads as covered. These
+// share one but mean something else: Wolfram's Area/Perimeter take a region and Depth an
+// expression, ours are FindStat statistics on Dyck paths, partitions and permutations.
+for (const head of ["Area", "Depth", "Perimeter"]) wolfram.delete(head);
+
 const found = { wolfram, sympy, mpmath };
 const coverage: Record<string, string[]> = {};
 for (const name of names.toSorted()) {

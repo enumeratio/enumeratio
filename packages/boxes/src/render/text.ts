@@ -158,6 +158,7 @@ class Writer {
       case "PolygonBox":
       case "PolyhedronBox":
       case "InsetBox":
+      case "RasterBox":
         return "-Graphics-";
       case "Graphics3DBox":
       case "GraphicsComplex3DBox":

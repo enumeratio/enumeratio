@@ -25,5 +25,5 @@ mod-is-the-remainder-integermod-is-the-class	enumeratio_mod(17, 5)	2
 chineseremainder-integermod-2-3-and-3-5			
 coprime-moduli-have-no-common-ring	(Mod(3, 4) + Mod(5, 7))	TypeError: unsupported operand parent(s) for +: 'Ring of integers modulo 4' and 'Ring of integers modulo 7'	error
 2-mod-4-over-1-mod-6-has-no-inverse	(Mod(1, 6) / Mod(2, 4))	ZeroDivisionError: inverse of Mod(0, 2) does not exist	error
-integermod-and-residueclass-do-not-mix	(Mod(2, 4) + Mod(1, 6))	1	inconclusive
-residueclass-declines-the-same-mixed-sum	(Mod(2, 4) + Mod(1, 6))	1	inconclusive
+integermod-and-residueclass-do-not-mix	(Mod(2, 4) + Mod(1, 6))	1	disagree
+residueclass-declines-the-same-mixed-sum	(Mod(2, 4) + Mod(1, 6))	1	disagree

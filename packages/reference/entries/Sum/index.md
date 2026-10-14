@@ -18,6 +18,15 @@ signatures:
     overrides: compute-engine
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: summation($1, $2)
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-12
+    note: "The iterator (Limits or Tuple, k from a to b, or from 1 when a is Nothing) is emitted as SymPy's (k, a, b). SymPy sums reversed bounds by Karr's convention: b < a - 1 gives a negative sum."
 stub: engine
 statOn:
   - Finset

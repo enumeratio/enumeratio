@@ -78,8 +78,9 @@ so a page reads the same on GitHub and on the site.
   compute-engine (`src/compute-engine/{numerics,library,compilation}`).
 - A patch applies at run time and is retired once `tests/landed.test.ts` says compute-engine
   ships it natively. Some patches may never land upstream and just stay ours.
-- Asks go to compute-engine as issues first, then PRs, as `enumeratio`, each draft signed off
-  before posting; batch related asks. The PR checklist is on the wiki's
+- Asks go to compute-engine as `enumeratio`, an issue with its PR posted together, each draft
+  signed off before posting; batch related asks. Post an issue alone first only when the work may
+  be rejected or needs the maintainer's design call. The PR checklist is on the wiki's
   [Contributing](https://github.com/enumeratio/enumeratio/wiki/Contributing#upstreaming-to-compute-engine).
 - `~/Playground/@enumeratio/compute-engine` is the local compute-engine branch: it holds only
   commits for PRs we've sent that aren't merged yet.

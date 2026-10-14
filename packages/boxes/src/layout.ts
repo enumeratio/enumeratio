@@ -391,6 +391,7 @@ class Layout {
       case "PolygonBox":
       case "PolyhedronBox":
       case "InsetBox":
+      case "RasterBox":
       case "Graphics3DBox":
       case "GraphicsComplex3DBox":
       case "Polygon3DBox":

@@ -137,8 +137,6 @@ afterAll(() => {
 // member picked by a fixed `type` (`TreeGraph` on `graphics-box`) -- so membership is titled
 // on the shared tag, not on whether `fixed` is set.
 const FAMILY_TAGS = [
-  "notatio-contour-plot",
-  "notatio-density-plot",
   "slider-box", // VerticalSlider: a SliderBox standing up
   "color-setter-box", // ColorSlider: Wolfram boxes it as a ColorSetterBox
   "graphics-3d-box", // Plot3D, ListPlot3D, BarChart3D and Graphics3D lower to their data, drawn by one element

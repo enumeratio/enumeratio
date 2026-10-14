@@ -236,6 +236,9 @@ export interface ReferenceBinding {
   /** `mapped` only: 1-based operand this head threads over, for a system whose plain function
    * call doesn't auto-thread a list the way compute-engine and Wolfram do (`THREADS_MANUALLY`). */
   readonly threadArg?: number;
+  /** `mapped` only: `threadArg` for this row's `form` alone, where the other systems' rows must not thread.
+   * Several operands name each a place a list may sit: the first one holding a list is threaded. */
+  readonly threadArgOnly?: number | readonly number[];
   readonly note?: string;
   /** Present (`false`) only on a row documenting that this row's `form` genuinely has no
    * counterpart for the head -- checked, not merely unmapped yet. A real mapping omits it. */

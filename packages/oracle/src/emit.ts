@@ -113,6 +113,20 @@ const wolframFree = (name: string): string => (isSystemName(name) ? `${CONTEXT}$
 /** Wolfram's spellings of our number sets (`Reals`): a set a call names, never a variable. */
 const NUMBER_SET_NAMES: ReadonlySet<string> = new Set(Object.values(NUMBER_SETS));
 
+/** A residue class (`IntegerMod`), or arithmetic over one. */
+const isResidue = (node: MathJSON): boolean =>
+  isCall(node) &&
+  (node[0] === "IntegerMod" ||
+    (["Add", "Subtract", "Multiply", "Negate", "Divide", "Power"].includes(node[0] as string) &&
+      node.slice(1).some((operand) => isResidue(operand as MathJSON))));
+
+/** Whether a symbol (a free or bound variable) appears anywhere in `node`. */
+const hasSymbol = (node: MathJSON): boolean =>
+  typeof node === "string" || (isCall(node) && node.slice(1).some((operand) => hasSymbol(operand)));
+
+/** SymPy's `PowerMod(a, s/r, m)`: the least root `x` of `x^r = a^s` (mod m), or `None` where there is none. */
+const POWER_MOD_ROOT = "min(nthroot_mod(pow(ZZ.convert($1), S($2).p, ZZ.convert($3)), S($2).q, $3, True) or [None])";
+
 /** A symbol that can be a series variable: not one of the named constants. */
 const isVariable = (node: MathJSON): node is string => typeof node === "string" && !(node in CONSTANTS);
 
@@ -219,8 +233,10 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         if (system === "sympy") return `Symbol(${JSON.stringify(node)})`;
         if (system === "sage") return `SR.var(${JSON.stringify(node)})`;
         missing.push(`symbol:${node}`);
+        return node;
       }
-      return node;
+      // SymPy has no bare `k`: an iterator's variable is a Symbol there.
+      return system === "sympy" ? `Symbol(${JSON.stringify(node)})` : node;
     }
     if (!isCall(node)) {
       const value = (node as { num?: unknown }).num;
@@ -238,8 +254,13 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     const head = node[0] as string;
     const operands = node.slice(1);
     const iterated = (head === "Sum" || head === "Product") && operands.length > 1 ? operands.slice(1) : [];
+    // A `Limits` iterator binds only for SymPy's Sum (below); the Wolfram lane keeps its free `k`.
     const binders = iterated.flatMap((it) =>
-      isCall(it) && (it[0] === "Tuple" || it[0] === "List") && typeof it[1] === "string" ? [it[1]] : [],
+      isCall(it) &&
+      (it[0] === "Tuple" || it[0] === "List" || (system === "sympy" && it[0] === "Limits")) &&
+      typeof it[1] === "string"
+        ? [it[1]]
+        : [],
     );
     const fresh = binders.filter((v) => !bound.has(v));
     for (const v of fresh) bound.add(v);
@@ -332,11 +353,58 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         return toWolfram([head, ...operands] as Parameters<typeof toWolfram>[0]);
       }
     }
+    // SymPy's `summation(f, (k, a, b))`: the iterator is a tuple, from 1 when its start is `Nothing` or left out.
+    if (system === "sympy" && head === "Sum" && operands.length === 2) {
+      const iterator = operands[1] as MathJSON;
+      const bounds = isCall(iterator) ? iterator.slice(2) : [];
+      if (
+        isCall(iterator) &&
+        (iterator[0] === "Limits" || iterator[0] === "Tuple" || iterator[0] === "List") &&
+        typeof iterator[1] === "string" &&
+        (bounds.length === 1 || bounds.length === 2)
+      ) {
+        const [from, to] = bounds.length === 1 ? [1, bounds[0]] : bounds;
+        const range = [iterator[1], from === "Nothing" ? 1 : from, to].map((part) => walk(part as MathJSON));
+        const summation = mappingFor(head, 2, extra)?.emit.sympy;
+        if (summation !== undefined) return fill(summation, [walk(operands[0] as MathJSON), `(${range.join(", ")})`]);
+      }
+    }
+    // factorrat takes rationals; a Gaussian integer is not one, and SymPy has no factorization of it to ask for.
+    if (system === "sympy" && head === "FactorInteger" && operands.length === 1) {
+      const operand = operands[0] as MathJSON;
+      if (isCall(operand) && operand[0] === "Complex") {
+        missing.push("FactorInteger/Complex");
+        return "0";
+      }
+    }
     const mapping = mappingFor(head, operands.length, extra);
-    const template = mapping?.emit[system];
+    let template = mapping?.emit[system];
+    if (system === "sympy" && template !== undefined) {
+      const first = operands[0] as MathJSON;
+      // `S()` would lift a residue class to its integer: a GF element stays one through Power and Divide.
+      if ((head === "Power" || head === "Divide") && isResidue(first)) template = template.replace("S($1)", "$1");
+      // SymPy's `Abs` leaves an AccumBounds held; Python's `abs()` takes its absolute value.
+      if (head === "Abs" && isCall(first) && first[0] === "Interval") template = "abs($1)";
+      // PowerMod runs over SymPy's ZZ, which takes integers only (a rational or Gaussian operand is a coercion
+      // error there; `pow` on SymPy numbers would only hold `Mod(...)` unreduced, or expand a huge power). A
+      // rational exponent is a modular root, as PowerModList; a symbol (a summand's variable) goes to `pow` itself.
+      if (head === "PowerMod" && operands.length === 3) {
+        const exponent = operands[1] as MathJSON;
+        if (isCall(exponent) && exponent[0] === "Rational") template = POWER_MOD_ROOT;
+        else if (operands.some((operand) => hasSymbol(operand as MathJSON))) template = "pow(S($1), $2, $3)";
+      }
+    }
     if (template !== undefined) {
       if (system === "combinatorica") fromCombinatorica = true;
-      const threadArg = mapping?.threadArg;
+      const only = mapping?.threadArgOnly?.[system];
+      const isList = (op: MathJSON | undefined): boolean => op !== undefined && isCall(op) && op[0] === "List";
+      // Several candidates: the first operand among them that holds a list.
+      const threadArg =
+        only === undefined
+          ? mapping?.threadArg
+          : typeof only === "number"
+            ? only
+            : (only.find((at) => isList(operands[at - 1] as MathJSON)) ?? only[0]);
       const threaded = threadArg !== undefined ? operands[threadArg - 1] : undefined;
       // With two list operands `threadOver` would thread one and leave the other a list in every
       // call (`gcd([2, 4], 6)`); the Python family broadcasts them together instead.

@@ -1,26 +1,20 @@
-// Exact prime counting and nth-prime, in two tiers.
+// Exact prime counting, in two tiers, and the segmented sieve under both.
 //
-// Below `PRIME_SIEVE_LIMIT`, a segmented Sieve of Eratosthenes: small primes up to √limit
-// mark composites block by block, so memory stays O(√limit + block size) instead of O(limit)
-// for one giant sieve. Fast enough for PrimePi/NthPrime's smaller bench range
-// (PrimePi(10^7) in milliseconds), but an O(n) pass doesn't reach the 10^9/10^11 tiers in
-// anything but minutes.
+// Small x: a segmented Sieve of Eratosthenes over odd numbers only. A Uint8 window of
+// `SEGMENT` bytes (128 KB, resident in L2) is marked by the base primes up to √hi, one segment
+// at a time, so memory is O(√hi + SEGMENT) however far the range runs. It also serves the short
+// windows nth-prime locates its answer in (nth-prime.ts).
 //
-// Above it, up to `PRIME_PI_LIMIT`, the Lucy_Hedgehog method (a well-known reformulation of
-// Meissel's combinatorial identity as a DP over the O(√x) distinct values of ⌊x/i⌋): still
-// exact, and its O(x^(3/4)) time with O(√x) memory reaches PrimePi(10^11) in a few hundred
-// milliseconds — see `primeCountLarge` below for the algorithm. NthPrime past the sieve
-// range brackets with Dusart's bounds on p_n, counts with the same method to locate the
-// bracket precisely, then segment-sieves that (short) interval for the exact prime — see
-// `nthPrimeLarge`.
-//
-// Past `PRIME_PI_LIMIT` both decline (stay symbolic) rather than let the √x working set grow
-// past what's worth keeping in memory for an interactive answer — see the punchlist issue
-// (#205) for Meissel–Lehmer's further pruning of the small-prime table as a follow-up.
+// Larger x: Lucy_Hedgehog (a well-known reformulation of Meissel's combinatorial identity as a
+// DP over the O(√x) distinct values of ⌊x/i⌋), exact, O(x^(3/4)) time and O(√x) memory. It
+// beats the O(x) sieve from about 10^4 (π(10^7) in under a millisecond against ten), so the
+// sieve is only the answer below `PRIME_SIEVE_LIMIT`. Past `PRIME_PI_LIMIT` callers decline
+// rather than grow the working set; prime-count.ts takes PrimePi further (Deléglise–Rivat).
+// Tracked at https://github.com/enumeratio/enumeratio/issues/205.
 
-const BLOCK_SIZE = 1 << 20; // 1,048,576 — big enough to amortize the per-block overhead
+const SEGMENT = 1 << 17; // odd numbers per segment, one byte each
 
-/** Every prime ≤ n, via a plain (non-segmented) sieve — only ever called with n = √limit. */
+/** Every prime ≤ n, via a plain (non-segmented) sieve — only ever called with n = √hi. */
 function smallPrimes(n: number): number[] {
   if (n < 2) return [];
   const composite = new Uint8Array(n + 1);
@@ -33,30 +27,86 @@ function smallPrimes(n: number): number[] {
   return primes;
 }
 
-/** Sieve `[low, high]` (inclusive) against `basePrimes`, calling `onPrime` for every survivor. */
-function sieveBlock(low: number, high: number, basePrimes: readonly number[], onPrime: (value: number) => void): void {
-  const size = high - low + 1;
-  const composite = new Uint8Array(size);
-  for (const p of basePrimes) {
-    if (p * p > high) break;
-    const start = Math.max(p * p, Math.ceil(low / p) * p);
-    for (let j = start; j <= high; j += p) composite[j - low] = 1;
+// Odd primes up to `baseLimit`, kept between calls (nth-prime windows reuse them).
+let baseCache: number[] = [];
+let baseLimit = 1;
+
+function oddBasePrimes(limit: number): number[] {
+  if (limit > baseLimit) {
+    baseLimit = Math.max(limit, 1 << 16);
+    baseCache = smallPrimes(baseLimit).slice(1);
   }
-  const from = Math.max(low, 2);
-  for (let value = from; value <= high; value++) {
-    if (!composite[value - low]) onPrime(value);
+  return baseCache;
+}
+
+function isqrt(n: number): number {
+  let r = Math.floor(Math.sqrt(n));
+  while ((r + 1) * (r + 1) <= n) r++;
+  while (r * r > n) r--;
+  return r;
+}
+
+/** Marks composites among the odd numbers `lo, lo+2, …` (`size` of them, `lo` odd and ≥ 3) in `seg`. */
+function markOdd(seg: Uint8Array, lo: number, size: number, base: readonly number[]): void {
+  seg.fill(0, 0, size);
+  const hi = lo + 2 * (size - 1);
+  for (const p of base) {
+    const pp = p * p;
+    if (pp > hi) break;
+    let m = pp;
+    if (pp < lo) {
+      m = lo + ((p - (lo % p)) % p); // first multiple of p at or above lo
+      if (m % 2 === 0) m += p; // …made odd
+    }
+    for (let i = (m - lo) / 2; i < size; i += p) seg[i] = 1;
   }
 }
 
-/** Below this, the plain segmented sieve above answers PrimePi/NthPrime directly. */
-export const PRIME_SIEVE_LIMIT = 200_000_000;
+/** Calls `visit(lo, size, seg)` for each segment covering the odd numbers in `[lo, hi]`, 3 ≤ lo. */
+function eachOddSegment(lo: number, hi: number, visit: (lo: number, size: number, seg: Uint8Array) => void): void {
+  if (hi < lo) return;
+  const base = oddBasePrimes(isqrt(hi));
+  const seg = new Uint8Array(SEGMENT);
+  for (let o = lo; o <= hi; o += 2 * SEGMENT) {
+    const size = Math.min(SEGMENT, Math.floor((hi - o) / 2) + 1);
+    markOdd(seg, o, size, base);
+    visit(o, size, seg);
+  }
+}
+
+/** First odd number ≥ max(lo, 3), and whether 2 lies in `[lo, hi]`. */
+function oddStart(lo: number, hi: number): [first: number, hasTwo: boolean] {
+  const from = Math.max(lo, 2);
+  return [from % 2 === 1 ? Math.max(from, 3) : from + 1, from <= 2 && hi >= 2];
+}
+
+/** The number of primes in `[lo, hi]` (inclusive), by the segmented sieve. */
+export function countPrimesIn(lo: number, hi: number): number {
+  const [first, hasTwo] = oddStart(lo, hi);
+  let count = hasTwo ? 1 : 0;
+  eachOddSegment(first, hi, (_o, size, seg) => {
+    for (let i = 0; i < size; i++) count += 1 - seg[i]!;
+  });
+  return count;
+}
+
+/** The primes in `[lo, hi]` (inclusive), in order, by the segmented sieve. */
+export function primesIn(lo: number, hi: number): number[] {
+  const [first, hasTwo] = oddStart(lo, hi);
+  const primes: number[] = hasTwo ? [2] : [];
+  eachOddSegment(first, hi, (o, size, seg) => {
+    for (let i = 0; i < size; i++) if (seg[i] === 0) primes.push(o + 2 * i);
+  });
+  return primes;
+}
+
+/** Below this, `primeCountUpTo` sieves; from it, Lucy_Hedgehog is the faster exact count. */
+export const PRIME_SIEVE_LIMIT = 20_000;
 
 /**
- * Past this, NthPrime declines exactly (stay symbolic; PrimePi goes on with prime-count.ts)
- * rather than grow the
- * Lucy_Hedgehog method's O(√x) working set past what's worth keeping resident for an
- * interactive answer — at 10^12 that's two Float64Arrays of about 8MB apiece, comfortably
- * under a gigabyte with room to spare for whatever else is running.
+ * Past this, nth-prime declines (and PrimePi goes on with prime-count.ts) rather than grow
+ * Lucy_Hedgehog's O(√x) working set past what's worth keeping resident for an interactive
+ * answer — at 10^12 that's two Float64Arrays of about 8MB apiece.
  */
 export const PRIME_PI_LIMIT = 1_000_000_000_000;
 
@@ -77,7 +127,7 @@ function idiv(n: number, d: number): number {
  * π(i) for the small values i ≤ √x; `larger[i]` holds π(⌊x/i⌋) for the same range, which is
  * every large value ⌊x/i⌋ can take. `larger[1] = π(x)` once every prime ≤ √x has sieved.
  */
-function primeCountLarge(x: number): number {
+export function primeCountLucy(x: number): number {
   if (x < 2) return 0;
   let sq = Math.floor(Math.sqrt(x));
   while ((sq + 1) * (sq + 1) <= x) sq++;
@@ -112,112 +162,5 @@ function primeCountLarge(x: number): number {
  *  the memory guarantee above — callers gate on `PRIME_PI_LIMIT` for that. */
 export function primeCountUpTo(limit: number): number {
   if (!Number.isSafeInteger(limit) || limit < 2) return 0;
-  if (limit > PRIME_SIEVE_LIMIT) return primeCountLarge(limit);
-  const basePrimes = smallPrimes(Math.floor(Math.sqrt(limit)));
-  let count = 0;
-  for (let low = 2; low <= limit; low += BLOCK_SIZE) {
-    const high = Math.min(low + BLOCK_SIZE - 1, limit);
-    sieveBlock(low, high, basePrimes, () => count++);
-  }
-  return count;
-}
-
-/** Every prime in `[2, limit]`, in order. Only used past the first few primes (see `nthPrime`). */
-function primesUpTo(limit: number): number[] {
-  const basePrimes = smallPrimes(Math.floor(Math.sqrt(limit)));
-  const primes: number[] = [];
-  for (let low = 2; low <= limit; low += BLOCK_SIZE) {
-    const high = Math.min(low + BLOCK_SIZE - 1, limit);
-    sieveBlock(low, high, basePrimes, (value) => primes.push(value));
-  }
-  return primes;
-}
-
-const FIRST_FIVE_PRIMES = [2, 3, 5, 7, 11];
-
-/**
- * A [lo, hi] bracket certain to contain p_n, from Dusart's 2010 bounds on the nth prime —
- * tight ones (Theorem 5.15, valid n ≥ 688383) where n is large enough for the tightness to
- * matter for the sieve interval that follows, the older, looser `n(ln n + ln ln n)` shape
- * with generous padding otherwise (cheap to sieve either way at these n). A relative pad on
- * top covers this being a recollection of the literature rather than a re-derivation: the
- * `expandBracket` guard below is the actual correctness backstop.
- */
-function dusartBracket(n: number): [number, number] {
-  const ln = Math.log(n);
-  const lnln = Math.log(ln);
-  let lo: number;
-  let hi: number;
-  if (n >= 688383) {
-    lo = n * (ln + lnln - 1 + (lnln - 2.1) / ln);
-    hi = n * (ln + lnln - 1 + (lnln - 2) / ln);
-  } else {
-    hi = n * (ln + lnln) * 1.2 + 20;
-    lo = Math.max(2, n * (ln + lnln - 1) * 0.8 - 20);
-  }
-  const pad = Math.max(1000, Math.ceil(hi * 0.002));
-  return [Math.max(2, Math.floor(lo) - pad), Math.ceil(hi) + pad];
-}
-
-/** Nth prime past `PRIME_SIEVE_LIMIT`'s implied index: bracket with Dusart's bounds, count
- *  the bracket's edges with the Lucy_Hedgehog `primeCountLarge` to locate p_n's position
- *  precisely, then segment-sieve that (short) interval for the exact value. `undefined` when
- *  the bracket would run past `PRIME_PI_LIMIT` (documented as this function's own range). */
-function nthPrimeLarge(n: number): number | undefined {
-  let [lo, hi] = dusartBracket(n);
-  // Counting past the limit costs minutes (π at 3·10^14), so the bracket is refused before any count.
-  if (hi > PRIME_PI_LIMIT) return undefined;
-  // Backstop against the literature recollection above being off in either direction: widen
-  // until the bracket demonstrably contains p_n. Never fires for a correct Dusart bound past
-  // n ≥ 688383; only exercised (and only once or twice) below that, where the padding is
-  // already loose.
-  for (let guard = 0; guard < 10 && primeCountLarge(hi) < n; guard++) {
-    lo = hi;
-    hi = Math.ceil(hi * 1.5) + 1000;
-    if (hi > PRIME_PI_LIMIT) return undefined;
-  }
-  for (let guard = 0; guard < 10 && lo > 2 && primeCountLarge(lo - 1) >= n; guard++) {
-    hi = lo;
-    lo = Math.max(2, Math.floor(lo * 0.7));
-  }
-  if (hi > PRIME_PI_LIMIT) return undefined;
-  const before = primeCountLarge(lo - 1); // count of primes strictly below lo
-  const need = n - before; // p_n is the `need`-th prime found sieving [lo, hi]
-  const basePrimes = smallPrimes(Math.floor(Math.sqrt(hi)) + 1);
-  let found = 0;
-  for (let low = lo; low <= hi; low += BLOCK_SIZE) {
-    const high = Math.min(low + BLOCK_SIZE - 1, hi);
-    let answer: number | undefined;
-    sieveBlock(low, high, basePrimes, (value) => {
-      if (answer === undefined && ++found === need) answer = value;
-    });
-    if (answer !== undefined) return answer;
-  }
-  return undefined;
-}
-
-/**
- * The nth prime (1-based): `nthPrime(1)` is 2. Below the sieve's implied index range, sieves
- * up to an upper bound from the Rosser–Schoenfeld / Dusart estimate `p_n < n·(ln n + ln ln
- * n)` (valid for n ≥ 6, padded for safety margin), then reads off the nth entry — one sieve
- * pass, no guessing loop. Past that, `nthPrimeLarge` brackets and locates it instead.
- * `undefined` past `PRIME_PI_LIMIT`'s implied index, or for n < 1.
- */
-export function nthPrime(n: number): number | undefined {
-  if (!Number.isSafeInteger(n) || n < 1) return undefined;
-  if (n <= FIRST_FIVE_PRIMES.length) return FIRST_FIVE_PRIMES[n - 1];
-  const ln = Math.log(n);
-  const lnln = Math.log(ln);
-  // Dusart (2010): p_n < n (ln n + ln ln n) for n ≥ 6. 20% headroom covers the estimate's
-  // slack at smaller n without materially changing the sieve's cost.
-  const bound = Math.ceil(n * (ln + lnln) * 1.2) + 20;
-  if (bound > PRIME_SIEVE_LIMIT) return nthPrimeLarge(n);
-  const primes = primesUpTo(bound);
-  // The bound is a proven upper limit for n ≥ 6, so this should never come up short —
-  // but a belt-and-suspenders re-sieve at double the bound costs nothing at n this size.
-  if (primes.length < n) {
-    const wider = primesUpTo(Math.min(bound * 2, PRIME_SIEVE_LIMIT));
-    return wider[n - 1];
-  }
-  return primes[n - 1];
+  return limit < PRIME_SIEVE_LIMIT ? countPrimesIn(2, limit) : primeCountLucy(limit);
 }

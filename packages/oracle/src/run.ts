@@ -224,8 +224,8 @@ for _enumeratio_i, _enumeratio_src in enumerate(_enumeratio_sources):
 /** SymPy / mpmath / Sage all evaluate Python, differing only in the preamble, binary and
  * evaluator. Sage's own preparser (which turns an integer division like `2/3` into an exact
  * `Rational`, not a float) only runs on the program `sage -c` is handed, not on a string
- * passed to plain `eval()` at runtime — so a Sage source has to go through `sage_eval`
- * instead, or every `/` an emit template writes silently becomes a float. */
+ * passed to plain `eval()` at runtime — so a Sage source has to be `preparse`d first,
+ * or every `/` an emit template writes silently becomes a float. */
 async function runPython(
   sources: readonly string[],
   binary: string,
@@ -457,11 +457,18 @@ def enumeratio_held_alike(a, held):
     return True if parsed(str(a)) == parsed(held) else "NotNumeric"
 `;
 
-// SymPy helpers: `stirling` lives outside `from sympy import *`, and an identity is decided by
+// Pure-Python integers for SymPy's `ZZ`, so an answer cannot move with whether gmpy2 is installed (it picks
+// `mpz` over `int`, which differ for a negative modulus). Set before SymPy is first imported.
+const SYMPY_IMPORT = `import os as _os
+_os.environ["SYMPY_GROUND_TYPES"] = "python"
+from sympy import *`;
+
+// SymPy helpers: `stirling` and `digits` live outside `from sympy import *`, and an identity is decided by
 // simplifying the difference, then numerically — `bool(Eq(…))` refuses anything it can't
 // settle syntactically.
 export const SYMPY_PREAMBLE = `
 from sympy.functions.combinatorial.numbers import stirling
+from sympy.ntheory.digits import digits
 
 ${HELD_ALIKE}
 def enumeratio_equal(a, b):
@@ -562,10 +569,19 @@ if hasattr(sys, "set_int_max_str_digits"):
 def enumeratio_value(x):
     if isinstance(x, list):
         return "[" + ", ".join(enumeratio_value(e) for e in x) + "]"
+    # A tuple of numbers reads element by element, so a closed form (-1 - 2*I) is one a scan can compare.
+    if isinstance(x, tuple) and not any(isinstance(e, str) for e in x):
+        return "(" + ", ".join(enumeratio_value(e) for e in x) + ("," if len(x) == 1 else "") + ")"
     if isinstance(x, (bool, int, str, tuple)) or x is None:
         return str(x)
+    # A residue of GF(n) keeps its modulus, as ours does and as Sage's printer below does.
+    if type(x).__name__.startswith("ModularInteger"):
+        return "ResidueClass(%s, %s)" % (x.val, x.mod)
     try:
         import sympy
+        # An interval is its endpoints, as structural.ts reads ours.
+        if isinstance(x, sympy.AccumBounds):
+            return "(" + enumeratio_value(x.min) + ", " + enumeratio_value(x.max) + ")"
         if isinstance(x, sympy.Basic):
             if x.is_Rational:
                 return str(x)
@@ -1165,9 +1181,33 @@ def enumeratio_value(x):
     except Exception:
         return str(x)
 
+# Sage builds the whole root list (x^2 = 0 mod 3^40 has 3^20 of them) and grows until its kernel
+# is killed, so an upper bound on the count is checked first. Per prime power p^k, with
+# b = p^v * u and u a unit mod p^(k - v): p^(k - ceil(k/d)) roots when v = k, none unless d
+# divides v, else p^(v - v/d) times the d-th roots of u, at most gcd(d, phi(p^(k - v))) in the
+# cyclic unit group (twice that at 2).
+ROOTS_LISTED = 10**6
+
+def _enumeratio_roots_bound(b, d, m):
+    bound = 1
+    for p, k in factor(m):
+        r = Integer(b) % p**k
+        v = k if r == 0 else r.valuation(p)
+        if v == k:
+            bound *= p**(k - ceil(k / d))
+        elif v % d == 0:
+            units = gcd(d, euler_phi(p**(k - v)))
+            bound *= p**(v - v // d) * (2 * units if p == 2 else units)
+        else:
+            return 0
+    return bound
+
 def enumeratio_power_mod_list(a, s, m):
     s = QQ(s)
-    return sorted(int(x) for x in (Zmod(m)(a)**s.numerator()).nth_root(s.denominator(), all=True))
+    b = Zmod(m)(a)**s.numerator()
+    if m > 1 and _enumeratio_roots_bound(b.lift(), s.denominator(), m) > ROOTS_LISTED:
+        raise ValueError("more than %d roots to list" % ROOTS_LISTED)
+    return sorted(int(x) for x in b.nth_root(s.denominator(), all=True))
 
 def _enumeratio_flatten(x):
     if isinstance(x, (list, tuple)):
@@ -1245,7 +1285,7 @@ export function preludeFor(system: System): Prelude {
     case "sympy":
       return {
         binary: "python3",
-        preamble: `from sympy import *\n${SYMPY_PREAMBLE}\n${PY_VALUE}\n${PY_BROADCAST}`,
+        preamble: `${SYMPY_IMPORT}\n${SYMPY_PREAMBLE}\n${PY_VALUE}\n${PY_BROADCAST}`,
         printer: "enumeratio_value",
       };
     case "mpmath":
@@ -1257,8 +1297,8 @@ export function preludeFor(system: System): Prelude {
     case "sage":
       return {
         binary: "sage",
-        preamble: `from sage.misc.sage_eval import sage_eval\n${SAGE_PREAMBLE}\n${PY_BROADCAST}`,
-        evaluate: (src) => `sage_eval(${src}, locals=globals())`,
+        preamble: `from sage.misc.sage_eval import sage_eval\nfrom sage.repl.preparse import preparse\n${SAGE_PREAMBLE}\n${PY_BROADCAST}`,
+        evaluate: (src) => `eval(preparse(${src}), globals())`,
         printer: "enumeratio_value",
       };
     case "oscar":
@@ -1333,7 +1373,7 @@ function runBatch(system: System, sources: readonly string[], itemSeconds: numbe
       return runPython(
         sources,
         "python3",
-        `from sympy import *\n${SYMPY_PREAMBLE}\n${PY_VALUE}\n${PY_BROADCAST}`,
+        `${SYMPY_IMPORT}\n${SYMPY_PREAMBLE}\n${PY_VALUE}\n${PY_BROADCAST}`,
         ["-c"],
         undefined,
         "enumeratio_value",
@@ -1350,16 +1390,17 @@ function runBatch(system: System, sources: readonly string[], itemSeconds: numbe
         itemSeconds,
       );
     case "sage":
-      // `sage -c` takes one program string, like python3 -c. `locals=<per-item ns>` is what
-      // lets `sage_eval` see SAGE_PREAMBLE's helpers (copied into that namespace from the
-      // module globals snapshotted right after the preamble runs) without also seeing the
-      // batch loop's own bookkeeping names.
+      // `sage -c` takes one program string, like python3 -c. The preparsed source is evaluated
+      // with the per-item ns as its globals (copied from the module globals snapshotted right
+      // after the preamble runs): SAGE_PREAMBLE's helpers are visible, including inside a
+      // lambda, which `sage_eval(locals=...)` hides them from, and the batch loop's own
+      // bookkeeping names are not.
       return runPython(
         sources,
         "sage",
-        `from sage.misc.sage_eval import sage_eval\n${SAGE_PREAMBLE}\n${PY_BROADCAST}`,
+        `from sage.misc.sage_eval import sage_eval\nfrom sage.repl.preparse import preparse\n${SAGE_PREAMBLE}\n${PY_BROADCAST}`,
         ["-c"],
-        (src, ns) => `sage_eval(${src}, locals=${ns})`,
+        (src, ns) => `eval(preparse(${src}), ${ns})`,
         "enumeratio_value",
         itemSeconds,
       );
