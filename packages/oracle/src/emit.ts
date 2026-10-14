@@ -18,12 +18,19 @@ import {
 import { CARRIER_NAMES, CARRIER_PARAMS } from "./carrier-names-data.ts";
 import { DEFINED_NAMES } from "./defined-names-data.ts";
 import { type Mapping, mappingFor, THREADS_MANUALLY } from "./mappings.ts";
+import { isReserved, spareName } from "./reserved.ts";
 import { isWolframFamily, type System } from "./systems.ts";
 
 export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 
 export type Emitted =
-  | { readonly ok: true; readonly source: string; readonly freeSymbols?: readonly string[] }
+  | {
+      readonly ok: true;
+      readonly source: string;
+      readonly freeSymbols?: readonly string[];
+      /** Bound names written under another name, because the system holds theirs: name → spelling. */
+      readonly renamed?: Readonly<Record<string, string>>;
+    }
   | { readonly ok: false; readonly missing: readonly string[] };
 
 const isCall = (value: MathJSON): value is readonly MathJSON[] => Array.isArray(value) && typeof value[0] === "string";
@@ -120,6 +127,14 @@ const isResidue = (node: MathJSON): boolean =>
     (["Add", "Subtract", "Multiply", "Negate", "Divide", "Power"].includes(node[0] as string) &&
       node.slice(1).some((operand) => isResidue(operand as MathJSON))));
 
+/** Every name `node` writes, quoted strings aside. */
+const namesIn = (node: MathJSON, into = new Set<string>()): Set<string> => {
+  if (typeof node === "string") {
+    if (!/^'.*'$/s.test(node)) into.add(node);
+  } else if (Array.isArray(node)) for (const child of node) namesIn(child as MathJSON, into);
+  return into;
+};
+
 /** Whether a symbol (a free or bound variable) appears anywhere in `node`. */
 const hasSymbol = (node: MathJSON): boolean =>
   typeof node === "string" || (isCall(node) && node.slice(1).some((operand) => hasSymbol(operand)));
@@ -175,6 +190,19 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
   // Every free bare symbol actually seen, regardless of system — the numeric-only lanes still
   // report it as missing, but the caller (a symbolic-agreement check) needs the names either way.
   const free = new Set<string>();
+  // A bound name the system's namespace already holds, written under a spare one: a `Sum` index
+  // `e` would capture the `e` that `ExponentialE` emits. Computed once, so every use agrees.
+  const renamed = new Map<string, string>();
+  let taken: ReadonlySet<string> | undefined;
+  const boundName = (name: string): string => {
+    if (wl) return isSystemName(name) ? `${CONTEXT}${name}` : name;
+    if (system === "sympy") return `Symbol(${JSON.stringify(name)})`;
+    if (!isReserved(system, name)) return name;
+    taken ??= namesIn(expr);
+    let spare = renamed.get(name);
+    if (spare === undefined) renamed.set(name, (spare = spareName(system, name, taken)));
+    return spare;
+  };
 
   // Combinatorica is the Wolfram transpiler plus its own head map: an expression with no map row
   // in it would only run in core Wolfram, which the `wolfram` lane already does.
@@ -235,8 +263,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         missing.push(`symbol:${node}`);
         return node;
       }
-      // SymPy has no bare `k`: an iterator's variable is a Symbol there.
-      return system === "sympy" ? `Symbol(${JSON.stringify(node)})` : node;
+      return boundName(node);
     }
     if (!isCall(node)) {
       const value = (node as { num?: unknown }).num;
@@ -559,7 +586,12 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
   const source = walk(expr);
   if (missing.length > 0) return { ok: false, missing };
   if (system === "combinatorica" && !fromCombinatorica) return { ok: false, missing: [] };
-  return { ok: true, source, ...(free.size > 0 ? { freeSymbols: [...free].toSorted() } : {}) };
+  return {
+    ok: true,
+    source,
+    ...(free.size > 0 ? { freeSymbols: [...free].toSorted() } : {}),
+    ...(renamed.size > 0 ? { renamed: Object.fromEntries(renamed) } : {}),
+  };
 }
 
 /** Which heads in an expression have no mapping for a system — the work queue. */

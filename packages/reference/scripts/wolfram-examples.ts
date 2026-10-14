@@ -3,6 +3,7 @@
 // head or symbol of ours, so the example means here what it meant there.
 
 import { GRAPHICS_HEADS } from "@enumeratio/formats";
+import { DEFINED_NAMES } from "@enumeratio/oracle";
 import { fromWolfram, isSystemName, READ_SYMBOLS, REVERSE_HEADS, SYMBOLS } from "@enumeratio/wolfram";
 
 /** Wolfram's documentation sections, as our page's (`null`: not an example we'd show). */
@@ -106,17 +107,19 @@ export function adaptInput(held: string): Adapted {
   // called, a function it leaves undefined (`f[x]`, `F[x]`), which no mapping would unlock.
   const unmapped = new Set<string>();
   const userFunctions = new Set<string>();
+  const userVariables = new Set<string>();
   for (const [, name, call] of code.matchAll(/([A-Za-z$][A-Za-z0-9$]*(?:`[A-Za-z$][A-Za-z0-9$]*)*)(\s*\[)?/g)) {
     if (EFFECTS.has(name!) || NOT_A_VALUE.test(name!)) return fail(`effect ${name}`);
     const ours = name! in REVERSE_HEADS || STRUCTURAL.has(name!) || MAPPED_SYMBOLS.has(name!);
     if (ours) continue;
     if (isSystemName(name!) || !/^[A-Za-z][A-Za-z0-9]*$/.test(name!)) unmapped.add(name!);
     else if (call !== undefined) userFunctions.add(name!);
+    else userVariables.add(name!);
   }
   if (userFunctions.size > 0) return fail(`user function ${[...userFunctions].toSorted().join(" ")}`);
   if (unmapped.size > 0) return fail(`unmapped ${[...unmapped].toSorted().join(" ")}`);
   try {
-    return { ok: true, expr: renameConstants(rulesAsRules(fromWolfram(text))) };
+    return { ok: true, expr: renameCaptured(rulesAsRules(fromWolfram(text)), userVariables) };
   } catch (error) {
     return fail(`parse: ${(error as Error).message}`);
   }
@@ -141,9 +144,10 @@ function rulesAsRules(expr: unknown): unknown {
     : walked;
 }
 
-// A bare `i` or `e` is the imaginary unit or Euler's number to our engine, but Wolfram's `I`
-// and `E` are those, and its documentation uses `i` and `e` as plain variables: a loop index, a
-// list element. Each becomes a letter the example doesn't use, so it stays a variable.
+// A name of the example's own that compute-engine has a definition for is captured by it. A bare `i` or
+// `e` is the imaginary unit or Euler's number (Wolfram's `I` and `E`), yet its documentation uses them as plain
+// variables: a loop index, a list element. Each such variable becomes a letter the example doesn't use,
+// so it stays a variable.
 const CONSTANT_LETTERS = ["i", "e"];
 const SPARE_LETTERS = "kmnpqrstuvwxyzjabcdgh".split("");
 
@@ -153,13 +157,17 @@ const symbolsOf = (expr: unknown, out = new Set<string>()): Set<string> => {
   return out;
 };
 
-function renameConstants(expr: unknown): unknown {
+/** `expr` with each of its `variables` that we define (`DEFINED_NAMES`, or `i` and `e`) renamed to a spare letter. */
+export function renameCaptured(expr: unknown, variables: ReadonlySet<string>): unknown {
   const used = symbolsOf(expr);
   const renames = new Map<string, string>();
-  for (const letter of CONSTANT_LETTERS) {
-    if (!used.has(letter)) continue;
-    const spare = SPARE_LETTERS.find((l) => !used.has(l) && ![...renames.values()].includes(l));
-    if (spare !== undefined) renames.set(letter, spare);
+  const taken = (letter: string): boolean =>
+    used.has(letter) || DEFINED_NAMES.has(letter) || [...renames.values()].includes(letter);
+  const captured = [...CONSTANT_LETTERS.filter((letter) => used.has(letter)), ...[...variables].toSorted()];
+  for (const name of captured) {
+    if (renames.has(name) || !(CONSTANT_LETTERS.includes(name) || DEFINED_NAMES.has(name))) continue;
+    const spare = SPARE_LETTERS.find((letter) => !taken(letter));
+    if (spare !== undefined) renames.set(name, spare);
   }
   if (renames.size === 0) return expr;
   const walk = (node: unknown): unknown =>
