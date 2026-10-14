@@ -17,7 +17,9 @@
 //
 // A kernel is `(args, m) => residue | undefined` over exactly-evaluated integer arguments
 // and a positive modulus; `undefined` declines. `Add`, `Multiply`, `Subtract`, `Negate` and
-// `Power` are closed over in Z/m, so `Mod(2·F(n) + 1, p)` stays modular throughout.
+// `Power` are closed over in Z/m, so `Mod(2·F(n) + 1, p)` stays modular throughout. A quotient,
+// a rational literal and a negative power are not: `Mod` of a rational is its rational remainder
+// (`Mod(1/3, 7)` is 1/3, not the inverse 5), so a call holding one declines to compute-engine.
 import { functionNodePrototype } from "./ce-internals.ts";
 import type { Engine, Expr } from "./facade.ts";
 import { bigIntegerAt, operandsOf } from "./index.ts";
@@ -25,9 +27,12 @@ import { bigIntegerAt, operandsOf } from "./index.ts";
 /** A residue of `head(...args)` modulo `modulus` (> 0), in [0, modulus); `undefined` declines. */
 export type ModularKernel = (args: readonly bigint[], modulus: bigint) => bigint | undefined;
 
+/** The number of integer arguments a kernel takes, or "variadic" for any number of them. */
+export type ModularArity = number | "variadic";
+
 interface Entry {
   readonly kernel: ModularKernel;
-  readonly arity: number;
+  readonly arity: ModularArity;
 }
 
 // Keyed by global symbols, not module-local maps: a second instance of this module (a duplicate
@@ -100,7 +105,7 @@ function modular(expr: Expr, m: bigint, run: Run): bigint | undefined {
     case "Power": {
       if (ops.length !== 2) return undefined;
       const exponent = exactInteger(ops[1]!);
-      if (exponent === undefined || exponent <= 0n) return undefined; // 0^0 is Indeterminate
+      if (exponent === undefined || exponent <= 0n) return undefined; // 0^0 is Indeterminate; x^-k is rational
       const base = modular(ops[0]!, m, run);
       if (base === undefined) return undefined;
       if (exponent > TRIVIAL_EXPONENT) run.used = true;
@@ -108,7 +113,7 @@ function modular(expr: Expr, m: bigint, run: Run): bigint | undefined {
     }
   }
   const entry = run.registry.get(expr.operator);
-  if (entry === undefined || ops.length !== entry.arity) return undefined;
+  if (entry === undefined || (entry.arity !== "variadic" && ops.length !== entry.arity)) return undefined;
   const args: bigint[] = [];
   for (const op of ops) {
     const value = exactInteger(op);
@@ -173,10 +178,10 @@ function patch(ce: Engine): void {
 
 /**
  * Let `Mod(head(a₁, …, aₙ), m)` compute modulo `m` through `kernel`, for `arity` integer
- * arguments. Declines (so the ordinary evaluation runs) for a non-integer argument or
+ * arguments (any number of them for "variadic"). Declines (so the ordinary evaluation runs) for a non-integer argument or
  * modulus, `m = 0`, a kernel that answers `undefined`, and numeric approximation.
  */
-export function registerModularKernel(ce: Engine, head: string, kernel: ModularKernel, arity = 1): void {
+export function registerModularKernel(ce: Engine, head: string, kernel: ModularKernel, arity: ModularArity = 1): void {
   let registry = registryOf(ce);
   if (registry === undefined) {
     registry = new Map();

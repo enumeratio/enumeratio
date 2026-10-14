@@ -83,6 +83,46 @@ test("a second instance of the module shares the registry and does not wrap agai
   expect(ce.box(["Mod", ["Quad", 10], 7]).evaluate().json).toBe(5);
 });
 
+test("a rational part declines: Mod of a rational is its rational remainder, never a modular inverse", () => {
+  // Triple answers to compute-engine as well, so the exact path has a value to agree with.
+  const ce = bareEngine();
+  ce.declare("Triple", { signature: "(integer) -> integer", evaluate: ([n]) => ce.number(3n * BigInt(n!.re)) });
+  registerModularKernel(ce, "Triple", (args, m) => (3n * args[0]!) % m);
+  const exact = (f: unknown, m: number) => ce.box(["Mod", ce.box(f as never).evaluate().json, m]).evaluate().json;
+  const fast = (f: unknown, m: number) => ce.box(["Mod", f as never, m]).evaluate().json;
+  for (const f of [
+    ["Add", ["Triple", 10], ["Rational", 1, 3]],
+    ["Add", ["Triple", 10], ["Power", 3, -1]],
+    ["Add", ["Triple", 10], ["Divide", 1, 3]],
+    ["Add", ["Triple", 10], ["Power", ["Triple", 5], -1]],
+    ["Power", ["Triple", 5], -1],
+    ["Add", ["Triple", 10], ["Power", ["Triple", 5], -300]],
+  ]) {
+    for (const m of [1, 7, 9, 1000003]) {
+      expect(fast(f, m), `Mod(${JSON.stringify(f)}, ${m})`).toEqual(exact(f, m));
+    }
+  }
+  expect(fast(["Add", ["Triple", 10], ["Rational", 1, 3]], 7)).toEqual(["Rational", 7, 3]); // 91/3 − 28
+});
+
+test("a variadic kernel takes any number of arguments", () => {
+  const ce = bareEngine();
+  ce.declare("Sum", { signature: "(integer*) -> integer" });
+  const seen: bigint[][] = [];
+  registerModularKernel(
+    ce,
+    "Sum",
+    (args, m) => {
+      seen.push([...args]);
+      return args.reduce((a, b) => a + b, 0n) % m;
+    },
+    "variadic",
+  );
+  expect(ce.box(["Mod", ["Sum", 10, 20, 30], 7]).evaluate().json).toBe(4);
+  expect(ce.box(["Mod", ["Sum"], 7]).evaluate().json).toBe(0);
+  expect(seen).toEqual([[10n, 20n, 30n], []]);
+});
+
 test("an engine that registered nothing is untouched, even in the same process", () => {
   engine();
   const other = bareEngine();
