@@ -170,9 +170,14 @@ export function wolframBatchCode(
 const COMBINATORICA_PREAMBLE = 'Quiet[Needs["Combinatorica`"]]; ';
 
 async function runWolfram(sources: readonly string[], itemSeconds: number, preamble: string = ""): Promise<Result[]> {
-  const run = await transcript("wolframscript", ["-code", wolframBatchCode(sources, itemSeconds, preamble)], {
-    timeoutMs: Math.max(600_000, itemSeconds * 20_000),
-  });
+  // The program holds every source twice, so a batch of long ones passes Linux's 128 KiB limit
+  // on one argument (spawn E2BIG); the kernel reads it from a file instead.
+  const code = wolframBatchCode(sources, itemSeconds, preamble);
+  const run = await withFile("batch.wl", code, (file) =>
+    transcript("wolframscript", ["-code", `Get[${JSON.stringify(file)}]`], {
+      timeoutMs: Math.max(600_000, itemSeconds * 20_000),
+    }),
+  );
   return "out" in run ? collectWolfram(run.out, sources.length) : failAll(sources.length, run.reason);
 }
 
