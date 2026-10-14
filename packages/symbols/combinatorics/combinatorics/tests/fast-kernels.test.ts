@@ -85,8 +85,9 @@ function edgeAlong(
 }
 
 // Nested elements have no compiled type, so these families' definitions are interpreted, a few
-// hundred milliseconds an operation: the standard run takes small params and a few ranks of each,
-// and DEEP_TESTS the full grid. Their own tests (trees/tests, collections/tests) check more.
+// hundred milliseconds an operation (rank and membership never compile: no type for a nested element).
+// The standard run takes small params and a few ranks of each, and DEEP_TESTS a bounded sample a little
+// wider: the full grid is hours. Their own tests (trees/tests, collections/tests) check more.
 const INTERPRETED = new Set([
   "BinaryTrees",
   "FullKAryTrees",
@@ -94,7 +95,7 @@ const INTERPRETED = new Set([
   "IncreasingBinaryTrees",
   "StandardTableauPairs",
 ]);
-const interpreted = (family: EpsilFamily): boolean => !DEEP && INTERPRETED.has(family.head);
+const interpreted = (family: EpsilFamily): boolean => INTERPRETED.has(family.head);
 
 // Families whose fast path stops at a table limit, a size or two past what Epsil does quickly, not at
 // 2^53: the edge scan would find the limit, and Epsil takes seconds a call there (minutes, past it).
@@ -115,7 +116,15 @@ const grids = new Map<string, { grid: number[][]; above: number[][] }>();
 function paramGrid(family: EpsilFamily): { grid: number[][]; above: number[][] } {
   const cached = grids.get(family.head);
   if (cached !== undefined) return cached;
-  const small = DEEP ? [0, 1, 2, 3, 4, 5, 6, 8, 10, 13] : interpreted(family) ? [0, 1, 2] : [0, 1, 2, 3, 5, 8];
+  const small = interpreted(family)
+    ? DEEP
+      ? family.paramCount === 1
+        ? [0, 1, 2, 3, 4, 5]
+        : [0, 1, 2, 3]
+      : [0, 1, 2]
+    : DEEP
+      ? [0, 1, 2, 3, 4, 5, 6, 8, 10, 13]
+      : [0, 1, 2, 3, 5, 8];
   const walks: ((x: number) => number[])[] = [];
   if (family.paramCount === 1) walks.push((n) => [n]);
   else
@@ -129,12 +138,13 @@ function paramGrid(family: EpsilFamily): { grid: number[][]; above: number[][] }
     .map((at) => edgeAlong(family, at))
     .filter((edge) => edge !== undefined)
     .toSorted((a, b) => size(a.below) - size(b.below))
-    .slice(0, DEEP ? 4 : interpreted(family) ? 0 : 1);
+    .slice(0, DEEP ? (interpreted(family) ? 1 : 4) : interpreted(family) ? 0 : 1);
   const grid: number[][] =
     family.paramCount === 1 ? small.map((n) => [n]) : small.flatMap((a) => small.map((b) => [a, b]));
   const above: number[][] = [];
   for (const edge of edges) {
-    grid.push(edge.below);
+    // An interpreted family's edge is only for the fiber past 2^53: Epsil can't unrank or rank at its last one.
+    if (!interpreted(family)) grid.push(edge.below);
     if (edge.above !== undefined) above.push(edge.above);
   }
   const unique = (list: number[][]): number[][] => [...new Map(list.map((p) => [p.join(","), p])).values()];
@@ -150,13 +160,15 @@ function random(below: bigint): bigint {
   return (seed >> 11n) % below;
 }
 
-/** Ranks of a fiber of `total`: all when small, else both ends, the middle and pseudo-random ones. */
-function ranksOf(total: bigint, few = false): bigint[] {
-  if (few && total > 6n) return [...new Set([0n, total / 2n, total - 1n])];
-  if (total <= (DEEP ? 120n : 24n)) return Array.from({ length: Number(total) }, (_, i) => BigInt(i));
+/** Ranks of a fiber of `total`: all when small, else both ends, the middle and pseudo-random ones.
+ *  An interpreted family takes the standard run's ranks in DEEP, and three in the standard run. */
+function ranksOf(total: bigint, family: EpsilFamily): bigint[] {
+  const full = DEEP && !interpreted(family);
+  if (!DEEP && interpreted(family) && total > 6n) return [...new Set([0n, total / 2n, total - 1n])];
+  if (total <= (full ? 120n : 24n)) return Array.from({ length: Number(total) }, (_, i) => BigInt(i));
   const ranks = new Set<bigint>([0n, 1n, total - 2n, total - 1n, total / 2n]);
-  for (let i = 0; i < (DEEP ? 24 : 3); i++) ranks.add(random(total));
-  if (DEEP) {
+  for (let i = 0; i < (full ? 24 : 3); i++) ranks.add(random(total));
+  if (full) {
     for (const r of [2n, total - 3n, total / 3n]) ranks.add(r);
     for (let i = 1n; i < 12n; i++) ranks.add((i * (total - 1n)) / 12n);
   }
@@ -314,7 +326,7 @@ for (const family of fastFamilies) {
       expect([where, fast.count(p)]).toEqual([where, total]);
       if (typeof total !== "bigint" || total > MAX_SAFE) continue;
       const members: Element[] = [];
-      for (const r of ranksOf(total, interpreted(family))) {
+      for (const r of ranksOf(total, family)) {
         const element = fast.unrank(p, r);
         expect([where, r, element]).toEqual([where, r, epsil.unrank(p, r)]);
         expect([where, r, fast.rank(element, p)]).toEqual([where, r, r]);
@@ -323,7 +335,10 @@ for (const family of fastFamilies) {
         members.push(element);
       }
       for (const member of members.filter((_, i) => i % Math.ceil(members.length / 3) === 0)) {
-        for (const near of mutations(member).slice(0, DEEP ? 60 : interpreted(family) ? 2 : 14)) {
+        for (const near of mutations(member).slice(
+          0,
+          DEEP && !interpreted(family) ? 60 : !DEEP && interpreted(family) ? 2 : 14,
+        )) {
           const expected = epsil.valid(near, p);
           if (!expected) rejected++;
           expect([where, near, fast.valid(near, p)]).toEqual([where, near, expected]);
