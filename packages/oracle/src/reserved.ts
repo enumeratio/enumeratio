@@ -32,5 +32,17 @@ export function spareName(system: System, name: string, taken: ReadonlySet<strin
   return spare;
 }
 
+/** What Sage's `SR.var` refuses as a name: Python's keywords, and `exec` and `print` (tests/foreign-names.test.ts checks the list). */
+export const SAGE_UNBINDABLE: ReadonlySet<string> = words(
+  `False None True and as assert async await break class continue def del elif else except finally for from
+  global if import in is lambda nonlocal not or pass raise return try while with yield exec print`,
+);
+
+/** `text` with each name in `renamed` (name → spelling, `Emitted.renamed`) written as its name again. */
+export function restoreNames(text: string, renamed: Readonly<Record<string, string>> | undefined): string {
+  const names = new Map(Object.entries(renamed ?? {}).map(([name, spelling]) => [spelling, name]));
+  return names.size === 0 ? text : text.replace(/[A-Za-z_]\w*/g, (word) => names.get(word) ?? word);
+}
+
 /** The runtime versions the sets were generated from (checked by tests/reserved-names.test.ts). */
 export const RESERVED_RUNTIMES = RESERVED_NAMES_DATA.runtimes;

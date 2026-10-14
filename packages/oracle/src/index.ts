@@ -3,6 +3,7 @@ export { DEFINED_NAMES } from "./defined-names-data.ts";
 export { emit, type Emitted, type MathJSON, unmappedHeads } from "./emit.ts";
 export { type KernelVersion, kernelVersion, sameRelease } from "./kernel-pin.ts";
 export { MAPPINGS, type Mapping, mappedHeads, mappingFor, mappingsFromBindings } from "./mappings.ts";
+export { restoreNames } from "./reserved.ts";
 export { ITEM_SECONDS, juliaFlags, type Prelude, preludeFor, type Result, runIn } from "./run.ts";
 export {
   type Bounds,
