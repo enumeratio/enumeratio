@@ -19,3 +19,4 @@ signatures:
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
 - The first fundamental transformation — it sends a permutation with k cycles to one with k left-to-right maxima. (The catalog's title also names maj → inv, which is the SECOND fundamental transformation's property; this map is the first.)
+- FindStat's title for Mp00087 calls it the inverse first fundamental transformation. Its values match this forward map, so the link stays.
