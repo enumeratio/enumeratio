@@ -65,8 +65,13 @@ function findstatExamples(definition: Definition): ReferenceExample[] {
 
 type MathJSONIn = string | number | readonly MathJSONIn[];
 
+/** A subject as nested lists of integers. */
+export type Nested = number | readonly Nested[];
+
 export interface Sample {
-  readonly list: number[] | number[][];
+  /** Only for the definitions on this carrier, when the area has several. */
+  readonly on?: string;
+  readonly list: Nested;
   readonly caption: string;
 }
 
@@ -162,8 +167,7 @@ function splitCurated(
   return { standard, curated };
 }
 
-const listOf = (value: number | number[] | number[][]): MathJSONIn =>
-  Array.isArray(value) ? ["List", ...value.map(listOf)] : value;
+const listOf = (value: Nested): MathJSONIn => (typeof value === "number" ? value : ["List", ...value.map(listOf)]);
 
 interface Example {
   expr: unknown;
@@ -222,7 +226,7 @@ export function areaStatisticsEntries(options: AreaEntriesOptions): {
 
   function examplesFor(definition: Definition): Example[] {
     const out: Example[] = [];
-    for (const sample of samples) {
+    for (const sample of samples.filter((s) => s.on === undefined || s.on === definition.on)) {
       for (const subject of subjectsFor(definition, sample)) {
         const bare = !Array.isArray(subject) || subject[0] !== definition.on;
         // One carrier example per sample, and a single bare-list example overall — enough to
@@ -267,6 +271,24 @@ export function areaStatisticsEntries(options: AreaEntriesOptions): {
     };
   };
 
+  /** One entry per head: a head defined on several of this area's carriers gets one record, its
+   *  summary naming each carrier and its examples all of theirs. */
+  const sameHeadMerged = (definitions: readonly Definition[]): ReferenceEntry[] => {
+    const byHead = new Map<string, Definition[]>();
+    for (const definition of definitions)
+      byHead.set(definition.head, [...(byHead.get(definition.head) ?? []), definition]);
+    return [...byHead.values()].map((group) => {
+      const entries = group.map(entryFor);
+      if (entries.length === 1) return entries[0]!;
+      return {
+        ...entries[0]!,
+        summary: group.map((d) => `${d.on}: ${d.summary}`).join(" "),
+        details: [...new Set(entries.flatMap((e) => e.details ?? []))],
+        examples: entries.flatMap((e) => e.examples),
+      };
+    });
+  };
+
   const frontierEntryFor = (entry: FrontierEntry): ReferenceEntry => {
     const sample = samples[0];
     const examples: Example[] =
@@ -296,7 +318,7 @@ export function areaStatisticsEntries(options: AreaEntriesOptions): {
   };
 
   const omitHeads = new Set(options.omitHeads ?? []);
-  const full = [...[...owner.values()].map(entryFor), ...frontier.map(frontierEntryFor)].filter(
+  const full = [...sameHeadMerged([...owner.values()]), ...frontier.map(frontierEntryFor)].filter(
     (e) => !omitHeads.has(e.name),
   );
   const curatedHeads = new Set(options.curatedHeads ?? []);

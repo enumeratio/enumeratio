@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-ordered-tree			[Breadth, [OrderedTree, [List, [List], [List, [List]], [List]]]]	3			the ordered tree $[[],[[]],[]]$
+findstat-st001058-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'Breadth'"]	1	1	FindStat St001058	FindStat's value for [[]]
+findstat-st001058-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'Breadth'"]	1	1	FindStat St001058	FindStat's value for [[[]]]
+findstat-st001058-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'Breadth'"]	2	2	FindStat St001058	FindStat's value for [[],[]]

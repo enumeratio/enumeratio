@@ -1,0 +1,9 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[LinearExtensionCount, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	3			the binary tree $[[.,.],[[.,.],.]]$
+the-ordered-tree			[LinearExtensionCount, [OrderedTree, [List, [List], [List, [List]], [List]]]]	12			the ordered tree $[[],[[]],[]]$
+findstat-st000045-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, [List, 0, 0]]]], "'LinearExtensionCount'"]	1	1	FindStat St000045	FindStat's value for [.,[.,[.,.]]]
+findstat-st000045-2	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, [List, 0, 0], 0]]], "'LinearExtensionCount'"]	1	1	FindStat St000045	FindStat's value for [.,[[.,.],.]]
+findstat-st000045-3	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], [List, 0, 0]]], "'LinearExtensionCount'"]	2	2	FindStat St000045	FindStat's value for [[.,.],[.,.]]
+findstat-st000085-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'LinearExtensionCount'"]	1	1	FindStat St000085	FindStat's value for [[]]
+findstat-st000085-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'LinearExtensionCount'"]	1	1	FindStat St000085	FindStat's value for [[[]]]
+findstat-st000085-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'LinearExtensionCount'"]	2	2	FindStat St000085	FindStat's value for [[],[]]

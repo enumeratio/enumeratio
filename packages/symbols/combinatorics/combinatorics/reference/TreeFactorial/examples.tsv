@@ -1,0 +1,9 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[TreeFactorial, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	8			the binary tree $[[.,.],[[.,.],.]]$
+the-ordered-tree			[TreeFactorial, [OrderedTree, [List, [List], [List, [List]], [List]]]]	10			the ordered tree $[[],[[]],[]]$
+findstat-st000411-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'TreeFactorial'"]	2	2	FindStat St000411	FindStat's value for [.,[.,.]]
+findstat-st000411-2	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'TreeFactorial'"]	2	2	FindStat St000411	FindStat's value for [[.,.],.]
+findstat-st000411-3	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, [List, 0, 0]]]], "'TreeFactorial'"]	6	6	FindStat St000411	FindStat's value for [.,[.,[.,.]]]
+findstat-st000410-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'TreeFactorial'"]	2	2	FindStat St000410	FindStat's value for [[]]
+findstat-st000410-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'TreeFactorial'"]	6	6	FindStat St000410	FindStat's value for [[[]]]
+findstat-st000410-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'TreeFactorial'"]	3	3	FindStat St000410	FindStat's value for [[],[]]

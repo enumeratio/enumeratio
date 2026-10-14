@@ -1,0 +1,9 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[PathLength, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	4			the binary tree $[[.,.],[[.,.],.]]$
+the-ordered-tree			[PathLength, [OrderedTree, [List, [List], [List, [List]], [List]]]]	5			the ordered tree $[[],[[]],[]]$
+findstat-st000398-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, 0]], "'PathLength'"]	0	0	FindStat St000398	FindStat's value for [.,.]
+findstat-st000398-2	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'PathLength'"]	1	1	FindStat St000398	FindStat's value for [.,[.,.]]
+findstat-st000398-3	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'PathLength'"]	1	1	FindStat St000398	FindStat's value for [[.,.],.]
+findstat-st000400-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'PathLength'"]	1	1	FindStat St000400	FindStat's value for [[]]
+findstat-st000400-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'PathLength'"]	3	3	FindStat St000400	FindStat's value for [[[]]]
+findstat-st000400-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'PathLength'"]	2	2	FindStat St000400	FindStat's value for [[],[]]

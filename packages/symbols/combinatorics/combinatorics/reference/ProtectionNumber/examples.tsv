@@ -1,0 +1,9 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[ProtectionNumber, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	2			the binary tree $[[.,.],[[.,.],.]]$
+the-ordered-tree			[ProtectionNumber, [OrderedTree, [List, [List], [List, [List]], [List]]]]	1			the ordered tree $[[],[[]],[]]$
+findstat-st000701-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, 0]], "'ProtectionNumber'"]	1	1	FindStat St000701	FindStat's value for [.,.]
+findstat-st000701-2	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'ProtectionNumber'"]	1	1	FindStat St000701	FindStat's value for [.,[.,.]]
+findstat-st000701-3	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'ProtectionNumber'"]	1	1	FindStat St000701	FindStat's value for [[.,.],.]
+findstat-st000700-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'ProtectionNumber'"]	1	1	FindStat St000700	FindStat's value for [[]]
+findstat-st000700-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'ProtectionNumber'"]	2	2	FindStat St000700	FindStat's value for [[[]]]
+findstat-st000700-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'ProtectionNumber'"]	1	1	FindStat St000700	FindStat's value for [[],[]]

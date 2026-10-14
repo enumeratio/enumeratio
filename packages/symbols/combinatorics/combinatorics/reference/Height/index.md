@@ -27,7 +27,7 @@ signatures:
   - call: Height(path)
     description: The greatest height the path reaches.
     library: enumeratio-combinatorics
-    type: (dyck_path) -> number
+    type: (binary_tree | dyck_path | ordered_tree) -> number
 ---
 
 - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

@@ -42,7 +42,9 @@ test("a statistic defined on set partitions answers on their growth strings", ()
 test("transport follows a chain of equivalences: a parent array reaches the Dyck path statistics", () => {
   // BinaryTreeParentArray -> BinaryTree -> DyckPath: the right spine of 3 nodes is UDUDUD.
   const spine = ["BinaryTreeParentArray", ["List", 0, 1, 2]];
-  expect(value(["CombinatorialStat", spine, "'Height'"])).toEqual(1);
+  expect(value(["CombinatorialStat", spine, "'Peaks'"])).toEqual(3);
+  // A statistic the binary tree defines itself (its height, St000050) is answered there, not on the path.
+  expect(value(["CombinatorialStat", spine, "'Height'"])).toEqual(3);
   expect(value(["Tally", ["CombinatorialStat", ["BinaryTreeParentArrays", 4], "'Peaks'"]])).toEqual([
     "Tuple",
     ["List", 4, 3, 2, 1],
