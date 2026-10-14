@@ -1,4 +1,4 @@
 id	section	role	expr	expected	known	tolerance	source	triage	wolfram.kind	wolfram.note
 besseli-0-1	Basic		[N, [BesselI, 0, 1]]	1.2660658777520084	{num: "1.266065877752008335598245"}	1e-13	mpmath 1.3.0 besseli			
-normal-series-besseli-0-x-x-positiveinfinity-2		triage	[Normal, [Series, [BesselI, 0, x], x, PositiveInfinity, 2]]	[Series, [BesselI, 0, x], x, PositiveInfinity, 2]				wolfram?	unclassified	""
+normal-series-besseli-0-x-x-positiveinfinity-2		triage	[Normal, [Series, [BesselI, 0, x], x, PositiveInfinity, 2]]	[Series, [BesselI, 0, x], x, PositiveInfinity, 2]				gap	unclassified	Series at Infinity is not implemented: ours stays the call. Wolfram is right, and its Indeterminate is the scan declining to compare a held series, not its answer: Series gives e^x (1/sqrt(2 pi x) + 1/(8 sqrt(2 pi) x^(3/2))), whose real part agrees with mpmath besseli to 8e-5 at x = 30 and 2e-5 at x = 60. It adds an imaginary e^(-x) term (beyond all orders, a Stokes ambiguity) that the real function does not have.
 n-besseli-0-1-50	Scope		[N, [BesselI, 0, 1], 50]	{num: "1.266065877752008335598244625214717537607670311355"}						
