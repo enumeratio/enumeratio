@@ -1,7 +1,7 @@
 import { ComputeEngine, version } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
 import { expect, test } from "vite-plus/test";
-import { CHECKED_COMPUTE_ENGINE, libraryOperator, shadowsLibrary } from "../src/ce-internals.ts";
+import { CHECKED_COMPUTE_ENGINE, functionNodePrototype, libraryOperator, shadowsLibrary } from "../src/ce-internals.ts";
 import { extendHead } from "../src/index.ts";
 
 // The compile stance reads two things from compute-engine's internals (ce-internals.ts). A bump of
@@ -30,4 +30,12 @@ test("shadowsLibrary agrees with compute-engine's own refusal to compile a shado
   operator().evaluate = () => undefined;
   expect(shadowsLibrary(ce, "Sin", operator())).toBe(true);
   expect(() => new JavaScriptTarget().compile(ce.box(["Sin", "x"]))).toThrow(/shadows the library operator/);
+});
+
+test("function nodes share one prototype that carries evaluate and evaluateAsync", () => {
+  const ce = new ComputeEngine();
+  const prototype = functionNodePrototype(ce);
+  expect(prototype).toBeDefined();
+  expect(Object.getPrototypeOf(ce.box(["Add", "x", 1]))).toBe(prototype);
+  expect(Object.getPrototypeOf(ce.box(["Sin", "x"]))).toBe(prototype);
 });

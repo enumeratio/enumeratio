@@ -32,6 +32,7 @@ import { declareFastFactorial } from "./declare-fast-factorial.ts";
 import { declareFastGcd } from "./declare-fast-gcd.ts";
 import { declareFastPrimes } from "./declare-fast-primes.ts";
 import { declareFastRecurrence } from "./declare-fast-recurrence.ts";
+import { declareModularKernels } from "./declare-modular-kernels.ts";
 import { declareGaussian, declareGaussianRationalGcdLcm, declareIntegerExponentGaussian } from "./declare-gaussian.ts";
 import { declareWidened } from "./declare-widened.ts";
 import { gaussianPowerModList } from "./gaussian-roots.ts";
@@ -630,4 +631,5 @@ function declareCombinatoricsGamma113(ce: Engine): void {
   declareFastPrimes(ce);
   declareFastFactorial(ce);
   declareFastGcd(ce);
+  declareModularKernels(ce);
 }
