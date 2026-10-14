@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-ordered-tree			[LargestOutDegree, [OrderedTree, [List, [List], [List, [List]], [List]]]]	3			the ordered tree $[[],[[]],[]]$
+findstat-st000328-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'LargestOutDegree'"]	1	1	FindStat St000328	FindStat's value for [[]]
+findstat-st000328-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'LargestOutDegree'"]	1	1	FindStat St000328	FindStat's value for [[[]]]
+findstat-st000328-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'LargestOutDegree'"]	2	2	FindStat St000328	FindStat's value for [[],[]]

@@ -83,6 +83,23 @@ function setPartitions(n: number): number[][][] {
   return out;
 }
 
+/** Every binary tree with n nodes: 0 is the empty tree, a node is [left, right]. */
+function binaryTrees(n: number): unknown[] {
+  if (n === 0) return [0];
+  const out: unknown[] = [];
+  for (let k = 0; k < n; k++) for (const l of binaryTrees(k)) for (const r of binaryTrees(n - 1 - k)) out.push([l, r]);
+  return out;
+}
+/** Every ordered tree with n edges: the list of its children, so a single vertex is []. */
+function orderedTrees(n: number): unknown[][] {
+  if (n === 0) return [[]];
+  const out: unknown[][] = [];
+  // The first child has k edges; the rest of the children make a tree of the others.
+  for (let k = 0; k < n; k++)
+    for (const first of orderedTrees(k)) for (const rest of orderedTrees(n - 1 - k)) out.push([first, ...rest]);
+  return out;
+}
+
 interface Carrier {
   /** FindStat's collection id. */
   readonly domain: string;
@@ -101,6 +118,9 @@ interface Carrier {
 }
 
 const list = (ce: ComputeEngine, xs: readonly number[]) => ce.box(["List", ...xs]);
+const binaryJson = (t: unknown): unknown =>
+  t === 0 ? 0 : ["List", binaryJson((t as unknown[])[0]), binaryJson((t as unknown[])[1])];
+const orderedJson = (t: unknown): unknown => ["List", ...(t as unknown[]).map(orderedJson)];
 const CARRIERS: Readonly<Record<string, Carrier>> = {
   Permutation: {
     domain: "Cc0001",
@@ -142,6 +162,28 @@ const CARRIERS: Readonly<Record<string, Carrier>> = {
     objects: setPartitions,
     spell: (blocks) => `{${(blocks as number[][]).map((b) => `{${b.join(",")}}`).join(",")}}`,
     box: (ce, blocks) => ce.box(["List", ...(blocks as number[][]).map((b) => ["List", ...b])] as never),
+  },
+  BinaryTree: {
+    domain: "Cc0010",
+    collection: "Binary trees",
+    // FindStat writes [.,[.,.]]: . is the empty tree.
+    parse: (s) => JSON.parse(s.replaceAll(".", "0")),
+    sizes: [1, 2, 3, 4, 5, 6],
+    small: [1, 2, 3, 4, 5],
+    objects: binaryTrees,
+    spell: (t) => JSON.stringify(t).replaceAll("0", "."),
+    box: (ce, t) => ce.box(binaryJson(t) as never),
+  },
+  OrderedTree: {
+    domain: "Cc0021",
+    collection: "Ordered trees",
+    parse: (s) => JSON.parse(s),
+    // By edges, as FindStat does: [[]] has one.
+    sizes: [1, 2, 3, 4, 5, 6],
+    small: [1, 2, 3, 4, 5],
+    objects: orderedTrees,
+    spell: (t) => JSON.stringify(t),
+    box: (ce, t) => ce.box(orderedJson(t) as never),
   },
 };
 

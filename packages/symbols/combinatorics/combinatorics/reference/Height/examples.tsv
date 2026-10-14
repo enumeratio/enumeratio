@@ -1,6 +1,10 @@
 id	section	role	expr	expected	known	source	caption
 the-step-word-uuddud			[Height, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	2			the step word $UUDDUD$
 the-step-word-uduudd			[Height, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]	2			the step word $UDUUDD$
+a-single-binary-node			[Height, [BinaryTree, [List, 0, 0]]]	1			a single node, counted in nodes
+the-binary-tree			[Height, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	3			the binary tree $[[.,.],[[.,.],.]]$
+a-single-vertex			[Height, [OrderedTree, [List]]]	0			a single vertex, counted in edges
+the-ordered-tree			[Height, [OrderedTree, [List, [List], [List, [List]], [List]]]]	2			the ordered tree $[[],[[]],[]]$
 findstat-st000013-1	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0]], "'Height'"]	1	1	FindStat St000013	FindStat's value for [1,0]
 findstat-st000013-2	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0]], "'Height'"]	1	1	FindStat St000013	FindStat's value for [1,0,1,0]
 findstat-st000013-3	Properties		[CombinatorialStat, [DyckPath, [List, 1, 1, 0, 0]], "'Height'"]	2	2	FindStat St000013	FindStat's value for [1,1,0,0]

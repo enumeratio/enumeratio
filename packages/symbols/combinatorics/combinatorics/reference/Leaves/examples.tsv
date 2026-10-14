@@ -1,0 +1,9 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[Leaves, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	2			the binary tree $[[.,.],[[.,.],.]]$
+the-ordered-tree			[Leaves, [OrderedTree, [List, [List], [List, [List]], [List]]]]	3			the ordered tree $[[],[[]],[]]$
+findstat-st000201-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, 0]], "'Leaves'"]	1	1	FindStat St000201	FindStat's value for [.,.]
+findstat-st000201-2	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'Leaves'"]	1	1	FindStat St000201	FindStat's value for [.,[.,.]]
+findstat-st000201-3	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'Leaves'"]	1	1	FindStat St000201	FindStat's value for [[.,.],.]
+findstat-st000167-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'Leaves'"]	1	1	FindStat St000167	FindStat's value for [[]]
+findstat-st000167-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'Leaves'"]	1	1	FindStat St000167	FindStat's value for [[[]]]
+findstat-st000167-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'Leaves'"]	2	2	FindStat St000167	FindStat's value for [[],[]]

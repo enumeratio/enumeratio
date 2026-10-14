@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[Pitchforks, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	1			the binary tree $[[.,.],[[.,.],.]]$
+findstat-st000409-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, 0]], "'Pitchforks'"]	0	0	FindStat St000409	FindStat's value for [.,.]
+findstat-st000409-2	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'Pitchforks'"]	1	1	FindStat St000409	FindStat's value for [.,[.,.]]
+findstat-st000409-3	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'Pitchforks'"]	1	1	FindStat St000409	FindStat's value for [[.,.],.]

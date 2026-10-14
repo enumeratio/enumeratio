@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[ExternalPathLength, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	12			the binary tree $[[.,.],[[.,.],.]]$
+findstat-st000399-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, 0]], "'ExternalPathLength'"]	2	2	FindStat St000399	FindStat's value for [.,.]
+findstat-st000399-2	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'ExternalPathLength'"]	5	5	FindStat St000399	FindStat's value for [.,[.,.]]
+findstat-st000399-3	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'ExternalPathLength'"]	5	5	FindStat St000399	FindStat's value for [[.,.],.]

@@ -8,6 +8,8 @@ const SAMPLE: Record<string, unknown> = {
   IntegerPartition: ["At", ["IntegerPartitions", 5], 3],
   DyckPath: ["At", ["DyckPaths", 4], 5],
   SetPartition: ["At", ["SetPartitions", 4], 6],
+  BinaryTree: ["At", ["BinaryTrees", 4], 5],
+  OrderedTree: ["At", ["OrderedTrees", 3], 4],
 };
 
 test("every statistic is callable by its bare head on each of its carriers", () => {

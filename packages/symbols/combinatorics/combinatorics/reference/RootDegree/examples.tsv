@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-ordered-tree			[RootDegree, [OrderedTree, [List, [List], [List, [List]], [List]]]]	3			the ordered tree $[[],[[]],[]]$
+findstat-st000084-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'RootDegree'"]	1	1	FindStat St000084	FindStat's value for [[]]
+findstat-st000084-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'RootDegree'"]	1	1	FindStat St000084	FindStat's value for [[[]]]
+findstat-st000084-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'RootDegree'"]	2	2	FindStat St000084	FindStat's value for [[],[]]

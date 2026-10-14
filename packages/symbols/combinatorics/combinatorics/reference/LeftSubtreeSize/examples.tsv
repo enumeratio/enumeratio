@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[LeftSubtreeSize, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	1			the binary tree $[[.,.],[[.,.],.]]$
+findstat-st000051-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, 0]], "'LeftSubtreeSize'"]	0	0	FindStat St000051	FindStat's value for [.,.]
+findstat-st000051-2	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'LeftSubtreeSize'"]	0	0	FindStat St000051	FindStat's value for [.,[.,.]]
+findstat-st000051-3	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'LeftSubtreeSize'"]	1	1	FindStat St000051	FindStat's value for [[.,.],.]

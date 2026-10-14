@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[MaximalLeftBranches, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	2			the binary tree $[[.,.],[[.,.],.]]$
+findstat-st000919-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'MaximalLeftBranches'"]	0	0	FindStat St000919	FindStat's value for [.,[.,.]]
+findstat-st000919-2	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'MaximalLeftBranches'"]	1	1	FindStat St000919	FindStat's value for [[.,.],.]
+findstat-st000919-3	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, [List, 0, 0]]]], "'MaximalLeftBranches'"]	0	0	FindStat St000919	FindStat's value for [.,[.,[.,.]]]
