@@ -51,7 +51,7 @@ n-polygamma-neg2-stays-unevaluated	enumeratio_n(psi(-2, 2))	ValueError: gamma fu
 n-polygamma-8-cancellation-region	enumeratio_n(psi(8, (-48.445348956457586 + 7.047151294800014*I)))		
 n-polygamma-8-cancellation-region-nearby-im	enumeratio_n(psi(8, (-48.445348956457586 + 10*I)))		
 n-polygamma-5-cancellation-region	enumeratio_n(psi(5, (-48.987654321098766 + 9.5*I)))		
-polygamma-neg1-neg-1-over-2-exact	psi(-1, (-1/2))		
+polygamma-neg1-neg-1-over-2-exact	psi(-1, (-1/2))	log(-2*sqrt(pi))	disagree
 n-polygamma-neg1-4p403	enumeratio_n(psi(-1, 4.403))		
 polygamma-neg1-inexact-argument	psi(-1, 0.5)		
 threads-over-a-list-each-element-exact-so-each	psi(1, [1, 2])	TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring	error

@@ -13,21 +13,21 @@ inverse-mod-i-is-always-0	enumeratio_inverse_mod((3 + 4*I), (0 + 1*I))
 a-unit-is-its-own-inverse-mod-anything-it-s-a	enumeratio_inverse_mod((0 + 1*I), (2 + 1*I))		
 inverse-of-a-gaussian-prime-mod-a-coprime	enumeratio_inverse_mod((2 + 1*I), (2 + -1*I))		
 inverse-mod-a-real-prime-3-mod-4	enumeratio_inverse_mod((2 + 1*I), 3)		
-no-inverse-when-the-gcd-isn-t-a-unit-shared	enumeratio_inverse_mod((3 + 4*I), (2 + 1*I))		
+no-inverse-when-the-gcd-isn-t-a-unit-shared	enumeratio_inverse_mod((3 + 4*I), (2 + 1*I))	ZeroDivisionError: 4*I + 3 is not invertible modulo Fractional ideal (I + 2)	error
 inverse-mod-a-negative-real-prime	enumeratio_inverse_mod((2 + 1*I), -7)		
 inverse-mod-a-composite-gaussian-modulus-norm-25	enumeratio_inverse_mod((1 + 1*I), (3 + 4*I))		
 inverse-mod-a-modulus-past-2-53	enumeratio_inverse_mod((4 + 1*I), (100000000000000000001 + 9007199254740993*I))		
 inverse-mod-1-4i-the-other-prime-above-17	enumeratio_inverse_mod((8 + 2*I), (1 + 4*I))		
-a-real-base-inverted-mod-a-gaussian-modulus	enumeratio_inverse_mod(5, (2 + 1*I))		
+a-real-base-inverted-mod-a-gaussian-modulus	enumeratio_inverse_mod(5, (2 + 1*I))	ZeroDivisionError: 5 is not invertible modulo Fractional ideal (I + 2)	error
 inverse-mod-a-large-norm-gaussian	enumeratio_inverse_mod((1 + 1*I), (123 + 456*I))		
-inverse-mod-a-negative-real-composite-has-none	enumeratio_inverse_mod((5 + 5*I), -15)		
+inverse-mod-a-negative-real-composite-has-none	enumeratio_inverse_mod((5 + 5*I), -15)	ZeroDivisionError: 5*I + 5 is not invertible modulo Fractional ideal (-15)	error
 inverse-of-a-prime-above-13-mod-the-other-prime	enumeratio_inverse_mod((3 + 2*I), (2 + 3*I))		
 inverse-mod-a-negative-associate	enumeratio_inverse_mod((2 + 1*I), (-2 + -3*I))		
-inverse-mod-a-real-composite-5-squared-has-none	enumeratio_inverse_mod((5 + 5*I), 25)		
+inverse-mod-a-real-composite-5-squared-has-none	enumeratio_inverse_mod((5 + 5*I), 25)	ZeroDivisionError: 5*I + 5 is not invertible modulo Fractional ideal (25)	error
 inverse-of-a-real-prime-s-associate-by-i-mod-a	enumeratio_inverse_mod((0 + 7*I), (3 + 2*I))		
 inverse-mod-a-real-prime-19	enumeratio_inverse_mod((2 + 1*I), 19)		
-no-inverse-mod-0	enumeratio_inverse_mod((2 + 1*I), 0)		
-a-real-base-with-no-inverse-mod-a-shared-factor	enumeratio_inverse_mod(5, (5 + 5*I))		
+no-inverse-mod-0	enumeratio_inverse_mod((2 + 1*I), 0)	ValueError: gens must have a nonzero element (zero ideal is not a fractional ideal)	error
+a-real-base-with-no-inverse-mod-a-shared-factor	enumeratio_inverse_mod(5, (5 + 5*I))	ZeroDivisionError: 5 is not invertible modulo Fractional ideal (5*I + 5)	error
 modularinverse-neg-5-7	enumeratio_inverse_mod(-5, 7)		
 modularinverse-10-pow-100-000-nextprime-1-000			
 the-same-as-powermod-with-exponent-1	enumeratio_equal(enumeratio_inverse_mod(3, 7), enumeratio_power_mod(3, -1, 7))	True	

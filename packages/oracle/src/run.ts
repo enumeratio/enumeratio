@@ -914,20 +914,24 @@ def enumeratio_equal(a, b):
     return _enumeratio_equal(a, b)
 
 # Zeta[s, a] sums ((n + a)^2)^(-s/2) over n >= 0 and skips n + a = 0, where Sage's hurwitz_zeta
-# continues (n + a)^(-s) and meets a pole at a nonpositive integer. For a rational a <= 0 the
-# terms before n + a turns positive are added by hand and hurwitz_zeta takes the rest.
+# continues (n + a)^(-s) and meets a pole at a nonpositive integer. For any a with Re a <= 0 (exact,
+# float or complex) the terms before Re(n + a) turns positive are added by hand and hurwitz_zeta
+# takes the rest.
 def _enumeratio_zeta_pair(s, a):
-    if getattr(a, "parent", lambda: None)() in (ZZ, QQ) and a <= 0:
-        m = ceil(-a)
-        if m > 10000:
-            raise ValueError("too many terms before the sum turns positive")
-        b = a + m
-        head = sum(((n + a) ** 2) ** (-s / 2) for n in range(m))
-        # n + a = 0 is skipped, except that 0^0 is 1 at s = 0.
-        if b == 0:
-            return head + (1 if s == 0 else 0) + hurwitz_zeta(s, 1)
-        return head + hurwitz_zeta(s, b)
-    return hurwitz_zeta(s, a)
+    try:
+        if real(a) > 0:
+            return hurwitz_zeta(s, a)
+        m = int(ceil(-real(a)))
+    except (TypeError, ValueError):
+        return hurwitz_zeta(s, a)
+    if m > 10000:
+        raise ValueError("too many terms before the sum turns positive")
+    b = a + m
+    head = sum(((n + a) ** 2) ** (-s / 2) for n in range(m))
+    # n + a = 0 is skipped, except that 0^0 is 1 at s = 0.
+    if b == 0:
+        return head + (1 if s == 0 else 0) + hurwitz_zeta(s, 1)
+    return head + hurwitz_zeta(s, b)
 
 def enumeratio_zeta_pair(s, a):
     return enumeratio_broadcast(_enumeratio_zeta_pair, s, a)
@@ -1104,6 +1108,15 @@ def _enumeratio_idele_json(u):
 def _enumeratio_adele_json(a):
     return ["Adele", _enumeratio_adic_num(a.infinite_part()[0].center()), _enumeratio_profinite_json(a.finite_part())]
 
+# AdicNumeral(p, x): a profinite number x is known to the valuation of its modulus at p, so the p-adic
+# carries that absolute precision; any other argument is the rational itself.
+def enumeratio_adic_numeral(p, x):
+    if _enumeratio_is_adeles_object(x) and hasattr(x, "modulus"):
+        if x.modulus() != 0:
+            return Qp(p, 60)(QQ(x.value()), absprec=QQ(x.modulus()).valuation(p))
+        x = x.value()
+    return Qp(p, 60)(QQ(x))
+
 def _enumeratio_is_adeles_object(x):
     return getattr(type(x), "__module__", "").startswith("adeles.")
 
@@ -1142,6 +1155,9 @@ def enumeratio_profinite_decomposition(rows, d):
 def enumeratio_value(x):
     import json
     if _enumeratio_is_adeles_object(x):
+        # A profinite number of modulus 0 is its rational, which ours reads as a number.
+        if hasattr(x, "modulus") and not hasattr(x, "finite_part") and not hasattr(x, "has_exact_finite_part") and x.modulus() == 0:
+            return str(QQ(x.value()))
         return json.dumps(_enumeratio_adeles_json(x))
     if isinstance(x, list) and x and all(_enumeratio_is_element(e) for e in x):
         return "combinations:" + json.dumps([_enumeratio_terms(e) for e in x])
@@ -1242,6 +1258,9 @@ def enumeratio_symbolic_agree(a, b, trials):
         if any(v is False for v in verdicts):
             return False
         return True if all(v is True for v in verdicts) else None
+    # A list is never a scalar: a shape mismatch is a disagreement, not an undecided pair.
+    if isinstance(a, list) != isinstance(b, list):
+        return False
     try:
         d = (a - b).simplify_full()
         if bool(d == 0):

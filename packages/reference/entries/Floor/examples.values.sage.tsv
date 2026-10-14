@@ -21,7 +21,7 @@ matrixfunction-floor-list-list-1-over-2-neg-1
 floor-0	enumeratio_floor(0)		
 floor-positiveinfinity	enumeratio_floor(oo)		
 piecewiseexpand-floor-x-2-0-lt-x-lt-4			
-d-floor-x-x	diff(enumeratio_floor(SR.var("x")), SR.var("x"))		
+d-floor-x-x	diff(enumeratio_floor(SR.var("x")), SR.var("x"))	diff(floor(x), x)	inconclusive
 how-many-full-5-item-packs-fit-in-17-items	enumeratio_floor((17 / 5))	3	
 legendre-s-formula-100-ends-in-lfloor-100-5	(enumeratio_floor((100 / 5)) + enumeratio_floor((100 / 25)))	24	
 the-number-of-decimal-digits-of-n-is-lfloor-log			

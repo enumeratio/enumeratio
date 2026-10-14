@@ -24,9 +24,9 @@ exponent-0-is-always-1	enumeratio_power_mod((2 + 1*I), 0, 7)
 a-negative-exponent-inverts-first	enumeratio_power_mod((2 + 1*I), -1, (2 + -1*I))		
 a-negative-exponent-past-the-first-power	enumeratio_power_mod((2 + 1*I), -3, (2 + -1*I))		
 modulus-a-real-prime-3-mod-4	enumeratio_power_mod((3 + 4*I), 4, 3)		
-modulus-a-negative-real-prime	enumeratio_power_mod((3 + 4*I), 3, -7)		
+modulus-a-negative-real-prime	enumeratio_power_mod((3 + 4*I), 3, -7)	2*I + 2	disagree
 modulus-a-composite-gaussian-norm-25	enumeratio_power_mod((1 + 1*I), 6, (3 + 4*I))		
-no-inverse-for-a-negative-exponent-when-the-base	enumeratio_power_mod((3 + 4*I), -2, (2 + 1*I))		
+no-inverse-for-a-negative-exponent-when-the-base	enumeratio_power_mod((3 + 4*I), -2, (2 + 1*I))	ZeroDivisionError: 4*I + 3 is not invertible modulo Fractional ideal (I + 2)	error
 a-bignum-exponent-base-and-modulus-small	enumeratio_power_mod((2 + 1*I), 100000000000000000000, 7)		
 a-negative-bignum-exponent	enumeratio_power_mod((1 + 1*I), -123456789012345678901, 11)		
 modulus-past-2-53	enumeratio_power_mod((4 + 1*I), 10, (100000000000000000001 + 9007199254740993*I))		
@@ -56,7 +56,7 @@ list-divides-2-8-powermod-8-3-2-eq-0
 powermod-7-totient-19-19-eq-1	enumeratio_equal(enumeratio_power_mod(7, enumeratio_euler_phi(19), 19), 1)		
 powermod-2-16-17	enumeratio_power_mod(2, 16, 17)		
 powermod-list-5-neg-5-2-3	enumeratio_power_mod([5, -5], 2, 3)		
-powermod-list-5-neg-5-2-neg-3	enumeratio_power_mod([5, -5], 2, -3)		
+powermod-list-5-neg-5-2-neg-3	enumeratio_power_mod([5, -5], 2, -3)	[-2, -2]	disagree
 no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	enumeratio_power_mod(2, -1, 4)	ZeroDivisionError: inverse of Mod(2, 4) does not exist	error
 a-nonzero-exponent-at-the-same-negative-modulus	enumeratio_power_mod(-2, 3, -14)	-8	inconclusive
 2-is-not-a-square-mod-5-so-there-is-no-root	enumeratio_power_mod(2, (1/2), 5)	TypeError: no conversion of this rational to integer	error

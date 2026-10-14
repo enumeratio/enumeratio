@@ -75,10 +75,10 @@ order-one-half-at-1-is-zeta-one-half	enumeratio_n(polylog((1/2), 1))	-1.46035450
 n-polylog-30-neg-4	enumeratio_n(polylog(30, -4))		
 n-polylog-250-neg-4-a-large-order-past-z-1	enumeratio_n(polylog(250, -4))		
 n-polylog-250-4-a-large-order-on-the-cut	enumeratio_n(polylog(250, 4))		
-n-polylog-2500000-4-a-huge-order-returns	enumeratio_n(polylog(2500000, 4))		
-n-polylog-40p5-2-plus-3i-a-large-complex-point	enumeratio_n(polylog(40.5, (2 + 3*I)))		
+n-polylog-2500000-4-a-huge-order-returns	enumeratio_n(polylog(2500000, 4))	TimeoutError: over 60 s	error
+n-polylog-40p5-2-plus-3i-a-large-complex-point	enumeratio_n(polylog(40.5, (2 + 3*I)))	1.13521303023391e28 + 7.68457079507548e27*I	disagree
 normal-series-polylog-2-x-x-positiveinfinity-6			
-polylog-s-tiny-negative-rim	enumeratio_n(polylog(-1e-12, (-0.12884449429552464 + 0.9916648104524686*I)))		
+polylog-s-tiny-negative-rim	enumeratio_n(polylog(-1e-12, (-0.12884449429552464 + 0.9916648104524686*I)))	-0.499999997777011 + 0.439238679595038*I	disagree
 threads-over-a-list-of-arguments	[polylog(2, 0.5), polylog(2, 0.25)]	[0.582240526465012, 0.267652639082733]	
 a-non-integer-order-past-z-1-is-left-unevaluated	polylog(2.5, 2)	2.78966033238278 - 1.36380370053935*I	
 complex-order-and-argument	polylog((0.2 + 1*I), (0.5 + -0.5*I))	0.0703265205505161 - 0.563293262539874*I	
@@ -115,9 +115,9 @@ li-1-z-z-1-z-2-negative-orders-are-rational	polylog(-1, SR.var("z"))	True
 li-2-1-2-pi-2-12-ln-2-2-2	enumeratio_equal((polylog(2, 0.5) + (0.5 * ((log(2))^2))), (((pi)^2) / 12))	True	
 li-s-1-zeta-s-for-symbolic-s	polylog(SR.var("s"), 1)	True	
 frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative	diff(polylog(SR.var("n"), SR.var("x")), SR.var("x"))		
-polylog-3-exponentiale-pow-1-over-3-times-i	polylog(3, ((e)^((0 + (1/3)*I) * pi)))		
-polylog-3-exponentiale-pow-neg-1-over-3-times-i	polylog(3, ((e)^((0 + (-1/3)*I) * pi)))		
-polylog-3-exponentiale-pow-2-over-3-times-i	polylog(3, ((e)^((0 + (2/3)*I) * pi)))		
+polylog-3-exponentiale-pow-1-over-3-times-i	polylog(3, ((e)^((0 + (1/3)*I) * pi)))	polylog(3, 1/2*I*sqrt(3) + 1/2)	disagree
+polylog-3-exponentiale-pow-neg-1-over-3-times-i	polylog(3, ((e)^((0 + (-1/3)*I) * pi)))	polylog(3, -1/2*I*sqrt(3) + 1/2)	disagree
+polylog-3-exponentiale-pow-2-over-3-times-i	polylog(3, ((e)^((0 + (2/3)*I) * pi)))	polylog(3, 1/2*I*sqrt(3) - 1/2)	disagree
 functionexpand-polylog-2-exponentiale-pow-1-over			
 neg-polylog-2-neg-1-plus-polylog-2-1-over-2	((-polylog(2, -1)) + polylog(2, (1/2)))		
 neg-1-over-2-times-polylog-2-neg-1-over-3-plus	(((-1/2) * polylog(2, (-1/3))) + polylog(2, -1) + polylog(2, (1/3)))		
