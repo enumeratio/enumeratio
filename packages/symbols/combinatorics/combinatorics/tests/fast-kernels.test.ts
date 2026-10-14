@@ -55,7 +55,21 @@ const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
 // How far each axis is scanned for the edge of the fast path.
 const SCAN = 90;
 
-const fastFamilies = allFamilies.filter(isEpsilFamily).filter((family) => family.fast !== undefined);
+const INTERPRETED = new Set([
+  "BinaryTrees",
+  "FullKAryTrees",
+  "OrderedTrees",
+  "IncreasingBinaryTrees",
+  "StandardTableauPairs",
+]);
+
+// FAST_FAMILIES=Head,Head runs just those (nightly's Epsil audit, one shard each). Under DEEP_TESTS
+// without it, the INTERPRETED families are left to the audit: their full grid is hours of interpreter.
+const ONLY = process.env.FAST_FAMILIES?.split(",").filter(Boolean);
+const fastFamilies = allFamilies
+  .filter(isEpsilFamily)
+  .filter((family) => family.fast !== undefined)
+  .filter((family) => (ONLY ? ONLY.includes(family.head) : !(DEEP && INTERPRETED.has(family.head))));
 
 /** The fiber the family's fast kernel counts at `p`, when that is a safe integer. */
 function countOf(family: EpsilFamily, p: number[]): bigint | undefined {
@@ -87,13 +101,6 @@ function edgeAlong(
 // Nested elements have no compiled type, so these families' definitions are interpreted, a few
 // hundred milliseconds an operation: the standard run takes small params and a few ranks of each,
 // and DEEP_TESTS the full grid. Their own tests (trees/tests, collections/tests) check more.
-const INTERPRETED = new Set([
-  "BinaryTrees",
-  "FullKAryTrees",
-  "OrderedTrees",
-  "IncreasingBinaryTrees",
-  "StandardTableauPairs",
-]);
 const interpreted = (family: EpsilFamily): boolean => !DEEP && INTERPRETED.has(family.head);
 
 // Families whose fast path stops at a table limit, a size or two past what Epsil does quickly, not at
@@ -193,7 +200,7 @@ function mutations(member: Element): Element[] {
 
 const labelled = (family: EpsilFamily, p: number[]): string => `${family.head}(${p.join(", ")})`;
 
-test("some families carry a fast path, and a kernel says so", () => {
+test.skipIf(ONLY !== undefined)("some families carry a fast path, and a kernel says so", () => {
   expect(fastFamilies.length).toBeGreaterThan(20);
   const [family] = fastFamilies;
   expect(kernelOn(ce, family).fast).toBe(true);
@@ -438,7 +445,7 @@ const BIGINT_COUNTS: [string, number[]][] = [
       ] as [string, number[]][])
     : []),
 ];
-for (const [head, p] of BIGINT_COUNTS) {
+for (const [head, p] of BIGINT_COUNTS.filter(([h]) => fastFamilies.some((f) => f.head === h))) {
   test(`${head}(${p.join(", ")}): the fast count past 2^53 is Epsil's`, () => {
     const family = fastFamilies.find((f) => f.head === head)!;
     // A family that declines an Epsil count past 2^53 is interpreted for the reference.

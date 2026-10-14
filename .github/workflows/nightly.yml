@@ -71,6 +71,26 @@ jobs:
       # π(x) by the combinatorial count against Lucy_Hedgehog, then 10^14 … 10^17 (minutes at the top).
       - run: pnpm --filter @enumeratio/residues exec vp test run tests/prime-count.test.ts
 
+  # The interpreted tree families' fast kernels against their Epsil definitions, over the full DEEP grid.
+  # The interpreter is hundreds of ms an operation there, so each family is its own shard with the longest
+  # budget a hosted runner allows, and `deep test sweeps` leaves them out.
+  epsil-audit:
+    name: Epsil audit ${{ matrix.head }}
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      DEEP_TESTS: "1"
+      FAST_FAMILIES: ${{ matrix.head }}
+    strategy:
+      fail-fast: false
+      matrix:
+        head: [BinaryTrees, FullKAryTrees, OrderedTrees, IncreasingBinaryTrees, StandardTableauPairs]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/fast-kernels.test.ts --reporter=verbose
+
   # The review backlog's machine-checkable claims (`expect:` bullets exported to
   # packages/reference/review-claims.tsv), evaluated against the current engine. A claim that stops
   # holding fails the job and the nightly-fixup routine files it. Visual review items are not here.
