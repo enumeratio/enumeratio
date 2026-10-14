@@ -318,6 +318,8 @@ const OVERRIDDEN = [
   "N",
   "NextPrime",
   "Norm",
+  // Not itself overridden -- Normal of our Series at infinity, which a bare engine leaves held.
+  "Normal",
   "NthPrime",
   "Ordering",
   "Partition",
