@@ -73,6 +73,15 @@ export function freshen(expression: unknown, prefix = "_v"): unknown {
   return walk(expression, new Map());
 }
 
+/** A JavaScript compile result's `code` as one expression that needs only `_SYS` and `_`: compute-engine's
+ *  `code` reads locals its `preamble` declares (a hoisted constant list, `_lit_1`), so the preamble
+ *  goes with it, scoped to the expression so two such expressions can't clash. */
+export function selfContainedCode(result: { code?: string; preamble?: string }): string | undefined {
+  if (typeof result.code !== "string") return undefined;
+  const preamble = result.preamble?.trim();
+  return preamble ? `(() => {\n${preamble}\nreturn ${result.code};\n})()` : result.code;
+}
+
 interface Compilation {
   readonly run: CompiledRun & { SYS?: unknown };
   readonly code: string;
@@ -91,9 +100,11 @@ export function compileTyped(
       success?: boolean;
       run?: Compilation["run"];
       code?: string;
+      preamble?: string;
     };
-    return result.success === true && result.run !== undefined && typeof result.code === "string"
-      ? { run: result.run, code: result.code }
+    const code = selfContainedCode(result);
+    return result.success === true && result.run !== undefined && code !== undefined
+      ? { run: result.run, code }
       : undefined;
   } catch {
     return undefined;
