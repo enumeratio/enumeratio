@@ -211,6 +211,10 @@ export interface KernelOptions {
   readonly onTables?: (params: readonly number[], precision: "double" | "exact") => void;
   /** `false` ignores the family's `fast` path, so the kernel runs its Epsil definitions alone. */
   readonly fast?: boolean;
+  /** Called with whatever compiled code throws, before the kernel falls back to the interpreter, which
+   *  answers as if it hadn't. A ReferenceError, SyntaxError or TypeError here is a bug in the generated
+   *  code; tests/compiled-family-ops.test.ts fails on one. */
+  readonly onCompiledError?: (operation: Operation, error: unknown) => void;
 }
 
 /** A map holding at most `size` entries, dropping the least recently read or written. */
@@ -292,7 +296,8 @@ export function kernelOn(
     if (code === null) return undefined;
     try {
       return code(vars);
-    } catch {
+    } catch (error) {
+      options.onCompiledError?.(operation, error);
       return undefined;
     }
   };
@@ -340,6 +345,7 @@ export function kernelOn(
         // params, so it isn't kept.
         if (error instanceof RangeError && error.message.includes("beyond the safe integer range")) value = "overflow";
         else if (error instanceof RangeError && error.message.includes("call stack")) return undefined;
+        else options.onCompiledError?.("tables", error);
       }
       table = Array.isArray(value) && value.every(Number.isInteger) ? (value as number[]) : null;
       if (
