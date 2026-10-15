@@ -1,6 +1,27 @@
-id	in	out	tex.in	tex.out
-two-cycles	PermutationSupport[List[5, 3, 4, 2, 1]]	{1, 2, 3, 4, 5}	\text{PermutationSupport}[\{5,3,4,2,1\}]	\{1,2,3,4,5\}
-the-one-line-word-312	PermutationSupport[List[3, 1, 2]]	{1, 2, 3}	\text{PermutationSupport}[\{3,1,2\}]	\{1,2,3\}
-the-one-line-word-2413	PermutationSupport[List[2, 4, 1, 3]]	{1, 2, 3, 4}	\text{PermutationSupport}[\{2,4,1,3\}]	\{1,2,3,4\}
-fixed-points-drop-out	PermutationSupport[List[1, 3, 2, 4]]	{2, 3}	\text{PermutationSupport}[\{1,3,2,4\}]	\{2,3\}
-the-identity	PermutationSupport[List[1, 2, 3]]	{}	\text{PermutationSupport}[\{1,2,3\}]	\{\}
+id	in	out	tex.in	tex.out	verdict
+two-cycles	PermutationSupport[List[5, 3, 4, 2, 1]]	{1, 2, 3, 4, 5}	\text{PermutationSupport}[\{5,3,4,2,1\}]	\{1,2,3,4,5\}	
+the-one-line-word-312	PermutationSupport[List[3, 1, 2]]	{1, 2, 3}	\text{PermutationSupport}[\{3,1,2\}]	\{1,2,3\}	
+the-one-line-word-2413	PermutationSupport[List[2, 4, 1, 3]]	{1, 2, 3, 4}	\text{PermutationSupport}[\{2,4,1,3\}]	\{1,2,3,4\}	
+a-three-cycle	Length[PermutationSupport[List[2, 3, 1]]]	3	\text{Length}[\text{PermutationSupport}[\{2,3,1\}]]	3	
+length-the-one-line-word-312	Length[PermutationSupport[List[3, 1, 2]]]	3	\text{Length}[\text{PermutationSupport}[\{3,1,2\}]]	3	
+length-the-one-line-word-2413	Length[PermutationSupport[List[2, 4, 1, 3]]]	4	\text{Length}[\text{PermutationSupport}[\{2,4,1,3\}]]	4	
+trailing-fixed-points	Max[PermutationSupport[List[2, 1, 3, 4]]]	2	\max (\text{PermutationSupport}[\{2,1,3,4\}])	2	
+max-the-one-line-word-312	Max[PermutationSupport[List[3, 1, 2]]]	3	\max (\text{PermutationSupport}[\{3,1,2\}])	3	
+max-the-one-line-word-2413	Max[PermutationSupport[List[2, 4, 1, 3]]]	4	\max (\text{PermutationSupport}[\{2,4,1,3\}])	4	
+leading-fixed-points	Min[PermutationSupport[List[1, 3, 2, 4]]]	2	\min (\text{PermutationSupport}[\{1,3,2,4\}])	2	
+min-the-one-line-word-312	Min[PermutationSupport[List[3, 1, 2]]]	1	\min (\text{PermutationSupport}[\{3,1,2\}])	1	
+min-the-one-line-word-2413	Min[PermutationSupport[List[2, 4, 1, 3]]]	1	\min (\text{PermutationSupport}[\{2,4,1,3\}])	1	
+fixed-points-drop-out	PermutationSupport[List[1, 3, 2, 4]]	{2, 3}	\text{PermutationSupport}[\{1,3,2,4\}]	\{2,3\}	
+fixed-points-do-not-count	Length[PermutationSupport[List[1, 3, 2, 4]]]	2	\text{Length}[\text{PermutationSupport}[\{1,3,2,4\}]]	2	
+length-two-cycles	Length[PermutationSupport[List[5, 3, 4, 2, 1]]]	5	\text{Length}[\text{PermutationSupport}[\{5,3,4,2,1\}]]	5	
+max-two-cycles	Max[PermutationSupport[List[5, 3, 4, 2, 1]]]	5	\max (\text{PermutationSupport}[\{5,3,4,2,1\}])	5	
+min-two-cycles	Min[PermutationSupport[List[5, 3, 4, 2, 1]]]	1	\min (\text{PermutationSupport}[\{5,3,4,2,1\}])	1	
+the-identity	PermutationSupport[List[1, 2, 3]]	{}	\text{PermutationSupport}[\{1,2,3\}]	\{\}	
+length-the-identity	Length[PermutationSupport[List[1, 2, 3]]]	0	\text{Length}[\text{PermutationSupport}[\{1,2,3\}]]	0	
+findstat-st000673-1	Length[PermutationSupport[List[1, 2]]]	0	\text{Length}[\text{PermutationSupport}[\{1,2\}]]	0	
+findstat-st000673-2	Length[PermutationSupport[List[2, 1]]]	2	\text{Length}[\text{PermutationSupport}[\{2,1\}]]	2	
+findstat-st000673-3	Length[PermutationSupport[List[1, 2, 3]]]	0	\text{Length}[\text{PermutationSupport}[\{1,2,3\}]]	0	
+max-the-identity	Max[0, PermutationSupport[List[1, 2, 3]]]	0	\max (0,\text{PermutationSupport}[\{1,2,3\}])	0	
+max-of-empty-support	Max[PermutationSupport[List[1, 2, 3]]]	-Infinity	\max (\text{PermutationSupport}[\{1,2,3\}])	-\infty	disagree
+min-the-identity	Min[Infinity, PermutationSupport[List[1, 2, 3]]]	Infinity	\min (\infty ,\text{PermutationSupport}[\{1,2,3\}])	\infty	
+min-of-empty-support	Min[PermutationSupport[List[1, 2, 3]]]	Infinity	\min (\text{PermutationSupport}[\{1,2,3\}])	\infty	disagree

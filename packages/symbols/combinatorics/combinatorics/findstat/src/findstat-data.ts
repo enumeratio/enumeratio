@@ -188,12 +188,6 @@ export const findstat: readonly FindStatMatch[] = [
     values: 3165,
   },
   {
-    head: "PermutationLength",
-    on: "Permutation",
-    findstat: ["St000673"],
-    values: 1200,
-  },
-  {
     head: "LongestIncreasingSubsequence",
     on: "Permutation",
     findstat: ["St000062"],

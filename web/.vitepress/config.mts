@@ -128,10 +128,18 @@ const moved: [string, string][] = [
   ...workspacePackages().map((p): [string, string] => [`/packages/${p.slug}`, docRoute(p.slug)]),
 ];
 
-// Collection families renamed to their plural keep the old symbol page's URL.
-const renamedSymbols: [string, string][] = ["PrimePartition", "TriangularComposition", "ZigzagComposition"].map(
-  (old) => [`/reference/symbol/${old}`, `/reference/symbol/${old}s`],
-);
+// Collection families renamed to their plural keep the old symbol page's URL, and the
+// moved-point statistics that became compositions of PermutationSupport lead to its page.
+const renamedSymbols: [string, string][] = [
+  ...["PrimePartition", "TriangularComposition", "ZigzagComposition"].map((old): [string, string] => [
+    `/reference/symbol/${old}`,
+    `/reference/symbol/${old}s`,
+  ]),
+  ...["PermutationLength", "PermutationMax", "PermutationMin"].map((old): [string, string] => [
+    `/reference/symbol/${old}`,
+    "/reference/symbol/PermutationSupport",
+  ]),
+];
 
 function writeRedirects(outDir: string): void {
   for (const [from, to] of [...moved, ...renamedSymbols]) {

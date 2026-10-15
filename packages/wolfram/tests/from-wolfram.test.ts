@@ -337,6 +337,13 @@ test("names Wolfram spells for something ours spells differently", () => {
   expect(fromWolfram("Residue[f, List[z, 0]]")).toEqual(["Residue", "f", "z", 0]);
 });
 
+test("PermutationLength, PermutationMax and PermutationMin read as Length, Max and Min of the support", () => {
+  const support = ["PermutationSupport", ["Permutation", ["List", 2, 3, 1]]];
+  expect(fromWolfram("PermutationLength[List[2, 3, 1]]")).toEqual(["Length", support]);
+  expect(fromWolfram("PermutationMax[List[2, 3, 1]]")).toEqual(["Max", 0, support]);
+  expect(fromWolfram("PermutationMin[List[2, 3, 1]]")).toEqual(["Min", "PositiveInfinity", support]);
+});
+
 test("Range[a, b] states its step: ours counts down without one, Wolfram's is empty", () => {
   expect(fromWolfram("Range[1, n]")).toEqual(["Range", 1, "n", 1]);
   expect(fromWolfram("Range[n]")).toEqual(["Range", 1, "n", 1]);

@@ -28,9 +28,6 @@ const SAMPLES: readonly Sample[] = [
 
 /** The heads with a hand-written record in `../../reference/`. */
 const CURATED_HEADS = [
-  "PermutationLength",
-  "PermutationMax",
-  "PermutationMin",
   "PermutationSupport",
   "Antiexcedances",
   "Ascents",
