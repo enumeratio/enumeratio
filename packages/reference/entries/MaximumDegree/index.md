@@ -1,9 +1,0 @@
----
-name: MaximumDegree
-domain: Combinatorics
-signature: MaximumDegree(...)
-summary: Maximum degree
-statOn:
-  - LabeledGraph
-stub: carrier
----

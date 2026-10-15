@@ -1,9 +1,0 @@
----
-name: DistinctNonzeroValues
-domain: Combinatorics
-signature: DistinctNonzeroValues(...)
-summary: Number of distinct nonzero values
-statOn:
-  - AscentSequence
-stub: carrier
----

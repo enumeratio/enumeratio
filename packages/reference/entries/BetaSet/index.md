@@ -1,9 +1,0 @@
----
-name: BetaSet
-domain: Combinatorics
-signature: BetaSet(...)
-summary: Beta-set (first-column hook lengths)
-mapOn:
-  - IntegerPartition
-stub: carrier
----

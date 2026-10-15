@@ -1,9 +1,0 @@
----
-name: LyndonFactorLengths
-domain: Combinatorics
-signature: LyndonFactorLengths(...)
-summary: Lyndon factorization (factor lengths)
-mapOn:
-  - Word
-stub: carrier
----

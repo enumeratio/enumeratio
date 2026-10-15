@@ -1,9 +1,0 @@
----
-name: NonzeroDigits
-domain: Combinatorics
-signature: NonzeroDigits(...)
-summary: Nonzero digits
-statOn:
-  - TernaryGrayCode
-stub: carrier
----
