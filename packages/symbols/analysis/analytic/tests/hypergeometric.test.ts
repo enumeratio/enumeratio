@@ -80,6 +80,33 @@ test("1F1Regularized(α; α+1; z) at α < 0 is raised by contiguity, so the thre
   }
 });
 
+test("the contiguous raise of 1F1Regularized(α; α+1; z) matches mpmath or declines at large |z|", () => {
+  // hyp1f1(a, a+1, z)/gamma(a+1) from mpmath at 30 digits; z > 0 cancels in the recurrence, z < 0 in the series.
+  const cases: [number, number, string][] = [
+    [-0.3, 100, "-6.2953267212207160005e+40"],
+    [-0.5, 100, "-7.6997319398393135664e+40"],
+    [-0.3, 1000, "-4.5590616984188914807e+430"],
+    [-0.3, 10000, "-2.0356520605661793474e+4338"],
+    [-0.3, -50, "3.2336350328867867956"],
+    [-0.3, -200, "4.9012741893948985942"],
+    [-1.7, -500, "38747.974688708417871"],
+    [-0.3, -10000, "15.848931924611132724"],
+  ];
+  for (const [a, z, want] of cases) {
+    const got = ce.box(["Hypergeometric1F1Regularized", a, a + 1, z] as never).N();
+    if (got.operator === "Hypergeometric1F1Regularized") continue; // declined
+    const value = got.re as number;
+    // Past the double range there is nothing to compare; a finite answer must be right.
+    if (!Number.isFinite(value)) continue;
+    expect(Math.abs(value - Number(want)) / Math.abs(Number(want)), `a=${a} z=${z}`).toBeLessThanOrEqual(4e-15);
+  }
+});
+
+test("the exact raise of 1F1Regularized is left alone where the rewrite would be larger than the head", () => {
+  const head = ["Hypergeometric1F1Regularized", ["Rational", -9, 2], ["Rational", -7, 2], ["Rational", 1, 2]];
+  expect(ce.box(head as never).evaluate().operator).toBe("Hypergeometric1F1Regularized");
+});
+
 test("Hypergeometric2F1Regularized and Hypergeometric3F2Regularized decline |z| >= 1", () => {
   expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, 2, 1.5]).N().operator).toBe("Hypergeometric2F1Regularized");
   expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, 2, ["Complex", 1, 0.5]]).N().operator).toBe(
