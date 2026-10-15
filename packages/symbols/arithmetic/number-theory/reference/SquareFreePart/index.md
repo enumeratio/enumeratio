@@ -34,6 +34,6 @@ bindings:
 ---
 
 - Every nonzero integer is $\pm s^2 q$ for a unique $s\ge1$ and square-free $q\ge1$; this is $q$, and [[SquarePartRoot]] is $s$. $n$ is square-free exactly when $s=1$, and a perfect square (up to sign) when $q=1$.
-- The sign is a unit, as in [[DivisorSigma]], so $q\ge1$ always: $\mathrm{SquareFreePart}(-12)=3$. Sage's `squarefree_part` keeps the sign instead.
+- The sign is a unit, as in [[PrimeOmega]], so $q\ge1$ always: $\mathrm{SquareFreePart}(-12)=3$. Sage's `squarefree_part` keeps the sign instead.
 - Defined on nonzero integers; 0 stays unevaluated.
 - Also called the square-free kernel; that name is more often given to the radical, the product of the *distinct* primes, which is a different function. The radical is Wolfram Function Repository's `IntegerRadical`.

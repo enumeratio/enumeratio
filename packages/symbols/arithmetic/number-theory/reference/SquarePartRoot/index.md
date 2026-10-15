@@ -32,5 +32,5 @@ bindings:
 ---
 
 - Every nonzero integer is $\pm s^2 q$ for a unique $s\ge1$ and square-free $q\ge1$; this is $s$, and [[SquareFreePart]] is $q$. $n$ is square-free exactly when $s=1$.
-- The sign is a unit, as in [[DivisorSigma]]: $\mathrm{SquarePartRoot}(-12)=2$. Defined on nonzero integers; 0 stays unevaluated.
+- The sign is a unit, as in [[PrimeOmega]]: $\mathrm{SquarePartRoot}(-12)=2$. Defined on nonzero integers; 0 stays unevaluated.
 - Halves every exponent in the factorization of $|n|$, rounding down.

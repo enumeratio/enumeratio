@@ -44,6 +44,6 @@ bindings:
 ---
 
 - Positive for an abundant number, zero for a perfect one, negative for a deficient one.
-- Defined on nonzero integers, with the sign of $n$ a unit as in [[DivisorSigma]]: $\mathrm{Abundance}(-n)=\mathrm{Abundance}(n)$. At 0 it stays unevaluated.
+- Defined on nonzero integers, with the sign of $n$ a unit, as in [[PrimeOmega]]: $\mathrm{Abundance}(-n)=\mathrm{Abundance}(n)$. At 0 it stays unevaluated.
 - $\mathrm{Abundance}(n) = \mathrm{AliquotSum}(n) - n$, which makes [[IsPerfect]] the test for 0.
 - Neither Wolfram nor Sage names it; SymPy's `abundance` answers positive integers only.

@@ -3,7 +3,7 @@ abundance-12			[Abundance, 12]	4	Abundant: its proper divisors sum to 16, which 
 abundance-28			[Abundance, 28]	0	Perfect: $1+2+4+7+14=28$						
 abundance-15			[Abundance, 15]	-6	Deficient: $\sigma(15)=24$, which is 6 short of 30						
 abundance-1			[Abundance, 1]	-1	$\sigma(1)-2=-1$						
-negative-n-the-sign-is-a-unit	Scope		[Abundance, -12]	4	Negative $n$: the sign is a unit, as in [[DivisorSigma]]						
+negative-n-the-sign-is-a-unit	Scope		[Abundance, -12]	4	Negative $n$: the sign is a unit, as in [[PrimeOmega]]						
 listable-over-a-list	Scope		[Abundance, [List, 6, 12, 15]]	[List, 0, 4, -6]	Listable over a list						
 large-integers-powers-of-two-are-always-1-short	Scope		[Abundance, [Power, 2, 40]]	-1	Large integers: a power of 2 is always 1 short, $2^{41}-1-2^{41}$						
 the-smallest-odd-abundant-number	Applications		[Abundance, 945]	30	The smallest odd abundant number: $3^3\cdot5\cdot7$						

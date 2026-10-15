@@ -3,7 +3,7 @@ aliquotsum-12			[AliquotSum, 12]	16	$1+2+3+4+6=16$
 aliquotsum-28			[AliquotSum, 28]	28	Perfect: its proper divisors sum back to 28						
 aliquotsum-13			[AliquotSum, 13]	1	A prime has only 1 as a proper divisor						
 aliquotsum-1			[AliquotSum, 1]	0	1 has no proper divisor						
-negative-n-the-sign-is-a-unit	Scope		[AliquotSum, -12]	16	Negative $n$: the sign is a unit, as in [[DivisorSigma]]						
+negative-n-the-sign-is-a-unit	Scope		[AliquotSum, -12]	16	Negative $n$: the sign is a unit, as in [[PrimeOmega]]						
 listable-over-a-list	Scope		[AliquotSum, [List, 6, 12, 13]]	[List, 6, 16, 1]	Listable over a list						
 large-integers-a-power-of-two	Scope		[AliquotSum, [Power, 2, 40]]	1099511627775	Large integers: $2^{40}-1$, the proper divisors of $2^{40}$						
 amicable-pair-220-and-284	Applications		[AliquotSum, 220]	284	Amicable pair: $s(220)=284$						

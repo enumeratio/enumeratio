@@ -1,4 +1,5 @@
 import { defineOverload, operandsOf, type Engine, type Expr } from "@enumeratio/engine";
+import { readsOwnExtremum } from "@enumeratio/structures";
 
 // A Finset is a subset of {1, …, n}: `Finset(Tuple(n, members))`. The heads that read a
 // collection's members read it too: its largest and smallest member, and its cardinality as `Length`.
@@ -13,6 +14,8 @@ const membersOf = (op: Expr | undefined): readonly Expr[] | undefined => {
 
 export function declareFinsetHeads(ce: Engine): void {
   // Max and Min of the member list, so the empty case answers as it does for an empty list.
+  // Structures reads a lone operand as its own extremum unless told its carrier has rows.
+  readsOwnExtremum(ce, "Finset");
   for (const head of ["Max", "Min"]) {
     defineOverload(ce, head, {
       package: "combinatorics",

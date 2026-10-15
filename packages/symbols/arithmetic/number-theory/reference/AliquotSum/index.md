@@ -44,6 +44,6 @@ bindings:
 ---
 
 - A prime has aliquot sum 1, and $s(1)=0$ since 1 has no proper divisor.
-- Defined on nonzero integers, with the sign of $n$ a unit as in [[DivisorSigma]]: $s(-n)=s(n)$. At 0 it stays unevaluated.
+- Defined on nonzero integers, with the sign of $n$ a unit, as in [[PrimeOmega]]: $s(-n)=s(n)$. At 0 it stays unevaluated.
 - Iterating $s$ gives the aliquot sequence; $n$ is perfect when $s(n)=n$, and $m, n$ are amicable when $s(m)=n$ and $s(n)=m$.
 - Neither Wolfram, Sage nor SymPy names it.

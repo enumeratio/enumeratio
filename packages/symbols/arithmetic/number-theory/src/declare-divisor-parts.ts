@@ -4,7 +4,7 @@ import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 
 // Abundance and AliquotSum are compositions over DivisorSigma, and SquareFreePart and
 // SquarePartRoot split n = ±s²·q by FactorInteger. All four take a nonzero integer and read
-// its sign as a unit, as PrimeOmega and DivisorSigma do (Wolfram's DivisorSigma[1, -12] is 28):
+// its sign as a unit, as PrimeOmega does:
 // they work on |n|. Each stays unevaluated where it can't answer.
 
 const nonzeroInteger = (op: Expr | undefined): bigint | undefined => {

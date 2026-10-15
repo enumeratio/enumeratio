@@ -155,7 +155,6 @@ const retiredStubs: [string, string][] = Object.entries({
   LittleOmega: "PrimeNu",
   ToCycleNotation: "CycleDecomposition",
   BinaryWeight: "DigitCount",
-  SquareFreeKernel: "SquareFreePart",
   SquareRoot: "SquarePartRoot",
 }).map(([old, head]) => [`/reference/symbol/${old}`, `/reference/symbol/${head}`]);
 

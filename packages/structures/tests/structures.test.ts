@@ -1,8 +1,8 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { executeEpsil } from "@cortex-js/compute-engine/epsil";
-import { operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { defineOverload, operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { describe, expect, it } from "vite-plus/test";
-import { ancestry, conform, declareAlgebra, declareStructures } from "../src/index.ts";
+import { ancestry, conform, declareAlgebra, declareStructures, readsOwnExtremum } from "../src/index.ts";
 
 const engine = (): ComputeEngine => {
   const ce = new ComputeEngine();
@@ -60,6 +60,36 @@ describe("the generic heads", () => {
   for (const [input, expected] of cases) it(JSON.stringify(input), () => expect(evaluate(ce, input)).toEqual(expected));
 });
 
+describe("a lone operand is its own extremum", () => {
+  const ce = engine();
+  const cases: [unknown, unknown][] = [
+    [["Max", "'a'"], "'a'"],
+    [["Min", ["Interval", 1, 3]], 1],
+    [
+      ["Max", ["Complex", 1, 2]],
+      ["Complex", 1, 2],
+    ],
+  ];
+  for (const [input, expected] of cases) it(JSON.stringify(input), () => expect(evaluate(ce, input)).toEqual(expected));
+
+  // A carrier that declares rows of its own, and says so, is answered by them; wrapped in a
+  // list it is still one value, as it was before.
+  it("leaves a carrier with its own rows to them, and only when it stands alone", () => {
+    const own = engine();
+    own.declare("Box", { signature: "(any) -> any" });
+    readsOwnExtremum(own, "Box");
+    for (const head of ["Max", "Min"])
+      defineOverload(own, head, {
+        package: "test",
+        on: ["Box"],
+        arity: 1,
+        evaluate: (ops) => operandsOf(ops[0]!)[0],
+      });
+    expect(evaluate(own, ["Max", ["Box", 7]])).toEqual(7);
+    expect(evaluate(own, ["Max", ["List", ["Box", 7]]])).toEqual(["Box", 7]);
+  });
+});
+
 describe("a type the engine has never seen", () => {
   // Money: a floor order that isn't a ring. Whole units are its ticks, with a parity, so
   // Round ties go to the even unit.
@@ -84,6 +114,7 @@ describe("a type the engine has never seen", () => {
   const cases: [unknown, unknown][] = [
     [["Min", M(3), M(1), M(2)], M(1)],
     [["Max", M(3), M(1)], M(3)],
+    [["Max", M(3)], M(3)],
     [["Floor", M(2.7)], M(2)],
     [["Ceil", M(2.2)], M(3)],
     [["Round", M(2.4)], M(2)],
@@ -106,6 +137,7 @@ type boolean is LinearOrder`,
   const cases: [string, unknown][] = [
     ["Min(True, False)", "False"],
     ["Max(True, False, True)", "True"],
+    ["Max(True)", "True"],
     ["Clamp(False, True, True)", "True"],
   ];
   for (const [source, expected] of cases)
