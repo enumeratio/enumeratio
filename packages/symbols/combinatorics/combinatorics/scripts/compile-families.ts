@@ -8,8 +8,11 @@
 //
 //   vp node packages/symbols/combinatorics/combinatorics/scripts/compile-families.ts
 
-import { execFileSync } from "node:child_process";
-import { writeFileSync } from "node:fs";
+import { execFileSync, spawn } from "node:child_process";
+import { createHash } from "node:crypto";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Engine } from "@enumeratio/engine";
 import { bareEngine } from "@enumeratio/engine/testing";
@@ -106,10 +109,13 @@ export function disagreements(ce: Engine, family: EpsilFamily, runs: Partial<Rec
 }
 
 /** Each Epsil family's head, hash and the generated code of the operations that compile. */
-export function compiledFamilies(verdicts: Verdicts = noVerdicts): Entry[] {
+export function compiledFamilies(
+  verdicts: Verdicts = noVerdicts,
+  only: (head: string) => boolean = () => true,
+): Entry[] {
   const ce = bareEngine();
   const out: Entry[] = [];
-  for (const family of allFamilies.filter(isEpsilFamily) as EpsilFamily[]) {
+  for (const family of (allFamilies.filter(isEpsilFamily) as EpsilFamily[]).filter((f) => only(f.head))) {
     const code: Partial<Record<Operation, string>> = {};
     const runs: Partial<Record<Operation, Run>> = {};
     for (const operation of operationsOf(family)) {
@@ -158,12 +164,36 @@ ${body}
 `;
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const verdicts = verdictsFor("compile-families");
-  const entries = compiledFamilies(verdicts);
+/** The cross-checks are most of the build and one process runs them one at a time, so the families
+ *  split by head across this many processes, each with its own verdict memo. */
+const SHARDS = 3;
+const shardOf = (head: string): number => createHash("sha1").update(head).digest()[0]! % SHARDS;
+
+/** A child process's share, as JSON in `out`. */
+function runShard(shard: number, out: string): Promise<Entry[]> {
+  return new Promise((resolve, reject) => {
+    spawn("node", [fileURLToPath(import.meta.url), "--shard", String(shard), out], { stdio: "inherit" }).on(
+      "exit",
+      (code) =>
+        code === 0
+          ? resolve(JSON.parse(readFileSync(out, "utf8")) as Entry[])
+          : reject(new Error(`compile-families shard ${shard} exited with ${code}`)),
+    );
+  });
+}
+
+if (process.argv[1] === fileURLToPath(import.meta.url) && process.argv[2] === "--shard") {
+  const shard = Number(process.argv[3]);
+  const verdicts = verdictsFor(`compile-families-${shard}`);
+  writeFileSync(process.argv[4]!, JSON.stringify(compiledFamilies(verdicts, (head) => shardOf(head) === shard)));
+  verdicts.save();
+} else if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const scratch = mkdtempSync(join(tmpdir(), "compile-families-"));
+  const shards = await Promise.all(Array.from({ length: SHARDS }, (_, i) => runShard(i, join(scratch, `${i}.json`))));
+  rmSync(scratch, { recursive: true, force: true });
+  const entries = shards.flat().toSorted((a, b) => (a.head < b.head ? -1 : a.head > b.head ? 1 : 0));
   const target = fileURLToPath(new URL("../collections/src/families/compiled-families.generated.js", import.meta.url));
   writeFileSync(target, render(entries));
-  verdicts.save();
   // Laid out as `vp fmt` lays it out, so a rerun with nothing changed changes nothing.
   execFileSync("vp", ["fmt", target], { stdio: "ignore" });
   const operations = entries.reduce((sum, e) => sum + Object.keys(e.code).length, 0);

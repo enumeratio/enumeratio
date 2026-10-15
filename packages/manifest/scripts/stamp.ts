@@ -201,13 +201,30 @@ export interface Verdicts {
 export const noVerdicts: Verdicts = { remember: (_parts, compute) => compute(), save() {} };
 
 /**
+ * Where a step's verdicts live: in the shared store when `$DIST_CACHE_DIR` names one (CI carries
+ * it from run to run, so a fresh runner re-checks only what changed), else beside the stamps.
+ */
+function verdictFile(dir: string, name: string): string {
+  const lock = lockfileOf(dir);
+  if (process.env.DIST_CACHE_DIR && lock !== "") {
+    const repo = dirname(lock);
+    const id = createHash("sha256")
+      .update(`${relative(repo, dir)}\0${name}`)
+      .digest("hex")
+      .slice(0, 32);
+    return join(sharedDir(repo)!, `verdicts-${id}.json`);
+  }
+  return cacheFile(dir, `${name}.verdicts.json`);
+}
+
+/**
  * A memo of checks that are slow and pure in `parts` (a generator comparing compiled code with
  * the interpreter, say) so an edit to one definition re-checks only that one. Answers are
  * trusted only while `inputs` (what the checks run on: the interpreter's code, the dists it
  * lives in) hash as they did when the answers were made.
  */
 export function verdictCache(name: string, inputs: StepInputs): Verdicts {
-  const file = cacheFile(inputs.dir, `${name}.verdicts.json`);
+  const file = verdictFile(inputs.dir, name);
   const env = hashInputs(inputs);
   let before: Record<string, unknown> = {};
   try {
@@ -225,7 +242,9 @@ export function verdictCache(name: string, inputs: StepInputs): Verdicts {
     },
     save() {
       mkdirSync(dirname(file), { recursive: true });
-      writeFileSync(file, JSON.stringify({ env, answers: kept }));
+      const tmp = `${file}.${process.pid}.tmp`;
+      writeFileSync(tmp, JSON.stringify({ env, answers: kept }));
+      renameSync(tmp, file);
     },
   };
 }
