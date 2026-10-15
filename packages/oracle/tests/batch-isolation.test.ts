@@ -46,6 +46,39 @@ test("past the retry cap the unresolved chunks error as a whole, and the run fin
   expect(calls.length - 1).toBeLessThanOrEqual(MAX_BISECT_RUNS);
 });
 
+test("a failure that is not a watchdog kill is not bisected", async () => {
+  const calls: number[] = [];
+  const batchRunner = async (sources: readonly string[]): Promise<Result[]> => {
+    calls.push(sources.length);
+    return failAll(sources.length, "wolframscript: exit 1: license");
+  };
+  const results = await runIn("wolfram", items(40), { batchRunner });
+  expect(calls).toEqual([40]);
+  expect(erroredAt(results)).toHaveLength(40);
+});
+
+test("a head half failing wholly for the parent's reason is systemic: the tail is not run", async () => {
+  const sources = items(40);
+  const { calls, batchRunner } = fake(new Set(sources));
+  const results = await runIn("wolfram", sources, { batchRunner });
+  expect(erroredAt(results)).toHaveLength(40);
+  // The batch, then head halves down to a pair, whose two leaves both run; no tail above that.
+  expect(calls).toEqual([40, 20, 10, 5, 3, 2, 1, 1]);
+});
+
+test("a head that died partway skips the tail, which runIn would discard", async () => {
+  const calls: number[] = [];
+  const batchRunner = async (chunk: readonly string[]): Promise<Result[]> => {
+    calls.push(chunk.length);
+    if (chunk.length === 8) return failAll(8, "wolframscript: killed (memory, peak 4112 MB)");
+    return chunk.map((_, i) => (i < 2 ? { value: "ok" } : { error: "no output" }));
+  };
+  const results = await runIn("wolfram", items(8), { batchRunner });
+  // The batch (lost), its head of 4 (partial), no tail; then runIn resumes after item 2.
+  expect(calls.slice(0, 2)).toEqual([8, 4]);
+  expect(results).toHaveLength(8);
+});
+
 test("a healthy batch costs one run", async () => {
   const { calls, batchRunner } = fake(new Set());
   await runIn("wolfram", items(40), { batchRunner });
