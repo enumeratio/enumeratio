@@ -47,10 +47,20 @@ const run = (script: string): Promise<void> =>
   });
 
 // What the steps write is not what they read; the records they generate from are.
+const generated = /(naming-data\.ts|\.generated\.(js|ts))$|\/(tests|docs)(\/|$)/;
 const inputs = {
   dir,
   roots: [dir, at("../statistics/reference")],
-  skip: (path: string) => /(naming-data\.ts|\.generated\.(js|ts))$|\/(tests|docs)(\/|$)/.test(path),
+  skip: (path: string) => generated.test(path),
+};
+
+// The compile steps read no record: records reach them only through the two files `quick`
+// derives from them, which stand in here. A record edit that changes neither (an oracle value, a
+// summary) leaves the compile steps' inputs, and their minutes of work, as they were.
+const compileInputs = {
+  dir,
+  roots: [dir, at("src/statistics/naming-data.ts"), at("src/maps-laws.generated.ts")],
+  skip: (path: string) => generated.test(path) || path === at("reference"),
 };
 
 // The compile steps import the stubs, so they count as outputs here.
@@ -70,7 +80,7 @@ await Promise.all(
     for (let step = queue.shift(); step !== undefined; step = queue.shift()) {
       const [script, output] = step;
       try {
-        const ran = await cached(script, inputs, [at(output)], () => run(script));
+        const ran = await cached(script, compileInputs, [at(output)], () => run(script));
         if (!ran) console.log(`${script}: up to date`);
       } catch (error) {
         failures.push(error);
