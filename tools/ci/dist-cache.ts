@@ -246,7 +246,8 @@ function prune(dir: string): void {
   }
   for (const f of readdirSync(dir)) {
     const p = join(dir, f);
-    if (f.startsWith(".tmp-") && statSync(p).mtimeMs < oldest) rmSync(p, { force: true });
+    if ((f.startsWith(".tmp-") || f.startsWith("verdicts-")) && statSync(p).mtimeMs < oldest)
+      rmSync(p, { force: true });
   }
 }
 
