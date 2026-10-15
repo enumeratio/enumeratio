@@ -1,15 +1,15 @@
-id	section	role	expr	expected	known	tolerance	source	mpmath.kind	mpmath.note	mpmath.issue
-rg-1-2-3		test	[N, [CarlsonRG, 1, 2, 3]]	1.4018470999908952	{num: "1.4018470999908952"}	1e-11	mpmath 1.3.0 elliprg			
-rg-1-1-1		test	[N, [CarlsonRG, 1, 1, 1]]	{num: "1.0"}	{num: "1"}	1e-11	mpmath 1.3.0 elliprg			
-rg-2-2-2		test	[N, [CarlsonRG, 2, 2, 2]]	1.4142135623730951	{num: "1.4142135623730951"}	1e-11	mpmath 1.3.0 elliprg			
-rg-0-1-2		test	[N, [CarlsonRG, 0, 1, 2]]	0.9550494472569284	{num: "0.955049447256928"}	1e-11	mpmath 1.3.0 elliprg			
-rg-0-2-3		test	[N, [CarlsonRG, 0, 2, 3]]	1.2386893481316148	{num: "1.2386893481316148"}	1e-11	mpmath 1.3.0 elliprg			
-rg-0-5-1-1-5		test	[N, [CarlsonRG, 0.5, 1, 1.5]]	0.9912555905902579	{num: "0.991255590590258"}	1e-11	mpmath 1.3.0 elliprg			
-rg-1-4-4		test	[N, [CarlsonRG, 1, 4, 4]]	1.7091995761561454	{num: "1.7091995761561452"}	1e-11	mpmath 1.3.0 elliprg			
-rg-1-1i-2-3		test	[N, [CarlsonRG, [Complex, 1, 1], 2, 3]]	[Complex, 1.4161421049284, 0.1309718448424377]	[Complex, 1.4161421049283998, 0.1309718448424378]	1e-11	mpmath 1.3.0 elliprg			
-rg-3-2i-1-1i-5		test	[N, [CarlsonRG, [Complex, 3, -2], [Complex, 1, 1], 5]]	[Complex, 1.7245616145696896, -0.07667991249655379]	[Complex, 1.7245616145696891, -0.07667991249655384]	1e-11	mpmath 1.3.0 elliprg			
-rg-0-5-0-5i-0-5-0-5i-2		test	[N, [CarlsonRG, [Complex, 0.5, 0.5], [Complex, 0.5, -0.5], 2]]	0.9902150204227402	{num: "0.99021502042274"}	1e-11	mpmath 1.3.0 elliprg			
-rg-1-3-2-5-2		test	[N, [CarlsonRG, [Rational, 1, 3], 2, [Rational, 5, 2]]]	1.2432376337979947	{num: "1.2432376337979947"}	1e-11	mpmath 1.3.0 elliprg			
-rg-0-0-0		test	[N, [CarlsonRG, 0, 0, 0]]	{num: "0.0"}	{num: "0"}	1e-13	mpmath 1.3.0 elliprg			
-n-carlsonrg-two-negative-arguments		test	[N, [CarlsonRG, -1.612, 2, -0.5]]	[Complex, 1.013142170465291, 0.4658924758177605]				ours	Two arguments at Re < 0, the region carlson.ts leaves unverified for RJ and RD (RG reaches RD): ours answers 1.0131 + 0.4659i, but the defining integral at 1e-6 off the cut gives 0.3783 + 0.4659i, as mpmath does. RG should stay symbolic here, as RJ does.	911
-n-carlsonrg-3-over-4-4-5-50	Scope		[N, [CarlsonRG, [Rational, 3, 4], 4, 5], 50]	{num: "1.7683569172007606057005120565827933724840481663269"}						
+id	section	role	expr	expected	known	tolerance	source	mpmath.kind	mpmath.note
+rg-1-2-3		test	[N, [CarlsonRG, 1, 2, 3]]	1.4018470999908952	{num: "1.4018470999908952"}	1e-11	mpmath 1.3.0 elliprg		
+rg-1-1-1		test	[N, [CarlsonRG, 1, 1, 1]]	{num: "1.0"}	{num: "1"}	1e-11	mpmath 1.3.0 elliprg		
+rg-2-2-2		test	[N, [CarlsonRG, 2, 2, 2]]	1.4142135623730951	{num: "1.4142135623730951"}	1e-11	mpmath 1.3.0 elliprg		
+rg-0-1-2		test	[N, [CarlsonRG, 0, 1, 2]]	0.9550494472569284	{num: "0.955049447256928"}	1e-11	mpmath 1.3.0 elliprg		
+rg-0-2-3		test	[N, [CarlsonRG, 0, 2, 3]]	1.2386893481316148	{num: "1.2386893481316148"}	1e-11	mpmath 1.3.0 elliprg		
+rg-0-5-1-1-5		test	[N, [CarlsonRG, 0.5, 1, 1.5]]	0.9912555905902579	{num: "0.991255590590258"}	1e-11	mpmath 1.3.0 elliprg		
+rg-1-4-4		test	[N, [CarlsonRG, 1, 4, 4]]	1.7091995761561454	{num: "1.7091995761561452"}	1e-11	mpmath 1.3.0 elliprg		
+rg-1-1i-2-3		test	[N, [CarlsonRG, [Complex, 1, 1], 2, 3]]	[Complex, 1.4161421049284, 0.1309718448424377]	[Complex, 1.4161421049283998, 0.1309718448424378]	1e-11	mpmath 1.3.0 elliprg		
+rg-3-2i-1-1i-5		test	[N, [CarlsonRG, [Complex, 3, -2], [Complex, 1, 1], 5]]	[Complex, 1.7245616145696896, -0.07667991249655379]	[Complex, 1.7245616145696891, -0.07667991249655384]	1e-11	mpmath 1.3.0 elliprg		
+rg-0-5-0-5i-0-5-0-5i-2		test	[N, [CarlsonRG, [Complex, 0.5, 0.5], [Complex, 0.5, -0.5], 2]]	0.9902150204227402	{num: "0.99021502042274"}	1e-11	mpmath 1.3.0 elliprg		
+rg-1-3-2-5-2		test	[N, [CarlsonRG, [Rational, 1, 3], 2, [Rational, 5, 2]]]	1.2432376337979947	{num: "1.2432376337979947"}	1e-11	mpmath 1.3.0 elliprg		
+rg-0-0-0		test	[N, [CarlsonRG, 0, 0, 0]]	{num: "0.0"}	{num: "0"}	1e-13	mpmath 1.3.0 elliprg		
+n-carlsonrg-two-negative-arguments		test	[N, [CarlsonRG, -1.612, 2, -0.5]]	[CarlsonRG, -1.612, 2, -0.5]				unevaluated	With two arguments at Re < 0 the Carlson pieces land on different sides of the cut (carlson.ts leaves it unverified for RJ and RD), so ours stays symbolic rather than answer a wrong real part; mpmath answers 0.3783 + 0.4659i, which the defining integral confirms.
+n-carlsonrg-3-over-4-4-5-50	Scope		[N, [CarlsonRG, [Rational, 3, 4], 4, 5], 50]	{num: "1.7683569172007606057005120565827933724840481663269"}					

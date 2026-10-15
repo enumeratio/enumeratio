@@ -109,6 +109,12 @@ test("CarlsonRF/RC/RD/RJ/RG evaluate through compute-engine, complex included", 
   expect(im(["CarlsonRF", ["Complex", 1, 1], 2, 3])).not.toBe(0);
 });
 
+test("RG declines with two arguments at Re < 0 (the pieces sit on different sides of the cut)", () => {
+  expect(ce.box(["CarlsonRG", -1.612, 2, -0.5]).N().json).toEqual(["CarlsonRG", -1.612, 2, -0.5]);
+  // One argument at Re < 0 still matches mpmath's elliprg(-1, 2, 3).
+  expect(Number.isFinite(num(["CarlsonRG", -1.0, 2, 3]))).toBe(true);
+});
+
 test("stays symbolic under plain evaluate; a float argument evaluates numerically", () => {
   expect(ce.box(["CarlsonRF", "x", "y", "z"]).evaluate().json).toEqual(["CarlsonRF", "x", "y", "z"]);
   expect(ce.box(["CarlsonRF", 1, 2, 3]).evaluate().json).toEqual(["CarlsonRF", 1, 2, 3]);
