@@ -1,17 +1,17 @@
-id	in	out
-n-arcoth-2	N(acoth(2), 30)	0.549306144334054845697622618461
-series-arcoth-x-x-positiveinfinity-5		
-a-logarithmic-singularity-at-1	acoth(1)	oo
-arcoth-positiveinfinity	acoth(oo)	0
-a-float-argument-evaluates-directly	acoth(3.5)	0.293893332451060
-as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1		
-oddness-pulls-the-sign-out-of-a-symbolic	acoth((-Symbol("x")))	True
-derivative-frac-1-1-x-2	diff(acoth(Symbol("x")), Symbol("x"))	True
-n-arcoth-2-50	N(acoth(2), 30)	0.549306144334054845697622618461
-arcoth-complexinfinity	acoth(zoo)	0
-arcoth-neg-1	acoth(-1)	-oo
-arcoth-list-list-i-neg-i-list-0-neg-i	[[acoth((0 + 1*I)), acoth((0 + -1*I))], [acoth(0), acoth((0 + -1*I))]]	[[-I*pi/4, I*pi/4], [I*pi/2, I*pi/4]]
-matrixfunction-function-arcoth-1-1-list-list-i		
-arcoth-1-over-2	acoth(Rational(1, 2))	acoth(1/2)
-arcoth-neg-1-over-2	acoth(Rational(-1, 2))	-acoth(1/2)
-arcoth-0	acoth(0)	I*pi/2
+id	in	out	verdict
+n-arcoth-2	N(acoth(2), 30)	0.549306144334054845697622618461	
+series-arcoth-x-x-positiveinfinity-5	series(acoth(Symbol("x")), Symbol("x"), oo, 5 + 1)	PoleError: 	error
+a-logarithmic-singularity-at-1	acoth(1)	oo	
+arcoth-positiveinfinity	acoth(oo)	0	
+a-float-argument-evaluates-directly	acoth(3.5)	0.293893332451060	
+as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1			
+oddness-pulls-the-sign-out-of-a-symbolic	acoth((-Symbol("x")))	True	
+derivative-frac-1-1-x-2	diff(acoth(Symbol("x")), Symbol("x"))	True	
+n-arcoth-2-50	N(acoth(2), 30)	0.549306144334054845697622618461	
+arcoth-complexinfinity	acoth(zoo)	0	
+arcoth-neg-1	acoth(-1)	-oo	
+arcoth-list-list-i-neg-i-list-0-neg-i	[[acoth((0 + 1*I)), acoth((0 + -1*I))], [acoth(0), acoth((0 + -1*I))]]	[[-I*pi/4, I*pi/4], [I*pi/2, I*pi/4]]	
+matrixfunction-function-arcoth-1-1-list-list-i			
+arcoth-1-over-2	acoth(Rational(1, 2))	acoth(1/2)	
+arcoth-neg-1-over-2	acoth(Rational(-1, 2))	-acoth(1/2)	
+arcoth-0	acoth(0)	I*pi/2	

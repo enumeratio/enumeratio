@@ -5,7 +5,7 @@ log10-100-000	log(100000, 10)	5
 log10-1-000-000	log(1000000, 10)	6	
 n-for-a-decimal-value	N(log(2, 10), 30)	0.301029995663981195213738894725	
 log-2	log(2, 10)	log(2)/log(10)	
-series-log-x-plus-1-x-0-5			
+series-log-x-plus-1-x-0-5	series(log((Symbol("x") + 1), 10), Symbol("x"), 0, 5 + 1)	True	
 an-exact-negative-power-of-10-folds-too-log-10	log(Rational(1, 100), 10)	-2	
 a-symbolic-argument-becomes-compute-engine-s	log(Symbol("x"), 10)	True	
 log10-5p5	log(5.5, 10)	1.70474809223843/log(10)	

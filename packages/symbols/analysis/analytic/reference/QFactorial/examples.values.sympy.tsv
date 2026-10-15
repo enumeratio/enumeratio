@@ -1,0 +1,18 @@
+id	in	out	verdict
+1-2-2-2-3-2-1-cdot-3-cdot-7			
+qfactorial-4-2			
+qfactorial-3-2			
+qfactorial-4-2-2			
+qfactorial-3-1-2			
+qfactorial-6-3			
+series-q-pow-9-plus-q-pow-8-plus-q-pow-7-plus-q	series((((S(Symbol("q"))**9) + (S(Symbol("q"))**8) + (S(Symbol("q"))**7) + (S(Symbol("q"))**6) + (S(Symbol("q"))**5) + (S(Symbol("q"))**4) + (S(Symbol("q"))**3) + (S(Symbol("q"))**2) + Symbol("q") + 1) * ((S(Symbol("q"))**8) + (S(Symbol("q"))**7) + (S(Symbol("q"))**6) + (S(Symbol("q"))**5) + (S(Symbol("q"))**4) + (S(Symbol("q"))**3) + (S(Symbol("q"))**2) + Symbol("q") + 1) * ((S(Symbol("q"))**7) + (S(Symbol("q"))**6) + (S(Symbol("q"))**5) + (S(Symbol("q"))**4) + (S(Symbol("q"))**3) + (S(Symbol("q"))**2) + Symbol("q") + 1) * ((S(Symbol("q"))**6) + (S(Symbol("q"))**5) + (S(Symbol("q"))**4) + (S(Symbol("q"))**3) + (S(Symbol("q"))**2) + Symbol("q") + 1) * ((S(Symbol("q"))**5) + (S(Symbol("q"))**4) + (S(Symbol("q"))**3) + (S(Symbol("q"))**2) + Symbol("q") + 1) * ((S(Symbol("q"))**4) + (S(Symbol("q"))**3) + (S(Symbol("q"))**2) + Symbol("q") + 1) * ((S(Symbol("q"))**3) + (S(Symbol("q"))**2) + Symbol("q") + 1) * ((S(Symbol("q"))**2) + Symbol("q") + 1) * (Symbol("q") + 1)), Symbol("q"), 0, 10 + 1)	TimeoutError: over 30s	error
+series-x-pow-2-plus-x-plus-1-times-x-plus-1-x	series((((S(Symbol("x"))**2) + Symbol("x") + 1) * (Symbol("x") + 1)), Symbol("x"), oo, 6 + 1)	True	
+qfactorial-3-1-over-2			
+matrixfunction-function-1-pow-2-plus-1-plus-1			
+n-qfactorial-1-over-3-6-50			
+fullsimplify-normal-series-qfactorial-x-q-x-0-3			
+fullsimplify-normal-series-qfactorial-x-q-x-x0-2			
+the-inversion-generating-function-of			
+at-q-1-it-is-the-ordinary-factorial			
+series-qfactorial-1-over-2-q-q-0-3			
+series-qfactorial-minus-3-over-2-q-q-0-3			

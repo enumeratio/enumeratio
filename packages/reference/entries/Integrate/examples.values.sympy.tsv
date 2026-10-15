@@ -1,0 +1,4 @@
+id	in	out
+odd-power-of-sine	integrate((S(sin(Symbol("x")))**3), Symbol("x"))	True
+sine-times-cosine-cubed	integrate(((S(sin(Symbol("x")))**3) * cos(Symbol("x"))), Symbol("x"))	True
+definite	integrate(sin(Symbol("x")), (Symbol("x"), 0, pi))	2

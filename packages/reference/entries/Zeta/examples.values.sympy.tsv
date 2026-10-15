@@ -27,9 +27,9 @@ zeta-5-2-neg-2-stays-symbolic	zeta(Rational(5, 2), -2)	nan	inconclusive
 n-zeta-1-2-neg-1-converges-by-continuation	N(zeta(Rational(1, 2), -1), 30)	nan	inconclusive
 n-zeta-neg-3-2-neg-1-matches-wolfram	N(zeta(Rational(-3, 2), -1), 30)	nan	inconclusive
 n-zeta-i-neg-2-complex-s	N(zeta((0 + 1*I), -2), 30)	nan	disagree
-fullsimplify-normal-series-zeta-x-x-0-2			
-normal-series-zeta-x-x-positiveinfinity-6			
-normal-series-zeta-x-x-1-2			
+fullsimplify-normal-series-zeta-x-x-0-2	simplify((series(zeta(Symbol("x")), Symbol("x"), 0, 2 + 1)).removeO())	True	
+normal-series-zeta-x-x-positiveinfinity-6	(series(zeta(Symbol("x")), Symbol("x"), oo, 6 + 1)).removeO()	None	inconclusive
+normal-series-zeta-x-x-1-2	(series(zeta(Symbol("x")), Symbol("x"), 1, 2 + 1)).removeO()	PoleError: Cannot expand zeta(_x + 1) around 0	error
 zeta-inexact-s-negative-integer-a-abs-terms	zeta(-1.500000001, -3)	nan	inconclusive
 zeta-complex-a-left-of-imaginary-axis	zeta((-1.5 + 1*I), (-0.04412268481772066 + 0.9990261201212289*I))	-2.07051414112865 + 3.28265267676808*I	disagree
 n-zeta-3-neg-2p5-sums-abs-terms	N(zeta(3, -2.5), 30)	0.0541020258208637015018708342839	disagree

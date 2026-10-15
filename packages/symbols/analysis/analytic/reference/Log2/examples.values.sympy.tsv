@@ -4,7 +4,7 @@ log2-1	log(1, 2)	0
 log2-1-024	log(1024, 2)	10	
 log2-2-pow-10	log((S(2)**10), 2)	10	
 a-machine-precision-argument-evaluates	log(1.4142, 2)	0.346564000188003/log(2)	
-series-log-x-plus-1-2-x-0-5			
+series-log-x-plus-1-2-x-0-5	series(log((Symbol("x") + 1), 2), Symbol("x"), 0, 5 + 1)	True	
 an-exact-negative-power-of-2-folds-too-log-2	log(Rational(1, 8), 2)	-3	
 a-symbolic-argument-becomes-the-two-argument-log	log(Symbol("x"), 2)	True	
 an-integer-power-is-pulled-out-2-log-2-3	log(9, 2)	log(9)/log(2)	

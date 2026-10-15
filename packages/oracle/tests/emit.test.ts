@@ -567,6 +567,64 @@ test("compute-engine's canonical Function and iterator forms emit as Wolfram wri
   });
 });
 
+test("SymPy's series order is one past ours, and Normal and the simplifiers go round a series", () => {
+  const sympy = (expr: unknown) => {
+    const out = emit(expr as never, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  const series = ["Series", ["Sin", "x"], "x", 0, 5];
+  expect(sympy(series)).toBe('series(sin(Symbol("x")), Symbol("x"), 0, 5 + 1)');
+  expect(sympy(["Normal", series])).toBe('(series(sin(Symbol("x")), Symbol("x"), 0, 5 + 1)).removeO()');
+  expect(sympy(["FullSimplify", ["Normal", series]])).toBe(
+    'simplify((series(sin(Symbol("x")), Symbol("x"), 0, 5 + 1)).removeO())',
+  );
+  // Only around a series: `Normal` of anything else is no SymPy call, and a simplifier is another row's.
+  expect(sympy(["Normal", ["Sin", "x"]])).toBeUndefined();
+  expect(sympy(["Simplify", ["Sin", "x"]])).toBeUndefined();
+});
+
+test("SymPy reads a derivative ours holds at a point as differentiating in each argument, then substituting", () => {
+  const source = (expr: unknown): string | undefined => {
+    const out = emit(expr as never, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  expect(source(["Apply", ["Derivative", "ChebyshevT", 0, 5], 5, 0])).toBe(
+    '(diff(chebyshevt(5, Symbol("_d1", real=True)), (Symbol("_d1", real=True), 5))).subs({Symbol("_d1", real=True): 0})',
+  );
+  // Orders and points pair off, one to an argument.
+  expect(source(["Apply", ["Derivative", "ChebyshevT", 5], 5, 0])).toBeUndefined();
+  // The variable is real only at a real point: sqrt(t**2) differentiates to 1 at I, not to sign(I).
+  expect(source(["Apply", ["Derivative", "Sin", 1], ["Complex", 0, 1]])).toBe(
+    '(diff(sin(Symbol("_d1")), (Symbol("_d1"), 1))).subs({Symbol("_d1"): (0 + 1*I)})',
+  );
+  expect(source(["Apply", ["Derivative", "Sin", 1], "x"])).toContain('Symbol("_d1")');
+  expect(source(["Apply", ["Derivative", "Sin", 1], "x"])).not.toContain("real=True");
+  // A derivative inside a point is its own, under names of its own (the outer point is no plain number).
+  expect(source(["Apply", ["Derivative", "Sin", 1], ["Apply", ["Derivative", "Cos", 1], 2]])).toBe(
+    '(diff(sin(Symbol("_d1")), (Symbol("_d1"), 1))).subs({Symbol("_d1"): ' +
+      '(diff(cos(Symbol("_d2", real=True)), (Symbol("_d2", real=True), 1))).subs({Symbol("_d2", real=True): 2})})',
+  );
+});
+
+test("SymPy's integrate takes a bare variable or a tuple, its first iterator the innermost", () => {
+  const sympy = (expr: unknown) => {
+    const out = emit(expr as never, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  expect(sympy(["Integrate", ["Sin", "x"], "x"])).toBe('integrate(sin(Symbol("x")), Symbol("x"))');
+  const body = ["Function", ["Block", ["Sin", "x"]], "x"];
+  expect(sympy(["Integrate", body, ["Limits", "x", "Nothing", "Nothing"]])).toBe(
+    'integrate(sin(Symbol("x")), Symbol("x"))',
+  );
+  expect(sympy(["Integrate", body, ["Limits", "x", 0, "Pi"]])).toBe(
+    'integrate(sin(Symbol("x")), (Symbol("x"), 0, pi))',
+  );
+  // Ours integrates the first limit last, as Wolfram's.
+  expect(sympy(["Integrate", ["Multiply", "x", "y"], ["Limits", "x", 0, 1], ["Limits", "y", 0, "x"]])).toBe(
+    'integrate((Symbol("x") * Symbol("y")), (Symbol("y"), 0, Symbol("x")), (Symbol("x"), 0, 1))',
+  );
+});
+
 test("a library's heads emit through its own mappings, called by namespace", () => {
   const fig = mappingsFromBindings([
     {

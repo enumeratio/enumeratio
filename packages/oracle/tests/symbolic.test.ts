@@ -613,6 +613,137 @@ test.skipIf(!hasSympy)("held alike: kernel holds the call, agrees; kernel evalua
   );
 });
 
+// SymPy's series and antiderivatives, run in SymPy: one process for the lot.
+test.skipIf(!hasSympy)("sympy: a series agrees up to the order both claim, an antiderivative up to a constant", () => {
+  const sin = ["Sin", "x"];
+  const power = (base: unknown, exponent: number) => ["Power", base, exponent];
+  const term = (coefficient: unknown, exponent: number) => ["Multiply", coefficient, power("x", exponent)];
+  const taylor = ["Add", ["Negate", ["Divide", power("x", 3), 6]], "x"];
+  const cases: [string, unknown, unknown, string[]][] = [
+    // Ours claims O(x^5) of a series asked to x^3: compared through x^3 (SymPy's order is one past ours).
+    ["through the requested order", ["Series", sin, "x", 0, 3], ["Add", taylor, ["BigO", power("x", 5)]], ["x"]],
+    // A wrong coefficient below the order both claim is a disagreement.
+    [
+      "wrong coefficient",
+      ["Series", sin, "x", 0, 3],
+      ["Add", term(["Rational", 1, 6], 3), "x", ["BigO", power("x", 5)]],
+      ["x"],
+    ],
+    // Past ours' own claim nothing is compared: x + O(x^3) agrees with sin x through x^2.
+    ["past ours' claim", ["Series", sin, "x", 0, 5], ["Add", "x", ["BigO", power("x", 3)]], ["x"]],
+    // A polynomial (as `Normal` gives) has no O-term; the requested order bounds it.
+    ["normal", ["Normal", ["Series", sin, "x", 0, 3]], taylor, ["x"]],
+    // At infinity the order is a negative power of x.
+    [
+      "at infinity",
+      ["Series", ["Arctan", "x"], "x", "PositiveInfinity", 3],
+      [
+        "Add",
+        term(["Rational", 1, 3], -3),
+        ["Divide", -1, "x"],
+        ["Multiply", ["Rational", 1, 2], "Pi"],
+        ["BigO", power("x", -5)],
+      ],
+      ["x"],
+    ],
+    // About another point, the powers are those of x - a.
+    [
+      "off center",
+      ["Series", ["Exp", "x"], "x", 1, 2],
+      [
+        "Add",
+        "ExponentialE",
+        ["Multiply", "ExponentialE", ["Add", "x", -1]],
+        ["Multiply", ["Rational", 1, 2], "ExponentialE", power(["Add", "x", -1], 2)],
+        ["BigO", power(["Add", "x", -1], 3)],
+      ],
+      ["x"],
+    ],
+    // A log is the coefficient of its power.
+    [
+      "logarithmic",
+      ["Series", ["Divide", ["Ln", "x"], "x"], "x", "PositiveInfinity", 3],
+      ["Divide", ["Ln", "x"], "x"],
+      ["x"],
+    ],
+    // Taken from below, a log at its branch point is another expansion: not comparable.
+    [
+      "log from below",
+      ["Series", ["Multiply", sin, ["Ln", "x"]], "x", 0, 3],
+      ["Add", ["Multiply", "x", ["Ln", "x"]], ["Multiply", ["Rational", -1, 6], power("x", 3), ["Ln", "x"]]],
+      ["x"],
+    ],
+    ["antiderivative", ["Integrate", sin, "x"], ["Negate", ["Cos", "x"]], ["x"]],
+    ["antiderivative up to a constant", ["Integrate", sin, "x"], ["Subtract", 1, ["Cos", "x"]], ["x"]],
+    ["wrong antiderivative", ["Integrate", sin, "x"], ["Cos", "x"], ["x"]],
+    [
+      "definite with a parameter",
+      ["Integrate", power("x", 3), ["Limits", "x", 0, "a"]],
+      ["Divide", power("a", 4), 4],
+      ["a", "x"],
+    ],
+    // An order of zero claims no terms: it agrees with nothing, as a series that has none below its order does.
+    ["claiming no terms", ["Series", sin, "x", 0, 3], ["BigO", power("x", 0)], ["x"]],
+    ["a bare O-term against terms", ["Series", sin, "x", 0, 3], ["BigO", power("x", 4)], ["x"]],
+    ["no terms on either side", ["Series", power("x", 5), "x", 0, 3], ["BigO", power("x", 4)], ["x"]],
+    ["no terms against a term", ["Series", power("x", 5), "x", 0, 3], ["Add", "x", ["BigO", power("x", 4)]], ["x"]],
+    // SymPy's series is from above by default: sqrt(x**2) is x there and -x from below, where Wolfram's is two-sided.
+    ["one side only", ["Series", ["Sqrt", power("x", 2)], "x", 0, 2], ["Add", "x", ["BigO", power("x", 3)]], ["x"]],
+    // A constant that jumps, or depends on the side of a branch point, is no constant.
+    ["jump", ["Integrate", "x", "x"], ["Add", ["Divide", power("x", 2), 2], ["Sign", "x"]], ["x"]],
+    [
+      "branch",
+      ["Integrate", ["Divide", 1, ["Add", 1, power("x", 2)]], "x"],
+      ["Negate", ["Arctan", ["Divide", 1, "x"]]],
+      ["x"],
+    ],
+    ["side-dependent constant", ["Integrate", ["Divide", 1, "x"], "x"], ["Ln", ["Negate", "x"]], ["x"]],
+    // Separate integrals aren't differentiated in each other's variables.
+    [
+      "separate integrals",
+      ["Add", ["Integrate", sin, "x"], ["Integrate", ["Cos", "y"], "y"]],
+      ["Add", ["Negate", ["Cos", "x"]], ["Multiply", 2, "x"], ["Sin", "y"]],
+      ["x", "y"],
+    ],
+  ];
+  const program = cases.map(([, expr, ours, free]) => {
+    const source = symbolicAgreementSource("sympy", expr as never, ours as never, free);
+    expect(source).toBeDefined();
+    return `print(${source})`;
+  });
+  // A variable of integration that is in neither answer decides nothing.
+  program.push('print(enumeratio_antiderivative_agree(Symbol("x") + 1, Symbol("x"), [Symbol("y")]))');
+  const run = spawnSync("python3", ["-c", `from sympy import *\n${SYMPY_PREAMBLE}\n${program.join("\n")}`], {
+    encoding: "utf8",
+  });
+  expect(run.stderr).toBe("");
+  const verdicts = run.stdout.trim().split("\n");
+  expect(Object.fromEntries(cases.map(([label], i) => [label, verdicts[i]]))).toEqual({
+    "through the requested order": "True",
+    "wrong coefficient": "False",
+    "past ours' claim": "True",
+    normal: "True",
+    "at infinity": "True",
+    "off center": "True",
+    logarithmic: "True",
+    "log from below": "None",
+    antiderivative: "True",
+    "antiderivative up to a constant": "True",
+    "wrong antiderivative": "False",
+    "definite with a parameter": "True",
+    "claiming no terms": "None",
+    "a bare O-term against terms": "False",
+    "no terms on either side": "None",
+    "no terms against a term": "False",
+    "one side only": "None",
+    jump: "None",
+    branch: "None",
+    "side-dependent constant": "None",
+    "separate integrals": "None",
+  });
+  expect(verdicts[cases.length]).toBe("None");
+});
+
 const hasPython = spawnSync("python3", ["-c", "pass"]).status === 0;
 
 // The held call reaches Python as a JSON string literal; whatever ours' source holds must survive it.

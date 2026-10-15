@@ -77,7 +77,7 @@ n-polylog-250-neg-4-a-large-order-past-z-1	N(polylog(250, -4), 30)	-4.0000000000
 n-polylog-250-4-a-large-order-on-the-cut	N(polylog(250, 4), 30)	4.0 - 1.019863859497598374311260677e-454*I	
 n-polylog-2500000-4-a-huge-order-returns	N(polylog(2500000, 4), 30)	4.00000000000000000000000000003 - 1.91009646958618531905136366578e-14554472*I	
 n-polylog-40p5-2-plus-3i-a-large-complex-point	N(polylog(40.5, (2 + 3*I)), 30)	1.99999999999678444846009173589 + 3.00000000000771731888027005127*I	
-normal-series-polylog-2-x-x-positiveinfinity-6			
+normal-series-polylog-2-x-x-positiveinfinity-6	(series(polylog(2, Symbol("x")), Symbol("x"), oo, 6 + 1)).removeO()	None	inconclusive
 polylog-s-tiny-negative-rim	N(polylog(-1e-12, (-0.12884449429552464 + 0.9916648104524686*I)), 30)	-0.500000000000052069459854919842 + 0.439238893322547396813604336785*I	disagree
 threads-over-a-list-of-arguments	[polylog(2, 0.5), polylog(2, 0.25)]	[polylog(2, 0.5), polylog(2, 0.25)]	
 a-non-integer-order-past-z-1-is-left-unevaluated	polylog(2.5, 2)	polylog(2.5, 2)	
@@ -104,7 +104,7 @@ polylog-2-list-list-1-over-2-0-list-0-1-over-2	[[polylog(2, Rational(1, 2)), pol
 polylog-1-0	polylog(1, 0)	0	
 d-polylog-n-z-z	diff(polylog(Symbol("n"), Symbol("z")), Symbol("z"))	True	
 matrixfunction-function-polylog-2-1-1-list-list			
-fullsimplify-series-polylog-n-x-x-x0-2			
+fullsimplify-series-polylog-n-x-x-x0-2	simplify(series(polylog(Symbol("n"), Symbol("x")), Symbol("x"), Symbol("x0"), 2 + 1))	True	
 li-1-2-1-zeta-1-2-a-non-integer-order-from	polylog(0.5, 1)	-1.46035450880959	
 li-1-2-1-2-0-80612672-via-the-lerch-series	polylog(0.5, 0.5)	0.806126723042852	
 li-5-2-1-2-0-46229778-the-alternating-side-euler	polylog(2.5, -0.5)	-0.462297782190063	
