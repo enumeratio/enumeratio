@@ -56,7 +56,7 @@ const DEEP_FIBERS: Readonly<Record<string, readonly (readonly number[])[]>> = {
 export const deepHeads = Object.keys(DEEP_FIBERS);
 
 const isDeep = (head: string, p: readonly number[]): boolean =>
-  DEEP_FIBERS[head]?.some((q) => q.every((x, i) => x === p[i])) ?? false;
+  DEEP_FIBERS[head]?.some((q) => q.length === p.length && q.every((x, i) => x === p[i])) ?? false;
 
 /** The fibers a build checks, and those left to the nightly sweep. */
 export const fibersOf = (family: EpsilFamily, deep: boolean): number[][] =>

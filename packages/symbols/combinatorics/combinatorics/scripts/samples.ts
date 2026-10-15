@@ -11,8 +11,16 @@ const toJson = (element: unknown): unknown => (Array.isArray(element) ? ["List",
 /** Elements (as MathJSON contents) of the families over `carrier` (its constructor name):
  *  one-parameter families up to `maxSize`, two-parameter ones (n, k) at k ≤ n. */
 export function smallElements(ce: Engine, carrier: string, maxSize = 5, perFamily = 8): unknown[] {
-  const out: unknown[] = [];
   const seen = new Set<string>();
+  return allElements(ce, carrier, maxSize, perFamily).filter((sample) => {
+    const key = JSON.stringify(sample);
+    return !seen.has(key) && seen.add(key);
+  });
+}
+
+/** `smallElements` before de-duplication. */
+export function allElements(ce: Engine, carrier: string, maxSize = 5, perFamily = 8): unknown[] {
+  const out: unknown[] = [];
   // A carrier whose slots are other carriers' values (`carrierElements`) isn't sampled.
   for (const family of allKernels(ce).filter(
     (f) => f.carrier === carrier && f.paramCount >= 1 && f.paramCount <= 2 && f.carrierElements === undefined,
@@ -27,11 +35,7 @@ export function smallElements(ce: Engine, carrier: string, maxSize = 5, perFamil
         for (let r = 0n; r < last; r++) {
           const element = toJson(family.unrank(params, r));
           const packed = family.carrierParams ?? 0;
-          const sample = packed === 0 ? element : ["Tuple", ...params.slice(0, packed), element];
-          const key = JSON.stringify(sample);
-          if (seen.has(key)) continue;
-          seen.add(key);
-          out.push(sample);
+          out.push(packed === 0 ? element : ["Tuple", ...params.slice(0, packed), element]);
         }
       }
   return out;

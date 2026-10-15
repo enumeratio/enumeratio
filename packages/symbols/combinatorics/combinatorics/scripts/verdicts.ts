@@ -18,12 +18,13 @@ const at = (path: string): string => fileURLToPath(new URL(`../${path}`, import.
 
 /** Where each kind of cross-check lives, for `verdictsFor`. */
 export const checkers = {
-  /** compile-maps.ts's `agrees`. */
+  /** compile-maps.ts's `agrees`. Its oracle, `evaluateDefinition`, is structures' (a dist, hashed
+   *  anyway); src/maps.ts only re-exports it, so it stays out. */
   maps: ["scripts/compile-maps.ts"],
   /** The statistics areas' shared `agrees`. */
   statistics: ["src/statistics/generate-compiled.ts"],
   /** The families' `disagreements`, and the Epsil it reads them through. */
-  families: ["scripts/family-checks.ts", "collections/src/families/epsil.ts"],
+  families: ["scripts/family-checks.ts", "collections/src/families/epsil.ts", "collections/src/families/types.ts"],
 } as const;
 
 export const verdictsFor = (step: string, roots: readonly string[]) =>
