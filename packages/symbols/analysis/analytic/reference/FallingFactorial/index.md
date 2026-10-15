@@ -12,4 +12,15 @@ seeAlso:
   - RisingFactorial
 names:
   wolfram: FactorialPower
+bindings:
+  - origin: mapped
+    form: sympy
+    template: ff($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 ---

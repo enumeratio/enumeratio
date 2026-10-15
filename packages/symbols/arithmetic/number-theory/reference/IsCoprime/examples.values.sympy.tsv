@@ -1,0 +1,22 @@
+id	in	out	verdict
+iscoprime-4-9	(igcd(4, 9) == 1)	True	
+both-are-divisible-by-3	(igcd(6, 9) == 1)	False	
+several-arguments-every-pair-must-be-coprime			
+iscoprime-8-11	(igcd(8, 11) == 1)	True	
+iscoprime-2-4	(igcd(2, 4) == 1)	False	
+gaussian-integers-2-i-and-2-i-are-non-associate	(igcd((2 + 1*I), (2 + -1*I)) == 1)	ValueError: 2 + I is not an integer	error
+listable	[(igcd(3, 4) == 1), (igcd(3, 6) == 1)]	[True, False]	
+iscoprime-2-3-neg-5-7			
+iscoprime-5-plus-i-1-minus-i	(igcd((5 + 1*I), (1 + -1*I)) == 1)	ValueError: 5 + I is not an integer	error
+iscoprime-neg-1-plus-2-pow-100-neg-1-plus-3-pow	(igcd((-1 + (S(2)**100)), (-1 + (S(3)**100))) == 1)	False	
+iscoprime-list-1-2-3-4-5-6	[(igcd(1, 6) == 1), (igcd(2, 6) == 1), (igcd(3, 6) == 1), (igcd(4, 6) == 1), (igcd(5, 6) == 1)]	[True, False, False, False, True]	
+iscoprime-2-3	(igcd(2, 3) == 1)	True	
+iscoprime-5-6	(igcd(5, 6) == 1)	True	
+iscoprime-5-3	(igcd(5, 3) == 1)	True	
+iscoprime-8-9	(igcd(8, 9) == 1)	True	
+iscoprime-6-11	(igcd(6, 11) == 1)	True	
+iscoprime-5-12	(igcd(5, 12) == 1)	True	
+iscoprime-a-b	(igcd(Symbol("a"), Symbol("b")) == 1)	ValueError: a is not an integer	error
+iscoprime-nthprime-10-nthprime-15-nthprime-20			
+iscoprime-7-10	(igcd(7, 10) == 1)	True	
+pairwise-not-collectively-gcd-6-10-15-1-yet-no			

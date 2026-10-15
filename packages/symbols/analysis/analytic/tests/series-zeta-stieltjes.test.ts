@@ -3,8 +3,8 @@ import { ComputeEngine } from "@enumeratio/engine/unstable";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
 
-// compute-engine's Series stops the Laurent series of Zeta at 1 after the constant; ours goes
-// on with (-1)^k γ_k (s-1)^k / k!.
+// compute-engine 0.152 carries the Laurent series of Zeta at 1 with the Stieltjes constants natively,
+// (-1)^k γ_k (s-1)^k / k!, so we declare nothing here; this pins that it stays so.
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);

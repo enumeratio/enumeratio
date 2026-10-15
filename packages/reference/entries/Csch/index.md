@@ -13,5 +13,14 @@ signatures:
     overrides: compute-engine
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: csch($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 stub: engine
 ---

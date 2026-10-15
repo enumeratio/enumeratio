@@ -362,6 +362,92 @@ function regularizedDiagonalExact(ce: ComputeEngine, ops: readonly BoxedExpressi
   return ce.box(["Multiply", ["Exp", z.json], ["Divide", 1, ["Gamma", a.json]]] as never).evaluate();
 }
 
+/**
+ * The most relative error the recurrence of `regularizedRaise` may carry out. Each step
+ * F̃(c−1) = e^z/Γ(c) − z·F̃(c) subtracts nearly equal terms at large positive z (F̃ ≈ e^z/(z·Γ(c)),
+ * so z = 100 already loses about two digits), and the bound below grows by about |head|/|result| per
+ * step; a result that cannot be vouched for to this much is left to the plain series. About 18 ulps:
+ * the bound is pessimistic, and the identity row (three terms, one step each) sits near it.
+ */
+const RAISE_TOLERANCE = 4e-15;
+
+/**
+ * The numeric twin of `regularizedRaiseExact`: F̃(α; α+1; z) for a real non-integer α < 0 and real z ≠ 0,
+ * by the same unrolled recurrence F̃(α; α+1) = e^z/Γ(α+1) − z·F̃(α+1; α+2), so a sum of chain members
+ * is rounded the way the exact fold is. It starts from a sum of positive terms (the series for z > 0,
+ * Kummer's e^z·F̃(1; c+1; −z) for z < 0), so the start is good to a few ulps, and carries a running
+ * relative error bound through the steps; undefined (the plain series answers) once the bound passes
+ * `RAISE_TOLERANCE`, or where the start can't be had.
+ */
+function regularizedRaise(a: Cx, b: Cx, z: Cx): Cx | undefined {
+  if (a.im !== 0 || b.im !== 0 || z.im !== 0 || z.re === 0 || !(a.re < 0) || Number.isInteger(a.re)) return undefined;
+  // b is a's decimal plus one, so it is allowed an ulp of rounding (-0.3 and 0.7 differ from exact by one).
+  if (!(Math.abs(b.re - a.re - 1) <= EPS * Math.max(1, Math.abs(a.re))) || -a.re >= MAX_RAISE) return undefined;
+  const steps = Math.floor(-a.re) + 1;
+  let c = a.re + steps;
+  const first = z.re > 0 ? pfqRegularizedSeries([cx(c)], [cx(c + 1)], z) : regularizedKummer(cx(c), cx(c + 1), z);
+  if (first === undefined || !Number.isFinite(first.re)) return undefined;
+  const u = EPS / 2;
+  let value = first;
+  let err = 2 * u;
+  for (let k = steps; k > 0; k--) {
+    c -= 1;
+    const head = mul(cexp(z), invGamma(cx(c + 1)));
+    const tail = Math.abs(z.re * value.re);
+    const next = add(head, scale(mul(z, value), -1));
+    const size = Math.abs(next.re);
+    if (!Number.isFinite(size) || size === 0) return undefined;
+    err = (err * tail + u * (2 * Math.abs(head.re) + tail)) / size + u;
+    if (!(err <= RAISE_TOLERANCE)) return undefined;
+    value = next;
+  }
+  return value;
+}
+
+/** The most contiguous steps `regularizedRaiseExact` unrolls; a more negative α is left to the numeric series.
+ * The same cap bounds the size of the exact rewrite. */
+const MAX_RAISE = 4;
+
+/**
+ * F̃(α; α+1; z) = 1F1(α; α+1; z)/Γ(α+1) at an exact non-integer α < 0 and a nonzero real z, raised
+ * to α ≥ 0 by the contiguous relation b·M(a, b, z) − b·M(a−1, b, z) − z·M(a, b+1, z) = 0 at b = a
+ * (DLMF 13.3.3), regularized:  F̃(α; α+1; z) = e^z/Γ(α+1) − z·F̃(α+1; α+2; z).
+ * Two members of the chain differ by elementary terms, so a sum like F̃(α; α+1) + z·F̃(α+1; α+2)
+ * − e^z/Γ(α+1) cancels to exactly 0 only when both sit at the same end; α ≥ 0 is left as written
+ * (the chain's canonical end), which also ends the recursion.
+ */
+function regularizedRaiseExact(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+  const [a, b, z] = ops;
+  if (a === undefined || b === undefined || z === undefined) return undefined;
+  if (z.re === 0 || z.im !== 0 || z.unknowns.length > 0) return undefined;
+  const alpha = bigRationalAt(a);
+  if (alpha === undefined || alpha[1] === 1n || alpha[0] >= 0n) return undefined;
+  if (
+    !ce
+      .function("Subtract", [b, ce.function("Add", [a, 1])])
+      .evaluate()
+      .is(0)
+  )
+    return undefined;
+  if (-alpha[0] / alpha[1] >= BigInt(MAX_RAISE)) return undefined;
+  const build = (c: BoxedExpression): unknown => {
+    if (c.re > 0) return ["Hypergeometric1F1Regularized", c.json, ["Add", c.json, 1], z.json];
+    const next = ce.function("Add", [c, 1]).evaluate();
+    return ["Subtract", ["Divide", ["Exp", z.json], ["Gamma", next.json]], ["Multiply", z.json, build(next)]];
+  };
+  const raised = ce.box(build(a) as never).evaluate();
+  // The rewrite earns its keep only as a number or a form not much larger than the head it replaces.
+  return nodeCount(raised.json) <= RAISE_GROWTH * nodeCount(["Hypergeometric1F1Regularized", ...ops.map((o) => o.json)])
+    ? raised
+    : undefined;
+}
+
+/** How many times the size of the head the exact rewrite may reach (the identity row needs about 2.5). */
+const RAISE_GROWTH = 3;
+
+const nodeCount = (json: unknown): number =>
+  Array.isArray(json) ? json.reduce((n: number, x) => n + nodeCount(x), 1) : 1;
+
 export function declareHypergeometric(ce: ComputeEngine): void {
   // Hypergeometric0F1(b, z) = 0F1(b; z), entire in z; pole at b a non-positive integer.
   ce.declare("Hypergeometric0F1", {
@@ -406,13 +492,18 @@ export function declareHypergeometric(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const cs = operandsOf(ops);
       if (cs !== undefined && !wantsNumber(ops, options))
-        return regularizedMinusOneExact(ce, ops) ?? regularizedDiagonalExact(ce, ops) ?? regularizedBessel(ce, ops);
+        return (
+          regularizedMinusOneExact(ce, ops) ??
+          regularizedDiagonalExact(ce, ops) ??
+          regularizedRaiseExact(ce, ops) ??
+          regularizedBessel(ce, ops)
+        );
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
       const [a, b, z] = cs;
       if (exceedsDoublePrecision(ce, options.numericApproximation)) return regularized1F1PastDouble(ce, ops);
       if (isMinusOneShift(a, b)) return numberResult(ce, regularizedMinusOne(a, z));
       if (isDiagonal(a, b)) return numberResult(ce, regularizedDiagonal(a, z));
-      const r = regularizedKummer(a, b, z) ?? pfqRegularizedSeries([a], [b], z);
+      const r = regularizedRaise(a, b, z) ?? regularizedKummer(a, b, z) ?? pfqRegularizedSeries([a], [b], z);
       return r === undefined ? undefined : numberResult(ce, r);
     },
   });

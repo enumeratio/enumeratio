@@ -30,7 +30,7 @@
 import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { applyAllPatches, character, eulerPhi } from "@enumeratio/ce-patches";
-import { runKernel } from "@enumeratio/utils/bounded";
+import { runKernel, runWolframKernel } from "@enumeratio/utils/bounded";
 
 const ce = new ComputeEngine();
 applyAllPatches(ce);
@@ -369,7 +369,7 @@ const wlCode = pending
   .filter(Boolean)
   .join(";\n");
 const wlClean = (s: string): number => Number(s.replace(/`[\d.]+/g, "").replace(/\*\^/g, "e"));
-const wl = parseLines(await runKernel("wolframscript", ["-code", wlCode], { timeoutMs: 300_000 }), wlClean);
+const wl = parseLines(await runWolframKernel(wlCode, { timeoutMs: 300_000 }), wlClean);
 
 // --- Compare, report, write --------------------------------------------------------
 const relErr = (ours: Pair, ref: Pair): number =>

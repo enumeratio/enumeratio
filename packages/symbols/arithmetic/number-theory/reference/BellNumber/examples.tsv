@@ -5,7 +5,7 @@ bellnumber-3			[BellNumber, 3]	5
 bellnumber-5			[BellNumber, 5]	52																							
 bellnumber-10			[BellNumber, 10]	115975																							
 threads-element-wise-over-a-list-as-wolfram-s	Scope		[BellNumber, [List, 1, 2, 3, 4]]	[List, 1, 2, 5, 15]			Threads element-wise over a list, as Wolfram's Listable heads do																	threading	compute-engine's BellNumber is Listable and threads over the list; Oscar's bare bell function takes scalars only.		
-exact-for-large-n	Scope		[BellNumber, 30]	{num: "846749014511809332450147"}			Exact for large n																	domain	The oracle mapping calls Oscar's bare bell(::Int), which tries to fit an arbitrary-precision result into a machine Int64 and overflows past n≈25; compute-engine computes BellNumber(30) exactly.		
+exact-for-large-n	Scope		[BellNumber, 30]	{num: "846749014511809332450147"}			Exact for large n																	emit	The oracle mapping calls Oscar's bare bell(::Int), which tries to fit an arbitrary-precision result into a machine Int64 and overflows past n≈25; compute-engine computes BellNumber(30) exactly.		
 the-two-argument-form-gives-the-bell-touchard	Scope		[BellNumber, 5, x]	[Add, [Power, x, 5], [Multiply, 10, [Power, x, 4]], [Multiply, 25, [Power, x, 3]], [Multiply, 15, [Power, x, 2]], x]			The two-argument form gives the Bell (Touchard) polynomial $\sum_k S(n, k)\,x^k$																				
 the-bell-polynomial-at-a-real-point-b-20-0-5	Scope		[BellNumber, 20, 0.5]	270190131940.15192			The Bell polynomial at a real point, $B_{20}(0.5)$																				
 bellnumber-list-1-2-3-4-5-6	Scope		[BellNumber, [List, 1, 2, 3, 4, 5, 6]]	[List, 1, 2, 5, 15, 52, 203]			Threads over a list of indices																				

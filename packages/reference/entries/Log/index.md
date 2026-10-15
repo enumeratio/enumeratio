@@ -23,6 +23,26 @@ references:
     identity: Logarithm
   - system: mathworld
     identity: Logarithm
+bindings:
+  - origin: mapped
+    form: sympy
+    template: log($1, 10)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: compute-engine's one-argument Log is base 10, not the natural logarithm; SymPy's log takes the value first and then the base.
+  - origin: mapped
+    form: sympy
+    template: log($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 ---
 
 - compute-engine's default base is 10, not $e$: Log(z) means $\log_{10}(z)$, and [[Ln]] is the natural logarithm.

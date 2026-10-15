@@ -1,0 +1,13 @@
+id	in	out	verdict
+argument-i	arg((0 + 1*I))	pi/2	
+argument-1-plus-i	arg((1 + 1*I))	pi/4	
+argument-neg-1	arg(-1)	pi	
+n-argument-exponentiale-plus-i-times-pi-20	N(arg((E + ((0 + 1*I) * pi))), 30)		
+argument-neg-123	arg(-123)	pi	
+argument-123-minus-456i	arg((123 + -456*I))	-atan(152/41)	
+argument-list-list-1-over-2-neg-1-list-neg-5	[[arg(Rational(1, 2)), arg(-1)], [arg(Rational(-5, 3)), arg(Rational(1, 2))]]	[[0, pi], [pi, 0]]	
+fullsimplify-matrixfunction-argument-list-list-1			
+argument-0	arg(0)	nan	inconclusive
+argument-positiveinfinity	arg(oo)	0	
+argument-negativeinfinity	arg(-oo)	pi	
+argument-positiveinfinity-times-i	arg((oo * (0 + 1*I)))		

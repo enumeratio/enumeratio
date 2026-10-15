@@ -72,6 +72,16 @@ bindings:
     arity: 1
     threadArg: 1
     note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.
+  - origin: mapped
+    form: sympy
+    template: fibonacci($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 ---
 
 - Defined by the recurrence $F_n = F_{n-1} + F_{n-2}$ with $F_0 = 0$, $F_1 = 1$.

@@ -1,0 +1,11 @@
+id	in	out	verdict
+n-artanh-1-over-2-50	N(atanh(Rational(1, 2)), 30)	0.549306144334054845697622618461	
+artanh-positiveinfinity	atanh(oo)	-I*pi/2	
+artanh-0	atanh(0)	0	
+d-artanh-x-x	diff(atanh(Symbol("x")), Symbol("x"))	True	
+fullsimplify-neg-1-over-x-times-y-plus-1-times-x			
+trigtoexp-artanh-z			
+integrate-artanh-x-x-nothing-nothing			
+artanh-2	atanh(2)	atanh(2)	
+artanh-neg-2	atanh(-2)	-atanh(2)	
+artanh-complexinfinity-is-indeterminate-the-sign	atanh(zoo)	I*AccumBounds(-pi/2, pi/2)	disagree

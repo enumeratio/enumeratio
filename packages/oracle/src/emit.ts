@@ -278,6 +278,14 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         // A Python float literal holds 53 bits; SymPy keeps every digit of a longer decimal.
         if (system === "sympy" && /[.e]/i.test(value) && value.replace(/e.*$/i, "").replace(/\D/g, "").length > 15)
           return `Float(${JSON.stringify(value)}, 50)`;
+        // Past the double range Python reads `1.0e1000` as inf (or `1e-1000` as 0) before SymPy sees it.
+        if (
+          system === "sympy" &&
+          /[.e]/i.test(value) &&
+          /[1-9]/.test(value.replace(/e.*$/i, "")) &&
+          !(Math.abs(Number(value)) > 0 && Number.isFinite(Number(value)))
+        )
+          return `Float(${JSON.stringify(value)})`;
         return value;
       }
       missing.push("literal:unrecognised");

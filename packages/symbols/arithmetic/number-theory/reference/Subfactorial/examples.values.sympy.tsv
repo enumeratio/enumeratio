@@ -18,7 +18,7 @@ fullsimplify-normal-series-subfactorial-x-x-2
 fullsimplify-normal-series-subfactorial-x-x-x0-2			
 the-hat-check-problem-the-number-of-ways-6	subfactorial(6)	265	
 recurrence-d-n-n-d-n-1-1-n	enumeratio_equal(subfactorial(4), ((4 * subfactorial(3)) + (S(-1)**4)))	True	
-d-n-is-frac-n-e-rounded-to-the-nearest-integer			
+d-n-is-frac-n-e-rounded-to-the-nearest-integer	enumeratio_equal(subfactorial(10), round((S(factorial(10)) / E)))	True	
 two-term-recurrence-d-n-1-n-d-n-d-n-1	enumeratio_equal(subfactorial(6), (5 * (subfactorial(5) + subfactorial(4))))	True	
 exponentialgeneratingfunction-subfactorial-n-n-x			
 subfactorial-2	subfactorial(2)	1	

@@ -17,6 +17,19 @@ seeAlso:
   - Binomial
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: betainc_regularized($2, $3, 0, $1)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: SymPy's betainc_regularized(a, b, x1, x2) is the integral between two limits, so the lower limit is 0 and the arguments reorder.
 ---
 
 - Normalized against [[Beta]]: $I_x(a, b)$ is the incomplete beta integral at x, divided by $B(a, b)$, so $I_0(a,b)=0$ and $I_1(a,b)=1$.

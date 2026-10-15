@@ -22,6 +22,16 @@ bindings:
     form: wolfram / mpmath / sympy
     environment: external
     note: Pochhammer[a, n]; mpmath.rf(a, n); sympy.rf(a, n).
+  - origin: mapped
+    form: sympy
+    template: rf($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 seeAlso:
   - Pochhammer
   - FallingFactorial

@@ -26,6 +26,14 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: DirichletEta[s]; mpmath.altzeta(s).
+  - origin: mapped
+    form: sympy
+    template: dirichlet_eta($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 seeAlso:
   - Zeta
   - DirichletBeta

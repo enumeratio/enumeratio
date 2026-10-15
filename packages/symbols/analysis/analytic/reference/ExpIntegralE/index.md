@@ -15,6 +15,16 @@ bindings:
     environment: engine
     source: packages/symbols/analysis/analytic/src/exp-integral-e.ts
     note: z^(n-1)·Γ(1-n, z), with the n = 0 and z = 0 removable cases handled ahead of it.
+  - origin: mapped
+    form: sympy
+    template: expint($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 seeAlso:
   - Gamma
   - GammaRegularized

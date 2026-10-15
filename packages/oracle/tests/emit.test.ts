@@ -183,6 +183,11 @@ test("a bare Infinity is SymPy's oo, and Wolfram still reads it as its own", () 
   expect(emit(["Erf", "Infinity"], "wolfram").ok).toBe(true);
 });
 
+test("SymPy reads a float past the double range as a Float, not Python's inf", () => {
+  expect(emit(["Exp", { num: "1.0e1000" }], "sympy")).toEqual({ ok: true, source: 'exp(Float("1.0e1000"))' });
+  expect(emit(["Exp", { num: "1.5" }], "sympy")).toEqual({ ok: true, source: "exp(1.5)" });
+});
+
 test("a binding's threadArgOnly threads for its own system alone", () => {
   expect(emit(["FactorInteger", ["List", 12, 18]], "sympy")).toEqual({
     ok: true,

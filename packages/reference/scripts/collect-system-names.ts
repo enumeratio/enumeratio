@@ -11,10 +11,10 @@
 //   node packages/reference/scripts/collect-system-names.ts
 
 import { writeFileSync } from "node:fs";
-import { runKernel } from "@enumeratio/utils/bounded";
+import { runWolframKernel } from "@enumeratio/utils/bounded";
 
 const code = 'Print[StringRiffle[Names["System`*"], "\\n"]]; Print["$Version=", $Version]';
-const out = await runKernel("wolframscript", ["-code", code], { timeoutMs: 600_000 });
+const out = await runWolframKernel(code, { timeoutMs: 600_000 });
 
 const lines = out.split("\n").map((line) => line.trim());
 const version = lines.find((line) => line.startsWith("$Version="))?.slice("$Version=".length);

@@ -5,7 +5,7 @@
 // entity, and expressions come back as held FullForm, never evaluated, so an example's input is
 // what the documentation typed.
 
-import { runBounded } from "@enumeratio/utils/bounded";
+import { runBounded, withFile, wolframFileArgs } from "@enumeratio/utils/bounded";
 
 export type WolframDataSource = "language" | "function" | "relation" | "formula";
 
@@ -253,7 +253,9 @@ export function collectRecords(output: string): WolframDataRecord[] {
 }
 
 async function kernel(code: string): Promise<string> {
-  const run = await runBounded("wolframscript", ["-code", code], { timeoutMs: TIMEOUT_MS });
+  const run = await withFile("data.wl", code, (file) =>
+    runBounded("wolframscript", wolframFileArgs(file), { timeoutMs: TIMEOUT_MS }),
+  );
   if (run.killed) throw new Error(`wolframscript killed (${run.killed}) at ${Math.round(run.peakMb)} MB`);
   return run.stdout;
 }
