@@ -3,7 +3,7 @@ moebiusmu-1	moebius(1)	1
 moebiusmu-11	moebius(11)	-1	
 12-22-3-is-not-squarefree	moebius(12)	0	
 10-2-5-a-product-of-an-even-number-of-distinct	moebius(10)	1	
-isprime-of-a-negative-beside-moebiusmu	[enumeratio_is_prime(-2), moebius(11)]		
+isprime-of-a-negative-beside-moebiusmu	[is_prime(-2), moebius(11)]	[False, -1]	disagree
 threads-element-wise-over-a-list-as-wolfram-s	[moebius(1), moebius(2), moebius(3), moebius(4)]	[1, -1, -1, 0]	
 gaussian-integers-5-6i-is-a-gaussian-prime-norm	moebius((5 + 6*I))	-1	
 listable-threads-over-a-list	[moebius(4), moebius(10), moebius(17), moebius(20)]	[0, 1, -1, 0]	
@@ -16,7 +16,7 @@ moebiusmu-5-187	moebius(5187)
 moebiusmu-32-538	moebius(32538)		
 moebiusmu-1-440	moebius(1440)		
 list-isprimepower-121-iscomposite-121-moebiusmu			
-list-isprime-11-moebiusmu-11	[enumeratio_is_prime(11), moebius(11)]		
+list-isprime-11-moebiusmu-11	[is_prime(11), moebius(11)]	[True, -1]	
 moebiusmu-2	moebius(2)		
 moebiusmu-3	moebius(3)		
 moebiusmu-4	moebius(4)		

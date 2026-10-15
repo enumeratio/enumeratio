@@ -23,7 +23,7 @@ test("a mapping is chosen by signature, not by name alone", () => {
   // and the systems disagree about which name carries which.
   expect(mappingFor("Zeta", 1)?.emit.wolfram).toBe("Zeta[$1]");
   expect(mappingFor("Zeta", 2)?.emit.wolfram).toBe("Zeta[$1, $2]");
-  expect(mappingFor("Zeta", 2)?.emit.sage).toBe("enumeratio_zeta_pair($1, $2)");
+  expect(mappingFor("Zeta", 2)?.emit.sage).toBe("hurwitz_zeta($1, $2)");
   // SymPy and mpmath overload one name across both arities.
   expect(mappingFor("Zeta", 1)?.emit.sympy).toBe("zeta($1)");
   expect(mappingFor("Zeta", 2)?.emit.sympy).toBe("zeta($1, $2)");
@@ -32,7 +32,7 @@ test("a mapping is chosen by signature, not by name alone", () => {
 });
 
 test("emitting fills positional and variadic templates", () => {
-  expect(emit(["Zeta", 2, 1], "sage")).toEqual({ ok: true, source: "enumeratio_zeta_pair(2, 1)" });
+  expect(emit(["Zeta", 2, 1], "sage")).toEqual({ ok: true, source: "hurwitz_zeta(2, 1)" });
   expect(emit(["Add", 1, 2, 3], "sympy")).toEqual({ ok: true, source: "(1 + 2 + 3)" });
   expect(emit(["Multiply", 2, 3], "sympy")).toEqual({ ok: true, source: "(2 * 3)" });
   // Lean reads `f -1` as `f - 1`.

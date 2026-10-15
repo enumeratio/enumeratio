@@ -39,8 +39,10 @@ bindings:
     arity: 1
   - origin: mapped
     form: sage
-    template: enumeratio_is_prime($1)
+    template: is_prime($1)
     arity: 1
+    threadArgOnly:
+      - 1
   - origin: mapped
     form: oscar
     template: is_prime(ZZ($1))
