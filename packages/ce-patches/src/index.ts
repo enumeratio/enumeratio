@@ -146,6 +146,7 @@ export {
   bigRealOperand,
   bigResult,
   exceedsDoublePrecision,
+  wantsBigDigits,
   asDouble,
   hasComplexOperand,
   doublesForFloats,

@@ -54,6 +54,52 @@ test("LogIntegral near 1 and near its zero, where ln x is the weak link", () => 
   });
 });
 
+test("N(f, d) carries d digits for every d past a double's, not only large ones", () => {
+  const ce = new ComputeEngine();
+  declareAnalytic(ce);
+  // mpmath, mp.dps = 60
+  const cases: [unknown, string][] = [
+    [["AiryAi", 2], "0.0349241304232743791353220807918076097610602138975832071886699"],
+    [["ExpIntegralEi", 2], "4.9542343560018901633795051302270352755180535624200420545271"],
+    [["LogIntegral", 2], "1.04516378011749278484458888919461313652261557815120157583291"],
+    [["BesselK", 0, 4], "0.0111596760858530242697451959798334892250090238884743405382553"],
+    [["BesselY", 0, 1], "0.0882569642156769579829267660235151628278175230906755467110438"],
+    [["BesselJ", 0, 4], "-0.39714980986384737228659076845169804197561868528939"],
+    [["BesselI", 0, 4], "11.301921952136330496356270183217102497412616594435"],
+  ];
+  for (const digits of [16, 20, 25, 30, 40]) {
+    for (const [call, expected] of cases) {
+      // a value of at most a double's digits prints as a plain number
+      const json = ce.box(["N", call, digits] as never).evaluate().json as unknown as number | { num: string };
+      const got = typeof json === "number" ? String(json) : json.num;
+      const compared = digits - 2; // the last digits are rounded twice
+      expect(d(got).toPrecision(compared).toString(), `${JSON.stringify(call)} at ${digits}`).toBe(
+        d(expected).toPrecision(compared).toString(),
+      );
+    }
+  }
+});
+
+test("a machine float, evaluated or plainly N()'d, is as native answers it", () => {
+  const ce = new ComputeEngine();
+  declareAnalytic(ce);
+  const bare = new ComputeEngine();
+  for (const call of [
+    ["AiryAi", 0.5],
+    ["ExpIntegralEi", 0.5],
+    ["LogIntegral", 2.5],
+    ["BesselK", 0, 1.5],
+    ["BesselY", 1, 1.5],
+    ["BesselJ", 0, 1.5],
+    ["BesselI", 1, 1.5],
+  ]) {
+    expect(ce.box(call as never).evaluate().json, JSON.stringify(call)).toEqual(
+      bare.box(call as never).evaluate().json,
+    );
+    expect(ce.box(call as never).N().json, JSON.stringify(call)).toEqual(bare.box(call as never).N().json);
+  }
+});
+
 test("a call the kernel declines is native's, as it was", () => {
   const ce = new ComputeEngine();
   declareAnalytic(ce);

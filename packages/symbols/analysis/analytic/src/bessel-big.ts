@@ -5,7 +5,7 @@ import {
   atDigits,
   bigRealOperand,
   bigResult,
-  exceedsDoublePrecision,
+  wantsBigDigits,
   isFiniteNum,
   isRealInt,
   wantsNumber,
@@ -45,8 +45,7 @@ export function declareBesselBig(ce: ComputeEngine): void {
       [head, 1, 1],
       (ops) => ops.length === 2 && ops.every(isFiniteNum) && isRealInt(ops[0]!) && ops[1]!.im === 0,
       (native) => (ops, options) => {
-        if (!wantsNumber(ops, options) || !exceedsDoublePrecision(ce, options.numericApproximation))
-          return native?.(ops, options);
+        if (!wantsBigDigits(ce, options, ops)) return native?.(ops, options);
         const [order, x] = ops as [BoxedExpression, BoxedExpression];
         const arg = bigRealOperand(ce, x);
         const value = arg === undefined ? undefined : besselBig(kind, order.re, arg, ce.precision);

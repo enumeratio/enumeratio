@@ -1,15 +1,7 @@
 // unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
 import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@enumeratio/engine/unstable";
 import { wrapOperator } from "@enumeratio/engine";
-import {
-  atDigits,
-  bigRealOperand,
-  bigResult,
-  exceedsDoublePrecision,
-  isFiniteNum,
-  isRealInt,
-  wantsNumber,
-} from "@enumeratio/ce-patches";
+import { atDigits, bigRealOperand, bigResult, wantsBigDigits, isFiniteNum, isRealInt } from "@enumeratio/ce-patches";
 import { pfqRegularizedBig } from "./hypergeometric-big.ts";
 
 // AiryAi, AiryBi, ExpIntegralEi, LogIntegral and integer-order BesselK and BesselY past a double's
@@ -193,8 +185,6 @@ export function besselKYBig(kind: "K" | "Y", order: number, x: BigDecimal, digit
 type Handler = (x: BigDecimal, digits: number) => BigDecimal | undefined;
 
 export function declareSpecialBig(ce: ComputeEngine): void {
-  const numeric = (ops: readonly BoxedExpression[], options: { numericApproximation?: boolean }): boolean =>
-    wantsNumber(ops, options as never) && exceedsDoublePrecision(ce, options.numericApproximation);
   const real = (ops: readonly BoxedExpression[], arity: number): boolean =>
     ops.length === arity && ops.every(isFiniteNum) && ops.every((op) => op.im === 0);
   // What each kernel can answer, so a call it always refuses never reaches it.
@@ -211,7 +201,7 @@ export function declareSpecialBig(ce: ComputeEngine): void {
       [head, 1],
       (ops) => real(ops, 1) && accepts(ops[0]!.re),
       (native) => (ops, options) => {
-        if (!numeric(ops, options)) return native?.(ops, options);
+        if (!wantsBigDigits(ce, options, ops)) return native?.(ops, options);
         const arg = bigRealOperand(ce, ops[0]!);
         const value = arg === undefined ? undefined : handler(arg, ce.precision);
         // a kernel that cannot vouch for the digits leaves the call to native, as it was
@@ -229,7 +219,7 @@ export function declareSpecialBig(ce: ComputeEngine): void {
       [head, 1, 1],
       (ops) => real(ops, 2) && isRealInt(ops[0]!) && Math.abs(ops[0]!.re) <= MAX_ORDER && ops[1]!.re > 0,
       (native) => (ops, options) => {
-        if (!numeric(ops, options)) return native?.(ops, options);
+        if (!wantsBigDigits(ce, options, ops)) return native?.(ops, options);
         const arg = bigRealOperand(ce, ops[1]!);
         const value = arg === undefined ? undefined : besselKYBig(kind, ops[0]!.re, arg, ce.precision);
         return value === undefined ? native?.(ops, options) : bigResult(ce, value);
