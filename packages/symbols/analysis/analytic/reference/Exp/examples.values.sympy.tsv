@@ -3,7 +3,7 @@ exp-0	exp(0)	1
 stays-the-exact-constant-rather-than	exp(1)	E	
 compute-engine-represents-exp-x-as-e-x-once-the	exp(Symbol("x"))	True	
 a-machine-precision-argument-evaluates	exp(3.4)	29.9641000473970	
-series-exponentiale-pow-x-x-0-10			
+series-exponentiale-pow-x-x-0-10	series((S(E)**Symbol("x")), Symbol("x"), 0, 10 + 1)	True	
 broadcasts-element-wise-giving-begin-pmatrix-1-e	[[exp(0), exp(1)], [exp(1), exp(0)]]	[[1, E], [E, 1]]	
 arbitrary-precision-via-n	N(exp(Rational(8, 5)), 30)	4.95303242439511480365428635642	
 evaluates-at-a-complex-argument	exp((2.5 + 1*I))	12.1824939607035*exp(I)	
@@ -21,8 +21,8 @@ interval-arithmetic-exp-1-ln-2-e-1-2	exp(AccumBounds(-1, log(2)))	AccumBounds(ex
 uncertainty-propagation-e-2-pm-0-01-approx-7-389			
 around-0-still-fires-the-e-base-power-rule			
 its-own-derivative	diff(exp(Symbol("x")), Symbol("x"))	True	
-its-own-antiderivative			
-taylor-series-about-0			
+its-own-antiderivative	integrate(exp(Symbol("x")), Symbol("x"))	True	
+taylor-series-about-0	series(exp(Symbol("x")), Symbol("x"), 0, 4 + 1)	True	
 n-decimalizes-a-combined-product	N((exp(1) * exp(2)), 30)	20.0855369231876677409285296546	
 agrees-numerically-at-a-complex-point	N((exp((1.3 + 0.7*I)) * exp((-0.4 + 2.1*I))), 30)	-2.31749300051021492155992283363 + 0.823937896324175626927563596246*I	
 to-50-significant-digits-every-one-correctly	N(exp(1), 30)	2.71828182845904523536028747135	

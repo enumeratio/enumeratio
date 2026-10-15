@@ -1,13 +1,13 @@
 id	in	out
-series-csch-x-x-0-10		
-normal-series-csch-x-x-2i-times-pi-3		
+series-csch-x-x-0-10	series(csch(Symbol("x")), Symbol("x"), 0, 10 + 1)	True
+normal-series-csch-x-x-2i-times-pi-3	(series(csch(Symbol("x")), Symbol("x"), ((0 + 2*I) * pi), 3 + 1)).removeO()	True
 n-csch-9-over-5-50	N(csch(Rational(9, 5)), 30)	0.339884691415493707140758149467
 csch-list-list-1-over-3-times-i-times-pi-neg-1	[[csch(((0 + Rational(1, 3)*I) * pi)), csch(((0 + Rational(-1, 3)*I) * pi))], [csch(0), csch(((0 + Rational(-1, 6)*I) * pi))]]	[[-2*sqrt(3)*I/3, 2*sqrt(3)*I/3], [zoo, 2*I]]
 csch-positiveinfinity	csch(oo)	0
 csch-0	csch(0)	zoo
 d-csch-x-x	diff(csch(Symbol("x")), Symbol("x"))	True
 matrixfunction-function-csch-1-1-list-list-1		
-integrate-csch-x-x-nothing-nothing		
+integrate-csch-x-x-nothing-nothing	integrate(csch(Symbol("x")), Symbol("x"))	True
 functionmeromorphic-csch-x-x		
 neg-2-times-2-plus-2-times-csch-1-over-2-pow-2	((-2 * (2 + (2 * (S(csch(Rational(1, 2)))**2))) * (S(csch(1))**2) * (S(csch(Rational(1, 2)))**4)) + (S(csch(Rational(1, 2)))**8))	(-4*csch(1/2)**2 - 4)*csch(1/2)**4*csch(1)**2 + csch(1/2)**8
 n-4-times-1-plus-csch-1-over-2-pow-2-times-csch	N((4 * (1 + (S(csch(Rational(1, 2)))**2)) * (S(csch(1))**2)), 30)	13.5622378731439142115410234138

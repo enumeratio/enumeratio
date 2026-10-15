@@ -180,6 +180,15 @@ function bigO(given: MathJSON, walk: (node: MathJSON) => string): string {
   return exponent === undefined ? order : `Power[${order}, ${walk(exponent)}]`;
 }
 
+/** The `Series(f, x, x0, n)` call under any `Normal`/`Simplify`/`FullSimplify` wrappers, if that is all `expr` is. */
+export function seriesCall(expr: MathJSON): readonly MathJSON[] | undefined {
+  if (!isCall(expr)) return undefined;
+  if (expr[0] === "Series" && expr.length === 5) return expr;
+  return ["Normal", "Simplify", "FullSimplify"].includes(expr[0] as string) && expr.length === 2
+    ? seriesCall(expr[1] as MathJSON)
+    : undefined;
+}
+
 /** `expr` as `system`'s source. `extra` maps a library's heads (`mappingsFromBindings`), which an
  *  expression calls by namespace: `MemberCall(ns, "Name", …)` is emitted as `ns.Name(…)`. */
 export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] = []): Emitted {
@@ -202,7 +211,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
   };
   const boundName = (name: string): string => {
     if (wl) return isSystemName(name) ? `${CONTEXT}${name}` : name;
-    if (system === "sympy") return `Symbol(${JSON.stringify(name)})`;
+    // A derivative's own variable (below) is real, so Abs and sign differentiate as they do on the line.
+    if (system === "sympy") return `Symbol(${JSON.stringify(name)}${/^_d\d+$/.test(name) ? ", real=True" : ""})`;
     return isReserved(system, name) ? spared(name) : name;
   };
 
@@ -408,6 +418,73 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         const summation = mappingFor(head, 2, extra)?.emit.sympy;
         if (summation !== undefined) return fill(summation, [walk(operands[0] as MathJSON), `(${range.join(", ")})`]);
       }
+    }
+    // A derivative ours holds at a point (`Series` coefficients): `Apply(Derivative(f, o1, …), a1, …)` is f
+    // differentiated o_i times in its i-th argument, there. The differentiated arguments are symbols of their own,
+    // substituted afterwards.
+    if (system === "sympy" && head === "Apply" && operands.length >= 2) {
+      const callee = operands[0] as MathJSON;
+      const orders = isCall(callee) && callee[0] === "Derivative" ? callee.slice(2) : [];
+      if (
+        isCall(callee) &&
+        typeof callee[1] === "string" &&
+        orders.length === operands.length - 1 &&
+        orders.every((order) => Number.isInteger(order) && (order as number) >= 0)
+      ) {
+        const names = orders.map((order, i) => (order === 0 ? undefined : `_d${i + 1}`));
+        const differentiated = names.filter((name): name is string => name !== undefined);
+        for (const name of differentiated) bound.add(name);
+        try {
+          const body = walk([callee[1], ...names.map((name, i) => name ?? operands[i + 1]!)] as MathJSON);
+          if (differentiated.length === 0) return body;
+          const steps = names.flatMap((name, i) =>
+            name === undefined ? [] : [`(${walk(name)}, ${orders[i] as number})`],
+          );
+          const points = names.flatMap((name, i) =>
+            name === undefined ? [] : [`${walk(name)}: ${walk(operands[i + 1] as MathJSON)}`],
+          );
+          return `(diff(${body}, ${steps.join(", ")})).subs({${points.join(", ")}})`;
+        } finally {
+          for (const name of differentiated) bound.delete(name);
+        }
+      }
+    }
+    // SymPy's `integrate(f, (x, a, b))`: a bare variable (or `Limits(x, Nothing, Nothing)`) is an indefinite
+    // integral. Our first limit is the outermost, as Wolfram's; SymPy's first is the innermost.
+    if (system === "sympy" && head === "Integrate" && operands.length >= 2) {
+      const [integrand, ...specs] = operands as [MathJSON, ...MathJSON[]];
+      const function_ = isCall(integrand) && integrand[0] === "Function" ? integrand : undefined;
+      const wrapped = function_?.[1] as MathJSON | undefined;
+      const body =
+        function_ === undefined
+          ? integrand
+          : isCall(wrapped as MathJSON) && (wrapped as readonly MathJSON[])[0] === "Block"
+            ? (wrapped as readonly MathJSON[])[1]!
+            : wrapped!;
+      const iterators = specs.map((spec) => {
+        if (typeof spec === "string") return walk(spec);
+        if (isCall(spec) && ["Limits", "Tuple", "List"].includes(spec[0] as string) && spec.length === 4) {
+          const [, name, from, to] = spec as unknown as [string, MathJSON, MathJSON, MathJSON];
+          if (typeof name === "string")
+            return from === "Nothing" && to === "Nothing"
+              ? walk(name)
+              : `(${[name, from, to].map((part) => walk(part)).join(", ")})`;
+        }
+        return undefined;
+      });
+      const integral = mappingFor(head, operands.length, extra)?.emit.sympy;
+      if (integral !== undefined && iterators.every((iterator) => iterator !== undefined))
+        return fill(integral, [walk(body), ...(iterators as string[]).toReversed()]);
+    }
+    // A series SymPy answers with its O-term: `Normal` is `removeO`, and its simplifier leaves the O alone.
+    if (
+      system === "sympy" &&
+      ["Normal", "Simplify", "FullSimplify"].includes(head) &&
+      operands.length === 1 &&
+      seriesCall(operands[0] as MathJSON) !== undefined
+    ) {
+      const series = walk(operands[0] as MathJSON);
+      return head === "Normal" ? `(${series}).removeO()` : `simplify(${series})`;
     }
     // factorrat takes rationals; a Gaussian integer is not one, and SymPy has no factorization of it to ask for.
     if (system === "sympy" && head === "FactorInteger" && operands.length === 1) {

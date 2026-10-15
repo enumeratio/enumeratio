@@ -554,6 +554,86 @@ def enumeratio_symbolic_agree(a, b, trials):
             continue
         results.append(abs(delta) < 1e-9)
     return all(results) if results else None
+
+# Whether a coefficient (or the derivative of a difference) is zero: True or False when it is decided (by
+# simplify, or at fixed rational points for the symbols left in it), None when it can't be.
+def _enumeratio_vanishes(d):
+    d = sympify(d)
+    if simplify(d) == 0:
+        return True
+    if d.is_number:
+        return bool(abs(N(d, 30)) < 1e-20)
+    symbols = sorted(d.free_symbols, key=str)
+    seen = []
+    for shift in range(3):
+        at = {s: Rational(*[(7, 3), (-11, 5), (13, 4), (-17, 6), (19, 8)][(i + shift) % 5]) for i, s in enumerate(symbols)}
+        try:
+            seen.append(abs(complex(N(d.subs(at), 30))) < 1e-9)
+        except (TypeError, ValueError, ZeroDivisionError):
+            continue
+    return all(seen) if seen else None
+
+# series(f, x, x0, n) as {power of t: (exponent, coefficient)}, t the distance from x0 (1/x at infinity); None
+# when it is not a power series in t (a log is taken as a coefficient of its power, so Puiseux and log terms read).
+def _enumeratio_power_series(expr, x, x0, t):
+    expr = expand(sympify(expr).subs(x, 1 / t if x0 == oo else x0 + t))
+    found = {}
+    for term in Add.make_args(expr):
+        coefficient, power = term.as_independent(t, as_Add=False)
+        shape = power.subs(log(t), 1)
+        if shape == 1:
+            exponent = S.Zero
+        else:
+            base, exponent = shape.as_base_exp()
+            if base != t:
+                return None
+        found[power] = (exponent, found.get(power, (exponent, S.Zero))[1] + coefficient)
+    return found
+
+# Whether SymPy's series (O-term and all) and our polynomial, whose own O-term claims ours_order (None when it has
+# none), agree in every power below the least of the requested order cap and the O-terms' orders: what both
+# claim. True when they do, False when a coefficient differs, None when the expansions aren't comparable.
+def enumeratio_series_agree(theirs, ours, x, x0, cap, ours_order):
+    try:
+        x0 = sympify(x0)
+        if x0.is_infinite and x0 != oo:
+            return None
+        t = Dummy("t", positive=True)
+        theirs, ours = sympify(theirs), sympify(ours)
+        orders = [sympify(cap)]
+        if ours_order is not None:
+            orders.append(sympify(ours_order))
+        remainder = theirs.getO()
+        if remainder is not None:
+            orders.append(next(iter(_enumeratio_power_series(remainder.expr, x, x0, t).values()))[0])
+        cut = min(orders)
+        a = _enumeratio_power_series(theirs.removeO(), x, x0, t)
+        b = _enumeratio_power_series(ours, x, x0, t)
+        if a is None or b is None:
+            return None
+        verdicts = []
+        for key in set(a) | set(b):
+            exponent = (a.get(key) or b[key])[0]
+            if not exponent < cut:
+                continue
+            verdicts.append(_enumeratio_vanishes(a.get(key, (0, S.Zero))[1] - b.get(key, (0, S.Zero))[1]))
+        if any(v is False for v in verdicts):
+            return False
+        return True if all(v is True for v in verdicts) else None
+    except (TypeError, ValueError, AttributeError, NotImplementedError, StopIteration):
+        return None
+
+# Whether two antiderivatives of the same function agree: they differ by a constant, so the derivative of their
+# difference in each variable of integration vanishes. The variable is real, as ours is: Abs and sign differentiate.
+def enumeratio_antiderivative_agree(a, b, variables):
+    try:
+        d = a - b
+        for v in variables:
+            r = Dummy(v.name, real=True)
+            d = diff(d.subs(v, r), r)
+        return _enumeratio_vanishes(d)
+    except (TypeError, ValueError, AttributeError, NotImplementedError):
+        return None
 `;
 
 // How SymPy and mpmath print a value for the scan: an exact integer or rational as it is, any

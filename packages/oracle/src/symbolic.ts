@@ -18,7 +18,7 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { DEFINED_NAMES } from "./defined-names-data.ts";
-import { emit, type MathJSON } from "./emit.ts";
+import { emit, type MathJSON, seriesCall } from "./emit.ts";
 import type { SymbolicSystem } from "./systems.ts";
 import type { Verdict } from "./compare.ts";
 
@@ -247,6 +247,28 @@ export function indefiniteVariables(expr: MathJSON, found: Set<string> = new Set
   return found;
 }
 
+/** The variables of the `Integrate` calls in `expr`, as SymPy takes them: an indefinite integral's (a bare
+ * variable, or `Limits(x, Nothing, Nothing)`), whose answer is an antiderivative, and a definite one's,
+ * bound inside the call and so never a point to sample. */
+export function integrationVariables(
+  expr: MathJSON,
+  found: { indefinite: Set<string>; definite: Set<string> } = { indefinite: new Set(), definite: new Set() },
+): { indefinite: Set<string>; definite: Set<string> } {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  if (head === "Integrate") {
+    for (const spec of operands.slice(1)) {
+      const limits = Array.isArray(spec) && ["Limits", "Tuple", "List"].includes(spec[0] as string);
+      const name = bareName(limits ? (spec[1] as MathJSON) : spec);
+      if (name === undefined) continue;
+      const open = !limits || (spec[2] === "Nothing" && spec[3] === "Nothing");
+      (open ? found.indefinite : found.definite).add(name);
+    }
+  }
+  for (const operand of operands) integrationVariables(operand, found);
+  return found;
+}
+
 /** The expansion variables of `Series(f, x, x0, n)` (or `Series(f, [x, x0, n])`) and of
  * `SeriesCoefficient(f, [x, x0, n])`: bound inside the call, so never a point to sample there (`Series[f, {7/3, x0, n}]` is Series::ivar). */
 export function seriesVariables(expr: MathJSON, found: Set<string> = new Set()): Set<string> {
@@ -358,10 +380,12 @@ function trialSources(
       ? new Set([...derivativeVariables(expr), ...derivativeVariables(expected), ...indefiniteVariables(expr)])
       : new Set<string>();
   const held = new Set([...steps, ...series, ...varied]);
+  // SymPy's definite integral binds its variable inside the call, so it is no point to sample.
   const bound = new Set([
     ...boundVariables(expr),
     ...boundVariables(expected),
     ...(system === "wolfram" ? [] : derivativeVariables(expr)),
+    ...(system === "sympy" ? integrationVariables(expr).definite : []),
   ]);
   const subs = new Map([...all].filter(([name]) => !held.has(name) && !bound.has(name)));
   // A series is sampled as a polynomial, so the simplifier around it has nothing to do: on a
@@ -862,6 +886,59 @@ export function rootsAsPowers(expr: MathJSON): MathJSON {
 /** Wolfram source for `source` with every `ConditionalExpression[value, condition]` replaced by its value. */
 const withoutConditions = (source: string): string => `ReplaceAll[${source}, ConditionalExpression[e_, _] :> e]`;
 
+/** `BigO(x^m)`, `BigO((x - a)^m)` or, at infinity, `BigO(x^-m)` as `m`, the order it claims in the distance
+ * from the center (`1/x` at infinity); `undefined` for any other shape. */
+function bigOOrder(term: MathJSON, variable: string, infinite: boolean): MathJSON | undefined {
+  if (!Array.isArray(term) || term[0] !== "BigO" || term.length !== 2) return undefined;
+  const given = term[1] as MathJSON;
+  const power = Array.isArray(given) && given[0] === "Power" && given.length === 3;
+  const base = power ? (given[1] as MathJSON) : given;
+  const exponent: MathJSON = power ? (given[2] as MathJSON) : 1;
+  const ofVariable =
+    base === variable || (Array.isArray(base) && base[0] === "Add" && base.slice(1).includes(variable as never));
+  if (!ofVariable) return undefined;
+  if (!infinite) return exponent;
+  // At infinity the claim is a negative power of x, and its order is the positive one in 1/x.
+  if (typeof exponent === "number") return exponent < 0 ? -exponent : undefined;
+  return Array.isArray(exponent) && exponent[0] === "Rational" && Number(exponent[1]) < 0
+    ? ["Rational", -Number(exponent[1]), exponent[2] as MathJSON]
+    : undefined;
+}
+
+/**
+ * The SymPy check that its `series(f, x, x0, n + 1)` and our `Series(f, x, x0, n)` agree up to the order both
+ * claim: `enumeratio_series_agree` (run.ts) compares the coefficients of every power below the least of the
+ * requested order and the two O-terms (ours is split off here, its exponent passed on). `undefined` when the
+ * expansion is not one the helper reads (an expansion at -∞, an O-term of another shape).
+ */
+function seriesAgreementSource(series: readonly MathJSON[], expected: MathJSON): string | undefined {
+  const [, , variable, center, order] = series as [string, MathJSON, MathJSON, MathJSON, MathJSON];
+  const infinite = center === "PositiveInfinity" || center === "Infinity";
+  if (typeof variable !== "string" || (!infinite && /Infinity/.test(JSON.stringify(center)))) return undefined;
+  // Ours is a sum with its O-term in it, or the O-term alone.
+  const terms = Array.isArray(expected) && expected[0] === "Add" ? (expected.slice(1) as MathJSON[]) : [expected];
+  const remainders = terms.filter((term) => Array.isArray(term) && term[0] === "BigO");
+  if (remainders.length > 1) return undefined;
+  const claimed = remainders.length === 0 ? undefined : bigOOrder(remainders[0] as MathJSON, variable, infinite);
+  if (remainders.length === 1 && claimed === undefined) return undefined;
+  const rest = terms.filter((term) => !remainders.includes(term));
+  const polynomial: MathJSON = rest.length === 0 ? 0 : rest.length === 1 ? (rest[0] as MathJSON) : ["Add", ...rest];
+  const [theirs, ours, at, around, requested, claim] = [
+    emit(series as MathJSON, "sympy"),
+    emit(polynomial, "sympy"),
+    emit(variable, "sympy"),
+    emit(center, "sympy"),
+    emit(order, "sympy"),
+    claimed === undefined ? undefined : emit(claimed, "sympy"),
+  ];
+  if (![theirs, ours, at, around, requested, claim].every((part) => part === undefined || part.ok)) return undefined;
+  const source = (part: ReturnType<typeof emit> | undefined): string => (part?.ok ? part.source : "None");
+  return (
+    `enumeratio_series_agree(${source(theirs)}, ${source(ours)}, ${source(at)}, ${source(around)}, ` +
+    `${source(requested)} + 1, ${source(claim)})`
+  );
+}
+
 /**
  * The kernel source for "does `expr` agree with `expected`", for an example whose emitted
  * form carries a free symbol. `undefined` when either side doesn't emit for `system`, OR when
@@ -896,6 +973,12 @@ export function symbolicAgreementSource(
   // A series ours holds is no polynomial to check: the kernel evaluates ours too, so any difference
   // from its own `Normal` of it would be zero. Undecided, not agreed.
   if (system === "wolfram" && leavesCall(seriesOfNormal(expr), expected)) return "Indeterminate";
+  // SymPy's series is compared as coefficients up to the order both claim, not as a difference.
+  if (system === "sympy") {
+    const series = seriesCall(expr);
+    if (series !== undefined)
+      return leavesCall(seriesOfNormal(expr), expected) ? "None" : seriesAgreementSource(series, expected);
+  }
   const solving = system === "wolfram" && Array.isArray(expr) && expr[0] === "Solve";
   // A declined `Solve` (ours stays the call) has no solutions to compare as sets.
   if (solving && Array.isArray(expected) && expected[0] === "Solve") return undefined;
@@ -958,6 +1041,16 @@ export function symbolicAgreementSource(
       `AllTrue[Flatten[{d}], # === 0 || (pureO[#] && #[[5]]/#[[6]] >= bound) &])), ` +
       `True, Module[{s = {${points.join(", ")}}}, ` +
       `s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], ${unsampled}]]]]`
+    );
+  }
+  // An indefinite integral's answers differ by a constant: the derivative of their difference is what vanishes.
+  const antiderivatives = system === "sympy" ? [...integrationVariables(expr).indefinite] : [];
+  if (antiderivatives.length > 0) {
+    const names = antiderivatives.map((name) => emit(name, system));
+    if (names.some((name) => !name.ok)) return undefined;
+    return (
+      `enumeratio_antiderivative_agree(${theirs.source}, ${ours.source}, ` +
+      `[${names.map((name) => (name as { source: string }).source).join(", ")}])`
     );
   }
   const points = trials.map((t) => (t === undefined ? "None" : `(${t.theirs}, ${t.ours})`));

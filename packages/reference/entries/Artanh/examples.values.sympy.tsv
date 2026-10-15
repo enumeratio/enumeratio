@@ -5,7 +5,7 @@ artanh-0	atanh(0)	0
 d-artanh-x-x	diff(atanh(Symbol("x")), Symbol("x"))	True	
 fullsimplify-neg-1-over-x-times-y-plus-1-times-x			
 trigtoexp-artanh-z			
-integrate-artanh-x-x-nothing-nothing			
+integrate-artanh-x-x-nothing-nothing	integrate(atanh(Symbol("x")), Symbol("x"))	True	
 artanh-2	atanh(2)	atanh(2)	
 artanh-neg-2	atanh(-2)	-atanh(2)	
 artanh-complexinfinity-is-indeterminate-the-sign	atanh(zoo)	I*AccumBounds(-pi/2, pi/2)	disagree
