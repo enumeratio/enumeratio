@@ -413,7 +413,9 @@ function solveAgreementSource(theirs: string, ours: string, cap: number): string
 function propositionAgreementSource(theirs: string, ours: string, cap: number): string {
   return (
     `Module[{zero, agree}, ` +
-    `zero[e_] := AllTrue[Flatten[{Quiet[TimeConstrained[FullSimplify[e], ${cap}, $Aborted]]}], # === 0 &]; ` +
+    // a machine-precision bound is zero to the rounding of a double (`0.` is not `=== 0`)
+    `zero[e_] := AllTrue[Flatten[{Quiet[TimeConstrained[FullSimplify[e], ${cap}, $Aborted]]}], ` +
+    `# === 0 || (InexactNumberQ[#] && Abs[#] < 10^-12) &]; ` +
     `agree[t_And, o_And] /; Length[t] == Length[o] := And @@ MapThread[agree, {List @@ t, List @@ o}]; ` +
     `agree[t_Equal, o_Equal] /; Length[t] == 2 && Length[o] == 2 := ` +
     `zero[t[[1]] - t[[2]] - (o[[1]] - o[[2]])] || zero[t[[1]] - t[[2]] + (o[[1]] - o[[2]])]; ` +

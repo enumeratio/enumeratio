@@ -11,7 +11,8 @@ import { bigRationalAt, type Engine, type Expr, operandsOf, symbolNameOf } from 
 // shows), and one that starts past it is dropped. The O-term is x^−(p + n), or one step past that
 // first term. The symbolic ₁F₁ and ₂F₁ branches are cut by relative order instead: terms 0 … n.
 //
-// Anything else (another argument, a numeric ₁F₁/₂F₁, a negative order) is declined, not guessed.
+// A ₂F₁ with positive integer parameters keeps the terms up to x^−n (absolute exponent), none starting past it.
+// Anything else (another argument, another numeric ₁F₁/₂F₁, a negative order) is declined, not guessed.
 
 type Rat = readonly [bigint, bigint];
 
@@ -46,6 +47,8 @@ interface Expansion {
   resolution: Rat;
   /** Terms added outside the series (they do not depend on the order). */
   extra?: Expr[];
+  /** A component that starts at the bound is dropped, not shown by its first term. */
+  strict?: boolean;
 }
 
 export function asymptoticSeries(ce: Engine, f: Expr, x: Expr, order: number): Expr | undefined {
@@ -58,7 +61,7 @@ export function asymptoticSeries(ce: Engine, f: Expr, x: Expr, order: number): E
   const pieces: Expr[] = [];
   for (const { factor, first, step, coefficient } of expansion.components) {
     const startsAtBound = compare(first, bound) === 0;
-    if (compare(first, bound) > 0) continue;
+    if (compare(first, bound) > 0 || (expansion.strict && startsAtBound)) continue;
     const terms: Expr[] = [];
     for (let k = 0, e = first; k === 0 || compare(e, bound) < 0; k++, e = plus(e, step)) {
       const c = coefficient(k);
@@ -99,7 +102,9 @@ function expansionOf(ce: Engine, f: Expr, x: Expr): Expansion | undefined {
     case "Hypergeometric2F1": {
       const parameters = args.slice(0, -1);
       if (args.length !== (f.operator === "Hypergeometric1F1" ? 3 : 4) || !ofX(args.at(-1))) return undefined;
-      // Wolfram cuts a symbolic expansion by relative order; with numeric parameters it cuts by absolute
+      const integers = f.operator === "Hypergeometric2F1" ? positiveIntegers(parameters) : undefined;
+      if (integers !== undefined) return hypergeometric2F1Integers(ce, x, integers as [number, number, number]);
+      // Wolfram cuts a symbolic expansion by relative order; with other numeric parameters it cuts by absolute
       // exponent (and has the e^x branch leading), which is not reproduced here.
       if (!parameters.every((p) => symbolNameOf(p) !== undefined && p.isConstant !== true && !p.isSame(x)))
         return undefined;
@@ -438,4 +443,62 @@ function hypergeometric2F1(ce: Engine, x: Expr, [a, b, c]: [Expr, Expr, Expr]): 
     };
   };
   return { lead: rat(1n), resolution: rat(1n), components: [branch(a, b), branch(b, a)] };
+}
+
+/** The values of `parameters` when all are positive integers (small enough to take factorials of), else `undefined`. */
+const positiveIntegers = (parameters: Expr[]): number[] | undefined => {
+  const values = parameters.map((p) => (p.im === 0 && Number.isInteger(p.re) && p.re > 0 && p.re <= 100 ? p.re : NaN));
+  return values.some(Number.isNaN) ? undefined : values;
+};
+
+/**
+ * ₂F₁(a, a+m; c; x) for positive integers (DLMF 15.8.8), where Γ is a factorial and ψ a harmonic number:
+ * m power terms, then a series with ln(−x). For c−a−m−k ≤ 0 the factor ψ(c−a−m−k)/Γ(c−a−m−k) is taken as its
+ * limit, (−1)^(N+1) N! at −N, and the logarithm drops out. Terms are cut at x^−n (absolute exponent).
+ */
+function hypergeometric2F1Integers(ce: Engine, x: Expr, [p, q, c]: [number, number, number]): Expansion {
+  const [a, b] = p <= q ? [p, q] : [q, p];
+  const m = b - a;
+  const pochhammerInt = (start: number, k: number): bigint =>
+    Array.from({ length: k }, (_, j) => BigInt(start + j)).reduce((u, v) => u * v, 1n);
+  const harmonic = (j: number): Rat =>
+    Array.from({ length: j }, (_, i) => rat(1n, BigInt(i + 1))).reduce(plus, rat(0n));
+  const parity = (k: number): bigint => (k % 2 === 0 ? 1n : -1n);
+  const [fact, scale] = [(n: number) => factorial(n), parity(a) * factorial(c - 1)];
+  const logarithm = ce.function("Ln", [negate(ce, x)]);
+  return {
+    lead: rat(1n),
+    resolution: rat(1n),
+    strict: true,
+    components: [
+      {
+        // Σ_(k<m) (a)_k (m−k−1)!/(k! Γ(c−a−k)) / Γ(a+m), a pole of Γ(c−a−k) zeroing the term
+        first: rat(BigInt(a)),
+        step: rat(1n),
+        coefficient: (k) => {
+          const rest = c - a - k;
+          if (k >= m || rest < 1) return undefined;
+          return rational(
+            ce,
+            rat(scale * pochhammerInt(a, k) * fact(m - k - 1), fact(a + m - 1) * fact(k) * fact(rest - 1)),
+          );
+        },
+      },
+      {
+        first: rat(BigInt(a + m)),
+        step: rat(1n),
+        coefficient: (k) => {
+          const rest = c - a - m - k;
+          const weight = rat(parity(k) * scale * pochhammerInt(a + m, k), fact(a - 1) * fact(k) * fact(k + m));
+          if (rest < 1) return rational(ce, times(weight, rat(parity(-rest) * fact(-rest))));
+          const scaled = times(weight, rat(1n, fact(rest - 1)));
+          const shift = plus(
+            plus(harmonic(m + k), harmonic(k)),
+            times(rat(-1n), plus(harmonic(a + m + k - 1), harmonic(rest - 1))),
+          );
+          return add(ce, mul(ce, rational(ce, scaled), logarithm), rational(ce, times(scaled, shift)));
+        },
+      },
+    ],
+  };
 }
