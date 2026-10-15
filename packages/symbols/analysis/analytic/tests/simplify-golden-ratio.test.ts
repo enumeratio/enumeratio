@@ -1,3 +1,4 @@
+// unstable: ComputeEngine, the engine class itself; the stable entry has no constructor
 import { ComputeEngine } from "@enumeratio/engine/unstable";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
