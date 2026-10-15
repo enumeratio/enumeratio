@@ -5,13 +5,13 @@
 
 import { fileURLToPath } from "node:url";
 import { smallElements } from "../../scripts/samples.ts";
-import { verdictsFor } from "../../scripts/verdicts.ts";
+import { checkers, verdictsFor } from "../../scripts/verdicts.ts";
 import { writeGenerated } from "../../scripts/write-generated.ts";
 import { compiledDefinitionsFor, renderCompiled } from "../../src/statistics/generate-compiled.ts";
 import { SET_PARTITION_STATISTICS } from "../src/statistics.ts";
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const verdicts = verdictsFor("compile-set-partitions");
+  const verdicts = verdictsFor("compile-set-partitions", checkers.statistics);
   // A set partition is a list of BLOCKS, not integers.
   const { compiled: entries, disagreed } = compiledDefinitionsFor(
     SET_PARTITION_STATISTICS,

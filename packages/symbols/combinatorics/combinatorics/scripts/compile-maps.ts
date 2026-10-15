@@ -16,7 +16,7 @@ import { CARRIERS } from "../src/carriers.ts";
 import { evaluateDefinition, MAPS } from "../src/maps.ts";
 import { noVerdicts, type Verdicts } from "../src/statistics/generate-compiled.ts";
 import { smallElements } from "./samples.ts";
-import { verdictsFor } from "./verdicts.ts";
+import { checkers, verdictsFor } from "./verdicts.ts";
 import { writeGenerated } from "./write-generated.ts";
 
 interface Entry {
@@ -61,6 +61,7 @@ export function compiledMaps(verdicts: Verdicts = noVerdicts): Entry[] {
   const ce = bareEngine();
   const carrierOf = new Map(CARRIERS.map((carrier) => [carrier.type, carrier]));
   const out: Entry[] = [];
+  const samples = new Map<string, unknown[]>();
   for (const map of MAPS) {
     if (map.body === undefined) continue;
     const from = carrierOf.get(map.from);
@@ -73,7 +74,8 @@ export function compiledMaps(verdicts: Verdicts = noVerdicts): Entry[] {
     if (map.guard !== undefined && guard === undefined) continue;
     const key = `${map.name}@${map.from}`;
     const hash = definitionHash({ body: map.body, guard: map.guard });
-    const subjects = smallElements(ce, from.name);
+    if (!samples.has(from.name)) samples.set(from.name, smallElements(ce, from.name));
+    const subjects = samples.get(from.name)!;
     const parts = { body: map.body, guard: map.guard, code: body.code, guardCode: guard?.code, subjects };
     if (!verdicts.remember(parts, () => agrees(ce, map, body.run, guard?.run, subjects))) {
       out.push({ key, hash });
@@ -109,7 +111,7 @@ ${body}
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const verdicts = verdictsFor("compile-maps");
+  const verdicts = verdictsFor("compile-maps", checkers.maps);
   const entries = compiledMaps(verdicts);
   const target = fileURLToPath(new URL("../src/compiled-maps.generated.js", import.meta.url));
   writeGenerated(target, render(entries));

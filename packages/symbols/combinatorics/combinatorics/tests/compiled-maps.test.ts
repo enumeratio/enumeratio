@@ -27,6 +27,13 @@ test("the build compiled maps", () => {
   expect(Object.keys(COMPILED_MAPS).length).toBeGreaterThan(0);
 });
 
+// Families overlap, and the build's cross-checks cost per subject.
+test("each small element is sampled once", () => {
+  const subjects = smallElements(ce, "Permutation").map((s) => JSON.stringify(s));
+  expect(subjects.length).toBeGreaterThan(0);
+  expect(new Set(subjects).size).toBe(subjects.length);
+});
+
 // A map's subjects run in chunks of one test each, so the file's total grows with the sample
 // but no test comes near `testTimeout`.
 const CHUNK = 40;

@@ -5,13 +5,13 @@
 
 import { fileURLToPath } from "node:url";
 import { smallElements } from "../../scripts/samples.ts";
-import { verdictsFor } from "../../scripts/verdicts.ts";
+import { checkers, verdictsFor } from "../../scripts/verdicts.ts";
 import { writeGenerated } from "../../scripts/write-generated.ts";
 import { compiledDefinitionsFor, renderCompiled } from "../../src/statistics/generate-compiled.ts";
 import { DYCK_STATISTICS } from "../src/statistics.ts";
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const verdicts = verdictsFor("compile-lattice-paths");
+  const verdicts = verdictsFor("compile-lattice-paths", checkers.statistics);
   const { compiled: entries, disagreed } = compiledDefinitionsFor(
     DYCK_STATISTICS,
     "list<integer>",

@@ -1,6 +1,7 @@
 // Small elements of a carrier, for the generators to check compiled code against the
 // interpreter: every family whose elements are values of the carrier, at small sizes, the
-// first few ranks of each.
+// first few ranks of each. Families overlap (the same small permutation is in dozens of them),
+// so each distinct element appears once: the checks cost per element.
 
 import type { Engine } from "@enumeratio/engine";
 import { allKernels } from "../collections/src/families/index.ts";
@@ -11,6 +12,7 @@ const toJson = (element: unknown): unknown => (Array.isArray(element) ? ["List",
  *  one-parameter families up to `maxSize`, two-parameter ones (n, k) at k ≤ n. */
 export function smallElements(ce: Engine, carrier: string, maxSize = 5, perFamily = 8): unknown[] {
   const out: unknown[] = [];
+  const seen = new Set<string>();
   // A carrier whose slots are other carriers' values (`carrierElements`) isn't sampled.
   for (const family of allKernels(ce).filter(
     (f) => f.carrier === carrier && f.paramCount >= 1 && f.paramCount <= 2 && f.carrierElements === undefined,
@@ -25,7 +27,11 @@ export function smallElements(ce: Engine, carrier: string, maxSize = 5, perFamil
         for (let r = 0n; r < last; r++) {
           const element = toJson(family.unrank(params, r));
           const packed = family.carrierParams ?? 0;
-          out.push(packed === 0 ? element : ["Tuple", ...params.slice(0, packed), element]);
+          const sample = packed === 0 ? element : ["Tuple", ...params.slice(0, packed), element];
+          const key = JSON.stringify(sample);
+          if (seen.has(key)) continue;
+          seen.add(key);
+          out.push(sample);
         }
       }
   return out;
