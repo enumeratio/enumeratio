@@ -25,6 +25,10 @@ laws:
     on: binary_tree_parent_array
   - inverse: DyckPath
     on: dyck_path
+  - graded:
+      from: DyckPaths
+      to: BinaryTrees
+    on: dyck_path
 ---
 
 - `BinaryTree([[0, 0], 0])` is a root whose left child is a single node. The empty tree is `BinaryTree(0)`.

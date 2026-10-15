@@ -47,14 +47,20 @@ test("a map's laws pass, shorthand and parameterized", () => {
   expect(
     validateSchema(REFERENCE_ENTRY_SCHEMA, {
       ...MINIMAL_ENTRY,
-      laws: ["involution", { inverse: "Mod" }, { orderIsomorphism: { from: "A", to: "B", sizeOffset: 1 } }],
+      laws: [
+        "involution",
+        "bijection",
+        { inverse: "Mod" },
+        { orderIsomorphism: { from: "A", to: "B", sizeOffset: 1 } },
+        { graded: { from: "A", to: "B" } },
+      ],
     }),
   ).toEqual([]);
 });
 
 test("rejects an unknown law", () => {
   expect(validateSchema(REFERENCE_ENTRY_SCHEMA, { ...MINIMAL_ENTRY, laws: ["reflexive"] })).toEqual([
-    "$.laws[0]: matches none of 3 allowed shapes",
+    "$.laws[0]: matches none of 4 allowed shapes",
   ]);
 });
 

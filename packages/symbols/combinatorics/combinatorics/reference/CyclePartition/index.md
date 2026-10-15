@@ -10,6 +10,11 @@ signatures:
     description: The orbits, as a set partition of the positions.
     library: enumeratio-combinatorics
     type: (permutation) -> set_partition
+laws:
+  - surjection
+  - graded:
+      from: Permutations
+      to: SetPartitions
 ---
 
 - Takes a `Permutation` and returns a `SetPartition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

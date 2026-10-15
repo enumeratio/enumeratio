@@ -20,6 +20,11 @@ signatures:
     description: The multiset of cycle lengths, as a partition.
     library: enumeratio-combinatorics
     type: (permutation) -> integer_partition
+laws:
+  - surjection
+  - graded:
+      from: Permutations
+      to: IntegerPartitions
 ---
 
 - Takes a `Permutation` and returns a `IntegerPartition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

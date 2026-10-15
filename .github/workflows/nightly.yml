@@ -64,6 +64,8 @@ jobs:
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/compiled-families.test.ts
       # Compiled maps against the interpreter, over the larger sample.
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/compiled-maps.test.ts
+      # Each map's graded, surjection and bijection laws, a size at a time, one size deeper.
+      - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/map-laws-per-size.test.ts
       # Every head in an engine holding only what the resolver picks, against the full one.
       - run: pnpm --filter @enumeratio/reference exec vp test run tests/resolver.test.ts
       # Every sampled head's examples, read back from markup and evaluated through the registry.

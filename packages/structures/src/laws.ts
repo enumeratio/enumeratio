@@ -43,6 +43,7 @@ export function checkLaws(
   }
 
   for (const law of map.laws ?? []) {
+    if (law === "surjection" || law === "bijection") continue; // about the whole image: checked per size.
     const name = lawName(law);
     const back =
       law === "involution"

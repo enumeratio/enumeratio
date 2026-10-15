@@ -18,6 +18,11 @@ signatures:
     description: The recording tableau of the RSK correspondence, as its rows.
     library: enumeratio-combinatorics
     type: (permutation) -> standard_tableau
+laws:
+  - surjection
+  - graded:
+      from: Permutations
+      to: StandardTableaux
 ---
 
 - Takes a `Permutation` and returns a `StandardTableau` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
