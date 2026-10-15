@@ -18,6 +18,13 @@ signatures:
     library: enumeratio-structures
     type: (any*) -> any
     overrides: enumeratio-analytic
+  - call: Max(finset)
+    description: the largest member of a [[Finset]].
+    library: enumeratio-combinatorics
+    type: (any*) -> any
+    overrides: enumeratio-structures
+    on:
+      - Finset
 seeAlso:
   - Min
   - Clamp
@@ -43,3 +50,4 @@ bindings:
 - Commutative and associative: order and grouping don't matter.
 - NaN poisons the result: it beats every other comparison, even $+\infty$.
 - With no arguments, compute-engine returns NaN rather than $-\infty$, the true identity element.
+- Takes a [[Finset]] too: its largest member, and NaN for the empty one, as for an empty list.

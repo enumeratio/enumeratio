@@ -1,9 +1,0 @@
----
-name: NumberOfEdges
-domain: Combinatorics
-signature: NumberOfEdges(...)
-summary: Number of edges
-statOn:
-  - LabeledGraph
-stub: carrier
----

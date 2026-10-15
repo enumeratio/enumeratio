@@ -1,0 +1,13 @@
+id	in	out	verdict
+squarefreepart-12	abs(12).squarefree_part()	3	
+squarefreepart-18	abs(18).squarefree_part()	2	
+a-square-free-number-is-its-own-part	abs(30).squarefree_part()	30	
+squarefreepart-1	abs(1).squarefree_part()	1	
+negative-n-the-sign-is-a-unit	abs(-12).squarefree_part()	3	
+listable-over-a-list	[abs(8).squarefree_part(), abs(9).squarefree_part(), abs(10).squarefree_part()]	[2, 1, 10]	
+large-integers-10	abs(enumeratio_factorial(10)).squarefree_part()	7	
+the-square-free-part-of-1000	abs(1000).squarefree_part()	10	
+n-is-s-squared-times-q	enumeratio_equal(360, (((isqrt(abs(360)//abs(360).squarefree_part()))^2) * abs(360).squarefree_part()))	True	
+the-part-is-always-square-free			
+the-part-of-a-perfect-square-is-1	abs(144).squarefree_part()	1	
+zero-stays-unevaluated	abs(0).squarefree_part()	0	inconclusive

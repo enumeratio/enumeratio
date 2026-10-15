@@ -1,9 +1,0 @@
----
-name: RealPart
-domain: Combinatorics
-signature: RealPart(...)
-summary: Real part
-statOn:
-  - GaussianInteger
-stub: carrier
----

@@ -1,0 +1,12 @@
+id	in	out	verdict
+aliquotsum-12	sigma(abs(12), 1) - abs(12)	16	
+aliquotsum-28	sigma(abs(28), 1) - abs(28)	28	
+aliquotsum-13	sigma(abs(13), 1) - abs(13)	1	
+aliquotsum-1	sigma(abs(1), 1) - abs(1)	0	
+negative-n-the-sign-is-a-unit	sigma(abs(-12), 1) - abs(-12)	16	
+listable-over-a-list	[sigma(abs(6), 1) - abs(6), sigma(abs(12), 1) - abs(12), sigma(abs(13), 1) - abs(13)]	[6, 16, 1]	
+large-integers-a-power-of-two	sigma(abs(((2)^40)), 1) - abs(((2)^40))	1099511627775	
+amicable-pair-220-and-284	sigma(abs(220), 1) - abs(220)	284	
+amicable-pair-the-other-way	sigma(abs(sigma(abs(220), 1) - abs(220)), 1) - abs(sigma(abs(220), 1) - abs(220))	220	
+aliquotsum-is-sigma-minus-n			
+zero-stays-unevaluated	sigma(abs(0), 1) - abs(0)	ArithmeticError: factorization of 0 is not defined	error

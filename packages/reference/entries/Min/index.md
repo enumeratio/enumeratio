@@ -23,6 +23,13 @@ signatures:
     library: enumeratio-structures
     type: (any*) -> any
     overrides: enumeratio-combinatorics
+  - call: Min(finset)
+    description: the smallest member of a [[Finset]].
+    library: enumeratio-combinatorics
+    type: (any*) -> any
+    overrides: enumeratio-structures
+    on:
+      - Finset
 seeAlso:
   - Max
   - Clamp
@@ -49,3 +56,4 @@ bindings:
 - $\min(a,b) + \max(a,b) = a + b$ for any two values. See [[Max]].
 - Infinities participate directly in the comparison.
 - With no arguments at all, returns the identity element $+\infty$.
+- Takes a [[Finset]] too: its smallest member, and NaN for the empty one, as for an empty list.

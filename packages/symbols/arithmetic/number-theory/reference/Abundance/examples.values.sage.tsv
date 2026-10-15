@@ -1,0 +1,13 @@
+id	in	out	verdict
+abundance-12	sigma(abs(12), 1) - 2*abs(12)	4	
+abundance-28	sigma(abs(28), 1) - 2*abs(28)	0	
+abundance-15	sigma(abs(15), 1) - 2*abs(15)	-6	
+abundance-1	sigma(abs(1), 1) - 2*abs(1)	-1	
+negative-n-the-sign-is-a-unit	sigma(abs(-12), 1) - 2*abs(-12)	4	
+listable-over-a-list	[sigma(abs(6), 1) - 2*abs(6), sigma(abs(12), 1) - 2*abs(12), sigma(abs(15), 1) - 2*abs(15)]	[0, 4, -6]	
+large-integers-powers-of-two-are-always-1-short	sigma(abs(((2)^40)), 1) - 2*abs(((2)^40))	-1	
+the-smallest-odd-abundant-number	sigma(abs(945), 1) - 2*abs(945)	30	
+classify-by-sign	enumeratio_sign(sigma(abs(12), 1) - 2*abs(12))	1	
+abundance-is-the-aliquot-sum-minus-n	enumeratio_equal(sigma(abs(12), 1) - 2*abs(12), (sigma(abs(12), 1) - abs(12) - 12))	True	
+perfect-numbers-have-abundance-0	enumeratio_equal(sigma(abs(496), 1) - 2*abs(496), 0)	True	
+zero-stays-unevaluated	sigma(abs(0), 1) - 2*abs(0)	ArithmeticError: factorization of 0 is not defined	error

@@ -462,6 +462,10 @@ export function declareGaussian(ce: Engine): void {
     const fallback = nativeEvaluate(ce, "DivisorSigma");
     extendHead(ce, "DivisorSigma", {
       evaluate: (ops, options) => {
+        // The sign of n is a unit, so σₖ(−n) = σₖ(n), as in Wolfram.
+        const negative = ops.length === 2 ? bigIntegerAt(ops[1]) : undefined;
+        if (negative !== undefined && negative < 0n)
+          return ce.function("DivisorSigma", [ops[0]!, ce.number(-negative)]).evaluate();
         const option = overOption("DivisorSigma", ops);
         if (option !== "other" && option.positional === 2) {
           const k = bigIntegerAt(ops[0]);

@@ -56,6 +56,8 @@ function extremum(ce: ComputeEngine, values: readonly BoxedExpression[], side: -
   const head = side < 0 ? "Min" : "Max";
   const parts = coordinatesOf(ce, values);
   if (parts !== undefined) return componentwise(ce, head, values[0]!, parts);
+  // A lone value has nothing to compare against: the head's own rows read it (a Finset's members).
+  if (values.length === 1) return undefined;
   const bound = side < 0 ? "GreatestLowerBound" : "LeastUpperBound";
   let best = values[0]!;
   for (const v of values.slice(1)) {

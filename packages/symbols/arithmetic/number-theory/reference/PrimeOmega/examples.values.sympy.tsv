@@ -8,6 +8,7 @@ gaussian-integers-5-9i-has-norm-106-2-cdot-53-so	primeomega((5 + 9*I))	TypeError
 gaussianintegers-true-12-1-i-4-cdot-3			
 listable-over-a-range			
 primeomega-28	primeomega(28)	3	
+negative-n-the-sign-is-a-unit	primeomega(-12)	ValueError: n should be a positive integer	error
 completely-additive-omega-mn-omega-m-omega-n-for	enumeratio_equal(primeomega((24 * 40)), (primeomega(24) + primeomega(40)))	True	
 omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3	Ge(primeomega(8), primenu(8))	True	
 primeomega-100	primeomega(100)	4	

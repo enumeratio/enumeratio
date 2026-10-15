@@ -1,0 +1,13 @@
+id	in	out	verdict
+squarepartroot-12	isqrt(abs(12)//abs(12).squarefree_part())	2	
+squarepartroot-360	isqrt(abs(360)//abs(360).squarefree_part())	6	
+a-square-free-number-has-root-1	isqrt(abs(30)//abs(30).squarefree_part())	1	
+squarepartroot-1	isqrt(abs(1)//abs(1).squarefree_part())	1	
+negative-n-the-sign-is-a-unit	isqrt(abs(-12)//abs(-12).squarefree_part())	2	
+listable-over-a-list	[isqrt(abs(8)//abs(8).squarefree_part()), isqrt(abs(9)//abs(9).squarefree_part()), isqrt(abs(10)//abs(10).squarefree_part())]	[2, 3, 1]	
+large-integers-10	isqrt(abs(enumeratio_factorial(10))//abs(enumeratio_factorial(10)).squarefree_part())	720	
+the-root-of-a-perfect-square-is-its-square-root	isqrt(abs(144)//abs(144).squarefree_part())	12	
+simplifying-sqrt-1000	isqrt(abs(1000)//abs(1000).squarefree_part())	10	
+n-is-s-squared-times-q	enumeratio_equal(360, (((isqrt(abs(360)//abs(360).squarefree_part()))^2) * abs(360).squarefree_part()))	True	
+a-number-is-square-free-when-the-root-is-1	enumeratio_equal(isqrt(abs(70)//abs(70).squarefree_part()), 1)	True	
+zero-stays-unevaluated	isqrt(abs(0)//abs(0).squarefree_part())	ZeroDivisionError: Integer division by zero	error

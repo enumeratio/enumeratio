@@ -1,0 +1,12 @@
+id	in	out	tex.in	tex.out	verdict
+aliquotsum-12	DivisorSigma[1, Abs[12]] - Abs[12]	16	\sigma _1(| 12| )-| 12|	16	
+aliquotsum-28	DivisorSigma[1, Abs[28]] - Abs[28]	28	\sigma _1(| 28| )-| 28|	28	
+aliquotsum-13	DivisorSigma[1, Abs[13]] - Abs[13]	1	\sigma _1(| 13| )-| 13|	1	
+aliquotsum-1	DivisorSigma[1, Abs[1]] - Abs[1]	0	\sigma _1(| 1| )-| 1|	0	
+negative-n-the-sign-is-a-unit	DivisorSigma[1, Abs[-12]] - Abs[-12]	16	\sigma _1(| -12| )-| -12|	16	
+listable-over-a-list	DivisorSigma[1, Abs[List[6, 12, 13]]] - Abs[List[6, 12, 13]]	{6, 16, 1}	\sigma _1(| \{6,12,13\}| )-| \{6,12,13\}|	\{6,16,1\}	
+large-integers-a-power-of-two	DivisorSigma[1, Abs[Power[2, 40]]] - Abs[Power[2, 40]]	1099511627775	\sigma _1\left(\left| 2^{40}\right| \right)-\left| 2^{40}\right|	1099511627775	
+amicable-pair-220-and-284	DivisorSigma[1, Abs[220]] - Abs[220]	284	\sigma _1(| 220| )-| 220|	284	
+amicable-pair-the-other-way	DivisorSigma[1, Abs[DivisorSigma[1, Abs[220]] - Abs[220]]] - Abs[DivisorSigma[1, Abs[220]] - Abs[220]]	220	\sigma _1(| \sigma _1(| 220| )-| 220| | )-| \sigma _1(| 220| )-| 220| |	220	
+aliquotsum-is-sigma-minus-n	(DivisorSigma[1, Abs[360]] - Abs[360] == Subtract[DivisorSigma[1, 360], 360])	True	\sigma _1(| 360| )-| 360| =\sigma _1(360)-360	\text{True}	
+zero-stays-unevaluated	DivisorSigma[1, Abs[0]] - Abs[0]	DivisorSigma[1, 0]	\sigma _1(| 0| )-| 0|	\sigma _1(0)	disagree
