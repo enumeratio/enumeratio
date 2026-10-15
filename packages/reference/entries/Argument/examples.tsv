@@ -1,8 +1,8 @@
-id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	wolfram.issue
 argument-i	Basic		[Argument, [Complex, 0, 1]]	[Multiply, [Rational, 1, 2], Pi]	$\arg(i) = \pi/2$			
 argument-1-plus-i	Basic		[Argument, [Complex, 1, 1]]	[Multiply, [Rational, 1, 4], Pi]				
 argument-neg-1			[Argument, -1]	Pi				
-n-argument-exponentiale-plus-i-times-pi-20	Scope	triage	[N, [Argument, [Add, ExponentialE, [Multiply, [Complex, 0, 1], Pi]]], 20]	{num: "0.85751178635584627029"}		compare	unclassified	""
+n-argument-exponentiale-plus-i-times-pi-20	Scope		[N, [Argument, [Add, ExponentialE, [Multiply, [Complex, 0, 1], Pi]]], 20]	{num: "0.85751178635584626501"}				
 argument-neg-123	Scope		[Argument, -123]	Pi				
 argument-123-minus-456i	Scope		[Argument, [Complex, 123, -456]]	[Arctan, [Rational, -152, 41]]				
 argument-list-list-1-over-2-neg-1-list-neg-5	Scope		[Argument, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]	[List, [List, 0, Pi], [List, Pi, 0]]				
@@ -10,4 +10,4 @@ fullsimplify-matrixfunction-argument-list-list-1	Scope		[FullSimplify, [MatrixFu
 argument-0	Scope		[Argument, 0]	0				
 argument-positiveinfinity	Scope		[Argument, PositiveInfinity]	0				
 argument-negativeinfinity	Scope		[Argument, NegativeInfinity]	Pi				
-argument-positiveinfinity-times-i	Scope	triage	[Argument, [Multiply, PositiveInfinity, [Complex, 0, 1]]]	Indeterminate		ours?	unclassified	""
+argument-positiveinfinity-times-i	Scope		[Argument, [Multiply, PositiveInfinity, [Complex, 0, 1]]]	Indeterminate		ours	I * Infinity evaluates to ComplexInfinity before Argument sees it, so the direction is lost and Argument answers Indeterminate; Wolfram's DirectedInfinity[I] has argument Pi/2. The same cause as ExpIntegralEi at +-I Infinity.	911

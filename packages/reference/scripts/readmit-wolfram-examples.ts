@@ -22,6 +22,8 @@ import { rewriteExamples, settle } from "./triage-records.ts";
 interface Decision {
   readonly action: "classify" | "fixed" | "compare" | "gap" | "emit" | "adapt";
   readonly kind?: string;
+  /** The GitHub issue a `kind: ours` row cites. */
+  readonly issue?: number;
   readonly note: string;
 }
 
@@ -44,7 +46,10 @@ for (const loaded of loadReferenceData(PACKAGES).heads) {
     counts[decision.action] = (counts[decision.action] ?? 0) + 1;
     switch (decision.action) {
       case "classify":
-        return { example: settle(example), wolfram: { ...wolfram, kind: decision.kind, note: decision.note } };
+        return {
+          example: settle(example),
+          wolfram: { ...wolfram, kind: decision.kind, note: decision.note, issue: decision.issue },
+        };
       case "fixed":
       case "compare":
         released.add(loaded.head);
