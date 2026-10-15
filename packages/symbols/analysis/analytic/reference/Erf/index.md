@@ -23,6 +23,26 @@ references:
     identity: "7.2"
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: erf($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+  - origin: mapped
+    form: sympy
+    template: erf2($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: SymPy's `erf2(x, y)` is erf(y) - erf(x), the generalized erf, but it stays unevaluated even at float arguments.
 ---
 
 - Odd function: $\operatorname{erf}(-z) = -\operatorname{erf}(z)$.

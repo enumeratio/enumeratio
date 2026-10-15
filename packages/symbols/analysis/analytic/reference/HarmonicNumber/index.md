@@ -25,6 +25,24 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: HarmonicNumber[n] / HarmonicNumber[n, r]; mpmath.harmonic(n) (one-argument only — mpmath has no generalized order).
+  - origin: mapped
+    form: sympy
+    template: harmonic($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+  - origin: mapped
+    form: sympy
+    template: harmonic($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 seeAlso:
   - PolyGamma
   - EulerGamma

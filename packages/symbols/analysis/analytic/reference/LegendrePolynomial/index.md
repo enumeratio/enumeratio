@@ -18,6 +18,16 @@ bindings:
     form: wolfram / mpmath / sympy
     environment: external
     note: LegendreP[n, x]; mpmath.legendre(n, x); sympy.legendre(n, x).
+  - origin: mapped
+    form: sympy
+    template: legendre($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 seeAlso:
   - ChebyshevT
   - ChebyshevU

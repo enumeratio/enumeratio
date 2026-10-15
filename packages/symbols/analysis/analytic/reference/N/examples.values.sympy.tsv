@@ -7,7 +7,7 @@ n-1-over-7-50	N(Rational(1, 7), 30)	0.142857142857142857142857142857
 n-gamma-33-over-10-50	N(gamma(Rational(33, 10)), 30)	2.68343738195576879359632731477	
 n-pi-50	N(pi, 30)	3.14159265358979323846264338328	
 n-khinchin-50			
-n-arcsin-3			
+n-arcsin-3	N(asin(3), 30)	1.57079632679489661923132169164 - 1.76274717403908605046521864996*I	
 n-c	N(Symbol("c"), 30)	True	
 n-c-47	N(Symbol("c"), 30)	True	
 n-poly	N(Symbol("poly"), 30)	True	

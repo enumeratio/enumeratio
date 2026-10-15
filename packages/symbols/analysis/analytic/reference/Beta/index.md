@@ -25,6 +25,17 @@ references:
 names:
   fungrim: BetaFunction
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: beta($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 ---
 
 - Defined via [[Gamma]]: $B(a, b) = \dfrac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}$.

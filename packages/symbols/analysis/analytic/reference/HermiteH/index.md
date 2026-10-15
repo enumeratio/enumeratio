@@ -35,6 +35,16 @@ bindings:
     form: wolfram / mpmath / sympy
     environment: external
     note: HermiteH[n, x]; mpmath.hermite(n, x); sympy.hermite(n, x).
+  - origin: mapped
+    form: sympy
+    template: hermite($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 seeAlso:
   - ChebyshevT
   - LegendrePolynomial
