@@ -1040,9 +1040,6 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
   expect(known.map((record) => record.name).toSorted()).toEqual(
     [
       ...FORMATS_KNOWN,
-      "PermutationLength",
-      "PermutationMax",
-      "PermutationMin",
       "PermutationOrder",
       "PermutationPower",
       "PermutationProduct",

@@ -45,7 +45,6 @@ import {
 } from "../../src/statistics/vocabulary.ts";
 
 const on = "Permutation";
-const INFINITY: MathJSON = { num: "+Infinity" };
 const stat = (head: string, summary: string, expr: Definition["expr"], note?: string, result?: string): Definition => ({
   head,
   on,
@@ -568,12 +567,8 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
     "Wolfram's PermutationOrder. The bare `Order` is Wolfram's canonical-ordering comparison `Order[a, b]`, so this head replaces it. The old name is recorded in `formerly` but does not resolve: `Order(p)` is now Wolfram's `Order`.",
   ),
 
-  // The moved points, as Wolfram reads them: positions where p(i) differs from i.
-  stat(
-    "PermutationLength",
-    "The number of points p moves.",
-    nonEmpty(count(positions, greater(distance(here, "i"), 0))),
-  ),
+  // The moved points, as Wolfram reads them: positions where p(i) differs from i. Their number,
+  // largest and smallest are Length, Max and Min of this, not heads of their own.
   stat(
     "PermutationSupport",
     "The points p moves, in increasing order.",
@@ -583,17 +578,6 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
     ),
     undefined,
     "list<integer>",
-  ),
-  stat(
-    "PermutationMax",
-    "The largest point p moves; 0 for the identity.",
-    nonEmpty(max(forEach(positions, ["If", greater(distance(here, "i"), 0), "i", 0]))),
-  ),
-  stat(
-    "PermutationMin",
-    "The smallest point p moves; infinity for the identity.",
-    // A numeric infinity: the compiled code has no symbol for it.
-    nonEmpty(min(forEach(positions, ["If", greater(distance(here, "i"), 0), "i", INFINITY])), INFINITY),
   ),
 
   word(
