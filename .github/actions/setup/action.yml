@@ -28,7 +28,14 @@ runs:
         key: dist-${{ runner.os }}-${{ github.sha }}
         restore-keys: dist-${{ runner.os }}-
     - id: build
-      run: node tools/ci/dist-cache.ts build $PACKAGES
+      run: |
+        (while true; do free -m | awk '/^Mem:/ {print $3}' >> "$RUNNER_TEMP/mem.log"; sleep 2; done) &
+        sampler=$!
+        status=0
+        node tools/ci/dist-cache.ts build $PACKAGES || status=$?
+        kill $sampler
+        echo "::notice::peak memory used $(sort -n "$RUNNER_TEMP/mem.log" | tail -1) MB of $(free -m | awk '/^Mem:/ {print $2}') MB"
+        exit $status
       shell: bash
       env:
         DIST_CACHE_DIR: ${{ runner.temp }}/dist-cache
