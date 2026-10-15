@@ -73,25 +73,19 @@ const weyl = (row: string, m: MathJSON): MathJSON =>
 const widths = (cap: string, lo: string, m: MathJSON): MathJSON =>
   fold(mul("gt_p", add(sub(at(cap, "gt_i"), at(lo, "gt_i")), 1)), "gt_p", "gt_i", 1, upTo(1, m));
 
-/** The row after `cur` in order, `cur` itself when it is the last. */
+/** The row after `cur` in order, `cur` itself when it is the last. It is filled in place, an entry at a time:
+ *  a `Map` row would stay lazy, and a search that carries it would re-evaluate every earlier row. */
 const next = (cur: string, cap: string, lo: string, m: MathJSON): MathJSON => {
   const room = (i: MathJSON): MathJSON => iff(equal(i, 1), at(cap, 1), ["Min", at(cap, i), at(cur, sub(i, 1))]);
   const raised = fold(iff(less(at(cur, "gn_i"), room("gn_i")), "gn_i", "gn_r"), "gn_r", "gn_i", 0, upTo(1, m));
+  const entry = iff(
+    less("gn_j", "gn_at"),
+    at(cur, "gn_j"),
+    iff(equal("gn_j", "gn_at"), add(at(cur, "gn_j"), 1), at(lo, "gn_j")),
+  );
   return lets(
     [["gn_at", raised, "integer"]],
-    iff(
-      equal("gn_at", 0),
-      cur,
-      map(
-        iff(
-          less("gn_j", "gn_at"),
-          at(cur, "gn_j"),
-          iff(equal("gn_j", "gn_at"), add(at(cur, "gn_j"), 1), at(lo, "gn_j")),
-        ),
-        "gn_j",
-        upTo(1, m),
-      ),
-    ),
+    iff(equal("gn_at", 0), cur, fold(["ReplaceAt", "gn_c", "gn_j", entry], "gn_c", "gn_j", cur, upTo(1, m))),
   );
 };
 

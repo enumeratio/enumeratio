@@ -27,8 +27,8 @@ const SHARDS = Number(process.env.FAMILY_SHARDS) || (process.env.CI ? 3 : 1);
  *  the shards log their times, so rebalance when one runs well past the others. */
 const COST: Readonly<Record<string, number>> = {
   SeparablePermutations: 38,
-  BoxedPlanePartitions: 35,
-  GelfandTsetlin: 27,
+  BoxedPlanePartitions: 28,
+  GelfandTsetlin: 17,
   SkewStandardTableaux: 26,
   SemistandardTableaux: 14,
   NonCrossingCycleSupportPermutations: 10,
