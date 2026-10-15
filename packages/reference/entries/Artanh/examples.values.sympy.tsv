@@ -3,7 +3,7 @@ n-artanh-1-over-2-50	N(atanh(Rational(1, 2)), 30)	0.5493061443340548456976226184
 artanh-positiveinfinity	atanh(oo)	-I*pi/2	
 artanh-0	atanh(0)	0	
 d-artanh-x-x	diff(atanh(Symbol("x")), Symbol("x"))	True	
-fullsimplify-neg-1-over-x-times-y-plus-1-times-x			
+fullsimplify-neg-1-over-x-times-y-plus-1-times-x	simplify(((-((S(1) / ((Symbol("x") * Symbol("y")) + 1)) * (Symbol("x") + Symbol("y")))) + tanh((atanh(Symbol("x")) + atanh(Symbol("y"))))))	True	
 trigtoexp-artanh-z			
 integrate-artanh-x-x-nothing-nothing	integrate(atanh(Symbol("x")), Symbol("x"))	True	
 artanh-2	atanh(2)	atanh(2)	

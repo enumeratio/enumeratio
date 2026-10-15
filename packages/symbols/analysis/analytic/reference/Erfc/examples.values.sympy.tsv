@@ -14,7 +14,7 @@ uncertainty-propagation
 to-30-significant-digits-every-one-correctly	N(erfc(2), 30)	0.00467773498104726583793074363275	
 n-erfc-3-over-2-50	N(erfc(Rational(3, 2)), 30)	0.0338948535246892729330237383541	
 functionexpand-matrixfunction-erfc-list-list-0-1			
-fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2			
+fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2	simplify(enumeratio_equal(erfc((-Symbol("z"))), ((-erfc(Symbol("z"))) + 2)))	True	
 series-erfc-x-x-0-7	series(erfc(Symbol("x")), Symbol("x"), 0, 7 + 1)	True	
 normal-series-erfc-x-x-positiveinfinity-1	(series(erfc(Symbol("x")), Symbol("x"), oo, 1 + 1)).removeO()	None	inconclusive
 erfc-z-2-erfc-z-here-at-z-1	enumeratio_equal((erfc(-1) + erfc(1)), 2)	True	

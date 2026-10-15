@@ -63,6 +63,16 @@ test("sympy: enumeratio_symbolic_agree, carrying the same 3 trials", () => {
   );
 });
 
+test("sympy: a simplifier is asked of the whole, and not again at each sample", () => {
+  // The value is the same at a point, and `simplify` can raise where the value is fine.
+  expect(symbolicAgreementSource("sympy", ["Simplify", expr], expected, ["x"])).toBe(
+    'enumeratio_symbolic_agree(simplify((Symbol("x") + Symbol("x"))), (2 * Symbol("x")), ' +
+      "[((Rational(7, 3) + Rational(7, 3)), (2 * Rational(7, 3))), " +
+      "((Rational(-11, 5) + Rational(-11, 5)), (2 * Rational(-11, 5))), " +
+      "((Rational(13, 4) + Rational(13, 4)), (2 * Rational(13, 4)))])",
+  );
+});
+
 test("sage: the same helper, Sage's own rational literal", () => {
   expect(symbolicAgreementSource("sage", expr, expected, ["x"])).toBe(
     'enumeratio_symbolic_agree((SR.var("x") + SR.var("x")), (2 * SR.var("x")), ' +

@@ -13,6 +13,16 @@ seeAlso:
   - ExpToTrig
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: simplify($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: SymPy has no stronger simplifier than `simplify`, so FullSimplify maps to the same call as Simplify. The scan compares what each answers by value (the difference simplifies to zero, or agrees at sample points), not by form; an answer ours leaves as written is no agreement unless SymPy leaves it too. Assumptions (a second operand) are not mapped.
 ---
 
 - Starts from compute-engine's native `simplify()`, which already folds the Pythagorean identity and a double-angle product on its own.
