@@ -9,4 +9,13 @@ signatures:
 stub: engine
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: Piecewise((1, $1), (0, True))
+    arity: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-15
+    note: Piecewise over the condition, which is a SymPy relational or And/Or/Not.
 ---

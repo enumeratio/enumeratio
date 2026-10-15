@@ -1,0 +1,8 @@
+id	in	out	verdict
+2-over-17-lt-1-over-5-lt-1-over-10-times-pi	And(Lt(Rational(2, 17), Rational(1, 5)), Lt(Rational(1, 5), (Rational(1, 10) * pi)))	True	
+3-over-2-lt-5-over-3	Lt(Rational(3, 2), Rational(5, 3))	True	
+1-lt-1-plus-128-times-10-pow-neg-16	Lt(1, (1 + (128 * (S(10)**-16))))	True	
+1-lt-1-plus-256-times-10-pow-neg-16	Lt(1, (1 + (256 * (S(10)**-16))))	True	
+pi-pow-exponentiale-lt-exponentiale-pow-pi	Lt((S(pi)**E), (S(E)**pi))	True	
+refine-sqrt-x-pow-2-x-lt-0			
+integrate-boole-1-lt-x-pow-2-plus-y-pow-2-lt-2	integrate((Piecewise((1, And(Lt(1, ((S(Symbol("x"))**2) + (S(Symbol("y"))**2))), Lt(((S(Symbol("x"))**2) + (S(Symbol("y"))**2)), 2))), (0, True)) * (S(Symbol("x"))**2)), (Symbol("y"), -oo, oo), (Symbol("x"), -oo, oo))	Integral(Piecewise((oo*sign(x**2), (x**2 + y**2 > 1) & (x**2 + y**2 < 2)), (0, True)), (x, -oo, oo))	disagree

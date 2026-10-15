@@ -9,4 +9,20 @@ signatures:
 names:
   wolframIdentity: true
 stub: engine
+bindings:
+  - origin: mapped
+    form: sympy
+    template: Gt($1, $2)
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sympy
+    template: And(Gt($1, $2), Gt($2, $3))
+    arity: 3
+    checked:
+      version: 1.14.0
+      on: 2026-10-15
+    note: A chain is the conjunction of its neighbors.
 ---
