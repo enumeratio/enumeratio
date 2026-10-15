@@ -7,6 +7,9 @@
 // rest — Wolfram and Sage have no such flag.
 
 import { execFileSync, spawn } from "node:child_process";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 export interface Bounds {
   /** Resident-memory ceiling for the child and everything it spawns. */
@@ -126,4 +129,29 @@ export async function runKernel(command: string, args: readonly string[], bounds
     throw new Error(`${command}: exit ${result.code}\n${result.stderr.slice(-2000)}`);
   }
   return result.stdout;
+}
+
+/** Write `program` to a throwaway file, hand its path to `run`, and clean up. A program goes
+ * through a file, not an argument: one argument tops out at 128 KiB on Linux (spawn E2BIG). */
+export async function withFile<T>(name: string, program: string, run: (file: string) => Promise<T>): Promise<T> {
+  const dir = mkdtempSync(join(tmpdir(), "oracle-"));
+  const file = join(dir, name);
+  writeFileSync(file, program);
+  try {
+    return await run(file);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
+/** The `wolframscript` arguments that run the program in `file` and print its last value, as
+ * `-code` would. `Get` reads Latin-1 unless told UTF-8. */
+export const wolframFileArgs = (file: string): string[] => [
+  "-code",
+  `Get[${JSON.stringify(file)}, CharacterEncoding -> "UTF-8"]`,
+];
+
+/** `runKernel` for a Wolfram program of any size: the program is handed over in a file. */
+export function runWolframKernel(program: string, bounds: Bounds = {}): Promise<string> {
+  return withFile("program.wl", program, (file) => runKernel("wolframscript", wolframFileArgs(file), bounds));
 }

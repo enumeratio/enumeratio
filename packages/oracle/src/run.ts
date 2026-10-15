@@ -9,11 +9,10 @@
 // Every kernel also runs under the process-group watchdog (bounded.ts), the ceiling for the
 // kernels with no per-item cap of their own (Lean).
 
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { type Bounds, memoryCapMb, runBounded } from "@enumeratio/utils/bounded";
+import { type Bounds, memoryCapMb, runBounded, withFile, wolframFileArgs } from "@enumeratio/utils/bounded";
 import type { System } from "./systems.ts";
 /** Sources per kernel process. */
 const BATCH = 40;
@@ -82,7 +81,20 @@ elif kernel.returncode != 0:
     print("<<%d>>!!KernelDied: exit %d" % (last + 1, kernel.returncode), flush=True)
 `;
 
-const failAll = (count: number, reason: string): Result[] => Array.from({ length: count }, () => ({ error: reason }));
+/** Items a kernel never reached; `runIn` resumes after the last answered one, so no bisect. */
+const noOutput = (count: number): Result[] => Array.from({ length: count }, () => ({ error: "no output" }));
+
+/** Errors that stand for a whole batch lost to the watchdog (memory or time), which a single
+ * item plausibly caused. A bad exit or a missing binary is systemic and is never tagged. */
+const BATCH_FAILURES = new WeakSet<object>();
+
+/** `count` results that all carry a batch-level failure; a watchdog kill is tagged for `runIn` to bisect. */
+export const failAll = (count: number, reason: string): Result[] =>
+  Array.from({ length: count }, () => {
+    const result = { error: reason };
+    if (/killed \((memory|timeout)/.test(reason)) BATCH_FAILURES.add(result);
+    return result;
+  });
 
 /** A directory beside this package (a Julia environment, the Lake project). */
 const local = (name: string): string => fileURLToPath(new URL(`../${name}`, import.meta.url));
@@ -104,18 +116,6 @@ async function transcript(
     return { reason: `${command}: ${why}` };
   } catch (error) {
     return { reason: `${command}: ${String(error).slice(0, 120)}` };
-  }
-}
-
-/** Write `program` to a throwaway file, hand its path to `run`, and clean up. */
-async function withFile<T>(name: string, program: string, run: (file: string) => Promise<T>) {
-  const dir = mkdtempSync(join(tmpdir(), "oracle-"));
-  const file = join(dir, name);
-  writeFileSync(file, program);
-  try {
-    return await run(file);
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
   }
 }
 
@@ -149,8 +149,8 @@ export function wolframBatchCode(
   itemSeconds: number = ITEM_SECONDS,
   preamble: string = "",
 ): string {
-  // wolframscript reads `-code` byte by byte (`∑` arrives as three Latin-1 characters), so a
-  // non-ASCII character goes in as Wolfram's own escape: `\:2211`, or `\|01f600` past the BMP.
+  // The program file is read as UTF-8, so this escape is optional; a non-ASCII character goes in
+  // as Wolfram's own escape (`\:2211`, or `\|01f600` past the BMP), keeping the program ASCII.
   const escaped = (source: string): string =>
     JSON.stringify(source).replace(/\P{ASCII}/gu, (ch) => {
       const code = ch.codePointAt(0) as number;
@@ -174,7 +174,7 @@ async function runWolfram(sources: readonly string[], itemSeconds: number, pream
   // on one argument (spawn E2BIG); the kernel reads it from a file instead.
   const code = wolframBatchCode(sources, itemSeconds, preamble);
   const run = await withFile("batch.wl", code, (file) =>
-    transcript("wolframscript", ["-code", `Get[${JSON.stringify(file)}]`], {
+    transcript("wolframscript", wolframFileArgs(file), {
       timeoutMs: Math.max(600_000, itemSeconds * 20_000),
     }),
   );
@@ -355,7 +355,7 @@ const RUST_HEADER = ["#![allow(unused_parens, unused_imports)]", "use enumeratio
 async function runRust(sources: readonly string[]): Promise<Result[]> {
   const crate = local("rust");
   const header = [...RUST_HEADER, "fn main() {"];
-  const results: Result[] = failAll(sources.length, "no output");
+  const results: Result[] = noOutput(sources.length);
   const live = new Set(sources.map((_, i) => i));
   for (let attempt = 0; attempt < sources.length + 1 && live.size > 0; attempt++) {
     const order = [...live];
@@ -391,7 +391,7 @@ async function runRust(sources: readonly string[]): Promise<Result[]> {
 
 /** Pull `<<n>>value` lines out of a transcript, tolerating anything else the kernel prints. */
 function collect(output: string, count: number): Result[] {
-  const results: Result[] = failAll(count, "no output");
+  const results: Result[] = noOutput(count);
   // Split on bare CR too: Oscar's banner leaves one before the first item.
   for (const line of output.split(/\r\n|\r|\n/)) {
     const match = /^<<(\d+)>>(.*)$/.exec(line);
@@ -1356,6 +1356,48 @@ export interface RunOptions {
   readonly deadline?: number;
   /** Seconds one item may run before it counts as an error (default `ITEM_SECONDS`). */
   readonly itemSeconds?: number;
+  /** Runs one batch in place of the system's kernel; for tests. */
+  readonly batchRunner?: (sources: readonly string[]) => Promise<Result[]>;
+}
+
+/** Extra kernel runs one batch may spend bisecting a whole-batch failure: a full bisect of
+ * `BATCH` items with one poison item takes about 2 * log2(BATCH) = 12. Past the cap the
+ * remaining chunk is reported failed as a whole. */
+export const MAX_BISECT_RUNS = 24;
+
+/** Bisect runs one whole `runIn` lane may spend, so a systemic failure that looks like a
+ * watchdog kill can't cost `MAX_BISECT_RUNS` for every batch. */
+export const MAX_LANE_BISECT_RUNS = 60;
+
+const reasonOf = (r: Result | undefined): string | undefined => (r !== undefined && "error" in r ? r.error : undefined);
+
+/** Run a batch; if the watchdog killed the kernel before it printed anything, run its halves
+ * separately so only the chunk holding the culprit errors. A chunk of one is final. A head
+ * half that fails entirely for the parent's own reason points at a systemic cause, and a head
+ * that died partway leaves a tail `runIn` would discard: neither runs the tail. */
+async function runBisecting(
+  run: (sources: readonly string[]) => Promise<Result[]>,
+  sources: readonly string[],
+  budget: { runs: number; lane: { runs: number } },
+  deadline: number | undefined,
+): Promise<Result[]> {
+  const results = await run(sources);
+  const lost = sources.length > 1 && results.length > 0 && results.every((r) => BATCH_FAILURES.has(r));
+  if (!lost || budget.runs < 2 || budget.lane.runs < 2 || (deadline !== undefined && Date.now() > deadline)) {
+    return results;
+  }
+  budget.runs -= 2;
+  budget.lane.runs -= 2;
+  const mid = Math.ceil(sources.length / 2);
+  const head = await runBisecting(run, sources.slice(0, mid), budget, deadline);
+  const rest = sources.length - mid;
+  if (head.some((r) => reasonOf(r) === "no output")) return [...head, ...noOutput(rest)];
+  const parent = reasonOf(results[0]) as string;
+  if (head.length > 1 && head.every((r) => reasonOf(r) === parent)) {
+    return [...head, ...Array.from({ length: rest }, () => ({ error: parent }))];
+  }
+  const tail = await runBisecting(run, sources.slice(mid), budget, deadline);
+  return [...head, ...tail];
 }
 
 /** Seconds between progress lines on stderr, so a stalled lane is visible in a CI log. */
@@ -1363,6 +1405,7 @@ const PROGRESS_SECONDS = 30;
 
 export async function runIn(system: System, sources: readonly string[], options: RunOptions = {}): Promise<Result[]> {
   const results: Result[] = [];
+  const lane = { runs: MAX_LANE_BISECT_RUNS };
   let start = 0;
   const began = Date.now();
   let reported = began;
@@ -1372,7 +1415,14 @@ export async function runIn(system: System, sources: readonly string[], options:
       while (results.length < sources.length) results.push(spent);
       break;
     }
-    const batch = await runBatch(system, sources.slice(start, start + BATCH), options.itemSeconds ?? ITEM_SECONDS);
+    const itemSeconds = options.itemSeconds ?? ITEM_SECONDS;
+    const run = options.batchRunner ?? ((chunk: readonly string[]) => runBatch(system, chunk, itemSeconds));
+    const batch = await runBisecting(
+      run,
+      sources.slice(start, start + BATCH),
+      { runs: MAX_BISECT_RUNS, lane },
+      options.deadline,
+    );
     // A kernel that died mid-batch leaves "no output" after the item that killed it.
     const lost = batch.findIndex((r) => "error" in r && r.error === "no output");
     // Nothing came back at all: count the first item as the culprit and move past it.

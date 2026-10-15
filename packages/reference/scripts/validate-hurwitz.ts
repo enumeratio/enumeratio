@@ -10,7 +10,7 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { applyAllPatches } from "@enumeratio/ce-patches";
-import { runKernel } from "@enumeratio/utils/bounded";
+import { runWolframKernel } from "@enumeratio/utils/bounded";
 
 const ce = new ComputeEngine();
 applyAllPatches(ce);
@@ -105,7 +105,7 @@ const code = cases
   .map((c, k) => `With[{v=${c.wl}},Print[${k},"|",ToString[Re[v],InputForm],"|",ToString[Im[v],InputForm]]]`)
   .join(";\n");
 
-const out = await runKernel("wolframscript", ["-code", code], { timeoutMs: 300_000 });
+const out = await runWolframKernel(code, { timeoutMs: 300_000 });
 
 const clean = (s: string): number => Number(s.replace(/`[\d.]+/g, "").replace(/\*\^/g, "e"));
 

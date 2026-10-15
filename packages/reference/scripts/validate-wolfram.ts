@@ -12,7 +12,7 @@
 // Extension heads with no Wolfram equivalent (our collections/statistics) stay
 // symbolic in Wolfram and are reported separately as "wl-unsupported", not failures.
 
-import { runKernel } from "@enumeratio/utils/bounded";
+import { runWolframKernel } from "@enumeratio/utils/bounded";
 import { toWolfram } from "@enumeratio/wolfram";
 import { isSettled } from "@enumeratio/entry";
 import { referenceEntries } from "../src/node.ts";
@@ -55,7 +55,7 @@ for (const entry of entries) {
 const code = cases
   .map((c, k) => `Print["${k}|", ToString[N[Quiet[ToExpression[${JSON.stringify(c.wl)}]]], InputForm]]`)
   .join(";\n");
-const out = await runKernel("wolframscript", ["-code", code], { timeoutMs: 180_000 });
+const out = await runWolframKernel(code, { timeoutMs: 180_000 });
 
 const got = new Map<number, string>();
 for (const line of out.split("\n")) {

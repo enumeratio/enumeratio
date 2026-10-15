@@ -11,7 +11,7 @@
 //   node packages/reference/scripts/collect-wolfram-vocabulary.ts
 
 import { writeFileSync } from "node:fs";
-import { runKernel } from "@enumeratio/utils/bounded";
+import { runWolframKernel } from "@enumeratio/utils/bounded";
 
 const code = [
   'names = Names["System`*"];',
@@ -24,7 +24,7 @@ const code = [
   'Print["FORMS=", StringRiffle[Select[names, StringEndsQ[#, "Form"] &], ","]];',
   'Print["$Version=", $Version]',
 ].join(" ");
-const out = await runKernel("wolframscript", ["-code", code], { timeoutMs: 900_000 });
+const out = await runWolframKernel(code, { timeoutMs: 900_000 });
 
 const field = (key: string): string[] => {
   const line = out.split("\n").find((l) => l.startsWith(`${key}=`));
