@@ -92,7 +92,7 @@ const fits = (read: (i: MathJSON, j: MathJSON) => MathJSON, s: MathJSON, r: Math
 // ─── _tables ───
 /** The rows, in the numbering: the empty row, then each length's block in lex order. */
 const rowsTable = (() => {
-  const [acc, i, prev, last, j, k] = [fresh("a"), fresh("i"), fresh("p"), fresh("l"), fresh("j"), fresh("k")];
+  const [acc, i, prev, last, j, k, cur] = ["a", "i", "p", "l", "j", "k", "c"].map(fresh);
   const cap = (at_: MathJSON): MathJSON => iff(equal(at_, 1), C, at(prev, at_));
   // The last entry that can be raised: within the row's length, below the entry before it (or c).
   const raised = fold(
@@ -102,27 +102,21 @@ const rowsTable = (() => {
     0,
     upTo(1, B),
   );
+  // The entries are filled in place, a cell at a time: a `Map` row would stay lazy, and the next
+  // row's reads would re-evaluate every earlier one.
+  const entry = iff(
+    equal(last, 0),
+    iff(["LessEqual", k, add(at(prev, 1), 1)], 1, 0),
+    iff(
+      less(k, last),
+      at(prev, add(k, 1)),
+      iff(equal(k, last), add(at(prev, add(k, 1)), 1), iff(["LessEqual", k, at(prev, 1)], 1, 0)),
+    ),
+  );
+  const cells = fold(["ReplaceAt", cur, add(k, 1), entry], cur, k, zeros(add(B, 1), fresh("z")), upTo(1, B));
   const next = lets(
     [[prev, take(drop(acc, mul(sub(i, 1), add(B, 1))), add(B, 1)), "list<integer>"]],
-    lets(
-      [[last, raised, "integer"]],
-      iff(
-        equal(last, 0),
-        join(list(add(at(prev, 1), 1)), map(iff(["LessEqual", k, add(at(prev, 1), 1)], 1, 0), k, upTo(1, B))),
-        join(
-          list(at(prev, 1)),
-          map(
-            iff(
-              less(k, last),
-              at(prev, add(k, 1)),
-              iff(equal(k, last), add(at(prev, add(k, 1)), 1), iff(["LessEqual", k, at(prev, 1)], 1, 0)),
-            ),
-            k,
-            upTo(1, B),
-          ),
-        ),
-      ),
-    ),
+    lets([[last, raised, "integer"]], ["ReplaceAt", cells, 1, iff(equal(last, 0), add(at(prev, 1), 1), at(prev, 1))]),
   );
   return fold(join(acc, next), acc, i, zeros(add(B, 1), fresh("z")), upTo(1, sub(N, 1)));
 })();

@@ -42,21 +42,10 @@ function sampleParams(count: number): number[][] {
 
 /**
  * Fibers of the sample that the interpreter takes a minute or so over, checked only in the
- * nightly sweep (tests/compiled-families.test.ts, DEEP_TESTS), not at every build. Smaller fibers
- * of each family run the same definitions: BoxedPlanePartitions' table walks a row list the
- * interpreter re-evaluates exponentially in its length (the C(b + c, b) rows of a 1 × 2 × 3
- * box), and GelfandTsetlin's unrank searches the rows linearly in the rank.
+ * nightly sweep (tests/compiled-families.test.ts, DEEP_TESTS), not at every build: head to
+ * fibers. None now; list one here when a definition's interpreter cost warrants it.
  */
-const DEEP_FIBERS: Readonly<Record<string, readonly (readonly number[])[]>> = {
-  BoxedPlanePartitions: [
-    [1, 2, 3],
-    [1, 3, 2],
-  ],
-  GelfandTsetlin: [
-    [3, 3],
-    [4, 2],
-  ],
-};
+const DEEP_FIBERS: Readonly<Record<string, readonly (readonly number[])[]>> = {};
 
 /** The heads that have fibers in the nightly sweep. */
 export const deepHeads = Object.keys(DEEP_FIBERS);
