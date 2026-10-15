@@ -24,7 +24,7 @@
 // at the cost of a much heavier dependency for no extra coverage. We call mpmath directly.
 
 import { writeFormatted } from "@enumeratio/entry/node";
-import { KernelKilled, runKernel } from "@enumeratio/utils/bounded";
+import { KernelKilled, runKernel, runWolframKernel } from "@enumeratio/utils/bounded";
 import { referenceEntries } from "../src/node.ts";
 
 const names = referenceEntries().map((entry) => entry.name);
@@ -36,7 +36,7 @@ async function askWolfram(heads: readonly string[]): Promise<Set<string>> {
   const list = `{${heads.map((head) => `"${head}"`).join(", ")}}`;
   const code = `Print[StringRiffle[Select[${list}, Length[Names["System\`" <> #]] > 0 &], ","]]`;
   try {
-    const out = await runKernel("wolframscript", ["-code", code], { timeoutMs: 120_000 });
+    const out = await runWolframKernel(code, { timeoutMs: 120_000 });
     return new Set(out.trim().split(",").filter(Boolean));
   } catch (error) {
     // A missing kernel leaves the column empty; a killed one must not pass for that.

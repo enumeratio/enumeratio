@@ -10,14 +10,14 @@
 //   node packages/reference/scripts/collect-named-characters.ts
 
 import { writeFileSync } from "node:fs";
-import { runKernel } from "@enumeratio/utils/bounded";
+import { runWolframKernel } from "@enumeratio/utils/bounded";
 
 const code = [
   'Do[With[{f = StringTake[ToString[FromCharacterCode[c], InputForm, CharacterEncoding -> "ASCII"], {2, -2}]},',
   'If[StringStartsQ[f, "\\\\["], Print[c, " ", StringTake[f, {3, -2}]]]], {c, 128, 65535}];',
   'Print["$Version=", $Version]',
 ].join(" ");
-const out = await runKernel("wolframscript", ["-code", code], { timeoutMs: 900_000 });
+const out = await runWolframKernel(code, { timeoutMs: 900_000 });
 
 const names: [string, number][] = [];
 let version: string | undefined;
