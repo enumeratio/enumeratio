@@ -9,4 +9,11 @@ signatures:
 names:
   wolframIdentity: true
 stub: engine
+bindings:
+  - origin: mapped
+    form: sympy
+    template: Or($*,)
+    checked:
+      version: 1.14.0
+      on: 2026-10-15
 ---

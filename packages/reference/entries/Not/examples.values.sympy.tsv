@@ -1,0 +1,5 @@
+id	in	out	verdict
+integrate-boole-factorial-4-times-x-pow-4-minus	integrate(Piecewise((1, Not(Le(((4 * (S(Symbol("x"))**4)) + (-4 * (S(Symbol("x"))**2)) + (S(Symbol("y"))**2)), 0))), (0, True)), (Symbol("y"), -1, 1), (Symbol("x"), -1, 1))	Integral(Piecewise((2, 4*x**4 - 4*x**2 + y**2 > 0), (0, True)), (x, -1, 1))	disagree
+booleanconvert-factorial-a-b			
+booleanconvert-factorial-a-b-c			
+booleanconvert-factorial-implies-a-b			

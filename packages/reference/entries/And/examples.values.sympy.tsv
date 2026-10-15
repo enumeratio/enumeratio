@@ -1,0 +1,7 @@
+id	in	out	verdict
+1-lt-2-3-lt-pi	And(Lt(1, 2), Lt(3, pi))	True	
+replaceall-x-factorial-eq-0-y-eq-1-times-x-pow			
+replaceall-y-eq-1-times-x-pow-neg-1-x-factorial			
+refine-a-pow-b-pow-c-a-gt-eq-0-b-in-realnumbers			
+integrate-boole-x-pow-2-plus-y-pow-2-lt-1-x	integrate(Piecewise((1, And(Lt(((S(Symbol("x"))**2) + (S(Symbol("y"))**2)), 1), Lt(((S((Symbol("x") + -1))**2) + (S(Symbol("y"))**2)), 2))), (0, True)), (Symbol("y"), -oo, oo), (Symbol("x"), -oo, oo))	Integral(Piecewise((oo, (x**2 + y**2 < 1) & (y**2 + (x - 1)**2 < 2)), (0, True)), (x, -oo, oo))	disagree
+booleanconvert-factorial-a-b			

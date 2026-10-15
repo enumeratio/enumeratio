@@ -626,6 +626,30 @@ test("SymPy's integrate takes a bare variable or a tuple, its first iterator the
   expect(sympy(["Integrate", ["Multiply", "x", "y"], ["Limits", "x", 0, 1], ["Limits", "y", 0, "x"]])).toBe(
     'integrate((Symbol("x") * Symbol("y")), (Symbol("y"), 0, Symbol("x")), (Symbol("x"), 0, 1))',
   );
+  // Any number of iterators, reversed; a call with none has no variable to take.
+  const triple = ["Multiply", "x", "y", "z"];
+  expect(sympy(["Integrate", triple, ["Limits", "x", 0, 1], ["Limits", "y", 0, 1], ["Limits", "z", 0, "y"]])).toBe(
+    'integrate((Symbol("x") * Symbol("y") * Symbol("z")), (Symbol("z"), 0, Symbol("y")), (Symbol("y"), 0, 1), (Symbol("x"), 0, 1))',
+  );
+  expect(sympy(["Integrate", ["Function", ["Block", triple], "x", "y", "z"], "x", "y", "z"])).toBe(
+    'integrate((Symbol("x") * Symbol("y") * Symbol("z")), Symbol("z"), Symbol("y"), Symbol("x"))',
+  );
+  expect(sympy(["Integrate", "x"])).toBeUndefined();
+});
+
+test("SymPy's Boole is a Piecewise over its condition, chains and connectives kept whole", () => {
+  const sympy = (expr: unknown) => {
+    const out = emit(expr as never, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  expect(sympy(["Boole", ["Less", 1, "x"]])).toBe('Piecewise((1, Lt(1, Symbol("x"))), (0, True))');
+  // A chain is the conjunction of its neighbors.
+  expect(sympy(["Boole", ["LessEqual", 1, "x", 2]])).toBe(
+    'Piecewise((1, And(Le(1, Symbol("x")), Le(Symbol("x"), 2))), (0, True))',
+  );
+  expect(sympy(["Boole", ["Not", ["Or", ["Greater", "x", 1], ["GreaterEqual", "x", "y"], ["Less", "y", 0]]]])).toBe(
+    'Piecewise((1, Not(Or(Gt(Symbol("x"), 1), Ge(Symbol("x"), Symbol("y")), Lt(Symbol("y"), 0)))), (0, True))',
+  );
 });
 
 test("a library's heads emit through its own mappings, called by namespace", () => {

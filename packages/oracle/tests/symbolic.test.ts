@@ -566,6 +566,29 @@ test("an indefinite integral's answer is differentiated before it is compared, s
   expect(source).toContain("/. {x -> Rational[7, 3]}, 30], 10^-12]");
 });
 
+test("sympy: every iterator of a multiple integral is bound by it, so only the parameters are sampled", () => {
+  const limits = (variable: string) => ["Limits", variable, 0, 1];
+  const body = ["Function", ["Block", ["Multiply", "a", "x", "y", "z"]], "x", "y", "z"];
+  const source = symbolicAgreementSource(
+    "sympy",
+    ["Integrate", body, limits("x"), limits("y"), limits("z")] as never,
+    ["Divide", "a", 8] as never,
+    ["a", "x", "y", "z"],
+  ) as string;
+  // The iterators stay symbols in every trial; `a` alone takes the sample values.
+  expect(source.match(/\(Symbol\("z"\), 0, 1\), \(Symbol\("y"\), 0, 1\), \(Symbol\("x"\), 0, 1\)/g)).toHaveLength(4);
+  expect(source).toContain('(Rational(7, 3) * Symbol("x") * Symbol("y") * Symbol("z"))');
+  // A bare variable among the limits is the call's own, differentiated in turn.
+  expect(
+    symbolicAgreementSource(
+      "sympy",
+      ["Integrate", ["Multiply", "x", "y", "z"], "x", limits("y"), "z"] as never,
+      ["Multiply", ["Rational", 1, 4], "x", "z"] as never,
+      ["x", "y", "z"],
+    ),
+  ).toContain('[Symbol("x"), Symbol("z")])');
+});
+
 test("rootsAsPowers: a root is its power, and a reciprocal base moves to its positive one", () => {
   expect(rootsAsPowers(["Root", 2, 3] as never)).toEqual(["Power", 2, ["Rational", 1, 3]]);
   // (1/2)^(1/4) is 2^(-1/4): the spelling Wolfram gives the same number.

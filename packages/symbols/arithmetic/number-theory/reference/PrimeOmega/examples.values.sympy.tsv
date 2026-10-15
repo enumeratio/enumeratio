@@ -9,7 +9,7 @@ gaussianintegers-true-12-1-i-4-cdot-3
 listable-over-a-range			
 primeomega-28	primeomega(28)	3	
 completely-additive-omega-mn-omega-m-omega-n-for	enumeratio_equal(primeomega((24 * 40)), (primeomega(24) + primeomega(40)))	True	
-omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3			
+omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3	Ge(primeomega(8), primenu(8))	True	
 primeomega-100	primeomega(100)	4	
 primeomega-16-807	primeomega(16807)	5	
 primeomega-165-eq-primenu-165	enumeratio_equal(primeomega(165), primenu(165))	True	

@@ -499,6 +499,11 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       if (integral !== undefined && iterators.every((iterator) => iterator !== undefined))
         return fill(integral, [walk(body), ...(iterators as string[]).toReversed()]);
     }
+    // Without an iterator `integrate(f)` would pick the variable itself.
+    if (system === "sympy" && head === "Integrate" && operands.length < 2) {
+      missing.push(`${head}/${operands.length}`);
+      return "0";
+    }
     // A series SymPy answers with its O-term: `Normal` is `removeO`, and its simplifier leaves the O alone.
     if (
       system === "sympy" &&

@@ -19,7 +19,7 @@ gamma-n-1-gamma-n-the-two-argument-form-reduces	stieltjes(1, 1)	stieltjes(1, 1)
 gamma-0-1-psi-1-gamma-polygamma-0-z-routes	stieltjes(0, 1)	EulerGamma	
 gamma-0-frac-12-psi-frac-12-gamma-2-ln-2-now	stieltjes(0, Rational(1, 2))	stieltjes(0, 1/2)	
 gamma-3-1-gamma-3-order-1-at-a-1-is-just-the	stieltjes(3, 1)	stieltjes(3, 1)	
-0-lt-stieltjesgamma-10-lt-10-pow-neg-3			
+0-lt-stieltjesgamma-10-lt-10-pow-neg-3	And(Lt(0, stieltjes(10)), Lt(stieltjes(10), (S(10)**-3)))	True	
 gamma-n-a-has-poles-at-the-nonpositive-integers	stieltjes(2, -1)	zoo	
 orders-past-30-stay-unevaluated-even-under-n-the	stieltjes(40)	stieltjes(40)	inconclusive
 stieltjesgamma-2-1	stieltjes(2, 1)	stieltjes(2, 1)	

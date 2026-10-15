@@ -12,7 +12,7 @@ threads-element-wise-over-a-list	[(sympify(1).is_odd is True), (sympify(2).is_od
 select-the-odd-numbers-up-to-10			
 isvector-list-1-5-7-11-isodd			
 isvector-list-2-5-7-11-isodd			
-an-integer-is-odd-exactly-when-it-is-not-even			
+an-integer-is-odd-exactly-when-it-is-not-even	enumeratio_equal((sympify(7).is_odd is True), Not((sympify(7).is_even is True)))	True	
 isodd-2	(sympify(2).is_odd is True)	False	
 isodd-15	(sympify(15).is_odd is True)	True	
 a-symbol-stays-undecided-rather-than-false	(sympify(Symbol("x")).is_odd is True)	False	disagree

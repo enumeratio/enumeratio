@@ -29,7 +29,7 @@ apply-derivative-abs-1-x	(diff(Abs(Symbol("_d1")), (Symbol("_d1"), 1))).subs({Sy
 the-gap-between-two-temperatures-70-and-95	Abs((70 - 95))	25	
 the-distance-between-the-points-1-i-and-4-5i-of	Abs(((1 + 1*I) - (4 + 5*I)))	5	
 even-function-x-x	enumeratio_equal(Abs(-8), Abs(8))	True	
-triangle-inequality-a-b-le-a-b			
+triangle-inequality-a-b-le-a-b	Le(Abs((3 + -8)), (Abs(3) + Abs(-8)))	True	
 z-2-z-bar-z	enumeratio_equal((S(Abs((3 + 4*I)))**2), ((3 + 4*I) * conjugate((3 + 4*I))))	True	
 multiplicative-ab-a-b	enumeratio_equal(Abs(((1 + 2*I) * (3 + -1*I))), (Abs((1 + 2*I)) * Abs((3 + -1*I))))	True	
 abs-1	Abs(1)	1	
