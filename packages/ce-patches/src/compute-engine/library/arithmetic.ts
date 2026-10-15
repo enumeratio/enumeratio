@@ -1,4 +1,4 @@
-import { type BoxedExpression, type ComputeEngine, isFunction, isNumber } from "@cortex-js/compute-engine";
+import { type ComputeEngine, isFunction, isNumber } from "@cortex-js/compute-engine";
 import { wrapOperator } from "@enumeratio/engine";
 
 /**
@@ -24,35 +24,5 @@ export function evaluateRootsOfNumbers(ce: ComputeEngine): void {
       return value.evaluate();
     },
     { arity: 2, compile: "builtin" },
-  );
-}
-
-const isNegativeInfinity = (op: BoxedExpression | undefined): boolean =>
-  op !== undefined && isNumber(op) && op.re === -Infinity && op.im === 0;
-
-/**
- * `Ln(-oo)` stays unevaluated (and `N` answers `oo + pi i`). Wolfram, Sage and SymPy take the
- * real part: ln(-x) = ln(x) + i pi, and the magnitude alone diverges, so the value is `+oo`.
- * `Log(-oo)` and `Log(-oo, b)` at a real base b > 1 are the same quotient by ln b > 0.
- */
-export function evaluateLnOfNegativeInfinity(ce: ComputeEngine): void {
-  wrapOperator(
-    ce,
-    ["Ln"],
-    (ops) => isNegativeInfinity(ops[0]),
-    () => () => ce.PositiveInfinity,
-    {
-      arity: 1,
-      compile: "builtin",
-    },
-  );
-  wrapOperator(
-    ce,
-    ["Log"],
-    ([x, base]) =>
-      isNegativeInfinity(x) &&
-      (base === undefined || (isNumber(base) && base.im === 0 && Number.isFinite(base.re) && base.re > 1)),
-    () => () => ce.PositiveInfinity,
-    { arity: { min: 1, max: 2 }, compile: "builtin" },
   );
 }

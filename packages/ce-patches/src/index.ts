@@ -3,7 +3,6 @@ import { applyPatch, applyPatches, symbols as symbolsOf } from "./patch.ts";
 import { argumentDigits } from "./patches/argument-digits.ts";
 import { integratePolynomialPowers } from "./patches/integrate-polynomial-powers.ts";
 import { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
-import { lnOfNegativeInfinity } from "./patches/ln-of-negative-infinity.ts";
 import { powerOfNumbersFoldsRoots } from "./patches/power-of-numbers-folds-roots.ts";
 import { shapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
 import { solveDeclines } from "./patches/solve-declines.ts";
@@ -87,7 +86,6 @@ export { dictionaryOf, entriesOf } from "./compute-engine/library/core.ts";
 export { valuesAtZero } from "./patches/values-at-zero.ts";
 export { argumentDigits, evaluateArgumentDigits } from "./patches/argument-digits.ts";
 export { powerOfNumbersFoldsRoots, evaluateRootsOfNumbers } from "./patches/power-of-numbers-folds-roots.ts";
-export { lnOfNegativeInfinity, evaluateLnOfNegativeInfinity } from "./patches/ln-of-negative-infinity.ts";
 export { clausen } from "./compute-engine/numerics/clausen.ts";
 export { stieltjesGamma, stieltjesGammaReal, STIELTJES_MAX_ORDER } from "./compute-engine/numerics/stieltjes.ts";
 export { stieltjesGammaBall, stieltjesGammaBig } from "./compute-engine/numerics/stieltjes-big.ts";
@@ -201,7 +199,6 @@ export function applyNativeHeadPatches(ce: ComputeEngine): void {
     integratePolynomialPowers,
     powerOfNumbersFoldsRoots,
     argumentDigits,
-    lnOfNegativeInfinity,
   ])
     applyPatch(ce, patch);
 }

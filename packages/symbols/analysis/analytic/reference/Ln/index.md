@@ -10,11 +10,6 @@ signatures:
     description: The natural logarithm, the inverse of [[Exp]].
     library: enumeratio-analytic
     type: "(complex | infinity, base: (complex | infinity)?) -> complex | infinity"
-    overrides: enumeratio-evaluation
-  - call: Ln(x)
-    description: The natural logarithm, the inverse of [[Exp]].
-    library: enumeratio-evaluation
-    type: "(complex | infinity, base: (complex | infinity)?) -> complex | infinity"
     overrides: compute-engine
 seeAlso:
   - Exp
