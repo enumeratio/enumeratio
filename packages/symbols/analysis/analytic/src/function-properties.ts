@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { specialFunctionRange } from "./function-range.ts";
 
 // The Wolfram `Function*` property family (FunctionDomain, FunctionRange,
 // FunctionMonotonicity, FunctionConvexity, FunctionSign, FunctionInjective,
@@ -955,7 +956,7 @@ export function declareFunctionProperties(ce: ComputeEngine): void {
       const y = yExpr === undefined ? undefined : symbolNameOf(yExpr);
       if (expr === undefined || x === undefined || y === undefined) return undefined;
       const rec = recognize(expr, x);
-      return rec === undefined ? undefined : rangeOf(ce, rec, y);
+      return rec === undefined ? specialFunctionRange(ce, expr, x, y) : rangeOf(ce, rec, y);
     },
   });
 

@@ -70,6 +70,23 @@ export function airyBig(kind: "Ai" | "Bi", x: BigDecimal, digits: number): BigDe
   });
 }
 
+/**
+ * Ai'(x) or Bi'(x), the same series differentiated: R_b'(z) = R_(b+1)(z) and z' = x²/3, so with
+ * Ai = c₁R(2/3) + c₂ x R(4/3), Ai' = c₁ (x²/3) R(5/3) + c₂ (R(4/3) + (x³/3) R(7/3)).
+ */
+export function airyPrimeBig(kind: "Ai" | "Bi", x: BigDecimal, digits: number): BigDecimal | undefined {
+  if (!x.isFinite()) return undefined;
+  return settled(digits, (working) => {
+    const z = x.mul(x).mul(x).div(9);
+    const [r5, r4, r7] = [5, 4, 7].map((p) => pfqRegularizedBig([], [big(p).div(3)], z, working));
+    if (r5 === undefined || r4 === undefined || r7 === undefined) return undefined;
+    const [c1, c2] = kind === "Ai" ? [thirdPower(2, 3), thirdPower(4, 3).neg()] : [thirdPower(1, 6), thirdPower(5, 6)];
+    const x2 = x.mul(x);
+    const [a, b, c] = [c1.mul(x2).div(3).mul(r5), c2.mul(r4), c2.mul(x2).mul(x).div(3).mul(r7)];
+    return { value: a.add(b).add(c), peak: biggest(a, b, c) };
+  });
+}
+
 /** Ei(x) = γ + ln|x| + Σ_{k≥1} xᵏ/(k·k!) for real x ≠ 0 (DLMF 6.6.1 and 6.2.8, the principal value). */
 export function expIntegralEiBig(x: BigDecimal, digits: number): BigDecimal | undefined {
   if (!x.isFinite() || x.isZero()) return undefined;

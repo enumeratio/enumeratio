@@ -96,3 +96,49 @@ test("a half-integer order terminates, and what has no expansion here stays held
     expect(ce.box(held as never).evaluate().operator, JSON.stringify(held)).toBe("Series");
   }
 });
+
+// ₂F₁ with positive integer parameters: m power terms, then a series with ln(−x); mpmath at x = −60.
+test.each([
+  [2, 3, 4, 0.0007328035948476449],
+  [1, 1, 2, 0.06851456440288851],
+  [2, 2, 5, 0.006127859500016699],
+  [3, 1, 2, 0.0083310937919914],
+  [1, 2, 1, 0.0002687449610319806],
+  [4, 4, 3, -0.0000000224959545495334],
+])("Hypergeometric2F1(%i, %i; %i) at infinity agrees with mpmath", (a, b, c, exact) => {
+  const normal = ce.box([
+    "Normal",
+    ["Series", ["Hypergeometric2F1", a, b, c, "x"], "x", "PositiveInfinity", 14],
+  ] as never);
+  const value = normal
+    .evaluate()
+    .subs({ x: -60 } as never)
+    .N().re;
+  expect(Math.abs(value - exact) / Math.abs(exact)).toBeLessThan(1e-9);
+});
+
+test("Hypergeometric2F1(2, 3; 4; x) at infinity is cut at x^-n, with the logarithm in the x^-3 term", () => {
+  const normal = ce.box([
+    "Normal",
+    ["Series", ["Hypergeometric2F1", 2, 3, 4, "x"], "x", "PositiveInfinity", 5],
+  ] as never);
+  // 3/x² + 3(2 ln(−x) − 1)/x³ − 9/x⁴ − 6/x⁵, at x = −10
+  const x = -10;
+  expect(
+    normal
+      .evaluate()
+      .subs({ x } as never)
+      .N().re,
+  ).toBeCloseTo(3 / x ** 2 + (3 * (2 * Math.log(-x) - 1)) / x ** 3 - 9 / x ** 4 - 6 / x ** 5, 12);
+  // order 2 keeps only 3/x²: the logarithm term starts at x⁻³
+  const short = ce.box([
+    "Normal",
+    ["Series", ["Hypergeometric2F1", 2, 3, 4, "x"], "x", "PositiveInfinity", 2],
+  ] as never);
+  expect(
+    short
+      .evaluate()
+      .subs({ x } as never)
+      .N().re,
+  ).toBeCloseTo(3 / x ** 2, 12);
+});

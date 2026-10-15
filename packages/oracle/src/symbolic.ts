@@ -450,15 +450,20 @@ function solveAgreementSource(theirs: string, ours: string, cap: number): string
  * side (`Cos[x] + I Sin[x]` against `I Sin[x] + Cos[x]`) is not a disagreement. A reply of a
  * different shape (`True`, a bare value) is not decided here.
  */
-function propositionAgreementSource(theirs: string, ours: string, cap: number): string {
+export function propositionAgreementSource(theirs: string, ours: string, cap: number): string {
   return (
     `Module[{zero, agree}, ` +
-    `zero[e_] := AllTrue[Flatten[{Quiet[TimeConstrained[FullSimplify[e], ${cap}, $Aborted]]}], # === 0 &]; ` +
+    // An inexact difference is zero to a double's rounding of the values compared (`0.` is not `=== 0`);
+    // an exact one must be exactly zero.
+    `zero[e_, values_] := AllTrue[Flatten[{Quiet[TimeConstrained[FullSimplify[e], ${cap}, $Aborted]]}], ` +
+    `# === 0 || (InexactNumberQ[#] && Abs[#] <= 10^-12 Max[Abs[N[values]]]) &]; ` +
     `agree[t_And, o_And] /; Length[t] == Length[o] := And @@ MapThread[agree, {List @@ t, List @@ o}]; ` +
     `agree[t_Equal, o_Equal] /; Length[t] == 2 && Length[o] == 2 := ` +
-    `zero[t[[1]] - t[[2]] - (o[[1]] - o[[2]])] || zero[t[[1]] - t[[2]] + (o[[1]] - o[[2]])]; ` +
+    `zero[t[[1]] - t[[2]] - (o[[1]] - o[[2]]), {t[[1]], t[[2]], o[[1]], o[[2]]}] || ` +
+    `zero[t[[1]] - t[[2]] + (o[[1]] - o[[2]]), {t[[1]], t[[2]], o[[1]], o[[2]]}]; ` +
     `agree[t_, o_] /; MatchQ[t, _Less | _LessEqual | _Greater | _GreaterEqual] && Head[t] === Head[o] && ` +
-    `Length[t] == 2 && Length[o] == 2 := zero[t[[1]] - o[[1]]] && zero[t[[2]] - o[[2]]]; ` +
+    `Length[t] == 2 && Length[o] == 2 := ` +
+    `zero[t[[1]] - o[[1]], {t[[1]], o[[1]]}] && zero[t[[2]] - o[[2]], {t[[2]], o[[2]]}]; ` +
     // Any other pair of statements (an `Or`, `x > 0` against `0 < x`): equivalent when the kernel can show it.
     `agree[t_, o_] := Module[{v = Select[Union[Cases[{t, o}, _Symbol, {-1}]], Context[#] =!= "System\`" &], r}, ` +
     `r = Quiet[TimeConstrained[FullSimplify[Equivalent[t, o]], ${cap}, $Aborted]]; ` +
