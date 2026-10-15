@@ -11,7 +11,7 @@ listable-threads-over-a-list	[prime_pi(3), prime_pi(5), prime_pi(17), prime_pi(2
 primepi-10-11	prime_pi(100000000000)		
 primepi-10-12	prime_pi(1000000000000)		
 primepi-10-13	prime_pi(10000000000000)		
-primepi-1-plus-10-pow-17	prime_pi((1 + ((10)^17)))		
+primepi-1-plus-10-pow-17	prime_pi((1 + ((10)^17)))	2623557157654233	inconclusive
 nthprime-range-1-primepi-100			
 primepi-5-000	prime_pi(5000)		
 same-inverse-relation-viewed-from-primepi-s-side			
