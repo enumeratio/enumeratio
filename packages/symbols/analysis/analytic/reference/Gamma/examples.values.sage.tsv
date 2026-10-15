@@ -18,6 +18,7 @@ gamma-2-5-0-complex-1-5-plus-i
 gamma-complex-2-plus-i-0-1-5			
 gamma-three-complex-arguments			
 gamma-0-1-4-all-integers			
+gamma-neg1-5-neg1-0-001			
 threads-over-a-list-and-reduces-each-integer	[gamma(1), gamma(2), gamma(3), gamma(4), gamma(5)]	[1, 1, 2, 6, 24]	
 gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer	gamma((5/2))	3/4*sqrt(pi)	
 complex-arguments-evaluate-directly	gamma((2.3 + 1*I))	0.719140936537282 + 0.540614467909849*I	

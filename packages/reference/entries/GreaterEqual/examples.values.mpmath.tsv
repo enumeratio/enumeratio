@@ -1,5 +1,6 @@
 id	in	out	verdict
 0-lt-eq-1	(0 <= 1)	True	
+pi-lt-eq-n-pi-1-digit	(pi <= pi)	True	disagree
 4-over-3-lt-eq-3-over-2	((mpf(4)/3) <= (mpf(3)/2))	True	
 pi-lt-eq-n-pi-20	(pi <= pi)	True	
 sqrt-5-plus-2-times-sqrt-6-lt-eq-sqrt-2-plus	(sqrt((5 + (2 * sqrt(6)))) <= (sqrt(2) + sqrt(3)))	False	disagree

@@ -378,6 +378,7 @@ lerch-phi-0-negative-base-principal-branch	N(lerchphi(0, 2.976, -2.664), 30)	-0.
 n-lerchphi-tiny-z-complex-s-neg-1-neg-2i-2	N(lerchphi(-1e-12, (-1 + -2*I), 2), 30)	0.366913952543709303741777865252 + 1.96605548407881929474155035021*I	disagree
 n-lerchphi-s-0-is-1-over-1-minus-z-at-900000i	N(lerchphi((0 + 900000*I), 0, -6.677), 30)	-1207873536.0 + 297795584.0*I	disagree
 n-lerchphi-past-the-unit-disk-imaginary-s-and-a	N(lerchphi((1 + 2*I), (0 + 1*I), (0 + -2*I)), 30)	-224.432514456845492260578640648 + 76.132401746566745688797638503*I	disagree
+n-lerchphi-tiny-negative-z-negative-integer-s	N(lerchphi(-1e-12, -3, 2), 30)	8.00000001613234351056022152776 + 0.00000000322578036537494088486979693635*I	inconclusive
 past-the-unit-disk-by-the-integral	N(lerchphi((1 + 2*I), (3 + -1*I), (4 + 2*I)), 30)	0.00202500995700990860053946871764 + 0.00332789753681355880743808908022*I	
 inexact-arguments-should-evaluate-numerically	lerchphi(0.5, 2, 3.5)	lerchphi(0.5, 2, 3.5)	
 s-0-far-outside-the-unit-disk-1-1-49-5	lerchphi(49.5, 0, 2)	lerchphi(49.5, 0, 2)	

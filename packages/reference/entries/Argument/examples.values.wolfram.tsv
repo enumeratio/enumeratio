@@ -2,6 +2,7 @@ id	in	out	shown	tex.in	tex.out	verdict
 argument-i	Arg[Complex[0, 1]]					
 argument-1-plus-i	Arg[Complex[1, 1]]					
 argument-neg-1	Arg[-1]	Pi		\arg (-1)	\pi	
+argument-of-a-list-holding-0	Arg[List[0, Rational[-1, 2]]]					
 n-argument-exponentiale-plus-i-times-pi-20	N[Arg[Plus[E, Times[Complex[0, 1], Pi]]], 20]	0.85751178635584626500686775093289753184`20.	0.85751178635584626501	N[\arg (e+i \pi ),20]	0.85751178635584626501	
 argument-neg-123	Arg[-123]	Pi		\arg (-123)	\pi	
 argument-123-minus-456i	Arg[Complex[123, -456]]	-ArcTan[152/41]		\arg (123-456 i)	-\tan ^{-1}\left(\frac{152}{41}\right)	

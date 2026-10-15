@@ -2,6 +2,7 @@ id	in	out	verdict
 stirling-5-2	stirling(5, 2)	15	
 stirling-6-3	stirling(6, 3)	90	
 stirling-20-10	stirling(20, 10)	5917584964655	
+stirling-0-3-against-a-sum-over-a-pole	enumeratio_equal(stirling(0, 3), (S(summation(((S(-2)**(3 - Symbol("j"))) * binomial(-9, Symbol("j")) * (S(Symbol("j"))**6)), (Symbol("j"), 0, 3))) / factorial(-2)))	False	disagree
 exact-for-large-n	stirling(50, 2)	562949953421311	
 threads-element-wise-over-a-list-as-wolfram-s	[stirling(2, 2), stirling(4, 2), stirling(6, 2)]	[1, 7, 31]	
 the-ways-to-split-10-distinct-items-among-3	stirling(10, 3)	9330	

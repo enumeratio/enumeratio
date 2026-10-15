@@ -2,6 +2,7 @@ id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	wolfram.issue	sy
 argument-i	Basic		[Argument, [Complex, 0, 1]]	[Multiply, [Rational, 1, 2], Pi]	$\arg(i) = \pi/2$							
 argument-1-plus-i	Basic		[Argument, [Complex, 1, 1]]	[Multiply, [Rational, 1, 4], Pi]								
 argument-neg-1			[Argument, -1]	Pi								
+argument-of-a-list-holding-0		test	[Argument, [List, 0, [Rational, -1, 2]]]	[List, 0, Pi]					convention	Ours and Wolfram's Arg[0] are 0; SymPy's arg(0) is nan, the argument of zero being undefined, so the list element differs.		
 n-argument-exponentiale-plus-i-times-pi-20	Scope		[N, [Argument, [Add, ExponentialE, [Multiply, [Complex, 0, 1], Pi]]], 20]	{num: "0.85751178635584626501"}								
 argument-neg-123	Scope		[Argument, -123]	Pi								
 argument-123-minus-456i	Scope		[Argument, [Complex, 123, -456]]	[Arctan, [Rational, -152, 41]]								

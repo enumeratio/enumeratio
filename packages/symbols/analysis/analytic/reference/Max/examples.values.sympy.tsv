@@ -6,6 +6,7 @@ a-single-argument-is-returned-unchanged	enumeratio_max(3)	3
 max-9-2	enumeratio_max(9, 2)	9	
 max-list-4-1-7-2	enumeratio_max([4, 1, 7, 2])	7	
 max-5p56-neg-4p8-7p3	enumeratio_max(5.56, -4.8, 7.3)	7.30000000000000	
+max-of-a-complex-and-a-real	enumeratio_max(sqrt(-1), Rational(3, 2))	ValueError: The argument 'I' is not comparable.	error
 nested-lists-are-flattened-into-the-pool	enumeratio_max(2, 3, [[Rational(1, 2), -1], [Rational(-5, 3), Rational(1, 2)]])	3	
 exact-numbers-are-compared-numerically	enumeratio_max(sqrt(2), Rational(3, 2))	3/2	
 max-1-positiveinfinity	enumeratio_max(1, oo)	oo	

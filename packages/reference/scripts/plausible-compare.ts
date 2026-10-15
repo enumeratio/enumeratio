@@ -68,7 +68,7 @@ export function roundsTo(spec: MathJSON, ours: MathJSON, theirs: string): boolea
     if (typeof accuracy === "number") scale = 10 ** accuracy;
     else if (typeof digits === "number") scale = x === 0 ? 1 : 10 ** (digits - 1 - Math.floor(Math.log10(Math.abs(x))));
     else return false;
-    // Within half a unit of the last place asked for: a wrong final digit is a finding.
-    return Math.abs(Math.round(x * scale) / scale - (mine[i] as number)) <= 0.5 / scale;
+    // Within half a unit of the last place asked for (an exact tie may round either way): a wrong final digit is a finding.
+    return Math.abs(x - (mine[i] as number)) <= (0.5 / scale) * (1 + 1e-9);
   });
 }

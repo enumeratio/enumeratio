@@ -10,6 +10,7 @@ round-2p6	nint(2.6)	3.0
 round-5p37	nint(5.37)	5.0	
 round-neg-3p7	nint(-3.7)	-4.0	
 idempotent-round-round-x-round-x			
+round-neg-1-over-2-exact-tie	nint((mpf(-1)/2))	0.0	disagree
 stays-symbolic			
 to-the-nearest-ten			
 an-exact-argument-rounds-to-an-exact-rational			

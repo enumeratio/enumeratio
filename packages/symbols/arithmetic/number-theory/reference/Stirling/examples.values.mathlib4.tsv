@@ -2,6 +2,7 @@ id	in	out
 stirling-5-2	(Nat.stirlingSecond 5 2)	15
 stirling-6-3	(Nat.stirlingSecond 6 3)	90
 stirling-20-10	(Nat.stirlingSecond 20 10)	
+stirling-0-3-against-a-sum-over-a-pole		
 exact-for-large-n	(Nat.stirlingSecond 50 2)	
 threads-element-wise-over-a-list-as-wolfram-s	(Nat.stirlingSecond [2, 4, 6] 2)	
 the-ways-to-split-10-distinct-items-among-3	(Nat.stirlingSecond 10 3)	

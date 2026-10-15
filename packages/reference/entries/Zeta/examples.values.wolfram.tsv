@@ -36,6 +36,7 @@ n-zeta-3-neg-2p5-sums-abs-terms	N[Zeta[3, -2.5]]
 n-zeta-2p5-neg-2p5	N[Zeta[2.5, -2.5]]					
 n-zeta-3-neg-2p5-plus-i	N[Zeta[3, Complex[-2.5, 1]]]					
 n-zeta-2p5-plus-i-neg-2p5	N[Zeta[Complex[2.5, 1], -2.5]]					
+zeta-3-133-at-a-negative-integer-a	Zeta[3.133, -2]					
 on-the-critical-line-zeta-1-2-14i-0-02224-0	N[Zeta[Complex[0.5, 14]]]	0.022241142609994033 - 0.10325812326645277*I		N[\zeta (0.5\, +14 i)]	0.0222411\, -0.103258 i	
 two-argument-zeta-s-a-via-enumeratio-analytic	Zeta[2, 1]	Pi^2/6		\zeta (2,1)	\frac{\pi ^2}{6}	
 zeta-2-2-zeta-2-1-pi-2-6-1	Zeta[2, 2]	-1 + Pi^2/6		\zeta (2,2)	\frac{\pi ^2}{6}-1	

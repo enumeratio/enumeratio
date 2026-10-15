@@ -12,6 +12,7 @@ at-u4-2-3i	(chebyu(4, mpc(2, 3)))	(-1843.0 - 2064.0j)
 chebyshevu-2-3	chebyu(2, 3)	35.0	
 chebyshevu-10-x			
 series-chebyshevu-5-x-x-0-5			
+u-of-a-negative-order-at-a-rational	chebyu(-7, (mpf(1)/2))	ValueError: hypsum() failed to converge to the requested 113 bits of accuracy	error
 at-a-rational	chebyu(3, (mpf(1)/2))	-1.0	
 at-a-complex-argument	chebyu(4, mpc(2, 3))	(-1843.0 - 2064.0j)	
 a-symbolic-order-stays-unevaluated			

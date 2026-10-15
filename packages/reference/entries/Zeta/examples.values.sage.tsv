@@ -36,6 +36,7 @@ n-zeta-3-neg-2p5-sums-abs-terms	enumeratio_n(hurwitz_zeta(3, -2.5))	0.0541020258
 n-zeta-2p5-neg-2p5	enumeratio_n(hurwitz_zeta(2.5, -2.5))	6.24711063456881 - 6.12093450391898*I	inconclusive
 n-zeta-3-neg-2p5-plus-i	enumeratio_n(hurwitz_zeta(3, (-2.5 + 1*I)))	0.0396299239699579 - 0.201022992074744*I	disagree
 n-zeta-2p5-plus-i-neg-2p5	enumeratio_n(hurwitz_zeta((2.5 + 1*I), -2.5))	83.2046830063312 - 106.551606331014*I	disagree
+zeta-3-133-at-a-negative-integer-a	hurwitz_zeta(3.133, -2)		
 on-the-critical-line-zeta-1-2-14i-0-02224-0	enumeratio_n(zeta((0.5 + 14*I)))	0.0222411426099936 - 0.103258123266450*I	
 two-argument-zeta-s-a-via-enumeratio-analytic	hurwitz_zeta(2, 1)	1/6*pi^2	
 zeta-2-2-zeta-2-1-pi-2-6-1	hurwitz_zeta(2, 2)	1/6*pi^2 - 1	

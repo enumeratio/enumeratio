@@ -1,5 +1,6 @@
 id	section	role	expr	expected	caption	epsil.backOut	wolfram.kind	wolfram.note	sympy.kind	sympy.note	mpmath.kind	mpmath.note
 0-lt-eq-1			[LessEqual, 0, 1]	True	Comparison of integers							
+pi-lt-eq-n-pi-1-digit		test	[LessEqual, Pi, [N, Pi, 1]]	False							emit	The mapping drops N's digit count and asks mpmath for the full-precision value, where ours rounds N(Pi, 1) to a single digit, so the comparison against Pi differs.
 4-over-3-lt-eq-3-over-2	Scope		[LessEqual, [Rational, 4, 3], [Rational, 3, 2]]	True	Exact rationals compare without rounding							
 pi-lt-eq-n-pi-20	Scope		[LessEqual, Pi, [N, Pi, 20]]	True	An exact constant compares against its 20-digit approximation				emit	The SymPy mapping of N(x, 20) is N(x, 30), so the comparison runs against a 30-digit approximation, not the 20-digit one asked for.		
 sqrt-5-plus-2-times-sqrt-6-lt-eq-sqrt-2-plus	Scope		[LessEqual, [Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 6]]]], [Add, [Sqrt, 2], [Sqrt, 3]]]	True	Equal radicals satisfy a non-strict inequality						convention	The two sides are equal; ours treats numerically close evaluated reals as equal (a tolerance), while mpmath's <= compares the 30-place floats strictly.

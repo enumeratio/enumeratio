@@ -2,6 +2,7 @@ id	in	out	verdict
 stirling-5-2	stirling2(5, 2)	15.0	
 stirling-6-3	stirling2(6, 3)	90.0	
 stirling-20-10	stirling2(20, 10)	5917584964655.0	
+stirling-0-3-against-a-sum-over-a-pole			
 exact-for-large-n	stirling2(50, 2)	562949953421311.0	
 threads-element-wise-over-a-list-as-wolfram-s	[stirling2(2, 2), stirling2(4, 2), stirling2(6, 2)]	[mpf('1.0'), mpf('7.0'), mpf('31.0')]	
 the-ways-to-split-10-distinct-items-among-3	stirling2(10, 3)	9330.0	

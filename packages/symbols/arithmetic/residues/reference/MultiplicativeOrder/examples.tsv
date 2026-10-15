@@ -3,6 +3,9 @@ multiplicativeorder-5-8			[MultiplicativeOrder, 5, 8]	2
 multiplicativeorder-3-7			[MultiplicativeOrder, 3, 7]	6							
 multiplicativeorder-5-7			[MultiplicativeOrder, 5, 7]	6							
 2-3-8-equiv-1-pmod-7-and-no-smaller-power-works			[MultiplicativeOrder, 2, 7]	3	$2^3=8\equiv1\pmod7$, and no smaller power works						
+order-mod-a-negative-modulus		test	[MultiplicativeOrder, 5, -12]	2						domain	Ours takes the modulus up to sign (5 has order 2 mod 12); SymPy's n_order requires a modulus greater than 1 and raises ValueError.
+order-of-a-negative-mod-a-negative-modulus		test	[MultiplicativeOrder, -4, -1]	1						domain	Ours takes the modulus up to sign, and everything has order 1 modulo 1; SymPy's n_order requires a modulus greater than 1 and raises ValueError.
+order-of-0-mod-1		test	[MultiplicativeOrder, 0, 1]	1						domain	Everything has order 1 modulo 1, as ours answers; SymPy's n_order requires a modulus greater than 1 and raises ValueError.
 a-negative-base-5-equiv-2-pmod-7	Scope		[MultiplicativeOrder, -5, 7]	3	a negative base: $-5 \equiv 2 \pmod 7$						
 the-first-power-of-5-to-reach-3-or-11-equiv-4-5	Scope		[MultiplicativeOrder, 5, 7, [List, 3, 11]]	2	the first power of 5 to reach 3 or $11 \equiv 4$: $5^2 = 25 \equiv 4$						
 a-10-001-digit-base-modulo-the-prime-7919	Scope		[MultiplicativeOrder, [Power, 10, 10000], 7919]	3959	a 10 001-digit base modulo the prime 7919						

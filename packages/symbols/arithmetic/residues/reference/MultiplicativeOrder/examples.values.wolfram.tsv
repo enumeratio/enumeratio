@@ -3,6 +3,9 @@ multiplicativeorder-5-8	MultiplicativeOrder[5, 8]	2	\text{ord}_8(5)	2
 multiplicativeorder-3-7	MultiplicativeOrder[3, 7]	6	\text{ord}_7(3)	6	
 multiplicativeorder-5-7	MultiplicativeOrder[5, 7]	6	\text{ord}_7(5)	6	
 2-3-8-equiv-1-pmod-7-and-no-smaller-power-works	MultiplicativeOrder[2, 7]	3	\text{ord}_7(2)	3	
+order-mod-a-negative-modulus	MultiplicativeOrder[5, -12]				
+order-of-a-negative-mod-a-negative-modulus	MultiplicativeOrder[-4, -1]				
+order-of-0-mod-1	MultiplicativeOrder[0, 1]				
 a-negative-base-5-equiv-2-pmod-7	MultiplicativeOrder[-5, 7]	3	\text{ord}_7(-5)	3	
 the-first-power-of-5-to-reach-3-or-11-equiv-4-5	MultiplicativeOrder[5, 7, List[3, 11]]	2	\text{MultiplicativeOrder}[5,7,\{3,11\}]	2	
 a-10-001-digit-base-modulo-the-prime-7919	MultiplicativeOrder[Power[10, 10000], 7919]	3959	\text{ord}_{7919}\left(10^{10000}\right)	3959	
