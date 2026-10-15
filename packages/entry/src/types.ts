@@ -306,8 +306,9 @@ export interface ReferenceNames {
  * `binary_tree_parent_array` and from `dyck_path`, each with its own inverse) -- the same
  * convention `ReferenceSignature.on` uses; omitted, the law applies to every overload this
  * record's name has. `surjection`/`bijection` and `graded` (each size-n member of `from` goes to
- * `to` at size n + `sizeOffset`, FindStat's "Graded map") are about the whole map, checked per
- * size against `graded`'s collections rather than at one element.
+ * `to` at size n + `sizeOffset`) are about the whole map, checked per size against `graded`'s
+ * collections rather than at one element. With `sizeOffset` 0 it is read as FindStat's "Graded
+ * map"; FindStat's own definition could not be fetched, so a nonzero offset is our extension.
  */
 export type EntryLaw =
   | "involution"

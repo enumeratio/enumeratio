@@ -12,22 +12,42 @@ declareCombinatorics(ce);
 declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
 
 const value = (json: unknown) => ce.box(json as never).evaluate().json;
-const members = (collection: string, n: number): string[] =>
-  Array.from({ length: value(["Count", [collection, n]]) as number }, (_, i) =>
-    JSON.stringify(value(["At", [collection, n], i + 1])),
-  );
 
-const MAX_SIZE = 5;
+const memo = new Map<string, string[]>();
+/** The members of `collection` at size n, as JSON; fails if the count doesn't evaluate. */
+const members = (collection: string, n: number): string[] => {
+  const key = `${collection}:${n}`;
+  let found = memo.get(key);
+  if (found === undefined) {
+    const count = value(["Count", [collection, n]]);
+    if (typeof count !== "number")
+      throw new Error(`Count(${collection}(${n})) did not evaluate: ${JSON.stringify(count)}`);
+    found = Array.from({ length: count }, (_, i) => JSON.stringify(value(["At", [collection, n], i + 1])));
+    memo.set(key, found);
+  }
+  return found;
+};
+
+// Size 5 takes minutes: the standard run stops at 3, the nightly deep run goes on.
+const DEEP = process.env.DEEP_TESTS === "1";
+const MAX_SIZE = DEEP ? 5 : 3;
 
 for (const map of MAPS.filter((m) => m.graded !== undefined)) {
   const { from, to, sizeOffset = 0 } = map.graded!;
   const laws = map.laws ?? [];
-  const onto = laws.includes("surjection") || laws.includes("bijection");
+  // `involution`, `inverse` and `orderIsomorphism` each make the map a bijection too.
+  const oneToOne =
+    laws.some((law) => law === "bijection" || law === "involution" || typeof law === "object") ||
+    map.orderIsomorphism !== undefined;
+  const onto = oneToOne || laws.includes("surjection");
 
   test(`${map.name} takes ${from} at size n to ${to} at size ${sizeOffset === 0 ? "n" : `n + ${sizeOffset}`}`, () => {
     for (let n = Math.max(0, -sizeOffset); n <= MAX_SIZE; n++) {
       const target = new Set(members(to, n + sizeOffset));
-      const images = members(from, n).map((member) =>
+      const sources = members(from, n);
+      // Cover is vacuous at size 0; from size 1 an empty source would pass everything below.
+      if (n >= 1) expect(sources.length, `${n}: members of ${from}`).toBeGreaterThan(0);
+      const images = sources.map((member) =>
         JSON.stringify(value(["CombinatorialMap", JSON.parse(member), `'${map.name}'`])),
       );
       expect(
@@ -35,7 +55,7 @@ for (const map of MAPS.filter((m) => m.graded !== undefined)) {
         `${n}: images outside ${to}`,
       ).toEqual([]);
       if (onto) expect(new Set(images).size, `${n}: onto ${to}`).toEqual(target.size);
-      if (laws.includes("bijection")) expect(new Set(images).size, `${n}: one-to-one`).toEqual(images.length);
+      if (oneToOne) expect(new Set(images).size, `${n}: one-to-one`).toEqual(images.length);
     }
   });
 }
