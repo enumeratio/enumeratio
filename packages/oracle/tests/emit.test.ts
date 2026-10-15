@@ -584,14 +584,26 @@ test("SymPy's series order is one past ours, and Normal and the simplifiers go r
 });
 
 test("SymPy reads a derivative ours holds at a point as differentiating in each argument, then substituting", () => {
-  const out = emit(["Apply", ["Derivative", "ChebyshevT", 0, 5], 5, 0] as never, "sympy");
-  expect(out).toEqual({
-    ok: true,
-    source:
-      '(diff(chebyshevt(5, Symbol("_d2", real=True)), (Symbol("_d2", real=True), 5))).subs({Symbol("_d2", real=True): 0})',
-  });
+  const source = (expr: unknown): string | undefined => {
+    const out = emit(expr as never, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  expect(source(["Apply", ["Derivative", "ChebyshevT", 0, 5], 5, 0])).toBe(
+    '(diff(chebyshevt(5, Symbol("_d1", real=True)), (Symbol("_d1", real=True), 5))).subs({Symbol("_d1", real=True): 0})',
+  );
   // Orders and points pair off, one to an argument.
-  expect(emit(["Apply", ["Derivative", "ChebyshevT", 5], 5, 0] as never, "sympy").ok).toBe(false);
+  expect(source(["Apply", ["Derivative", "ChebyshevT", 5], 5, 0])).toBeUndefined();
+  // The variable is real only at a real point: sqrt(t**2) differentiates to 1 at I, not to sign(I).
+  expect(source(["Apply", ["Derivative", "Sin", 1], ["Complex", 0, 1]])).toBe(
+    '(diff(sin(Symbol("_d1")), (Symbol("_d1"), 1))).subs({Symbol("_d1"): (0 + 1*I)})',
+  );
+  expect(source(["Apply", ["Derivative", "Sin", 1], "x"])).toContain('Symbol("_d1")');
+  expect(source(["Apply", ["Derivative", "Sin", 1], "x"])).not.toContain("real=True");
+  // A derivative inside a point is its own, under names of its own (the outer point is no plain number).
+  expect(source(["Apply", ["Derivative", "Sin", 1], ["Apply", ["Derivative", "Cos", 1], 2]])).toBe(
+    '(diff(sin(Symbol("_d1")), (Symbol("_d1"), 1))).subs({Symbol("_d1"): ' +
+      '(diff(cos(Symbol("_d2", real=True)), (Symbol("_d2", real=True), 1))).subs({Symbol("_d2", real=True): 2})})',
+  );
 });
 
 test("SymPy's integrate takes a bare variable or a tuple, its first iterator the innermost", () => {

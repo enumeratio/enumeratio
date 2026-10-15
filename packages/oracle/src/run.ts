@@ -575,9 +575,12 @@ def _enumeratio_vanishes(d):
 
 # series(f, x, x0, n) as {power of t: (exponent, coefficient)}, t the distance from x0 (1/x at infinity); None
 # when it is not a power series in t (a log is taken as a coefficient of its power, so Puiseux and log terms read).
+# Zero has no terms.
 def _enumeratio_power_series(expr, x, x0, t):
     expr = expand(sympify(expr).subs(x, 1 / t if x0 == oo else x0 + t))
     found = {}
+    if expr == 0:
+        return found
     for term in Add.make_args(expr):
         coefficient, power = term.as_independent(t, as_Add=False)
         shape = power.subs(log(t), 1)
@@ -590,48 +593,88 @@ def _enumeratio_power_series(expr, x, x0, t):
         found[power] = (exponent, found.get(power, (exponent, S.Zero))[1] + coefficient)
     return found
 
+# Whether two such expansions have the same coefficient in every power below cut: one verdict per power
+# either has there (none when neither has a term below it).
+def _enumeratio_compare_series(a, b, cut):
+    verdicts = []
+    for key in set(a) | set(b):
+        exponent = (a.get(key) or b[key])[0]
+        if exponent < cut:
+            verdicts.append(_enumeratio_vanishes(a.get(key, (0, S.Zero))[1] - b.get(key, (0, S.Zero))[1]))
+    return verdicts
+
 # Whether SymPy's series (O-term and all) and our polynomial, whose own O-term claims ours_order (None when it has
 # none), agree in every power below the least of the requested order cap and the O-terms' orders: what both
-# claim. True when they do, False when a coefficient differs, None when the expansions aren't comparable.
-def enumeratio_series_agree(theirs, ours, x, x0, cap, ours_order):
+# claim. True when they do, False when a coefficient differs, None when the expansions aren't comparable or
+# nothing was compared (ours claiming no terms agrees with nothing).
+# Without an O-term on either side the cap alone bounds a fractional-power (Puiseux) series.
+# theirs_below is a thunk for the same series approached from below (None at infinity): SymPy's default is from
+# above, where Wolfram's Series is two-sided (series(sqrt(x**2), x, 0, 3) is x here and -x from below), so an
+# expansion that differs between the sides, or that SymPy can't take from below, is not comparable.
+def enumeratio_series_agree(theirs, ours, x, x0, cap, ours_order, theirs_below=None):
     try:
         x0 = sympify(x0)
         if x0.is_infinite and x0 != oo:
             return None
         t = Dummy("t", positive=True)
-        theirs, ours = sympify(theirs), sympify(ours)
         orders = [sympify(cap)]
         if ours_order is not None:
             orders.append(sympify(ours_order))
-        remainder = theirs.getO()
-        if remainder is not None:
-            orders.append(next(iter(_enumeratio_power_series(remainder.expr, x, x0, t).values()))[0])
+        expansions = [sympify(theirs)]
+        if theirs_below is not None and x0 != oo:
+            expansions.append(sympify(theirs_below()))
+        for expansion in expansions:
+            remainder = expansion.getO()
+            if remainder is not None:
+                orders.append(next(iter(_enumeratio_power_series(remainder.expr, x, x0, t).values()))[0])
         cut = min(orders)
-        a = _enumeratio_power_series(theirs.removeO(), x, x0, t)
-        b = _enumeratio_power_series(ours, x, x0, t)
-        if a is None or b is None:
+        parts = [_enumeratio_power_series(expansion.removeO(), x, x0, t) for expansion in expansions]
+        b = _enumeratio_power_series(sympify(ours), x, x0, t)
+        if b is None or any(part is None for part in parts):
             return None
-        verdicts = []
-        for key in set(a) | set(b):
-            exponent = (a.get(key) or b[key])[0]
-            if not exponent < cut:
-                continue
-            verdicts.append(_enumeratio_vanishes(a.get(key, (0, S.Zero))[1] - b.get(key, (0, S.Zero))[1]))
+        if len(parts) > 1 and any(v is not True for v in _enumeratio_compare_series(parts[0], parts[1], cut)):
+            return None
+        verdicts = _enumeratio_compare_series(parts[0], b, cut)
         if any(v is False for v in verdicts):
             return False
-        return True if all(v is True for v in verdicts) else None
+        return True if verdicts and all(v is True for v in verdicts) else None
     except (TypeError, ValueError, AttributeError, NotImplementedError, StopIteration):
         return None
 
-# Whether two antiderivatives of the same function agree: they differ by a constant, so the derivative of their
-# difference in each variable of integration vanishes. The variable is real, as ours is: Abs and sign differentiate.
+# Whether two antiderivatives of the same function agree: the derivative of their difference in each variable of
+# integration (one iterated integral's, differentiated in turn) vanishes, and the difference itself is the same
+# at real points of both signs. The derivative alone would call x**2/2 + sign(x), + Heaviside(x) or atan(x) against
+# -atan(1/x) the same antiderivative; a constant that depends on the side of a branch point or a jump is no
+# constant, so those are None (log(x) against log(-x) legitimately differ that way). The variable is real, as ours
+# is: Abs and sign differentiate. A variable that is in neither answer decides nothing.
 def enumeratio_antiderivative_agree(a, b, variables):
     try:
+        a, b = sympify(a), sympify(b)
+        free = a.free_symbols | b.free_symbols
+        if not variables or any(v not in free for v in variables):
+            return None
         d = a - b
         for v in variables:
             r = Dummy(v.name, real=True)
             d = diff(d.subs(v, r), r)
-        return _enumeratio_vanishes(d)
+        decided = _enumeratio_vanishes(d)
+        if decided is not True:
+            return decided
+        points = [Rational(-13, 4), Rational(-7, 3), Rational(-1, 2), Rational(1, 2), Rational(7, 3), Rational(13, 4)]
+        others = sorted(free - set(variables), key=str)
+        values = []
+        for k in range(len(points)):
+            at = {v: points[(k + 2 * i) % len(points)] for i, v in enumerate(variables)}
+            at.update({s: Rational(*[(7, 3), (13, 4), (19, 8), (5, 7)][i % 4]) for i, s in enumerate(others)})
+            try:
+                value = complex(N((a - b).subs(at), 30))
+            except (TypeError, ValueError, ZeroDivisionError, OverflowError):
+                continue
+            if value == value and abs(value) != float("inf"):
+                values.append(value)
+        if len(values) >= 2 and any(abs(v - values[0]) > 1e-9 * (1 + abs(values[0])) for v in values):
+            return None
+        return True
     except (TypeError, ValueError, AttributeError, NotImplementedError):
         return None
 `;

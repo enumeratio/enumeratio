@@ -662,6 +662,13 @@ test.skipIf(!hasSympy)("sympy: a series agrees up to the order both claim, an an
     // A log is the coefficient of its power.
     [
       "logarithmic",
+      ["Series", ["Divide", ["Ln", "x"], "x"], "x", "PositiveInfinity", 3],
+      ["Divide", ["Ln", "x"], "x"],
+      ["x"],
+    ],
+    // Taken from below, a log at its branch point is another expansion: not comparable.
+    [
+      "log from below",
       ["Series", ["Multiply", sin, ["Ln", "x"]], "x", 0, 3],
       ["Add", ["Multiply", "x", ["Ln", "x"]], ["Multiply", ["Rational", -1, 6], power("x", 3), ["Ln", "x"]]],
       ["x"],
@@ -675,12 +682,37 @@ test.skipIf(!hasSympy)("sympy: a series agrees up to the order both claim, an an
       ["Divide", power("a", 4), 4],
       ["a", "x"],
     ],
+    // An order of zero claims no terms: it agrees with nothing, as a series that has none below its order does.
+    ["claiming no terms", ["Series", sin, "x", 0, 3], ["BigO", power("x", 0)], ["x"]],
+    ["a bare O-term against terms", ["Series", sin, "x", 0, 3], ["BigO", power("x", 4)], ["x"]],
+    ["no terms on either side", ["Series", power("x", 5), "x", 0, 3], ["BigO", power("x", 4)], ["x"]],
+    ["no terms against a term", ["Series", power("x", 5), "x", 0, 3], ["Add", "x", ["BigO", power("x", 4)]], ["x"]],
+    // SymPy's series is from above by default: sqrt(x**2) is x there and -x from below, where Wolfram's is two-sided.
+    ["one side only", ["Series", ["Sqrt", power("x", 2)], "x", 0, 2], ["Add", "x", ["BigO", power("x", 3)]], ["x"]],
+    // A constant that jumps, or depends on the side of a branch point, is no constant.
+    ["jump", ["Integrate", "x", "x"], ["Add", ["Divide", power("x", 2), 2], ["Sign", "x"]], ["x"]],
+    [
+      "branch",
+      ["Integrate", ["Divide", 1, ["Add", 1, power("x", 2)]], "x"],
+      ["Negate", ["Arctan", ["Divide", 1, "x"]]],
+      ["x"],
+    ],
+    ["side-dependent constant", ["Integrate", ["Divide", 1, "x"], "x"], ["Ln", ["Negate", "x"]], ["x"]],
+    // Separate integrals aren't differentiated in each other's variables.
+    [
+      "separate integrals",
+      ["Add", ["Integrate", sin, "x"], ["Integrate", ["Cos", "y"], "y"]],
+      ["Add", ["Negate", ["Cos", "x"]], ["Multiply", 2, "x"], ["Sin", "y"]],
+      ["x", "y"],
+    ],
   ];
   const program = cases.map(([, expr, ours, free]) => {
     const source = symbolicAgreementSource("sympy", expr as never, ours as never, free);
     expect(source).toBeDefined();
     return `print(${source})`;
   });
+  // A variable of integration that is in neither answer decides nothing.
+  program.push('print(enumeratio_antiderivative_agree(Symbol("x") + 1, Symbol("x"), [Symbol("y")]))');
   const run = spawnSync("python3", ["-c", `from sympy import *\n${SYMPY_PREAMBLE}\n${program.join("\n")}`], {
     encoding: "utf8",
   });
@@ -694,11 +726,22 @@ test.skipIf(!hasSympy)("sympy: a series agrees up to the order both claim, an an
     "at infinity": "True",
     "off center": "True",
     logarithmic: "True",
+    "log from below": "None",
     antiderivative: "True",
     "antiderivative up to a constant": "True",
     "wrong antiderivative": "False",
     "definite with a parameter": "True",
+    "claiming no terms": "None",
+    "a bare O-term against terms": "False",
+    "no terms on either side": "None",
+    "no terms against a term": "False",
+    "one side only": "None",
+    jump: "None",
+    branch: "None",
+    "side-dependent constant": "None",
+    "separate integrals": "None",
   });
+  expect(verdicts[cases.length]).toBe("None");
 });
 
 const hasPython = spawnSync("python3", ["-c", "pass"]).status === 0;

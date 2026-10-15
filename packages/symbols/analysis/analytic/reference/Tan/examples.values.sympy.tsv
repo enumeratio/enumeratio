@@ -30,7 +30,7 @@ tan-arctan-x-x-for-every-x	tan(atan(Symbol("x")))	True
 tan-arctan-2-2-for-every-x	tan(atan(2))	2	
 tan-arcsin-x-frac-x-sqrt-1-x-2	tan(asin(Symbol("x")))	True	
 derivative-sec-2-x	diff(tan(Symbol("x")), Symbol("x"))	True	
-antiderivative-ln-sec-x	integrate(tan(Symbol("x")), Symbol("x"))	True	
+antiderivative-ln-sec-x	integrate(tan(Symbol("x")), Symbol("x"))	None	inconclusive
 taylor-series-about-0	series(tan(Symbol("x")), Symbol("x"), 0, 7 + 1)	True	
 to-30-significant-digits-every-one-correctly	N(tan(1), 30)	1.55740772465490223050697480746	
 n-tan-6-over-5-50	N(tan(Rational(6, 5)), 30)	2.57215162212631893540999423603	

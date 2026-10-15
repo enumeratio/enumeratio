@@ -269,6 +269,22 @@ export function integrationVariables(
   return found;
 }
 
+/** The indefinite variables of each `Integrate` call in `expr` that has any, in the order the call names them. */
+export function indefiniteGroups(expr: MathJSON, found: string[][] = []): string[][] {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  if (head === "Integrate") {
+    const group = operands.slice(1).flatMap((spec) => {
+      const limits = Array.isArray(spec) && ["Limits", "Tuple", "List"].includes(spec[0] as string);
+      const name = bareName(limits ? (spec[1] as MathJSON) : spec);
+      return name !== undefined && (!limits || (spec[2] === "Nothing" && spec[3] === "Nothing")) ? [name] : [];
+    });
+    if (group.length > 0) found.push(group);
+  }
+  for (const operand of operands) indefiniteGroups(operand, found);
+  return found;
+}
+
 /** The expansion variables of `Series(f, x, x0, n)` (or `Series(f, [x, x0, n])`) and of
  * `SeriesCoefficient(f, [x, x0, n])`: bound inside the call, so never a point to sample there (`Series[f, {7/3, x0, n}]` is Series::ivar). */
 export function seriesVariables(expr: MathJSON, found: Set<string> = new Set()): Set<string> {
@@ -933,9 +949,14 @@ function seriesAgreementSource(series: readonly MathJSON[], expected: MathJSON):
   ];
   if (![theirs, ours, at, around, requested, claim].every((part) => part === undefined || part.ok)) return undefined;
   const source = (part: ReturnType<typeof emit> | undefined): string => (part?.ok ? part.source : "None");
+  // The same call approached from below, for a finite center: SymPy's default is from above, Wolfram's is two-sided.
+  const below =
+    !infinite && theirs!.ok && theirs!.source.endsWith(")")
+      ? `lambda: ${theirs!.source.slice(0, -1)}, dir="-")`
+      : "None";
   return (
     `enumeratio_series_agree(${source(theirs)}, ${source(ours)}, ${source(at)}, ${source(around)}, ` +
-    `${source(requested)} + 1, ${source(claim)})`
+    `${source(requested)} + 1, ${source(claim)}, ${below})`
   );
 }
 
@@ -1043,10 +1064,15 @@ export function symbolicAgreementSource(
       `s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], ${unsampled}]]]]`
     );
   }
-  // An indefinite integral's answers differ by a constant: the derivative of their difference is what vanishes.
-  const antiderivatives = system === "sympy" ? [...integrationVariables(expr).indefinite] : [];
-  if (antiderivatives.length > 0) {
-    const names = antiderivatives.map((name) => emit(name, system));
+  // An indefinite integral's answers differ by a constant: the derivative of their difference vanishes (and the
+  // difference is the same at points of both signs: see `enumeratio_antiderivative_agree`). One iterated integral
+  // is differentiated in each of its variables in turn; separate integrals only when they share the one variable.
+  const groups = system === "sympy" ? indefiniteGroups(expr) : [];
+  if (groups.length > 0) {
+    const shared = [...new Set(groups.flat())];
+    const variables = groups.length === 1 ? (groups[0] as string[]) : shared.length === 1 ? shared : undefined;
+    if (variables === undefined) return "None";
+    const names = variables.map((name) => emit(name, system));
     if (names.some((name) => !name.ok)) return undefined;
     return (
       `enumeratio_antiderivative_agree(${theirs.source}, ${ours.source}, ` +

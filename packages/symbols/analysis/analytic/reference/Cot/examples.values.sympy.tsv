@@ -22,7 +22,7 @@ an-interval-straddling-the-pole-at-0-maps-to-two	cot(AccumBounds((-(S(pi) / 4)),
 uncertainty-propagation-near-a-pole-grows-fast			
 oddness-pulls-the-sign-out-of-a-symbolic	cot((-Symbol("x")))	True	
 derivative-csc-2-x	diff(cot(Symbol("x")), Symbol("x"))	True	
-antiderivative-ln-sin-x	integrate(cot(Symbol("x")), Symbol("x"))	True	
+antiderivative-ln-sin-x	integrate(cot(Symbol("x")), Symbol("x"))	None	inconclusive
 n-cot-6-over-5-50	N(cot(Rational(6, 5)), 30)	0.388779569368204911634191504972	
 matrixfunction-function-cot-1-1-list-list-5-over			
 cot-positiveinfinity	cot(oo)	AccumBounds(-oo, oo)	disagree

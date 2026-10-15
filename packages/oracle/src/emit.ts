@@ -180,6 +180,18 @@ function bigO(given: MathJSON, walk: (node: MathJSON) => string): string {
   return exponent === undefined ? order : `Power[${order}, ${walk(exponent)}]`;
 }
 
+/** Whether `node` is a real number written out: a literal, a rational, or arithmetic over them and the named constants. */
+function isRealNumber(node: MathJSON): boolean {
+  if (typeof node === "number") return true;
+  if (typeof node === "string") return ["Pi", "ExponentialE", "EulerGamma", "GoldenRatio"].includes(node);
+  if (isCall(node))
+    return (
+      ["Rational", "Negate", "Add", "Subtract", "Multiply", "Divide"].includes(node[0] as string) &&
+      node.slice(1).every((operand) => isRealNumber(operand))
+    );
+  return typeof (node as { num?: unknown }).num === "string";
+}
+
 /** The `Series(f, x, x0, n)` call under any `Normal`/`Simplify`/`FullSimplify` wrappers, if that is all `expr` is. */
 export function seriesCall(expr: MathJSON): readonly MathJSON[] | undefined {
   if (!isCall(expr)) return undefined;
@@ -209,10 +221,14 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     if (spare === undefined) renamed.set(name, (spare = spareName(system, name, taken)));
     return spare;
   };
+  // The variables of a held derivative (below), named apart for each one, and those taken at real points.
+  let derivatives = 0;
+  const realDummies = new Set<string>();
   const boundName = (name: string): string => {
     if (wl) return isSystemName(name) ? `${CONTEXT}${name}` : name;
-    // A derivative's own variable (below) is real, so Abs and sign differentiate as they do on the line.
-    if (system === "sympy") return `Symbol(${JSON.stringify(name)}${/^_d\d+$/.test(name) ? ", real=True" : ""})`;
+    // A real variable lets Abs and sign differentiate as they do on the line; at a complex point (sqrt(t**2) at I)
+    // it would be the wrong function to differentiate.
+    if (system === "sympy") return `Symbol(${JSON.stringify(name)}${realDummies.has(name) ? ", real=True" : ""})`;
     return isReserved(system, name) ? spared(name) : name;
   };
 
@@ -431,9 +447,13 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         orders.length === operands.length - 1 &&
         orders.every((order) => Number.isInteger(order) && (order as number) >= 0)
       ) {
-        const names = orders.map((order, i) => (order === 0 ? undefined : `_d${i + 1}`));
+        const names = orders.map((order) => (order === 0 ? undefined : `_d${++derivatives}`));
         const differentiated = names.filter((name): name is string => name !== undefined);
-        for (const name of differentiated) bound.add(name);
+        const real = names.every((name, i) => name === undefined || isRealNumber(operands[i + 1] as MathJSON));
+        for (const name of differentiated) {
+          bound.add(name);
+          if (real) realDummies.add(name);
+        }
         try {
           const body = walk([callee[1], ...names.map((name, i) => name ?? operands[i + 1]!)] as MathJSON);
           if (differentiated.length === 0) return body;
@@ -445,7 +465,10 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
           );
           return `(diff(${body}, ${steps.join(", ")})).subs({${points.join(", ")}})`;
         } finally {
-          for (const name of differentiated) bound.delete(name);
+          for (const name of differentiated) {
+            bound.delete(name);
+            realDummies.delete(name);
+          }
         }
       }
     }
