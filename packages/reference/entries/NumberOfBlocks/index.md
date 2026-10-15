@@ -1,9 +1,0 @@
----
-name: NumberOfBlocks
-domain: Combinatorics
-signature: NumberOfBlocks(...)
-summary: Number of blocks
-statOn:
-  - SetComposition
-stub: carrier
----

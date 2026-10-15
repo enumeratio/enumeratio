@@ -1,9 +1,0 @@
----
-name: NumberOfTouchPoints
-domain: Combinatorics
-signature: NumberOfTouchPoints(...)
-summary: Number of touch points
-statOn:
-  - DyckPath
-stub: carrier
----

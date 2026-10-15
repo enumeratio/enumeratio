@@ -1,9 +1,0 @@
----
-name: ZeroParts
-domain: Combinatorics
-signature: ZeroParts(...)
-summary: Zero parts
-statOn:
-  - WeakComposition
-stub: carrier
----

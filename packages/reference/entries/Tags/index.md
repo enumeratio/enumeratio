@@ -1,9 +1,0 @@
----
-name: Tags
-domain: Combinatorics
-signature: Tags(...)
-summary: Tags
-statOn:
-  - Text
-stub: carrier
----

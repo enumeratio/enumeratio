@@ -1,9 +1,0 @@
----
-name: NumberOfComponents
-domain: Combinatorics
-signature: NumberOfComponents(...)
-summary: Number of connected components
-statOn:
-  - LabeledGraph
-stub: carrier
----

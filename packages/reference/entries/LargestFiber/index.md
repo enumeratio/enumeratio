@@ -1,9 +1,0 @@
----
-name: LargestFiber
-domain: Combinatorics
-signature: LargestFiber(...)
-summary: Largest fiber
-statOn:
-  - Surjection
-stub: carrier
----

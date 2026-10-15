@@ -1,9 +1,0 @@
----
-name: Rooks
-domain: Combinatorics
-signature: Rooks(...)
-summary: Rooks
-statOn:
-  - RookPlacement
-stub: carrier
----

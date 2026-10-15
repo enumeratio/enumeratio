@@ -1,9 +1,0 @@
----
-name: SubtreeSizes
-domain: Combinatorics
-signature: SubtreeSizes(...)
-summary: Root-subtree sizes
-mapOn:
-  - OrderedTree
-stub: carrier
----
