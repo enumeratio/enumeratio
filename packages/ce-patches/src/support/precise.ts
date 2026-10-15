@@ -1,4 +1,4 @@
-import { type BigDecimal, type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
+import { type BigDecimal, type BoxedExpression, ComputeEngine, isNumber } from "@cortex-js/compute-engine";
 import { inexactComplex } from "./box.ts";
 
 /** Above this many digits a double is no longer the limiting factor — and neither should we be. */
@@ -22,6 +22,30 @@ const REQUESTED_DIGITS_GUARD = 20;
  */
 export const exceedsDoublePrecision = (ce: ComputeEngine, numericApproximation: boolean | undefined): boolean =>
   (numericApproximation ?? false) && ce.precision > DOUBLE_DIGITS + REQUESTED_DIGITS_GUARD;
+
+/** A float literal that carries no more digits than a machine double holds (`0.5`, not `1/3` widened by `N`). */
+const isMachineFloat = (x: BoxedExpression): boolean =>
+  (x as Partial<{ isExact: boolean }>).isExact === false &&
+  [x.bignumRe, x.bignumIm].every((part) => part === undefined || part.toPrecision(DOUBLE_DIGITS + 2).eq(part));
+
+let defaultPrecision: number | undefined;
+
+/**
+ * Should a bignum kernel answer this numeric call? It must be a numeric request past a double's
+ * digits. `N(…, d)` runs `evaluate` at d + 20 then d + 10, so every d past a double's is covered
+ * only if the gate is the plain precision, not `exceedsDoublePrecision`'s guard band. But a plain
+ * `N()` runs at the engine's default precision, which is past a double's too, and a machine-float
+ * operand there keeps the float answer it asks for.
+ */
+export const wantsBigDigits = (
+  ce: ComputeEngine,
+  options: { readonly numericApproximation?: boolean },
+  ops: readonly BoxedExpression[],
+): boolean => {
+  if (!(options.numericApproximation ?? false) || ce.precision <= DOUBLE_DIGITS) return false;
+  defaultPrecision ??= new ComputeEngine().precision;
+  return !(ce.precision === defaultPrecision && ops.some(isMachineFloat));
+};
 
 /** An operand with a nonzero imaginary part: compute-engine's complex Gamma, Cos, … run in doubles. */
 export const hasComplexOperand = (ops: readonly BoxedExpression[]): boolean =>

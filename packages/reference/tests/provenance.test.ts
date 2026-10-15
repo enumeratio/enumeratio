@@ -211,6 +211,11 @@ const OVERRIDDEN = [
   "BarnesG",
   "BellNumber",
   "BernoulliB",
+  // BesselI/J/K/Y, ExpIntegralEi and LogIntegral (and the Airy pair): N(f(2)) carries the digits asked for, where a bare engine prints a double's.
+  "BesselI",
+  "BesselJ",
+  "BesselK",
+  "BesselY",
   "Beta",
   "BetaRegularized",
   "Binomial",
@@ -248,6 +253,7 @@ const OVERRIDDEN = [
   "ErfInv",
   "Erfc",
   "Exp",
+  "ExpIntegralEi",
   "Expand",
   "ExtendedGCD",
   "FactorInteger",
@@ -299,6 +305,7 @@ const OVERRIDDEN = [
   "Log2",
   "LogBarnesG",
   "LogGamma",
+  "LogIntegral",
   "LucasL",
   "Mandelbrot",
   "MatrixPower",
@@ -321,6 +328,9 @@ const OVERRIDDEN = [
   // Not itself overridden -- Normal of our Series at infinity, which a bare engine leaves held.
   "Normal",
   "NthPrime",
+  // Pinned by the two `Over` rows (#911): compute-engine ignores the option where ours threads over it.
+  // Comes off this list when #911's fix lands.
+  "Numerator",
   "Ordering",
   "Partition",
   "Pochhammer",

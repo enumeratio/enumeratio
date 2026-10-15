@@ -337,6 +337,12 @@ test("names Wolfram spells for something ours spells differently", () => {
   expect(fromWolfram("Residue[f, List[z, 0]]")).toEqual(["Residue", "f", "z", 0]);
 });
 
+test("Range[a, b] states its step: ours counts down without one, Wolfram's is empty", () => {
+  expect(fromWolfram("Range[1, n]")).toEqual(["Range", 1, "n", 1]);
+  expect(fromWolfram("Range[n]")).toEqual(["Range", 1, "n", 1]);
+  expect(fromWolfram("Range[1, 10, 2]")).toEqual(["Range", 1, 10, 2]);
+});
+
 test("Modulus -> p is working over the integers mod p", () => {
   expect(fromWolfram("Modulus -> 5")).toEqual(["KeyValuePair", "Over", ["QuotientRing", "Integers", 5]]);
 });

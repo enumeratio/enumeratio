@@ -7,7 +7,7 @@ signatures:
   - call: AiryBi(complex | infinity) -> number
     description: as compute-engine declares it
   - call: AiryBi(complex | infinity) -> number
-    description: Airy function of the second kind
+    description: As native, and keeps its digits past a double's for real argument (N(AiryBi(2), 50)).
     library: enumeratio-analytic
     type: (complex | infinity) -> number
     overrides: compute-engine
