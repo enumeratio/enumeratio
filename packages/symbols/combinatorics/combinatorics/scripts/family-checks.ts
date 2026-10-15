@@ -40,6 +40,34 @@ function sampleParams(count: number): number[][] {
   );
 }
 
+/**
+ * Fibers of the sample that the interpreter takes a minute or so over, checked only in the
+ * nightly sweep (tests/compiled-families.test.ts, DEEP_TESTS), not at every build. Smaller fibers
+ * of each family run the same definitions: BoxedPlanePartitions' table walks a row list the
+ * interpreter re-evaluates exponentially in its length (the C(b + c, b) rows of a 1 × 2 × 3
+ * box), and GelfandTsetlin's unrank searches the rows linearly in the rank.
+ */
+const DEEP_FIBERS: Readonly<Record<string, readonly (readonly number[])[]>> = {
+  BoxedPlanePartitions: [
+    [1, 2, 3],
+    [1, 3, 2],
+  ],
+  GelfandTsetlin: [
+    [3, 3],
+    [4, 2],
+  ],
+};
+
+/** The heads that have fibers in the nightly sweep. */
+export const deepHeads = Object.keys(DEEP_FIBERS);
+
+const isDeep = (head: string, p: readonly number[]): boolean =>
+  DEEP_FIBERS[head]?.some((q) => q.every((x, i) => x === p[i])) ?? false;
+
+/** The fibers a build checks, and those left to the nightly sweep. */
+export const fibersOf = (family: EpsilFamily, deep: boolean): number[][] =>
+  sampleParams(family.paramCount).filter((p) => isDeep(family.head, p) === deep);
+
 /** A member one entry away from itself, which the family may or may not contain. */
 const nearMiss = (element: unknown): unknown =>
   Array.isArray(element)
@@ -54,7 +82,12 @@ const nearMiss = (element: unknown): unknown =>
  * and of a near miss, and the table the others read, where there is one. Compiled code is
  * otherwise trusted below 2^53, so a miscompile would answer wrong silently.
  */
-export function disagreements(ce: Engine, family: EpsilFamily, runs: Partial<Record<Operation, Run>>): Operation[] {
+export function disagreements(
+  ce: Engine,
+  family: EpsilFamily,
+  runs: Partial<Record<Operation, Run>>,
+  fibers: readonly (readonly number[])[] = fibersOf(family, false),
+): Operation[] {
   const wrong = new Set<Operation>();
   const attempt = (run: Run, vars: Record<string, unknown>): unknown => {
     try {
@@ -63,7 +96,7 @@ export function disagreements(ce: Engine, family: EpsilFamily, runs: Partial<Rec
       return undefined;
     }
   };
-  for (const p of sampleParams(family.paramCount)) {
+  for (const p of fibers) {
     const params = Object.fromEntries(family.params.map((name, i) => [name, p[i]]));
     // The table the other definitions read: the interpreter's to the interpreter, as plain numbers to compiled code.
     const table = family.epsil.tables === undefined ? undefined : evaluateTables(ce, family.epsil.tables, params);
@@ -96,6 +129,23 @@ export function disagreements(ce: Engine, family: EpsilFamily, runs: Partial<Rec
   return OPERATIONS.filter((operation) => wrong.has(operation));
 }
 
+/** The generated code of the family's operations that compile, and each one's runnable form. */
+export function compileFamily(
+  ce: Engine,
+  family: EpsilFamily,
+): { code: Partial<Record<Operation, string>>; runs: Partial<Record<Operation, Run>> } {
+  const code: Partial<Record<Operation, string>> = {};
+  const runs: Partial<Record<Operation, Run>> = {};
+  for (const operation of operationsOf(family)) {
+    const types = operationTypes(family, operation);
+    const compiled = types === undefined ? undefined : compileTyped(ce, family.epsil[operation], types);
+    if (compiled === undefined) continue;
+    code[operation] = compiled.code;
+    runs[operation] = compiled.run;
+  }
+  return { code, runs };
+}
+
 /** Each Epsil family's head, hash and the generated code of the operations that compile. */
 export function compiledFamilies(
   verdicts: Verdicts = noVerdicts,
@@ -104,15 +154,7 @@ export function compiledFamilies(
   const ce = bareEngine();
   const out: Entry[] = [];
   for (const family of (allFamilies.filter(isEpsilFamily) as EpsilFamily[]).filter((f) => only(f.head))) {
-    const code: Partial<Record<Operation, string>> = {};
-    const runs: Partial<Record<Operation, Run>> = {};
-    for (const operation of operationsOf(family)) {
-      const types = operationTypes(family, operation);
-      const compiled = types === undefined ? undefined : compileTyped(ce, family.epsil[operation], types);
-      if (compiled === undefined) continue;
-      code[operation] = compiled.code;
-      runs[operation] = compiled.run;
-    }
+    const { code, runs } = compileFamily(ce, family);
     const interpreted = verdicts.remember({ params: family.params, epsil: family.epsil, code }, () =>
       disagreements(ce, family, runs),
     );
