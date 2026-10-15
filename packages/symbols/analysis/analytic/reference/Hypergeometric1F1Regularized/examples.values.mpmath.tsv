@@ -8,6 +8,7 @@ a-2-b-neg-2-at-0-4	enumeratio_hyperreg([2], [-2], 0.4)	0.42009783485578180290787
 a-complex-argument-at-b-2	(enumeratio_hyperreg([1], [2], mpc(0.5, 0.5)))	(1.2373281197977840698948458431 + 0.343550046629445753791679290996j)	
 a-complex-argument-at-a-nonpositive-integer-b	(enumeratio_hyperreg([1], [-1], mpc(0.3, -0.4)))	(-0.213189507662140118989538130402 - 0.261596366272892097320461865061j)	
 simplify-normal-series			
+n-hypergeometric1f1regularized-1-0-0	(enumeratio_hyperreg([-1], [0], 0))	ValueError: 	error
 n-hypergeometric1f1regularized-2-neg-4-2-50	enumeratio_n(lambda: (enumeratio_hyperreg([2], [-4], 2)), 50)	1891.5983613262464581709894299072020001741607860613	
 n-hypergeometric1f1regularized-1-0-1-30	enumeratio_n(lambda: (enumeratio_hyperreg([1], [0], 1)), 30)	2.71828182845904523536028747135	
 matrixfunction-function			

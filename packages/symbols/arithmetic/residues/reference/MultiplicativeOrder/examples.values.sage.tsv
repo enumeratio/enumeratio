@@ -3,6 +3,9 @@ multiplicativeorder-5-8	Mod(5, 8).multiplicative_order()	2
 multiplicativeorder-3-7	Mod(3, 7).multiplicative_order()	6	
 multiplicativeorder-5-7	Mod(5, 7).multiplicative_order()	6	
 2-3-8-equiv-1-pmod-7-and-no-smaller-power-works	Mod(2, 7).multiplicative_order()	3	
+order-mod-a-negative-modulus	Mod(5, -12).multiplicative_order()		
+order-of-a-negative-mod-a-negative-modulus	Mod(-4, -1).multiplicative_order()		
+order-of-0-mod-1	Mod(0, 1).multiplicative_order()		
 a-negative-base-5-equiv-2-pmod-7	Mod(-5, 7).multiplicative_order()	3	
 the-first-power-of-5-to-reach-3-or-11-equiv-4-5			
 a-10-001-digit-base-modulo-the-prime-7919	Mod(((10)^10000), 7919).multiplicative_order()	3959	

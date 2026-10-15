@@ -179,6 +179,7 @@ n-hurwitzzeta-3-neg-2p5	N[HurwitzZeta[3, -2.5]]
 n-hurwitzzeta-2p5-neg-2p5	N[HurwitzZeta[2.5, -2.5]]					
 n-hurwitzzeta-3-neg-2p5-plus-i	N[HurwitzZeta[3, Complex[-2.5, 1]]]					
 n-hurwitzzeta-2p5-plus-i-neg-2p5	N[HurwitzZeta[Complex[2.5, 1], -2.5]]					
+n-hurwitzzeta-2-neg-0-999999999	N[HurwitzZeta[2, -0.999999999]]					
 a-positive-integer-a-peels-off-the-first-terms	HurwitzZeta[7, 5]	HurwitzZeta[7, 5]		\zeta (7,5)	\zeta (7,5)	
 complex-a	N[HurwitzZeta[2.3, Complex[8, 1]]]	0.054470082732130685 - 0.009448515336470249*I		N[\zeta (2.3,8+i)]	0.0544701\, -0.00944852 i	
 listable-threads-over-a-list-of-orders	HurwitzZeta[List[2, 3, 4], 0.5]	{4.934802200544678, 8.41439832211716, 16.234848505667077}		\zeta (\{2,3,4\},0.5)	\{4.9348,8.4144,16.2348\}	

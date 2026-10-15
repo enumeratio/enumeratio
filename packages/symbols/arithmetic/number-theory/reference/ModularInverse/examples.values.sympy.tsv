@@ -2,6 +2,8 @@ id	in	out	verdict
 3-cdot-5-15-equiv-1	mod_inverse(3, 7)	5	
 modularinverse-2-11	mod_inverse(2, 11)	6	
 modularinverse-3-5	mod_inverse(3, 5)	2	
+inverse-mod-1-of-a-negative-integer	mod_inverse(-3, 1)	ValueError: inverse of -3 (mod 1) does not exist	error
+inverse-of-0-mod-1	mod_inverse(0, 1)	ValueError: inverse of 0 (mod 1) does not exist	error
 a-negative-argument-3-cdot-2-6-equiv-1	mod_inverse(-3, 7)	2	
 a-21-digit-modulus	mod_inverse(3, ((S(10)**20) + 1))	33333333333333333334	
 listable-threads-over-a-list	[mod_inverse(2, 11), mod_inverse(3, 11), mod_inverse(4, 11)]	[6, 4, 3]	

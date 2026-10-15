@@ -9,6 +9,12 @@ test("N(x, d): their full answer rounding to ours at d figures is no finding", (
   expect(roundsTo(3, ["Complex", 2, { num: "-2.15" }], "(2.0-2.1528j)")).toBe(true);
 });
 
+test("N(x, d): an exact tie may round to either neighbor", () => {
+  expect(roundsTo(1, 0.4, "0.45")).toBe(true);
+  expect(roundsTo(1, 0.5, "0.45")).toBe(true);
+  expect(roundsTo(1, 0.4, "0.46")).toBe(false);
+});
+
 test("a 30-digit answer wrong at digit 12 stays a finding", () => {
   const ours = { num: "1.17520119364480145688238185060" };
   // To 30 figures: past what the double rounding can vouch for.

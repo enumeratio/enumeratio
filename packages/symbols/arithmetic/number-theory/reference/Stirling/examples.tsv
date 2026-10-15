@@ -2,6 +2,7 @@ id	section	role	expr	expected	known	source	caption	epsil.backOut	sage.kind	sage.
 stirling-5-2			[Stirling, 5, 2]	15												
 stirling-6-3			[Stirling, 6, 3]	90												
 stirling-20-10			[Stirling, 20, 10]	5917584964655												
+stirling-0-3-against-a-sum-over-a-pole		test	[Equal, [Stirling, 0, 3], [Divide, [Sum, [Multiply, [Power, -2, [Subtract, 3, j]], [Binomial, -9, j], [Power, j, 6]], [Tuple, j, 0, 3]], [Factorial, -2]]]	True							convention	The divisor (-2)! is ComplexInfinity, so ours reads the quotient as 0 (finite over ~oo), equal to Stirling(0, 3). SymPy's summation of binomial(-9, j) with a symbolic j is zoo, so zoo/zoo is nan and the comparison is False.				
 exact-for-large-n	Scope		[Stirling, 50, 2]	562949953421311			Exact for large n									
 threads-element-wise-over-a-list-as-wolfram-s	Scope		[Stirling, [List, 2, 4, 6], 2]	[List, 1, 7, 31]			Threads element-wise over a list, as Wolfram's Listable heads do									
 the-ways-to-split-10-distinct-items-among-3	Applications		[Stirling, 10, 3]	9330			The ways to split 10 distinct items among 3 identical non-empty boxes									

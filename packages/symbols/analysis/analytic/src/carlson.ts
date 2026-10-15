@@ -304,6 +304,17 @@ export function carlsonRJDeclines(x: Cx, y: Cx, z: Cx, p: Cx): boolean {
   return args.filter((v) => v.re < 0).length >= 2;
 }
 
+/**
+ * RG reaches RF and RD, and with two or more arguments at Re < 0 those pieces land on different
+ * sides of the cut, so the sum is no limit of the function at all (RG(-1.612, 2, -0.5) came
+ * back with a real part 1.0131 where the defining integral, and mpmath, give 0.3783). Declines
+ * (stays symbolic) there, as `carlsonRJDeclines` does; at most one argument at Re < 0
+ * matches mpmath.
+ */
+export function carlsonRGDeclines(x: Cx, y: Cx, z: Cx): boolean {
+  return [x, y, z].filter((v) => v.re < 0).length >= 2;
+}
+
 // --- Real-scalar wrappers, for the plotting/compiled pipeline (see box.ts's realCompile) --
 
 export const carlsonRFReal = (x: number, y: number, z: number): number => carlsonRF(cx(x), cx(y), cx(z)).re;
@@ -338,12 +349,14 @@ function evaluate3(
   kernel: (x: Cx, y: Cx, z: Cx) => Cx,
   options: EvalOptions,
   big: (args: BigDecimal[], digits: number) => BigDecimal | undefined,
+  declines?: (x: Cx, y: Cx, z: Cx) => boolean,
 ): BoxedExpression | undefined {
   const [x, y, z] = ops;
   if (x === undefined || y === undefined || z === undefined) return undefined;
   if (!wantsNumber(ops, options) || !isFiniteNum(x) || !isFiniteNum(y) || !isFiniteNum(z)) {
     return undefined;
   }
+  if (declines?.(cx(x.re, x.im), cx(y.re, y.im), cx(z.re, z.im))) return undefined;
   const past = pastDouble(ce, ops, options, big);
   if (past !== undefined) return past.value;
   return numberResult(ce, kernel(cx(x.re, x.im), cx(y.re, y.im), cx(z.re, z.im)));
@@ -426,6 +439,6 @@ export function declareCarlson(ce: ComputeEngine): void {
     signature: "(number, number, number) -> number",
     evaluate: (ops, options) =>
       equalArguments(ce, ops, options, [1, 2]) ??
-      evaluate3(ce, ops, carlsonRG, options, ([x, y, z], d) => carlsonRGBig(x!, y!, z!, d)),
+      evaluate3(ce, ops, carlsonRG, options, ([x, y, z], d) => carlsonRGBig(x!, y!, z!, d), carlsonRGDeclines),
   });
 }

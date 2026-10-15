@@ -3,6 +3,7 @@ factorinteger-360			[FactorInteger, 360]	[List, [Tuple, 2, 3], [Tuple, 3, 2], [T
 factorinteger-84			[FactorInteger, 84]	[List, [Tuple, 2, 2], [Tuple, 3, 1], [Tuple, 7, 1]]					
 factorinteger-120			[FactorInteger, 120]	[List, [Tuple, 2, 3], [Tuple, 3, 1], [Tuple, 5, 1]]					
 factorinteger-36			[FactorInteger, 36]	[List, [Tuple, 2, 2], [Tuple, 3, 2]]					
+factorinteger-of-a-prime-to-the-0		test	[FactorInteger, [Power, {num: "100000000000000000039"}, 0]]	[List, [Tuple, 1, 1]]				convention	Ours and Wolfram's FactorInteger[1] is {{1, 1}}; SymPy's factorint(1) is the empty factorization.
 threads-element-wise-over-a-list-as-wolfram-s	Scope		[FactorInteger, [List, 12, 18]]	[List, [List, [Tuple, 2, 2], [Tuple, 3, 1]], [List, [Tuple, 2, 1], [Tuple, 3, 2]]]	Threads element-wise over a list, as Wolfram's Listable heads do				
 5-i-1-2i-2-i	Scope		[FactorInteger, 5, [KeyValuePair, Over, GaussianIntegers]]	[List, [Tuple, [Complex, 0, -1], 1], [Tuple, [Complex, 1, 2], 1], [Tuple, [Complex, 2, 1], 1]]	$5 = -i(1 + 2i)(2 + i)$				
 3-4i-2-i-2	Scope		[FactorInteger, [Complex, 3, 4]]	[List, [Tuple, [Complex, 2, 1], 2]]	$3 + 4i = (2 + i)^2$				

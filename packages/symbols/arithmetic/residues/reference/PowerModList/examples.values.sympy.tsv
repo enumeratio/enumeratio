@@ -2,6 +2,7 @@ id	in	out	verdict
 the-square-roots-of-3-modulo-11-5-2-25-and-6-2	nthroot_mod(pow(ZZ.convert(3), S(Rational(1, 2)).p, ZZ.convert(11)), S(Rational(1, 2)).q, 11, True)	[5, 6]	
 the-cube-roots-of-unity-modulo-7-since-3-mid-6	nthroot_mod(pow(ZZ.convert(1), S(Rational(1, 3)).p, ZZ.convert(7)), S(Rational(1, 3)).q, 7, True)	[1, 2, 4]	
 an-integer-exponent-is-an-ordinary-power-2-10	nthroot_mod(pow(ZZ.convert(2), S(10).p, ZZ.convert(1000)), S(10).q, 1000, True)	[24]	
+root-of-a-non-invertible-base	nthroot_mod(pow(ZZ.convert(8), S(Rational(-1, 2)).p, ZZ.convert(12)), S(Rational(-1, 2)).q, 12, True)	ValueError: base is not invertible for the given modulus	error
 a-general-exponent-s-r-every-x-with-x-2-equiv-2	nthroot_mod(pow(ZZ.convert(2), S(Rational(3, 2)).p, ZZ.convert(17)), S(Rational(3, 2)).q, 17, True)	[5, 12]	
 the-three-cube-roots-of-2-2-4-since-3-mid-30	nthroot_mod(pow(ZZ.convert(2), S(Rational(2, 3)).p, ZZ.convert(31)), S(Rational(2, 3)).q, 31, True)	[16, 18, 28]	
 exponent-1-is-the-modular-inverse-3-cdot-5-15	nthroot_mod(pow(ZZ.convert(3), S(-1).p, ZZ.convert(7)), S(-1).q, 7, True)	[5]	

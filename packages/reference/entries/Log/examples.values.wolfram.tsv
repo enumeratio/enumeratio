@@ -2,6 +2,7 @@ id	in	out	tex.in	tex.out
 default-base-is-10	Log[10, 100]	2	\log _{10}(100)	2
 same-result-written-with-an-explicit-base	Log[10, 100]	2	\log _{10}(100)	2
 base-2-via-the-explicit-second-argument	Log[2, 8]	3	\log _2(8)	3
+log-in-a-negative-base	Log[-1, 2.5]			
 log-3-1-5-at-machine-precision	Log[3, 1.5]	0.3690702464285425	\log _3(1.5)	0.36907
 log-9-3	Log[3, 9]	2	\log _3(9)	2
 threads-over-a-list-of-values	Log[2, List[2, 4, 8]]	{1, 2, 3}	\log _2(\{2,4,8\})	\{1,2,3\}

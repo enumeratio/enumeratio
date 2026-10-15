@@ -3,6 +3,7 @@ factorinteger-360	list(factorrat(S(360)).items())	[(2, 3), (3, 2), (5, 1)]
 factorinteger-84	list(factorrat(S(84)).items())	[(2, 2), (3, 1), (7, 1)]	
 factorinteger-120	list(factorrat(S(120)).items())	[(2, 3), (3, 1), (5, 1)]	
 factorinteger-36	list(factorrat(S(36)).items())	[(2, 2), (3, 2)]	
+factorinteger-of-a-prime-to-the-0	list(factorrat(S((S(100000000000000000039)**0))).items())	[]	disagree
 threads-element-wise-over-a-list-as-wolfram-s	[list(factorrat(S(12)).items()), list(factorrat(S(18)).items())]	[[(2, 2), (3, 1)], [(2, 1), (3, 2)]]	
 5-i-1-2i-2-i			
 3-4i-2-i-2			

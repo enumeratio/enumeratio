@@ -7,6 +7,7 @@ mod-7-3	(7 % 3)	1
 5-mod-3	(5 % 3)	2	
 1-plus-4-mod-3	(1 + (4 % 3))	2	
 integermod-keeps-the-modulus			
+gaussian-mod-a-gaussian-unit-multiple	(mpc(1000, -1) % mpc(1, -1))	TypeError: unsupported operand type(s) for %: 'mpc' and 'mpc'	error
 a-third-argument-offsets-the-range-the-result			
 with-offset-1-the-residues-run-1-2-3-rather-than			
 rationals-are-reduced-exactly	((mpf(5)/2) % 2)	0.5	

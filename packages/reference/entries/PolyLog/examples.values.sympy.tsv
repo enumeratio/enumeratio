@@ -79,6 +79,8 @@ n-polylog-2500000-4-a-huge-order-returns	N(polylog(2500000, 4), 30)	4.0000000000
 n-polylog-40p5-2-plus-3i-a-large-complex-point	N(polylog(40.5, (2 + 3*I)), 30)	1.99999999999678444846009173589 + 3.00000000000771731888027005127*I	
 normal-series-polylog-2-x-x-positiveinfinity-6	(series(polylog(2, Symbol("x")), Symbol("x"), oo, 6 + 1)).removeO()	None	inconclusive
 polylog-s-tiny-negative-rim	N(polylog(-1e-12, (-0.12884449429552464 + 0.9916648104524686*I)), 30)	-0.500000000000052069459854919842 + 0.439238893322547396813604336785*I	disagree
+polylog-neg-2-at-the-pole-z-1	polylog(-2, Rational(2, 2))	0	inconclusive
+polylog-neg-2-over-a-list-holding-the-pole	[polylog(-2, Rational(2, 2)), polylog(-2, -6)]	[0, polylog(-2, -6)]	disagree
 threads-over-a-list-of-arguments	[polylog(2, 0.5), polylog(2, 0.25)]	[polylog(2, 0.5), polylog(2, 0.25)]	
 a-non-integer-order-past-z-1-is-left-unevaluated	polylog(2.5, 2)	polylog(2.5, 2)	
 complex-order-and-argument	polylog((0.2 + 1*I), (0.5 + -0.5*I))	0.0703265205505161 - 0.563293262539874*I	

@@ -2,6 +2,7 @@ id	in	out	verdict
 a-pole-of-gamma-in-log-form	loggamma(0)	oo	
 a-floating-point-argument-evaluates-directly-to	loggamma(2.5)	0.284682870472919	
 ln-gamma-100-5-where-gamma-100-5-itself-is-about	loggamma(100.5)	361.435540467778	
+n-gammaln-of-a-negative-rational	N(loggamma(Rational(-1, 3)), 30)	1.40176256381563326007110805429 - 3.14159265358979323846264338328*I	inconclusive
 at-a-pole-of-gamma-compute-engine-gives-the-real	loggamma(-1)	oo	
 complex-arguments-here-the-principal-ln-gamma-z	loggamma((2.5 + 3*I))	-1.47095461034884 + 2.8226156382608*I	
 a-huge-inexact-argument-should-still-evaluate	loggamma(Float("1.0e1000"))	2.30158509299405e+1003	

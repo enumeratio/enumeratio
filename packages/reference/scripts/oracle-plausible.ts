@@ -144,9 +144,26 @@ function familyParams(family: AnyFamily, ops: readonly MathJSON[], random: Rando
   return [...ops];
 }
 
+/** A call to `head` with its range bounds in order: a reversed `Interval` or `Limits(k, 3, 0)` is another question. */
+function orderBounds(head: string, ops: MathJSON[]): MathJSON {
+  const iterated = (head === "Tuple" || head === "Limits") && typeof ops[0] === "string";
+  const bounds = head === "Interval" ? ops : iterated ? ops.slice(1) : undefined;
+  if (bounds === undefined || bounds.length !== 2 || !bounds.every((bound) => typeof bound === "number"))
+    return [head, ...ops] as MathJSON;
+  const [lo, hi] = (bounds as number[]).toSorted((a, b) => a - b);
+  return [head, ...ops.slice(0, ops.length - 2), lo, hi] as MathJSON;
+}
+
 /** `expr` with some of its numeric literals resampled; at least one when it has any. */
 function mutate(expr: MathJSON, random: Random): MathJSON {
   let changed = false;
+  /** A digit count resampled to a positive one. */
+  const positive = (node: MathJSON): MathJSON => {
+    if (typeof node === "number") return Math.max(1, Math.abs(node));
+    if (Array.isArray(node) && node[0] === "List")
+      return [node[0], ...node.slice(1).map((n) => positive(n as MathJSON))] as MathJSON;
+    return node;
+  };
   const walk = (node: MathJSON): MathJSON => {
     if (typeof node === "number") {
       if (random() < 0.5) {
@@ -215,7 +232,10 @@ function mutate(expr: MathJSON, random: Random): MathJSON {
     }
     // The first operand of AdicNumeral is its base: keep it, resample the value.
     if (head === "AdicNumeral") return [head, ops[0] as MathJSON, ...ops.slice(1).map(walk)];
-    return [head, ...ops.map(walk)] as MathJSON;
+    // N's digit count is a count: zero or negative is no precision at all (the lanes reject it
+    // in their own words), so it is resampled among the positive ones.
+    if (head === "N" && ops.length === 2) return [head, walk(ops[0] as MathJSON), positive(walk(ops[1] as MathJSON))];
+    return orderBounds(head as string, ops.map(walk));
   };
   const out = walk(expr);
   return changed ? out : walk(expr);

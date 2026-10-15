@@ -2,6 +2,7 @@ id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sage.kind	sage.n
 the-square-roots-of-3-modulo-11-5-2-25-and-6-2			[PowerModList, 3, [Rational, 1, 2], 11]	[List, 5, 6]	the square roots of 3 modulo 11: $5^2 = 25$ and $6^2 = 36$ are both $\equiv 3$						
 the-cube-roots-of-unity-modulo-7-since-3-mid-6			[PowerModList, 1, [Rational, 1, 3], 7]	[List, 1, 2, 4]	the cube roots of unity modulo 7, since $3 \mid 6$						
 an-integer-exponent-is-an-ordinary-power-2-10			[PowerModList, 2, 10, 1000]	[List, 24]	an integer exponent is an ordinary power: $2^{10} = 1024$						
+root-of-a-non-invertible-base		test	[PowerModList, 8, [Rational, -1, 2], 12]	[List]						domain	8 shares a factor with 12, so it has no inverse and no square root of one: ours answers the empty list; SymPy's nthroot_mod raises that the base is not invertible.
 a-general-exponent-s-r-every-x-with-x-2-equiv-2	Scope		[PowerModList, 2, [Rational, 3, 2], 17]	[List, 5, 12]	a general exponent $s/r$: every $x$ with $x^2 \equiv 2^3$						
 the-three-cube-roots-of-2-2-4-since-3-mid-30	Scope		[PowerModList, 2, [Rational, 2, 3], 31]	[List, 16, 18, 28]	the three cube roots of $2^2 = 4$, since $3 \mid 30$						
 exponent-1-is-the-modular-inverse-3-cdot-5-15	Scope		[PowerModList, 3, -1, 7]	[List, 5]	exponent $-1$ is the modular inverse: $3 \cdot 5 = 15 \equiv 1$						

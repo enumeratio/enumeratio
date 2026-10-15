@@ -2,6 +2,7 @@ id	in	out	verdict
 argument-i	arg(mpc(0, 1))	1.57079632679489661923132169164	
 argument-1-plus-i	arg(mpc(1, 1))	0.78539816339744830961566084582	
 argument-neg-1	arg(-1)	3.14159265358979323846264338328	
+argument-of-a-list-holding-0	[arg(0), arg((mpf(-1)/2))]	[mpf('0.0'), mpf('3.14159265358979323846264338327933')]	
 n-argument-exponentiale-plus-i-times-pi-20	enumeratio_n(lambda: (arg((e + (mpc(0, 1) * pi)))), 20)	0.85751178635584626501	
 argument-neg-123	arg(-123)	3.14159265358979323846264338328	
 argument-123-minus-456i	arg(mpc(123, -456))	-1.30732978575997917422057446703	

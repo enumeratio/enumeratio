@@ -79,6 +79,8 @@ n-polylog-2500000-4-a-huge-order-returns	enumeratio_n(polylog(2500000, 4))	Timeo
 n-polylog-40p5-2-plus-3i-a-large-complex-point	enumeratio_n(polylog(40.5, (2 + 3*I)))	1.13521303023391e28 + 7.68457079507548e27*I	disagree
 normal-series-polylog-2-x-x-positiveinfinity-6			
 polylog-s-tiny-negative-rim	enumeratio_n(polylog(-1e-12, (-0.12884449429552464 + 0.9916648104524686*I)))	-0.499999997777011 + 0.439238679595038*I	disagree
+polylog-neg-2-at-the-pole-z-1	polylog(-2, (2/2))		
+polylog-neg-2-over-a-list-holding-the-pole	[polylog(-2, (2/2)), polylog(-2, -6)]		
 threads-over-a-list-of-arguments	[polylog(2, 0.5), polylog(2, 0.25)]	[0.582240526465012, 0.267652639082733]	
 a-non-integer-order-past-z-1-is-left-unevaluated	polylog(2.5, 2)	2.78966033238278 - 1.36380370053935*I	
 complex-order-and-argument	polylog((0.2 + 1*I), (0.5 + -0.5*I))	0.0703265205505161 - 0.563293262539874*I	
