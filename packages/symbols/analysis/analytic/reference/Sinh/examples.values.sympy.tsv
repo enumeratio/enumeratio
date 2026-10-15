@@ -14,8 +14,8 @@ sinh-positiveinfinity	sinh(oo)	oo
 sinh-ln-2-frac-2-1-2-2-frac-34	sinh(log(2))	sinh(log(2))	
 a-real-symbolic-argument-is-untouched	sinh(Symbol("x"))	True	
 oddness-pulls-the-sign-out-of-a-symbolic	sinh((-Symbol("x")))	True	
-sinh-arsinh-x-x-for-every-x			
-sinh-arsinh-2-2-for-every-x			
+sinh-arsinh-x-x-for-every-x	sinh(asinh(Symbol("x")))	True	
+sinh-arsinh-2-2-for-every-x	sinh(asinh(2))	2	
 derivative-cosh-x	diff(sinh(Symbol("x")), Symbol("x"))	True	
 antiderivative			
 taylor-series-about-0			

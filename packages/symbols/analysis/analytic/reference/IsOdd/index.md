@@ -15,4 +15,14 @@ seeAlso:
   - IsEven
 names:
   wolfram: OddQ
+bindings:
+  - origin: mapped
+    form: sympy
+    template: (sympify($1).is_odd is True)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: Wolfram's OddQ is False unless the operand is an odd integer, so SymPy's undecided `is_odd` (None), as for a symbol or 4.0, reads as False.
 ---

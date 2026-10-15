@@ -1,0 +1,14 @@
+id	in	out	verdict
+iseven-4	(sympify(4).is_even is True)	True	
+iseven-3	(sympify(3).is_even is True)	False	
+zero-is-even	(sympify(0).is_even is True)	True	
+negative-integers-count-too	(sympify(-4).is_even is True)	True	
+iseven-8	(sympify(8).is_even is True)	True	
+a-non-integer-is-not-even	(sympify(2.5).is_even is True)	False	
+big-integers	(sympify((S(2)**100)).is_even is True)	True	
+iseven-10-factorial	(sympify(factorial(10)).is_even is True)	True	
+threads-element-wise-over-a-list	[(sympify(1).is_even is True), (sympify(2).is_even is True), (sympify(3).is_even is True)]	[False, True, False]	
+select-the-even-numbers-up-to-10			
+every-integer-is-exactly-one-of-odd-and-even-see			
+iseven-12	(sympify(12).is_even is True)	True	
+a-symbol-stays-undecided-rather-than-false	(sympify(Symbol("x")).is_even is True)	False	disagree

@@ -10,6 +10,15 @@ signatures:
     type: (number) -> number
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: real_root($1, 3)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 ---
 
 - Real-valued even at a negative x -- $\sqrt[3]{-27} = -3$, not a complex principal root. The same real branch as [[Root]]$(x, 3)$; CubeRoot is the named special case.

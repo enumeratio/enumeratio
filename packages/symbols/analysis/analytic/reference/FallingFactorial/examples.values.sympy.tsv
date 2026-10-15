@@ -1,0 +1,14 @@
+id	in	out
+falling-factorial-5-3-60	ff(5, 3)	60
+fallingfactorial-10-2	ff(10, 2)	90
+fallingfactorial-x-8	ff(Symbol("x"), 8)	True
+fullsimplify-series-fallingfactorial-x-5-x-0-5		
+series-fallingfactorial-x-4-x-neg-1-3		
+falling-factorial-3-5-0	ff(3, 5)	0
+falling-factorial-half-2-neg-1-4	ff(Rational(1, 2), 2)	-1/4
+fallingfactorial-4-2	ff(4, 2)	12
+functionexpand-fallingfactorial-x-4		
+fallingfactorial-n-0	ff(Symbol("n"), 0)	1
+fallingfactorial-x-plus-bigo-x-pow-5-10		
+fallingfactorial-10-3	ff(10, 3)	720
+differencedelta-fallingfactorial-x-n-x		

@@ -10,6 +10,16 @@ signatures:
     type: (number) -> number
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: (sign(re($1)) * floor(Abs(re($1))) + I * sign(im($1)) * floor(Abs(im($1))))
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: Each part is truncated toward 0, as Wolfram's IntegerPart truncates a complex number.
 ---
 
 - Truncates toward 0, unlike [[Floor]] (which rounds toward $-\infty$): $\mathrm{IntegerPart}(-2.4) = -2$, where $\mathrm{Floor}(-2.4) = -3$.
