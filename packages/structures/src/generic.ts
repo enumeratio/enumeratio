@@ -16,6 +16,15 @@ const isStructured = (op: BoxedExpression): boolean =>
   // native head reads itself, not one value to compare.
   !isReal(op) && op.unknowns.length === 0 && (op.type.matches("string") || !op.type.matches("collection"));
 
+const ownExtremum = new WeakMap<ComputeEngine, Set<string>>();
+
+/** Mark a carrier head whose lone `Min`/`Max` operand is answered by an overload row of its own
+ *  (a Finset's members), not by the operand standing as its own extremum. */
+export function readsOwnExtremum(ce: ComputeEngine, head: string): void {
+  const heads = ownExtremum.get(ce) ?? new Set<string>();
+  ownExtremum.set(ce, heads.add(head));
+}
+
 /** The pool `Min`/`Max` compare: lists flattened, as compute-engine's do. */
 const pool = (ops: readonly BoxedExpression[]): BoxedExpression[] =>
   ops.flatMap((op) => (op.operator === "List" ? pool(operandsOf(op)) : [op]));
@@ -52,10 +61,17 @@ function componentwise(
 }
 
 /** The least (`side` -1) or greatest (1) of `values`: the lattice's meet or join, else by `Compare`. */
-function extremum(ce: ComputeEngine, values: readonly BoxedExpression[], side: -1 | 1): BoxedExpression | undefined {
+function extremum(
+  ce: ComputeEngine,
+  values: readonly BoxedExpression[],
+  side: -1 | 1,
+  lone?: BoxedExpression,
+): BoxedExpression | undefined {
   const head = side < 0 ? "Min" : "Max";
   const parts = coordinatesOf(ce, values);
   if (parts !== undefined) return componentwise(ce, head, values[0]!, parts);
+  // A lone operand of a carrier that reads its own extremum is left to the head's own rows.
+  if (lone !== undefined && ownExtremum.get(ce)?.has(lone.operator) === true) return undefined;
   const bound = side < 0 ? "GreatestLowerBound" : "LeastUpperBound";
   let best = values[0]!;
   for (const v of values.slice(1)) {
@@ -129,7 +145,8 @@ export function declareGenericHeads(ce: ComputeEngine): void {
       ce,
       [head, "'b'", "'a'"],
       (ops) => pool(ops).some(isStructured),
-      (native) => (ops, options) => extremum(ce, pool(ops), side) ?? native?.(ops, options),
+      (native) => (ops, options) =>
+        extremum(ce, pool(ops), side, ops.length === 1 ? ops[0] : undefined) ?? native?.(ops, options),
       { arity: { min: 1 }, compile: "builtin" },
     );
   }

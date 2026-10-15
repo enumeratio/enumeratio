@@ -44,6 +44,8 @@ HermiteDecomposition([[1, 2], [3, 4]])      // the unimodular u and Hermite form
 - [`MoebiusMu`](https://enumeratio.dev/reference/symbol/MoebiusMu) / [`MangoldtLambda`](https://enumeratio.dev/reference/symbol/MangoldtLambda) / [`LiouvilleLambda`](https://enumeratio.dev/reference/symbol/LiouvilleLambda)
 - [`PrimeNu`](https://enumeratio.dev/reference/symbol/PrimeNu) / [`PrimeOmega`](https://enumeratio.dev/reference/symbol/PrimeOmega) — distinct and with-multiplicity prime counts
 - [`IsPerfect`](https://enumeratio.dev/reference/symbol/IsPerfect) / [`PerfectNumber`](https://enumeratio.dev/reference/symbol/PerfectNumber) / [`MersennePrimeExponent`](https://enumeratio.dev/reference/symbol/MersennePrimeExponent)
+- [`Abundance`](https://enumeratio.dev/reference/symbol/Abundance) / [`AliquotSum`](https://enumeratio.dev/reference/symbol/AliquotSum) — $\sigma(n)-2n$ and $\sigma(n)-n$
+- [`SquareFreePart`](https://enumeratio.dev/reference/symbol/SquareFreePart) / [`SquarePartRoot`](https://enumeratio.dev/reference/symbol/SquarePartRoot) — $q$ and $s$ in $n=\pm s^2q$ with $q$ square-free
 
 **GCD, modular and symbols**
 

@@ -12,6 +12,7 @@ exact-numbers-are-compared-numerically	enumeratio_min(sqrt(2), (3/2))	sqrt(2)
 the-numeric-arguments-collapse-to-their-minimum	enumeratio_min(3, SR.var("x"), 5)	True	
 compares-exact-constants-numerically-min-e-pi-5	enumeratio_min([e, pi, 5])	e	
 the-min-of-two-intervals-is-the-interval-of			
+the-smallest-member-of-a-finset	enumeratio_min([1, 3, 4])	1	
 the-day-s-low-from-the-same-hourly-readings-see	enumeratio_min(68, 72, 65, 80, 74)	65	
 commutative-order-doesn-t-matter	enumeratio_equal(enumeratio_min(3, 7), enumeratio_min(7, 3))	True	
 min-a-b-max-a-b-a-b-see-max	enumeratio_equal((enumeratio_min(4, 9) + enumeratio_max(4, 9)), (4 + 9))	True	
@@ -21,3 +22,4 @@ multiple-arguments-lists-included-are-flattened	enumeratio_min([3, 1], 0)	0
 with-no-arguments-it-returns-the-identity	enumeratio_min()	ValueError: min() iterable argument is empty	error
 the-min-of-an-empty-list-is-nan	enumeratio_min([])	ValueError: min() iterable argument is empty	error
 min-with-complexinfinity-stays-unevaluated	enumeratio_min(unsigned_infinity, 1)	1	inconclusive
+the-smallest-member-of-the-empty-finset	enumeratio_min([])	ValueError: min() iterable argument is empty	error

@@ -141,8 +141,25 @@ const renamedSymbols: [string, string][] = [
   ]),
 ];
 
+// Catalogue-only statistic and map names retired by BL-202 lead to the head that took the role.
+const retiredStubs: [string, string][] = Object.entries({
+  RealPart: "Re",
+  ImaginaryPart: "Imaginary",
+  MaxElement: "Max",
+  MinElement: "Min",
+  Cardinality: "Length",
+  ToRationalNumber: "FromContinuedFraction",
+  NumberOfEdges: "EdgeCount",
+  BigOmega: "PrimeOmega",
+  DivisorCount: "DivisorSigma",
+  LittleOmega: "PrimeNu",
+  ToCycleNotation: "CycleDecomposition",
+  BinaryWeight: "DigitCount",
+  SquareRoot: "SquarePartRoot",
+}).map(([old, head]) => [`/reference/symbol/${old}`, `/reference/symbol/${head}`]);
+
 function writeRedirects(outDir: string): void {
-  for (const [from, to] of [...moved, ...renamedSymbols]) {
+  for (const [from, to] of [...moved, ...renamedSymbols, ...retiredStubs]) {
     const file = resolve(outDir, from.endsWith("/") ? `.${from}index.html` : `.${from}.html`);
     mkdirSync(dirname(file), { recursive: true });
     writeFileSync(

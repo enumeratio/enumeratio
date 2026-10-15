@@ -1,4 +1,8 @@
-id	section	role	expr	expected	caption
-a-finite-expansion	Basic		[FromContinuedFraction, [List, 3, 7, 15, 1]]	[Rational, 355, 113]	$[3;7,15,1]$ is the convergent $355/113$
-symbolic-terms	Scope		[FromContinuedFraction, [List, a, b, c]]	[Add, a, [Divide, 1, [Add, b, [Divide, 1, c]]]]	Built term by term, unsimplified
-periodic-tail	Scope		[FromContinuedFraction, [List, 1, [List, 1]]]	[Multiply, [Rational, 1, 2], [Add, 1, [Sqrt, 5]]]	$[1;\overline{1}]$ is the golden ratio
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+a-finite-expansion	Basic		[FromContinuedFraction, [List, 3, 7, 15, 1]]	[Rational, 355, 113]	$[3;7,15,1]$ is the convergent $355/113$		
+symbolic-terms	Scope		[FromContinuedFraction, [List, a, b, c]]	[Add, a, [Divide, 1, [Add, b, [Divide, 1, c]]]]	Built term by term, unsimplified		
+periodic-tail	Scope		[FromContinuedFraction, [List, 1, [List, 1]]]	[Multiply, [Rational, 1, 2], [Add, 1, [Sqrt, 5]]]	$[1;\overline{1}]$ is the golden ratio		
+a-one-term-list-is-an-integer	Scope		[FromContinuedFraction, [List, 5]]	5	A one-term list is that integer		
+terms-after-the-first-may-follow-a-negative-a0	Scope		[FromContinuedFraction, [List, -3, 2, 5]]	[Rational, -28, 11]	The first term may be negative: $-3+1/(2+1/5)$		
+it-inverts-continuedfraction	Properties		[FromContinuedFraction, [ContinuedFraction, [Rational, 47, 17]]]	[Rational, 47, 17]	Inverts [[ContinuedFraction]]: a rational round-trips through its expansion		
+the-empty-list-stays-unevaluated	Possible issues		[FromContinuedFraction, [List]]	[FromContinuedFraction, [List]]	The empty list has no value here	unevaluated	compute-engine leaves the empty list unevaluated; Wolfram answers Infinity, the value of an empty continued fraction read as a_0 = infinity.

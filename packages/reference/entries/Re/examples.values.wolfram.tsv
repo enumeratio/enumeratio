@@ -14,6 +14,7 @@ real-positiveinfinity-times-i	Re[Times[Infinity, Complex[0, 1]]]	0		\Re(\infty  
 real-complexinfinity	Re[ComplexInfinity]	Indeterminate		\Re(\text{ComplexInfinity})	\text{Indeterminate}	
 piecewiseexpand-re-imaginaryunit-times-x-neg-2	PiecewiseExpand[Re[Times[I, x]], Less[-2, x, 2]]	-Im[x]		\text{PiecewiseExpand}[\Re(i x),-2<x<2]	-\Im(x)	disagree
 simplify-re-x-x-gt-0	Simplify[Re[x], Greater[x, 0]]	x		\text{Simplify}[\Re(x),x>0]	x	disagree
+a-gaussian-integer-is-a-complex-number	Re[Times[Complex[2, 1], Complex[1, 3]]]	-1		\Re((2+i) (1+3 i))	-1	
 re-of-a-symbolic-value-stays-unevaluated	Re[x]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\Re(x)-\Re(x)],10,\text{$\$$Aborted}]]\},\text{If}\left[\text{AllTrue}[\text{Flatten}[\{d\}],\text{$\#$1}\text{===}0\&],\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Re\left(\frac{7}{3}\right)-\Re\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\Re\left(-\frac{11}{5}\right)-\Re\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\Re\left(\frac{13}{4}\right)-\Re\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 real-1	Re[1]	1		\Re(1)	1	
 real-neg-1	Re[-1]	-1		\Re(-1)	-1	

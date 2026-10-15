@@ -2,6 +2,7 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { registerNotation } from "@enumeratio/boxes";
 import { ensureAlgebraHeads } from "./algebra.ts";
 import { declareGenericHeads } from "./generic.ts";
+export { readsOwnExtremum } from "./generic.ts";
 import { STRUCTURES_NOTATION } from "./notation.ts";
 import { conformNumbers } from "./numbers.ts";
 import { ensureOperationHeads } from "./operations.ts";

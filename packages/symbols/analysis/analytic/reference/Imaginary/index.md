@@ -24,3 +24,5 @@ bindings:
       version: 1.3.0
       on: 2026-10-15
 ---
+
+- A Gaussian integer is a complex number with integer parts, so `Im` and [[Re]] read its two coordinates; there is no separate head for them.

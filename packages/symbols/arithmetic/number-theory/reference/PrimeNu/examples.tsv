@@ -8,6 +8,7 @@ gaussian-integers-3-i-1-i-2-i	Scope		[PrimeNu, [Complex, 3, 1]]	2			Gaussian int
 gaussianintegers-true-5-splits-so-105-has-4	Scope		[PrimeNu, 105, [KeyValuePair, Over, GaussianIntegers]]	4			GaussianIntegers -> True: $5$ splits, so $105$ has 4 Gaussian prime factors			
 listable-over-a-range	Scope		[PrimeNu, [Range, 20]]	[List, 0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2]			Listable over a [[Range]]			
 primenu-30	Scope		[PrimeNu, 30]	3			Counts distinct primes: $2,3,5$			
+negative-n-the-sign-is-a-unit	Scope		[PrimeNu, -12]	2			Negative $n$: the sign is a unit, so $\omega(-12)=\omega(12)$		domain	SymPy's primenu() requires a positive integer; ours reads the sign as a unit, as Wolfram does.
 moebiusmu-42-eq-neg-1-pow-primenu-42	Applications		[Equal, [MoebiusMu, 42], [Power, -1, [PrimeNu, 42]]]	True			For squarefree $n$, $\mu(n)=(-1)^{\omega(n)}$			
 liouvillelambda-42-eq-neg-1-pow-primenu-42	Applications		[Equal, [LiouvilleLambda, 42], [Power, -1, [PrimeNu, 42]]]	True			Squarefree numbers also have $\lambda(n)=(-1)^{\omega(n)}$			
 primenu-n-is-the-length-of-factorinteger-n	Properties		[Equal, [PrimeNu, 50], [Length, [FactorInteger, 50]]]	True			PrimeNu(n) is the length of [[FactorInteger]](n)			

@@ -12,6 +12,7 @@ max-1-positiveinfinity	Max[1, Infinity]	Infinity	\max (1,\infty )	\infty
 the-numeric-arguments-collapse-to-their-maximum	Max[3, x, 5]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\max (3,x,5)-\max (5,x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\max \left(3,\frac{7}{3},5\right)-\max \left(5,\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\max \left(3,-\frac{11}{5},5\right)-\max \left(5,-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\max \left(3,\frac{13}{4},5\right)-\max \left(5,\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 compares-exact-constants-numerically-max-e-pi-2	Max[List[E, Pi, 2]]	Pi	\max (\{e,\pi ,2\})	\pi	
 the-max-of-two-intervals-is-the-interval-of	Max[Interval[List[1, 3]], Interval[List[-3, 5]]]	5	\max (\text{Interval}[\{1,3\}],\text{Interval}[\{-3,5\}])	5	disagree
+the-largest-member-of-a-finset	Max[List[1, 3, 4]]	4	\max (\{1,3,4\})	4	
 the-day-s-high-from-a-handful-of-hourly-readings	Max[68, 72, 65, 80, 74]	80	\max (68,72,65,80,74)	80	
 commutative-order-doesn-t-matter	(Max[3, 7] == Max[7, 3])	True	\max (3,7)=\max (7,3)	\text{True}	
 multiple-list-arguments-are-flattened-into-one	(Max[List[3, 1, 4], List[9, 2]] == 9)	True	\max (\{3,1,4\},\{9,2\})=9	\text{True}	
@@ -20,3 +21,4 @@ with-no-arguments-compute-engine-returns-nan	Max[]	-Infinity	\max ()	-\infty	dis
 nan-poisons-the-result-overriding-every-other	Max[Indeterminate, 3]	Indeterminate	\max (\text{Indeterminate},3)	\text{Indeterminate}	
 the-max-of-an-empty-list-is-nan-too	Max[List[]]	-Infinity	\max (\{\})	-\infty	disagree
 max-with-complexinfinity-stays-unevaluated	Max[ComplexInfinity, 1]	Max[1, ComplexInfinity]	\max (\text{ComplexInfinity},1)	\max (1,\text{ComplexInfinity})	
+the-largest-member-of-the-empty-finset	Max[List[]]	-Infinity	\max (\{\})	-\infty	disagree

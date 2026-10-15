@@ -1,0 +1,12 @@
+id	in	out	verdict
+aliquotsum-12	divisor_sigma(abs(12)) - abs(12)	16	
+aliquotsum-28	divisor_sigma(abs(28)) - abs(28)	28	
+aliquotsum-13	divisor_sigma(abs(13)) - abs(13)	1	
+aliquotsum-1	divisor_sigma(abs(1)) - abs(1)	0	
+negative-n-the-sign-is-a-unit	divisor_sigma(abs(-12)) - abs(-12)	16	
+listable-over-a-list	[divisor_sigma(abs(6)) - abs(6), divisor_sigma(abs(12)) - abs(12), divisor_sigma(abs(13)) - abs(13)]	[6, 16, 1]	
+large-integers-a-power-of-two	divisor_sigma(abs((S(2)**40))) - abs((S(2)**40))	1099511627775	
+amicable-pair-220-and-284	divisor_sigma(abs(220)) - abs(220)	284	
+amicable-pair-the-other-way	divisor_sigma(abs(divisor_sigma(abs(220)) - abs(220))) - abs(divisor_sigma(abs(220)) - abs(220))	220	
+aliquotsum-is-sigma-minus-n	enumeratio_equal(divisor_sigma(abs(360)) - abs(360), (divisor_sigma(360, 1) - 360))	True	
+zero-stays-unevaluated	divisor_sigma(abs(0)) - abs(0)	ValueError: n should be a positive integer	error

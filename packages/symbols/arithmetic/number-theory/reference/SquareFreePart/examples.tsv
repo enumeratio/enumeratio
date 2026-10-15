@@ -1,0 +1,13 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sage.kind	sage.note
+squarefreepart-12			[SquareFreePart, 12]	3	$12 = 2^2\cdot3$				
+squarefreepart-18			[SquareFreePart, 18]	2	$18 = 3^2\cdot2$				
+a-square-free-number-is-its-own-part			[SquareFreePart, 30]	30	A square-free number is its own square-free part				
+squarefreepart-1			[SquareFreePart, 1]	1					
+negative-n-the-sign-is-a-unit	Scope		[SquareFreePart, -12]	3	Negative $n$: the sign is a unit, so the part is positive				
+listable-over-a-list	Scope		[SquareFreePart, [List, 8, 9, 10]]	[List, 2, 1, 10]	Listable over a list				
+large-integers-10	Scope		[SquareFreePart, [Factorial, 10]]	7	Large integers: $10! = 2^8\cdot3^4\cdot5^2\cdot7$				
+the-square-free-part-of-1000	Applications		[SquareFreePart, 1000]	10	Simplifying $\sqrt{1000}=10\sqrt{10}$: the radicand left over is the square-free part				
+n-is-s-squared-times-q	Properties		[Equal, 360, [Multiply, [Power, [SquarePartRoot, 360], 2], [SquareFreePart, 360]]]	True	$n=s^2 q$. See [[SquarePartRoot]]				
+the-part-is-always-square-free	Properties		[IsSquareFree, [SquareFreePart, 360]]	True	The part is always square-free. See [[IsSquareFree]]				
+the-part-of-a-perfect-square-is-1	Properties		[SquareFreePart, 144]	1	A perfect square has part 1				
+zero-stays-unevaluated	Possible issues		[SquareFreePart, 0]	[SquareFreePart, 0]	Zero is outside the domain, so it stays unevaluated	domain	Wolfram's FactorInteger[0] is {{0, 1}}, which the mapping reads as 0; we leave it unevaluated, as the domain is the nonzero integers.	domain	Sage's squarefree_part of 0 is 0; ours leaves it unevaluated, as the domain is the nonzero integers.
