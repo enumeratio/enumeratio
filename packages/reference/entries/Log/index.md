@@ -12,6 +12,11 @@ signatures:
     description: The logarithm of z in base b, defaulting to base 10.
     library: enumeratio-analytic
     type: "(complex | infinity, base: (complex | infinity)?) -> number"
+    overrides: enumeratio-evaluation
+  - call: Log(z, b = 10)
+    description: The logarithm of z in base b, defaulting to base 10.
+    library: enumeratio-evaluation
+    type: "(complex | infinity, base: (complex | infinity)?) -> number"
     overrides: compute-engine
 seeAlso:
   - Ln

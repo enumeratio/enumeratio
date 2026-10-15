@@ -41,6 +41,25 @@ import { isPrime } from "./primes.ts";
 class Decline extends Error {}
 
 const MAX_POWER = 64;
+/** Heads that carry no quotient (a Tuple, a relation, a truth value): Wolfram hands these back as they are. */
+const NOT_ARITHMETIC: ReadonlySet<string> = new Set([
+  "Tuple",
+  "KeyValuePair",
+  "Set",
+  "Equal",
+  "NotEqual",
+  "Less",
+  "LessEqual",
+  "Greater",
+  "GreaterEqual",
+  "And",
+  "Or",
+  "Not",
+  "Xor",
+  "Implies",
+  "Interval",
+  "Range",
+]);
 
 /** The unknowns an expression is a rational function in, keyed by their MathJSON. */
 function collectAtoms(e: Expr, atoms: Map<string, Expr>): void {
@@ -62,6 +81,7 @@ function collectAtoms(e: Expr, atoms: Map<string, Expr>): void {
       return;
     }
   }
+  if (NOT_ARITHMETIC.has(e.operator)) throw new Decline();
   // A symbol that is not a constant, or an application (x^y, sin x): an unknown. Any other
   // number (a float, Pi) has no place in a quotient over ℤ/p.
   if (e.operator === undefined && (symbolNameOf(e) === undefined || e.isConstant === true)) throw new Decline();
@@ -129,7 +149,8 @@ const lcm = (a: bigint, b: bigint): bigint => (a / integerGcd(a, b)) * b;
 /**
  * The fraction as Together writes it over ℚ: integer coefficients, the contents of numerator and
  * denominator coprime, the denominator's leading coefficient (lexicographically, the unknowns in
- * name order) positive unless `keepSign`.
+ * name order) positive unless `keepSign`. That is Wolfram's sign for a single unknown; with several
+ * it can differ by a unit.
  */
 function integerForm(fraction: Fraction<Rational>, keepSign: boolean): Fraction<bigint> {
   const factorOf = (a: Poly<Rational>): bigint => [...a.values()].reduce((f, [, d]) => lcm(f, d), 1n);
@@ -182,14 +203,19 @@ function build(
   const bottom = reduceModulo(denominator, p);
   if (isZero(bottom)) throw new Decline();
 
+  // Wolfram cancels a factor that only appears mod p in these cases and no others: a quotient of two
+  // monomials ((x^2 + 5)/(x^2 + 5x) is 1 mod 5), or of parts that reduce to the same polynomial.
+  // x(x + 1)/(x(x + 3)) mod 5 stays as it is.
+  const sameParts = top.size === bottom.size && [...top].every(([m, c]) => bottom.get(m) === c);
+  if (sameParts) return { numerator: one, denominator: one };
   const monomial = laurent && denominator.size === 1;
   const constantDenominator = bottom.size === 1 && exponentsOf([...bottom.keys()][0]!).every((e) => e === 0);
-  if (!monomial && !constantDenominator) {
+  const monomials = top.size === 1 && bottom.size === 1;
+  if (!monomial && !constantDenominator && !monomials) {
     const read = (poly: Poly<bigint>) => sum([...poly].map(([m, c]) => term(c, exponentsOf(m))));
     return { numerator: read(top), denominator: read(bottom) };
   }
-  const [[mD, cD]] = [...(monomial ? new Map([...denominator].map(([m, c]) => [m, mod(c, p)] as const)) : bottom)];
-  if (cD === 0n) throw new Decline();
+  const [[mD, cD]] = [...bottom] as [[string, bigint]];
   const eD = exponentsOf(mD);
   const unit = F.inverse(cD);
   const terms = [...top].map(([m, c]) => ({
@@ -247,8 +273,14 @@ function ringOf(over: Json | undefined): bigint | "ordinary" | undefined {
 
 export function declareNumerator(ce: Engine): void {
   for (const head of ["Numerator", "Denominator"] as const) {
-    // The option rides as a trailing rule, a Tuple the head would otherwise thread over; and
-    // native canonicalization reads a quotient's first part and drops the rest, option included.
+    // The option rides as a trailing rule, a Tuple the head would otherwise thread over (hence the
+    // `tuples` exemption, set on the definition directly, as the option heads in number-theory do).
+    //
+    // Workaround for compute-engine: Numerator's and Denominator's `canonical` step returns the
+    // first operand's own part when it is a Divide or Rational and drops every other operand, so
+    // `Numerator(a/b, Over -> R)` canonicalizes to `a` before anything sees the option. A call with
+    // an option is rebuilt here instead (through `ce._fn`, which is private API). This replaces the
+    // definition's `canonical`, so a package extending it after residues must capture ours.
     widenSignature(ce, head, "(number, any*) -> number");
     const operator = (
       ce.lookupDefinition(head) as { operator?: { broadcastExemptions: readonly string[] } } | undefined
@@ -274,6 +306,11 @@ export function declareNumerator(ce: Engine): void {
         if (split.ops.length !== 1 || Object.keys(split.options).some((name) => name !== "Over")) return undefined;
         const ring = ringOf(split.options.Over);
         if (ring === undefined) return undefined;
+        // Listable, as Wolfram's is: the ring applies to each element.
+        if (ops[0]!.operator === "List") {
+          const items = operandsOf(ops[0]).map((item) => ce.function(head, [item, ...ops.slice(1)]).evaluate());
+          return ce.function("List", items);
+        }
         if (ring === "ordinary") return ce.function(head, [ops[0]!]).evaluate();
         try {
           const parts = overField(ce, ops[0]!, ring);

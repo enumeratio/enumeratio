@@ -8,6 +8,9 @@ import {
   inDoublesIfComplex,
   isRealInt,
   type NativeEval,
+  logGammaReal,
+  numberResult,
+  wantsBigDigits,
   wantsNumber,
 } from "@enumeratio/ce-patches";
 import { gammaExactValue } from "./widened.ts";
@@ -59,6 +62,58 @@ const rewrite = (
   return options.numericApproximation ? inDoublesIfComplex(ce, ops, options, () => expr.N()) : expr.evaluate();
 };
 
+/** sin(πa) and cos(πa) for a in [0, 1], exact at the multiples of 1/2 (cos(π/2) is 0, not 6e-17). */
+const sinPiUnit = (a: number): number =>
+  a <= 0.25 ? Math.sin(Math.PI * a) : a <= 0.75 ? Math.cos(Math.PI * (0.5 - a)) : Math.sin(Math.PI * (1 - a));
+const cosPiUnit = (a: number): number =>
+  a <= 0.25 ? Math.cos(Math.PI * a) : a <= 0.75 ? Math.sin(Math.PI * (0.5 - a)) : -Math.cos(Math.PI * (1 - a));
+/** x reduced to [-1, 1] by 2, which is exact for a double. */
+const reduced = (x: number): number => x - 2 * Math.round(x / 2);
+const sinPi = (x: number): number => {
+  const r = reduced(x);
+  return r < 0 ? -sinPiUnit(-r) : sinPiUnit(r);
+};
+const cosPi = (x: number): number => cosPiUnit(Math.abs(reduced(x)));
+
+/** Digits the sums below may lose (as a factor) before the answer is declined as noise. */
+const MAX_CANCELLATION = 1e3;
+
+/**
+ * Q(s, z) for a non-integer real s and z < 0, as `[re, im]`, or `undefined` where doubles cannot
+ * hold it. With t = −z > 0 and the principal z^s = t^s e^{iπs},
+ *
+ *   P(s, z) = z^s/Γ(s) · Σₖ tᵏ/(k! (s + k)),   Q = 1 − P = 1 − R e^{iπs},
+ *
+ * the series being positive for s > 0 (no cancellation, unlike Γ(s, z)/Γ(s)); for s < 0,
+ * 1/Γ(s) = sin(πs) Γ(1 − s)/π. R cos(πs) ≈ 1 near the even integers leaves Re Q cancelling;
+ * past MAX_CANCELLATION it declines rather than answer noise.
+ */
+function regularizedGammaNegative(s: number, z: number): [number, number] | undefined {
+  const t = -z;
+  if (!(t < 700) || s > 170 || s < -170) return undefined;
+  let weight = 1; // tᵏ/k!
+  let term = 0;
+  let sum = 0;
+  let magnitude = 0;
+  for (let k = 0; k < 4000; k++) {
+    term = weight / (s + k);
+    sum += term;
+    magnitude += Math.abs(term);
+    weight *= t / (k + 1);
+    if (k > t && k > -s && Math.abs(term) < 1e-17 * Math.abs(sum)) break;
+    if (k === 3999) return undefined;
+  }
+  if (!(Math.abs(sum) > 0) || magnitude > MAX_CANCELLATION * Math.abs(sum)) return undefined;
+  // In logs: t^s, the sum and Γ each reach past a double's range before their product does.
+  const lnR = s * Math.log(t) + Math.log(Math.abs(sum)) + (s > 0 ? -logGammaReal(s) : logGammaReal(1 - s));
+  const R = Math.sign(sum) * (s > 0 ? 1 : sinPi(s) / Math.PI) * Math.exp(lnR);
+  if (!Number.isFinite(R)) return undefined;
+  const re = 1 - R * cosPi(s);
+  const scale = Math.max(1, Math.abs(R * cosPi(s)));
+  if (Math.abs(re) < scale / MAX_CANCELLATION) return undefined;
+  return [re, -R * sinPi(s)];
+}
+
 /**
  * Evaluate `Gamma` / `GammaRegularized`, deferring to compute-engine for one and two
  * arguments and adding the three-argument difference. Γ(1, z) = e^{−z} is filled in on the
@@ -99,14 +154,19 @@ export function evaluateIncompleteGamma(
       return options.numericApproximation ? expr.N() : expr.evaluate();
     }
     // Q(s, z) = Γ(s, z)/Γ(s) — the native regularized handler is real-only, while Γ(s, z)
-    // itself takes complex s and z, so the quotient covers what it declines: a complex
-    // operand, and a non-integer s at z < 0 (principal branch: ln z = ln|z| + iπ), whose value is
-    // complex.
-    if (head === "GammaRegularized" && (s.im !== 0 || z.im !== 0 || (z.re < 0 && !isRealInt(s)))) {
+    // itself takes complex s and z, so the quotient covers what it declines: a genuinely
+    // complex operand.
+    if (head === "GammaRegularized" && (s.im !== 0 || z.im !== 0)) {
       const expr = ce.box(["Divide", ["Gamma", sJson, zJson], ["Gamma", sJson]] as BoxInput);
-      // A float operand asks for a float: in doubles, not a bignum quotient of a double's digits.
-      const q = wantsNumber(ops, options) ? inDoubles(ce, options, () => expr.N()) : expr.evaluate();
+      const q = options.numericApproximation ? inDoubles(ce, options, () => expr.N()) : expr.evaluate();
       if (q !== undefined && !unreduced(q, "Gamma")) return q;
+    }
+    // A non-integer real s at z < 0 is complex (principal branch). In doubles, so only where
+    // that is what is asked for: a float operand or a plain N.
+    if (head === "GammaRegularized" && s.im === 0 && z.im === 0 && z.re < 0 && !isRealInt(s)) {
+      if (!wantsNumber(ops, options) || wantsBigDigits(ce, options, ops)) return r;
+      const q = regularizedGammaNegative(s.re, z.re);
+      if (q !== undefined) return numberResult(ce, { re: q[0], im: q[1] });
     }
     return r;
   }

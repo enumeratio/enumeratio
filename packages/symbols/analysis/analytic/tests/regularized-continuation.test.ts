@@ -20,10 +20,17 @@ test("I_x(a, b) at integer a, b is a polynomial: exact for a rational x outside 
   expect(numeric(["BetaRegularized", 2, 2, 3]).re).toBe(8);
 });
 
-test("a float x gives the polynomial's value at that double, correctly rounded", () => {
+test("a float x gives the polynomial's value at that double, within an ulp of the exact one", () => {
   expect(numeric(["BetaRegularized", -1.25, 4, 3]).re).toBe(148.01025390625);
   expect(numeric(["BetaRegularized", 2.5, 2, 3]).re).toBe(29.6875);
   expect(numeric(["BetaRegularized", -7.5, 9, 11]).re / -6.91916095873125e21).toBeCloseTo(1, 14);
+});
+
+test("past a double's digits the value is rounded from the exact rational", () => {
+  const value = ce.box(["N", ["BetaRegularized", R(-5, 3), 3, 4], 40] as never).evaluate();
+  // -814375/729
+  expect(String((value.json as { num: string }).num).startsWith("-1117.112482853223593964334705075445816")).toBe(true);
+  expect(ce.box(["N", ["BetaRegularized", 2, 2, 3], 40] as never).evaluate().json).toEqual({ num: "8.0" });
 });
 
 test("inside [0, 1], and off the integers, the earlier answers stand", () => {
@@ -43,6 +50,16 @@ test("Q(s, z) at a non-integer s and z < 0 is complex (principal branch)", () =>
   const negative = numeric(["GammaRegularized", -1.5, -2]);
   expect(negative.re).toBeCloseTo(1, 13);
   expect(negative.im).toBeCloseTo(-0.0883638989471347, 13);
+});
+
+test("where Q(s, z) would lose digits to cancellation it declines rather than answer noise", () => {
+  // Near an integer order, or at a tiny one, Re Q is a difference of nearly equal numbers.
+  expect(numeric(["GammaRegularized", 2.0000001, -1]).operator).toBe("GammaRegularized");
+  expect(numeric(["GammaRegularized", 1e-8, -2]).operator).toBe("GammaRegularized");
+  // Large order: Q is 1 to a double's digits.
+  expect(numeric(["GammaRegularized", 150.5, -1]).re).toBe(1);
+  // mpmath: gammainc(25.5, -20, regularized=True) is 1 + 5.234103e15 i.
+  expect(numeric(["GammaRegularized", 25.5, -20]).im / 5.234103024184011e15).toBeCloseTo(1, 12);
 });
 
 test("a float operand answers in doubles; an exact one that cannot reduce stays unevaluated", () => {

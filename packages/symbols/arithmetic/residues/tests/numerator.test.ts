@@ -54,6 +54,32 @@ test("a monomial denominator's unit moves into the numerator", () => {
   });
 });
 
+test("a factor that appears only mod p cancels between monomials, and nowhere else", () => {
+  // (x^2 + 5)/(x^2 + 5x) mod 5 is x^2/x^2; (5y + x^2)/(5y + x) is x^2/x.
+  const one = { numerator: 1, denominator: 1 };
+  expect(parts(["Divide", ["Add", ["Power", "x", 2], 5], ["Add", ["Power", "x", 2], ["Multiply", 5, "x"]]], 5)).toEqual(
+    one,
+  );
+  expect(
+    parts(["Divide", ["Add", ["Multiply", 5, "y"], ["Power", "x", 2]], ["Add", ["Multiply", 5, "y"], "x"]], 5),
+  ).toEqual({ numerator: "x", denominator: 1 });
+  // x(x + 1)/(x(x + 3)) mod 5 keeps its common x, as Wolfram's does.
+  const kept = [
+    "Divide",
+    ["Multiply", ["Add", "x", 1], ["Add", "x", 5]],
+    ["Multiply", ["Add", "x", 3], ["Add", "x", 10]],
+  ];
+  expect(parts(kept, 5).denominator).toEqual(["Add", ["Power", "x", 2], ["Multiply", 3, "x"]]);
+});
+
+test("it threads over a list, and leaves a relation alone", () => {
+  const list = ["List", ["Divide", "x", 2], ["Divide", 3, "y"]];
+  expect(ce.box(["Numerator", list, over(7)] as never).evaluate().json).toEqual(["List", ["Multiply", 4, "x"], 3]);
+  expect(ce.box(["Denominator", list, over(7)] as never).evaluate().json).toEqual(["List", 1, "y"]);
+  const relation = ["Equal", "x", ["Rational", 3, 2]];
+  expect(ce.box(["Numerator", relation, over(7)] as never).evaluate().operator).toBe("Numerator");
+});
+
 test("it declines where Wolfram has no answer, or the ring is not one it reads", () => {
   // A denominator that vanishes mod p; a modulus that is not prime.
   const stays = (expr: unknown, p: number) => ce.box(["Numerator", expr, over(p)] as never).evaluate().operator;

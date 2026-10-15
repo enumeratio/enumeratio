@@ -1,6 +1,13 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, wrapOperator } from "@enumeratio/engine";
-import { isFiniteNum, isRealInt, wantsNumber, logGammaReal } from "@enumeratio/ce-patches";
+import {
+  atEnginePrecision,
+  isFiniteNum,
+  isRealInt,
+  logGammaReal,
+  wantsBigDigits,
+  wantsNumber,
+} from "@enumeratio/ce-patches";
 
 // I_x(a, b) past x = 1 at a positive integer b: (1 − t)^(b−1) is a polynomial, so the
 // defining integral is a finite sum, B_x(a, b) = Σⱼ C(b−1, j)(−1)ʲ x^(a+j)/(a+j), real for
@@ -22,7 +29,17 @@ function exactDouble(x: number): [bigint, bigint] {
   return [BigInt(m), 2n ** BigInt(e)];
 }
 
-/** `n / d` as a double, however large the two. */
+/** A decimal literal (`-1.5e-3`) as the exact rational it spells. */
+function exactDecimal(text: string): [bigint, bigint] | undefined {
+  const match = /^(-?)(\d+)(?:\.(\d+))?(?:e([+-]?\d+))?$/i.exec(text);
+  if (match === null) return undefined;
+  const [, sign, whole, fraction = "", exponent = "0"] = match;
+  const shift = Number(exponent) - fraction.length;
+  const digits = BigInt(`${sign}${whole}${fraction}`);
+  return shift >= 0 ? [digits * 10n ** BigInt(shift), 1n] : [digits, 10n ** BigInt(-shift)];
+}
+
+/** `n / d` as a double, however large the two (a quotient of two doubles: within about an ulp). */
 function ratioToDouble(n: bigint, d: bigint): number {
   const drop = BigInt(Math.max(0, Math.max(n.toString(2).length, d.toString(2).length) - 1000));
   return Number(n >> drop) / Number(d >> drop);
@@ -53,8 +70,16 @@ export function declareBetaContinuation(ce: ComputeEngine): void {
     const [m, n] = [bigIntegerAt(a), bigIntegerAt(b)];
     if (x === undefined || m === undefined || n === undefined || ops.length !== 3) return undefined;
     const isFloat = (x as Partial<{ isExact: boolean }>).isExact === false; // not Pi, whose `.re` is a double too
+    // A float is the exact rational it is: a bignum by its decimal digits, a double by its bits.
     const rational =
-      bigRationalAt(x) ?? (isFloat && x.im === 0 && Number.isFinite(x.re) ? exactDouble(x.re) : undefined);
+      bigRationalAt(x) ??
+      (!isFloat || x.im !== 0
+        ? undefined
+        : x.bignumRe !== undefined
+          ? exactDecimal(x.bignumRe.toString())
+          : Number.isFinite(x.re)
+            ? exactDouble(x.re)
+            : undefined);
     if (rational === undefined) return undefined;
     const [p, q] = rational;
     if ((p >= 0n && p <= q) || m < 1n || n < 1n || m + n - 1n > BigInt(N_MAX)) return undefined;
@@ -87,7 +112,12 @@ export function declareBetaContinuation(ce: ComputeEngine): void {
       const exact = exactOutside(ops);
       if (exact !== undefined) {
         const [n, d] = exactTail(...exact);
-        // A float anywhere asks for a float answer; the value itself is exact either way.
+        // The value is exact either way. Past a double's digits it is rounded from the exact
+        // rational to the engine's precision; otherwise a float anywhere asks for a double.
+        if (wantsBigDigits(ce, options, ops)) {
+          const value = ce.function("Rational", [ce.number(n), ce.number(d)]).N();
+          return atEnginePrecision(ce, value) ?? value;
+        }
         if (wantsNumber(ops, options)) return ce.number(ratioToDouble(n, d));
         return d === 1n ? ce.number(n) : ce.function("Rational", [ce.number(n), ce.number(d)]).evaluate();
       }
