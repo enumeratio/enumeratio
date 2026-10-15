@@ -53,6 +53,33 @@ test("1F1Regularized(a; a; z) is e^z/Γ(a), so the contiguous sum cancels exactl
   expect(ce.box(["N", row] as never).evaluate().re).toBe(0);
 });
 
+test("1F1Regularized(α; α+1; z) at α < 0 is raised by contiguity, so the three-term identity cancels exactly", () => {
+  const half = (n: number) => ["Rational", n, 2];
+  const F = (a: unknown, b: unknown, z: unknown) => ["Hypergeometric1F1Regularized", a, b, z];
+  // −½·F̃(½; 3/2; ½) − F̃(−½; ½; ½) + F̃(½; ½; ½) = 0 (the row n-neg-1-over-2-times)
+  const row = [
+    "Add",
+    ["Multiply", half(-1), F(half(1), half(3), half(1))],
+    ["Negate", F(half(-1), half(1), half(1))],
+    F(half(1), half(1), half(1)),
+  ];
+  expect(ce.box(row as never).evaluate().json).toEqual(0);
+  expect(ce.box(["N", row] as never).evaluate().re).toBe(0);
+  // Two steps (α = −3/2) against mpmath: hyp1f1(-3/2, -1/2, 0.7)/gamma(-1/2) = -0.64914844044725178
+  const exact = ce.box(F(half(-3), half(-1), ["Rational", 7, 10]) as never);
+  expect(exact.evaluate().operator).not.toBe("Hypergeometric1F1Regularized");
+  expect(exact.N().re).toBeCloseTo(-0.6491484404472518, 12);
+  // The float route, against mpmath hyp1f1(a, a+1, z)/gamma(a+1)
+  for (const [a, z, want] of [
+    [-0.3, 2.5, -0.8638857918900044],
+    [-2.7, -1.3, 2.098092626975902],
+    [-0.5, 15, -69014.51217815421],
+  ] as const) {
+    const got = ce.box(F(a, a + 1, z) as never).N().re as number;
+    expect(Math.abs(got - want)).toBeLessThanOrEqual(1e-13 * Math.abs(want));
+  }
+});
+
 test("Hypergeometric2F1Regularized and Hypergeometric3F2Regularized decline |z| >= 1", () => {
   expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, 2, 1.5]).N().operator).toBe("Hypergeometric2F1Regularized");
   expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, 2, ["Complex", 1, 0.5]]).N().operator).toBe(

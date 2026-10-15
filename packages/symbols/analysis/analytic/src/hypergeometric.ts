@@ -362,6 +362,62 @@ function regularizedDiagonalExact(ce: ComputeEngine, ops: readonly BoxedExpressi
   return ce.box(["Multiply", ["Exp", z.json], ["Divide", 1, ["Gamma", a.json]]] as never).evaluate();
 }
 
+/**
+ * The numeric twin of `regularizedRaiseExact`: F̃(α; α+1; z) for a real non-integer α < 0 and real z ≠ 0,
+ * by the same unrolled recurrence F̃(α; α+1) = e^z/Γ(α+1) − z·F̃(α+1; α+2), so a sum of chain members
+ * is rounded the way the exact fold is. Undefined (the plain series answers) when the subtraction
+ * cancels past a few digits of the result, or the shift is not exactly one.
+ */
+function regularizedRaise(a: Cx, b: Cx, z: Cx): Cx | undefined {
+  if (a.im !== 0 || b.im !== 0 || z.im !== 0 || z.re === 0 || !(a.re < 0) || Number.isInteger(a.re)) return undefined;
+  if (!(Math.abs(b.re - a.re - 1) <= EPS * Math.max(1, Math.abs(a.re))) || -a.re >= MAX_RAISE) return undefined;
+  const steps = Math.floor(-a.re) + 1;
+  let c = a.re + steps;
+  let value = pfqRegularizedSeries([cx(c)], [cx(c + 1)], z);
+  if (value === undefined) return undefined;
+  for (let k = steps; k > 0; k--) {
+    c -= 1;
+    const head = mul(cexp(z), invGamma(cx(c + 1)));
+    const next = add(head, scale(mul(z, value), -1));
+    if (Math.abs(next.re) < 1e-6 * (Math.abs(head.re) + Math.abs(z.re * value.re))) return undefined;
+    value = next;
+  }
+  return value;
+}
+
+/** The most contiguous steps `regularizedRaiseExact` unrolls; a more negative α is left to the numeric series. */
+const MAX_RAISE = 8;
+
+/**
+ * F̃(α; α+1; z) = 1F1(α; α+1; z)/Γ(α+1) at an exact non-integer α < 0 and a nonzero real z, raised
+ * to α ≥ 0 by the contiguous relation b·M(a, b, z) − b·M(a−1, b, z) − z·M(a, b+1, z) = 0 at b = a
+ * (DLMF 13.3.3), regularized:  F̃(α; α+1; z) = e^z/Γ(α+1) − z·F̃(α+1; α+2; z).
+ * Two members of the chain differ by elementary terms, so a sum like F̃(α; α+1) + z·F̃(α+1; α+2)
+ * − e^z/Γ(α+1) cancels to exactly 0 only when both sit at the same end; α ≥ 0 is left as written
+ * (the chain's canonical end), which also ends the recursion.
+ */
+function regularizedRaiseExact(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+  const [a, b, z] = ops;
+  if (a === undefined || b === undefined || z === undefined) return undefined;
+  if (z.re === 0 || z.im !== 0 || z.unknowns.length > 0) return undefined;
+  const alpha = bigRationalAt(a);
+  if (alpha === undefined || alpha[1] === 1n || alpha[0] >= 0n) return undefined;
+  if (
+    !ce
+      .function("Subtract", [b, ce.function("Add", [a, 1])])
+      .evaluate()
+      .is(0)
+  )
+    return undefined;
+  if (-alpha[0] / alpha[1] >= BigInt(MAX_RAISE)) return undefined;
+  const build = (c: BoxedExpression): unknown => {
+    if (c.re > 0) return ["Hypergeometric1F1Regularized", c.json, ["Add", c.json, 1], z.json];
+    const next = ce.function("Add", [c, 1]).evaluate();
+    return ["Subtract", ["Divide", ["Exp", z.json], ["Gamma", next.json]], ["Multiply", z.json, build(next)]];
+  };
+  return ce.box(build(a) as never).evaluate();
+}
+
 export function declareHypergeometric(ce: ComputeEngine): void {
   // Hypergeometric0F1(b, z) = 0F1(b; z), entire in z; pole at b a non-positive integer.
   ce.declare("Hypergeometric0F1", {
@@ -406,13 +462,18 @@ export function declareHypergeometric(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const cs = operandsOf(ops);
       if (cs !== undefined && !wantsNumber(ops, options))
-        return regularizedMinusOneExact(ce, ops) ?? regularizedDiagonalExact(ce, ops) ?? regularizedBessel(ce, ops);
+        return (
+          regularizedMinusOneExact(ce, ops) ??
+          regularizedDiagonalExact(ce, ops) ??
+          regularizedRaiseExact(ce, ops) ??
+          regularizedBessel(ce, ops)
+        );
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
       const [a, b, z] = cs;
       if (exceedsDoublePrecision(ce, options.numericApproximation)) return regularized1F1PastDouble(ce, ops);
       if (isMinusOneShift(a, b)) return numberResult(ce, regularizedMinusOne(a, z));
       if (isDiagonal(a, b)) return numberResult(ce, regularizedDiagonal(a, z));
-      const r = regularizedKummer(a, b, z) ?? pfqRegularizedSeries([a], [b], z);
+      const r = regularizedRaise(a, b, z) ?? regularizedKummer(a, b, z) ?? pfqRegularizedSeries([a], [b], z);
       return r === undefined ? undefined : numberResult(ce, r);
     },
   });

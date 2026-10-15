@@ -76,7 +76,6 @@ import { declareSeriesCoefficient } from "./series-coefficient.ts";
 import { declareSeriesInfinite } from "./series-infinite.ts";
 import { declareSeriesJacobi } from "./series-jacobi.ts";
 import { declareSeriesQBinomial } from "./series-q-binomial.ts";
-import { declareSeriesZetaStieltjes } from "./series-zeta-stieltjes.ts";
 import { declareFunctionProperties } from "./function-properties.ts";
 import { declareTransforms } from "./transforms.ts";
 import { declareMeijerG } from "./meijer-g.ts";
@@ -238,7 +237,6 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declarePiecewise(ce);
   declarePiecewiseExpand(ce);
   declareSeriesCoefficient(ce);
-  declareSeriesZetaStieltjes(ce);
   declareSeriesQBinomial(ce);
   declareSeriesJacobi(ce);
   declareSeriesInfinite(ce);
