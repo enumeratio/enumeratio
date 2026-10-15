@@ -41,6 +41,7 @@ bindings:
     form: sage
     template: is_prime($1)
     arity: 1
+    threadArg: 1
   - origin: mapped
     form: oscar
     template: is_prime(ZZ($1))
