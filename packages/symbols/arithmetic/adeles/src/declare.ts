@@ -397,8 +397,10 @@ export function declareAdeles(ce: Engine): void {
   sequence("Fibonacci", P.fibonacci);
   sequence("LucasL", P.lucas);
 
-  // Natively `(number)`: the gate keeps the native handler to what its signature took.
-  const isNumber = (op: Expr): boolean => op.type.matches("number");
+  // Natively `(number)`: the gate keeps the native handler to what its signature took, and the
+  // `Over -> R` option residues reads (a Tuple, as a rule canonicalizes) rides along.
+  const isNumber = (op: Expr): boolean =>
+    op.type.matches("number") || (op.operator === "Tuple" && symbolNameOf(operandsOf(op)[0]) === "Over");
   defineOverload(ce, "Numerator", {
     package: "adeles",
     signature: "(value) -> value",

@@ -34,6 +34,5 @@ bindings:
 - $Q(a, 0) = 1$ for any $a > 0$: all the mass sits to the right of 0.
 - For a positive integer n it has a closed polynomial form, $Q(n, z) = e^{-z}\sum_{k=0}^{n-1} z^k/k!$, which compute-engine uses to evaluate exactly, even for negative z.
 - Gives the Poisson CDF tail and the Gamma-distribution survival function, so it shows up throughout reliability and queueing models. See [[Gamma]].
-- compute-engine leaves a non-integer a combined with negative z symbolic -- genuinely outside the real domain there -- rather than erroring or returning NaN.
 - The three-argument form divides the difference by $\Gamma(a)$ rather than subtracting two $Q$ values, so $Q(a, 0, z) = 1 - Q(a, z)$ holds for negative $a$ too, where $\Gamma(a, 0)$ and $\Gamma(a)$ are separately infinite but their ratio is 1. That is Wolfram's convention.
-- A genuinely complex $a$ or $z$, which the built-in handler declines, is evaluated as $\Gamma(a, z)/\Gamma(a)$ (`@enumeratio/analytic`) -- [[Gamma]] itself takes complex arguments.
+- A genuinely complex $a$ or $z$, which the built-in handler declines, is evaluated as $\Gamma(a, z)/\Gamma(a)$ (`@enumeratio/analytic`) -- [[Gamma]] itself takes complex arguments. So is a non-integer real $a$ with $z < 0$, whose value is complex (principal branch, $\ln z = \ln|z| + i\pi$): $Q(5/2, -1) = 1 - 0.628\,i$. In doubles; past what they hold it stays unevaluated.

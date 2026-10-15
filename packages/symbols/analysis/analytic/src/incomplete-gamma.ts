@@ -8,6 +8,7 @@ import {
   inDoublesIfComplex,
   isRealInt,
   type NativeEval,
+  wantsNumber,
 } from "@enumeratio/ce-patches";
 import { gammaExactValue } from "./widened.ts";
 
@@ -98,12 +99,13 @@ export function evaluateIncompleteGamma(
       return options.numericApproximation ? expr.N() : expr.evaluate();
     }
     // Q(s, z) = Γ(s, z)/Γ(s) — the native regularized handler is real-only, while Γ(s, z)
-    // itself takes complex s and z, so the quotient covers what it declines. Only for a
-    // genuinely complex operand: a real pair it declines (a non-integer s with z < 0, whose
-    // value is complex) is left exactly as vanilla compute-engine leaves it.
-    if (head === "GammaRegularized" && (s.im !== 0 || z.im !== 0)) {
+    // itself takes complex s and z, so the quotient covers what it declines: a complex
+    // operand, and a non-integer s at z < 0 (principal branch: ln z = ln|z| + iπ), whose value is
+    // complex.
+    if (head === "GammaRegularized" && (s.im !== 0 || z.im !== 0 || (z.re < 0 && !isRealInt(s)))) {
       const expr = ce.box(["Divide", ["Gamma", sJson, zJson], ["Gamma", sJson]] as BoxInput);
-      const q = options.numericApproximation ? inDoubles(ce, options, () => expr.N()) : expr.evaluate();
+      // A float operand asks for a float: in doubles, not a bignum quotient of a double's digits.
+      const q = wantsNumber(ops, options) ? inDoubles(ce, options, () => expr.N()) : expr.evaluate();
       if (q !== undefined && !unreduced(q, "Gamma")) return q;
     }
     return r;

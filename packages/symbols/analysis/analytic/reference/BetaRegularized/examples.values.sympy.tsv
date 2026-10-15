@@ -19,4 +19,4 @@ the-arcsine-distribution-s-median-i-1-2-1-2-1-2	betainc_regularized(Rational(1, 
 i-x-1-1-x-symbolically	betainc_regularized(1, 1, 0, Symbol("x"))	True	
 i-x-a-1-x-a-symbolically	betainc_regularized(Symbol("a"), 1, 0, Symbol("x"))	True	
 i-x-1-b-1-1-x-b	betainc_regularized(1, Symbol("b"), 0, Symbol("x"))	True	
-an-x-outside-0-1-is-left-unevaluated-rather-than	betainc_regularized(2, 3, 0, 2)	betainc_regularized(2, 3, 0, 2)	inconclusive
+an-x-outside-0-1-is-left-unevaluated-rather-than	betainc_regularized(2, 3, 0, 2)	betainc_regularized(2, 3, 0, 2)	

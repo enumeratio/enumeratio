@@ -16,7 +16,12 @@ signatures:
   - call: Numerator(number) -> nothing | number
     description: Numerator of an expression
     library: enumeratio-number-theory
-    type: (number) -> nothing | number
+    type: (number, any*) -> nothing | number
+    overrides: enumeratio-residues
+  - call: Numerator(number) -> nothing | number
+    description: Numerator of an expression
+    library: enumeratio-residues
+    type: (number, any*) -> nothing | number
     overrides: compute-engine
 statOn:
   - BinaryWord
@@ -36,3 +41,5 @@ attributes:
 names:
   wolframIdentity: true
 ---
+
+- `Over -> QuotientRing(Integers, p)` (Wolfram's `Modulus -> p`, p prime) reads the expression over the field $\mathbb{Z}/p$ (`@enumeratio/residues`): a quotient in lowest terms over $\mathbb{Q}$ with integer coefficients, then its coefficients mod p. A constant denominator, and a monomial one when no polynomial divides anywhere, moves its unit into the numerator ($x/(2y) \to 4x/y$ mod 7). It stays unevaluated where Wolfram has no answer, as for a denominator that vanishes mod p. `Over -> Integers` is the ordinary numerator.

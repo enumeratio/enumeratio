@@ -26,3 +26,17 @@ export function evaluateRootsOfNumbers(ce: ComputeEngine): void {
     { arity: 2, compile: "builtin" },
   );
 }
+
+/**
+ * `Ln(-oo)` stays unevaluated (and `N` answers `oo + pi i`). Wolfram, Sage and SymPy take the
+ * real part: ln(-x) = ln(x) + i pi, and the magnitude alone diverges, so the value is `+oo`.
+ */
+export function evaluateLnOfNegativeInfinity(ce: ComputeEngine): void {
+  wrapOperator(
+    ce,
+    ["Ln"],
+    (ops) => ops.length === 1 && isNumber(ops[0]!) && ops[0].re === -Infinity && ops[0].im === 0,
+    () => () => ce.PositiveInfinity,
+    { arity: 1, compile: "builtin" },
+  );
+}
