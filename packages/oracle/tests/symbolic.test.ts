@@ -12,6 +12,7 @@ import {
   leavesCall,
   lookThroughConditions,
   notNumeric,
+  propositionAgreementSource,
   orderVariables,
   positiveVariables,
   rootsAsPowers,
@@ -694,4 +695,27 @@ test.skipIf(!hasSage)(
     expect(sage(cases.map(([source]) => source))).toEqual(cases.map(([, answer]) => answer));
   },
   300_000,
+);
+
+// The proposition check reads an inexact difference as zero relative to the values compared. Skipped
+// without wolframscript (one kernel, one short run); the Wolfram scan exercises it too.
+const hasWolfram = spawnSync("wolframscript", ["-version"]).status === 0;
+test.skipIf(!hasWolfram)(
+  "wolfram proposition: inexact bounds agree to a relative 1e-12, exact ones exactly",
+  () => {
+    const cases: [string, string, string][] = [
+      ["y <= 0.5207864124022675", "y <= 0.5207864124022676", "True"],
+      ["y <= 1.*^6", "y <= 1000000.0000001", "True"],
+      ["y <= 0.", "y <= 0.", "True"],
+      ["y <= 1.*^-14", "y <= 3.*^-14", "False"],
+      ["y <= 1.*^-20", "y <= 2.*^-20", "False"],
+      ["y <= 1.*^6", "y <= 1000001.", "False"],
+      ["y <= 1/3", "y <= 2/6", "True"],
+      ["y <= 1/3", "y <= 333333333333/1000000000000", "False"],
+    ];
+    const sources = cases.map(([theirs, ours]) => propositionAgreementSource(theirs, ours, 10));
+    const run = spawnSync("wolframscript", ["-code", `{${sources.join(", ")}}`], { encoding: "utf8" });
+    expect(run.stdout.trim()).toBe(`{${cases.map(([, , answer]) => answer).join(", ")}}`);
+  },
+  120_000,
 );

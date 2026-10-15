@@ -15,8 +15,7 @@ import { airyBig, airyPrimeBig, besselKYBig } from "./special-big.ts";
 //
 // The range is the extreme values among the derivative's zeros found by a sign scan of a finite
 // window, provided the bound beyond the window stays inside them; a window that cannot prove that
-// grows a few times, then the call is declined. The scan assumes no two critical points sit within one
-// step (they are simple, and about π/√|x| apart for Airy and π apart for Bessel).
+// grows a few times, then the call is declined.
 
 const DIGITS = 25;
 /** Relative room the tail bound must clear the extremum by, past the rounding of the doubles it is read in. */
@@ -88,6 +87,10 @@ function besselYCurve(order: number): Curve {
   };
 }
 
+/**
+ * The scan's step. A sign scan misses two critical points inside one step; they are simple, and
+ * about π/√s apart for Airy (s ≤ 48 across the windows, so ≥ 0.45) and about π or more apart for Y_n.
+ */
 const STEP = 0.1;
 const WINDOWS = 4;
 
@@ -96,10 +99,13 @@ function criticalPoints(curve: Curve, from: number, to: number): number[] | unde
   const points: number[] = [];
   let [a, fa] = [from, curve.slope(from)];
   if (fa === undefined) return undefined;
+  if (fa === 0) points.push(from);
   for (let s = from + STEP; a < to; s = Math.min(s + STEP, to)) {
     const fs = curve.slope(s);
     if (fs === undefined) return undefined;
-    if (fa * fs < 0) {
+    // an exact zero on the grid is a point of its own; it is then `fa` of the next cell and not counted twice
+    if (fs === 0) points.push(s);
+    else if (fa * fs < 0) {
       let [lo, hi, flo] = [a, s, fa];
       while (hi - lo > 1e-9) {
         const mid = (lo + hi) / 2;
