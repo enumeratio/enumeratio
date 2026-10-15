@@ -11,7 +11,7 @@ at-u-5-0-7	N(chebyshevu(-5, 0.7), 30)	0.0560000000000004938272013532696
 at-u4-2-3i	N(chebyshevu(4, (2 + 3*I)), 30)	-1843.0 - 2064.0*I
 chebyshevu-2-3	chebyshevu(2, 3)	35
 chebyshevu-10-x	chebyshevu(10, Symbol("x"))	True
-series-chebyshevu-5-x-x-0-5		
+series-chebyshevu-5-x-x-0-5	series(chebyshevu(5, Symbol("x")), Symbol("x"), 0, 5 + 1)	True
 at-a-rational	chebyshevu(3, Rational(1, 2))	-1
 at-a-complex-argument	chebyshevu(4, (2 + 3*I))	1 + 16*(2 + 3*I)**4 - 12*(2 + 3*I)**2
 a-symbolic-order-stays-unevaluated	chebyshevu(Symbol("n"), Symbol("x"))	True
@@ -36,5 +36,5 @@ chebyshevu-2-positiveinfinity	chebyshevu(2, oo)	oo
 chebyshevu-2-negativeinfinity	chebyshevu(2, -oo)	oo
 sum-chebyshevu-k-1-over-2-times-chebyshevu-k-2-k	summation((chebyshevu(Symbol("k"), Rational(1, 2)) * chebyshevu(Symbol("k"), 2)), (Symbol("k"), 0, 2))	5
 sum-chebyshevu-k-1-over-2-times-chebyshevu-k-2-2	summation((chebyshevu(Symbol("k"), Rational(1, 2)) * chebyshevu(Symbol("k"), 2)), (Symbol("k"), 0, 3))	-51
-n-integrate-sqrt-neg-t-pow-2-plus-1-times		
-n-integrate-chebyshevu-2-t-times-chebyshevu-3-t		
+n-integrate-sqrt-neg-t-pow-2-plus-1-times	N(integrate((sqrt(((-(S(Symbol("t"))**2)) + 1)) * (S(chebyshevu(2, Symbol("t")))**2)), (Symbol("t"), -1, 1)), 30)	1.57079632679489661923132169164
+n-integrate-chebyshevu-2-t-times-chebyshevu-3-t	N(integrate((chebyshevu(2, Symbol("t")) * chebyshevu(3, Symbol("t")) * sqrt(((-(S(Symbol("t"))**2)) + 1))), (Symbol("t"), -1, 1)), 30)	0

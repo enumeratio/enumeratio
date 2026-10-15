@@ -12,7 +12,7 @@ at-t-5-0-7	N(chebyshevt(-5, 0.7), 30)	-0.670879999999999476756329386262
 at-t4-2-3i	N(chebyshevt(4, (2 + 3*I)), 30)	-911.0 - 1056.0*I
 chebyshevt-2-3	chebyshevt(2, 3)	17
 chebyshevt-10-x	chebyshevt(10, Symbol("x"))	True
-series-chebyshevt-5-x-x-0-5		
+series-chebyshevt-5-x-x-0-5	series(chebyshevt(5, Symbol("x")), Symbol("x"), 0, 5 + 1)	True
 at-a-rational	chebyshevt(5, Rational(1, 3))	241/243
 at-a-complex-argument	chebyshevt(4, (2 + 3*I))	1 + 8*(2 + 3*I)**4 - 8*(2 + 3*I)**2
 a-symbolic-order-stays-unevaluated	chebyshevt(Symbol("n"), Symbol("x"))	True

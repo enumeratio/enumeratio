@@ -4,9 +4,9 @@ n-arcosh-5-50	N(acosh(5), 30)	2.29243166956117768780078731135
 arcosh-list-list-1-sqrt-2-over-2-list-0-neg-sqrt	[[acosh(1), acosh((S(sqrt(2)) / 2))], [acosh(0), acosh((-(S(sqrt(2)) / 2)))]]	[[0, I*pi/4], [I*pi/2, 3*I*pi/4]]	
 arcosh-positiveinfinity	acosh(oo)	oo	
 arcosh-1	acosh(1)	0	
-integrate-arcosh-x-x-0-1			
+integrate-arcosh-x-x-0-1	integrate(acosh(Symbol("x")), (Symbol("x"), 0, 1))	Integral(acosh(x), (x, 0, 1))	
 d-arcosh-x-x	diff(acosh(Symbol("x")), Symbol("x"))	None	inconclusive
-integrate-arcosh-x-x-nothing-nothing			
+integrate-arcosh-x-x-nothing-nothing	integrate(acosh(Symbol("x")), Symbol("x"))	False	disagree
 arcosh-complexinfinity	acosh(zoo)	zoo	disagree
 arcosh-neg-2	acosh(-2)	acosh(-2)	
 arcosh-3-over-5	acosh(Rational(3, 5))	acosh(3/5)	

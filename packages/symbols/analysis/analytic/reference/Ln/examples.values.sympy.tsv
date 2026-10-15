@@ -4,7 +4,7 @@ ln-exponentiale	log(E)	1
 ln-0	log(0)	zoo	disagree
 a-machine-precision-argument-evaluates	log(1.5)	0.405465108108164	
 a-machine-precision-negative-argument	log(-4.705)	1.54862577303734 + I*pi	
-series-ln-x-plus-1-x-0-10			
+series-ln-x-plus-1-x-0-10	series(log((Symbol("x") + 1)), Symbol("x"), 0, 10 + 1)	True	
 ln-1-i-pi-the-principal-value-past-the-branch	log(-1)	I*pi	
 n-for-a-decimal-value	N(log(1000), 30)	6.90775527898213705205397436405	
 arbitrary-precision-via-n	N(log(Rational(5, 2)), 30)	0.916290731874155065183527211768	
@@ -21,8 +21,8 @@ interval-arithmetic-ln-is-increasing-so-ln-frac	log(AccumBounds(Rational(1, 3), 
 uncertainty-propagation-ln-2-pm-0-01-approx-0			
 ln-exp-x	log(exp(Symbol("x")))	True	
 derivative-1-x	diff(log(Symbol("x")), Symbol("x"))	True	
-antiderivative-x-ln-x-x			
-mercator-series-for-ln-1-x			
+antiderivative-x-ln-x-x	integrate(log(Symbol("x")), Symbol("x"))	True	
+mercator-series-for-ln-1-x	series(log((1 + Symbol("x"))), Symbol("x"), 0, 4 + 1)	True	
 to-40-significant-digits-every-one-correctly	N(log(2), 30)	0.693147180559945309417232121458	
 ln-frac-12-i-pi-ln-2-a-negative-rational-folded	log(Rational(-1, 2))	-log(2) + I*pi	
 n-decimalizes-ln-i-not-just-the-exact-form	N(log(I), 30)	1.57079632679489661923132169164*I	
@@ -41,8 +41,8 @@ functionsurjective-ln-x-x
 d-ln-z-z	diff(log(Symbol("z")), Symbol("z"))	True	
 d-ln-ln-x-x	diff(log(log(Symbol("x"))), Symbol("x"))	True	
 ln-exponentiale-pow-n	log((S(E)**Symbol("n")))	True	
-series-ln-x-x-1-4			
-series-ln-x-x-neg-2-3			
+series-ln-x-x-1-4	series(log(Symbol("x")), Symbol("x"), 1, 4 + 1)	True	
+series-ln-x-x-neg-2-3	series(log(Symbol("x")), Symbol("x"), -2, 3 + 1)	True	
 inverse-of-exp-ln-e-x-x	enumeratio_equal(log(exp(5)), 5)	True	
 product-rule-ln-ab-ln-a-ln-b	enumeratio_equal((log(2) + log(3)), log(6))	True	
 powerexpand-splits-a-logarithm-of-a-product			
@@ -54,7 +54,7 @@ n-ln-2-pow-2-2	N((S(log(2))**2), 30)	0.480453013918201424667102526327
 n-ln-2-pow-3-2	N((S(log(2))**3), 30)	0.333024651988929479718853582612	
 n-ln-2-pow-4-2	N((S(log(2))**4), 30)	0.230835098583083451887497717768	
 n-ln-2-pow-5-2	N((S(log(2))**5), 30)	0.160002697757141321080946663856	
-n-integrate-1-over-t-minus-1-times-ln-t-pow-2-t			
-n-integrate-exponentiale-pow-neg-t-times-ln-t			
-n-integrate-1-over-neg-x-times-y-plus-1-times-ln			
-n-integrate-1-over-t-minus-1-times-ln-t-pow-3-t			
+n-integrate-1-over-t-minus-1-times-ln-t-pow-2-t	N(integrate(((S(1) / (Symbol("t") + -1)) * (S(log(Symbol("t")))**2)), (Symbol("t"), 1, 2)), 30)	Integral(log(t)**2/(t - 1), (t, 1, 2))	inconclusive
+n-integrate-exponentiale-pow-neg-t-times-ln-t	N(integrate(((S(E)**(-Symbol("t"))) * (S(log(Symbol("t")))**2)), (Symbol("t"), 0, oo)), 30)	1.97811199065594511079079130300	
+n-integrate-1-over-neg-x-times-y-plus-1-times-ln	N(integrate(((S(1) / ((-(Symbol("x") * Symbol("y"))) + 1)) * log((Symbol("x") * Symbol("y")))), (Symbol("y"), 0, 1), (Symbol("x"), 0, 1)), 30)	Integral(Piecewise(((x*Integral(polylog(1, x*y*exp_polar(I*pi) - exp_polar(I*pi))/(x*y - 1), (y, 0, 1)) - log(x)*log(x - 1) + I*pi*log(x))/x, (y - 1/x < 1) & (1/(y - 1/x) < 1)), ((x*Integral(log(x)/(x*y - 1), (y, 0, 1)) + x*Integral(polylog(1, x*y*exp_polar(I*pi) - exp_polar(I*pi))/(x*y - 1), (y, 0, 1)) - log(x)*log(x - 1) + I*pi*log(x))/x, (y - 1/x < 1) | (1/(y - 1/x) < 1)), ((x*Integral(polylog(1, x*y*exp_polar(I*pi) - exp_polar(I*pi))/(x*y - 1), (y, 0, 1)) + x*Integral(meijerg(((), (1, 1)), ((0, 1), ()), y - 1/x)*log(x)/(x*y - 1), (y, 0, 1)) + x*Integral(meijerg(((0, 1), ()), ((), (0, 0)), y - 1/x)*log(x)/(x*y - 1), (y, 0, 1)) - log(x)*log(x - 1) + I*pi*log(x))/x, True)), (x, 0, 1))	inconclusive
+n-integrate-1-over-t-minus-1-times-ln-t-pow-3-t	N(integrate(((S(1) / (Symbol("t") + -1)) * (S(log(Symbol("t")))**3)), (Symbol("t"), 1, 2)), 30)	Integral(log(t)**3/(t - 1), (t, 1, 2))	inconclusive

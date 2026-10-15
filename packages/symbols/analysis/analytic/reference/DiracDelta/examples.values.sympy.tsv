@@ -8,7 +8,7 @@ diracdelta-neg-1	DiracDelta(-1)	0
 diracdelta-pi-8-1-over-3			
 fouriertransform-diracdelta-x-x-t			
 fouriertransform-diracdelta-neg-a-plus-x-x-t			
-integrate-diracdelta-p-pow-2-plus-q-pow-2-minus			
+integrate-diracdelta-p-pow-2-plus-q-pow-2-minus	integrate(DiracDelta(((S(Symbol("p"))**2) + (S(Symbol("q"))**2) + -1)), (Symbol("p"), -oo, oo), (Symbol("q"), -oo, oo))	Integral(1/Abs(sqrt(1 - q**2)), (q, -oo, oo))	inconclusive
 fouriertransform-diracdelta-y-y-x			
 diracdelta-1	DiracDelta(1)	0	
 diracdelta-0-times-diracdelta-3-over-2	(DiracDelta(0) * DiracDelta(Rational(3, 2)))	0	

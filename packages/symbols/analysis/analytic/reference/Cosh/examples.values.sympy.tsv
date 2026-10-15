@@ -3,7 +3,7 @@ n-cosh-0	N(cosh(0), 30)	1.00000000000000000000000000000
 n-cosh-1	N(cosh(1), 30)	1.54308063481524377847790562076	
 cosh-0	cosh(0)	1	
 a-float-argument-evaluates-directly-no-n-needed	cosh(1.2)	1.81065556732437	
-series-cosh-x-x-0-10			
+series-cosh-x-x-0-10	series(cosh(Symbol("x")), Symbol("x"), 0, 10 + 1)	True	
 arbitrary-precision-via-n	N(cosh(Rational(6, 5)), 30)	1.81065556732437479308787251834	
 evaluates-at-a-complex-argument	cosh((2.5 + 1*I))	3.31329014611322 + 5.0910715229497*I	
 cosh-i-pi-cos-pi-1	cosh((I * pi))	-1	
@@ -16,7 +16,7 @@ cosh-arcosh-x-x-for-every-x	cosh(acosh(Symbol("x")))	True
 cosh-arcosh-2-2	cosh(acosh(2))	2	
 cosh-arcosh-of-a-complex-argument	cosh(acosh((0 + 3*I)))	3*I	
 derivative-sinh-x	diff(cosh(Symbol("x")), Symbol("x"))	True	
-antiderivative			
+antiderivative	integrate(cosh(Symbol("x")), Symbol("x"))	True	
 to-30-significant-digits-every-one-correctly	N(cosh(1), 30)	1.54308063481524377847790562076	
 n-cosh-6-over-5-50	N(cosh(Rational(6, 5)), 30)	1.81065556732437479308787251834	
 cosh-1-over-5-times-i-times-pi	cosh(((0 + Rational(1, 5)*I) * pi))	1/4 + sqrt(5)/4	
