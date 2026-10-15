@@ -1,0 +1,26 @@
+id	in	out
+log10-1-000	log10(1000)	3.0
+log10-1	log10(1)	0.0
+log10-100-000	log10(100000)	5.0
+log10-1-000-000	log10(1000000)	6.0
+n-for-a-decimal-value	(log10(2))	0.301029995663981195213738894725
+log-2	log(2, 10)	0.301029995663981195213738894725
+series-log-x-plus-1-x-0-5		
+an-exact-negative-power-of-10-folds-too-log-10	log10((mpf(1)/100))	-2.0
+a-symbolic-argument-becomes-compute-engine-s		
+log10-5p5	log10(5.5)	0.740362689494243845536461076518
+threads-element-wise-over-a-list	[log10(1), log10(10), log10(100), log10(1000)]	[mpf('0.0'), mpf('1.0'), mpf('2.0'), mpf('3.0')]
+element-wise-over-a-matrix-including-the-exact	[[log10(1), log10(100)], [log10(0), log10((mpf(1)/100))]]	[[mpf('0.0'), mpf('2.0')], [mpf('-inf'), mpf('-2.0')]]
+as-with-ln-the-logarithm-of-complex-infinity-is		
+interval-arithmetic-log-10-frac-13-2-log-10-3		
+uncertainty-propagation-log-10-frac-1-101-pm-0		
+derivative-frac-1-x-ln-10		
+to-30-significant-digits-every-one-correctly	enumeratio_n(lambda: (log10(7)), 30)	0.845098040014256830712216258593
+log-5	log(5, 10)	0.698970004336018804786261105275
+n-log-45-100	enumeratio_n(lambda: (log(45, 10)), 100)	1.653212513775343679376316911785737591632067846919283188349303819483350116292897736599009459177046431
+n-log-4-plus-i	(log(mpc(4, 1), 10))	(0.615224460689136964270084947164 + 0.106392881580032730198538817983j)
+fullsimplify-matrixfunction-log10-list-list-1		
+log-positiveinfinity	log(inf, 10)	+inf
+log-0	log(0, 10)	-inf
+a-float-argument-folds-even-for-a-fractional	log10(0.001)	-2.99999999999999999095943000106
+same-as-compute-engine-s-default-base-log	almosteq(log10(1000), log(1000, 10), 1e-20)	True

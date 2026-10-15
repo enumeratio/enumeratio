@@ -1,0 +1,9 @@
+id	in	out
+n-arsinh-1-100	enumeratio_n(lambda: (asinh(1)), 100)	0.8813735870195430252326093249797923090281603282616354107532956086533771842220260878337068919102560429
+arsinh-positiveinfinity	asinh(inf)	+inf
+arsinh-0	asinh(0)	0.0
+d-arsinh-x-x		
+arsinh-list-list-i-sqrt-2-over-2-times-i-list-0	[[asinh(mpc(0, 1)), asinh(mpc(0, (mpmathify(sqrt(2)) / 2)))], [asinh(0), asinh(mpc(0, (-(mpmathify(sqrt(2)) / 2))))]]	[[mpc(real='0.0', imag='1.57079632679489661923132169163967'), mpc(real='0.0', imag='0.785398163397448309615660845819932')], [mpf('0.0'), mpc(real='0.0', imag='-0.785398163397448309615660845819932')]]
+arsinh-1-over-2-times-i-times-sqrt-1-over-2	asinh((mpc(0, (mpf(1)/2)) * sqrt(((mpf(1)/2) * (5 + (-sqrt(5)))))))	(0.0 + 0.628318530717958647692528676656j)
+arsinh-neg-1-over-2-times-i-times-sqrt-1-over-2	asinh((mpc(0, (mpf(-1)/2)) * sqrt(((mpf(1)/2) * (5 + (-sqrt(5)))))))	(0.0 - 0.628318530717958647692528676656j)
+arsinh-complexinfinity-is-complexinfinity		

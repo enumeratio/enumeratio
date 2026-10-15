@@ -52,6 +52,14 @@ bindings:
     template: prime_pi($1)
     arity: 1
     threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: primepi($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - Inverse of [[NthPrime]]: $\pi(p_n)=n$.

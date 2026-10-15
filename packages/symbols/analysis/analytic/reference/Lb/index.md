@@ -21,6 +21,14 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: log($1, 2)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - An alias for [[Log2]] -- the "lb" notation is borrowed from information theory and computer science, as opposed to "lg" for base 10.

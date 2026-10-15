@@ -18,6 +18,14 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: RiemannSiegelZ[t]; mpmath.siegelz(t).
+  - origin: mapped
+    form: mpmath
+    template: siegelz($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - RiemannSiegelTheta
   - Zeta

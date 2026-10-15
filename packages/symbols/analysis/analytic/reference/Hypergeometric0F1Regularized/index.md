@@ -18,6 +18,17 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: Hypergeometric0F1Regularized[b,z]; mpmath's own regularized series (rgamma per term).
+  - origin: mapped
+    form: mpmath
+    template: enumeratio_hyperreg([], [$1], $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: Regularized by the limit at a pole of Γ(b), through hypercomb.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - Hypergeometric0F1
   - BesselJ

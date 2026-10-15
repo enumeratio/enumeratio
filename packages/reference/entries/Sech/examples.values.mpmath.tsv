@@ -1,6 +1,6 @@
 id	in	out
 series-sech-x-x-0-10		
-n-sech-9-over-5-50	(sech((mpf(9)/5)))	0.321804869506587868350220885542
+n-sech-9-over-5-50	enumeratio_n(lambda: (sech((mpf(9)/5))), 50)	0.32180486950658786835022088554160801674409611259873
 sech-list-list-1-over-3-times-i-times-pi-neg-1	[[sech((mpc(0, (mpf(1)/3)) * pi)), sech((mpc(0, (mpf(-1)/3)) * pi))], [sech(0), sech((mpc(0, (mpf(-1)/6)) * pi))]]	[[mpc(real='1.99999999999999999999999999999961', imag='0.0'), mpc(real='1.99999999999999999999999999999961', imag='0.0')], [mpf('1.0'), mpc(real='1.15470053837925152901829756100396', imag='0.0')]]
 sech-positiveinfinity	sech(inf)	0.0
 sech-0	sech(0)	1.0

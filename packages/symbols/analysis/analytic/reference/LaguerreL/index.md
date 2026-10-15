@@ -58,6 +58,27 @@ bindings:
       version: 1.14.0
       on: 2026-10-14
     note: SymPy's `assoc_laguerre(n, a, x)` is the generalized Laguerre polynomial; `laguerre(n, x)` is its a = 0 case.
+  - origin: mapped
+    form: mpmath
+    template: laguerre($1, 0, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: mpmath
+    template: laguerre($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - HermiteH
   - ChebyshevT

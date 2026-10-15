@@ -1,0 +1,46 @@
+id	in	out	verdict
+arcsin-0	asin(0)	0.0	
+arcsin-1-over-2	asin((mpf(1)/2))	0.523598775598298873077107230547	
+the-top-of-the-principal-range	asin(1)	1.57079632679489661923132169164	
+arcsin-neg-1	asin(-1)	-1.57079632679489661923132169164	
+a-machine-precision-argument-evaluates	asin(0.4)	0.41151684606748804361179051013	
+outside-1-1-a-float-argument-gives-the-complex	asin(1.5)	(1.57079632679489661923132169164 - 0.962423650119206894995517826849j)	
+outside-1-1-reduces-to-the-exact-closed-form	asin(2)	(1.57079632679489661923132169164 - 1.31695789692481670862504634731j)	
+arbitrary-precision-via-n	(asin((mpf(1)/3)))	0.339836909454121937096392513392	
+evaluates-at-a-complex-argument	asin(mpc(2.5, 1))	(1.16462351028938506266292269911 + 1.65869329885643274976739341981j)	
+threads-element-wise-over-a-matrix	[[asin(1), asin((mpmathify(1) / sqrt(2)))], [asin(0), asin((mpmathify(1) / sqrt(2)))]]	[[mpf('1.57079632679489661923132169163967'), mpf('0.785398163397448309615660845819833')], [mpf('0.0'), mpf('0.785398163397448309615660845819833')]]	
+exact-inverse-of-a-special-value	asin((mpmathify(sqrt(2)) / 2))	0.78539816339744830961566084582	
+arcsin-sqrt-3-over-2	asin((mpmathify(sqrt(3)) / 2))	1.04719755119659774615421446109	
+recognizes-the-radical-value-sin-pi-12	asin((mpmathify((sqrt(6) - sqrt(2))) / 4))	0.261799387799149436538553615273	
+recognizes-sin-pi-10-frac-sqrt-5-1-4	asin((mpmathify((sqrt(5) - 1)) / 4))	0.314159265358979323846264338328	
+interval-arithmetic-arcsin-frac-13-frac-12			
+uncertainty-propagation-arcsin-0-9-pm-0-1-approx			
+oddness-pulls-the-sign-out-of-a-symbolic			
+derivative-frac-1-sqrt-1-x-2			
+antiderivative			
+taylor-series-about-0			
+arcsin-sin-1-2-is-already-principal	asin(sin((mpf(1)/2)))	0.5	
+to-30-significant-digits-not-yet-the-last-digit	enumeratio_n(lambda: (asin((mpf(1)/3))), 30)	0.339836909454121937096392513392	
+arcsin-2-past-1-1-the-odd-function-mirror-of	asin(-2)	(-1.57079632679489661923132169164 + 1.31695789692481670862504634731j)	
+arcsin-infinity-is-a-directed-infinity-along-the	asin(inf)	(1.57079632679489661923132169164 - +infj)	disagree
+arcsin-infinity-is-the-opposite-directed	asin(-inf)	(-1.57079632679489661923132169164 + +infj)	disagree
+n-arcsin-1-over-3-50	enumeratio_n(lambda: (asin((mpf(1)/3))), 50)	0.33983690945412193709639251339176406638824469033246	
+arcsin-3-over-2	asin((mpf(3)/2))	(1.57079632679489661923132169164 - 0.962423650119206894995517826849j)	
+sin-arcsin-x-x-on-the-principal-branch	almosteq(sin(asin((mpf(1)/2))), (mpf(1)/2), 1e-20)	True	
+co-function-identity-arcsin-x-arccos-x-pi-2	almosteq((asin((mpf(1)/2)) + acos((mpf(1)/2))), (mpmathify(pi) / 2), 1e-20)	True	
+as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2			
+arcsin-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	asin(((-(mpmathify(sqrt(2)) / 4)) * (-1 + sqrt(3))))	-0.261799387799149436538553615273	
+arcsin-1-over-4-times-1-minus-sqrt-5	asin(((mpf(1)/4) * (1 + (-sqrt(5)))))	-0.314159265358979323846264338328	
+arcsin-1-over-2-times-sqrt-2-minus-sqrt-2	asin(((mpf(1)/2) * sqrt((2 + (-sqrt(2))))))	0.39269908169872415480783042291	
+arcsin-neg-1-over-2-times-sqrt-2-minus-sqrt-2	asin(((mpf(-1)/2) * sqrt((2 + (-sqrt(2))))))	-0.39269908169872415480783042291	
+arcsin-neg-1-over-2	asin((mpf(-1)/2))	-0.523598775598298873077107230547	
+arcsin-1-over-2-times-sqrt-1-over-2-times-5	asin(((mpf(1)/2) * sqrt(((mpf(1)/2) * (5 + (-sqrt(5)))))))	0.628318530717958647692528676656	
+arcsin-neg-1-over-2-times-sqrt-1-over-2-times-5	asin(((mpf(-1)/2) * sqrt(((mpf(1)/2) * (5 + (-sqrt(5)))))))	-0.628318530717958647692528676656	
+arcsin-neg-sqrt-2-over-2	asin((-(mpmathify(sqrt(2)) / 2)))	-0.78539816339744830961566084582	
+arcsin-1-over-4-times-1-plus-sqrt-5	asin(((mpf(1)/4) * (1 + sqrt(5))))	0.942477796076937971538793014984	
+arcsin-1-over-4-times-neg-1-minus-sqrt-5	asin(((mpf(1)/4) * (-1 + (-sqrt(5)))))	-0.942477796076937971538793014984	
+arcsin-neg-sqrt-3-over-2	asin((-(mpmathify(sqrt(3)) / 2)))	-1.04719755119659774615421446109	
+arcsin-1-over-2-times-sqrt-2-plus-sqrt-2	asin(((mpf(1)/2) * sqrt((2 + sqrt(2)))))	1.17809724509617246442349126873	
+not-simply-2-2-is-outside-the-principal-range-pi	asin(sin(2))	1.14159265358979323846264338328	
+arcsin-sin-neg-2-mirrors-through-0	asin(sin(-2))	-1.14159265358979323846264338328	
+arcsin-complexinfinity-is-complexinfinity			

@@ -1,0 +1,5 @@
+id	in	out
+eta-at-i	enumeratio_n(lambda: (eta(mpc(0, 1))), 15)	(0.768225422326057+0.0j)
+n-dedekindeta-12-over-5-plus-i-50	enumeratio_n(lambda: (eta(mpc((mpf(12)/5), 1))), 50)	(0.62410753329822665899776369137968307883823030846163+0.45239955632977248983990726291640147575479863718317j)
+n-2pi-pow-12-times-dedekindeta-i-pow-24	(((((2 * pi))**12) * ((eta(mpc(0, 1)))**24)))	(6759064.90601279716307316621965 + 0.0j)
+n-dedekindeta-i-plus-10-pow-22-20	enumeratio_n(lambda: (eta((mpc(0, 1) + ((10)**22)))), 20)	(-0.38411271116302832950-0.66530273156739412621j)

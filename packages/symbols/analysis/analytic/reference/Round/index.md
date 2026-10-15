@@ -49,6 +49,15 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: nint($1)
+    arity: 1
+    threadArgOnly: 1
+    note: mpmath rounds half to even.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - Rounds to the nearest integer, with ties (an exact .5) breaking away from 0: $\mathrm{Round}(2.5) = 3$ and $\mathrm{Round}(-2.5) = -3$.

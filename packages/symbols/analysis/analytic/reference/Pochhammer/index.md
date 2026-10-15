@@ -35,6 +35,16 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: rf($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - Closed form via the Gamma function: $(a)_n = \frac{\Gamma(a+n)}{\Gamma(a)}$.

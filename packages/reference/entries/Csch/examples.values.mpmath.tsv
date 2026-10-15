@@ -1,0 +1,15 @@
+id	in	out	verdict
+series-csch-x-x-0-10			
+normal-series-csch-x-x-2i-times-pi-3			
+n-csch-9-over-5-50	enumeratio_n(lambda: (csch((mpf(9)/5))), 50)	0.33988469141549370714075814946653211798477613243671	
+csch-list-list-1-over-3-times-i-times-pi-neg-1	[[csch((mpc(0, (mpf(1)/3)) * pi)), csch((mpc(0, (mpf(-1)/3)) * pi))], [csch(0), csch((mpc(0, (mpf(-1)/6)) * pi))]]	ZeroDivisionError: 	error
+csch-positiveinfinity	csch(inf)	0.0	
+csch-0	csch(0)	ZeroDivisionError: 	error
+d-csch-x-x			
+matrixfunction-function-csch-1-1-list-list-1			
+integrate-csch-x-x-nothing-nothing			
+functionmeromorphic-csch-x-x			
+neg-2-times-2-plus-2-times-csch-1-over-2-pow-2	((-2 * (2 + (2 * ((csch((mpf(1)/2)))**2))) * ((csch(1))**2) * ((csch((mpf(1)/2)))**4)) + ((csch((mpf(1)/2)))**8))	2.5243548967072377773175314089e-29	
+n-4-times-1-plus-csch-1-over-2-pow-2-times-csch	((4 * (1 + ((csch((mpf(1)/2)))**2)) * ((csch(1))**2)))	13.5622378731439142115410234138	
+n-csch-1-over-2-plus-1-over-2-times-i-times-pi	(((csch(((mpf(1)/2) + (mpc(0, (mpf(1)/2)) * pi))))**2))	(-0.786447732965927410149698934344 - 6.16264672823315055310051636162e-32j)	
+n-4-times-1-plus-csch-2-pow-2-times-csch-4-pow-2	((4 * (1 + ((csch(2))**2)) * ((csch(4))**2)))	0.00577931861192863729692706906612	

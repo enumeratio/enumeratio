@@ -12,6 +12,19 @@ seeAlso:
   - EllipticTheta
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: jtheta($1, $2, $3, 1)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    note: The derivative in z, as in Wolfram.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - Shares [[EllipticTheta]]'s nome convention, series-convergence rule, and decline conditions — see there.

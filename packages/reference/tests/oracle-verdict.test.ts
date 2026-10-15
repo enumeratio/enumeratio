@@ -29,6 +29,17 @@ test("Wolfram's value agreeing is not enough for N(x, d): its displayed digits m
   expect(verdictOf("wolfram", 0.12, { ...tie, shown: "0.12" }, 0.05, true)).toBe("agree");
 });
 
+test("mpmath's N(x, d) digits must match, and the value must not disagree: sign and exponent are not digits", () => {
+  const call = ["N", "x", 4];
+  const answer = (value: string) => ({ value });
+  expect(verdictOf("mpmath", { num: "0.5000" }, answer("0.5000"), undefined, true, call)).toBe("agree");
+  expect(verdictOf("mpmath", { num: "0.5000" }, answer("5.000e-1"), undefined, true, call)).toBe("agree");
+  expect(verdictOf("mpmath", { num: "0.5000" }, answer("-0.5000"), undefined, true, call)).toBe("disagree");
+  expect(verdictOf("mpmath", { num: "0.5000" }, answer("5.000e-2"), undefined, true, call)).toBe("disagree");
+  // The last digit is the point: values within the tolerance still differ.
+  expect(verdictOf("mpmath", { num: "0.5000" }, answer("0.5001"), undefined, true, call)).toBe("disagree");
+});
+
 test("a lone integer answer to N(x, d) is judged by the digits Wolfram displays", () => {
   const e = { value: "2.7182818284590452354`1.", numeric: "2.7182818284590452354`1.", shown: "3." };
   expect(verdictOf("wolfram", 3, e, undefined, true)).toBe("agree");

@@ -1,0 +1,24 @@
+id	in	out	verdict
+a-pole-of-gamma-shared-by-its-log-derivative	digamma(0)	ValueError: polygamma pole	error
+digamma-neg-1	digamma(-1)	ValueError: polygamma pole	error
+a-floating-point-argument-evaluates-directly-to	digamma(0.5)	-1.963510026021423479440976333	
+a-machine-precision-argument	digamma(100.5)	4.6051743525818452118686787856	
+psi-5-h-4-gamma-frac-25-12-gamma	digamma(5)	1.50611766843180047272682124325	
+threads-over-a-list-reducing-each-positive	[digamma(1), digamma(2), digamma(3)]	[mpf('-0.577215664901532860606512090082402'), mpf('0.422784335098467139393487909917598'), mpf('0.922784335098467139393487909917598')]	
+complex-arguments-should-evaluate-as-psi-m-does	digamma(mpc(2.5, 3))	(1.28127391906623142714070538747 + 0.979805315344559637622394833544j)	
+psi-infty-infty-growing-like-ln-z	digamma(inf)	+inf	
+gauss-s-digamma-theorem-psi-1-4-gamma-pi-2-3-ln	digamma((mpf(1)/4))	-4.2274535333762654080895301461	
+psi-1-3-gamma-frac-pi-2-sqrt-3-frac-32-ln-3	digamma((mpf(1)/3))	-3.13203378002080632299641907429	
+interval-arithmetic-psi-is-increasing-on-0-infty			
+to-30-significant-digits-every-one-correctly	enumeratio_n(lambda: (digamma((mpf(1)/3))), 30)	-3.13203378002080632299641907429	
+harmonic-numbers-via-digamma-psi-n-1-gamma-h-n	almosteq((digamma(6) + euler), (1 + (mpf(1)/2) + (mpf(1)/3) + (mpf(1)/4) + (mpf(1)/5)), 1e-20)	True	
+psi-1-gamma	almosteq((digamma(1) + euler), 0, 1e-20)	True	
+recurrence-psi-z-1-psi-z-1-z-here-at-z-1	almosteq(digamma(2), (digamma(1) + 1), 1e-20)	True	
+psi-1-2-gamma-2-ln-2	almosteq((digamma((mpf(1)/2)) + euler + (2 * log(2))), 0, 1e-20)	True	
+psi-x-is-the-trigamma-psi-1-x			
+reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot	(digamma(0.7) - digamma(0.3))	2.28250066850219838430967883571	
+psi-1-gamma-2	digamma(1)	-0.577215664901532860606512090082	
+psi-2-1-gamma-from-psi-n-1-psi-n-1-n	digamma(2)	0.422784335098467139393487909918	
+psi-3-frac-3-2-gamma	digamma(3)	0.922784335098467139393487909918	
+neg-digamma-2-over-3-plus-digamma-1-over-3	((-digamma((mpf(2)/3))) + digamma((mpf(1)/3)))	-1.81379936423421785059407825764	
+between-the-poles-at-0-and-1-psi-is-still-finite	digamma(-0.5)	0.0364899739785765205590236670012	

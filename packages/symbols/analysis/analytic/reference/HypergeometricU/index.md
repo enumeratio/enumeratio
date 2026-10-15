@@ -18,6 +18,17 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: HypergeometricU[a,b,z]; mpmath.hyperu(a,b,z).
+  - origin: mapped
+    form: mpmath
+    template: hyperu($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - HypergeometricUStar
   - Hypergeometric1F1Regularized

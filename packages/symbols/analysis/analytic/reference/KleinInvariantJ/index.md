@@ -15,6 +15,14 @@ bindings:
     environment: engine
     source: packages/symbols/analysis/analytic/src/modular.ts
     note: j(τ)/1728, delegating entirely to ModularJ.
+  - origin: mapped
+    form: mpmath
+    template: kleinj($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - ModularJ
   - ModularLambda

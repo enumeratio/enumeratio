@@ -1,0 +1,14 @@
+id	in	out	verdict
+series-coth-x-x-0-10			
+series-coth-x-x-2i-times-pi-3			
+n-coth-6-over-5-50	enumeratio_n(lambda: (coth((mpf(6)/5))), 50)	1.1995375441923507667499199315680981656280599551886	
+coth-list-list-1-over-3-times-i-times-pi-neg-1	[[coth((mpc(0, (mpf(1)/3)) * pi)), coth((mpc(0, (mpf(-1)/3)) * pi))], [coth(0), coth((mpc(0, (mpf(-1)/6)) * pi))]]	ZeroDivisionError: 	error
+coth-positiveinfinity	coth(inf)	1.0	
+coth-0	coth(0)	ZeroDivisionError: 	error
+d-coth-x-x			
+matrixfunction-function-coth-1-1-list-list-1			
+functionmeromorphic-coth-x-x			
+n-coth-1-times-coth-1-over-2	((coth(1) * coth((mpf(1)/2))))	2.84134718841558463789082704543	
+n-coth-1-over-2-plus-1-over-2-times-i-times-pi	(coth(((mpf(1)/2) + (mpc(0, (mpf(1)/2)) * pi))))	(0.462117157260009758502318483644 - 6.66784021261273308044863073557e-32j)	
+n-coth-2-times-coth-4	((coth(2) * coth(4)))	1.03801091491903554962668650626	
+n-coth-2-plus-1-over-2-times-i-times-pi	(coth((2 + (mpc(0, (mpf(1)/2)) * pi))))	(0.964027580075816883946413724101 - 5.99007907662948108537123955475e-33j)	

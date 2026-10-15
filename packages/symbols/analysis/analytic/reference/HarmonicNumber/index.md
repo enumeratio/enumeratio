@@ -43,6 +43,25 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: harmonic($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: mpmath
+    template: (harmonic($1) if ($2) == 1 else zeta($2) - zeta($2, ($1) + 1))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: H(n, r) = ζ(r) − ζ(r, n + 1), the plain harmonic number at r = 1.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - PolyGamma
   - EulerGamma

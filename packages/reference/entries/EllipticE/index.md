@@ -22,4 +22,23 @@ names:
   wolfram: EllipticE
   dlmf: Legendre's complete elliptic integral of the second kind
 stub: engine
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: ellipe($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: mpmath
+    template: ellipe($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---

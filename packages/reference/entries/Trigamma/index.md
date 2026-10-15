@@ -20,5 +20,13 @@ bindings:
     form: wolfram
     template: PolyGamma[1, $1]
     arity: 1
+  - origin: mapped
+    form: mpmath
+    template: psi(1, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 stub: engine
 ---

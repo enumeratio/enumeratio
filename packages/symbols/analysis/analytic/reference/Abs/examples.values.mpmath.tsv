@@ -11,7 +11,7 @@ threads-over-a-matrix-entry-by-entry	[[fabs((mpf(1)/2)), fabs(-1)], [fabs((mpf(-
 exact-numeric-constants	fabs((-pi))	3.14159265358979323846264338328	
 an-exact-complex-number-gives-an-exact-radical	fabs(mpc(1, 1))	1.41421356237309504880168872421	
 abs-imaginaryunit	fabs(mpc(0,1))	1.0	
-e-i-pi-3-lies-on-the-unit-circle			
+e-i-pi-3-lies-on-the-unit-circle	fabs(exp((mpc(0,1) * (mpmathify(pi) / 3))))	1.0	
 abs-negativeinfinity	fabs(-inf)		
 complex-infinity-has-infinite-magnitude-in-every			
 an-interval-maps-to-the-interval-of-absolute			
@@ -29,8 +29,8 @@ apply-derivative-abs-1-x
 the-gap-between-two-temperatures-70-and-95	fabs((70 - 95))	25.0	
 the-distance-between-the-points-1-i-and-4-5i-of	fabs((mpc(1, 1) - mpc(4, 5)))	5.0	
 even-function-x-x	almosteq(fabs(-8), fabs(8), 1e-20)	True	
-triangle-inequality-a-b-le-a-b			
-z-2-z-bar-z			
+triangle-inequality-a-b-le-a-b	(fabs((3 + -8)) <= (fabs(3) + fabs(-8)))	True	
+z-2-z-bar-z	almosteq(((fabs(mpc(3, 4)))**2), (mpc(3, 4) * conj(mpc(3, 4))), 1e-20)	True	
 multiplicative-ab-a-b	almosteq(fabs((mpc(1, 2) * mpc(3, -1))), (fabs(mpc(1, 2)) * fabs(mpc(3, -1))), 1e-20)	True	
 abs-1	fabs(1)		
 abs-neg-1	fabs(-1)		

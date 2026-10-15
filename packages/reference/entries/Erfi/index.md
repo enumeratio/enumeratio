@@ -19,6 +19,15 @@ references:
 names:
   dlmf: alternative notation for Dawson's integral
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: erfi($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - Defined as $\operatorname{erfi}(z) = -i\operatorname{erf}(iz)$, real-valued for real $z$ (unlike $\operatorname{erf}(iz)$ itself, which is imaginary). See [[Erf]].

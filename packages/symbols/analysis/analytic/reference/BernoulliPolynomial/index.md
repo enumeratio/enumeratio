@@ -12,4 +12,15 @@ seeAlso:
   - BernoulliB
 names:
   wolfram: BernoulliB
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: bernpoly($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---

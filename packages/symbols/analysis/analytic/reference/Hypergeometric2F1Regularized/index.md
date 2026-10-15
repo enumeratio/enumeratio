@@ -18,6 +18,18 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: Hypergeometric2F1Regularized[a,b,c,z]; mpmath's own regularized series (rgamma per term).
+  - origin: mapped
+    form: mpmath
+    template: enumeratio_hyperreg([$1, $2], [$3], $4)
+    arity: 4
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+      - 4
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - Hypergeometric3F2Regularized
   - Hypergeometric1F1Regularized

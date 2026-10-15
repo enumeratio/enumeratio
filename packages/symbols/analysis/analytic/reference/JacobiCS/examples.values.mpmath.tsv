@@ -1,0 +1,14 @@
+id	in	out
+a-floating-point-argument-evaluates-directly-to	(ellipfun('cs', 1.1, m=0.9))	0.722588061871721228228476507076
+m-greater-than-1-via-the-reciprocal-modulus	(ellipfun('cs', 0.3, m=1.5))	(3.30980975012587254076161564802 - 7.14950408789834147049982907488e-35j)
+d-jacobics-u-m-m		
+series-jacobics-u-m-u-0-4		
+series-jacobics-z-m-m-0-2		
+series-jacobics-u-m-u-u0-2		
+u-0-is-a-pole-for-any-m		
+n-jacobics-sqrt-2-over-4-times-i-neg-1	(ellipfun('cs', mpc(0, (mpmathify(sqrt(2)) / 4)), m=-1))	(0.0 - 3.00416811350371249617002055899j)
+n-jacobics-1-over-2-times-1-plus-sqrt-2-over-2-1	(ellipfun('cs', ((mpf(1)/2) * (1 + (mpmathify(sqrt(2)) / 2))), m=((((1 + (-(mpmathify(sqrt(2)) / 2))))**2) * (((1 + (mpmathify(sqrt(2)) / 2)))**-2))))	0.87685160297014784209060332224
+n-jacobics-sqrt-2-times-i-neg-1	(ellipfun('cs', mpc(0, sqrt(2)), m=-1))	(-1.94731743405121857809601726291e-47 - 1.42180268249736366145760366766j)
+n-jacobics-2-times-1-plus-sqrt-2-over-2-1-minus	(ellipfun('cs', (2 * (1 + (mpmathify(sqrt(2)) / 2))), m=((((1 + (-(mpmathify(sqrt(2)) / 2))))**2) * (((1 + (mpmathify(sqrt(2)) / 2)))**-2))))	3.93213950852496252452142149328
+symbolic-arguments-are-left-unevaluated-rather		
+m-1-at-a-shared-pole-of-sn-and-cn	(ellipfun('cs', ((mpf(1)/2) * mpc(0,1) * pi), m=1))	(0.0 - 1.0j)

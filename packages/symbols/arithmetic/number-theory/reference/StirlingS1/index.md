@@ -68,6 +68,17 @@ bindings:
       version: 1.14.0
       on: 2026-10-14
     note: SymPy's `stirling` defaults to the second kind and unsigned; `kind=1, signed=True` is the signed first kind, as ours and Wolfram's.
+  - origin: mapped
+    form: mpmath
+    template: stirling1($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: Signed, as ours.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 catalog:
   - system: wolfram
     identity: StirlingS1

@@ -1,0 +1,10 @@
+id	in	out	verdict
+1-1-2-2-3-3-4-4	hyperfac(4)	27648.0	
+the-empty-product	hyperfac(0)	1.0	
+hyperfactorial-1-5	hyperfac(1.5)	1.61748852794894606281703546023	
+hyperfactorial-2-5	hyperfac(2.5)	15.9842119922237168526349534134	
+hyperfactorial-6-25	hyperfac(6.25)	92229745540481.6950056314754539	
+listable	[hyperfac(1), hyperfac(2), hyperfac(3), hyperfac(4), hyperfac(5), hyperfac(6)]	[mpf('1.0'), mpf('4.0'), mpf('108.0'), mpf('27648.0'), mpf('86400000.0'), mpf('4031078400000.0')]	
+continued-off-the-integers	hyperfac(0.5)	0.88044923517342339327924358419	
+h-10-well-past-double-range-exact-bigint	hyperfac(10)	2.15779412229418562091680268288e+44	
+hyperfactorial-one-half-stays-exact	hyperfac((mpf(1)/2))	0.88044923517342339327924358419	inconclusive

@@ -16,5 +16,14 @@ bindings:
     form: wolfram
     template: AiryAiPrime[$1]
     arity: 1
+  - origin: mapped
+    form: mpmath
+    template: airyai($1, derivative=1)
+    arity: 1
+    threadArgOnly: 1
+    note: The first derivative.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 stub: engine
 ---

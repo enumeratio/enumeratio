@@ -1,0 +1,15 @@
+id	in	out	verdict
+a-floating-point-argument-evaluates-directly-to	(ellipfun('cd', 0.3, m=0.5))	0.977250336444249839470321076715	
+jacobicd-0-4-0-5i-0-3	(ellipfun('cd', mpc(0.4, 0.5), m=0.3))	(1.03401719000533875034534371097 - 0.139337967212635160898114052631j)	
+m-greater-than-1-via-the-reciprocal-modulus	(ellipfun('cd', 0.3, m=1.5))	(1.02363310657873493511975169359 + 1.18746848472591251651403275556e-35j)	
+d-jacobicd-u-m-m			
+series-jacobicd-u-m-u-0-5			
+series-jacobicd-z-m-m-0-2			
+u-0-is-1-for-any-m			
+n-jacobicd-sqrt-2-over-4-times-i-2	(ellipfun('cd', mpc(0, (mpmathify(sqrt(2)) / 4)), m=2))	(0.942972425777385687299450860906 - 4.11891752247066512804329017229e-35j)	
+n-jacobicd-1-over-2-times-1-plus-sqrt-2-over-2-1	(ellipfun('cd', ((mpf(1)/2) * (1 + (mpmathify(sqrt(2)) / 2))), m=((((1 + (-(mpmathify(sqrt(2)) / 2))))**2) * (((1 + (mpmathify(sqrt(2)) / 2)))**-2))))	0.664848107974773613391420358058	
+n-jacobicd-sqrt-2-times-i-2	(ellipfun('cd', mpc(0, sqrt(2)), m=2))	(0.710861047784087326885967881663 - 4.79532327595953601693768022172e-35j)	
+n-jacobicd-2-times-1-plus-sqrt-2-over-2-1-minus	(ellipfun('cd', (2 * (1 + (mpmathify(sqrt(2)) / 2))), m=((((1 + (-(mpmathify(sqrt(2)) / 2))))**2) * (((1 + (mpmathify(sqrt(2)) / 2)))**-2))))	-0.970018357823858777827475156468	
+symbolic-arguments-are-left-unevaluated-rather			
+u-1e16-declines-rather-than-answering-wrong	(ellipfun('cd', ((10)**16), m=(mpf(2)/7)))	0.224047523574504120662423282415	inconclusive
+u-1e16-mpmath-true-value	(ellipfun('cd', ((10)**16), m=(mpf(2)/7)))		

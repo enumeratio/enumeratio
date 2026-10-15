@@ -7,4 +7,12 @@ signatures:
   - call: AppellF1(complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number
     description: as compute-engine declares it
 stub: engine
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: appellf1($1, $2, $3, $4, $5, $6)
+    arity: 6
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---

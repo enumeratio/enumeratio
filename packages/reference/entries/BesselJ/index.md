@@ -22,4 +22,15 @@ names:
   dlmf: Bessel function of the first kind
   wolframIdentity: true
 stub: engine
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: besselj($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---

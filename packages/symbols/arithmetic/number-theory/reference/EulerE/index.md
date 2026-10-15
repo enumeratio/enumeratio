@@ -34,6 +34,24 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: eulernum($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: mpmath
+    template: eulerpoly($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - Odd-indexed Euler numbers past $E_0$ are 0; the even ones come from $\sum_{k=0}^{n/2}\binom{n}{2k}E_{2k}=0$.

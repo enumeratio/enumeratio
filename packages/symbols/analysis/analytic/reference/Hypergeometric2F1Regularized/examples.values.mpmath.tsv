@@ -1,0 +1,16 @@
+id	in	out	verdict
+matches-hypergeometric2f1-1-1-2-0-5-gamma-2	enumeratio_hyperreg([1, 1], [2], 0.5)	1.38629436111989061883446424292	
+a-0-5-b-1-5-c-2-5-at-neg-0-6	enumeratio_hyperreg([0.5, 1.5], [2.5], -0.6)	0.648457661435742937464664102862	
+c-0-at-0-5	enumeratio_hyperreg([1, 1], [0], 0.5)	2.0	
+b-2-c-neg-2-at-0-4	enumeratio_hyperreg([1, 2], [-2], 0.4)	19.7530864197530933643580141162	
+a-complex-argument-at-c-2	(enumeratio_hyperreg([1, 1], [2], mpc(0.3, 0.3)))	(1.12875895667653239549134860762 + 0.220880330940412335022993935314j)	
+a-complex-argument-at-a-nonpositive-integer-c	(enumeratio_hyperreg([1, 1], [-1], mpc(0.2, -0.1)))	(0.0509786071916249460118582067141 - 0.183887118798361430700296629578j)	
+simplify-normal-series			
+normal-series-hypergeometric2f1regularized-1			
+n-hypergeometric2f1regularized-1-over-3-1-3-neg	enumeratio_n(lambda: (enumeratio_hyperreg([(mpf(1)/3), 1], [3], -7)), 50)	0.35510204081632653061224489795918367346938775510204	
+n-hypergeometric2f1regularized-1-over-3-1-0-neg	enumeratio_n(lambda: (enumeratio_hyperreg([(mpf(1)/3), 1], [0], -7)), 25)	-0.1458333333333333333333333	
+matrixfunction-function			
+hypergeometric2f1regularized-1-1-1-0	enumeratio_hyperreg([1, 1], [1], 0)	1.0	
+hypergeometric2f1regularized-1-over-2-1-1-over-2			
+stays-finite-at-a-nonpositive-integer-lower	(enumeratio_hyperreg([1, 1], [-1], 0.3))	0.524781341107871656305382174814	
+z-ge-1-stays-symbolic-no-continuation-past-the	enumeratio_hyperreg([1, 1], [2], 1.5)	(0.462098120373296872944821414305 - 2.09439510239319549230842892219j)	disagree

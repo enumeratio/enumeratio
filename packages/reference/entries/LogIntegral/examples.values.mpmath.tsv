@@ -1,0 +1,8 @@
+id	in	out
+li-at-0	li(0)	0.0
+li-2	(li(2))	1.04516378011749278484458888919
+n-logintegral-2-50	enumeratio_n(lambda: (li(2)), 50)	1.0451637801174927848445888891946131365226155781512
+logintegral-1	li(1)	-inf
+logintegral-positiveinfinity	li(inf)	+inf
+d-logintegral-x-x		
+series-logintegral-x-x-2-3		

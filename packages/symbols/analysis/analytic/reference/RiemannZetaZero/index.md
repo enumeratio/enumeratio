@@ -19,6 +19,14 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: ZetaZero[k]; mpmath.zetazero(k).
+  - origin: mapped
+    form: mpmath
+    template: zetazero($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - RiemannSiegelZ
   - Zeta

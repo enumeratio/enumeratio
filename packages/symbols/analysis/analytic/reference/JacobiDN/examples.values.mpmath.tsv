@@ -1,0 +1,56 @@
+id	in	out	verdict
+a-floating-point-argument-evaluates-directly-to	(ellipfun('dn', 0.3, m=0.5))	0.978240504174361205330294431609	
+dn-1-1-0-9	(ellipfun('dn', 1.1, m=0.9))	0.639315778453692169243414908516	
+dn-0-7-0-2	(ellipfun('dn', -0.7, m=0.2))	0.958660207314323824817468556025	
+dn-0-3-0	(ellipfun('dn', 0.3, m=0))	1.0	
+dn-0-3-1	(ellipfun('dn', 0.3, m=1))	0.956627911900248292696125697633	
+dn-1-2-3	(ellipfun('dn', 1.2, m=3))	(-0.279380257734894032644419229438 - 2.8078338483673637117294378224e-35j)	
+dn-0-9-0-5	(ellipfun('dn', 0.9, m=-0.5))	1.15402587816035105931627776886	
+dn-0-4-0-5i-0-3	(ellipfun('dn', mpc(0.4, 0.5), m=0.3))	(1.00487337640866987389746098677 - 0.0631506946528659874600226460725j)	
+dn-0-4-0-5i-0-3-2	(ellipfun('dn', mpc(0.4, -0.5), m=0.3))	(1.00487337640866987389746098677 + 0.0631506946528659874600226460725j)	
+dn-0-4-0-5i-0-3-3	(ellipfun('dn', mpc(-0.4, 0.5), m=0.3))	(1.00487337640866987389746098677 + 0.0631506946528659874600226460725j)	
+dn-0-4-0-5i-0-3-4	(ellipfun('dn', mpc(-0.4, -0.5), m=0.3))	(1.00487337640866987389746098677 - 0.0631506946528659874600226460725j)	
+dn-1-1-0-7i-0-3	(ellipfun('dn', mpc(1.1, -0.7), m=0.3))	(0.841596867675110449331911870407 + 0.11336608344803289026837070119j)	
+dn-1-1i-0-3	(ellipfun('dn', mpc(1, 1), m=0.3))	(0.821615724716882417136206487685 - 0.219489514568340755757335562352j)	
+dn-0-2-8i-0-4	(ellipfun('dn', mpc(0.2, 8), m=0.4))	(0.999661423514144730689075641474 - 0.0161366857780364045542522221312j)	
+dn-0-2-8i-0-4-2	(ellipfun('dn', mpc(0.2, -8), m=0.4))	(0.999661423514144730689075641474 + 0.0161366857780364045542522221312j)	
+dn-5-4i-0-6	(ellipfun('dn', mpc(5, 4), m=0.6))	(-0.739167170349423686323292143754 + 0.129907609687760097878433981899j)	
+dn-0-05-1-9753631352924692i-0-3	(ellipfun('dn', mpc(0.05, 1.9753631352924692), m=0.3))	(8.02832986328273983985281164019 - 3.98585229581704892007546843885j)	
+dn-0-05-2-0653631352924693i-0-3	(ellipfun('dn', mpc(0.05, 2.0653631352924693), m=0.3))	(3.84898820155069452053014719142 - 19.216601045192597165267046413j)	
+dn-0-05-2-074363135292469i-0-3	(ellipfun('dn', mpc(0.05, 2.074363135292469), m=0.3))	(0.400123500884718822206453982499 - 19.9778348079405913350307223221j)	
+dn-0-05-2-075263135292469i-0-3	(ellipfun('dn', mpc(0.05, 2.075263135292469), m=0.3))	(0.040028183693161259108051634377 - 19.9857516074880057501414081736j)	
+dn-0-3-0-2i-1-5	(ellipfun('dn', mpc(0.3, 0.2), m=1.5))	(0.958764936573353715247829318912 - 0.0857539700934879250090464922317j)	
+dn-0-5-0-3i-3	(ellipfun('dn', mpc(0.5, -0.3), m=3))	(0.726110088197370573388741141312 + 0.368158440185773379170315622757j)	
+dn-0-3-0-2i-0-7	(ellipfun('dn', mpc(0.3, 0.2), m=-0.7))	(1.01867368973651259393975852142 + 0.0408546512141556141368187830249j)	
+dn-0-5-0-3i-3-2	(ellipfun('dn', mpc(0.5, -0.3), m=-3))	(1.26623595482955119129841091465 - 0.44028731801389812668161159732j)	
+series-jacobidn-z-m-z-0-6			
+series-jacobidn-z-m-m-0-2			
+m-greater-than-1-via-the-reciprocal-modulus	(ellipfun('dn', 0.3, m=1.5))	(0.935161917755299729048955754665 + 1.35244898118193948112719212429e-35j)	
+m-less-than-0-via-the-imaginary-modulus	(ellipfun('dn', 0.3, m=-2))	1.08851294660627242839029208387	
+a-complex-argument-u	(ellipfun('dn', mpc(0.3, 0.4), m=0.5))	(1.01226208221286849273564231829 - 0.0628496850247805070972100625945j)	
+matrixfunction-function-jacobidn-neg-1-over-3			
+list-jacobidn-z-0-jacobidn-z-1			
+n-jacobidn-3-1-over-3-50	enumeratio_n(lambda: (ellipfun('dn', 3, m=(mpf(1)/3))), 50)	0.96626305210024318988146551208989351133175821626861	
+list-jacobidn-0-m-jacobidn-1-over-2-times			
+series-jacobidn-x-1-over-3-x-0-7			
+series-jacobidn-1-m-m-0-3			
+d-jacobidn-u-m-m			
+u-0-is-1-for-any-m			
+m-0-is-1-for-any-u			
+the-quarter-period-u-elliptick-m-is-sqrt			
+jacobidn-0-1	ellipfun('dn', 0, m=1)	1.0	
+jacobidn-1-over-2-times-i-times-pi-1	ellipfun('dn', (mpc(0, (mpf(1)/2)) * pi), m=1)	(1.17946397617372560788321902958e+31 + 0.0j)	inconclusive
+jacobidn-3i-times-elliptick-1-0	ellipfun('dn', (mpc(0, 3) * ellipk(1)), m=0)	(nan + nanj)	inconclusive
+n-jacobidn-1-over-2-1-over-2-plus-jacobidn-1	((((ellipfun('dn', (mpf(1)/2), m=(mpf(1)/2)) + ellipfun('dn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) * ellipfun('cn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) + ((ellipfun('dn', (mpf(1)/2), m=(mpf(1)/2)) + ellipfun('dn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) * ellipfun('cn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) + ((ellipfun('dn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2)) + ellipfun('dn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) * ellipfun('cn', (mpf(1)/2), m=(mpf(1)/2)))))	-1.97215226305252951352932141321e-31	
+n-jacobidn-1-over-2-1-over-2-plus-jacobidn-1-2	((((ellipfun('dn', (mpf(1)/2), m=(mpf(1)/2)) + ellipfun('dn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) * ellipfun('sn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) + ((ellipfun('dn', (mpf(1)/2), m=(mpf(1)/2)) + ellipfun('dn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) * ellipfun('sn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) + ((ellipfun('dn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2)) + ellipfun('dn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) * ellipfun('sn', (mpf(1)/2), m=(mpf(1)/2)))))	9.86076131526264756764660706603e-32	
+n-jacobisn-1-over-2-1-over-2-times-jacobidn-1	(((ellipfun('sn', (mpf(1)/2), m=(mpf(1)/2)) * ellipfun('dn', ((mpf(1)/2) + ellipk((mpf(1)/2))), m=(mpf(1)/2)) * ellipfun('cn', (mpf(1)/2), m=(mpf(1)/2))) + (ellipfun('sn', ((mpf(1)/2) + ellipk((mpf(1)/2))), m=(mpf(1)/2)) * ellipfun('dn', (mpf(1)/2), m=(mpf(1)/2)) * ellipfun('cn', ((mpf(1)/2) + ellipk((mpf(1)/2))), m=(mpf(1)/2)))))	-9.86076131526264756764660706603e-32	
+n-jacobidn-sqrt-2-over-4-times-i-neg-1	(ellipfun('dn', mpc(0, (mpmathify(sqrt(2)) / 4)), m=-1))	(0.93562268712481237275488098323 + 0.0j)	
+n-jacobidn-1-over-2-times-1-plus-sqrt-2-over-2-1	(ellipfun('dn', ((mpf(1)/2) * (1 + (mpmathify(sqrt(2)) / 2))), m=((((1 + (-(mpmathify(sqrt(2)) / 2))))**2) * (((1 + (mpmathify(sqrt(2)) / 2)))**-2))))	0.99164416404505097727186864341	
+n-jacobidn-1-over-2-1-over-2-plus-jacobidn-1-3	((((ellipfun('dn', (mpf(1)/2), m=(mpf(1)/2)) + ellipfun('dn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) * ellipfun('cn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) + ((ellipfun('dn', (mpf(1)/2), m=(mpf(1)/2)) + ellipfun('dn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) * ellipfun('cn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) + ((ellipfun('dn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2)) + ellipfun('dn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) * ellipfun('cn', (mpf(1)/2), m=(mpf(1)/2)))))	-1.97215226305252951352932141321e-31	
+n-jacobidn-1-over-2-1-over-2-plus-jacobidn-1-4	((((ellipfun('dn', (mpf(1)/2), m=(mpf(1)/2)) + ellipfun('dn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) * ellipfun('sn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) + ((ellipfun('dn', (mpf(1)/2), m=(mpf(1)/2)) + ellipfun('dn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) * ellipfun('sn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) + ((ellipfun('dn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2)) + ellipfun('dn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) * ellipfun('sn', (mpf(1)/2), m=(mpf(1)/2)))))	9.86076131526264756764660706603e-32	
+n-sum-jacobidn-4-over-3-times-k-minus-1-times			
+n-sum-jacobidn-4-over-3-times-k-minus-1-times-2			
+n-jacobisn-1-over-2-1-over-2-times-jacobidn-1-2	(((ellipfun('sn', (mpf(1)/2), m=(mpf(1)/2)) * ellipfun('dn', ((mpf(1)/2) + ellipk((mpf(1)/2))), m=(mpf(1)/2)) * ellipfun('cn', (mpf(1)/2), m=(mpf(1)/2))) + (ellipfun('sn', ((mpf(1)/2) + ellipk((mpf(1)/2))), m=(mpf(1)/2)) * ellipfun('dn', (mpf(1)/2), m=(mpf(1)/2)) * ellipfun('cn', ((mpf(1)/2) + ellipk((mpf(1)/2))), m=(mpf(1)/2)))))	-9.86076131526264756764660706603e-32	
+n-jacobidn-1-over-2-1-over-2-times-jacobidn-1	(((ellipfun('dn', (mpf(1)/2), m=(mpf(1)/2)) * ellipfun('dn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2)) * ellipfun('cn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) + (ellipfun('dn', (mpf(1)/2), m=(mpf(1)/2)) * ellipfun('dn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2)) * ellipfun('cn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2))) + (ellipfun('dn', ((mpf(1)/2) + ((mpf(4)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2)) * ellipfun('dn', ((mpf(1)/2) + ((mpf(8)/3) * ellipk((mpf(1)/2)))), m=(mpf(1)/2)) * ellipfun('cn', (mpf(1)/2), m=(mpf(1)/2)))))	-0.0226943931124502905104178925008	
+jacobidn-i-times-elliptick-1-0	ellipfun('dn', (mpc(0, 1) * ellipk(1)), m=0)	(nan + nanj)	inconclusive
+symbolic-arguments-are-left-unevaluated-rather			

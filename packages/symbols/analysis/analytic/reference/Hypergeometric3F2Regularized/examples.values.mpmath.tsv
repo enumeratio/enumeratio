@@ -1,0 +1,15 @@
+id	in	out	verdict
+a-generic-point-inside-the-unit-disc	enumeratio_hyperreg([1, 1, 1], [2, 3], 0.5)	0.550775414049915630639776883236	
+a-0-5-1-1-5-2-2-5-at-neg-0-4	enumeratio_hyperreg([0.5, 1, 1.5], [2, 2.5], -0.4)	0.712541516124743838982513201578	
+a-lower-parameter-0-at-0-3	enumeratio_hyperreg([1, 1, 1], [0, 2], 0.3)	0.239654948775653961264511046852	
+a-lower-parameter-neg-1-at-0-3	enumeratio_hyperreg([1, 1, 1], [-1, 2], 0.3)	0.132935000407875708861941987559	
+an-upper-parameter-neg-1-at-0-3	enumeratio_hyperreg([1, 1, 1], [2, -1], 0.3)	0.132935000407875708861941987559	
+a-complex-argument	(enumeratio_hyperreg([1, 1, 1], [2, 3], mpc(0.3, 0.2)))	(0.52616748168904027091088085866 + 0.0206561537324027141689900632001j)	
+n-hypergeometric3f2regularized-1-over-2-1-3-over	enumeratio_n(lambda: (enumeratio_hyperreg([(mpf(1)/2), 1, (mpf(3)/2)], [2, (mpf(5)/2)], (mpf(-2)/5))), 50)	0.71254151612474384093244961059191861657544315078213	
+n-hypergeometric3f2regularized-1-1-1-neg-1-2-3	enumeratio_n(lambda: (enumeratio_hyperreg([1, 1, 1], [-1, 2], (mpf(3)/10))), 30)	0.132935000407875723363169639567	
+n-hypergeometric3f2regularized-1-2-3-4-5-neg-99	enumeratio_n(lambda: (enumeratio_hyperreg([1, 2, 3], [4, 5], (mpf(-99)/100))), 50)	0.0054443110756106714511264237157860223284250329111684	
+n-hypergeometric3f2regularized-1-2-3-4-5-99-over	enumeratio_n(lambda: (enumeratio_hyperreg([1, 2, 3], [4, 5], (mpf(99)/100))), 50)	0.010777742588066192949898256818198843550905414725585	
+n-hypergeometric3f2regularized-1-1-1-2-3-1-over	enumeratio_n(lambda: (enumeratio_hyperreg([1, 1, 1], [2, 3], (mpf(1)/2))), 50)	0.55077541404991563063977688323571335363939721833276	
+z-ge-1-stays-symbolic-no-continuation-past-the	enumeratio_hyperreg([1, 1, 1], [2, 3], 1.2)	(0.71744148192634131828112695617 - 0.0409844065138693494258922156814j)	disagree
+n-hypergeometric3f2regularized-1-1-1-2-3-6-over	enumeratio_n(lambda: (enumeratio_hyperreg([1, 1, 1], [2, 3], (mpf(6)/5))), 30)	(0.717441481926341330842371400790-0.0409844065138693640567038329041j)	disagree
+n-hypergeometric3f2regularized-1-2-3-4-5-999	enumeratio_n(lambda: (enumeratio_hyperreg([1, 2, 3], [4, 5], (mpf(999)/1000))), 50)	TimeoutError: over 30s	error

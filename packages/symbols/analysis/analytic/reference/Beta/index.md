@@ -36,6 +36,41 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: beta($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: mpmath
+    template: betainc($2, $3, 0, $1)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    note: Incomplete beta B(z; a, b), the integral from 0 to z.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: mpmath
+    template: betainc($3, $4, $1, $2)
+    arity: 4
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+      - 4
+    note: Generalized incomplete beta, the integral from z0 to z1.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - Defined via [[Gamma]]: $B(a, b) = \dfrac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}$.

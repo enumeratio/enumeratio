@@ -1,0 +1,14 @@
+id	in	out
+the-cube-root-of-27	(-root(-(27), 3) if im(27) == 0 and re(27) < 0 and (3) % 2 == 1 else root(27, 3))	3.0
+root-16-4	(-root(-(16), 4) if im(16) == 0 and re(16) < 0 and (4) % 2 == 1 else root(16, 4))	2.0
+odd-roots-of-a-negative-number-stay-real	(-root(-(-8), 3) if im(-8) == 0 and re(-8) < 0 and (3) % 2 == 1 else root(-8, 3))	-2.0
+stays-symbolic-when-x-isn-t-a-perfect-power	(-root(-(2), 3) if im(2) == 0 and re(2) < 0 and (3) % 2 == 1 else root(2, 3))	1.25992104989487316476721060728
+a-negative-index-gives-the-reciprocal-root-x-1-n	(-root(-(16), -2) if im(16) == 0 and re(16) < 0 and (-2) % 2 == 1 else root(16, -2))	0.25
+the-real-cube-root-wolfram-s-surd-27-3	(-root(-(-27), 3) if im(-27) == 0 and re(-27) < 0 and (3) % 2 == 1 else root(-27, 3))	-3.0
+any-odd-root-of-a-negative-number-is-real	(-root(-(-32), 5) if im(-32) == 0 and re(-32) < 0 and (5) % 2 == 1 else root(-32, 5))	-2.0
+approximate-negative-radicands-stay-real-too	(-root(-(-3.5), 5) if im(-3.5) == 0 and re(-3.5) < 0 and (5) % 2 == 1 else root(-3.5, 5))	-1.28473515712343933867943306542
+threads-element-wise-over-a-list	[(-root(-(-8), 3) if im(-8) == 0 and re(-8) < 0 and (3) % 2 == 1 else root(-8, 3)), (-root(-(27), 3) if im(27) == 0 and re(27) < 0 and (3) % 2 == 1 else root(27, 3))]	[mpf('-2.0'), mpf('3.0')]
+the-edge-length-of-a-cube-with-volume-1000	(-root(-(1000), 3) if im(1000) == 0 and re(1000) < 0 and (3) % 2 == 1 else root(1000, 3))	10.0
+sqrt-n-x-n-x-for-a-perfect-nth-power	almosteq((((-root(-(8), 3) if im(8) == 0 and re(8) < 0 and (3) % 2 == 1 else root(8, 3)))**3), 8, 1e-20)	True
+root-x-2-agrees-with-sqrt	almosteq((-root(-(16), 2) if im(16) == 0 and re(16) < 0 and (2) % 2 == 1 else root(16, 2)), sqrt(16), 1e-20)	True
+an-even-root-of-a-negative-non-perfect-power	(-root(-(-8), 2) if im(-8) == 0 and re(-8) < 0 and (2) % 2 == 1 else root(-8, 2))	(0.0 + 2.82842712474619009760337744842j)

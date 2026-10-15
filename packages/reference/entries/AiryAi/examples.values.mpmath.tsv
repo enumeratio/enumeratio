@@ -1,0 +1,9 @@
+id	in	out
+ai-0	(airyai(0))	0.355028053887817239260063186004
+ai-1	(airyai(1))	0.135292416312881415524147423515
+series-airyai-x-x-0-4		
+normal-series-airyai-x-x-positiveinfinity-2		
+n-airyai-2-50	enumeratio_n(lambda: (airyai(2)), 50)	0.034924130423274379135322080791807609761060213897583
+n-functionrange-airyai-x-x-y		
+d-airyai-x-x		
+series-airyai-x-x-0-7		

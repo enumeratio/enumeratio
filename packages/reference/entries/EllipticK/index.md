@@ -22,4 +22,14 @@ names:
   wolfram: EllipticK
   dlmf: Legendre's complete elliptic integral of the first kind
 stub: engine
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: ellipk($1)
+    arity: 1
+    threadArgOnly: 1
+    note: The parameter m, not the modulus k, as in Wolfram.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---

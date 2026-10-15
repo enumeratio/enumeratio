@@ -14,4 +14,16 @@ signatures:
 names:
   wolfram: EllipticF
 stub: engine
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: ellipf($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: Amplitude first, then the parameter m, as in Wolfram.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---

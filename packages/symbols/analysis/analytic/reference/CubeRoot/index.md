@@ -19,6 +19,15 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: (-cbrt(-($1)) if im($1) == 0 and re($1) < 0 else cbrt($1))
+    arity: 1
+    threadArgOnly: 1
+    note: The real cube root of a negative real, as ours; mpmath's cbrt is the principal root.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - Real-valued even at a negative x -- $\sqrt[3]{-27} = -3$, not a complex principal root. The same real branch as [[Root]]$(x, 3)$; CubeRoot is the named special case.

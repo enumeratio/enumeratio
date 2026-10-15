@@ -18,7 +18,7 @@ threads-element-wise-over-a-list	[sqrt(1), sqrt(4), sqrt(9)]	[mpf('1.0'), mpf('2
 threads-over-a-matrix-entry-by-entry-this-is-not	[[sqrt((mpf(1)/2)), sqrt(-1)], [sqrt(0), sqrt((mpf(1)/2))]]	[[mpf('0.707106781186547524400844362104884'), mpc(real='0.0', imag='1.0')], [mpf('0.0'), mpf('0.707106781186547524400844362104884')]]	
 interval-arithmetic-sqrt-is-increasing-so-sqrt-1			
 uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1			
-to-45-significant-digits-every-one-correctly	(sqrt(2))	1.41421356237309504880168872421	
+to-45-significant-digits-every-one-correctly	enumeratio_n(lambda: (sqrt(2)), 45)	1.41421356237309504880168872420969807856967188	
 an-approximate-negative-radicand-stays-complex	sqrt(-2.875)	(0.0 + 1.69558249578131703476613908166j)	
 sqrt-neg-4-over-9	sqrt((mpf(-4)/9))	(0.0 + 0.666666666666666666666666666667j)	
 sqrt-neg-1-half	sqrt((mpf(-1)/2))	(0.0 + 0.707106781186547524400844362105j)	

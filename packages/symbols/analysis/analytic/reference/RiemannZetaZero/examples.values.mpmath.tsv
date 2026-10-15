@@ -1,0 +1,10 @@
+id	in	out	verdict
+the-first-nontrivial-zero-frac-12-14-1347-i	(zetazero(1))	(0.5 + 14.1347251417346937904572519836j)	
+n-riemannzetazero-2	(zetazero(2))	(0.5 + 21.0220396387715549926284795939j)	
+n-riemannzetazero-50	(zetazero(50))	(0.5 + 143.111845807620632739405123869j)	
+n-riemannzetazero-10	(zetazero(10))	(0.5 + 49.7738324776723021819167846786j)	
+n-list-riemannzetazero-1-riemannzetazero-2	([zetazero(1), zetazero(2), zetazero(3)])	[mpc(real='0.5', imag='14.1347251417346937904572519835617'), mpc(real='0.5', imag='21.0220396387715549926284795938965'), mpc(real='0.5', imag='25.010857580145688763213790992564')]	
+n-riemannzetazero-54-50	enumeratio_n(lambda: (zetazero(54)), 50)	(0.50000000000000000000000000000000000000000000000000+150.92525761224146676185252467830562760242677047300j)	
+n-riemannzetazero-46-20	enumeratio_n(lambda: (zetazero(46)), 20)	(0.50000000000000000000+134.75650975337387133j)	
+n-riemannzetazero-neg-1-eq-conjugate	(almosteq(zetazero(-1), conj(zetazero(1)), 1e-20))	True	
+n-riemannzetazero-0	(zetazero(0))	ValueError: n must be nonzero	error

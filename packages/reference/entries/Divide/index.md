@@ -75,4 +75,15 @@ bindings:
     form: rust
     template: ($1 / $2)
     arity: 2
+  - origin: mapped
+    form: mpmath
+    template: (mpmathify($1) / $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: mpmathify keeps an integer quotient at working precision; Python's `/` would be a double.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---

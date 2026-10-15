@@ -1,0 +1,4 @@
+id	in	out
+besseli-0-1	(besseli(0, 1))	1.26606587775200833559824462521
+normal-series-besseli-0-x-x-positiveinfinity-2		
+n-besseli-0-1-50	enumeratio_n(lambda: (besseli(0, 1)), 50)	1.2660658777520083355982446252147175376076703113550

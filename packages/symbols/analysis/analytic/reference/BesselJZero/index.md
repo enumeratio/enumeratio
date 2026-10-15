@@ -18,6 +18,16 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: BesselJZero[nu, k]; mpmath.besseljzero(nu, k).
+  - origin: mapped
+    form: mpmath
+    template: besseljzero($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - Sinc
 names:

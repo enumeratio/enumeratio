@@ -26,6 +26,14 @@ bindings:
       version: 1.14.0
       on: 2026-10-14
     note: SymPy's acot ranges over (-pi/2, pi/2], as Wolfram's ArcCot does; compute-engine's Arccot ranges over (0, pi).
+  - origin: mapped
+    form: mpmath
+    template: acot($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - Stays symbolic even at values where the reciprocal circular functions fold exactly (e.g. $x = 1$) -- wrap in N(...) for a numeric result.
