@@ -2327,7 +2327,7 @@
           },
           "sage": {
             "sources": [
-              "[enumeratio_mod(((-1) ** (235 - 124) * stirling_number1(235, 124)), 1000000007), enumeratio_mod(((-1) ** (291 - 160) * stirling_number1(291, 160)), 1000000007), enumeratio_mod(((-1) ** (224 - 136) * stirling_number1(224, 136)), 1000000007), enumeratio_mod(((-1) ** (293 - 96) * stirling_number1(293, 96)), 1000000007), enumeratio_mod(((-1) ** (225 - 122) * stirling_number1(225, 122)), 1000000007), enumeratio_mod(((-1) ** (300 - 99) * stirling_number1(300, 99)), 1000000007), enumeratio_mod(((-1) ** (295 - 83) * stirling_number1(295, 83)), 1000000007), enumeratio_mod(((-1) ** (224 - 93) * stirling_number1(224, 93)), 1000000007)]"
+              "[enumeratio_mod(stirling_number1(235, 124), 1000000007), enumeratio_mod(stirling_number1(291, 160), 1000000007), enumeratio_mod(stirling_number1(224, 136), 1000000007), enumeratio_mod(stirling_number1(293, 96), 1000000007), enumeratio_mod(stirling_number1(225, 122), 1000000007), enumeratio_mod(stirling_number1(300, 99), 1000000007), enumeratio_mod(stirling_number1(295, 83), 1000000007), enumeratio_mod(stirling_number1(224, 93), 1000000007)]"
             ]
           },
           "oscar": {
@@ -2392,7 +2392,7 @@
           },
           "sage": {
             "sources": [
-              "[enumeratio_mod(((-1) ** (1035 - 510) * stirling_number1(1035, 510)), 1000000007), enumeratio_mod(((-1) ** (1091 - 599) * stirling_number1(1091, 599)), 1000000007), enumeratio_mod(((-1) ** (1024 - 539) * stirling_number1(1024, 539)), 1000000007), enumeratio_mod(((-1) ** (1093 - 441) * stirling_number1(1093, 441)), 1000000007)]"
+              "[enumeratio_mod(stirling_number1(1035, 510), 1000000007), enumeratio_mod(stirling_number1(1091, 599), 1000000007), enumeratio_mod(stirling_number1(1024, 539), 1000000007), enumeratio_mod(stirling_number1(1093, 441), 1000000007)]"
             ]
           },
           "oscar": {

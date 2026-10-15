@@ -39,7 +39,7 @@ bindings:
     arity: 1
   - origin: mapped
     form: sage
-    template: enumeratio_is_prime($1)
+    template: is_prime($1)
     arity: 1
   - origin: mapped
     form: oscar

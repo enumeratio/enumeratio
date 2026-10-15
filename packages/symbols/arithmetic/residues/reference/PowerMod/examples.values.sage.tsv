@@ -48,12 +48,12 @@ one-step-of-rsa-style-modular-exponentiation-7	enumeratio_power_mod(7, 13, 33)	1
 341-11-cdot-31-passes-fermat-s-test-to-base-2	enumeratio_power_mod(2, 340, 341)	1	
 diffie-hellman-both-parties-reach-the-shared-key	enumeratio_equal(enumeratio_power_mod(enumeratio_power_mod(5, 6, 23), 15, 23), enumeratio_power_mod(enumeratio_power_mod(5, 15, 23), 6, 23))	True	
 by-definition-a-b-bmod-m-computed-without-ever	enumeratio_equal(enumeratio_power_mod(2, 10, 3), enumeratio_mod(((2)^10), 3))	True	
-euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	enumeratio_power_mod(7, enumeratio_euler_phi(19), 19)	1	
+euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	enumeratio_power_mod(7, euler_phi(19), 19)	1	
 list-powermod-7-2-5-powermod-12-2-5	[enumeratio_power_mod(7, 2, 5), enumeratio_power_mod(12, 2, 5)]		
 list-powermod-2-3-5-8-mod-5	[enumeratio_power_mod(2, 3, 5), enumeratio_mod(8, 5)]		
 list-powermod-2-neg-1-5-modularinverse-2-5	[enumeratio_power_mod(2, -1, 5), enumeratio_inverse_mod(2, 5)]		
 list-divides-2-8-powermod-8-3-2-eq-0			
-powermod-7-totient-19-19-eq-1	enumeratio_equal(enumeratio_power_mod(7, enumeratio_euler_phi(19), 19), 1)		
+powermod-7-totient-19-19-eq-1	enumeratio_equal(enumeratio_power_mod(7, euler_phi(19), 19), 1)	True	
 powermod-2-16-17	enumeratio_power_mod(2, 16, 17)		
 powermod-list-5-neg-5-2-3	enumeratio_power_mod([5, -5], 2, 3)		
 powermod-list-5-neg-5-2-neg-3	enumeratio_power_mod([5, -5], 2, -3)	[-2, -2]	disagree

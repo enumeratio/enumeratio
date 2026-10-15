@@ -1047,29 +1047,6 @@ def _enumeratio_equal(a, b):
 def enumeratio_equal(a, b):
     return _enumeratio_equal(a, b)
 
-# Zeta[s, a] sums ((n + a)^2)^(-s/2) over n >= 0 and skips n + a = 0, where Sage's hurwitz_zeta
-# continues (n + a)^(-s) and meets a pole at a nonpositive integer. For any a with Re a <= 0 (exact,
-# float or complex) the terms before Re(n + a) turns positive are added by hand and hurwitz_zeta
-# takes the rest.
-def _enumeratio_zeta_pair(s, a):
-    try:
-        if real(a) > 0:
-            return hurwitz_zeta(s, a)
-        m = int(ceil(-real(a)))
-    except (TypeError, ValueError):
-        return hurwitz_zeta(s, a)
-    if m > 10000:
-        raise ValueError("too many terms before the sum turns positive")
-    b = a + m
-    head = sum(((n + a) ** 2) ** (-s / 2) for n in range(m))
-    # n + a = 0 is skipped, except that 0^0 is 1 at s = 0.
-    if b == 0:
-        return head + (1 if s == 0 else 0) + hurwitz_zeta(s, 1)
-    return head + hurwitz_zeta(s, b)
-
-def enumeratio_zeta_pair(s, a):
-    return enumeratio_broadcast(_enumeratio_zeta_pair, s, a)
-
 # A factorial passes an infinity through and threads over a list.
 def enumeratio_factorial(n):
     return enumeratio_broadcast(lambda v: v if str(v) == "+Infinity" else factorial(v), n)
@@ -1121,17 +1098,6 @@ def _enumeratio_abs(x):
 
 def enumeratio_abs(x):
     return enumeratio_broadcast(_enumeratio_abs, x)
-
-# PrimeQ and EulerPhi take the magnitude of a negative integer: -7 is prime, phi(-10) = phi(10).
-def _enumeratio_magnitude(n):
-    n = enumeratio_gi(n)
-    return n if _enumeratio_is_gi(n) or n not in ZZ else abs(n)
-
-def enumeratio_is_prime(n):
-    return enumeratio_broadcast(lambda v: is_prime(_enumeratio_magnitude(v)), n)
-
-def enumeratio_euler_phi(n):
-    return enumeratio_broadcast(lambda v: euler_phi(_enumeratio_magnitude(v)), n)
 
 enumeratio_ring = PolynomialRing(ZZ, "delta")
 enumeratio_delta = enumeratio_ring.gen()
