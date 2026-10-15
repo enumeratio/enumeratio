@@ -81,29 +81,32 @@ export function airyBig(kind: "Ai" | "Bi", x: BigDecimal, digits: number): BigDe
 /** Ei(x) = γ + ln|x| + Σ_{k≥1} xᵏ/(k·k!) for real x ≠ 0 (DLMF 6.6.1 and 6.2.8, the principal value). */
 export function expIntegralEiBig(x: BigDecimal, digits: number): BigDecimal | undefined {
   if (!x.isFinite() || x.isZero()) return undefined;
-  return settled(digits, (working) => {
-    const tol = big(10).pow(-working);
-    const lead = BigDecimal.EULER_GAMMA.add(x.abs().ln());
-    let sum = big(0);
-    let peak = biggest(lead, BigDecimal.EULER_GAMMA);
-    let term = big(1); // xᵏ/k!
-    const settleAfter = Math.ceil(x.abs().toNumber()) + 2;
-    for (let k = 1; k < MAX_TERMS; k++) {
-      term = term.mul(x).div(k).toPrecision(working);
-      const part = term.div(k);
-      sum = sum.add(part);
-      if (part.abs().gt(peak)) peak = part.abs();
-      if (k > settleAfter && part.abs().lt(tol.mul(peak))) return { value: lead.add(sum), peak };
-    }
-    return undefined;
-  });
+  return settled(digits, (working) => eiSum(x, working));
 }
 
-/** li(x) = Ei(ln x) for real x > 0, x ≠ 1. */
+/** The series for Ei(x) at `working` digits, with its largest part. */
+function eiSum(x: BigDecimal, working: number): Sum | undefined {
+  if (x.isZero()) return undefined;
+  const tol = big(10).pow(-working);
+  const lead = BigDecimal.EULER_GAMMA.add(x.abs().ln());
+  let sum = big(0);
+  let peak = biggest(lead, BigDecimal.EULER_GAMMA);
+  let term = big(1); // xᵏ/k!
+  const settleAfter = Math.ceil(x.abs().toNumber()) + 2;
+  for (let k = 1; k < MAX_TERMS; k++) {
+    term = term.mul(x).div(k).toPrecision(working);
+    const part = term.div(k);
+    sum = sum.add(part);
+    if (part.abs().gt(peak)) peak = part.abs();
+    if (k > settleAfter && part.abs().lt(tol.mul(peak))) return { value: lead.add(sum), peak };
+  }
+  return undefined;
+}
+
+/** li(x) = Ei(ln x) for real x > 0, x ≠ 1; ln x is taken at each pass's digits, so the agreement test sees its error. */
 export function logIntegralBig(x: BigDecimal, digits: number): BigDecimal | undefined {
   if (!x.isFinite() || !x.isPositive() || x.eq(1)) return undefined;
-  const y = atDigits(digits + 2 * GUARD, () => x.ln());
-  return expIntegralEiBig(y, digits);
+  return settled(digits, (working) => eiSum(x.ln(), working));
 }
 
 const factorial = (n: number): BigDecimal => {
@@ -194,23 +197,25 @@ export function declareSpecialBig(ce: ComputeEngine): void {
     wantsNumber(ops, options as never) && exceedsDoublePrecision(ce, options.numericApproximation);
   const real = (ops: readonly BoxedExpression[], arity: number): boolean =>
     ops.length === arity && ops.every(isFiniteNum) && ops.every((op) => op.im === 0);
-  const unary: readonly [string, Handler][] = [
-    ["AiryAi", (x, d) => airyBig("Ai", x, d)],
-    ["AiryBi", (x, d) => airyBig("Bi", x, d)],
-    ["ExpIntegralEi", expIntegralEiBig],
-    ["LogIntegral", logIntegralBig],
+  // What each kernel can answer, so a call it always refuses never reaches it.
+  const unary: readonly [string, Handler, (x: number) => boolean][] = [
+    ["AiryAi", (x, d) => airyBig("Ai", x, d), () => true],
+    ["AiryBi", (x, d) => airyBig("Bi", x, d), () => true],
+    ["ExpIntegralEi", expIntegralEiBig, (x) => x !== 0],
+    ["LogIntegral", logIntegralBig, (x) => x > 0 && x !== 1],
   ];
-  for (const [head, handler] of unary) {
+  for (const [head, handler, accepts] of unary) {
     // compile builtin: digits past a double's, where compiled code has none
     wrapOperator(
       ce,
       [head, 1],
-      (ops) => real(ops, 1),
+      (ops) => real(ops, 1) && accepts(ops[0]!.re),
       (native) => (ops, options) => {
         if (!numeric(ops, options)) return native?.(ops, options);
         const arg = bigRealOperand(ce, ops[0]!);
         const value = arg === undefined ? undefined : handler(arg, ce.precision);
-        return value === undefined ? undefined : bigResult(ce, value);
+        // a kernel that cannot vouch for the digits leaves the call to native, as it was
+        return value === undefined ? native?.(ops, options) : bigResult(ce, value);
       },
       { arity: 1, compile: "builtin" },
     );
@@ -222,12 +227,12 @@ export function declareSpecialBig(ce: ComputeEngine): void {
     wrapOperator(
       ce,
       [head, 1, 1],
-      (ops) => real(ops, 2) && isRealInt(ops[0]!) && ops[1]!.re > 0,
+      (ops) => real(ops, 2) && isRealInt(ops[0]!) && Math.abs(ops[0]!.re) <= MAX_ORDER && ops[1]!.re > 0,
       (native) => (ops, options) => {
         if (!numeric(ops, options)) return native?.(ops, options);
         const arg = bigRealOperand(ce, ops[1]!);
         const value = arg === undefined ? undefined : besselKYBig(kind, ops[0]!.re, arg, ce.precision);
-        return value === undefined ? undefined : bigResult(ce, value);
+        return value === undefined ? native?.(ops, options) : bigResult(ce, value);
       },
       { arity: 2, compile: "builtin" },
     );

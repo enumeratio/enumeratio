@@ -55,6 +55,8 @@ const phiInverse = ([a, b]: Phi): Phi | undefined => {
   return [qDiv(qAdd(a, b), norm), qDiv(qMul(b, q(-1n)), norm)];
 };
 const phiPow = (x: Phi, n: number): Phi | undefined => {
+  // 0^0 is Indeterminate (Wolfram), not 1
+  if (n === 0 && x[0][0] === 0n && x[1][0] === 0n) return undefined;
   let base = n < 0 ? phiInverse(x) : x;
   if (base === undefined) return undefined;
   let result: Phi = [q(1n), ZERO];
@@ -102,11 +104,13 @@ function asPhi(json: unknown): Phi | undefined {
 }
 
 /** The rational `json` equals, when it is built from GoldenRatio and collapses to one. */
-function goldenRatioCollapse(json: unknown): unknown {
+export function goldenRatioCollapse(json: unknown): unknown {
   if (!JSON.stringify(json).includes('"GoldenRatio"')) return json;
   const phi = asPhi(json);
   if (phi === undefined || phi[1][0] !== 0n) return json;
   const [n, d] = phi[0];
+  // a part past a double's exact integers would be written rounded: leave the input
+  if (!Number.isSafeInteger(Number(n)) || !Number.isSafeInteger(Number(d))) return json;
   return d === 1n ? Number(n) : ["Rational", Number(n), Number(d)];
 }
 

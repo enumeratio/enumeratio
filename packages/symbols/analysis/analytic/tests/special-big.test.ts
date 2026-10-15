@@ -43,6 +43,35 @@ test("ExpIntegralEi and LogIntegral", () => {
   });
 });
 
+test("LogIntegral near 1 and near its zero, where ln x is the weak link", () => {
+  at(90, () => {
+    agrees(logIntegralBig(d("1.0000000000001"), 50), "-29.356390544021011031627376821230998934438812794012");
+    agrees(logIntegralBig(d("1.4"), 50), "-0.1449910047903065638201169133225021882717998829452");
+    agrees(
+      logIntegralBig(d("1.45136923488338105028396848589202744949303228364"), 50),
+      "-2.15186674439324278237935765187949422095460384813211389336599e-47",
+    );
+  });
+});
+
+test("a call the kernel declines is native's, as it was", () => {
+  const ce = new ComputeEngine();
+  declareAnalytic(ce);
+  const at50 = (expr: unknown): unknown => ce.box(["N", expr, 50] as never).evaluate().json;
+  const native = new ComputeEngine();
+  for (const call of [
+    ["ExpIntegralEi", 0],
+    ["LogIntegral", 1],
+    ["LogIntegral", 0],
+    ["LogIntegral", -2],
+    ["AiryAi", 150],
+    ["ExpIntegralEi", -1000],
+    ["BesselK", 300, 2],
+    ["BesselY", 0, -1],
+  ])
+    expect(at50(call), JSON.stringify(call)).toEqual(native.box(["N", call, 50] as never).evaluate().json);
+});
+
 test("BesselK and BesselY of integer order", () => {
   at(70, () => {
     agrees(besselKYBig("K", 0, d(4), 50), "0.0111596760858530242697451959798334892250090238884743405382553");

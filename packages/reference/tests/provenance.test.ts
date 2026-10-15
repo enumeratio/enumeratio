@@ -321,7 +321,8 @@ const OVERRIDDEN = [
   // Not itself overridden -- Normal of our Series at infinity, which a bare engine leaves held.
   "Normal",
   "NthPrime",
-  // Gaussian rationals, and an `Over` option compute-engine ignores where ours threads over it.
+  // Pinned by the two `Over` rows (#911): compute-engine ignores the option where ours threads over it.
+  // Comes off this list when #911's fix lands.
   "Numerator",
   "Ordering",
   "Partition",

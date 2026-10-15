@@ -50,7 +50,8 @@ export function declareBesselBig(ce: ComputeEngine): void {
         const [order, x] = ops as [BoxedExpression, BoxedExpression];
         const arg = bigRealOperand(ce, x);
         const value = arg === undefined ? undefined : besselBig(kind, order.re, arg, ce.precision);
-        return value === undefined ? undefined : bigResult(ce, value);
+        // a series that cannot vouch for the digits leaves the call to native, as it was
+        return value === undefined ? native?.(ops, options) : bigResult(ce, value);
       },
       { arity: 2, compile: "builtin" },
     );
