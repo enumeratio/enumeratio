@@ -8,7 +8,7 @@ import { CARRIERS } from "../src/carriers.ts";
 import { COMPILED_MAPS } from "../src/compiled-maps.generated.js";
 import { fastDefinition } from "../src/compiled.ts";
 import { evaluateDefinition, MAPS } from "../src/maps.ts";
-import { smallElements } from "../scripts/samples.ts";
+import { allElements, smallElements } from "../scripts/samples.ts";
 
 // The interpreter is the slow side of the comparison: a small sample in the standard run, more
 // under DEEP_TESTS.
@@ -25,6 +25,15 @@ const ce = bareEngine();
 
 test("the build compiled maps", () => {
   expect(Object.keys(COMPILED_MAPS).length).toBeGreaterThan(0);
+});
+
+// Families overlap, and the build's cross-checks cost per subject.
+test("each small element is sampled once", () => {
+  const subjects = smallElements(ce, "Permutation").map((s) => JSON.stringify(s));
+  const all = allElements(ce, "Permutation").map((s) => JSON.stringify(s));
+  expect(subjects.length).toBeGreaterThan(0);
+  expect(new Set(subjects).size).toBe(subjects.length);
+  expect(subjects).toEqual([...new Set(all)]);
 });
 
 // A map's subjects run in chunks of one test each, so the file's total grows with the sample

@@ -41,17 +41,22 @@ function sampleParams(count: number): number[][] {
 }
 
 /**
- * Fibers of the sample that the interpreter takes a minute or so over, checked only in the
- * nightly sweep (tests/compiled-families.test.ts, DEEP_TESTS), not at every build: head to
- * fibers. None now; list one here when a definition's interpreter cost warrants it.
+ * Fibers of the sample that the interpreter takes tens of seconds over (cold, on one core), checked
+ * only in the nightly sweep (tests/compiled-families.test.ts, DEEP_TESTS), not at every build: head
+ * to fibers. List one here when a definition's interpreter cost warrants it; the smaller fibers of
+ * the same head stay in the build.
  */
-const DEEP_FIBERS: Readonly<Record<string, readonly (readonly number[])[]>> = {};
+const DEEP_FIBERS: Readonly<Record<string, readonly (readonly number[])[]>> = {
+  SeparablePermutations: [[4]],
+  SkewStandardTableaux: [[4]],
+  NonCrossingCycleSupportPermutations: [[4]],
+};
 
 /** The heads that have fibers in the nightly sweep. */
 export const deepHeads = Object.keys(DEEP_FIBERS);
 
 const isDeep = (head: string, p: readonly number[]): boolean =>
-  DEEP_FIBERS[head]?.some((q) => q.every((x, i) => x === p[i])) ?? false;
+  DEEP_FIBERS[head]?.some((q) => q.length === p.length && q.every((x, i) => x === p[i])) ?? false;
 
 /** The fibers a build checks, and those left to the nightly sweep. */
 export const fibersOf = (family: EpsilFamily, deep: boolean): number[][] =>

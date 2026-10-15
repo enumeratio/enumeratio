@@ -17,7 +17,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { verdictsFor } from "./verdicts.ts";
+import { checkers, verdictsFor } from "./verdicts.ts";
 import { writeGenerated } from "./write-generated.ts";
 
 const SHARDS = Number(process.env.FAMILY_SHARDS) || (process.env.CI ? 3 : 1);
@@ -26,12 +26,15 @@ const SHARDS = Number(process.env.FAMILY_SHARDS) || (process.env.CI ? 3 : 1);
  *  family counts one. Only the split reads this, so a stale entry costs balance, never correctness;
  *  the shards log their times, so rebalance when one runs well past the others. */
 const COST: Readonly<Record<string, number>> = {
-  SeparablePermutations: 38,
-  BoxedPlanePartitions: 28,
-  GelfandTsetlin: 17,
-  SkewStandardTableaux: 26,
+  BoxedPlanePartitions: 32,
+  GelfandTsetlin: 18,
   SemistandardTableaux: 14,
-  NonCrossingCycleSupportPermutations: 10,
+  SeparablePermutations: 13,
+  SkewStandardTableaux: 6,
+  NonCrossingCycleSupportPermutations: 5,
+  SkewPartitions: 4,
+  RootedUnlabeledTrees: 3,
+  UnlabeledFreeTrees: 3,
 };
 
 /** Each head's shard: dearest first, each to the least loaded (so one head can't hold up the rest). */
@@ -64,7 +67,10 @@ if (process.argv[2] === "--shard") {
   const [, , , shard, shards, out] = process.argv;
   const { compiledFamilies, definedOperations, familyHeads, renderEntry } = await import("./family-checks.ts");
   const mine = assignShards(familyHeads(), Number(shards));
-  const verdicts = verdictsFor(Number(shards) === 1 ? "compile-families" : `compile-families-${shard}of${shards}`);
+  const verdicts = verdictsFor(
+    Number(shards) === 1 ? "compile-families" : `compile-families-${shard}of${shards}`,
+    checkers.families,
+  );
   const entries = compiledFamilies(verdicts, (head) => mine.get(head) === Number(shard)).map((e) => ({
     head: e.head,
     text: renderEntry(e),

@@ -5,13 +5,13 @@
 
 import { fileURLToPath } from "node:url";
 import { smallElements } from "../../scripts/samples.ts";
-import { verdictsFor } from "../../scripts/verdicts.ts";
+import { checkers, verdictsFor } from "../../scripts/verdicts.ts";
 import { writeGenerated } from "../../scripts/write-generated.ts";
 import { compiledDefinitionsFor, renderCompiled } from "../../src/statistics/generate-compiled.ts";
 import { PARTITION_STATISTICS } from "../src/statistics.ts";
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const verdicts = verdictsFor("compile-partitions");
+  const verdicts = verdictsFor("compile-partitions", checkers.statistics);
   const { compiled: entries, disagreed } = compiledDefinitionsFor(
     PARTITION_STATISTICS,
     "list<integer>",
