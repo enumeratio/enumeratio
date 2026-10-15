@@ -6,7 +6,9 @@
 // A row this system has never answered (the forms collect-forms writes for a new example:
 // an input, no verdict or output) that the scan now answers is new, not drift: a feature PR
 // adds examples without running the weekly kernels, by design. Those are listed as a
-// warning, to classify at the next accept, and don't fail the lane.
+// warning, to classify at the next accept, and don't fail the lane. Such a row for an
+// aspirational example is dropped by the scan (it only keeps settled examples' rows); that
+// isn't drift either.
 //
 //   node .github/scripts/oracle-drift.ts        # after oracle-scan.ts, in a checkout
 
@@ -77,7 +79,8 @@ for (const folder of folders) {
     const [b, a] = [before.get(id), after.get(id)];
     if (said(b) === said(a)) {
       if (b?.["out"] !== a?.["out"]) printed.push(`${id}: ${String(b?.["out"])} → ${String(a?.["out"])}`);
-    } else if (unscanned(b) && b?.["in"] === a?.["in"]) fresh.push(`${id}: ${said(a)}`);
+    } else if (unscanned(b) && a === undefined) continue; // an aspirational example's form row: the scan never keeps one
+    else if (unscanned(b) && b?.["in"] === a?.["in"]) fresh.push(`${id}: ${said(a)}`);
     else changed.push(`${id}\n  was: ${said(b)}\n  now: ${said(a)}`);
   }
 }
