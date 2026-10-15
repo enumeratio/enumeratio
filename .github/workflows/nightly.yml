@@ -58,6 +58,8 @@ jobs:
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run partitions/tests/partition-statistics
       # Tree statistics over the larger trees.
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run trees/tests/tree-statistics
+      # Permutation statistics over the larger permutations.
+      - run: pnpm --filter @enumeratio/combinatorics exec vp test run permutations/tests/permutation-statistics
       # Compiled maps against the interpreter, over the larger sample.
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/compiled-maps.test.ts
       # Every head in an engine holding only what the resolver picks, against the full one.

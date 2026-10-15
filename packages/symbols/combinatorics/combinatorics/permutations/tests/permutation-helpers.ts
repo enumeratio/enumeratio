@@ -7,6 +7,7 @@ import { expect, test } from "vite-plus/test";
 import { applyDefinition } from "../../src/statistics/declare.ts";
 import { PERMUTATION_STATISTICS } from "../src/statistics.ts";
 import { bySignature } from "../../src/statistics/types.ts";
+import { FINDSTAT_READINGS } from "./permutation-findstat-readings.ts";
 
 export const ce = bareEngine();
 export const index = bySignature(PERMUTATION_STATISTICS);
@@ -172,6 +173,7 @@ export const EXPECTED: Record<string, (p: number[]) => number | number[]> = {
   LongestDecreasingSubsequence: (p) => piles(p, (top, x) => top > x),
   LargestRunLength: longestRun,
   Denert: denert,
+  ...FINDSTAT_READINGS,
 };
 
 /** Generate `${head} agrees over every permutation of 1..N` for each of `heads`, against
