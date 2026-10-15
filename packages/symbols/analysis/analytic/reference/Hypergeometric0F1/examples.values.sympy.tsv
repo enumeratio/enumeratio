@@ -1,0 +1,18 @@
+id	in	out	verdict
+a-generic-point-checked-against-mpmath-s-hyp0f1	N(hyper([], [2], 0.5))	1.27172345631214	
+b-1-5-at-neg-0-7	N(hyper([], [1.5], -0.7))	0.594476258632800	
+rational-order-7-3-at-2-5	N(hyper([], [Rational(7, 3)], 2.5))	2.56029269391997	
+complex-order-1-plus-i-at-0-5	N(N(hyper([], [(1 + 1*I)], 0.5)), 30)	1.26248414130763308982352555176 - 0.289645741340911866412710651275*I	
+order-2-at-a-complex-argument	N(N(hyper([], [2], (0.5 + 0.5*I))), 30)	1.24817563688592891857354061358 + 0.293401296264334088270686606847*I	
+negative-order-neg-0-5-at-0-3	N(hyper([], [-0.5], 0.3))	0.207633759462581	
+complex-order-and-argument	N(N(hyper([], [(-2.5 + 1.5*I)], (1.2 + -0.8*I))), 30)	0.632186477801754631578035059647 + 0.0225531925472149431810553465994*I	
+series-hypergeometric0f1-a-x-x-0-4			
+fullsimplify-normal-series-hypergeometric0f1-a-x			
+n-hypergeometric0f1-1-neg-2-50	N(N(hyper([], [1], -2)), 30)	-0.196548095270468209383452062866	
+matrixfunction-function-hypergeometric0f1-1-over			
+series-hypergeometric0f1-a-x-x-0-3			
+n-neg-1-over-4-times-hypergeometric0f1-1-over-2	N(((Rational(-1, 4) * N(hyper([], [Rational(1, 2)], Rational(1, 2)))) + (Rational(1, 4) * N(hyper([], [Rational(-1, 2)], Rational(1, 2)))) + (Rational(1, 2) * N(hyper([], [Rational(3, 2)], Rational(1, 2))))), 30)	0	
+n-neg-1-over-4-times-hypergeometric0f1-1-over-3	N(((Rational(-1, 4) * (S(N(hyper([], [Rational(1, 2)], Rational(1, 2))))**2)) + (Rational(1, 2) * (S(N(hyper([], [Rational(3, 2)], Rational(1, 2))))**2))), 30)	-0.250000000000000111022302462516	
+n-2-times-hypergeometric0f1-3-over-2-2-plus-neg	N(((2 * N(hyper([], [Rational(3, 2)], 2))) + (Rational(-1, 4) * N(hyper([], [Rational(1, 2)], 2))) + (Rational(1, 4) * N(hyper([], [Rational(-1, 2)], 2)))), 30)	4.44089209850062616169452667236e-16	
+n-2-times-hypergeometric0f1-3-over-2-2-pow-2	N(((2 * (S(N(hyper([], [Rational(3, 2)], 2)))**2)) + (Rational(-1, 4) * (S(N(hyper([], [Rational(1, 2)], 2)))**2))), 30)	-0.249999999999996447286321199499	
+b-0-is-a-pole-stays-symbolic	N(hyper([], [0], 0.5))	ZeroDivisionError: pole in hypergeometric series	error

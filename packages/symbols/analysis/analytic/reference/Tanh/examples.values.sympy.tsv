@@ -12,8 +12,8 @@ uncertainty-propagation-tanh-2-sqrt-3-pm-0-1
 the-horizontal-asymptote-at-infty	tanh(oo)	1	
 tanh-i-pi-4-i-tan-pi-4-i	tanh((I * (S(pi) / 4)))	I	
 oddness-pulls-the-sign-out-of-a-symbolic	tanh((-Symbol("x")))	True	
-tanh-artanh-x-x-for-every-x			
-tanh-artanh-2-2-past-the-real-domain			
+tanh-artanh-x-x-for-every-x	tanh(atanh(Symbol("x")))	True	
+tanh-artanh-2-2-past-the-real-domain	tanh(atanh(2))	2	
 derivative-sech-2-x	diff(tanh(Symbol("x")), Symbol("x"))	True	
 antiderivative-ln-cosh-x			
 tanh-has-no-limit-at-complex-infinity-undefined	tanh(zoo)	nan	

@@ -1,0 +1,26 @@
+id	in	out
+e-1-3-2-gamma-0-3-2	expint(1, 1.5)	expint(1, 1.5)
+expintegrale-2-1p5	expint(2, 1.5)	expint(2, 1.5)
+e-3-2	N(expint(3, 2), 30)	0.0301333797978158931874799229699
+order-1-5-at-3-2	expint(1.5, 3.2)	0.00915699142887098
+series-expintegrale-n-x-x-0-4		
+series-expintegrale-1-x-x-0-4		
+normal-series-expintegrale-n-x-x		
+non-integer-order	expint(0.5, 2.5)	0.0284142997092898
+exact-arguments-under-n	N(expint(1, 1), 30)	0.219383934395520273677163775460
+n-expintegrale-1-plus-i-2-plus-3i	N(expint((1 + 1*I), (2 + 3*I)), 30)	-0.018943830508373643317172566324 + 0.0204437701028299705566242401978*I
+expintegrale-0-z	expint(0, Symbol("z"))	True
+seriescoefficient-expintegrale-0-x-list-x-0-n		
+expintegrale-0-positiveinfinity	expint(0, oo)	0
+n-expintegrale-3-11-over-5-50	N(expint(3, Rational(11, 5)), 30)	0.0235206566482765000078317199118
+simplify-functionexpand-list-expintegrale-5		
+functionexpand-expintegrale-3-over-2-z		
+functionexpand-expintegrale-3-z		
+functionexpand-expintegrale-minus-2-z		
+functionexpand-expintegrale-1-over-3-z		
+functionexpand-expintegrale-n-z		
+series-expintegrale-n-x-x-0-7		
+e-n-0-1-n-1-for-n-1	expint(2, 0)	expint(2, 0)
+e-0-x-e-x-x	expint(0, Symbol("x"))	True
+expintegrale-0-0	expint(0, 0)	zoo
+expintegrale-3-0	expint(3, 0)	expint(3, 0)

@@ -38,6 +38,16 @@ bindings:
     template: bernoulli($1)
     arity: 1
     threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: bernoulli($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 ---
 
 - Defined by the generating function $\dfrac{t}{e^t-1} = \sum_{n=0}^{\infty} B_n \dfrac{t^n}{n!}$.

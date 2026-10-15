@@ -12,6 +12,15 @@ seeAlso:
   - Log10
 names:
   wolfram: Log2
+bindings:
+  - origin: mapped
+    form: sympy
+    template: log($1, 2)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 ---
 
 - An alias for [[Log2]] -- the "lb" notation is borrowed from information theory and computer science, as opposed to "lg" for base 10.

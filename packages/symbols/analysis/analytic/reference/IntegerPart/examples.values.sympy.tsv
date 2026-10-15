@@ -1,0 +1,26 @@
+id	in	out
+integerpart-2p4	(sign(re(2.4)) * floor(Abs(re(2.4))) + I * sign(im(2.4)) * floor(Abs(im(2.4))))	2
+truncates-toward-0-unlike-floor	(sign(re(-2.4)) * floor(Abs(re(-2.4))) + I * sign(im(-2.4)) * floor(Abs(im(-2.4))))	-2
+integerpart-7-over-2	(sign(re(Rational(7, 2))) * floor(Abs(re(Rational(7, 2)))) + I * sign(im(Rational(7, 2))) * floor(Abs(im(Rational(7, 2)))))	3
+integerpart-neg-7-over-2	(sign(re(Rational(-7, 2))) * floor(Abs(re(Rational(-7, 2)))) + I * sign(im(Rational(-7, 2))) * floor(Abs(im(Rational(-7, 2)))))	-3
+exact-numeric-arguments-stay-exact	(sign(re(pi)) * floor(Abs(re(pi))) + I * sign(im(pi)) * floor(Abs(im(pi))))	3
+threads-element-wise-over-a-list	[(sign(re(2.5)) * floor(Abs(re(2.5))) + I * sign(im(2.5)) * floor(Abs(im(2.5)))), (sign(re(-2.5)) * floor(Abs(re(-2.5))) + I * sign(im(-2.5)) * floor(Abs(im(-2.5))))]	[2, -2]
+complex-numbers-real-and-imaginary-parts	(sign(re((2.5 + 3.7*I))) * floor(Abs(re((2.5 + 3.7*I)))) + I * sign(im((2.5 + 3.7*I))) * floor(Abs(im((2.5 + 3.7*I)))))	2 + 3*I
+integerpart-neg-5-over-4	(sign(re(Rational(-5, 4))) * floor(Abs(re(Rational(-5, 4)))) + I * sign(im(Rational(-5, 4))) * floor(Abs(im(Rational(-5, 4)))))	-1
+integerpart-0	(sign(re(0)) * floor(Abs(re(0))) + I * sign(im(0)) * floor(Abs(im(0))))	0
+piecewiseexpand-integerpart-x-0-lt-x-lt-4		
+integerpart-exponentiale-plus-pi	(sign(re((E + pi))) * floor(Abs(re((E + pi)))) + I * sign(im((E + pi))) * floor(Abs(im((E + pi)))))	5
+x-integerpart-x-fractionalpart-x		
+piecewiseexpand-integerpart-x-pow-2-plus-sqrt-x		
+integerpart-1	(sign(re(1)) * floor(Abs(re(1))) + I * sign(im(1)) * floor(Abs(im(1))))	1
+integerpart-neg-1	(sign(re(-1)) * floor(Abs(re(-1))) + I * sign(im(-1)) * floor(Abs(im(-1))))	-1
+integerpart-23-over-10	(sign(re(Rational(23, 10))) * floor(Abs(re(Rational(23, 10)))) + I * sign(im(Rational(23, 10))) * floor(Abs(im(Rational(23, 10)))))	2
+integerpart-neg-3	(sign(re(-3)) * floor(Abs(re(-3))) + I * sign(im(-3)) * floor(Abs(im(-3))))	-3
+integerpart-neg-pi	(sign(re((-pi))) * floor(Abs(re((-pi)))) + I * sign(im((-pi))) * floor(Abs(im((-pi)))))	-3
+integerpart-neg-27-over-10	(sign(re(Rational(-27, 10))) * floor(Abs(re(Rational(-27, 10)))) + I * sign(im(Rational(-27, 10))) * floor(Abs(im(Rational(-27, 10)))))	-2
+simplify-integerpart-x-plus-1-minus-integerpart		
+piecewiseexpand-integerpart-x-plus-1-times-3-pow		
+integerpart-i	(sign(re((0 + 1*I))) * floor(Abs(re((0 + 1*I)))) + I * sign(im((0 + 1*I))) * floor(Abs(im((0 + 1*I)))))	I
+integerpart-neg-i	(sign(re((0 + -1*I))) * floor(Abs(re((0 + -1*I)))) + I * sign(im((0 + -1*I))) * floor(Abs(im((0 + -1*I)))))	-I
+integerpart-23-over-10-plus-neg-i-times	(sign(re((Rational(23, 10) + ((0 + -1*I) * E)))) * floor(Abs(re((Rational(23, 10) + ((0 + -1*I) * E))))) + I * sign(im((Rational(23, 10) + ((0 + -1*I) * E)))) * floor(Abs(im((Rational(23, 10) + ((0 + -1*I) * E))))))	2 - 2*I
+integerpart-1-plus-2pi-minus-1-plus-pi-pow-2	(sign(re((1 + (2 * pi) + (-(S((1 + pi))**2)) + (S(pi)**2)))) * floor(Abs(re((1 + (2 * pi) + (-(S((1 + pi))**2)) + (S(pi)**2))))) + I * sign(im((1 + (2 * pi) + (-(S((1 + pi))**2)) + (S(pi)**2)))) * floor(Abs(im((1 + (2 * pi) + (-(S((1 + pi))**2)) + (S(pi)**2))))))	0

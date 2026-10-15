@@ -1,0 +1,14 @@
+id	in	out
+series-coth-x-x-0-10		
+series-coth-x-x-2i-times-pi-3		
+n-coth-6-over-5-50	N(coth(Rational(6, 5)), 30)	1.19953754419235076674991993157
+coth-list-list-1-over-3-times-i-times-pi-neg-1	[[coth(((0 + Rational(1, 3)*I) * pi)), coth(((0 + Rational(-1, 3)*I) * pi))], [coth(0), coth(((0 + Rational(-1, 6)*I) * pi))]]	[[-sqrt(3)*I/3, sqrt(3)*I/3], [zoo, sqrt(3)*I]]
+coth-positiveinfinity	coth(oo)	1
+coth-0	coth(0)	zoo
+d-coth-x-x	diff(coth(Symbol("x")), Symbol("x"))	True
+matrixfunction-function-coth-1-1-list-list-1		
+functionmeromorphic-coth-x-x		
+n-coth-1-times-coth-1-over-2	N((coth(1) * coth(Rational(1, 2))), 30)	2.84134718841558463789082704543
+n-coth-1-over-2-plus-1-over-2-times-i-times-pi	N(coth((Rational(1, 2) + ((0 + Rational(1, 2)*I) * pi))), 30)	0.462117157260009758502318483644
+n-coth-2-times-coth-4	N((coth(2) * coth(4)), 30)	1.03801091491903554962668650626
+n-coth-2-plus-1-over-2-times-i-times-pi	N(coth((2 + ((0 + Rational(1, 2)*I) * pi))), 30)	0.964027580075816883946413724101

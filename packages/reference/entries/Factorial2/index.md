@@ -26,6 +26,15 @@ references:
 names:
   fungrim: DoubleFactorial
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: factorial2($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 ---
 
 - Skips every other factor: $n!! = n(n-2)(n-4)\cdots$, stopping at 1 (n odd) or 2 (n even).

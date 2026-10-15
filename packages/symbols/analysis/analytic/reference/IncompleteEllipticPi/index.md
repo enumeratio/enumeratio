@@ -14,6 +14,19 @@ seeAlso:
   - EllipticF
 names:
   wolfram: EllipticPi
+bindings:
+  - origin: mapped
+    form: sympy
+    template: elliptic_pi($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: The arguments are (n, phi, m) in both, with m = k^2.
 ---
 
 - $m = k^2$, the same convention [[EllipticE]] / [[EllipticF]] use — not the elliptic modulus k itself.

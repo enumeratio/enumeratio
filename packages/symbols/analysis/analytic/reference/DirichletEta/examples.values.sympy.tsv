@@ -1,0 +1,16 @@
+id	in	out	verdict
+eta-1-ln-2-the-alternating-harmonic-series	dirichlet_eta(1)	log(2)	
+eta-2-pi-2-12	dirichlet_eta(2)	pi**2/12	
+eta-3-frac-34-zeta-3-no-closed-form-beyond-apery	dirichlet_eta(3)	dirichlet_eta(3)	
+on-the-critical-line-through-1-2-1-s-zeta-s-so	dirichlet_eta(0.5)	0.604898643421630	
+numeric-for-a-floating-point-argument	dirichlet_eta(1.5)	0.765147024625408	
+complex-arguments	dirichlet_eta((3.5 + 2.5*I))	(0.957702865370249 - 0.0864849815631101*I)*(1 - 2**(-2.5 - 2.5*I))	
+threads-elementwise-over-an-array	[[dirichlet_eta(Rational(1, 2)), dirichlet_eta(-1)], [dirichlet_eta(0), dirichlet_eta(Rational(1, 2))]]	[[dirichlet_eta(1/2), 1/4], [1/2, dirichlet_eta(1/2)]]	
+eta-s-to-1-as-s-to-infty	dirichlet_eta(oo)	1	
+interval-arithmetic-over-an-increasing-stretch	dirichlet_eta(AccumBounds(1.5, 1.6))	dirichlet_eta(AccumBounds(1.5, 1.6))	disagree
+uncertainty-propagation-eta-2-pm-0-01-0-82247-pm			
+to-30-significant-digits-not-yet-the-last-digit	N(dirichlet_eta(Rational(1, 2)), 30)	0.604898643421630370247265914236	
+nonpositive-integers-eta-n-2-n-1-1-b-n-1-n-1	[dirichlet_eta(0), dirichlet_eta(-1), dirichlet_eta(-2), dirichlet_eta(-3)]	[1/2, 1/4, 0, -1/8]	
+eta-4-frac-78-zeta-4-7-pi-4-720	dirichlet_eta(4)	7*pi**4/720	
+rewriting-in-terms-of-zeta-eta-s-1-2-1-s-zeta-s			
+an-exact-non-integer-argument-stays-symbolic	dirichlet_eta(Rational(1, 2))	dirichlet_eta(1/2)	
