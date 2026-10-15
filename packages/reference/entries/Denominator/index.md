@@ -16,7 +16,12 @@ signatures:
   - call: Denominator(number) -> nothing | number
     description: Denominator of an expression
     library: enumeratio-number-theory
-    type: (number) -> nothing | number
+    type: (number, any*) -> nothing | number
+    overrides: enumeratio-residues
+  - call: Denominator(number) -> nothing | number
+    description: Denominator of an expression
+    library: enumeratio-residues
+    type: (number, any*) -> nothing | number
     overrides: compute-engine
 statOn:
   - BinaryWord

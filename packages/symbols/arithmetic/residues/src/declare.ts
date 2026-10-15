@@ -16,6 +16,7 @@ import { RESIDUES_CARRIERS } from "./carrier-data.ts";
 import { declareIntegerMod } from "./integer-mod.ts";
 import { declareResidueClass, residueClassOf } from "./residue-class-declare.ts";
 import { declareModExactConstant } from "./mod-exact-constant.ts";
+import { declareNumerator } from "./numerator-declare.ts";
 import { discreteLog, multiplicativeOrder, primitiveRootCount, primitiveRootList, primitiveRoots } from "./logs.ts";
 import { powerModList } from "./roots.ts";
 import { declareTables } from "./table-declare.ts";
@@ -183,4 +184,5 @@ export function declareResidues(ce: Engine): void {
   declareResidueClass(ce);
   declareIntegerMod(ce);
   declareModExactConstant(ce);
+  declareNumerator(ce);
 }

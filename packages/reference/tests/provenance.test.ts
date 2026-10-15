@@ -328,8 +328,7 @@ const OVERRIDDEN = [
   // Not itself overridden -- Normal of our Series at infinity, which a bare engine leaves held.
   "Normal",
   "NthPrime",
-  // Pinned by the two `Over` rows (#911): compute-engine ignores the option where ours threads over it.
-  // Comes off this list when #911's fix lands.
+  // The two `Over` rows: ours reads the ring (`Over -> QuotientRing(Integers, p)`), compute-engine ignores the option.
   "Numerator",
   "Ordering",
   "Partition",
