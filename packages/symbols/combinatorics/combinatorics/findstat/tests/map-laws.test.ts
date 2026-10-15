@@ -19,9 +19,12 @@ function impliedProperties(laws: MapLaws): string[] {
   for (const law of laws.laws ?? []) {
     if (law === "involution") implied.push("Involution", "Bijection");
     else if (law === "idempotent") implied.push("Idempotent");
+    else if (law === "surjection") implied.push("Surjection");
+    else if (law === "bijection") implied.push("Bijection");
     else implied.push("Bijection"); // `{ inverse }`: a map with an inverse is a bijection.
   }
   if (laws.orderIsomorphism !== undefined) implied.push("Bijection");
+  if (laws.graded !== undefined) implied.push("Graded map");
   return implied;
 }
 

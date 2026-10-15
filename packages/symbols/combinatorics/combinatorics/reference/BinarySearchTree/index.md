@@ -16,6 +16,11 @@ signatures:
     description: The tree built by inserting σ(1), σ(2), ... into an empty binary search tree.
     library: enumeratio-combinatorics
     type: (permutation) -> binary_tree
+laws:
+  - surjection
+  - graded:
+      from: Permutations
+      to: BinaryTrees
 ---
 
 - Takes a `Permutation` and returns a `BinaryTree` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

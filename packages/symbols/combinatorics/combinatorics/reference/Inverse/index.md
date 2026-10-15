@@ -29,6 +29,10 @@ signatures:
       - permutation
 laws:
   - involution
+  - graded:
+      from: Permutations
+      to: Permutations
+    on: permutation
 names:
   wolframIdentity: true
 ---

@@ -11,6 +11,11 @@ signatures:
     description: The composition of n cut at the descent positions.
     library: enumeratio-combinatorics
     type: (permutation) -> composition
+laws:
+  - surjection
+  - graded:
+      from: Permutations
+      to: IntegerCompositions
 ---
 
 - Takes a `Permutation` and returns a `Composition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

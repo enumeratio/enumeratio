@@ -63,6 +63,7 @@ export {
   type DeclareMapsOptions,
   evaluateDefinition,
   evaluateEpsil,
+  type Graded,
   type Law,
   type MapDeclaration,
 } from "./maps.ts";
