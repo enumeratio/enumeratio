@@ -476,6 +476,12 @@ from sympy.functions.combinatorial.numbers import stirling
 from sympy.ntheory.digits import digits
 
 ${HELD_ALIKE}
+# How close a numeric identity must hold: 1e-20, loosened to the digits of the least precise float in it,
+# since two 15-digit literals (0.3 + 0.7) can't be told apart from 1 any closer than that.
+def _enumeratio_tolerance(*xs):
+    digits = [f._prec * 0.30103 for x in xs for f in sympify(x).atoms(Float)]
+    return 10.0 ** -min(20, min(digits) - 3) if digits else 1e-20
+
 def enumeratio_equal(a, b):
     try:
         d = a - b
@@ -483,7 +489,7 @@ def enumeratio_equal(a, b):
             return True
         # What simplify can't prove, 30 digits can still settle for a numeric identity.
         if d.is_number:
-            return bool(abs(N(d, 30)) < 1e-20)
+            return bool(abs(N(d, 30)) < _enumeratio_tolerance(a, b))
         return False
     except (TypeError, ValueError, AttributeError):
         return a == b

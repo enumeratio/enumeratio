@@ -31,8 +31,8 @@ export const DIVERGENCE_KINDS = {
   threading: "threaded over a list here, scalars only there",
   /** The other system hit the scan's time or memory cap, so said nothing either way. */
   resource: "the other system ran out of time or memory",
-  /** Our emitter can't express the input for that system; neither side's mathematics is in question. */
-  emit: "our emitter can't express this input for that system",
+  /** Our emitter or mapping can't or doesn't express the input faithfully; neither side's mathematics is in question. */
+  emit: "our emitter or mapping can't or doesn't express this input faithfully",
   /** The other system is right and this is a gap or bug here; the row names its issue. */
   ours: "a gap or bug here, tracked by an issue",
   /** Not yet reviewed — a scan adds these and a person replaces them. */

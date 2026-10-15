@@ -1,14 +1,14 @@
 id	in	out	verdict
-iseven-4	((4) % 2 == 0)	True	
-iseven-3	((3) % 2 == 0)	False	
-zero-is-even	((0) % 2 == 0)	True	
-negative-integers-count-too	((-4) % 2 == 0)	True	
-iseven-8	((8) % 2 == 0)	True	
-a-non-integer-is-not-even	((2.5) % 2 == 0)	False	
-big-integers	(((S(2)**100)) % 2 == 0)	True	
-iseven-10-factorial	((factorial(10)) % 2 == 0)	True	
-threads-element-wise-over-a-list	[((1) % 2 == 0), ((2) % 2 == 0), ((3) % 2 == 0)]	[False, True, False]	
+iseven-4	(sympify(4).is_even is True)	True	
+iseven-3	(sympify(3).is_even is True)	False	
+zero-is-even	(sympify(0).is_even is True)	True	
+negative-integers-count-too	(sympify(-4).is_even is True)	True	
+iseven-8	(sympify(8).is_even is True)	True	
+a-non-integer-is-not-even	(sympify(2.5).is_even is True)	False	
+big-integers	(sympify((S(2)**100)).is_even is True)	True	
+iseven-10-factorial	(sympify(factorial(10)).is_even is True)	True	
+threads-element-wise-over-a-list	[(sympify(1).is_even is True), (sympify(2).is_even is True), (sympify(3).is_even is True)]	[False, True, False]	
 select-the-even-numbers-up-to-10			
 every-integer-is-exactly-one-of-odd-and-even-see			
-iseven-12	((12) % 2 == 0)	True	
-a-symbol-stays-undecided-rather-than-false	((Symbol("x")) % 2 == 0)	False	disagree
+iseven-12	(sympify(12).is_even is True)	True	
+a-symbol-stays-undecided-rather-than-false	(sympify(Symbol("x")).is_even is True)	False	disagree

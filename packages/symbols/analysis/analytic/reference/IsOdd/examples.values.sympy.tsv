@@ -1,18 +1,18 @@
 id	in	out	verdict
-isodd-3	((3) % 2 == 1)	True	
-isodd-4	((4) % 2 == 1)	False	
-negative-integers-count-too	((-7) % 2 == 1)	True	
-isodd-0	((0) % 2 == 1)	False	
-isodd-9	((9) % 2 == 1)	True	
-a-non-integer-is-not-odd	((3.5) % 2 == 1)	False	
-isodd-1-over-3	((Rational(1, 3)) % 2 == 1)	False	
-big-integers	((((S(2)**100) + 1)) % 2 == 1)	True	
-pi-is-known-not-to-be-an-integer-so-it-is	((pi) % 2 == 1)	False	
-threads-element-wise-over-a-list	[((1) % 2 == 1), ((2) % 2 == 1), ((3) % 2 == 1)]	[True, False, True]	
+isodd-3	(sympify(3).is_odd is True)	True	
+isodd-4	(sympify(4).is_odd is True)	False	
+negative-integers-count-too	(sympify(-7).is_odd is True)	True	
+isodd-0	(sympify(0).is_odd is True)	False	
+isodd-9	(sympify(9).is_odd is True)	True	
+a-non-integer-is-not-odd	(sympify(3.5).is_odd is True)	False	
+isodd-1-over-3	(sympify(Rational(1, 3)).is_odd is True)	False	
+big-integers	(sympify(((S(2)**100) + 1)).is_odd is True)	True	
+pi-is-known-not-to-be-an-integer-so-it-is	(sympify(pi).is_odd is True)	False	
+threads-element-wise-over-a-list	[(sympify(1).is_odd is True), (sympify(2).is_odd is True), (sympify(3).is_odd is True)]	[True, False, True]	
 select-the-odd-numbers-up-to-10			
 isvector-list-1-5-7-11-isodd			
 isvector-list-2-5-7-11-isodd			
 an-integer-is-odd-exactly-when-it-is-not-even			
-isodd-2	((2) % 2 == 1)	False	
-isodd-15	((15) % 2 == 1)	True	
-a-symbol-stays-undecided-rather-than-false	((Symbol("x")) % 2 == 1)	False	disagree
+isodd-2	(sympify(2).is_odd is True)	False	
+isodd-15	(sympify(15).is_odd is True)	True	
+a-symbol-stays-undecided-rather-than-false	(sympify(Symbol("x")).is_odd is True)	False	disagree

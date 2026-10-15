@@ -15,4 +15,4 @@ isvector-list-2-5-7-11-isodd	Applications		[IsVector, [List, 2, 5, 7, 11], IsOdd
 an-integer-is-odd-exactly-when-it-is-not-even	Properties		[Equal, [IsOdd, 7], [Not, [IsEven, 7]]]	True	An integer is odd exactly when it is not even. See [[IsEven]]				
 isodd-2	Properties		[IsOdd, 2]	False	2 is even, hence not odd				
 isodd-15	Properties		[IsOdd, 15]	True	15 is odd				
-a-symbol-stays-undecided-rather-than-false	Possible issues		[IsOdd, x]	[IsOdd, x]	A symbol stays undecided rather than False	unevaluated	We leave the call unevaluated; Wolfram answers False.	unevaluated	The template reads x % 2 == 1 for a bare symbol as False; ours leaves IsOdd(x) unevaluated, since x may be an odd integer.
+a-symbol-stays-undecided-rather-than-false	Possible issues		[IsOdd, x]	[IsOdd, x]	A symbol stays undecided rather than False	unevaluated	We leave the call unevaluated; Wolfram answers False.	unevaluated	SymPy's is_odd is undecided (None) for a bare symbol, which the template reads as False, as Wolfram's OddQ[x] is False; ours leaves IsOdd(x) unevaluated.
