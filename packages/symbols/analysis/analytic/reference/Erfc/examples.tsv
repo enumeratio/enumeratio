@@ -1,6 +1,6 @@
 id	section	role	expr	expected	known	known.convention	source	caption	wolfram.kind	wolfram.note	wolfram.issue	sympy.kind	sympy.note	sympy.issue
 erfc-0			[Erfc, 0]	1										
-erfc-infinity			[Erfc, Infinity]	0								convention	The example writes the argument as `Infinity`, which is not a SymPy name (its own is oo), so it reaches SymPy as a free symbol and the call stays held.	
+erfc-infinity			[Erfc, Infinity]	0										
 erfc-negativeinfinity			[Erfc, NegativeInfinity]	2										
 a-floating-point-argument-evaluates-directly-to			[Erfc, 0.5]	{num: "0.479500122186953462317"}				A floating-point argument evaluates directly to a high-precision decimal						
 a-machine-precision-argument			[Erfc, 1.5]	{num: "0.033894853524689272933"}				A machine-precision argument						

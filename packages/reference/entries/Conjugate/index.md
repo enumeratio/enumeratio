@@ -46,4 +46,5 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
+    note: The complex conjugate only; the record's mapOn partition meanings have no SymPy counterpart.
 ---

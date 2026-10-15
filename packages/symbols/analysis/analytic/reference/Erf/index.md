@@ -34,7 +34,7 @@ bindings:
       on: 2026-10-14
   - origin: mapped
     form: sympy
-    template: erf2($1, $2)
+    template: (erf($2) - erf($1))
     arity: 2
     threadArgOnly:
       - 1
@@ -42,7 +42,7 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
-    note: SymPy's `erf2(x, y)` is erf(y) - erf(x), the generalized erf, but it stays unevaluated even at float arguments.
+    note: "SymPy's `erf2(x, y)` is the same difference but stays unevaluated even at float arguments, so the difference is written out: erf(z1) - erf(z0), each term SymPy's own erf."
 ---
 
 - Odd function: $\operatorname{erf}(-z) = -\operatorname{erf}(z)$.

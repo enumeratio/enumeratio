@@ -1,6 +1,6 @@
 id	in	out	verdict
 erfc-0	erfc(0)	1	
-erfc-infinity	erfc(Symbol("Infinity"))	erfc(Infinity)	inconclusive
+erfc-infinity	erfc(oo)	0	
 erfc-negativeinfinity	erfc(-oo)	2	
 a-floating-point-argument-evaluates-directly-to	erfc(0.5)	0.479500122186953	
 a-machine-precision-argument	erfc(1.5)	0.0338948535246893	

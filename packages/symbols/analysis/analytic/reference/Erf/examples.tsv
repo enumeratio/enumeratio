@@ -1,14 +1,14 @@
 id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sympy.kind	sympy.note
 erf-0			[Erf, 0]	0					
-erf-infinity			[Erf, Infinity]	1				convention	The example writes the argument as `Infinity`, which is not a SymPy name (its own is oo), so it reaches SymPy as a free symbol and the call stays held.
+erf-infinity			[Erf, Infinity]	1					
 erf-negativeinfinity			[Erf, NegativeInfinity]	-1					
 erf-complexinfinity			[Erf, ComplexInfinity]	Indeterminate	erf as z -> ComplexInfinity has no limit -- the approach direction decides it (1 real, i imaginary)	undefined-form	Wolfram spells the same decline as NaN from a numeric evaluation attempt; we stay exact with Indeterminate		
 a-floating-point-argument-evaluates-directly-to			[Erf, 0.5]	{num: "0.520499877813046537683"}	A floating-point argument evaluates directly to a high-precision decimal				
 a-machine-precision-argument			[Erf, 0.95]	{num: "0.820890807273277941908"}	A machine-precision argument				
 threads-element-wise-over-a-list-as-wolfram-s	Scope		[Erf, [List, 0, 1]]	[List, 0, [Erf, 1]]	Threads element-wise over a list, as Wolfram's Listable heads do				
 complex-arguments-evaluate-directly	Scope		[Erf, [Complex, 1.5, -1]]	[Complex, 1.0783992074989335, 0.027963711238655833]	Complex arguments evaluate directly				
-two-arguments-the-generalized-erf-z-0-z-1-erf-z	Scope		[Erf, 0.5, 1.5]	0.4456052686622642	Two arguments: the generalized $\operatorname{erf}(z_0, z_1) = \operatorname{erf}(z_1) - \operatorname{erf}(z_0)$			domain	SymPy's erf2 stays unevaluated at float arguments; ours evaluates the difference.
-which-with-exact-arguments-is-the-difference-erf	Scope		[Erf, 1, 2]	[Add, [Negate, [Erf, 1]], [Erf, 2]]	...which with exact arguments is the difference $\operatorname{erf}(2) - \operatorname{erf}(1)$			domain	SymPy's erf2 stays unevaluated at exact arguments; ours writes the difference erf(2) - erf(1).
+two-arguments-the-generalized-erf-z-0-z-1-erf-z	Scope		[Erf, 0.5, 1.5]	0.4456052686622642	Two arguments: the generalized $\operatorname{erf}(z_0, z_1) = \operatorname{erf}(z_1) - \operatorname{erf}(z_0)$				
+which-with-exact-arguments-is-the-difference-erf	Scope		[Erf, 1, 2]	[Add, [Negate, [Erf, 1]], [Erf, 2]]	...which with exact arguments is the difference $\operatorname{erf}(2) - \operatorname{erf}(1)$				
 interval-arithmetic-erf-is-increasing-so-the	Scope		[Erf, [Interval, -2.1, -1.9]]	[Interval, -0.997020533343667, -0.9927904292352575]	Interval arithmetic: Erf is increasing, so the image of an interval is the interval of the endpoint images	convention	We evaluate the tight endpoint image for a monotone function; Wolfram's generic interval propagation gives a wider, still-correct bound.	domain	SymPy leaves erf(...) over an AccumBounds unevaluated; ours computes the image.
 uncertainty-propagation-with-slope-frac-2-sqrt	Scope		[Erf, [Around, 2, 0.01]]	[Around, 0.9953222650189527, 0.00020666985354092054]	Uncertainty propagation, with slope $\frac{2}{\sqrt\pi}e^{-4}$				
 to-40-significant-digits-every-one-correctly	Scope		[N, [Erf, 1], 40]	{num: "0.8427007929497148693412206350826092592961"}	To 40 significant digits, every one correctly rounded				

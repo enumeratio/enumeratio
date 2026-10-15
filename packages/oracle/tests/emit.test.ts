@@ -178,6 +178,11 @@ test("SymPy keeps a residue class through Power and Divide, and reads an Interva
   expect(source(["FactorInteger", ["Complex", 3, 4]])).toBeUndefined();
 });
 
+test("a bare Infinity is SymPy's oo, and Wolfram still reads it as its own", () => {
+  expect(emit(["Erf", "Infinity"], "sympy")).toEqual({ ok: true, source: "erf(oo)" });
+  expect(emit(["Erf", "Infinity"], "wolfram").ok).toBe(true);
+});
+
 test("a binding's threadArgOnly threads for its own system alone", () => {
   expect(emit(["FactorInteger", ["List", 12, 18]], "sympy")).toEqual({
     ok: true,

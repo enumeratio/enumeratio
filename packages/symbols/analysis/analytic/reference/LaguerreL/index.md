@@ -53,6 +53,7 @@ bindings:
     threadArgOnly:
       - 1
       - 2
+      - 3
     checked:
       version: 1.14.0
       on: 2026-10-14
