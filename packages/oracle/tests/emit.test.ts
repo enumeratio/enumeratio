@@ -196,6 +196,15 @@ test("mpmath reads a decimal past a double's digits or range from its text, and 
   expect(emit(["N", ["Exp", 1], 50], "mpmath")).toEqual({ ok: true, source: "enumeratio_n(lambda: (exp(1)), 50)" });
 });
 
+test("inside an mpmath N(x, d) past a double's digits every decimal is read from its text", () => {
+  expect(emit(["N", ["Sin", 0.1], 50], "mpmath")).toEqual({
+    ok: true,
+    source: 'enumeratio_n(lambda: (sin(mpf("0.1"))), 50)',
+  });
+  expect(emit(["N", ["Sin", 0.1], 10], "mpmath")).toEqual({ ok: true, source: "enumeratio_n(lambda: (sin(0.1)), 10)" });
+  expect(emit(["Sin", 0.1], "mpmath")).toEqual({ ok: true, source: "sin(0.1)" });
+});
+
 test("a binding's threadArgOnly threads for its own system alone", () => {
   expect(emit(["FactorInteger", ["List", 12, 18]], "sympy")).toEqual({
     ok: true,

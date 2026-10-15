@@ -238,6 +238,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
 
   // The expression itself, and what a list of answers holds: where mpmath's N(x, d) can round to d digits.
   const answers = new Set<MathJSON>([expr]);
+  // Whether the walk is inside the operand of an mpmath N(x, d) answer with d past a double's digits.
+  let exact = false;
   const walk = (node: MathJSON): string => {
     // Wolfram's exponent marker is `*^`, and `1e-11` there is `1 * e - 11`.
     if (typeof node === "number") {
@@ -245,6 +247,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       // Lean reads `f -1` as `f - 1`.
       // Rust values are the prelude's dynamic `V` (rust/src/prelude.rs).
       if (system === "rust") return Number.isSafeInteger(node) ? `n(${node})` : `x(${node})`;
+      // Inside an N(x, d) answer past a double's digits `0.1` would be the double, not the decimal.
+      if (system === "mpmath" && exact && !Number.isInteger(node)) return `mpf(${JSON.stringify(String(node))})`;
       return system === "mathlib4" && node < 0 ? `(${node})` : String(node);
     }
     if (typeof node === "boolean") return node ? "True" : "False";
@@ -318,7 +322,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         if (
           system === "mpmath" &&
           /[.e]/i.test(value) &&
-          (value.replace(/e.*$/i, "").replace(/\D/g, "").replace(/^0+/, "").length > 15 ||
+          (exact ||
+            value.replace(/e.*$/i, "").replace(/\D/g, "").replace(/^0+/, "").length > 15 ||
             (/[1-9]/.test(value.replace(/e.*$/i, "")) &&
               !(Math.abs(Number(value)) > 0 && Number.isFinite(Number(value)))))
         )
@@ -346,9 +351,12 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     );
     const fresh = binders.filter((v) => !bound.has(v));
     for (const v of fresh) bound.add(v);
+    const wasExact = exact;
+    if (system === "mpmath" && head === "N" && typeof operands[1] === "number" && operands[1] > 15) exact = true;
     try {
       return walkCall(head, operands);
     } finally {
+      exact = wasExact;
       for (const v of fresh) bound.delete(v);
     }
   };
