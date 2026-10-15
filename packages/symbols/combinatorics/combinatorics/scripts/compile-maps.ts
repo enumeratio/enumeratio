@@ -8,8 +8,6 @@
 //
 //   vp node packages/symbols/combinatorics/combinatorics/scripts/compile-maps.ts
 
-import { execFileSync } from "node:child_process";
-import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import type { Engine } from "@enumeratio/engine";
 import { bareEngine } from "@enumeratio/engine/testing";
@@ -19,6 +17,7 @@ import { evaluateDefinition, MAPS } from "../src/maps.ts";
 import { noVerdicts, type Verdicts } from "../src/statistics/generate-compiled.ts";
 import { smallElements } from "./samples.ts";
 import { verdictsFor } from "./verdicts.ts";
+import { writeGenerated } from "./write-generated.ts";
 
 interface Entry {
   readonly key: string;
@@ -113,10 +112,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const verdicts = verdictsFor("compile-maps");
   const entries = compiledMaps(verdicts);
   const target = fileURLToPath(new URL("../src/compiled-maps.generated.js", import.meta.url));
-  writeFileSync(target, render(entries));
+  writeGenerated(target, render(entries));
   verdicts.save();
-  // Laid out as `vp fmt` lays it out, so a rerun with nothing changed changes nothing.
-  execFileSync("vp", ["fmt", target], { stdio: "ignore" });
   const compiled = entries.filter((e) => e.body !== undefined);
   console.log(`${compiled.length} of ${MAPS.filter((m) => m.body !== undefined).length} map definitions compiled`);
   for (const e of entries.filter((entry) => entry.body === undefined))

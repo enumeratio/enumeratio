@@ -6,7 +6,7 @@ import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { COMPILED_FAMILIES } from "../collections/src/families/compiled-families.generated.js";
 import { epsilEntries } from "../permutations/src/families/core.ts";
-import { disagreements } from "../scripts/compile-families.ts";
+import { disagreements } from "../scripts/family-checks.ts";
 
 test("the build compiled families", () => {
   expect(Object.keys(COMPILED_FAMILIES).length).toBeGreaterThan(0);

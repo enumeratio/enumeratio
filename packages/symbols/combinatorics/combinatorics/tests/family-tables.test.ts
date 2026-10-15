@@ -13,7 +13,7 @@ import {
 } from "../collections/src/families/epsil.ts";
 import { allFamilies } from "../collections/src/families/index.ts";
 import { epsilEntries as compositions } from "../compositions/src/families/core.ts";
-import { disagreements } from "../scripts/compile-families.ts";
+import { disagreements } from "../scripts/family-checks.ts";
 
 const ce = bareEngine();
 const family = compositions.find((f) => f.head === "CompositionsIntoKParts")!;
