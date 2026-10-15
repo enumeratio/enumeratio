@@ -1,0 +1,49 @@
+id	in	out	verdict
+h-10-frac-7381-2520	harmonic(10)	7381/2520	
+h-0-0-the-empty-sum	harmonic(0)	0	
+h-5-1-sum-k-1-5-k-15-a-negative-order-is-still	harmonic(5, -1)	15	
+a-floating-point-argument-evaluates-via-psi-z-1	harmonic(2.5)	1.68037230554678	
+h-10-2-sum-k-1-10-k-2-exact	harmonic(10, 2)	1968329/1270080	
+h-1-the-first-term	harmonic(1)	1	
+h-10-3-exact-generalized-sum	harmonic(10, 3)	19164113947/16003008000	
+h-5-0-sum-k-1-5-1-5	harmonic(5, 0)	5	
+h-0-3-the-empty-sum-at-a-nonzero-order	harmonic(0, 3)	0	
+h-0-2-the-empty-sum-at-order-2	harmonic(0, 2)	0	
+no-sum-below-n-0-one-argument-form	harmonic(-1)	zoo	
+no-sum-below-n-0-two-argument-form	harmonic(-2, 3)	nan	disagree
+symbolic-n-one-argument-form-stays-symbolic	harmonic(Symbol("n"))	True	
+n-harmonicnumber-0p5	N(harmonic(0.5), 30)	0.613705638880109427546472034010	
+n-harmonicnumber-complex-3-plus-2i	N(harmonic((3 + 2*I)), 30)	1.97257641104474115649415119131 + 0.516961128796076382232241496007*I	
+n-harmonicnumber-1-over-2-order-2	N(harmonic(Rational(1, 2), 2), 30)	0.710131866303547127055169666708	
+n-harmonicnumber-5-order-1-over-2	N(harmonic(5, Rational(1, 2)), 30)	3.23167064587613122819182787635	
+n-harmonicnumber-2p5-order-1-not-the-zeta-1-pole	N(harmonic(2.5, 1), 30)	1.68037230554677607941016503901	
+h-10-1-order-1-reduces-to-the-plain-h-10	harmonic(10, 1)	7381/2520	
+h-2-is-three-halves	harmonic(2)	3/2	
+h-neg0-5	harmonic(-0.5)	-1.38629436111989	
+h-neg2-5	harmonic(-2.5)	1.28037230554678	
+h-10-5	harmonic(10.5)	2.97545479443731	
+n-harmonicnumber-7-3-rational	N(harmonic(Rational(7, 3)), 30)	1.62375331345215510903866444437	
+h-complex-neg1-5-plus-4i	harmonic((-1.5 + 4*I))	1.99164559645283 + 1.81695017291054*I	
+h-complex-0-2-minus-3i	harmonic((0.2 + -3*I))	1.69834790334516 - 1.33955200399877*I	
+h-2-5-order-2	harmonic(2.5, 2)	harmonic(2.5, 2)	
+h-0-5-order-3	harmonic(0.5, 3)	harmonic(0.5, 3)	
+n-harmonicnumber-complex-3-plus-2i-order-2	N(harmonic((3 + 2*I), 2), 30)	1.42958870352384990109492545724 + 0.121819632987466434489258083636*I	
+h-complex-neg1-5-plus-4i-order-3-2	harmonic((-1.5 + 4*I), Rational(3, 2))	harmonic(-1.5 + 4*I, 3/2)	
+non-integer-arguments-via-psi-z-1-gamma	harmonic(0.33)	0.441523646937364	
+the-generalized-form-off-the-integers-via-zeta-r	harmonic(0.8, 3)	harmonic(0.8, 3)	
+complex-arguments	harmonic((1.5 + 2*I))	1.61704942307449 + 0.780197135729859*I	
+order-r-1-off-the-integers-is-plain-h-z-h-e-1	N(harmonic(E, 1), 30)	1.75002138053654173357307165671	
+listable-threads-over-a-list	[harmonic(2), harmonic(3), harmonic(5), harmonic(7), harmonic(11)]	[3/2, 11/6, 137/60, 363/140, 83711/27720]	
+threads-elementwise-over-an-array-of-orders-and	[[harmonic(2, Rational(1, 2)), harmonic(2, 2)], [harmonic(2, 2), harmonic(2, Rational(1, 2))]]	[[sqrt(2)/2 + 1, 5/4], [5/4, sqrt(2)/2 + 1]]	
+interval-arithmetic-in-the-order	harmonic(0.2, AccumBounds(2.1, 2.2))	harmonic(0.2, AccumBounds(2.1, 2.2))	disagree
+uncertainty-propagation-in-the-order			
+to-exactly-30-significant-digits-not-yet-31-come	N(harmonic(Rational(1, 2)), 30)	0.613705638880109381165535757084	
+order-1-gives-h-z-itself-not-the-zeta-1-pole	N(harmonic(2.5, 1), 30)	1.68037230554677607941016503901	
+at-an-integer-order-1-agrees-exactly-with-the	harmonic(10, 1)	7381/2520	
+no-sum-below-n-0	harmonic(-3)	zoo	
+h-1-2-2-2-ln-2-exact-at-rational-arguments-by	harmonic(Rational(1, 2))	harmonic(1/2)	
+h-1-4-4-frac-pi-2-3-ln-2	harmonic(Rational(1, 4))	harmonic(1/4)	
+symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays	harmonic(Symbol("n"), -1)	True	
+the-harmonic-series-diverges	harmonic(oo)	oo	
+h-infty-r-zeta-r-for-r-1-the-basel-sum	harmonic(oo, 2)	pi**2/6	
+a-non-integer-order-stays-symbolic-under-plain	harmonic(5, Rational(1, 2))	sqrt(5)/5 + sqrt(3)/3 + sqrt(2)/2 + 3/2	inconclusive

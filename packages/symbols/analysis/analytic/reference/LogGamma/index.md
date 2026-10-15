@@ -26,6 +26,14 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: LogGamma[z] and mpmath.loggamma(z) — both the continuation, not Log[Gamma[z]].
+  - origin: mapped
+    form: sympy
+    template: loggamma($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 seeAlso:
   - Gamma
   - GammaLn

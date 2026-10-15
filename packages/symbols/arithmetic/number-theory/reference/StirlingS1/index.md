@@ -57,6 +57,17 @@ bindings:
     template: Function[{n, k}, (-1)^(n - k) StirlingFirst[n, k], Listable][$1, $2]
     arity: 2
     note: Signed in Wolfram and compute-engine; Combinatorica's StirlingFirst, like Sage's stirling_number1, is UNSIGNED, so the template carries the sign (-1)^(n-k). Combinatorics.jl's stirlings1 and Mathlib's Nat.stirlingFirst are UNSIGNED too, so a sign difference there is expected, not a bug. Combinatorics.jl's stirlings1 also needs n as a BigInt past its Int64 lookup table (n > 20).
+  - origin: mapped
+    form: sympy
+    template: stirling($1, $2, kind=1, signed=True)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: SymPy's `stirling` defaults to the second kind and unsigned; `kind=1, signed=True` is the signed first kind, as ours and Wolfram's.
 catalog:
   - system: wolfram
     identity: StirlingS1

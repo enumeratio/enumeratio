@@ -27,10 +27,10 @@ uncertainty-propagation-cos-2-pm-0-01-approx-0
 cos-infty-should-be-the-oscillation-range-1-1	cos(oo)	AccumBounds(-1, 1)	disagree
 an-imaginary-argument-rewrites-to-cosh-cos-ix	cos((I * Symbol("x")))	True	
 evenness-drops-the-sign-of-a-symbolic-argument	cos((-Symbol("x")))	True	
-cos-arccos-x-x-for-every-x			
-cos-arccos-2-2-past-the-real-domain			
-cos-arcsin-x-sqrt-1-x-2			
-cos-arctan-x-frac-1-sqrt-1-x-2			
+cos-arccos-x-x-for-every-x	cos(acos(Symbol("x")))	True	
+cos-arccos-2-2-past-the-real-domain	cos(acos(2))	2	
+cos-arcsin-x-sqrt-1-x-2	cos(asin(Symbol("x")))	True	
+cos-arctan-x-frac-1-sqrt-1-x-2	cos(atan(Symbol("x")))	True	
 derivative-sin-x	diff(cos(Symbol("x")), Symbol("x"))	True	
 antiderivative			
 taylor-series-about-0-only-even-powers-appear			

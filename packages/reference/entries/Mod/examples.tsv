@@ -54,7 +54,7 @@ generatingfunction-n-mod-4-n-x	Scope		[GeneratingFunction, [Mod, n, 4], n, x]	[D
 list-a-b-c-list-1-plus-neg-1-plus-range-1-10-mod	Applications		[At, [List, a, b, c], [Add, 1, [Mod, [Add, -1, [Range, 1, 10]], 3]]]	[List, a, b, c, a, b, c, a, b, c, a]			Cycling an index with Mod repeats the list																	
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	Properties		[Equal, [Mod, 17, 5], [Mod, [Add, 17, [Multiply, 3, 5]], 5]]	True			Periodicity: $a \bmod n = (a+kn) \bmod n$ for any integer $k$																	
 a-negative-modulus-gives-a-result-in-n-0	Properties		[Mod, -5, -3]	-2			A negative modulus gives a result in $(n, 0]$																	
-the-remainder-of-quotient	Properties		[Equal, [Mod, [Complex, 7, 5], [Complex, 2, 1]], [Subtract, [Complex, 7, 5], [Multiply, [Complex, 2, 1], [Quotient, [Complex, 7, 5], [Complex, 2, 1]]]]]	True			the remainder of [[Quotient]]																	
+the-remainder-of-quotient	Properties		[Equal, [Mod, [Complex, 7, 5], [Complex, 2, 1]], [Subtract, [Complex, 7, 5], [Multiply, [Complex, 2, 1], [Quotient, [Complex, 7, 5], [Complex, 2, 1]]]]]	True			the remainder of [[Quotient]]								domain	SymPy's % and // take real operands: the Gaussian remainder stays held as Mod(7 + 5*I, 2 + I), and // floors each part of the quotient, so the identity does not hold.								
 5-mod-3-eq-2-mod-3	Properties		[Equal, [Mod, 5, 3], [Mod, 2, 3]]	True			Congruent numbers share a remainder																	
 2-mod-3-eq-8-mod-3	Properties		[Equal, [Mod, 2, 3], [Mod, 8, 3]]	True			$2 \equiv 8 \pmod 3$																	
 0-mod-1	Properties		[Mod, 0, 1]	0	0	Wolfram MathematicalFunctionData, Mod	Anything is 0 modulo 1																	

@@ -18,6 +18,16 @@ bindings:
     form: wolfram / mpmath / sympy
     environment: external
     note: ChebyshevU[n, x]; mpmath.chebyu(n, x); sympy.chebyshevu(n, x).
+  - origin: mapped
+    form: sympy
+    template: chebyshevu($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 seeAlso:
   - ChebyshevT
   - LegendrePolynomial

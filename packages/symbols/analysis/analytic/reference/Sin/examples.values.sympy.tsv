@@ -34,11 +34,11 @@ uncertainty-propagation-sin-2-pm-0-01-approx-0
 an-imaginary-argument-rewrites-to-sinh-sin-ix-i	sin((I * Symbol("x")))	True	
 oddness-pulls-the-sign-out-of-a-symbolic	sin((-Symbol("x")))	True	
 a-half-period-shift-reduces-sin-x-pi-sin-x	sin((Symbol("x") + pi))	True	
-sin-arcsin-x-x-for-every-x			
-sin-arcsin-2-2-past-the-real-domain			
-sin-arcsin-of-a-complex-argument			
-sin-arccos-x-sqrt-1-x-2			
-sin-arctan-x-frac-x-sqrt-1-x-2			
+sin-arcsin-x-x-for-every-x	sin(asin(Symbol("x")))	True	
+sin-arcsin-2-2-past-the-real-domain	sin(asin(2))	2	
+sin-arcsin-of-a-complex-argument	sin(asin((1 + 2*I)))	1 + 2*I	
+sin-arccos-x-sqrt-1-x-2	sin(acos(Symbol("x")))	True	
+sin-arctan-x-frac-x-sqrt-1-x-2	sin(atan(Symbol("x")))	True	
 derivative-frac-d-dx-sin-x-cos-x	diff(sin(Symbol("x")), Symbol("x"))	True	
 second-derivative	diff(sin(Symbol("x")), Symbol("x"), Symbol("x"))	True	
 antiderivative			

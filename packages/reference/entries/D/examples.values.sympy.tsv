@@ -1,4 +1,4 @@
 id	in	out
 of-a-product	diff(((S(Symbol("x"))**2) * sin(Symbol("x"))), Symbol("x"))	True
 second-derivative	diff((S(Symbol("x"))**3), Symbol("x"), Symbol("x"))	True
-of-a-head-we-declare		
+of-a-head-we-declare	diff(loggamma(Symbol("z")), Symbol("z"))	True

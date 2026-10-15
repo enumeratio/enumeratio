@@ -26,6 +26,15 @@ names:
   fungrim: Atan
   dlmf: arctangent function
   wolfram: ArcTan
+bindings:
+  - origin: mapped
+    form: sympy
+    template: atan($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 ---
 
 - Defined for every real x, unlike [[Arcsin]] and [[Arccos]].

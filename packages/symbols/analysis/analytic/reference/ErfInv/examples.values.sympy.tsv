@@ -1,0 +1,31 @@
+id	in	out	verdict
+erfinv-0	erfinv(0)	0	
+erfinv-1	erfinv(1)	oo	
+erfinv-neg-1	erfinv(-1)	-oo	
+a-floating-point-argument-evaluates-directly-to	erfinv(0.5)	0.476936276204470	
+a-machine-precision-argument	erfinv(0.6)	0.595116081449995	
+series-erfinv-x-x-0-3			
+threads-element-wise-over-a-list-as-wolfram-s	[erfinv(0), erfinv(1)]	[0, oo]	
+two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x			
+interval-arithmetic-the-inverse-is-increasing-so	erfinv(AccumBounds(0.5, 0.6))	erfinv(AccumBounds(0.5, 0.6))	disagree
+uncertainty-propagation			
+to-30-significant-digits-every-one-correctly	N(erfinv(Rational(1, 2)), 30)	0.476936276204469873381418353643	
+n-erfinv-33-over-100-50	N(erfinv(Rational(33, 100)), 30)	0.301332146133705826128502718158	
+functionexpand-matrixfunction-erfinv-list-list-0			
+erfinv-a-erf-a-z			
+functionexpand-erf-erfinv-s			
+erfinv-s-eq-erfinv-0-s			
+series-erfinv-x-x-0-8			
+series-erfinv-z0-s-z0-0-2			
+the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	(sqrt(2) * erfinv(0.95))	1.38590382434968*sqrt(2)	
+inverse-of-erf-erf-erfinv-x-x-see-erf	enumeratio_equal(erf(erfinv(0.5)), 0.5)	True	
+odd-erfinv-x-erfinv-x-applied-symbolically	erfinv((-Symbol("x")))	None	inconclusive
+frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2	diff(erfinv(Symbol("x")), Symbol("x"))	True	
+isnumeric-erfinv-1-over-pi-1-over-2			
+erfinv-0-0			
+erfinv-0-1			
+erfinv-1-0			
+solve-erfinv-x-pow-3-plus-2-times-erfinv-x-eq-1			
+attributes-erfinv			
+outside-its-real-domain-1-1-compute-engine	erfinv(2)	ValueError: erfinv(x) is defined only for -1 <= x <= 1	error
+blows-up-near-the-boundary-erfinv-0-9999-is	erfinv(0.9999)	2.75106390571208	

@@ -26,9 +26,9 @@ interval-arithmetic-the-image-of-0-pi-3-is-0	tan(AccumBounds(0, (S(pi) / 3)))	Ac
 uncertainty-propagation-tan-2-pm-0-02-approx-2			
 tan-ix-i-tanh-x	tan((I * Symbol("x")))	True	
 oddness-pulls-the-sign-out-of-a-symbolic	tan((-Symbol("x")))	True	
-tan-arctan-x-x-for-every-x			
-tan-arctan-2-2-for-every-x			
-tan-arcsin-x-frac-x-sqrt-1-x-2			
+tan-arctan-x-x-for-every-x	tan(atan(Symbol("x")))	True	
+tan-arctan-2-2-for-every-x	tan(atan(2))	2	
+tan-arcsin-x-frac-x-sqrt-1-x-2	tan(asin(Symbol("x")))	True	
 derivative-sec-2-x	diff(tan(Symbol("x")), Symbol("x"))	True	
 antiderivative-ln-sec-x			
 taylor-series-about-0			

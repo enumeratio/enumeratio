@@ -36,6 +36,28 @@ bindings:
     form: wolfram / mpmath / sympy
     environment: external
     note: LaguerreL[n, x] and LaguerreL[n, a, x]; mpmath.laguerre(n, a, x); sympy.assoc_laguerre(n, a, x).
+  - origin: mapped
+    form: sympy
+    template: laguerre($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+  - origin: mapped
+    form: sympy
+    template: assoc_laguerre($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: SymPy's `assoc_laguerre(n, a, x)` is the generalized Laguerre polynomial; `laguerre(n, x)` is its a = 0 case.
 seeAlso:
   - HermiteH
   - ChebyshevT

@@ -161,8 +161,8 @@ test("an unmappable expression names exactly what is missing", () => {
   // …including when the gap is nested inside something we do know.
   expect(unmappedHeads(["Add", 1, ["JonesPolynomial", 2]], "sympy")).toEqual(["JonesPolynomial/1"]);
   // A head mapped for one system may be unmapped for another; that is not a maths claim.
-  expect(emit(["Quotient", 7, 2], "wolfram").ok).toBe(true);
-  expect(emit(["Quotient", 7, 2], "sympy").ok).toBe(false);
+  expect(emit(["Mean", ["List", 1, 2]], "wolfram").ok).toBe(true);
+  expect(emit(["Mean", ["List", 1, 2]], "sympy").ok).toBe(false);
 });
 
 test("SymPy keeps a residue class through Power and Divide, and reads an Interval's Abs with abs()", () => {
@@ -176,6 +176,11 @@ test("SymPy keeps a residue class through Power and Divide, and reads an Interva
   expect(source(["Abs", -3])).toBe("Abs(-3)");
   // factorrat takes rationals, so a Gaussian integer is unmapped, not an AttributeError.
   expect(source(["FactorInteger", ["Complex", 3, 4]])).toBeUndefined();
+});
+
+test("a bare Infinity is SymPy's oo, and Wolfram still reads it as its own", () => {
+  expect(emit(["Erf", "Infinity"], "sympy")).toEqual({ ok: true, source: "erf(oo)" });
+  expect(emit(["Erf", "Infinity"], "wolfram").ok).toBe(true);
 });
 
 test("a binding's threadArgOnly threads for its own system alone", () => {

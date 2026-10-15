@@ -225,6 +225,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       if (/^'.*'$/s.test(node)) return JSON.stringify(node.slice(1, -1));
       const constant = CONSTANTS[node]?.[system];
       if (constant !== undefined) return constant;
+      // A bare `Infinity` is SymPy's `oo`; scoped here, since a CONSTANTS row would make it missing elsewhere.
+      if (system === "sympy" && node === "Infinity") return "oo";
       // Wolfram also knows the rest of the constants, the slots a Function binds, and a
       // mapped head passed as a value (`Fold(Add, 0, xs)`).
       if (wl && (node in SYMBOLS || node in HEADS || /^_\d+$/.test(node))) return toWolfram(node);

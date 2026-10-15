@@ -18,6 +18,15 @@ seeAlso:
 names:
   dlmf: cosecant function
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: csc($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 ---
 
 - $\csc(x) = \frac{1}{\sin(x)}$.

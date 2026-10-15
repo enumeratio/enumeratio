@@ -23,6 +23,15 @@ references:
 names:
   dlmf: complementary error function
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: erfc($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
 ---
 
 - Defined as $\operatorname{erfc}(z) = 1 - \operatorname{erf}(z)$. See [[Erf]].

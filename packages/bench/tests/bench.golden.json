@@ -2318,8 +2318,9 @@
             ]
           },
           "sympy": {
-            "reason": "unmapped",
-            "missing": ["StirlingS1/2"]
+            "sources": [
+              "[(stirling(235, 124, kind=1, signed=True) % 1000000007), (stirling(291, 160, kind=1, signed=True) % 1000000007), (stirling(224, 136, kind=1, signed=True) % 1000000007), (stirling(293, 96, kind=1, signed=True) % 1000000007), (stirling(225, 122, kind=1, signed=True) % 1000000007), (stirling(300, 99, kind=1, signed=True) % 1000000007), (stirling(295, 83, kind=1, signed=True) % 1000000007), (stirling(224, 93, kind=1, signed=True) % 1000000007)]"
+            ]
           },
           "mpmath": {
             "reason": "precision"
@@ -2382,8 +2383,9 @@
             ]
           },
           "sympy": {
-            "reason": "unmapped",
-            "missing": ["StirlingS1/2"]
+            "sources": [
+              "[(stirling(1035, 510, kind=1, signed=True) % 1000000007), (stirling(1091, 599, kind=1, signed=True) % 1000000007), (stirling(1024, 539, kind=1, signed=True) % 1000000007), (stirling(1093, 441, kind=1, signed=True) % 1000000007)]"
+            ]
           },
           "mpmath": {
             "reason": "precision"
