@@ -9,6 +9,16 @@ signatures:
     library: enumeratio-analytic
     type: (any, any?) -> expression
     overrides: compute-engine
+bindings:
+  - origin: mapped
+    form: sympy
+    template: simplify($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: SymPy has one simplifier, so FullSimplify maps to it too. The scan compares what each answers by value (the difference simplifies to zero, or agrees at sample points), not by form; an answer ours leaves as written is no agreement unless SymPy leaves it too. Assumptions (a second operand) are not mapped.
 attributes:
   - HoldAll
 names:

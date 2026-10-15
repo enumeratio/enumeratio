@@ -12,14 +12,14 @@ cuberoot-0	real_root(0, 3)	0
 cuberoot-positiveinfinity	real_root(oo, 3)	oo	
 cuberoot-negativeinfinity	real_root(-oo, 3)	-oo	
 cuberoot-x-eq-surd-x-3			
-fullsimplify-d-integrate-cuberoot-x-x-nothing			
-fullsimplify-integrate-sin-x-times-cuberoot-x-x			
+fullsimplify-d-integrate-cuberoot-x-x-nothing	simplify(enumeratio_equal(diff(integrate(real_root(Symbol("x"), 3), Symbol("x")), Symbol("x")), real_root(Symbol("x"), 3)))	False	disagree
+fullsimplify-integrate-sin-x-times-cuberoot-x-x	simplify(integrate((sin(Symbol("x")) * real_root(Symbol("x"), 3)), (Symbol("x"), 0, 5)))	75*5**(1/3)*hyper((7/6,), (3/2, 13/6), -25/4)/7	disagree
 d-cuberoot-x-x	diff(real_root(Symbol("x"), 3), Symbol("x"))	None	inconclusive
 solve-cuberoot-x-eq-3-times-2-pow-neg-1-x			
-fullsimplify-d-cuberoot-x-list-x-k			
+fullsimplify-d-cuberoot-x-list-x-k	simplify(diff(real_root(Symbol("x"), 3), [Symbol("x"), Symbol("k")]))	Derivative(Piecewise((Piecewise((0, Eq(x, 0)), (x/Abs(x**(2/3)), True)), Eq(im(x), 0)), (x**(1/3), True)), (x, k))	disagree
 seriescoefficient-cuberoot-x-list-x-1-n			
 fullsimplify-fourierseries-cuberoot-x-x-1			
-fullsimplify-integrate-cuberoot-x-times			
+fullsimplify-integrate-cuberoot-x-times	simplify(integrate((real_root(Symbol("x"), 3) * (S(E)**Symbol("x"))), Symbol("x")))	Integral(Piecewise((0, Eq(x, 0)), (x*exp(x)/Abs(x**(2/3)), True)), x)	disagree
 series-cuberoot-x-x-1-4	series(real_root(Symbol("x"), 3), Symbol("x"), 1, 4 + 1)	True	
 fullsimplify-series-cuberoot-x-x-x0-2	simplify(series(real_root(Symbol("x"), 3), Symbol("x"), Symbol("x0"), 2 + 1))	Piecewise(((5*x0**3 + 5*x*x0**2 - x**2*x0 + O((x - x0)**3, (x, x0)))/(9*x0**(5/3)*Abs(x0)), Eq(im(x0), 0)), ((5*x0**2 + 5*x*x0 - x**2 + O((x - x0)**3, (x, x0)))/(9*x0**(5/3)), True))	disagree
 the-same-as-root-with-index-3			

@@ -578,9 +578,12 @@ test("SymPy's series order is one past ours, and Normal and the simplifiers go r
   expect(sympy(["FullSimplify", ["Normal", series]])).toBe(
     'simplify((series(sin(Symbol("x")), Symbol("x"), 0, 5 + 1)).removeO())',
   );
-  // Only around a series: `Normal` of anything else is no SymPy call, and a simplifier is another row's.
-  expect(sympy(["Normal", ["Sin", "x"]])).toBeUndefined();
-  expect(sympy(["Simplify", ["Sin", "x"]])).toBeUndefined();
+  // Around anything else a simplifier is SymPy's one `simplify`, threaded over a list, and Normal hands it back.
+  expect(sympy(["Normal", ["Sin", "x"]])).toBe('sin(Symbol("x"))');
+  expect(sympy(["Simplify", ["Sin", "x"]])).toBe('simplify(sin(Symbol("x")))');
+  expect(sympy(["FullSimplify", ["Sin", "x"]])).toBe('simplify(sin(Symbol("x")))');
+  // Assumptions are not mapped.
+  expect(sympy(["Simplify", ["Sin", "x"], ["Greater", "x", 0]])).toBeUndefined();
 });
 
 test("SymPy reads a derivative ours holds at a point as differentiating in each argument, then substituting", () => {

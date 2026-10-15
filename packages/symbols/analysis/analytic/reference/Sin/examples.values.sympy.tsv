@@ -70,8 +70,8 @@ angle-addition-formula-via-trigexpand
 triple-angle-formula			
 power-reduction-sin-2-x-frac-1-cos-2x-2			
 euler-s-formula-sin-x-frac-e-ix-e-ix-2i			
-simplify-knows-the-pythagorean-identity			
-the-same-through-fullsimplify			
+simplify-knows-the-pythagorean-identity	simplify(((S(sin(Symbol("x")))**2) + (S(cos(Symbol("x")))**2)))	1	
+the-same-through-fullsimplify	simplify(((S(sin(Symbol("x")))**2) + (S(cos(Symbol("x")))**2)))	1	
 sin-3-over-10-times-pi	sin((Rational(3, 10) * pi))	1/4 + sqrt(5)/4	
 integrate-sin-t-pow-2-t-0-positiveinfinity	integrate(sin((S(Symbol("t"))**2)), (Symbol("t"), 0, oo))	sqrt(2)*sqrt(pi)/4	
 integrate-sin-t-pow-2-t-0-1-over-2-times-pi	integrate((S(sin(Symbol("t")))**2), (Symbol("t"), 0, (Rational(1, 2) * pi)))	pi/4	

@@ -406,7 +406,8 @@ function trialSources(
   const subs = new Map([...all].filter(([name]) => !held.has(name) && !bound.has(name)));
   // A series is sampled as a polynomial, so the simplifier around it has nothing to do: on a
   // symbolic-coefficient series it only runs out the clock (`FullSimplify[Normal[Series[…]]]`).
-  const asked = series.size > 0 ? withoutSimplifiers(expr) : expr;
+  // SymPy's simplifier is not asked at a point either: it keeps the value, and can raise there where the value is fine.
+  const asked = series.size > 0 || system === "sympy" ? withoutSimplifiers(expr) : expr;
   const theirs = emit(substituteFreeSymbols(asked, subs), system);
   const ours = emit(substituteFreeSymbols(expected, subs), system);
   if (!theirs.ok || !ours.ok) return undefined;
