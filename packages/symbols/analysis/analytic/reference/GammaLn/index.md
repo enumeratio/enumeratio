@@ -35,6 +35,14 @@ bindings:
       version: 1.14.0
       on: 2026-10-14
     note: SymPy's loggamma is the principal continuation, as Wolfram's LogGamma is, so the real log-magnitude GammaLn takes at a negative real differs from it.
+  - origin: mapped
+    form: mpmath
+    template: loggamma($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - Defined via [[Gamma]]: $\operatorname{GammaLn}(z) = \ln \Gamma(z)$ for $z > 0$, where $\Gamma$ is positive so no branch-cut ambiguity arises.

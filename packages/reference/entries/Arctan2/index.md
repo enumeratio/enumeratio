@@ -14,5 +14,15 @@ bindings:
     form: wolfram
     template: ArcTan[$2, $1]
     arity: 2
+  - origin: mapped
+    form: mpmath
+    template: atan2($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 stub: engine
 ---

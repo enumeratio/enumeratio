@@ -298,6 +298,12 @@ export function verdictOf(
     verdict = compareCombinations(expected, theirs);
   } else {
     verdict = compare(show(expected, system === "sage" || system === "sympy"), theirs, tolerance);
+    // mpmath ran an `N(x, d)` at d + 20 and rounded to d (run.ts), so, as for Wolfram, the digits it
+    // shows must be ours to the last.
+    if (system === "mpmath" && asksForDigits && Array.isArray(call) && typeof call[2] === "number") {
+      const same = sameDigits(expected, theirs);
+      if (same !== undefined) return same ? "agree" : "disagree";
+    }
     // A text comparison that disagrees or can't decide (a complex against a real, say)
     // gets a second, structural look.
     if (verdict !== "agree") {

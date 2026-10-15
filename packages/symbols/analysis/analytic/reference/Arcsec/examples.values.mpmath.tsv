@@ -1,0 +1,30 @@
+id	in	out	verdict
+arcsec-1	asec(1)	0.0	
+arcsec-2	asec(2)	1.04719755119659774615421446109	
+arcsec-sqrt-2-pi-4	asec(sqrt(2))	0.78539816339744830961566084582	
+arcsec-neg-1	asec(-1)	3.14159265358979323846264338328	
+arcsec-2-2-pi-3	asec(-2)	2.09439510239319549230842892219	
+inside-1-1-the-value-is-purely-imaginary	asec(0.5)	(0.0 + 1.31695789692481670862504634731j)	
+arcsec-positiveinfinity	asec(inf)	1.57079632679489661923132169164	
+a-pole-arcsec-0-is-complex-infinity	asec(0)	ZeroDivisionError: 	error
+derivative-for-real-x-1			
+n-arcsec-5-50	enumeratio_n(lambda: (asec(5)), 50)	1.3694384060045658277761961394221280318585466182853	
+arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	[[asec(sqrt(2)), asec((-sqrt(2)))], [asec(0), asec((-sqrt(2)))]]	ZeroDivisionError: 	error
+arcsec-2-over-3-times-sqrt-3	asec(((mpf(2)/3) * sqrt(3)))	0.523598775598298873077107230546	
+arcsec-complexinfinity			
+matrixfunction-function-arcsec-1-1-list-list			
+arcsec-1-over-2	asec((mpf(1)/2))	(0.0 + 1.31695789692481670862504634731j)	
+arcsec-neg-1-over-2	asec((mpf(-1)/2))	(3.14159265358979323846264338328 - 1.31695789692481670862504634731j)	
+undoes-sec-sec-arcsec-x-x	almosteq(sec(asec(2)), 2, 1e-20)	True	
+arcsec-neg-sqrt-2-plus-sqrt-6	asec(((-sqrt(2)) + sqrt(6)))	0.261799387799149436538553615274	
+arcsec-neg-sqrt-6-plus-sqrt-2	asec(((-sqrt(6)) + sqrt(2)))	2.87979326579064380192408976801	
+arcsec-2-times-sqrt-1-over-2-plus-sqrt-2	asec((2 * sqrt((mpmathify(1) / (2 + sqrt(2))))))	0.39269908169872415480783042291	
+arcsec-neg-2-times-sqrt-1-over-2-plus-sqrt-2	asec((-2 * sqrt((mpmathify(1) / (2 + sqrt(2))))))	2.74889357189106908365481296037	
+arcsec-neg-2-over-3-times-sqrt-3	asec(((mpf(-2)/3) * sqrt(3)))	2.61799387799149436538553615273	
+arcsec-neg-1-plus-sqrt-5	asec((-1 + sqrt(5)))	0.628318530717958647692528676656	
+arcsec-1-minus-sqrt-5	asec((1 + (-sqrt(5))))	2.51327412287183459077011470662	
+arcsec-neg-sqrt-2	asec((-sqrt(2)))	2.35619449019234492884698253746	
+arcsec-sqrt-2-plus-neg-2-over-5-times-sqrt-5	asec(sqrt((2 + ((mpf(-2)/5) * sqrt(5)))))	0.314159265358979323846264338328	
+arcsec-neg-sqrt-2-plus-neg-2-over-5-times-sqrt-5	asec((-sqrt((2 + ((mpf(-2)/5) * sqrt(5))))))	2.82743338823081391461637904495	
+arcsec-sqrt-2-plus-2-over-5-times-sqrt-5	asec(sqrt((2 + ((mpf(2)/5) * sqrt(5)))))	0.942477796076937971538793014984	
+arcsec-neg-sqrt-2-plus-2-over-5-times-sqrt-5	asec((-sqrt((2 + ((mpf(2)/5) * sqrt(5))))))	2.1991148575128552669238503683	

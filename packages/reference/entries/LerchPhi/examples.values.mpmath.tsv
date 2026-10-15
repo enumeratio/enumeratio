@@ -383,12 +383,12 @@ inexact-arguments-should-evaluate-numerically	lerchphi(0.5, 2, 3.5)	0.1193862268
 s-0-far-outside-the-unit-disk-1-1-49-5	lerchphi(49.5, 0, 2)	-0.0206185567010309278350515463918	
 z-1-by-analytic-continuation-phi-z-1-2-ln-1-z-z	lerchphi(7.5, 1, 2)	(-0.166609816478250514251311205691 - 0.0558505360638185464615581045916j)	
 uncertainty-in-z			
-to-30-significant-digits-not-yet-the-requested	(lerchphi((mpf(1)/2), 2, (mpf(1)/3)))	9.34347465937593951855554965804	
+to-30-significant-digits-not-yet-the-requested	enumeratio_n(lambda: (lerchphi((mpf(1)/2), 2, (mpf(1)/3))), 30)	9.34347465937593951855554965804	
 past-z-1-it-is-continued-on-the-cut-real-z-1-it	(lerchphi(2.809, 2, 2))	(-0.0565877019732228976485379048983 - 0.411220377971662588357397032992j)	
 phi-1-3-1-zeta-3-apery-s-constant	almosteq(lerchphi(1, 3, 1), zeta(3), 1e-20)	True	
-phi-1-2-1-eta-2-pi-2-12-the-alternating-rim-via			
+phi-1-2-1-eta-2-pi-2-12-the-alternating-rim-via	almosteq(lerchphi(-1, 2, 1), (mpmathify(((pi)**2)) / 12), 1e-20)	True	
 phi-1-2-2-1-2-li-2-1-2	(lerchphi((mpf(1)/2), 2, 1))	1.16448105293002501180531264032	
-certified-digits-phi-1-2-1-2-1-3	(lerchphi((mpf(1)/2), (mpf(1)/2), (mpf(1)/3)))	2.45241714548152611174214415653	
+certified-digits-phi-1-2-1-2-1-3	enumeratio_n(lambda: (lerchphi((mpf(1)/2), (mpf(1)/2), (mpf(1)/3))), 40)	2.452417145481526111742144156526818292226	
 phi-1-4-1-zeta-4-pi-4-90	lerchphi(1, 4, 1)	1.08232323371113819151600369654	
 phi-1-1-1-zeta-1-1-12	lerchphi(1, -1, 1)	-0.0833333333333333333333333333333	
 phi-1-s-a-zeta-s-a-for-symbolic-s-a			

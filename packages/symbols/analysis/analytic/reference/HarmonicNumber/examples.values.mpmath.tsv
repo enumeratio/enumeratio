@@ -1,0 +1,49 @@
+id	in	out	verdict
+h-10-frac-7381-2520	harmonic(10)	2.92896825396825396825396825397	
+h-0-0-the-empty-sum	harmonic(0)	0.0	
+h-5-1-sum-k-1-5-k-15-a-negative-order-is-still	(harmonic(5) if (-1) == 1 else zeta(-1) - zeta(-1, (5) + 1))	15.0	
+a-floating-point-argument-evaluates-via-psi-z-1	harmonic(2.5)	1.68037230554677604783220242375	
+h-10-2-sum-k-1-10-k-2-exact	(harmonic(10) if (2) == 1 else zeta(2) - zeta(2, (10) + 1))	1.54976773116654069035021415974	
+h-1-the-first-term	harmonic(1)	1.0	
+h-10-3-exact-generalized-sum	(harmonic(10) if (3) == 1 else zeta(3) - zeta(3, (10) + 1))	1.19753198567419325166868628698	
+h-5-0-sum-k-1-5-1-5	(harmonic(5) if (0) == 1 else zeta(0) - zeta(0, (5) + 1))	5.0	
+h-0-3-the-empty-sum-at-a-nonzero-order	(harmonic(0) if (3) == 1 else zeta(3) - zeta(3, (0) + 1))	0.0	
+h-0-2-the-empty-sum-at-order-2	(harmonic(0) if (2) == 1 else zeta(2) - zeta(2, (0) + 1))	0.0	
+no-sum-below-n-0-one-argument-form	harmonic(-1)	ValueError: polygamma pole	error
+no-sum-below-n-0-two-argument-form	(harmonic(-2) if (3) == 1 else zeta(3) - zeta(3, (-2) + 1))	ZeroDivisionError: 	error
+symbolic-n-one-argument-form-stays-symbolic			
+n-harmonicnumber-0p5	(harmonic(0.5))	0.613705638880109381165535757084	
+n-harmonicnumber-complex-3-plus-2i	(harmonic(mpc(3, 2)))	(1.97257641104474115649415119131 + 0.516961128796076382232241496007j)	
+n-harmonicnumber-1-over-2-order-2	((harmonic((mpf(1)/2)) if (2) == 1 else zeta(2) - zeta(2, ((mpf(1)/2)) + 1)))	0.710131866303547127055169666708	
+n-harmonicnumber-5-order-1-over-2	((harmonic(5) if ((mpf(1)/2)) == 1 else zeta((mpf(1)/2)) - zeta((mpf(1)/2), (5) + 1)))	3.23167064587613122819182787635	
+n-harmonicnumber-2p5-order-1-not-the-zeta-1-pole	((harmonic(2.5) if (1) == 1 else zeta(1) - zeta(1, (2.5) + 1)))	1.68037230554677604783220242375	
+h-10-1-order-1-reduces-to-the-plain-h-10	(harmonic(10) if (1) == 1 else zeta(1) - zeta(1, (10) + 1))	2.92896825396825396825396825397	
+h-2-is-three-halves	harmonic(2)	1.5	
+h-neg0-5	harmonic(-0.5)	-1.38629436111989061883446424292	
+h-neg2-5	harmonic(-2.5)	1.28037230554677604783220242375	
+h-10-5	harmonic(10.5)	2.97545479443731447397434373617	
+n-harmonicnumber-7-3-rational	(harmonic((mpf(7)/3)))	1.62375331345215510903866444437	
+h-complex-neg1-5-plus-4i	harmonic(mpc(-1.5, 4))	(1.99164559645282876021036214497 + 1.81695017291053611586344424707j)	
+h-complex-0-2-minus-3i	harmonic(mpc(0.2, -3))	(1.69834790334515745997040590773 - 1.33955200399877045369109788629j)	
+h-2-5-order-2	(harmonic(2.5) if (2) == 1 else zeta(2) - zeta(2, (2.5) + 1))	1.31457631074799157149961411115	
+h-0-5-order-3	(harmonic(0.5) if (3) == 1 else zeta(3) - zeta(3, (0.5) + 1))	0.787658581042434287601571030931	
+n-harmonicnumber-complex-3-plus-2i-order-2	((harmonic(mpc(3, 2)) if (2) == 1 else zeta(2) - zeta(2, (mpc(3, 2)) + 1)))	(1.42958870352384990109492545724 + 0.121819632987466434489258083636j)	
+h-complex-neg1-5-plus-4i-order-3-2	(harmonic(mpc(-1.5, 4)) if ((mpf(3)/2)) == 1 else zeta((mpf(3)/2)) - zeta((mpf(3)/2), (mpc(-1.5, 4)) + 1))	(2.00591782091559039955796096051 + 0.778159485195299601757922651828j)	
+non-integer-arguments-via-psi-z-1-gamma	harmonic(0.33)	0.441523646937363545197516675785	
+the-generalized-form-off-the-integers-via-zeta-r	(harmonic(0.8) if (3) == 1 else zeta(3) - zeta(3, (0.8) + 1))	0.940124048948776996526100912956	
+complex-arguments	harmonic(mpc(1.5, 2))	(1.61704942307448654051315835004 + 0.780197135729858677447653395167j)	
+order-r-1-off-the-integers-is-plain-h-z-h-e-1	((harmonic(e) if (1) == 1 else zeta(1) - zeta(1, (e) + 1)))	1.75002138053654173357307165671	
+listable-threads-over-a-list	[harmonic(2), harmonic(3), harmonic(5), harmonic(7), harmonic(11)]	[mpf('1.5'), mpf('1.83333333333333333333333333333327'), mpf('2.28333333333333333333333333333331'), mpf('2.59285714285714285714285714285715'), mpf('3.01987734487734487734487734487738')]	
+threads-elementwise-over-an-array-of-orders-and	[[(harmonic(2) if ((mpf(1)/2)) == 1 else zeta((mpf(1)/2)) - zeta((mpf(1)/2), (2) + 1)), (harmonic(2) if (2) == 1 else zeta(2) - zeta(2, (2) + 1))], [(harmonic(2) if (2) == 1 else zeta(2) - zeta(2, (2) + 1)), (harmonic(2) if ((mpf(1)/2)) == 1 else zeta((mpf(1)/2)) - zeta((mpf(1)/2), (2) + 1))]]	[[mpf('1.70710678118654752440084436210479'), mpf('1.25')], [mpf('1.25'), mpf('1.70710678118654752440084436210479')]]	
+interval-arithmetic-in-the-order			
+uncertainty-propagation-in-the-order			
+to-exactly-30-significant-digits-not-yet-31-come	enumeratio_n(lambda: (harmonic((mpf(1)/2))), 30)	0.613705638880109381165535757084	
+order-1-gives-h-z-itself-not-the-zeta-1-pole	((harmonic(2.5) if (1) == 1 else zeta(1) - zeta(1, (2.5) + 1)))	1.68037230554677604783220242375	
+at-an-integer-order-1-agrees-exactly-with-the	(harmonic(10) if (1) == 1 else zeta(1) - zeta(1, (10) + 1))	2.92896825396825396825396825397	
+no-sum-below-n-0	harmonic(-3)	ValueError: polygamma pole	error
+h-1-2-2-2-ln-2-exact-at-rational-arguments-by	harmonic((mpf(1)/2))	0.613705638880109381165535757084	
+h-1-4-4-frac-pi-2-3-ln-2	harmonic((mpf(1)/4))	0.349762131525267452516981943986	
+symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays			
+the-harmonic-series-diverges	harmonic(inf)	+inf	
+h-infty-r-zeta-r-for-r-1-the-basel-sum	(harmonic(inf) if (2) == 1 else zeta(2) - zeta(2, (inf) + 1))	TimeoutError: over 30s	error
+a-non-integer-order-stays-symbolic-under-plain	(harmonic(5) if ((mpf(1)/2)) == 1 else zeta((mpf(1)/2)) - zeta((mpf(1)/2), (5) + 1))	3.23167064587613122819182787635	inconclusive

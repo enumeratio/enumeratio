@@ -1,0 +1,34 @@
+id	in	out	verdict
+catalannumber-0	(binomial(2 * (0), 0) / ((0) + 1))	1.0	
+catalannumber-1	(binomial(2 * (1), 1) / ((1) + 1))	1.0	
+catalannumber-5	(binomial(2 * (5), 5) / ((5) + 1))	42.0	
+catalannumber-10	(binomial(2 * (10), 10) / ((10) + 1))	16796.0	
+catalannumber-30	(binomial(2 * (30), 30) / ((30) + 1))	3814986502092304.0	
+catalannumber-neg-1-is-neg-1	(binomial(2 * (-1), -1) / ((-1) + 1))	ZeroDivisionError: 	error
+catalannumber-0-past-neg-1	(binomial(2 * (-2), -2) / ((-2) + 1))	0.0	
+catalannumber-neg-5-is-also-0	(binomial(2 * (-5), -5) / ((-5) + 1))	0.0	
+threads-element-wise-over-a-list-as-wolfram-s	[(binomial(2 * (1), 1) / ((1) + 1)), (binomial(2 * (2), 2) / ((2) + 1)), (binomial(2 * (3), 3) / ((3) + 1)), (binomial(2 * (4), 4) / ((4) + 1))]	[mpf('1.0'), mpf('2.0'), mpf('5.0'), mpf('14.0')]	
+half-integer-arguments-evaluate-exactly-through	(binomial(2 * ((mpf(5)/2)), (mpf(5)/2)) / (((mpf(5)/2)) + 1))	3.10427927097334902528260902273	
+real-arguments-evaluate-as-frac-gamma-2n-1-gamma	(binomial(2 * (2.3), 2.3) / ((2.3) + 1))	2.59035215401932309110060225841	
+complex-arguments-evaluate-through-the-same	(binomial(2 * (mpc(1.2, 1)), mpc(1.2, 1)) / ((mpc(1.2, 1)) + 1))	(0.730728624207283878262242539485 + 0.569846406969342461377166452655j)	
+c-1-2-frac-8-3-pi-by-analytic-continuation	(binomial(2 * ((mpf(1)/2)), (mpf(1)/2)) / (((mpf(1)/2)) + 1))	0.848826363156775124100713404653	
+an-interval-argument-should-give-an-enclosing			
+the-5-ways-to-balance-3-pairs-of-parentheses	(binomial(2 * (3), 3) / ((3) + 1))	5.0	
+the-14-triangulations-of-a-hexagon-and-the-14	(binomial(2 * (4), 4) / ((4) + 1))	14.0	
+assuming-n-in-integers-n-gt-eq-0-fullsimplify			
+closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n	(mpmathify(binomial((2 * 5), 5)) / (5 + 1))	42.0	
+the-closed-form-through-a-negative-n-in-binomial	(mpmathify(binomial((2 * -13), 5)) / (4 + 1))	-28501.2	
+equivalently-c-n-binom-2n-n-binom-2n-n-1	(binomial(10, 5) - binomial(10, 6))	42.0	
+the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	(mpmathify((binomial(2 * (6), 6) / ((6) + 1))) / (binomial(2 * (5), 5) / ((5) + 1)))	3.14285714285714285714285714286	
+segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i			
+generatingfunction-catalannumber-n-n-x			
+catalannumber-neg-10	(binomial(2 * (-10), -10) / ((-10) + 1))	0.0	
+catalannumber-neg-9	(binomial(2 * (-9), -9) / ((-9) + 1))	0.0	
+catalannumber-neg-8	(binomial(2 * (-8), -8) / ((-8) + 1))	0.0	
+catalannumber-neg-7	(binomial(2 * (-7), -7) / ((-7) + 1))	0.0	
+catalannumber-neg-6	(binomial(2 * (-6), -6) / ((-6) + 1))	0.0	
+catalannumber-neg-4	(binomial(2 * (-4), -4) / ((-4) + 1))	0.0	
+catalannumber-neg-3	(binomial(2 * (-3), -3) / ((-3) + 1))	0.0	
+differencerootreduce-catalannumber-k-k			
+closed-form-difference-with-a-negative-binomial	(binomial(10, 5) - binomial(-1, -7))	251.0	
+they-grow-fast-c-15-already-passes-nine-million	(binomial(2 * (15), 15) / ((15) + 1))	9694845.0	

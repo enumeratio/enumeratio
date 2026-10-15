@@ -43,6 +43,24 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: log($1, 10)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: mpmath
+    template: log($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - compute-engine's default base is 10, not $e$: Log(z) means $\log_{10}(z)$, and [[Ln]] is the natural logarithm.

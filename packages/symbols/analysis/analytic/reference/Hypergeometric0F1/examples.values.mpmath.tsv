@@ -1,0 +1,18 @@
+id	in	out	verdict
+a-generic-point-checked-against-mpmath-s-hyp0f1	hyp0f1(2, 0.5)	1.27172345631213711073143338209	
+b-1-5-at-neg-0-7	hyp0f1(1.5, -0.7)	0.594476258632799808387881909898	
+rational-order-7-3-at-2-5	hyp0f1((mpf(7)/3), 2.5)	2.56029269391997459822103156783	
+complex-order-1-plus-i-at-0-5	(hyp0f1(mpc(1, 1), 0.5))	(1.26248414130763301585562227458 - 0.289645741340911886803139632171j)	
+order-2-at-a-complex-argument	(hyp0f1(2, mpc(0.5, 0.5)))	(1.24817563688592882888916050689 + 0.293401296264334070187094740079j)	
+negative-order-neg-0-5-at-0-3	hyp0f1(-0.5, 0.3)	0.207633759462580836143401576106	
+complex-order-and-argument	(hyp0f1(mpc(-2.5, 1.5), mpc(1.2, -0.8)))	(0.632186477801754677774921792467 + 0.0225531925472149416513865664627j)	
+series-hypergeometric0f1-a-x-x-0-4			
+fullsimplify-normal-series-hypergeometric0f1-a-x			
+n-hypergeometric0f1-1-neg-2-50	enumeratio_n(lambda: (hyp0f1(1, -2)), 50)	-0.19654809527046820004079337208793223132588978731089	
+matrixfunction-function-hypergeometric0f1-1-over			
+series-hypergeometric0f1-a-x-x-0-3			
+n-neg-1-over-4-times-hypergeometric0f1-1-over-2	((((mpf(-1)/4) * hyp0f1((mpf(1)/2), (mpf(1)/2))) + ((mpf(1)/4) * hyp0f1((mpf(-1)/2), (mpf(1)/2))) + ((mpf(1)/2) * hyp0f1((mpf(3)/2), (mpf(1)/2)))))	0.0	
+n-neg-1-over-4-times-hypergeometric0f1-1-over-3	((((mpf(-1)/4) * ((hyp0f1((mpf(1)/2), (mpf(1)/2)))**2)) + ((mpf(1)/2) * ((hyp0f1((mpf(3)/2), (mpf(1)/2)))**2))))	-0.25	
+n-2-times-hypergeometric0f1-3-over-2-2-plus-neg	(((2 * hyp0f1((mpf(3)/2), 2)) + ((mpf(-1)/4) * hyp0f1((mpf(1)/2), 2)) + ((mpf(1)/4) * hyp0f1((mpf(-1)/2), 2))))	-3.94430452610505902705864282641e-31	
+n-2-times-hypergeometric0f1-3-over-2-2-pow-2	(((2 * ((hyp0f1((mpf(3)/2), 2))**2)) + ((mpf(-1)/4) * ((hyp0f1((mpf(1)/2), 2))**2))))	-0.250000000000000000000000000003	
+b-0-is-a-pole-stays-symbolic	hyp0f1(0, 0.5)	ZeroDivisionError: pole in hypergeometric series	error

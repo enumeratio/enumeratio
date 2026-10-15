@@ -16,5 +16,13 @@ bindings:
     form: wolfram
     template: AiryBiPrime[$1]
     arity: 1
+  - origin: mapped
+    form: mpmath
+    template: airybi($1, derivative=1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 stub: engine
 ---

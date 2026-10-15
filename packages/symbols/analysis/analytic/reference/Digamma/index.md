@@ -35,6 +35,14 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: digamma($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - Digamma is the order-zero polygamma: $\psi(z) = \psi^{(0)}(z)$. The higher derivatives are [[PolyGamma]].

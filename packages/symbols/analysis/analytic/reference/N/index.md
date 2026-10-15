@@ -54,9 +54,9 @@ bindings:
     note: "The digit count is dropped: lanes compare numbers to a relative tolerance, so the full-precision value is the better witness."
   - origin: mapped
     form: mpmath
-    template: ($1)
+    template: "enumeratio_n(lambda: ($1), $2)"
     arity: 2
-    note: "The digit count is dropped: lanes compare numbers to a relative tolerance, so the full-precision value is the better witness."
+    note: Past a double's 15 digits the operand runs at the requested precision (plus 20 guard digits) and the answer is rounded to it; below, the digit count is dropped.
   - origin: mapped
     form: sage
     template: enumeratio_n($1, $2)

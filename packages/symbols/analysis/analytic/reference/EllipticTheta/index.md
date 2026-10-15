@@ -13,6 +13,19 @@ seeAlso:
   - JacobiSN
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: jtheta($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    note: q is the nome, as in Wolfram.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - $q$ is the nome, $|q| < 1$ — the same convention mpmath's `jtheta(a, u, q)` uses, not the "half-period ratio" $\tau$ some other references parameterize by.

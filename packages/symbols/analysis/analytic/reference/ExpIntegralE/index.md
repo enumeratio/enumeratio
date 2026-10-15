@@ -25,6 +25,16 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: expint($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - Gamma
   - GammaRegularized

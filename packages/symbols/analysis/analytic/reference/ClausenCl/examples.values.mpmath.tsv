@@ -1,0 +1,10 @@
+id	in	out	verdict
+cl-2-pi-2-g-catalan-s-constant	(clsin(2, (mpmathify(pi) / 2)) if (2) % 2 == 0 else clcos(2, (mpmathify(pi) / 2)))	0.915965594177219015054603514932	
+odd-orders-are-cosine-series-cl-3-0-zeta-3	(clsin(3, 0) if (3) % 2 == 0 else clcos(3, 0))	1.20205690315959428539973816151	
+cl-2-0-0	(clsin(2, 0) if (2) % 2 == 0 else clcos(2, 0))	0.0	
+cl-3-pi-2-frac-3-32-zeta-3	(clsin(3, (mpmathify(pi) / 2)) if (3) % 2 == 0 else clcos(3, (mpmathify(pi) / 2)))	-0.112692834671211964256225452642	
+cl-2-pi-3-1-01494-the-maximum-of-cl-2	(clsin(2, 1.0471975511965976) if (2) % 2 == 0 else clcos(2, 1.0471975511965976))	1.01494160640965362502120255427	
+cl-2-pi-0-the-sine-series-vanishes-at-multiples	(clsin(2, pi) if (2) % 2 == 0 else clcos(2, pi))	5.95270339256406394035368182449e-35	
+cl-3-pi-eta-3-frac-34-zeta-3	(clsin(3, pi) if (3) % 2 == 0 else clcos(3, pi))	-0.901542677369695714049803621134	
+cl-4-pi-2-beta-4-which-has-no-closed-form-of-its	(clsin(4, (mpmathify(pi) / 2)) if (4) % 2 == 0 else clcos(4, (mpmathify(pi) / 2)))	0.988944551741105336108422633228	
+cl-1-theta-ln-2-sin-theta-2-diverges-at-theta-0	(clsin(1, 0) if (1) % 2 == 0 else clcos(1, 0))	ValueError: zeta(1) pole	error

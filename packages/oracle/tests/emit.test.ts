@@ -188,6 +188,14 @@ test("SymPy reads a float past the double range as a Float, not Python's inf", (
   expect(emit(["Exp", { num: "1.5" }], "sympy")).toEqual({ ok: true, source: "exp(1.5)" });
 });
 
+test("mpmath reads a decimal past a double's digits or range from its text, and N(x, d) runs at d digits", () => {
+  const long = "0.12345678901234567890123";
+  expect(emit(["Exp", { num: long }], "mpmath")).toEqual({ ok: true, source: `exp(mpf("${long}"))` });
+  expect(emit(["Exp", { num: "1.0e1000" }], "mpmath")).toEqual({ ok: true, source: 'exp(mpf("1.0e1000"))' });
+  expect(emit(["Exp", { num: "1.5" }], "mpmath")).toEqual({ ok: true, source: "exp(1.5)" });
+  expect(emit(["N", ["Exp", 1], 50], "mpmath")).toEqual({ ok: true, source: "enumeratio_n(lambda: (exp(1)), 50)" });
+});
+
 test("a binding's threadArgOnly threads for its own system alone", () => {
   expect(emit(["FactorInteger", ["List", 12, 18]], "sympy")).toEqual({
     ok: true,

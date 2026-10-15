@@ -1,2 +1,2 @@
-id	in
-euler-gamma-to-20-digits	(euler)
+id	in	out
+euler-gamma-to-20-digits	enumeratio_n(lambda: (euler), 20)	0.57721566490153286061

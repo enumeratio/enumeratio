@@ -1,0 +1,16 @@
+id	in	out	verdict
+fullsimplify-normal-series-ellipticpi-n-m-m			
+functionexpand-ellipticpi-list-list-neg-1-0-list			
+functionexpand-matrixfunction-function			
+n-ellipticpi-3-over-10-2-over-5-50	enumeratio_n(lambda: (ellippi((mpf(3)/10), (mpf(2)/5))), 50)	2.1487954158664566359360227863754503502433007322701	
+n-ellipticpi-3-over-10-2-2-over-5-50	enumeratio_n(lambda: (ellippi((mpf(3)/10), 2, (mpf(2)/5))), 50)	2.9069282158995094765661591577858774162815622496102	
+simplify-integrate-ellipticpi-n-m-m			
+simplify-series-ellipticpi-n-m-m-0-3			
+simplify-series-ellipticpi-n-m-n-1-1			
+ellipticpi-0-0-1	ellippi(0, 0, 1)	0.0	
+ellipticpi-0-0-0	ellippi(0, 0, 0)	0.0	
+n-ellipticpi-1-over-2-i-times-arsinh-tan-1-over	(ellippi((mpf(1)/2), (mpc(0, 1) * asinh(tan((mpf(1)/2)))), (mpf(1)/2)))	(0.0 + 0.488330039028240134596631036684j)	
+n-neg-ellipticf-1-over-2-1-over-2-plus	(((((-ellipf((mpf(1)/2), (mpf(1)/2))) + ellippi(((mpf(1)/2) * ((sin((mpf(1)/2)))**2)), (mpf(1)/2), (mpf(1)/2))) * cot((mpf(1)/2)) * sqrt((1 + ((mpf(-1)/2) * ((sin((mpf(1)/2)))**2))))) + (ellipf((mpf(1)/2), (mpf(1)/2)) * ellipe((mpf(1)/2), (mpf(1)/2)))))	0.258354379144596993202949238352	
+n-ellipticpi-1-over-2-i-times-arsinh-tan-1-ove-2	(ellippi((mpf(1)/2), (mpc(0, 1) * asinh(tan((mpf(1)/2)))), -1))	(0.0 + 0.525899989634695318210618081524j)	
+n-neg-ellipticf-2-1-over-2-plus-ellipticpi-1	(((((-ellipf(2, (mpf(1)/2))) + ellippi(((mpf(1)/2) * ((sin((mpf(1)/2)))**2)), 2, (mpf(1)/2))) * cot((mpf(1)/2)) * sqrt((1 + ((mpf(-1)/2) * ((sin((mpf(1)/2)))**2))))) + (ellipf((mpf(1)/2), (mpf(1)/2)) * ellipe(2, (mpf(1)/2)))))	1.19119948439919757151851341152	
+n-ellipticpi-2-i-times-list-neg-1-1-times-10-pow	(ellippi(2, (enumeratio_broadcast(lambda _a0, _a1, _a2: (_a0 * _a1 * _a2), mpc(0, 1), [-1, 1], ((10)**-6)) + ((mpf(1)/2) * pi))))	TypeError: can only concatenate list (not "mpf") to list	error

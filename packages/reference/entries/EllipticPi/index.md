@@ -15,4 +15,26 @@ names:
   wolfram: EllipticPi
   dlmf: Legendre's complete elliptic integral of the third kind
 stub: engine
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: ellippi($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: mpmath
+    template: ellippi($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---

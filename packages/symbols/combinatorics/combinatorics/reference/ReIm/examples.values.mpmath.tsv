@@ -1,0 +1,23 @@
+id	in	out
+real-and-imaginary-parts	[re(mpc(3, 4)), im(mpc(3, 4))]	[mpf('3.0'), mpf('4.0')]
+reim-5-plus-12i	[re(mpc(5, 12)), im(mpc(5, 12))]	[mpf('5.0'), mpf('12.0')]
+reim-3	[re(3), im(3)]	[mpf('3.0'), mpf('0.0')]
+reim-list-i-neg-1-neg-i-1	[[re(mpc(0, 1)), im(mpc(0, 1))], [re(-1), im(-1)], [re(mpc(0, -1)), im(mpc(0, -1))], [re(1), im(1)]]	[[mpf('0.0'), mpf('1.0')], [mpf('-1.0'), mpf('0.0')], [mpf('0.0'), mpf('-1.0')], [mpf('1.0'), mpf('0.0')]]
+threads-over-a-list	[[re(mpc(1, 2)), im(mpc(1, 2))], [re(mpc(3, 4)), im(mpc(3, 4))]]	[[mpf('1.0'), mpf('2.0')], [mpf('3.0'), mpf('4.0')]]
+reim-neg-3	[re(-3), im(-3)]	[mpf('-3.0'), mpf('0.0')]
+reim-3-over-5	[re((mpf(3)/5)), im((mpf(3)/5))]	[mpf('0.60000000000000000000000000000002'), mpf('0.0')]
+reim-root-neg-17-4	[re((-root(-(-17), 4) if im(-17) == 0 and re(-17) < 0 and (4) % 2 == 1 else root(-17, 4))), im((-root(-(-17), 4) if im(-17) == 0 and re(-17) < 0 and (4) % 2 == 1 else root(-17, 4)))]	[mpf('1.43581085551295031114930068775628'), mpf('1.43581085551295031114930068775628')]
+reim-gamma-neg-1-over-2	[re(gamma((mpf(-1)/2))), im(gamma((mpf(-1)/2)))]	[mpf('-3.54490770181103205459633496668212'), mpf('0.0')]
+reim-list-list-1-neg-1-0-list-0-1	[[[re(1), im(1)], [re(-1), im(-1)], [re(0), im(0)]], [[re(0), im(0)], [re(1), im(1)]]]	[[[mpf('1.0'), mpf('0.0')], [mpf('-1.0'), mpf('0.0')], [mpf('0.0'), mpf('0.0')]], [[mpf('0.0'), mpf('0.0')], [mpf('1.0'), mpf('0.0')]]]
+reim-z		
+reim-2z		
+reim-w-plus-z		
+reim-list-a-list-b-c		
+reim-exponentiale-pow-2-over-3-times-i-times-pi	[re(((e)**(mpc(0, (mpf(2)/3)) * pi))), im(((e)**(mpc(0, (mpf(2)/3)) * pi)))]	[mpf('-0.499999999999999999999999999999901'), mpf('0.866025403784438646763723170753017')]
+rank-reim-mat		
+reim-2x-plus-i		
+shape-reim-mat		
+reim-5-times-exponentiale-pow-3-over-4-times-i	[re((5 * ((e)**(mpc(0, (mpf(3)/4)) * pi)))), im((5 * ((e)**(mpc(0, (mpf(3)/4)) * pi))))]	[mpf('-3.53553390593273762200422181052452'), mpf('3.53553390593273762200422181052452')]
+reim-i	[re(mpc(0, 1)), im(mpc(0, 1))]	[mpf('0.0'), mpf('1.0')]
+reim-list-i-neg-i-0	[[re(mpc(0, 1)), im(mpc(0, 1))], [re(mpc(0, -1)), im(mpc(0, -1))], [re(0), im(0)]]	[[mpf('0.0'), mpf('1.0')], [mpf('0.0'), mpf('-1.0')], [mpf('0.0'), mpf('0.0')]]
+replaceall-reim-z-rule-z-list-imaginaryunit-neg		

@@ -1,0 +1,14 @@
+id	in	out	verdict
+a-floating-point-argument-evaluates-directly-to	(ellipfun('sd', 0.3, m=-2))	(0.279301577474694574344993136138 + 0.0j)	
+m-greater-than-1-via-the-reciprocal-modulus	(ellipfun('sd', 1.1, m=0.9))	1.26782176692066116554272793128	
+d-jacobisd-u-m-m			
+series-jacobisd-u-m-u-0-5			
+series-jacobisd-z-m-m-0-2			
+u-0-is-0-for-any-m			
+n-jacobisd-sqrt-2-over-4-times-i-neg-1	(ellipfun('sd', mpc(0, (mpmathify(sqrt(2)) / 4)), m=-1))	(0.0 + 0.377290639308584697799755827094j)	
+n-jacobisd-1-over-2-times-1-plus-sqrt-2-over-2-1	(ellipfun('sd', ((mpf(1)/2) * (1 + (mpmathify(sqrt(2)) / 2))), m=((((1 + (-(mpmathify(sqrt(2)) / 2))))**2) * (((1 + (mpmathify(sqrt(2)) / 2)))**-2))))	0.758221922298758885825118582085	
+n-jacobisd-sqrt-2-times-i-neg-1	(ellipfun('sd', mpc(0, sqrt(2)), m=-1))	(9.33570999134006129711139679951e-47 - 6.81631935122685120727903005861j)	
+n-jacobisd-2-times-1-plus-sqrt-2-over-2-1-minus	(ellipfun('sd', (2 * (1 + (mpmathify(sqrt(2)) / 2))), m=((((1 + (-(mpmathify(sqrt(2)) / 2))))**2) * (((1 + (mpmathify(sqrt(2)) / 2)))**-2))))	-0.246689710708594707499994461792	
+symbolic-arguments-are-left-unevaluated-rather			
+m-1-at-a-shared-pole-of-sn-and-cn	(ellipfun('sd', ((mpf(1)/2) * mpc(0,1) * pi), m=1))	(0.0 + 1.0j)	
+u-1e16-declines-rather-than-answering-wrong	(ellipfun('sd', ((10)**16), m=(mpf(1)/5)))	-1.11004844463154844556816229323	inconclusive

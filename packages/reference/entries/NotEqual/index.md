@@ -27,4 +27,12 @@ names:
 stub: engine
 attributes:
   - HoldAll
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: (not almosteq($1, $2, 1e-20))
+    arity: 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---

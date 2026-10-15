@@ -1,0 +1,11 @@
+id	in	out
+n-artanh-1-over-2-50	enumeratio_n(lambda: (atanh((mpf(1)/2))), 50)	0.54930614433405484569762261846126285232374527891137
+artanh-positiveinfinity	atanh(inf)	(0.0 - 1.57079632679489661923132169164j)
+artanh-0	atanh(0)	0.0
+d-artanh-x-x		
+fullsimplify-neg-1-over-x-times-y-plus-1-times-x		
+trigtoexp-artanh-z		
+integrate-artanh-x-x-nothing-nothing		
+artanh-2	atanh(2)	(0.549306144334054845697622618461 - 1.57079632679489661923132169164j)
+artanh-neg-2	atanh(-2)	(-0.549306144334054845697622618461 + 1.57079632679489661923132169164j)
+artanh-complexinfinity-is-indeterminate-the-sign		

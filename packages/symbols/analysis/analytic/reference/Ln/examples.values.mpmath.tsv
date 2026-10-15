@@ -23,15 +23,15 @@ ln-exp-x
 derivative-1-x			
 antiderivative-x-ln-x-x			
 mercator-series-for-ln-1-x			
-to-40-significant-digits-every-one-correctly	(log(2))	0.693147180559945309417232121458	
+to-40-significant-digits-every-one-correctly	enumeratio_n(lambda: (log(2)), 40)	0.6931471805599453094172321214581765680755	
 ln-frac-12-i-pi-ln-2-a-negative-rational-folded	log((mpf(-1)/2))	(-0.693147180559945309417232121458 + 3.14159265358979323846264338328j)	
 n-decimalizes-ln-i-not-just-the-exact-form	(log(mpc(0,1)))	(0.0 + 1.57079632679489661923132169164j)	
 an-integer-power-negative-argument	log(-2)	(0.693147180559945309417232121458 + 3.14159265358979323846264338328j)	
-n-of-a-negative-integer-argument	(log(-2))	(0.693147180559945309417232121458 + 3.14159265358979323846264338328j)	
+n-of-a-negative-integer-argument	enumeratio_n(lambda: (log(-2)), 10)	(0.6931471806+3.141592654j)	
 ln-neg-6	log(-6)	(1.79175946922805500081247735838 + 3.14159265358979323846264338328j)	
 n-of-a-negative-rational-argument	(log((mpf(-1)/2)))	(-0.693147180559945309417232121458 + 3.14159265358979323846264338328j)	
 ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	log(-inf)	(+inf + 3.14159265358979323846264338328j)	disagree
-n-ln-5-over-2-50	(log((mpf(5)/2)))		
+n-ln-5-over-2-50	enumeratio_n(lambda: (log((mpf(5)/2))), 50)	0.91629073187415506518352721176801107145010121990826	
 functiondomain-ln-x-x			
 functionrange-ln-x-x-y			
 functionanalytic-ln-x-x			

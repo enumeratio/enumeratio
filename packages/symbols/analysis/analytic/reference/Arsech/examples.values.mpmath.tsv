@@ -1,0 +1,19 @@
+id	in	out	verdict
+n-arsech-1-over-2	(asech((mpf(1)/2)))	1.31695789692481670862504634731	
+arsech-1-0-exactly	asech(1)	0.0	
+a-logarithmic-singularity-at-0	asech(0)	ZeroDivisionError: 	error
+a-float-argument-evaluates-directly	asech(0.25)	2.06343706889556054672728117262	
+past-1-the-value-is-imaginary-arsech-2-arcosh	asech(2)	(0.0 + 1.04719755119659774615421446109j)	
+derivative-frac-1-x-sqrt-1-x-2			
+n-arsech-1-over-3-50	enumeratio_n(lambda: (asech((mpf(1)/3))), 50)	1.7627471740390860504652186499595846180563206565233	
+arsech-list-list-2-0-list-1-neg-2	[[asech(2), asech(0)], [asech(1), asech(-2)]]	ZeroDivisionError: 	error
+arsech-positiveinfinity	asech(inf)	(0.0 + 1.57079632679489661923132169164j)	
+trigtoexp-arsech-z			
+matrixfunction-function-arsech-1-1-list-list-2-0			
+integrate-arsech-x-x-nothing-nothing			
+arsech-neg-2	asech(-2)	(0.0 + 2.09439510239319549230842892219j)	
+arsech-neg-1-over-2	asech((mpf(-1)/2))	(1.31695789692481670862504634731 + 3.14159265358979323846264338328j)	
+arsech-2-times-sqrt-1-over-2-plus-sqrt-2	asech((2 * sqrt((mpmathify(1) / (2 + sqrt(2))))))	(0.0 + 0.39269908169872415480783042291j)	
+arsech-neg-2-times-sqrt-1-over-2-plus-sqrt-2	asech((-2 * sqrt((mpmathify(1) / (2 + sqrt(2))))))	(0.0 + 2.74889357189106908365481296037j)	
+arsech-neg-1	asech(-1)	(0.0 + 3.14159265358979323846264338328j)	
+arsech-complexinfinity-is-indeterminate-by			

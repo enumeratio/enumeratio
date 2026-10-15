@@ -1,0 +1,20 @@
+id	in	out	verdict
+arcosh-infinity-is-infinity-not-infinity-the	acosh(-inf)	(+inf + 3.14159265358979323846264338328j)	disagree
+n-arcosh-5-50	enumeratio_n(lambda: (acosh(5)), 50)	2.2924316695611776878007873113480154316218682400157	
+arcosh-list-list-1-sqrt-2-over-2-list-0-neg-sqrt	[[acosh(1), acosh((mpmathify(sqrt(2)) / 2))], [acosh(0), acosh((-(mpmathify(sqrt(2)) / 2)))]]	[[mpf('0.0'), mpc(real='0.0', imag='0.785398163397448309615660845819833')], [mpc(real='0.0', imag='1.57079632679489661923132169163967'), mpc(real='0.0', imag='2.3561944901923449288469825374595')]]	
+arcosh-positiveinfinity	acosh(inf)	+inf	
+arcosh-1	acosh(1)	0.0	
+integrate-arcosh-x-x-0-1			
+d-arcosh-x-x			
+integrate-arcosh-x-x-nothing-nothing			
+arcosh-complexinfinity			
+arcosh-neg-2	acosh(-2)	(1.31695789692481670862504634731 + 3.14159265358979323846264338328j)	
+arcosh-3-over-5	acosh((mpf(3)/5))	(0.0 + 0.927295218001612232428512462922j)	
+arcosh-1-over-2-times-sqrt-1-over-2-times-5	acosh(((mpf(1)/2) * sqrt(((mpf(1)/2) * (5 + (-sqrt(5)))))))	(0.0 + 0.942477796076937971538793014984j)	
+arcosh-neg-1-over-2-times-sqrt-1-over-2-times-5	acosh(((mpf(-1)/2) * sqrt(((mpf(1)/2) * (5 + (-sqrt(5)))))))	(0.0 + 2.1991148575128552669238503683j)	
+arcosh-0	acosh(0)	(0.0 + 1.57079632679489661923132169164j)	
+arcosh-sqrt-2-over-4-times-neg-1-plus-sqrt-3	acosh(((mpmathify(sqrt(2)) / 4) * (-1 + sqrt(3))))	(0.0 + 1.30899693899574718269276807637j)	
+arcosh-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	acosh(((-(mpmathify(sqrt(2)) / 4)) * (-1 + sqrt(3))))	(0.0 + 1.83259571459404605576987530691j)	
+arcosh-1-over-4-times-neg-1-plus-sqrt-5	acosh(((mpf(1)/4) * (-1 + sqrt(5))))	(0.0 + 1.25663706143591729538505735331j)	
+arcosh-1-over-4-times-1-minus-sqrt-5	acosh(((mpf(1)/4) * (1 + (-sqrt(5)))))	(0.0 + 1.88495559215387594307758602997j)	
+arcosh-1-over-2-times-sqrt-2-minus-sqrt-2	acosh(((mpf(1)/2) * sqrt((2 + (-sqrt(2))))))	(0.0 + 1.17809724509617246442349126873j)	

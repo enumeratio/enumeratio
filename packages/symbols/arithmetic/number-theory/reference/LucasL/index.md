@@ -53,6 +53,15 @@ bindings:
     template: Combinatorics.lucasnum($1)
     arity: 1
     threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: (fib(($1) - 1) + fib(($1) + 1))
+    arity: 1
+    threadArgOnly: 1
+    note: "F(n − 1) + F(n + 1): Lucas' number for integer n and its continuation otherwise."
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - Defined by the same recurrence as [[Fibonacci]], $L_n = L_{n-1} + L_{n-2}$, but started from $L_0 = 2$, $L_1 = 1$.

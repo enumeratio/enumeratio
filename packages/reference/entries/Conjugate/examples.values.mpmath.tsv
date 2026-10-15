@@ -1,0 +1,19 @@
+id	in	out
+conjugate-0	conj(0)	0.0
+conjugate-1	conj(1)	1.0
+conjugate-neg-1	conj(-1)	-1.0
+conjugate-neg-i	conj(mpc(0, -1))	(0.0 + 1.0j)
+conjugate-1-plus-i	conj(mpc(1, 1))	(1.0 - 1.0j)
+conjugate-neg-1-plus-i	conj(mpc(-1, 1))	(-1.0 - 1.0j)
+conjugate-neg-1-minus-i	conj(mpc(-1, -1))	(-1.0 + 1.0j)
+conjugate-1-minus-i	conj(mpc(1, -1))	(1.0 + 1.0j)
+conjugate-1-plus-sqrt-3-times-i	conj((1 + mpc(0, sqrt(3))))	(1.0 - 1.73205080756887729352744634151j)
+conjugate-neg-1-plus-sqrt-3-times-i	conj((-1 + mpc(0, sqrt(3))))	(-1.0 - 1.73205080756887729352744634151j)
+conjugate-neg-sqrt-3-minus-i	conj(((-sqrt(3)) + mpc(0, -1)))	(-1.73205080756887729352744634151 + 1.0j)
+conjugate-neg-1-plus-neg-sqrt-3-times-i	conj((-1 + mpc(0, (-sqrt(3)))))	(-1.0 + 1.73205080756887729352744634151j)
+conjugate-1-plus-neg-sqrt-3-times-i	conj((1 + mpc(0, (-sqrt(3)))))	(1.0 + 1.73205080756887729352744634151j)
+conjugate-sqrt-3-minus-i	conj((sqrt(3) + mpc(0, -1)))	(1.73205080756887729352744634151 + 1.0j)
+conjugate-2	conj(2)	2.0
+conjugate-i	conj(mpc(0, 1))	(0.0 - 1.0j)
+conjugate-sqrt-3-plus-i	conj((sqrt(3) + mpc(0, 1)))	(1.73205080756887729352744634151 - 1.0j)
+conjugate-neg-sqrt-3-plus-i	conj(((-sqrt(3)) + mpc(0, 1)))	(-1.73205080756887729352744634151 - 1.0j)

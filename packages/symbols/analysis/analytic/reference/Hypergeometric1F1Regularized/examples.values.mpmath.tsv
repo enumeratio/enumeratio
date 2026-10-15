@@ -1,0 +1,17 @@
+id	in	out	verdict
+matches-hypergeometric1f1-1-2-0-5-gamma-2	enumeratio_hyperreg([1], [2], 0.5)	1.29744254140025629369730157563	
+b-1-is-a-pole-of-gamma-but-the-regularized-form	enumeratio_hyperreg([1], [-1], 0.7)	0.986738826660533326576003797242	
+a-0-5-b-1-5-at-neg-1	enumeratio_hyperreg([0.5], [1.5], -1)	0.842700792949714869341220635083	
+complex-a-at-0-5	(enumeratio_hyperreg([mpc(1, 0.5)], [2], 0.5))	(1.29072175734512541360978703738 + 0.161480563558252108209614523387j)	
+b-0-at-0-5	enumeratio_hyperreg([1], [0], 0.5)	0.824360635350064073424325393907	
+a-2-b-neg-2-at-0-4	enumeratio_hyperreg([2], [-2], 0.4)	0.420097834855781802907878100243	
+a-complex-argument-at-b-2	(enumeratio_hyperreg([1], [2], mpc(0.5, 0.5)))	(1.2373281197977840698948458431 + 0.343550046629445753791679290996j)	
+a-complex-argument-at-a-nonpositive-integer-b	(enumeratio_hyperreg([1], [-1], mpc(0.3, -0.4)))	(-0.213189507662140118989538130402 - 0.261596366272892097320461865061j)	
+simplify-normal-series			
+n-hypergeometric1f1regularized-2-neg-4-2-50	enumeratio_n(lambda: (enumeratio_hyperreg([2], [-4], 2)), 50)	1891.5983613262464581709894299072020001741607860613	
+n-hypergeometric1f1regularized-1-0-1-30	enumeratio_n(lambda: (enumeratio_hyperreg([1], [0], 1)), 30)	2.71828182845904523536028747135	
+matrixfunction-function			
+n-1-over-2-times-hypergeometric1f1regularized-3	((((mpf(1)/2) * enumeratio_hyperreg([(mpf(3)/2)], [(mpf(1)/2)], (mpf(1)/2))) + (-enumeratio_hyperreg([(mpf(1)/2)], [(mpf(1)/2)], (mpf(1)/2)))))	0.0	
+n-neg-hypergeometric1f1regularized-1-over-2-neg	((-enumeratio_hyperreg([(mpf(1)/2)], [(mpf(-1)/2)], (mpf(1)/2))))	ValueError: hypsum() failed to converge to the requested 113 bits of accuracy	error
+n-neg-1-over-2-times	((((mpf(-1)/2) * enumeratio_hyperreg([(mpf(1)/2)], [(mpf(3)/2)], (mpf(1)/2))) + (-enumeratio_hyperreg([(mpf(-1)/2)], [(mpf(1)/2)], (mpf(1)/2))) + enumeratio_hyperreg([(mpf(1)/2)], [(mpf(1)/2)], (mpf(1)/2))))	0.0	
+n-neg-1-over-2-times-2	((((mpf(-1)/2) * enumeratio_hyperreg([(mpf(3)/2)], [(mpf(1)/2)], (mpf(1)/2))) + enumeratio_hyperreg([(mpf(1)/2)], [(mpf(-1)/2)], (mpf(1)/2)) + enumeratio_hyperreg([(mpf(1)/2)], [(mpf(1)/2)], (mpf(1)/2))))	ValueError: hypsum() failed to converge to the requested 113 bits of accuracy	error

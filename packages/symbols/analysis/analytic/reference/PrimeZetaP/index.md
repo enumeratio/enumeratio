@@ -14,6 +14,14 @@ bindings:
     form: typescript
     environment: engine
     source: packages/symbols/analysis/analytic/src/prime-zeta.ts
+  - origin: mapped
+    form: mpmath
+    template: primezeta($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - Zeta
 names:

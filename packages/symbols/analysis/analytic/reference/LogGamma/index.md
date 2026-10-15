@@ -34,6 +34,15 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: loggamma($1)
+    arity: 1
+    threadArgOnly: 1
+    note: The principal branch, cut along the negative reals, as in Wolfram.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - Gamma
   - GammaLn

@@ -1,0 +1,43 @@
+id	in	out	verdict
+cot-pi-over-6	cot((mpmathify(pi) / 6))	1.73205080756887729352744634151	
+cot-pi-over-4	cot((mpmathify(pi) / 4))	1.0	
+cot-pi-over-3	cot((mpmathify(pi) / 3))	0.577350269189625764509148780502	
+cot-60-circ-frac-sqrt-3-3-exactly			
+a-machine-precision-argument-evaluates	cot(1.2)	0.38877956936820496275550107086	
+a-huge-24-40-argument	(cot(((24)**40)))	2.29072091001088067842489372819	
+a-huge-10-100-argument	(cot(((10)**100)))	2.49232387927982069486640543726	
+a-huge-3-200-argument	(cot(((3)**200)))	0.367143001033697879173282719963	
+a-huge-neg-7-60-argument	(cot((-((7)**60))))	-2.54972544855289659474408289918	
+a-huge-10-80-plus-1-over-3-argument	(cot((mpmathify((((10)**80) + 1)) / 3)))	-5.35891773395797293952961004078	disagree
+cot-7-under-n	(cot(7))	1.1475154224051356850571278336	
+series-cot-x-x-0-10			
+series-cot-x-x-neg-pi-5			
+n-of-an-exact-argument-gives-an-arbitrary	(cot((mpf(6)/5)))	0.388779569368204911634191504972	
+evaluates-at-a-complex-argument	cot(mpc(2.5, 1))	(-0.27566912122989941244067250585 - 1.04264064209442165390183569675j)	
+threads-element-wise-over-a-matrix	[[cot((5 * (mpmathify(pi) / 6))), cot((mpmathify(pi) / 2))], [cot((3 * (mpmathify(pi) / 2))), cot((-(mpmathify(pi) / 6)))]]	[[mpf('-1.73205080756887729352744634150426'), mpf('8.47842766036889964395870146938683e-32')], [mpf('2.54352829811066989318761044081585e-31'), mpf('-1.73205080756887729352744634150603')]]	
+cot-pi-8-1-sqrt-2	cot((mpmathify(pi) / 8))	2.41421356237309504880168872421	
+cot-pi-12-2-sqrt-3	cot((mpmathify(pi) / 12))	3.73205080756887729352744634151	
+cot-pi-over-5	cot((mpmathify(pi) / 5))	1.37638192047117353820720958191	
+an-interval-straddling-the-pole-at-0-maps-to-two			
+uncertainty-propagation-near-a-pole-grows-fast			
+oddness-pulls-the-sign-out-of-a-symbolic			
+derivative-csc-2-x			
+antiderivative-ln-sin-x			
+n-cot-6-over-5-50	enumeratio_n(lambda: (cot((mpf(6)/5))), 50)	0.38877956936820491163419150497190340959498492594098	
+matrixfunction-function-cot-1-1-list-list-5-over			
+cot-positiveinfinity	cot(inf)	nan	disagree
+assuming-m-in-integers-refine-cot-pi-times-1			
+assuming-m-in-integers-fullsimplify-refine-cot			
+functionmeromorphic-cot-x-x			
+reciprocal-of-tan-cot-x-frac-1-tan-x	almosteq(cot((mpmathify(pi) / 4)), (mpmathify(1) / tan((mpmathify(pi) / 4))), 1e-20)	True	
+pythagorean-identity-1-cot-2-x-csc-2-x	almosteq((1 + ((cot((mpmathify(pi) / 6)))**2)), ((csc((mpmathify(pi) / 6)))**2), 1e-20)	True	
+cot-1-over-10-times-pi	cot(((mpf(1)/10) * pi))	3.07768353717525340257029057604	
+cot-3-over-10-times-pi	cot(((mpf(3)/10) * pi))	0.726542528005360885895466757481	
+cot-3-over-8-times-pi	cot(((mpf(3)/8) * pi))	0.41421356237309504880168872421	
+n-cot-1-times-cot-1-over-2	((cot(1) * cot((mpf(1)/2))))	1.17534264967002141077678675966	
+n-cot-1-over-2-plus-1-over-2-times-pi	(cot(((mpf(1)/2) + ((mpf(1)/2) * pi))))	-0.54630248984379051325517946578	
+n-cot-2-times-cot-4	((cot(2) * cot(4)))	-0.39527478146848104055612325774	
+n-cot-2-plus-1-over-2-times-pi	(cot((2 + ((mpf(1)/2) * pi))))	2.18503986326151899164330610231	
+a-pole-sin-0-0	cot(0)	ZeroDivisionError: 	error
+not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	cot((mpmathify(pi) / 2))	8.47842766036889964395870146939e-32	
+cot-complexinfinity-is-indeterminate-for-the			

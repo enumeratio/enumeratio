@@ -236,6 +236,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
   // in it would only run in core Wolfram, which the `wolfram` lane already does.
   let fromCombinatorica = false;
 
+  // The expression itself, and what a list of answers holds: where mpmath's N(x, d) can round to d digits.
+  const answers = new Set<MathJSON>([expr]);
   const walk = (node: MathJSON): string => {
     // Wolfram's exponent marker is `*^`, and `1e-11` there is `1 * e - 11`.
     if (typeof node === "number") {
@@ -312,6 +314,15 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
           !(Math.abs(Number(value)) > 0 && Number.isFinite(Number(value)))
         )
           return `Float(${JSON.stringify(value)})`;
+        // mpmath reads a string at its own precision: a longer decimal, or one past the double range, would round or overflow as a float.
+        if (
+          system === "mpmath" &&
+          /[.e]/i.test(value) &&
+          (value.replace(/e.*$/i, "").replace(/\D/g, "").replace(/^0+/, "").length > 15 ||
+            (/[1-9]/.test(value.replace(/e.*$/i, "")) &&
+              !(Math.abs(Number(value)) > 0 && Number.isFinite(Number(value)))))
+        )
+          return `mpf(${JSON.stringify(value)})`;
         return value;
       }
       missing.push("literal:unrecognised");
@@ -319,6 +330,11 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     }
     const head = node[0] as string;
     const operands = node.slice(1);
+    if (system === "mpmath") {
+      if (head === "List" && answers.has(node)) for (const entry of operands) answers.add(entry as MathJSON);
+      // N(x, d) answers in text (run.ts), which can't be an operand: below the answer it is plain N(x).
+      if (head === "N" && operands.length === 2 && !answers.has(node)) return walk(operands[0] as MathJSON);
+    }
     const iterated = (head === "Sum" || head === "Product") && operands.length > 1 ? operands.slice(1) : [];
     // A `Limits` iterator binds only for SymPy's Sum (below); the Wolfram lane keeps its free `k`.
     const binders = iterated.flatMap((it) =>

@@ -25,4 +25,11 @@ bindings:
       version: 1.14.0
       on: 2026-10-15
     note: A chain is the conjunction of its neighbors.
+  - origin: mapped
+    form: mpmath
+    template: ($1 < $2)
+    arity: 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---

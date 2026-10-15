@@ -1414,6 +1414,36 @@ def enumeratio_symbolic_agree(a, b, trials):
     return all(results) if results else None
 `;
 
+/** mpmath at 30 digits, plus `enumeratio_n(thunk, d)`: N(x, d) evaluates the thunk at d + 20 digits and answers the
+ * value rounded to d, as text a scan compares digit for digit; and `enumeratio_hyperreg`, a regularized pFq
+ * (divided by the gamma of each lower parameter) by its limit where a lower parameter is a pole. */
+const MPMATH_PREAMBLE = `from mpmath import *
+mp.dps = 30
+${PY_VALUE}
+${PY_BROADCAST}
+def enumeratio_round(x, d):
+    if isinstance(x, list):
+        return [enumeratio_round(e, d) for e in x]
+    if isinstance(x, type(pi)):
+        x = +x
+    if isinstance(x, mpf) and isfinite(x):
+        return nstr(x, d, strip_zeros=False)
+    if isinstance(x, mpc) and isfinite(x.real) and isfinite(x.imag):
+        return "(" + nstr(x.real, d, strip_zeros=False) + ("-" if x.imag < 0 else "+") + nstr(abs(x.imag), d, strip_zeros=False) + "j)"
+    return x
+
+def enumeratio_n(thunk, d):
+    if not isinstance(d, (int, float)):
+        return thunk()
+    d = int(d)
+    with workdps(max(d, 15) + 20):
+        return enumeratio_round(thunk(), d)
+
+def enumeratio_hyperreg(a, b, z):
+    n = len(a)
+    return hypercomb(lambda *p: [([], [], [], list(p[n:-1]), list(p[:n]), list(p[n:-1]), p[-1])], list(a) + list(b) + [z])
+`;
+
 export interface Prelude {
   readonly binary: string;
   readonly preamble: string;
@@ -1444,7 +1474,7 @@ export function preludeFor(system: System): Prelude {
     case "mpmath":
       return {
         binary: "python3",
-        preamble: `from mpmath import *\nmp.dps = 30\n${PY_VALUE}\n${PY_BROADCAST}`,
+        preamble: MPMATH_PREAMBLE,
         printer: "enumeratio_value",
       };
     case "sage":
@@ -1583,15 +1613,7 @@ function runBatch(system: System, sources: readonly string[], itemSeconds: numbe
         itemSeconds,
       );
     case "mpmath":
-      return runPython(
-        sources,
-        "python3",
-        `from mpmath import *\nmp.dps = 30\n${PY_VALUE}\n${PY_BROADCAST}`,
-        ["-c"],
-        undefined,
-        "enumeratio_value",
-        itemSeconds,
-      );
+      return runPython(sources, "python3", MPMATH_PREAMBLE, ["-c"], undefined, "enumeratio_value", itemSeconds);
     case "sage":
       // `sage -c` takes one program string, like python3 -c. The preparsed source is evaluated
       // with the per-item ns as its globals (copied from the module globals snapshotted right

@@ -1,0 +1,7 @@
+id	in	out	verdict
+besselk-0-1	(besselk(0, 1))	0.421024438240708333335627379213	
+normal-series-besselk-0-x-x-positiveinfinity-4			
+n-besselk-0-4-50	enumeratio_n(lambda: (besselk(0, 4)), 50)	0.011159676085853024269745195979833489225009023888474	
+list-besselk-0-0-besselk-1-0	[besselk(0, 0), besselk(1, 0)]	[mpf('+inf'), mpf('+inf')]	disagree
+d-besselk-n-x-x			
+normal-series-besselk-n-x-x-positiveinfinity-2			

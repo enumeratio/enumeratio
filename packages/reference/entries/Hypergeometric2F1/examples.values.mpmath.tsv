@@ -1,0 +1,13 @@
+id	in	out
+2f1-at-0	hyp2f1(1, 1, 2, 0)	1.0
+2f1-1-1-2-half	enumeratio_n(lambda: (hyp2f1(1, 1, 2, (mpf(1)/2))), 20)	1.3862943611198906188
+series-hypergeometric2f1-a-b-c-x-x-0-3		
+normal-series-hypergeometric2f1-2-3-4-x-x		
+fullsimplify-series-hypergeometric2f1-2-3-4-x-x		
+n-hypergeometric2f1-1-over-2-1-over-3-2-1-50	enumeratio_n(lambda: (hyp2f1((mpf(1)/2), (mpf(1)/3), 2, 1)), 50)	1.1595952669639283657699920515700208819451652634398
+hypergeometric2f1-1-over-2-1-1-list-list-1-over	[[hyp2f1((mpf(1)/2), 1, 1, (mpf(1)/2)), hyp2f1((mpf(1)/2), 1, 1, 0)], [hyp2f1((mpf(1)/2), 1, 1, 0), hyp2f1((mpf(1)/2), 1, 1, (mpf(1)/2))]]	[[mpf('1.41421356237309504880168872420977'), mpf('1.0')], [mpf('1.0'), mpf('1.41421356237309504880168872420977')]]
+matrixfunction-function-hypergeometric2f1-1-over		
+normal-series-hypergeometric2f1-1-1-2-x-x		
+normal-series-hypergeometric2f1-2-2-5-x-x		
+normal-series-hypergeometric2f1-3-1-2-x-x		
+normal-series-hypergeometric2f1-2-3-4-x-x-2		

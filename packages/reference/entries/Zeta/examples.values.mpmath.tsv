@@ -46,22 +46,22 @@ complex-s-under-n	(zeta(mpc(2, -5)))	(0.850962943624262957210878535908 - 0.09899
 zeta-infty-1-only-the-n-1-term-survives	zeta(inf)	1.0	
 two-arguments-at-a-nonpositive-integer-s-zeta-1	zeta(-1, 5)	-10.0833333333333333333333333333	
 two-arguments-inexact	zeta(-1.5, 5)	-17.0500647493426550141352594598	
-two-complex-arguments-under-n-to-ten-digits	(zeta(mpc(-1.5, 1), mpc(2.5, -1)))	(0.0184868091938106521569164857071 + 1.67553378430176592096139476727j)	
+two-complex-arguments-under-n-to-ten-digits	enumeratio_n(lambda: (zeta(mpc(-1.5, 1), mpc(2.5, -1))), 10)	(0.01848680919+1.675533784j)	
 which-with-inexact-complex-arguments-should	zeta(mpc(-1.5, 1), mpc(2.5, -1))	(0.0184868091938106521569164857071 + 1.67553378430176592096139476727j)	
 zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of	zeta(20, (mpf(1)/2))	1048576.0003007396681671843484	
 zeta-2-1-2-3-zeta-2-pi-2-2	zeta(2, (mpf(1)/2))	4.93480220054467930941724549994	
 interval-arithmetic-zeta-is-decreasing-on-1			
 uncertainty-in-a-propagated-with-partial-a-zeta			
-to-40-significant-digits-every-one-correctly	(zeta(3))	1.20205690315959428539973816151	
-n-zeta-5-over-4-50	(zeta((mpf(5)/4)))	4.59511182584294338068537803969	
-n-zeta-3-2-50	(zeta(3, 2))	0.202056903159594285399738161511	
+to-40-significant-digits-every-one-correctly	enumeratio_n(lambda: (zeta(3)), 40)	1.202056903159594285399738161511449990765	
+n-zeta-5-over-4-50	enumeratio_n(lambda: (zeta((mpf(5)/4))), 50)	4.5951118258429433806853780396946256522810297806048	
+n-zeta-3-2-50	enumeratio_n(lambda: (zeta(3, 2)), 50)	0.20205690315959428539973816151144999076498629234050	
 zeta-2-list-list-1-over-2-0-list-0-3-over-2	[[zeta(2, (mpf(1)/2)), zeta(2, 0)], [zeta(2, 0), zeta(2, (mpf(3)/2))]]	ZeroDivisionError: 	error
 zeta-4-5	zeta(4, 5)	0.00357130469879251250365801752882	
 zeta-list-1-2-3-4	[zeta(1), zeta(2), zeta(3), zeta(4)]	ValueError: zeta(1) pole	error
 matrixfunction-function-zeta-2-1-1-list-list-1			
 complex-s-on-the-critical-line	(zeta(mpc(0.5, 14)))	(0.022241142609993589246213199204 - 0.103258123266450057902363095553j)	
-the-probability-that-two-random-positive			
-certified-digits-zeta-3	(zeta(3))	1.20205690315959428539973816151	
+the-probability-that-two-random-positive	almosteq((mpmathify(1) / zeta(2)), (mpmathify(6) / ((pi)**2)), 1e-20)	True	
+certified-digits-zeta-3	enumeratio_n(lambda: (zeta(3)), 40)	1.202056903159594285399738161511449990765	
 zeta-0-1-2	zeta(0)	-0.5	
 trivial-zero-zeta-2n-0-for-positive-integer-n	zeta(-2)	0.0	
 zeta-3-b-4-4-1-120-via-the-bernoulli-number	zeta(-3)	0.00833333333333333333333333333333	

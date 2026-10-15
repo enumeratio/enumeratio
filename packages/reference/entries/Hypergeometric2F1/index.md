@@ -21,6 +21,19 @@ references:
 stub: engine
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: hyp2f1($1, $2, $3, $4)
+    arity: 4
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+      - 4
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 The Gauss hypergeometric function ${}_2F_1(a,b;c;z) = \sum_{s\ge0} (a)_s(b)_s/(c)_s \cdot z^s/s!$ (DLMF 15.2.1) converges on the disc $|z| < 1$ and continues analytically elsewhere, with Euler's integral $\dfrac{\Gamma(c)}{\Gamma(b)\Gamma(c-b)}\int_0^1 t^{b-1}(1-t)^{c-b-1}(1-zt)^{-a}\,dt$ for $\operatorname{Re}(c) > \operatorname{Re}(b) > 0$ (DLMF 15.6.1); see [[Gamma]], [[Beta]]. It is the $p=2,q=1$ case of [[HypergeometricPFQ]], and dividing it by $\Gamma(c)$ gives [[Hypergeometric2F1Regularized]], entire in $c$ where this itself has poles. It is compute-engine's own native head, declared for real and complex $z$, including some continuation past $|z|=1$.

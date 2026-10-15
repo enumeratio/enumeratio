@@ -30,6 +30,15 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: DirichletBeta[s]; mpmath.dirichlet(s, [0, 1, 0, -1]).
+  - origin: mapped
+    form: mpmath
+    template: dirichlet($1, [0, 1, 0, -1])
+    arity: 1
+    threadArgOnly: 1
+    note: The Dirichlet L-function of the character mod 4.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - DirichletEta
   - HurwitzZeta

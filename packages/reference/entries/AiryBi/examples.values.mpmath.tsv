@@ -1,0 +1,10 @@
+id	in	out
+bi-0	(airybi(0))	0.614926627446000735150922369094
+series-airybi-x-x-0-4		
+normal-series-airybi-x-x-positiveinfinity-2		
+n-airybi-2-50	enumeratio_n(lambda: (airybi(2)), 50)	3.2980949999782147102806044252234524220039759634036
+n-functionrange-airybi-x-x-y		
+d-airybi-x-x		
+series-airybi-x-x-0-7		
+normal-series-airybi-x-x-directedinfinity-z-1		
+simplify-functionexpand-airybi-z-times		

@@ -1,0 +1,20 @@
+id	in	out	verdict
+n-arcsch-2	(acsch(2))	0.481211825059603447497758913424	
+a-pole-at-0	acsch(0)	ZeroDivisionError: 	error
+arcsch-positiveinfinity	acsch(inf)	0.0	
+a-float-argument-evaluates-directly	acsch(1.5)	0.625145117250416687634251673226	
+as-a-logarithm-arcsch-1-ln-1-sqrt-2			
+oddness-pulls-the-sign-out-of-a-symbolic			
+derivative-for-real-x-ne-0			
+n-arcsch-5-50	enumeratio_n(lambda: (acsch(5)), 50)	0.19869011034924140647463691595020696822130879422445	
+arcsch-complexinfinity			
+arcsch-list-list-2i-0-list-i-neg-2-times-i	[[acsch(mpc(0, 2)), acsch(0)], [acsch(mpc(0, 1)), acsch(mpc(0, -2))]]	ZeroDivisionError: 	error
+matrixfunction-function-arcsch-1-1-list-list-2i			
+arcsch-neg-i-times-sqrt-2-plus-neg-2-over-5	acsch((mpc(0, -1) * sqrt((2 + ((mpf(-2)/5) * sqrt(5))))))	(0.0 + 1.25663706143591729538505735331j)	
+arcsch-2i-times-sqrt-1-over-2-plus-sqrt-2	acsch((mpc(0, 2) * sqrt((mpmathify(1) / (2 + sqrt(2))))))	(0.0 - 1.17809724509617246442349126873j)	
+arcsch-neg-2-times-i-times-sqrt-1-over-2-plus	acsch((mpc(0, -2) * sqrt((mpmathify(1) / (2 + sqrt(2))))))	(0.0 + 1.17809724509617246442349126873j)	
+arcsch-neg-i-times-sqrt-2-plus-2-over-5-times	acsch((mpc(0, -1) * sqrt((2 + ((mpf(2)/5) * sqrt(5))))))	(0.0 + 0.628318530717958647692528676656j)	
+arcsch-i-times-neg-sqrt-2-plus-sqrt-6	acsch((mpc(0, 1) * ((-sqrt(2)) + sqrt(6))))	(0.0 - 1.30899693899574718269276807637j)	
+arcsch-i-times-neg-sqrt-6-plus-sqrt-2	acsch((mpc(0, 1) * ((-sqrt(6)) + sqrt(2))))	(0.0 + 1.30899693899574718269276807637j)	
+arcsch-i-times-sqrt-2-plus-neg-2-over-5-times	acsch((mpc(0, 1) * sqrt((2 + ((mpf(-2)/5) * sqrt(5))))))	(0.0 - 1.25663706143591729538505735331j)	
+arcsch-i-times-sqrt-2-plus-2-over-5-times-sqrt-5	acsch((mpc(0, 1) * sqrt((2 + ((mpf(2)/5) * sqrt(5))))))	(0.0 - 0.628318530717958647692528676656j)	

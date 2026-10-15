@@ -1,0 +1,42 @@
+id	in	out
+lucasl-0	(fib((0) - 1) + fib((0) + 1))	2.0
+lucasl-1	(fib((1) - 1) + fib((1) + 1))	1.0
+lucasl-5	(fib((5) - 1) + fib((5) + 1))	11.0
+lucasl-10	(fib((10) - 1) + fib((10) + 1))	123.0
+series-lucasl-1-over-2-x-x-0-5		
+exact-at-any-size	(fib((100) - 1) + fib((100) + 1))	792070839848372253127.0
+an-odd-negative-index-flips-the-sign-l-11-l-11	(fib((-11) - 1) + fib((-11) + 1))	-199.0
+a-real-index-uses-l-nu-varphi-nu-cos-pi-nu	(fib((2.3333333333333335) - 1) + fib((2.3333333333333335) + 1))	3.23621187949162125786595743971
+the-two-argument-lucas-polynomial-l-7-x-from-l-n		
+the-lucas-polynomial-at-x-1-is-the-lucas-number		
+special-value-of-the-lucas-polynomial-l-1-0-0		
+special-value-of-the-lucas-polynomial-l-0-0-2		
+l-2-x-x-2-2-threads-element-wise-over-a-matrix		
+threads-element-wise-over-a-list-as-wolfram-s	[(fib((1) - 1) + fib((1) + 1)), (fib((2) - 1) + fib((2) + 1)), (fib((3) - 1) + fib((3) + 1)), (fib((4) - 1) + fib((4) + 1))]	[mpf('1.0'), mpf('3.0'), mpf('4.0'), mpf('7.0')]
+n-lucasl-11-over-3-50	enumeratio_n(lambda: ((fib(((mpf(11)/3)) - 1) + fib(((mpf(11)/3)) + 1))), 50)	5.9239626529619554101356978621940126287519855422362
+n-lucasl-1-plus-1-over-2-times-i	((fib((mpc(1, (mpf(1)/2))) - 1) + fib((mpc(1, (mpf(1)/2))) + 1)))	(0.0653384254708234165969564784568 + 0.755094920107234153982558411218j)
+lucasl-1-neg-x-eq-neg-lucasl-1-x		
+lucasl-2-neg-x-eq-lucasl-2-x		
+lucasl-list-1-2-3-4-5	[(fib((1) - 1) + fib((1) + 1)), (fib((2) - 1) + fib((2) + 1)), (fib((3) - 1) + fib((3) + 1)), (fib((4) - 1) + fib((4) + 1)), (fib((5) - 1) + fib((5) + 1))]	[mpf('1.0'), mpf('3.0'), mpf('4.0'), mpf('7.0'), mpf('11.0')]
+generatingfunction-lucasl-n-n-x		
+lucasl-1-conjugate-z-eq-conjugate-lucasl-1-z		
+fullsimplify-matrixfunction-function-lucasl-2-1		
+consecutive-ratios-l-n-1-l-n-converge-to-the	(mpmathify((fib((15) - 1) + fib((15) + 1))) / (fib((14) - 1) + fib((14) + 1)))	1.61803084223013048635824436536
+nestwhile-function-1-plus-1-1-function-lucasl-1		
+l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci	((((fib((10) - 1) + fib((10) + 1)))**2) - (5 * ((fib(10))**2)))	4.0
+l-n-f-n-1-f-n-1-here-at-n-6	almosteq((fib((6) - 1) + fib((6) + 1)), (fib(5) + fib(7)), 1e-20)	True
+conversely-f-n-frac-l-n-1-l-n-1-5	almosteq(fib(6), (mpmathify(((fib((5) - 1) + fib((5) + 1)) + (fib((7) - 1) + fib((7) + 1)))) / 5), 1e-20)	True
+a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n	(((fib((4) - 1) + fib((4) + 1)) * (fib((6) - 1) + fib((6) + 1))) - (((fib((5) - 1) + fib((5) + 1)))**2))	5.0
+negative-indices-are-supported-via-l-n-1-n-l-n	(fib((-1) - 1) + fib((-1) + 1))	-1.0
+lucasl-2	(fib((2) - 1) + fib((2) + 1))	3.0
+lucasl-3	(fib((3) - 1) + fib((3) + 1))	4.0
+lucasl-4	(fib((4) - 1) + fib((4) + 1))	7.0
+lucasl-6	(fib((6) - 1) + fib((6) + 1))	18.0
+lucasl-7	(fib((7) - 1) + fib((7) + 1))	29.0
+lucasl-8	(fib((8) - 1) + fib((8) + 1))	47.0
+lucasl-9	(fib((9) - 1) + fib((9) + 1))	76.0
+sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-2		
+neg-lucasl-1-times-lucasl-3-plus-lucasl-2-pow-2	((-((fib((1) - 1) + fib((1) + 1)) * (fib((3) - 1) + fib((3) + 1)))) + (((fib((2) - 1) + fib((2) + 1)))**2))	5.0
+sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-3		
+n-neg-lucasl-neg-1-over-2-times-lucasl-3-over-2	(((-((fib(((mpf(-1)/2)) - 1) + fib(((mpf(-1)/2)) + 1)) * (fib(((mpf(3)/2)) - 1) + fib(((mpf(3)/2)) + 1)))) + (((fib(((mpf(1)/2)) - 1) + fib(((mpf(1)/2)) + 1)))**2)))	0.0
+l-30-already-tops-1-8-million-growing-at-the	(fib((30) - 1) + fib((30) + 1))	1860498.0

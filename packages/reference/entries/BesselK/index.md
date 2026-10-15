@@ -15,4 +15,15 @@ names:
   dlmf: modified Bessel function of the second kind
   wolframIdentity: true
 stub: engine
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: besselk($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---

@@ -69,6 +69,16 @@ bindings:
     template: mod_floor($1, $2)
     arity: 2
     threadArg: 2
+  - origin: mapped
+    form: mpmath
+    template: ($1 % $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 ---
 
 - Equivalent to $a-b\,\mathrm{Quotient}(a,b)$, i.e. $a-b\lfloor a/b\rfloor$.
