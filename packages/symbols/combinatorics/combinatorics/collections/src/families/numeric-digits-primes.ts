@@ -5,92 +5,15 @@
 // palindromic/circular/emirp primes, semiprimes and their squarefree/sphenic/prime-power
 // kin); and the selectors KAlmostPrimes(k), RoughNumbers(k), PrimePairs(gap).
 //
-// The sieve/isPrime/nthMatchCache trio below is COPIED from numeric-sets.ts rather than
-// imported -- that file isn't meant to export its internals across the family boundary
-// (each family file owns its own kernel), so this is a deliberate, reported duplication.
+// Every scan and factoring below is bounded by ./work.ts: a question past about a second of work declines.
 import type { EpsilFamily } from "./epsil.ts";
 import { withScanDefinitions } from "./scan-definitions.ts";
 import { withSequenceDefinitions } from "./sequence-definitions.ts";
 import type { NumberKernel } from "./types.ts";
-
-// ---- copied from numeric-sets.ts: incremental sieve + trial-division primality. ----
-
-let sievePrimes: number[] = [2, 3];
-let sieveLimit = 3;
-
-function growSieveTo(limit: number): void {
-  if (limit <= sieveLimit) return;
-  const isComposite = new Uint8Array(limit + 1);
-  const primes: number[] = [];
-  for (let i = 2; i <= limit; i++) {
-    if (isComposite[i]) continue;
-    primes.push(i);
-    for (let j = i * i; j <= limit; j += i) isComposite[j] = 1;
-  }
-  sievePrimes = primes;
-  sieveLimit = limit;
-}
-
-function isPrime(n: number): boolean {
-  if (!Number.isInteger(n) || n < 2) return false;
-  if (n <= sieveLimit) return sievePrimes.includes(n);
-  for (let i = 2; i * i <= n; i++) if (n % i === 0) return false;
-  return true;
-}
-
-/** The prime factorisation of `n` (n >= 2) as ascending [prime, exponent] pairs, by trial
- *  division against the sieve. Grows the sieve to sqrt(n) first so no prime is skipped. */
-function factorize(n: number): [number, number][] {
-  let m = n;
-  growSieveTo(Math.ceil(Math.sqrt(m)) + 1);
-  const factors: [number, number][] = [];
-  for (const p of sievePrimes) {
-    if (p * p > m) break;
-    if (m % p !== 0) continue;
-    let e = 0;
-    while (m % p === 0) {
-      m /= p;
-      e++;
-    }
-    factors.push([p, e]);
-  }
-  if (m > 1) factors.push([m, 1]);
-  return factors;
-}
+import { digitCost, exactly, factorsOf, isPrimeNumber as isPrime, matchCache, memoBy } from "./work.ts";
 
 /** Omega(n): count of prime factors of n, with multiplicity. Omega(1) = 0. */
-const omega = (n: number): number => (n < 2 ? 0 : factorize(n).reduce((s, [, e]) => s + e, 0));
-
-// ---- copied from numeric-sets.ts, generalised with a `start` so Evil (which includes 0)
-// can share it with the rest (which start their scan at 1). ----
-
-function nthMatchCacheFrom(start: number, predicate: (n: number) => boolean) {
-  const matches: number[] = [];
-  let scanned = start - 1;
-  const extendTo = (count: number): void => {
-    while (matches.length < count) {
-      scanned++;
-      if (predicate(scanned)) matches.push(scanned);
-    }
-  };
-  return {
-    /** The k-th match (1-indexed). */
-    nth: (k: number): number => {
-      extendTo(k);
-      return matches[k - 1];
-    },
-    /** 0-indexed rank of `value`, or -1 if it isn't a match. */
-    rankOf: (value: number): number => {
-      if (!Number.isInteger(value) || value < start) return -1;
-      while (scanned < value) {
-        scanned++;
-        if (predicate(scanned)) matches.push(scanned);
-      }
-      return matches.indexOf(value);
-    },
-  };
-}
-const nthMatchCache = (predicate: (n: number) => boolean) => nthMatchCacheFrom(1, predicate);
+const omega = (n: number): number => (n < 2 ? 0 : factorsOf(n).reduce((sum, [, e]) => sum + e, 0));
 
 // ---- digit helpers (base 10). ----
 
@@ -100,7 +23,7 @@ const digitSum = (n: number): number => digitsOf(n).reduce((s, d) => s + d, 0);
 // ---- HarshadNumbers: A005349. n divisible by its own digit sum. ----
 
 const isHarshad = (n: number): boolean => n >= 1 && n % digitSum(n) === 0;
-const harshadCache = nthMatchCache(isHarshad);
+const harshadCache = matchCache("HarshadNumbers", isHarshad, { cost: digitCost });
 
 // ---- HappyNumbers: A007770. Iterating sum-of-squared-digits reaches 1 (vs. the one other
 // cycle, {4,16,37,58,89,145,42,20,4,...}). ----
@@ -114,7 +37,7 @@ function isHappy(n: number): boolean {
   }
   return x === 1;
 }
-const happyCache = nthMatchCache(isHappy);
+const happyCache = matchCache("HappyNumbers", isHappy, { cost: () => 400 });
 
 // ---- NarcissisticNumbers (Armstrong numbers): A005188, excluding the trivial 0 -- PROVEN
 // finite, exactly 88 terms (the largest is the 39-digit 115132219018763992565095597973971522401,
@@ -320,7 +243,7 @@ function isKaprekar(n: number): boolean {
   }
   return false;
 }
-const kaprekarCache = nthMatchCache(isKaprekar);
+const kaprekarCache = matchCache("KaprekarNumbers", isKaprekar, { cost: () => 200 });
 
 // ---- Evil/Odious/Pernicious: A001969 / A000069 / A052294, by binary weight (popcount).
 // Evil starts at 0 (popcount 0, even), the one family here whose first term isn't >= 1. ----
@@ -333,19 +256,19 @@ const popcount = (n: number): number =>
 const isEvil = (n: number): boolean => n >= 0 && popcount(n) % 2 === 0;
 const isOdious = (n: number): boolean => n >= 0 && popcount(n) % 2 === 1;
 const isPernicious = (n: number): boolean => n >= 0 && isPrime(popcount(n));
-const evilCache = nthMatchCacheFrom(0, isEvil);
-const odiousCache = nthMatchCache(isOdious);
-const perniciousCache = nthMatchCache(isPernicious);
+const evilCache = matchCache("EvilNumbers", isEvil, { start: 0, cost: digitCost });
+const odiousCache = matchCache("OdiousNumbers", isOdious, { cost: digitCost });
+const perniciousCache = matchCache("PerniciousNumbers", isPernicious, { cost: digitCost });
 
 // ---- SmithNumbers: A006753. Composite n whose digit sum equals the digit sum of its prime
 // factors, counted with multiplicity. Infinite (McDaniel 1987). ----
 
 function isSmith(n: number): boolean {
   if (n < 4 || isPrime(n)) return false;
-  const factorDigitSum = factorize(n).reduce((s, [p, e]) => s + e * digitSum(p), 0);
+  const factorDigitSum = factorsOf(n).reduce((s, [p, e]) => s + e * digitSum(p), 0);
   return factorDigitSum === digitSum(n);
 }
-const smithCache = nthMatchCache(isSmith);
+const smithCache = matchCache("SmithNumbers", isSmith);
 
 // ---- Semiprimes / squarefree semiprimes / sphenic / prime powers: by Omega(n) and the
 // factorisation shape. All infinite (each has an obvious one-parameter infinite subfamily,
@@ -353,31 +276,26 @@ const smithCache = nthMatchCache(isSmith);
 
 const isSemiprime = (n: number): boolean => omega(n) === 2;
 const isSquarefreeSemiprime = (n: number): boolean => {
-  const f = factorize(n);
+  const f = factorsOf(n);
   return f.length === 2 && f.every(([, e]) => e === 1);
 };
 const isSphenic = (n: number): boolean => {
-  const f = factorize(n);
+  const f = factorsOf(n);
   return f.length === 3 && f.every(([, e]) => e === 1);
 };
-const isPrimePower = (n: number): boolean => n >= 2 && factorize(n).length === 1;
-const semiprimeCache = nthMatchCache(isSemiprime);
-const squarefreeSemiprimeCache = nthMatchCache(isSquarefreeSemiprime);
-const sphenicCache = nthMatchCache(isSphenic);
-const primePowerCache = nthMatchCache(isPrimePower);
+const isPrimePower = (n: number): boolean => n >= 2 && factorsOf(n).length === 1;
+const semiprimeCache = matchCache("SemiprimeNumbers", isSemiprime);
+const squarefreeSemiprimeCache = matchCache("SquarefreeSemiprimes", isSquarefreeSemiprime);
+const sphenicCache = matchCache("SphenicNumbers", isSphenic);
+const primePowerCache = matchCache("PrimePowerNumbers", isPrimePower);
 
 // ---- KAlmostPrimes(k): Omega(n) = k, a one-parameter selector. k=1 is PrimeNumbers verbatim,
 // k=2 is SemiprimeNumbers verbatim (both cross-checked in the test file). Infinite for every
 // k >= 1: 2^(k-1) * p has Omega = k for every prime p. ----
 
-const kAlmostCaches = new Map<number, ReturnType<typeof nthMatchCache>>();
-function kAlmostCacheFor(k: number): ReturnType<typeof nthMatchCache> {
-  let cache = kAlmostCaches.get(k);
-  if (!cache) {
-    cache = nthMatchCache((n) => omega(n) === k);
-    kAlmostCaches.set(k, cache);
-  }
-  return cache;
+const kAlmostCaches = new Map<number, ReturnType<typeof matchCache>>();
+function kAlmostCacheFor(k: number): ReturnType<typeof matchCache> {
+  return memoBy(kAlmostCaches, k, () => matchCache("KAlmostPrimes", (n) => omega(n) === k));
 }
 
 // ---- RoughNumbers(k): every prime factor of n is >= k (1 counts, vacuously -- the
@@ -387,16 +305,11 @@ function kAlmostCacheFor(k: number): ReturnType<typeof nthMatchCache> {
 function isRough(n: number, k: number): boolean {
   if (n < 1) return false;
   if (n === 1) return true;
-  return factorize(n).every(([p]) => p >= k);
+  return factorsOf(n).every(([p]) => p >= k);
 }
-const roughCaches = new Map<number, ReturnType<typeof nthMatchCache>>();
-function roughCacheFor(k: number): ReturnType<typeof nthMatchCache> {
-  let cache = roughCaches.get(k);
-  if (!cache) {
-    cache = nthMatchCache((n) => isRough(n, k));
-    roughCaches.set(k, cache);
-  }
-  return cache;
+const roughCaches = new Map<number, ReturnType<typeof matchCache>>();
+function roughCacheFor(k: number): ReturnType<typeof matchCache> {
+  return memoBy(roughCaches, k, () => matchCache("RoughNumbers", (n) => isRough(n, k)));
 }
 
 // ---- prime-pair families: lesser member p of a pair (p, p+gap), both prime -- the catalog's
@@ -404,18 +317,18 @@ function roughCacheFor(k: number): ReturnType<typeof nthMatchCache> {
 // Infinitude is open for every one of these (the twin-prime conjecture and its kin), so Count
 // is NaN throughout, per PrimePairs(gap) for every gap. ----
 
-const isTwinPrime = (n: number): boolean => isPrime(n) && isPrime(n + 2);
-const isCousinPrime = (n: number): boolean => isPrime(n) && isPrime(n + 4);
-const isSexyPrime = (n: number): boolean => isPrime(n) && isPrime(n + 6);
-const isSophieGermainPrime = (n: number): boolean => isPrime(n) && isPrime(2 * n + 1);
+const isTwinPrime = (n: number): boolean => isPrime(n) && isPrime(exactly("n + 2", n + 2));
+const isCousinPrime = (n: number): boolean => isPrime(n) && isPrime(exactly("n + 4", n + 4));
+const isSexyPrime = (n: number): boolean => isPrime(n) && isPrime(exactly("n + 6", n + 6));
+const isSophieGermainPrime = (n: number): boolean => isPrime(n) && isPrime(exactly("2n + 1", 2 * n + 1));
 const isSafePrime = (n: number): boolean => isPrime(n) && (n - 1) % 2 === 0 && isPrime((n - 1) / 2);
-const twinPrimeCache = nthMatchCache(isTwinPrime);
-const cousinPrimeCache = nthMatchCache(isCousinPrime);
-const sexyPrimeCache = nthMatchCache(isSexyPrime);
-const sophieGermainCache = nthMatchCache(isSophieGermainPrime);
-const safePrimeCache = nthMatchCache(isSafePrime);
+const twinPrimeCache = matchCache("TwinPrimes", isTwinPrime);
+const cousinPrimeCache = matchCache("CousinPrimes", isCousinPrime);
+const sexyPrimeCache = matchCache("SexyPrimes", isSexyPrime);
+const sophieGermainCache = matchCache("SophieGermainPrimes", isSophieGermainPrime);
+const safePrimeCache = matchCache("SafePrimes", isSafePrime);
 
-const primePairCaches = new Map<number, ReturnType<typeof nthMatchCache>>();
+const primePairCaches = new Map<number, ReturnType<typeof matchCache>>();
 /** The lesser primes p with p + gap prime, for an odd gap: p = 2 or p + gap = 2. */
 const oddGapPairs = (gap: number): number[] => {
   const pairs = [...new Set([2, 2 - gap])].filter((p) => isPrime(p) && isPrime(p + gap));
@@ -423,13 +336,8 @@ const oddGapPairs = (gap: number): number[] => {
   return pairs;
 };
 
-function primePairCacheFor(gap: number): ReturnType<typeof nthMatchCache> {
-  let cache = primePairCaches.get(gap);
-  if (!cache) {
-    cache = nthMatchCache((n) => isPrime(n) && isPrime(n + gap));
-    primePairCaches.set(gap, cache);
-  }
-  return cache;
+function primePairCacheFor(gap: number): ReturnType<typeof matchCache> {
+  return memoBy(primePairCaches, gap, () => matchCache("PrimePairs", (n) => isPrime(n) && isPrime(n + gap)));
 }
 
 // ---- palindromic / circular / emirp primes: also open infinitude (Count NaN). ----
@@ -443,30 +351,30 @@ const isPalindromeNum = (n: number): boolean => {
 const reverseNum = (n: number): number => {
   const chars = String(n).split("");
   chars.reverse();
-  return Number(chars.join(""));
+  return exactly("the reversal of n", Number(chars.join("")));
 };
 
 const isPalindromicPrime = (n: number): boolean => isPrime(n) && isPalindromeNum(n);
-const palindromicPrimeCache = nthMatchCache(isPalindromicPrime);
+const palindromicPrimeCache = matchCache("PalindromicPrimes", isPalindromicPrime);
 
 function isCircularPrime(n: number): boolean {
   if (!isPrime(n)) return false;
   const s = String(n);
   if (s.includes("0")) return false; // a 0 digit rotates to a leading zero -- excluded by convention
   for (let i = 0; i < s.length; i++) {
-    const rotated = Number(s.slice(i) + s.slice(0, i));
+    const rotated = exactly("a rotation of n", Number(s.slice(i) + s.slice(0, i)));
     if (!isPrime(rotated)) return false;
   }
   return true;
 }
-const circularPrimeCache = nthMatchCache(isCircularPrime);
+const circularPrimeCache = matchCache("CircularPrimes", isCircularPrime);
 
 function isEmirp(n: number): boolean {
   if (!isPrime(n)) return false;
   const r = reverseNum(n);
   return r !== n && isPrime(r);
 }
-const emirpCache = nthMatchCache(isEmirp);
+const emirpCache = matchCache("EmirpPrimes", isEmirp);
 
 // ---- MersennePrimes: A000668, 2^p - 1 for prime p. FibonacciPrimes: A005478, Fibonacci
 // numbers that are prime. Both have only a handful of known terms and the known terms grow
@@ -585,6 +493,7 @@ export const kernels: NumberKernel[] = [
     paramCount: 0,
     kind: "scalar",
     count: () => NARCISSISTIC_COUNT,
+    bigElements: true,
     unrank: (_p, r) => (r >= 0 && r < NARCISSISTIC_NUMBERS.length ? narrow(NARCISSISTIC_NUMBERS[r]) : Number.NaN),
     valid: (element) => {
       const x = toBigNarcissistic(element);
@@ -771,7 +680,10 @@ export const kernels: NumberKernel[] = [
     // {2} (or {2 − gap}), finite, where a scan for more would never end. Even gaps are open.
     count: ([gap]) => (gap % 2 !== 0 ? oddGapPairs(gap).length : Number.NaN),
     unrank: ([gap], r) => (gap % 2 !== 0 ? (oddGapPairs(gap)[r] ?? Number.NaN) : primePairCacheFor(gap).nth(r + 1)),
-    valid: (element, [gap]) => isPrime(Number(element)) && isPrime(Number(element) + gap),
+    valid: (element, [gap]) => {
+      const n = Number(element);
+      return isPrime(n) && isPrime(exactly("n + gap", n + gap));
+    },
     rank: (element, [gap]) =>
       gap % 2 !== 0 ? oddGapPairs(gap).indexOf(Number(element)) : primePairCacheFor(gap).rankOf(Number(element)),
   },

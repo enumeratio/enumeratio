@@ -1,4 +1,4 @@
-import { type Expr, integerAt } from "@enumeratio/engine";
+import { bigIntegerAt, type Expr, integerAt } from "@enumeratio/engine";
 
 // The one collection contract, shared by every family. A FamilyKernel is a pure kernel
 // (count / unrank / rank / valid) over plain JS values, with NO compute-engine
@@ -116,7 +116,14 @@ export interface NumberKernel extends Family {
   readonly exactCount?: (p: number[]) => bigint | undefined;
   readonly unrank: (p: number[], r: number) => Element;
   readonly rank: (element: unknown, p: number[]) => number;
+  /** `valid` and `rank` read a bigint element past 2^53 exactly. Without it they get no such
+   *  element: `Number(element)` would round it, so the lifted kernel declines instead. */
+  readonly bigElements?: true;
 }
+
+/** Mark kernels whose `valid` and `rank` read bigint elements exactly (see `NumberKernel.bigElements`). */
+export const bigAware = (kernels: NumberKernel[]): NumberKernel[] =>
+  kernels.map((kernel) => ({ ...kernel, bigElements: true as const }));
 
 const exact = (head: string, what: string, n: number, p: number[]): bigint => {
   if (!Number.isSafeInteger(n)) {
@@ -129,14 +136,31 @@ const exact = (head: string, what: string, n: number, p: number[]): bigint => {
 export const needsBigint = (error: unknown): boolean =>
   error instanceof RangeError && error.message.includes("not bigint yet");
 
+/** A scalar element is an integer, a safe one or a bigint: anything else (NaN from 1.5, √2 or a symbol) is no member. */
+const isScalar = (element: unknown): boolean => typeof element === "bigint" || Number.isSafeInteger(element);
+
+/** Refuse (RangeError) an element past 2^53 that a kernel in plain numbers can only read rounded. */
+const refuseBig = (head: string, element: unknown): void => {
+  if (
+    typeof element === "bigint" &&
+    (element > BigInt(Number.MAX_SAFE_INTEGER) || element < BigInt(Number.MIN_SAFE_INTEGER))
+  )
+    throw new RangeError(`${head}: element ${element} exceeds 2^53; its kernel is not bigint yet`);
+};
+
 /** Lift a NumberKernel into the bigint contract, refusing (RangeError) rather than
  *  converting a value a double has already rounded. */
 export function numberKernel(k: NumberKernel): FamilyKernel {
+  const bigElements = k.bigElements === true;
   return {
     head: k.head,
     paramCount: k.paramCount,
     kind: k.kind,
-    valid: k.valid,
+    valid: (element, p) => {
+      if (k.kind === "scalar" && !isScalar(element)) return false;
+      if (!bigElements) refuseBig(k.head, element);
+      return k.valid(element, p);
+    },
     ...(k.carrier === undefined ? {} : { carrier: k.carrier }),
     ...(k.carrierParams === undefined ? {} : { carrierParams: k.carrierParams }),
     ...(k.carrierElements === undefined ? {} : { carrierElements: k.carrierElements }),
@@ -152,6 +176,8 @@ export function numberKernel(k: NumberKernel): FamilyKernel {
       return k.unrank(p, Number(r));
     },
     rank: (element, p) => {
+      if (k.kind === "scalar" && !isScalar(element)) return -1n;
+      if (!bigElements) refuseBig(k.head, element);
       const r = k.rank(element, p);
       return r < 0 ? -1n : exact(k.head, "rank", r, p);
     },
@@ -167,6 +193,23 @@ export const countNumber = (c: Count): number | undefined =>
  *  The decoders below are total, and `NaN` is an invalid element every family's
  *  `valid()` already rejects — which is why this rejects rather than truncates. */
 export const intOf = (x: Boxed | undefined): number => integerAt(x as unknown as Expr | undefined) ?? Number.NaN;
+
+/** A scalar element, exactly: a number where a double holds it, else the bigint itself (as the
+ *  kernels' terms are, cast through `Element`); `NaN` when the expression is no integer. A float
+ *  past 2^53 that is a whole number (2.0^60, 1.0e30) is an integer no one has read exactly -- a double
+ *  has already rounded it -- so it declines, as a kernel does past 2^53, rather than read as `NaN`
+ *  (not a member). */
+export const scalarOf = (x: Boxed | undefined): number => {
+  const expr = x as unknown as Expr | undefined;
+  const small = integerAt(expr);
+  if (small !== undefined) return small;
+  const big = bigIntegerAt(expr);
+  const machine = typeof (expr as { numericValue?: unknown } | undefined)?.numericValue === "number";
+  if (big !== undefined && !machine) return big as unknown as number;
+  if (expr !== undefined && expr.isInteger === true && Number.isFinite(expr.re) && expr.im === 0)
+    throw new RangeError(`${String(expr.re)} is an integer-valued float past 2^53; its kernel is not bigint yet`);
+  return Number.NaN;
+};
 
 // MathJSON encoders (element -> boxed MathJSON expression input).
 export const listMJ = (xs: number[]): unknown => ["List", ...xs];

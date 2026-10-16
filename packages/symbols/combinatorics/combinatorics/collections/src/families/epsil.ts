@@ -9,6 +9,7 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { compileTyped, definitionHash, type GeneratedRun, runtimeHelpers } from "@enumeratio/engine/compiled";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { COMPILED_FAMILIES } from "./compiled-families.generated.js";
+import { isWorkDecline } from "./work.ts";
 import {
   type Count,
   type Element,
@@ -45,6 +46,8 @@ export type FastKernel = {
   readonly unrank: (p: number[], r: number) => ReturnType<NumberKernel["unrank"]> | undefined;
   readonly rank: (element: unknown, p: number[]) => number | undefined;
   readonly valid: (element: unknown, p: number[]) => boolean | undefined;
+  /** `valid` reads a bigint element past 2^53 exactly; without it that element never reaches the fast path. */
+  readonly bigElements?: true;
 };
 
 export interface EpsilFamily extends FamilyShape {
@@ -477,14 +480,19 @@ export function kernelOn(
     const element = typeof given === "bigint" && !beyondDoubles(given) ? Number(given) : given;
     const settledEarly = early?.member?.(element, p);
     if (settledEarly === false) return false;
-    if (settledEarly === "decline") return decline(p);
-    // Membership never reads the count: the fast path answers at any params it reads as written.
-    if (quick !== undefined && wellParamed(p) && !beyondDoubles(element)) {
+    // Membership never reads the count: the fast path answers at any params it reads as written, a
+    // bigint element only if it says it reads one exactly. It goes ahead of the decline, which is for
+    // the interpreter's reach alone.
+    if (quick !== undefined && wellParamed(p) && (!beyondDoubles(element) || quick.bigElements === true)) {
       try {
         const answer = quick.valid(element, p);
         if (typeof answer === "boolean") return answer;
-      } catch {}
+      } catch (error) {
+        // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+        if (isWorkDecline(error)) throw error;
+      }
     }
+    if (settledEarly === "decline") return decline(p);
     const fast = beyondDoubles(element) ? undefined : run("valid", p, { _x: element });
     if (typeof fast === "boolean") return fast;
     // A compiled answer that isn't a boolean can't tell: decline rather than interpret the definition
@@ -518,7 +526,10 @@ export function kernelOn(
           try {
             const element = quick.unrank(p, Number(r));
             if (element !== undefined) return element;
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         return decline(p);
       }
@@ -530,7 +541,10 @@ export function kernelOn(
           try {
             const element = quick.unrank(p, Number(r));
             if (element !== undefined) return element;
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         if (early?.unrank?.(r, p) === "decline") return decline(p);
         if (r <= MAX_SAFE) {
@@ -546,7 +560,10 @@ export function kernelOn(
           try {
             const element = quick.unrank(p, Number(r));
             if (element !== undefined) return element;
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         const fast = run("unrank", p, { _r: Number(r) });
         if (wellFormed(family.kind, fast)) return fast as Element;
@@ -567,12 +584,27 @@ export function kernelOn(
             try {
               const place = quick.rank(element, p);
               if (isInteger(place)) return BigInt(place);
-            } catch {}
+            } catch (error) {
+              // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+              if (isWorkDecline(error)) throw error;
+            }
           }
           if (early?.rank?.(element, p) === "decline") return decline(p);
           const fast = run("rank", p, { _x: element });
           if (isInteger(fast)) return BigInt(fast);
-        } else if (early?.rank?.(element, p) === "decline") return decline(p);
+        } else {
+          // As in `valid`: a fast path that reads a bigint exactly answers, within its own bounds, ahead of the decline.
+          if (quick?.bigElements === true && wellParamed(p)) {
+            try {
+              const place = quick.rank(element, p);
+              if (isInteger(place)) return BigInt(place);
+            } catch (error) {
+              // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+              if (isWorkDecline(error)) throw error;
+            }
+          }
+          if (early?.rank?.(element, p) === "decline") return decline(p);
+        }
         const json = interpret("rank", p, { _x: elementJson(element) });
         return integerOf(json) ?? (beyondDoubles(element) || unexpanded(json) ? decline(p) : fail("rank", p, json));
       }
@@ -582,7 +614,10 @@ export function kernelOn(
           try {
             const place = quick.rank(element, p);
             if (isInteger(place)) return BigInt(place);
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         return decline(p);
       }
@@ -591,7 +626,10 @@ export function kernelOn(
           try {
             const place = quick.rank(element, p);
             if (isInteger(place)) return BigInt(place);
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         const fast = run("rank", p, { _x: element });
         if (isInteger(fast)) return BigInt(fast);
