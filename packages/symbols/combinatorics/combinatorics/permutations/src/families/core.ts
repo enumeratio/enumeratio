@@ -56,20 +56,20 @@ const at = (list: MathJSON, index: MathJSON): MathJSON => ["At", list, index];
 const quotient = (a: MathJSON, b: MathJSON): MathJSON => ["Divide", sub(a, ["Mod", a, b]), b];
 const all = (condition: (j: string) => MathJSON, over: MathJSON, j = "j"): MathJSON =>
   fold(["And", "ok", condition(j)], "ok", j, "True", over);
-const between = (x: MathJSON, low: MathJSON, high: MathJSON): MathJSON => [
+export const between = (x: MathJSON, low: MathJSON, high: MathJSON): MathJSON => [
   "And",
   ["LessEqual", low, x],
   ["LessEqual", x, high],
 ];
 
 /** m (m − 1) ⋯ (m − t + 1): the number of ways to fill t slots from m. */
-const falling = (m: MathJSON, t: MathJSON, v = "f"): MathJSON =>
+export const falling = (m: MathJSON, t: MathJSON, v = "f"): MathJSON =>
   fold(["Multiply", "product", v], "product", v, 1, upTo(add(sub(m, t), 1), m));
 
 /** Digit j (1-based) of r in the mixed radix of a k-permutation of n: slot j has n − j + 1
  *  choices, and a digit there is worth the ways to fill the slots after it, (n − j)! when every
  *  slot is filled. */
-const digit = (n: MathJSON, k: MathJSON, r: MathJSON, j: MathJSON): MathJSON => [
+export const digit = (n: MathJSON, k: MathJSON, r: MathJSON, j: MathJSON): MathJSON => [
   "Mod",
   quotient(r, JSON.stringify(n) === JSON.stringify(k) ? ["Factorial", sub(n, j)] : falling(sub(n, j), sub(k, j))),
   add(sub(n, j), 1),
@@ -90,11 +90,12 @@ const lexEntry = (n: MathJSON, k: MathJSON, r: MathJSON, j: MathJSON): MathJSON 
     downTo(sub(j, 1), 1),
   );
 
-const lexUnrank = (n: MathJSON, k: MathJSON, r: MathJSON): MathJSON => map(lexEntry(n, k, r, "j"), "j", upTo(1, k));
+export const lexUnrank = (n: MathJSON, k: MathJSON, r: MathJSON): MathJSON =>
+  map(lexEntry(n, k, r, "j"), "j", upTo(1, k));
 
 /** The lex rank of a k-permutation of n whose entry j is `entry(j)`: digit j is how many values
  *  below entry j are still free, read in Horner form. */
-const lexRank = (n: MathJSON, k: MathJSON, entry: (j: MathJSON) => MathJSON): MathJSON =>
+export const lexRank = (n: MathJSON, k: MathJSON, entry: (j: MathJSON) => MathJSON): MathJSON =>
   fold(
     add(
       ["Multiply", "r", add(sub(n, "j"), 1)],
@@ -109,8 +110,8 @@ const lexRank = (n: MathJSON, k: MathJSON, entry: (j: MathJSON) => MathJSON): Ma
     upTo(1, k),
   );
 
-const element = (j: MathJSON): MathJSON => at("_x", j);
-const hasLength = (list: MathJSON, length: MathJSON, then: MathJSON): MathJSON => [
+export const element = (j: MathJSON): MathJSON => at("_x", j);
+export const hasLength = (list: MathJSON, length: MathJSON, then: MathJSON): MathJSON => [
   "If",
   ["Equal", ["Length", list], length],
   then,
@@ -140,7 +141,7 @@ export const symmetricGroup: EpsilFamily = {
 };
 
 /** The k-permutations (arrangements) of n, n!/(n − k)! of them, in lex order. */
-const kPermutations: EpsilFamily = {
+export const kPermutations: EpsilFamily = {
   head: "KPermutations",
   paramCount: 2,
   kind: "ints",

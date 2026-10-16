@@ -362,6 +362,10 @@ test("the fast path answers up to 2^53 members, and not a member more", () => {
 const QUICK_PAST_LIMIT = new Set([
   "SymmetricGroup",
   "KPermutations",
+  "Arrangements",
+  "EvenPermutations",
+  "LehmerCodes",
+  "SubexcedantSeqs",
   "SignedPermutations",
   "ColoredPermutations",
   "GrayCodeSubsets",
