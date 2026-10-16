@@ -21,8 +21,8 @@ round-226-10
 rounding-a-price-to-the-nearest-cent-19-995			
 a-negative-second-argument-rounds-to-the-nearest			
 rounding-to-0-decimal-places-matches-the-1			
-rounds-half-away-from-zero-not-banker-s-rounding	round(x(2.5))	3.0	disagree
-and-by-the-same-convention-2-5-rounds-to-3-not-2	round(x(-2.5))	-3.0	disagree
+rounds-half-to-even	round(x(2.5))	3.0	disagree
+minus-2-5-rounds-to-minus-2	round(x(-2.5))	-3.0	disagree
 round-5-over-2-exact-rational-tie	round(rational(n(5), n(2)))	3	disagree
-an-exact-half-rounds-away-from-zero-as-well	round(rational(n(1), n(2)))	1	disagree
+an-exact-half-rounds-to-even	round(rational(n(1), n(2)))	1	disagree
 round-complexinfinity-is-complexinfinity-the			

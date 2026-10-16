@@ -21,8 +21,8 @@ round-226-10	Round[226, 100]	200	\text{Round}[226,100]	200
 rounding-a-price-to-the-nearest-cent-19-995	Round[19.995, Rational[1, 100]]	20	\text{Round}\left[19.995,\frac{1}{100}\right]	20	
 a-negative-second-argument-rounds-to-the-nearest	(Round[1234, 100] == 1200)	True	\text{Round}[1234,100]=1200	\text{True}	
 rounding-to-0-decimal-places-matches-the-1	(Round[3.14159, 1] == Round[3.14159])	True	\text{Round}[3.14159,1]=\text{Round}[3.14159]	\text{True}	
-rounds-half-away-from-zero-not-banker-s-rounding	Round[2.5]	2	\text{Round}[2.5]	2	
-and-by-the-same-convention-2-5-rounds-to-3-not-2	Round[-2.5]	-2	\text{Round}[-2.5]	-2	
+rounds-half-to-even	Round[2.5]	2	\text{Round}[2.5]	2	
+minus-2-5-rounds-to-minus-2	Round[-2.5]	-2	\text{Round}[-2.5]	-2	
 round-5-over-2-exact-rational-tie	Round[Rational[5, 2]]	2	\text{Round}\left[\frac{5}{2}\right]	2	
-an-exact-half-rounds-away-from-zero-as-well	Round[Rational[1, 2]]	0	\text{Round}\left[\frac{1}{2}\right]	0	
+an-exact-half-rounds-to-even	Round[Rational[1, 2]]	0	\text{Round}\left[\frac{1}{2}\right]	0	
 round-complexinfinity-is-complexinfinity-the	Round[ComplexInfinity]	ComplexInfinity	\text{Round}[\text{ComplexInfinity}]	\text{ComplexInfinity}	disagree
