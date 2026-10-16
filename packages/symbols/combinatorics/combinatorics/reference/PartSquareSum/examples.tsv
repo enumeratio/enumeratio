@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-partition-4-2-1-of-7			[PartSquareSum, [IntegerPartition, [List, 4, 2, 1]]]	21			the partition $4 + 2 + 1$ of $7$
+the-partition-3-3-1-of-7			[PartSquareSum, [IntegerPartition, [List, 3, 3, 1]]]	19			the partition $3 + 3 + 1$ of $7$
+findstat-st001127-1	Properties		[CombinatorialStat, [IntegerPartition, [List, 1]], "'PartSquareSum'"]	1	1	FindStat St001127	FindStat's value for [1]
+findstat-st001127-2	Properties		[CombinatorialStat, [IntegerPartition, [List, 2]], "'PartSquareSum'"]	4	4	FindStat St001127	FindStat's value for [2]
+findstat-st001127-3	Properties		[CombinatorialStat, [IntegerPartition, [List, 3]], "'PartSquareSum'"]	9	9	FindStat St001127	FindStat's value for [3]

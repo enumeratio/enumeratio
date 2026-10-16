@@ -2,6 +2,7 @@ import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { applyDefinition, declareStatistics } from "../../src/statistics/declare.ts";
 import { PARTITION_STATISTICS } from "../src/statistics.ts";
+import { PARTITION_READINGS } from "./partition-findstat-readings.ts";
 
 const ce = bareEngine();
 // Declared, not just indexed: StandardTableauCount is defined in terms of the
@@ -137,6 +138,7 @@ const EXPECTED: Record<string, (l: number[]) => number> = {
     return part;
   },
   PairwiseProductSum: (l) => (sum(l) ** 2 - sum(l.map((p) => p * p))) / 2,
+  ...PARTITION_READINGS,
 };
 
 test("every partition definition has an independent reading", () => {
