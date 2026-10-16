@@ -6,6 +6,7 @@ ln-gamma-5-ln-4-ln-24-split-into-prime	loggamma(5)	log(24)
 log-gamma-neg-2-is-a-pole	loggamma(-2)	oo	
 log-gamma-neg-3-is-a-pole	loggamma(-3)	oo	
 n-log-gamma-5-over-2-to-40-digits	N(loggamma(Rational(5, 2)), 30)	0.284682870472919159632494669683	
+n-loggamma-15-pow-300-past-a-double	N(loggamma((S(15)**300)), 30)	RecursionError: maximum recursion depth exceeded	error
 to-the-engine-s-working-precision	loggamma(2.2)	0.0969474667906389	
 complex-arguments	loggamma((2.5 + 3*I))	-1.47095461034884 + 2.8226156382608*I	
 threads-elementwise-over-an-array	[[loggamma(Rational(1, 2)), loggamma(-1)], [loggamma(0), loggamma(Rational(1, 2))]]	[[log(sqrt(pi)), oo], [oo, log(sqrt(pi))]]	

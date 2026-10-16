@@ -6,6 +6,7 @@ ln-gamma-5-ln-4-ln-24-split-into-prime	loggamma(5)	3.178053830347945619646941601
 log-gamma-neg-2-is-a-pole	loggamma(-2)	ValueError: gamma function pole	error
 log-gamma-neg-3-is-a-pole	loggamma(-3)	ValueError: gamma function pole	error
 n-log-gamma-5-over-2-to-40-digits	enumeratio_n(lambda: (loggamma((mpf(5)/2))), 40)	0.2846828704729191596324946696827019243201	
+n-loggamma-15-pow-300-past-a-double	(loggamma(((15)**300)))	5.45281521924575338242510709907e+355	
 to-the-engine-s-working-precision	loggamma(2.2)	0.0969474667906388731779520854347	
 complex-arguments	loggamma(mpc(2.5, 3))	(-1.47095461034884169130549929498 + 2.82261563826079945002526554732j)	
 threads-elementwise-over-an-array	[[loggamma((mpf(1)/2)), loggamma(-1)], [loggamma(0), loggamma((mpf(1)/2))]]	ValueError: gamma function pole	error

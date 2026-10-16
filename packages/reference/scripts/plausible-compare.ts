@@ -75,28 +75,228 @@ export function roundsTo(spec: MathJSON, ours: MathJSON, theirs: string): boolea
 
 /** The Rust lane declining in its own words: a double that isn't finite, a crate's argument
  * error, a parameter that is a machine word or unsigned, a zero or a digit the crate has no
- * answer for. Where ours answers, that is a domain difference, not a disagreement. */
+ * answer for. On its own that says nothing about ours: `outsideCrateDomain` says why. */
 const CRATE_DECLINES =
   /non-finite result|statrs:|`Err` value|no value: |machine word|non-negative integer|no factorization|digits below the base|unit part/;
 export const crateDeclines = (theirs: string): boolean => CRATE_DECLINES.test(theirs);
 
-/** Whether `ours` is an exact zero that `theirs` (a double) lands within rounding of: a double
- * can't hit the zero of a trig value at a multiple of π, or of `ln Γ(1)`, exactly. */
-export function roundsToZero(ours: MathJSON, theirs: string): boolean {
-  const other = parts(theirs);
-  return ours === 0 && other?.length === 1 && Math.abs(other[0] as number) <= 1e-12;
+// ── what a literal expression is worth, to judge a sample's arguments ──
+
+/** A literal expression's value as a double, `undefined` when it isn't plain arithmetic on numbers
+ * (or leaves the reals, or divides by zero). */
+export function numeric(expr: MathJSON): number | undefined {
+  if (typeof expr === "number") return expr;
+  if (isBigNumber(expr)) return Number(expr.num);
+  if (expr === "Pi") return Math.PI;
+  if (expr === "ExponentialE") return Math.E;
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return undefined;
+  const [head, ...ops] = expr as readonly MathJSON[];
+  const values = ops.map(numeric);
+  if (values.some((v) => v === undefined)) return undefined;
+  const v = values as number[];
+  const finite = (x: number): number | undefined => (Number.isFinite(x) ? x : undefined);
+  switch (head) {
+    case "Rational":
+    case "Divide":
+      return v.length === 2 && v[1] !== 0 ? finite((v[0] as number) / (v[1] as number)) : undefined;
+    case "Negate":
+      return v.length === 1 ? -(v[0] as number) : undefined;
+    case "Add":
+      return finite(v.reduce((a, b) => a + b, 0));
+    case "Subtract":
+      return v.length === 2 ? (v[0] as number) - (v[1] as number) : undefined;
+    case "Multiply":
+      return finite(v.reduce((a, b) => a * b, 1));
+    case "Power":
+      return v.length === 2 ? finite((v[0] as number) ** (v[1] as number)) : undefined;
+    case "Sqrt":
+      return v.length === 1 && (v[0] as number) >= 0 ? Math.sqrt(v[0] as number) : undefined;
+    default:
+      return undefined;
+  }
 }
 
-/** Whether a printed answer holds a double past 1e15 in size: a crate's value beside a pole
- * it can't reach exactly (statrs's `gamma(-1)` is -2.6e16). */
-export const hasHugeDouble = (theirs: string): boolean =>
-  [...theirs.matchAll(/-?\d+(?:\.\d+)?(?:e[-+]?\d+)?/gi)].some((m) => Math.abs(Number(m[0])) >= 1e15);
+/** `expr` as a rational multiple of π (`[p, q]`), when it is one with a small denominator. */
+function piMultiple(expr: MathJSON): [number, number] | undefined {
+  const v = numeric(expr);
+  if (v === undefined) return undefined;
+  if (v === 0) return [0, 1];
+  const q = v / Math.PI;
+  for (let d = 1; d <= 24; d++) {
+    const p = Math.round(q * d);
+    if (Math.abs(q * d - p) <= 1e-9 * Math.max(1, Math.abs(q * d))) return [p, d];
+  }
+  return undefined;
+}
+
+/** Whether `head(arg)` has an exact zero there: a trig value at a multiple of π, or ln Γ at 1 or 2. */
+function exactZeroAt(head: string, arg: MathJSON): boolean {
+  if (head === "LogGamma" || head === "GammaLn") return [1, 2].includes(numeric(arg) as number);
+  const m = piMultiple(arg);
+  if (m === undefined) return false;
+  if (head === "Sin" || head === "Tan") return m[1] === 1;
+  if (head === "Cos" || head === "Cot") return m[1] === 2 && Math.abs(m[0]) % 2 === 1;
+  return false;
+}
+
+/** The call a sample is, inside an `N`. */
+const innerCall = (sample: MathJSON): readonly MathJSON[] | undefined => {
+  const call = Array.isArray(sample) && sample[0] === "N" ? sample[1] : sample;
+  return Array.isArray(call) && typeof call[0] === "string" ? (call as readonly MathJSON[]) : undefined;
+};
+
+/** Whether `ours` is the exact zero a double only approaches: the sample is one call with an exact
+ * zero there (a trig value at a multiple of π, ln Γ(1)), and theirs is rounding noise around it. */
+export function roundsToZero(sample: MathJSON, ours: MathJSON, theirs: string): boolean {
+  const call = innerCall(sample);
+  const other = parts(theirs);
+  return (
+    ours === 0 &&
+    call !== undefined &&
+    call.length === 2 &&
+    exactZeroAt(call[0] as string, call[1] as MathJSON) &&
+    other?.length === 1 &&
+    Math.abs(other[0] as number) <= 1e-12
+  );
+}
 
 const NON_ANSWERS = ["ComplexInfinity", "PositiveInfinity", "NegativeInfinity", "NaN", "Indeterminate"];
+const isNonAnswer = (ours: MathJSON): boolean =>
+  (typeof ours === "string" && NON_ANSWERS.includes(ours)) || (Array.isArray(ours) && ours[0] === "Error");
 /** Whether `ours` holds a non-answer (a pole, an undefined form or an error) anywhere in it. */
 export function hasNonAnswer(ours: MathJSON): boolean {
-  if (typeof ours === "string") return NON_ANSWERS.includes(ours);
-  return Array.isArray(ours) && (ours[0] === "Error" || ours.some((part) => hasNonAnswer(part as MathJSON)));
+  return isNonAnswer(ours) || (Array.isArray(ours) && ours.some((part) => hasNonAnswer(part as MathJSON)));
+}
+
+/** Whether a call of `head` on `arg` sits at a pole. */
+function poleAt(head: string, arg: MathJSON): boolean {
+  if (head === "Gamma") {
+    const v = numeric(arg);
+    return v !== undefined && Number.isInteger(v) && v <= 0;
+  }
+  const m = piMultiple(arg);
+  if (m === undefined) return false;
+  if (head === "Tan" || head === "Sec") return m[1] === 2 && Math.abs(m[0]) % 2 === 1;
+  if (head === "Cot" || head === "Csc") return m[1] === 1;
+  return false;
+}
+
+/** Whether a crate's huge finite double stands where ours says a pole, and only there: a sample of
+ * one pole-having head, element by element, where each non-answer of ours is at a pole of the head
+ * and the crate answers 1e15 or more, and every other element agrees (or is an exact zero beside rounding noise). */
+export function overshootsPole(sample: MathJSON, ours: MathJSON, theirs: string): boolean {
+  const call = innerCall(sample);
+  if (call === undefined || call.length !== 2 || !["Gamma", "Sec", "Csc", "Tan", "Cot"].includes(call[0] as string))
+    return false;
+  let printed: unknown;
+  try {
+    printed = JSON.parse(theirs);
+  } catch {
+    return false;
+  }
+  const head = call[0] as string;
+  let atPole = false;
+  const walk = (arg: MathJSON, mine: MathJSON, other: unknown): boolean => {
+    if (Array.isArray(arg) && arg[0] === "List") {
+      if (!Array.isArray(mine) || mine[0] !== "List" || !Array.isArray(other) || mine.length !== arg.length)
+        return false;
+      if (other.length !== arg.length - 1) return false;
+      return arg.slice(1).every((a, i) => walk(a as MathJSON, mine[i + 1] as MathJSON, other[i]));
+    }
+    if (typeof other !== "number") return false;
+    if (isNonAnswer(mine)) {
+      atPole = true;
+      return Math.abs(other) >= 1e15 && poleAt(head, arg);
+    }
+    const x = numeric(mine);
+    const y = other;
+    if (x === undefined) return false;
+    if (x === 0) return exactZeroAt(head, arg) && Math.abs(y) <= 1e-12;
+    return Math.abs(x - y) <= 1e-9 * Math.max(Math.abs(x), Math.abs(y));
+  };
+  return walk(call[1] as MathJSON, ours, printed) && atPole;
+}
+
+const WORD = 2 ** 64;
+/** Whether the sample has a call whose literal arguments leave what the Rust crate takes: its real
+ * logarithm, root and inverse trigonometric domains, statrs's argument ranges (`gamma`, `beta`, …),
+ * a machine-word or unsigned integer, a zero it can't factor, a digit past its base, a division by
+ * zero. A sample the crate declines for any other reason, or on arguments it can't read, stays a finding. */
+export function outsideCrateDomain(sample: MathJSON): boolean {
+  if (!Array.isArray(sample) || typeof sample[0] !== "string") return false;
+  const [head, ...ops] = sample as readonly MathJSON[];
+  if (ops.some((op) => outsideCrateDomain(op))) return true;
+  // A list threads: any of its readable elements outside the domain is enough.
+  const elements = (op: MathJSON | undefined): number[] =>
+    Array.isArray(op) && op[0] === "List"
+      ? op.slice(1).flatMap((item) => elements(item as MathJSON))
+      : op === undefined || numeric(op) === undefined
+        ? []
+        : [numeric(op) as number];
+  const bad = (i: number, outside: (x: number) => boolean): boolean => elements(ops[i]).some(outside);
+  switch (head) {
+    case "Divide":
+      return bad(1, (x) => x === 0);
+    case "Sqrt":
+      return bad(0, (x) => x < 0);
+    case "Ln":
+    case "Log2":
+    case "Log10":
+    case "Lb":
+      return bad(0, (x) => x <= 0);
+    case "Log":
+      return bad(0, (x) => x <= 0) || bad(1, (x) => x <= 0 || x === 1);
+    case "Arcsin":
+    case "Arccos":
+      return bad(0, (x) => Math.abs(x) > 1);
+    case "Arcosh":
+      return bad(0, (x) => x < 1);
+    case "Arctanh":
+      return bad(0, (x) => Math.abs(x) >= 1);
+    case "Arcoth":
+      return bad(0, (x) => Math.abs(x) <= 1);
+    case "Arsech":
+      return bad(0, (x) => x <= 0 || x > 1);
+    case "InverseErfc":
+      return bad(0, (x) => x < 0 || x > 2);
+    case "LogGamma":
+    case "GammaLn":
+      return bad(0, (x) => x <= 0);
+    case "Gamma":
+      return ops.length === 1
+        ? bad(0, (x) => Number.isInteger(x) && x <= 0)
+        : ops.length === 2 && (bad(0, (x) => x <= 0) || bad(1, (x) => x < 0));
+    case "GammaRegularized":
+      return bad(0, (x) => x <= 0) || bad(1, (x) => x < 0);
+    case "Beta":
+      return bad(0, (x) => x <= 0) || bad(1, (x) => x <= 0);
+    case "BetaRegularized":
+      return bad(0, (x) => x < 0 || x > 1) || bad(1, (x) => x <= 0) || bad(2, (x) => x <= 0);
+    case "InverseBetaRegularized":
+      return bad(0, (x) => x < 0 || x > 1) || bad(1, (x) => x <= 0) || bad(2, (x) => x <= 0);
+    case "ExpIntegralE":
+      return bad(1, (x) => x < 0);
+    case "IsPrime":
+    case "IsComposite":
+    case "IsPrimePower":
+      return bad(0, (x) => x < 0 || x >= WORD);
+    case "IsSquareFree":
+    case "PrimeNu":
+    case "PrimeOmega":
+    case "FactorInteger":
+      return bad(0, (x) => x <= 0 || x > 1e18);
+    case "FromDigits": {
+      const base = numeric(ops[1] as MathJSON);
+      return base !== undefined && elements(ops[0]).some((d) => d < 0 || d >= base);
+    }
+    case "AdicDigits":
+    case "AdicExpansion": {
+      const value = Array.isArray(ops[0]) && ops[0][0] === "AdicNumeral" ? numeric(ops[0][2] as MathJSON) : undefined;
+      return value === 0;
+    }
+    default:
+      return false;
+  }
 }
 
 /** Whether `ours` is a call left unevaluated on plain numbers (`Log(-1, 2)`, `ErfInv(1.01)`). */
@@ -106,7 +306,3 @@ export const isStuckCall = (ours: MathJSON): boolean =>
   !["Complex", "Rational", "List", "Error"].includes(ours[0]) &&
   ours.length > 1 &&
   ours.slice(1).every((op) => typeof op === "number" || isBigNumber(op));
-
-/** Whether `ours` holds a bignum past what a double can hold (1e300 and up). */
-export const exceedsDouble = (ours: MathJSON): boolean =>
-  /"num":"[^"]*e\+(3\d\d|[4-9]\d\d|\d{4,})"/.test(JSON.stringify(ours));

@@ -3,10 +3,10 @@ import {
   agreesInNorm,
   associates,
   crateDeclines,
-  exceedsDouble,
-  hasHugeDouble,
   hasNonAnswer,
   isStuckCall,
+  outsideCrateDomain,
+  overshootsPole,
   roundsTo,
   roundsToZero,
   undecidedIdentity,
@@ -43,7 +43,7 @@ test("an undecided identity is no finding only from the symbolic check", () => {
   expect(undecidedIdentity(true, "False")).toBe(false);
 });
 
-test("the Rust lane declining in its own words is no disagreement", () => {
+test("the Rust lane declining in its own words is only a message", () => {
   for (const theirs of [
     "panic: non-finite result: NaN",
     "panic: statrs: XInvalid",
@@ -56,22 +56,62 @@ test("the Rust lane declining in its own words is no disagreement", () => {
   expect(crateDeclines("panic: index out of bounds: the len is 2 but the index is 5")).toBe(false);
 });
 
-test("a double's rounding beside an exact zero, and a pole it overshoots", () => {
-  expect(roundsToZero(0, "6.123233995736766e-17")).toBe(true);
-  expect(roundsToZero(0, "0.001")).toBe(false);
-  expect(roundsToZero(1, "1e-17")).toBe(false);
-  expect(hasHugeDouble("[1.0, -2.5653050788007548e16]")).toBe(true);
-  expect(hasHugeDouble("[1.0, 4.5]")).toBe(false);
+test("the crate's domain is judged from the sample's own arguments", () => {
+  expect(outsideCrateDomain(["Log2", -9])).toBe(true);
+  expect(outsideCrateDomain(["N", ["Log", 45, -7], 100])).toBe(true);
+  expect(
+    outsideCrateDomain([
+      "Equal",
+      ["Add", ["Sqrt", 0], ["Sqrt", 3]],
+      ["Sqrt", ["Add", 5, ["Multiply", 8, ["Sqrt", -2]]]],
+    ]),
+  ).toBe(true);
+  expect(outsideCrateDomain(["Log10", ["List", -1, 10, 100]])).toBe(true);
+  expect(outsideCrateDomain(["Log10", ["List", 1, 10, 100]])).toBe(false);
+  expect(outsideCrateDomain(["Beta", 1.219, -0.5])).toBe(true);
+  expect(outsideCrateDomain(["BetaRegularized", -2.606, ["List", 0, 1], 1])).toBe(true);
+  expect(outsideCrateDomain(["IsPrimePower", ["Power", 9, 40]])).toBe(true);
+  expect(outsideCrateDomain(["IsSquareFree", 0])).toBe(true);
+  expect(outsideCrateDomain(["FromDigits", ["List", 1, 15], 15])).toBe(true);
+  expect(outsideCrateDomain(["Cos", ["Multiply", 10, ["Divide", "Pi", 0]]])).toBe(true);
+  // Arguments the crate takes, or can't be read: the decline is not explained.
+  expect(outsideCrateDomain(["Log2", 9])).toBe(false);
+  expect(outsideCrateDomain(["Beta", 2, 3])).toBe(false);
+  expect(outsideCrateDomain(["N", ["LogGamma", ["Power", 15, 300]]])).toBe(false);
+  expect(outsideCrateDomain(["Log2", "x"])).toBe(false);
+  expect(outsideCrateDomain(["IsPrime", ["Power", 3, 30]])).toBe(false);
+});
+
+test("a double beside an exact zero is rounding only where the zero is exact", () => {
+  expect(roundsToZero(["Cos", ["Multiply", ["Rational", 1, 2], "Pi"]], 0, "6.123233995736766e-17")).toBe(true);
+  expect(roundsToZero(["Tan", ["Divide", "Pi", -1]], 0, "1.2246467991473532e-16")).toBe(true);
+  expect(roundsToZero(["LogGamma", ["Rational", 3, 3]], 0, "-4.440892098500626e-16")).toBe(true);
+  // Ours flushing a small value to zero is not rounding.
+  expect(roundsToZero(["Erf", 1e-13], 0, "1.1283791670955126e-13")).toBe(false);
+  expect(roundsToZero(["Cos", 1], 0, "1e-17")).toBe(false);
+  expect(roundsToZero(["Cos", ["Multiply", ["Rational", 1, 2], "Pi"]], 0, "0.001")).toBe(false);
+});
+
+test("a pole the crate overshoots is judged element by element, at the head's poles", () => {
+  const gamma = ["Gamma", ["List", 2, -1]];
+  expect(overshootsPole(gamma, ["List", 1, "ComplexInfinity"], "[1.0, -2.5653050788007548e16]")).toBe(true);
+  // Not a pole of Gamma: ours would be wrong to say so.
+  expect(overshootsPole(["Gamma", ["List", 2, 25]], ["List", 1, "ComplexInfinity"], "[1.0, 6.2e23]")).toBe(false);
+  // Another element disagrees.
+  expect(overshootsPole(gamma, ["List", 3, "ComplexInfinity"], "[1.0, -2.5653050788007548e16]")).toBe(false);
+  // The crate's value is not huge.
+  expect(overshootsPole(gamma, ["List", 1, "ComplexInfinity"], "[1.0, 12.5]")).toBe(false);
+  const sec = ["Sec", ["List", ["Multiply", 3, ["Divide", "Pi", 6]], 0]];
+  expect(overshootsPole(sec, ["List", "ComplexInfinity", 1], "[1.633123935319537e16, 1.0]")).toBe(true);
+  expect(overshootsPole(["Sec", ["List", "Pi", 0]], ["List", "ComplexInfinity", 1], "[-1.0, 1.0]")).toBe(false);
+});
+
+test("ours' non-answers and calls left on numbers", () => {
   expect(hasNonAnswer(["List", 1, "ComplexInfinity"])).toBe(true);
   expect(hasNonAnswer(["List", 1, ["Error", "x"]])).toBe(true);
   expect(hasNonAnswer(["List", 1, 2])).toBe(false);
-});
-
-test("ours left a call on plain numbers unevaluated, or past a double", () => {
   expect(isStuckCall(["Log", -1, 2])).toBe(true);
   expect(isStuckCall(["ErfInv", 1.01])).toBe(true);
   expect(isStuckCall(["Complex", 1, 2])).toBe(false);
   expect(isStuckCall(["Add", ["Multiply", 2, "Pi"], ["Ln", 3]])).toBe(false);
-  expect(exceedsDouble({ num: "5.45281521924575338242e+355" })).toBe(true);
-  expect(exceedsDouble({ num: "5.4e+30" })).toBe(false);
 });

@@ -38,10 +38,10 @@ import {
   agreesInNorm,
   associates,
   crateDeclines,
-  exceedsDouble,
-  hasHugeDouble,
   hasNonAnswer,
   isStuckCall,
+  outsideCrateDomain,
+  overshootsPole,
   roundsTo,
   roundsToZero,
   undecidedIdentity,
@@ -382,16 +382,14 @@ function autoKind(
   // drew, not the other system): the same "nothing to compare" shrug, from our side.
   if (ours === "Aborted") return "resource";
   if (system === "rust") {
-    // A double can't land on an exact zero (cos(π/2), ln Γ(1)).
-    if (result.error === undefined && roundsToZero(ours, theirs)) return "precision";
-    // A pole the crate blows past rather than reaching, where ours answers a pole.
-    if (result.error === undefined && hasNonAnswer(ours) && hasHugeDouble(theirs)) return "undefined-form";
-    // The crate declines in its own words (a real-only function, an unsigned or machine-word
-    // parameter); ours either answers (a domain difference) or declines too.
-    if (result.error !== undefined && crateDeclines(theirs)) {
-      if (exceedsDouble(ours)) return "precision"; // a double overflowed where ours' bignum holds the value
+    // A double can't land on an exact zero (cos(π/2), ln Γ(1)): only where ours' zero is exact.
+    if (result.error === undefined && roundsToZero(sample, ours, theirs)) return "precision";
+    // A pole the crate blows past rather than reaching, element by element, at the head's poles only.
+    if (result.error === undefined && overshootsPole(sample, ours, theirs)) return "undefined-form";
+    // The crate declines in its own words, on arguments outside what it takes (a real-only
+    // function, an unsigned or machine-word parameter); ours either answers or declines too.
+    if (result.error !== undefined && crateDeclines(theirs) && outsideCrateDomain(sample))
       return hasNonAnswer(ours) || isStuckCall(ours) ? "undefined-form" : "domain";
-    }
   }
   // `N(expr, d)`: the mapping drops the digit count and asks the other system for full
   // precision instead (a numeric-tolerance comparison is the better general witness — see
