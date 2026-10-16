@@ -60,6 +60,8 @@ jobs:
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run trees/tests/tree-statistics
       # Permutation statistics over the larger permutations.
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run permutations/tests/permutation-statistics
+      # The numeric sequences and predicate scans defined in Epsil, against references in bigints and sieves, farther out.
+      - run: pnpm --filter @enumeratio/combinatorics exec vp test run collections/tests/numeric-epsil.test.ts collections/tests/sequence-epsil.test.ts collections/tests/scan-epsil.test.ts
       # Compiled families against the interpreter on the fibers the build skips.
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/compiled-families.test.ts
       # Compiled maps against the interpreter, over the larger sample.
