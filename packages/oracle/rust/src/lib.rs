@@ -210,15 +210,11 @@ pub fn equal(a: V, b: V) -> V {
     Bool(match (&a, &b) {
         (Bool(p), Bool(q)) => p == q,
         (List(p), List(q)) => p.len() == q.len() && p.iter().zip(q).all(|(x, y)| matches!(equal(x.clone(), y.clone()), Bool(true))),
-        // A float identity holds to the scan's own tolerance, not to the last bit.
+        // A float identity holds to the scan's own relative tolerance, not to the last bit; zero is
+        // only equal to zero, as in the scan's comparison.
         (Float(_), _) | (_, Float(_)) => {
             let (p, q) = (a.f64(), b.f64());
-            // Infinities and NaN compare exactly: a relative tolerance of ∞ is no tolerance.
-            if !p.is_finite() || !q.is_finite() {
-                p == q
-            } else {
-                (p - q).abs() <= 1e-9 * p.abs().max(q.abs()).max(1.0)
-            }
+            p == q || (p.is_finite() && q.is_finite() && (p - q).abs() <= 1e-9 * p.abs().max(q.abs()))
         }
         (Adic(p), Adic(q)) => p == q,
         _ => a.rat() == b.rat(),
@@ -397,6 +393,9 @@ pub fn nth_prime(v: V) -> V {
     n(primal::StreamingSieve::nth_prime(v.usize()) as i64)
 }
 pub fn prime_pi(v: V) -> V {
+    // A fixed cap, not the item's time cap: past it the count takes minutes, and whether a
+    // host finishes in 30 s must not decide a row.
+    assert!(v.usize() <= 10_000_000_000, "too large for the scan: the count is past what a sieve finishes in its time cap");
     n(primal::StreamingSieve::prime_pi(v.usize()) as i64)
 }
 pub fn next_prime(v: V) -> V {

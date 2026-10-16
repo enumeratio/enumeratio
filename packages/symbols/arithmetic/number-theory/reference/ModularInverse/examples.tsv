@@ -2,7 +2,7 @@ id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sage.kind	sage.n
 3-cdot-5-15-equiv-1			[ModularInverse, 3, 7]	5	$3 \cdot 5 = 15 \equiv 1$										
 modularinverse-2-11			[ModularInverse, 2, 11]	6											
 modularinverse-3-5			[ModularInverse, 3, 5]	2	$3\cdot2\equiv1 \pmod5$										
-inverse-mod-1-of-a-negative-integer		test	[ModularInverse, -3, 1]	0						domain	Modulo 1 every integer is 0, which is its own inverse, so ours answers 0 (also for a modulus of -1); SymPy's mod_inverse raises that no inverse exists.			precision	num-bigint's modinv at modulus 1 returns 1, not the residue 0 in [0, 1).
+inverse-mod-1-of-a-negative-integer		test	[ModularInverse, -3, 1]	0						domain	Modulo 1 every integer is 0, which is its own inverse, so ours answers 0 (also for a modulus of -1); SymPy's mod_inverse raises that no inverse exists.			convention	num-bigint's modinv(a, 1) is 1 for a negative a, where ModularInverse reduces into [0, 1), which is 0.
 inverse-of-0-mod-1		test	[ModularInverse, 0, 1]	0						domain	Modulo 1 every integer is 0, which is its own inverse, so ours answers 0; SymPy's mod_inverse raises that no inverse exists.				
 a-negative-argument-3-cdot-2-6-equiv-1	Scope		[ModularInverse, -3, 7]	2	a negative argument: $-3 \cdot 2 = -6 \equiv 1$										
 a-21-digit-modulus	Scope		[ModularInverse, 3, [Add, [Power, 10, 20], 1]]	{num: "33333333333333333334"}	a 21-digit modulus										

@@ -40,6 +40,9 @@ test("a list or a tuple is compared entry by entry, and one entry is enough to d
   expect(against(["Tuple", 2, 1, -1], "[2, 1, -1]")).toBe("agree");
   expect(against(["List", ["List", 1, 2], ["List", 3, 4]], "[[1, 2], [3, 4]]")).toBe("agree");
   expect(against(["List", ["List", 1, 2], ["List", 3, 4]], "[[1, 2], [3, 5]]")).toBe("disagree");
+  // An entry that can't be read doesn't hide one that definitely differs, nor settle the list as agreeing.
+  expect(against(["List", ["Complex", 0, 1], 0], "[NaN, 1.2e-16]")).toBe("disagree");
+  expect(against(["List", "True", 1], "[true, 1.0]")).toBeUndefined();
   // A different length is not decided here.
   expect(against(["List", 1, 2], "[1, 2, 3]")).toBeUndefined();
 });

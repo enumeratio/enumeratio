@@ -258,6 +258,8 @@ test("Rust threads a list into a `list(vec![…])` of calls, and writes a double
   expect(emit(["Cot", 1], "rust")).toEqual({ ok: true, source: "(n(1) / tan(n(1)))" });
   // `x(100)` would be an integer where the adapters take a double.
   expect(emit(["Sinh", { num: "1e2" }], "rust")).toEqual({ ok: true, source: "sinh(x(100.0))" });
+  // An integer-valued number past 2^53 is that integer, which a float literal would round.
+  expect(emit(["PrimePi", 1e16], "rust")).toEqual({ ok: true, source: 'prime_pi(big("10000000000000000"))' });
   expect(emit(["Sinh", { num: "-2.5e-3" }], "rust")).toEqual({ ok: true, source: "sinh(x(-0.0025))" });
 });
 

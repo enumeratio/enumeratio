@@ -291,7 +291,11 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       if (wl) return toWolfram(node);
       // Lean reads `f -1` as `f - 1`.
       // Rust values are the prelude's dynamic `V` (rust/src/prelude.rs).
-      if (system === "rust") return Number.isSafeInteger(node) ? `n(${node})` : rustFloat(node);
+      if (system === "rust") {
+        if (Number.isSafeInteger(node)) return `n(${node})`;
+        // Past 2^53 an integer-valued number is the integer it spells, not a float.
+        return Number.isInteger(node) ? `big("${BigInt(node)}")` : rustFloat(node);
+      }
       // Inside an N(x, d) answer past a double's digits `0.1` would be the double, not the decimal.
       if (system === "mpmath" && exact && !Number.isInteger(node)) return `mpf(${JSON.stringify(String(node))})`;
       if (system === "julia" && (!Number.isInteger(node) || /e/i.test(String(node))))

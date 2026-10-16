@@ -45,6 +45,26 @@ test.skipIf(!hasRust)(
 );
 
 test.skipIf(!hasRust)(
+  "a float identity holds relative to its size, so rounding noise is not zero",
+  async () => {
+    const [noise, close, exact, cap, counted] = (await runIn("rust", [
+      "equal(sin(x(std::f64::consts::PI)), n(0))",
+      "equal(x(1.0000000001), x(1.0))",
+      "equal(sin(n(0)), n(0))",
+      // A size cap, not a clock: past it the count is refused on every host.
+      "prime_pi(n(100000000000))",
+      "prime_pi(n(1000))",
+    ])) as Answer[];
+    expect(value(noise)).toBe("false");
+    expect(value(close)).toBe("true");
+    expect(value(exact)).toBe("true");
+    expect(error(cap)).toContain("too large");
+    expect(value(counted)).toBe("168");
+  },
+  300_000,
+);
+
+test.skipIf(!hasRust)(
   "an operand a crate cannot hold says why",
   async () => {
     const [negative, large, fractional, argument, adic] = (await runIn("rust", [

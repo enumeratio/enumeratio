@@ -145,8 +145,9 @@ export function compareMachine(
     const parts = listElements(text);
     if (parts === undefined || parts.length !== expected.length - 1) return undefined;
     const verdicts = parts.map((part, i) => compareMachine(expected[i + 1] as MathJSON, part, tolerance, value));
-    if (verdicts.some((verdict) => verdict === undefined)) return undefined;
-    return verdicts.includes("disagree") ? "disagree" : "agree";
+    // One definite disagreement settles the list, whatever else in it can't be read.
+    if (verdicts.includes("disagree")) return "disagree";
+    return verdicts.every((verdict) => verdict === "agree") ? "agree" : undefined;
   }
   const ours = exactRational(expected);
   const ratio = /^(-?\d+)(?:\/(\d+))?$/.exec(text);

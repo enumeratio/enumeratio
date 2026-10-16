@@ -8,10 +8,10 @@ rational-arguments-the-primes-up-to-7-2-are-2	prime_pi(rational(n(7), n(2)))	pan
 real-arguments	prime_pi(x(15.25))	panic: an integer, not 15.25	error
 the-primes-below-a-million	prime_pi(n(1000000))	78498	
 listable-threads-over-a-list	list(vec![prime_pi(n(3)), prime_pi(n(5)), prime_pi(n(17)), prime_pi(n(25))])	[2, 3, 7, 9]	
-primepi-10-11	prime_pi(n(100000000000))	TimeoutError: over 30 s	error
-primepi-10-12	prime_pi(n(1000000000000))	TimeoutError: over 30 s	error
-primepi-10-13	prime_pi(n(10000000000000))	TimeoutError: over 30 s	error
-primepi-1-plus-10-pow-17	prime_pi((n(1) + power(n(10), n(17))))	TimeoutError: over 30 s	error
+primepi-10-11	prime_pi(n(100000000000))	panic: too large for the scan: the count is past what a sieve finishes in its time cap	error
+primepi-10-12	prime_pi(n(1000000000000))	panic: too large for the scan: the count is past what a sieve finishes in its time cap	error
+primepi-10-13	prime_pi(n(10000000000000))	panic: too large for the scan: the count is past what a sieve finishes in its time cap	error
+primepi-1-plus-10-pow-17	prime_pi((n(1) + power(n(10), n(17))))	panic: too large for the scan: the count is past what a sieve finishes in its time cap	error
 nthprime-range-1-primepi-100			
 primepi-5-000	prime_pi(n(5000))	669	
 same-inverse-relation-viewed-from-primepi-s-side	equal(prime_pi(nth_prime(n(50))), n(50))	true	
@@ -33,4 +33,4 @@ primepi-16	prime_pi(n(16))	6
 primepi-17	prime_pi(n(17))	7	
 primepi-18	prime_pi(n(18))	7	
 no-primes-are-a-negative-number	prime_pi(n(-1))	panic: a non-negative integer: the crate's parameter is unsigned	error
-past-10-15-the-call-stays-symbolic	prime_pi(x(10000000000000000.0))	panic: an integer, not 1e16	error
+past-10-15-the-call-stays-symbolic	prime_pi(big("10000000000000000"))	panic: too large for the scan: the count is past what a sieve finishes in its time cap	error
