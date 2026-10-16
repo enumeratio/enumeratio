@@ -54,7 +54,7 @@ n-ln-2-pow-2-2	enumeratio_n(((log(2))^2))	0.480453013918201
 n-ln-2-pow-3-2	enumeratio_n(((log(2))^3))	0.333024651988929	
 n-ln-2-pow-4-2	enumeratio_n(((log(2))^4))	0.230835098583083	
 n-ln-2-pow-5-2	enumeratio_n(((log(2))^5))	0.160002697757141	
-n-integrate-1-over-t-minus-1-times-ln-t-pow-2-t	enumeratio_n(integrate(((1 / (SR.var("t") + -1)) * ((log(SR.var("t")))^2)), SR.var("t"), 1, 2))	0.300514225789899 - 4.61648930889287e-128*I	
+n-integrate-1-over-t-minus-1-times-ln-t-pow-2-t	enumeratio_n(integrate(((1 / (SR.var("t") + -1)) * ((log(SR.var("t")))^2)), SR.var("t"), 1, 2))	0.300514225789899	
 n-integrate-exponentiale-pow-neg-t-times-ln-t	enumeratio_n(integrate((((e)^(-SR.var("t"))) * ((log(SR.var("t")))^2)), SR.var("t"), 0, oo))	1.97811199065595	
 n-integrate-1-over-neg-x-times-y-plus-1-times-ln	enumeratio_n(integrate(integrate(((1 / ((-(SR.var("x") * SR.var("y"))) + 1)) * log((SR.var("x") * SR.var("y")))), SR.var("y"), 0, 1), SR.var("x"), 0, 1))	ValueError: Computation failed since Maxima requested additional constraints; using the 'assume' command before 	error
-n-integrate-1-over-t-minus-1-times-ln-t-pow-3-t	enumeratio_n(integrate(((1 / (SR.var("t") + -1)) * ((log(SR.var("t")))^3)), SR.var("t"), 1, 2))	0.142514197935711 + 4.61648930889287e-127*I	
+n-integrate-1-over-t-minus-1-times-ln-t-pow-3-t	enumeratio_n(integrate(((1 / (SR.var("t") + -1)) * ((log(SR.var("t")))^3)), SR.var("t"), 1, 2))	0.142514197935711 + 2.76989358533572e-127*I	

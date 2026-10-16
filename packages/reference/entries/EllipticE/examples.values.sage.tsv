@@ -8,7 +8,7 @@ list-elliptice-0-elliptice-1	[elliptic_ec(0), elliptic_ec(1)]	[1/2*pi, 1]
 list-elliptice-positiveinfinity-elliptice	[elliptic_ec(oo), elliptic_ec(unsigned_infinity)]	[elliptic_ec(+Infinity), elliptic_ec(Infinity)]	disagree
 n-elliptice-2-over-3-2-50	enumeratio_n(elliptic_e((2/3), 2), 50)	0.560575729788692	
 series-elliptice-m-m-0-3	SR(elliptic_ec(SR.var("m"))).series(SR.var("m") == 0, 3 + 1)	ValueError: power::eval(): division by zero	error
-series-elliptice-m-m-1-1	SR(elliptic_ec(SR.var("m"))).series(SR.var("m") == 1, 1 + 1)	False	disagree
+series-elliptice-m-m-1-1	SR(elliptic_ec(SR.var("m"))).series(SR.var("m") == 1, 1 + 1)	None	inconclusive
 elliptice-0-1	elliptic_e(0, 1)	0	
 elliptice-0-0	elliptic_e(0, 0)	0	
 elliptice-1	elliptic_ec(1)	1	

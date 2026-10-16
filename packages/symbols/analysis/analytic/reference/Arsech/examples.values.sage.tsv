@@ -10,7 +10,7 @@ arsech-list-list-2-0-list-1-neg-2	[[arcsech(2), arcsech(0)], [arcsech(1), arcsec
 arsech-positiveinfinity	arcsech(oo)	1/2*I*pi	
 trigtoexp-arsech-z	SR(arcsech(SR.var("z"))).exponentialize()	True	
 matrixfunction-function-arsech-1-1-list-list-2-0			
-integrate-arsech-x-x-nothing-nothing	integrate(arcsech(SR.var("x")), SR.var("x"))	False	disagree
+integrate-arsech-x-x-nothing-nothing	integrate(arcsech(SR.var("x")), SR.var("x"))	None	inconclusive
 arsech-neg-2	arcsech(-2)	I*pi - arcsech(2)	
 arsech-neg-1-over-2	arcsech((-1/2))	I*pi - arcsech(1/2)	disagree
 arsech-2-times-sqrt-1-over-2-plus-sqrt-2	arcsech((2 * sqrt((1 / (2 + sqrt(2))))))	arcsech(2/sqrt(sqrt(2) + 2))	

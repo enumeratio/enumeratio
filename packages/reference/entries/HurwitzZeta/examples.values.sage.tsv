@@ -196,7 +196,7 @@ hurwitzzeta-neg-1-list-list-1-over-2-1-list-1-1	[[hurwitz_zeta(-1, (1/2)), hurwi
 functionexpand-hurwitzzeta-neg-2-a			
 functionexpand-hurwitzzeta-0-a			
 fullsimplify-matrixfunction-function-hurwitzzeta			
-series-hurwitzzeta-s-a-a-0-3	SR(hurwitz_zeta(SR.var("s"), SR.var("a"))).series(SR.var("a") == 0, 3 + 1)	True	
+series-hurwitzzeta-s-a-a-0-3	SR(hurwitz_zeta(SR.var("s"), SR.var("a"))).series(SR.var("a") == 0, 3 + 1)	NoConvergence: zeta: too much cancellation	error
 certified-digits-zeta-1-2-1-3	enumeratio_n(hurwitz_zeta((1/2), (1/3)), 40)	-0.118083327934222	
 zeta-0-a-frac-12-a-exact-and-symbolic-in-a	hurwitz_zeta(0, SR.var("a"))	True	
 zeta-1-a-b-2-a-2-frac-1-12-6a-2-6a-1	hurwitz_zeta(-1, SR.var("a"))	True	

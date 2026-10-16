@@ -108,6 +108,35 @@ function fill(template: string, parts: readonly string[]): string {
   return template.replace(/\$(\d)/g, (_match, index: string) => parts[Number(index) - 1] ?? "");
 }
 
+/** Functions with no derivative in a complex variable: Sage would differentiate them as on the line. */
+const NON_HOLOMORPHIC = new Set([
+  "Abs",
+  "Sign",
+  "Conjugate",
+  "Real",
+  "Imaginary",
+  "Argument",
+  "Floor",
+  "Ceil",
+  "Round",
+]);
+
+/** Graph constructors whose vertex numbering is not Sage's sorted order, and the queries that read a numbering. */
+const UNSORTED_GRAPHS = new Set(["TuranGraph", "HararyGraph", "GridGraph"]);
+const NUMBERED_QUERIES = new Set([
+  "VertexDegree",
+  "VertexEccentricity",
+  "GraphDistance",
+  "FindShortestPath",
+  "GraphCenter",
+  "VertexList",
+  "AdjacencyMatrix",
+  "ConnectedComponents",
+  "EdgeList",
+]);
+const mentions = (node: MathJSON, heads: ReadonlySet<string>): boolean =>
+  isCall(node) && (heads.has(node[0] as string) || node.slice(1).some((child) => mentions(child as MathJSON, heads)));
+
 /** Heads whose operands thread over lists, which Python's own operators do not. */
 const BROADCAST_HEADS = new Set(["Add", "Subtract", "Multiply", "Divide", "Power"]);
 const PYTHON_FAMILY: readonly System[] = ["sympy", "mpmath", "sage"];
@@ -228,7 +257,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
   const boundName = (name: string): string => {
     if (wl) return isSystemName(name) ? `${CONTEXT}${name}` : name;
     // The symbols a held derivative differentiates are Sage variables, not Python names.
-    if (system === "sage" && /^_d\d+$/.test(name)) return `SR.var(${JSON.stringify(name)})`;
+    if (system === "sage" && /^_d\d+$/.test(name))
+      return `SR.var(${JSON.stringify(name)}${realDummies.has(name) ? ', domain="real"' : ""})`;
     // A real variable lets Abs and sign differentiate as they do on the line; at a complex point (sqrt(t**2) at I)
     // it would be the wrong function to differentiate.
     if (system === "sympy") return `Symbol(${JSON.stringify(name)}${realDummies.has(name) ? ", real=True" : ""})`;
@@ -489,6 +519,11 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         const names = orders.map((order) => (order === 0 ? undefined : `_d${++derivatives}`));
         const differentiated = names.filter((name): name is string => name !== undefined);
         const real = names.every((name, i) => name === undefined || isRealNumber(operands[i + 1] as MathJSON));
+        // Sage differentiates Abs and sign as it would on the line whatever the point: off it, no answer.
+        if (system === "sage" && !real && NON_HOLOMORPHIC.has(callee[1] as string)) {
+          missing.push(`${head}/derivative-at-a-complex-point`);
+          return "0";
+        }
         for (const name of differentiated) {
           bound.add(name);
           if (real) realDummies.add(name);
@@ -584,6 +619,15 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         missing.push("FactorInteger/Complex");
         return "0";
       }
+    }
+    // A query that reads vertex numbers of a graph Sage numbers otherwise than ours would compare under two numberings.
+    if (
+      system === "sage" &&
+      NUMBERED_QUERIES.has(head) &&
+      operands.some((op) => mentions(op as MathJSON, UNSORTED_GRAPHS))
+    ) {
+      missing.push(`${head}/numbering`);
+      return "0";
     }
     // A graph is Sage's Graph or DiGraph, by its edges; loops and parallel edges are kept, as ours keeps them.
     if (system === "sage" && head === "Graph" && (operands.length === 1 || operands.length === 2)) {

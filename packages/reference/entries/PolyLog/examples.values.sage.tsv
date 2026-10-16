@@ -106,7 +106,7 @@ polylog-2-list-list-1-over-2-0-list-0-1-over-2	[[polylog(2, (1/2)), polylog(2, 0
 polylog-1-0	polylog(1, 0)	0	
 d-polylog-n-z-z	diff(polylog(SR.var("n"), SR.var("z")), SR.var("z"))	True	
 matrixfunction-function-polylog-2-1-1-list-list			
-fullsimplify-series-polylog-n-x-x-x0-2	SR(polylog(SR.var("n"), SR.var("x"))).series(SR.var("x") == SR.var("x0"), 2 + 1)	False	disagree
+fullsimplify-series-polylog-n-x-x-x0-2	SR(polylog(SR.var("n"), SR.var("x"))).series(SR.var("x") == SR.var("x0"), 2 + 1)	None	inconclusive
 li-1-2-1-zeta-1-2-a-non-integer-order-from	polylog(0.5, 1)	NaN + NaN*I	inconclusive
 li-1-2-1-2-0-80612672-via-the-lerch-series	polylog(0.5, 0.5)	0.806126723042852	
 li-5-2-1-2-0-46229778-the-alternating-side-euler	polylog(2.5, -0.5)	-0.462297782190063	

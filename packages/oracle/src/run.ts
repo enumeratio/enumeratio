@@ -659,6 +659,7 @@ def enumeratio_antiderivative_agree(a, b, variables):
         points = [Rational(-13, 4), Rational(-7, 3), Rational(-1, 2), Rational(1, 2), Rational(7, 3), Rational(13, 4)]
         others = sorted(free - set(variables), key=str)
         values = []
+        signs = set()
         for k in range(len(points)):
             at = {v: points[(k + 2 * i) % len(points)] for i, v in enumerate(variables)}
             at.update({s: Rational(*[(7, 3), (13, 4), (19, 8), (5, 7)][i % 4]) for i, s in enumerate(others)})
@@ -668,7 +669,11 @@ def enumeratio_antiderivative_agree(a, b, variables):
                 continue
             if value == value and abs(value) != float("inf"):
                 values.append(value)
-        if len(values) >= 2 and any(abs(v - values[0]) > 1e-9 * (1 + abs(values[0])) for v in values):
+                signs.add(at[variables[0]] > 0)
+        # Constant across both signs of the first variable, at two points or more: anything less is undecided.
+        if len(values) < 2 or len(signs) < 2:
+            return None
+        if any(abs(v - values[0]) > 1e-9 * (1 + abs(values[0])) for v in values):
             return None
         return True
     except (TypeError, ValueError, AttributeError, NotImplementedError):
@@ -1044,9 +1049,11 @@ def enumeratio_equal(a, b):
     return _enumeratio_equal(a, b)
 
 # Whether d, an expression in some variables, is zero: the simplifier proves it, else it vanishes at the sample
-# points (True), or at one of them does not (False); None when no point could be evaluated. With real, the
-# samples are real (the complex one would differentiate Abs and sign off the line).
-def _enumeratio_vanishes(d, real=False):
+# points (True), or at one of them does not (False); None when no point could be evaluated. Sampled at 300 bits, a
+# value vanishes when it is within 2^-150 of the size of the parts it is the difference of (2^-200 where they are
+# zero), so a coefficient that is merely small is no zero. With real, the samples are real (the complex one would
+# differentiate Abs and sign off the line).
+def _enumeratio_vanishes(d, real=False, parts=()):
     d = SR(d)
     try:
         if bool(d.simplify_full() == 0):
@@ -1054,35 +1061,41 @@ def _enumeratio_vanishes(d, real=False):
     except (TypeError, ValueError, ArithmeticError):
         pass
     names = d.variables()
+    C = ComplexField(300)
     seen = []
     for j in range(2 if real else 3):
         point = {v: _enumeratio_sample(j, i) for i, v in enumerate(names)}
         try:
-            seen.append(abs(CC(_enumeratio_at(d, point))) <= 1e-9)
+            value = abs(C(N(_enumeratio_at(d, point), prec=300)))
+            scale = max([abs(C(N(_enumeratio_at(SR(p), point), prec=300))) for p in parts] + [RealField(300)(0)])
         except (ArithmeticError, ValueError, TypeError):
             continue
+        if not (value < 2 ** 1000 and scale < 2 ** 1000):
+            continue
+        seen.append(value <= (scale * 2 ** -150 if scale > 0 else 2 ** -200))
     return all(seen) if seen else None
 
 # Whether two antiderivatives of the same function agree: the derivative of their difference in each variable of
 # integration vanishes, and the difference itself is the same at real points of both signs, so a constant that
-# depends on the side of a branch point or a jump is no constant (None). A variable that is in neither answer
-# decides nothing.
+# depends on the side of a branch point or a jump is no constant (None), and so is a constancy not established at
+# two points or more of both signs. A variable that is in neither answer decides nothing.
 def enumeratio_antiderivative_agree(a, b, variables):
     try:
         a, b = SR(a), SR(b)
         free = set(a.variables()) | set(b.variables())
         if not variables or any(v not in free for v in variables):
             return None
-        d = a - b
+        da, db = a, b
         for v in variables:
-            d = diff(d, v)
-        decided = _enumeratio_vanishes(d, True)
+            da, db = diff(da, v), diff(db, v)
+        decided = _enumeratio_vanishes(da - db, True, (da, db))
         if decided is not True:
             return decided
         points = [QQ(-13) / 4, QQ(-7) / 3, QQ(-1) / 2, QQ(1) / 2, QQ(7) / 3, QQ(13) / 4]
         others = sorted(free - set(variables), key=str)
         extras = [QQ(7) / 3, QQ(13) / 4, QQ(19) / 8, QQ(5) / 7]
         values = []
+        signs = set()
         for k in range(len(points)):
             at = {v: points[(k + 2 * i) % len(points)] for i, v in enumerate(variables)}
             at.update({s: extras[i % 4] for i, s in enumerate(others)})
@@ -1092,7 +1105,10 @@ def enumeratio_antiderivative_agree(a, b, variables):
                 continue
             if value == value and abs(value) != float("inf"):
                 values.append(value)
-        if len(values) >= 2 and any(abs(v - values[0]) > 1e-9 * (1 + abs(values[0])) for v in values):
+                signs.add(at[variables[0]] > 0)
+        if len(values) < 2 or len(signs) < 2:
+            return None
+        if any(abs(v - values[0]) > 1e-9 * (1 + abs(values[0])) for v in values):
             return None
         return True
     except (TypeError, ValueError, AttributeError):
@@ -1106,27 +1122,68 @@ def _enumeratio_series_terms(expr, x, x0, t):
     except (TypeError, ValueError, AttributeError, ArithmeticError):
         return None
 
-# Whether Sage's series (its Order term cut off) and our polynomial, whose own O-term claims ours_order (None when it
-# has none), agree in every power below the least of the requested order cap and the O-term: what both claim. True
-# when they do, False when a coefficient differs, None when the expansions aren't comparable or nothing was
-# compared. Sage's series is two-sided, as Wolfram's.
-def enumeratio_series_agree(theirs, ours, x, x0, cap, ours_order):
+# The exponent of the Order term Sage's series ends in, in t = x - x0, or None.
+def _enumeratio_series_order(series, x, x0, t):
     try:
-        x0 = SR(x0)
-        if x0.is_infinity():
+        last = series.operands()[-1]
+        if not str(last).startswith("Order("):
             return None
+        terms = _enumeratio_series_terms(last.operands()[0], x, x0, t)
+        return None if terms is None or len(terms) != 1 else next(iter(terms))
+    except (TypeError, ValueError, AttributeError, ArithmeticError, IndexError):
+        return None
+
+# Whether Sage's polynomial stands for f near x0: at x0 +- 2^-40 (the other variables at fixed rationals) f and the
+# polynomial differ by no more than 2^10 times the size of the polynomial and h^cut. Sage's series is silently wrong
+# off an analytic function (sqrt(x), x^(3/2) come back 1 + O(x^n)); False there, None where nothing could be evaluated.
+def _enumeratio_series_sound(f, polynomial, x, x0, cut):
+    extras = [QQ(7) / 3, QQ(13) / 4, QQ(19) / 8, QQ(5) / 7]
+    names = sorted((set(SR(f).variables()) | set(SR(polynomial).variables()) | set(SR(x0).variables())) - {x}, key=str)
+    bits = max(300, int(40 * cut) + 200)
+    C = ComplexField(bits)
+    checked = []
+    for h in (QQ(1) / 2 ** 40, -QQ(1) / 2 ** 40):
+        at = {s: extras[i % 4] for i, s in enumerate(names)}
+        try:
+            point = SR(x0).subs(at) + h
+            gap = abs(C(N(SR(f).subs(at).subs({x: point}), prec=bits)) - C(N(SR(polynomial).subs(at).subs({x: point}), prec=bits)))
+            size = 1 + abs(C(N(SR(polynomial).subs(at).subs({x: point}), prec=bits)))
+        except (ArithmeticError, ValueError, TypeError):
+            continue
+        if not (gap < 2 ** 1000):
+            continue
+        checked.append(gap <= 2 ** 10 * size * RealField(bits)(abs(h)) ** RealField(bits)(cut))
+    return all(checked) if checked else None
+
+# Whether Sage's series of f and our polynomial, whose own O-term claims ours_order (None when it has none), agree in
+# every power below the least of Sage's own O-term and ours: what both claim. True when they do, False when a
+# coefficient differs, None when the expansions aren't comparable or nothing was compared. Both must be sums of
+# integer powers, and Sage's polynomial must stand for f (_enumeratio_series_sound). Sage's series is two-sided.
+def enumeratio_series_agree(f, ours, x, x0, cap, ours_order):
+    x0 = SR(x0)
+    if x0.is_infinity():
+        return None
+    # Where Sage cannot expand at all, its own error is the row's answer.
+    series = SR(f).series(x == x0, cap)
+    try:
         t = SR.var("_enumeratio_t")
-        cut = QQ(cap) if ours_order is None else min(QQ(cap), QQ(ours_order))
-        a = _enumeratio_series_terms(SR(theirs).truncate(), x, x0, t)
+        claimed = _enumeratio_series_order(series, x, x0, t)
+        if claimed is None:
+            return None
+        cut = claimed if ours_order is None else min(claimed, QQ(ours_order))
+        polynomial = series.truncate()
+        a = _enumeratio_series_terms(polynomial, x, x0, t)
         b = _enumeratio_series_terms(ours, x, x0, t)
-        if a is None or b is None:
+        if a is None or b is None or any(p.denominator() != 1 for p in set(a) | set(b)):
+            return None
+        if _enumeratio_series_sound(f, polynomial, x, x0, cut) is not True:
             return None
         compared = False
         undecided = False
         for p in sorted(set(a) | set(b)):
             if p >= cut:
                 continue
-            decided = _enumeratio_vanishes(a.get(p, 0) - b.get(p, 0))
+            decided = _enumeratio_vanishes(a.get(p, 0) - b.get(p, 0), False, (a.get(p, 0), b.get(p, 0)))
             compared = True
             if decided is False:
                 return False

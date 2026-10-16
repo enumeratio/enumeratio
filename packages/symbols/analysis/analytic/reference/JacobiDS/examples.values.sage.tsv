@@ -2,7 +2,7 @@ id	in	out	verdict
 a-floating-point-argument-evaluates-directly-to	enumeratio_n(jacobi_ds(1.1, 0.9))	0.788754402307544	
 m-less-than-0-via-the-imaginary-modulus	enumeratio_n(jacobi_ds(0.3, -0.7))	3.45316371361881	
 d-jacobids-u-m-m	diff(jacobi_ds(SR.var("u"), SR.var("m")), SR.var("m"))	-1/2*((u + elliptic_e(arcsin(jacobi_sn(u, m)), m)/(m - 1))*jacobi_cn(u, m)*jacobi_dn(u, m)/m - jacobi_cn(u, m)^2*jacobi_sn(u, m)/(m - 1))*jacobi_dn(u, m)/jacobi_sn(u, m)^2 - 1/2*((u + elliptic_e(arcsin(jacobi_sn(u, m)), m)/(m - 1))*jacobi_cn(u, m)*jacobi_sn(u, m) - jacobi_dn(u, m)*jacobi_sn(u, m)^2/(m - 1))/jacobi_sn(u, m)	disagree
-series-jacobids-u-m-u-0-4	SR(jacobi_ds(SR.var("u"), SR.var("m"))).series(SR.var("u") == 0, 4 + 1)	False	disagree
+series-jacobids-u-m-u-0-4	SR(jacobi_ds(SR.var("u"), SR.var("m"))).series(SR.var("u") == 0, 4 + 1)	None	inconclusive
 series-jacobids-z-m-m-0-2	SR(jacobi_ds(SR.var("z"), SR.var("m"))).series(SR.var("m") == 0, 2 + 1)	ValueError: power::eval(): division by zero	error
 u-0-is-a-pole-for-any-m	jacobi_ds(0, SR.var("m"))	jacobi_ds(0, m)	disagree
 n-jacobids-sqrt-2-over-4-times-i-neg-1	enumeratio_n(jacobi_ds((0 + (sqrt(2) / 4)*I), -1))	2.79063465321664e-184 - 2.65047657114574*I	

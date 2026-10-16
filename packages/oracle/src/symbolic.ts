@@ -403,7 +403,9 @@ function trialSources(
     ...(system === "wolfram" ? [] : derivativeVariables(expr)),
     ...(system === "sympy" || system === "sage" ? integrationVariables(expr).definite : []),
   ]);
-  const subs = new Map([...all].filter(([name]) => !held.has(name) && !bound.has(name)));
+  // Sage's transforms take a variable, not a number, for the answer's variable: it is sampled after the call.
+  const deferred = system === "sage" ? positiveVariables(expr) : new Set<string>();
+  const subs = new Map([...all].filter(([name]) => !held.has(name) && !bound.has(name) && !deferred.has(name)));
   // A series is sampled as a polynomial, so the simplifier around it has nothing to do: on a
   // symbolic-coefficient series it only runs out the clock (`FullSimplify[Normal[Series[…]]]`).
   // SymPy's simplifier is not asked at a point either: it keeps the value, and can raise there where the value is fine.
@@ -418,9 +420,17 @@ function trialSources(
   const after = rules.map(
     ([name, value]) => `${(name as { source: string }).source} -> ${(value as { source: string }).source}`,
   );
+  const later = [...deferred]
+    .filter((name) => all.has(name))
+    .map((name) => [emit(name, system), emit(all.get(name)!, system)] as const);
+  if (later.some(([name, value]) => !name.ok || !value.ok)) return undefined;
+  const afterwards = (source: string): string =>
+    later.length === 0
+      ? source
+      : `SR(${source}).subs({${later.map(([name, value]) => `${(name as { source: string }).source}: ${(value as { source: string }).source}`).join(", ")}})`;
   return {
-    theirs: system === "wolfram" ? withoutConditions(theirs.source) : theirs.source,
-    ours: ours.source,
+    theirs: system === "wolfram" ? withoutConditions(theirs.source) : afterwards(theirs.source),
+    ours: afterwards(ours.source),
     after: after.length === 0 ? "{}" : `{${after.join(", ")}}`,
     stepped: [...all.keys()].some((name) => steps.has(name)),
     series: series.size > 0,
@@ -950,7 +960,8 @@ function seriesAgreementSource(
   const rest = terms.filter((term) => !remainders.includes(term));
   const polynomial: MathJSON = rest.length === 0 ? 0 : rest.length === 1 ? (rest[0] as MathJSON) : ["Add", ...rest];
   const [theirs, ours, at, around, requested, claim] = [
-    emit(series as MathJSON, system),
+    // Sage's helper builds the series itself, to check it stands for the function.
+    emit(system === "sage" ? (series[1] as MathJSON) : (series as MathJSON), system),
     emit(polynomial, system),
     emit(variable, system),
     emit(center, system),

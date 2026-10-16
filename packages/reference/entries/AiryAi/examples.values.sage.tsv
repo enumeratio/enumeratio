@@ -2,7 +2,7 @@ id	in	out	verdict
 ai-0	enumeratio_n(airy_ai(0))	0.355028053887817	
 ai-1	enumeratio_n(airy_ai(1))	0.135292416312881	
 series-airyai-x-x-0-4	SR(airy_ai(SR.var("x"))).series(SR.var("x") == 0, 4 + 1)	True	
-normal-series-airyai-x-x-positiveinfinity-2	(SR(airy_ai(SR.var("x"))).series(SR.var("x") == oo, 2 + 1)).truncate()	ValueError: power::eval(): pow(Infinity, 0) is undefined.	error
+normal-series-airyai-x-x-positiveinfinity-2	(SR(airy_ai(SR.var("x"))).series(SR.var("x") == oo, 2 + 1)).truncate()	None	inconclusive
 n-airyai-2-50	enumeratio_n(airy_ai(2), 50)	0.0349241304232744	
 n-functionrange-airyai-x-x-y			
 d-airyai-x-x	diff(airy_ai(SR.var("x")), SR.var("x"))	True	

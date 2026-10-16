@@ -747,3 +747,25 @@ test("Sage: sums and integrals over symbols, a series with its Order term, graph
   // A statistic Sage has no method for stays unmapped.
   expect(emit(["CombinatorialStat", ["Permutation", ["List", 3, 1, 2]], "'NoSuchStat'"], "sage").ok).toBe(false);
 });
+
+// Sage differentiates Abs as on the line, so a held derivative is real only at real points, and none is answered off them.
+test("Sage: a held derivative's variable is real at real points, and a non-holomorphic one is unmapped at a complex point", () => {
+  const at = (point: MathJSON): MathJSON => ["Apply", ["Derivative", "Abs", 1], point];
+  expect(emit(at(2), "sage")).toEqual({
+    ok: true,
+    source:
+      '(diff(enumeratio_abs(SR.var("_d1", domain="real")), SR.var("_d1", domain="real"), 1)).subs({SR.var("_d1", domain="real"): 2})',
+  });
+  expect(emit(at(["Complex", 2, 1]), "sage")).toMatchObject({ ok: false });
+  // A holomorphic function is differentiated the same at any point.
+  expect(emit(["Apply", ["Derivative", "Sin", 1], ["Complex", 2, 1]], "sage").ok).toBe(true);
+});
+
+// Sage's graph families are numbered from 1 in its own sorted order, which ours is not for these three.
+test("Sage: a query that reads vertex numbers is unmapped over a graph Sage numbers otherwise, a numbering-free one is not", () => {
+  const turan: MathJSON = ["TuranGraph", 5, 3];
+  expect(emit(["VertexDegree", turan, 1], "sage")).toMatchObject({ ok: false, missing: ["VertexDegree/numbering"] });
+  expect(emit(["GraphDistance", ["GridGraph", ["List", 2, 3]], 1, 6], "sage").ok).toBe(false);
+  expect(emit(["EdgeCount", turan], "sage").ok).toBe(true);
+  expect(emit(["VertexDegree", ["CycleGraph", 5], 1], "sage").ok).toBe(true);
+});

@@ -1,6 +1,6 @@
 id	in	out	verdict
 n-arcoth-2	enumeratio_n(arccoth(2))	0.549306144334055	
-series-arcoth-x-x-positiveinfinity-5	SR(arccoth(SR.var("x"))).series(SR.var("x") == oo, 5 + 1)	RuntimeError: indeterminate expression: 0 * infinity encountered.	error
+series-arcoth-x-x-positiveinfinity-5	SR(arccoth(SR.var("x"))).series(SR.var("x") == oo, 5 + 1)	None	inconclusive
 a-logarithmic-singularity-at-1	arccoth(1)	+Infinity	
 arcoth-positiveinfinity	arccoth(oo)	0	
 a-float-argument-evaluates-directly	arccoth(3.5)	0.293893332451059	
