@@ -52,3 +52,10 @@ test("a LatexRule reads and writes through createLatexEngine", () => {
   expect(ce.parse("\\twice(3)").json).toEqual(["Twice", 3]);
   expect(box(ce, ["Twice", "x"]).latex).toBe("\\twice(x)");
 });
+
+test("a created engine breaks ties to even, a bare one keeps compute-engine's rule", () => {
+  const round = (ce: ReturnType<typeof bareEngine>) => box(ce, ["Round", ["Rational", 5, 2]]).evaluate().json;
+  expect(round(createEngine())).toBe(2);
+  expect(round(createLatexEngine([]))).toBe(2);
+  expect(round(bareEngine())).toBe(3);
+});

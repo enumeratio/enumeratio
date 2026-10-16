@@ -5,7 +5,6 @@
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-syntax";
-import { setEngineDefaults } from "@enumeratio/engine";
 
 let engine: ComputeEngine | undefined;
 let enginePromise: Promise<ComputeEngine> | undefined;
@@ -89,9 +88,10 @@ export function configureResolver(r: EngineResolver): void {
 function createEngine(): Promise<ComputeEngine> {
   return (bare ??= (async () => {
     await (globalThis as EngineGate).__notatioEngineSetup?.().catch(() => {});
-    const [{ ComputeEngine, LATEX_DICTIONARY }, { displayLatexSyntax }] = await Promise.all([
+    const [{ ComputeEngine, LATEX_DICTIONARY }, { displayLatexSyntax }, { setEngineDefaults }] = await Promise.all([
       import("@cortex-js/compute-engine"),
       import("./display.ts"),
+      import("@enumeratio/engine"),
     ]);
     // The kernel's dictionary, so the page writes and reads LaTeX as a kernel does.
     engine = new ComputeEngine({
