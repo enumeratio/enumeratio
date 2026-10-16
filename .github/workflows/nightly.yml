@@ -151,8 +151,23 @@ jobs:
       - uses: ./.github/actions/oracle-drift
         with:
           system: sympy
-      - if: ${{ !cancelled() }} # sample even when the rescan above drifted
-        uses: ./.github/actions/oracle-plausible
+
+  # The Python sampling is its own job so the rescans and the sampling each fit the cap.
+  python-oracle-plausible:
+    name: reference ⟷ Python Plausible (mpmath, SymPy)
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: packages/oracle/python/requirements.txt
+      - run: pip install -r packages/oracle/python/requirements.txt
+      - uses: ./.github/actions/oracle-plausible
         with:
           systems: mpmath sympy
           ecosystem: Python
