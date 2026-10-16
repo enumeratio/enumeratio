@@ -30,6 +30,8 @@ interface Sequence {
   /** At least the rank of the term `_x`, for an `_x` that is at least 1 (default `_x`, as a term is at
    *  least its rank + 1). Only its size matters: it sets how many steps the descent takes. */
   readonly rankBound?: MathJSON;
+  /** The first term is met again at rank 1 (1, 1, 2, …): its rank is 0, the first place it occurs. */
+  readonly repeatsFirst?: boolean;
 }
 
 /**
@@ -45,6 +47,7 @@ export function sequence({
   exists = "True",
   term,
   rankBound = "_x",
+  repeatsFirst = false,
 }: Sequence): EpsilFamily {
   const [place, bit] = ["sq_at", "sq_b"];
   // 2^(bits + 1) exceeds the rank bound, the most the descent can reach.
@@ -67,7 +70,7 @@ export function sequence({
       unrank: term("_r"),
       rank: iff(
         exists,
-        found((at) => iff(equal(term(at), "_x"), at, -1)),
+        found((at) => iff(equal(term(at), "_x"), repeatsFirst ? iff(equal("_x", term(0)), 0, at) : at, -1)),
         -1,
       ),
       valid: defined(found((at) => equal(term(at), "_x"))),
@@ -134,30 +137,52 @@ export const definitions: ReadonlyMap<string, EpsilFamily> = new Map(families.ma
 /** The most bits a power of two is expanded to on the fast path: the TS kernel's own reach, a bigint's limit. */
 const MAX_BIGINT_BITS = 2 ** 30;
 
-/** A TS kernel as a fast path: the terms it holds exactly are plain numbers, and it declines the rest.
- *  `big` also passes on a bigint term (a power of two, which the interpreter can't expand far), up to a size. */
-const fastOf = (kernel: NumberKernel, big = false): FastKernel => ({
+/** What a TS kernel answers on the fast path beyond the terms a double holds. Its cost can grow with the
+ *  rank or the element (a cache of the terms, a scan), so past these it declines and Epsil answers. */
+export interface FastReach {
+  /** `unrank` also passes on a bigint term (the kernel's own, exact), not only a number. */
+  readonly bigTerms?: boolean;
+  /** The greatest rank `unrank` answers. */
+  readonly unrank?: number;
+  /** The greatest element `rank` answers. */
+  readonly rank?: number;
+}
+
+/** A TS kernel as a fast path: the terms it holds exactly are plain numbers, and it declines the rest. */
+export const fastOf = (kernel: NumberKernel, { bigTerms = false, unrank, rank }: FastReach = {}): FastKernel => ({
   count: (p) => kernel.count(p),
   unrank: (p, r) => {
-    if (big && r >= MAX_BIGINT_BITS) return undefined;
+    if (unrank !== undefined && r > unrank) return undefined;
     const term: unknown = kernel.unrank(p, r);
-    if (big && typeof term === "bigint") return term as unknown as number;
+    if (typeof term === "bigint") {
+      if (term <= BigInt(Number.MAX_SAFE_INTEGER) && term >= -BigInt(Number.MAX_SAFE_INTEGER)) return Number(term);
+      return bigTerms ? (term as unknown as number) : undefined;
+    }
     return typeof term === "number" && Number.isSafeInteger(term) ? term : undefined;
   },
-  rank: (element, p) => kernel.rank(element, p),
+  rank: (element, p) => {
+    if (rank !== undefined && !(Number(element) <= rank)) return undefined;
+    const place = kernel.rank(element, p);
+    // A member the kernel's own scan gave up on still has a rank: Epsil's to find.
+    return place < 0 && kernel.valid(element, p) ? undefined : place;
+  },
   valid: (element, p) => kernel.valid(element, p),
 });
 
 /** The kernels, each replaced by its Epsil definition where there is one: that, with the kernel as
  *  its fast path and its Plausible declaration. */
-export const withDefinitions = (kernels: readonly NumberKernel[]): (NumberKernel | EpsilFamily)[] =>
+export const withDefinitions = (
+  kernels: readonly (NumberKernel | EpsilFamily)[],
+  catalogue: ReadonlyMap<string, EpsilFamily> = definitions,
+  reach: Readonly<Record<string, FastReach>> = { PowersOfTwo: { bigTerms: true, unrank: MAX_BIGINT_BITS - 1 } },
+): (NumberKernel | EpsilFamily)[] =>
   kernels.map((kernel) => {
-    const definition = definitions.get(kernel.head);
-    if (definition === undefined) return kernel;
+    const definition = catalogue.get(kernel.head);
+    if (definition === undefined || "epsil" in kernel) return kernel;
     const declared: Declared | undefined = kernel.declared;
     return {
       ...definition,
       ...(declared === undefined ? {} : { declared }),
-      fast: fastOf(kernel, kernel.head === "PowersOfTwo"),
+      fast: fastOf(kernel, reach[kernel.head]),
     };
   });

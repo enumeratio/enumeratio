@@ -8,6 +8,8 @@
 // it lines up with the OEIS offset -- see the reference entries at the end of
 // packages/reference/src/entries/enumerable-families.ts for the definitive statement per
 // sequence; the comments here are the implementation-level version of the same facts.
+import type { EpsilFamily } from "./epsil.ts";
+import { withSequenceDefinitions } from "./sequence-definitions.ts";
 import type { Declared, NumberKernel } from "./types.ts";
 
 // ---- shared: bigint decode + a bounded forward scan for membership/rank. ----
@@ -238,7 +240,9 @@ function scalarEntry(head: string, nth: (k: number) => bigint, monotoneFrom: num
   };
 }
 
-export const entries: NumberKernel[] = [
+/** The families as TS kernels: where a family has an Epsil definition (./sequence-definitions.ts), the
+ *  fast path of it and its independent reading in tests. */
+export const kernels: NumberKernel[] = [
   scalarEntry("FibonacciNumbers", (k) => fibonacci.nth(k), 0),
   scalarEntry("LucasNumbers", (k) => lucas.nth(k), 1),
   scalarEntry("JacobsthalNumbers", (k) => jacobsthal.nth(k), 0),
@@ -291,3 +295,5 @@ export const entries: NumberKernel[] = [
     },
   },
 ];
+
+export const entries: (NumberKernel | EpsilFamily)[] = withSequenceDefinitions(kernels);

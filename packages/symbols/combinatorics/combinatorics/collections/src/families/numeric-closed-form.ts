@@ -16,6 +16,7 @@
 // bigint straight through.
 import type { EpsilFamily } from "./epsil.ts";
 import { withDefinitions } from "./numeric-definitions.ts";
+import { withSequenceDefinitions } from "./sequence-definitions.ts";
 import type { Declared, NumberKernel } from "./types.ts";
 
 const MAX_SAFE_BIG = BigInt(Number.MAX_SAFE_INTEGER);
@@ -307,4 +308,4 @@ export const kernels: NumberKernel[] = [
   },
 ];
 
-export const entries: (NumberKernel | EpsilFamily)[] = withDefinitions(kernels);
+export const entries: (NumberKernel | EpsilFamily)[] = withSequenceDefinitions(withDefinitions(kernels));

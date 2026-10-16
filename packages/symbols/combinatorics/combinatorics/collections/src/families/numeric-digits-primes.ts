@@ -8,6 +8,8 @@
 // The sieve/isPrime/nthMatchCache trio below is COPIED from numeric-sets.ts rather than
 // imported -- that file isn't meant to export its internals across the family boundary
 // (each family file owns its own kernel), so this is a deliberate, reported duplication.
+import type { EpsilFamily } from "./epsil.ts";
+import { withSequenceDefinitions } from "./sequence-definitions.ts";
 import type { NumberKernel } from "./types.ts";
 
 // ---- copied from numeric-sets.ts: incremental sieve + trial-division primality. ----
@@ -556,7 +558,9 @@ function fibonacciPrimesTable(): number[] {
   return fibonacciPrimesCache;
 }
 
-export const entries: NumberKernel[] = [
+/** The families as TS kernels: where a family has an Epsil definition (./sequence-definitions.ts), the
+ *  fast path of it and its independent reading in tests. */
+export const kernels: NumberKernel[] = [
   {
     head: "HarshadNumbers",
     paramCount: 0,
@@ -822,3 +826,5 @@ export const entries: NumberKernel[] = [
     rank: (element) => fibonacciPrimesTable().indexOf(Number(element)),
   },
 ];
+
+export const entries: (NumberKernel | EpsilFamily)[] = withSequenceDefinitions(kernels);
