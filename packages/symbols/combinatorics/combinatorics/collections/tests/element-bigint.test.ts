@@ -5,6 +5,7 @@
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { kernels as digitsPrimes } from "../src/families/numeric-digits-primes.ts";
+import { kernels as recurrence } from "../src/families/numeric-recurrence.ts";
 import { numberKernel } from "../src/families/types.ts";
 import { declareCollections } from "../src/library.ts";
 
@@ -64,6 +65,20 @@ test("a kernel in plain numbers declines a bigint element instead of rounding it
   expect(() => harshad.valid(10n ** 24n, [])).toThrow(/not bigint yet/);
   expect(() => harshad.rank(10n ** 24n, [])).toThrow(/not bigint yet/);
   expect(run(["Element", big(10n ** 24n), "HarshadNumbers"]).operator).toBe("Element");
+});
+
+test("a scan that ran out of terms declines instead of answering absent", () => {
+  const kernelOf = (head: string) => numberKernel(recurrence.find((k) => k.head === head)!);
+  const jacobsthal = kernelOf("JacobsthalNumbers");
+  // J(n) = (2^n - (-1)^n) / 3: a term within the scan is a member, a value past its last term is unknown.
+  expect(jacobsthal.valid((2n ** 100n - 1n) / 3n, [])).toBe(true);
+  expect(jacobsthal.valid((2n ** 100n - 1n) / 3n + 1n, [])).toBe(false);
+  expect(() => jacobsthal.valid(10n ** 7000n, [])).toThrow(/not bigint yet/);
+  expect(() => jacobsthal.rank(10n ** 7000n, [])).toThrow(/not bigint yet/);
+  // Every integer occurs in the diatomic sequence, so one the scan never met has a rank it can't give.
+  const stern = kernelOf("SternDiatomicSequence");
+  expect(stern.rank(5n, [])).toBeGreaterThan(0n);
+  expect(() => stern.rank(10n ** 9n, [])).toThrow(/not bigint yet/);
 });
 
 test("a param past 2^53 leaves the call unevaluated, not answered for another fiber", () => {

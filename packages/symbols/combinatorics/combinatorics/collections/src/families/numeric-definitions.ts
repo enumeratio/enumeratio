@@ -167,6 +167,7 @@ export const fastOf = (kernel: NumberKernel, { bigTerms = false, unrank, rank }:
     return place < 0 && kernel.valid(element, p) ? undefined : place;
   },
   valid: (element, p) => kernel.valid(element, p),
+  ...(kernel.bigElements === true ? { bigElements: true as const } : {}),
 });
 
 /** The kernels, each replaced by its Epsil definition where there is one: that, with the kernel as

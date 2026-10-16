@@ -22,11 +22,16 @@ function toBigInt(x: unknown): bigint | undefined {
   return undefined;
 }
 
+/** A scan that ran out of terms before settling the value: unknown, never a verdict. */
+const declineScan = (head: string, value: bigint): never => {
+  throw new RangeError(`${head}: ${value} is past the terms scanned; its kernel is not bigint yet`);
+};
+
 /** Scans `nth(0), nth(1), ...` for `value`. Once past `monotoneFrom`, the sequence is assumed
  *  non-decreasing forever (true for every recurrence below past its initial transient), so the
  *  scan can stop the moment a term exceeds the target -- otherwise it just checks equality.
- *  `cap` is a last-resort guard against a value that never appears. */
-function scanMembership(nth: (k: number) => bigint, monotoneFrom = 0, cap = 20_000) {
+ *  `cap` bounds the terms scanned; a value still ahead of the last one is declined, not absent. */
+function scanMembership(head: string, nth: (k: number) => bigint, monotoneFrom = 0, cap = 20_000) {
   return {
     contains(value: bigint): boolean {
       if (value < 0n) return false;
@@ -35,7 +40,7 @@ function scanMembership(nth: (k: number) => bigint, monotoneFrom = 0, cap = 20_0
         if (t === value) return true;
         if (i >= monotoneFrom && t > value) return false;
       }
-      return false;
+      return declineScan(head, value);
     },
     rankOf(value: bigint): number {
       if (value < 0n) return -1;
@@ -44,7 +49,7 @@ function scanMembership(nth: (k: number) => bigint, monotoneFrom = 0, cap = 20_0
         if (t === value) return i;
         if (i >= monotoneFrom && t > value) return -1;
       }
-      return -1;
+      return declineScan(head, value);
     },
   };
 }
@@ -220,7 +225,7 @@ const repeatsIn = (nth: (k: number) => bigint, monotoneFrom: number): boolean =>
 };
 
 function scalarEntry(head: string, nth: (k: number) => bigint, monotoneFrom: number): NumberKernel {
-  const scan = scanMembership(nth, monotoneFrom);
+  const scan = scanMembership(head, nth, monotoneFrom);
   return {
     declared: sequence(repeatsIn(nth, monotoneFrom)),
     head,
@@ -272,7 +277,8 @@ export const kernels: NumberKernel[] = bigAware([
       const v = toBigInt(element);
       if (v === undefined || v < 0n) return -1;
       for (let i = 0; i <= 20_000; i++) if (fusc(i) === v) return i;
-      return -1;
+      // Every non-negative integer occurs, so one not met by the scan is out of its reach, not absent.
+      return declineScan("SternDiatomicSequence", v);
     },
   },
   {

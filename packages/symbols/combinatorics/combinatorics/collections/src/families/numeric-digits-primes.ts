@@ -772,7 +772,13 @@ export const kernels: NumberKernel[] = [
     // {2} (or {2 − gap}), finite, where a scan for more would never end. Even gaps are open.
     count: ([gap]) => (gap % 2 !== 0 ? oddGapPairs(gap).length : Number.NaN),
     unrank: ([gap], r) => (gap % 2 !== 0 ? (oddGapPairs(gap)[r] ?? Number.NaN) : primePairCacheFor(gap).nth(r + 1)),
-    valid: (element, [gap]) => isPrime(Number(element)) && isPrime(Number(element) + gap),
+    valid: (element, [gap]) => {
+      if (Number(element) + gap > Number.MAX_SAFE_INTEGER)
+        throw new RangeError(
+          `PrimePairs(${gap}): ${Number(element)} + ${gap} exceeds 2^53; its kernel is not bigint yet`,
+        );
+      return isPrime(Number(element)) && isPrime(Number(element) + gap);
+    },
     rank: (element, [gap]) =>
       gap % 2 !== 0 ? oddGapPairs(gap).indexOf(Number(element)) : primePairCacheFor(gap).rankOf(Number(element)),
   },
