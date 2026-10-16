@@ -277,6 +277,30 @@ for (const system of systems) {
       symbolicMode[index] = false;
     }
   }
+  // The agreement program's `True`, and the TeX of the program itself, are not what Wolfram answers or how it
+  // writes the input: a decided row shows the plain input's answer and TeX, and the verdict stays the program's.
+  const decided = isWolframFamily(system)
+    ? runnable.flatMap((_row, index) => (symbolicMode[index] ? [index] : []))
+    : [];
+  if (decided.length > 0) {
+    const plain = await runIn(
+      system,
+      decided.map((index) => plainSources[index] as string),
+      { itemSeconds: capItem },
+    );
+    for (const [at, index] of decided.entries()) {
+      const answered = plain[at] as (typeof results)[number];
+      const program = results[index] as (typeof results)[number];
+      if ("error" in answered || "error" in program || answered.display === undefined) continue;
+      const { shown: _shown, tex: _tex, ...rest } = program;
+      results[index] = {
+        ...rest,
+        display: answered.display,
+        ...(answered.shown === undefined ? {} : { shown: answered.shown }),
+        ...(answered.tex === undefined ? {} : { tex: answered.tex }),
+      };
+    }
+  }
 
   const outcomes: Outcome[] = [];
   const missing: Record<string, number> = {};

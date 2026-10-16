@@ -6,7 +6,7 @@ norlundb-3-2	NorlundB[3, 2]	-1/2	B_3^{(2)}	-\frac{1}{2}
 norlundb-6-4	NorlundB[6, 4]	221/42	B_6^{(4)}	\frac{221}{42}
 norlundb-5-3	NorlundB[5, 3]	-3/4	B_5^{(3)}	-\frac{3}{4}
 norlundb-7-2	NorlundB[7, 2]	-1/6	B_7^{(2)}	-\frac{1}{6}
-a-polynomial-in-a	NorlundB[1, a]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B_1^{(a)}--\frac{1}{2} a\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B_1^{\left(\frac{7}{3}\right)}--\frac{1}{2} \frac{7}{3}\right]\right],\text{Chop}\left[N\left[B_1^{\left(-\frac{11}{5}\right)}--\frac{1}{2} \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[B_1^{\left(\frac{13}{4}\right)}--\frac{1}{2} \frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+a-polynomial-in-a	NorlundB[1, a]	-1/2*a	B_1^{(a)}	-\frac{a}{2}
 norlundb-0-0	NorlundB[0, 0]	1	B_0^{(0)}	1
 norlundb-1-0	NorlundB[1, 0]	0	B_1^{(0)}	0
 norlundb-2-0	NorlundB[2, 0]	0	B_2^{(0)}	0
