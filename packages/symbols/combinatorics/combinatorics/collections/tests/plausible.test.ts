@@ -101,6 +101,7 @@ const bigScalars = (elements: readonly bigint[], broken?: Partial<NumberKernel>)
     unrank: (_p, r) => elements[r] as unknown as number,
     rank: (element) => elements.indexOf(element as bigint),
     valid: (element) => elements.includes(element as bigint),
+    bigElements: true,
     ...broken,
   });
 

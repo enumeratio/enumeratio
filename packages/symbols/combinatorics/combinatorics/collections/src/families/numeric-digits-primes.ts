@@ -584,6 +584,7 @@ export const kernels: NumberKernel[] = [
     paramCount: 0,
     kind: "scalar",
     count: () => NARCISSISTIC_COUNT,
+    bigElements: true,
     unrank: (_p, r) => (r >= 0 && r < NARCISSISTIC_NUMBERS.length ? narrow(NARCISSISTIC_NUMBERS[r]) : Number.NaN),
     valid: (element) => {
       const x = toBigNarcissistic(element);

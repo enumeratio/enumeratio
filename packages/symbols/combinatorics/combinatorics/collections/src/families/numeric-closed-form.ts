@@ -8,16 +8,12 @@
 // (cast through the `NumberKernel` element type, which predates bigint support and can't be
 // widened here — see the FILES boundary in the task that produced this file). `ce.box`
 // accepts a bigint directly, so `At`/`Take` on fast-growing sequences (FactorialNumbers,
-// PrimorialNumbers, …) stay exact well past 2^53. The one place precision is unavoidably
-// capped is membership (`valid`/`rank`): declare.ts decodes a boxed element through
-// `intOf`, which is itself capped at `Number.MAX_SAFE_INTEGER` — a shared contract this
-// file doesn't own. `Element(hugeValue, FactorialNumbers)` is therefore only reliable
-// within that range; direct kernel calls (as in this package's tests) can still pass a
-// bigint straight through.
+// PrimorialNumbers, …) stay exact well past 2^53. Membership reads a boxed element as a bigint
+// too (`scalarOf`, types.ts), so every kernel here is `bigAware`.
 import type { EpsilFamily } from "./epsil.ts";
 import { withDefinitions } from "./numeric-definitions.ts";
 import { withSequenceDefinitions } from "./sequence-definitions.ts";
-import type { Declared, NumberKernel } from "./types.ts";
+import { bigAware, type Declared, type NumberKernel } from "./types.ts";
 
 const MAX_SAFE_BIG = BigInt(Number.MAX_SAFE_INTEGER);
 const MIN_SAFE_BIG = BigInt(Number.MIN_SAFE_INTEGER);
@@ -213,7 +209,7 @@ const CLOSED: Declared["cost"] = { count: "closed", unrank: "closed", rank: "clo
 
 /** The families as TS kernels: the fast paths of the Epsil definitions (./numeric-definitions.ts)
  *  and, in tests, their independent reading. */
-export const kernels: NumberKernel[] = [
+export const kernels: NumberKernel[] = bigAware([
   // ---- figurate numbers: all k-gonal, P(k, n) = ((k-2)n^2 - (k-4)n)/2. ----
   quadraticFamily("TriangularNumbers", 1n, 1n, 0n, 2n), // P(3, n) = n(n+1)/2, A000217
   quadraticFamily("PentagonalNumbers", 3n, -1n, 0n, 2n), // P(5, n) = n(3n-1)/2, A000326
@@ -306,6 +302,6 @@ export const kernels: NumberKernel[] = [
       return quadraticRank(a, b, c, denom, x);
     },
   },
-];
+]);
 
 export const entries: (NumberKernel | EpsilFamily)[] = withSequenceDefinitions(withDefinitions(kernels));

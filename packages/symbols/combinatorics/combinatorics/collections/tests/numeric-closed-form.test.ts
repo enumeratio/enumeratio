@@ -274,9 +274,7 @@ test("PolygonalNumbers(4) agrees with SquareNumbers (numeric-sets.ts)", () => {
 });
 
 // ─── engine-level: Take / Element through the declared CE collection handlers,
-// as in numeric-sets.test.ts. Kept to values well within the safe-integer decode range that
-// declare.ts's `intOf` caps membership checks to (see the file header in
-// numeric-closed-form.ts). Take/Element cases now live as examples (CubeNumbers,
+// as in numeric-sets.test.ts; past 2^53 see element-bigint.test.ts. Take/Element cases now live as examples (CubeNumbers,
 // TriangularNumbers, PowersOfTwo, FactorialNumbers, PolygonalNumbers, AllOnes). ─────────────
 const ce = bareEngine();
 declareCollections(ce);

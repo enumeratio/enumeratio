@@ -12,6 +12,7 @@ import {
   listMJ,
   needsBigint,
   nestMJ,
+  scalarOf,
 } from "./types.ts";
 import { type AnyFamily, kernelOn } from "./epsil.ts";
 
@@ -57,7 +58,7 @@ const carrierOf = (family: FamilyKernel): string | undefined => family.carrier;
 const encoderFor = (kind: FamilyKernel["kind"]) =>
   kind === "ints" ? listMJ : kind === "blocks" ? blocksMJ : kind === "scalar" ? (n: unknown) => n : nestMJ;
 const decoderFor = (kind: FamilyKernel["kind"]) =>
-  kind === "ints" ? asIntList : kind === "blocks" ? asBlockList : kind === "scalar" ? intOf : denest;
+  kind === "ints" ? asIntList : kind === "blocks" ? asBlockList : kind === "scalar" ? scalarOf : denest;
 
 /** The element after `target` in a family's own order, for the call `collection`: null at the last
  *  element or for a non-member, undefined where the kernel declines. */
@@ -106,9 +107,12 @@ function handlersOf(
     const tupleOps = inner?.ops;
     return bareDecode(tupleOps?.[tupleOps.length - 1] as never);
   };
-  const params = (c: Expr): number[] => {
+  // Undefined where a param is no safe integer (past 2^53, say): the kernels read params as doubles,
+  // and a rounded or NaN param would answer for some other fiber, so the call stays unknown.
+  const params = (c: Expr): number[] | undefined => {
     const ops = asBoxed(c).ops ?? [];
-    return Array.from({ length: family.paramCount }, (_, i) => intOf(ops[i]));
+    const p = Array.from({ length: family.paramCount }, (_, i) => intOf(ops[i]));
+    return p.every(Number.isSafeInteger) ? p : undefined;
   };
   // Undefined where the kernel declines past 2^53 (`needsBigint`): unknown, not an error.
   // A NaN element is a table's end (`GiugaNumbers`): no such element, never a NaN one.
@@ -151,6 +155,7 @@ function handlersOf(
   };
   const successor: SuccessorOf = (c, target) => {
     const p = params(c);
+    if (p === undefined) return undefined;
     if (tooBig(p, ["count", "unrank", "rank"])) return undefined;
     try {
       const total = countAt(p);
@@ -175,25 +180,33 @@ function handlersOf(
   const collection: CollectionHandlers = {
     count: (c) => {
       const p = params(c);
+      if (p === undefined) return undefined;
       if (tooBig(p, ["count"])) return undefined;
       const total = countAt(p);
       return total === undefined ? undefined : countNumber(total);
     },
     // ∞ is known-infinite; NaN (an open problem, e.g. TwinPrimes) is unknown either way.
     isFinite: (c) => {
-      const total = countAt(params(c));
+      const p = params(c);
+      if (p === undefined) return undefined;
+      const total = countAt(p);
       // Past 2^53 in a plain-number kernel: still finite, just not a count a double can carry.
       if (total === undefined) return true;
       return typeof total === "bigint" ? true : Number.isNaN(total) ? undefined : false;
     },
     isLazy: () => true,
-    isEnumerable: (c) => !tooBig(params(c), ["count", "unrank"], true),
+    isEnumerable: (c) => {
+      const p = params(c);
+      return p === undefined ? undefined : !tooBig(p, ["count", "unrank"], true);
+    },
     isEmpty: (c) => {
       const p = params(c);
+      if (p === undefined) return undefined;
       return tooBig(p, ["count"]) ? undefined : countAt(p) === 0n ? true : countAt(p) === undefined ? undefined : false;
     },
     iterator: (c) => {
       const p = params(c);
+      if (p === undefined) return undefined;
       if (tooBig(p, ["count", "unrank"], true)) return undefined;
       const total = countAt(p);
       if (total === undefined) return undefined;
@@ -219,6 +232,7 @@ function handlersOf(
             : undefined;
       if (ordinal === undefined) return undefined;
       const p = params(c);
+      if (p === undefined) return undefined;
       if (tooBig(p, ["count", "unrank"])) return undefined;
       const total = countAt(p);
       if (total === undefined) return undefined;
@@ -230,8 +244,10 @@ function handlersOf(
       return i < 1n || i > total ? undefined : element(p, i - 1n);
     },
     contains: (c, target) => {
+      const p = params(c);
+      if (p === undefined) return undefined;
       try {
-        return family.valid(decode(asBoxed(target)), params(c));
+        return family.valid(decode(asBoxed(target)), p);
       } catch (error) {
         if (needsBigint(error)) return undefined;
         throw error;

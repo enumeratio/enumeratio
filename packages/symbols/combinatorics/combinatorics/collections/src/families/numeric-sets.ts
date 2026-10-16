@@ -122,8 +122,14 @@ export const kernels: NumberKernel[] = [
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
     unrank: (_p, r) => nthPrime(r + 1),
-    valid: (element) => isPrime(Number(element)),
-    rank: (element) => primeRank(Number(element)),
+    // BPSW reads a bigint exactly; the rank (π) is out of reach past 2^53.
+    bigElements: true,
+    valid: (element) => (typeof element === "bigint" ? isPrimeBig(element) : isPrime(Number(element))),
+    rank: (element) => {
+      if (typeof element === "bigint" && element > BigInt(Number.MAX_SAFE_INTEGER))
+        throw new RangeError(`PrimeNumbers: element ${element} exceeds 2^53; its kernel is not bigint yet`);
+      return primeRank(Number(element));
+    },
     declared: numeric("scan"),
   },
   {

@@ -10,12 +10,11 @@
 // sequence; the comments here are the implementation-level version of the same facts.
 import type { EpsilFamily } from "./epsil.ts";
 import { withSequenceDefinitions } from "./sequence-definitions.ts";
-import type { Declared, NumberKernel } from "./types.ts";
+import { bigAware, type Declared, type NumberKernel } from "./types.ts";
 
 // ---- shared: bigint decode + a bounded forward scan for membership/rank. ----
 
-/** Boxed elements arrive here as whatever `intOf` (types.ts, capped at Number.isSafeInteger)
- *  decoded, or as the raw bigint our own kernel-level tests pass directly. Either way, decode
+/** Boxed elements arrive here as a number or, past 2^53, a bigint (`scalarOf`, types.ts). Either way, decode
  *  once to a bigint so `contains`/`rank` never compare across mixed types. */
 function toBigInt(x: unknown): bigint | undefined {
   if (typeof x === "bigint") return x;
@@ -242,7 +241,7 @@ function scalarEntry(head: string, nth: (k: number) => bigint, monotoneFrom: num
 
 /** The families as TS kernels: where a family has an Epsil definition (./sequence-definitions.ts), the
  *  fast path of it and its independent reading in tests. */
-export const kernels: NumberKernel[] = [
+export const kernels: NumberKernel[] = bigAware([
   scalarEntry("FibonacciNumbers", (k) => fibonacci.nth(k), 0),
   scalarEntry("LucasNumbers", (k) => lucas.nth(k), 1),
   scalarEntry("JacobsthalNumbers", (k) => jacobsthal.nth(k), 0),
@@ -294,6 +293,6 @@ export const kernels: NumberKernel[] = [
       return -1;
     },
   },
-];
+]);
 
 export const entries: (NumberKernel | EpsilFamily)[] = withSequenceDefinitions(kernels);
