@@ -22,13 +22,13 @@ equivalently-c-n-binom-2n-n-binom-2n-n-1	(binomial(10, 5) - binomial(10, 6))	42
 the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	(catalan_number(6) / catalan_number(5))	22/7	
 segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i			
 generatingfunction-catalannumber-n-n-x			
-catalannumber-neg-10	catalan_number(-10)		
-catalannumber-neg-9	catalan_number(-9)		
-catalannumber-neg-8	catalan_number(-8)		
-catalannumber-neg-7	catalan_number(-7)		
-catalannumber-neg-6	catalan_number(-6)		
-catalannumber-neg-4	catalan_number(-4)		
-catalannumber-neg-3	catalan_number(-3)		
+catalannumber-neg-10	catalan_number(-10)	0	
+catalannumber-neg-9	catalan_number(-9)	0	
+catalannumber-neg-8	catalan_number(-8)	0	
+catalannumber-neg-7	catalan_number(-7)	0	
+catalannumber-neg-6	catalan_number(-6)	0	
+catalannumber-neg-4	catalan_number(-4)	0	
+catalannumber-neg-3	catalan_number(-3)	0	
 differencerootreduce-catalannumber-k-k			
 closed-form-difference-with-a-negative-binomial	(binomial(10, 5) - binomial(-1, -7))	252	disagree
 they-grow-fast-c-15-already-passes-nine-million	catalan_number(15)	9694845	

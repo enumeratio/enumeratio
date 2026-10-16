@@ -1,2 +1,2 @@
-id	in
-golden-ratio-to-20-digits	enumeratio_n(golden_ratio, 20)
+id	in	out
+golden-ratio-to-20-digits	enumeratio_n(golden_ratio, 20)	1.61803398874989

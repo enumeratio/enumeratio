@@ -22,7 +22,7 @@ a-gaussian-integer-n-binom-1-i-5-frac-1-i-12	binomial((1 + 1*I), 5)	-1/12*I - 1/
 complex-n-and-k-evaluate-through-the-gamma	binomial((2 + 1*I), (7 + -3*I))	TypeError: either m or x-m must be an integer	error
 interval-arithmetic-in-k-binom-1-2-k-is			
 n-binomial-7-over-3-1-over-5-20	enumeratio_n(binomial((7/3), (1/5)), 20)	TypeError: either m or x-m must be an integer	error
-binomial-n-4	binomial(SR.var("n"), 4)		
+binomial-n-4	binomial(SR.var("n"), 4)	True	
 matrixfunction-function-binomial-1-2-1-list-list			
 the-number-of-distinct-5-card-hands-dealt-from-a	binomial(52, 5)	2598960	
 the-probability-of-exactly-3-heads-in-10-fair	(binomial(10, 3) / ((2)^10))	15/128	
@@ -33,10 +33,10 @@ sum-of-squares-along-a-row-sum-k-binom-n-k-2
 vandermonde-s-identity-sum-k-binom-m-k-binom-n-r			
 the-alternating-row-sum-vanishes-sum-k-1-k-binom			
 the-factorial-form-binom-n-k-frac-n-k-n-k-see	enumeratio_equal(binomial(7, 3), (enumeratio_factorial(7) / (enumeratio_factorial(3) * enumeratio_factorial(4))))	True	
-binomial-1-over-2-neg-1-over-2-plus-binomial-1	(binomial((1/2), (-1/2)) + binomial((1/2), (1/2)))		
+binomial-1-over-2-neg-1-over-2-plus-binomial-1	(binomial((1/2), (-1/2)) + binomial((1/2), (1/2)))	3/2	
 sum-binomial-2-k-pow-2-times-binomial-k-plus-2-k			
 sum-binomial-2-2k-plus-1-times-2-pow-k-k-0-floor			
-binomial-1-over-2-1-over-2-plus-binomial-1-over	(binomial((1/2), (1/2)) + binomial((1/2), (3/2)))		
+binomial-1-over-2-1-over-2-plus-binomial-1-over	(binomial((1/2), (1/2)) + binomial((1/2), (3/2)))	1	
 choosing-more-elements-than-available-k-n-gives	binomial(5, 7)	0	
 a-negative-k-also-gives-0	binomial(5, -1)	0	
 a-negative-n-uses-the-generalized-formula-binom	binomial(-5, 2)	15	

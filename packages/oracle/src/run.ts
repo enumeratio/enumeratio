@@ -228,28 +228,23 @@ for _enumeratio_i, _enumeratio_src in enumerate(_enumeratio_sources):
 
 /** SymPy / mpmath / Sage all evaluate Python, differing only in the preamble, binary and
  * evaluator. Sage's own preparser (which turns an integer division like `2/3` into an exact
- * `Rational`, not a float) only runs on the program `sage -c` is handed, not on a string
+ * `Rational`, not a float) only runs on the program Sage is handed (a .sage file), not on a string
  * passed to plain `eval()` at runtime — so a Sage source has to be `preparse`d first,
  * or every `/` an emit template writes silently becomes a float. */
 async function runPython(
   sources: readonly string[],
   binary: string,
   preamble: string,
-  args: readonly string[] = ["-c"],
+  file: string,
   evalExpr?: (src: string, ns: string) => string,
   valueOf?: string,
   itemSeconds: number = ITEM_SECONDS,
 ): Promise<Result[]> {
   const program = pythonBatchCode(sources, preamble, evalExpr, valueOf, itemSeconds);
-  const run = await transcript("python3", [
-    "-c",
-    SUPERVISOR,
-    String(MAX_BYTES),
-    String(stallSeconds(itemSeconds)),
-    binary,
-    ...args,
-    program,
-  ]);
+  // The program goes through a file: one argument tops out at 128 KiB on Linux (spawn E2BIG).
+  const run = await withFile(file, program, (path) =>
+    transcript("python3", ["-c", SUPERVISOR, String(MAX_BYTES), String(stallSeconds(itemSeconds)), binary, path]),
+  );
   if (!("out" in run)) return failAll(sources.length, run.reason);
   return valueOf ? collectWolfram(run.out, sources.length) : collect(run.out, sources.length);
 }
@@ -1288,6 +1283,9 @@ def enumeratio_value(x):
         z = CC(x)
         if z.imag() == 0:
             re = float(z.real())
+            # A held call that CC cannot evaluate (gamma(-oo)) is not a NaN: it stays as printed.
+            if re != re and str(x) not in named:
+                return str(x)
             if re != re or re in (float("inf"), float("-inf")):
                 return named.get(str(x), "PositiveInfinity" if re > 0 else "NegativeInfinity" if re < 0 else "NaN")
             return repr(re)
@@ -1320,7 +1318,12 @@ def _enumeratio_roots_bound(b, d, m):
 
 def enumeratio_power_mod_list(a, s, m):
     s = QQ(s)
-    b = Zmod(m)(a)**s.numerator()
+    base = Zmod(m)(a)
+    try:
+        b = base**s.numerator()
+    except ZeroDivisionError:
+        # x^d = a^-n with a not a unit: a^n * x^d = 1 has no solution.
+        return []
     if m > 1 and _enumeratio_roots_bound(b.lift(), s.denominator(), m) > ROOTS_LISTED:
         raise ValueError("more than %d roots to list" % ROOTS_LISTED)
     return sorted(int(x) for x in b.nth_root(s.denominator(), all=True))
@@ -1573,15 +1576,15 @@ function runBatch(system: System, sources: readonly string[], itemSeconds: numbe
         sources,
         "python3",
         `${SYMPY_IMPORT}\n${SYMPY_PREAMBLE}\n${PY_VALUE}\n${PY_BROADCAST}`,
-        ["-c"],
+        "batch.py",
         undefined,
         "enumeratio_value",
         itemSeconds,
       );
     case "mpmath":
-      return runPython(sources, "python3", MPMATH_PREAMBLE, ["-c"], undefined, "enumeratio_value", itemSeconds);
+      return runPython(sources, "python3", MPMATH_PREAMBLE, "batch.py", undefined, "enumeratio_value", itemSeconds);
     case "sage":
-      // `sage -c` takes one program string, like python3 -c. The preparsed source is evaluated
+      // A `.sage` file is preparsed as `sage -c` was. The preparsed source is evaluated
       // with the per-item ns as its globals (copied from the module globals snapshotted right
       // after the preamble runs): SAGE_PREAMBLE's helpers are visible, including inside a
       // lambda, which `sage_eval(locals=...)` hides them from, and the batch loop's own
@@ -1590,7 +1593,7 @@ function runBatch(system: System, sources: readonly string[], itemSeconds: numbe
         sources,
         "sage",
         `from sage.misc.sage_eval import sage_eval\nfrom sage.repl.preparse import preparse\n${SAGE_PREAMBLE}\n${PY_BROADCAST}`,
-        ["-c"],
+        "batch.sage",
         (src, ns) => `eval(preparse(${src}), ${ns})`,
         "enumeratio_value",
         itemSeconds,

@@ -36,7 +36,7 @@ n-zeta-3-neg-2p5-sums-abs-terms	enumeratio_n(hurwitz_zeta(3, -2.5))	0.0541020258
 n-zeta-2p5-neg-2p5	enumeratio_n(hurwitz_zeta(2.5, -2.5))	6.24711063456881 - 6.12093450391898*I	inconclusive
 n-zeta-3-neg-2p5-plus-i	enumeratio_n(hurwitz_zeta(3, (-2.5 + 1*I)))	0.0396299239699579 - 0.201022992074744*I	disagree
 n-zeta-2p5-plus-i-neg-2p5	enumeratio_n(hurwitz_zeta((2.5 + 1*I), -2.5))	83.2046830063312 - 106.551606331014*I	disagree
-zeta-3-133-at-a-negative-integer-a	hurwitz_zeta(3.133, -2)		
+zeta-3-133-at-a-negative-integer-a	hurwitz_zeta(3.133, -2)	hurwitz_zeta(3.13300000000000, -2)	inconclusive
 on-the-critical-line-zeta-1-2-14i-0-02224-0	enumeratio_n(zeta((0.5 + 14*I)))	0.0222411426099936 - 0.103258123266450*I	
 two-argument-zeta-s-a-via-enumeratio-analytic	hurwitz_zeta(2, 1)	1/6*pi^2	
 zeta-2-2-zeta-2-1-pi-2-6-1	hurwitz_zeta(2, 2)	1/6*pi^2 - 1	
@@ -54,13 +54,13 @@ zeta-2-1-2-3-zeta-2-pi-2-2	hurwitz_zeta(2, (1/2))	1/2*pi^2
 interval-arithmetic-zeta-is-decreasing-on-1			
 uncertainty-in-a-propagated-with-partial-a-zeta			
 to-40-significant-digits-every-one-correctly	enumeratio_n(zeta(3), 40)	1.20205690315959	
-n-zeta-5-over-4-50	enumeratio_n(zeta((5/4)), 50)		
+n-zeta-5-over-4-50	enumeratio_n(zeta((5/4)), 50)	4.59511182584294	
 n-zeta-3-2-50	enumeratio_n(hurwitz_zeta(3, 2), 50)	0.202056903159594	
 zeta-2-list-list-1-over-2-0-list-0-3-over-2	[[hurwitz_zeta(2, (1/2)), hurwitz_zeta(2, 0)], [hurwitz_zeta(2, 0), hurwitz_zeta(2, (3/2))]]	ValueError: psi2_eval(): pole	error
 zeta-4-5	hurwitz_zeta(4, 5)	1/90*pi^4 - 22369/20736	
 zeta-list-1-2-3-4	[zeta(1), zeta(2), zeta(3), zeta(4)]	[Infinity, 1/6*pi^2, zeta(3), 1/90*pi^4]	
 matrixfunction-function-zeta-2-1-1-list-list-1			
-complex-s-on-the-critical-line	enumeratio_n(zeta((0.5 + 14*I)))		
+complex-s-on-the-critical-line	enumeratio_n(zeta((0.5 + 14*I)))	0.0222411426099936 - 0.103258123266450*I	
 the-probability-that-two-random-positive	enumeratio_equal((1 / zeta(2)), (6 / ((pi)^2)))	True	
 certified-digits-zeta-3	enumeratio_n(zeta(3), 40)	1.20205690315959	
 zeta-0-1-2	zeta(0)	-1/2	

@@ -1,15 +1,15 @@
 id	in	out	verdict
-residueclass-10-7	Mod(10, 7)		
-1-3-is-the-inverse-of-3-3-cdot-5-15-equiv-1	Mod((1/3), 7)		
-fermat-3-6-equiv-1-pmod-7	((Mod(3, 7))^6)		
-residueclass-negative-1-7	Mod(-1, 7)		
-1-over-residueclass-3-7	(1 / Mod(3, 7))		
-adding-two-classes-mod-7	(Mod(5, 7) + Mod(4, 7))		
-adding-a-plain-integer-to-a-class	(Mod(5, 7) + 3)		
-subtracting-two-classes-mod-7	(Mod(2, 7) - Mod(5, 7))		
-multiplying-two-classes-mod-7	(Mod(3, 7) * Mod(5, 7))		
-power-with-exponent-negative-1-is-the-inverse	((Mod(3, 7))^-1)		
-negating-a-class-mod-7	(-Mod(3, 7))		
+residueclass-10-7	Mod(10, 7)	3	
+1-3-is-the-inverse-of-3-3-cdot-5-15-equiv-1	Mod((1/3), 7)	5	
+fermat-3-6-equiv-1-pmod-7	((Mod(3, 7))^6)	1	
+residueclass-negative-1-7	Mod(-1, 7)	6	
+1-over-residueclass-3-7	(1 / Mod(3, 7))	5	
+adding-two-classes-mod-7	(Mod(5, 7) + Mod(4, 7))	2	
+adding-a-plain-integer-to-a-class	(Mod(5, 7) + 3)	1	
+subtracting-two-classes-mod-7	(Mod(2, 7) - Mod(5, 7))	4	
+multiplying-two-classes-mod-7	(Mod(3, 7) * Mod(5, 7))	1	
+power-with-exponent-negative-1-is-the-inverse	((Mod(3, 7))^-1)	5	
+negating-a-class-mod-7	(-Mod(3, 7))	4	
 chineseremainder-residueclass-2-3-and-3-5			
 multiplicativeorder-residueclass-2-7			
 chineseremainder-residueclass-1-4-and-3-6			

@@ -6,10 +6,10 @@ a-single-argument-is-returned-unchanged	enumeratio_max(3)	3
 max-9-2	enumeratio_max(9, 2)	9	
 max-list-4-1-7-2	enumeratio_max([4, 1, 7, 2])	7	
 max-5p56-neg-4p8-7p3	enumeratio_max(5.56, -4.8, 7.3)	7.30000000000000	
-max-of-a-complex-and-a-real	enumeratio_max(sqrt(-1), (3/2))		
+max-of-a-complex-and-a-real	enumeratio_max(sqrt(-1), (3/2))	3/2	inconclusive
 nested-lists-are-flattened-into-the-pool	enumeratio_max(2, 3, [[(1/2), -1], [(-5/3), (1/2)]])	3	
 exact-numbers-are-compared-numerically	enumeratio_max(sqrt(2), (3/2))	3/2	
-max-1-positiveinfinity	enumeratio_max(1, oo)		
+max-1-positiveinfinity	enumeratio_max(1, oo)	+Infinity	
 the-numeric-arguments-collapse-to-their-maximum	enumeratio_max(3, SR.var("x"), 5)	True	
 compares-exact-constants-numerically-max-e-pi-2	enumeratio_max([e, pi, 2])	pi	
 the-max-of-two-intervals-is-the-interval-of			
@@ -19,7 +19,7 @@ commutative-order-doesn-t-matter	enumeratio_equal(enumeratio_max(3, 7), enumerat
 multiple-list-arguments-are-flattened-into-one	enumeratio_equal(enumeratio_max([3, 1, 4], [9, 2]), 9)	True	
 idempotent-max-x-x-x	enumeratio_max(SR.var("x"), SR.var("x"))	True	
 with-no-arguments-compute-engine-returns-nan	enumeratio_max()	ValueError: max() iterable argument is empty	error
-nan-poisons-the-result-overriding-every-other	enumeratio_max(NaN, 3)		
+nan-poisons-the-result-overriding-every-other	enumeratio_max(NaN, 3)	NaN	
 the-max-of-an-empty-list-is-nan-too	enumeratio_max([])	ValueError: max() iterable argument is empty	error
 max-with-complexinfinity-stays-unevaluated	enumeratio_max(unsigned_infinity, 1)	Infinity	disagree
 the-largest-member-of-the-empty-finset	enumeratio_max([])	ValueError: max() iterable argument is empty	error

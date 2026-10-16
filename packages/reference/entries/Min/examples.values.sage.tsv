@@ -17,7 +17,7 @@ the-day-s-low-from-the-same-hourly-readings-see	enumeratio_min(68, 72, 65, 80, 7
 commutative-order-doesn-t-matter	enumeratio_equal(enumeratio_min(3, 7), enumeratio_min(7, 3))	True	
 min-a-b-max-a-b-a-b-see-max	enumeratio_equal((enumeratio_min(4, 9) + enumeratio_max(4, 9)), (4 + 9))	True	
 idempotent-min-x-x-x	enumeratio_min(SR.var("x"), SR.var("x"))	True	
-infinities-participate-directly-in-the	enumeratio_min(-oo, 3)		
+infinities-participate-directly-in-the	enumeratio_min(-oo, 3)	-Infinity	
 multiple-arguments-lists-included-are-flattened	enumeratio_min([3, 1], 0)	0	
 with-no-arguments-it-returns-the-identity	enumeratio_min()	ValueError: min() iterable argument is empty	error
 the-min-of-an-empty-list-is-nan	enumeratio_min([])	ValueError: min() iterable argument is empty	error

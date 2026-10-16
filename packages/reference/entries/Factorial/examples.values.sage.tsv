@@ -9,7 +9,7 @@ real-arguments-evaluate-as-gamma-n-1	enumeratio_factorial(3.5)	11.6317283965674
 negative-non-integers-are-defined-too-2-5-gamma	enumeratio_factorial(-2.5)	2.36327180120735	
 complex-arguments-1-i-gamma-2-i	enumeratio_factorial((1 + 1*I))	factorial(I + 1)	disagree
 frac-12-gamma-frac-12-sqrt-pi-returned-as-a	enumeratio_factorial((-1/2))	sqrt(pi)	
-infty-infty	enumeratio_factorial(oo)		
+infty-infty	enumeratio_factorial(oo)	+Infinity	
 the-number-of-ways-to-arrange-8-distinct-books	enumeratio_factorial(8)	40320	
 recurrence-n-n-n-1	enumeratio_equal(enumeratio_factorial(5), (5 * enumeratio_factorial(4)))	True	
 extends-to-non-integers-via-the-gamma-function	enumeratio_factorial((1/2))	1/2*sqrt(pi)	
