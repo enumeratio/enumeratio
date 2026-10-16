@@ -1,2 +1,2 @@
-id	in
-inert	PolygonBox[List[Points, List[List[0, 0], List[1, 0], List[0, 1]]]]
+id	in	out	tex.in	tex.out
+inert	PolygonBox[List[Points, List[List[0, 0], List[1, 0], List[0, 1]]]]	PolygonBox[{Points, {{0, 0}, {1, 0}, {0, 1}}}]	\text{PolygonBox}\left[\left\{\text{Points},\left( \begin{array}{cc}  0 & 0 \\  1 & 0 \\  0 & 1 \\ \end{array} \right)\right\}\right]	\text{PolygonBox}\left[\left\{\text{Points},\left( \begin{array}{cc}  0 & 0 \\  1 & 0 \\  0 & 1 \\ \end{array} \right)\right\}\right]

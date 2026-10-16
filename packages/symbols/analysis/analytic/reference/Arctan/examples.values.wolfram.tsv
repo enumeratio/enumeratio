@@ -18,7 +18,7 @@ interval-arithmetic-arctan-1-3-frac-pi-4-arctan	ArcTan[Interval[List[-1, 3]]]	In
 oddness-pulls-the-sign-out-of-a-symbolic	ArcTan[Minus[x]]	-ArcTan[x]		\tan ^{-1}(-x)	-\tan ^{-1}(x)	
 derivative-frac-1-1-x-2	D[ArcTan[x], x]	(1 + x^2)^(-1)		\frac{\partial \tan ^{-1}(x)}{\partial x}	\frac{1}{x^2+1}	
 antiderivative	Integrate[ArcTan[x], x]	x*ArcTan[x] - Log[1 + x^2]/2		\int \tan ^{-1}(x) \, dx	x \tan ^{-1}(x)-\frac{1}{2} \log \left(x^2+1\right)	
-gregory-s-series-about-0	Series[ArcTan[x], List[x, 0, 7]]					
+gregory-s-series-about-0	Series[ArcTan[x], List[x, 0, 7]]	SeriesData[x, 0, {1, 0, -1/3, 0, 1/5, 0, -1/7}, 1, 8, 1]		\text{Series}\left[\tan ^{-1}(x),\{x,0,7\}\right]	x-\frac{x^3}{3}+\frac{x^5}{5}-\frac{x^7}{7}+O\left(x^8\right)	
 the-limit-at-infty	Limit[ArcTan[x], Rule[x, Infinity]]	Pi/2		\underset{x\to \infty }{\text{lim}}\tan ^{-1}(x)	\frac{\pi }{2}	
 to-30-significant-digits-every-one-correctly	N[ArcTan[Rational[1, 2]], 30]	0.4636476090008061162142562314612144020285370542861202638109`30.	0.463647609000806116214256231461	N\left[\tan ^{-1}\left(\frac{1}{2}\right),30\right]	0.463647609000806116214256231461	
 n-arctan-1-over-2-50	N[ArcTan[Rational[1, 2]], 50]	0.46364760900080611621425623146121440202853705428612026381093308872019786416573`50.	0.46364760900080611621425623146121440202853705428612	N\left[\tan ^{-1}\left(\frac{1}{2}\right),50\right]	0.46364760900080611621425623146121440202853705428612	

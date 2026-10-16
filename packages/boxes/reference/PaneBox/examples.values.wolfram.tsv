@@ -1,2 +1,2 @@
-id	in
-inert	PaneBox["x", List[ImageSize, 200]]
+id	in	out	tex.in	tex.out
+inert	PaneBox["x", List[ImageSize, 200]]	PaneBox["x", {ImageSize, 200}]	\text{PaneBox}[\text{x},\{\text{ImageSize},200\}]	\text{PaneBox}[\text{x},\{\text{ImageSize},200\}]

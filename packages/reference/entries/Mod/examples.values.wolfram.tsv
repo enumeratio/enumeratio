@@ -7,7 +7,7 @@ mod-7-3	Mod[7, 3]	1	(7 \bmod 3)	1
 5-mod-3	Mod[5, 3]	2	(5 \bmod 3)	2	
 1-plus-4-mod-3	Plus[1, Mod[4, 3]]	2	1+(4 \bmod 3)	2	
 integermod-keeps-the-modulus					
-gaussian-mod-a-gaussian-unit-multiple	Mod[Complex[1000, -1], Complex[1, -1]]				
+gaussian-mod-a-gaussian-unit-multiple	Mod[Complex[1000, -1], Complex[1, -1]]	-I	((1000-i) \bmod (1-i))	-i	
 a-third-argument-offsets-the-range-the-result	Mod[17, 5, 1]	2	\text{Mod}[17,5,1]	2	
 with-offset-1-the-residues-run-1-2-3-rather-than	Mod[5, 3, 1]	2	\text{Mod}[5,3,1]	2	
 rationals-are-reduced-exactly	Mod[Rational[5, 2], 2]	1/2	(\frac{5}{2} \bmod 2)	\frac{1}{2}	

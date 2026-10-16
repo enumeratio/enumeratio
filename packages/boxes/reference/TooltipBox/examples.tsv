@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-inert	Basic		[TooltipBox, "'x'", "'the unknown'"]	[TooltipBox, "'x'", "'the unknown'"]	a box is inert: it evaluates to itself	shape	Not run against Wolfram (no kernel on this machine). Wolfram's documented shape is TooltipBox[boxes, label]; its label for a string may carry the string's quotes.
+id	section	role	expr	expected	caption
+inert	Basic		[TooltipBox, "'x'", "'the unknown'"]	[TooltipBox, "'x'", "'the unknown'"]	a box is inert: it evaluates to itself

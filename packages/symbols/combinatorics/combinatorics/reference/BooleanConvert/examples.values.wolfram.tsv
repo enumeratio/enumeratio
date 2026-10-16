@@ -2,7 +2,7 @@ id	in	out	tex.in	tex.out	verdict
 default-form-is-dnf	BooleanConvert[And[p, Or[b, r]]]	(b && p) || (p && r)	\text{BooleanConvert}[p\land (b\lor r)]	(b\land p)\lor (p\land r)	
 booleanconvert-equivalent-x-y-z	BooleanConvert[Equivalent[x, y, z]]	(x && y && z) || ( !x &&  !y &&  !z)	\text{BooleanConvert}[x\unicode{29e6}y\unicode{29e6}z]	(x\land y\land z)\lor (\neg x\land \neg y\land \neg z)	
 cnf-distributes-or-over-and	BooleanConvert[Or[p, And[b, r]], "CNF"]	(b || p) && (p || r)	\text{BooleanConvert}[p\lor (b\land r),\text{CNF}]	(b\lor p)\land (p\lor r)	
-nnf-pushes-not-to-the-leaves-not-distributed	BooleanConvert[Implies[p, b], "NNF"]				
+nnf-pushes-not-to-the-leaves-not-distributed	BooleanConvert[Implies[p, b], "NNF"]	BooleanConvert[Implies[p, b], "NNF"]	\text{BooleanConvert}[p\Rightarrow b,\text{NNF}]	\text{BooleanConvert}[p\Rightarrow b,\text{NNF}]	inconclusive
 a-tautological-clause-drops-out-of-cnf	BooleanConvert[Or[p, Not[p]], "CNF"]	True	\text{BooleanConvert}[p\lor \neg p,\text{CNF}]	\text{True}	
 an-unimplemented-form-stays-unevaluated	BooleanConvert[p, "ESOP"]	p	\text{BooleanConvert}[p,\text{ESOP}]	p	disagree
 booleanconvert-f	BooleanConvert[f]	f	\text{BooleanConvert}[f]	f	

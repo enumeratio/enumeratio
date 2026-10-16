@@ -1,2 +1,2 @@
-id	in
-inert	DiskBox[List[Radius, 1]]
+id	in	out	tex.in	tex.out
+inert	DiskBox[List[Radius, 1]]	DiskBox[{Radius, 1}]	\text{DiskBox}[\{\text{Radius},1\}]	\text{DiskBox}[\{\text{Radius},1\}]

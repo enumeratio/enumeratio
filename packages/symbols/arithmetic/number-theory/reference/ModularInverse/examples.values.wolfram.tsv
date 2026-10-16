@@ -2,8 +2,8 @@ id	in	out	tex.in	tex.out	verdict
 3-cdot-5-15-equiv-1	ModularInverse[3, 7]	5	\text{ModularInverse}[3,7]	5	
 modularinverse-2-11	ModularInverse[2, 11]	6	\text{ModularInverse}[2,11]	6	
 modularinverse-3-5	ModularInverse[3, 5]	2	\text{ModularInverse}[3,5]	2	
-inverse-mod-1-of-a-negative-integer	ModularInverse[-3, 1]				
-inverse-of-0-mod-1	ModularInverse[0, 1]				
+inverse-mod-1-of-a-negative-integer	ModularInverse[-3, 1]	0	\text{ModularInverse}[-3,1]	0	
+inverse-of-0-mod-1	ModularInverse[0, 1]	0	\text{ModularInverse}[0,1]	0	
 a-negative-argument-3-cdot-2-6-equiv-1	ModularInverse[-3, 7]	2	\text{ModularInverse}[-3,7]	2	
 a-21-digit-modulus	ModularInverse[3, Plus[Power[10, 20], 1]]	33333333333333333334	\text{ModularInverse}\left[3,10^{20}+1\right]	33333333333333333334	
 listable-threads-over-a-list	ModularInverse[List[2, 3, 4], 11]	ModularInverse[{2, 3, 4}, 11]	\text{ModularInverse}[\{2,3,4\},11]	\text{ModularInverse}[\{2,3,4\},11]	disagree

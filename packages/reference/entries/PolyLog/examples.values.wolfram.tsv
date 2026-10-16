@@ -78,9 +78,9 @@ n-polylog-250-4-a-large-order-on-the-cut	N[PolyLog[250, 4]]	4.000000000000001 - 
 n-polylog-2500000-4-a-huge-order-returns	N[PolyLog[2500000, 4]]	$Aborted				error
 n-polylog-40p5-2-plus-3i-a-large-complex-point	N[PolyLog[40.5, Complex[2, 3]]]	-1.3326049345424029*^63 - 1.2379965608305523*^63*I		N[\text{Li}_{40.5}(2+3 i)]	-1.3326\times 10^{63}-1.238\times 10^{63} i	disagree
 normal-series-polylog-2-x-x-positiveinfinity-6	Normal[Series[PolyLog[2, x], List[x, Infinity, 6]]]	-1/36*1/x^6 - 1/(25*x^5) - 1/(16*x^4) - 1/(9*x^3) - 1/(4*x^2) - x^(-1) + (-Pi^2 - 3*Log[-x]^2)/6		\text{Normal}[\text{Series}[\text{Li}_2(x),\{x,\infty ,6\}]]	-\frac{1}{36 x^6}-\frac{1}{25 x^5}-\frac{1}{16 x^4}-\frac{1}{9 x^3}-\frac{1}{4 x^2}-\frac{1}{x}+\frac{1}{6} \left(-3 \log ^2(-x)-\pi ^2\right)	inconclusive
-polylog-s-tiny-negative-rim	N[PolyLog[-1*^-12, Complex[-0.12884449429552464, 0.9916648104524686]]]					
-polylog-neg-2-at-the-pole-z-1	PolyLog[-2, Rational[2, 2]]					
-polylog-neg-2-over-a-list-holding-the-pole	PolyLog[-2, List[Rational[2, 2], -6]]					
+polylog-s-tiny-negative-rim	N[PolyLog[-1*^-12, Complex[-0.12884449429552464, 0.9916648104524686]]]	-0.49999999999712363 + 0.4392388922766449*I		N\left[\text{Li}_{-\frac{1}{1000000000000}}(-0.128844+0.991665 i)\right]	-0.5+0.439239 i	
+polylog-neg-2-at-the-pole-z-1	PolyLog[-2, Rational[2, 2]]	ComplexInfinity		\text{Li}_{-2}\left(\frac{2}{2}\right)	\text{ComplexInfinity}	
+polylog-neg-2-over-a-list-holding-the-pole	PolyLog[-2, List[Rational[2, 2], -6]]	{ComplexInfinity, 30/343}		\text{Li}_{-2}\left(\left\{\frac{2}{2},-6\right\}\right)	\left\{\text{ComplexInfinity},\frac{30}{343}\right\}	
 threads-over-a-list-of-arguments	PolyLog[2, List[0.5, 0.25]]	{0.5822405264650127, 0.2676526390827326}		\text{Li}_2(\{0.5,0.25\})	\{0.582241,0.267653\}	
 a-non-integer-order-past-z-1-is-left-unevaluated	PolyLog[2.5, 2]	2.789660332381895 - 1.3638037005377295*I		\text{Li}_{2.5}(2)	2.78966\, -1.3638 i	
 complex-order-and-argument	PolyLog[Complex[0.2, 1], Complex[0.5, -0.5]]	0.07032652055051612 - 0.5632932625398744*I		\text{Li}_{0.2\, +i}(0.5\, -0.5 i)	0.0703265\, -0.563293 i	

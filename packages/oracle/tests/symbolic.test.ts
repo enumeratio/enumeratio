@@ -322,6 +322,26 @@ test("alignFunctions: an expression spelled another way is ours when both are on
   expect(alignFunctions(other as never, ours as never)).toEqual(other);
 });
 
+// Comparing an example with `x^a` in it types `a` as a number in an engine that outlives the comparison.
+const poisonWithPowerOfA = () =>
+  echoesInput(
+    ["Assuming", ["Greater", "a", 0], ["List", ["Integrate", ["Power", "x", "a"], ["Limits", "x", 0, 1]]]] as never,
+    ["List", "a", ["Divide", 1, ["Add", "a", 1]]] as never,
+  );
+
+test.each([
+  ["KeyValuePair", ["List", ["KeyValuePair", "a", "'a'"]], ["List", ["Tuple", "a", "'a'"]]],
+  ["Not", ["Not", ["Not", "a"]], "a"],
+  ["Xor", ["Xor", "b", "a"], ["Xor", "a", "b"]],
+])(
+  "alignFunctions: %s reads the same with or without an earlier example that used its symbol as a number",
+  (_head, theirs, ours) => {
+    expect(alignFunctions(theirs as never, ours as never)).toEqual(ours);
+    poisonWithPowerOfA();
+    expect(alignFunctions(theirs as never, ours as never)).toEqual(ours);
+  },
+);
+
 test("a relation answer is compared as a statement, not by its spelling", () => {
   const source = symbolicAgreementSource(
     "wolfram",

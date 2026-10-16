@@ -6,7 +6,7 @@ j-3-2-2	N[BesselJZero[Rational[3, 2], 2]]	7.725251836937707		N\left[j_{\frac{3}{
 j-1-2	N[BesselJZero[1, 2]]	7.015586669815622		N\left[j_{1,2}\right]	7.01559
 j-5-2-1	N[BesselJZero[Rational[5, 2], 1]]	5.763459196894548		N\left[j_{\frac{5}{2},1}\right]	5.76346
 series-besseljzero-n-x-x-0-1	Series[BesselJZero[n, x], List[x, 0, 1]]	SeriesData[x, 0, {BesselJZero[n, 0], (Pi^2*BesselJZero[n, 0]*(BesselJ[n, BesselJZero[n, 0]]^2 + BesselY[n, BesselJZero[n, 0]]^2))/2}, 0, 2, 1]		\text{Series}\left[j_{n,x},\{x,0,1\}\right]	j_{n,0}+\frac{1}{2} \pi ^2 x j_{n,0} \left(J_n\left(j_{n,0}\right){}^2+Y_n\left(j_{n,0}\right){}^2\right)+O\left(x^2\right)
-n-besseljzero-of-a-negative-order	N[BesselJZero[Rational[-1, 2], 2]]				
+n-besseljzero-of-a-negative-order	N[BesselJZero[Rational[-1, 2], 2]]	4.71238898038469		N\left[j_{-\frac{1}{2},2}\right]	4.71239
 n-list-besseljzero-0-1-besseljzero-0-2	N[List[BesselJZero[0, 1], BesselJZero[0, 2], BesselJZero[0, 3]]]	{2.404825557695773, 5.5200781102863115, 8.653727912911013}		N\left[\left\{j_{0,1},j_{0,2},j_{0,3}\right\}\right]	\{2.40483,5.52008,8.65373\}
 j-0-1-to-20-digits	N[BesselJZero[0, 1], 20]	2.40482555769577276862281325129800735221`20.	2.4048255576957727686	N\left[j_{0,1},20\right]	2.4048255576957727686
 the-third-zero-of-j-0-to-30-digits	N[BesselJZero[0, 3], 30]	8.6537279129110122169541987126623597716554063031126163307834`30.	8.65372791291101221695419871266	N\left[j_{0,3},30\right]	8.65372791291101221695419871266

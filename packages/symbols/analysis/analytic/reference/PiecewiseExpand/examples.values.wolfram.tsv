@@ -1,6 +1,6 @@
 id	in	out	tex.in	tex.out	verdict
-abs-of-a-real-variable	PiecewiseExpand[Abs[x], Element[x, Reals]]				
-sign-of-a-real-variable	PiecewiseExpand[Sign[x], Element[x, Reals]]				
+abs-of-a-real-variable	PiecewiseExpand[Abs[x], Element[x, Reals]]	Piecewise[{{-x, x < 0}}, x]	\text{PiecewiseExpand}[| x| ,x\in \mathbb{R}]	\begin{cases}  -x & x<0 \\  x & \text{True} \end{cases}	
+sign-of-a-real-variable	PiecewiseExpand[Sign[x], Element[x, Reals]]	Piecewise[{{-1, x < 0}, {1, x > 0}}, 0]	\text{PiecewiseExpand}[\text{sgn}(x),x\in \mathbb{R}]	\begin{cases}  -1 & x<0 \\  1 & x>0 \end{cases}	
 clip-of-a-real-variable	PiecewiseExpand[Clip[x, List[-1, 1]], Element[x, Reals]]	Piecewise[{{-1, x < -1}, {1, x > 1}}, x]	\text{PiecewiseExpand}[\text{Clip}[x,\{-1,1\}],x\in \mathbb{R}]	\begin{cases}  -1 & x<-1 \\  1 & x>1 \\  x & \text{True} \end{cases}	
 max-of-two-real-variables	PiecewiseExpand[Max[x, y], And[Element[x, Reals], Element[y, Reals]]]	Piecewise[{{x, x - y >= 0}}, y]	\text{PiecewiseExpand}[\max (x,y),x\in \mathbb{R}\land y\in \mathbb{R}]	\begin{cases}  x & x-y\geq 0 \\  y & \text{True} \end{cases}	
 mod-by-a-fraction	PiecewiseExpand[Mod[x, Rational[3, 2]], LessEqual[0, x, 4]]	Piecewise[{{-3 + x, x >= 3}, {x, x < 3/2}}, (-3 + 2*x)/2]	\text{PiecewiseExpand}\left[(x \bmod \frac{3}{2}),0\leq x\leq 4\right]	\begin{cases}  x-3 & x\geq 3 \\  x & x<\frac{3}{2} \\  \frac{1}{2} (2 x-3) & \text{True} \end{cases}	

@@ -1,6 +1,6 @@
 id	in	out	shown	tex.in	tex.out
-li-at-0	LogIntegral[0]				
-li-2	N[LogIntegral[2]]				
+li-at-0	LogIntegral[0]	0		\text{li}(0)	0
+li-2	N[LogIntegral[2]]	1.0451637801174924		N[\text{li}(2)]	1.04516
 n-logintegral-2-50	N[LogIntegral[2], 50]	1.04516378011749278484458888919461313652261557815120157581925916179817166103197`50.	1.0451637801174927848445888891946131365226155781512	N[\text{li}(2),50]	1.0451637801174927848445888891946131365226155781512
 logintegral-1	LogIntegral[1]	-Infinity		\text{li}(1)	-\infty
 logintegral-positiveinfinity	LogIntegral[Infinity]	Infinity		\text{li}(\infty )	\infty
