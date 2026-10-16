@@ -14,6 +14,7 @@ import {
   bind,
   count,
   equals,
+  fold,
   forEach,
   greater,
   length,
@@ -83,6 +84,11 @@ const staircaseSide: MathJSON = [
   forEach(upTo(add(length(), 1)), ["If", equals("i", add(length(), 1)), length(), add(here, subtract("i", 1))]),
 ];
 
+/** The largest even part, 0 if there is none. */
+const largestEven: MathJSON = ["Max", forEach(positions, ["If", equals(["Mod", here, 2], 0), here, 0])];
+/** The distinct sums of sub-multisets of the parts, 0 (the empty one) included: each part either joins or not. */
+const subsetSums: MathJSON = fold(x, ["List", 0], ["Unique", ["Join", "a", forEach("a", add("i", "b"))]]);
+
 export const PARTITION_STATISTICS: readonly Definition[] = [
   stat("LargestPart", "The largest part.", nonEmpty(largest)),
   stat(
@@ -127,9 +133,10 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     nonEmpty(count(positions, ["Or", equals("i", length()), greater(here, at(add("i", 1)))])),
   ),
   stat(
-    "Perimeter",
-    "The perimeter of the Young diagram: largest part plus number of parts.",
+    "HalfPerimeter",
+    "Half the perimeter of the bounding rectangle of the Young diagram: largest part plus number of parts.",
     nonEmpty(add(largest, length())),
+    "FindStat's St000459 calls the hook length of the base cell the perimeter; that is `HookLengthOfFirstCell`, one less than this.",
   ),
 
   stat(
@@ -332,5 +339,190 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     "PairwiseProductSum",
     "The sum of the products of all pairs of parts.",
     nonEmpty(["Divide", subtract(["Power", total, 2], sumOver(positions, ["Power", here, 2])), 2]),
+  ),
+
+  // ── FindStat's integer-partition statistics, second round ────────────────────────────────
+
+  // Extremes and shapes of the diagram.
+  stat("PartRange", "The largest part minus the smallest.", nonEmpty(subtract(largest, ["Min", x]))),
+  stat(
+    "ContainingRectangleShortSide",
+    "The shorter side of the smallest rectangle that contains the diagram: the smaller of the largest part and the number of parts.",
+    nonEmpty(["Min", largest, length()]),
+  ),
+  stat(
+    "MaximalRectangleHalfPerimeter",
+    "Half the perimeter of the rectangle inside the diagram that has the greatest perimeter.",
+    nonEmpty(["Max", forEach(positions, add(here, "i"))]),
+    "One more than `LargestShiftedPart`, except that both are 0 on the empty partition.",
+  ),
+  stat(
+    "LargestShiftedPart",
+    "The largest part after adding i - 1 to the i-th part.",
+    nonEmpty(["Max", forEach(positions, add(here, subtract("i", 1)))]),
+    "One less than `MaximalRectangleHalfPerimeter`, except that both are 0 on the empty partition.",
+  ),
+  stat(
+    "RemovableHorizontalDominoes",
+    "Parts from which 2 can be subtracted and leave a partition: rows ending in a removable horizontal domino.",
+    nonEmpty(
+      count(positions, [
+        "If",
+        equals("i", length()),
+        atLeastValue(here, 2),
+        atLeastValue(subtract(here, 2), at(add("i", 1))),
+      ]),
+    ),
+  ),
+  stat(
+    "CellsOutsideFirstRow",
+    "Cells of the diagram below the first row: the size minus the largest part.",
+    nonEmpty(subtract(total, largest)),
+  ),
+  stat(
+    "CellsOutsideFirstHook",
+    "Cells in neither the first row nor the first column: the size minus the hook length of cell (1,1).",
+    nonEmpty(subtract(total, subtract(add(largest, length()), 1))),
+  ),
+  stat(
+    "RowCellPairs",
+    "Pairs of cells in the same row: the sum over parts of the binomial coefficient of the part and 2.",
+    nonEmpty(sumOver(positions, ["Divide", ["Multiply", here, subtract(here, 1)], 2])),
+  ),
+  // Stays interpreted: the JavaScript compiler does not lower a cell-by-cell walk over a bound conjugate, as for the hook and diagonal statistics (pinned by `interpreted.test.ts`).
+  stat(
+    "CellsWithZeroLegAndOddArm",
+    "Cells with leg 0 and an odd arm.",
+    cellsWhere(and(equals(subtract(columnLength("j"), "i"), 0), equals(["Mod", subtract(here, "j"), 2], 1))),
+  ),
+  stat(
+    "CornerMajorIndex",
+    "The sum, over the corners, of the step number along the boundary path from the bottom left: (number of parts - i) + the i-th part.",
+    nonEmpty(
+      sumOver(positions, [
+        "If",
+        or(equals("i", length()), greater(here, at(add("i", 1)))),
+        add(subtract(length(), "i"), here),
+        0,
+      ]),
+    ),
+    "For (8, 6, 6, 4, 3, 3) the corners are at steps 3, 6, 9 and 13, so the value is 31 (FindStat's St000770 example).",
+  ),
+
+  // Sums and products of the parts.
+  stat("PartProduct", "The product of the parts.", nonEmpty(["Product", x], 1)),
+  stat("PartSquareSum", "The sum of the squares of the parts.", nonEmpty(sumOver(positions, ["Power", here, 2]))),
+  stat(
+    "PartFactorialProduct",
+    "The product of the factorials of the parts.",
+    nonEmpty(["Product", forEach(positions, ["Product", upTo(here)])], 1),
+  ),
+  stat(
+    "MultiplicityFactorialProduct",
+    "The product of the factorials of the multiplicities of the parts.",
+    nonEmpty(["Product", forEach(positions, count(upTo("i"), equals(at("j"), here), "j"))], 1),
+  ),
+  stat(
+    "SumOfEvenParts",
+    "The sum of the even parts.",
+    nonEmpty(sumOver(positions, ["If", equals(["Mod", here, 2], 0), here, 0])),
+  ),
+  stat(
+    "SumOfOddParts",
+    "The sum of the odd parts.",
+    nonEmpty(sumOver(positions, ["If", equals(["Mod", here, 2], 1), here, 0])),
+  ),
+  stat(
+    "SumOfPartsAtLeastTwo",
+    "The sum of the parts that are at least 2.",
+    nonEmpty(sumOver(positions, ["If", atLeastValue(here, 2), here, 0])),
+  ),
+  stat(
+    "GreatestCommonDivisorOfParts",
+    "The greatest common divisor of the parts.",
+    nonEmpty(fold(["Rest", x], at(1), ["Divide", ["Multiply", "a", "b"], ["LCM", "a", "b"]])),
+  ),
+  stat(
+    "LeastCommonMultipleOfParts",
+    "The least common multiple of the parts.",
+    nonEmpty(fold(["Rest", x], at(1), ["LCM", "a", "b"]), 1),
+  ),
+  stat(
+    "PairwiseGreatestCommonDivisorSum",
+    "The sum of the greatest common divisors of all pairs of parts.",
+    nonEmpty(
+      sumOver(
+        positions,
+        sumOver(
+          positions,
+          ["If", less("j", "i"), ["Divide", ["Multiply", at("i"), at("j")], ["LCM", at("i"), at("j")]], 0],
+          "j",
+        ),
+      ),
+    ),
+  ),
+
+  // Parity of the parts.
+  stat("LargestEvenPart", "The largest even part; 0 if there is none.", nonEmpty(largestEven)),
+  stat(
+    "EvenOddCrank",
+    "The largest even part minus the number of odd parts.",
+    nonEmpty(subtract(largestEven, count(positions, equals(["Mod", here, 2], 1)))),
+    "Not the Andrews-Garvan `Crank`: this is the largest even part minus the number of odd parts.",
+  ),
+  stat(
+    "OddPartsBelowLargestEvenPart",
+    "Odd parts smaller than the largest even part.",
+    nonEmpty(bind("e", largestEven, count(positions, and(less(here, "e"), equals(["Mod", here, 2], 1))), "number")),
+  ),
+  stat(
+    "DistinctEvenParts",
+    "Distinct even part sizes.",
+    nonEmpty(count(upTo(largest), and(greater(multiplicityOf("k"), 0), equals(["Mod", "k", 2], 0)), "k")),
+  ),
+  stat(
+    "BerkovichGarvanRank",
+    "The sum of a checkerboard filling of the diagram, +1 on cells whose coordinates sum to an even number and -1 on the others.",
+    nonEmpty(sumOver(positions, ["Multiply", ["If", equals(["Mod", "i", 2], 1), 1, -1], ["Mod", here, 2]])),
+    "A row of even length cancels and one of odd length leaves a single cell, counted + in the first row, - in the second, and so on.",
+  ),
+
+  // Gaps, repeats and subset sums.
+  stat(
+    "PartsEqualToNextPart",
+    "Parts whose next smaller part has the same size: the number of parts less the distinct parts.",
+    nonEmpty(subtract(length(), count(upTo(largest), greater(multiplicityOf("k"), 0), "k"))),
+  ),
+  stat(
+    "LargestMissingPart",
+    "The largest integer below the largest part that is not a part; 0 if every smaller integer is.",
+    nonEmpty(["Max", forEach(upTo(largest), ["If", equals(multiplicityOf("k"), 0), "k", 0], "k")]),
+    "0 counts as a candidate, so the value is 0 when every smaller positive integer is a part.",
+  ),
+  stat(
+    "SmallestNonRepeatedInteger",
+    "The smallest positive integer that is not a part at least twice.",
+    ["If", equals(length(), 0), 1, ["Min", where(upTo(add(length(), 1)), less(multiplicityOf("k"), 2), "k")]],
+    "The integer need not be a part: it is the least k >= 1 with fewer than two parts equal to k.",
+  ),
+  stat(
+    "DistinctSubsetSums",
+    "Distinct sums of non-empty sub-multisets of the parts.",
+    nonEmpty(bind("s", subsetSums, subtract(length("s"), 1))),
+    'Follows FindStat\'s Sage code and its data, not its title: the "partial sums" it counts are the sums of arbitrary sub-multisets of the parts (the code runs over all subsets), not of the running prefixes.',
+  ),
+  // Stays interpreted: the JavaScript compiler does not lower the fold that grows the subset-sum list (pinned by `interpreted.test.ts`).
+  stat(
+    "DistinctEvenSubsetSums",
+    "Distinct nonzero even sums of sub-multisets of the parts.",
+    nonEmpty(bind("s", subsetSums, subtract(count("s", equals(["Mod", "i", 2], 0)), 1))),
+    'Follows FindStat\'s Sage code and its data, not its title: the "partial sums" it counts are the sums of arbitrary sub-multisets of the parts (the code runs over all subsets), not of the running prefixes. The empty sum, 0, is not counted.',
+  ),
+  // Stays interpreted, as above.
+  stat(
+    "DistinctOddSubsetSums",
+    "Distinct odd sums of sub-multisets of the parts.",
+    nonEmpty(bind("s", subsetSums, count("s", equals(["Mod", "i", 2], 1)))),
+    'Follows FindStat\'s Sage code and its data, not its title: the "partial sums" it counts are the sums of arbitrary sub-multisets of the parts (the code runs over all subsets), not of the running prefixes.',
   ),
 ];

@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-partition-4-2-1-of-7			[MultiplicityFactorialProduct, [IntegerPartition, [List, 4, 2, 1]]]	1			the partition $4 + 2 + 1$ of $7$
+the-partition-3-3-1-of-7			[MultiplicityFactorialProduct, [IntegerPartition, [List, 3, 3, 1]]]	2			the partition $3 + 3 + 1$ of $7$
+findstat-st000706-1	Properties		[CombinatorialStat, [IntegerPartition, [List, 2]], "'MultiplicityFactorialProduct'"]	1	1	FindStat St000706	FindStat's value for [2]
+findstat-st000706-2	Properties		[CombinatorialStat, [IntegerPartition, [List, 3]], "'MultiplicityFactorialProduct'"]	1	1	FindStat St000706	FindStat's value for [3]
+findstat-st000706-3	Properties		[CombinatorialStat, [IntegerPartition, [List, 4]], "'MultiplicityFactorialProduct'"]	1	1	FindStat St000706	FindStat's value for [4]

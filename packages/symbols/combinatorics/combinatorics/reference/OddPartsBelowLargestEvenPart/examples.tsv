@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-partition-4-2-1-of-7			[OddPartsBelowLargestEvenPart, [IntegerPartition, [List, 4, 2, 1]]]	1			the partition $4 + 2 + 1$ of $7$
+the-partition-3-3-1-of-7			[OddPartsBelowLargestEvenPart, [IntegerPartition, [List, 3, 3, 1]]]	0			the partition $3 + 3 + 1$ of $7$
+findstat-st001586-1	Properties		[CombinatorialStat, [IntegerPartition, [List, 1]], "'OddPartsBelowLargestEvenPart'"]	0	0	FindStat St001586	FindStat's value for [1]
+findstat-st001586-2	Properties		[CombinatorialStat, [IntegerPartition, [List, 2]], "'OddPartsBelowLargestEvenPart'"]	0	0	FindStat St001586	FindStat's value for [2]
+findstat-st001586-3	Properties		[CombinatorialStat, [IntegerPartition, [List, 3]], "'OddPartsBelowLargestEvenPart'"]	0	0	FindStat St001586	FindStat's value for [3]
