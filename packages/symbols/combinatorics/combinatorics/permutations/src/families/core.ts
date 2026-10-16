@@ -333,6 +333,8 @@ const kCycleDefinitions: EpsilFamily = permutationRestriction({
     ),
   ],
   state: cycleState,
+  // The cycles the state closed number k: membership then reads no table, which overflows doubles from n = 171.
+  predicate: equal(closedCycles, "_k"),
   completions: lets(
     [
       ["left", sub("_k", closedCycles), "integer"],

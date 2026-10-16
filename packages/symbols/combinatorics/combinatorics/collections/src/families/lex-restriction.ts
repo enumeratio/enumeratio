@@ -37,8 +37,8 @@ export interface PermutationRestriction extends Omit<FamilyShape, "kind"> {
    * (1-based), from `pstate`, `slot` and `value`. Read it only through `At`.
    */
   readonly state?: PrefixState;
-  /** Whether `_x`, a permutation of n, is a member. Default: its completions as a full
-   *  prefix are 1. */
+  /** Whether `_x`, a permutation of n, is a member; it may read `taken` and `pstate` too. Default:
+   *  its completions as a full prefix are 1. */
   readonly predicate?: MathJSON;
   /** The list `completions` and `predicate` read under the name given, computed once per params
    *  (`FamilyEpsil.tables`). */
@@ -241,9 +241,15 @@ export function permutationRestriction(spec: PermutationRestriction): EpsilFamil
     spec.completions,
   );
 
+  // A given predicate reads `_x`, and `taken` or `pstate` (as they stand at the whole permutation) where it names them.
+  const reads = (name: string): boolean => given !== undefined && JSON.stringify(given).includes(JSON.stringify(name));
   const predicate =
-    given ??
-    equal(lets([["prefix", "_x", "list<integer>"], ["filled", n, "integer"], ...fullLists()], spec.completions), 1);
+    given === undefined
+      ? equal(lets([["prefix", "_x", "list<integer>"], ["filled", n, "integer"], ...fullLists()], spec.completions), 1)
+      : lets(
+          fullLists().filter(([name]) => reads(name)),
+          given,
+        );
   // A given predicate that never reads the table leaves membership free of it (and of its cost).
   const readsTables =
     given === undefined || (tables !== undefined && JSON.stringify(given).includes(JSON.stringify(tables[0])));
