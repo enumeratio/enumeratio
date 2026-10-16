@@ -71,6 +71,11 @@ export interface EpsilFamily extends FamilyShape {
     /** Membership of a well-formed `element`: false where it is certainly no member, "decline"
      *  where the question is too big to try, undefined to go on to the definition. */
     readonly member?: (element: unknown, p: readonly number[]) => false | "decline" | undefined;
+    /** In a fiber with no end, "decline" where the term at `rank` is too far out for the definition to
+     *  reach in reasonable time (a fold over the ranks): the fast path still answers what it holds. */
+    readonly unrank?: (rank: bigint, p: readonly number[]) => "decline" | undefined;
+    /** Likewise for the rank of a member `element` (a search over its possible neighbours). */
+    readonly rank?: (element: unknown, p: readonly number[]) => "decline" | undefined;
   };
   readonly epsil: FamilyEpsil;
   /** A verified fast path: used while the fiber's count is a safe integer, ahead of Epsil.
@@ -521,13 +526,14 @@ export function kernelOn(
       // interpreter the terms past that.
       if (total === Number.POSITIVE_INFINITY) {
         if (r < 0n) throw new RangeError(`${family.head}(${p.join(", ")}): rank ${r} is outside the fiber`);
+        if (r <= MAX_SAFE && quick !== undefined && wellParamed(p)) {
+          try {
+            const element = quick.unrank(p, Number(r));
+            if (element !== undefined) return element;
+          } catch {}
+        }
+        if (early?.unrank?.(r, p) === "decline") return decline(p);
         if (r <= MAX_SAFE) {
-          if (quick !== undefined && wellParamed(p)) {
-            try {
-              const element = quick.unrank(p, Number(r));
-              if (element !== undefined) return element;
-            } catch {}
-          }
           const fast = run("unrank", p, { _r: Number(r) });
           if (wellFormed(family.kind, fast)) return fast as Element;
         }
@@ -563,9 +569,10 @@ export function kernelOn(
               if (isInteger(place)) return BigInt(place);
             } catch {}
           }
+          if (early?.rank?.(element, p) === "decline") return decline(p);
           const fast = run("rank", p, { _x: element });
           if (isInteger(fast)) return BigInt(fast);
-        }
+        } else if (early?.rank?.(element, p) === "decline") return decline(p);
         const json = interpret("rank", p, { _x: elementJson(element) });
         return integerOf(json) ?? (beyondDoubles(element) || unexpanded(json) ? decline(p) : fail("rank", p, json));
       }

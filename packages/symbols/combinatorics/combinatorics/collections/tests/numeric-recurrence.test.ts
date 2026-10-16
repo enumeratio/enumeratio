@@ -1,6 +1,6 @@
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/families/numeric-recurrence.ts";
+import { kernels as entries } from "../src/families/numeric-recurrence.ts";
 import { declareCollections } from "../src/library.ts";
 
 const byHead = new Map(entries.map((e) => [e.head, e]));
