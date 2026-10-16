@@ -8,7 +8,7 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { CompileHandler } from "./facade.ts";
 
 /** The compute-engine version whose shadow rules this file was checked against. */
-export const CHECKED_COMPUTE_ENGINE = "0.153.0";
+export const CHECKED_COMPUTE_ENGINE = "0.154.0";
 
 /** The fields of a definition that, replaced, make an extension a shadow of the library head. */
 export const SHADOWING_FIELDS = [

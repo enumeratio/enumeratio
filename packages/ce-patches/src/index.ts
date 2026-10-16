@@ -1,6 +1,5 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { applyPatch, applyPatches, symbols as symbolsOf } from "./patch.ts";
-import { argumentDigits } from "./patches/argument-digits.ts";
 import { integratePolynomialPowers } from "./patches/integrate-polynomial-powers.ts";
 import { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
 import { shapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
@@ -83,7 +82,6 @@ export { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
 export { shapeOfUnknownElements, evaluateShapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
 export { dictionaryOf, entriesOf } from "./compute-engine/library/core.ts";
 export { valuesAtZero } from "./patches/values-at-zero.ts";
-export { argumentDigits, evaluateArgumentDigits } from "./patches/argument-digits.ts";
 export { clausen } from "./compute-engine/numerics/clausen.ts";
 export { stieltjesGamma, stieltjesGammaReal, STIELTJES_MAX_ORDER } from "./compute-engine/numerics/stieltjes.ts";
 export { stieltjesGammaBall, stieltjesGammaBig } from "./compute-engine/numerics/stieltjes-big.ts";
@@ -195,7 +193,6 @@ export function applyNativeHeadPatches(ce: ComputeEngine): void {
     iteratorUpperBound,
     shapeOfUnknownElements,
     integratePolynomialPowers,
-    argumentDigits,
   ])
     applyPatch(ce, patch);
 }
