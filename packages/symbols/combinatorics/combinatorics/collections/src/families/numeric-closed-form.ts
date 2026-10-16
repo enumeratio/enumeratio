@@ -14,6 +14,7 @@ import type { EpsilFamily } from "./epsil.ts";
 import { withDefinitions } from "./numeric-definitions.ts";
 import { withSequenceDefinitions } from "./sequence-definitions.ts";
 import { bigAware, type Declared, type NumberKernel } from "./types.ts";
+import { declineWork } from "./work.ts";
 
 const MAX_SAFE_BIG = BigInt(Number.MAX_SAFE_INTEGER);
 const MIN_SAFE_BIG = BigInt(Number.MIN_SAFE_INTEGER);
@@ -26,10 +27,17 @@ function narrow(x: bigint): number {
   return x >= MIN_SAFE_BIG && x <= MAX_SAFE_BIG ? Number(x) : (x as unknown as number);
 }
 
+/** The elements read at most this wide: the square roots, bisections and scans below cost a few
+ *  milliseconds at 2^15, and a scan's cache (factorials) a few megabytes. Wider declines. */
+const MAX_BITS = 1n << 32_768n;
+
 /** Loosely read an element (number or bigint, whatever the caller has) as a bigint,
  *  or `undefined` if it isn't an integer at all. */
 function toBig(x: unknown): bigint | undefined {
-  if (typeof x === "bigint") return x;
+  if (typeof x === "bigint") {
+    if (x >= MAX_BITS || x <= -MAX_BITS) return declineWork("an element past 2^32768");
+    return x;
+  }
   if (typeof x === "number" && Number.isInteger(x)) return BigInt(x);
   return undefined;
 }
@@ -38,11 +46,12 @@ function toBig(x: unknown): bigint | undefined {
 
 function isqrt(n: bigint): bigint {
   if (n < 2n) return n < 0n ? 0n : n;
-  let x = n;
-  let y = (x + 1n) / 2n;
+  // From a power of two at or above the root, Newton's iteration only decreases to it.
+  let x = 1n << BigInt((n.toString(2).length + 1) >> 1);
+  let y = (x + n / x) >> 1n;
   while (y < x) {
     x = y;
-    y = (x + n / x) / 2n;
+    y = (x + n / x) >> 1n;
   }
   return x;
 }
@@ -240,7 +249,7 @@ export const kernels: NumberKernel[] = bigAware([
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    unrank: (_p, r) => narrow(2n ** BigInt(r)),
+    unrank: (_p, r) => narrow(1n << BigInt(r)),
     valid: (element) => {
       const x = toBig(element);
       return x !== undefined && x >= 1n && (x & (x - 1n)) === 0n;

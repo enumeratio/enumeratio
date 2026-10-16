@@ -193,14 +193,19 @@ export const intOf = (x: Boxed | undefined): number => integerAt(x as unknown as
 
 /** A scalar element, exactly: a number where a double holds it, else the bigint itself (as the
  *  kernels' terms are, cast through `Element`); `NaN` when the expression is no integer. A float
- *  past 2^53 is no exact integer -- a double has already rounded it -- so it reads as `NaN` too. */
+ *  past 2^53 that is a whole number (2.0^60, 1.0e30) is an integer no one has read exactly -- a double
+ *  has already rounded it -- so it declines, as a kernel does past 2^53, rather than read as `NaN`
+ *  (not a member). */
 export const scalarOf = (x: Boxed | undefined): number => {
   const expr = x as unknown as Expr | undefined;
   const small = integerAt(expr);
   if (small !== undefined) return small;
   const big = bigIntegerAt(expr);
   const machine = typeof (expr as { numericValue?: unknown } | undefined)?.numericValue === "number";
-  return big === undefined || machine ? Number.NaN : (big as unknown as number);
+  if (big !== undefined && !machine) return big as unknown as number;
+  if (expr !== undefined && expr.isInteger === true && Number.isFinite(expr.re) && expr.im === 0)
+    throw new RangeError(`${String(expr.re)} is an integer-valued float past 2^53; its kernel is not bigint yet`);
+  return Number.NaN;
 };
 
 // MathJSON encoders (element -> boxed MathJSON expression input).

@@ -9,6 +9,7 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { compileTyped, definitionHash, type GeneratedRun, runtimeHelpers } from "@enumeratio/engine/compiled";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { COMPILED_FAMILIES } from "./compiled-families.generated.js";
+import { isWorkDecline } from "./work.ts";
 import {
   type Count,
   type Element,
@@ -486,7 +487,10 @@ export function kernelOn(
       try {
         const answer = quick.valid(element, p);
         if (typeof answer === "boolean") return answer;
-      } catch {}
+      } catch (error) {
+        // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+        if (isWorkDecline(error)) throw error;
+      }
     }
     if (settledEarly === "decline") return decline(p);
     const fast = beyondDoubles(element) ? undefined : run("valid", p, { _x: element });
@@ -522,7 +526,10 @@ export function kernelOn(
           try {
             const element = quick.unrank(p, Number(r));
             if (element !== undefined) return element;
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         return decline(p);
       }
@@ -534,7 +541,10 @@ export function kernelOn(
           try {
             const element = quick.unrank(p, Number(r));
             if (element !== undefined) return element;
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         if (early?.unrank?.(r, p) === "decline") return decline(p);
         if (r <= MAX_SAFE) {
@@ -550,7 +560,10 @@ export function kernelOn(
           try {
             const element = quick.unrank(p, Number(r));
             if (element !== undefined) return element;
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         const fast = run("unrank", p, { _r: Number(r) });
         if (wellFormed(family.kind, fast)) return fast as Element;
@@ -571,12 +584,27 @@ export function kernelOn(
             try {
               const place = quick.rank(element, p);
               if (isInteger(place)) return BigInt(place);
-            } catch {}
+            } catch (error) {
+              // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+              if (isWorkDecline(error)) throw error;
+            }
           }
           if (early?.rank?.(element, p) === "decline") return decline(p);
           const fast = run("rank", p, { _x: element });
           if (isInteger(fast)) return BigInt(fast);
-        } else if (early?.rank?.(element, p) === "decline") return decline(p);
+        } else {
+          // As in `valid`: a fast path that reads a bigint exactly answers, within its own bounds, ahead of the decline.
+          if (quick?.bigElements === true && wellParamed(p)) {
+            try {
+              const place = quick.rank(element, p);
+              if (isInteger(place)) return BigInt(place);
+            } catch (error) {
+              // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+              if (isWorkDecline(error)) throw error;
+            }
+          }
+          if (early?.rank?.(element, p) === "decline") return decline(p);
+        }
         const json = interpret("rank", p, { _x: elementJson(element) });
         return integerOf(json) ?? (beyondDoubles(element) || unexpanded(json) ? decline(p) : fail("rank", p, json));
       }
@@ -586,7 +614,10 @@ export function kernelOn(
           try {
             const place = quick.rank(element, p);
             if (isInteger(place)) return BigInt(place);
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         return decline(p);
       }
@@ -595,7 +626,10 @@ export function kernelOn(
           try {
             const place = quick.rank(element, p);
             if (isInteger(place)) return BigInt(place);
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         const fast = run("rank", p, { _x: element });
         if (isInteger(fast)) return BigInt(fast);

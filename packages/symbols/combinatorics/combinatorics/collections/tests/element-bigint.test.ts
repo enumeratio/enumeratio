@@ -4,8 +4,9 @@
 
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
+import { type EpsilFamily, kernelOn, liftFamily } from "../src/families/epsil.ts";
 import { kernels as digitsPrimes } from "../src/families/numeric-digits-primes.ts";
-import { kernels as recurrence } from "../src/families/numeric-recurrence.ts";
+import { entries as sequenceEntries, kernels as recurrence } from "../src/families/numeric-recurrence.ts";
 import { numberKernel } from "../src/families/types.ts";
 import { declareCollections } from "../src/library.ts";
 
@@ -91,6 +92,80 @@ test("a param past 2^53 leaves the call unevaluated, not answered for another fi
 test("Position and FirstPosition do not walk an endless collection", () => {
   expect(run(["Position", "FibonacciNumbers", 8]).operator).toBe("Position");
   expect(run(["FirstPosition", "FibonacciNumbers", 8]).operator).toBe("FirstPosition");
+});
+
+// A family whose Epsil definitions say nothing (valid is False), to isolate `early` and `fast` in kernelOn.
+const synthetic = (early: EpsilFamily["early"], fast?: EpsilFamily["fast"]): EpsilFamily => ({
+  head: "Synthetic",
+  paramCount: 0,
+  kind: "scalar",
+  params: [],
+  epsil: { count: "PositiveInfinity", unrank: 0, rank: 0, valid: "False" },
+  ...(early === undefined ? {} : { early }),
+  ...(fast === undefined ? {} : { fast }),
+});
+const yes: NonNullable<EpsilFamily["fast"]> = {
+  count: () => Number.POSITIVE_INFINITY,
+  unrank: () => undefined,
+  rank: () => 7,
+  valid: () => true,
+};
+
+test("a fast path that reads bigints answers ahead of early.member's decline; false still wins", () => {
+  const huge = 10n ** 30n;
+  const declines = { member: () => "decline" as const, rank: () => "decline" as const };
+  expect(kernelOn(ce, synthetic(declines, { ...yes, bigElements: true })).valid(huge, [])).toBe(true);
+  expect(kernelOn(ce, synthetic(declines, { ...yes, bigElements: true })).rank(huge, [])).toBe(7n);
+  // Not flagged: the bigint never reaches it, so the decline stands.
+  expect(() => kernelOn(ce, synthetic(declines, yes)).valid(huge, [])).toThrow(/not bigint yet/);
+  expect(() => kernelOn(ce, synthetic(declines, yes)).rank(huge, [])).toThrow(/not bigint yet/);
+  // early.member says no member: that settles it, whatever the fast path thinks.
+  const never = synthetic({ member: () => false }, { ...yes, bigElements: true });
+  expect(kernelOn(ce, never).valid(huge, [])).toBe(false);
+});
+
+test("a safe integer past the interpreter's reach is the fast path's to answer", () => {
+  expect(run(["Element", 1000000007, "PrimeNumbers"]).toString()).toBe('"True"');
+  expect(run(["Element", 1000000011, "PrimeNumbers"]).toString()).toBe('"False"'); // 3 divides it
+  expect(run(["Element", 999999999999989, ["SmoothNumbers", 1e15]]).toString()).toBe('"True"');
+});
+
+test("rank past the interpreter's maxBits is the fast scan's, or declines with membership", () => {
+  const kernel = kernelOn(ce, liftFamily(sequenceEntries.find((f) => f.head === "FibonacciNumbers")!));
+  const f5000 = fibonacci(5000);
+  expect(f5000 >= 1n << 2200n).toBe(true);
+  expect(kernel.valid(f5000, [])).toBe(true);
+  expect(kernel.rank(f5000, [])).toBe(5000n);
+  // Past the scan's terms, both decline: no 28,000-step fold in the interpreter.
+  const started = performance.now();
+  const f20000 = fibonacci(20000);
+  expect(() => kernel.valid(f20000, [])).toThrow(/not bigint yet/);
+  expect(() => kernel.rank(f20000, [])).toThrow(/not bigint yet/);
+  expect(element(f20000, "FibonacciNumbers").startsWith("Element")).toBe(true);
+  expect(performance.now() - started).toBeLessThan(5000);
+});
+
+test("a float past 2^53 declines instead of reading as a non-member", () => {
+  expect(run(["Element", 1e30, "SquareNumbers"]).operator).toBe("Element");
+  expect(run(["Element", ["N", ["Power", 2, 100]], "PowersOfTwo"]).operator).toBe("Element");
+  expect(run(["Element", 1.5, "SquareNumbers"]).toString()).toBe('"False"');
+});
+
+test("work past a second's declines quickly instead of hanging or filling the heap", () => {
+  const started = performance.now();
+  // A scan from 1 up to 10^12, a Bell triangle past 1500 rows, a Lucky sieve of a million.
+  expect(run(["IndexOf", "AbundantNumbers", big(10n ** 12n)]).operator).toBe("IndexOf");
+  expect(run(["Element", big(10n ** 9000n), "BellNumbers"]).operator).toBe("Element");
+  expect(run(["IndexOf", "LuckyNumbers", 10 ** 6]).operator).toBe("IndexOf");
+  expect(run(["At", "TwinPrimes", 10 ** 9]).operator).toBe("At");
+  expect(performance.now() - started).toBeLessThan(15_000);
+});
+
+test("a derived value past 2^53 declines: 2n + 1 for a Sophie Germain prime", () => {
+  const sophie = numberKernel(digitsPrimes.find((k) => k.head === "SophieGermainPrimes")!);
+  expect(sophie.valid(11, [])).toBe(true);
+  expect(sophie.valid(13, [])).toBe(false);
+  expect(() => sophie.valid(9007199254740881, [])).toThrow(/not bigint yet/); // 2^53 - 111, prime
 });
 
 test.skipIf(!DEEP)("terms far past 2^53 (DEEP_TESTS)", () => {

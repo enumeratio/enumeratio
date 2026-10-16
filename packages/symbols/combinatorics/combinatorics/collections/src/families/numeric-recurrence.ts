@@ -11,6 +11,7 @@
 import type { EpsilFamily } from "./epsil.ts";
 import { withSequenceDefinitions } from "./sequence-definitions.ts";
 import { bigAware, type Declared, type NumberKernel } from "./types.ts";
+import { declineWork } from "./work.ts";
 
 // ---- shared: bigint decode + a bounded forward scan for membership/rank. ----
 
@@ -22,6 +23,10 @@ function toBigInt(x: unknown): bigint | undefined {
   return undefined;
 }
 
+/** The terms a scan for a value reads, and so a recurrence's cache grows to: the most that is a few megabytes
+ *  for the fastest growing (a Delannoy number gains about 2.5 bits a term). A value past the last is declined. */
+const SCAN_TERMS = 8000;
+
 /** A scan that ran out of terms before settling the value: unknown, never a verdict. */
 const declineScan = (head: string, value: bigint): never => {
   throw new RangeError(`${head}: ${value} is past the terms scanned; its kernel is not bigint yet`);
@@ -31,7 +36,7 @@ const declineScan = (head: string, value: bigint): never => {
  *  non-decreasing forever (true for every recurrence below past its initial transient), so the
  *  scan can stop the moment a term exceeds the target -- otherwise it just checks equality.
  *  `cap` bounds the terms scanned; a value still ahead of the last one is declined, not absent. */
-function scanMembership(head: string, nth: (k: number) => bigint, monotoneFrom = 0, cap = 20_000) {
+function scanMembership(head: string, nth: (k: number) => bigint, monotoneFrom = 0, cap = SCAN_TERMS) {
   return {
     contains(value: bigint): boolean {
       if (value < 0n) return false;
@@ -116,15 +121,22 @@ function schroederNth(n: number): bigint {
 
 // ---- Bell (Aitken's triangle) and Fubini (needs a bigint Pascal's triangle). ----
 
-const bellRows: bigint[][] = [[1n]];
+/** The most terms Bell and Fubini build: their rows are a quadratic number of bigints (about a second). */
+const BELL_MAX = 1500;
+const FUBINI_MAX = 500;
+
+// Only the last row of the triangle is kept, and the term each row starts.
+const bellTerms: bigint[] = [1n];
+let bellRow: bigint[] = [1n];
 function bellNth(n: number): bigint {
-  while (bellRows.length <= n) {
-    const prev = bellRows[bellRows.length - 1];
-    const row: bigint[] = [prev[prev.length - 1]];
-    for (let j = 0; j < prev.length; j++) row.push(row[j] + prev[j]);
-    bellRows.push(row);
+  if (n > BELL_MAX) return declineWork(`BellNumbers: term ${n}`);
+  while (bellTerms.length <= n) {
+    const row: bigint[] = [bellRow[bellRow.length - 1]];
+    for (let j = 0; j < bellRow.length; j++) row.push(row[j] + bellRow[j]);
+    bellRow = row;
+    bellTerms.push(row[0]);
   }
-  return bellRows[n][0];
+  return bellTerms[n];
 }
 
 const pascalRows: bigint[][] = [[1n]];
@@ -142,6 +154,7 @@ function binomialBig(n: number, k: number): bigint {
 
 const fubiniTerms: bigint[] = [1n];
 function fubiniNth(n: number): bigint {
+  if (n > FUBINI_MAX) return declineWork(`FubiniNumbers: term ${n}`);
   while (fubiniTerms.length <= n) {
     const m = fubiniTerms.length;
     let sum = 0n;
@@ -155,8 +168,12 @@ function fubiniNth(n: number): bigint {
 // in kernels-combinatorics.ts, but that one is a plain-number kernel -- p(n) itself stays
 // small, but every family here is bigint on principle so At never has a float/bigint seam). ----
 
+/** Partition terms take about n^1.5 steps in all; this many is about a second. */
+const PARTITION_MAX = 50_000;
+
 const partitionTerms: bigint[] = [1n];
 function partitionNth(n: number): bigint {
+  if (n > PARTITION_MAX) return declineWork(`PartitionNumbers: term ${n}`);
   while (partitionTerms.length <= n) {
     const m = partitionTerms.length;
     let sum = 0n;
@@ -183,6 +200,7 @@ function fusc(n: number): bigint {
   if (n === 0) return 0n;
   const cached = fuscCache.get(n);
   if (cached !== undefined) return cached;
+  if (fuscCache.size >= 100_000) fuscCache.clear();
   let a = 0n;
   let b = 1n;
   for (const bit of n.toString(2)) {

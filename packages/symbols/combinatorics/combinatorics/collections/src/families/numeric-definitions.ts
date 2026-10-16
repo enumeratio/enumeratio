@@ -127,15 +127,18 @@ const families: readonly EpsilFamily[] = [
     term: (r) => add(binomial(add(r, 3), 3), binomial(add(r, 2), 3)),
   }),
   // The rank is the exponent, at most the bits of the term.
-  sequence({ head: "PowersOfTwo", term: (r) => power(2, r), rankBound: add(floor(log2("_x")), 2) }),
+  {
+    ...sequence({ head: "PowersOfTwo", term: (r) => power(2, r), rankBound: add(floor(log2("_x")), 2) }),
+    early: { unrank: (r) => (r > MAX_BIGINT_BITS ? "decline" : undefined) },
+  },
   allOnes,
 ];
 
 /** The definitions, by head. */
 export const definitions: ReadonlyMap<string, EpsilFamily> = new Map(families.map((family) => [family.head, family]));
 
-/** The most bits a power of two is expanded to on the fast path: the TS kernel's own reach, a bigint's limit. */
-const MAX_BIGINT_BITS = 2 ** 30;
+/** The most bits a power of two is expanded to, on either path: four million bits is instant, where 2^(10^9) is a heap of digits. */
+const MAX_BIGINT_BITS = 2 ** 22;
 
 /** What a TS kernel answers on the fast path beyond the terms a double holds. Its cost can grow with the
  *  rank or the element (a cache of the terms, a scan), so past these it declines and Epsil answers. */

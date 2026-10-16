@@ -21,6 +21,10 @@ const floor = (x: MathJSON): MathJSON => ["Floor", x];
 const log2 = (x: MathJSON): MathJSON => ["Log", x, 2];
 const upTo = (to: MathJSON): MathJSON => ["Range", 0, to, 1];
 
+/** "decline" for a bigint of `maxBits` bits or more: past what the interpreter's scan answers in a second. */
+const pastBits = (x: unknown, maxBits: number): "decline" | undefined =>
+  typeof x === "bigint" && x >= 1n << BigInt(maxBits) ? "decline" : undefined;
+
 /** The ranks the interpreter folds over before a term is too far out to wait for. */
 const REACH = 5000;
 /** The same for a term that is a sum of binomials, which costs more than a rank's worth of steps. */
@@ -82,7 +86,8 @@ function walked({ head, seed, next, from = 0, perBit, maxBits }: Walk): EpsilFam
       valid: iff(["GreaterEqual", "_x", 0], ["GreaterEqual", place, 0], "False"),
     },
     early: {
-      member: (x) => (typeof x === "bigint" && x >= 1n << BigInt(maxBits) ? "decline" : undefined),
+      member: (x) => pastBits(x, maxBits),
+      rank: (x) => pastBits(x, maxBits),
       unrank: (r) => (r > REACH ? "decline" : undefined),
     },
   };
@@ -117,7 +122,8 @@ const summed = (head: string, maxBits: number, term: (r: MathJSON) => MathJSON, 
   }),
   // A term is a sum of as many binomials as its rank, and the descent tries a few ranks.
   early: {
-    member: (x) => (typeof x === "bigint" && x >= 1n << BigInt(maxBits) ? "decline" : undefined),
+    member: (x) => pastBits(x, maxBits),
+    rank: (x) => pastBits(x, maxBits),
     unrank: (r) => (r > SUMMED_REACH ? "decline" : undefined),
   },
 });

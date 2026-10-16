@@ -9,92 +9,35 @@
 import type { EpsilFamily } from "./epsil.ts";
 import { withScanDefinitions } from "./scan-definitions.ts";
 import type { Declared, NumberKernel } from "./types.ts";
-
-// ---- shared: memoised "nth n with predicate(n)" scan (copied from numeric-sets.ts). ----
-
-function nthMatchCache(predicate: (n: number) => boolean) {
-  const matches: number[] = [];
-  let scanned = 0;
-  const extendTo = (count: number) => {
-    while (matches.length < count) {
-      scanned++;
-      if (predicate(scanned)) matches.push(scanned);
-    }
-  };
-  return {
-    nth: (k: number): number => {
-      extendTo(k);
-      return matches[k - 1];
-    },
-    rankOf: (value: number): number => {
-      if (!Number.isInteger(value) || value < 1) return -1;
-      while (scanned < value) {
-        scanned++;
-        if (predicate(scanned)) matches.push(scanned);
-      }
-      return matches.indexOf(value);
-    },
-  };
-}
+import { declineWork, factorsOf, isPrimeNumber, matchCache, memoBy, sigmaOf as sigmaBig } from "./work.ts";
 
 // ---- divisor/factoring primitives, plain numbers (safe within Number.MAX_SAFE_INTEGER). ----
 
-function isPrime(n: number): boolean {
-  if (!Number.isInteger(n) || n < 2) return false;
-  if (n % 2 === 0) return n === 2;
-  for (let d = 3; d * d <= n; d += 2) if (n % d === 0) return false;
-  return true;
-}
+const isPrime = isPrimeNumber;
 
-/** Ascending [prime, exponent] pairs of n's factorisation by trial division. */
-function primeFactorsOf(n: number): [number, number][] {
-  let m = Math.abs(Math.trunc(n));
-  const factors: [number, number][] = [];
-  for (let p = 2; p * p <= m; p++) {
-    if (m % p !== 0) continue;
-    let exp = 0;
-    while (m % p === 0) {
-      m /= p;
-      exp++;
-    }
-    factors.push([p, exp]);
-  }
-  if (m > 1) factors.push([m, 1]);
-  return factors;
-}
+/** Ascending [prime, exponent] pairs of n's factorisation. */
+const primeFactorsOf = (n: number): [number, number][] => factorsOf(Math.abs(Math.trunc(n)));
 
-/** All divisors of n, ascending, including 1 and n. */
+/** All divisors of n, ascending, including 1 and n: built from the factorisation. */
 function divisorsOf(n: number): number[] {
-  if (n < 1) return [];
-  const divs: number[] = [];
-  for (let d = 1; d * d <= n; d++) {
-    if (n % d !== 0) continue;
-    divs.push(d);
-    const cofactor = n / d;
-    if (cofactor !== d) divs.push(cofactor);
+  if (!Number.isSafeInteger(n) || n < 1) return [];
+  let divs = [1];
+  for (const [p, e] of primeFactorsOf(n)) {
+    const next: number[] = [];
+    for (let k = 0, power = 1; k <= e; k++, power *= p) for (const d of divs) next.push(d * power);
+    divs = next;
   }
-  divs.sort((a, b) => a - b);
-  return divs;
+  return divs.toSorted((a, b) => a - b);
 }
 
 const properDivisorsOf = (n: number): number[] => divisorsOf(n).filter((d) => d !== n);
-const sigmaOf = (n: number): number => divisorsOf(n).reduce((s, d) => s + d, 0);
+const sigmaOf = (n: number): number => Number(sigmaBig(n));
 const numDivisorsOf = (n: number): number => divisorsOf(n).length;
 
-// ---- AbundantNumbers helper, copied verbatim from numeric-sets.ts's own copy. ----
+// ---- AbundantNumbers / DeficientNumbers: σ(n) against 2n, σ exact from the factorisation. ----
 
-function sumProperDivisors(n: number): number {
-  if (n <= 1) return 0;
-  let sum = 1;
-  for (let d = 2; d * d <= n; d++) {
-    if (n % d !== 0) continue;
-    sum += d;
-    const cofactor = n / d;
-    if (cofactor !== d) sum += cofactor;
-  }
-  return sum;
-}
-const isAbundant = (n: number): boolean => n >= 1 && sumProperDivisors(n) > n;
+const isAbundant = (n: number): boolean => Number.isSafeInteger(n) && n >= 1 && sigmaBig(n) > 2n * BigInt(n);
+const isDeficient = (n: number): boolean => Number.isSafeInteger(n) && n >= 1 && sigmaBig(n) < 2n * BigInt(n);
 
 // ---- exact-power / factor-shape predicates. ----
 
@@ -135,7 +78,11 @@ const isAchilles = (n: number): boolean => n > 1 && isPowerful(n) && !isPerfectP
 /** Does some subset of n's proper divisors sum to exactly n? 0/1 DP over reachable sums,
  *  bounded by n -- fine at the scale this family is queried at (small n; see the test file
  *  for the deliberately small term counts this costs). */
+/** The greatest n whose subset-sum table (n bytes, n steps a divisor) is built: about a second. */
+const SEMIPERFECT_LIMIT = 2e6;
+
 function isSemiperfect(n: number): boolean {
+  if (n > SEMIPERFECT_LIMIT) return declineWork(`Semiperfect: ${n}`);
   const divs = properDivisorsOf(n);
   if (divs.length === 0) return false;
   const reachable = new Uint8Array(n + 1);
@@ -163,7 +110,8 @@ function isPractical(n: number): boolean {
   return true;
 }
 
-const isArithmetic = (n: number): boolean => n >= 1 && sigmaOf(n) % numDivisorsOf(n) === 0;
+const isArithmetic = (n: number): boolean =>
+  Number.isSafeInteger(n) && n >= 1 && sigmaBig(n) % BigInt(numDivisorsOf(n)) === 0n;
 
 /** Korselt's criterion: composite, squarefree, and (p-1) | (n-1) for every prime p | n --
  *  equivalent to "Fermat pseudoprime to every base coprime to n." */
@@ -180,7 +128,7 @@ function isCarmichael(n: number): boolean {
 
 function highlyCompositeCache() {
   let maxDivisorCount = 0;
-  return nthMatchCache((n) => {
+  return matchCache("HighlyCompositeNumbers", (n) => {
     const t = numDivisorsOf(n);
     if (t <= maxDivisorCount) return false;
     maxDivisorCount = t;
@@ -193,7 +141,7 @@ function superabundantCache() {
   // Best abundancy sigma(n)/n so far, compared by cross-multiplication to stay exact.
   let bestSigma = 0;
   let bestN = 1;
-  return nthMatchCache((n) => {
+  return matchCache("SuperabundantNumbers", (n) => {
     const s = sigmaOf(n);
     if (s * bestN <= bestSigma * n) return false;
     bestSigma = s;
@@ -227,13 +175,20 @@ function growTouchedTo(minLimit: number): void {
   touchedLimit = limit;
 }
 
+/** The greatest sieve of aliquot sums built (n² for the n asked): 4 million, about 40 MB while it is built. */
+const UNTOUCHED_LIMIT = 2e6;
+
 function isUntouchable(n: number): boolean {
   if (n < 1) return false;
+  if (n * n > UNTOUCHED_LIMIT) return declineWork(`Untouchable: ${n}`);
   growTouchedTo(Math.max(256, n * n));
   return touchedSieve?.[n] !== 1;
 }
 
 // ---- LuckyNumbers: Ulam's sieve, grown (and fully rebuilt) on demand. ----
+
+/** The greatest limit the sieve is grown to (an array of half as many numbers, filtered once a lucky number). */
+const LUCKY_LIMIT = 65_536;
 
 let luckyTerms: number[] = [1, 3];
 let luckyLimit = 3;
@@ -261,6 +216,7 @@ function luckyNth(k: number): number {
   let limit = luckyLimit;
   while (luckyTerms.length < k) {
     limit *= 2;
+    if (limit > LUCKY_LIMIT) return declineWork(`Lucky: term ${k}`);
     growLuckyTo(limit);
   }
   return luckyTerms[k - 1];
@@ -268,6 +224,7 @@ function luckyNth(k: number): number {
 
 function luckyRankOf(value: number): number {
   if (!Number.isInteger(value) || value < 1) return -1;
+  if (value > LUCKY_LIMIT) return declineWork(`Lucky: ${value}`);
   let limit = Math.max(luckyLimit, value);
   growLuckyTo(limit);
   while (luckyTerms[luckyTerms.length - 1] < value) {
@@ -279,14 +236,9 @@ function luckyRankOf(value: number): number {
 
 // ---- SmoothNumbers(k)-style per-parameter cache, for KFreeIntegers(k). ----
 
-const kFreeCaches = new Map<number, ReturnType<typeof nthMatchCache>>();
-function kFreeCacheFor(k: number): ReturnType<typeof nthMatchCache> {
-  let cache = kFreeCaches.get(k);
-  if (!cache) {
-    cache = nthMatchCache((n) => isKFree(n, k));
-    kFreeCaches.set(k, cache);
-  }
-  return cache;
+const kFreeCaches = new Map<number, ReturnType<typeof matchCache>>();
+function kFreeCacheFor(k: number): ReturnType<typeof matchCache> {
+  return memoBy(kFreeCaches, k, () => matchCache("KFreeIntegers", (n) => isKFree(n, k)));
 }
 
 // ---- known-term tables for the three sets whose infinitude is an open problem. Past the
@@ -325,9 +277,16 @@ function tableEntry(table: readonly number[]): Pick<NumberKernel, "unrank" | "va
   };
 }
 
+/** What the subset-sum table of `isSemiperfect` costs, in the steps of a double loop. */
+const semiperfectCost = (n: number): number => (n * Math.log(n + 2)) / 2.5;
+
 /** A paramCount:0 scalar family driven by a plain predicate, via one shared nthMatchCache. */
-function predicateEntry(predicate: (n: number) => boolean): Pick<NumberKernel, "unrank" | "valid" | "rank"> {
-  const cache = nthMatchCache(predicate);
+function predicateEntry(
+  head: string,
+  predicate: (n: number) => boolean,
+  cost?: (n: number) => number,
+): Pick<NumberKernel, "unrank" | "valid" | "rank"> {
+  const cache = matchCache(head, predicate, cost === undefined ? {} : { cost });
   return {
     unrank: (_p, r) => cache.nth(r + 1),
     valid: (element) => predicate(Number(element)),
@@ -338,7 +297,7 @@ function predicateEntry(predicate: (n: number) => boolean): Pick<NumberKernel, "
 /** Same shape, for a family whose membership can only be answered by rank (record-setting
  *  scans like HighlyCompositeNumbers, where "valid" has no cheaper test than "is it a
  *  record" -- which the cache already computes when asked for the rank). */
-function cacheEntry(cache: ReturnType<typeof nthMatchCache>): Pick<NumberKernel, "unrank" | "valid" | "rank"> {
+function cacheEntry(cache: ReturnType<typeof matchCache>): Pick<NumberKernel, "unrank" | "valid" | "rank"> {
   return {
     unrank: (_p, r) => cache.nth(r + 1),
     valid: (element) => cache.rankOf(Number(element)) >= 0,
@@ -352,7 +311,7 @@ export const kernels: NumberKernel[] = [
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry((n) => sumProperDivisors(n) < n),
+    ...predicateEntry("DeficientNumbers", isDeficient),
   },
   {
     head: "PerfectNumbers",
@@ -366,21 +325,21 @@ export const kernels: NumberKernel[] = [
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry(isSemiperfect),
+    ...predicateEntry("SemiperfectNumbers", isSemiperfect, semiperfectCost),
   },
   {
     head: "WeirdNumbers",
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry(isWeird),
+    ...predicateEntry("WeirdNumbers", isWeird, semiperfectCost),
   },
   {
     head: "PracticalNumbers",
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry(isPractical),
+    ...predicateEntry("PracticalNumbers", isPractical),
   },
   {
     head: "HighlyCompositeNumbers",
@@ -401,42 +360,42 @@ export const kernels: NumberKernel[] = [
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry(isArithmetic),
+    ...predicateEntry("ArithmeticNumbers", isArithmetic),
   },
   {
     head: "UntouchableNumbers",
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry(isUntouchable),
+    ...predicateEntry("UntouchableNumbers", isUntouchable, (n) => n * n),
   },
   {
     head: "AchillesNumbers",
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry(isAchilles),
+    ...predicateEntry("AchillesNumbers", isAchilles),
   },
   {
     head: "PowerfulNumbers",
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry(isPowerful),
+    ...predicateEntry("PowerfulNumbers", isPowerful),
   },
   {
     head: "PerfectPowerNumbers",
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry(isPerfectPower),
+    ...predicateEntry("PerfectPowerNumbers", isPerfectPower, () => 3000),
   },
   {
     head: "SquareFreeNumbers",
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry(isSquareFree),
+    ...predicateEntry("SquareFreeNumbers", isSquareFree),
   },
   {
     declared: {
@@ -459,7 +418,7 @@ export const kernels: NumberKernel[] = [
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry(isCarmichael),
+    ...predicateEntry("CarmichaelNumbers", isCarmichael),
   },
   {
     head: "GiugaNumbers",
