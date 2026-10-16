@@ -8,16 +8,19 @@ const hasSage = spawnSync("sage", ["--version"], { stdio: "ignore" }).status ===
 test.skipIf(!hasSage)(
   "a root list too long for Sage to build is refused up front, and costs only its own item",
   async () => {
-    const [many, few, none] = await runIn("sage", [
+    const [many, few, none, unit] = await runIn("sage", [
       "enumeratio_power_mod_list(0, (1/2), ((3)^40))",
       "enumeratio_power_mod_list(0, (1/2), ((3)^6))",
       "enumeratio_power_mod_list(2, (1/2), 7)",
+      "enumeratio_power_mod_list(8, (-1/2), 12)",
     ]);
     expect(many).toEqual({ error: expect.stringContaining("roots to list") });
     // 3^3 square roots of 0 mod 3^6: the bound lets a list this size through.
     expect(few).toHaveProperty("value");
     expect((few as { value: string }).value).toMatch(/^\[0, 27, 54,/);
     expect(none).toMatchObject({ value: "[3, 4]" });
+    // A negative power of a non-unit has no root, as in ours.
+    expect(unit).toMatchObject({ value: "[]" });
   },
   120_000,
 );

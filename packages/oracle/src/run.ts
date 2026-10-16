@@ -1320,7 +1320,12 @@ def _enumeratio_roots_bound(b, d, m):
 
 def enumeratio_power_mod_list(a, s, m):
     s = QQ(s)
-    b = Zmod(m)(a)**s.numerator()
+    base = Zmod(m)(a)
+    try:
+        b = base**s.numerator()
+    except ZeroDivisionError:
+        # x^d = a^-n with a not a unit: a^n * x^d = 1 has no solution.
+        return []
     if m > 1 and _enumeratio_roots_bound(b.lift(), s.denominator(), m) > ROOTS_LISTED:
         raise ValueError("more than %d roots to list" % ROOTS_LISTED)
     return sorted(int(x) for x in b.nth_root(s.denominator(), all=True))

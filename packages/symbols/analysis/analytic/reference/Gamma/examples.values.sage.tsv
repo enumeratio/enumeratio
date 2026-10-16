@@ -24,7 +24,7 @@ gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer	gamma((5/2))	3/4*sqrt(pi)
 complex-arguments-evaluate-directly	gamma((2.3 + 1*I))	0.719140936537282 + 0.540614467909849*I	
 half-integers-have-closed-forms-gamma-7-2-frac	gamma((7/2))	15/8*sqrt(pi)	
 including-negative-half-integers-gamma-3-2-frac	gamma((-3/2))	4/3*sqrt(pi)	
-gamma-infty-infty	gamma(oo)		
+gamma-infty-infty	gamma(oo)	gamma(+Infinity)	
 values-far-past-the-double-range-gamma-200-5	gamma(200.5)	5.57316894480138e373	
 two-arguments-the-upper-incomplete-gamma-gamma-5			
 an-integer-order-reduces-to-a-closed-form-gamma			
@@ -33,7 +33,7 @@ listable-threads-elementwise-over-a-matrix-and
 interval-arithmetic-the-image-of-1-4-1-5-whose			
 uncertainty-propagation-gamma-2-5-pm-0-01-1-3293			
 to-40-significant-digits-every-one-correctly	enumeratio_n(gamma((1/3)), 40)	2.67893853470775	
-gamma-neg-infty-indeterminate	gamma(-oo)		
+gamma-neg-infty-indeterminate	gamma(-oo)	gamma(-Infinity)	
 gamma-complex-infinity-indeterminate	gamma(unsigned_infinity)	gamma(Infinity)	disagree
 gamma-i-infty-0			
 gamma-directed-infinity-i			
@@ -50,9 +50,9 @@ gamma-a-0-gamma-a-the-incomplete-gamma-from-zero
 gamma-0-z-e-1-z-the-exponential-integral-e-1-3-2			
 gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc			
 gamma-x-gamma-x-psi-x-so-the-logarithmic	(diff(gamma(SR.var("x")), SR.var("x")) / gamma(SR.var("x")))	psi(x)	disagree
-1-over-gamma-1-over-2	(1 / gamma((1/2)))		
-gamma-1-over-2-pow-2	((gamma((1/2)))^2)		
-gamma-neg-1-over-2-times-gamma-1-over-2	(gamma((-1/2)) * gamma((1/2)))		
+1-over-gamma-1-over-2	(1 / gamma((1/2)))	1/sqrt(pi)	
+gamma-1-over-2-pow-2	((gamma((1/2)))^2)	pi	
+gamma-neg-1-over-2-times-gamma-1-over-2	(gamma((-1/2)) * gamma((1/2)))	-2*pi	
 product-gamma-1-over-2-times-2k-plus-1-over-2-k			
 squaring-the-reflection-formula-at-z-1-2	enumeratio_equal(((gamma((1/2)))^2), pi)	True	
 gamma-i-2-pi-sinh-pi-0-27203	enumeratio_n(((enumeratio_abs(gamma(I)))^2))	0.272029054982133	
