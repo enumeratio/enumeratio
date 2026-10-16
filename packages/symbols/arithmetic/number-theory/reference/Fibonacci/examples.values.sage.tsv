@@ -25,7 +25,7 @@ generatingfunction-fibonacci-n-n-x
 fibonacci-1-conjugate-z-eq-conjugate-fibonacci-1			
 matrixfunction-function-fibonacci-3-1-1-list			
 consecutive-ratios-f-n-1-f-n-converge-to-the	(fibonacci(20) / fibonacci(19))	6765/4181	
-sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143			
+sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	sum(fibonacci(SR.var("k")), SR.var("k"), 1, 10)	TypeError: unable to convert k to an integer	error
 the-doubling-identity-f-2n-f-n-l-n-see-lucasl	enumeratio_equal(fibonacci(20), (fibonacci(10) * lucas_number2(10, 1, -1)))	True	
 the-defining-recurrence-f-10-f-9-f-8	enumeratio_equal(fibonacci(10), (fibonacci(9) + fibonacci(8)))	True	
 cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	((fibonacci(5) * fibonacci(7)) - ((fibonacci(6))^2))	1	
@@ -43,5 +43,5 @@ fibonacci-1-times-fibonacci-3-minus-fibonacci-2	((fibonacci(1) * fibonacci(3)) +
 neg-fibonacci-0-times-fibonacci-4-plus-fibonacci	((-(fibonacci(0) * fibonacci(4))) + ((fibonacci(2))^2))	1	
 fibonacci-2-times-fibonacci-3-times-fibonacci-4	((fibonacci(2) * fibonacci(3) * fibonacci(4) * fibonacci(6) * fibonacci(7) * fibonacci(8)) + ((lucas_number2(5, 1, -1))^2))	13225	
 fibonacci-0-times-fibonacci-1-times-fibonacci-3	(fibonacci(0) * fibonacci(1) * fibonacci(3) * fibonacci(4))	0	
-f-1000-has-209-digits-see-integerdigits			
+f-1000-has-209-digits-see-integerdigits	enumeratio_length((Integer(abs(fibonacci(1000))).digits(10) or [0])[::-1])	209	
 they-grow-fast-f-50-already-exceeds-twelve	fibonacci(50)	12586269025	

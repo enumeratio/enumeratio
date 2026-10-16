@@ -3,7 +3,7 @@ exp-0	exp(0)	1
 stays-the-exact-constant-rather-than	exp(1)	e	
 compute-engine-represents-exp-x-as-e-x-once-the	exp(SR.var("x"))	True	
 a-machine-precision-argument-evaluates	exp(3.4)	29.9641000473970	
-series-exponentiale-pow-x-x-0-10			
+series-exponentiale-pow-x-x-0-10	SR(((e)^SR.var("x"))).series(SR.var("x") == 0, 10 + 1)	True	
 broadcasts-element-wise-giving-begin-pmatrix-1-e	[[exp(0), exp(1)], [exp(1), exp(0)]]	[[1, e], [e, 1]]	
 arbitrary-precision-via-n	enumeratio_n(exp((8/5)))	4.95303242439511	
 evaluates-at-a-complex-argument	exp((2.5 + 1*I))	6.58222957819277 + 10.2512151905294*I	
@@ -21,8 +21,8 @@ interval-arithmetic-exp-1-ln-2-e-1-2
 uncertainty-propagation-e-2-pm-0-01-approx-7-389			
 around-0-still-fires-the-e-base-power-rule			
 its-own-derivative	diff(exp(SR.var("x")), SR.var("x"))	True	
-its-own-antiderivative			
-taylor-series-about-0			
+its-own-antiderivative	integrate(exp(SR.var("x")), SR.var("x"))	True	
+taylor-series-about-0	SR(exp(SR.var("x"))).series(SR.var("x") == 0, 4 + 1)	True	
 n-decimalizes-a-combined-product	enumeratio_n((exp(1) * exp(2)))	20.0855369231877	
 agrees-numerically-at-a-complex-point	enumeratio_n((exp((1.3 + 0.7*I)) * exp((-0.4 + 2.1*I))))	-2.31749300051022 + 0.823937896324175*I	
 to-50-significant-digits-every-one-correctly	enumeratio_n(exp(1), 50)	2.71828182845905	

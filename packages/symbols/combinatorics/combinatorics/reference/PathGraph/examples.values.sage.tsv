@@ -1,0 +1,3 @@
+id	in	out	verdict
+a-5-vertex-path	(enumeratio_graph(graphs.PathGraph(5))).degree()	[1, 2, 2, 2, 1]	
+a-path-along-named-vertices	enumeratio_graph(graphs.PathGraph([SR.var("a"), SR.var("b"), SR.var("c")]))	TypeError: unsupported operand type(s) for -: 'list' and 'int'	error

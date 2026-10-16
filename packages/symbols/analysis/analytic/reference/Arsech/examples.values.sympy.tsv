@@ -10,7 +10,7 @@ arsech-list-list-2-0-list-1-neg-2	[[asech(2), asech(0)], [asech(1), asech(-2)]]	
 arsech-positiveinfinity	asech(oo)	I*pi/2	
 trigtoexp-arsech-z			
 matrixfunction-function-arsech-1-1-list-list-2-0			
-integrate-arsech-x-x-nothing-nothing	integrate(asech(Symbol("x")), Symbol("x"))	True	
+integrate-arsech-x-x-nothing-nothing	integrate(asech(Symbol("x")), Symbol("x"))	None	inconclusive
 arsech-neg-2	asech(-2)	2*I*pi/3	
 arsech-neg-1-over-2	asech(Rational(-1, 2))	asech(-1/2)	
 arsech-2-times-sqrt-1-over-2-plus-sqrt-2	asech((2 * sqrt((S(1) / (2 + sqrt(2))))))	I*pi/8	

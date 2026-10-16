@@ -25,6 +25,24 @@ bindings:
     form: sympy
     template: multiplicity($2, $1)
     arity: 2
+  - origin: mapped
+    form: sage
+    template: Integer($1).valuation(10)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: sage
+    template: Integer($1).valuation($2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Integers only: a rational's $p$-adic valuation is [[AdicValuation]]'s, over [[AdicNumeral]].

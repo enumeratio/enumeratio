@@ -16,4 +16,12 @@ statOn:
   - PlanePartition
 names:
   wolfram: Tr
+bindings:
+  - origin: mapped
+    form: sage
+    template: matrix($1).trace()
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---

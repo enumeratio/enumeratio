@@ -1,0 +1,6 @@
+id	in	out
+the-partition-1-3-mid-2	enumeratio_stat("SetPartition", [[1, 3], [2]], "Nestings")	0
+the-partition-1-mid-2-4-mid-3	enumeratio_stat("SetPartition", [[1], [2, 4], [3]], "Nestings")	0
+findstat-st000233-1	enumeratio_stat("SetPartition", [[1]], "Nestings")	0
+findstat-st000233-2	enumeratio_stat("SetPartition", [[1, 2]], "Nestings")	0
+findstat-st000233-3	enumeratio_stat("SetPartition", [[1, 2, 3]], "Nestings")	0

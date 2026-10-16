@@ -4,7 +4,7 @@ id	in	out	verdict
 the-empty-product-is-1-by-convention	enumeratio_factorial(0)	1	
 10-factorial	enumeratio_factorial(10)	3628800	
 threads-element-wise-over-a-list	enumeratio_factorial([1, 2, 3, 4])	[1, 2, 6, 24]	
-frac-n-n-1-simplifies-to-n-under-simplify-plain			
+frac-n-n-1-simplifies-to-n-under-simplify-plain	SR((enumeratio_factorial(SR.var("n")) / enumeratio_factorial((SR.var("n") - 1)))).simplify_full()	True	
 real-arguments-evaluate-as-gamma-n-1	enumeratio_factorial(3.5)	11.6317283965674	
 negative-non-integers-are-defined-too-2-5-gamma	enumeratio_factorial(-2.5)	2.36327180120735	
 complex-arguments-1-i-gamma-2-i	enumeratio_factorial((1 + 1*I))	factorial(I + 1)	disagree
@@ -14,9 +14,9 @@ the-number-of-ways-to-arrange-8-distinct-books	enumeratio_factorial(8)	40320
 recurrence-n-n-n-1	enumeratio_equal(enumeratio_factorial(5), (5 * enumeratio_factorial(4)))	True	
 extends-to-non-integers-via-the-gamma-function	enumeratio_factorial((1/2))	1/2*sqrt(pi)	
 n-gamma-n-1-see-gamma	enumeratio_equal(enumeratio_factorial(5), gamma(6))	True	
-the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e			
-sum-k-factorial-pow-neg-4-times-k-plus-2			
-sum-k-factorial-pow-neg-4-times-k-plus-3			
+the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e	sum((1 / enumeratio_factorial(SR.var("k"))), SR.var("k"), 0, oo)	e	
+sum-k-factorial-pow-neg-4-times-k-plus-2	sum((((enumeratio_factorial(SR.var("k")))^-4) * ((enumeratio_factorial((SR.var("k") + 2)))^2) * ((enumeratio_factorial(((-SR.var("k")) + 2)))^-2)), SR.var("k"), 0, 2)	73	
+sum-k-factorial-pow-neg-4-times-k-plus-3	sum((((enumeratio_factorial(SR.var("k")))^-4) * ((enumeratio_factorial((SR.var("k") + 3)))^2) * ((enumeratio_factorial(((-SR.var("k")) + 3)))^-2)), SR.var("k"), 0, 3)	1445	
 negative-integers-are-poles-of-the-gamma	enumeratio_factorial(-1)	ValueError: factorial only defined for nonnegative integers	error
 factorials-grow-fast-20-already-exceeds-2-times	enumeratio_factorial(20)	2432902008176640000	
 30-has-33-digits-and-ends-in-seven-zeros	enumeratio_factorial(30)	265252859812191058636308480000000	

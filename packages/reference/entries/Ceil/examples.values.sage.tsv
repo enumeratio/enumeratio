@@ -21,7 +21,7 @@ ceil-positiveinfinity	enumeratio_ceil(oo)	+Infinity
 piecewiseexpand-ceil-x-2-0-lt-x-lt-4			
 d-ceil-x-x	diff(enumeratio_ceil(SR.var("x")), SR.var("x"))	diff(ceil(x), x)	inconclusive
 how-many-5-seat-vans-are-needed-to-carry-17	enumeratio_ceil((17 / 5))	4	
-ten-bits-are-enough-to-number-1000-items-lceil			
+ten-bits-are-enough-to-number-1000-items-lceil	enumeratio_ceil(log(1000, 2))	10	
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	enumeratio_equal(enumeratio_ceil((7/2)), (enumeratio_floor((7/2)) + 1))	True	
 floor-and-ceil-agree-exactly-on-integers	enumeratio_equal(enumeratio_ceil(5), enumeratio_floor(5))	True	
 ceil-16-3			

@@ -1,0 +1,31 @@
+id	in	out	verdict
+carmichaellambda-10	carmichael_lambda(10)	4	
+listable	[carmichael_lambda(8), carmichael_lambda(15)]	[2, 4]	
+negative-n-lambda-n-lambda-n	carmichael_lambda(-100)	ValueError: Input n must be a positive integer.	error
+listable-over-a-range			
+carmichaellambda-neg-10	carmichael_lambda(-10)	ValueError: Input n must be a positive integer.	error
+carmichaellambda-list-2-4-7	[carmichael_lambda(2), carmichael_lambda(4), carmichael_lambda(7)]	[1, 2, 6]	
+561-mod-carmichaellambda-561	enumeratio_mod(561, carmichael_lambda(561))	1	
+carmichaellambda-12	carmichael_lambda(12)	2	
+list-divides-8-24-divides-carmichaellambda-8			
+3-pow-1-plus-carmichaellambda-17-mod-17	enumeratio_mod(((3)^(1 + carmichael_lambda(17))), 17)	3	
+divides-multiplicativeorder-4-9-carmichaellambda			
+carmichaellambda-1	carmichael_lambda(1)	1	
+carmichaellambda-2	carmichael_lambda(2)	1	
+carmichaellambda-3	carmichael_lambda(3)	2	
+carmichaellambda-4	carmichael_lambda(4)	2	
+carmichaellambda-5	carmichael_lambda(5)	4	
+carmichaellambda-6	carmichael_lambda(6)	2	
+divides-carmichaellambda-8-totient-8			
+carmichaellambda-7	carmichael_lambda(7)	6	
+carmichaellambda-8	carmichael_lambda(8)	2	
+carmichaellambda-9	carmichael_lambda(9)	6	
+carmichaellambda-11	carmichael_lambda(11)	10	
+carmichaellambda-13	carmichael_lambda(13)	12	
+carmichaellambda-14	carmichael_lambda(14)	6	
+carmichaellambda-15	carmichael_lambda(15)	4	
+carmichaellambda-16	carmichael_lambda(16)	4	
+carmichaellambda-17	carmichael_lambda(17)	16	
+carmichaellambda-list-neg-2-neg-1-0-1-2	[carmichael_lambda(-2), carmichael_lambda(-1), carmichael_lambda(0), carmichael_lambda(1), carmichael_lambda(2)]	ValueError: Input n must be a positive integer.	error
+list-lcm-carmichaellambda-list-3-8	[lcm([[carmichael_lambda(3), carmichael_lambda(8)]]), carmichael_lambda(enumeratio_lcm(3, 8))]	TypeError: no common canonical parent for objects with parents: 'Integer Ring' and '<class 'list'>'	error
+carmichaellambda-0	carmichael_lambda(0)	ValueError: Input n must be a positive integer.	error

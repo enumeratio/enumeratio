@@ -1,0 +1,10 @@
+id	in	out	verdict
+the-group-product			
+no-division-needed-at-determinant-1			
+t-5			
+words-multiply-their-matrices			
+the-inverse-of-a-word	[list(r) for r in matrix("L").inverse().rows()]	TypeError: the dimensions of the matrix must be specified	error
+r-3	[list(r) for r in (matrix("R")^3).rows()]	TypeError: the dimensions of the matrix must be specified	error
+negative-powers-are-powers-of-the-inverse			
+a-plain-integer-matrix-goes-to-compute-engine-s	[list(r) for r in (matrix([[1, 1], [1, 0]])^10).rows()]	[[89, 55], [55, 34]]	
+the-zeroth-power-is-the-identity			

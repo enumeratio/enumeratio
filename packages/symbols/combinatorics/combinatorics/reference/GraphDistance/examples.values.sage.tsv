@@ -1,0 +1,5 @@
+id	in	out
+distance-along-a-path-graph	(enumeratio_graph(graphs.PathGraph(5))).distance(1, 5)	4
+unreachable-is-infinite		
+unreachable-against-a-longer-directed-chain		
+weighted-distance-is-summed-weight-not-hop-count		

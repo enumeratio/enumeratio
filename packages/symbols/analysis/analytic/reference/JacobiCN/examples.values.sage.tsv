@@ -1,0 +1,49 @@
+id	in	out	verdict
+a-floating-point-argument-evaluates-directly-to	enumeratio_n(jacobi_cn(0.3, 0.5))	0.955985861827787	
+cn-1-1-0-9	enumeratio_n(jacobi_cn(1.1, 0.9))	0.585685414782307	
+cn-0-7-0-2	enumeratio_n(jacobi_cn(-0.7, 0.2))	0.771457688690515	
+cn-0-3-0	enumeratio_n(jacobi_cn(0.3, 0))	0.955336489125606	
+cn-0-3-1	enumeratio_n(jacobi_cn(0.3, 1))	0.956627911900248	
+cn-1-2-3	enumeratio_n(jacobi_cn(1.2, 3))	0.832276662417015 + 9.31045534765664e-21*I	
+cn-0-9-0-5	enumeratio_n(jacobi_cn(0.9, -0.5))	0.580041847690717	
+cn-0-4-0-5i-0-3	enumeratio_n(jacobi_cn((0.4 + 0.5*I), 0.3))	1.03025705556427 - 0.205315917406723*I	
+cn-0-4-0-5i-0-3-2	enumeratio_n(jacobi_cn((0.4 + -0.5*I), 0.3))	1.03025705556427 + 0.205315917406723*I	
+cn-0-4-0-5i-0-3-3	enumeratio_n(jacobi_cn((-0.4 + 0.5*I), 0.3))	1.03025705556427 + 0.205315917406723*I	
+cn-0-4-0-5i-0-3-4	enumeratio_n(jacobi_cn((-0.4 + -0.5*I), 0.3))	1.03025705556427 - 0.205315917406723*I	
+cn-1-1-0-7i-0-3	enumeratio_n(jacobi_cn((1.1 + -0.7*I), 0.3))	0.557232948770840 + 0.570728040764726*I	
+cn-1-1i-0-3	enumeratio_n(jacobi_cn((1 + 1*I), 0.3))	0.701054852177762 - 0.857450911387922*I	
+cn-0-2-8i-0-4	enumeratio_n(jacobi_cn((0.2 + 8*I), 0.4))	0.999641905915214 - 0.0403425021005485*I	
+cn-0-2-8i-0-4-2	enumeratio_n(jacobi_cn((0.2 + -8*I), 0.4))	0.999641905915214 + 0.0403425021005485*I	
+cn-5-4i-0-6	enumeratio_n(jacobi_cn((5 + 4*I), 0.6))	0.548571839071998 - 0.291737664423919*I	
+cn-0-05-1-9753631352924692i-0-3	enumeratio_n(jacobi_cn((0.05 + 1.9753631352924692*I), 0.3))	14.5937742753862 - 7.30899272829252*I	
+cn-0-05-2-0653631352924693i-0-3	enumeratio_n(jacobi_cn((0.05 + 2.0653631352924693*I), 0.3))	7.02086365142673 - 35.1165110016166*I	
+cn-0-05-2-074363135292469i-0-3	enumeratio_n(jacobi_cn((0.05 + 2.074363135292469*I), 0.3))	0.729882695167384 - 36.5063283747724*I	
+cn-0-05-2-075263135292469i-0-3	enumeratio_n(jacobi_cn((0.05 + 2.075263135292469*I), 0.3))	0.0730171775843677 - 36.5207824173756*I	
+cn-0-3-0-2i-1-5	enumeratio_n(jacobi_cn((0.3 + 0.2*I), 1.5))	0.971818959199235 - 0.0564013828016847*I	
+cn-0-5-0-3i-3	enumeratio_n(jacobi_cn((0.5 + -0.3*I), 3))	0.898370778663918 + 0.0991882801707142*I	
+cn-0-3-0-2i-0-7	enumeratio_n(jacobi_cn((0.3 + 0.2*I), -0.7))	0.975830356552470 - 0.0609262197145672*I	
+cn-0-5-0-3i-3-2	enumeratio_n(jacobi_cn((0.5 + -0.3*I), -3))	0.949629189769531 + 0.195693097379752*I	
+series-jacobicn-z-m-z-0-7	SR(jacobi_cn(SR.var("z"), SR.var("m"))).series(SR.var("z") == 0, 7 + 1)	True	
+series-jacobicn-z-m-m-0-1	SR(jacobi_cn(SR.var("z"), SR.var("m"))).series(SR.var("m") == 0, 1 + 1)	ValueError: power::eval(): division by zero	error
+m-greater-than-1-via-the-reciprocal-modulus	enumeratio_n(jacobi_cn(0.3, 1.5))	0.957262699025985 + 5.50067721384993e-20*I	
+m-less-than-0-via-the-imaginary-modulus	enumeratio_n(jacobi_cn(0.3, -2))	0.952664569791102	
+a-complex-argument-u	enumeratio_n(jacobi_cn((0.3 + 0.4*I), 0.5))	1.02799287200799 - 0.123775864136756*I	
+matrixfunction-function-jacobicn-neg-1-over-3			
+list-jacobicn-z-0-jacobicn-z-1	[jacobi_cn(SR.var("z"), 0), jacobi_cn(SR.var("z"), 1)]	True	
+n-jacobicn-2-1-over-3-50	enumeratio_n(jacobi_cn(2, (1/3)), 50)	-0.216378369067458	
+list-jacobicn-0-m-jacobicn-1-over-2-times	[jacobi_cn(0, SR.var("m")), jacobi_cn(((1/2) * elliptic_kc(SR.var("m"))), SR.var("m")), jacobi_cn(elliptic_kc(SR.var("m")), SR.var("m"))]	[1, jacobi_cn(1/2*elliptic_kc(m), m), jacobi_cn(elliptic_kc(m), m)]	disagree
+series-jacobicn-x-1-over-3-x-0-7	SR(jacobi_cn(SR.var("x"), (1/3))).series(SR.var("x") == 0, 7 + 1)	True	
+series-jacobicn-1-m-m-0-3	SR(jacobi_cn(1, SR.var("m"))).series(SR.var("m") == 0, 3 + 1)	ValueError: power::eval(): division by zero	error
+d-jacobicn-u-m-m	diff(jacobi_cn(SR.var("u"), SR.var("m")), SR.var("m"))	-1/2*(u + elliptic_e(arcsin(jacobi_sn(u, m)), m)/(m - 1))*jacobi_dn(u, m)*jacobi_sn(u, m)/m + 1/2*jacobi_cn(u, m)*jacobi_sn(u, m)^2/(m - 1)	disagree
+u-0-is-1-for-any-m	jacobi_cn(0, SR.var("m"))	1	
+m-0-reduces-to-cos-u	jacobi_cn(SR.var("u"), 0)	True	
+the-quarter-period-u-elliptick-m-is-0	jacobi_cn(elliptic_kc(SR.var("m")), SR.var("m"))	jacobi_cn(elliptic_kc(m), m)	inconclusive
+jacobicn-0-0	jacobi_cn(0, 0)	1	
+jacobicn-1-over-2-times-pi-0	jacobi_cn(((1/2) * pi), 0)	0	
+jacobicn-0-1	jacobi_cn(0, 1)	1	
+jacobicn-1-over-2-times-i-times-pi-1	jacobi_cn(((0 + (1/2)*I) * pi), 1)	Infinity	
+n-jacobicn-sqrt-2-over-4-times-i-2	enumeratio_n(jacobi_cn((0 + (sqrt(2) / 4)*I), 2))	1.06880691731944 + 1.93833485829463e-132*I	
+n-jacobicn-1-over-2-times-1-plus-sqrt-2-over-2-1	enumeratio_n(jacobi_cn(((1/2) * (1 + (sqrt(2) / 2))), ((((1 + (-(sqrt(2) / 2))))^2) * (((1 + (sqrt(2) / 2)))^-2))))	0.659292746249578	
+n-jacobicn-sqrt-2-times-i-2	enumeratio_n(jacobi_cn((0 + sqrt(2)*I), 2))	-6.88928221935418 - 3.34877337703196e-131*I	
+n-jacobicn-2-times-1-plus-sqrt-2-over-2-1-minus	enumeratio_n(jacobi_cn((2 * (1 + (sqrt(2) / 2))), ((((1 + (-(sqrt(2) / 2))))^2) * (((1 + (sqrt(2) / 2)))^-2))))	-0.969150664490022	
+symbolic-arguments-are-left-unevaluated-rather	jacobi_cn(SR.var("u"), SR.var("m"))	True	

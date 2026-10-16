@@ -35,6 +35,14 @@ laws:
     on: permutation
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: "[list(r) for r in matrix($1).inverse().rows()]"
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

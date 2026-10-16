@@ -12,6 +12,13 @@ bindings:
     environment: engine
     source: packages/symbols/combinatorics/combinatorics/collections/src/stats.ts:cycleCount
     note: Orbit traversal with a visited set — the one statistic here that does not reduce to an expression.
+  - origin: mapped
+    form: sage
+    template: enumeratio_stat("Permutation", $1, "CycleCount")
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 signatures:
   - call: CycleCount(p)
     description: the cycle count of a one-line permutation $p$

@@ -14,6 +14,14 @@ seeAlso:
   - WeightedAdjacencyMatrix
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: "[list(r) for r in ($1).adjacency_matrix().rows()]"
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Returned as a plain matrix (a list of lists) rather than Wolfram's default `SparseArray` — a deliberate simplification here, since this library has no sparse-matrix head to return instead.

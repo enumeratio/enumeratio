@@ -1,0 +1,7 @@
+id	in	out
+inversions-of-a-permutation	enumeratio_stat("Permutation", [3, 1, 2], "Inversions")	2
+by-findstat-id		
+sign-of-a-three-cycle	enumeratio_stat("Permutation", [3, 1, 2], "Sign")	1
+distinct-parts-of-a-partition		
+count-of-a-collection		
+the-mahonian-distribution		

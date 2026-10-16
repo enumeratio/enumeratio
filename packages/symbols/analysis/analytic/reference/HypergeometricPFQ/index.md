@@ -29,6 +29,13 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: hypergeometric($1, $2, $3)
+    arity: 3
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 seeAlso:
   - Hypergeometric0F1
   - Hypergeometric2F1Regularized

@@ -10,6 +10,14 @@ signatures:
     description: The length of the opening run of up steps.
     library: enumeratio-combinatorics
     type: (dyck_path) -> number
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_stat("DyckPath", $1, "InitialRise")
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

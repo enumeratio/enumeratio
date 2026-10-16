@@ -28,6 +28,16 @@ bindings:
       version: 1.14.0
       on: 2026-10-14
     note: SymPy has no regularized incomplete gamma; it is written out as its definition, Gamma(a, z) / Gamma(a).
+  - origin: mapped
+    form: sage
+    template: (gamma_inc($1, $2) / gamma($1))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Complementary to the lower regularized $P(a, z) = 1 - Q(a, z)$, which is the three-argument $Q(a, 0, z)$ (`@enumeratio/analytic`) -- the Gamma-distribution CDF, and with $a = k/2$, $z = x/2$ the $\chi^2_k$ CDF.

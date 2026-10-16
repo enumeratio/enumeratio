@@ -9,4 +9,13 @@ signatures:
 stub: engine
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: SR($1).trig_expand()
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---

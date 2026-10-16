@@ -22,7 +22,7 @@ a-product-of-classes-mod-12-and-mod-8	(Mod(7, 12) * Mod(5, 8))	3
 a-plain-integer-reduces-in-the-class-ring	(Mod(1, 3) + 5)	0	
 equal-across-moduli-mod-6-and-mod-3	enumeratio_equal(Mod(5, 6), Mod(2, 3))	True	
 mod-is-the-remainder-integermod-is-the-class	enumeratio_mod(17, 5)	2	
-chineseremainder-integermod-2-3-and-3-5			
+chineseremainder-integermod-2-3-and-3-5	CRT_list(Mod(2, 3), Mod(3, 5))	ValueError: arguments to CRT_list should be lists	error
 coprime-moduli-have-no-common-ring	(Mod(3, 4) + Mod(5, 7))	TypeError: unsupported operand parent(s) for +: 'Ring of integers modulo 4' and 'Ring of integers modulo 7'	error
 2-mod-4-over-1-mod-6-has-no-inverse	(Mod(1, 6) / Mod(2, 4))	ZeroDivisionError: inverse of Mod(0, 2) does not exist	error
 integermod-and-residueclass-do-not-mix	(Mod(2, 4) + Mod(1, 6))	1	disagree

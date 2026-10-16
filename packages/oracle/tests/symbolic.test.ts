@@ -767,6 +767,12 @@ test.skipIf(!hasSympy)("sympy: a series agrees up to the order both claim, an an
   });
   // A variable of integration that is in neither answer decides nothing.
   program.push('print(enumeratio_antiderivative_agree(Symbol("x") + 1, Symbol("x"), [Symbol("y")]))');
+  // The difference is -1 wherever it is defined, but it is undefined at every negative sample point: constancy across
+  // both signs isn't established.
+  program.push(
+    'P = (Symbol("x") + Rational(13, 4)) * (Symbol("x") + Rational(7, 3)) * (Symbol("x") + Rational(1, 2))\n' +
+      'print(enumeratio_antiderivative_agree(log(1 / P), 1 - log(P), [Symbol("x")]))',
+  );
   const run = spawnSync("python3", ["-c", `from sympy import *\n${SYMPY_PREAMBLE}\n${program.join("\n")}`], {
     encoding: "utf8",
   });
@@ -796,6 +802,7 @@ test.skipIf(!hasSympy)("sympy: a series agrees up to the order both claim, an an
     "separate integrals": "None",
   });
   expect(verdicts[cases.length]).toBe("None");
+  expect(verdicts[cases.length + 1]).toBe("None");
 });
 
 const hasPython = spawnSync("python3", ["-c", "pass"]).status === 0;

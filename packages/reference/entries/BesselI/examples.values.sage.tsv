@@ -1,0 +1,4 @@
+id	in	out	verdict
+besseli-0-1	enumeratio_n(bessel_I(0, 1))	1.26606587775201	
+normal-series-besseli-0-x-x-positiveinfinity-2	(SR(bessel_I(0, SR.var("x"))).series(SR.var("x") == oo, 2 + 1)).truncate()	None	inconclusive
+n-besseli-0-1-50	enumeratio_n(bessel_I(0, 1), 50)	1.26606587775201	

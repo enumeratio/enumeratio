@@ -34,17 +34,17 @@ uncertainty-propagation-sin-2-pm-0-01-approx-0
 an-imaginary-argument-rewrites-to-sinh-sin-ix-i	sin((I * SR.var("x")))	True	
 oddness-pulls-the-sign-out-of-a-symbolic	sin((-SR.var("x")))	True	
 a-half-period-shift-reduces-sin-x-pi-sin-x	sin((SR.var("x") + pi))	True	
-sin-arcsin-x-x-for-every-x			
-sin-arcsin-2-2-past-the-real-domain			
-sin-arcsin-of-a-complex-argument			
-sin-arccos-x-sqrt-1-x-2			
-sin-arctan-x-frac-x-sqrt-1-x-2			
+sin-arcsin-x-x-for-every-x	sin(arcsin(SR.var("x")))	True	
+sin-arcsin-2-2-past-the-real-domain	sin(arcsin(2))	2	
+sin-arcsin-of-a-complex-argument	sin(arcsin((1 + 2*I)))	2*I + 1	
+sin-arccos-x-sqrt-1-x-2	sin(arccos(SR.var("x")))	True	
+sin-arctan-x-frac-x-sqrt-1-x-2	sin(arctan(SR.var("x")))	True	
 derivative-frac-d-dx-sin-x-cos-x	diff(sin(SR.var("x")), SR.var("x"))	True	
 second-derivative	diff(sin(SR.var("x")), SR.var("x"), SR.var("x"))	True	
-antiderivative			
-area-under-one-arch-int-0-pi-sin-x-dx-2			
-int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers			
-taylor-series-about-0-only-odd-powers-appear			
+antiderivative	integrate(sin(SR.var("x")), SR.var("x"))	True	
+area-under-one-arch-int-0-pi-sin-x-dx-2	integrate(sin(SR.var("x")), SR.var("x"), 0, pi)	2	
+int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers	integrate(((sin(SR.var("x")))^3), SR.var("x"))	True	
+taylor-series-about-0-only-odd-powers-appear	SR(sin(SR.var("x"))).series(SR.var("x") == 0, 10 + 1)	True	
 the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1			
 to-30-significant-digits-every-one-correctly	enumeratio_n(sin(1), 30)	0.841470984807897	
 a-huge-24-40-argument-reduces-exactly-mod-2-pi	enumeratio_n(sin(((24)^40)))	0.400083152719766	
@@ -65,24 +65,24 @@ degrees-d-converts-a-degree-measure-to-radians
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	(((sin((pi / 6)))^2) + ((cos((pi / 6)))^2))	1	
 odd-function-sin-x-sin-x	enumeratio_equal(sin((-(pi / 6))), (-sin((pi / 6))))	True	
 period-2-pi-adding-a-full-turn-doesn-t-change	sin(((pi / 6) + (2 * pi)))	1/2	
-double-angle-formula-via-trigexpand			
-angle-addition-formula-via-trigexpand			
-triple-angle-formula			
-power-reduction-sin-2-x-frac-1-cos-2x-2			
-euler-s-formula-sin-x-frac-e-ix-e-ix-2i			
-simplify-knows-the-pythagorean-identity			
-the-same-through-fullsimplify			
+double-angle-formula-via-trigexpand	SR(sin((2 * SR.var("x")))).trig_expand()	True	
+angle-addition-formula-via-trigexpand	SR(sin((SR.var("x") + SR.var("y")))).trig_expand()	True	
+triple-angle-formula	SR(sin((3 * SR.var("x")))).trig_expand()	True	
+power-reduction-sin-2-x-frac-1-cos-2x-2	SR(((sin(SR.var("x")))^2)).trig_reduce()	True	
+euler-s-formula-sin-x-frac-e-ix-e-ix-2i	SR(sin(SR.var("x"))).exponentialize()	True	
+simplify-knows-the-pythagorean-identity	SR((((sin(SR.var("x")))^2) + ((cos(SR.var("x")))^2))).simplify_full()	1	
+the-same-through-fullsimplify	SR((((sin(SR.var("x")))^2) + ((cos(SR.var("x")))^2))).simplify_full()	1	
 sin-3-over-10-times-pi	sin(((3/10) * pi))	1/4*sqrt(5) + 1/4	
-integrate-sin-t-pow-2-t-0-positiveinfinity			
-integrate-sin-t-pow-2-t-0-1-over-2-times-pi			
+integrate-sin-t-pow-2-t-0-positiveinfinity	integrate(sin(((SR.var("t"))^2)), SR.var("t"), 0, oo)	1/4*sqrt(2)*sqrt(pi)	
+integrate-sin-t-pow-2-t-0-1-over-2-times-pi	integrate(((sin(SR.var("t")))^2), SR.var("t"), 0, ((1/2) * pi))	1/4*pi	
 neg-2-times-neg-2-times-sin-1-over-2-pow-4-plus	((-2 * ((-2 * ((sin((1/2)))^4)) + (2 * ((sin((1/2)))^2))) * ((sin(1))^2)) + ((sin(1))^4))	sin(1)^4 + 4*(sin(1/2)^4 - sin(1/2)^2)*sin(1)^2	
 n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2	enumeratio_n((((((0 + 1*I) * sin((1/2))) + cos((1/2))))^2))	0.540302305868140 + 0.841470984807897*I	
-integrate-sin-t-pow-3-t-0-1-over-2-times-pi			
+integrate-sin-t-pow-3-t-0-1-over-2-times-pi	integrate(((sin(SR.var("t")))^3), SR.var("t"), 0, ((1/2) * pi))	2/3	
 n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2	enumeratio_n((((((0 + 1*I) * sin((1/2))) + cos((1/2))))^2))	0.540302305868140 + 0.841470984807897*I	
 n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow	enumeratio_n((((((0 + -1*I) * sin((1/2))) + cos((1/2))))^2))	0.540302305868140 - 0.841470984807897*I	
-n-integrate-1-over-t-times-sin-t-t-0			
-n-integrate-1-over-sqrt-t-times-sin-t-t-0			
-n-integrate-1-over-t-times-sin-1-over-2-times-t			
+n-integrate-1-over-t-times-sin-t-t-0	enumeratio_n(integrate(((1 / SR.var("t")) * sin(SR.var("t"))), SR.var("t"), 0, oo))	1.57079632679490	
+n-integrate-1-over-sqrt-t-times-sin-t-t-0	enumeratio_n(integrate(((1 / sqrt(SR.var("t"))) * sin(SR.var("t"))), SR.var("t"), 0, oo))	1.25331413731550	
+n-integrate-1-over-t-times-sin-1-over-2-times-t	enumeratio_n(integrate(((1 / SR.var("t")) * sin(((1/2) * SR.var("t"))) * cos(((1/2) * SR.var("t")))), SR.var("t"), 0, oo))	0.785398163397448	
 n-sin-1-pow-2	enumeratio_n(((sin(1))^2))	0.708073418273571	
 n-sin-1-over-2-plus-1-over-2-times-pi-pow-2	enumeratio_n(((sin(((1/2) + ((1/2) * pi))))^2))	0.770151152934070	
 1-radian-isn-t-a-recognized-special-angle-so	sin(1)	sin(1)	

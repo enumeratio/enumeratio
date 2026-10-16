@@ -1,0 +1,4 @@
+id	in	out
+a-tree-is-acyclic	(lambda g: g.is_directed_acyclic() if g.is_directed() else g.is_forest())(Graph([[1, 2, 3, 4], [(1, 2), (2, 3), (3, 4)]], format="vertices_and_edges", loops=True, multiedges=True))	True
+a-cycle-is-not-acyclic	(lambda g: g.is_directed_acyclic() if g.is_directed() else g.is_forest())(enumeratio_graph(graphs.CycleGraph(4)))	False
+a-directed-2-cycle-is-a-cycle	(lambda g: g.is_directed_acyclic() if g.is_directed() else g.is_forest())(DiGraph([[1, 2], [(1, 2), (2, 1)]], format="vertices_and_edges", loops=True, multiedges=True))	False

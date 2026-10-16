@@ -17,6 +17,21 @@ seeAlso:
   - Graph
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: ($1).degree()
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: sage
+    template: ($1).degree($2)
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Total degree, in and out combined — a directed edge counts once at each endpoint, same as an undirected one. Sums to $2|E|$ (the handshake lemma), which the tests check against an independently-computed sum on random graphs.

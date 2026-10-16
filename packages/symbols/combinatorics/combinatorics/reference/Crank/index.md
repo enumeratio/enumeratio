@@ -19,6 +19,14 @@ signatures:
     description: "The Andrews-Garvan crank: the largest part when λ has no 1s, else (parts larger than the number of 1s) minus (the number of 1s)."
     library: enumeratio-combinatorics
     type: (integer_partition) -> number
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_stat("IntegerPartition", $1, "Crank")
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

@@ -1,0 +1,18 @@
+id	in	out	verdict
+1-2-2-2-3-2-1-cdot-3-cdot-7	enumeratio_q_factorial(3, 2)	21	
+qfactorial-4-2	enumeratio_q_factorial(4, 2)	315	
+qfactorial-3-2	enumeratio_n(enumeratio_q_factorial(3, 2))	21.0000000000000	
+qfactorial-4-2-2	enumeratio_n(enumeratio_q_factorial(4, 2))	315.000000000000	
+qfactorial-3-1-2	enumeratio_n(enumeratio_q_factorial(3, (1/2)))	2.62500000000000	
+qfactorial-6-3	enumeratio_n(enumeratio_q_factorial(6, 3))	9.16115200000000e7	
+series-q-pow-9-plus-q-pow-8-plus-q-pow-7-plus-q	SR(((((SR.var("q"))^9) + ((SR.var("q"))^8) + ((SR.var("q"))^7) + ((SR.var("q"))^6) + ((SR.var("q"))^5) + ((SR.var("q"))^4) + ((SR.var("q"))^3) + ((SR.var("q"))^2) + SR.var("q") + 1) * (((SR.var("q"))^8) + ((SR.var("q"))^7) + ((SR.var("q"))^6) + ((SR.var("q"))^5) + ((SR.var("q"))^4) + ((SR.var("q"))^3) + ((SR.var("q"))^2) + SR.var("q") + 1) * (((SR.var("q"))^7) + ((SR.var("q"))^6) + ((SR.var("q"))^5) + ((SR.var("q"))^4) + ((SR.var("q"))^3) + ((SR.var("q"))^2) + SR.var("q") + 1) * (((SR.var("q"))^6) + ((SR.var("q"))^5) + ((SR.var("q"))^4) + ((SR.var("q"))^3) + ((SR.var("q"))^2) + SR.var("q") + 1) * (((SR.var("q"))^5) + ((SR.var("q"))^4) + ((SR.var("q"))^3) + ((SR.var("q"))^2) + SR.var("q") + 1) * (((SR.var("q"))^4) + ((SR.var("q"))^3) + ((SR.var("q"))^2) + SR.var("q") + 1) * (((SR.var("q"))^3) + ((SR.var("q"))^2) + SR.var("q") + 1) * (((SR.var("q"))^2) + SR.var("q") + 1) * (SR.var("q") + 1))).series(SR.var("q") == 0, 10 + 1)	None	inconclusive
+series-x-pow-2-plus-x-plus-1-times-x-plus-1-x	SR(((((SR.var("x"))^2) + SR.var("x") + 1) * (SR.var("x") + 1))).series(SR.var("x") == oo, 6 + 1)	None	inconclusive
+qfactorial-3-1-over-2	enumeratio_q_factorial(3, (1/2))	21/8	
+matrixfunction-function-1-pow-2-plus-1-plus-1			
+n-qfactorial-1-over-3-6-50	enumeratio_n(enumeratio_q_factorial((1/3), 6), 50)	ValueError: argument (1/3) must be a nonnegative integer	error
+fullsimplify-normal-series-qfactorial-x-q-x-0-3	(SR(enumeratio_q_factorial(SR.var("x"), SR.var("q"))).series(SR.var("x") == 0, 3 + 1)).truncate()	ValueError: argument (x) must be a nonnegative integer	error
+fullsimplify-normal-series-qfactorial-x-q-x-x0-2	(SR(enumeratio_q_factorial(SR.var("x"), SR.var("q"))).series(SR.var("x") == SR.var("x0"), 2 + 1)).truncate()	ValueError: argument (x) must be a nonnegative integer	error
+the-inversion-generating-function-of	SR(enumeratio_q_factorial(3, SR.var("q"))).expand()	True	
+at-q-1-it-is-the-ordinary-factorial	enumeratio_q_factorial(5, 1)	120	
+series-qfactorial-1-over-2-q-q-0-3	SR(enumeratio_q_factorial((1/2), SR.var("q"))).series(SR.var("q") == 0, 3 + 1)	ValueError: argument (1/2) must be a nonnegative integer	error
+series-qfactorial-minus-3-over-2-q-q-0-3	SR(enumeratio_q_factorial((-3/2), SR.var("q"))).series(SR.var("q") == 0, 3 + 1)	ValueError: argument (-3/2) must be a nonnegative integer	error

@@ -1,0 +1,20 @@
+id	in	out
+the-quadratic	legendre_P(2, SR.var("x"))	True
+the-cubic	legendre_P(3, SR.var("x"))	True
+the-quartic	legendre_P(4, SR.var("x"))	True
+at-a-real	legendre_P(5, 0.7)	-0.365198750000000
+at-p0-0-7	enumeratio_n(legendre_P(0, 0.7))	1.00000000000000
+at-p1-0-7	enumeratio_n(legendre_P(1, 0.7))	0.700000000000000
+at-p2-0-7	enumeratio_n(legendre_P(2, 0.7))	0.235000000000000
+at-p5-0-7	enumeratio_n(legendre_P(5, 0.7))	-0.365198750000000
+at-p-1-0-7	enumeratio_n(legendre_P(-1, 0.7))	1.00000000000000
+at-p-4-0-7	enumeratio_n(legendre_P(-4, 0.7))	-0.192500000000000
+at-p4-2-3i	enumeratio_n(legendre_P(4, (2 + 3*I)))	-501.500000000000 - 570.000000000000*I
+at-a-rational	legendre_P(3, (1/2))	-7/16
+at-a-complex-argument	legendre_P(3, (2 + 3*I))	18*I - 118
+a-symbolic-order-stays-unevaluated	legendre_P(SR.var("n"), SR.var("x"))	True
+at-1	legendre_P(6, 1)	1
+at-minus-1	legendre_P(5, -1)	-1
+at-0	legendre_P(4, 0)	3/8
+bonnet-recurrence	enumeratio_equal((4 * legendre_P(4, 3)), ((7 * 3 * legendre_P(3, 3)) - (3 * legendre_P(2, 3))))	True
+negative-order	legendre_P(-3, SR.var("x"))	True

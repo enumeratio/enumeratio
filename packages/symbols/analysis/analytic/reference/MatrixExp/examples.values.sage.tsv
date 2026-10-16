@@ -1,0 +1,22 @@
+id	in	out	verdict
+the-2-2-closed-form-exact-not-decimalized	[list(r) for r in matrix(SR, [[0, 1], [1, 0]]).exp().rows()]	[[1/2*(e^2 + 1)*e^(-1), 1/2*(e^2 - 1)*e^(-1)], [1/2*(e^2 - 1)*e^(-1), 1/2*(e^2 + 1)*e^(-1)]]	
+the-exponential-of-the-zero-matrix-is-the	[list(r) for r in matrix(SR, [[0, 0], [0, 0]]).exp().rows()]	[[1, 0], [0, 1]]	
+a-diagonal-matrix-exponentiates-entry-by-entry	[list(r) for r in matrix(SR, [[1, 0], [0, 2]]).exp().rows()]	[[e, 0], [0, e^2]]	
+a-generic-2-2-matrix-no-special-structure	enumeratio_n([list(r) for r in matrix(SR, [[1, 2], [3, 4]]).exp().rows()])	[[51.9689561987050, 74.7365645670032], [112.104846850505, 164.073803049210]]	
+an-upper-triangular-3-3-matrix-numeric-path	enumeratio_n([list(r) for r in matrix(SR, [[1, 2, 0], [0, 3, 4], [0, 0, 5]]).exp().rows()])	[[2.71828182845905, 17.3672550947286, 110.960367084660], [0.000000000000000, 20.0855369231877, 256.655244358778], [0.000000000000000, 0.000000000000000, 148.413159102577]]	
+a-nilpotent-4-4-generator-numeric-path	enumeratio_n([list(r) for r in matrix(SR, [[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 0, 0, 0]]).exp().rows()])	[[1.00000000000000, 1.00000000000000, 0.500000000000000, 0.166666666666667], [0.000000000000000, 1.00000000000000, 1.00000000000000, 0.500000000000000], [0.000000000000000, 0.000000000000000, 1.00000000000000, 1.00000000000000], [0.000000000000000, 0.000000000000000, 0.000000000000000, 1.00000000000000]]	
+a-nilpotent-matrix-i-a-since-a-2-0	[list(r) for r in matrix(SR, [[0, 1], [0, 0]]).exp().rows()]	[[1, 1], [0, 1]]	
+a-diagonal-matrix-exp-of-each-diagonal-entry	[list(r) for r in matrix(SR, [[1, 0, 0], [0, 2, 0], [0, 0, 3]]).exp().rows()]	[[e, 0, 0], [0, e^2, 0], [0, 0, e^3]]	
+a-3-3-matrix-with-no-diagonal-nilpotent-or-2-2	enumeratio_n([list(r) for r in matrix(SR, [[1, 2, 3], [4, 5, 6], [7, 8, 10]]).exp().rows()])	TypeError: ECL says: Unable to find the spectral representation	error
+a-jordan-block-e-i-n-e-i-n	[list(r) for r in matrix(SR, [[1, 1], [0, 1]]).exp().rows()]	[[e, e], [0, e]]	
+applied-to-a-vector-e-a-v-computed-as-e-a-via			
+a-3-times-3-nilpotent-generator-the-exponential	[list(r) for r in matrix(SR, [[0, 1, 0], [0, 0, 1], [0, 0, 0]]).exp().rows()]	[[1, 1, 1/2], [0, 1, 1], [0, 0, 1]]	
+a-jordan-block-repeated-eigenvalue-2-e-2-i-n-not	[list(r) for r in matrix(SR, [[2, 1], [0, 2]]).exp().rows()]	[[e^2, e^2], [0, e^2]]	
+matrixexp-list-list-a-b-list-0-c	[list(r) for r in matrix(SR, [[SR.var("a"), SR.var("b")], [0, SR.var("c")]]).exp().rows()]	True	
+matrixexp-diagonalmatrix-list-a-b-c			
+matrixexp-identitymatrix-3			
+a-skew-symmetric-generator-gives-a-rotation	[list(r) for r in matrix(SR, [[0, 1], [-1, 0]]).exp().rows()]	[[1/2*(e^(2*I) + 1)*e^(-I), -1/2*I*(e^(2*I) - 1)*e^(-I)], [1/2*I*(e^(2*I) - 1)*e^(-I), 1/2*(e^(2*I) + 1)*e^(-I)]]	
+matrixexp-a-eq-matrixfunction-exp-a			
+rejects-a-non-square-argument	[list(r) for r in matrix(SR, [[1, 2, 3], [4, 5, 6]]).exp().rows()]	ValueError: exp only defined on square matrices	error
+a-generic-matrix-with-no-closed-form-stays	[list(r) for r in matrix(SR, [[1, 2, 3], [4, 5, 6], [7, 8, 10]]).exp().rows()]	TypeError: ECL says: Unable to find the spectral representation	error
+euler-s-identity-for-matrices-rotation-by-pi-is	[list(r) for r in matrix(SR, [[0, (-pi)], [pi, 0]]).exp().rows()]	[[-1, 0], [0, -1]]	

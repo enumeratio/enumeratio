@@ -19,6 +19,14 @@ bindings:
       version: 1.14.0
       on: 2026-10-14
     note: SymPy has one simplifier, so FullSimplify maps to it too. The scan compares what each answers by value (the difference simplifies to zero, or agrees at sample points), not by form; an answer ours leaves as written is no agreement unless SymPy leaves it too. Assumptions (a second operand) are not mapped.
+  - origin: mapped
+    form: sage
+    template: SR($1).simplify_full()
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 attributes:
   - HoldAll
 names:

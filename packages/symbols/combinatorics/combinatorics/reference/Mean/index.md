@@ -26,6 +26,13 @@ bindings:
     form: oscar
     template: (sum($1) // length($1))
     arity: 1
+  - origin: mapped
+    form: sage
+    template: mean($1)
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - $Mean(c) = \dfrac{\sum c}{Length(c)}$. See [[Length]].

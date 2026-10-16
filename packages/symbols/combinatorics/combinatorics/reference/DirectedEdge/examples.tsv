@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-an-edge-from-1-to-2			[DirectedEdge, 1, 2]	[DirectedEdge, 1, 2]	An edge from 1 to 2
+id	section	role	expr	expected	caption	sage.kind	sage.note
+an-edge-from-1-to-2			[DirectedEdge, 1, 2]	[DirectedEdge, 1, 2]	An edge from 1 to 2	shape	Sage has no edge object: an edge is the tuple (1, 2), which ours writes UndirectedEdge(1, 2) or DirectedEdge(1, 2).

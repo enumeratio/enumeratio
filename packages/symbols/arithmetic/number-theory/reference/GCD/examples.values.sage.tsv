@@ -1,9 +1,9 @@
 id	in	out	verdict
 gcd-12-18	enumeratio_gcd(12, 18)	6	
 gcd-24-36	enumeratio_gcd(24, 36)	12	
-gcd-is-variadic-it-accepts-any-number-of			
-gcd-2-6-10			
-over-the-rationals-the-gcd-of-the-numerators			
+gcd-is-variadic-it-accepts-any-number-of	gcd([20, 30, 45])	5	
+gcd-2-6-10	gcd([2, 6, 10])	2	
+over-the-rationals-the-gcd-of-the-numerators	gcd([(1/3), (2/5), (3/7)])	1/105	
 gaussian-integers-the-associate-in-the-first	enumeratio_gcd((3 + 1*I), (1 + 3*I))	I + 1	
 gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i	enumeratio_gcd((-3 + 2*I), (10 + 15*I))	3*I + 2	
 gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2	enumeratio_gcd((5 + (10/3)*I), ((3/2) + 1*I))	1	inconclusive
@@ -44,12 +44,12 @@ gcd-6-3-mod-3-eq-0	enumeratio_equal(enumeratio_mod(enumeratio_gcd(6, 3), 3), 0)	
 commutative-gcd-a-b-gcd-b-a	enumeratio_equal(enumeratio_gcd(12, 18), enumeratio_gcd(18, 12))	True	
 gcd-a-b-cdot-lcm-a-b-ab-see-lcm	enumeratio_equal((enumeratio_gcd(12, 18) * enumeratio_lcm(12, 18)), (12 * 18))	True	
 gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci	enumeratio_gcd(fibonacci(12), fibonacci(18))	8	
-gcd-7-11-29			
+gcd-7-11-29	gcd([7, 11, 29])	1	
 gcd-5-6-eq-1	enumeratio_equal(enumeratio_gcd(5, 6), 1)	True	
-a-single-argument-is-returned-unchanged			
-with-no-arguments-compute-engine-returns-0-the			
+a-single-argument-is-returned-unchanged	gcd([4])	4	
+with-no-arguments-compute-engine-returns-0-the	gcd([])	0	
 0-is-absorbed-every-integer-divides-it-so-gcd-0	enumeratio_gcd(0, 5)	5	
-signs-are-discarded-before-computing-the-gcd			
+signs-are-discarded-before-computing-the-gcd	gcd([-12, 9, 57])	3	
 equal-length-lists-thread-element-wise	enumeratio_broadcast(lambda _a0, _a1: enumeratio_gcd(_a0, _a1), [2, 4], [6, 8])	[2, 4]	
 gcd-0-0-0-by-convention	enumeratio_gcd(0, 0)	0	
 symbolic-arguments-stay-unevaluated	enumeratio_gcd(SR.var("x"), SR.var("y"))	1	inconclusive

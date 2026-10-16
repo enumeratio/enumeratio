@@ -1,5 +1,5 @@
 id	in	out
 const-glaisher-numeric-value	enumeratio_n(glaisher)	1.28242712910062
 n-constglaisher-50	enumeratio_n(glaisher, 50)	1.28242712910062
-round-constglaisher-pow-100		
+round-constglaisher-pow-100	round(((glaisher)^100))	63572555914
 1-lt-constglaisher-lt-2		

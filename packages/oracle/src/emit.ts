@@ -19,6 +19,7 @@ import { CARRIER_NAMES, CARRIER_PARAMS } from "./carrier-names-data.ts";
 import { DEFINED_NAMES } from "./defined-names-data.ts";
 import { type Mapping, mappingFor, THREADS_MANUALLY } from "./mappings.ts";
 import { isReserved, SAGE_UNBINDABLE, spareName } from "./reserved.ts";
+import { SAGE_STATS } from "./sage-stats.ts";
 import { isWolframFamily, type System } from "./systems.ts";
 
 export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
@@ -106,6 +107,35 @@ function fill(template: string, parts: readonly string[]): string {
   }
   return template.replace(/\$(\d)/g, (_match, index: string) => parts[Number(index) - 1] ?? "");
 }
+
+/** Functions with no derivative in a complex variable: Sage would differentiate them as on the line. */
+const NON_HOLOMORPHIC = new Set([
+  "Abs",
+  "Sign",
+  "Conjugate",
+  "Real",
+  "Imaginary",
+  "Argument",
+  "Floor",
+  "Ceil",
+  "Round",
+]);
+
+/** Graph constructors whose vertex numbering is not Sage's sorted order, and the queries that read a numbering. */
+const UNSORTED_GRAPHS = new Set(["TuranGraph", "HararyGraph", "GridGraph"]);
+const NUMBERED_QUERIES = new Set([
+  "VertexDegree",
+  "VertexEccentricity",
+  "GraphDistance",
+  "FindShortestPath",
+  "GraphCenter",
+  "VertexList",
+  "AdjacencyMatrix",
+  "ConnectedComponents",
+  "EdgeList",
+]);
+const mentions = (node: MathJSON, heads: ReadonlySet<string>): boolean =>
+  isCall(node) && (heads.has(node[0] as string) || node.slice(1).some((child) => mentions(child as MathJSON, heads)));
 
 /** Heads whose operands thread over lists, which Python's own operators do not. */
 const BROADCAST_HEADS = new Set(["Add", "Subtract", "Multiply", "Divide", "Power"]);
@@ -226,6 +256,9 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
   const realDummies = new Set<string>();
   const boundName = (name: string): string => {
     if (wl) return isSystemName(name) ? `${CONTEXT}${name}` : name;
+    // The symbols a held derivative differentiates are Sage variables, not Python names.
+    if (system === "sage" && /^_d\d+$/.test(name))
+      return `SR.var(${JSON.stringify(name)}${realDummies.has(name) ? ', domain="real"' : ""})`;
     // A real variable lets Abs and sign differentiate as they do on the line; at a complex point (sqrt(t**2) at I)
     // it would be the wrong function to differentiate.
     if (system === "sympy") return `Symbol(${JSON.stringify(name)}${realDummies.has(name) ? ", real=True" : ""})`;
@@ -257,8 +290,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       if (/^'.*'$/s.test(node)) return JSON.stringify(node.slice(1, -1));
       const constant = CONSTANTS[node]?.[system];
       if (constant !== undefined) return constant;
-      // A bare `Infinity` is SymPy's `oo`; scoped here, since a CONSTANTS row would make it missing elsewhere.
-      if (system === "sympy" && node === "Infinity") return "oo";
+      // A bare `Infinity` is `oo` for SymPy and Sage; scoped here, since a CONSTANTS row would make it missing elsewhere.
+      if ((system === "sympy" || system === "sage") && node === "Infinity") return "oo";
       // Wolfram also knows the rest of the constants, the slots a Function binds, and a
       // mapped head passed as a value (`Fold(Add, 0, xs)`).
       if (wl && (node in SYMBOLS || node in HEADS || /^_\d+$/.test(node))) return toWolfram(node);
@@ -343,6 +376,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     const iterated = (head === "Sum" || head === "Product") && operands.length > 1 ? operands.slice(1) : [];
     // A `Limits` iterator binds only for SymPy's Sum (below); the Wolfram lane keeps its free `k`.
     const binders = iterated.flatMap((it) =>
+      // Sage's own sum keeps the index a symbol (below); a library's row for it binds the name.
+      (system !== "sage" || extra.some((m) => m.head === head)) &&
       isCall(it) &&
       (it[0] === "Tuple" || it[0] === "List" || (system === "sympy" && it[0] === "Limits")) &&
       typeof it[1] === "string"
@@ -444,7 +479,13 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       }
     }
     // SymPy's `summation(f, (k, a, b))`: the iterator is a tuple, from 1 when its start is `Nothing` or left out.
-    if (system === "sympy" && head === "Sum" && operands.length === 2) {
+    // Sage's `sum(f, k, a, b)` and `product(f, k, a, b)` take the iterator's parts as arguments, k a symbol.
+    if (
+      (system === "sympy"
+        ? head === "Sum"
+        : system === "sage" && (head === "Sum" || head === "Product") && !extra.some((m) => m.head === head)) &&
+      operands.length === 2
+    ) {
       const iterator = operands[1] as MathJSON;
       const bounds = isCall(iterator) ? iterator.slice(2) : [];
       if (
@@ -455,14 +496,18 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       ) {
         const [from, to] = bounds.length === 1 ? [1, bounds[0]] : bounds;
         const range = [iterator[1], from === "Nothing" ? 1 : from, to].map((part) => walk(part as MathJSON));
-        const summation = mappingFor(head, 2, extra)?.emit.sympy;
-        if (summation !== undefined) return fill(summation, [walk(operands[0] as MathJSON), `(${range.join(", ")})`]);
+        const summation = mappingFor(head, 2, extra)?.emit[system];
+        if (summation !== undefined)
+          return fill(summation, [
+            walk(operands[0] as MathJSON),
+            system === "sage" ? range.join(", ") : `(${range.join(", ")})`,
+          ]);
       }
     }
     // A derivative ours holds at a point (`Series` coefficients): `Apply(Derivative(f, o1, …), a1, …)` is f
     // differentiated o_i times in its i-th argument, there. The differentiated arguments are symbols of their own,
     // substituted afterwards.
-    if (system === "sympy" && head === "Apply" && operands.length >= 2) {
+    if ((system === "sympy" || system === "sage") && head === "Apply" && operands.length >= 2) {
       const callee = operands[0] as MathJSON;
       const orders = isCall(callee) && callee[0] === "Derivative" ? callee.slice(2) : [];
       if (
@@ -474,6 +519,11 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         const names = orders.map((order) => (order === 0 ? undefined : `_d${++derivatives}`));
         const differentiated = names.filter((name): name is string => name !== undefined);
         const real = names.every((name, i) => name === undefined || isRealNumber(operands[i + 1] as MathJSON));
+        // Sage differentiates Abs and sign as it would on the line whatever the point: off it, no answer.
+        if (system === "sage" && !real && NON_HOLOMORPHIC.has(callee[1] as string)) {
+          missing.push(`${head}/derivative-at-a-complex-point`);
+          return "0";
+        }
         for (const name of differentiated) {
           bound.add(name);
           if (real) realDummies.add(name);
@@ -482,7 +532,13 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
           const body = walk([callee[1], ...names.map((name, i) => name ?? operands[i + 1]!)] as MathJSON);
           if (differentiated.length === 0) return body;
           const steps = names.flatMap((name, i) =>
-            name === undefined ? [] : [`(${walk(name)}, ${orders[i] as number})`],
+            name === undefined
+              ? []
+              : [
+                  system === "sage"
+                    ? `${walk(name)}, ${orders[i] as number}`
+                    : `(${walk(name)}, ${orders[i] as number})`,
+                ],
           );
           const points = names.flatMap((name, i) =>
             name === undefined ? [] : [`${walk(name)}: ${walk(operands[i + 1] as MathJSON)}`],
@@ -498,7 +554,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     }
     // SymPy's `integrate(f, (x, a, b))`: a bare variable (or `Limits(x, Nothing, Nothing)`) is an indefinite
     // integral. Our first limit is the outermost, as Wolfram's; SymPy's first is the innermost.
-    if (system === "sympy" && head === "Integrate" && operands.length >= 2) {
+    if ((system === "sympy" || system === "sage") && head === "Integrate" && operands.length >= 2) {
       const [integrand, ...specs] = operands as [MathJSON, ...MathJSON[]];
       const function_ = isCall(integrand) && integrand[0] === "Function" ? integrand : undefined;
       const wrapped = function_?.[1] as MathJSON | undefined;
@@ -515,16 +571,24 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
           if (typeof name === "string")
             return from === "Nothing" && to === "Nothing"
               ? walk(name)
-              : `(${[name, from, to].map((part) => walk(part)).join(", ")})`;
+              : system === "sage"
+                ? [name, from, to].map((part) => walk(part)).join(", ")
+                : `(${[name, from, to].map((part) => walk(part)).join(", ")})`;
         }
         return undefined;
       });
-      const integral = mappingFor(head, operands.length, extra)?.emit.sympy;
-      if (integral !== undefined && iterators.every((iterator) => iterator !== undefined))
+      const integral = mappingFor(head, operands.length, extra)?.emit[system];
+      if (integral !== undefined && iterators.every((iterator) => iterator !== undefined)) {
+        // Sage integrates one variable at a time, the last iterator innermost.
+        if (system === "sage")
+          return (iterators as string[])
+            .toReversed()
+            .reduce((inner, iterator) => fill(integral, [inner, iterator]), walk(body));
         return fill(integral, [walk(body), ...(iterators as string[]).toReversed()]);
+      }
     }
     // Without an iterator `integrate(f)` would pick the variable itself.
-    if (system === "sympy" && head === "Integrate" && operands.length < 2) {
+    if ((system === "sympy" || system === "sage") && head === "Integrate" && operands.length < 2) {
       missing.push(`${head}/${operands.length}`);
       return "0";
     }
@@ -538,6 +602,16 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       const series = walk(operands[0] as MathJSON);
       return head === "Normal" ? `(${series}).removeO()` : `simplify(${series})`;
     }
+    // Sage's series answers its Order term too: `Normal` is its `truncate()`.
+    if (
+      system === "sage" &&
+      ["Normal", "Simplify", "FullSimplify"].includes(head) &&
+      operands.length === 1 &&
+      seriesCall(operands[0] as MathJSON) !== undefined
+    ) {
+      const series = walk(operands[0] as MathJSON);
+      return head === "Normal" ? `(${series}).truncate()` : series;
+    }
     // factorrat takes rationals; a Gaussian integer is not one, and SymPy has no factorization of it to ask for.
     if (system === "sympy" && head === "FactorInteger" && operands.length === 1) {
       const operand = operands[0] as MathJSON;
@@ -545,6 +619,49 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         missing.push("FactorInteger/Complex");
         return "0";
       }
+    }
+    // A query that reads vertex numbers of a graph Sage numbers otherwise than ours would compare under two numberings.
+    if (
+      system === "sage" &&
+      NUMBERED_QUERIES.has(head) &&
+      operands.some((op) => mentions(op as MathJSON, UNSORTED_GRAPHS))
+    ) {
+      missing.push(`${head}/numbering`);
+      return "0";
+    }
+    // A graph is Sage's Graph or DiGraph, by its edges; loops and parallel edges are kept, as ours keeps them.
+    if (system === "sage" && head === "Graph" && (operands.length === 1 || operands.length === 2)) {
+      const edges = operands[operands.length - 1] as MathJSON;
+      const kinds =
+        isCall(edges) && edges[0] === "List" ? new Set(edges.slice(1).map((e) => (isCall(e) ? e[0] : ""))) : undefined;
+      const directed = kinds?.has("DirectedEdge") === true;
+      if (
+        kinds === undefined ||
+        [...kinds].some((kind) => kind !== "UndirectedEdge" && kind !== "DirectedEdge") ||
+        (directed && kinds.has("UndirectedEdge"))
+      ) {
+        missing.push(`${head}/${operands.length}`);
+        return "0";
+      }
+      const list = walk(edges);
+      const constructor = directed ? "DiGraph" : "Graph";
+      return operands.length === 1
+        ? `${constructor}(${list}, format="list_of_edges", loops=True, multiedges=True)`
+        : `${constructor}([${walk(operands[0] as MathJSON)}, ${list}], format="vertices_and_edges", loops=True, multiedges=True)`;
+    }
+    // A statistic by name, on the carrier it is of: Sage builds the object the carrier names (run.ts).
+    if (system === "sage" && head === "CombinatorialStat" && operands.length === 2) {
+      const [object, label] = operands as [MathJSON, MathJSON];
+      const name = typeof label === "string" && /^'.*'$/s.test(label) ? label.slice(1, -1) : undefined;
+      if (
+        isCall(object) &&
+        object.length === 2 &&
+        name !== undefined &&
+        SAGE_STATS[object[0] as string]?.[name] !== undefined
+      )
+        return `enumeratio_stat(${JSON.stringify(object[0])}, ${walk(object[1] as MathJSON)}, ${JSON.stringify(name)})`;
+      missing.push(`${head}/${operands.length}`);
+      return "0";
     }
     const mapping = mappingFor(head, operands.length, extra);
     let template = mapping?.emit[system];

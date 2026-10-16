@@ -15,6 +15,14 @@ signatures:
     description: The sum of the parts weighted by their row, counting rows from 0.
     library: enumeratio-combinatorics
     type: (integer_partition) -> number
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_stat("IntegerPartition", $1, "WeightedSize")
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

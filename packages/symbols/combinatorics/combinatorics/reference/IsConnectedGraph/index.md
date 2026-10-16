@@ -13,6 +13,14 @@ seeAlso:
   - IsTreeGraph
 names:
   wolfram: ConnectedGraphQ
+bindings:
+  - origin: mapped
+    form: sage
+    template: "(lambda g: g.is_strongly_connected() if g.is_directed() else g.is_connected())($1)"
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Wolfram calls this `ConnectedGraphQ`; this library uses the `Is…` spelling everywhere.

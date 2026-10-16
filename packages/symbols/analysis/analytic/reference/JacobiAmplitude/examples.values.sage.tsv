@@ -1,0 +1,14 @@
+id	in	out	verdict
+a-floating-point-argument-evaluates-directly-to	enumeratio_n(jacobi_am(0.3, 0.5))	0.297794749129830	
+am-1-1-0-9	enumeratio_n(jacobi_am(1.1, 0.9))	0.945070898187812	
+am-0-7-0-2	enumeratio_n(jacobi_am(-0.7, 0.2))	-0.689667393573298	
+am-1-1i-0-3	enumeratio_n(jacobi_am((1 + 1*I), 0.3))	ValueError: arguments must be real	error
+am-0-1-5i-0-4	enumeratio_n(jacobi_am((0.1 + 5*I), 0.4))	ValueError: arguments must be real	error
+a-wider-argument-u-past-the-first-quarter	enumeratio_n(jacobi_am(2.5, 0.3))	2.24725055095409	
+d-jacobiamplitude-u-m-m	diff(jacobi_am(SR.var("u"), SR.var("m")), SR.var("m"))	-1/2*(m*jacobi_cn(u, m)*jacobi_sn(u, m) - ((m - 1)*u + elliptic_e(jacobi_am(u, m), m))*jacobi_dn(u, m))/((m - 1)*m)	disagree
+series-jacobiamplitude-u-m-u-0-5	SR(jacobi_am(SR.var("u"), SR.var("m"))).series(SR.var("u") == 0, 5 + 1)	True	
+series-jacobiamplitude-z-m-m-0-2	SR(jacobi_am(SR.var("z"), SR.var("m"))).series(SR.var("m") == 0, 2 + 1)	ValueError: power::eval(): division by zero	error
+u-0-is-0-for-any-m	jacobi_am(0, SR.var("m"))	0	
+m-0-reduces-to-u	jacobi_am(SR.var("u"), 0)	True	
+m-outside-0-1-is-declined	enumeratio_n(jacobi_am(0.3, 1.5))	0.293411763426439	inconclusive
+symbolic-arguments-are-left-unevaluated-rather	jacobi_am(SR.var("u"), SR.var("m"))	True	

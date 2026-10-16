@@ -26,6 +26,25 @@ names:
   wolframIdentity: true
 statOn:
   - Numeric
+bindings:
+  - origin: mapped
+    form: sage
+    template: sum(Integer(abs($1)).digits(10))
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: sage
+    template: sum(Integer(abs($1)).digits($2))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Equivalent to summing [[IntegerDigits]](n, base).

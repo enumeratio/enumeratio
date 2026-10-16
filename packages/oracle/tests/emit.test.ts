@@ -178,8 +178,9 @@ test("SymPy keeps a residue class through Power and Divide, and reads an Interva
   expect(source(["FactorInteger", ["Complex", 3, 4]])).toBeUndefined();
 });
 
-test("a bare Infinity is SymPy's oo, and Wolfram still reads it as its own", () => {
+test("a bare Infinity is oo for SymPy and Sage, and Wolfram still reads it as its own", () => {
   expect(emit(["Erf", "Infinity"], "sympy")).toEqual({ ok: true, source: "erf(oo)" });
+  expect(emit(["Erf", "Infinity"], "sage")).toEqual({ ok: true, source: "erf(oo)" });
   expect(emit(["Erf", "Infinity"], "wolfram").ok).toBe(true);
 });
 
@@ -718,4 +719,53 @@ test("BigO emits to Wolfram with the exponent outside O, and the center in it", 
     ok: true,
     source: "Power[O[x, Infinity], 7]",
   });
+});
+
+// Sage takes its sums, integrals, series, graphs and statistics through its own calls, with the variables symbols.
+test("Sage: sums and integrals over symbols, a series with its Order term, graphs, and named statistics", () => {
+  expect(emit(["Sum", ["Power", "k", 2], ["Limits", "k", 1, 10]], "sage")).toMatchObject({
+    source: 'sum(((SR.var("k"))^2), SR.var("k"), 1, 10)',
+    freeSymbols: ["k"],
+  });
+  // The first limit is the outermost integral.
+  expect(
+    emit(["Integrate", ["Multiply", "x", "y"], ["Limits", "x", 0, 1], ["Limits", "y", 0, 2]], "sage"),
+  ).toMatchObject({
+    source: 'integrate(integrate((SR.var("x") * SR.var("y")), SR.var("y"), 0, 2), SR.var("x"), 0, 1)',
+  });
+  expect(emit(["Series", ["Sin", "x"], "x", 0, 5], "sage")).toMatchObject({
+    source: 'SR(sin(SR.var("x"))).series(SR.var("x") == 0, 5 + 1)',
+  });
+  expect(emit(["Graph", ["List", 1, 2, 3], ["List", ["DirectedEdge", 1, 2]]], "sage")).toEqual({
+    ok: true,
+    source: 'DiGraph([[1, 2, 3], [(1, 2)]], format="vertices_and_edges", loops=True, multiedges=True)',
+  });
+  expect(emit(["CombinatorialStat", ["Permutation", ["List", 3, 1, 2]], "'Descents'"], "sage")).toEqual({
+    ok: true,
+    source: 'enumeratio_stat("Permutation", [3, 1, 2], "Descents")',
+  });
+  // A statistic Sage has no method for stays unmapped.
+  expect(emit(["CombinatorialStat", ["Permutation", ["List", 3, 1, 2]], "'NoSuchStat'"], "sage").ok).toBe(false);
+});
+
+// Sage differentiates Abs as on the line, so a held derivative is real only at real points, and none is answered off them.
+test("Sage: a held derivative's variable is real at real points, and a non-holomorphic one is unmapped at a complex point", () => {
+  const at = (point: MathJSON): MathJSON => ["Apply", ["Derivative", "Abs", 1], point];
+  expect(emit(at(2), "sage")).toEqual({
+    ok: true,
+    source:
+      '(diff(enumeratio_abs(SR.var("_d1", domain="real")), SR.var("_d1", domain="real"), 1)).subs({SR.var("_d1", domain="real"): 2})',
+  });
+  expect(emit(at(["Complex", 2, 1]), "sage")).toMatchObject({ ok: false });
+  // A holomorphic function is differentiated the same at any point.
+  expect(emit(["Apply", ["Derivative", "Sin", 1], ["Complex", 2, 1]], "sage").ok).toBe(true);
+});
+
+// Sage's graph families are numbered from 1 in its own sorted order, which ours is not for these three.
+test("Sage: a query that reads vertex numbers is unmapped over a graph Sage numbers otherwise, a numbering-free one is not", () => {
+  const turan: MathJSON = ["TuranGraph", 5, 3];
+  expect(emit(["VertexDegree", turan, 1], "sage")).toMatchObject({ ok: false, missing: ["VertexDegree/numbering"] });
+  expect(emit(["GraphDistance", ["GridGraph", ["List", 2, 3]], 1, 6], "sage").ok).toBe(false);
+  expect(emit(["EdgeCount", turan], "sage").ok).toBe(true);
+  expect(emit(["VertexDegree", ["CycleGraph", 5], 1], "sage").ok).toBe(true);
 });

@@ -42,7 +42,7 @@ base-a-real-prime-s-associate-by-the-unit-i	enumeratio_power_mod((0 + 7*I), 3, (
 modulus-a-real-composite-5-squared	enumeratio_power_mod((1 + 1*I), 4, 25)	21	
 a-negative-unit-exponent-is-its-own-inverse	enumeratio_power_mod((0 + 1*I), -1, 7)	-I	
 modulus-a-negative-associate	enumeratio_power_mod((2 + 1*I), 5, (-2 + -3*I))	-I - 1	
-sum-powermod-a-2-7-a-nothing-7			
+sum-powermod-a-2-7-a-nothing-7	sum(enumeratio_power_mod(SR.var("a"), 2, 7), SR.var("a"), 1, 7)	TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'	error
 findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0			
 one-step-of-rsa-style-modular-exponentiation-7	enumeratio_power_mod(7, 13, 33)	13	
 341-11-cdot-31-passes-fermat-s-test-to-base-2	enumeratio_power_mod(2, 340, 341)	1	

@@ -1,0 +1,25 @@
+id	in	out	verdict
+one-over-s-squared	inverse_laplace(((SR.var("s"))^-2), SR.var("s"), SR.var("t"))	True	
+one-over-s-minus-a	inverse_laplace((((SR.var("s") + (-SR.var("a"))))^-1), SR.var("s"), SR.var("t"))	True	
+s-over-s-squared-plus-a-squared	inverse_laplace((SR.var("s") / (((SR.var("s"))^2) + ((SR.var("a"))^2))), SR.var("s"), SR.var("t"))	TypeError: Computation failed since Maxima requested additional constraints; using the 'assume' command before 	error
+inverselaplacetransform-1-over-s-plus-1-s-t	inverse_laplace((1 / (SR.var("s") + 1)), SR.var("s"), SR.var("t"))	True	
+inverselaplacetransform-ln-1-over-b-plus-s-times	inverse_laplace(log(((1 / (SR.var("b") + SR.var("s"))) * (SR.var("a") + SR.var("s")))), SR.var("s"), SR.var("t"))	None	inconclusive
+inverselaplacetransform-a-times-1-over-a-pow-2	inverse_laplace((SR.var("a") * (1 / (((SR.var("a"))^2) + ((SR.var("s"))^2)))), SR.var("s"), SR.var("t"))	TypeError: Computation failed since Maxima requested additional constraints; using the 'assume' command before 	error
+inverselaplacetransform-s-times-1-over-a-pow-2	inverse_laplace((SR.var("s") * (1 / (((SR.var("a"))^2) + ((SR.var("s"))^2)))), SR.var("s"), SR.var("t"))	TypeError: Computation failed since Maxima requested additional constraints; using the 'assume' command before 	error
+fullsimplify-inverselaplacetransform-a-times-1	SR(inverse_laplace((SR.var("a") * (1 / ((-((SR.var("a"))^2)) + ((SR.var("s"))^2)))), SR.var("s"), SR.var("t"))).simplify_full()	True	
+fullsimplify-inverselaplacetransform-s-times-1	SR(inverse_laplace((SR.var("s") * (1 / ((-((SR.var("a"))^2)) + ((SR.var("s"))^2)))), SR.var("s"), SR.var("t"))).simplify_full()	True	
+inverselaplacetransform-s-times-a-pow-2-plus-s	inverse_laplace((SR.var("s") * (((((SR.var("a"))^2) + ((SR.var("s"))^2)))^-2)), SR.var("s"), SR.var("t"))	TypeError: Computation failed since Maxima requested additional constraints; using the 'assume' command before 	error
+inverselaplacetransform-s-times-1-over-a-pow-2-2	inverse_laplace((SR.var("s") * (1 / ((((SR.var("a"))^2) + ((SR.var("s"))^2)) * (((SR.var("b"))^2) + ((SR.var("s"))^2))))), SR.var("s"), SR.var("t"))	TypeError: Computation failed since Maxima requested additional constraints; using the 'assume' command before 	error
+fullsimplify-inverselaplacetransform-1-over-neg	SR(inverse_laplace(((1 / (((-((SR.var("a"))^2)) + ((SR.var("s"))^2)) * ((-((SR.var("b"))^2)) + ((SR.var("s"))^2)))) * ((SR.var("s"))^2)), SR.var("s"), SR.var("t"))).simplify_full()	True	
+inverselaplacetransform-1-over-s-minus-2-times	inverse_laplace(((1 / ((SR.var("s") + -2) * sqrt(SR.var("s")))) * ((e)^(-5 * SR.var("s")))), SR.var("s"), SR.var("t"))	ilt(e^(-5*s)/((s - 2)*sqrt(s)), s, t)	disagree
+inverselaplacetransform-1-over-a-plus-s-times	inverse_laplace(((1 / (SR.var("a") + SR.var("s"))) * sqrt((SR.var("b") + SR.var("s")))), SR.var("s"), SR.var("t"))	None	inconclusive
+inverselaplacetransform-1-over-s-minus-1-times	inverse_laplace(((1 / (SR.var("s") + -1)) * log(SR.var("s"))), SR.var("s"), SR.var("t"))	None	inconclusive
+inverselaplacetransform-ln-1-over-s-pow-2-plus-2	inverse_laplace(log(((1 / (((SR.var("s"))^2) + 2)) * (((SR.var("s"))^2) + 1))), SR.var("s"), SR.var("t"))	None	inconclusive
+inverselaplacetransform-1-over-root-s-3-times-ln	inverse_laplace(((1 / real_nth_root(SR.var("s"), 3)) * log((4 * SR.var("s")))), SR.var("s"), SR.var("t"))	None	inconclusive
+inverselaplacetransform-1-over-s-times-ln-s-pow	inverse_laplace(((1 / SR.var("s")) * ((log(SR.var("s")))^2)), SR.var("s"), SR.var("t"))	None	inconclusive
+inverselaplacetransform-1-over-root-s-3-times	inverse_laplace(((1 / real_nth_root(SR.var("s"), 3)) * gamma_inc((1/3), SR.var("s"))), SR.var("s"), SR.var("t"))	ilt(gamma(1/3, s)*real_nth_root(1/s, 3), s, t)	disagree
+inverselaplacetransform-1-over-sqrt-s-times-erf	inverse_laplace(((1 / sqrt(SR.var("s"))) * erf(sqrt((2 * SR.var("s"))))), SR.var("s"), SR.var("t"))	ilt(erf(sqrt(2)*sqrt(s))/sqrt(s), s, t)	disagree
+inverselaplacetransform-elliptick-a-pow-2-times	inverse_laplace((elliptic_kc((((SR.var("a"))^2) * ((SR.var("s"))^-2))) + ((-1/2) * pi)), SR.var("s"), SR.var("t"))	None	inconclusive
+inverselaplacetransform-s-times-neg-elliptice-a	inverse_laplace((SR.var("s") * ((-elliptic_ec((((SR.var("a"))^2) * ((SR.var("s"))^-2)))) + ((1/2) * pi))), SR.var("s"), SR.var("t"))	None	inconclusive
+inverselaplacetransform-1-over-sqrt-s-plus-1-s-t	inverse_laplace((1 / sqrt((SR.var("s") + 1))), SR.var("s"), SR.var("t"))	None	inconclusive
+inverselaplacetransform-besselk-4-sqrt-s-times-s	inverse_laplace((bessel_K(4, sqrt(SR.var("s"))) * ((SR.var("s"))^-2)), SR.var("s"), SR.var("t"))	None	inconclusive

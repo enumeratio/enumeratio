@@ -31,6 +31,14 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: prime(n) is SymPy's n-th prime.
+  - origin: mapped
+    form: sage
+    template: nth_prime($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Inverse of [[PrimePi]]: $\pi(p_n)=n$.

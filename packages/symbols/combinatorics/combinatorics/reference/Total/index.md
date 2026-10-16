@@ -13,6 +13,14 @@ seeAlso:
   - MovingMap
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: sum($1)
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Wolfram's levels and `Method` arguments are not implemented.

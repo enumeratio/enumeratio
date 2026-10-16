@@ -27,6 +27,14 @@ statOn:
   - Endofunction
   - Permutation
   - SignedPermutation
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_stat("Permutation", $1, "FixedPoints")
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - A permutation with no fixed points is a derangement (see [[Derangements]])

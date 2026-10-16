@@ -52,6 +52,14 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: euler_number($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Odd-indexed Euler numbers past $E_0$ are 0; the even ones come from $\sum_{k=0}^{n/2}\binom{n}{2k}E_{2k}=0$.

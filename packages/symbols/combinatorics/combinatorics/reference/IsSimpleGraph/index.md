@@ -13,6 +13,14 @@ seeAlso:
   - IsCompleteGraph
 names:
   wolfram: SimpleGraphQ
+bindings:
+  - origin: mapped
+    form: sage
+    template: (not ($1).has_loops() and not ($1).has_multiple_edges())
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Wolfram calls this `SimpleGraphQ`; this library uses the `Is…` spelling everywhere.

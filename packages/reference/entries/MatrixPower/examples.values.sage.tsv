@@ -1,0 +1,5 @@
+id	in	out	verdict
+of-a-matrix	[list(r) for r in (matrix([[1, 1], [1, 0]])^10).rows()]	[[89, 55], [55, 34]]	
+of-a-word	[list(r) for r in (matrix("LR")^2).rows()]	TypeError: the dimensions of the matrix must be specified	error
+of-a-modular-matrix			
+negative-power			

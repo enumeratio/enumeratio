@@ -1,0 +1,20 @@
+id	in	out	verdict
+n-arcsch-2	enumeratio_n(arccsch(2))	0.481211825059603	
+a-pole-at-0	arccsch(0)	+Infinity	disagree
+arcsch-positiveinfinity	arccsch(oo)	0	
+a-float-argument-evaluates-directly	arccsch(1.5)	0.625145117250417	
+as-a-logarithm-arcsch-1-ln-1-sqrt-2	SR(arccsch(1)).exponentialize()	arccsch(1)	
+oddness-pulls-the-sign-out-of-a-symbolic	arccsch((-SR.var("x")))	True	
+derivative-for-real-x-ne-0	diff(arccsch(SR.var("x")), SR.var("x"))	None	inconclusive
+n-arcsch-5-50	enumeratio_n(arccsch(5), 50)	0.198690110349241	
+arcsch-complexinfinity	arccsch(unsigned_infinity)	0	
+arcsch-list-list-2i-0-list-i-neg-2-times-i	[[arccsch((0 + 2*I)), arccsch(0)], [arccsch((0 + 1*I)), arccsch((0 + -2*I))]]	[[arccsch(2*I), +Infinity], [arccsch(I), arccsch(-2*I)]]	disagree
+matrixfunction-function-arcsch-1-1-list-list-2i			
+arcsch-neg-i-times-sqrt-2-plus-neg-2-over-5	arccsch(((0 + -1*I) * sqrt((2 + ((-2/5) * sqrt(5))))))	arccsch(-I*sqrt(-2/5*sqrt(5) + 2))	
+arcsch-2i-times-sqrt-1-over-2-plus-sqrt-2	arccsch(((0 + 2*I) * sqrt((1 / (2 + sqrt(2))))))	arccsch(2*I/sqrt(sqrt(2) + 2))	
+arcsch-neg-2-times-i-times-sqrt-1-over-2-plus	arccsch(((0 + -2*I) * sqrt((1 / (2 + sqrt(2))))))	arccsch(-2*I/sqrt(sqrt(2) + 2))	
+arcsch-neg-i-times-sqrt-2-plus-2-over-5-times	arccsch(((0 + -1*I) * sqrt((2 + ((2/5) * sqrt(5))))))	arccsch(-I*sqrt(2/5*sqrt(5) + 2))	
+arcsch-i-times-neg-sqrt-2-plus-sqrt-6	arccsch(((0 + 1*I) * ((-sqrt(2)) + sqrt(6))))	arccsch(I*sqrt(6) - I*sqrt(2))	
+arcsch-i-times-neg-sqrt-6-plus-sqrt-2	arccsch(((0 + 1*I) * ((-sqrt(6)) + sqrt(2))))	arccsch(-I*sqrt(6) + I*sqrt(2))	
+arcsch-i-times-sqrt-2-plus-neg-2-over-5-times	arccsch(((0 + 1*I) * sqrt((2 + ((-2/5) * sqrt(5))))))	arccsch(I*sqrt(-2/5*sqrt(5) + 2))	
+arcsch-i-times-sqrt-2-plus-2-over-5-times-sqrt-5	arccsch(((0 + 1*I) * sqrt((2 + ((2/5) * sqrt(5))))))	arccsch(I*sqrt(2/5*sqrt(5) + 2))	
