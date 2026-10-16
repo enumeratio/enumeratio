@@ -1,0 +1,35 @@
+id	in	out	verdict
+q-a-0-1-for-any-a	gamma_regularized(n(1), n(0))	panic: statrs: XInvalid	error
+q-1-z-e-z-here-at-z-1	gamma_regularized(n(1), n(1))	0.3678794411714419	
+floating-point-arguments-evaluate-directly-to-a	gamma_regularized(x(2.5), x(1.5))	0.6999858358786284	
+q-1-z-e-z-at-z-1-5	gamma_regularized(n(1), x(1.5))	0.22313016014842993	
+q-2-3-3-4-3-e-3-3	gamma_regularized(n(2), x(3.3))	0.15859761982533205	
+q-1-0-2-all-integers			
+q-2-5-1-5-3			
+q-0-5-0-0-25			
+q-3-1-7-all-integers			
+q-2-5-0-complex-1-5-plus-i			
+q-complex-2-plus-i-0-1-5			
+q-three-complex-arguments			
+q-0-1-4-all-integers			
+threads-element-wise-over-a-list-as-wolfram-s	list(vec![gamma_regularized(n(1), n(1)), gamma_regularized(n(2), n(1))])	[0.3678794411714419, 0.7357588823428847]	
+complex-order-under-n			
+three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2			
+which-at-an-integer-order-equally-evaluates-to			
+listable-over-its-limits-q-1-infty-infty-q-1			
+listable-threads-elementwise-over-a-matrix	list(vec![list(vec![gamma_regularized(n(2), x(3.5)), gamma_regularized(n(2), n(0))]), list(vec![gamma_regularized(n(2), n(0)), gamma_regularized(n(2), x(6.5))])])	panic: statrs: XInvalid	error
+interval-arithmetic-q-is-decreasing-in-z			
+to-30-significant-digits-not-yet-the-last-digit	nf(gamma_regularized(n(2), n(1)))	0.7357588823428847	
+q-s-z-at-a-complex-order-s-beyond-what-the			
+the-cdf-of-a-poisson-lambda-2-random-variable-at	gamma_regularized(n(3), n(2))	0.6766764161830646	
+three-arguments-p-5-2-3-2-q-5-2-0-3-2-the-gamma			
+the-chi-2-1-cdf-p-1-2-x-2-at-the-familiar	(n(1) - gamma_regularized(x(0.5), x(1.9207294103470425)))	0.9499999999999988	
+the-polynomial-closed-form-for-an-integer-order	gamma_regularized(n(5), n(-1))	panic: statrs: XInvalid	error
+q-a-0-z-1-q-a-z-even-for-negative-a-where-gamma			
+q-a-0-1-for-symbolic-a			
+q-a-infty-0			
+q-1-x-e-x-symbolically			
+q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s			
+q-1-2-x-erfc-sqrt-x-see-erfc			
+a-non-integer-order-combined-with-negative-z	gamma_regularized(x(2.5), n(-1))	panic: statrs: XInvalid	error
+gamma-regularized-0-0-is-indeterminate	gamma_regularized(n(0), n(0))	panic: statrs: AInvalid	error

@@ -42,6 +42,15 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: (n(1) / cos($1))
+    arity: 1
+    threadArgOnly: 1
+    note: The reciprocal of cos.
+    checked:
+      version: rustc 1.98.1
+      on: 2026-10-16
 ---
 
 - $\sec(x) = \frac{1}{\cos(x)}$.

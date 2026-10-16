@@ -25,4 +25,11 @@ bindings:
       version: 1.14.0
       on: 2026-10-15
     note: A chain is the conjunction of its neighbors.
+  - origin: mapped
+    form: rust
+    template: greater($1, $2)
+    arity: 2
+    checked:
+      version: num-rational 0.4.2
+      on: 2026-10-16
 ---

@@ -59,6 +59,17 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: gamma_regularized($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: a, z > 0 only.
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
 ---
 
 - Complementary to the lower regularized $P(a, z) = 1 - Q(a, z)$, which is the three-argument $Q(a, 0, z)$ (`@enumeratio/analytic`) -- the Gamma-distribution CDF, and with $a = k/2$, $z = x/2$ the $\chi^2_k$ CDF.

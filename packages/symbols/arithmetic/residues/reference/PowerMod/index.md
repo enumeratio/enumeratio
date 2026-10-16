@@ -52,6 +52,10 @@ bindings:
     template: powermod($1, $2, $3)
     arity: 3
     note: Sage's power_mod takes a negative exponent, like ours; no rational base or exponent.
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
   - origin: mapped
     form: sympy
     template: pow(ZZ.convert($1), ZZ.convert($2), ZZ.convert($3))

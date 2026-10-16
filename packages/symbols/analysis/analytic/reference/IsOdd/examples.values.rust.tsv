@@ -1,0 +1,18 @@
+id	in	out	verdict
+isodd-3	is_odd(n(3))	true	
+isodd-4	is_odd(n(4))	false	
+negative-integers-count-too	is_odd(n(-7))	true	
+isodd-0	is_odd(n(0))	false	
+isodd-9	is_odd(n(9))	true	
+a-non-integer-is-not-odd	is_odd(x(3.5))	panic: an integer, not 3.5	error
+isodd-1-over-3	is_odd(rational(n(1), n(3)))	panic: an integer, not 1/3	error
+big-integers	is_odd((power(n(2), n(100)) + n(1)))	true	
+pi-is-known-not-to-be-an-integer-so-it-is	is_odd(x(std::f64::consts::PI))	panic: an integer, not 3.141592653589793	error
+threads-element-wise-over-a-list	list(vec![is_odd(n(1)), is_odd(n(2)), is_odd(n(3))])	[true, false, true]	
+select-the-odd-numbers-up-to-10			
+isvector-list-1-5-7-11-isodd			
+isvector-list-2-5-7-11-isodd			
+an-integer-is-odd-exactly-when-it-is-not-even			
+isodd-2	is_odd(n(2))	false	
+isodd-15	is_odd(n(15))	true	
+a-symbol-stays-undecided-rather-than-false			

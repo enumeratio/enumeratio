@@ -1,0 +1,49 @@
+id	in	out	verdict
+h-10-frac-7381-2520	harmonic(n(10))	2.928968253968252	
+h-0-0-the-empty-sum	harmonic(n(0))	1.0	disagree
+h-5-1-sum-k-1-5-k-15-a-negative-order-is-still	generalized_harmonic(n(5), n(-1))	15.0	
+a-floating-point-argument-evaluates-via-psi-z-1	harmonic(x(2.5))	panic: an integer, not 2.5	error
+h-10-2-sum-k-1-10-k-2-exact	generalized_harmonic(n(10), n(2))	1.5497677311665408	
+h-1-the-first-term	harmonic(n(1))	0.9999999999999978	
+h-10-3-exact-generalized-sum	generalized_harmonic(n(10), n(3))	1.197531985674193	
+h-5-0-sum-k-1-5-1-5	generalized_harmonic(n(5), n(0))	5.0	
+h-0-3-the-empty-sum-at-a-nonzero-order	generalized_harmonic(n(0), n(3))	1.0	disagree
+h-0-2-the-empty-sum-at-order-2	generalized_harmonic(n(0), n(2))	1.0	disagree
+no-sum-below-n-0-one-argument-form	harmonic(n(-1))	panic: a non-negative integer: the crate's parameter is unsigned	error
+no-sum-below-n-0-two-argument-form	generalized_harmonic(n(-2), n(3))	panic: a non-negative integer: the crate's parameter is unsigned	error
+symbolic-n-one-argument-form-stays-symbolic			
+n-harmonicnumber-0p5	nf(harmonic(x(0.5)))	panic: an integer, not 0.5	error
+n-harmonicnumber-complex-3-plus-2i			
+n-harmonicnumber-1-over-2-order-2	nf(generalized_harmonic(rational(n(1), n(2)), n(2)))	panic: an integer, not 1/2	error
+n-harmonicnumber-5-order-1-over-2	nf(generalized_harmonic(n(5), rational(n(1), n(2))))	3.231670645876131	
+n-harmonicnumber-2p5-order-1-not-the-zeta-1-pole	nf(generalized_harmonic(x(2.5), n(1)))	panic: an integer, not 2.5	error
+h-10-1-order-1-reduces-to-the-plain-h-10	generalized_harmonic(n(10), n(1))	2.9289682539682538	
+h-2-is-three-halves	harmonic(n(2))	1.4999999999999978	
+h-neg0-5	harmonic(x(-0.5))	panic: an integer, not -0.5	error
+h-neg2-5	harmonic(x(-2.5))	panic: an integer, not -2.5	error
+h-10-5	harmonic(x(10.5))	panic: an integer, not 10.5	error
+n-harmonicnumber-7-3-rational	nf(harmonic(rational(n(7), n(3))))	panic: an integer, not 7/3	error
+h-complex-neg1-5-plus-4i			
+h-complex-0-2-minus-3i			
+h-2-5-order-2	generalized_harmonic(x(2.5), n(2))	panic: an integer, not 2.5	error
+h-0-5-order-3	generalized_harmonic(x(0.5), n(3))	panic: an integer, not 0.5	error
+n-harmonicnumber-complex-3-plus-2i-order-2			
+h-complex-neg1-5-plus-4i-order-3-2			
+non-integer-arguments-via-psi-z-1-gamma	harmonic(x(0.33))	panic: an integer, not 0.33	error
+the-generalized-form-off-the-integers-via-zeta-r	generalized_harmonic(x(0.8), n(3))	panic: an integer, not 0.8	error
+complex-arguments			
+order-r-1-off-the-integers-is-plain-h-z-h-e-1	nf(generalized_harmonic(x(std::f64::consts::E), n(1)))	panic: an integer, not 2.718281828459045	error
+listable-threads-over-a-list	list(vec![harmonic(n(2)), harmonic(n(3)), harmonic(n(5)), harmonic(n(7)), harmonic(n(11))])	[1.4999999999999978, 1.8333333333333313, 2.283333333333331, 2.5928571428571408, 3.019877344877343]	
+threads-elementwise-over-an-array-of-orders-and	list(vec![list(vec![generalized_harmonic(n(2), rational(n(1), n(2))), generalized_harmonic(n(2), n(2))]), list(vec![generalized_harmonic(n(2), n(2)), generalized_harmonic(n(2), rational(n(1), n(2)))])])	[[1.7071067811865475, 1.25], [1.25, 1.7071067811865475]]	
+interval-arithmetic-in-the-order			
+uncertainty-propagation-in-the-order			
+to-exactly-30-significant-digits-not-yet-31-come	nf(harmonic(rational(n(1), n(2))))	panic: an integer, not 1/2	error
+order-1-gives-h-z-itself-not-the-zeta-1-pole	nf(generalized_harmonic(x(2.5), n(1)))	panic: an integer, not 2.5	error
+at-an-integer-order-1-agrees-exactly-with-the	generalized_harmonic(n(10), n(1))	2.9289682539682538	
+no-sum-below-n-0	harmonic(n(-3))	panic: a non-negative integer: the crate's parameter is unsigned	error
+h-1-2-2-2-ln-2-exact-at-rational-arguments-by	harmonic(rational(n(1), n(2)))	panic: an integer, not 1/2	error
+h-1-4-4-frac-pi-2-3-ln-2	harmonic(rational(n(1), n(4)))	panic: an integer, not 1/4	error
+symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays			
+the-harmonic-series-diverges			
+h-infty-r-zeta-r-for-r-1-the-basel-sum			
+a-non-integer-order-stays-symbolic-under-plain	generalized_harmonic(n(5), rational(n(1), n(2)))	3.231670645876131	inconclusive

@@ -61,6 +61,9 @@ bindings:
     template: gcd($1, $2)
     arity: 2
     threadArg: 2
+    threadArgOnly:
+      - 1
+      - 2
   - origin: mapped
     form: sage
     template: gcd([$*,])

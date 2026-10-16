@@ -48,6 +48,15 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: atanh(n(1) / $1)
+    arity: 1
+    threadArgOnly: 1
+    note: atanh of the reciprocal, the principal value off 0.
+    checked:
+      version: rustc 1.98.1
+      on: 2026-10-16
 ---
 
 - Stays symbolic at plain evaluation, same as [[Arsinh]]-family functions; wrap in N(...).

@@ -45,6 +45,14 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: log2($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: rustc 1.98.1
+      on: 2026-10-16
 ---
 
 - Equivalent to Log(z, 2), and identical to [[Lb]].

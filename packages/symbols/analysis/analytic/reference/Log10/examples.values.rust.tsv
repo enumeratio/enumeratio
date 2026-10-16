@@ -1,0 +1,26 @@
+id	in	out	verdict
+log10-1-000	log10(n(1000))	3.0	
+log10-1	log10(n(1))	0.0	
+log10-100-000	log10(n(100000))	5.0	
+log10-1-000-000	log10(n(1000000))	6.0	
+n-for-a-decimal-value	nf(log10(n(2)))	0.3010299956639812	
+log-2	log10(n(2))	0.3010299956639812	
+series-log-x-plus-1-x-0-5			
+an-exact-negative-power-of-10-folds-too-log-10	log10(rational(n(1), n(100)))	-2.0	
+a-symbolic-argument-becomes-compute-engine-s			
+log10-5p5	log10(x(5.5))	0.7403626894942439	
+threads-element-wise-over-a-list	list(vec![log10(n(1)), log10(n(10)), log10(n(100)), log10(n(1000))])	[0.0, 1.0, 2.0, 3.0]	
+element-wise-over-a-matrix-including-the-exact	list(vec![list(vec![log10(n(1)), log10(n(100))]), list(vec![log10(n(0)), log10(rational(n(1), n(100)))])])	panic: non-finite result: -inf	error
+as-with-ln-the-logarithm-of-complex-infinity-is			
+interval-arithmetic-log-10-frac-13-2-log-10-3			
+uncertainty-propagation-log-10-frac-1-101-pm-0			
+derivative-frac-1-x-ln-10			
+to-30-significant-digits-every-one-correctly	nf(log10(n(7)))	0.8450980400142568	
+log-5	log10(n(5))	0.6989700043360189	
+n-log-45-100	nf(log10(n(45)))	1.6532125137753437	
+n-log-4-plus-i			
+fullsimplify-matrixfunction-log10-list-list-1			
+log-positiveinfinity			
+log-0	log10(n(0))	panic: non-finite result: -inf	error
+a-float-argument-folds-even-for-a-fractional	log10(x(0.001))	-3.0	
+same-as-compute-engine-s-default-base-log	equal(log10(n(1000)), log10(n(1000)))	true	

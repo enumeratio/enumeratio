@@ -1,0 +1,11 @@
+id	in	out
+divides-2-10	divides(n(2), n(10))	true
+divides-2-5	divides(n(2), n(5))	false
+divides-3-6	divides(n(3), n(6))	true
+divides-16-001-1-plus-10-pow-3-000	divides(n(16001), (n(1) + power(n(10), n(3000))))	true
+divides-3-2-895	divides(n(3), n(2895))	true
+divides-11-918-082	divides(n(11), n(918082))	true
+list-isinteger-5-divides-2-10		
+divides-8-48	divides(n(8), n(48))	true
+divides-12-25	divides(n(12), n(25))	false
+simplify-divides-a-b-times-a-list-a-b-in		

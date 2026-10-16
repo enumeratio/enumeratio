@@ -3,7 +3,7 @@ ceil-7-over-2	ceil(rational(n(7), n(2)))	4
 ceil-3p2	ceil(x(3.2))	4.0	
 ceil-3p7	ceil(x(3.7))	4.0	
 integers-pass-through-unchanged	ceil(n(5))	5	
-threads-element-wise-over-a-list	ceil(list(vec![x(1.2), x(-1.2), x(3.7)]))	panic: threading: a list where the crate takes a scalar	error
+threads-element-wise-over-a-list	list(vec![ceil(x(1.2)), ceil(x(-1.2)), ceil(x(3.7))])	[2.0, -1.0, 4.0]	
 ceil-2p4	ceil(x(2.4))	3.0	
 ceil-2p6	ceil(x(2.6))	3.0	
 idempotent-lceil-lceil-x-rceil-rceil			
@@ -14,27 +14,27 @@ a-second-argument-rounds-up-to-a-multiple-of-it
 the-step-needn-t-be-an-integer-3-5-cdot-lceil-10			
 nor-rational-2-pi-e-approx-3-57-rounds-up-to-the			
 rounds-the-real-and-imaginary-parts-up			
-ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	ceil(list(vec![list(vec![rational(n(1), n(2)), n(-1)]), list(vec![n(0), rational(n(-1), n(2))])]))		
+ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	list(vec![list(vec![ceil(rational(n(1), n(2))), ceil(n(-1))]), list(vec![ceil(n(0)), ceil(rational(n(-1), n(2)))])])	[[1, -1], [0, 0]]	
 matrixfunction-ceil-list-list-1-over-2-neg-1			
-ceil-0	ceil(n(0))		
+ceil-0	ceil(n(0))	0	
 ceil-positiveinfinity			
 piecewiseexpand-ceil-x-2-0-lt-x-lt-4			
 d-ceil-x-x			
 how-many-5-seat-vans-are-needed-to-carry-17	ceil((n(17) / n(5)))	4	
-ten-bits-are-enough-to-number-1000-items-lceil			
+ten-bits-are-enough-to-number-1000-items-lceil	ceil((ln(n(1000)) / ln(n(2))))	10.0	
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	equal(ceil(rational(n(7), n(2))), (floor(rational(n(7), n(2))) + n(1)))	true	
 floor-and-ceil-agree-exactly-on-integers	equal(ceil(n(5)), floor(n(5)))	true	
 ceil-16-3			
 piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2			
 generatingfunction-ceil-n-4-n-x			
-ceil-1	ceil(n(1))		
-ceil-neg-1	ceil(n(-1))		
+ceil-1	ceil(n(1))	1	
+ceil-neg-1	ceil(n(-1))	-1	
 ceil-neg-i			
-ceil-23-over-10	ceil(rational(n(23), n(10)))		
-ceil-neg-3	ceil(n(-3))		
+ceil-23-over-10	ceil(rational(n(23), n(10)))	3	
+ceil-neg-3	ceil(n(-3))	-3	
 piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1			
-ceil-neg-pi	ceil((-(x(std::f64::consts::PI))))		
-ceil-neg-27-over-10	ceil(rational(n(-27), n(10)))		
+ceil-neg-pi	ceil((-(x(std::f64::consts::PI))))	-3.0	
+ceil-neg-27-over-10	ceil(rational(n(-27), n(10)))	-2	
 ceil-negativeinfinity			
 ceil-23-over-10-plus-neg-i-times-exponentiale			
 ceil-i			

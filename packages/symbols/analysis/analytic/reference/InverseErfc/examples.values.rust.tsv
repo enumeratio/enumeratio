@@ -1,0 +1,19 @@
+id	in	out	verdict
+erfc-1-1-2-erf-1-1-2	erfc_inv(x(0.5))	0.4769362762044699	
+erfc-1-1-0	erfc_inv(n(1))	0.0	
+argument-1-7	erfc_inv(x(1.7))	-0.7328690779592169	
+deep-tail-0-001	erfc_inv(x(0.001))	2.3267537655135246	
+erfc-1-0-infty	erfc_inv(n(0))	panic: non-finite result: inf	error
+erfc-1-2-infty	erfc_inv(n(2))	panic: non-finite result: -inf	error
+arguments-in-1-2-give-negative-values	erfc_inv(x(1.5))	-0.4769362762044699	
+listable	list(vec![erfc_inv(n(0)), erfc_inv(n(1))])	panic: non-finite result: inf	error
+n-inverseerfc-33-over-100-50	nf(erfc_inv(rational(n(33), n(100))))	0.6888025281165564	
+functionexpand-matrixfunction-inverseerfc-list			
+series-inverseerfc-x-x-1-8			
+sqrt-2-times-this-2-5758-is-the-two-sided-99	erfc_inv(x(0.01))	1.8213863677184496	
+erfc-erfc-1-x-x			
+list-erfc-inverseerfc-z-inverseerfc-erfc-z			
+isnumeric-inverseerfc-1-over-2			
+solve-inverseerfc-x-pow-2-plus-inverseerfc-x-eq			
+attributes-inverseerfc			
+deep-in-the-tail-it-keeps-full-precision-where	erfc_inv(x(1e-10))	4.572824967389485	

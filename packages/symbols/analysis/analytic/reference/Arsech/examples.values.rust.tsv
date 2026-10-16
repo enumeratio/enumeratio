@@ -1,0 +1,19 @@
+id	in	out	verdict
+n-arsech-1-over-2	nf(acosh(n(1) / rational(n(1), n(2))))	1.3169578969248166	
+arsech-1-0-exactly	acosh(n(1) / n(1))	0.0	
+a-logarithmic-singularity-at-0	acosh(n(1) / n(0))	panic: denominator == 0	error
+a-float-argument-evaluates-directly	acosh(n(1) / x(0.25))	2.0634370688955608	
+past-1-the-value-is-imaginary-arsech-2-arcosh	acosh(n(1) / n(2))	panic: non-finite result: NaN	error
+derivative-frac-1-x-sqrt-1-x-2			
+n-arsech-1-over-3-50	nf(acosh(n(1) / rational(n(1), n(3))))	1.762747174039086	
+arsech-list-list-2-0-list-1-neg-2	list(vec![list(vec![acosh(n(1) / n(2)), acosh(n(1) / n(0))]), list(vec![acosh(n(1) / n(1)), acosh(n(1) / n(-2))])])	panic: non-finite result: NaN	error
+arsech-positiveinfinity			
+trigtoexp-arsech-z			
+matrixfunction-function-arsech-1-1-list-list-2-0			
+integrate-arsech-x-x-nothing-nothing			
+arsech-neg-2	acosh(n(1) / n(-2))	panic: non-finite result: NaN	error
+arsech-neg-1-over-2	acosh(n(1) / rational(n(-1), n(2)))	panic: non-finite result: NaN	error
+arsech-2-times-sqrt-1-over-2-plus-sqrt-2	acosh(n(1) / (n(2) * sqrt((n(1) / (n(2) + sqrt(n(2)))))))	panic: non-finite result: NaN	error
+arsech-neg-2-times-sqrt-1-over-2-plus-sqrt-2	acosh(n(1) / (n(-2) * sqrt((n(1) / (n(2) + sqrt(n(2)))))))	panic: non-finite result: NaN	error
+arsech-neg-1	acosh(n(1) / n(-1))	panic: non-finite result: NaN	error
+arsech-complexinfinity-is-indeterminate-by			

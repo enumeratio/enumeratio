@@ -74,6 +74,15 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: round($1)
+    arity: 1
+    threadArgOnly: 1
+    note: Ties go away from zero, as num-rational's `round` and std's do.
+    checked:
+      version: num-rational 0.4.2
+      on: 2026-10-16
 ---
 
 - Rounds to the nearest integer, with ties (an exact .5) breaking away from 0: $\mathrm{Round}(2.5) = 3$ and $\mathrm{Round}(-2.5) = -3$.

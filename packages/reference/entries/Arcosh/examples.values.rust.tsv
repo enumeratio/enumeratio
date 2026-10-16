@@ -1,0 +1,21 @@
+id	in	out	verdict
+arcosh-of-a-pure-imaginary-argument	acosh((sqrt(n(-13)) / n(3)))	panic: non-finite result: NaN	error
+arcosh-infinity-is-infinity-not-infinity-the			
+n-arcosh-5-50	nf(acosh(n(5)))	2.2924316695611777	
+arcosh-list-list-1-sqrt-2-over-2-list-0-neg-sqrt	list(vec![list(vec![acosh(n(1)), acosh((sqrt(n(2)) / n(2)))]), list(vec![acosh(n(0)), acosh((-((sqrt(n(2)) / n(2)))))])])	panic: non-finite result: NaN	error
+arcosh-positiveinfinity			
+arcosh-1	acosh(n(1))	0.0	
+integrate-arcosh-x-x-0-1			
+d-arcosh-x-x			
+integrate-arcosh-x-x-nothing-nothing			
+arcosh-complexinfinity			
+arcosh-neg-2	acosh(n(-2))	panic: non-finite result: NaN	error
+arcosh-3-over-5	acosh(rational(n(3), n(5)))	panic: non-finite result: NaN	error
+arcosh-1-over-2-times-sqrt-1-over-2-times-5	acosh((rational(n(1), n(2)) * sqrt((rational(n(1), n(2)) * (n(5) + (-(sqrt(n(5)))))))))	panic: non-finite result: NaN	error
+arcosh-neg-1-over-2-times-sqrt-1-over-2-times-5	acosh((rational(n(-1), n(2)) * sqrt((rational(n(1), n(2)) * (n(5) + (-(sqrt(n(5)))))))))	panic: non-finite result: NaN	error
+arcosh-0	acosh(n(0))	panic: non-finite result: NaN	error
+arcosh-sqrt-2-over-4-times-neg-1-plus-sqrt-3	acosh(((sqrt(n(2)) / n(4)) * (n(-1) + sqrt(n(3)))))	panic: non-finite result: NaN	error
+arcosh-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	acosh(((-((sqrt(n(2)) / n(4)))) * (n(-1) + sqrt(n(3)))))	panic: non-finite result: NaN	error
+arcosh-1-over-4-times-neg-1-plus-sqrt-5	acosh((rational(n(1), n(4)) * (n(-1) + sqrt(n(5)))))	panic: non-finite result: NaN	error
+arcosh-1-over-4-times-1-minus-sqrt-5	acosh((rational(n(1), n(4)) * (n(1) + (-(sqrt(n(5)))))))	panic: non-finite result: NaN	error
+arcosh-1-over-2-times-sqrt-2-minus-sqrt-2	acosh((rational(n(1), n(2)) * sqrt((n(2) + (-(sqrt(n(2))))))))	panic: non-finite result: NaN	error

@@ -3,34 +3,34 @@ no-primes-are-1	prime_pi(n(1))	0
 primepi-2	prime_pi(n(2))	1	
 primepi-15	prime_pi(n(15))	6	
 primepi-100	prime_pi(n(100))	25	
-threads-element-wise-over-a-list-as-wolfram-s	prime_pi(list(vec![n(10), n(100)]))	panic: threading: a list where the crate takes a scalar	error
+threads-element-wise-over-a-list-as-wolfram-s	list(vec![prime_pi(n(10)), prime_pi(n(100))])	[4, 25]	
 rational-arguments-the-primes-up-to-7-2-are-2	prime_pi(rational(n(7), n(2)))	panic: an integer, not 7/2	error
 real-arguments	prime_pi(x(15.25))	panic: an integer, not 15.25	error
 the-primes-below-a-million	prime_pi(n(1000000))	78498	
-listable-threads-over-a-list	prime_pi(list(vec![n(3), n(5), n(17), n(25)]))	panic: threading: a list where the crate takes a scalar	error
-primepi-10-11	prime_pi(n(100000000000))		
-primepi-10-12	prime_pi(n(1000000000000))		
-primepi-10-13	prime_pi(n(10000000000000))		
-primepi-1-plus-10-pow-17	prime_pi((n(1) + power(n(10), n(17))))		
+listable-threads-over-a-list	list(vec![prime_pi(n(3)), prime_pi(n(5)), prime_pi(n(17)), prime_pi(n(25))])	[2, 3, 7, 9]	
+primepi-10-11	prime_pi(n(100000000000))	TimeoutError: over 30 s	error
+primepi-10-12	prime_pi(n(1000000000000))	TimeoutError: over 30 s	error
+primepi-10-13	prime_pi(n(10000000000000))	TimeoutError: over 30 s	error
+primepi-1-plus-10-pow-17	prime_pi((n(1) + power(n(10), n(17))))	TimeoutError: over 30 s	error
 nthprime-range-1-primepi-100			
-primepi-5-000	prime_pi(n(5000))		
-same-inverse-relation-viewed-from-primepi-s-side			
-primepi-nthprime-100			
-primepi-1-000	prime_pi(n(1000))		
-primepi-3	prime_pi(n(3))		
-primepi-4	prime_pi(n(4))		
-primepi-5	prime_pi(n(5))		
-primepi-6	prime_pi(n(6))		
-primepi-7	prime_pi(n(7))		
-primepi-8	prime_pi(n(8))		
-primepi-9	prime_pi(n(9))		
-primepi-10	prime_pi(n(10))		
-primepi-11	prime_pi(n(11))		
-primepi-12	prime_pi(n(12))		
-primepi-13	prime_pi(n(13))		
-primepi-14	prime_pi(n(14))		
-primepi-16	prime_pi(n(16))		
-primepi-17	prime_pi(n(17))		
-primepi-18	prime_pi(n(18))		
-no-primes-are-a-negative-number	prime_pi(n(-1))	panic: a non-negative integer	error
-past-10-15-the-call-stays-symbolic	prime_pi(x(10000000000000000))		
+primepi-5-000	prime_pi(n(5000))	669	
+same-inverse-relation-viewed-from-primepi-s-side	equal(prime_pi(nth_prime(n(50))), n(50))	true	
+primepi-nthprime-100	prime_pi(nth_prime(n(100)))	100	
+primepi-1-000	prime_pi(n(1000))	168	
+primepi-3	prime_pi(n(3))	2	
+primepi-4	prime_pi(n(4))	2	
+primepi-5	prime_pi(n(5))	3	
+primepi-6	prime_pi(n(6))	3	
+primepi-7	prime_pi(n(7))	4	
+primepi-8	prime_pi(n(8))	4	
+primepi-9	prime_pi(n(9))	4	
+primepi-10	prime_pi(n(10))	4	
+primepi-11	prime_pi(n(11))	5	
+primepi-12	prime_pi(n(12))	5	
+primepi-13	prime_pi(n(13))	6	
+primepi-14	prime_pi(n(14))	6	
+primepi-16	prime_pi(n(16))	6	
+primepi-17	prime_pi(n(17))	7	
+primepi-18	prime_pi(n(18))	7	
+no-primes-are-a-negative-number	prime_pi(n(-1))	panic: a non-negative integer: the crate's parameter is unsigned	error
+past-10-15-the-call-stays-symbolic	prime_pi(x(10000000000000000.0))	panic: an integer, not 1e16	error

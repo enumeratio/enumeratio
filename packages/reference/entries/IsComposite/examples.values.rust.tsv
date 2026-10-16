@@ -1,0 +1,13 @@
+id	in	out	verdict
+iscomposite-4	is_composite(n(4))	true	
+iscomposite-13	is_composite(n(13))	false	
+iscomposite-1-plus-10-pow-3-000	is_composite((n(1) + power(n(10), n(3000))))	panic: an integer below 2^64: the crate's parameter is a machine word	error
+iscomposite-list-1-2-3-4-5-6	list(vec![is_composite(n(1)), is_composite(n(2)), is_composite(n(3)), is_composite(n(4)), is_composite(n(5)), is_composite(n(6))])	[false, false, false, true, false, true]	
+iscomposite-5	is_composite(n(5))	false	
+iscomposite-3-plus-i			
+iscomposite-8	is_composite(n(8))	true	
+iscomposite-12	is_composite(n(12))	true	
+iscomposite-67	is_composite(n(67))	false	
+iscomposite-28	is_composite(n(28))	true	
+iscomposite-60	is_composite(n(60))	true	
+iscomposite-48-828-125	is_composite(n(48828125))	true	

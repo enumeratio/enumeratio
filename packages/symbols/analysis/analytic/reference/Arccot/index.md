@@ -50,6 +50,15 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: atan(n(1) / $1)
+    arity: 1
+    threadArgOnly: 1
+    note: atan of the reciprocal, the principal value off 0.
+    checked:
+      version: rustc 1.98.1
+      on: 2026-10-16
 ---
 
 - Stays symbolic even at values where the reciprocal circular functions fold exactly (e.g. $x = 1$) -- wrap in N(...) for a numeric result.

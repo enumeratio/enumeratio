@@ -60,6 +60,7 @@ bindings:
     form: rust
     template: factorial($1)
     arity: 1
+    threadArgOnly: 1
   - origin: mapped
     form: mpmath
     template: factorial($1)

@@ -41,6 +41,18 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: beta_regularized($2, $3, $1)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    note: The crate takes a, b, then the point.
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
 ---
 
 - Normalized against [[Beta]]: $I_x(a, b)$ is the incomplete beta integral at x, divided by $B(a, b)$, so $I_0(a,b)=0$ and $I_1(a,b)=1$.

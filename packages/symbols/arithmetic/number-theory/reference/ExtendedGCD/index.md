@@ -70,6 +70,17 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: extended_gcd($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: Bézout coefficients are the algorithm's choice among many, so a pair can differ from ours.
+    checked:
+      version: num-integer 0.1.47
+      on: 2026-10-16
 ---
 
 - Implements the extended Euclidean algorithm, the standard way to compute modular inverses. See [[PowerMod]].

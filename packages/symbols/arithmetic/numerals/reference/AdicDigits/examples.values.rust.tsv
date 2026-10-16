@@ -1,0 +1,13 @@
+id	in	out	verdict
+adicdigits-adicnumeral-10-third-6	adic_digits(adic(n(10), rational(n(1), n(3))), n(6))	panic: the adic crate takes a prime base, not 10	error
+adicdigits-adicnumeral-2-minus1	adic_digits(adic(n(2), n(-1)), n(8))	[1, 1, 1, 1, 1, 1, 1, 1]	
+adicdigits-adicnumeral-2-third	adic_digits(adic(n(2), rational(n(1), n(3))), n(8))	[1, 1, 0, 1, 0, 1, 0, 1]	
+adicdigits-adicnumeral-3-minus4-9	adic_digits(adic(n(3), rational(n(-4), n(9))), n(8))	[2, 1, 2, 2, 2, 2, 2, 2]	
+adicdigits-adicnumeral-5-7-25	adic_digits(adic(n(5), rational(n(7), n(25))), n(8))	[2, 1, 0, 0, 0, 0, 0, 0]	
+adicdigits-adicnumeral-5-100	adic_digits(adic(n(5), n(100)), n(8))	[4, 0, 0, 0, 0, 0, 0, 0]	
+adicdigits-adicnumeral-7-2-7	adic_digits(adic(n(7), rational(n(2), n(7))), n(8))	[2, 0, 0, 0, 0, 0, 0, 0]	
+adicdigits-adicnumeral-11-100	adic_digits(adic(n(11), n(100)), n(8))	[1, 9, 0, 0, 0, 0, 0, 0]	
+adicdigits-adicnumeral-7-minus1-3	adic_digits(adic(n(7), rational(n(-1), n(3))), n(8))	[2, 2, 2, 2, 2, 2, 2, 2]	
+adicdigits-adicnumeral-2-100	adic_digits(adic(n(2), n(100)), n(8))	[1, 0, 0, 1, 1, 0, 0, 0]	
+adicdigits-adicnumeral-3-third	adic_digits(adic(n(3), rational(n(1), n(3))), n(8))	[1, 0, 0, 0, 0, 0, 0, 0]	
+adicdigits-adicnumeral-11-minus1	adic_digits(adic(n(11), n(-1)), n(8))	[10, 10, 10, 10, 10, 10, 10, 10]	

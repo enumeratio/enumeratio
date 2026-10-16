@@ -49,6 +49,15 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: prime_omega($1)
+    arity: 1
+    threadArgOnly: 1
+    note: The number of primes in the factorization, with multiplicity.
+    checked:
+      version: primal 0.3.3
+      on: 2026-10-16
 ---
 
 - Counts every prime factor with multiplicity -- $\Omega(2^5)=5$, unlike [[PrimeNu]]'s 1.

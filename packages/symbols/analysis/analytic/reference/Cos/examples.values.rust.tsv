@@ -3,19 +3,19 @@ cos-0	cos(n(0))	1.0
 cos-pi-over-6	cos((x(std::f64::consts::PI) / n(6)))	0.8660254037844387	
 cos-pi-over-4	cos((x(std::f64::consts::PI) / n(4)))	0.7071067811865476	
 cos-pi-over-3	cos((x(std::f64::consts::PI) / n(3)))	0.5000000000000001	
-cos-pi-over-2	cos((x(std::f64::consts::PI) / n(2)))	6.123233995736766e-17	
+cos-pi-over-2	cos((x(std::f64::consts::PI) / n(2)))	6.123233995736766e-17	disagree
 cos-pi	cos(x(std::f64::consts::PI))	-1.0	
 cos-30-circ-exactly			
 a-machine-precision-argument-evaluates	cos(x(1.2))	0.3623577544766736	
-a-huge-24-40-argument	nf(cos(power(n(24), n(40))))		
-a-huge-3-200-argument	nf(cos(power(n(3), n(200))))		
-a-huge-neg-7-60-argument	nf(cos((-(power(n(7), n(60))))))		
-a-huge-10-80-plus-1-over-3-argument	nf(cos(((power(n(10), n(80)) + n(1)) / n(3))))		
-cos-2-5	cos(x(2.5))		
+a-huge-24-40-argument	nf(cos(power(n(24), n(40))))	-0.8075665056326358	disagree
+a-huge-3-200-argument	nf(cos(power(n(3), n(200))))	-0.22832018072215501	disagree
+a-huge-neg-7-60-argument	nf(cos((-(power(n(7), n(60))))))	-0.9993044805340108	disagree
+a-huge-10-80-plus-1-over-3-argument	nf(cos(((power(n(10), n(80)) + n(1)) / n(3))))	0.8667688785282804	disagree
+cos-2-5	cos(x(2.5))	-0.8011436155469337	
 series-cos-x-x-0-10			
 n-of-an-exact-argument-gives-an-arbitrary	nf(cos(rational(n(6), n(5))))	0.3623577544766736	
 evaluates-at-a-complex-argument			
-threads-element-wise-over-a-matrix	cos(list(vec![list(vec![(n(5) * (x(std::f64::consts::PI) / n(6))), n(0)]), list(vec![(n(3) * (x(std::f64::consts::PI) / n(2))), (-((x(std::f64::consts::PI) / n(2))))])]))	panic: threading: a list where the crate takes a scalar	error
+threads-element-wise-over-a-matrix	list(vec![list(vec![cos((n(5) * (x(std::f64::consts::PI) / n(6)))), cos(n(0))]), list(vec![cos((n(3) * (x(std::f64::consts::PI) / n(2)))), cos((-((x(std::f64::consts::PI) / n(2)))))])])	[[-0.8660254037844385, 1.0], [-1.8369701987210297e-16, 6.123233995736766e-17]]	disagree
 cos-pi-12-frac-sqrt-6-sqrt-2-4	cos((x(std::f64::consts::PI) / n(12)))	0.9659258262890683	
 cos-pi-8-frac-sqrt-2-sqrt-2-2	cos((x(std::f64::consts::PI) / n(8)))	0.9238795325112867	
 cos-pi-10-frac-sqrt-10-2-sqrt-5-4	cos((x(std::f64::consts::PI) / n(10)))	0.9510565162951535	
@@ -28,7 +28,7 @@ cos-infty-should-be-the-oscillation-range-1-1
 an-imaginary-argument-rewrites-to-cosh-cos-ix			
 evenness-drops-the-sign-of-a-symbolic-argument			
 cos-arccos-x-x-for-every-x			
-cos-arccos-2-2-past-the-real-domain			
+cos-arccos-2-2-past-the-real-domain	cos(acos(n(2)))	panic: non-finite result: NaN	error
 cos-arcsin-x-sqrt-1-x-2			
 cos-arctan-x-frac-1-sqrt-1-x-2			
 derivative-sin-x			
@@ -37,7 +37,7 @@ taylor-series-about-0-only-even-powers-appear
 to-30-significant-digits-every-one-correctly	nf(cos(n(1)))	0.5403023058681398	
 to-1-significant-digit	nf(cos(n(1)))	0.5403023058681398	disagree
 a-huge-10-100-argument-reduces-exactly-mod-2-pi	nf(cos(power(n(10), n(100))))	0.9247242387519338	disagree
-n-cos-6-over-5-50	nf(cos(rational(n(6), n(5))))		
+n-cos-6-over-5-50	nf(cos(rational(n(6), n(5))))	0.3623577544766736	
 functiondomain-cos-x-x			
 functionrange-cos-x-x-y			
 functionperiod-cos-x-x			
@@ -49,14 +49,14 @@ functiondiscontinuities-cos-x-x
 matrixfunction-function-cos-1-1-list-list-5-over			
 assuming-m-in-integers-refine-cos-pi-times-1			
 assuming-m-in-integers-fullsimplify-refine-cos			
-threads-element-wise-over-a-list	cos(list(vec![n(0), (x(std::f64::consts::PI) / n(2)), x(std::f64::consts::PI)]))	panic: threading: a list where the crate takes a scalar	error
+threads-element-wise-over-a-list	list(vec![cos(n(0)), cos((x(std::f64::consts::PI) / n(2))), cos(x(std::f64::consts::PI))])	[1.0, 6.123233995736766e-17, -1.0]	disagree
 even-function-cos-x-cos-x	equal(cos((-((x(std::f64::consts::PI) / n(3))))), cos((x(std::f64::consts::PI) / n(3))))	true	
 co-function-identity-cos-x-sin-pi-2-x	equal(cos((x(std::f64::consts::PI) / n(6))), sin(((x(std::f64::consts::PI) / n(2)) - (x(std::f64::consts::PI) / n(6)))))	true	
 double-angle-formula-cos-2x-cos-2-x-sin-2-x			
 angle-addition-formula			
 power-reduction-cos-2-x-frac-1-cos-2x-2			
 euler-s-formula-cos-x-frac-e-ix-e-ix-2			
-cos-3-over-10-times-pi	cos((rational(n(3), n(10)) * x(std::f64::consts::PI)))		
+cos-3-over-10-times-pi	cos((rational(n(3), n(10)) * x(std::f64::consts::PI)))	0.5877852522924731	
 integrate-cos-t-pow-2-t-0-1-over-2-times-pi			
 product-neg-cos-1-over-4-times-pi-times-2k-minus			
 integrate-cos-t-pow-3-t-0-1-over-2-times-pi			
@@ -66,8 +66,8 @@ n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2
 n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow			
 n-integrate-exponentiale-pow-neg-1-over-2-times			
 n-integrate-1-over-sqrt-cos-t-minus-cos-1-over-2			
-n-neg-2-times-cos-1-times-cos-1-over-2-pow-2	nf(((n(-2) * cos(n(1)) * power(cos(rational(n(1), n(2))), n(2))) + (n(2) * power(cos(rational(n(1), n(2))), n(2))) + power(cos(n(1)), n(2))))		
-n-cos-1-over-2-plus-1-over-2-times-pi-pow-2	nf(power(cos((rational(n(1), n(2)) + (rational(n(1), n(2)) * x(std::f64::consts::PI)))), n(2)))		
+n-neg-2-times-cos-1-times-cos-1-over-2-pow-2	nf(((n(-2) * cos(n(1)) * power(cos(rational(n(1), n(2))), n(2))) + (n(2) * power(cos(rational(n(1), n(2))), n(2))) + power(cos(n(1)), n(2))))	1.0	
+n-cos-1-over-2-plus-1-over-2-times-pi-pow-2	nf(power(cos((rational(n(1), n(2)) + (rational(n(1), n(2)) * x(std::f64::consts::PI)))), n(2)))	0.2298488470659301	
 n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-3			
 as-with-sin-a-non-special-numeric-argument-stays	cos(n(2))	-0.4161468365471424	
 pi-24-is-past-the-automatic-special-angle-table	cos((rational(n(1), n(24)) * x(std::f64::consts::PI)))	0.9914448613738104	

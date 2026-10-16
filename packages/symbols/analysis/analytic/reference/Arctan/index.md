@@ -59,6 +59,14 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: atan($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: rustc 1.98.1
+      on: 2026-10-16
 ---
 
 - Defined for every real x, unlike [[Arcsin]] and [[Arccos]].

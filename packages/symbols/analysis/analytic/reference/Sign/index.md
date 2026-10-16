@@ -64,6 +64,14 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: signum($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: num-rational 0.4.2
+      on: 2026-10-16
 statOn:
   - Permutation
 ---

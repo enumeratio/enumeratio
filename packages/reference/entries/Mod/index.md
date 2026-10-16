@@ -75,6 +75,9 @@ bindings:
     template: mod_floor($1, $2)
     arity: 2
     threadArg: 2
+    threadArgOnly:
+      - 1
+      - 2
   - origin: mapped
     form: mpmath
     template: ($1 % $2)

@@ -6,12 +6,12 @@
 #![allow(dead_code)]
 
 use adic::normed::{Normed, UltraNormed, Valuation};
-use adic::traits::{AdicPrimitive, PrimedFrom};
+use adic::traits::{AdicPrimitive, HasDigits, PrimedFrom};
 use adic::{EAdic, QAdic};
 use num_bigint::BigInt;
 use num_integer::Integer;
 use num_rational::BigRational;
-use num_traits::{Signed, ToPrimitive, Zero};
+use num_traits::{One, Signed, ToPrimitive, Zero};
 use std::ops::{Add, Div, Mul, Neg, Sub};
 use std::panic::{catch_unwind, UnwindSafe};
 use std::sync::mpsc;
@@ -43,6 +43,20 @@ pub fn big(digits: &str) -> V {
 pub fn list(items: Vec<V>) -> V {
     List(items)
 }
+/// What a crate's unsigned parameter says of an integer it can't hold.
+fn unsigned_range(i: &BigInt) -> ! {
+    if i.is_negative() {
+        panic!("a non-negative integer: the crate's parameter is unsigned")
+    } else {
+        panic!("an integer below 2^64: the crate's parameter is a machine word")
+    }
+}
+/// A computed float. A NaN or an infinity is a crate stepping outside its domain, or a double
+/// overflowing: neither is an answer a comparison may count as agreeing, so it fails the item.
+fn flt(v: f64) -> V {
+    assert!(v.is_finite(), "non-finite result: {v}");
+    Float(v)
+}
 pub fn rational(a: V, b: V) -> V {
     normal(BigRational::new(a.int(), b.int()))
 }
@@ -57,7 +71,7 @@ fn normal(r: BigRational) -> V {
 /// `N`: an exact number as its float.
 pub fn nf(v: V) -> V {
     match v {
-        Int(_) | Rat(_) => Float(v.f64()),
+        Int(_) | Rat(_) => flt(v.f64()),
         other => other,
     }
 }
@@ -84,10 +98,12 @@ impl V {
         self.int().to_i64().expect("an integer in i64")
     }
     pub fn u64(&self) -> u64 {
-        self.int().to_u64().expect("a non-negative integer")
+        let i = self.int();
+        i.to_u64().unwrap_or_else(|| unsigned_range(&i))
     }
     pub fn usize(&self) -> usize {
-        self.int().to_usize().expect("a non-negative integer")
+        let i = self.int();
+        i.to_usize().unwrap_or_else(|| unsigned_range(&i))
     }
     pub fn rat(&self) -> BigRational {
         match self.scalar() {
@@ -130,7 +146,7 @@ fn adic_pair(a: &V, b: &V) -> Option<(QAdic<EAdic>, QAdic<EAdic>)> {
 fn arith(a: V, b: V, i: fn(BigInt, BigInt) -> V, r: fn(BigRational, BigRational) -> V, f: fn(f64, f64) -> f64) -> V {
     match (&a, &b) {
         (Int(p), Int(q)) => i(p.clone(), q.clone()),
-        (Float(_), _) | (_, Float(_)) => Float(f(a.f64(), b.f64())),
+        (Float(_), _) | (_, Float(_)) => flt(f(a.f64(), b.f64())),
         _ => r(a.rat(), b.rat()),
     }
 }
@@ -187,7 +203,7 @@ pub fn power(a: V, b: V) -> V {
             let e = q.to_i32().expect("a small exponent");
             normal(if e >= 0 { num_traits::pow(base, e as usize) } else { num_traits::pow(base.recip(), (-e) as usize) })
         }
-        _ => Float(a.f64().powf(b.f64())),
+        _ => flt(a.f64().powf(b.f64())),
     }
 }
 pub fn equal(a: V, b: V) -> V {
@@ -212,9 +228,12 @@ pub fn equal(a: V, b: V) -> V {
 // ── std's float functions ─────────────────────────────────────────────────────
 
 macro_rules! float_fn {
-    ($($name:ident),*) => { $(pub fn $name(v: V) -> V { Float(v.f64().$name()) })* };
+    ($($name:ident),*) => { $(pub fn $name(v: V) -> V { flt(v.f64().$name()) })* };
 }
-float_fn!(sin, cos, tan, exp, ln, sqrt);
+float_fn!(sin, cos, tan, exp, ln, sqrt, asin, acos, atan, sinh, cosh, tanh, asinh, acosh, atanh, log10, log2, cbrt);
+pub fn atan2(y: V, x: V) -> V {
+    flt(y.f64().atan2(x.f64()))
+}
 pub fn abs(v: V) -> V {
     match v.scalar() {
         Int(i) => Int(i.abs()),
@@ -236,6 +255,77 @@ pub fn ceil(v: V) -> V {
         _ => Float(v.f64().ceil()),
     }
 }
+/// Ties go away from zero, as num-rational's `round` and std's.
+pub fn round(v: V) -> V {
+    match v.scalar() {
+        Int(_) => v,
+        Rat(r) => Int(r.round().to_integer()),
+        _ => Float(v.f64().round()),
+    }
+}
+pub fn trunc(v: V) -> V {
+    match v.scalar() {
+        Int(_) => v,
+        Rat(r) => Int(r.trunc().to_integer()),
+        _ => Float(v.f64().trunc()),
+    }
+}
+pub fn fract(v: V) -> V {
+    match v.scalar() {
+        Int(_) => n(0),
+        Rat(r) => normal(r.fract()),
+        _ => Float(v.f64().fract()),
+    }
+}
+pub fn signum(v: V) -> V {
+    match v.scalar() {
+        Int(i) => Int(i.signum()),
+        Rat(r) => Int(r.numer().signum()),
+        // std's signum(0.0) is 1.0; zero is its own sign.
+        _ if v.f64() == 0.0 => Float(0.0),
+        _ => Float(v.f64().signum()),
+    }
+}
+pub fn numerator(v: V) -> V {
+    Int(v.rat().numer().clone())
+}
+pub fn denominator(v: V) -> V {
+    Int(v.rat().denom().clone())
+}
+
+/// Exact between integers and rationals, as doubles once either is one.
+fn order(a: &V, b: &V) -> std::cmp::Ordering {
+    match (a.scalar(), b.scalar()) {
+        (Float(_), _) | (_, Float(_)) => a.f64().partial_cmp(&b.f64()).expect("a comparable number"),
+        _ => a.rat().cmp(&b.rat()),
+    }
+}
+pub fn less(a: V, b: V) -> V {
+    Bool(order(&a, &b).is_lt())
+}
+pub fn less_equal(a: V, b: V) -> V {
+    Bool(order(&a, &b).is_le())
+}
+pub fn greater(a: V, b: V) -> V {
+    Bool(order(&a, &b).is_gt())
+}
+pub fn greater_equal(a: V, b: V) -> V {
+    Bool(order(&a, &b).is_ge())
+}
+pub fn maximum(a: V, b: V) -> V {
+    if order(&a, &b).is_lt() {
+        b
+    } else {
+        a
+    }
+}
+pub fn minimum(a: V, b: V) -> V {
+    if order(&a, &b).is_gt() {
+        b
+    } else {
+        a
+    }
+}
 
 // ── num-integer, num-bigint ───────────────────────────────────────────────────
 
@@ -250,6 +340,41 @@ pub fn mod_floor(a: V, b: V) -> V {
 }
 pub fn binomial(a: V, b: V) -> V {
     Int(num_integer::binomial(a.int(), b.int()))
+}
+pub fn quotient(a: V, b: V) -> V {
+    Int(a.int().div_floor(&b.int()))
+}
+pub fn mod_inverse(a: V, m: V) -> V {
+    Int(a.int().modinv(&m.int()).expect("no modular inverse: the operands share a factor"))
+}
+/// `[g, x, y]` with `a x + b y = g`, flat as ours is.
+pub fn extended_gcd(a: V, b: V) -> V {
+    let e = a.int().extended_gcd(&b.int());
+    List(vec![Int(e.gcd), Int(e.x), Int(e.y)])
+}
+pub fn is_coprime(a: V, b: V) -> V {
+    Bool(a.int().gcd(&b.int()).is_one())
+}
+/// `a | b`.
+pub fn divides(a: V, b: V) -> V {
+    Bool(b.int().is_multiple_of(&a.int()))
+}
+pub fn is_even(v: V) -> V {
+    Bool(v.int().is_even())
+}
+pub fn is_odd(v: V) -> V {
+    Bool(v.int().is_odd())
+}
+/// The digits of |n| in the base, most significant first.
+pub fn integer_digits(v: V, base: V) -> V {
+    let radix = u32::try_from(base.u64()).expect("a base the crate takes");
+    List(v.int().magnitude().to_radix_be(radix).into_iter().map(|d| n(d as i64)).collect())
+}
+pub fn from_digits(digits: V, base: V) -> V {
+    let radix = u32::try_from(base.u64()).expect("a base the crate takes");
+    let List(items) = &digits else { panic!("a list of digits") };
+    let digits: Vec<u8> = items.iter().map(|d| u8::try_from(d.u64()).expect("a digit below 256")).collect();
+    Int(BigInt::from_radix_be(num_bigint::Sign::Plus, &digits, radix).expect("digits below the base"))
 }
 pub fn powermod(a: V, e: V, m: V) -> V {
     let (a, e, m) = (a.int(), e.int(), m.int());
@@ -274,11 +399,96 @@ pub fn nth_prime(v: V) -> V {
 pub fn prime_pi(v: V) -> V {
     n(primal::StreamingSieve::prime_pi(v.usize()) as i64)
 }
+pub fn next_prime(v: V) -> V {
+    let from = v.usize();
+    assert!(from <= 1_000_000_000, "a sieve to 2n would not fit in memory");
+    // Bertrand: a prime lies in (n, 2n].
+    let sieve = primal::Sieve::new(2 * from + 2);
+    n(sieve.primes_from(from + 1).next().expect("a prime within the sieve") as i64)
+}
+/// The factorization as `(prime, exponent)` pairs, by a sieve to the square root.
+fn factors(v: &V) -> Vec<(usize, usize)> {
+    let at = v.usize();
+    assert!(at > 0, "zero has no factorization");
+    assert!(at <= 1_000_000_000_000_000_000, "a sieve to the square root would not fit in memory");
+    let root = (at as f64).sqrt() as usize + 2;
+    primal::Sieve::new(root).factor(at).expect("the sieve reaches the square root")
+}
+pub fn factor_integer(v: V) -> V {
+    List(factors(&v).into_iter().map(|(p, e)| List(vec![n(p as i64), n(e as i64)])).collect())
+}
+pub fn prime_nu(v: V) -> V {
+    n(factors(&v).len() as i64)
+}
+pub fn prime_omega(v: V) -> V {
+    n(factors(&v).iter().map(|(_, e)| *e as i64).sum())
+}
+pub fn is_square_free(v: V) -> V {
+    Bool(factors(&v).iter().all(|(_, e)| *e == 1))
+}
+pub fn is_prime_power(v: V) -> V {
+    Bool(primal::as_prime_power(v.u64()).is_some())
+}
+pub fn is_composite(v: V) -> V {
+    let at = v.u64();
+    Bool(at > 1 && !primal::is_prime(at))
+}
 pub fn factorial(v: V) -> V {
-    Float(statrs::function::factorial::factorial(v.u64()))
+    flt(statrs::function::factorial::factorial(v.u64()))
 }
 pub fn gamma(v: V) -> V {
-    Float(statrs::function::gamma::gamma(v.f64()))
+    flt(statrs::function::gamma::gamma(v.f64()))
+}
+/// A statrs answer that may be an argument error, reported by name.
+fn checked<E: std::fmt::Debug>(r: Result<f64, E>) -> V {
+    match r {
+        Ok(v) => flt(v),
+        Err(e) => panic!("statrs: {e:?}"),
+    }
+}
+pub fn upper_gamma(a: V, z: V) -> V {
+    checked(statrs::function::gamma::checked_gamma_ui(a.f64(), z.f64()))
+}
+pub fn gamma_regularized(a: V, z: V) -> V {
+    checked(statrs::function::gamma::checked_gamma_ur(a.f64(), z.f64()))
+}
+pub fn ln_gamma(v: V) -> V {
+    flt(statrs::function::gamma::ln_gamma(v.f64()))
+}
+pub fn digamma(v: V) -> V {
+    flt(statrs::function::gamma::digamma(v.f64()))
+}
+pub fn beta(a: V, b: V) -> V {
+    checked(statrs::function::beta::checked_beta(a.f64(), b.f64()))
+}
+/// Takes the crate's order, `a`, `b`, then the point.
+pub fn beta_regularized(a: V, b: V, x: V) -> V {
+    checked(statrs::function::beta::checked_beta_reg(a.f64(), b.f64(), x.f64()))
+}
+pub fn inverse_beta_regularized(a: V, b: V, x: V) -> V {
+    flt(statrs::function::beta::inv_beta_reg(a.f64(), b.f64(), x.f64()))
+}
+pub fn erf(v: V) -> V {
+    flt(statrs::function::erf::erf(v.f64()))
+}
+pub fn erfc(v: V) -> V {
+    flt(statrs::function::erf::erfc(v.f64()))
+}
+pub fn erf_inv(v: V) -> V {
+    flt(statrs::function::erf::erf_inv(v.f64()))
+}
+pub fn erfc_inv(v: V) -> V {
+    flt(statrs::function::erf::erfc_inv(v.f64()))
+}
+pub fn harmonic(v: V) -> V {
+    flt(statrs::function::harmonic::harmonic(v.u64()))
+}
+pub fn generalized_harmonic(order: V, m: V) -> V {
+    flt(statrs::function::harmonic::gen_harmonic(order.u64(), m.f64()))
+}
+/// E_n(x); the crate answers `None` for x < 0, or when its continued fraction does not converge.
+pub fn exp_integral_e(order: V, x: V) -> V {
+    flt(statrs::function::exponential::integral(x.f64(), order.u64()).expect("no value: x < 0, or no convergence"))
 }
 
 // ── the adic crate ────────────────────────────────────────────────────────────
@@ -302,6 +512,16 @@ pub fn adic_norm(v: V) -> V {
 }
 pub fn adic_prime(v: V) -> V {
     n(u32::from(v.adic().p()) as i64)
+}
+/// The first `count` digits of the unit part, least significant first. The crate's iterator stops
+/// where an expansion terminates; the digits after it are zeros.
+pub fn adic_digits(v: V, count: V) -> V {
+    let unit = v.adic().unit().expect("a non-zero p-adic has a unit part");
+    let count = count.usize();
+    assert!(count <= 100_000, "too many digits to ask for");
+    let mut digits: Vec<V> = unit.digits().take(count).map(|d| n(d as i64)).collect();
+    digits.resize(count, n(0));
+    List(digits)
 }
 
 /// A p-adic printed as ours is written, `["AdicNumeral",p,value]`: its exact rational value

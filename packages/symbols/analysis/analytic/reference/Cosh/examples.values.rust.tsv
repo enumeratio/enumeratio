@@ -1,0 +1,39 @@
+id	in	out
+n-cosh-0	nf(cosh(n(0)))	1.0
+n-cosh-1	nf(cosh(n(1)))	1.5430806348152437
+cosh-0	cosh(n(0))	1.0
+a-float-argument-evaluates-directly-no-n-needed	cosh(x(1.2))	1.8106555673243747
+series-cosh-x-x-0-10		
+arbitrary-precision-via-n	nf(cosh(rational(n(6), n(5))))	1.8106555673243747
+evaluates-at-a-complex-argument		
+cosh-i-pi-cos-pi-1		
+element-wise-over-a-matrix-of-imaginary		
+interval-arithmetic-cosh-0-ln-3-1-frac-53-not		
+uncertainty-propagation-cosh-2-sqrt-3-pm-0-1		
+cosh-positiveinfinity		
+evenness-drops-the-sign-of-a-symbolic-argument		
+cosh-arcosh-x-x-for-every-x		
+cosh-arcosh-2-2	cosh(acosh(n(2)))	1.9999999999999998
+cosh-arcosh-of-a-complex-argument		
+derivative-sinh-x		
+antiderivative		
+to-30-significant-digits-every-one-correctly	nf(cosh(n(1)))	1.5430806348152437
+n-cosh-6-over-5-50	nf(cosh(rational(n(6), n(5))))	1.8106555673243747
+cosh-1-over-5-times-i-times-pi		
+cosh-1-over-24-times-i-times-pi		
+matrixfunction-function-cosh-1-1-list-list-1		
+even-function-cosh-x-cosh-x	equal(cosh((-(n(1)))), cosh(n(1)))	true
+hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	equal((power(cosh(n(1)), n(2)) - power(sinh(n(1)), n(2))), n(1))	true
+the-definition-cosh-x-frac-e-x-e-x-2		
+cosh-2-x-sinh-2-x-should-simplify-to-1		
+cosh-1-over-12-times-i-times-pi		
+cosh-1-over-10-times-i-times-pi		
+cosh-1-over-9-times-i-times-pi		
+cosh-1-over-8-times-i-times-pi		
+cosh-1-over-7-times-i-times-pi		
+cosh-1-over-6-times-i-times-pi		
+cosh-2-over-9-times-i-times-pi		
+n-sinh-1-over-2-plus-cosh-1-over-2-pow-2	nf(power((sinh(rational(n(1), n(2))) + cosh(rational(n(1), n(2)))), n(2)))	2.7182818284590455
+n-neg-sinh-1-over-2-plus-cosh-1-over-2-pow-2	nf(power(((-(sinh(rational(n(1), n(2))))) + cosh(rational(n(1), n(2)))), n(2)))	0.36787944117144217
+n-neg-2-times-cosh-1-times-cosh-1-over-2-pow-2	nf(((n(-2) * cosh(n(1)) * power(cosh(rational(n(1), n(2))), n(2))) + (n(2) * power(cosh(rational(n(1), n(2))), n(2))) + power(cosh(n(1)), n(2))))	1.0000000000000004
+n-cosh-1-over-2-plus-1-over-2-times-i-times-pi		

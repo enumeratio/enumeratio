@@ -55,6 +55,17 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: exp_integral_e($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: A non-negative integer order and x >= 0 only.
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
 seeAlso:
   - Gamma
   - GammaRegularized

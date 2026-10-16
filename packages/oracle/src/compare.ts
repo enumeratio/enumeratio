@@ -85,6 +85,82 @@ export function compare(ours: string, theirs: string, tolerance = 1e-9): Verdict
   return normalise(ours) === normalise(theirs) ? "agree" : "disagree";
 }
 
+/** A whole number or ratio of them written in MathJSON, as a reduced `[numerator, denominator]`. */
+function exactRational(expr: MathJSON): readonly [bigint, bigint] | undefined {
+  const whole = (node: MathJSON): bigint | undefined => {
+    if (typeof node === "number") return Number.isSafeInteger(node) ? BigInt(node) : undefined;
+    const text = (node as { num?: unknown }).num;
+    return typeof text === "string" && /^-?\d+$/.test(text) ? BigInt(text) : undefined;
+  };
+  const integer = whole(expr);
+  if (integer !== undefined) return [integer, 1n];
+  if (!Array.isArray(expr) || expr[0] !== "Rational" || expr.length !== 3) return undefined;
+  const [p, q] = [whole(expr[1] as MathJSON), whole(expr[2] as MathJSON)];
+  return p === undefined || q === undefined || q === 0n ? undefined : reduced(p, q);
+}
+
+function reduced(p: bigint, q: bigint): readonly [bigint, bigint] {
+  let [a, b] = [p < 0n ? -p : p, q < 0n ? -q : q];
+  while (b !== 0n) [a, b] = [b, a % b];
+  const sign = q < 0n ? -1n : 1n;
+  return [(sign * p) / a, (sign * q) / a];
+}
+
+/** The elements of a printed `[a, b, [c, d]]`, split at its top level. */
+function listElements(text: string): string[] | undefined {
+  if (!text.startsWith("[") || !text.endsWith("]")) return undefined;
+  const inner = text.slice(1, -1);
+  if (inner.trim() === "") return [];
+  const parts: string[] = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < inner.length; i++) {
+    const c = inner[i];
+    if (c === "[") depth++;
+    else if (c === "]") depth--;
+    else if (c === "," && depth === 0) {
+      parts.push(inner.slice(start, i).trim());
+      start = i + 1;
+    }
+  }
+  parts.push(inner.slice(start).trim());
+  return parts;
+}
+
+/**
+ * A machine-precision system's answer (the Rust lane: statrs and the std floats are doubles, `num`
+ * is exact): exact where both sides are an integer or a ratio, and otherwise equal to a relative
+ * `tolerance` alone — `compare`'s absolute floor of 1 would let a tiny answer agree with any other.
+ * `value` reads one of ours as a double. `undefined` when the two cannot be read this way, which
+ * leaves the verdict to `compare`.
+ */
+export function compareMachine(
+  expected: MathJSON,
+  theirs: string,
+  tolerance: number,
+  value: (expr: MathJSON) => number | undefined,
+): Verdict | undefined {
+  const text = theirs.trim();
+  if (Array.isArray(expected) && (expected[0] === "List" || expected[0] === "Tuple")) {
+    const parts = listElements(text);
+    if (parts === undefined || parts.length !== expected.length - 1) return undefined;
+    const verdicts = parts.map((part, i) => compareMachine(expected[i + 1] as MathJSON, part, tolerance, value));
+    if (verdicts.some((verdict) => verdict === undefined)) return undefined;
+    return verdicts.includes("disagree") ? "disagree" : "agree";
+  }
+  const ours = exactRational(expected);
+  const ratio = /^(-?\d+)(?:\/(\d+))?$/.exec(text);
+  if (ratio !== null && /^0+$/.test(ratio[2] ?? "1")) return undefined;
+  if (ours !== undefined && ratio !== null) {
+    const them = reduced(BigInt(ratio[1] as string), BigInt(ratio[2] ?? "1"));
+    return ours[0] === them[0] && ours[1] === them[1] ? "agree" : "disagree";
+  }
+  const a = ours === undefined ? value(expected) : Number(ours[0]) / Number(ours[1]);
+  const b = ratio !== null ? Number(ratio[1]) / Number(ratio[2] ?? 1) : asNumber(text);
+  if (a === undefined || b === undefined || !Number.isFinite(a) || !Number.isFinite(b)) return undefined;
+  return a === b || Math.abs(a - b) <= tolerance * Math.max(Math.abs(a), Math.abs(b)) ? "agree" : "disagree";
+}
+
 /** A Python literal — nested lists/tuples of numbers, booleans and strings — parsed into a `Tree`
  * (structural.ts), or `undefined` if `text` isn't one. Tuples and lists both become plain
  * arrays: Sage's `[(2, 2), (3, 1)]` (a list of tuples, from `list(factor(n))`) lines up

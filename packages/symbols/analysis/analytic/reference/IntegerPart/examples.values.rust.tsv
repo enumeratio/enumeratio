@@ -1,0 +1,26 @@
+id	in	out
+integerpart-2p4	trunc(x(2.4))	2.0
+truncates-toward-0-unlike-floor	trunc(x(-2.4))	-2.0
+integerpart-7-over-2	trunc(rational(n(7), n(2)))	3
+integerpart-neg-7-over-2	trunc(rational(n(-7), n(2)))	-3
+exact-numeric-arguments-stay-exact	trunc(x(std::f64::consts::PI))	3.0
+threads-element-wise-over-a-list	list(vec![trunc(x(2.5)), trunc(x(-2.5))])	[2.0, -2.0]
+complex-numbers-real-and-imaginary-parts		
+integerpart-neg-5-over-4	trunc(rational(n(-5), n(4)))	-1
+integerpart-0	trunc(n(0))	0
+piecewiseexpand-integerpart-x-0-lt-x-lt-4		
+integerpart-exponentiale-plus-pi	trunc((x(std::f64::consts::E) + x(std::f64::consts::PI)))	5.0
+x-integerpart-x-fractionalpart-x	equal((trunc(rational(n(-7), n(2))) + fract(rational(n(-7), n(2)))), rational(n(-7), n(2)))	true
+piecewiseexpand-integerpart-x-pow-2-plus-sqrt-x		
+integerpart-1	trunc(n(1))	1
+integerpart-neg-1	trunc(n(-1))	-1
+integerpart-23-over-10	trunc(rational(n(23), n(10)))	2
+integerpart-neg-3	trunc(n(-3))	-3
+integerpart-neg-pi	trunc((-(x(std::f64::consts::PI))))	-3.0
+integerpart-neg-27-over-10	trunc(rational(n(-27), n(10)))	-2
+simplify-integerpart-x-plus-1-minus-integerpart		
+piecewiseexpand-integerpart-x-plus-1-times-3-pow		
+integerpart-i		
+integerpart-neg-i		
+integerpart-23-over-10-plus-neg-i-times		
+integerpart-1-plus-2pi-minus-1-plus-pi-pow-2	trunc((n(1) + (n(2) * x(std::f64::consts::PI)) + (-(power((n(1) + x(std::f64::consts::PI)), n(2)))) + power(x(std::f64::consts::PI), n(2))))	0.0

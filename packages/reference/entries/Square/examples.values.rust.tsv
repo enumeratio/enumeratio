@@ -1,0 +1,10 @@
+id	in	out
+square-5	power(n(5), n(2))	25
+same-result-for-x-and-x	power(n(-5), n(2))	25
+square-2-over-3	power(rational(n(2), n(3)), n(2))	4/9
+canonicalizes-to-x-2		
+threads-element-wise-over-a-list	list(vec![power(n(2), n(2)), power(n(3), n(2)), power(n(-4), n(2))])	[4, 9, 16]
+the-area-of-a-3-3-square-tile	power(n(3), n(2))	9
+even-function-x-2-x-2	equal(power(n(-5), n(2)), power(n(5), n(2)))	true
+1-i-2-2i-squaring-a-complex-number-needn-t-stay		
+infinity-squared-stays-infinite-rather-than		

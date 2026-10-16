@@ -1,0 +1,9 @@
+id	in	out
+n-arsinh-1-100	nf(asinh(n(1)))	0.881373587019543
+arsinh-positiveinfinity		
+arsinh-0	asinh(n(0))	0.0
+d-arsinh-x-x		
+arsinh-list-list-i-sqrt-2-over-2-times-i-list-0		
+arsinh-1-over-2-times-i-times-sqrt-1-over-2		
+arsinh-neg-1-over-2-times-i-times-sqrt-1-over-2		
+arsinh-complexinfinity-is-complexinfinity		

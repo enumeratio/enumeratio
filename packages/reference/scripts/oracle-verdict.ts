@@ -10,6 +10,7 @@ import {
   compare,
   compareCombination,
   compareCombinations,
+  compareMachine,
   comparePythonStructured,
   compareTrees,
   echoedPart,
@@ -310,10 +311,18 @@ function judge(
   } else if (theirs.startsWith("combinations:")) {
     verdict = compareCombinations(expected, theirs);
   } else {
-    verdict = compare(show(expected, system === "sage" || system === "sympy"), theirs, tolerance);
+    // Rust's doubles are compared relative to their size, its integers and ratios exactly.
+    const machine =
+      system === "rust"
+        ? compareMachine(expected, theirs, tolerance ?? 1e-9, (expr) => {
+            const value = leaf(expr);
+            return typeof value === "number" ? value : undefined;
+          })
+        : undefined;
+    verdict = machine ?? compare(show(expected, system === "sage" || system === "sympy"), theirs, tolerance);
     // A text comparison that disagrees or can't decide (a complex against a real, say)
     // gets a second, structural look.
-    if (verdict !== "agree") {
+    if (verdict !== "agree" && machine === undefined) {
       const structured = comparePythonStructured(reduce(expected, leaf), theirs, tolerance);
       if (structured === "agree") verdict = structured;
     }

@@ -4,14 +4,14 @@ stays-the-exact-constant-rather-than	exp(n(1))	2.718281828459045
 compute-engine-represents-exp-x-as-e-x-once-the			
 a-machine-precision-argument-evaluates	exp(x(3.4))	29.96410004739701	
 series-exponentiale-pow-x-x-0-10			
-broadcasts-element-wise-giving-begin-pmatrix-1-e	exp(list(vec![list(vec![n(0), n(1)]), list(vec![n(1), n(0)])]))	panic: threading: a list where the crate takes a scalar	error
+broadcasts-element-wise-giving-begin-pmatrix-1-e	list(vec![list(vec![exp(n(0)), exp(n(1))]), list(vec![exp(n(1)), exp(n(0))])])	[[1.0, 2.718281828459045], [2.718281828459045, 1.0]]	
 arbitrary-precision-via-n	nf(exp(rational(n(8), n(5))))	4.953032424395115	
 evaluates-at-a-complex-argument			
 euler-s-identity-e-i-pi-1			
 exp-imaginaryunit-times-pi-over-2			
 a-special-imaginary-argument-folds-through-e-i			
 exp-ln-2	exp(ln(n(2)))	2.0	
-exp-ln-neg-1	exp(ln(n(-1)))	NaN	inconclusive
+exp-ln-neg-1	exp(ln(n(-1)))	panic: non-finite result: NaN	error
 inverse-of-ln-symbolically			
 exp-ln-of-a-complex-argument-is-that-argument			
 exp-negativeinfinity			
@@ -23,7 +23,7 @@ around-0-still-fires-the-e-base-power-rule
 its-own-derivative			
 its-own-antiderivative			
 taylor-series-about-0			
-n-decimalizes-a-combined-product	nf((exp(n(1)) * exp(n(2))))		
+n-decimalizes-a-combined-product	nf((exp(n(1)) * exp(n(2))))	20.085536923187668	
 agrees-numerically-at-a-complex-point			
 to-50-significant-digits-every-one-correctly	nf(exp(n(1)))	2.718281828459045	
 to-1-significant-digit	nf(exp(n(1)))	2.718281828459045	disagree
@@ -38,12 +38,12 @@ functionsign-exp-x-x
 functionsingularities-exp-x-x			
 functiondiscontinuities-exp-x-x			
 functionconvexity-exp-x-x			
-n-exponentiale-pow-8-over-5-50	nf(power(x(std::f64::consts::E), rational(n(8), n(5))))		
+n-exponentiale-pow-8-over-5-50	nf(power(x(std::f64::consts::E), rational(n(8), n(5))))	4.953032424395115	
 exponentiale-pow-9-over-2-times-i-times-pi			
 exptotrig-exponentiale-pow-1-over-5-times-i			
 assuming-n-in-integers-refine-exp-2-times-pi			
 assuming-n-in-integers-refine-exp-2-times-pi-2			
-threads-element-wise-over-a-list	exp(list(vec![n(0), n(1)]))	panic: threading: a list where the crate takes a scalar	error
+threads-element-wise-over-a-list	list(vec![exp(n(0)), exp(n(1))])	[1.0, 2.718281828459045]	
 inverse-of-ln-e-ln-x-x	equal(exp(ln(n(5))), n(5))	true	
 e-a-e-b-e-a-b	equal((exp(n(2)) * exp(n(3))), exp(n(5)))	true	
 e-as-the-limit-lim-x-to-infty-1-1-x-x			
@@ -53,7 +53,7 @@ combines-past-two-factors
 combines-past-extra-non-exponential-factors			
 e-x-e-x-cancels-to-1			
 euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig			
-exp-ln-of-a-negative-real-is-left-unevaluated	exp(ln(n(-2)))	NaN	inconclusive
+exp-ln-of-a-negative-real-is-left-unevaluated	exp(ln(n(-2)))	panic: non-finite result: NaN	error
 a-lone-exp-factor-is-untouched			
 same-base-non-e-powers-are-left-alone			
 exp-complexinfinity-is-indeterminate-via			

@@ -97,6 +97,25 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: log10($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: rustc 1.98.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: (ln($1) / ln($2))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: "The quotient of natural logarithms: std has no logarithm to a base."
+    checked:
+      version: rustc 1.98.1
+      on: 2026-10-16
 ---
 
 - compute-engine's default base is 10, not $e$: Log(z) means $\log_{10}(z)$, and [[Ln]] is the natural logarithm.

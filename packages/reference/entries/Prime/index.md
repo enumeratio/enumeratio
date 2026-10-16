@@ -23,5 +23,6 @@ bindings:
     form: rust
     template: nth_prime($1)
     arity: 1
+    threadArgOnly: 1
 stub: engine
 ---

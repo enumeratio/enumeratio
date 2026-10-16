@@ -149,6 +149,17 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: upper_gamma($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: a, z > 0 only.
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
 ---
 
 The gamma function $\Gamma(z) = \int_0^\infty t^{z-1} e^{-t}\,dt$ for $\operatorname{Re}(z) > 0$ (DLMF 5.2.1), continued analytically elsewhere, is the standard extension of the factorial to real and complex arguments. The two- and three-argument forms below split that same integral at a finite endpoint rather than $\infty$.

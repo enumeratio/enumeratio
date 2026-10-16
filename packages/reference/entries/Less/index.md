@@ -32,4 +32,11 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: rust
+    template: less($1, $2)
+    arity: 2
+    checked:
+      version: num-rational 0.4.2
+      on: 2026-10-16
 ---

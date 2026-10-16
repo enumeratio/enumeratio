@@ -1,0 +1,39 @@
+id	in	out	verdict
+fromdigits-list-5-1-2-8			
+fromdigits-list-1-0-1-1-0-1-1-2	from_digits(list(vec![n(1), n(0), n(1), n(1), n(0), n(1), n(1)]), n(2))	91	
+1d-2h-3m-4s-back-to-seconds			
+crt-reconstruction			
+fromdigits-list-1-4-25-41-mixedradixnumerals			
+the-digits-can-be-given-as-a-string-0-9-then-a-z			
+a-digit-string-in-a-given-base	from_digits("1011011", n(2))	compile: mismatched types: expected `V`, found `&str`	error
+roman-numerals-with-the-base-roman	from_digits("XVII", "Roman")	compile: arguments to this function are incorrect	error
+a-mixed-radix-spelled-mixedradix-1d-4h-25m-41s			
+the-inverse-of-integerdigits-137-mixedradix-3-12			
+digits-past-9-are-plain-integers-1-cdot-16-15	from_digits(list(vec![n(1), n(15)]), n(16))	31	
+a-symbolic-base-gives-the-polynomial-x-2-2x-3			
+a-negative-base-1-cdot-4-1-cdot-2-0-2	from_digits(list(vec![n(1), n(1), n(0)]), n(-2))	panic: a non-negative integer: the crate's parameter is unsigned	error
+a-digits-exponent-pair-the-shape-realdigits			
+ordinary-base-2-as-a-system-value			
+zeckendorf-100-89-8-3-back-through-fromdigits			
+a-factoradic-lehmer-code-back-to-463			
+balanced-ternary-1-1-1-back-to-5			
+combinatorial-base-3-3-2-1-back-to-3			
+ostrowski-golden-digits-back-to-12			
+bijective-base-26-the-empty-numeral-is-zero			
+the-horner-reduction-in-base-5	from_digits(list(vec![n(1), n(2), n(3)]), n(5))	38	
+a-negative-base-minus-3-1-0-1	from_digits(list(vec![n(1), n(0), n(1)]), n(-3))	panic: a non-negative integer: the crate's parameter is unsigned	error
+a-negative-base-minus-4-3-2-1	from_digits(list(vec![n(3), n(2), n(1)]), n(-4))	panic: a non-negative integer: the crate's parameter is unsigned	error
+a-digits-exponent-pair-exponent-3-is-an-exact			
+a-digits-exponent-pair-exponent-5-is-12-300			
+fromdigits-list-3-2-5-mixedradixnumerals-list-3			
+a-lehmer-code-back-to-its-rank			
+fromdigits-inverts-integerdigits			
+the-round-trip-holds-in-any-base	from_digits(integer_digits(n(58127), n(2)), n(2))	58127	
+fromdigits-list-1-3-22-14-mixedradixnumerals			
+an-empty-digit-list-is-left-unevaluated-rather			
+two-adjacent-ones-is-not-a-numeral-so-it-denotes			
+ostrowski-declines-a-string-past-its-ceiling			
+non-coprime-residues-an-inconsistent-string			
+a-malformed-roman-numeral-declines	from_digits("IIII", "Roman")	compile: arguments to this function are incorrect	error
+map-fromdigits-list-7-8-9-a-b-c-d			
+digits-the-base-carry-into-higher-place-values-7			

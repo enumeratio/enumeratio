@@ -1,0 +1,43 @@
+id	in	out	verdict
+cot-pi-over-6	(n(1) / tan((x(std::f64::consts::PI) / n(6))))	1.7320508075688776	
+cot-pi-over-4	(n(1) / tan((x(std::f64::consts::PI) / n(4))))	1.0000000000000002	
+cot-pi-over-3	(n(1) / tan((x(std::f64::consts::PI) / n(3))))	0.577350269189626	
+cot-60-circ-frac-sqrt-3-3-exactly			
+a-machine-precision-argument-evaluates	(n(1) / tan(x(1.2)))	0.388779569368205	
+a-huge-24-40-argument	nf((n(1) / tan(power(n(24), n(40)))))	1.3692754518772292	disagree
+a-huge-10-100-argument	nf((n(1) / tan(power(n(10), n(100)))))	-2.429407710870673	disagree
+a-huge-3-200-argument	nf((n(1) / tan(power(n(3), n(200)))))	0.23451462649920546	disagree
+a-huge-neg-7-60-argument	nf((n(1) / tan((-(power(n(7), n(60)))))))	26.79808253166062	disagree
+a-huge-10-80-plus-1-over-3-argument	nf((n(1) / tan(((power(n(10), n(80)) + n(1)) / n(3)))))	-1.7380216888169062	disagree
+cot-7-under-n	nf((n(1) / tan(n(7))))	1.1475154224051354	
+series-cot-x-x-0-10			
+series-cot-x-x-neg-pi-5			
+n-of-an-exact-argument-gives-an-arbitrary	nf((n(1) / tan(rational(n(6), n(5)))))	0.388779569368205	
+evaluates-at-a-complex-argument			
+threads-element-wise-over-a-matrix	list(vec![list(vec![(n(1) / tan((n(5) * (x(std::f64::consts::PI) / n(6))))), (n(1) / tan((x(std::f64::consts::PI) / n(2))))]), list(vec![(n(1) / tan((n(3) * (x(std::f64::consts::PI) / n(2))))), (n(1) / tan((-((x(std::f64::consts::PI) / n(6))))))])])	[[-1.7320508075688756, 6.123233995736766e-17], [1.83697019872103e-16, -1.7320508075688776]]	disagree
+cot-pi-8-1-sqrt-2	(n(1) / tan((x(std::f64::consts::PI) / n(8))))	2.414213562373095	
+cot-pi-12-2-sqrt-3	(n(1) / tan((x(std::f64::consts::PI) / n(12))))	3.7320508075688776	
+cot-pi-over-5	(n(1) / tan((x(std::f64::consts::PI) / n(5))))	1.3763819204711736	
+an-interval-straddling-the-pole-at-0-maps-to-two			
+uncertainty-propagation-near-a-pole-grows-fast			
+oddness-pulls-the-sign-out-of-a-symbolic			
+derivative-csc-2-x			
+antiderivative-ln-sin-x			
+n-cot-6-over-5-50	nf((n(1) / tan(rational(n(6), n(5)))))	0.388779569368205	
+matrixfunction-function-cot-1-1-list-list-5-over			
+cot-positiveinfinity			
+assuming-m-in-integers-refine-cot-pi-times-1			
+assuming-m-in-integers-fullsimplify-refine-cot			
+functionmeromorphic-cot-x-x			
+reciprocal-of-tan-cot-x-frac-1-tan-x	equal((n(1) / tan((x(std::f64::consts::PI) / n(4)))), (n(1) / tan((x(std::f64::consts::PI) / n(4)))))	true	
+pythagorean-identity-1-cot-2-x-csc-2-x	equal((n(1) + power((n(1) / tan((x(std::f64::consts::PI) / n(6)))), n(2))), power((n(1) / sin((x(std::f64::consts::PI) / n(6)))), n(2)))	true	
+cot-1-over-10-times-pi	(n(1) / tan((rational(n(1), n(10)) * x(std::f64::consts::PI))))	3.077683537175254	
+cot-3-over-10-times-pi	(n(1) / tan((rational(n(3), n(10)) * x(std::f64::consts::PI))))	0.7265425280053611	
+cot-3-over-8-times-pi	(n(1) / tan((rational(n(3), n(8)) * x(std::f64::consts::PI))))	0.41421356237309515	
+n-cot-1-times-cot-1-over-2	nf(((n(1) / tan(n(1))) * (n(1) / tan(rational(n(1), n(2))))))	1.1753426496700217	
+n-cot-1-over-2-plus-1-over-2-times-pi	nf((n(1) / tan((rational(n(1), n(2)) + (rational(n(1), n(2)) * x(std::f64::consts::PI))))))	-0.5463024898437904	
+n-cot-2-times-cot-4	nf(((n(1) / tan(n(2))) * (n(1) / tan(n(4)))))	-0.3952747814684811	
+n-cot-2-plus-1-over-2-times-pi	nf((n(1) / tan((n(2) + (rational(n(1), n(2)) * x(std::f64::consts::PI))))))	2.1850398632615193	
+a-pole-sin-0-0	(n(1) / tan(n(0)))	panic: non-finite result: inf	error
+not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	(n(1) / tan((x(std::f64::consts::PI) / n(2))))	6.123233995736766e-17	disagree
+cot-complexinfinity-is-indeterminate-for-the			
