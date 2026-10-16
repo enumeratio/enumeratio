@@ -286,8 +286,9 @@ const families: readonly EpsilFamily[] = [
 /** The definitions, by head. */
 export const definitions: ReadonlyMap<string, EpsilFamily> = new Map(families.map((family) => [family.head, family]));
 
-/** The TS kernels' reach on the fast path: a cache of the terms, or a scan up to the element, costs more
- *  the farther out it goes (the figures are a few megabytes of terms, a few milliseconds of scan). */
+/** The TS kernels' reach on the fast path. The recurrence kernels cache every term up to the rank, and ran out
+ *  of memory (measured: factorials by ~50000 ranks, the rest between 10^5 and 3·10^5), so these stop just short;
+ *  the bit kernels scan up to the rank or element, which compiled Epsil answers in closed form past them. */
 const REACHES: Readonly<Record<string, FastReach>> = {
   ...Object.fromEntries(
     [
@@ -303,10 +304,10 @@ const REACHES: Readonly<Record<string, FastReach>> = {
       "CentralDelannoyNumbers",
       "LittleSchroderNumbers",
       "SchroederNumbers",
-    ].map((head) => [head, { bigTerms: true, unrank: 2000 }]),
+    ].map((head) => [head, { bigTerms: true, unrank: 100_000 }]),
   ),
-  FactorialNumbers: { bigTerms: true, unrank: 1000 },
-  DoubleFactorialNumbers: { bigTerms: true, unrank: 1000 },
+  FactorialNumbers: { bigTerms: true, unrank: 30_000 },
+  DoubleFactorialNumbers: { bigTerms: true, unrank: 30_000 },
   EvilNumbers: { unrank: 100_000, rank: 200_000 },
   OdiousNumbers: { unrank: 100_000, rank: 200_000 },
   SternDiatomicSequence: { rank: STERN_RANK_LIMIT },

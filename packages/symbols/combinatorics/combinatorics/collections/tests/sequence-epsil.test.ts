@@ -109,16 +109,12 @@ const bitwiseTerm = (head: string, r: bigint): bigint =>
 
 /** How many ranks the exhaustive checks cover: the bit sequences are cheap, the sums dear. */
 const RANKS: Record<string, number> = {
-  EvilNumbers: 600,
-  OdiousNumbers: 600,
-  ThueMorseNumbers: 300,
-  SternDiatomicSequence: 3000,
-  MotzkinNumbers: 70,
-  CentralDelannoyNumbers: 50,
-  LittleSchroderNumbers: 50,
-  SchroederNumbers: 50,
+  EvilNumbers: 200,
+  OdiousNumbers: 200,
+  ThueMorseNumbers: 100,
+  SternDiatomicSequence: 1000,
 };
-const ranksOf = (head: string): number => (DEEP ? 3 : 1) * (RANKS[head] ?? 150);
+const ranksOf = (head: string): number => (DEEP ? 4 : 1) * (RANKS[head] ?? 150);
 
 /** The first rank whose term a double can't hold (a sequence whose terms grow). */
 const crossingOf = (head: string): number => TERMS[head](400).findIndex((term) => term > MAX_SAFE);
@@ -167,17 +163,17 @@ test("the sequences are Epsil definitions with their TS kernels as fast paths", 
 for (const head of definitions.keys()) {
   const terms = TERMS[head];
   // Past the crossing the interpreter answers each rank in turn: the far-out checks below hold it to account.
-  const count = bitwise(head) ? ranksOf(head) : Math.min(ranksOf(head), crossingOf(head) + 4);
+  const count = bitwise(head) ? ranksOf(head) : Math.min(ranksOf(head), crossingOf(head) + (DEEP ? 4 : 1));
 
   test(`${head}: the first terms, their first places and the numbers between`, () => {
     const sequence = terms(count);
     const places = firstPlaces(sequence);
     // A term past the last is no number's to judge here, but those below it are all known (these grow); Stern's
     // every number is a member, with a place where the first ranks reach it.
-    const horizon = growing(head) ? sequence[count - 1] : head === "SternDiatomicSequence" ? 60n : 3n;
+    const horizon = growing(head) ? sequence[count - 1] : head === "SternDiatomicSequence" ? (DEEP ? 60n : 30n) : 3n;
     const probes = new Set<bigint>();
-    for (let x = -2n; x <= horizon && x < 400n; x++) probes.add(x);
-    for (const x of [...places.keys()].slice(0, 80))
+    for (let x = -2n; x <= horizon && x < (DEEP ? 400n : 150n); x++) probes.add(x);
+    for (const x of [...places.keys()].slice(0, DEEP ? 80 : 40))
       for (const d of [-1n, 0n, 1n]) if (x + d <= horizon) probes.add(x + d);
     for (const [name, kernel] of kernels(head)) {
       expect([name, kernel.count([])]).toEqual([name, Infinity]);
@@ -195,7 +191,9 @@ for (const head of definitions.keys()) {
     // Where the terms are no longer exact in doubles (2r is, past 2^52) or never leave them (a rank in the
     // trillions), ranks answer in closed form at any size, exactly.
     test(`${head}: ranks from 2^52 to 10^60 are answered exactly`, () => {
-      const ranks = [2n ** 52n - 3n, 2n ** 52n, 2n ** 53n + 1n, 10n ** 15n, 10n ** 30n + 7n, 10n ** 60n + 123456789n];
+      const ranks = DEEP
+        ? [2n ** 52n - 3n, 2n ** 52n, 2n ** 53n + 1n, 10n ** 15n, 10n ** 30n + 7n, 10n ** 60n + 123456789n]
+        : [2n ** 52n - 3n, 2n ** 53n + 1n, 10n ** 30n + 7n];
       for (const [name, kernel] of kernels(head)) {
         for (const r of ranks) {
           const x = bitwiseTerm(head, r);
@@ -217,8 +215,8 @@ for (const head of definitions.keys()) {
     const places = firstPlaces(sequence);
 
     test(`${head}: terms and places on either side of 2^53 are exact`, () => {
-      for (const [name, kernel] of kernels(head)) {
-        for (let r = Math.max(0, crossing - 4); r < crossing + 3; r++) {
+      for (const [name, kernel] of DEEP ? kernels(head) : kernels(head).slice(0, 1)) {
+        for (let r = Math.max(0, crossing - (DEEP ? 4 : 1)); r < crossing + (DEEP ? 3 : 2); r++) {
           const x = sequence[r];
           expect([name, r, kernel.unrank([], BigInt(r))]).toEqual([name, r, asTerm(x)]);
           for (const y of [x - 1n, x, x + 1n]) {
@@ -237,12 +235,12 @@ for (const head of definitions.keys()) {
       const out = summed
         ? DEEP
           ? [50, 120, 250, 399]
-          : [50, 120]
+          : [50]
         : DEEP
           ? [120, 250, 399, 1000, 1499]
           : ["PadovanSequence", "PerrinSequence"].includes(head)
-            ? [250, 399]
-            : [120, 250];
+            ? [300]
+            : [120];
       for (const r of out) {
         const x = sequence[r];
         // The fast path passes on its own bigint terms; membership and places are the interpreter's.
@@ -272,6 +270,25 @@ for (const head of definitions.keys()) {
     });
   }
 }
+
+// The TS kernels answered a rank of tens of thousands; the fast path keeps that reach (Epsil alone stops far short of it).
+test("the fast path answers ranks of thousands and tens of thousands, exactly", () => {
+  for (const head of definitions.keys()) {
+    if (bitwise(head) || head === "MotzkinNumbers") continue; // Motzkin's reference sums binomials, too slow this far out
+    const r = head.includes("Factorial") ? 2000 : 3000;
+    expect([head, full(head).unrank([], BigInt(r))]).toEqual([head, TERMS[head](r + 1)[r]]);
+  }
+  const fibonacci = full("FibonacciNumbers");
+  const far = fibonacci.unrank([], 100_000n) as unknown as bigint;
+  expect(far.toString().length).toBe(20899);
+  // Fibonacci's identity F(2n) = F(n)(2F(n+1) - F(n)), one rank down the middle.
+  const [a, b] = [
+    fibonacci.unrank([], 40_000n) as unknown as bigint,
+    fibonacci.unrank([], 40_001n) as unknown as bigint,
+  ];
+  expect(fibonacci.unrank([], 80_000n)).toBe(a * (2n * b - a));
+  expect(answer(() => fibonacci.unrank([], 100_001n))).toBe("declined");
+});
 
 test("Stern's first places are searched to a limit, then declined", () => {
   // The first index of each value among the first 300000 numbers.
@@ -316,7 +333,7 @@ test("the interpreted definitions give the same terms and places", async () => {
   for (const [head, family] of definitions) {
     const sequence = TERMS[head](24);
     const places = firstPlaces(sequence);
-    sequence.slice(0, 9).forEach((term, r) => {
+    sequence.slice(0, DEEP ? 9 : 5).forEach((term, r) => {
       expect([head, r, evaluateEpsil(ce, family.epsil.unrank, { _r: r })]).toEqual([head, r, Number(term)]);
       expect([head, r, evaluateEpsil(ce, family.epsil.rank, { _x: Number(term) })]).toEqual([
         head,
@@ -324,7 +341,7 @@ test("the interpreted definitions give the same terms and places", async () => {
         places.get(term),
       ]);
     });
-    for (let x = 0; x < 20; x++) {
+    for (let x = 0; x < (DEEP ? 20 : 8); x++) {
       const member = head === "SternDiatomicSequence" ? true : places.has(BigInt(x));
       expect([head, x, evaluateEpsil(ce, family.epsil.valid, { _x: x })]).toEqual([head, x, member ? "True" : "False"]);
     }

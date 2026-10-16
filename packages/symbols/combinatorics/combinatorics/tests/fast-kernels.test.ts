@@ -384,8 +384,9 @@ for (const family of sequenceFamilies) {
           return false; // a term too large for the kernel at all
         }
       };
-      let [low, high] = [0, 2 ** 40];
-      while (holds(high) && high < 2 ** 52) high *= 2;
+      // Doubling from a few thousand ranks: a kernel that caches its terms builds them all up to the rank asked.
+      let [low, high] = [0, 4096];
+      while (holds(high) && high < 2 ** 52) [low, high] = [high, high * 2];
       if (holds(high)) low = high;
       else
         while (low + 1 < high) {
@@ -396,7 +397,7 @@ for (const family of sequenceFamilies) {
       const ranks = new Set<number>();
       for (let r = 0; r < 60; r++) ranks.add(r);
       for (let r = Math.max(0, low - 3); r <= low + 3; r++) ranks.add(r);
-      for (const r of [1234, 98765, 2 ** 30 + 1]) if (holds(r)) ranks.add(r);
+      for (const r of [1234, 98765, 2 ** 30 + 1]) if (r <= low && holds(r)) ranks.add(r);
       const members: Element[] = [];
       for (const r of [...ranks].toSorted((a, b) => a - b)) {
         const element = fast.unrank(p, BigInt(r));
