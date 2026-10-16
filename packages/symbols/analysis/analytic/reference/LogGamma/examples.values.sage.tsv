@@ -6,6 +6,7 @@ ln-gamma-5-ln-4-ln-24-split-into-prime	log_gamma(5)	log(24)
 log-gamma-neg-2-is-a-pole	log_gamma(-2)	+Infinity	
 log-gamma-neg-3-is-a-pole	log_gamma(-3)	+Infinity	
 n-log-gamma-5-over-2-to-40-digits	enumeratio_n(log_gamma((5/2)), 40)	0.284682870472919	
+n-loggamma-15-pow-300-past-a-double	enumeratio_n(log_gamma(((15)^300)))	TypeError: cannot evaluate symbolic expression numerically	error
 to-the-engine-s-working-precision	log_gamma(2.2)	0.0969474667906389	
 complex-arguments	log_gamma((2.5 + 3*I))	-1.47095461034884 + 2.82261563826080*I	
 threads-elementwise-over-an-array	[[log_gamma((1/2)), log_gamma(-1)], [log_gamma(0), log_gamma((1/2))]]	[[log_gamma(1/2), +Infinity], [+Infinity, log_gamma(1/2)]]	

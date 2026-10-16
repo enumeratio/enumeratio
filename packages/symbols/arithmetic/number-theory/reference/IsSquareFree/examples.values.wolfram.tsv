@@ -4,6 +4,7 @@ issquarefree-4	SquareFreeQ[4]	False	\text{SquareFreeQ}[4]	\text{False}
 issquarefree-12	SquareFreeQ[12]	False	\text{SquareFreeQ}[12]	\text{False}	
 every-prime-is-squarefree	SquareFreeQ[17]	True	\text{SquareFreeQ}[17]	\text{True}	
 issquarefree-20	SquareFreeQ[20]	False	\text{SquareFreeQ}[20]	\text{False}	
+issquarefree-of-zero	SquareFreeQ[0]				
 threads-element-wise-over-a-list	SquareFreeQ[List[10, 4, 12]]	SquareFreeQ[{10, 4, 12}]	\text{SquareFreeQ}[\{10,4,12\}]	\text{SquareFreeQ}[\{10,4,12\}]	disagree
 gaussian-integers-3-2i-is-a-gaussian-prime	SquareFreeQ[Complex[3, 2]]	True	\text{SquareFreeQ}[3+2 i]	\text{True}	
 gaussianintegers-true-2-i-1-i-2	SquareFreeQ[2, Rule[GaussianIntegers, True]]	False	\text{SquareFreeQ}[2,\text{GaussianIntegers}\to \text{True}]	\text{False}	

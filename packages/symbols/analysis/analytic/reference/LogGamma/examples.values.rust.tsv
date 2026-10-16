@@ -6,6 +6,7 @@ ln-gamma-5-ln-4-ln-24-split-into-prime	ln_gamma(n(5))	3.1780538303479497
 log-gamma-neg-2-is-a-pole	ln_gamma(n(-2))	36.397144537438486	inconclusive
 log-gamma-neg-3-is-a-pole	ln_gamma(n(-3))	panic: non-finite result: NaN	error
 n-log-gamma-5-over-2-to-40-digits	nf(ln_gamma(rational(n(5), n(2))))	0.2846828704729223	
+n-loggamma-15-pow-300-past-a-double	nf(ln_gamma(power(n(15), n(300))))	panic: non-finite result: inf	error
 to-the-engine-s-working-precision	ln_gamma(x(2.2))	0.09694746679063737	
 complex-arguments			
 threads-elementwise-over-an-array	list(vec![list(vec![ln_gamma(rational(n(1), n(2))), ln_gamma(n(-1))]), list(vec![ln_gamma(n(0)), ln_gamma(rational(n(1), n(2)))])])	panic: non-finite result: NaN	error

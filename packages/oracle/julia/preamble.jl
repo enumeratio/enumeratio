@@ -128,10 +128,12 @@ _log10(z) = log(z) / log(CC(10))
 _log2(z) = log(z) / log(CC(2))
 _log_base(x, b) = log(x) / log(b)
 
-# (a)_n by the product for a whole n (exact at a pole of Γ), by Γ(a + n) / Γ(a) otherwise.
+# (a)_n by the product for a whole n (exact at a pole of Γ), by Γ(a + n) / Γ(a) otherwise. A negative
+# whole n is the reciprocal product, 1 / (a + n)_(-n): Γ(a + n) and 1/Γ(a) can be a pole and a zero together.
 function _rising(a, n)
   ok, k = unique_integer(real(n))
-  ok && iszero(imag(n)) && k >= 0 ? rising_factorial(a, Int(k)) : rgamma(a) * gamma(a + n)
+  ok && iszero(imag(n)) || return rgamma(a) * gamma(a + n)
+  k >= 0 ? rising_factorial(a, Int(k)) : 1 / rising_factorial(a + n, Int(-k))
 end
 
 # ── sign, rounding, roots and extrema ──

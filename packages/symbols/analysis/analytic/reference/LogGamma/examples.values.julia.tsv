@@ -6,6 +6,7 @@ ln-gamma-5-ln-4-ln-24-split-into-prime	enumeratio_ball(lgamma, 5)	3.178053830347
 log-gamma-neg-2-is-a-pole	enumeratio_ball(lgamma, -2)	ball not finite	error
 log-gamma-neg-3-is-a-pole	enumeratio_ball(lgamma, -3)	ball not finite	error
 n-log-gamma-5-over-2-to-40-digits	enumeratio_nshow(enumeratio_ball(lgamma, (5 // 2)), 40)	2.846828704729191596324946696827019243201e-01	
+n-loggamma-15-pow-300-past-a-double	(enumeratio_ball(lgamma, enumeratio_pow(15, 300)))	5.452815219245753382425107099072722437071339063456579419711091874702554411722067e355	
 to-the-engine-s-working-precision	enumeratio_ball(lgamma, enumeratio_decimal("2.2"))	0.09694746679063877649201518585462918623772172105237273713436585164752173802477669	
 complex-arguments	enumeratio_ball(lgamma, enumeratio_complex(enumeratio_decimal("2.5"), 3))	(-1.470954610348841691305499294978075015070396211602911682450843211402321071049176+2.822615638260799450025265547318710370045752147369647387508885915510258700151739j)	
 threads-elementwise-over-an-array	Any[Any[enumeratio_ball(lgamma, (1 // 2)), enumeratio_ball(lgamma, -1)], Any[enumeratio_ball(lgamma, 0), enumeratio_ball(lgamma, (1 // 2))]]	ball not finite	error

@@ -19,6 +19,7 @@ b-a-1-1-a-for-symbolic-a
 b-2-b-frac-1-b-b-1-not-yet			
 partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the			
 a-nonpositive-integer-argument-is-a-pole-of-the	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), -1, 2)	ball not finite	error
+beta-at-two-poles-compares-equal	enumeratio_equal(enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), -2, -1), enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 0, 2))	false	disagree
 beta-1-over-2-1-over-2-times-beta-1-1-over-2	(enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), (1 // 2), (1 // 2)) * enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 1, (1 // 2)))	6.283185307179586476925286766559005768394338798750211641949889184615632812572189	
 beta-1-over-2-1-over-2-times-beta-1-2	(enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), (1 // 2), (1 // 2)) * enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 1, 2))	1.570796326794896619231321691639751442098584699687552910487472296153908203143082	
 beta-of-positive-infinity-0-is-indeterminate	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), Inf, 0)	non-finite argument	error

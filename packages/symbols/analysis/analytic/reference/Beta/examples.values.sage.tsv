@@ -19,6 +19,7 @@ b-a-1-1-a-for-symbolic-a	beta(SR.var("a"), 1)	True
 b-2-b-frac-1-b-b-1-not-yet	beta(2, SR.var("b"))	True	
 partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the	diff(beta(SR.var("a"), SR.var("b")), SR.var("a"))	True	
 a-nonpositive-integer-argument-is-a-pole-of-the	beta(-1, 2)	ValueError: beta_eval(): simple pole	error
+beta-at-two-poles-compares-equal	enumeratio_equal(beta(-2, -1), beta(0, 2))	ValueError: beta_eval(): simple pole	error
 beta-1-over-2-1-over-2-times-beta-1-1-over-2	(beta((1/2), (1/2)) * beta(1, (1/2)))	2*beta(1/2, 1/2)	
 beta-1-over-2-1-over-2-times-beta-1-2	(beta((1/2), (1/2)) * beta(1, 2))	1/2*beta(1/2, 1/2)	
 beta-of-positive-infinity-0-is-indeterminate	beta(oo, 0)	NaN	disagree

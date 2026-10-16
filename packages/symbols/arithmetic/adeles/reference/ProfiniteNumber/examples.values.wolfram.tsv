@@ -14,6 +14,8 @@ modulus-zero-collapses-to-the-rational-itself
 subtracting-an-integer-from-a-profinite-number				
 squaring-a-profinite-number				
 dividing-by-an-exact-integer-divisor				
+numerator-of-an-unreduced-rational	Numerator[Rational[3, 3]]			
+denominator-of-a-negative-unreduced-rational	Denominator[Rational[-3, 3]]			
 crt-glued-from-its-2-adic-and-3-adic-images				
 a-rational-value-and-a-rational-modulus				
 lenstra-s-profinite-fibonacci-numbers				

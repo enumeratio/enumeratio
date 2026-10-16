@@ -6,6 +6,7 @@ ln-gamma-5-ln-4-ln-24-split-into-prime	LogGamma[5]	Log[24]		\text{log$\Gamma $}(
 log-gamma-neg-2-is-a-pole	LogGamma[-2]	Infinity		\text{log$\Gamma $}(-2)	\infty	
 log-gamma-neg-3-is-a-pole	LogGamma[-3]	Infinity		\text{log$\Gamma $}(-3)	\infty	
 n-log-gamma-5-over-2-to-40-digits	N[LogGamma[Rational[5, 2]], 40]	0.2846828704729191596324946696827019243201376955598947283178`40.	0.2846828704729191596324946696827019243201	N\left[\text{log$\Gamma $}\left(\frac{5}{2}\right),40\right]	0.2846828704729191596324946696827019243201	
+n-loggamma-15-pow-300-past-a-double	N[LogGamma[Power[15, 300]]]					
 to-the-engine-s-working-precision	LogGamma[2.2]	0.09694746679063887		\text{log$\Gamma $}(2.2)	0.0969475	
 complex-arguments	LogGamma[Complex[2.5, 3]]	-1.4709546103488407 + 2.8226156382607996*I		\text{log$\Gamma $}(2.5\, +3 i)	-1.47095+2.82262 i	
 threads-elementwise-over-an-array	LogGamma[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]	{{Log[Pi]/2, Infinity}, {Infinity, Log[Pi]/2}}		\text{log$\Gamma $}\left(\left( \begin{array}{cc}  \frac{1}{2} & -1 \\  0 & \frac{1}{2} \\ \end{array} \right)\right)	\left( \begin{array}{cc}  \frac{\log (\pi )}{2} & \infty  \\  \infty  & \frac{\log (\pi )}{2} \\ \end{array} \right)	

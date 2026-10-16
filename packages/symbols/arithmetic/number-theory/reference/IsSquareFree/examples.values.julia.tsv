@@ -4,6 +4,7 @@ issquarefree-4	is_squarefree(ZZ(4))	false
 issquarefree-12	is_squarefree(ZZ(12))	false	
 every-prime-is-squarefree	is_squarefree(ZZ(17))	true	
 issquarefree-20	is_squarefree(ZZ(20))	false	
+issquarefree-of-zero	is_squarefree(ZZ(0))	false	
 threads-element-wise-over-a-list	Any[is_squarefree(ZZ(10)), is_squarefree(ZZ(4)), is_squarefree(ZZ(12))]	[true, false, false]	
 gaussian-integers-3-2i-is-a-gaussian-prime	is_squarefree(ZZ(enumeratio_complex(3, 2)))	MethodError: no method matching (::ZZRing)(::ComplexFieldElem) The object of type `ZZRing` exists, b	error
 gaussianintegers-true-2-i-1-i-2			

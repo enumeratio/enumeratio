@@ -4,6 +4,7 @@ issquarefree-4			[IsSquareFree, 4]	False
 issquarefree-12			[IsSquareFree, 12]	False										
 every-prime-is-squarefree			[IsSquareFree, 17]	True	Every prime is squarefree									
 issquarefree-20			[IsSquareFree, 20]	False										
+issquarefree-of-zero		test	[IsSquareFree, 0]	False									domain	primal has no factorization of zero and the adapter declines; compute-engine answers False, since every square divides 0.
 threads-element-wise-over-a-list	Scope		[IsSquareFree, [List, 10, 4, 12]]	[List, True, False, False]	Threads element-wise over a list		domain	We thread over a List; Wolfram's SquareFreeQ takes a single number and leaves a list unevaluated.						
 gaussian-integers-3-2i-is-a-gaussian-prime	Scope		[IsSquareFree, [Complex, 3, 2]]	True	Gaussian integers: $3+2i$ is a Gaussian prime						domain	Nemo's ZZ takes an integer only; compute-engine's IsSquareFree also takes a Gaussian integer or a list, which this mapping does not pass on.		
 gaussianintegers-true-2-i-1-i-2	Scope		[IsSquareFree, 2, [KeyValuePair, Over, GaussianIntegers]]	False	GaussianIntegers -> True: $2=-i(1+i)^2$									

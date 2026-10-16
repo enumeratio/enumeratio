@@ -19,6 +19,7 @@ b-a-1-1-a-for-symbolic-a
 b-2-b-frac-1-b-b-1-not-yet			
 partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the			
 a-nonpositive-integer-argument-is-a-pole-of-the	beta(-1, 2)	+inf	disagree
+beta-at-two-poles-compares-equal	almosteq(beta(-2, -1), beta(0, 2), 1e-20)	False	disagree
 beta-1-over-2-1-over-2-times-beta-1-1-over-2	(beta((mpf(1)/2), (mpf(1)/2)) * beta(1, (mpf(1)/2)))	6.28318530717958647692528676656	
 beta-1-over-2-1-over-2-times-beta-1-2	(beta((mpf(1)/2), (mpf(1)/2)) * beta(1, 2))	1.57079632679489661923132169164	
 beta-of-positive-infinity-0-is-indeterminate	beta(inf, 0)	nan	disagree

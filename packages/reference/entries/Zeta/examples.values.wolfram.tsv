@@ -37,6 +37,8 @@ n-zeta-2p5-neg-2p5	N[Zeta[2.5, -2.5]]	12.36804513848779		N[\zeta (2.5,-2.5)]	12.
 n-zeta-3-neg-2p5-plus-i	N[Zeta[3, Complex[-2.5, 1]]]	-1.3912718248112188 - 0.02886396524976546*I		N[\zeta (3,-2.5+i)]	-1.39127-0.028864 i	
 n-zeta-2p5-plus-i-neg-2p5	N[Zeta[Complex[2.5, 1], -2.5]]	9.479051146626311 + 6.677691995918281*I		N[\zeta (2.5\, +i,-2.5)]	9.47905\, +6.67769 i	
 zeta-3-133-at-a-negative-integer-a	Zeta[3.133, -2]	2.2916807133439048		\zeta (3.133,-2)	2.29168	
+n-zeta-1-3-0-drops-the-zero-term	N[Zeta[Rational[1, 3], 0]]					
+n-zeta-i-0-to-ten-digits	N[Zeta[Complex[0, 1], Complex[0, 0]], 10]					
 on-the-critical-line-zeta-1-2-14i-0-02224-0	N[Zeta[Complex[0.5, 14]]]	0.022241142609994033 - 0.10325812326645277*I		N[\zeta (0.5\, +14 i)]	0.0222411\, -0.103258 i	
 two-argument-zeta-s-a-via-enumeratio-analytic	Zeta[2, 1]	Pi^2/6		\zeta (2,1)	\frac{\pi ^2}{6}	
 zeta-2-2-zeta-2-1-pi-2-6-1	Zeta[2, 2]	-1 + Pi^2/6		\zeta (2,2)	\frac{\pi ^2}{6}-1	

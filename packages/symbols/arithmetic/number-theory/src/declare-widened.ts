@@ -208,7 +208,8 @@ export function declareWidened(ce: Engine): void {
   // native handler asks for an integer.
   const isSquareFreeInteger = (n: bigint): boolean | undefined => {
     const abs = n < 0n ? -n : n;
-    if (abs <= 1n) return true;
+    if (abs === 0n) return false; // every square divides 0
+    if (abs === 1n) return true;
     const factors = factorInteger(abs);
     return factors === undefined ? undefined : factors.every(([, e]) => e === 1);
   };

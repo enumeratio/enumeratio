@@ -34,7 +34,18 @@ import {
 import { between as edgeBiased } from "@enumeratio/plausible";
 import { isSettled } from "@enumeratio/entry";
 import { referenceEntries } from "../src/node.ts";
-import { agreesInNorm, associates, roundsTo, undecidedIdentity } from "./plausible-compare.ts";
+import {
+  agreesInNorm,
+  associates,
+  crateDeclines,
+  hasNonAnswer,
+  isStuckCall,
+  outsideCrateDomain,
+  overshootsPole,
+  roundsTo,
+  roundsToZero,
+  undecidedIdentity,
+} from "./plausible-compare.ts";
 import { cappedVerdicts } from "./oracle-verdict-capped.ts";
 import { hash, inLaneOrder, laneMinutes, verdictArguments } from "./plausible-lanes.ts";
 
@@ -110,6 +121,9 @@ const STRUCTURAL = new Set([
   "RookAlgebra",
   "AdicNumerals",
 ]);
+
+// Heads whose second operand is how many digits to produce.
+const COUNTED = new Set(["AdicDigits", "AdicExpansion", "AdicSqrt"]);
 
 // A collection family's integer arguments are sizes, not values: resampling them near the
 // template's (up to ±1e6) builds enormous families. They're drawn from the family's own
@@ -230,6 +244,9 @@ function mutate(expr: MathJSON, random: Random): MathJSON {
     // N's digit count is a count: zero or negative is no precision at all (the lanes reject it
     // in their own words), so it is resampled among the positive ones.
     if (head === "N" && ops.length === 2) return [head, walk(ops[0] as MathJSON), positive(walk(ops[1] as MathJSON))];
+    // The same for a count of digits: ours takes a non-positive one as the default 20.
+    if (COUNTED.has(head as string) && ops.length === 2)
+      return [head, walk(ops[0] as MathJSON), positive(walk(ops[1] as MathJSON))] as MathJSON;
     return orderBounds(head as string, ops.map(walk));
   };
   const out = walk(expr);
@@ -364,6 +381,16 @@ function autoKind(
   // Our own worker hit its time or memory cap on this sample (an extreme edge the mutator
   // drew, not the other system): the same "nothing to compare" shrug, from our side.
   if (ours === "Aborted") return "resource";
+  if (system === "rust") {
+    // A double can't land on an exact zero (cos(π/2), ln Γ(1)): only where ours' zero is exact.
+    if (result.error === undefined && roundsToZero(sample, ours, theirs)) return "precision";
+    // A pole the crate blows past rather than reaching, element by element, at the head's poles only.
+    if (result.error === undefined && overshootsPole(sample, ours, theirs)) return "undefined-form";
+    // The crate declines in its own words, on arguments outside what it takes (a real-only
+    // function, an unsigned or machine-word parameter); ours either answers or declines too.
+    if (result.error !== undefined && crateDeclines(theirs) && outsideCrateDomain(sample))
+      return hasNonAnswer(ours) || isStuckCall(ours) ? "undefined-form" : "domain";
+  }
   // `N(expr, d)`: the mapping drops the digit count and asks the other system for full
   // precision instead (a numeric-tolerance comparison is the better general witness — see
   // the N/2 mapping's own note), so a low `d` disagrees whenever rounding to `d` significant

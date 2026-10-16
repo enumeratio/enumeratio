@@ -4,6 +4,7 @@ numerator-of-an-integer	numerator(5)	5
 numerator-2-over-3	numerator((2 // 3))	2	
 numerator-x-minus-2-times-x-minus-1-times-x			
 numerator-sin-x-minus-2-pow-neg-b-times-sin-x			
+numerator-of-an-unreduced-rational	numerator((3 // 3))	1	disagree
 numerator-3-over-7	numerator((3 // 7))	3	
 numerator-3-over-7-plus-1-over-11-times-i	numerator(enumeratio_complex((3 // 7), (1 // 11)))	MethodError: no method matching numerator(::ComplexFieldElem) The function `numerator` exists, but n	error
 numerator-1-over-x-minus-3-times-x-minus-2-times			
