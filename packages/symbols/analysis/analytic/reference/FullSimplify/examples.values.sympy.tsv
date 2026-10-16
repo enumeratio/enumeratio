@@ -1,14 +1,14 @@
 id	in	out	verdict
 the-pythagorean-identity	simplify(((S(sin(Symbol("x")))**2) + (S(cos(Symbol("x")))**2)))	1	
-recognizes-the-definition-of-sinh	simplify((S((exp(Symbol("x")) - exp((-Symbol("x"))))) / 2))	True	
-folds-the-double-angle-product	simplify((2 * sin(Symbol("x")) * cos(Symbol("x"))))	True	
-the-functional-equation-of-gamma	simplify((S(gamma((Symbol("x") + 1))) / gamma(Symbol("x"))))	True	
+recognizes-the-definition-of-sinh	simplify((S((exp(Symbol("x")) - exp((-Symbol("x"))))) / 2))	sinh(x)	
+folds-the-double-angle-product	simplify((2 * sin(Symbol("x")) * cos(Symbol("x"))))	sin(2*x)	
+the-functional-equation-of-gamma	simplify((S(gamma((Symbol("x") + 1))) / gamma(Symbol("x"))))	x	
 denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3	simplify(((sqrt(2) + sqrt(3)) - sqrt((5 + (2 * sqrt(6))))))	0	
 the-hyperbolic-pythagorean-identity	simplify(((S(cosh(Symbol("x")))**2) - (S(sinh(Symbol("x")))**2)))	1	
-fullsimplify-x-pow-10-minus-1-times-x-pow-10	simplify((((S(Symbol("x"))**10) + -1) * ((S(Symbol("x"))**10) + 1)))	True	
+fullsimplify-x-pow-10-minus-1-times-x-pow-10	simplify((((S(Symbol("x"))**10) + -1) * ((S(Symbol("x"))**10) + 1)))	x**20 - 1	
 fullsimplify-neg-4-times-arctan-1-over-239-plus	simplify(((-4 * atan(Rational(1, 239))) + (16 * atan(Rational(1, 5)))))	-4*atan(1/239) + 16*atan(1/5)	
-fullsimplify-4-times-sin-x-times-cos-x-plus-4	simplify(((4 * sin(Symbol("x")) * cos(Symbol("x"))) + (4 * (S(sin(Symbol("x")))**2) * (S(cos(Symbol("x")))**2)) + 1))	True	
-fullsimplify-1-minus-i-times-exponentiale-pow-i	simplify((((1 + -1*I) * (S(E)**((0 + 1*I) * Symbol("x")))) + ((1 + 1*I) * (S(E)**((0 + -1*I) * Symbol("x"))))))	True	
+fullsimplify-4-times-sin-x-times-cos-x-plus-4	simplify(((4 * sin(Symbol("x")) * cos(Symbol("x"))) + (4 * (S(sin(Symbol("x")))**2) * (S(cos(Symbol("x")))**2)) + 1))	2*sin(2*x) - cos(4*x)/2 + 3/2	
+fullsimplify-1-minus-i-times-exponentiale-pow-i	simplify((((1 + -1*I) * (S(E)**((0 + 1*I) * Symbol("x")))) + ((1 + 1*I) * (S(E)**((0 + -1*I) * Symbol("x"))))))	((1 - I)*exp(2*I*x) + 1 + I)*exp(-I*x)	
 assuming-re-x-gt-0-fullsimplify-exponentiale-pow			
 a-bare-exp-is-left-alone	simplify(exp(Symbol("x")))	exp(x)	disagree
 assuming-real-x-gt-0-fullsimplify-exponentiale			

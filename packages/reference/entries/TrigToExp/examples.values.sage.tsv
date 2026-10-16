@@ -1,12 +1,12 @@
 id	in	out	verdict
-trigtoexp-cos-x	SR(cos(SR.var("x"))).exponentialize()	True	
-trigtoexp-sinh-x	SR(sinh(SR.var("x"))).exponentialize()	True	
-trigtoexp-tanh-x	SR(tanh(SR.var("x"))).exponentialize()	True	
-trigtoexp-arcsin-x	SR(arcsin(SR.var("x"))).exponentialize()	True	
-trigtoexp-arcoth-x	SR(arccoth(SR.var("x"))).exponentialize()	True	
+trigtoexp-cos-x	SR(cos(SR.var("x"))).exponentialize()	1/2*e^(I*x) + 1/2*e^(-I*x)	
+trigtoexp-sinh-x	SR(sinh(SR.var("x"))).exponentialize()	-1/2*e^(-x) + 1/2*e^x	
+trigtoexp-tanh-x	SR(tanh(SR.var("x"))).exponentialize()	-(e^(-x) - e^x)/(e^(-x) + e^x)	
+trigtoexp-arcsin-x	SR(arcsin(SR.var("x"))).exponentialize()	arcsin(x)	
+trigtoexp-arcoth-x	SR(arccoth(SR.var("x"))).exponentialize()	arccoth(x)	
 trigtoexp-sinh-x-lt-eq-11-arctan-x-eq-7			
-trigtoexp-list-sin-x-cos-x-tan-x	[SR(sin(SR.var("x"))).exponentialize(), SR(cos(SR.var("x"))).exponentialize(), SR(tan(SR.var("x"))).exponentialize()]	True	
-trigtoexp-cos-x-plus-imaginaryunit-times-sin-x	SR((cos(SR.var("x")) + (I * sin(SR.var("x"))))).exponentialize()	True	
-trigtoexp-sin-5-times-arcsin-x	SR(sin((5 * arcsin(SR.var("x"))))).exponentialize()	True	
+trigtoexp-list-sin-x-cos-x-tan-x	[SR(sin(SR.var("x"))).exponentialize(), SR(cos(SR.var("x"))).exponentialize(), SR(tan(SR.var("x"))).exponentialize()]	[-1/2*I*e^(I*x) + 1/2*I*e^(-I*x), 1/2*e^(I*x) + 1/2*e^(-I*x), (-I*e^(I*x) + I*e^(-I*x))/(e^(I*x) + e^(-I*x))]	
+trigtoexp-cos-x-plus-imaginaryunit-times-sin-x	SR((cos(SR.var("x")) + (I * sin(SR.var("x"))))).exponentialize()	e^(I*x)	
+trigtoexp-sin-5-times-arcsin-x	SR(sin((5 * arcsin(SR.var("x"))))).exponentialize()	-1/2*I*e^(5*I*arcsin(x)) + 1/2*I*e^(-5*I*arcsin(x))	
 trigtoexp-sin-x-lt-x-lt-tan-x			
 trigtoexp-sin-x-eq-pi-times-3-pow-neg-1	SR(enumeratio_equal(sin(SR.var("x")), (pi * ((3)^-1)))).exponentialize()	0	inconclusive

@@ -10,8 +10,8 @@ a-huge-3-200-argument	N(cot((S(3)**200)), 30)	0.367143001033697879173282719963
 a-huge-neg-7-60-argument	N(cot((-(S(7)**60))), 30)	-2.54972544855289659474408289918	
 a-huge-10-80-plus-1-over-3-argument	N(cot((S(((S(10)**80) + 1)) / 3)), 30)	-0.407124001051926907359657544063	disagree
 cot-7-under-n	N(cot(7), 30)	1.14751542240513568505712783360	
-series-cot-x-x-0-10	series(cot(Symbol("x")), Symbol("x"), 0, 10 + 1)	True	
-series-cot-x-x-neg-pi-5	series(cot(Symbol("x")), Symbol("x"), (-pi), 5 + 1)	True	
+series-cot-x-x-0-10	series(cot(Symbol("x")), Symbol("x"), 0, 10 + 1)	1/x - x/3 - x**3/45 - 2*x**5/945 - x**7/4725 - 2*x**9/93555 + O(x**11)	
+series-cot-x-x-neg-pi-5	series(cot(Symbol("x")), Symbol("x"), (-pi), 5 + 1)	1/(x + pi) - pi/3 - (x + pi)**3/45 - 2*(x + pi)**5/945 - x/3 + O((x + pi)**6, (x, -pi))	
 n-of-an-exact-argument-gives-an-arbitrary	N(cot(Rational(6, 5)), 30)	0.388779569368204911634191504972	
 evaluates-at-a-complex-argument	cot((2.5 + 1*I))	-0.275669121229899 - 1.04264064209442*I	
 threads-element-wise-over-a-matrix	[[cot((5 * (S(pi) / 6))), cot((S(pi) / 2))], [cot((3 * (S(pi) / 2))), cot((-(S(pi) / 6)))]]	[[-sqrt(3), 0], [0, -sqrt(3)]]	
@@ -20,8 +20,8 @@ cot-pi-12-2-sqrt-3	cot((S(pi) / 12))	sqrt(3) + 2
 cot-pi-over-5	cot((S(pi) / 5))	sqrt(2*sqrt(5)/5 + 1)	
 an-interval-straddling-the-pole-at-0-maps-to-two	cot(AccumBounds((-(S(pi) / 4)), (S(pi) / 4)))	AccumBounds(-oo, oo)	disagree
 uncertainty-propagation-near-a-pole-grows-fast			
-oddness-pulls-the-sign-out-of-a-symbolic	cot((-Symbol("x")))	True	
-derivative-csc-2-x	diff(cot(Symbol("x")), Symbol("x"))	True	
+oddness-pulls-the-sign-out-of-a-symbolic	cot((-Symbol("x")))	-cot(x)	
+derivative-csc-2-x	diff(cot(Symbol("x")), Symbol("x"))	-cot(x)**2 - 1	
 antiderivative-ln-sin-x	integrate(cot(Symbol("x")), Symbol("x"))	None	inconclusive
 n-cot-6-over-5-50	N(cot(Rational(6, 5)), 30)	0.388779569368204911634191504972	
 matrixfunction-function-cot-1-1-list-list-5-over			

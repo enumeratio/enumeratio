@@ -4,7 +4,7 @@ ln-exponentiale	log(e)	1
 ln-0	log(0)	-Infinity	
 a-machine-precision-argument-evaluates	log(1.5)	0.405465108108164	
 a-machine-precision-negative-argument	log(-4.705)	1.54862577303734 + 3.14159265358979*I	
-series-ln-x-plus-1-x-0-10	SR(log((SR.var("x") + 1))).series(SR.var("x") == 0, 10 + 1)	True	
+series-ln-x-plus-1-x-0-10	SR(log((SR.var("x") + 1))).series(SR.var("x") == 0, 10 + 1)	1*x + (-1/2)*x^2 + 1/3*x^3 + (-1/4)*x^4 + 1/5*x^5 + (-1/6)*x^6 + 1/7*x^7 + (-1/8)*x^8 + 1/9*x^9 + (-1/10)*x^10 + Order(x^11)	
 ln-1-i-pi-the-principal-value-past-the-branch	log(-1)	I*pi	
 n-for-a-decimal-value	enumeratio_n(log(1000))	6.90775527898214	
 arbitrary-precision-via-n	enumeratio_n(log((5/2)))	0.916290731874155	
@@ -19,10 +19,10 @@ ln-i-i-pi-2-exactly	log(I)	1/2*I*pi
 a-unit-fraction-becomes-a-negated-logarithm-ln	log((1/2))	log(1/2)	
 interval-arithmetic-ln-is-increasing-so-ln-frac			
 uncertainty-propagation-ln-2-pm-0-01-approx-0			
-ln-exp-x	log(exp(SR.var("x")))	True	
-derivative-1-x	diff(log(SR.var("x")), SR.var("x"))	True	
-antiderivative-x-ln-x-x	integrate(log(SR.var("x")), SR.var("x"))	True	
-mercator-series-for-ln-1-x	SR(log((1 + SR.var("x")))).series(SR.var("x") == 0, 4 + 1)	True	
+ln-exp-x	log(exp(SR.var("x")))	log(e^x)	
+derivative-1-x	diff(log(SR.var("x")), SR.var("x"))	1/x	
+antiderivative-x-ln-x-x	integrate(log(SR.var("x")), SR.var("x"))	x*log(x) - x	
+mercator-series-for-ln-1-x	SR(log((1 + SR.var("x")))).series(SR.var("x") == 0, 4 + 1)	1*x + (-1/2)*x^2 + 1/3*x^3 + (-1/4)*x^4 + Order(x^5)	
 to-40-significant-digits-every-one-correctly	enumeratio_n(log(2), 40)	0.693147180559945	
 ln-frac-12-i-pi-ln-2-a-negative-rational-folded	log((-1/2))	I*pi + log(1/2)	
 n-decimalizes-ln-i-not-just-the-exact-form	enumeratio_n(log(I))	1.57079632679490*I	
@@ -38,10 +38,10 @@ functionanalytic-ln-x-x
 functionmeromorphic-ln-x-x			
 functioninjective-ln-x-x			
 functionsurjective-ln-x-x			
-d-ln-z-z	diff(log(SR.var("z")), SR.var("z"))	True	
-d-ln-ln-x-x	diff(log(log(SR.var("x"))), SR.var("x"))	True	
-ln-exponentiale-pow-n	log(((e)^SR.var("n")))	True	
-series-ln-x-x-1-4	SR(log(SR.var("x"))).series(SR.var("x") == 1, 4 + 1)	True	
+d-ln-z-z	diff(log(SR.var("z")), SR.var("z"))	1/z	
+d-ln-ln-x-x	diff(log(log(SR.var("x"))), SR.var("x"))	1/(x*log(x))	
+ln-exponentiale-pow-n	log(((e)^SR.var("n")))	log(e^n)	
+series-ln-x-x-1-4	SR(log(SR.var("x"))).series(SR.var("x") == 1, 4 + 1)	1*(x - 1) + (-1/2)*(x - 1)^2 + 1/3*(x - 1)^3 + (-1/4)*(x - 1)^4 + Order((x - 1)^5)	
 series-ln-x-x-neg-2-3	SR(log(SR.var("x"))).series(SR.var("x") == -2, 3 + 1)	RuntimeError: ex::series(): expansion point has unknown type	error
 inverse-of-exp-ln-e-x-x	enumeratio_equal(log(exp(5)), 5)	True	
 product-rule-ln-ab-ln-a-ln-b	enumeratio_equal((log(2) + log(3)), log(6))	True	

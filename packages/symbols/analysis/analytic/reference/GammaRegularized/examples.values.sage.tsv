@@ -28,8 +28,8 @@ the-polynomial-closed-form-for-an-integer-order	(gamma_inc(5, -1) / gamma(5))	1/
 q-a-0-z-1-q-a-z-even-for-negative-a-where-gamma			
 q-a-0-1-for-symbolic-a	(gamma_inc(SR.var("a"), 0) / gamma(SR.var("a")))	1	
 q-a-infty-0	(gamma_inc(SR.var("a"), oo) / gamma(SR.var("a")))	gamma(a, +Infinity)/gamma(a)	inconclusive
-q-1-x-e-x-symbolically	(gamma_inc(1, SR.var("x")) / gamma(1))	True	
-q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s	(gamma_inc(2, SR.var("x")) / gamma(2))	True	
-q-1-2-x-erfc-sqrt-x-see-erfc	(gamma_inc((1/2), SR.var("x")) / gamma((1/2)))	True	
+q-1-x-e-x-symbolically	(gamma_inc(1, SR.var("x")) / gamma(1))	e^(-x)	
+q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s	(gamma_inc(2, SR.var("x")) / gamma(2))	gamma(2, x)	
+q-1-2-x-erfc-sqrt-x-see-erfc	(gamma_inc((1/2), SR.var("x")) / gamma((1/2)))	-erf(sqrt(x)) + 1	
 a-non-integer-order-combined-with-negative-z	(gamma_inc(2.5, -1) / gamma(2.5))	1.00000000000000 - 0.628008230288381*I	
 gamma-regularized-0-0-is-indeterminate	(gamma_inc(0, 0) / gamma(0))	RuntimeError: indeterminate expression: 0 * infinity encountered.	error

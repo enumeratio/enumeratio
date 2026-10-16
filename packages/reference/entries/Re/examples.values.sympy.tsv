@@ -7,7 +7,7 @@ real-2-times-exponentiale-pow-1-over-3-times-i	re((2 * (S(E)**((0 + Rational(1, 
 real-3-over-2-plus-4-over-5-times-i	re((Rational(3, 2) + Rational(4, 5)*I))	3/2	
 n-real-exponentiale-plus-i-times-pi-25	N(re((E + ((0 + 1*I) * pi))), 30)	2.71828182845904523536028747135	
 real-41-over-25-minus-2i	re((Rational(41, 25) + -2*I))	41/25	
-real-list-list-1-u-list-v-neg-i	[[re(1), re(Symbol("u"))], [re(Symbol("v")), re((0 + -1*I))]]	True	
+real-list-list-1-u-list-v-neg-i	[[re(1), re(Symbol("u"))], [re(Symbol("v")), re((0 + -1*I))]]	[[1, re(u)], [re(v), 0]]	
 real-0	re(0)	0	
 real-positiveinfinity	re(oo)	oo	
 real-positiveinfinity-times-i	re((oo * (0 + 1*I)))	0	inconclusive
@@ -15,7 +15,7 @@ real-complexinfinity	re(zoo)	nan
 piecewiseexpand-re-imaginaryunit-times-x-neg-2			
 simplify-re-x-x-gt-0			
 a-gaussian-integer-is-a-complex-number	re(((2 + 1*I) * (1 + 3*I)))	-1	
-re-of-a-symbolic-value-stays-unevaluated	re(Symbol("x"))	True	
+re-of-a-symbolic-value-stays-unevaluated	re(Symbol("x"))	re(x)	
 real-1	re(1)	1	
 real-neg-1	re(-1)	-1	
 real-neg-i	re((0 + -1*I))	0	

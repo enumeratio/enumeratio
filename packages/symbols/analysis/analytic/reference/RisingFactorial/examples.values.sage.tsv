@@ -2,9 +2,9 @@ id	in	out
 five-six-seven	rising_factorial(5, 3)	210
 from-1-is-the-factorial	rising_factorial(1, 5)	120
 at-risingfactorial-2-5i	enumeratio_n(rising_factorial((2 + 5*I), (3 + 2*I)))	20.6474078947724 + 24.0473567102328*I
-a-symbolic-base	rising_factorial(SR.var("a"), 3)	True
+a-symbolic-base	rising_factorial(SR.var("a"), 3)	(a + 2)*(a + 1)*a
 a-rational-base	rising_factorial((1/2), 3)	15/8
-a-symbolic-order-is-pochhammer	rising_factorial(SR.var("a"), SR.var("n"))	True
+a-symbolic-order-is-pochhammer	rising_factorial(SR.var("a"), SR.var("n"))	gamma(a + n)/gamma(a)
 complex-base-and-order	enumeratio_n(rising_factorial((2 + 5*I), (3 + 2*I)))	20.6474078947724 + 24.0473567102328*I
 agrees-with-pochhammer	enumeratio_equal(rising_factorial(4, 3), rising_factorial(4, 3))	True
 negative-order	rising_factorial(5, -2)	1/12

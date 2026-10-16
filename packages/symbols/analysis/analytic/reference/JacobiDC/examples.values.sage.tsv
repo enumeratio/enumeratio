@@ -1,14 +1,14 @@
 id	in	out	verdict
-a-floating-point-argument-evaluates-directly-to	enumeratio_n(jacobi_dc(0.6, 0.4))	1.12478042691156	
-m-less-than-0-via-the-imaginary-modulus	enumeratio_n(jacobi_dc(0.3, -0.7))	1.07993977008323	
+a-floating-point-argument-evaluates-directly-to	enumeratio_n(jacobi_dc(RealField(200)("0.6"), RealField(200)("0.4")))	1.12478042691156	
+m-less-than-0-via-the-imaginary-modulus	enumeratio_n(jacobi_dc(RealField(200)("0.3"), RealField(200)("-0.7")))	1.07993977008323	
 d-jacobidc-u-m-m	diff(jacobi_dc(SR.var("u"), SR.var("m")), SR.var("m"))	-1/2*((u + elliptic_e(arcsin(jacobi_sn(u, m)), m)/(m - 1))*jacobi_cn(u, m)*jacobi_sn(u, m) - jacobi_dn(u, m)*jacobi_sn(u, m)^2/(m - 1))/jacobi_cn(u, m) + 1/2*((u + elliptic_e(arcsin(jacobi_sn(u, m)), m)/(m - 1))*jacobi_dn(u, m)*jacobi_sn(u, m)/m - jacobi_cn(u, m)*jacobi_sn(u, m)^2/(m - 1))*jacobi_dn(u, m)/jacobi_cn(u, m)^2	disagree
-series-jacobidc-u-m-u-0-5	SR(jacobi_dc(SR.var("u"), SR.var("m"))).series(SR.var("u") == 0, 5 + 1)	True	
+series-jacobidc-u-m-u-0-5	SR(jacobi_dc(SR.var("u"), SR.var("m"))).series(SR.var("u") == 0, 5 + 1)	1 + (-1/2*m + 1/2)*u^2 + (1/24*m^2 - 1/4*m + 5/24)*u^4 + Order(u^6)	
 series-jacobidc-z-m-m-0-2	SR(jacobi_dc(SR.var("z"), SR.var("m"))).series(SR.var("m") == 0, 2 + 1)	ValueError: power::eval(): division by zero	error
-series-jacobidc-u-m-u-u0-2	SR(jacobi_dc(SR.var("u"), SR.var("m"))).series(SR.var("u") == SR.var("u0"), 2 + 1)	True	
+series-jacobidc-u-m-u-u0-2	SR(jacobi_dc(SR.var("u"), SR.var("m"))).series(SR.var("u") == SR.var("u0"), 2 + 1)	(jacobi_dc(u0, m)) + (-m*jacobi_nc(u0, m)*jacobi_sc(u0, m) + jacobi_nc(u0, m)*jacobi_sc(u0, m))*(u - u0) + (-1/2*m*jacobi_dc(u0, m)*jacobi_nc(u0, m)^2 - 1/2*m*jacobi_dc(u0, m)*jacobi_sc(u0, m)^2 + 1/2*jacobi_dc(u0, m)*jacobi_nc(u0, m)^2 + 1/2*jacobi_dc(u0, m)*jacobi_sc(u0, m)^2)*(u - u0)^2 + Order((u - u0)^3)	
 u-0-is-1-for-any-m	jacobi_dc(0, SR.var("m"))	1	
 n-jacobidc-sqrt-2-over-4-times-i-2	enumeratio_n(jacobi_dc((0 + (sqrt(2) / 4)*I), 2))	1.06047639640746 - 7.95929451175089e-132*I	
 n-jacobidc-1-over-2-times-1-plus-sqrt-2-over-2-1	enumeratio_n(jacobi_dc(((1/2) * (1 + (sqrt(2) / 2))), ((((1 + (-(sqrt(2) / 2))))^2) * (((1 + (sqrt(2) / 2)))^-2))))	1.50410294923776	
 n-jacobidc-sqrt-2-times-i-2	enumeratio_n(jacobi_dc((0 + sqrt(2)*I), 2))	1.40674468395367 - 8.02670366680936e-132*I	
 n-jacobidc-2-times-1-plus-sqrt-2-over-2-1-minus	enumeratio_n(jacobi_dc((2 * (1 + (sqrt(2) / 2))), ((((1 + (-(sqrt(2) / 2))))^2) * (((1 + (sqrt(2) / 2)))^-2))))	-1.03090832450161	
-symbolic-arguments-are-left-unevaluated-rather	jacobi_dc(SR.var("u"), SR.var("m"))	True	
+symbolic-arguments-are-left-unevaluated-rather	jacobi_dc(SR.var("u"), SR.var("m"))	jacobi_dc(u, m)	
 u-1e16-declines-rather-than-answering-wrong	enumeratio_n(jacobi_dc(((10)^16), (5/7)))	-1.02644356400536	inconclusive

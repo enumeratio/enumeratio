@@ -2,7 +2,7 @@ id	in	out	verdict
 n-arsinh-1-100	N(asinh(1), 30)	0.881373587019543025232609324980	
 arsinh-positiveinfinity	asinh(oo)	oo	
 arsinh-0	asinh(0)	0	
-d-arsinh-x-x	diff(asinh(Symbol("x")), Symbol("x"))	True	
+d-arsinh-x-x	diff(asinh(Symbol("x")), Symbol("x"))	1/sqrt(x**2 + 1)	
 arsinh-list-list-i-sqrt-2-over-2-times-i-list-0	[[asinh((0 + 1*I)), asinh((0 + (S(sqrt(2)) / 2)*I))], [asinh(0), asinh((0 + (-(S(sqrt(2)) / 2))*I))]]	[[I*pi/2, I*pi/4], [0, -I*pi/4]]	
 arsinh-1-over-2-times-i-times-sqrt-1-over-2	asinh(((0 + Rational(1, 2)*I) * sqrt((Rational(1, 2) * (5 + (-sqrt(5)))))))	I*asin(sqrt(5/2 - sqrt(5)/2)/2)	
 arsinh-neg-1-over-2-times-i-times-sqrt-1-over-2	asinh(((0 + Rational(-1, 2)*I) * sqrt((Rational(1, 2) * (5 + (-sqrt(5)))))))	-I*asin(sqrt(5/2 - sqrt(5)/2)/2)	

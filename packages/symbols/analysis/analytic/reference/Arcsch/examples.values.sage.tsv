@@ -4,7 +4,7 @@ a-pole-at-0	arccsch(0)	+Infinity	disagree
 arcsch-positiveinfinity	arccsch(oo)	0	
 a-float-argument-evaluates-directly	arccsch(1.5)	0.625145117250417	
 as-a-logarithm-arcsch-1-ln-1-sqrt-2	SR(arccsch(1)).exponentialize()	arccsch(1)	
-oddness-pulls-the-sign-out-of-a-symbolic	arccsch((-SR.var("x")))	True	
+oddness-pulls-the-sign-out-of-a-symbolic	arccsch((-SR.var("x")))	arccsch(-x)	
 derivative-for-real-x-ne-0	diff(arccsch(SR.var("x")), SR.var("x"))	None	inconclusive
 n-arcsch-5-50	enumeratio_n(arccsch(5), 50)	0.198690110349241	
 arcsch-complexinfinity	arccsch(unsigned_infinity)	0	

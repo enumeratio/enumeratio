@@ -1,11 +1,11 @@
 id	in	out	verdict
-series-csch-x-x-0-10	series(csch(Symbol("x")), Symbol("x"), 0, 10 + 1)	True	
-normal-series-csch-x-x-2i-times-pi-3	(series(csch(Symbol("x")), Symbol("x"), ((0 + 2*I) * pi), 3 + 1)).removeO()	True	
+series-csch-x-x-0-10	series(csch(Symbol("x")), Symbol("x"), 0, 10 + 1)	1/x - x/6 + 7*x**3/360 - 31*x**5/15120 + 127*x**7/604800 - 73*x**9/3421440 + O(x**11)	
+normal-series-csch-x-x-2i-times-pi-3	(series(csch(Symbol("x")), Symbol("x"), ((0 + 2*I) * pi), 3 + 1)).removeO()	-x/6 + 7*(x - 2*I*pi)**3/360 + I*pi/3 + 1/(x - 2*I*pi)	
 n-csch-9-over-5-50	N(csch(Rational(9, 5)), 30)	0.339884691415493707140758149467	
 csch-list-list-1-over-3-times-i-times-pi-neg-1	[[csch(((0 + Rational(1, 3)*I) * pi)), csch(((0 + Rational(-1, 3)*I) * pi))], [csch(0), csch(((0 + Rational(-1, 6)*I) * pi))]]	[[-2*sqrt(3)*I/3, 2*sqrt(3)*I/3], [zoo, 2*I]]	
 csch-positiveinfinity	csch(oo)	0	
 csch-0	csch(0)	zoo	
-d-csch-x-x	diff(csch(Symbol("x")), Symbol("x"))	True	
+d-csch-x-x	diff(csch(Symbol("x")), Symbol("x"))	-coth(x)*csch(x)	
 matrixfunction-function-csch-1-1-list-list-1			
 integrate-csch-x-x-nothing-nothing	integrate(csch(Symbol("x")), Symbol("x"))	None	inconclusive
 functionmeromorphic-csch-x-x			

@@ -2,4 +2,4 @@ id	in	out	verdict
 besselj-0-1	enumeratio_n(bessel_J(0, 1))	0.765197686557967	
 normal-series-besselj-0-x-x-positiveinfinity-3	(SR(bessel_J(0, SR.var("x"))).series(SR.var("x") == oo, 3 + 1)).truncate()	None	inconclusive
 n-besselj-0-4-50	enumeratio_n(bessel_J(0, 4), 50)	-0.397149809863847	
-d-besselj-n-x-x	diff(bessel_J(SR.var("n"), SR.var("x")), SR.var("x"))	True	
+d-besselj-n-x-x	diff(bessel_J(SR.var("n"), SR.var("x")), SR.var("x"))	-1/2*bessel_J(n + 1, x) + 1/2*bessel_J(n - 1, x)	

@@ -4,7 +4,7 @@ a-pole-at-0	acsch(0)	zoo
 arcsch-positiveinfinity	acsch(oo)	0	
 a-float-argument-evaluates-directly	acsch(1.5)	0.625145117250417	
 as-a-logarithm-arcsch-1-ln-1-sqrt-2			
-oddness-pulls-the-sign-out-of-a-symbolic	acsch((-Symbol("x")))	True	
+oddness-pulls-the-sign-out-of-a-symbolic	acsch((-Symbol("x")))	-acsch(x)	
 derivative-for-real-x-ne-0	diff(acsch(Symbol("x")), Symbol("x"))	None	inconclusive
 n-arcsch-5-50	N(acsch(5), 30)	0.198690110349241406474636915950	
 arcsch-complexinfinity	acsch(zoo)	0	

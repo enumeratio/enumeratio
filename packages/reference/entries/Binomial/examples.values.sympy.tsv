@@ -6,9 +6,9 @@ choosing-none-of-n-is-always-1-way	binomial(5, 0)	1
 choosing-all-of-n-is-always-1-way	binomial(5, 5)	1	
 binomial-8-4	binomial(8, 4)	70	
 symbolic-n-binom-n-0-1-for-any-n	binomial(Symbol("n"), 0)	1	
-symbolic-n-binom-n-1-n	binomial(Symbol("n"), 1)	True	
-binom-n-n-1-n-for-symbolic-n	binomial(Symbol("n"), (Symbol("n") - 1))	True	
-binom-m-m-1-m-for-symbolic-m	binomial(Symbol("m"), (Symbol("m") + -1))	True	
+symbolic-n-binom-n-1-n	binomial(Symbol("n"), 1)	n	
+binom-n-n-1-n-for-symbolic-n	binomial(Symbol("n"), (Symbol("n") - 1))	binomial(n, n - 1)	
+binom-m-m-1-m-for-symbolic-m	binomial(Symbol("m"), (Symbol("m") + -1))	binomial(m, m - 1)	
 n-binomial-7-over-3-1-over-5-1-digit	N(binomial(Rational(7, 3), Rational(1, 5)), 30)	1.33312542446502865223592287085	disagree
 threads-element-wise-over-a-list-as-wolfram-s	[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]	[0, 1, 10, 35, 165]	
 half-integer-arguments-evaluate-exactly-through	binomial(Rational(9, 2), Rational(7, 2))	9/2	
@@ -22,7 +22,7 @@ a-gaussian-integer-n-binom-1-i-5-frac-1-i-12	binomial((1 + 1*I), 5)	-1/12 - I/12
 complex-n-and-k-evaluate-through-the-gamma	binomial((2 + 1*I), (7 + -3*I))	gamma(3 + I)/(gamma(-4 + 4*I)*gamma(8 - 3*I))	
 interval-arithmetic-in-k-binom-1-2-k-is	binomial(Rational(1, 2), AccumBounds(0.5, 0.6))	binomial(1/2, AccumBounds(0.5, 0.6))	disagree
 n-binomial-7-over-3-1-over-5-20	N(binomial(Rational(7, 3), Rational(1, 5)), 30)	1.33312542446502865223592287085	
-binomial-n-4	binomial(Symbol("n"), 4)	True	
+binomial-n-4	binomial(Symbol("n"), 4)	binomial(n, 4)	
 matrixfunction-function-binomial-1-2-1-list-list			
 the-number-of-distinct-5-card-hands-dealt-from-a	binomial(52, 5)	2598960	
 the-probability-of-exactly-3-heads-in-10-fair	(S(binomial(10, 3)) / (S(2)**10))	15/128	

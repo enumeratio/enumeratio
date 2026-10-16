@@ -1,16 +1,16 @@
 id	in	out	verdict
-one-over-s-squared	inverse_laplace(((SR.var("s"))^-2), SR.var("s"), SR.var("t"))	True	
-one-over-s-minus-a	inverse_laplace((((SR.var("s") + (-SR.var("a"))))^-1), SR.var("s"), SR.var("t"))	True	
+one-over-s-squared	inverse_laplace(((SR.var("s"))^-2), SR.var("s"), SR.var("t"))	t	
+one-over-s-minus-a	inverse_laplace((((SR.var("s") + (-SR.var("a"))))^-1), SR.var("s"), SR.var("t"))	e^(a*t)	
 s-over-s-squared-plus-a-squared	inverse_laplace((SR.var("s") / (((SR.var("s"))^2) + ((SR.var("a"))^2))), SR.var("s"), SR.var("t"))	TypeError: Computation failed since Maxima requested additional constraints; using the 'assume' command before 	error
-inverselaplacetransform-1-over-s-plus-1-s-t	inverse_laplace((1 / (SR.var("s") + 1)), SR.var("s"), SR.var("t"))	True	
+inverselaplacetransform-1-over-s-plus-1-s-t	inverse_laplace((1 / (SR.var("s") + 1)), SR.var("s"), SR.var("t"))	e^(-t)	
 inverselaplacetransform-ln-1-over-b-plus-s-times	inverse_laplace(log(((1 / (SR.var("b") + SR.var("s"))) * (SR.var("a") + SR.var("s")))), SR.var("s"), SR.var("t"))	None	inconclusive
 inverselaplacetransform-a-times-1-over-a-pow-2	inverse_laplace((SR.var("a") * (1 / (((SR.var("a"))^2) + ((SR.var("s"))^2)))), SR.var("s"), SR.var("t"))	TypeError: Computation failed since Maxima requested additional constraints; using the 'assume' command before 	error
 inverselaplacetransform-s-times-1-over-a-pow-2	inverse_laplace((SR.var("s") * (1 / (((SR.var("a"))^2) + ((SR.var("s"))^2)))), SR.var("s"), SR.var("t"))	TypeError: Computation failed since Maxima requested additional constraints; using the 'assume' command before 	error
-fullsimplify-inverselaplacetransform-a-times-1	SR(inverse_laplace((SR.var("a") * (1 / ((-((SR.var("a"))^2)) + ((SR.var("s"))^2)))), SR.var("s"), SR.var("t"))).simplify_full()	True	
-fullsimplify-inverselaplacetransform-s-times-1	SR(inverse_laplace((SR.var("s") * (1 / ((-((SR.var("a"))^2)) + ((SR.var("s"))^2)))), SR.var("s"), SR.var("t"))).simplify_full()	True	
+fullsimplify-inverselaplacetransform-a-times-1	SR(inverse_laplace((SR.var("a") * (1 / ((-((SR.var("a"))^2)) + ((SR.var("s"))^2)))), SR.var("s"), SR.var("t"))).simplify_full()	1/2*(e^(2*a*t) - 1)*e^(-a*t)	
+fullsimplify-inverselaplacetransform-s-times-1	SR(inverse_laplace((SR.var("s") * (1 / ((-((SR.var("a"))^2)) + ((SR.var("s"))^2)))), SR.var("s"), SR.var("t"))).simplify_full()	1/2*(e^(2*a*t) + 1)*e^(-a*t)	
 inverselaplacetransform-s-times-a-pow-2-plus-s	inverse_laplace((SR.var("s") * (((((SR.var("a"))^2) + ((SR.var("s"))^2)))^-2)), SR.var("s"), SR.var("t"))	TypeError: Computation failed since Maxima requested additional constraints; using the 'assume' command before 	error
 inverselaplacetransform-s-times-1-over-a-pow-2-2	inverse_laplace((SR.var("s") * (1 / ((((SR.var("a"))^2) + ((SR.var("s"))^2)) * (((SR.var("b"))^2) + ((SR.var("s"))^2))))), SR.var("s"), SR.var("t"))	TypeError: Computation failed since Maxima requested additional constraints; using the 'assume' command before 	error
-fullsimplify-inverselaplacetransform-1-over-neg	SR(inverse_laplace(((1 / (((-((SR.var("a"))^2)) + ((SR.var("s"))^2)) * ((-((SR.var("b"))^2)) + ((SR.var("s"))^2)))) * ((SR.var("s"))^2)), SR.var("s"), SR.var("t"))).simplify_full()	True	
+fullsimplify-inverselaplacetransform-1-over-neg	SR(inverse_laplace(((1 / (((-((SR.var("a"))^2)) + ((SR.var("s"))^2)) * ((-((SR.var("b"))^2)) + ((SR.var("s"))^2)))) * ((SR.var("s"))^2)), SR.var("s"), SR.var("t"))).simplify_full()	1/2*(a*(e^(2*a*t) - 1)*e^(b*t) - b*(e^(a*t + 2*b*t) - e^(a*t)))/(a^2*e^(a*t + b*t) - b^2*e^(a*t + b*t))	
 inverselaplacetransform-1-over-s-minus-2-times	inverse_laplace(((1 / ((SR.var("s") + -2) * sqrt(SR.var("s")))) * ((e)^(-5 * SR.var("s")))), SR.var("s"), SR.var("t"))	ilt(e^(-5*s)/((s - 2)*sqrt(s)), s, t)	disagree
 inverselaplacetransform-1-over-a-plus-s-times	inverse_laplace(((1 / (SR.var("a") + SR.var("s"))) * sqrt((SR.var("b") + SR.var("s")))), SR.var("s"), SR.var("t"))	None	inconclusive
 inverselaplacetransform-1-over-s-minus-1-times	inverse_laplace(((1 / (SR.var("s") + -1)) * log(SR.var("s"))), SR.var("s"), SR.var("t"))	None	inconclusive

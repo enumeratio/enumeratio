@@ -1,13 +1,13 @@
 id	in	out	verdict
-t-cubed	laplace(((SR.var("t"))^3), SR.var("t"), SR.var("s"))	True	
-exp-at	laplace(((e)^(2 * SR.var("t"))), SR.var("t"), SR.var("s"))	True	
-sin-at	laplace(sin((3 * SR.var("t"))), SR.var("t"), SR.var("s"))	True	
+t-cubed	laplace(((SR.var("t"))^3), SR.var("t"), SR.var("s"))	6/s^4	
+exp-at	laplace(((e)^(2 * SR.var("t"))), SR.var("t"), SR.var("s"))	1/(s - 2)	
+sin-at	laplace(sin((3 * SR.var("t"))), SR.var("t"), SR.var("s"))	3/(s^2 + 9)	
 laplacetransform-x-times-exponentiale-pow-neg-y	laplace((SR.var("x") * ((e)^(-SR.var("y")))), [SR.var("x"), SR.var("y")], [SR.var("p"), SR.var("q")])	AttributeError: 'sage.symbolic.expression.Expression' object has no attribute 'strip'	error
-t-cubed-exp-shift	laplace((((e)^(2 * SR.var("t"))) * ((SR.var("t"))^3)), SR.var("t"), SR.var("s"))	True	
-exp-sin-shift	laplace((((e)^(2 * SR.var("t"))) * sin((3 * SR.var("t")))), SR.var("t"), SR.var("s"))	True	
-laplacetransform-1-t-s	laplace(1, SR.var("t"), SR.var("s"))	True	
-laplacetransform-3-times-t-pow-2-plus-5t-minus-7	laplace(((3 * ((SR.var("t"))^2)) + (5 * SR.var("t")) + -7), SR.var("t"), SR.var("s"))	True	
-laplacetransform-exponentiale-pow-neg-a-times-t	laplace(((e)^(-(SR.var("a") * SR.var("t")))), SR.var("t"), SR.var("s"))	True	
+t-cubed-exp-shift	laplace((((e)^(2 * SR.var("t"))) * ((SR.var("t"))^3)), SR.var("t"), SR.var("s"))	6/(s^4 - 8*s^3 + 24*s^2 - 32*s + 16)	
+exp-sin-shift	laplace((((e)^(2 * SR.var("t"))) * sin((3 * SR.var("t")))), SR.var("t"), SR.var("s"))	3/(s^2 - 4*s + 13)	
+laplacetransform-1-t-s	laplace(1, SR.var("t"), SR.var("s"))	1/s	
+laplacetransform-3-times-t-pow-2-plus-5t-minus-7	laplace(((3 * ((SR.var("t"))^2)) + (5 * SR.var("t")) + -7), SR.var("t"), SR.var("s"))	-7/s + 5/s^2 + 6/s^3	
+laplacetransform-exponentiale-pow-neg-a-times-t	laplace(((e)^(-(SR.var("a") * SR.var("t")))), SR.var("t"), SR.var("s"))	1/(a + s)	
 simplify-laplacetransform-b-times-sinh-a-times-t	SR(laplace((((SR.var("b") * sinh((SR.var("a") * SR.var("t")))) + (-1 * (SR.var("a") * sinh((SR.var("b") * SR.var("t")))))) * (((((SR.var("a"))^2) + (-1 * ((SR.var("b"))^2))))^-1)), SR.var("t"), SR.var("s"))).simplify_full()	a*b/(a^2*b^2 + s^4 - (a^2 + b^2)*s^2)	disagree
 laplacetransform-1-over-t-times-exponentiale-pow	laplace(((1 / SR.var("t")) * (((e)^SR.var("t")) + -1)), SR.var("t"), SR.var("s"))	True	
 laplacetransform-1-over-sqrt-t-times-chebyshevt	laplace(((1 / sqrt(SR.var("t"))) * chebyshev_T(SR.var("n"), ((1 / (SR.var("t") + 1)) * ((-SR.var("t")) + 1))) * (((SR.var("t") + 1))^SR.var("n"))), SR.var("t"), SR.var("s"))	RuntimeError: hermite_eval: The index n must be a nonnegative integer	error
@@ -15,9 +15,9 @@ laplacetransform-gamma-nu-a-times-1-over-t-t-s	laplace(gamma_inc(SR.var("nu"), (
 laplacetransform-diracdelta-t-minus-1-t-s			
 laplacetransform-1-over-gamma-m-plus-1-times	laplace(((1 / (gamma((SR.var("m") + 1)) * gamma((SR.var("n") + 1)))) * ((SR.var("x"))^SR.var("m")) * ((SR.var("y"))^SR.var("n"))), [SR.var("x"), SR.var("y")], [SR.var("p"), SR.var("q")])	AttributeError: 'sage.symbolic.expression.Expression' object has no attribute 'strip'	error
 laplacetransform-1-over-sqrt-x-times-y-times-cos	laplace(((1 / sqrt((SR.var("x") * SR.var("y")))) * cos(sqrt((SR.var("x") * SR.var("y"))))), [SR.var("x"), SR.var("y")], [SR.var("p"), SR.var("q")])	AttributeError: 'sage.symbolic.expression.Expression' object has no attribute 'strip'	error
-laplacetransform-1-over-t-times-sin-3t-t-s	laplace(((1 / SR.var("t")) * sin((3 * SR.var("t")))), SR.var("t"), SR.var("s"))	True	
+laplacetransform-1-over-t-times-sin-3t-t-s	laplace(((1 / SR.var("t")) * sin((3 * SR.var("t")))), SR.var("t"), SR.var("s"))	1/2*pi - arctan(1/3*s)	
 fullsimplify-laplacetransform-realabs-sin-t-t-s			
 separable-two-variables	laplace((((SR.var("x"))^2) * exp((3 * SR.var("y")))), [SR.var("x"), SR.var("y")], [SR.var("p"), SR.var("q")])	AttributeError: 'sage.symbolic.expression.Expression' object has no attribute 'strip'	error
 together-laplacetransform-1-plus-a-times-t-times			
-laplacetransform-ln-t-t-s	laplace(log(SR.var("t")), SR.var("t"), SR.var("s"))	True	
+laplacetransform-ln-t-t-s	laplace(log(SR.var("t")), SR.var("t"), SR.var("s"))	-(euler_gamma + log(s))/s	
 laplacetransform-fresnelc-sqrt-a-times-t-times			

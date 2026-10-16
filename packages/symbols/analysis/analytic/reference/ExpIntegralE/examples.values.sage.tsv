@@ -9,7 +9,7 @@ normal-series-expintegrale-n-x-x	(SR(exp_integral_e(SR.var("n"), SR.var("x"))).s
 non-integer-order	exp_integral_e(0.5, 2.5)	0.0284142997092898	
 exact-arguments-under-n	enumeratio_n(exp_integral_e(1, 1))	0.219383934395520	
 n-expintegrale-1-plus-i-2-plus-3i	enumeratio_n(exp_integral_e((1 + 1*I), (2 + 3*I)))	-0.0189438305083736 + 0.0204437701028300*I	
-expintegrale-0-z	exp_integral_e(0, SR.var("z"))	True	
+expintegrale-0-z	exp_integral_e(0, SR.var("z"))	e^(-z)/z	
 seriescoefficient-expintegrale-0-x-list-x-0-n			
 expintegrale-0-positiveinfinity	exp_integral_e(0, oo)	0	
 n-expintegrale-3-11-over-5-50	enumeratio_n(exp_integral_e(3, (11/5)), 50)	0.0235206566482765	
@@ -21,6 +21,6 @@ functionexpand-expintegrale-1-over-3-z
 functionexpand-expintegrale-n-z			
 series-expintegrale-n-x-x-0-7	SR(exp_integral_e(SR.var("n"), SR.var("x"))).series(SR.var("x") == 0, 7 + 1)	NotImplementedError: The derivative of this function is only implemented for n = 1, 2, 3, ...	error
 e-n-0-1-n-1-for-n-1	exp_integral_e(2, 0)	1	
-e-0-x-e-x-x	exp_integral_e(0, SR.var("x"))	True	
+e-0-x-e-x-x	exp_integral_e(0, SR.var("x"))	e^(-x)/x	
 expintegrale-0-0	exp_integral_e(0, 0)	exp_integral_e(0, 0)	disagree
 expintegrale-3-0	exp_integral_e(3, 0)	1/2	

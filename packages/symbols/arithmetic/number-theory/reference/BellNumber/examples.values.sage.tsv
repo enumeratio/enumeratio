@@ -10,7 +10,7 @@ the-two-argument-form-gives-the-bell-touchard
 the-bell-polynomial-at-a-real-point-b-20-0-5			
 bellnumber-list-1-2-3-4-5-6	[bell_number(1), bell_number(2), bell_number(3), bell_number(4), bell_number(5), bell_number(6)]	[1, 2, 5, 15, 52, 203]	
 the-number-of-ways-to-partition-a-4-element-set	bell_number(4)	15	
-recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	enumeratio_equal(bell_number(5), ((binomial(4, 0) * bell_number(0)) + (binomial(4, 1) * bell_number(1)) + (binomial(4, 2) * bell_number(2)) + (binomial(4, 3) * bell_number(3)) + (binomial(4, 4) * bell_number(4))))	True	
+recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	enumeratio_equal(bell_number(5), ((enumeratio_binomial(4, 0) * bell_number(0)) + (enumeratio_binomial(4, 1) * bell_number(1)) + (enumeratio_binomial(4, 2) * bell_number(2)) + (enumeratio_binomial(4, 3) * bell_number(3)) + (enumeratio_binomial(4, 4) * bell_number(4))))	True	
 the-bell-polynomial-at-1-is-the-bell-number-b-n			
 dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac	(sum((((SR.var("k"))^5) / enumeratio_factorial(SR.var("k"))), SR.var("k"), 0, oo) / e)	52	
 touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	enumeratio_equal(enumeratio_mod(bell_number(9), 7), enumeratio_mod((bell_number(2) + bell_number(3)), 7))	True	

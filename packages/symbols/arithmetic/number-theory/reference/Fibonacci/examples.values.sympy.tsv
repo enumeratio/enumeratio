@@ -6,7 +6,7 @@ fibonacci-20	fibonacci(20)	6765
 fibonacci-8	fibonacci(8)	21	
 exact-at-any-size-f-100-has-21-digits	fibonacci(100)	354224848179261915075	
 a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	fibonacci(1.5)	0.920442065259926	
-the-two-argument-fibonacci-polynomial-f-7-x-from	fibonacci(7, Symbol("x"))	True	
+the-two-argument-fibonacci-polynomial-f-7-x-from	fibonacci(7, Symbol("x"))	x**6 + 5*x**4 + 6*x**2 + 1	
 the-fibonacci-polynomial-at-a-real-order-and	fibonacci(5.8, 3)	TypeError: PythonMPContext._wrap_libmp_function.<locals>.f() takes 1 positional argument but 2 were given	error
 special-value-of-the-fibonacci-polynomial-f-1-0	fibonacci(1, 0)	1	
 special-value-of-the-fibonacci-polynomial-f-0-0	fibonacci(0, 0)	ValueError: Fibonacci polynomials are defined only for positive integer indices.	error

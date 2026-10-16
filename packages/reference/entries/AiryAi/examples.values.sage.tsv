@@ -1,9 +1,9 @@
 id	in	out	verdict
 ai-0	enumeratio_n(airy_ai(0))	0.355028053887817	
 ai-1	enumeratio_n(airy_ai(1))	0.135292416312881	
-series-airyai-x-x-0-4	SR(airy_ai(SR.var("x"))).series(SR.var("x") == 0, 4 + 1)	True	
+series-airyai-x-x-0-4	SR(airy_ai(SR.var("x"))).series(SR.var("x") == 0, 4 + 1)	(1/3*3^(1/3)/gamma(2/3)) + (-1/3*3^(2/3)/gamma(1/3))*x + (1/18*3^(1/3)/gamma(2/3))*x^3 + (-1/36*3^(2/3)/gamma(1/3))*x^4 + Order(x^5)	
 normal-series-airyai-x-x-positiveinfinity-2	(SR(airy_ai(SR.var("x"))).series(SR.var("x") == oo, 2 + 1)).truncate()	None	inconclusive
 n-airyai-2-50	enumeratio_n(airy_ai(2), 50)	0.0349241304232744	
 n-functionrange-airyai-x-x-y			
-d-airyai-x-x	diff(airy_ai(SR.var("x")), SR.var("x"))	True	
-series-airyai-x-x-0-7	SR(airy_ai(SR.var("x"))).series(SR.var("x") == 0, 7 + 1)	True	
+d-airyai-x-x	diff(airy_ai(SR.var("x")), SR.var("x"))	airy_ai_prime(x)	
+series-airyai-x-x-0-7	SR(airy_ai(SR.var("x"))).series(SR.var("x") == 0, 7 + 1)	(1/3*3^(1/3)/gamma(2/3)) + (-1/3*3^(2/3)/gamma(1/3))*x + (1/18*3^(1/3)/gamma(2/3))*x^3 + (-1/36*3^(2/3)/gamma(1/3))*x^4 + (1/540*3^(1/3)/gamma(2/3))*x^6 + (-1/1512*3^(2/3)/gamma(1/3))*x^7 + Order(x^8)	

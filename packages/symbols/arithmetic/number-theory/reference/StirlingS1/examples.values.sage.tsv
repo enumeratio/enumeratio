@@ -11,7 +11,7 @@ the-number-of-permutations-of-5-elements-with	stirling_number1(5, 3)	35
 abs-stirlings1-n-range-1-n			
 the-unsigned-values-in-a-row-sum-to-n	enumeratio_equal(sum(enumeratio_abs(stirling_number1(4, SR.var("k"))), SR.var("k"), 0, 4), enumeratio_factorial(4))	TypeError: unable to convert k to an integer	error
 the-signed-row-sum-vanishes-for-n-ge-2	sum(stirling_number1(6, SR.var("k")), SR.var("k"), 0, 6)	TypeError: unable to convert k to an integer	error
-s-n-n-1-binom-n-2	enumeratio_equal(stirling_number1(6, 5), (-binomial(6, 2)))	False	disagree
+s-n-n-1-binom-n-2	enumeratio_equal(stirling_number1(6, 5), (-enumeratio_binomial(6, 2)))	False	disagree
 the-generating-property-sum-k-s-n-k-x-k-x-x-1-x	enumeratio_equal(sum((stirling_number1(4, SR.var("k")) * ((SR.var("x"))^SR.var("k"))), SR.var("k"), 0, 4), SR((SR.var("x") * (SR.var("x") - 1) * (SR.var("x") - 2) * (SR.var("x") - 3))).expand())	TypeError: unable to convert k to an integer	error
 n-stirlings1-100-11	enumeratio_n(stirling_number1(100, 11))	3.90376773476390e155	disagree
 stirlings1-0-1	stirling_number1(0, 1)	0	

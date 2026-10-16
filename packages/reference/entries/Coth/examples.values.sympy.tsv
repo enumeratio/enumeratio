@@ -1,11 +1,11 @@
 id	in	out
-series-coth-x-x-0-10	series(coth(Symbol("x")), Symbol("x"), 0, 10 + 1)	True
-series-coth-x-x-2i-times-pi-3	series(coth(Symbol("x")), Symbol("x"), ((0 + 2*I) * pi), 3 + 1)	True
+series-coth-x-x-0-10	series(coth(Symbol("x")), Symbol("x"), 0, 10 + 1)	1/x + x/3 - x**3/45 + 2*x**5/945 - x**7/4725 + 2*x**9/93555 + O(x**11)
+series-coth-x-x-2i-times-pi-3	series(coth(Symbol("x")), Symbol("x"), ((0 + 2*I) * pi), 3 + 1)	1/(x - 2*I*pi) - 2*I*pi/3 - (x - 2*I*pi)**3/45 + x/3 + O((x - 2*I*pi)**4, (x, 2*I*pi))
 n-coth-6-over-5-50	N(coth(Rational(6, 5)), 30)	1.19953754419235076674991993157
 coth-list-list-1-over-3-times-i-times-pi-neg-1	[[coth(((0 + Rational(1, 3)*I) * pi)), coth(((0 + Rational(-1, 3)*I) * pi))], [coth(0), coth(((0 + Rational(-1, 6)*I) * pi))]]	[[-sqrt(3)*I/3, sqrt(3)*I/3], [zoo, sqrt(3)*I]]
 coth-positiveinfinity	coth(oo)	1
 coth-0	coth(0)	zoo
-d-coth-x-x	diff(coth(Symbol("x")), Symbol("x"))	True
+d-coth-x-x	diff(coth(Symbol("x")), Symbol("x"))	-1/sinh(x)**2
 matrixfunction-function-coth-1-1-list-list-1		
 functionmeromorphic-coth-x-x		
 n-coth-1-times-coth-1-over-2	N((coth(1) * coth(Rational(1, 2))), 30)	2.84134718841558463789082704543

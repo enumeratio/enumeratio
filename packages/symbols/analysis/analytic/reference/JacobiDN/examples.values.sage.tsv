@@ -1,43 +1,43 @@
 id	in	out	verdict
-a-floating-point-argument-evaluates-directly-to	enumeratio_n(jacobi_dn(0.3, 0.5))	0.978240504174361	
-dn-1-1-0-9	enumeratio_n(jacobi_dn(1.1, 0.9))	0.639315778453692	
-dn-0-7-0-2	enumeratio_n(jacobi_dn(-0.7, 0.2))	0.958660207314324	
-dn-0-3-0	enumeratio_n(jacobi_dn(0.3, 0))	1.00000000000000	
-dn-0-3-1	enumeratio_n(jacobi_dn(0.3, 1))	0.956627911900248	
-dn-1-2-3	enumeratio_n(jacobi_dn(1.2, 3))	-0.279380257734894 - 7.28489486332273e-21*I	
-dn-0-9-0-5	enumeratio_n(jacobi_dn(0.9, -0.5))	1.15402587816035	
-dn-0-4-0-5i-0-3	enumeratio_n(jacobi_dn((0.4 + 0.5*I), 0.3))	1.00487337640867 - 0.0631506946528660*I	
-dn-0-4-0-5i-0-3-2	enumeratio_n(jacobi_dn((0.4 + -0.5*I), 0.3))	1.00487337640867 + 0.0631506946528660*I	
-dn-0-4-0-5i-0-3-3	enumeratio_n(jacobi_dn((-0.4 + 0.5*I), 0.3))	1.00487337640867 + 0.0631506946528660*I	
-dn-0-4-0-5i-0-3-4	enumeratio_n(jacobi_dn((-0.4 + -0.5*I), 0.3))	1.00487337640867 - 0.0631506946528660*I	
-dn-1-1-0-7i-0-3	enumeratio_n(jacobi_dn((1.1 + -0.7*I), 0.3))	0.841596867675110 + 0.113366083448033*I	
-dn-1-1i-0-3	enumeratio_n(jacobi_dn((1 + 1*I), 0.3))	0.821615724716882 - 0.219489514568341*I	
-dn-0-2-8i-0-4	enumeratio_n(jacobi_dn((0.2 + 8*I), 0.4))	0.999661423514145 - 0.0161366857780364*I	
-dn-0-2-8i-0-4-2	enumeratio_n(jacobi_dn((0.2 + -8*I), 0.4))	0.999661423514145 + 0.0161366857780364*I	
-dn-5-4i-0-6	enumeratio_n(jacobi_dn((5 + 4*I), 0.6))	-0.739167170349424 + 0.129907609687760*I	
-dn-0-05-1-9753631352924692i-0-3	enumeratio_n(jacobi_dn((0.05 + 1.9753631352924692*I), 0.3))	8.02832986328274 - 3.98585229581705*I	
-dn-0-05-2-0653631352924693i-0-3	enumeratio_n(jacobi_dn((0.05 + 2.0653631352924693*I), 0.3))	3.84898820155069 - 19.2166010451926*I	
-dn-0-05-2-074363135292469i-0-3	enumeratio_n(jacobi_dn((0.05 + 2.074363135292469*I), 0.3))	0.400123500884896 - 19.9778348079406*I	
-dn-0-05-2-075263135292469i-0-3	enumeratio_n(jacobi_dn((0.05 + 2.075263135292469*I), 0.3))	0.0400281836929835 - 19.9857516074880*I	
-dn-0-3-0-2i-1-5	enumeratio_n(jacobi_dn((0.3 + 0.2*I), 1.5))	0.958764936573354 - 0.0857539700934879*I	
-dn-0-5-0-3i-3	enumeratio_n(jacobi_dn((0.5 + -0.3*I), 3))	0.726110088197371 + 0.368158440185773*I	
-dn-0-3-0-2i-0-7	enumeratio_n(jacobi_dn((0.3 + 0.2*I), -0.7))	1.01867368973651 + 0.0408546512141556*I	
-dn-0-5-0-3i-3-2	enumeratio_n(jacobi_dn((0.5 + -0.3*I), -3))	1.26623595482955 - 0.440287318013898*I	
-series-jacobidn-z-m-z-0-6	SR(jacobi_dn(SR.var("z"), SR.var("m"))).series(SR.var("z") == 0, 6 + 1)	True	
+a-floating-point-argument-evaluates-directly-to	enumeratio_n(jacobi_dn(RealField(200)("0.3"), 0.5))	0.978240504174361	
+dn-1-1-0-9	enumeratio_n(jacobi_dn(RealField(200)("1.1"), RealField(200)("0.9")))	0.639315778453692	
+dn-0-7-0-2	enumeratio_n(jacobi_dn(RealField(200)("-0.7"), RealField(200)("0.2")))	0.958660207314324	
+dn-0-3-0	enumeratio_n(jacobi_dn(RealField(200)("0.3"), 0))	1.00000000000000	
+dn-0-3-1	enumeratio_n(jacobi_dn(RealField(200)("0.3"), 1))	0.956627911900248	
+dn-1-2-3	enumeratio_n(jacobi_dn(RealField(200)("1.2"), 3))	-0.279380257734894 - 3.82457799030111e-64*I	
+dn-0-9-0-5	enumeratio_n(jacobi_dn(RealField(200)("0.9"), -0.5))	1.15402587816035	
+dn-0-4-0-5i-0-3	enumeratio_n(jacobi_dn((RealField(200)("0.4") + 0.5*I), RealField(200)("0.3")))	1.00487337640867 - 0.0631506946528660*I	
+dn-0-4-0-5i-0-3-2	enumeratio_n(jacobi_dn((RealField(200)("0.4") + -0.5*I), RealField(200)("0.3")))	1.00487337640867 + 0.0631506946528660*I	
+dn-0-4-0-5i-0-3-3	enumeratio_n(jacobi_dn((RealField(200)("-0.4") + 0.5*I), RealField(200)("0.3")))	1.00487337640867 + 0.0631506946528660*I	
+dn-0-4-0-5i-0-3-4	enumeratio_n(jacobi_dn((RealField(200)("-0.4") + -0.5*I), RealField(200)("0.3")))	1.00487337640867 - 0.0631506946528660*I	
+dn-1-1-0-7i-0-3	enumeratio_n(jacobi_dn((RealField(200)("1.1") + RealField(200)("-0.7")*I), RealField(200)("0.3")))	0.841596867675110 + 0.113366083448033*I	
+dn-1-1i-0-3	enumeratio_n(jacobi_dn((1 + 1*I), RealField(200)("0.3")))	0.821615724716882 - 0.219489514568341*I	
+dn-0-2-8i-0-4	enumeratio_n(jacobi_dn((RealField(200)("0.2") + 8*I), RealField(200)("0.4")))	0.999661423514145 - 0.0161366857780364*I	
+dn-0-2-8i-0-4-2	enumeratio_n(jacobi_dn((RealField(200)("0.2") + -8*I), RealField(200)("0.4")))	0.999661423514145 + 0.0161366857780364*I	
+dn-5-4i-0-6	enumeratio_n(jacobi_dn((5 + 4*I), RealField(200)("0.6")))	-0.739167170349424 + 0.129907609687760*I	
+dn-0-05-1-9753631352924692i-0-3	enumeratio_n(jacobi_dn((RealField(200)("0.05") + RealField(200)("1.9753631352924692")*I), RealField(200)("0.3")))	8.02832986328274 - 3.98585229581705*I	
+dn-0-05-2-0653631352924693i-0-3	enumeratio_n(jacobi_dn((RealField(200)("0.05") + RealField(200)("2.0653631352924693")*I), RealField(200)("0.3")))	3.84898820155068 - 19.2166010451926*I	
+dn-0-05-2-074363135292469i-0-3	enumeratio_n(jacobi_dn((RealField(200)("0.05") + RealField(200)("2.074363135292469")*I), RealField(200)("0.3")))	0.400123500884786 - 19.9778348079406*I	
+dn-0-05-2-075263135292469i-0-3	enumeratio_n(jacobi_dn((RealField(200)("0.05") + RealField(200)("2.075263135292469")*I), RealField(200)("0.3")))	0.0400281836931001 - 19.9857516074880*I	
+dn-0-3-0-2i-1-5	enumeratio_n(jacobi_dn((RealField(200)("0.3") + RealField(200)("0.2")*I), 1.5))	0.958764936573354 - 0.0857539700934879*I	
+dn-0-5-0-3i-3	enumeratio_n(jacobi_dn((0.5 + RealField(200)("-0.3")*I), 3))	0.726110088197371 + 0.368158440185773*I	
+dn-0-3-0-2i-0-7	enumeratio_n(jacobi_dn((RealField(200)("0.3") + RealField(200)("0.2")*I), RealField(200)("-0.7")))	1.01867368973651 + 0.0408546512141556*I	
+dn-0-5-0-3i-3-2	enumeratio_n(jacobi_dn((0.5 + RealField(200)("-0.3")*I), -3))	1.26623595482955 - 0.440287318013898*I	
+series-jacobidn-z-m-z-0-6	SR(jacobi_dn(SR.var("z"), SR.var("m"))).series(SR.var("z") == 0, 6 + 1)	1 + (-1/2*m)*z^2 + (1/24*m^2 + 1/6*m)*z^4 + (-1/720*m^3 - 11/180*m^2 - 1/45*m)*z^6 + Order(z^7)	
 series-jacobidn-z-m-m-0-2	SR(jacobi_dn(SR.var("z"), SR.var("m"))).series(SR.var("m") == 0, 2 + 1)	ValueError: power::eval(): division by zero	error
-m-greater-than-1-via-the-reciprocal-modulus	enumeratio_n(jacobi_dn(0.3, 1.5))	0.935161917755300 + 4.33305596348060e-20*I	
-m-less-than-0-via-the-imaginary-modulus	enumeratio_n(jacobi_dn(0.3, -2))	1.08851294660627	
-a-complex-argument-u	enumeratio_n(jacobi_dn((0.3 + 0.4*I), 0.5))	1.01226208221287 - 0.0628496850247805*I	
+m-greater-than-1-via-the-reciprocal-modulus	enumeratio_n(jacobi_dn(RealField(200)("0.3"), 1.5))	0.935161917755300 + 2.77806408891813e-20*I	
+m-less-than-0-via-the-imaginary-modulus	enumeratio_n(jacobi_dn(RealField(200)("0.3"), -2))	1.08851294660627	
+a-complex-argument-u	enumeratio_n(jacobi_dn((RealField(200)("0.3") + RealField(200)("0.4")*I), 0.5))	1.01226208221287 - 0.0628496850247805*I	
 matrixfunction-function-jacobidn-neg-1-over-3			
-list-jacobidn-z-0-jacobidn-z-1	[jacobi_dn(SR.var("z"), 0), jacobi_dn(SR.var("z"), 1)]	True	
+list-jacobidn-z-0-jacobidn-z-1	[jacobi_dn(SR.var("z"), 0), jacobi_dn(SR.var("z"), 1)]	[1, sech(z)]	
 n-jacobidn-3-1-over-3-50	enumeratio_n(jacobi_dn(3, (1/3)), 50)	0.966263052100243	
 list-jacobidn-0-m-jacobidn-1-over-2-times	[jacobi_dn(0, SR.var("m")), jacobi_dn(((1/2) * elliptic_kc(SR.var("m"))), SR.var("m")), jacobi_dn(elliptic_kc(SR.var("m")), SR.var("m"))]	[1, jacobi_dn(1/2*elliptic_kc(m), m), jacobi_dn(elliptic_kc(m), m)]	disagree
-series-jacobidn-x-1-over-3-x-0-7	SR(jacobi_dn(SR.var("x"), (1/3))).series(SR.var("x") == 0, 7 + 1)	True	
+series-jacobidn-x-1-over-3-x-0-7	SR(jacobi_dn(SR.var("x"), (1/3))).series(SR.var("x") == 0, 7 + 1)	1 + (-1/6)*x^2 + 13/216*x^4 + (-277/19440)*x^6 + Order(x^8)	
 series-jacobidn-1-m-m-0-3	SR(jacobi_dn(1, SR.var("m"))).series(SR.var("m") == 0, 3 + 1)	ValueError: power::eval(): division by zero	error
 d-jacobidn-u-m-m	diff(jacobi_dn(SR.var("u"), SR.var("m")), SR.var("m"))	-1/2*(u + elliptic_e(arcsin(jacobi_sn(u, m)), m)/(m - 1))*jacobi_cn(u, m)*jacobi_sn(u, m) + 1/2*jacobi_dn(u, m)*jacobi_sn(u, m)^2/(m - 1)	disagree
 u-0-is-1-for-any-m	jacobi_dn(0, SR.var("m"))	1	
 m-0-is-1-for-any-u	jacobi_dn(SR.var("u"), 0)	1	
-the-quarter-period-u-elliptick-m-is-sqrt	jacobi_dn(elliptic_kc(SR.var("m")), SR.var("m"))	True	
+the-quarter-period-u-elliptick-m-is-sqrt	jacobi_dn(elliptic_kc(SR.var("m")), SR.var("m"))	jacobi_dn(elliptic_kc(m), m)	
 jacobidn-0-1	jacobi_dn(0, 1)	1	
 jacobidn-1-over-2-times-i-times-pi-1	jacobi_dn(((0 + (1/2)*I) * pi), 1)	Infinity	
 jacobidn-3i-times-elliptick-1-0	jacobi_dn(((0 + 3*I) * elliptic_kc(1)), 0)	1	
@@ -53,4 +53,4 @@ n-sum-jacobidn-4-over-3-times-k-minus-1-times-2	enumeratio_n(sum(((jacobi_dn((((
 n-jacobisn-1-over-2-1-over-2-times-jacobidn-1-2	enumeratio_n(((jacobi_sn((1/2), (1/2)) * jacobi_dn(((1/2) + elliptic_kc((1/2))), (1/2)) * jacobi_cn((1/2), (1/2))) + (jacobi_sn(((1/2) + elliptic_kc((1/2))), (1/2)) * jacobi_dn((1/2), (1/2)) * jacobi_cn(((1/2) + elliptic_kc((1/2))), (1/2)))))	-4.02925461590969e-1022	
 n-jacobidn-1-over-2-1-over-2-times-jacobidn-1	enumeratio_n(((jacobi_dn((1/2), (1/2)) * jacobi_dn(((1/2) + ((4/3) * elliptic_kc((1/2)))), (1/2)) * jacobi_cn(((1/2) + ((8/3) * elliptic_kc((1/2)))), (1/2))) + (jacobi_dn((1/2), (1/2)) * jacobi_dn(((1/2) + ((8/3) * elliptic_kc((1/2)))), (1/2)) * jacobi_cn(((1/2) + ((4/3) * elliptic_kc((1/2)))), (1/2))) + (jacobi_dn(((1/2) + ((4/3) * elliptic_kc((1/2)))), (1/2)) * jacobi_dn(((1/2) + ((8/3) * elliptic_kc((1/2)))), (1/2)) * jacobi_cn((1/2), (1/2)))))	-0.0226943931124503	
 jacobidn-i-times-elliptick-1-0	jacobi_dn(((0 + 1*I) * elliptic_kc(1)), 0)	1	
-symbolic-arguments-are-left-unevaluated-rather	jacobi_dn(SR.var("u"), SR.var("m"))	True	
+symbolic-arguments-are-left-unevaluated-rather	jacobi_dn(SR.var("u"), SR.var("m"))	jacobi_dn(u, m)	

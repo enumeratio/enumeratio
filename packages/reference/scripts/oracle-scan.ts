@@ -277,11 +277,9 @@ for (const system of systems) {
       symbolicMode[index] = false;
     }
   }
-  // The agreement program's `True`, and the TeX of the program itself, are not what Wolfram answers or how it
+  // The agreement program's `True`, and the TeX of the program itself, are not what the kernel answers or how it
   // writes the input: a decided row shows the plain input's answer and TeX, and the verdict stays the program's.
-  const decided = isWolframFamily(system)
-    ? runnable.flatMap((_row, index) => (symbolicMode[index] ? [index] : []))
-    : [];
+  const decided = runnable.flatMap((_row, index) => (symbolicMode[index] ? [index] : []));
   if (decided.length > 0) {
     const plain = await runIn(
       system,
