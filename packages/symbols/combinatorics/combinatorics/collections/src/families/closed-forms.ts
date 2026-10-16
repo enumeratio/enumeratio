@@ -8,7 +8,7 @@
 // path where they list in the same order.
 
 import type { EpsilFamily, FastKernel } from "./epsil.ts";
-import { cell, choose, colexDigits, iff, lets, less, pascalTable, rowTable } from "./tables.ts";
+import { cell, choose, colexDigits, distinctIn, iff, lets, less, pascalTable, rowTable } from "./tables.ts";
 
 type MathJSON = unknown;
 
@@ -126,17 +126,8 @@ const membersWhere = (n: MathJSON, keep: (i: string) => MathJSON): MathJSON => [
   ["Function", keep("i"), "i"],
 ];
 
-/** Whether `_x` lists distinct values in 1..n (any order). */
-const distinctMembers = (n: MathJSON): MathJSON =>
-  all(
-    (j) => [
-      "And",
-      between(element(j), 1, n),
-      all((i) => ["NotEqual", element(i), element(j)], upTo(1, sub(j, 1)), "i"),
-    ],
-    upTo(1, len),
-    "j",
-  );
+/** Whether `_x` lists distinct values in 1..n (any order), in one pass. */
+const distinctMembers = (n: MathJSON): MathJSON => distinctIn(n, len, element, "dm");
 
 // ─── Subsets, lex within a size and graded by size ───────────────────────────────────────────
 // A subset is a set, so its order is by size, then lex on its ascending members (Wolfram's
