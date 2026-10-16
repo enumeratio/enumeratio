@@ -476,8 +476,6 @@ export function propositionAgreementSource(theirs: string, ours: string, cap: nu
   );
 }
 
-const ce = new ComputeEngine();
-
 /** Wrappers that ask the kernel to work on their argument; the call inside is what can be left alone. */
 const WRAPPERS = new Set(["N", "Simplify", "FullSimplify", "FunctionExpand", "Hold", "Evaluate", "Expand", "Factor"]);
 /** Heads that only combine values: keeping one is not a function left unevaluated. */
@@ -498,22 +496,40 @@ const COMBINING = new Set([
   "Pair",
 ]);
 
-/** `expr` with each `KeyValuePair` written as the `Tuple` it canonicalizes to. Left to the engine, a pair keyed
- * by a symbol boxes as a type error once an earlier example has used that symbol as a number (`x^a`). */
-const pairsAsTuples = (expr: MathJSON): MathJSON =>
-  Array.isArray(expr)
-    ? (expr.map((part, i) =>
-        i === 0 && part === "KeyValuePair" ? "Tuple" : pairsAsTuples(part as MathJSON),
-      ) as MathJSON)
-    : expr;
+/** Raised when one side of a comparison cannot be put in canonical form and the other can: the two texts would be
+ * different kinds of thing, so the comparison is declined (an `inconclusive` verdict) rather than made. */
+export class Undecided extends Error {}
 
-const canonicalText = (expr: MathJSON): string => {
+/** The engine of the comparison in progress. Boxing `x^a` types `a` as a number for good, so each public
+ * comparison gets an engine of its own (about 10 ms) and nothing it learns reaches the next example. */
+let current: ComputeEngine | undefined;
+const engine = (): ComputeEngine => (current ??= new ComputeEngine());
+
+function isolated<T>(run: () => T): T {
+  if (current !== undefined) return run();
   try {
-    return JSON.stringify(ce.box(pairsAsTuples(expr) as Parameters<ComputeEngine["box"]>[0]).json);
+    return run();
+  } finally {
+    current = undefined;
+  }
+}
+
+const canonicalText = (expr: MathJSON): string | undefined => {
+  try {
+    return JSON.stringify(engine().box(expr as Parameters<ComputeEngine["box"]>[0]).json);
   } catch {
-    return JSON.stringify(expr);
+    return undefined;
   }
 };
+
+/** Whether `a` and `b` are one expression in canonical form. Both failing to box compares them as written; one
+ * failing is no comparison at all. */
+function sameCanonical(a: MathJSON, b: MathJSON): boolean {
+  const [x, y] = [canonicalText(a), canonicalText(b)];
+  if (x === undefined && y === undefined) return JSON.stringify(a) === JSON.stringify(b);
+  if (x === undefined || y === undefined) throw new Undecided();
+  return x === y;
+}
 
 /**
  * Whether `expected` still holds some part of the call `expr` asks (canonically, so `Times(1/t, f)`
@@ -524,6 +540,10 @@ const canonicalText = (expr: MathJSON): string => {
  * holds one entry is not agreement with a list that evaluates all of them.
  */
 export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
+  return isolated(() => leavesCallIn(expr, expected));
+}
+
+function leavesCallIn(expr: MathJSON, expected: MathJSON): boolean {
   let call = expr;
   while (Array.isArray(call) && WRAPPERS.has(call[0] as string)) call = call[1] as MathJSON;
   if (!Array.isArray(call) || typeof call[0] !== "string") return false;
@@ -560,11 +580,10 @@ export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
   }
   const head = call[0];
   const asked = call;
-  const askedText = canonicalText(asked);
   const visit = (e: MathJSON): boolean =>
     Array.isArray(e) &&
     ((e[0] === head &&
-      (canonicalText(e) === askedText ||
+      (sameCanonical(e, asked) ||
         (e.length === asked.length &&
           e.slice(1).every((x, i) => sameValue(x as MathJSON, asked[i + 1] as MathJSON))))) ||
       e.slice(1).some((x) => visit(x as MathJSON)));
@@ -616,8 +635,11 @@ const rewriteTargets = (expr: MathJSON): MathJSON[] | undefined => {
 
 /** Whether `node` is `expr`'s form, or one entry of it, written back unchanged. */
 export function echoedPart(expr: MathJSON, node: MathJSON): boolean {
-  const text = canonicalText(node);
-  return rewriteTargets(expr)?.some((target) => canonicalText(target) === text) === true;
+  return isolated(() => echoedPartIn(expr, node));
+}
+
+function echoedPartIn(expr: MathJSON, node: MathJSON): boolean {
+  return rewriteTargets(expr)?.some((target) => sameCanonical(target, node)) === true;
 }
 
 /**
@@ -627,6 +649,10 @@ export function echoedPart(expr: MathJSON, node: MathJSON): boolean {
  * form alone too.
  */
 export function echoesInput(expr: MathJSON, expected: MathJSON): boolean {
+  return isolated(() => echoesInputIn(expr, expected));
+}
+
+function echoesInputIn(expr: MathJSON, expected: MathJSON): boolean {
   return echoedPart(expr, expected) || (listEntries(expected)?.some((entry) => echoedPart(expr, entry)) ?? false);
 }
 
@@ -752,11 +778,11 @@ function orderFree(expr: MathJSON): MathJSON {
 
 /** Two arguments that are one expression written differently (`1/t * f` and `f/t`). */
 function sameValue(a: MathJSON, b: MathJSON): boolean {
-  if (canonicalText(a) === canonicalText(b)) return true;
+  if (sameCanonical(a, b)) return true;
   if (JSON.stringify(orderFree(a)) === JSON.stringify(orderFree(b))) return true;
   try {
-    const [x, y] = [a, b].map((e) => ce.box(e as Parameters<ComputeEngine["box"]>[0]));
-    return x!.isSame(y!) || ce.box(["Subtract", x!, y!]).simplify().is(0) || agreeAtPoints(a, b);
+    const [x, y] = [a, b].map((e) => engine().box(e as Parameters<ComputeEngine["box"]>[0]));
+    return x!.isSame(y!) || engine().box(["Subtract", x!, y!]).simplify().is(0) || agreeAtPoints(a, b);
   } catch {
     return false;
   }
@@ -775,14 +801,18 @@ function agreeAtPoints(a: MathJSON, b: MathJSON): boolean {
     ...indefiniteVariables(a),
     ...indefiniteVariables(b),
   ]);
-  const names = [...new Set([...ce.box(a as never).unknowns, ...ce.box(b as never).unknowns])].filter(
+  const names = [...new Set([...engine().box(a as never).unknowns, ...engine().box(b as never).unknowns])].filter(
     (name) => !bound.has(name),
   );
   const discrete = new Set([...discreteVariables(a), ...discreteVariables(b)]);
   const positive = new Set([...positiveVariables(a), ...positiveVariables(b)]);
   return Array.from({ length: NUMBER_OF_TRIALS }, (_, trial) => {
     const subs = trialSubstitution(names, trial, discrete, positive);
-    const [x, y] = [a, b].map((e) => ce.box(substituteFreeSymbols(e, subs) as never).N());
+    const [x, y] = [a, b].map((e) =>
+      engine()
+        .box(substituteFreeSymbols(e, subs) as never)
+        .N(),
+    );
     const close = (p: number, q: number) => Number.isFinite(p) && Number.isFinite(q) && Math.abs(p - q) < 1e-9;
     return close(x!.re, y!.re) && close(x!.im, y!.im);
   }).every(Boolean);
@@ -848,6 +878,10 @@ function applyFunction(fn: readonly MathJSON[], argument: MathJSON): MathJSON | 
 /** Whether two pure functions are one function written differently: the same arity, and bodies that
  * are one expression once the bound variables are renamed alike (`x |-> f(x)` and `f[#1] &`). */
 export function equivalentFunctions(a: MathJSON, b: MathJSON): boolean {
+  return isolated(() => equivalentFunctionsIn(a, b));
+}
+
+function equivalentFunctionsIn(a: MathJSON, b: MathJSON): boolean {
   if (!isFunction(a) || !isFunction(b)) return false;
   const [x, y] = [positional(a), positional(b)];
   return x !== undefined && y !== undefined && x.arity === y.arity && sameValue(x.body, y.body);
@@ -859,9 +893,13 @@ export function equivalentFunctions(a: MathJSON, b: MathJSON): boolean {
  * function, not two spellings of it. Anything else is left as it was.
  */
 export function alignFunctions(theirs: MathJSON, ours: MathJSON): MathJSON {
+  return isolated(() => alignFunctionsIn(theirs, ours));
+}
+
+function alignFunctionsIn(theirs: MathJSON, ours: MathJSON): MathJSON {
   if (equivalentFunctions(theirs, ours)) return ours;
   // One expression spelled two ways (`Sqrt(2)` and `Power(2, 1/2)`) is one canonical form.
-  if (Array.isArray(theirs) && canonicalText(theirs) === canonicalText(ours)) return ours;
+  if (Array.isArray(theirs) && sameCanonical(theirs, ours)) return ours;
   if (
     Array.isArray(theirs) &&
     Array.isArray(ours) &&
@@ -995,6 +1033,22 @@ export function symbolicAgreementSource(
   freeSymbols: readonly string[],
   /** Seconds the kernel may simplify a difference (`SYMBOLIC_SECONDS`). */
   symbolicSeconds: number = SYMBOLIC_SECONDS,
+): string | undefined {
+  try {
+    return agreementSource(system, expr, expected, freeSymbols, symbolicSeconds);
+  } catch (error) {
+    // A comparison that could not be made is undecided, not agreed or disagreed.
+    if (error instanceof Undecided) return system === "wolfram" ? "Indeterminate" : "None";
+    throw error;
+  }
+}
+
+function agreementSource(
+  system: SymbolicSystem,
+  expr: MathJSON,
+  expected: MathJSON,
+  freeSymbols: readonly string[],
+  symbolicSeconds: number,
 ): string | undefined {
   // Ours left the call unevaluated: the identity holds trivially, so the plain verdict decides.
   if (leavesCall(expr, expected) || echoesInput(expr, expected)) {

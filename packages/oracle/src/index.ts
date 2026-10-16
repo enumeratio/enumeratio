@@ -34,6 +34,7 @@ export {
   notNumeric,
   rootsAsPowers,
   SYMBOLIC_SECONDS,
+  Undecided,
   symbolicAgreementSource,
 } from "./symbolic.ts";
 export {

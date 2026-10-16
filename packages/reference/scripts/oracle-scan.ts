@@ -291,7 +291,13 @@ for (const system of systems) {
     for (const [at, index] of decided.entries()) {
       const answered = plain[at] as (typeof results)[number];
       const program = results[index] as (typeof results)[number];
-      if ("error" in answered || "error" in program || answered.display === undefined) continue;
+      if ("error" in answered || "error" in program || answered.display === undefined) {
+        // The record would show the check's `True` and its TeX: leave the committed row as it is.
+        const id = (runnable[index] as { item: Case }).item.id;
+        process.stderr.write(`${system}: ${id}: the plain input gave no answer to record; its row is not written\n`);
+        scannedIdsBySystem.get(system)?.delete(id);
+        continue;
+      }
       const { shown: _shown, tex: _tex, ...rest } = program;
       results[index] = {
         ...rest,
