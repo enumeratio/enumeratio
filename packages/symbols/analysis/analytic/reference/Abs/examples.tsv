@@ -11,13 +11,13 @@ threads-over-a-matrix-entry-by-entry	Scope		[Abs, [List, [List, [Rational, 1, 2]
 exact-numeric-constants	Scope		[Abs, [Negate, Pi]]	Pi			Exact numeric constants																				
 an-exact-complex-number-gives-an-exact-radical	Scope		[Abs, [Complex, 1, 1]]	[Sqrt, 2]			An exact complex number gives an exact radical																				
 abs-imaginaryunit	Scope		[Abs, ImaginaryUnit]	1																							
-e-i-pi-3-lies-on-the-unit-circle	Scope		[Abs, [Exp, [Multiply, ImaginaryUnit, [Divide, Pi, 3]]]]	1			$e^{i\pi/3}$ lies on the unit circle																				
+e-i-pi-3-lies-on-the-unit-circle	Scope		[Abs, [Exp, [Multiply, ImaginaryUnit, [Divide, Pi, 3]]]]	1			$e^{i\pi/3}$ lies on the unit circle														Sage leaves the call unevaluated; agrees numerically.						
 abs-negativeinfinity	Scope		[Abs, NegativeInfinity]	PositiveInfinity																							
 complex-infinity-has-infinite-magnitude-in-every	Scope		[Abs, ComplexInfinity]	PositiveInfinity			Complex infinity has infinite magnitude in every direction																				
 an-interval-maps-to-the-interval-of-absolute	Scope		[Abs, [Interval, -3, 5]]	[Interval, 0, 5]			An [[Interval]] maps to the interval of absolute values, $[0, 5]$																				
 an-interval-straddling-0-maps-to-0-the-larger	Scope	test	[Abs, [Interval, -3, 2]]	[Interval, 0, 3]			An [[Interval]] straddling $0$ maps to $[0, \max(|{-3}|, |2|)] = [0, 3]$																				
-decides-the-sign-of-an-exact-numeric-expression	Scope		[Abs, [Subtract, [Sqrt, 2], 2]]	[Add, 2, [Negate, [Sqrt, 2]]]			Decides the sign of an exact numeric expression and gives $2-\sqrt{2}$																				
-a-complex-radicand-inside-the-subtraction	Scope	test	[Abs, [Subtract, [Sqrt, -10], 2]]	[Sqrt, 14]			$|\sqrt{-10} - 2| = |{-2 + i\sqrt{10}}| = \sqrt{4+10} = \sqrt{14}$																			domain	Rust's f64 sqrt inside is real-only and gives NaN, which poisons the whole expression; compute-engine decides the sign symbolically and gives an exact Sqrt.
+decides-the-sign-of-an-exact-numeric-expression	Scope		[Abs, [Subtract, [Sqrt, 2], 2]]	[Add, 2, [Negate, [Sqrt, 2]]]			Decides the sign of an exact numeric expression and gives $2-\sqrt{2}$														Sage leaves the call unevaluated; agrees numerically.						
+a-complex-radicand-inside-the-subtraction	Scope	test	[Abs, [Subtract, [Sqrt, -10], 2]]	[Sqrt, 14]			$|\sqrt{-10} - 2| = |{-2 + i\sqrt{10}}| = \sqrt{4+10} = \sqrt{14}$														Sage leaves the call unevaluated; agrees numerically.					domain	Rust's f64 sqrt inside is real-only and gives NaN, which poisons the whole expression; compute-engine decides the sign symbolically and gives an exact Sqrt.
 n-abs-pi-plus-i-times-catalan-25	Scope		[N, [Abs, [Add, Pi, [Multiply, [Complex, 0, 1], CatalanConstant]]], 25]	{num: "3.272399329361528960349014"}			Twenty-five digits of the modulus of a complex constant																				
 fullsimplify-matrixfunction-abs-list-list-1-over	Scope		[FullSimplify, [MatrixFunction, Abs, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]]	[List, [List, [Divide, [Sqrt, 15], 3], [Negate, [Divide, [Sqrt, 15], 10]]], [List, [Negate, [Divide, [Sqrt, 15], 6]], [Divide, [Sqrt, 15], 3]]]			Applied to a matrix as a matrix function, not entry by entry																				
 abs-positiveinfinity	Scope		[Abs, PositiveInfinity]	PositiveInfinity			The modulus of an infinite real is infinite																				
@@ -38,14 +38,14 @@ abs-neg-i	Properties		[Abs, [Complex, 0, -1]]	1	1	Wolfram MathematicalFunctionDa
 abs-neg-1-plus-i	Properties		[Abs, [Complex, -1, 1]]	[Sqrt, 2]	[Sqrt, 2]	Wolfram MathematicalFunctionData, Abs	The Gaussian integer $-1+i$ has modulus $\sqrt2$																				
 abs-neg-1-minus-i	Properties		[Abs, [Complex, -1, -1]]	[Sqrt, 2]	[Sqrt, 2]	Wolfram MathematicalFunctionData, Abs	Same modulus in the third quadrant																				
 abs-1-minus-i	Properties		[Abs, [Complex, 1, -1]]	[Sqrt, 2]	[Sqrt, 2]	Wolfram MathematicalFunctionData, Abs	Same modulus in the fourth quadrant																				
-abs-sqrt-3-plus-i	Properties		[Abs, [Add, [Sqrt, 3], [Complex, 0, 1]]]	2	2	Wolfram MathematicalFunctionData, Abs	The $30^\circ$ right triangle gives exact modulus 2																				
-abs-1-plus-sqrt-3-times-i	Properties		[Abs, [Add, 1, [Complex, 0, [Sqrt, 3]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Swapping the legs still gives 2																				
-abs-neg-1-plus-sqrt-3-times-i	Properties		[Abs, [Add, -1, [Complex, 0, [Sqrt, 3]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Second quadrant, still 2																				
-abs-neg-sqrt-3-plus-i	Properties		[Abs, [Add, [Negate, [Sqrt, 3]], [Complex, 0, 1]]]	2	2	Wolfram MathematicalFunctionData, Abs	Second quadrant with the legs swapped																				
-abs-neg-sqrt-3-minus-i	Properties		[Abs, [Add, [Negate, [Sqrt, 3]], [Complex, 0, -1]]]	2	2	Wolfram MathematicalFunctionData, Abs	Third quadrant, still 2																				
-abs-neg-1-plus-neg-sqrt-3-times-i	Properties		[Abs, [Add, -1, [Complex, 0, [Negate, [Sqrt, 3]]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Written with nested negations, still exactly 2																				
-abs-1-plus-neg-sqrt-3-times-i	Properties		[Abs, [Add, 1, [Complex, 0, [Negate, [Sqrt, 3]]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Fourth quadrant with a negated imaginary part, still 2																				
-abs-sqrt-3-minus-i	Properties		[Abs, [Add, [Sqrt, 3], [Complex, 0, -1]]]	2	2	Wolfram MathematicalFunctionData, Abs	Fourth quadrant with the legs swapped																				
+abs-sqrt-3-plus-i	Properties		[Abs, [Add, [Sqrt, 3], [Complex, 0, 1]]]	2	2	Wolfram MathematicalFunctionData, Abs	The $30^\circ$ right triangle gives exact modulus 2														Sage leaves the call unevaluated; agrees numerically.						
+abs-1-plus-sqrt-3-times-i	Properties		[Abs, [Add, 1, [Complex, 0, [Sqrt, 3]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Swapping the legs still gives 2														Sage leaves the call unevaluated; agrees numerically.						
+abs-neg-1-plus-sqrt-3-times-i	Properties		[Abs, [Add, -1, [Complex, 0, [Sqrt, 3]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Second quadrant, still 2														Sage leaves the call unevaluated; agrees numerically.						
+abs-neg-sqrt-3-plus-i	Properties		[Abs, [Add, [Negate, [Sqrt, 3]], [Complex, 0, 1]]]	2	2	Wolfram MathematicalFunctionData, Abs	Second quadrant with the legs swapped														Sage leaves the call unevaluated; agrees numerically.						
+abs-neg-sqrt-3-minus-i	Properties		[Abs, [Add, [Negate, [Sqrt, 3]], [Complex, 0, -1]]]	2	2	Wolfram MathematicalFunctionData, Abs	Third quadrant, still 2														Sage leaves the call unevaluated; agrees numerically.						
+abs-neg-1-plus-neg-sqrt-3-times-i	Properties		[Abs, [Add, -1, [Complex, 0, [Negate, [Sqrt, 3]]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Written with nested negations, still exactly 2														Sage leaves the call unevaluated; agrees numerically.						
+abs-1-plus-neg-sqrt-3-times-i	Properties		[Abs, [Add, 1, [Complex, 0, [Negate, [Sqrt, 3]]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Fourth quadrant with a negated imaginary part, still 2														Sage leaves the call unevaluated; agrees numerically.						
+abs-sqrt-3-minus-i	Properties		[Abs, [Add, [Sqrt, 3], [Complex, 0, -1]]]	2	2	Wolfram MathematicalFunctionData, Abs	Fourth quadrant with the legs swapped														Sage leaves the call unevaluated; agrees numerically.						
 abs-2	Properties		[Abs, 2]	2	2	Wolfram MathematicalFunctionData, Abs	A positive integer is its own modulus																				
 abs-1-over-2-pow-2	Properties		[Power, [Abs, [Rational, 1, 2]], 2]	[Rational, 1, 4]	[Rational, 1, 4]	Wolfram MathematicalFunctionData, Abs, Absolute square																					
 abs-2-pow-2	Properties		[Power, [Abs, 2], 2]	4	4	Wolfram MathematicalFunctionData, Abs, Absolute square																					
