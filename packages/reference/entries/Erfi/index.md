@@ -36,6 +36,14 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(erfi, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Defined as $\operatorname{erfi}(z) = -i\operatorname{erf}(iz)$, real-valued for real $z$ (unlike $\operatorname{erf}(iz)$ itself, which is imaginary). See [[Erf]].

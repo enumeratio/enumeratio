@@ -1,2 +1,2 @@
 id	in
-from-a-binary-tree	[[0, 0], [0, [0, 0]]]
+from-a-binary-tree	Any[Any[0, 0], Any[0, Any[0, 0]]]

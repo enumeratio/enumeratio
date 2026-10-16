@@ -41,6 +41,14 @@ bindings:
     arity: 1
     threadArg: 1
     note: Sage has no head for it; this is its definition, with the sign of n a unit.
+  - origin: mapped
+    form: julia
+    template: (divisor_sigma(abs(ZZ($1)), 1) - 2 * abs(ZZ($1)))
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Positive for an abundant number, zero for a perfect one, negative for a deficient one.

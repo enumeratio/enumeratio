@@ -100,6 +100,27 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), $1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball((n, a, x) -> _rising(a + 1, n) * rgamma(n + 1) * hypergeometric_1f1(-n, a + 1, x), $1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 seeAlso:
   - HermiteH
   - ChebyshevT

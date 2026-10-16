@@ -1,0 +1,20 @@
+id	in	out	verdict
+2000-5-3-cdot-16	valuation(ZZ(2000), ZZ(5))	3	
+base-10-by-default			
+trailing-zeros-in-base-10			
+integerexponent-2-pow-10-times-3-pow-4-2	valuation(ZZ((enumeratio_pow(2, 10) * enumeratio_pow(3, 4))), ZZ(2))	10	
+integerexponent-1000-base-10			
+integerexponent-1024-base-4	valuation(ZZ(1024), ZZ(4))	5	
+integerexponent-1-152-2	valuation(ZZ(1152), ZZ(2))	7	
+integerexponent-144-2	valuation(ZZ(144), ZZ(2))	4	
+composite-base-1728-2-6-3-3-so-6-3-divides-it	valuation(ZZ(1728), ZZ(6))	3	
+negative-integers			
+threads-over-a-list			
+gaussian-integers-8i-i-cdot-i-3-1-i-6	valuation(ZZ(enumeratio_complex(0, 8)), ZZ(enumeratio_complex(1, 1)))	MethodError: no method matching (::ZZRing)(::ComplexFieldElem) The object of type `ZZRing` exists, b	error
+negative-integers-base-2	valuation(ZZ(-24), ZZ(2))	3	
+the-trailing-zeros-of-100			
+integerexponent-range-1-50-2			
+legendre-s-formula-lfloor-100-7-rfloor-lfloor	valuation(ZZ(factorial(ZZ(100))), ZZ(7))	16	
+integerexponent-2-524-2	valuation(ZZ(2524), ZZ(2))	2	
+integerexponent-0-5	valuation(ZZ(0), ZZ(5))	Not yet implemented	error
+base-1-has-no-well-defined-p-adic-valuation-so	valuation(ZZ(10), ZZ(1))	Factor <= 1	error

@@ -1,0 +1,15 @@
+id	in	out	verdict
+a-floating-point-argument-evaluates-directly-to	(enumeratio_jacobi(:cd, enumeratio_decimal("0.3"), enumeratio_decimal("0.5")))	0.9772503364442498377682883388685243436539286769215368777975650902464135470174562	
+jacobicd-0-4-0-5i-0-3	(enumeratio_jacobi(:cd, enumeratio_complex(enumeratio_decimal("0.4"), enumeratio_decimal("0.5")), enumeratio_decimal("0.3")))	(1.034017190005338755992455118153331473296249221830933170220133732302638827087396-0.1393379672126351505558456982378907398147343876835820762887078377956415757495207j)	
+m-greater-than-1-via-the-reciprocal-modulus	(enumeratio_jacobi(:cd, enumeratio_decimal("0.3"), enumeratio_decimal("1.5")))	1.023633106578734936955591209788186906149605763594807270430345337923407720491446	
+d-jacobicd-u-m-m			
+series-jacobicd-u-m-u-0-5			
+series-jacobicd-z-m-m-0-2			
+u-0-is-1-for-any-m			
+n-jacobicd-sqrt-2-over-4-times-i-2	(enumeratio_jacobi(:cd, enumeratio_complex(0, enumeratio_div(enumeratio_ball(sqrt, 2), 4)), 2))	(0.9429724257773856872994508609059521240040129336829246393825110396564497436902013+5.758443440575166570055583286322803684380994011660990125832268386486862798650615e-78j)	
+n-jacobicd-1-over-2-times-1-plus-sqrt-2-over-2-1	(enumeratio_jacobi(:cd, ((1 // 2) * (1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2))), (enumeratio_pow((1 + (-(enumeratio_div(enumeratio_ball(sqrt, 2), 2)))), 2) * enumeratio_pow((1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2)), -2))))	0.6648481079747736133914203580580786179515524848439914081318895113573768281156526	
+n-jacobicd-sqrt-2-times-i-2	(enumeratio_jacobi(:cd, enumeratio_complex(0, enumeratio_ball(sqrt, 2)), 2))	(0.7108610477840873268859678816628336164214981760801091130764471872224532323739542+4.996503842367950091709965425095076650438899303519946629348646471175852374168926e-78j)	
+n-jacobicd-2-times-1-plus-sqrt-2-over-2-1-minus	(enumeratio_jacobi(:cd, (2 * (1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2))), (enumeratio_pow((1 + (-(enumeratio_div(enumeratio_ball(sqrt, 2), 2)))), 2) * enumeratio_pow((1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2)), -2))))	-0.9700183578238587778274751564682809074754498498963155312209383444637718972922304	
+symbolic-arguments-are-left-unevaluated-rather			
+u-1e16-declines-rather-than-answering-wrong	(enumeratio_jacobi(:cd, enumeratio_pow(10, 16), (2 // 7)))	0.2240475235745040987375805187592931046132146336206719408689767169113289293266581	inconclusive
+u-1e16-mpmath-true-value	(enumeratio_jacobi(:cd, enumeratio_pow(10, 16), (2 // 7)))		

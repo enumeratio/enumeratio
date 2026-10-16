@@ -56,9 +56,15 @@ bindings:
     threadArg: 2
   - origin: mapped
     form: julia
-    template: mod($1, $2)
+    template: enumeratio_mod($1, $2)
     arity: 2
     threadArg: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
   - origin: mapped
     form: mathlib4
     template: "(($1 : ℤ) % $2)"

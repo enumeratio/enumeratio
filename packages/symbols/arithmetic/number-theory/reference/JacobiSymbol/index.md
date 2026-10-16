@@ -41,6 +41,16 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: jacobi_symbol(ZZ($1), ZZ($2))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Generalizes the Legendre symbol from prime $m$ to any odd $m$, by multiplying the Legendre symbols of $m$'s prime factors.

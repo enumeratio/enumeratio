@@ -1,0 +1,35 @@
+id	in	out	verdict
+q-a-0-1-for-any-a	enumeratio_ball(gamma_regularized, 1, 0)	1.0	
+q-1-z-e-z-here-at-z-1	enumeratio_ball(gamma_regularized, 1, 1)	0.3678794411714423215955237701614608674458111310317678345078368016974614957448981	
+floating-point-arguments-evaluate-directly-to-a	enumeratio_ball(gamma_regularized, enumeratio_decimal("2.5"), enumeratio_decimal("1.5"))	0.6999858358786275090998015516246682211534790859804148894927901917820771920123185	
+q-1-z-e-z-at-z-1-5	enumeratio_ball(gamma_regularized, 1, enumeratio_decimal("1.5"))	0.2231301601484298289332804707640125213421716293610793287438353187603251666313132	
+q-2-3-3-4-3-e-3-3	enumeratio_ball(gamma_regularized, 2, enumeratio_decimal("3.3"))	0.1585976198253320234160959303885166341039576670858639686375622347716414203513709	
+q-1-0-2-all-integers	(enumeratio_ball((a, z0, z1) -> gamma_regularized(a, z0) - gamma_regularized(a, z1), 1, 0, 2))	0.8646647167633873081060005050275155965923684540904241185318411273459266258985063	
+q-2-5-1-5-3	enumeratio_ball((a, z0, z1) -> gamma_regularized(a, z0) - gamma_regularized(a, z1), enumeratio_decimal("2.5"), enumeratio_decimal("1.5"), 3)	0.3937669174653491082204112605280279109127289058251520588179584031764744840101779	
+q-0-5-0-0-25	enumeratio_ball((a, z0, z1) -> gamma_regularized(a, z0) - gamma_regularized(a, z1), enumeratio_decimal("0.5"), 0, enumeratio_decimal("0.25"))	0.520499877813046537682746653891964528736451575757963700058805725647193521716836	
+q-3-1-7-all-integers	(enumeratio_ball((a, z0, z1) -> gamma_regularized(a, z0) - gamma_regularized(a, z1), 3, 1, 7))	0.8900624390480840272287075026603504832541317804377478364430676680322456429596504	
+q-2-5-0-complex-1-5-plus-i	enumeratio_ball((a, z0, z1) -> gamma_regularized(a, z0) - gamma_regularized(a, z1), enumeratio_decimal("2.5"), 0, enumeratio_complex(enumeratio_decimal("1.5"), 1))	(0.311826994456124644968488101378530905049508388953832081021074274645807354244389+0.3411887709247592850251802786844295551345923857429349907897503485334959988092105j)	
+q-complex-2-plus-i-0-1-5	(enumeratio_ball((a, z0, z1) -> gamma_regularized(a, z0) - gamma_regularized(a, z1), enumeratio_complex(2, 1), 0, enumeratio_decimal("1.5")))	(0.3823477689549367127133407082886468417764513456238996385977513844464396162229887-0.3334815406585526118915905512252524241744073169470608469439282256385806513837692j)	
+q-three-complex-arguments	(enumeratio_ball((a, z0, z1) -> gamma_regularized(a, z0) - gamma_regularized(a, z1), enumeratio_complex(2, 1), enumeratio_complex(enumeratio_decimal("0.5"), -1), enumeratio_complex(enumeratio_decimal("1.5"), 1)))	(1.509764918616017710375382735404827649371329316016190946203945409116269111132514+0.9563829092138766112362134809286731589468605568301953403685783134749558734769188j)	
+q-0-1-4-all-integers	(enumeratio_ball((a, z0, z1) -> gamma_regularized(a, z0) - gamma_regularized(a, z1), 0, 1, 4))	0.0	
+threads-element-wise-over-a-list-as-wolfram-s	Any[enumeratio_ball(gamma_regularized, 1, 1), enumeratio_ball(gamma_regularized, 2, 1)]	[0.3678794411714423215955237701614608674458111310317678345078368016974614957448981, 0.7357588823428846431910475403229217348916222620635356690156736033949229914897963]	
+complex-order-under-n	(enumeratio_ball(gamma_regularized, enumeratio_complex(1, 1), enumeratio_decimal("2.5")))	(0.007947060620119125745003712995264827754684493289157125932893021953529347700221591+0.1525367785410183950904300438243527357639087742175045994780325051934785186061039j)	
+three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2	enumeratio_ball((a, z0, z1) -> gamma_regularized(a, z0) - gamma_regularized(a, z1), enumeratio_decimal("2.5"), enumeratio_decimal("0.5"), enumeratio_decimal("1.5"))	0.2625799373686688598572805382727510134338202358662030631659011324815400935334954	
+which-at-an-integer-order-equally-evaluates-to	enumeratio_ball((a, z0, z1) -> gamma_regularized(a, z0) - gamma_regularized(a, z1), 2, enumeratio_decimal("0.5"), enumeratio_decimal("1.5"))	0.3519705891978755630724981255767393768074481298280821116647499412017718625423335	
+listable-over-its-limits-q-1-infty-infty-q-1	Any[enumeratio_ball(gamma_regularized, 1, (-Inf)), enumeratio_ball(gamma_regularized, 1, Inf)]	non-finite argument	error
+listable-threads-elementwise-over-a-matrix	Any[Any[enumeratio_ball(gamma_regularized, 2, enumeratio_decimal("3.5")), enumeratio_ball(gamma_regularized, 2, 0)], Any[enumeratio_ball(gamma_regularized, 2, 0), enumeratio_ball(gamma_regularized, 2, enumeratio_decimal("6.5"))]]	[[0.1358882254004332533290383156362893028224723951144565300210310038827012661466272, 1.0], [1.0, 0.01127579394733179335537177499125740372500384718727223822417037433974087276460033]]	
+interval-arithmetic-q-is-decreasing-in-z			
+to-30-significant-digits-not-yet-the-last-digit	enumeratio_nshow(enumeratio_ball(gamma_regularized, 2, 1), 30)	7.35758882342884643191047540323e-01	
+q-s-z-at-a-complex-order-s-beyond-what-the	(enumeratio_ball(gamma_regularized, enumeratio_complex(2, 1), enumeratio_decimal("1.5")))	(0.6176522310450632872866592917113531582235486543761003614022486155535603837770113+0.3334815406585526118915905512252524241744073169470608469439282256385806513837692j)	
+the-cdf-of-a-poisson-lambda-2-random-variable-at	enumeratio_ball(gamma_regularized, 3, 2)	0.676676416183063459469997474862422017038157729547879407340794363270366870507434	
+three-arguments-p-5-2-3-2-q-5-2-0-3-2-the-gamma	enumeratio_ball((a, z0, z1) -> gamma_regularized(a, z0) - gamma_regularized(a, z1), enumeratio_decimal("2.5"), 0, enumeratio_decimal("1.5"))	0.3000141641213724909001984483753317788465209140195851105072098082179228079876815	
+the-chi-2-1-cdf-p-1-2-x-2-at-the-familiar	(1 - enumeratio_ball(gamma_regularized, enumeratio_decimal("0.5"), enumeratio_decimal("1.9207294103470425")))	0.9499999999999987786437360229916005381413060846357691676380091279083294400600996	
+the-polynomial-closed-form-for-an-integer-order	enumeratio_ball(gamma_regularized, 5, -1)	1.019355685672141963260107801757248436658967660137484840612612860396528736382566	
+q-a-0-z-1-q-a-z-even-for-negative-a-where-gamma	enumeratio_ball((a, z0, z1) -> gamma_regularized(a, z0) - gamma_regularized(a, z1), enumeratio_decimal("-1.5"), 0, enumeratio_decimal("1.5"))	ball not finite	error
+q-a-0-1-for-symbolic-a			
+q-a-infty-0			
+q-1-x-e-x-symbolically			
+q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s			
+q-1-2-x-erfc-sqrt-x-see-erfc			
+a-non-integer-order-combined-with-negative-z	enumeratio_ball(gamma_regularized, enumeratio_decimal("2.5"), -1)	(1.0-0.628008230288381392591190856519631943580822899329285368899750798149391442073838j)	
+gamma-regularized-0-0-is-indeterminate	enumeratio_ball(gamma_regularized, 0, 0)	ball not finite	error

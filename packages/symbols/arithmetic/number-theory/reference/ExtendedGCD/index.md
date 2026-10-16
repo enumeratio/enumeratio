@@ -60,6 +60,16 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: collect(gcdx(ZZ($1), ZZ($2)))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Implements the extended Euclidean algorithm, the standard way to compute modular inverses. See [[PowerMod]].

@@ -36,6 +36,14 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-09-28
+  - origin: mapped
+    form: julia
+    template: denominator($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 attributes:
   - HoldAll
 names:

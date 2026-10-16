@@ -1,0 +1,16 @@
+id	in	out	verdict
+the-absolute-value-of-a-real-number	enumeratio_ball(abs, enumeratio_decimal("-2.5"))	2.5	
+realabs-neg-7-over-2	enumeratio_ball(abs, (-7 // 2))	3.5	
+realabs-2	enumeratio_ball(abs, 2)	2.0	
+d-realabs-x-x			
+threads-element-wise-over-a-list	Any[enumeratio_ball(abs, -1), enumeratio_ball(abs, 2), enumeratio_ball(abs, -3)]	[1.0, 2.0, 3.0]	
+exact-numeric-arguments	enumeratio_ball(abs, (-(const_pi(RR))))	3.141592653589793238462643383279502884197169399375105820974944592307816406286198	
+n-realabs-pi-minus-catalan-50			
+realabs-list-list-1-over-2-neg-1-list-0-neg-1	Any[Any[enumeratio_ball(abs, (1 // 2)), enumeratio_ball(abs, -1)], Any[enumeratio_ball(abs, 0), enumeratio_ball(abs, (-1 // 2))]]	[[0.5, 1.0], [0.0, 0.5]]	
+matrixfunction-realabs-list-list-1-over-2-neg-1			
+realabs-interval-neg-5-3			
+realabs-0	enumeratio_ball(abs, 0)	0.0	
+realabs-positiveinfinity	enumeratio_ball(abs, Inf)	non-finite argument	error
+realabs-negativeinfinity	enumeratio_ball(abs, (-Inf))	non-finite argument	error
+piecewiseexpand-realabs-x			
+agrees-with-abs-on-the-reals	enumeratio_equal(enumeratio_ball(abs, -5), enumeratio_ball(abs, -5))	true	

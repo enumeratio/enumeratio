@@ -48,6 +48,16 @@ bindings:
     template: hurwitz_zeta($1, $2)
     arity: 2
     note: mpmath is correct at negative-integer s where Wolfram's N[] is not; the grid in special-functions.examples.json covers that branch.
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(zeta, $1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 seeAlso:
   - Zeta
   - BernoulliB

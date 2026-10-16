@@ -1,0 +1,14 @@
+id	in	out	verdict
+a-floating-point-argument-evaluates-directly-to	(enumeratio_jacobi(:cs, enumeratio_decimal("1.1"), enumeratio_decimal("0.9")))	0.7225880618717213089213821374182689294489098678259615149400349388669651886796191	
+m-greater-than-1-via-the-reciprocal-modulus	(enumeratio_jacobi(:cs, enumeratio_decimal("0.3"), enumeratio_decimal("1.5")))	3.309809750125872416641882876882642508065319597737434922553604269754211809380411	
+d-jacobics-u-m-m			
+series-jacobics-u-m-u-0-4			
+series-jacobics-z-m-m-0-2			
+series-jacobics-u-m-u-u0-2			
+u-0-is-a-pole-for-any-m			
+n-jacobics-sqrt-2-over-4-times-i-neg-1	(enumeratio_jacobi(:cs, enumeratio_complex(0, enumeratio_div(enumeratio_ball(sqrt, 2), 4)), -1))	(-1.87706515623717505251947017654238279468026654050915171878016790254830720133822e-77-3.004168113503712496170020558987427300231654185880221035463487173216137580828642j)	
+n-jacobics-1-over-2-times-1-plus-sqrt-2-over-2-1	(enumeratio_jacobi(:cs, ((1 // 2) * (1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2))), (enumeratio_pow((1 + (-(enumeratio_div(enumeratio_ball(sqrt, 2), 2)))), 2) * enumeratio_pow((1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2)), -2))))	0.876851602970147842090603322240165256111291392176492110489907586063598775396079	
+n-jacobics-sqrt-2-times-i-neg-1	(enumeratio_jacobi(:cs, enumeratio_complex(0, enumeratio_ball(sqrt, 2)), -1))	(-3.186744230939116617015435003401667832785759585751095414309178532733465356666241e-77-1.421802682497363661457603667660284233035598723408483079779570875376083001699621j)	
+n-jacobics-2-times-1-plus-sqrt-2-over-2-1-minus	(enumeratio_jacobi(:cs, (2 * (1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2))), (enumeratio_pow((1 + (-(enumeratio_div(enumeratio_ball(sqrt, 2), 2)))), 2) * enumeratio_pow((1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2)), -2))))	3.932139508524962524521421493280662056986642571079540533067918545133811276994017	
+symbolic-arguments-are-left-unevaluated-rather			
+m-1-at-a-shared-pole-of-sn-and-cn	(enumeratio_jacobi(:cs, ((1 // 2) * onei(CC) * const_pi(RR)), 1))	ball not finite	error

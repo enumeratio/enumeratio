@@ -1,0 +1,14 @@
+id	in	out	verdict
+a-floating-point-argument-evaluates-directly-to	(enumeratio_jacobi(:dc, enumeratio_decimal("0.6"), enumeratio_decimal("0.4")))	1.12478042691155514927345735592126039887608845121182621131056584756022096753309	
+m-less-than-0-via-the-imaginary-modulus	(enumeratio_jacobi(:dc, enumeratio_decimal("0.3"), enumeratio_decimal("-0.7")))	1.079939770083225151718245711638467939467580392565182633479669351918017075985492	
+d-jacobidc-u-m-m			
+series-jacobidc-u-m-u-0-5			
+series-jacobidc-z-m-m-0-2			
+series-jacobidc-u-m-u-u0-2			
+u-0-is-1-for-any-m			
+n-jacobidc-sqrt-2-over-4-times-i-2	(enumeratio_jacobi(:dc, enumeratio_complex(0, enumeratio_div(enumeratio_ball(sqrt, 2), 4)), 2))	(1.060476396407456800991762079324368431423207591441568236035620042046676906875973-6.47600415647674619134722205284346946056652286816424082415159477824194558385078e-78j)	
+n-jacobidc-1-over-2-times-1-plus-sqrt-2-over-2-1	(enumeratio_jacobi(:dc, ((1 // 2) * (1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2))), (enumeratio_pow((1 + (-(enumeratio_div(enumeratio_ball(sqrt, 2), 2)))), 2) * enumeratio_pow((1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2)), -2))))	1.504102949237757449550531787762325439850804446373796465683929360423929100212166	
+n-jacobidc-sqrt-2-times-i-2	(enumeratio_jacobi(:dc, enumeratio_complex(0, enumeratio_ball(sqrt, 2)), 2))	(1.406744683953669107357519723598458541594549203190338914058992436386336834138665-9.887734375818665535470907638501374602062371385605082427365642489461382728830906e-78j)	
+n-jacobidc-2-times-1-plus-sqrt-2-over-2-1-minus	(enumeratio_jacobi(:dc, (2 * (1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2))), (enumeratio_pow((1 + (-(enumeratio_div(enumeratio_ball(sqrt, 2), 2)))), 2) * enumeratio_pow((1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2)), -2))))	-1.030908324501612630536981947607228612423527944030653295959808766206076959831985	
+symbolic-arguments-are-left-unevaluated-rather			
+u-1e16-declines-rather-than-answering-wrong	(enumeratio_jacobi(:dc, enumeratio_pow(10, 16), (5 // 7)))	-1.026443564005361558313653090056385082116270940157794787694287407061232635536328	inconclusive

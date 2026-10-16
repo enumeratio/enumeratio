@@ -45,6 +45,16 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: divisor_sigma(ZZ($2), Int($1))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - $k=0$ gives the divisor count $d(n)$; $k=1$ gives the ordinary sum of divisors.

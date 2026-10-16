@@ -38,28 +38,37 @@ const isCall = (value: MathJSON): value is readonly MathJSON[] => Array.isArray(
 
 /** compute-engine symbol constants, per system. */
 const CONSTANTS: Record<string, Partial<Record<System, string>>> = {
-  Pi: { wolfram: "Pi", sympy: "pi", mpmath: "pi", sage: "pi", rust: "x(std::f64::consts::PI)" },
+  Pi: { wolfram: "Pi", sympy: "pi", mpmath: "pi", sage: "pi", julia: "const_pi(RR)", rust: "x(std::f64::consts::PI)" },
   ExponentialE: {
     wolfram: "E",
     sympy: "E",
     mpmath: "e",
     sage: "e",
+    julia: "const_e(RR)",
     rust: "x(std::f64::consts::E)",
   },
-  ImaginaryUnit: { wolfram: "I", sympy: "I", mpmath: "mpc(0,1)", sage: "I" },
-  EulerGamma: { wolfram: "EulerGamma", sympy: "EulerGamma", mpmath: "euler", sage: "euler_gamma" },
+  ImaginaryUnit: { wolfram: "I", sympy: "I", mpmath: "mpc(0,1)", sage: "I", julia: "onei(CC)" },
+  EulerGamma: {
+    wolfram: "EulerGamma",
+    sympy: "EulerGamma",
+    mpmath: "euler",
+    sage: "euler_gamma",
+    julia: "const_euler(RR)",
+  },
   GoldenRatio: {
     wolfram: "GoldenRatio",
     sympy: "GoldenRatio",
     mpmath: "phi",
     sage: "golden_ratio",
+    julia: "((1 + sqrt(RR(5))) / 2)",
   },
-  True: { wolfram: "True", sympy: "True", mpmath: "True", sage: "True", rust: "V::Bool(true)" },
+  True: { wolfram: "True", sympy: "True", mpmath: "True", sage: "True", julia: "true", rust: "V::Bool(true)" },
   False: {
     wolfram: "False",
     sympy: "False",
     mpmath: "False",
     sage: "False",
+    julia: "false",
     rust: "V::Bool(false)",
   },
   // Named values, not free variables — a bare `NaN` or `ComplexInfinity` used to fall through
@@ -67,16 +76,16 @@ const CONSTANTS: Record<string, Partial<Record<System, string>>> = {
   // system fix below (#A-72) would otherwise turn into a bogus `Symbol("NaN")`: a variable
   // named NaN, not the not-a-number value. sympy has no exact Glaisher/Khinchin, so those two
   // stay unmapped there rather than guessed at.
-  NaN: { wolfram: "Indeterminate", sympy: "nan", mpmath: "nan", sage: "NaN" },
+  NaN: { wolfram: "Indeterminate", sympy: "nan", mpmath: "nan", sage: "NaN", julia: "NaN" },
   // Our other named "no value" answer, for an exact indeterminate form (0/0) rather than a
   // floating-point result — Wolfram (and every other system here) has only the one notion,
   // so it emits identically to NaN above.
-  Indeterminate: { wolfram: "Indeterminate", sympy: "nan", mpmath: "nan", sage: "NaN" },
+  Indeterminate: { wolfram: "Indeterminate", sympy: "nan", mpmath: "nan", sage: "NaN", julia: "NaN" },
   ComplexInfinity: { wolfram: "ComplexInfinity", sympy: "zoo", sage: "unsigned_infinity" },
-  PositiveInfinity: { wolfram: "Infinity", sympy: "oo", mpmath: "inf", sage: "oo" },
-  NegativeInfinity: { wolfram: "-Infinity", sympy: "-oo", mpmath: "-inf", sage: "-oo" },
-  ConstGlaisher: { wolfram: "Glaisher", mpmath: "glaisher", sage: "glaisher" },
-  Khinchin: { wolfram: "Khinchin", mpmath: "khinchin", sage: "khinchin" },
+  PositiveInfinity: { wolfram: "Infinity", sympy: "oo", mpmath: "inf", sage: "oo", julia: "Inf" },
+  NegativeInfinity: { wolfram: "-Infinity", sympy: "-oo", mpmath: "-inf", sage: "-oo", julia: "(-Inf)" },
+  ConstGlaisher: { wolfram: "Glaisher", mpmath: "glaisher", sage: "glaisher", julia: "const_glaisher(RR)" },
+  Khinchin: { wolfram: "Khinchin", mpmath: "khinchin", sage: "khinchin", julia: "const_khinchin(RR)" },
   // Our carrier's plural type-space symbol, now DEFINED_NAMES-defined (declareCarriers'
   // default plural folding). Without an entry here it would fall into the DEFINED_NAMES
   // branch below and get reported missing whenever it appears as a bare option VALUE
@@ -282,6 +291,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       if (system === "rust") return Number.isSafeInteger(node) ? `n(${node})` : `x(${node})`;
       // Inside an N(x, d) answer past a double's digits `0.1` would be the double, not the decimal.
       if (system === "mpmath" && exact && !Number.isInteger(node)) return `mpf(${JSON.stringify(String(node))})`;
+      if (system === "julia" && (!Number.isInteger(node) || /e/i.test(String(node))))
+        return `enumeratio_decimal(${JSON.stringify(String(node))})`;
       return system === "mathlib4" && node < 0 ? `(${node})` : String(node);
     }
     if (typeof node === "boolean") return node ? "True" : "False";
@@ -351,6 +362,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
           !(Math.abs(Number(value)) > 0 && Number.isFinite(Number(value)))
         )
           return `Float(${JSON.stringify(value)})`;
+        // A decimal is exact in Julia: a rational, which no double rounds or underflows, and which a retry at more bits refines.
+        if (system === "julia" && /[.e]/i.test(value)) return `enumeratio_decimal(${JSON.stringify(value)})`;
         // mpmath reads a string at its own precision: a longer decimal, or one past the double range, would round or overflow as a float.
         if (
           system === "mpmath" &&
@@ -368,6 +381,11 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     }
     const head = node[0] as string;
     const operands = node.slice(1);
+    if (system === "julia" && head === "List" && answers.has(node))
+      for (const entry of operands) answers.add(entry as MathJSON);
+    // Below the answer, Julia's N(x, d) is the rounded number, not the digits written out.
+    if (system === "julia" && head === "N" && operands.length === 2 && !answers.has(node))
+      return `enumeratio_n(${walk(operands[0] as MathJSON)}, ${walk(operands[1] as MathJSON)})`;
     if (system === "mpmath") {
       if (head === "List" && answers.has(node)) for (const entry of operands) answers.add(entry as MathJSON);
       // N(x, d) answers in text (run.ts), which can't be an operand: below the answer it is plain N(x).
@@ -404,7 +422,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
    */
   const threadOver = (node: MathJSON, template: string, others: readonly string[], threadArg: number): string => {
     if (isCall(node) && node[0] === "List") {
-      return `[${node
+      // Julia's `[1, true]` promotes to one element type; `Any[...]` keeps each as it is.
+      return `${system === "julia" ? "Any" : ""}[${node
         .slice(1)
         .map((el) => threadOver(el, template, others, threadArg))
         .join(", ")}]`;

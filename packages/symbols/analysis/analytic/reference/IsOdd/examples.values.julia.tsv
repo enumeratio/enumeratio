@@ -1,0 +1,18 @@
+id	in	out	verdict
+isodd-3	is_odd(ZZ(3))	true	
+isodd-4	is_odd(ZZ(4))	false	
+negative-integers-count-too	is_odd(ZZ(-7))	true	
+isodd-0	is_odd(ZZ(0))	false	
+isodd-9	is_odd(ZZ(9))	true	
+a-non-integer-is-not-odd	is_odd(ZZ(enumeratio_decimal("3.5")))	AssertionError: denominator(x) == 1	error
+isodd-1-over-3	is_odd(ZZ((1 // 3)))	AssertionError: denominator(x) == 1	error
+big-integers	is_odd(ZZ((enumeratio_pow(2, 100) + 1)))	true	
+pi-is-known-not-to-be-an-integer-so-it-is	is_odd(ZZ(const_pi(RR)))	Argument must represent a unique integer	error
+threads-element-wise-over-a-list	Any[is_odd(ZZ(1)), is_odd(ZZ(2)), is_odd(ZZ(3))]	[true, false, true]	
+select-the-odd-numbers-up-to-10			
+isvector-list-1-5-7-11-isodd			
+isvector-list-2-5-7-11-isodd			
+an-integer-is-odd-exactly-when-it-is-not-even			
+isodd-2	is_odd(ZZ(2))	false	
+isodd-15	is_odd(ZZ(15))	true	
+a-symbol-stays-undecided-rather-than-false			

@@ -31,6 +31,14 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(imag, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - A Gaussian integer is a complex number with integer parts, so `Im` and [[Re]] read its two coordinates; there is no separate head for them.

@@ -268,7 +268,7 @@ async function runJulia(
 println("<<0>>"); flush(stdout)
 for (i, src) in enumerate([${list}])
     try
-        println("<<", i, ">>", show_oracle(Core.eval(Main, Meta.parse(src))))
+        println("<<", i, ">>", oracle_eval(src))
     catch e
         println("<<", i, ">>!!", first(replace(sprint(showerror, e), '\\n' => ' '), 100))
     end
@@ -293,7 +293,8 @@ show_oracle(x::Rational) = string(Float64(x))
 show_oracle(x::QQFieldElem) = string(Float64(x))
 show_oracle(x::AbstractVector) = "[" * join(map(show_oracle, x), ", ") * "]"
 show_oracle(x::Complex) = "(" * string(real(x)) * (imag(x) < 0 ? "-" : "+") * string(abs(imag(x))) * "j)"
-${preamble === undefined ? "" : `include(${JSON.stringify(preamble)})`}`;
+${preamble === undefined ? "" : `include(${JSON.stringify(preamble)})`}
+@isdefined(oracle_eval) || (oracle_eval(src) = show_oracle(Core.eval(Main, Meta.parse(src))))`;
 
 /** Single-threaded, with the GC told to stay under three quarters of the cap. */
 export const juliaFlags = (project: string): string[] => [
@@ -1655,7 +1656,7 @@ export function preludeFor(system: System): Prelude {
     case "julia":
       return {
         binary: "julia",
-        preamble: juliaHeader("Nemo, Combinatorics"),
+        preamble: juliaHeader("Nemo, Combinatorics", join(local("julia"), "preamble.jl")),
         printer: "show_oracle",
         project: local("julia"),
       };
@@ -1793,7 +1794,7 @@ function runBatch(system: System, sources: readonly string[], itemSeconds: numbe
     case "oscar":
       return runJulia(sources, "oscar", "Oscar", join(local("oscar"), "preamble.jl"), itemSeconds);
     case "julia":
-      return runJulia(sources, "julia", "Nemo, Combinatorics", undefined, itemSeconds);
+      return runJulia(sources, "julia", "Nemo, Combinatorics", join(local("julia"), "preamble.jl"), itemSeconds);
     case "mathlib4":
       return runLean(sources);
     case "rust":

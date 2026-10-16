@@ -317,9 +317,14 @@ function judge(
       const structured = comparePythonStructured(reduce(expected, leaf), theirs, tolerance);
       if (structured === "agree") verdict = structured;
     }
-    // mpmath ran an `N(x, d)` at d + 20 and rounded to d (run.ts), so, as for Wolfram, the digits it shows
+    // mpmath ran an `N(x, d)` at d + 20 and rounded to d (run.ts), and Julia writes the d digits of its ball out, so, as for Wolfram, the digits it shows
     // must be ours to the last. The digits alone drop sign, point and exponent, so the value must not disagree.
-    if (system === "mpmath" && asksForDigits && Array.isArray(call) && typeof call[2] === "number") {
+    if (
+      (system === "mpmath" || system === "julia") &&
+      asksForDigits &&
+      Array.isArray(call) &&
+      typeof call[2] === "number"
+    ) {
       const same = sameDigits(expected, theirs);
       if (same === false) verdict = "disagree";
       else if (same === true && verdict !== "disagree") verdict = "agree";

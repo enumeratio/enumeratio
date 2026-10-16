@@ -1,0 +1,12 @@
+id	in	out
+five-six-seven	enumeratio_ball(_rising, 5, 3)	210.0
+from-1-is-the-factorial	enumeratio_ball(_rising, 1, 5)	120.0
+at-risingfactorial-2-5i	(enumeratio_ball(_rising, enumeratio_complex(2, 5), enumeratio_complex(3, 2)))	(20.6474078947724353858296344537981683726751040994337404729381448750790487977801+24.04735671023280419885471823912275402565788649524187275263665076242739782107798j)
+a-symbolic-base		
+a-rational-base	enumeratio_ball(_rising, (1 // 2), 3)	1.875
+a-symbolic-order-is-pochhammer		
+complex-base-and-order	(enumeratio_ball(_rising, enumeratio_complex(2, 5), enumeratio_complex(3, 2)))	(20.6474078947724353858296344537981683726751040994337404729381448750790487977801+24.04735671023280419885471823912275402565788649524187275263665076242739782107798j)
+agrees-with-pochhammer	enumeratio_equal(enumeratio_ball(_rising, 4, 3), enumeratio_ball(_rising, 4, 3))	true
+negative-order	enumeratio_ball(_rising, 5, -2)	0.08333333333333333333333333333333333333333333333333333333333333333333333333333261
+a-zero-factor	enumeratio_ball(_rising, -3, 4)	0.0
+a-pole-of-gamma-a	(enumeratio_ball(_rising, -2, enumeratio_complex(1, 1)))	0.0

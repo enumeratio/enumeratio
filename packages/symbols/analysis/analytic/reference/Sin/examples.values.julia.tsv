@@ -1,0 +1,96 @@
+id	in	out	verdict
+sin-0	enumeratio_ball(sin, 0)	0.0	
+exact-value-at-a-special-angle	enumeratio_ball(sin, enumeratio_div(const_pi(RR), 6))	0.4999999999999999999999999999999999999999999999999999999999999999999999999999957	
+sin-pi-over-4	enumeratio_ball(sin, enumeratio_div(const_pi(RR), 4))	0.707106781186547524400844362104849039284835937688474036588339868995366239231051	
+sin-pi-over-3	enumeratio_ball(sin, enumeratio_div(const_pi(RR), 3))	0.8660254037844386467637231707529361834714026269051903140279034897259665084543902	
+sin-pi-over-2	enumeratio_ball(sin, enumeratio_div(const_pi(RR), 2))	0.9999999999999999999999999999999999999999999999999999999999999999999999999999914	
+sin-pi	enumeratio_ball(sin, const_pi(RR))	1.096917440979352076707323515973394366191088238114113506040171645940952915410778e-77	
+degrees-d-converts-to-radians-so-sin-60-circ-is			
+a-machine-precision-argument-evaluates	enumeratio_ball(sin, enumeratio_decimal("1.2"))	0.9320390859672263496701344354948259954150705882087307353665978944502423415767821	
+a-huge-10-100-argument	(enumeratio_ball(sin, enumeratio_pow(10, 100)))	-0.3723761236612766882620866955531642957196678835674347023644153882967192240437525	
+a-huge-3-200-argument	(enumeratio_ball(sin, enumeratio_pow(3, 200)))	-0.9387317086070749196371470437729828223651994511976913913179240958268831494216505610864926137232923952731212166979549531556478168974260216243064227629923385328499490980622068657254116648295749581069186650176074114364908307762979606136512036114327253221901101117739803527045255618805734897346704904588191785444863	
+a-huge-neg-7-60-argument	(enumeratio_ball(sin, (-(enumeratio_pow(7, 60)))))	0.3651216004023555500760338739624819731766810208268850293051250191410445114412041	
+a-huge-10-80-plus-1-over-3-argument	(enumeratio_ball(sin, enumeratio_div((enumeratio_pow(10, 80) + 1), 3)))	0.9853483014981159217555016941579773438178008471518522556093850100398576387506190892300058107009463108392483596377332409759569840773259541937313806932912173171780612096575545105318722307628259281943785958938545188063298278157530325039874894037051836104540440093765512599076324082896996267324329961316755346372592	
+sin-1-under-n	(enumeratio_ball(sin, 1))	0.8414709848078965066525023216302989996225630607983710656727517099919104043912312	
+n-of-an-exact-argument-gives-an-arbitrary	(enumeratio_ball(sin, (6 // 5)))	0.9320390859672263496701344354948259954150705882087307353665978944502423415767821	
+evaluates-at-a-complex-argument	enumeratio_ball(sin, enumeratio_complex(enumeratio_decimal("2.5"), 1))	(0.92349077604317324082303630121758402071294281076115355911172971852604372315163-0.9415049332708672760253890237505125212686440132867446715765029021403678744403771j)	
+threads-element-wise-over-a-matrix	Any[Any[enumeratio_ball(sin, (5 * enumeratio_div(const_pi(RR), 6))), enumeratio_ball(sin, 0)], Any[enumeratio_ball(sin, (3 * enumeratio_div(const_pi(RR), 2))), enumeratio_ball(sin, (-(enumeratio_div(const_pi(RR), 2))))]]	[[0.5000000000000000000000000000000000000000000000000000000000000000000000000000259, 0.0], [-0.9999999999999999999999999999999999999999999999999999999999999999999999999999914, -0.9999999999999999999999999999999999999999999999999999999999999999999999999999914]]	
+exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4	enumeratio_ball(sin, enumeratio_div(const_pi(RR), 12))	0.2588190451025207623488988376240483283490689013199305138140032073150569747487992	
+sin-pi-8-frac-sqrt-2-sqrt-2-2	enumeratio_ball(sin, enumeratio_div(const_pi(RR), 8))	0.382683432365089771728459984030398866761344562485627041433800635627546033960086	
+sin-pi-10-frac-sqrt-5-1-4	enumeratio_ball(sin, enumeratio_div(const_pi(RR), 10))	0.3090169943749474241022934171828190588601545899028814310677243113526302314094462	
+sin-5-pi-12-frac-sqrt-6-sqrt-2-4	enumeratio_ball(sin, ((5 // 12) * const_pi(RR)))	0.9659258262890682867497431997288973676339048390084045504023430763104232139798459	
+sin-3-pi-8-frac-sqrt-2-sqrt-2-2	enumeratio_ball(sin, ((3 // 8) * const_pi(RR)))	0.9238795325112867561281831893967882868224166258636424861150977312805350075010968	
+large-rational-multiples-of-pi-are-reduced	enumeratio_ball(sin, ((100 // 3) * const_pi(RR)))	-0.8660254037844386467637231707529361834714026269051903140279034897259665084536129	
+any-integer-multiple-of-pi-is-a-zero-of-sine	enumeratio_ball(sin, (1000001 * const_pi(RR)))	2.716711403155463014475971209697074411259119787743908941918556908932977242444367e-71	
+sin-negate-pi-is-also-zero	enumeratio_ball(sin, (-(const_pi(RR))))	-1.096917440979352076707323515973394366191088238114113506040171645940952915410778e-77	
+sin-4-pi-is-zero	enumeratio_ball(sin, (4 * const_pi(RR)))	-4.387669763917408306969744354534343414579028434872214321258137283927637161133227e-77	
+a-full-turn-shift-of-a-symbolic-argument-doesn-t			
+sin-i-pi-2-i-sinh-pi-2-exactly	enumeratio_ball(sin, (onei(CC) * enumeratio_div(const_pi(RR), 2)))	(0.0+2.301298902307294873463040023434427178178146516516382665972839803093566013803005j)	
+n-decimalizes-sin-i-pi-2-not-just-the-exact-form	(enumeratio_ball(sin, (onei(CC) * enumeratio_div(const_pi(RR), 2))))	(0.0+2.301298902307294873463040023434427178178146516516382665972839803093566013803005j)	
+interval-arithmetic-the-image-of-pi-6-pi-6-is			
+the-image-of-the-whole-real-line-is-1-1			
+wolfram-answers-sin-infty-with-the-range-of-its	enumeratio_ball(sin, Inf)	non-finite argument	error
+uncertainty-propagation-sin-2-pm-0-01-approx-0			
+an-imaginary-argument-rewrites-to-sinh-sin-ix-i			
+oddness-pulls-the-sign-out-of-a-symbolic			
+a-half-period-shift-reduces-sin-x-pi-sin-x			
+sin-arcsin-x-x-for-every-x			
+sin-arcsin-2-2-past-the-real-domain	enumeratio_ball(sin, enumeratio_ball(_asin, 2))	(1.999999999999999999999999999999999999999999999999999999999999999999999999999948-9.499583697423365298821713775061605959609914020699034515595696866144258590652735e-78j)	
+sin-arcsin-of-a-complex-argument	enumeratio_ball(sin, enumeratio_ball(_asin, enumeratio_complex(1, 2)))	(1.000000000000000000000000000000000000000000000000000000000000000000000000000121+2.0j)	
+sin-arccos-x-sqrt-1-x-2			
+sin-arctan-x-frac-x-sqrt-1-x-2			
+derivative-frac-d-dx-sin-x-cos-x			
+second-derivative			
+antiderivative			
+area-under-one-arch-int-0-pi-sin-x-dx-2			
+int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers			
+taylor-series-about-0-only-odd-powers-appear			
+the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1			
+to-30-significant-digits-every-one-correctly	enumeratio_nshow(enumeratio_ball(sin, 1), 30)	8.41470984807896506652502321630e-01	
+a-huge-24-40-argument-reduces-exactly-mod-2-pi	(enumeratio_ball(sin, enumeratio_pow(24, 40)))	0.4000831527197660470709419158482646956061055971916011789752566258968887692054036	
+n-sin-6-over-5-50	enumeratio_nshow(enumeratio_ball(sin, (6 // 5)), 50)	9.3203908596722634967013443549482599541507058820873e-01	
+functiondomain-sin-x-x			
+functionrange-sin-x-x-y			
+functionperiod-sin-x-x			
+functionanalytic-sin-x-x			
+functioninjective-sin-x-x			
+functionsurjective-sin-x-x			
+functionsingularities-sin-x-x			
+functiondiscontinuities-sin-x-x			
+matrixfunction-function-sin-1-1-list-list-5-over			
+assuming-m-in-integers-refine-sin-pi-times-m			
+assuming-m-in-integers-fullsimplify-sin-pi-times			
+threads-element-wise-over-a-list	Any[enumeratio_ball(sin, 0), enumeratio_ball(sin, enumeratio_div(const_pi(RR), 2)), enumeratio_ball(sin, const_pi(RR))]	[0.0, 0.9999999999999999999999999999999999999999999999999999999999999999999999999999914, 1.096917440979352076707323515973394366191088238114113506040171645940952915410778e-77]	
+degrees-d-converts-a-degree-measure-to-radians			
+pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	(enumeratio_pow(enumeratio_ball(sin, enumeratio_div(const_pi(RR), 6)), 2) + enumeratio_pow(enumeratio_ball(cos, enumeratio_div(const_pi(RR), 6)), 2))	0.9999999999999999999999999999999999999999999999999999999999999999999999999999827	
+odd-function-sin-x-sin-x	enumeratio_equal(enumeratio_ball(sin, (-(enumeratio_div(const_pi(RR), 6)))), (-(enumeratio_ball(sin, enumeratio_div(const_pi(RR), 6)))))	true	
+period-2-pi-adding-a-full-turn-doesn-t-change	enumeratio_ball(sin, (enumeratio_div(const_pi(RR), 6) + (2 * const_pi(RR))))	0.4999999999999999999999999999999999999999999999999999999999999999999999999999655	
+double-angle-formula-via-trigexpand			
+angle-addition-formula-via-trigexpand			
+triple-angle-formula			
+power-reduction-sin-2-x-frac-1-cos-2x-2			
+euler-s-formula-sin-x-frac-e-ix-e-ix-2i			
+simplify-knows-the-pythagorean-identity			
+the-same-through-fullsimplify			
+sin-3-over-10-times-pi	enumeratio_ball(sin, ((3 // 10) * const_pi(RR)))	0.8090169943749474241022934171828190588601545899028814310677243113526302314094376	
+integrate-sin-t-pow-2-t-0-positiveinfinity			
+integrate-sin-t-pow-2-t-0-1-over-2-times-pi			
+neg-2-times-neg-2-times-sin-1-over-2-pow-4-plus	((-2 * ((-2 * enumeratio_pow(enumeratio_ball(sin, (1 // 2)), 4)) + (2 * enumeratio_pow(enumeratio_ball(sin, (1 // 2)), 2))) * enumeratio_pow(enumeratio_ball(sin, 1), 2)) + enumeratio_pow(enumeratio_ball(sin, 1), 4))	-8.636168555094444625386351862800399571116000364436281385023703470168591803162427e-78	
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2	(enumeratio_pow(((enumeratio_complex(0, 1) * enumeratio_ball(sin, (1 // 2))) + enumeratio_ball(cos, (1 // 2))), 2))	(0.5403023058681397174009366074429766037323104206179222276700972553811003947744667+0.8414709848078965066525023216302989996225630607983710656727517099919104043912312j)	
+integrate-sin-t-pow-3-t-0-1-over-2-times-pi			
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2	(enumeratio_pow(((enumeratio_complex(0, 1) * enumeratio_ball(sin, (1 // 2))) + enumeratio_ball(cos, (1 // 2))), 2))	(0.5403023058681397174009366074429766037323104206179222276700972553811003947744667+0.8414709848078965066525023216302989996225630607983710656727517099919104043912312j)	
+n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow	(enumeratio_pow(((enumeratio_complex(0, -1) * enumeratio_ball(sin, (1 // 2))) + enumeratio_ball(cos, (1 // 2))), 2))	(0.5403023058681397174009366074429766037323104206179222276700972553811003947744667-0.8414709848078965066525023216302989996225630607983710656727517099919104043912312j)	
+n-integrate-1-over-t-times-sin-t-t-0			
+n-integrate-1-over-sqrt-t-times-sin-t-t-0			
+n-integrate-1-over-t-times-sin-1-over-2-times-t			
+n-sin-1-pow-2	(enumeratio_pow(enumeratio_ball(sin, 1), 2))	0.7080734182735711934987841147503810948830003855377724453775749868909824680620209	
+n-sin-1-over-2-plus-1-over-2-times-pi-pow-2	(enumeratio_pow(enumeratio_ball(sin, ((1 // 2) + ((1 // 2) * const_pi(RR)))), 2))	0.7701511529340698587004683037214883018661552103089611138350486276905501973872333	
+1-radian-isn-t-a-recognized-special-angle-so	enumeratio_ball(sin, 1)	0.8414709848078965066525023216302989996225630607983710656727517099919104043912312	
+sin-2-a-generic-argument-stays-symbolic	enumeratio_ball(sin, 2)	0.9092974268256816953960198659117448427022549714478902683789730115309673015407754	
+sin-x-plus-y-stays-symbolic			
+pi-15-has-a-radical-form-but-like-wolfram-s	enumeratio_ball(sin, enumeratio_div(const_pi(RR), 15))	0.2079116908177593371017422844051251662165847606277238364071819738823828256640711	
+a-huge-exact-argument-is-reduced-modulo-2-pi	(enumeratio_ball(sin, enumeratio_pow(10, 20)))	-0.6452512852657808442058117113125230074069041966868971183031170068878986162188562	
+an-even-huger-argument-11-38	(enumeratio_ball(sin, enumeratio_pow(11, 38)))	0.8675341931848630320817504297282418646390595750219556007908112423556031674025518	
+sin-complexinfinity-is-indeterminate-off-the			
+the-special-angle-table-reaches-past-30-45-60	enumeratio_ball(sin, enumeratio_div(const_pi(RR), 5))	0.5877852522924731291687059546390727685976524376431459910722724807572784741623414	
+functionexpand-gives-the-nested-radical-form			

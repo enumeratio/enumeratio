@@ -1,0 +1,20 @@
+id	in	out
+the-quadratic		
+the-cubic		
+the-quartic		
+at-a-real	enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 5, enumeratio_decimal("0.7"))	-0.3651987500000000000000000000000000000000000000000000000000000000000000000000123
+at-p0-0-7	(enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 0, enumeratio_decimal("0.7")))	1.0
+at-p1-0-7	(enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 1, enumeratio_decimal("0.7")))	0.6999999999999999999999999999999999999999999999999999999999999999999999999999983
+at-p2-0-7	(enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 2, enumeratio_decimal("0.7")))	0.234999999999999999999999999999999999999999999999999999999999999999999999999996
+at-p5-0-7	(enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 5, enumeratio_decimal("0.7")))	-0.3651987500000000000000000000000000000000000000000000000000000000000000000000123
+at-p-1-0-7	(enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), -1, enumeratio_decimal("0.7")))	1.0
+at-p-4-0-7	(enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), -4, enumeratio_decimal("0.7")))	-0.1925000000000000000000000000000000000000000000000000000000000000000000000000071
+at-p4-2-3i	(enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 4, enumeratio_complex(2, 3)))	(-501.5-570.0j)
+at-a-rational	enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 3, (1 // 2))	-0.4375
+at-a-complex-argument	enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 3, enumeratio_complex(2, 3))	(-118.0+18.0j)
+a-symbolic-order-stays-unevaluated		
+at-1	enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 6, 1)	1.0
+at-minus-1	enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 5, -1)	-1.0
+at-0	enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 4, 0)	0.375
+bonnet-recurrence	enumeratio_equal((4 * enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 4, 3)), ((7 * 3 * enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 3, 3)) - (3 * enumeratio_ball((n, x) -> hypergeometric_2f1(-n, n + 1, CC(1), (1 - x) / 2), 2, 3))))	true
+negative-order		

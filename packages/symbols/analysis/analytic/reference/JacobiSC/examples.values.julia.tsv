@@ -1,0 +1,14 @@
+id	in	out	verdict
+a-floating-point-argument-evaluates-directly-to	(enumeratio_jacobi(:sc, enumeratio_decimal("0.6"), enumeratio_decimal("0.4")))	0.6647443227328587661523863281465457296444599217177233820323706375174356422355452	
+m-greater-than-1-via-the-reciprocal-modulus	(enumeratio_jacobi(:sc, enumeratio_decimal("1.2"), 3))	0.6660771819422740703122543496309957541812499912469322117679498348451472598760397	
+d-jacobisc-u-m-m			
+series-jacobisc-u-m-u-0-5			
+series-jacobisc-z-m-m-0-2			
+u-0-is-0-for-any-m			
+n-jacobisc-sqrt-2-over-4-times-i-neg-1	(enumeratio_jacobi(:sc, enumeratio_complex(0, enumeratio_div(enumeratio_ball(sqrt, 2), 4)), -1))	(-2.079844584343564980485603217559382599419502070041094317588282752345549466822845e-78+0.3328708521686944595273603492820774871025330921937345338323477912427065418671015j)	
+n-jacobisc-1-over-2-times-1-plus-sqrt-2-over-2-1	(enumeratio_jacobi(:sc, ((1 // 2) * (1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2))), (enumeratio_pow((1 + (-(enumeratio_div(enumeratio_ball(sqrt, 2), 2)))), 2) * enumeratio_pow((1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2)), -2))))	1.140443829506285009648569556551856582201281131805710929530818604784180495954894	
+n-jacobisc-sqrt-2-times-i-neg-1	(enumeratio_jacobi(:sc, enumeratio_complex(0, enumeratio_ball(sqrt, 2)), -1))	(-1.576407707996987392878471170314503638780040634773530406176173801876677914257738e-77+0.7033324752514343512026848148293410501224774469781037604838180751674403038112232j)	
+n-jacobisc-2-times-1-plus-sqrt-2-over-2-1-minus	(enumeratio_jacobi(:sc, (2 * (1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2))), (enumeratio_pow((1 + (-(enumeratio_div(enumeratio_ball(sqrt, 2), 2)))), 2) * enumeratio_pow((1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2)), -2))))	0.2543144763383848970190347967588328930639578279947484432325614646747001112359873	
+symbolic-arguments-are-left-unevaluated-rather			
+m-1-at-a-shared-pole-of-sn-and-cn	(enumeratio_jacobi(:sc, ((1 // 2) * onei(CC) * const_pi(RR)), 1))	ball not finite	error
+u-1e16-declines-rather-than-answering-wrong	(enumeratio_jacobi(:sc, enumeratio_pow(10, 16), (1 // 4)))	-7.952790204604931046324057899071792048870816572797456890683828143995080007850684	inconclusive

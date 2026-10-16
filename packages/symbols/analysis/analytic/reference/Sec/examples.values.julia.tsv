@@ -1,0 +1,42 @@
+id	in	out	verdict
+sec-0	enumeratio_ball(_sec, 0)	1.0	
+sec-pi-over-4	enumeratio_ball(_sec, enumeratio_div(const_pi(RR), 4))	1.414213562373095048801688724209698078569671875376948073176679737990732478462102	
+sec-pi-over-3	enumeratio_ball(_sec, enumeratio_div(const_pi(RR), 3))	2.0	
+sec-pi	enumeratio_ball(_sec, const_pi(RR))	-1.0	
+sec-30-circ-frac-2-sqrt-3-3-exactly			
+a-machine-precision-argument-evaluates	enumeratio_ball(_sec, enumeratio_decimal("1.2"))	2.759703601332406456883432939237783860073115323011027652111642182419992047301571	
+a-huge-24-40-argument	(enumeratio_ball(_sec, enumeratio_pow(24, 40)))	1.091132661597017500545567534032875647737319069713913582068603304296692285218858	
+a-huge-10-100-argument	(enumeratio_ball(_sec, enumeratio_pow(10, 100)))	-1.077491107769803497330819829724279480213909320585431031719547347155667653186784	
+a-huge-3-200-argument	(enumeratio_ball(_sec, enumeratio_pow(3, 200)))	-2.901504568450503094879764113350283036502848204344263596809633361104044370351245699178110988478420650276608146749805285087594018901057782430708057439427908228865247776993335651214276968182101778698919517415635061375920602584033186833336909130592711647069869524262794715059453046088192503364459545009012683428787	
+a-huge-neg-7-60-argument	(enumeratio_ball(_sec, (-(enumeratio_pow(7, 60)))))	-1.07416019568312309199066631102982399468797136330972534694712501002907061569515	
+a-huge-10-80-plus-1-over-3-argument	(enumeratio_ball(_sec, enumeratio_div((enumeratio_pow(10, 80) + 1), 3)))	5.863239831165696429804646813910055115382055192948315298060454781770247840845022278843416682285399475858075563202418484124234844960240981270517296744240769751688156105954682338744267088563803312401626560251455055562292063218860043228673756842722915947228266118717688273262531876174155506672013452811797434643728	
+sec-3-under-n	(enumeratio_ball(_sec, 3))	-1.01010866590799375130303648146319295518501902819059696420351394046330719677057	
+series-sec-x-x-0-10			
+series-sec-x-x-3-over-2-times-pi-5			
+n-of-an-exact-argument-gives-an-arbitrary	(enumeratio_ball(_sec, (6 // 5)))	2.759703601332406456883432939237783860073115323011027652111642182419992047301571	
+evaluates-at-a-complex-argument	enumeratio_ball(_sec, enumeratio_complex(enumeratio_decimal("2.5"), 1))	(-0.6111085641552315182803294839841486478092341170336117871865741015242444672987225+0.3476766607104959968793724804023395192210904810731542321970466070193543505288638j)	
+threads-element-wise-over-a-matrix	Any[Any[enumeratio_ball(_sec, (5 * enumeratio_div(const_pi(RR), 6))), enumeratio_ball(_sec, 0)], Any[enumeratio_ball(_sec, enumeratio_div(const_pi(RR), 6)), enumeratio_ball(_sec, (-(enumeratio_div(const_pi(RR), 4))))]]	[[-1.154700538379251529018297561003914911295203502540253752037204652967955344605882, 1.0], [1.154700538379251529018297561003914911295203502540253752037204652967955344605865, 1.414213562373095048801688724209698078569671875376948073176679737990732478462102]]	
+sec-pi-12-sqrt-6-sqrt-2	enumeratio_ball(_sec, enumeratio_div(const_pi(RR), 12))	1.035276180410083049395595350496193313396275605279722055256012829260227898995197	
+sec-pi-5-sqrt-5-1	enumeratio_ball(_sec, enumeratio_div(const_pi(RR), 5))	1.236067977499789696409173668731276235440618359611525724270897245410520925637785	
+sec-pi-8-sqrt-4-2-sqrt-2	enumeratio_ball(_sec, enumeratio_div(const_pi(RR), 8))	1.082392200292393968799446410732778840122144126756030889362594191305977947082021	
+interval-arithmetic-the-image-of-pi-6-pi-3-is			
+uncertainty-propagation-sec-2-pm-0-01-approx-2			
+evenness-drops-the-sign-of-a-symbolic-argument			
+derivative-sec-x-tan-x			
+antiderivative-ln-sec-x-tan-x			
+n-sec-6-over-5-50	enumeratio_nshow(enumeratio_ball(_sec, (6 // 5)), 50)	2.7597036013324064568834329392377838600731153230110e+00	
+matrixfunction-function-sec-1-1-list-list-5-over			
+sec-positiveinfinity	enumeratio_ball(_sec, Inf)	non-finite argument	error
+assuming-m-in-integers-refine-sec-pi-times-1			
+assuming-m-in-integers-fullsimplify-refine-sec			
+functionmeromorphic-sec-x-x			
+reciprocal-of-cos-sec-x-frac-1-cos-x	enumeratio_equal(enumeratio_ball(_sec, enumeratio_div(const_pi(RR), 3)), enumeratio_div(1, enumeratio_ball(cos, enumeratio_div(const_pi(RR), 3))))	true	
+pythagorean-identity-1-tan-2-x-sec-2-x	enumeratio_equal((1 + enumeratio_pow(enumeratio_ball(tan, enumeratio_div(const_pi(RR), 6)), 2)), enumeratio_pow(enumeratio_ball(_sec, enumeratio_div(const_pi(RR), 6)), 2))	true	
+sec-1-over-10-times-pi	enumeratio_ball(_sec, ((1 // 10) * const_pi(RR)))	1.05146222423826721205133816969575321457099586448668356305787104648242229280642	
+sec-3-over-10-times-pi	enumeratio_ball(_sec, ((3 // 10) * const_pi(RR)))	1.701301616704079864363080994126022144480802807529633763673480484755768094727893	
+n-2-minus-sec-1-over-2-pow-2-times-sec-1	(((2 + (-(enumeratio_pow(enumeratio_ball(_sec, (1 // 2)), 2)))) * enumeratio_ball(_sec, 1)))	1.298446410409524836883766498854359657792285522154900404712010315703054698425826	
+n-2-times-sec-1-times-sec-1-over-2-pow-2-plus	(((2 * enumeratio_ball(_sec, 1) * enumeratio_pow(enumeratio_ball(_sec, (1 // 2)), 2)) + (((-2 * enumeratio_pow(enumeratio_ball(_sec, (1 // 2)), 2)) + enumeratio_pow(enumeratio_ball(_sec, (1 // 2)), 4)) * enumeratio_pow(enumeratio_ball(_sec, 1), 2)) + (-(enumeratio_pow(enumeratio_ball(_sec, (1 // 2)), 4)))))	-6.908934844075555700309081490240319656892800291549025108018962776134873442529942e-77	
+n-sec-1-over-2-plus-1-over-2-times-pi-pow-2	(enumeratio_pow(enumeratio_ball(_sec, ((1 // 2) + ((1 // 2) * const_pi(RR)))), 2))	4.350685299340042821553573519312139951696894935248368427501080110294061420578688	
+n-2-minus-sec-2-pow-2-times-sec-4	(((2 + (-(enumeratio_pow(enumeratio_ball(_sec, 2), 2)))) * enumeratio_ball(_sec, 4)))	5.774399204041917612412767604323237382428652001841055884648470966838298686120674	
+a-pole-cos-pi-2-0	enumeratio_ball(_sec, enumeratio_div(const_pi(RR), 2))	ball not finite	error
+sec-complexinfinity-is-indeterminate-for-the			

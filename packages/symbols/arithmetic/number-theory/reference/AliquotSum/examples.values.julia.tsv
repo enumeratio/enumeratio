@@ -1,0 +1,12 @@
+id	in	out	verdict
+aliquotsum-12	(divisor_sigma(abs(ZZ(12)), 1) - abs(ZZ(12)))	16	
+aliquotsum-28	(divisor_sigma(abs(ZZ(28)), 1) - abs(ZZ(28)))	28	
+aliquotsum-13	(divisor_sigma(abs(ZZ(13)), 1) - abs(ZZ(13)))	1	
+aliquotsum-1	(divisor_sigma(abs(ZZ(1)), 1) - abs(ZZ(1)))	0	
+negative-n-the-sign-is-a-unit	(divisor_sigma(abs(ZZ(-12)), 1) - abs(ZZ(-12)))	16	
+listable-over-a-list	Any[(divisor_sigma(abs(ZZ(6)), 1) - abs(ZZ(6))), (divisor_sigma(abs(ZZ(12)), 1) - abs(ZZ(12))), (divisor_sigma(abs(ZZ(13)), 1) - abs(ZZ(13)))]	[6, 16, 1]	
+large-integers-a-power-of-two	(divisor_sigma(abs(ZZ(enumeratio_pow(2, 40))), 1) - abs(ZZ(enumeratio_pow(2, 40))))	1099511627775	
+amicable-pair-220-and-284	(divisor_sigma(abs(ZZ(220)), 1) - abs(ZZ(220)))	284	
+amicable-pair-the-other-way	(divisor_sigma(abs(ZZ((divisor_sigma(abs(ZZ(220)), 1) - abs(ZZ(220))))), 1) - abs(ZZ((divisor_sigma(abs(ZZ(220)), 1) - abs(ZZ(220))))))	220	
+aliquotsum-is-sigma-minus-n	enumeratio_equal((divisor_sigma(abs(ZZ(360)), 1) - abs(ZZ(360))), (divisor_sigma(ZZ(360), Int(1)) - 360))	true	
+zero-stays-unevaluated	(divisor_sigma(abs(ZZ(0)), 1) - abs(ZZ(0)))	DomainError with 0: Argument must be positive	error

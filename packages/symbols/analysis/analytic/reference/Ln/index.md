@@ -47,6 +47,14 @@ bindings:
     template: ln($1)
     arity: 1
     threadArg: 1
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(log, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Inverse of [[Exp]]: $\ln(e^x) = x$.

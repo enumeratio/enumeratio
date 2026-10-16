@@ -1,0 +1,23 @@
+id	in	out
+real-and-imaginary-parts	Any[enumeratio_ball(real, enumeratio_complex(3, 4)), enumeratio_ball(imag, enumeratio_complex(3, 4))]	[3.0, 4.0]
+reim-5-plus-12i	Any[enumeratio_ball(real, enumeratio_complex(5, 12)), enumeratio_ball(imag, enumeratio_complex(5, 12))]	[5.0, 12.0]
+reim-3	Any[enumeratio_ball(real, 3), enumeratio_ball(imag, 3)]	[3.0, 0.0]
+reim-list-i-neg-1-neg-i-1	Any[Any[enumeratio_ball(real, enumeratio_complex(0, 1)), enumeratio_ball(imag, enumeratio_complex(0, 1))], Any[enumeratio_ball(real, -1), enumeratio_ball(imag, -1)], Any[enumeratio_ball(real, enumeratio_complex(0, -1)), enumeratio_ball(imag, enumeratio_complex(0, -1))], Any[enumeratio_ball(real, 1), enumeratio_ball(imag, 1)]]	[[0.0, 1.0], [-1.0, 0.0], [0.0, -1.0], [1.0, 0.0]]
+threads-over-a-list	Any[Any[enumeratio_ball(real, enumeratio_complex(1, 2)), enumeratio_ball(imag, enumeratio_complex(1, 2))], Any[enumeratio_ball(real, enumeratio_complex(3, 4)), enumeratio_ball(imag, enumeratio_complex(3, 4))]]	[[1.0, 2.0], [3.0, 4.0]]
+reim-neg-3	Any[enumeratio_ball(real, -3), enumeratio_ball(imag, -3)]	[-3.0, 0.0]
+reim-3-over-5	Any[enumeratio_ball(real, (3 // 5)), enumeratio_ball(imag, (3 // 5))]	[0.5999999999999999999999999999999999999999999999999999999999999999999999999999948, 0.0]
+reim-root-neg-17-4	Any[enumeratio_ball(real, enumeratio_root(-17, 4)), enumeratio_ball(imag, enumeratio_root(-17, 4))]	[1.435810855512950311149300687756283233809759072809317830520710436239533340143947, 1.435810855512950311149300687756283233809759072809317830520710436239533340143947]
+reim-gamma-neg-1-over-2	Any[enumeratio_ball(real, enumeratio_ball(gamma, (-1 // 2))), enumeratio_ball(imag, enumeratio_ball(gamma, (-1 // 2)))]	[-3.54490770181103205459633496668229036559509891224477425642761557970582256918205, 0.0]
+reim-list-list-1-neg-1-0-list-0-1	Any[Any[Any[enumeratio_ball(real, 1), enumeratio_ball(imag, 1)], Any[enumeratio_ball(real, -1), enumeratio_ball(imag, -1)], Any[enumeratio_ball(real, 0), enumeratio_ball(imag, 0)]], Any[Any[enumeratio_ball(real, 0), enumeratio_ball(imag, 0)], Any[enumeratio_ball(real, 1), enumeratio_ball(imag, 1)]]]	[[[1.0, 0.0], [-1.0, 0.0], [0.0, 0.0]], [[0.0, 0.0], [1.0, 0.0]]]
+reim-z		
+reim-2z		
+reim-w-plus-z		
+reim-list-a-list-b-c		
+reim-exponentiale-pow-2-over-3-times-i-times-pi	Any[enumeratio_ball(real, enumeratio_pow(const_e(RR), (enumeratio_complex(0, (2 // 3)) * const_pi(RR)))), enumeratio_ball(imag, enumeratio_pow(const_e(RR), (enumeratio_complex(0, (2 // 3)) * const_pi(RR))))]	[-0.499999999999999999999999999999999999999999999999999999999999999999999999999892, 0.8660254037844386467637231707529361834714026269051903140279034897259665084544592]
+rank-reim-mat		
+reim-2x-plus-i		
+shape-reim-mat		
+reim-5-times-exponentiale-pow-3-over-4-times-i	Any[enumeratio_ball(real, (5 * enumeratio_pow(const_e(RR), (enumeratio_complex(0, (3 // 4)) * const_pi(RR))))), enumeratio_ball(imag, (5 * enumeratio_pow(const_e(RR), (enumeratio_complex(0, (3 // 4)) * const_pi(RR)))))]	[-3.535533905932737622004221810524245196424179688442370182941699344976831196154901, 3.535533905932737622004221810524245196424179688442370182941699344976831196155592]
+reim-i	Any[enumeratio_ball(real, enumeratio_complex(0, 1)), enumeratio_ball(imag, enumeratio_complex(0, 1))]	[0.0, 1.0]
+reim-list-i-neg-i-0	Any[Any[enumeratio_ball(real, enumeratio_complex(0, 1)), enumeratio_ball(imag, enumeratio_complex(0, 1))], Any[enumeratio_ball(real, enumeratio_complex(0, -1)), enumeratio_ball(imag, enumeratio_complex(0, -1))], Any[enumeratio_ball(real, 0), enumeratio_ball(imag, 0)]]	[[0.0, 1.0], [0.0, -1.0], [0.0, 0.0]]
+replaceall-reim-z-rule-z-list-imaginaryunit-neg		

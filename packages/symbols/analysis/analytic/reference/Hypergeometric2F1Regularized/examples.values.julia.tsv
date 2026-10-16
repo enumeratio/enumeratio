@@ -1,0 +1,16 @@
+id	in	out	verdict
+matches-hypergeometric2f1-1-1-2-0-5-gamma-2	enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), 1, 1, 2, enumeratio_decimal("0.5"))	1.386294361119890618834464242916353136151000268720510508241360018986787243939357	
+a-0-5-b-1-5-c-2-5-at-neg-0-6	enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), enumeratio_decimal("0.5"), enumeratio_decimal("1.5"), enumeratio_decimal("2.5"), enumeratio_decimal("-0.6"))	0.6484576614357429344809606675311225183911345698058960096392358249880861146076179	
+c-0-at-0-5	enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), 1, 1, 0, enumeratio_decimal("0.5"))	ball not finite	error
+b-2-c-neg-2-at-0-4	enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), 1, 2, -2, enumeratio_decimal("0.4"))	ball not finite	error
+a-complex-argument-at-c-2	(enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), 1, 1, 2, enumeratio_complex(enumeratio_decimal("0.3"), enumeratio_decimal("0.3"))))	(1.1287589566765323983830205113062712289466360011215815452993054102537317531102+0.220880330940412345990555918725204159559652786164003846925463008922113726031614j)	
+a-complex-argument-at-a-nonpositive-integer-c	(enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), 1, 1, -1, enumeratio_complex(enumeratio_decimal("0.2"), enumeratio_decimal("-0.1"))))	ball not finite	error
+simplify-normal-series			
+normal-series-hypergeometric2f1regularized-1			
+n-hypergeometric2f1regularized-1-over-3-1-3-neg	enumeratio_nshow(enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), (1 // 3), 1, 3, -7), 50)	3.5510204081632653061224489795918367346938775510204e-01	
+n-hypergeometric2f1regularized-1-over-3-1-0-neg	enumeratio_nshow(enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), (1 // 3), 1, 0, -7), 25)	ball not finite	error
+matrixfunction-function			
+hypergeometric2f1regularized-1-1-1-0	enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), 1, 1, 1, 0)	1.0	
+hypergeometric2f1regularized-1-over-2-1-1-over-2			
+stays-finite-at-a-nonpositive-integer-lower	(enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), 1, 1, -1, enumeratio_decimal("0.3")))	ball not finite	error
+z-ge-1-stays-symbolic-no-continuation-past-the	enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), 1, 1, 2, enumeratio_decimal("1.5"))	(0.4620981203732968729448214143054510453836667562401701694137866729955957479806347-2.094395102393195492308428922186335256131446266250070547316629728205210937524051j)	disagree
