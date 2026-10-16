@@ -184,6 +184,9 @@ const termOf = (json: unknown): Element | undefined => {
       : (big as unknown as Element);
 };
 
+/** Whether an interpreted answer still holds a power or a search the interpreter left unevaluated. */
+const unexpanded = (json: unknown): boolean => /"(Power|Reduce)"/.test(JSON.stringify(json));
+
 /** A `tables` expression at `params`, interpreted. compute-engine can leave the last entry of a
  *  fold of rows an unevaluated sum, so an entry that isn't an integer is evaluated again. */
 export function evaluateTables(ce: ComputeEngine, tables: unknown, params: Record<string, unknown>): unknown {
@@ -528,8 +531,9 @@ export function kernelOn(
           const fast = run("unrank", p, { _r: Number(r) });
           if (wellFormed(family.kind, fast)) return fast as Element;
         }
-        // A term the interpreter leaves unevaluated (a power too large to expand) is past it: unknown.
-        return termOf(interpret("unrank", p, { _r: bigintJson(r) })) ?? decline(p);
+        const json = interpret("unrank", p, { _r: bigintJson(r) });
+        // A term left unevaluated (a power too large to expand) is past the interpreter: unknown, not a bad definition.
+        return termOf(json) ?? (unexpanded(json) ? decline(p) : fail("unrank", p, json));
       }
       if (typeof total === "bigint" && total <= MAX_SAFE) {
         if (quick !== undefined && r >= 0n && r < total && total <= FAST_LIMIT && wellParamed(p)) {
@@ -562,7 +566,8 @@ export function kernelOn(
           const fast = run("rank", p, { _x: element });
           if (isInteger(fast)) return BigInt(fast);
         }
-        return integerOf(interpret("rank", p, { _x: elementJson(element) })) ?? decline(p);
+        const json = interpret("rank", p, { _x: elementJson(element) });
+        return integerOf(json) ?? (beyondDoubles(element) || unexpanded(json) ? decline(p) : fail("rank", p, json));
       }
       if (known === undefined || (declinePastDoubles === "count" && typeof known === "bigint" && known > MAX_SAFE)) {
         // Past 2^53, as above: the fast rank answers where a double holds it.

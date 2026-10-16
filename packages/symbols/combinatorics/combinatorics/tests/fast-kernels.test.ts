@@ -376,10 +376,10 @@ for (const family of sequenceFamilies) {
       const where = labelled(family, p);
       expect([where, fast.count(p)]).toEqual([where, Number.POSITIVE_INFINITY]);
       expect([where, epsil.count(p)]).toEqual([where, Number.POSITIVE_INFINITY]);
-      // The first rank the fast path declines (a constant sequence has none), searched up from 2^40.
+      // The first rank whose term the fast path gives as a bigint or declines (a constant sequence has none).
       const holds = (r: number): boolean => {
         try {
-          return family.fast!.unrank(p, r) !== undefined;
+          return typeof family.fast!.unrank(p, r) === "number";
         } catch {
           return false; // a term too large for the kernel at all
         }

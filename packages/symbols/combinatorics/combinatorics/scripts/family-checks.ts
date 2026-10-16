@@ -62,8 +62,26 @@ const isDeep = (head: string, p: readonly number[]): boolean =>
 export const fibersOf = (family: EpsilFamily, deep: boolean): number[][] =>
   sampleParams(family.paramCount).filter((p) => isDeep(family.head, p) === deep);
 
-/** The ranks sampled in a fiber with no end. */
-const UNBOUNDED_RANKS: readonly bigint[] = [0n, 1n, 2n, 3n, 5n, 8n, 12n, 15n];
+/** The ranks sampled in a fiber with no end: the first few, some between, and the last ones whose term a double
+ *  holds exactly (the last is found by bisection with the interpreter, which a constant sequence never leaves). */
+function unboundedRanks(ce: Engine, family: EpsilFamily, bind: Record<string, unknown>): bigint[] {
+  const safe = (r: bigint): boolean => {
+    const term = elementOf(evaluateEpsil(ce, family.epsil.unrank, { ...bind, _r: Number(r) }));
+    return typeof term === "number" && Number.isSafeInteger(term);
+  };
+  const ranks = new Set<bigint>([0n, 1n, 2n, 3n, 5n, 8n, 12n, 15n]);
+  const top = 2n ** 53n - 1n;
+  if (safe(top)) return [...ranks];
+  let [low, high] = [0n, top];
+  while (low + 1n < high) {
+    const mid = (low + high) / 2n;
+    if (safe(mid)) low = mid;
+    else high = mid;
+  }
+  for (const r of [low - 2n, low - 1n, low, low / 2n, low / 7n, low / 1000n, 12345n])
+    if (r >= 0n && r <= low) ranks.add(r);
+  return [...ranks];
+}
 
 /** A member one entry away from itself, which the family may or may not contain. */
 const nearMiss = (element: unknown): unknown =>
@@ -111,7 +129,7 @@ export function disagreements(
     if (runs.count !== undefined && attempt(runs.count, compiledBind) !== (unbounded ? Infinity : Number(total)))
       wrong.add("count");
     if (total === 0n && !unbounded) continue;
-    for (const r of unbounded ? UNBOUNDED_RANKS : new Set([0n, total / 2n, total - 1n])) {
+    for (const r of unbounded ? unboundedRanks(ce, family, bind) : new Set([0n, total / 2n, total - 1n])) {
       const element = elementOf(evaluateEpsil(ce, family.epsil.unrank, { ...bind, _r: Number(r) }));
       if (
         runs.unrank !== undefined &&

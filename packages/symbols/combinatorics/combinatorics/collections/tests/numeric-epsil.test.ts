@@ -136,6 +136,34 @@ for (const head of definitions.keys()) {
         }
       }
     });
+
+    // A member is never denied, however large: the answer is exact or declined, never false or -1.
+    // (A power of two's rank is its exponent, so its sizes are the exponents.)
+    test(`${where}: members and non-members at ranks ~1e30 and ~1e60 are never misjudged`, () => {
+      if (head === "AllOnes") return;
+      const ranks = head === "PowersOfTwo" ? [10n ** 3n, 3n * 10n ** 3n] : [10n ** 30n, 10n ** 60n];
+      const answer = <T>(read: () => T): T | "declined" => {
+        try {
+          return read();
+        } catch (error) {
+          if (needsBigint(error)) return "declined";
+          throw error;
+        }
+      };
+      const kernel = epsil(head);
+      let answered = 0;
+      for (const r of ranks) {
+        const x = term(r + 1n);
+        const [member, below, above] = [x, x - 1n, x + 1n].map((y) => answer(() => kernel.valid(y as never, p)));
+        const place = answer(() => kernel.rank(x as never, p));
+        // Never denied; every size here is answered, so an exact `true` and the rank back is held to.
+        expect([r, member]).toEqual([r, true]);
+        expect([r, place]).toEqual([r, r]);
+        expect([r, below, above]).toEqual([r, false, false]);
+        answered++;
+      }
+      expect(answered).toBe(ranks.length);
+    });
   }
 }
 
@@ -145,20 +173,30 @@ test("a negative rank is outside the fiber", () => {
 });
 
 test("a term too large for the interpreter to expand is declined, not an error", () => {
-  for (const kernel of [epsil("PowersOfTwo"), full("PowersOfTwo")]) {
-    expect(() => kernel.unrank([], 10n ** 9n)).toThrow(RangeError);
+  // The fast path expands a power of two as far as a bigint goes; the interpreter far less.
+  const declined = (read: () => unknown): boolean => {
     try {
-      kernel.unrank([], 10n ** 9n);
+      read();
+      return false;
     } catch (error) {
-      expect(needsBigint(error)).toBe(true);
+      return error instanceof RangeError && needsBigint(error);
     }
-  }
+  };
+  expect(declined(() => epsil("PowersOfTwo").unrank([], 10n ** 9n))).toBe(true);
+  expect(declined(() => full("PowersOfTwo").unrank([], 2n ** 31n))).toBe(true);
+  expect(full("PowersOfTwo").unrank([], 2000000n)).toBe(2n ** 2000000n);
 });
 
 test("PolygonalNumbers below 3 sides has no terms", () => {
   for (const k of [0, 1, 2]) {
     expect(epsil("PolygonalNumbers").count([k])).toBe(0n);
     expect(full("PolygonalNumbers").count([k])).toBe(0n);
+    // And no number is a member of it, in either kernel.
+    for (const kernel of [epsil("PolygonalNumbers"), full("PolygonalNumbers")])
+      for (const x of [1, 2, 3, 4, 6, 10]) {
+        expect([k, x, kernel.valid(x, [k])]).toEqual([k, x, false]);
+        expect([k, x, kernel.rank(x, [k])]).toEqual([k, x, -1n]);
+      }
   }
 });
 
