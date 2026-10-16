@@ -4,6 +4,7 @@ issquarefree-4	is_squarefree(4)	False
 issquarefree-12	is_squarefree(12)	False	
 every-prime-is-squarefree	is_squarefree(17)	True	
 issquarefree-20	is_squarefree(20)	False	
+issquarefree-of-zero	is_squarefree(0)	False	
 threads-element-wise-over-a-list	[is_squarefree(10), is_squarefree(4), is_squarefree(12)]	[True, False, False]	
 gaussian-integers-3-2i-is-a-gaussian-prime	is_squarefree((3 + 2*I))	True	
 gaussianintegers-true-2-i-1-i-2			

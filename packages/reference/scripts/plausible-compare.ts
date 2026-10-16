@@ -72,3 +72,41 @@ export function roundsTo(spec: MathJSON, ours: MathJSON, theirs: string): boolea
     return Math.abs(x - (mine[i] as number)) <= (0.5 / scale) * (1 + 1e-9);
   });
 }
+
+/** The Rust lane declining in its own words: a double that isn't finite, a crate's argument
+ * error, a parameter that is a machine word or unsigned, a zero or a digit the crate has no
+ * answer for. Where ours answers, that is a domain difference, not a disagreement. */
+const CRATE_DECLINES =
+  /non-finite result|statrs:|`Err` value|no value: |machine word|non-negative integer|no factorization|digits below the base|unit part/;
+export const crateDeclines = (theirs: string): boolean => CRATE_DECLINES.test(theirs);
+
+/** Whether `ours` is an exact zero that `theirs` (a double) lands within rounding of: a double
+ * can't hit the zero of a trig value at a multiple of π, or of `ln Γ(1)`, exactly. */
+export function roundsToZero(ours: MathJSON, theirs: string): boolean {
+  const other = parts(theirs);
+  return ours === 0 && other?.length === 1 && Math.abs(other[0] as number) <= 1e-12;
+}
+
+/** Whether a printed answer holds a double past 1e15 in size: a crate's value beside a pole
+ * it can't reach exactly (statrs's `gamma(-1)` is -2.6e16). */
+export const hasHugeDouble = (theirs: string): boolean =>
+  [...theirs.matchAll(/-?\d+(?:\.\d+)?(?:e[-+]?\d+)?/gi)].some((m) => Math.abs(Number(m[0])) >= 1e15);
+
+const NON_ANSWERS = ["ComplexInfinity", "PositiveInfinity", "NegativeInfinity", "NaN", "Indeterminate"];
+/** Whether `ours` holds a non-answer (a pole, an undefined form or an error) anywhere in it. */
+export function hasNonAnswer(ours: MathJSON): boolean {
+  if (typeof ours === "string") return NON_ANSWERS.includes(ours);
+  return Array.isArray(ours) && (ours[0] === "Error" || ours.some((part) => hasNonAnswer(part as MathJSON)));
+}
+
+/** Whether `ours` is a call left unevaluated on plain numbers (`Log(-1, 2)`, `ErfInv(1.01)`). */
+export const isStuckCall = (ours: MathJSON): boolean =>
+  Array.isArray(ours) &&
+  typeof ours[0] === "string" &&
+  !["Complex", "Rational", "List", "Error"].includes(ours[0]) &&
+  ours.length > 1 &&
+  ours.slice(1).every((op) => typeof op === "number" || isBigNumber(op));
+
+/** Whether `ours` holds a bignum past what a double can hold (1e300 and up). */
+export const exceedsDouble = (ours: MathJSON): boolean =>
+  /"num":"[^"]*e\+(3\d\d|[4-9]\d\d|\d{4,})"/.test(JSON.stringify(ours));

@@ -1,22 +1,23 @@
-id	in	out
-8-2-3	first(is_prime_power_with_data(ZZ(8)))	true
-12-2-2-cdot-3-has-two-distinct-primes	first(is_prime_power_with_data(ZZ(12)))	false
-a-prime-is-its-own-first-power	first(is_prime_power_with_data(ZZ(7)))	true
-isprimepower-6	first(is_prime_power_with_data(ZZ(6)))	false
-listable	Any[first(is_prime_power_with_data(ZZ(2))), first(is_prime_power_with_data(ZZ(4))), first(is_prime_power_with_data(ZZ(6))), first(is_prime_power_with_data(ZZ(9))), first(is_prime_power_with_data(ZZ(10))), first(is_prime_power_with_data(ZZ(16)))]	[true, true, false, true, false, true]
-large-integers	first(is_prime_power_with_data(ZZ(enumeratio_pow(3, 40))))	true
-isprimepower-9	first(is_prime_power_with_data(ZZ(9)))	true
-isprimepower-list-1-2-3-4-5-6-7	Any[first(is_prime_power_with_data(ZZ(1))), first(is_prime_power_with_data(ZZ(2))), first(is_prime_power_with_data(ZZ(3))), first(is_prime_power_with_data(ZZ(4))), first(is_prime_power_with_data(ZZ(5))), first(is_prime_power_with_data(ZZ(6))), first(is_prime_power_with_data(ZZ(7)))]	[false, true, true, true, true, false, true]
-filter-range-1-100-function-isprimepower-1		
-isprimepower-625	first(is_prime_power_with_data(ZZ(625)))	true
-isprimepower-53	first(is_prime_power_with_data(ZZ(53)))	true
-list-isprimepower-27-issquarefree-27	Any[first(is_prime_power_with_data(ZZ(27))), is_squarefree(ZZ(27))]	[true, false]
-list-isprimepower-3-issquarefree-3	Any[first(is_prime_power_with_data(ZZ(3))), is_squarefree(ZZ(3))]	[true, true]
-isprimepower-25	first(is_prime_power_with_data(ZZ(25)))	true
-isprimepower-16-807	first(is_prime_power_with_data(ZZ(16807)))	true
-list-isprimepower-121-iscomposite-121-moebiusmu	Any[first(is_prime_power_with_data(ZZ(121))), (abs(ZZ(121)) > 1 && !is_prime(abs(ZZ(121)))), moebius_mu(121)]	[true, true, 0]
-list-isprimepower-11-isprime-11-moebiusmu-11	Any[first(is_prime_power_with_data(ZZ(11))), is_prime(ZZ(11)), moebius_mu(11)]	[true, true, -1]
-isprimepower-2-401	first(is_prime_power_with_data(ZZ(2401)))	true
-isprimepower-121	first(is_prime_power_with_data(ZZ(121)))	true
-map-function-divisorsigma-1-1-lt-2-times-1-1		
-1-is-p-0-which-does-not-count	first(is_prime_power_with_data(ZZ(1)))	false
+id	in	out	verdict
+8-2-3	first(is_prime_power_with_data(ZZ(8)))	true	
+12-2-2-cdot-3-has-two-distinct-primes	first(is_prime_power_with_data(ZZ(12)))	false	
+a-prime-is-its-own-first-power	first(is_prime_power_with_data(ZZ(7)))	true	
+isprimepower-6	first(is_prime_power_with_data(ZZ(6)))	false	
+isprime-of-a-negative-prime	is_prime(ZZ(-5))	false	disagree
+listable	Any[first(is_prime_power_with_data(ZZ(2))), first(is_prime_power_with_data(ZZ(4))), first(is_prime_power_with_data(ZZ(6))), first(is_prime_power_with_data(ZZ(9))), first(is_prime_power_with_data(ZZ(10))), first(is_prime_power_with_data(ZZ(16)))]	[true, true, false, true, false, true]	
+large-integers	first(is_prime_power_with_data(ZZ(enumeratio_pow(3, 40))))	true	
+isprimepower-9	first(is_prime_power_with_data(ZZ(9)))	true	
+isprimepower-list-1-2-3-4-5-6-7	Any[first(is_prime_power_with_data(ZZ(1))), first(is_prime_power_with_data(ZZ(2))), first(is_prime_power_with_data(ZZ(3))), first(is_prime_power_with_data(ZZ(4))), first(is_prime_power_with_data(ZZ(5))), first(is_prime_power_with_data(ZZ(6))), first(is_prime_power_with_data(ZZ(7)))]	[false, true, true, true, true, false, true]	
+filter-range-1-100-function-isprimepower-1			
+isprimepower-625	first(is_prime_power_with_data(ZZ(625)))	true	
+isprimepower-53	first(is_prime_power_with_data(ZZ(53)))	true	
+list-isprimepower-27-issquarefree-27	Any[first(is_prime_power_with_data(ZZ(27))), is_squarefree(ZZ(27))]	[true, false]	
+list-isprimepower-3-issquarefree-3	Any[first(is_prime_power_with_data(ZZ(3))), is_squarefree(ZZ(3))]	[true, true]	
+isprimepower-25	first(is_prime_power_with_data(ZZ(25)))	true	
+isprimepower-16-807	first(is_prime_power_with_data(ZZ(16807)))	true	
+list-isprimepower-121-iscomposite-121-moebiusmu	Any[first(is_prime_power_with_data(ZZ(121))), (abs(ZZ(121)) > 1 && !is_prime(abs(ZZ(121)))), moebius_mu(121)]	[true, true, 0]	
+list-isprimepower-11-isprime-11-moebiusmu-11	Any[first(is_prime_power_with_data(ZZ(11))), is_prime(ZZ(11)), moebius_mu(11)]	[true, true, -1]	
+isprimepower-2-401	first(is_prime_power_with_data(ZZ(2401)))	true	
+isprimepower-121	first(is_prime_power_with_data(ZZ(121)))	true	
+map-function-divisorsigma-1-1-lt-2-times-1-1			
+1-is-p-0-which-does-not-count	first(is_prime_power_with_data(ZZ(1)))	false	

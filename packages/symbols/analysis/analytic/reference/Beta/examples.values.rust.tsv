@@ -19,6 +19,7 @@ b-a-1-1-a-for-symbolic-a
 b-2-b-frac-1-b-b-1-not-yet			
 partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the			
 a-nonpositive-integer-argument-is-a-pole-of-the	beta(n(-1), n(2))	panic: statrs: ANotGreaterThanZero	error
+beta-at-two-poles-compares-equal	equal(beta(n(-2), n(-1)), beta(n(0), n(2)))	panic: statrs: ANotGreaterThanZero	error
 beta-1-over-2-1-over-2-times-beta-1-1-over-2	(beta(rational(n(1), n(2)), rational(n(1), n(2))) * beta(n(1), rational(n(1), n(2))))	6.283185307179572	
 beta-1-over-2-1-over-2-times-beta-1-2	(beta(rational(n(1), n(2)), rational(n(1), n(2))) * beta(n(1), n(2)))	1.5707963267948912	
 beta-of-positive-infinity-0-is-indeterminate			

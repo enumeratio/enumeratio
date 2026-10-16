@@ -14,6 +14,8 @@ modulus-zero-collapses-to-the-rational-itself	Qhat((1/3), 0)	1/3
 subtracting-an-integer-from-a-profinite-number	(Qhat(7, 30) - 2)		
 squaring-a-profinite-number	((Qhat(3, 12))^2)		
 dividing-by-an-exact-integer-divisor	(Qhat(4, 12) / 2)		
+numerator-of-an-unreduced-rational	((3/3)).numerator()	1	disagree
+denominator-of-a-negative-unreduced-rational	((-3/3)).denominator()	1	disagree
 crt-glued-from-its-2-adic-and-3-adic-images			
 a-rational-value-and-a-rational-modulus	(Qhat((1/2), (97/5)) + Qhat((1/3), 10))		
 lenstra-s-profinite-fibonacci-numbers	fibonacci(Qhat(3, 10))	TypeError: unable to coerce <class 'adeles.profinite_number.ProfiniteNumbers_with_category.element_class'> to a	error

@@ -19,6 +19,7 @@ b-a-1-1-a-for-symbolic-a	Beta[a, 1]	Beta[a, 1]		B(a,1)	B(a,1)
 b-2-b-frac-1-b-b-1-not-yet	Beta[2, b]	Beta[2, b]		B(2,b)	B(2,b)
 partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the	D[Beta[a, b], a]	Beta[a, b]*(PolyGamma[0, a] - PolyGamma[0, a + b])		\frac{\partial B(a,b)}{\partial a}	(\psi ^{(0)}(a)-\psi ^{(0)}(a+b)) B(a,b)
 a-nonpositive-integer-argument-is-a-pole-of-the	Beta[-1, 2]	ComplexInfinity		B(-1,2)	\text{ComplexInfinity}
+beta-at-two-poles-compares-equal	(Beta[-2, -1] == Beta[0, 2])				
 beta-1-over-2-1-over-2-times-beta-1-1-over-2	Times[Beta[Rational[1, 2], Rational[1, 2]], Beta[1, Rational[1, 2]]]	2*Pi		B\left(\frac{1}{2},\frac{1}{2}\right) B\left(1,\frac{1}{2}\right)	2 \pi
 beta-1-over-2-1-over-2-times-beta-1-2	Times[Beta[Rational[1, 2], Rational[1, 2]], Beta[1, 2]]	Pi/2		B\left(\frac{1}{2},\frac{1}{2}\right) B(1,2)	\frac{\pi }{2}
 beta-of-positive-infinity-0-is-indeterminate	Beta[Infinity, 0]	ComplexInfinity		B(\infty ,0)	\text{ComplexInfinity}

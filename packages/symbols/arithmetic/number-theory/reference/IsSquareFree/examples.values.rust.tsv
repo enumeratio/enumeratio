@@ -4,6 +4,7 @@ issquarefree-4	is_square_free(n(4))	false
 issquarefree-12	is_square_free(n(12))	false	
 every-prime-is-squarefree	is_square_free(n(17))	true	
 issquarefree-20	is_square_free(n(20))	false	
+issquarefree-of-zero	is_square_free(n(0))	panic: zero has no factorization	error
 threads-element-wise-over-a-list	list(vec![is_square_free(n(10)), is_square_free(n(4)), is_square_free(n(12))])	[true, false, false]	
 gaussian-integers-3-2i-is-a-gaussian-prime			
 gaussianintegers-true-2-i-1-i-2			

@@ -206,6 +206,12 @@ test("IsSquareFree: correct (not silently wrong) past compute-engine's native fa
   }
 });
 
+test("IsSquareFree: 0 is divisible by every square, 1 and -1 by none", () => {
+  expect(run(["IsSquareFree", 0])).toBe("False");
+  expect(run(["IsSquareFree", 1])).toBe("True");
+  expect(run(["IsSquareFree", -1])).toBe("True");
+});
+
 test("SquaresR: brute force lattice-point count for small d, n", () => {
   const naive = (d: number, n: number): number => {
     const bound = Math.floor(Math.sqrt(Math.max(n, 0)));

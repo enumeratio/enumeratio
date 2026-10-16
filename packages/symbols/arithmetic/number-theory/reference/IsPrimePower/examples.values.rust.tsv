@@ -1,22 +1,23 @@
-id	in	out
-8-2-3	is_prime_power(n(8))	true
-12-2-2-cdot-3-has-two-distinct-primes	is_prime_power(n(12))	false
-a-prime-is-its-own-first-power	is_prime_power(n(7))	true
-isprimepower-6	is_prime_power(n(6))	false
-listable	list(vec![is_prime_power(n(2)), is_prime_power(n(4)), is_prime_power(n(6)), is_prime_power(n(9)), is_prime_power(n(10)), is_prime_power(n(16))])	[true, true, false, true, false, true]
-large-integers	is_prime_power(power(n(3), n(40)))	true
-isprimepower-9	is_prime_power(n(9))	true
-isprimepower-list-1-2-3-4-5-6-7	list(vec![is_prime_power(n(1)), is_prime_power(n(2)), is_prime_power(n(3)), is_prime_power(n(4)), is_prime_power(n(5)), is_prime_power(n(6)), is_prime_power(n(7))])	[false, true, true, true, true, false, true]
-filter-range-1-100-function-isprimepower-1		
-isprimepower-625	is_prime_power(n(625))	true
-isprimepower-53	is_prime_power(n(53))	true
-list-isprimepower-27-issquarefree-27	list(vec![is_prime_power(n(27)), is_square_free(n(27))])	[true, false]
-list-isprimepower-3-issquarefree-3	list(vec![is_prime_power(n(3)), is_square_free(n(3))])	[true, true]
-isprimepower-25	is_prime_power(n(25))	true
-isprimepower-16-807	is_prime_power(n(16807))	true
-list-isprimepower-121-iscomposite-121-moebiusmu		
-list-isprimepower-11-isprime-11-moebiusmu-11		
-isprimepower-2-401	is_prime_power(n(2401))	true
-isprimepower-121	is_prime_power(n(121))	true
-map-function-divisorsigma-1-1-lt-2-times-1-1		
-1-is-p-0-which-does-not-count	is_prime_power(n(1))	false
+id	in	out	verdict
+8-2-3	is_prime_power(n(8))	true	
+12-2-2-cdot-3-has-two-distinct-primes	is_prime_power(n(12))	false	
+a-prime-is-its-own-first-power	is_prime_power(n(7))	true	
+isprimepower-6	is_prime_power(n(6))	false	
+isprime-of-a-negative-prime	is_prime(n(-5))	panic: a non-negative integer: the crate's parameter is unsigned	error
+listable	list(vec![is_prime_power(n(2)), is_prime_power(n(4)), is_prime_power(n(6)), is_prime_power(n(9)), is_prime_power(n(10)), is_prime_power(n(16))])	[true, true, false, true, false, true]	
+large-integers	is_prime_power(power(n(3), n(40)))	true	
+isprimepower-9	is_prime_power(n(9))	true	
+isprimepower-list-1-2-3-4-5-6-7	list(vec![is_prime_power(n(1)), is_prime_power(n(2)), is_prime_power(n(3)), is_prime_power(n(4)), is_prime_power(n(5)), is_prime_power(n(6)), is_prime_power(n(7))])	[false, true, true, true, true, false, true]	
+filter-range-1-100-function-isprimepower-1			
+isprimepower-625	is_prime_power(n(625))	true	
+isprimepower-53	is_prime_power(n(53))	true	
+list-isprimepower-27-issquarefree-27	list(vec![is_prime_power(n(27)), is_square_free(n(27))])	[true, false]	
+list-isprimepower-3-issquarefree-3	list(vec![is_prime_power(n(3)), is_square_free(n(3))])	[true, true]	
+isprimepower-25	is_prime_power(n(25))	true	
+isprimepower-16-807	is_prime_power(n(16807))	true	
+list-isprimepower-121-iscomposite-121-moebiusmu			
+list-isprimepower-11-isprime-11-moebiusmu-11			
+isprimepower-2-401	is_prime_power(n(2401))	true	
+isprimepower-121	is_prime_power(n(121))	true	
+map-function-divisorsigma-1-1-lt-2-times-1-1			
+1-is-p-0-which-does-not-count	is_prime_power(n(1))	false	
