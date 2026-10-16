@@ -1,0 +1,9 @@
+id	in	out	verdict
+bessely-0-1	(enumeratio_ball(bessel_y, 0, 1))	0.08825696421567695798292676602351516282781752309067554671104384761199978932347601	
+normal-series-bessely-0-x-x-positiveinfinity-2			
+n-bessely-0-1-50	enumeratio_n(enumeratio_ball(bessel_y, 0, 1), 50)	0.08825696421567695798292676602351516282781752309067600000000000000000000000000029	
+list-bessely-0-0-bessely-1-0	Any[enumeratio_ball(bessel_y, 0, 0), enumeratio_ball(bessel_y, 1, 0)]	[(NaN+NaNj), (NaN+NaNj)]	disagree
+n-functionrange-bessely-0-x-x-y			
+n-functionrange-bessely-1-x-x-y			
+d-bessely-n-x-x			
+series-bessely-0-x-x-1-3			

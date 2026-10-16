@@ -1,0 +1,30 @@
+id	in	out	verdict
+g-5-0-1-2-3-12	enumeratio_ball(barnes_g, 5)	12.0	
+g-7-34560	enumeratio_ball(barnes_g, 7)	34560.0	
+the-superfactorials-threaded-over-a-list	Any[enumeratio_ball(barnes_g, 1), enumeratio_ball(barnes_g, 2), enumeratio_ball(barnes_g, 3), enumeratio_ball(barnes_g, 4), enumeratio_ball(barnes_g, 5), enumeratio_ball(barnes_g, 6)]	[1.0, 1.0, 1.0, 2.0, 12.0, 288.0]	
+a-floating-point-argument-evaluates-numerically	enumeratio_ball(barnes_g, 2.5)	0.9475739010838257768841529863534580643764102627243133422402698498576612326326829	
+g-10-prod-k-0-8-k-exact	enumeratio_ball(barnes_g, 10)	5.05658474496e15	
+g-3-0-1-1	enumeratio_ball(barnes_g, 3)	1.0	
+g-frac-12-to-machine-precision	enumeratio_ball(barnes_g, 0.5)	0.6032442812094462061914292245347020798830034203894597653877692041194327856793418	
+g-1-1	enumeratio_ball(barnes_g, 1)	1.0	
+g-2-1	enumeratio_ball(barnes_g, 2)	1.0	
+g-4-2	enumeratio_ball(barnes_g, 4)	2.0	
+g-6-288	enumeratio_ball(barnes_g, 6)	288.0	
+barnesg-of-a-symbol-stays-symbolic			
+n-barnesg-5-over-2	(enumeratio_ball(barnes_g, (5 // 2)))	0.9475739010838257768841529863534580643764102627243133422402698498576612326326829	
+complex-arguments	enumeratio_ball(barnes_g, enumeratio_complex(1.3, 1))	(1.444613935050243310414771437470391405727241780341315813719133451274070648637881-0.2985488252115505133619960194168596686246345514801970824117230408315168649798053j)	
+negative-non-integer-arguments-between-the-zeros	enumeratio_ball(barnes_g, -2.5)	0.0761729796568611111946819385757824539019326201867555365595054233885045185490271	
+threads-elementwise-over-an-array	Any[Any[enumeratio_ball(barnes_g, (1 // 2)), enumeratio_ball(barnes_g, 1)], Any[enumeratio_ball(barnes_g, 1), enumeratio_ball(barnes_g, (1 // 2))]]	[[0.6032442812094462061914292245347020798830034203894597653877692041194327856793418, 1.0], [1.0, 0.6032442812094462061914292245347020798830034203894597653877692041194327856793418]]	
+g-infty-infty	enumeratio_ball(barnes_g, Inf)	non-finite argument	error
+interval-arithmetic-g-is-increasing-on-1-17-1-18			
+uncertainty-propagation-g-2-1-pm-0-01-0-98477-pm			
+to-30-significant-digits-not-yet-the-requested	enumeratio_n(enumeratio_ball(barnes_g, (1 // 2)), 30)	0.6032442812094462061914292245349999999999999999999999999999999999999999999999997	
+image-over-1p17-to-1p18			
+image-over-1-to-3			
+image-over-0p5-to-1p5			
+image-over-2p2-to-2p9			
+image-over-neg-1p9-to-neg-1p1			
+g-vanishes-at-the-nonpositive-integers	enumeratio_ball(barnes_g, 0)	0.0	
+all-of-them	enumeratio_ball(barnes_g, -3)	0.0	
+the-hyperfactorial-h-n-gamma-n-1-n-g-n-1-here	enumeratio_div(enumeratio_pow(enumeratio_ball(gamma, 6), 5), enumeratio_ball(barnes_g, 6))	8.64e7	
+an-exact-non-integer-argument-stays-symbolic	enumeratio_ball(barnes_g, (5 // 2))	0.9475739010838257768841529863534580643764102627243133422402698498576612326326829	

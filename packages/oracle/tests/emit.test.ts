@@ -90,11 +90,11 @@ test("threadArg rebuilds a List's nesting as Julia list literals too", () => {
   expect(emit(["Binomial", ["List", 2, 3, 5, 7, 11], 3], "julia")).toEqual({
     ok: true,
     source:
-      "[binomial(ZZ(2), ZZ(3)), binomial(ZZ(3), ZZ(3)), binomial(ZZ(5), ZZ(3)), binomial(ZZ(7), ZZ(3)), binomial(ZZ(11), ZZ(3))]",
+      "Any[binomial(ZZ(2), ZZ(3)), binomial(ZZ(3), ZZ(3)), binomial(ZZ(5), ZZ(3)), binomial(ZZ(7), ZZ(3)), binomial(ZZ(11), ZZ(3))]",
   });
   expect(emit(["GCD", 12, ["List", 3, 7, 40]], "julia")).toEqual({
     ok: true,
-    source: "[gcd(ZZ(12), ZZ(3)), gcd(ZZ(12), ZZ(7)), gcd(ZZ(12), ZZ(40))]",
+    source: "Any[gcd(ZZ(12), ZZ(3)), gcd(ZZ(12), ZZ(7)), gcd(ZZ(12), ZZ(40))]",
   });
 });
 
@@ -108,9 +108,8 @@ test("a Power base is parenthesised, so a negative literal doesn't leak past una
   expect(emit(["Power", 2, 10], "mpmath")).toEqual({ ok: true, source: "((2)**10)" });
   // S() keeps a negative exponent exact in SymPy rather than a float.
   expect(emit(["Power", 2, -1], "sympy")).toEqual({ ok: true, source: "(S(2)**-1)" });
-  // Julia/Oscar and Lean were never affected: `big($1)` and the negative-literal special
-  // case already parenthesise the base.
-  expect(emit(["Power", -1, 2], "julia")).toEqual({ ok: true, source: "(big(-1)^2)" });
+  // Julia passes the base as a call argument; Lean's negative-literal special case parenthesises it.
+  expect(emit(["Power", -1, 2], "julia")).toEqual({ ok: true, source: "enumeratio_pow(-1, 2)" });
   expect(emit(["Power", -1, 2], "mathlib4")).toEqual({ ok: true, source: "((-1) ^ 2)" });
 });
 
@@ -203,6 +202,27 @@ test("inside an mpmath N(x, d) past a double's digits every decimal is read from
   });
   expect(emit(["N", ["Sin", 0.1], 10], "mpmath")).toEqual({ ok: true, source: "enumeratio_n(lambda: (sin(0.1)), 10)" });
   expect(emit(["Sin", 0.1], "mpmath")).toEqual({ ok: true, source: "sin(0.1)" });
+});
+
+test("Julia reads a constant as a ball, a list as Any, and a decimal past a double from its text", () => {
+  expect(emit(["Sin", ["Divide", "Pi", 6]], "julia")).toEqual({
+    ok: true,
+    source: "enumeratio_ball(sin, enumeratio_div(const_pi(RR), 6))",
+  });
+  // A mixed list keeps each element's type, where `[1, true]` would promote.
+  expect(emit(["List", 1, "True"], "julia")).toEqual({ ok: true, source: "Any[1, true]" });
+  expect(emit(["Exp", { num: "1.0e1000" }], "julia")).toEqual({
+    ok: true,
+    source: 'enumeratio_ball(exp, parse(BigFloat, "1.0e1000"))',
+  });
+  expect(emit(["Exp", { num: "1.5" }], "julia")).toEqual({ ok: true, source: "enumeratio_ball(exp, 1.5)" });
+  // An infinity is Julia's own, which the ball helpers decline rather than guess at.
+  expect(emit(["Gamma", "PositiveInfinity"], "julia")).toEqual({ ok: true, source: "enumeratio_ball(gamma, Inf)" });
+  // A threaded special function builds a list of ball calls.
+  expect(emit(["Gamma", ["List", 1, 2]], "julia")).toEqual({
+    ok: true,
+    source: "Any[enumeratio_ball(gamma, 1), enumeratio_ball(gamma, 2)]",
+  });
 });
 
 test("a binding's threadArgOnly threads for its own system alone", () => {

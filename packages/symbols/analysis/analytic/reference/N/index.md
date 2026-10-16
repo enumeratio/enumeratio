@@ -69,9 +69,12 @@ bindings:
     note: "The digit count is dropped: lanes compare numbers to a relative tolerance, so the full-precision value is the better witness."
   - origin: mapped
     form: julia
-    template: ($1)
+    template: enumeratio_n($1, $2)
     arity: 2
-    note: "The digit count is dropped: lanes compare numbers to a relative tolerance, so the full-precision value is the better witness."
+    note: N(x, d) rounds to d significant digits, ties to even, as Wolfram does.
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
   - origin: mapped
     form: rust
     template: nf($1)

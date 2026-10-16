@@ -50,6 +50,14 @@ bindings:
     template: abs($1)
     arity: 1
     threadArg: 1
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(abs, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - For a real number, $|x| = x$ if $x \ge 0$ and $|x| = -x$ if $x < 0$.

@@ -4,31 +4,31 @@ stirlings1-4-2	Combinatorics.stirlings1(big(4), 2)	11
 s-n-n-is-always-1	Combinatorics.stirlings1(big(3), 3)	1	
 s-n-0-is-0-for-n-0	Combinatorics.stirlings1(big(5), 0)	0	
 stirlings1-20-10	Combinatorics.stirlings1(big(20), 10)	381922055502195	
-threads-element-wise-over-a-list-as-wolfram-s	[Combinatorics.stirlings1(big(2), 2), Combinatorics.stirlings1(big(4), 2), Combinatorics.stirlings1(big(6), 2)]	[1, 11, 274]	
+threads-element-wise-over-a-list-as-wolfram-s	Any[Combinatorics.stirlings1(big(2), 2), Combinatorics.stirlings1(big(4), 2), Combinatorics.stirlings1(big(6), 2)]	[1, 11, 274]	
 exact-for-large-n	Combinatorics.stirlings1(big(50), 2)	2724619372591264761651711494187624530726005154239846809600000000	
-a-mid-sized-n-and-k-past-the-fast-paths	Combinatorics.stirlings1(big(40), 14)	julia: killed (memory, peak 3088 MB)	error
+a-mid-sized-n-and-k-past-the-fast-paths	Combinatorics.stirlings1(big(40), 14)	TimeoutError: over 60 s	error
 the-number-of-permutations-of-5-elements-with	Combinatorics.stirlings1(big(5), 3)	35	
 abs-stirlings1-n-range-1-n			
 the-unsigned-values-in-a-row-sum-to-n			
 the-signed-row-sum-vanishes-for-n-ge-2			
-s-n-n-1-binom-n-2	(Combinatorics.stirlings1(big(6), 5) == (-(binomial(ZZ(6), ZZ(2)))))	false	disagree
+s-n-n-1-binom-n-2	enumeratio_equal(Combinatorics.stirlings1(big(6), 5), (-(binomial(ZZ(6), ZZ(2)))))	false	disagree
 the-generating-property-sum-k-s-n-k-x-k-x-x-1-x			
-n-stirlings1-100-11	(Combinatorics.stirlings1(big(100), 11))		
-stirlings1-0-1	Combinatorics.stirlings1(big(0), 1)		
-stirlings1-1-0	Combinatorics.stirlings1(big(1), 0)		
-stirlings1-1-1	Combinatorics.stirlings1(big(1), 1)		
-stirlings1-1-2	Combinatorics.stirlings1(big(1), 2)		
-stirlings1-2-0	Combinatorics.stirlings1(big(2), 0)		
-stirlings1-2-1	Combinatorics.stirlings1(big(2), 1)		
-stirlings1-2-2	Combinatorics.stirlings1(big(2), 2)		
-stirlings1-2-3	Combinatorics.stirlings1(big(2), 3)		
-stirlings1-3-0	Combinatorics.stirlings1(big(3), 0)		
-stirlings1-3-1	Combinatorics.stirlings1(big(3), 1)		
-stirlings1-3-2	Combinatorics.stirlings1(big(3), 2)		
-stirlings1-3-4	Combinatorics.stirlings1(big(3), 4)		
-stirlings1-4-0	Combinatorics.stirlings1(big(4), 0)		
-stirlings1-4-1	Combinatorics.stirlings1(big(4), 1)		
-stirlings1-4-3	Combinatorics.stirlings1(big(4), 3)		
+n-stirlings1-100-11	(Combinatorics.stirlings1(big(100), 11))	TimeoutError: over 60 s	error
+stirlings1-0-1	Combinatorics.stirlings1(big(0), 1)	0	
+stirlings1-1-0	Combinatorics.stirlings1(big(1), 0)	0	
+stirlings1-1-1	Combinatorics.stirlings1(big(1), 1)	1	
+stirlings1-1-2	Combinatorics.stirlings1(big(1), 2)	0	
+stirlings1-2-0	Combinatorics.stirlings1(big(2), 0)	0	
+stirlings1-2-1	Combinatorics.stirlings1(big(2), 1)	1	disagree
+stirlings1-2-2	Combinatorics.stirlings1(big(2), 2)	1	
+stirlings1-2-3	Combinatorics.stirlings1(big(2), 3)	0	
+stirlings1-3-0	Combinatorics.stirlings1(big(3), 0)	0	
+stirlings1-3-1	Combinatorics.stirlings1(big(3), 1)	2	
+stirlings1-3-2	Combinatorics.stirlings1(big(3), 2)	3	disagree
+stirlings1-3-4	Combinatorics.stirlings1(big(3), 4)	0	
+stirlings1-4-0	Combinatorics.stirlings1(big(4), 0)	0	
+stirlings1-4-1	Combinatorics.stirlings1(big(4), 1)	6	disagree
+stirlings1-4-3	Combinatorics.stirlings1(big(4), 3)	6	disagree
 the-empty-case-s-0-0-1-by-convention-distinct	Combinatorics.stirlings1(big(0), 0)	1	
 k-n-is-0	Combinatorics.stirlings1(big(5), 6)	0	
 a-negative-k-stays-symbolic	Combinatorics.stirlings1(big(4), -1)	0	inconclusive

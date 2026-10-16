@@ -1,0 +1,17 @@
+id	in	out
+series-elliptice-m-m-0-6		
+normal-series-elliptice-x-x-positiveinfinity-2		
+n-elliptice-1-over-3-50	enumeratio_n(enumeratio_ball(elliptic_e, (1 // 3)), 50)	1.430315257172219723922528414532283730294450907408900000000000000000000000000001
+elliptice-list-list-1-0-list-0-1	Any[Any[enumeratio_ball(elliptic_e, 1), enumeratio_ball(elliptic_e, 0)], Any[enumeratio_ball(elliptic_e, 0), enumeratio_ball(elliptic_e, 1)]]	[[1.0, 1.570796326794896619231321691639751442098584699687552910487472296153908203143099], [1.570796326794896619231321691639751442098584699687552910487472296153908203143099, 1.0]]
+matrixfunction-elliptice-list-list-1-0-list-0-1		
+list-elliptice-0-elliptice-1	Any[enumeratio_ball(elliptic_e, 0), enumeratio_ball(elliptic_e, 1)]	[1.570796326794896619231321691639751442098584699687552910487472296153908203143099, 1.0]
+list-elliptice-positiveinfinity-elliptice		
+n-elliptice-2-over-3-2-50		
+series-elliptice-m-m-0-3		
+series-elliptice-m-m-1-1		
+elliptice-0-1		
+elliptice-0-0		
+elliptice-1	enumeratio_ball(elliptic_e, 1)	1.0
+elliptice-0	enumeratio_ball(elliptic_e, 0)	1.570796326794896619231321691639751442098584699687552910487472296153908203143099
+elliptice-1-plus-sqrt-2-minus-sqrt-2-times-1	enumeratio_ball(elliptic_e, enumeratio_pow((1 + enumeratio_ball(sqrt, 2) + (-(enumeratio_ball(sqrt, (2 * (1 + enumeratio_ball(sqrt, 2))))))), 4))	1.569927685644860379007891516855697454762441527792331361913437980721035390594007
+elliptice-1-minus-1-plus-sqrt-2-minus-sqrt-2	enumeratio_ball(elliptic_e, (1 + (-(enumeratio_pow((1 + enumeratio_ball(sqrt, 2) + (-(enumeratio_ball(sqrt, (2 * (1 + enumeratio_ball(sqrt, 2))))))), 4)))))	1.004362669257050187923869670651945426831344134387088450246437937964560545910198

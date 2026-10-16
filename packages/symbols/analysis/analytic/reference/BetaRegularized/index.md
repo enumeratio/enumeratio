@@ -30,6 +30,17 @@ bindings:
       version: 1.14.0
       on: 2026-10-14
     note: SymPy's betainc_regularized(a, b, x1, x2) is the integral between two limits, so the lower limit is 0 and the arguments reorder.
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), $1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Normalized against [[Beta]]: $I_x(a, b)$ is the incomplete beta integral at x, divided by $B(a, b)$, so $I_0(a,b)=0$ and $I_1(a,b)=1$.

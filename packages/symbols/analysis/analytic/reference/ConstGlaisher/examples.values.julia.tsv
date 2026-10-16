@@ -1,0 +1,5 @@
+id	in	out
+const-glaisher-numeric-value	(const_glaisher(RR))	1.282427129100622636875342568869791727767688927325001192063740021740406308858818
+n-constglaisher-50	enumeratio_n(const_glaisher(RR), 50)	1.282427129100622636875342568869791727767688927325000000000000000000000000000007
+round-constglaisher-pow-100	enumeratio_round(enumeratio_pow(const_glaisher(RR), 100))	63572555914
+1-lt-constglaisher-lt-2		

@@ -1,0 +1,13 @@
+id	in	out
+2f1-at-0	enumeratio_ball(hypergeometric_2f1, 1, 1, 2, 0)	1.0
+2f1-1-1-2-half	enumeratio_n(enumeratio_ball(hypergeometric_2f1, 1, 1, 2, (1 // 2)), 20)	1.386294361119890618799999999999999999999999999999999999999999999999999999999992
+series-hypergeometric2f1-a-b-c-x-x-0-3		
+normal-series-hypergeometric2f1-2-3-4-x-x		
+fullsimplify-series-hypergeometric2f1-2-3-4-x-x		
+n-hypergeometric2f1-1-over-2-1-over-3-2-1-50	enumeratio_n(enumeratio_ball(hypergeometric_2f1, (1 // 2), (1 // 3), 2, 1), 50)	1.159595266963928365769992051570020881945165263439799999999999999999999999999998
+hypergeometric2f1-1-over-2-1-1-list-list-1-over	Any[Any[enumeratio_ball(hypergeometric_2f1, (1 // 2), 1, 1, (1 // 2)), enumeratio_ball(hypergeometric_2f1, (1 // 2), 1, 1, 0)], Any[enumeratio_ball(hypergeometric_2f1, (1 // 2), 1, 1, 0), enumeratio_ball(hypergeometric_2f1, (1 // 2), 1, 1, (1 // 2))]]	[[1.414213562373095048801688724209698078569671875376948073176679737990732478462102, 1.0], [1.0, 1.414213562373095048801688724209698078569671875376948073176679737990732478462102]]
+matrixfunction-function-hypergeometric2f1-1-over		
+normal-series-hypergeometric2f1-1-1-2-x-x		
+normal-series-hypergeometric2f1-2-2-5-x-x		
+normal-series-hypergeometric2f1-3-1-2-x-x		
+normal-series-hypergeometric2f1-2-3-4-x-x-2		

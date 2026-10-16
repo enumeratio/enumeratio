@@ -43,6 +43,16 @@ bindings:
     form: sage
     template: polylog($1, $2)
     arity: 2
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(polylog, $1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 The polylogarithm $\operatorname{Li}_s(z) = \sum_{n=1}^{\infty} z^n/n^s$ (DLMF 25.12.10) generalizes $-\ln(1-z)$ (its $s = 1$ case) to arbitrary order $s$. It is the $a = 1$ slice of the Lerch transcendent, $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$, and reduces to [[Zeta]] on its $z = 1$ edge.

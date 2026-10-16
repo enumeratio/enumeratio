@@ -99,6 +99,35 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(gamma, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(gamma, $1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball((a, z0, z1) -> gamma(a, z0) - gamma(a, z1), $1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 The gamma function $\Gamma(z) = \int_0^\infty t^{z-1} e^{-t}\,dt$ for $\operatorname{Re}(z) > 0$ (DLMF 5.2.1), continued analytically elsewhere, is the standard extension of the factorial to real and complex arguments. The two- and three-argument forms below split that same integral at a finite endpoint rather than $\infty$.

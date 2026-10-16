@@ -36,6 +36,16 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: kronecker_symbol is SymPy's extension of the Jacobi symbol to every integer n.
+  - origin: mapped
+    form: julia
+    template: kronecker_symbol(ZZ($1), ZZ($2))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Agrees with [[JacobiSymbol]] wherever $n$ is odd and positive, and with [[LegendreSymbol]] where $n$ is also prime — this is the head above both.

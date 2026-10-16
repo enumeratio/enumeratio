@@ -1,0 +1,40 @@
+id	in	out	verdict
+arccos-1	enumeratio_ball(_acos, 1)	0.0	
+arccos-1-over-2	enumeratio_ball(_acos, (1 // 2))	1.04719755119659774615421446109316762806572313312503527365831486410260546876206	
+arccos-0	enumeratio_ball(_acos, 0)	1.570796326794896619231321691639751442098584699687552910487472296153908203143099	
+the-top-of-the-principal-range	enumeratio_ball(_acos, -1)	3.141592653589793238462643383279502884197169399375105820974944592307816406286198	
+a-machine-precision-argument-evaluates	enumeratio_ball(_acos, 0.4)	1.159279480727408575619531181510028060291426974034425710518146067424473730843269	
+outside-1-1-the-value-is-purely-imaginary	enumeratio_ball(_acos, 1.5)	(0.0+0.9624236501192068949955178268487368462703686687713210393220363376803277352164344j)	
+arbitrary-precision-via-n	(enumeratio_ball(_acos, (1 // 3)))	1.230959417340774682134929178247987375710340009355094839055548333663992314478246	
+evaluates-at-a-complex-argument	enumeratio_ball(_acos, enumeratio_complex(2.5, 1))	(0.4061728165055115565683989925297080617010850536773606989143029095315979083542262-1.658693298856432749767393419814603821906124138815490694653640489974241577097961j)	
+threads-element-wise-over-a-matrix	Any[Any[enumeratio_ball(_acos, 1), enumeratio_ball(_acos, enumeratio_div(1, enumeratio_ball(sqrt, 2)))], Any[enumeratio_ball(_acos, 0), enumeratio_ball(_acos, enumeratio_div(1, enumeratio_ball(sqrt, 2)))]]	[[0.0, 0.7853981633974483096156608458198757210492923498437764552437361480769541015715495], [1.570796326794896619231321691639751442098584699687552910487472296153908203143099, 0.7853981633974483096156608458198757210492923498437764552437361480769541015715495]]	
+exact-inverse-of-a-special-value	enumeratio_ball(_acos, enumeratio_div(enumeratio_ball(sqrt, 3), 2))	0.5235987755982988730771072305465838140328615665625176368291574320513027343810388	
+arccos-neg-sqrt-2-over-2	enumeratio_ball(_acos, (-(enumeratio_div(enumeratio_ball(sqrt, 2), 2))))	2.356194490192344928846982537459627163147877049531329365731208444230862304714631	
+recognizes-cos-pi-5-frac-1-sqrt-5-4	enumeratio_ball(_acos, enumeratio_div((1 + enumeratio_ball(sqrt, 5)), 4))	0.62831853071795864769252867665590057683943387987502116419498891846156328125725	
+interval-arithmetic-decreasing-so-arccos-frac-13			
+uncertainty-propagation-arccos-0-9-pm-0-1-approx			
+derivative-frac-1-sqrt-1-x-2			
+antiderivative			
+not-simply-4-4-is-outside-the-principal-range-0	enumeratio_ball(_acos, enumeratio_ball(cos, 4))	2.283185307179586476925286766559005768394338798750211641949889184615632812572396	
+arccos-infinity-is-a-directed-infinity-along-the	enumeratio_ball(_acos, Inf)	non-finite argument	error
+arccos-infinity-is-the-opposite-directed	enumeratio_ball(_acos, (-Inf))	non-finite argument	error
+n-arccos-1-over-3-50	enumeratio_n(enumeratio_ball(_acos, (1 // 3)), 50)	1.230959417340774682134929178247987375710340009355099999999999999999999999999993	
+integrate-arccos-x-x-neg-1-1			
+outside-1-1-reduces-to-the-exact-closed-form	enumeratio_ball(_acos, 2)	(0.0+1.316957896924816708625046347307968444026981971467516479768472256920460185416428j)	
+arccos-neg-2	enumeratio_ball(_acos, -2)	(3.141592653589793238462643383279502884197169399375105820974944592307816406286198-1.316957896924816708625046347307968444026981971467516479768472256920460185416428j)	
+cos-arccos-x-x-on-the-principal-branch	enumeratio_equal(enumeratio_ball(cos, enumeratio_ball(_acos, (1 // 2))), (1 // 2))	true	
+reflection-arccos-x-pi-arccos-x			
+arccos-sqrt-2-over-4-times-neg-1-plus-sqrt-3	enumeratio_ball(_acos, (enumeratio_div(enumeratio_ball(sqrt, 2), 4) * (-1 + enumeratio_ball(sqrt, 3))))	1.308996938995747182692768076366459535082153916406294092072893580128256835952571	
+arccos-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	enumeratio_ball(_acos, ((-(enumeratio_div(enumeratio_ball(sqrt, 2), 4))) * (-1 + enumeratio_ball(sqrt, 3))))	1.83259571459404605576987530691304334911501548296881172890205101217955957033361	
+arccos-1-over-4-times-neg-1-plus-sqrt-5	enumeratio_ball(_acos, ((1 // 4) * (-1 + enumeratio_ball(sqrt, 5))))	1.256637061435917295385057353311801153678867759750042328389977836923126562514483	
+arccos-1-over-4-times-1-minus-sqrt-5	enumeratio_ball(_acos, ((1 // 4) * (1 + (-(enumeratio_ball(sqrt, 5))))))	1.884955592153875943077586029967701730518301639625063492584966755384689843771715	
+arccos-1-over-2-times-sqrt-2-minus-sqrt-2	enumeratio_ball(_acos, ((1 // 2) * enumeratio_ball(sqrt, (2 + (-(enumeratio_ball(sqrt, 2)))))))	1.178097245096172464423491268729813581573938524765664682865604222115431152357316	
+arccos-neg-1-over-2-times-sqrt-2-minus-sqrt-2	enumeratio_ball(_acos, ((-1 // 2) * enumeratio_ball(sqrt, (2 + (-(enumeratio_ball(sqrt, 2)))))))	1.963495408493620774039152114549689302623230874609441138109340370192385253928865	
+arccos-neg-1-over-2	enumeratio_ball(_acos, (-1 // 2))	2.094395102393195492308428922186335256131446266250070547316629728205210937524121	
+arccos-1-over-2-times-sqrt-1-over-2-times-5	enumeratio_ball(_acos, ((1 // 2) * enumeratio_ball(sqrt, ((1 // 2) * (5 + (-(enumeratio_ball(sqrt, 5))))))))	0.9424777960769379715387930149838508652591508198125317462924833776923449218858663	
+arccos-neg-1-over-2-times-sqrt-1-over-2-times-5	enumeratio_ball(_acos, ((-1 // 2) * enumeratio_ball(sqrt, ((1 // 2) * (5 + (-(enumeratio_ball(sqrt, 5))))))))	2.199114857512855266923850368295652018938018579562574074682461214615471484400332	
+arccos-sqrt-2-over-2	enumeratio_ball(_acos, enumeratio_div(enumeratio_ball(sqrt, 2), 2))	0.7853981633974483096156608458198757210492923498437764552437361480769541015715495	
+arccos-1-over-4-times-neg-1-minus-sqrt-5	enumeratio_ball(_acos, ((1 // 4) * (-1 + (-(enumeratio_ball(sqrt, 5))))))	2.513274122871834590770114706623602307357735519500084656779955673846253125028931	
+arccos-neg-sqrt-3-over-2	enumeratio_ball(_acos, (-(enumeratio_div(enumeratio_ball(sqrt, 3), 2))))	2.617993877991494365385536152732919070164307832812588184145787160256513671905142	
+arccos-1-over-2-times-sqrt-2-plus-sqrt-2	enumeratio_ball(_acos, ((1 // 2) * enumeratio_ball(sqrt, (2 + enumeratio_ball(sqrt, 2)))))	0.3926990816987241548078304229099378605246461749218882276218680740384770507858007	
+arccos-complexinfinity-is-complexinfinity			

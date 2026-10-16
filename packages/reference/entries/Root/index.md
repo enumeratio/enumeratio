@@ -26,6 +26,16 @@ bindings:
       version: 1.3.0
       on: 2026-10-15
     note: An odd root of a negative real is the real one, as ours; mpmath's root is the principal root.
+  - origin: mapped
+    form: julia
+    template: enumeratio_root($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - The nth root: $\mathrm{Root}(x, n) = x^{1/n}$. See [[Sqrt]] for the special case $n = 2$.

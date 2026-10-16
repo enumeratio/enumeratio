@@ -1,0 +1,26 @@
+id	in	out	verdict
+the-cube-root-of-a-perfect-cube	enumeratio_cbrt(8)	1.999999999999999999999999999999999999999999999999999999999999999999999999999983	
+the-real-root-of-a-negative-number-not-a-complex	enumeratio_cbrt(-27)	-2.999999999999999999999999999999999999999999999999999999999999999999999999999931	
+at-a-non-perfect-cube-n-forces-the-numeric	(enumeratio_cbrt(2))	1.259921049894873164767210607278228350570251464701507980081975112155299676513956	
+series-cuberoot-x-x-neg-1-5			
+threads-element-wise-over-a-list	Any[enumeratio_cbrt(-8), enumeratio_cbrt(27)]	[-1.999999999999999999999999999999999999999999999999999999999999999999999999999983, 2.999999999999999999999999999999999999999999999999999999999999999999999999999931]	
+cuberoot-128	enumeratio_cbrt(128)	5.039684199579492659068842429112913402281005858806031920327900448621198706055618	
+n-cuberoot-18-100	enumeratio_n(enumeratio_cbrt(18), 100)	2.620741394208896607141661280441996270239427645723631725102773805728699819196002	
+cuberoot-list-list-1-over-2-neg-1-list-neg-5	Any[Any[enumeratio_cbrt((1 // 2)), enumeratio_cbrt(-1)], Any[enumeratio_cbrt((-5 // 3)), enumeratio_cbrt((1 // 2))]]	[[0.793700525984099737375852819636154130195746663949926504904142880912608252812103, -1.0], [-1.185631101496687602002051540746303861659362304833145542088869166337001236019592, 0.793700525984099737375852819636154130195746663949926504904142880912608252812103]]	
+matrixfunction-cuberoot-list-list-1-over-2-neg-1			
+cuberoot-0	enumeratio_cbrt(0)	0.0	
+cuberoot-positiveinfinity	enumeratio_cbrt(Inf)	non-finite argument	error
+cuberoot-negativeinfinity	enumeratio_cbrt((-Inf))	non-finite argument	error
+cuberoot-x-eq-surd-x-3			
+fullsimplify-d-integrate-cuberoot-x-x-nothing			
+fullsimplify-integrate-sin-x-times-cuberoot-x-x			
+d-cuberoot-x-x			
+solve-cuberoot-x-eq-3-times-2-pow-neg-1-x			
+fullsimplify-d-cuberoot-x-list-x-k			
+seriescoefficient-cuberoot-x-list-x-1-n			
+fullsimplify-fourierseries-cuberoot-x-x-1			
+fullsimplify-integrate-cuberoot-x-times			
+series-cuberoot-x-x-1-4			
+fullsimplify-series-cuberoot-x-x-x0-2			
+the-same-as-root-with-index-3	enumeratio_equal(enumeratio_cbrt(-64), enumeratio_root(-64, 3))	true	
+cuberoot-neg-8	enumeratio_cbrt(-8)	-1.999999999999999999999999999999999999999999999999999999999999999999999999999983	

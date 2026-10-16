@@ -24,6 +24,16 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-14
+  - origin: mapped
+    form: julia
+    template: (gcd(ZZ($1), ZZ($2)) == 1)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Pairwise, not collectively: $\gcd$ of the whole set being 1 is not enough — every pair must itself be coprime.

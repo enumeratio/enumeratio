@@ -1,2 +1,2 @@
-id	in
-rows	[[1, 2, 4], [3, 5]]
+id	in	out
+rows	Any[Any[1, 2, 4], Any[3, 5]]	[[1, 2, 4], [3, 5]]

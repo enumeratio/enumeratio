@@ -41,6 +41,17 @@ bindings:
     template: lerchphi($1, $2, $3)
     arity: 3
     note: For a + k < 0, Wolfram sums ((a+k)²)^(−s/2), the generalized-zeta convention; mpmath, SymPy and ours take (a+k)^(−s), principal.
+  - origin: mapped
+    form: julia
+    template: enumeratio_lerch($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 seeAlso:
   - HurwitzZeta
   - Zeta

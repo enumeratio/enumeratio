@@ -71,6 +71,39 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), $1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(_betainc, $1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball((z1, z2, a, b) -> _betainc(z2, a, b) - _betainc(z1, a, b), $1, $2, $3, $4)
+    arity: 4
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+      - 4
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Defined via [[Gamma]]: $B(a, b) = \dfrac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}$.

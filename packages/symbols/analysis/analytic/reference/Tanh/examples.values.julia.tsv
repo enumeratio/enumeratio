@@ -1,0 +1,39 @@
+id	in	out	verdict
+n-forces-the-numeric-result-that-plain	(enumeratio_ball(tanh, 0))	0.0	
+n-tanh-1	(enumeratio_ball(tanh, 1))	0.7615941559557648881194582826047935904127685972579365515968105001219532445766371	
+stays-symbolic-even-at-0-same-as-sinh-and-cosh	enumeratio_ball(tanh, 0)	0.0	
+a-float-argument-evaluates-directly-no-n-needed	enumeratio_ball(tanh, 2.2)	0.975743130031451528927557962423336221129388258232464974775564244950014611320267	
+series-tanh-x-x-0-10			
+series-tanh-x-x-1-over-2-times-i-times-pi-3			
+arbitrary-precision-via-n	(enumeratio_ball(tanh, (11 // 5)))	0.9757431300314515204143066680301146527813050340579887493150816739173344072137137	
+evaluates-at-a-complex-argument	enumeratio_ball(tanh, enumeratio_complex(2.5, 1))	(1.005548011895059983672932904319519725101743084960169346003924515180840715587515+0.01232213825582835354096963930861708995795799180031536934845749716777775580084546j)	
+interval-arithmetic-tanh-is-increasing-so-tanh-0			
+uncertainty-propagation-tanh-2-sqrt-3-pm-0-1			
+the-horizontal-asymptote-at-infty	enumeratio_ball(tanh, Inf)	non-finite argument	error
+tanh-i-pi-4-i-tan-pi-4-i	enumeratio_ball(tanh, (onei(CC) * enumeratio_div(const_pi(RR), 4)))	(0.0+0.9999999999999999999999999999999999999999999999999999999999999999999999999999914j)	
+oddness-pulls-the-sign-out-of-a-symbolic			
+tanh-artanh-x-x-for-every-x			
+tanh-artanh-2-2-past-the-real-domain	enumeratio_ball(tanh, enumeratio_ball(_atanh, 2))	(1.999999999999999999999999999999999999999999999999999999999999999999999999999983+1.64537616146902811499076012863970857437929461596329011051153211882951662337111e-77j)	
+derivative-sech-2-x			
+antiderivative-ln-cosh-x			
+tanh-has-no-limit-at-complex-infinity-undefined			
+to-30-significant-digits-every-one-correctly	enumeratio_n(enumeratio_ball(tanh, 1), 30)	0.7615941559557648881194582826049999999999999999999999999999999999999999999999972	
+n-tanh-11-over-5-50	enumeratio_n(enumeratio_ball(tanh, (11 // 5)), 50)	0.9757431300314515204143066680301146527813050340579900000000000000000000000000029	
+tanh-list-list-1-over-3-times-i-times-pi-neg-1	Any[Any[enumeratio_ball(tanh, (enumeratio_complex(0, (1 // 3)) * const_pi(RR))), enumeratio_ball(tanh, (enumeratio_complex(0, (-1 // 3)) * const_pi(RR)))], Any[enumeratio_ball(tanh, 0), enumeratio_ball(tanh, (enumeratio_complex(0, (-1 // 6)) * const_pi(RR)))]]	[[(0.0+1.732050807568877293527446341505872366942805253810380628055806979451933016908694j), (0.0-1.732050807568877293527446341505872366942805253810380628055806979451933016908694j)], [0.0, (0.0-0.5773502691896257645091487805019574556476017512701268760186023264839776723029153j)]]	
+tanh-1-over-5-times-i-times-pi	enumeratio_ball(tanh, (enumeratio_complex(0, (1 // 5)) * const_pi(RR)))	(0.0+0.7265425280053608858954667574806187496160923929652084627500663273457493918456659j)	
+tanh-1-over-24-times-i-times-pi	enumeratio_ball(tanh, (enumeratio_complex(0, (1 // 24)) * const_pi(RR)))	(0.0+0.1316524975873958534715264574097171035928141022232375735535653257897598390106184j)	
+matrixfunction-function-tanh-1-1-list-list-1			
+functionmeromorphic-tanh-x-x			
+tanh-x-frac-sinh-x-cosh-x	enumeratio_equal(enumeratio_ball(tanh, 1), enumeratio_div(enumeratio_ball(sinh, 1), enumeratio_ball(cosh, 1)))	true	
+in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x			
+tanh-1-over-12-times-i-times-pi	enumeratio_ball(tanh, (enumeratio_complex(0, (1 // 12)) * const_pi(RR)))	(0.0+0.2679491924311227064725536584941276330571947461896193719441930205480669830911895j)	
+tanh-1-over-10-times-i-times-pi	enumeratio_ball(tanh, (enumeratio_complex(0, (1 // 10)) * const_pi(RR)))	(0.0+0.3249196962329063261558714122151344649549034715214751003078047191366729009607365j)	
+tanh-1-over-9-times-i-times-pi	enumeratio_ball(tanh, (enumeratio_complex(0, (1 // 9)) * const_pi(RR)))	(0.0+0.3639702342662023613510478827768340438904717837537381141956129887130739621004805j)	
+tanh-1-over-8-times-i-times-pi	enumeratio_ball(tanh, (enumeratio_complex(0, (1 // 8)) * const_pi(RR)))	(0.0+0.414213562373095048801688724209698078569671875376948073176679737990732478462102j)	
+tanh-1-over-7-times-i-times-pi	enumeratio_ball(tanh, (enumeratio_complex(0, (1 // 7)) * const_pi(RR)))	(0.0+0.4815746188075286443321623530569705752190788917522999355542053729792981033054547j)	
+tanh-1-over-6-times-i-times-pi	enumeratio_ball(tanh, (enumeratio_complex(0, (1 // 6)) * const_pi(RR)))	(0.0+0.5773502691896257645091487805019574556476017512701268760186023264839776723029153j)	
+tanh-2-over-9-times-i-times-pi	enumeratio_ball(tanh, (enumeratio_complex(0, (2 // 9)) * const_pi(RR)))	(0.0+0.8390996311772800117631272981231813646874342830123465332441020392325183280550095j)	
+n-1-plus-tanh-1-over-2-pow-2-times-tanh-1	(((1 + enumeratio_pow(enumeratio_ball(tanh, (1 // 2)), 2)) * enumeratio_ball(tanh, 1)))	0.9242343145200195170046369672873450974605785606602260771054636316761618122807965	
+n-tanh-1-over-2-plus-1-over-2-times-i-times-pi	(enumeratio_ball(tanh, ((1 // 2) + (enumeratio_complex(0, (1 // 2)) * const_pi(RR)))))	(2.163953413738652848770004010218023117093738602150792272533574119296087634783314+2.019805845871347949926321219541212467189815714515340474671706758894525099084034e-77j)	
+n-1-plus-tanh-2-pow-2-times-tanh-4	(((1 + enumeratio_pow(enumeratio_ball(tanh, 2), 2)) * enumeratio_ball(tanh, 4)))	1.928055160151633767892827448201846300510059952481869552096526434826215892635174	
+n-tanh-2-plus-1-over-2-times-i-times-pi	(enumeratio_ball(tanh, (2 + (enumeratio_complex(0, (1 // 2)) * const_pi(RR)))))	(1.037314720727548095877809764767820711662391269249194603569981733844518757519254+4.169483552227235082900076956107623565244764553058530302385968834797076729779189e-79j)	

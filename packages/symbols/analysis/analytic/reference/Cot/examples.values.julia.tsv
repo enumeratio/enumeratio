@@ -1,0 +1,43 @@
+id	in	out	verdict
+cot-pi-over-6	enumeratio_ball(cot, enumeratio_div(const_pi(RR), 6))	1.732050807568877293527446341505872366942805253810380628055806979451933016908815	
+cot-pi-over-4	enumeratio_ball(cot, enumeratio_div(const_pi(RR), 4))	1.0	
+cot-pi-over-3	enumeratio_ball(cot, enumeratio_div(const_pi(RR), 3))	0.5773502691896257645091487805019574556476017512701268760186023264839776723029412	
+cot-60-circ-frac-sqrt-3-3-exactly			
+a-machine-precision-argument-evaluates	enumeratio_ball(cot, 1.2)	0.3887795693682049627555010708599934506650289354194429667187827531030664645919851	
+a-huge-24-40-argument	(enumeratio_ball(cot, enumeratio_pow(24, 40)))	2.290720910010880678424893728187679648525123676304924760755135953638314814490703	
+a-huge-10-100-argument	(enumeratio_ball(cot, enumeratio_pow(10, 100)))	2.492323879279820694866405437260403961693210146448632318171496603333814555915263	
+a-huge-3-200-argument	(enumeratio_ball(cot, enumeratio_pow(3, 200)))	0.3671430010336978791732827199630862076739567226385841106801058889451175918088833	
+a-huge-neg-7-60-argument	(enumeratio_ball(cot, (-(enumeratio_pow(7, 60)))))	-2.549725448552896594744082899183804040713535875607631628273893574327368713927057	
+a-huge-10-80-plus-1-over-3-argument	(enumeratio_ball(cot, enumeratio_div((enumeratio_pow(10, 80) + 1), 3)))	0.1730902354461424460455893715148239320281822290565405619352317523853572707672934	
+cot-7-under-n	(enumeratio_ball(cot, 7))	1.147515422405135685057127833596869012584380267836163344517010898152196689255489	
+series-cot-x-x-0-10			
+series-cot-x-x-neg-pi-5			
+n-of-an-exact-argument-gives-an-arbitrary	(enumeratio_ball(cot, (6 // 5)))	0.388779569368204911634191504971903409594984925940975824572656578577703233921593	
+evaluates-at-a-complex-argument	enumeratio_ball(cot, enumeratio_complex(2.5, 1))	(-0.2756691212298994124406725058499758796478609954070700885467917892639010987963249-1.042640642094421653901835696750955591295062473002090458748862123391323202841912j)	
+threads-element-wise-over-a-matrix	Any[Any[enumeratio_ball(cot, (5 * enumeratio_div(const_pi(RR), 6))), enumeratio_ball(cot, enumeratio_div(const_pi(RR), 2))], Any[enumeratio_ball(cot, (3 * enumeratio_div(const_pi(RR), 2))), enumeratio_ball(cot, (-(enumeratio_div(const_pi(RR), 6))))]]	[[-1.732050807568877293527446341505872366942805253810380628055806979451933016908659, 5.484587222770523069572711301799809519582840029971911056107664263226886069873999e-78], [5.099843617019640338429637281732497382994551201843161705718624253211169799824907e-77, -1.732050807568877293527446341505872366942805253810380628055806979451933016908815]]	
+cot-pi-8-1-sqrt-2	enumeratio_ball(cot, enumeratio_div(const_pi(RR), 8))	2.414213562373095048801688724209698078569671875376948073176679737990732478462085	
+cot-pi-12-2-sqrt-3	enumeratio_ball(cot, enumeratio_div(const_pi(RR), 12))	3.732050807568877293527446341505872366942805253810380628055806979451933016908815	
+cot-pi-over-5	enumeratio_ball(cot, enumeratio_div(const_pi(RR), 5))	1.376381920471173538207209581910887679525899336008158663365675765619095193767199	
+an-interval-straddling-the-pole-at-0-maps-to-two			
+uncertainty-propagation-near-a-pole-grows-fast			
+oddness-pulls-the-sign-out-of-a-symbolic			
+derivative-csc-2-x			
+antiderivative-ln-sin-x			
+n-cot-6-over-5-50	enumeratio_n(enumeratio_ball(cot, (6 // 5)), 50)	0.388779569368204911634191504971903409594984925940979999999999999999999999999998	
+matrixfunction-function-cot-1-1-list-list-5-over			
+cot-positiveinfinity	enumeratio_ball(cot, Inf)	non-finite argument	error
+assuming-m-in-integers-refine-cot-pi-times-1			
+assuming-m-in-integers-fullsimplify-refine-cot			
+functionmeromorphic-cot-x-x			
+reciprocal-of-tan-cot-x-frac-1-tan-x	enumeratio_equal(enumeratio_ball(cot, enumeratio_div(const_pi(RR), 4)), enumeratio_div(1, enumeratio_ball(tan, enumeratio_div(const_pi(RR), 4))))	true	
+pythagorean-identity-1-cot-2-x-csc-2-x	enumeratio_equal((1 + enumeratio_pow(enumeratio_ball(cot, enumeratio_div(const_pi(RR), 6)), 2)), enumeratio_pow(enumeratio_ball(_csc, enumeratio_div(const_pi(RR), 6)), 2))	true	
+cot-1-over-10-times-pi	enumeratio_ball(cot, ((1 // 10) * const_pi(RR)))	3.077683537175253402570290576036909824006702143537792427039156250374863288495109	
+cot-3-over-10-times-pi	enumeratio_ball(cot, ((3 // 10) * const_pi(RR)))	0.7265425280053608858954667574806187496160923929652084627500663273457493918457005	
+cot-3-over-8-times-pi	enumeratio_ball(cot, ((3 // 8) * const_pi(RR)))	0.4142135623730950488016887242096980785696718753769480731766797379907324784621193	
+n-cot-1-times-cot-1-over-2	((enumeratio_ball(cot, 1) * enumeratio_ball(cot, (1 // 2))))	1.175342649670021410776786759656069975848447467624184213750540055147030710289327	
+n-cot-1-over-2-plus-1-over-2-times-pi	(enumeratio_ball(cot, ((1 // 2) + ((1 // 2) * const_pi(RR)))))	-0.5463024898437905132551794657802853832975517201797912461640913859329075105180146	
+n-cot-2-times-cot-4	((enumeratio_ball(cot, 2) * enumeratio_ball(cot, 4)))	-0.3952747814684810405561232577396548061967446816989747532597765782197574508671118	
+n-cot-2-plus-1-over-2-times-pi	(enumeratio_ball(cot, (2 + ((1 // 2) * const_pi(RR)))))	2.185039863261518991643306102313682543432017746227663164562955869966773747209196	
+a-pole-sin-0-0	enumeratio_ball(cot, 0)	NaN	disagree
+not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	enumeratio_ball(cot, enumeratio_div(const_pi(RR), 2))	5.484587222770523069572711301799809519582840029971911056107664263226886069873999e-78	
+cot-complexinfinity-is-indeterminate-for-the			

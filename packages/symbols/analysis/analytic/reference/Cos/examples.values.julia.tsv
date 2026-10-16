@@ -1,0 +1,75 @@
+id	in	out	verdict
+cos-0	enumeratio_ball(cos, 0)	1.0	
+cos-pi-over-6	enumeratio_ball(cos, enumeratio_div(const_pi(RR), 6))	0.8660254037844386467637231707529361834714026269051903140279034897259665084543988	
+cos-pi-over-4	enumeratio_ball(cos, enumeratio_div(const_pi(RR), 4))	0.707106781186547524400844362104849039284835937688474036588339868995366239231051	
+cos-pi-over-3	enumeratio_ball(cos, enumeratio_div(const_pi(RR), 3))	0.5	
+cos-pi-over-2	enumeratio_ball(cos, enumeratio_div(const_pi(RR), 2))	5.484587204896760383302533762132361914597648719877633701705107062765055411237032e-78	
+cos-pi	enumeratio_ball(cos, const_pi(RR))	-0.9999999999999999999999999999999999999999999999999999999999999999999999999999914	
+cos-30-circ-exactly			
+a-machine-precision-argument-evaluates	enumeratio_ball(cos, 1.2)	0.3623577544766736190292234792790889968729392759682927488699088932492334072434713	
+a-huge-24-40-argument	(enumeratio_ball(cos, enumeratio_pow(24, 40)))	0.91647884367824463046141232096677428809380434160322162966114084238113070637529	
+a-huge-3-200-argument	(enumeratio_ball(cos, enumeratio_pow(3, 200)))	-0.3446487766634922835201864496979877870879918397291212436411052660409878578364497	
+a-huge-neg-7-60-argument	(enumeratio_ball(cos, (-(enumeratio_pow(7, 60)))))	-0.9309598363622474747028740555482155638273794575636691475318932276433213640150929	
+a-huge-10-80-plus-1-over-3-argument	(enumeratio_ball(cos, enumeratio_div((enumeratio_pow(10, 80) + 1), 3)))	0.1705541695027654383911377122967449149073522473895312150979728870113353372620388	
+cos-2-5	enumeratio_ball(cos, 2.5)	-0.8011436155469337148335027904673516644285678487678201350745979916620240771711801	
+series-cos-x-x-0-10			
+n-of-an-exact-argument-gives-an-arbitrary	(enumeratio_ball(cos, (6 // 5)))	0.3623577544766735776383733556230760203399477855766486264877497209361354423102119	
+evaluates-at-a-complex-argument	enumeratio_ball(cos, enumeratio_complex(2.5, 1))	(-1.236229198856342081683189505255083748199378424233913439454736511203405892548714-0.7033251781135348261074870141474432269828515467966307482197103901712222799950685j)	
+threads-element-wise-over-a-matrix	Any[Any[enumeratio_ball(cos, (5 * enumeratio_div(const_pi(RR), 6))), enumeratio_ball(cos, 0)], Any[enumeratio_ball(cos, (3 * enumeratio_div(const_pi(RR), 2))), enumeratio_ball(cos, (-(enumeratio_div(const_pi(RR), 2))))]]	[[-0.8660254037844386467637231707529361834714026269051903140279034897259665084543815, 1.0], [-5.099843583506805965238934400853712369368811750014976195919313973672837010962824e-77, 5.484587204896760383302533762132361914597648719877633701705107062765055411237032e-78]]	
+cos-pi-12-frac-sqrt-6-sqrt-2-4	enumeratio_ball(cos, enumeratio_div(const_pi(RR), 12))	0.9659258262890682867497431997288973676339048390084045504023430763104232139798545	
+cos-pi-8-frac-sqrt-2-sqrt-2-2	enumeratio_ball(cos, enumeratio_div(const_pi(RR), 8))	0.9238795325112867561281831893967882868224166258636424861150977312805350075010968	
+cos-pi-10-frac-sqrt-10-2-sqrt-5-4	enumeratio_ball(cos, enumeratio_div(const_pi(RR), 10))	0.9510565162951535721164393333793821434056986341257502224473056444301531700851873	
+cos-2-pi-5-frac-sqrt-5-1-4	enumeratio_ball(cos, ((2 // 5) * const_pi(RR)))	0.3090169943749474241022934171828190588601545899028814310677243113526302314094678	
+cos-3-pi-5-frac-1-sqrt-5-4	enumeratio_ball(cos, ((3 // 5) * const_pi(RR)))	-0.3090169943749474241022934171828190588601545899028814310677243113526302314094247	
+reduced-into-the-first-quadrant-by-symmetry	enumeratio_ball(cos, ((11 // 6) * const_pi(RR)))	0.8660254037844386467637231707529361834714026269051903140279034897259665084543556	
+interval-arithmetic-the-image-of-pi-3-pi-2-is-0			
+uncertainty-propagation-cos-2-pm-0-01-approx-0			
+cos-infty-should-be-the-oscillation-range-1-1	enumeratio_ball(cos, Inf)	non-finite argument	error
+an-imaginary-argument-rewrites-to-cosh-cos-ix			
+evenness-drops-the-sign-of-a-symbolic-argument			
+cos-arccos-x-x-for-every-x			
+cos-arccos-2-2-past-the-real-domain	enumeratio_ball(cos, enumeratio_ball(_acos, 2))	(1.999999999999999999999999999999999999999999999999999999999999999999999999999965+0.0j)	
+cos-arcsin-x-sqrt-1-x-2			
+cos-arctan-x-frac-1-sqrt-1-x-2			
+derivative-sin-x			
+antiderivative			
+taylor-series-about-0-only-even-powers-appear			
+to-30-significant-digits-every-one-correctly	enumeratio_n(enumeratio_ball(cos, 1), 30)	0.5403023058681397174009366074430000000000000000000000000000000000000000000000019	
+to-1-significant-digit	enumeratio_n(enumeratio_ball(cos, 1), 1)	0.5	
+a-huge-10-100-argument-reduces-exactly-mod-2-pi	(enumeratio_ball(cos, enumeratio_pow(10, 100)))	-0.9280819050746553434561946437769559281831820764390503933251142095425212220307955	
+n-cos-6-over-5-50	enumeratio_n(enumeratio_ball(cos, (6 // 5)), 50)	0.3623577544766735776383733556230760203399477855766500000000000000000000000000013	
+functiondomain-cos-x-x			
+functionrange-cos-x-x-y			
+functionperiod-cos-x-x			
+functionanalytic-cos-x-x			
+functioninjective-cos-x-x			
+functionsurjective-cos-x-x			
+functionsingularities-cos-x-x			
+functiondiscontinuities-cos-x-x			
+matrixfunction-function-cos-1-1-list-list-5-over			
+assuming-m-in-integers-refine-cos-pi-times-1			
+assuming-m-in-integers-fullsimplify-refine-cos			
+threads-element-wise-over-a-list	Any[enumeratio_ball(cos, 0), enumeratio_ball(cos, enumeratio_div(const_pi(RR), 2)), enumeratio_ball(cos, const_pi(RR))]	[1.0, 5.484587204896760383302533762132361914597648719877633701705107062765055411237032e-78, -0.9999999999999999999999999999999999999999999999999999999999999999999999999999914]	
+even-function-cos-x-cos-x	enumeratio_equal(enumeratio_ball(cos, (-(enumeratio_div(const_pi(RR), 3)))), enumeratio_ball(cos, enumeratio_div(const_pi(RR), 3)))	true	
+co-function-identity-cos-x-sin-pi-2-x	enumeratio_equal(enumeratio_ball(cos, enumeratio_div(const_pi(RR), 6)), enumeratio_ball(sin, (enumeratio_div(const_pi(RR), 2) - enumeratio_div(const_pi(RR), 6))))	true	
+double-angle-formula-cos-2x-cos-2-x-sin-2-x			
+angle-addition-formula			
+power-reduction-cos-2-x-frac-1-cos-2x-2			
+euler-s-formula-cos-x-frac-e-ix-e-ix-2			
+cos-3-over-10-times-pi	enumeratio_ball(cos, ((3 // 10) * const_pi(RR)))	0.5877852522924731291687059546390727685976524376431459910722724807572784741623587	
+integrate-cos-t-pow-2-t-0-1-over-2-times-pi			
+product-neg-cos-1-over-4-times-pi-times-2k-minus			
+integrate-cos-t-pow-3-t-0-1-over-2-times-pi			
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2	(enumeratio_pow(((enumeratio_complex(0, 1) * enumeratio_ball(sin, (1 // 2))) + enumeratio_ball(cos, (1 // 2))), 2))	(0.5403023058681397174009366074429766037323104206179222276700972553811003947744667+0.8414709848078965066525023216302989996225630607983710656727517099919104043912312j)	
+product-neg-cos-1-over-6-times-pi-times-2k-minus			
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2	(enumeratio_pow(((enumeratio_complex(0, 1) * enumeratio_ball(sin, (1 // 2))) + enumeratio_ball(cos, (1 // 2))), 2))	(0.5403023058681397174009366074429766037323104206179222276700972553811003947744667+0.8414709848078965066525023216302989996225630607983710656727517099919104043912312j)	
+n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow	(enumeratio_pow(((enumeratio_complex(0, -1) * enumeratio_ball(sin, (1 // 2))) + enumeratio_ball(cos, (1 // 2))), 2))	(0.5403023058681397174009366074429766037323104206179222276700972553811003947744667-0.8414709848078965066525023216302989996225630607983710656727517099919104043912312j)	
+n-integrate-exponentiale-pow-neg-1-over-2-times			
+n-integrate-1-over-sqrt-cos-t-minus-cos-1-over-2			
+n-neg-2-times-cos-1-times-cos-1-over-2-pow-2	(((-2 * enumeratio_ball(cos, 1) * enumeratio_pow(enumeratio_ball(cos, (1 // 2)), 2)) + (2 * enumeratio_pow(enumeratio_ball(cos, (1 // 2)), 2)) + enumeratio_pow(enumeratio_ball(cos, 1), 2)))	1.0	
+n-cos-1-over-2-plus-1-over-2-times-pi-pow-2	(enumeratio_pow(enumeratio_ball(cos, ((1 // 2) + ((1 // 2) * const_pi(RR)))), 2))	0.2298488470659301412995316962785116981338447896910388861649513723094498026127559	
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-3	(enumeratio_pow(((enumeratio_complex(0, 1) * enumeratio_ball(sin, (1 // 2))) + enumeratio_ball(cos, (1 // 2))), 3))	(0.07073720166770291008818985143426870908509102756334686942264541719092293457350829+0.997494986604054430941723371141487322706651425922115821949974824059345209707858j)	
+as-with-sin-a-non-special-numeric-argument-stays	enumeratio_ball(cos, 2)	-0.4161468365471423869975682295007621897660007710755448907551499737819649361240763	
+pi-24-is-past-the-automatic-special-angle-table	enumeratio_ball(cos, ((1 // 24) * const_pi(RR)))	0.9914448613738104111445575269285628712777382744481022714587746035289220684050763	
+cos-complexinfinity-is-indeterminate-for-the			
+cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden	enumeratio_ball(cos, enumeratio_div(const_pi(RR), 5))	0.8090169943749474241022934171828190588601545899028814310677243113526302314094549	

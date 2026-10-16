@@ -41,6 +41,14 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: julia
+    template: enumeratio_subfactorial($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Closed form $D_n = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!}$, so $D_n$ is n! divided by e and rounded to the nearest integer.

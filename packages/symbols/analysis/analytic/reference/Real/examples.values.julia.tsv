@@ -1,0 +1,3 @@
+id	in	out	verdict
+of-a-complex-number	enumeratio_ball(real, enumeratio_complex(3, 4))	3.0	
+of-an-infinity	enumeratio_ball(real, Inf)	non-finite argument	error

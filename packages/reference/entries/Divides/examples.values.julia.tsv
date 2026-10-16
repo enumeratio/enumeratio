@@ -1,0 +1,11 @@
+id	in	out
+divides-2-10	iszero(mod(ZZ(10), ZZ(2)))	true
+divides-2-5	iszero(mod(ZZ(5), ZZ(2)))	false
+divides-3-6	iszero(mod(ZZ(6), ZZ(3)))	true
+divides-16-001-1-plus-10-pow-3-000	iszero(mod(ZZ((1 + enumeratio_pow(10, 3000))), ZZ(16001)))	true
+divides-3-2-895	iszero(mod(ZZ(2895), ZZ(3)))	true
+divides-11-918-082	iszero(mod(ZZ(918082), ZZ(11)))	true
+list-isinteger-5-divides-2-10		
+divides-8-48	iszero(mod(ZZ(48), ZZ(8)))	true
+divides-12-25	iszero(mod(ZZ(25), ZZ(12)))	false
+simplify-divides-a-b-times-a-list-a-b-in		

@@ -1,18 +1,18 @@
-id	in
-power-2-complexinfinity-is-indeterminate-same	
-2-pow-100	(big(2)^100)
-neg-8-to-the-1-3-is-the-real-root	(big(-8)^(1 // 3))
-real-cube-roots-of-a-list-of-negatives	(big([-8, -27])^(1 // 3))
-power-half-complexinfinity-is-indeterminate	
-power-x-complexinfinity-is-left-unevaluated	
-n-248-832-over-1-419-857-50	((248832 // 1419857))
-2-pow-list-1-2-3	(big(2)^[1, 2, 3])
-interval-1-over-3-2-pow-3	
-2-pow-list-list-1-over-2-neg-1-list-neg-5-over-3	(big(2)^[[(1 // 2), -1], [(-5 // 3), (1 // 2)]])
-fullsimplify-functioncontinuous-list-x-pow-n-x	
-d-x-pow-n-x	
-root-neg-1-3	
-fullsimplify-matrixfunction-function-2-pow-1-1	
-n-2-pow-i	((big(2)^complex(0, 1)))
-power-1-complexinfinity-is-indeterminate	
-power-e-complexinfinity-is-indeterminate-exp	
+id	in	out	verdict
+power-2-complexinfinity-is-indeterminate-same			
+2-pow-100	enumeratio_pow(2, 100)	1267650600228229401496703205376	
+neg-8-to-the-1-3-is-the-real-root	enumeratio_pow(-8, (1 // 3))	(1.000000000000000000000000000000000000000000000000000000000000000000000000000017+1.732050807568877293527446341505872366942805253810380628055806979451933016908746j)	inconclusive
+real-cube-roots-of-a-list-of-negatives	Any[enumeratio_pow(-8, (1 // 3)), enumeratio_pow(-27, (1 // 3))]	[(1.000000000000000000000000000000000000000000000000000000000000000000000000000017+1.732050807568877293527446341505872366942805253810380628055806979451933016908746j), (1.5+2.598076211353315940291169512258808550414207880715570942083710469177899525363067j)]	disagree
+power-half-complexinfinity-is-indeterminate			
+power-x-complexinfinity-is-left-unevaluated			
+n-248-832-over-1-419-857-50	enumeratio_n((248832 // 1419857), 50)	0.1752514513785543192025675825100696760307552098556399999999999999999999999999992	
+2-pow-list-1-2-3	Any[enumeratio_pow(2, 1), enumeratio_pow(2, 2), enumeratio_pow(2, 3)]	[2, 4, 8]	
+interval-1-over-3-2-pow-3			
+2-pow-list-list-1-over-2-neg-1-list-neg-5-over-3	Any[Any[enumeratio_pow(2, (1 // 2)), enumeratio_pow(2, -1)], Any[enumeratio_pow(2, (-5 // 3)), enumeratio_pow(2, (1 // 2))]]	[[1.414213562373095048801688724209698078569671875376948073176679737990732478462102, 0.5], [0.3149802624737182911918026518195570876425628661753769950204937780388249191284934, 1.414213562373095048801688724209698078569671875376948073176679737990732478462102]]	
+fullsimplify-functioncontinuous-list-x-pow-n-x			
+d-x-pow-n-x			
+root-neg-1-3	enumeratio_root(-1, 3)	-1.0	
+fullsimplify-matrixfunction-function-2-pow-1-1			
+n-2-pow-i	(enumeratio_pow(2, enumeratio_complex(0, 1)))	(0.7692389013639721265783299936612707014408959949119638531698715074290813468073352+0.638961276313634801150032911464701784257230537830579729495586956646324522448539j)	
+power-1-complexinfinity-is-indeterminate			
+power-e-complexinfinity-is-indeterminate-exp			

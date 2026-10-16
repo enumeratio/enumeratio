@@ -61,6 +61,24 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(erf, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball((a, b) -> erf(b) - erf(a), $1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Odd function: $\operatorname{erf}(-z) = -\operatorname{erf}(z)$.

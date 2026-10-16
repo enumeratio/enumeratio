@@ -1,0 +1,17 @@
+id	in	out	verdict
+ln-g-4-ln-2	enumeratio_ball(log_barnes_g, 4)	0.6931471805599453094172321214581765680755001343602552541206800094933936219696955	
+ln-g-3-ln-1-0	enumeratio_ball(log_barnes_g, 3)	0.0	
+numeric-for-a-floating-point-argument	enumeratio_ball(log_barnes_g, 10.5)	42.27888363679505205874563275391388381891113490187730198944039107185408360674544	
+ln-g-frac-12	enumeratio_ball(log_barnes_g, 0.5)	-0.5054330544896953827976849898083449517213991014666199327898275603418492577223237	
+ln-g-0-7-negative-since-g-1-on-0-1	enumeratio_ball(log_barnes_g, 0.7)	-0.2145898970750625101459635131183247731320825912487666529076838472582003736867214	
+complex-arguments	enumeratio_ball(log_barnes_g, enumeratio_complex(1.7, 1))	(0.1213786626290474183631259754540768643627428167351797183076517969767461944358798-0.3135617613368512828201514294890792772151557995157924596740915346741671180306881j)	
+threads-elementwise-over-an-array-infty-at-the	Any[Any[enumeratio_ball(log_barnes_g, 4), enumeratio_ball(log_barnes_g, -1)], Any[enumeratio_ball(log_barnes_g, 0), enumeratio_ball(log_barnes_g, 3)]]	[[0.6931471805599453094172321214581765680755001343602552541206800094933936219696955, (NaN+NaNj)], [(NaN+NaNj), 0.0]]	disagree
+huge-arguments-straight-from-the-asymptotic	(enumeratio_ball(log_barnes_g, enumeratio_pow(10, 1000)))	1.150542546497022842008995727342182103800550744314386488016663950483786304838822e2003	
+interval-arithmetic-over-an-increasing-stretch			
+uncertainty-propagation-through-ln-g			
+ln-g-infty-infty	enumeratio_ball(log_barnes_g, Inf)	non-finite argument	error
+image-over-0p111-to-0p112			
+image-over-0p3-to-4			
+g-0-0-so-its-logarithm-is-infty	enumeratio_ball(log_barnes_g, 0)	(NaN+NaNj)	disagree
+exact-at-the-integers-ln-g-10-ln	enumeratio_ball(log_barnes_g, 10)	36.15946769873875744776728874563190242494049298692840917495726108685737762060507	
+the-continuation-not-ln-of-the-value-g-2-5-0-yet	enumeratio_ball(log_barnes_g, -2.5)	(-2.574748476853147743124968938515753378824759657087102189402305665761250070222845+18.84955592153875943077586029967701730518301639625063492584966755384689843771677j)	

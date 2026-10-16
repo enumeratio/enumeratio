@@ -43,6 +43,12 @@ bindings:
     form: sage
     template: enumeratio_max($*,)
     note: Wolfram (and our Max) flattens nested lists into one pool; bare SymPy Max()/Sage max() on a list (or a list of lists) either raise or compare lexicographically instead, so both go through a flattening helper (run.ts's SYMPY_PREAMBLE / SAGE_PREAMBLE).
+  - origin: mapped
+    form: julia
+    template: enumeratio_max($*,)
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - The largest of its arguments, or of a single list argument.

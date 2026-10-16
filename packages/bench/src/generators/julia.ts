@@ -1,6 +1,6 @@
 // Native harness generator for Nemo+Combinatorics ("julia") and Oscar ("oscar"): one Julia
 // script per system, self-contained, implementing the contract in generate.ts. The two systems
-// share everything but the `using` line, the project, and (for Oscar) the preamble include —
+// share everything but the `using` line, the project, and the preamble include —
 // all three come from `preludeFor`, so this stays in lockstep with the oracle scan.
 
 import { join, relative, sep } from "node:path";
@@ -20,7 +20,7 @@ export const CACHES_OSCAR: "cleared" | "uncleared" = "uncleared";
 const here = (path: string): string => join(ROOT, path);
 const generatedDir = (system: JuliaSystem): string => here(`generated/${system}/`);
 
-// `preludeFor`'s Oscar preamble `include`s preamble.jl by its absolute path on this checkout,
+// `preludeFor`'s preamble `include`s preamble.jl by its absolute path on this checkout,
 // which isn't safe to bake into a committed file (a different clone, or even this worktree,
 // puts the repo somewhere else). Repointing it at a path relative to the generated harness's
 // own directory keeps the file identical everywhere the repo is checked out.

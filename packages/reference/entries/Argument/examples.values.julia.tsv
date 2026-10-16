@@ -1,0 +1,14 @@
+id	in	out	verdict
+argument-i	enumeratio_ball(angle, enumeratio_complex(0, 1))	1.570796326794896619231321691639751442098584699687552910487472296153908203143099	
+argument-1-plus-i	enumeratio_ball(angle, enumeratio_complex(1, 1))	0.7853981633974483096156608458198757210492923498437764552437361480769541015715495	
+argument-neg-1	enumeratio_ball(angle, -1)	3.141592653589793238462643383279502884197169399375105820974944592307816406286198	
+argument-of-a-list-holding-0	Any[enumeratio_ball(angle, 0), enumeratio_ball(angle, (-1 // 2))]	[0.0, 3.141592653589793238462643383279502884197169399375105820974944592307816406286198]	
+n-argument-exponentiale-plus-i-times-pi-20	enumeratio_n(enumeratio_ball(angle, (const_e(RR) + (enumeratio_complex(0, 1) * const_pi(RR)))), 20)	0.8575117863558462650099999999999999999999999999999999999999999999999999999999978	
+argument-neg-123	enumeratio_ball(angle, -123)	3.141592653589793238462643383279502884197169399375105820974944592307816406286198	
+argument-123-minus-456i	enumeratio_ball(angle, enumeratio_complex(123, -456))	-1.307329785759979174220574467028944576996515277190524503215578594756689473635352	
+argument-list-list-1-over-2-neg-1-list-neg-5	Any[Any[enumeratio_ball(angle, (1 // 2)), enumeratio_ball(angle, -1)], Any[enumeratio_ball(angle, (-5 // 3)), enumeratio_ball(angle, (1 // 2))]]	[[0.0, 3.141592653589793238462643383279502884197169399375105820974944592307816406286198], [3.141592653589793238462643383279502884197169399375105820974944592307816406286198, 0.0]]	
+fullsimplify-matrixfunction-argument-list-list-1			
+argument-0	enumeratio_ball(angle, 0)	0.0	
+argument-positiveinfinity	enumeratio_ball(angle, Inf)	non-finite argument	error
+argument-negativeinfinity	enumeratio_ball(angle, (-Inf))	non-finite argument	error
+argument-positiveinfinity-times-i	enumeratio_ball(angle, (Inf * enumeratio_complex(0, 1)))	NaN	

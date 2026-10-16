@@ -28,6 +28,9 @@ bindings:
     arity: 2
   - origin: mapped
     form: julia
-    template: complex($1, $2)
+    template: enumeratio_complex($1, $2)
     arity: 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---

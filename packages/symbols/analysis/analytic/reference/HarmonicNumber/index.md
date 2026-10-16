@@ -62,6 +62,24 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: "enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), $1, $2)"
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 seeAlso:
   - PolyGamma
   - EulerGamma

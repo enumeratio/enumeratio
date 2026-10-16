@@ -1,0 +1,37 @@
+id	in	out	verdict
+bernoullib-0	bernoulli(Int(0))	1.0	
+bernoullib-1	bernoulli(Int(1))	-0.5	
+bernoullib-2	bernoulli(Int(2))	0.16666666666666666	
+bernoullib-4	bernoulli(Int(4))	-0.03333333333333333	
+bernoullib-12	bernoulli(Int(12))	-0.2531135531135531	
+bernoullib-10	bernoulli(Int(10))	0.07575757575757576	
+exact-rationals-at-any-index	bernoulli(Int(60))	-2.1399949257225335e34	
+listable-b-n-threads-over-a-list-of-indices	Any[bernoulli(Int(2)), bernoulli(Int(4)), bernoulli(Int(6))]	[0.16666666666666666, -0.03333333333333333, 0.023809523809523808]	
+the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac			
+the-bernoulli-polynomial-at-a-rational-point-b-2	enumeratio_bernoulli_poly(2, (1 // 2))	-0.08333333333333333333333333333333333333333333333333333333333333333333333333333477	
+with-a-second-argument-the-bernoulli-polynomial			
+threads-element-wise-over-a-list-as-wolfram-s	Any[bernoulli(Int(1)), bernoulli(Int(2)), bernoulli(Int(3))]	[-0.5, 0.16666666666666666, 0.0]	
+faulhaber-s-formula-recovers-sum-k-0-4-k-2-30	enumeratio_div(((binomial(ZZ(3), ZZ(0)) * bernoulli(Int(0)) * enumeratio_pow(5, 3)) + (binomial(ZZ(3), ZZ(1)) * bernoulli(Int(1)) * enumeratio_pow(5, 2)) + (binomial(ZZ(3), ZZ(2)) * bernoulli(Int(2)) * enumeratio_pow(5, 1))), 3)	30.0	
+von-staudt-clausen-the-denominator-of-b-2n-is	denominator(bernoulli(Int(12)))	2730	
+zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see	enumeratio_equal(enumeratio_ball(zeta, -3), (-(enumeratio_div(bernoulli(Int(4)), 4))))	true	
+the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here	((binomial(ZZ(5), ZZ(0)) * bernoulli(Int(0))) + (binomial(ZZ(5), ZZ(1)) * bernoulli(Int(1))) + (binomial(ZZ(5), ZZ(2)) * bernoulli(Int(2))) + (binomial(ZZ(5), ZZ(3)) * bernoulli(Int(3))) + (binomial(ZZ(5), ZZ(4)) * bernoulli(Int(4))))	0.0	
+b-n-0-for-every-odd-n-1	enumeratio_equal(bernoulli(Int(5)), 0)	true	
+bernoullib-3	bernoulli(Int(3))	0.0	
+bernoullib-5	bernoulli(Int(5))	0.0	
+bernoullib-6	bernoulli(Int(6))	0.023809523809523808	
+bernoullib-7	bernoulli(Int(7))	0.0	
+bernoullib-8	bernoulli(Int(8))	-0.03333333333333333	
+bernoullib-9	bernoulli(Int(9))	0.0	
+bernoullib-2-0	enumeratio_bernoulli_poly(2, 0)	0.1666666666666666666666666666666666666666666666666666666666666666666666666666652	
+bernoullib-3-0	enumeratio_bernoulli_poly(3, 0)	0.0	
+bernoullib-2-1	enumeratio_bernoulli_poly(2, 1)	0.1666666666666666666666666666666666666666666666666666666666666666666666666666652	
+bernoullib-3-1	enumeratio_bernoulli_poly(3, 1)	0.0	
+bernoullib-0-1-over-6	enumeratio_bernoulli_poly(0, (1 // 6))	1.0	
+sum-k-plus-3-times-binomial-3-k-times-bernoullib			
+sum-1-over-k-times-1-over-neg-k-plus-3-times			
+sum-k-plus-3-times-binomial-4-k-times-bernoullib			
+sum-1-over-k-times-1-over-neg-k-plus-4-times			
+b-1-1-frac-12-is-the-other-convention-for-b-1	enumeratio_bernoulli_poly(1, 1)	0.5	
+bernoulli-numbers-are-only-defined-for-n-ge-0-a	bernoulli(Int(-1))	DomainError with -1: Index must be non-negative	error
+numerators-and-denominators-grow-quickly-b-20	bernoulli(Int(20))	-529.1242424242424	
+bernoullib-12-x			

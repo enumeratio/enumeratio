@@ -1,0 +1,18 @@
+id	in	out	verdict
+7-5-3-1	Combinatorics.doublefactorial(big(7))	105	
+8-6-4-2	Combinatorics.doublefactorial(big(8))	384	
+factorial2-10	Combinatorics.doublefactorial(big(10))	3840	
+factorial2-0	Combinatorics.doublefactorial(big(0))	1	
+factorial2-20	Combinatorics.doublefactorial(big(20))	3715891200	
+the-recurrence-n-n-cdot-n-2-run-downwards	Combinatorics.doublefactorial(big(-1))	DomainError with -1: n must be nonnegative	error
+threads-element-wise-over-a-list	Any[Combinatorics.doublefactorial(big(1)), Combinatorics.doublefactorial(big(2)), Combinatorics.doublefactorial(big(3)), Combinatorics.doublefactorial(big(4)), Combinatorics.doublefactorial(big(5))]	[1, 2, 3, 8, 15]	
+negative-odd-integers-follow-the-recurrence	Combinatorics.doublefactorial(big(-3))	DomainError with -3: n must be nonnegative	error
+5-frac-1-3-by-the-backward-recurrence	Combinatorics.doublefactorial(big(-5))	DomainError with -5: n must be nonnegative	error
+real-arguments-use-the-analytic-continuation-2-1	Combinatorics.doublefactorial(big(2.5))	MethodError: no method matching doublefactorial(::BigFloat) The function `doublefactorial` exists, b	error
+the-number-of-ways-to-pair-up-10-people-into-5	Combinatorics.doublefactorial(big(9))	945	
+splits-an-ordinary-factorial-into-even-and-odd	enumeratio_equal(factorial(ZZ(8)), (Combinatorics.doublefactorial(big(8)) * Combinatorics.doublefactorial(big(7))))	true	
+even-double-factorials-2n-2-n-n	enumeratio_equal(Combinatorics.doublefactorial(big(10)), (enumeratio_pow(2, 5) * factorial(ZZ(5))))	true	
+odd-double-factorials-2n-1-frac-2n-2-n-n	enumeratio_equal(Combinatorics.doublefactorial(big(9)), enumeratio_div(factorial(ZZ(10)), (enumeratio_pow(2, 5) * factorial(ZZ(5)))))	true	
+negative-even-arguments-hit-a-pole-in-the	Combinatorics.doublefactorial(big(-2))	DomainError with -2: n must be nonnegative	error
+15-2-027-025-already-past-two-million-despite	Combinatorics.doublefactorial(big(15))	2027025	
+factorial2-of-negative-infinity-is-indeterminate	Combinatorics.doublefactorial(big((-Inf)))	MethodError: no method matching doublefactorial(::BigFloat) The function `doublefactorial` exists, b	error

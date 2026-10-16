@@ -1,0 +1,4 @@
+id	in	out	verdict
+of-a-complex-number	enumeratio_ball(imag, enumeratio_complex(3, 4))	4.0	
+a-gaussian-integer-is-a-complex-number	enumeratio_ball(imag, (enumeratio_complex(2, 1) * enumeratio_complex(1, 3)))	7.0	
+of-a-real-infinity	enumeratio_ball(imag, Inf)	non-finite argument	error

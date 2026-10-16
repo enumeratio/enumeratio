@@ -21,6 +21,14 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: julia
+    template: Any[enumeratio_ball(real, $1), enumeratio_ball(imag, $1)]
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Listable: ReIm({z1, z2}) is {ReIm(z1), ReIm(z2)}, not a single flattened pair.

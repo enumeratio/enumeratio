@@ -1,0 +1,10 @@
+id	in	out
+bi-0	(enumeratio_ball(airy_bi, 0))	0.6149266274460007351509223690936135535947281886485965050408787530142965193055146
+series-airybi-x-x-0-4		
+normal-series-airybi-x-x-positiveinfinity-2		
+n-airybi-2-50	enumeratio_n(enumeratio_ball(airy_bi, 2), 50)	3.298094999978214710280604425223452422003975963403600000000000000000000000000006
+n-functionrange-airybi-x-x-y		
+d-airybi-x-x		
+series-airybi-x-x-0-7		
+normal-series-airybi-x-x-directedinfinity-z-1		
+simplify-functionexpand-airybi-z-times		

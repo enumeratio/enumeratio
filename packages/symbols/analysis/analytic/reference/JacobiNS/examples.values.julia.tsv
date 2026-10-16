@@ -1,0 +1,14 @@
+id	in	out	verdict
+a-floating-point-argument-evaluates-directly-to	(enumeratio_jacobi(:ns, 0.3, 0.5))	3.408168381792332470904438399489521287388744025470371076852303960172813580267359	
+jacobins-0-4-0-5i-0-3	(enumeratio_jacobi(:ns, enumeratio_complex(0.4, -0.5), 0.3))	(1.0615623894068560000620119138782104104845358444157063251793607907751403424559+1.111029734408047340614913342928605733187234301565856995554775779864298931813878j)	
+m-less-than-0-via-the-imaginary-modulus	(enumeratio_jacobi(:ns, 0.3, -2))	3.289220683752634829501571318374152921343451079538816718680518435461088135182496	
+d-jacobins-u-m-m			
+series-jacobins-u-m-u-0-4			
+series-jacobins-z-m-m-0-2			
+u-0-is-a-pole-for-any-m			
+n-jacobins-sqrt-2-over-4-times-i-neg-1	(enumeratio_jacobi(:ns, enumeratio_complex(0, enumeratio_div(enumeratio_ball(sqrt, 2), 4)), -1))	(-2.739480988832073596925277818266898060589202929713365457585829141348542003920293e-77-2.832847693433668312695425742588742970327887513382897581621465324292135142931608j)	
+n-jacobins-1-over-2-times-1-plus-sqrt-2-over-2-1	(enumeratio_jacobi(:ns, ((1 // 2) * (1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2))), (enumeratio_pow((1 + (-(enumeratio_div(enumeratio_ball(sqrt, 2), 2)))), 2) * enumeratio_pow((1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2)), -2))))	1.329988245674117897378382092562338991234608807614603001815758286438224170120023	
+n-jacobins-sqrt-2-times-i-neg-1	(enumeratio_jacobi(:ns, enumeratio_complex(0, enumeratio_ball(sqrt, 2)), -1))	(-4.346868844614040057975557560892212626228954510033007637846789030596517978952952e-77-1.010704144622301971802162075420615097462331833859059936128288132606231786768483j)	
+n-jacobins-2-times-1-plus-sqrt-2-over-2-1-minus	(enumeratio_jacobi(:ns, (2 * (1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2))), (enumeratio_pow((1 + (-(enumeratio_div(enumeratio_ball(sqrt, 2), 2)))), 2) * enumeratio_pow((1 + enumeratio_div(enumeratio_ball(sqrt, 2), 2)), -2))))	-4.05730466128721147457520145455041268398758134858633243296928622780278789134861	
+symbolic-arguments-are-left-unevaluated-rather			
+u-1e16-declines-rather-than-answering-wrong	(enumeratio_jacobi(:ns, enumeratio_pow(10, 16), (2 // 3)))	1.31062916142492936204179257586491005049228028456432437126975411029477046457702	inconclusive

@@ -1,0 +1,24 @@
+id	in	out	verdict
+a-pole-of-gamma-shared-by-its-log-derivative	enumeratio_ball(digamma, 0)	NaN	disagree
+digamma-neg-1	enumeratio_ball(digamma, -1)	NaN	disagree
+a-floating-point-argument-evaluates-directly-to	enumeratio_ball(digamma, 0.5)	-1.963510026021423479440976332998755567193159604660434107047127253871654970717042	
+a-machine-precision-argument	enumeratio_ball(digamma, 100.5)	4.60517435258184521186867878560471454857266876169160040870628267898688213181004	
+psi-5-h-4-gamma-frac-25-12-gamma	enumeratio_ball(digamma, 5)	1.506117668431800472726821243250930902291173997393409734527566098448465606555653	
+threads-over-a-list-reducing-each-positive	Any[enumeratio_ball(digamma, 1), enumeratio_ball(digamma, 2), enumeratio_ball(digamma, 3)]	[-0.5772156649015328606065120900824024310421593359399235988057672348848677267776599, 0.4227843350984671393934879099175975689578406640600764011942327651151322732223358, 0.9227843350984671393934879099175975689578406640600764011942327651151322732223315]	
+complex-arguments-should-evaluate-as-psi-m-does	enumeratio_ball(digamma, enumeratio_complex(2.5, 3))	(1.281273919066231427140705387474317038989722172876555169029988407356364271960511+0.9798053153445596376223948335439970125136499195354077195925837600612852587003675j)	
+psi-infty-infty-growing-like-ln-z	enumeratio_ball(digamma, Inf)	non-finite argument	error
+gauss-s-digamma-theorem-psi-1-4-gamma-pi-2-3-ln	enumeratio_ball(digamma, (1 // 4))	-4.227453533376265408089530146096683577367244438708242271655279559518956795829802	
+psi-1-3-gamma-frac-pi-2-sqrt-3-frac-32-ln-3	enumeratio_ball(digamma, (1 // 3))	-3.132033780020806322996419074287268854155428296720418064192751203035170757168762	
+interval-arithmetic-psi-is-increasing-on-0-infty			
+to-30-significant-digits-every-one-correctly	enumeratio_n(enumeratio_ball(digamma, (1 // 3)), 30)	-3.132033780020806322996419074290000000000000000000000000000000000000000000000006	
+harmonic-numbers-via-digamma-psi-n-1-gamma-h-n	enumeratio_equal((enumeratio_ball(digamma, 6) + const_euler(RR)), (1 + (1 // 2) + (1 // 3) + (1 // 4) + (1 // 5)))	true	
+psi-1-gamma	enumeratio_equal((enumeratio_ball(digamma, 1) + const_euler(RR)), 0)	true	
+recurrence-psi-z-1-psi-z-1-z-here-at-z-1	enumeratio_equal(enumeratio_ball(digamma, 2), (enumeratio_ball(digamma, 1) + 1))	true	
+psi-1-2-gamma-2-ln-2	enumeratio_equal((enumeratio_ball(digamma, (1 // 2)) + const_euler(RR) + (2 * enumeratio_ball(log, 2))), 0)	true	
+psi-x-is-the-trigamma-psi-1-x			
+reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot	(enumeratio_ball(digamma, 0.7) - enumeratio_ball(digamma, 0.3))	2.282500668502198384309678835709745947301675340153787969735440495051095161718653	
+psi-1-gamma-2	enumeratio_ball(digamma, 1)	-0.5772156649015328606065120900824024310421593359399235988057672348848677267776599	
+psi-2-1-gamma-from-psi-n-1-psi-n-1-n	enumeratio_ball(digamma, 2)	0.4227843350984671393934879099175975689578406640600764011942327651151322732223358	
+psi-3-frac-3-2-gamma	enumeratio_ball(digamma, 3)	0.9227843350984671393934879099175975689578406640600764011942327651151322732223315	
+neg-digamma-2-over-3-plus-digamma-1-over-3	((-(enumeratio_ball(digamma, (2 // 3)))) + enumeratio_ball(digamma, (1 // 3)))	-1.813799364234217850594078257642155732284066248092740575569884935388123181126359	
+between-the-poles-at-0-and-1-psi-is-still-finite	enumeratio_ball(digamma, -0.5)	0.03648997397857652055902366700124443280684039533956589295287274612834502928294582	

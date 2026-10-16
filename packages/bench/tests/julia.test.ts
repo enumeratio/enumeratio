@@ -103,9 +103,10 @@ describe("oscar includes the shared group-algebra preamble relative to itself", 
   });
 });
 
-describe("julia has no group-algebra include (Nemo + Combinatorics only)", () => {
+describe("julia includes its own ball-arithmetic preamble relative to itself", () => {
   const text = generateJulia(plan)["harness.jl"] as string;
-  test("no include() at all", () => {
-    expect(text).not.toContain("include(");
+  test("include() is anchored at @__DIR__, and brings no group-algebra preamble", () => {
+    expect(text).toMatch(/include\(joinpath\(@__DIR__, "[^"]+julia\/preamble\.jl"\)\)/);
+    expect(text).not.toContain("oscar/preamble.jl");
   });
 });

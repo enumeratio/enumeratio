@@ -1,0 +1,18 @@
+id	in	out	verdict
+multinomial-1-2-1	enumeratio_multinomial(1, 2, 1)	12	
+multinomial-2-3-4	enumeratio_multinomial(2, 3, 4)	1260	
+threads-element-wise-over-a-list-as-wolfram-s	enumeratio_multinomial(Any[2, 3, 5], 3)	MethodError: no method matching ComplexFieldElem(::Vector{Any}, ::Int64) The type `ComplexFieldElem`	error
+zero-parts-contribute-0-1	enumeratio_multinomial(0, 0, 1)	1	
+real-arguments-evaluate-via-the-gamma-function	enumeratio_multinomial(2, 0.2, 5)	34.31780352000000088810580223253055918528543202758351032281665993859293038528486	
+complex-arguments-evaluate-via-the-gamma	enumeratio_multinomial(enumeratio_complex(1, 1), 0.2, 4)	(2.894060302449624018574771326768120955737251576677885057893897612299268987478978+9.104625875691286587925649455984175572284016831663079766140436789930436817289721j)	
+an-around-argument-should-propagate-its			
+the-number-of-distinct-letter-arrangements-of	enumeratio_multinomial(1, 4, 4, 2)	34650	
+the-coefficient-of-a-2-b-3-c-in-a-b-c-6	enumeratio_multinomial(2, 3, 1)	60	
+with-two-arguments-it-reduces-to-binomial-binom	enumeratio_equal(enumeratio_multinomial(7, 3), binomial(ZZ(10), ZZ(3)))	true	
+orderless-permuting-the-arguments-doesn-t-change	enumeratio_equal(enumeratio_multinomial(1, 2, 3), enumeratio_multinomial(3, 1, 2))	true	
+the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3	enumeratio_equal(enumeratio_multinomial(3, 4, 5), enumeratio_div(factorial(ZZ(12)), (factorial(ZZ(3)) * factorial(ZZ(4)) * factorial(ZZ(5)))))	true	
+all-ones-parts-give-n-every-part-is-a-single	enumeratio_multinomial(1, 1, 1, 1)	24	
+all-zero-arguments-still-give-the-empty-product	enumeratio_multinomial(0, 0, 0)	1	
+a-single-argument-is-always-1-there-s-only-one	enumeratio_multinomial(5)	1	
+a-single-symbolic-argument-is-also-1			
+with-no-arguments-it-is-the-empty-product-1	enumeratio_multinomial()	1	

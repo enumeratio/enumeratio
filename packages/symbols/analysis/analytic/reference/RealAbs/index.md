@@ -10,6 +10,15 @@ signatures:
     type: (number) -> number
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(abs, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Agrees with native [[Abs]] on every real x -- RealAbs exists so a plot or a domain check can say "real only" and mean it, the way Wolfram's does.

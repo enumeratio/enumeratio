@@ -1,0 +1,58 @@
+id	in	out	verdict
+a-pole-of-gamma	enumeratio_ball(gamma, 0)	NaN	disagree
+a-pole-of-gamma-at-negative-1	enumeratio_ball(gamma, -1)	NaN	disagree
+a-pole-of-gamma-at-negative-2	enumeratio_ball(gamma, -2)	NaN	disagree
+a-floating-point-argument-evaluates-directly-to	enumeratio_ball(gamma, 2.5)	1.329340388179137020473625612505858887098162092091790346160355842389683463443264	
+threads-over-a-list-so-poles-evaluate-concretely	Any[enumeratio_ball(gamma, 0), enumeratio_ball(gamma, -1)]	[NaN, NaN]	disagree
+three-arguments-the-integral-between-two-limits	enumeratio_ball((a, z0, z1) -> gamma(a, z0) - gamma(a, z1), 2.5, 0, 1.5)	0.3988209453923446296063842532125185034298388408665073085350513093216150092030404	
+int-3-2-3-t-3-2-e-t-dt-gamma-5-2-3-2-gamma-5-2-3	enumeratio_ball((a, z0, z1) -> gamma(a, z0) - gamma(a, z1), 2.5, 1.5, 3)	0.5234502669154893924330021845652296391726328837711872953114305936842412776550054	
+a-machine-precision-argument-gamma-4-5-11-6317	enumeratio_ball(gamma, 4.5)	11.63172839656744892914422410942626526210891830580316552890311362090973030512858	
+gamma-5-4-24	enumeratio_ball(gamma, 5)	24.0	
+two-arguments-with-a-complex-second-argument	enumeratio_ball(gamma, 2.5, enumeratio_complex(1.5, 1))	(0.9148161703240986772647374511525832280190266616885138184995539135747894150235062-0.4535560131834821666044955045824094287407066063122933948867734114523048703642477j)	
+n-gamma-1-0-2-exponential-cdf-at-a-concrete-z	(enumeratio_ball((a, z0, z1) -> gamma(a, z0) - gamma(a, z1), 1, 0, 2))	0.8646647167633873081060005050275155965923684540904241185318411273459266258985063	
+three-arguments-fully-symbolic-in-both-order-and			
+gamma-0-5-0-0-25	enumeratio_ball((a, z0, z1) -> gamma(a, z0) - gamma(a, z1), 0.5, 0, 0.25)	0.9225620128255848975114058734809062061675181779285822933609451318699677685905703	
+gamma-neg1-5-0-1-5	enumeratio_ball((a, z0, z1) -> gamma(a, z0) - gamma(a, z1), -1.5, 0, 1.5)	(NaN+NaNj)	inconclusive
+gamma-3-1-7-all-integers	(enumeratio_ball((a, z0, z1) -> gamma(a, z0) - gamma(a, z1), 3, 1, 7))	1.780124878096168054457415005320700966508263560875495672886135336064491285919301	
+gamma-2-5-0-complex-1-5-plus-i	enumeratio_ball((a, z0, z1) -> gamma(a, z0) - gamma(a, z1), 2.5, 0, enumeratio_complex(1.5, 1))	(0.4145242178550383432088881613532756590791354304032765276608019288148940484197582+0.4535560131834821666044955045824094287407066063122933948867734114523048703642477j)	
+gamma-complex-2-plus-i-0-1-5	enumeratio_ball((a, z0, z1) -> gamma(a, z0) - gamma(a, z1), enumeratio_complex(2, 1), 0, 1.5)	(0.3640660255701452314341888433817312462605335904026402992526685037788057201083646-0.0865814812845660083355140381366158967299207739876442842335057927832407144418112j)	
+gamma-three-complex-arguments	enumeratio_ball((a, z0, z1) -> gamma(a, z0) - gamma(a, z1), enumeratio_complex(2, 1), enumeratio_complex(0.5, -1), enumeratio_complex(1.5, 1))	(0.6577220936262111887884894415549073028956631459015355152768206481240389840729495+1.142433810813164559058887675644620433535950140144813261755493774307705416232909j)	
+gamma-0-1-4-all-integers	(enumeratio_ball((a, z0, z1) -> gamma(a, z0) - gamma(a, z1), 0, 1, 4))	0.2156045819856713671982889153276552341793307463644186272172445927599840923867747	
+gamma-neg1-5-neg1-0-001	enumeratio_ball((a, z0, z1) -> gamma(a, z0) - gamma(a, z1), -1.5, -1, 0.001)	(-21018.57389532234049224007345043173239126242589023082035264287048568824789333007+1.536159001165606180576445377753356581858840597488614654840296374864784422597796j)	disagree
+threads-over-a-list-and-reduces-each-integer	Any[enumeratio_ball(gamma, 1), enumeratio_ball(gamma, 2), enumeratio_ball(gamma, 3), enumeratio_ball(gamma, 4), enumeratio_ball(gamma, 5)]	[1.0, 1.0, 2.0, 6.0, 24.0]	
+gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer	enumeratio_ball(gamma, (5 // 2))	1.329340388179137020473625612505858887098162092091790346160355842389683463443264	
+complex-arguments-evaluate-directly	enumeratio_ball(gamma, enumeratio_complex(2.3, 1))	(0.7191409365372817341291659794009155758437758640991515280552144833491558845411891+0.5406144679098491417456616200379100617169154074498850913941988475116114274165831j)	
+half-integers-have-closed-forms-gamma-7-2-frac	enumeratio_ball(gamma, (7 // 2))	3.323350970447842551184064031264647217745405230229475865400889605974208658608152	
+including-negative-half-integers-gamma-3-2-frac	enumeratio_ball(gamma, (-3 // 2))	2.363271801207354703064223311121526910396732608163182837618410386470548379454688	
+gamma-infty-infty	enumeratio_ball(gamma, Inf)	non-finite argument	error
+values-far-past-the-double-range-gamma-200-5	enumeratio_ball(gamma, 200.5)	5.573168944801379133643202962906591494177937847961640531808357736658150107921583e373	
+two-arguments-the-upper-incomplete-gamma-gamma-5	enumeratio_ball(gamma, 2.5, 1.5)	0.9305194427867923908672413592933403836683232512252830376253045330680684542402239	
+an-integer-order-reduces-to-a-closed-form-gamma			
+gamma-2-1-2-e-the-same-closed-form-at-an-exact	enumeratio_ball(gamma, 2, 1)	0.7357588823428846431910475403229217348916222620635356690156736033949229914897963	
+listable-threads-elementwise-over-a-matrix-and	Any[Any[enumeratio_ball(gamma, 2, (7 // 2)), enumeratio_ball(gamma, 2, 0)], Any[enumeratio_ball(gamma, 2, 0), enumeratio_ball(gamma, 2, (13 // 2))]]	[[0.1358882254004332533290383156362893028224723951144565300210310038827012661466272, 1.0], [1.0, 0.01127579394733179335537177499125740372500384718727223822417037433974087276460033]]	
+interval-arithmetic-the-image-of-1-4-1-5-whose			
+uncertainty-propagation-gamma-2-5-pm-0-01-1-3293			
+to-40-significant-digits-every-one-correctly	enumeratio_n(enumeratio_ball(gamma, (1 // 3)), 40)	2.678938534707747633655692940974677644128999999999999999999999999999999999999983	
+gamma-neg-infty-indeterminate	enumeratio_ball(gamma, (-Inf))	non-finite argument	error
+gamma-complex-infinity-indeterminate			
+gamma-i-infty-0			
+gamma-directed-infinity-i			
+gamma-threads-over-the-infinities			
+the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2	enumeratio_equal(enumeratio_div(enumeratio_pow(const_pi(RR), 2), enumeratio_ball(gamma, 3)), enumeratio_div(enumeratio_pow(const_pi(RR), 2), 2))	true	
+extends-the-factorial-gamma-n-1-n-so-gamma-6-5	enumeratio_equal(enumeratio_ball(gamma, 6), factorial(ZZ(5)))	true	
+functional-equation-gamma-z-1-z-gamma-z-here-at	enumeratio_equal(enumeratio_ball(gamma, 6), (5 * enumeratio_ball(gamma, 5)))	true	
+reflection-formula-gamma-z-gamma-1-z-pi-sin-pi-z	enumeratio_equal((enumeratio_ball(gamma, (1 // 3)) * enumeratio_ball(gamma, (2 // 3))), enumeratio_div(const_pi(RR), enumeratio_ball(sin, enumeratio_div(const_pi(RR), 3))))	true	
+gamma-1-2-sqrt-pi	enumeratio_equal(enumeratio_ball(gamma, (1 // 2)), enumeratio_ball(sqrt, const_pi(RR)))	true	
+gamma-1-z-e-z-exact-and-symbolic-in-z			
+so-gamma-1-z-1-e-z-the-exponential-distribution			
+now-that-gamma-2-z-has-a-closed-form-the-three			
+gamma-a-0-gamma-a-the-incomplete-gamma-from-zero			
+gamma-0-z-e-1-z-the-exponential-integral-e-1-3-2	enumeratio_ball(gamma, 0, 1.5)	0.1000195824066326519019093399116669782617300061403505850505670603647199164241685	
+gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc			
+gamma-x-gamma-x-psi-x-so-the-logarithmic			
+1-over-gamma-1-over-2	enumeratio_div(1, enumeratio_ball(gamma, (1 // 2)))	0.5641895835477562869480794515607725858440506293289988568440857217106424684414956	
+gamma-1-over-2-pow-2	enumeratio_pow(enumeratio_ball(gamma, (1 // 2)), 2)	3.141592653589793238462643383279502884197169399375105820974944592307816406286163	
+gamma-neg-1-over-2-times-gamma-1-over-2	(enumeratio_ball(gamma, (-1 // 2)) * enumeratio_ball(gamma, (1 // 2)))	-6.283185307179586476925286766559005768394338798750211641949889184615632812572327	
+product-gamma-1-over-2-times-2k-plus-1-over-2-k			
+squaring-the-reflection-formula-at-z-1-2	enumeratio_equal(enumeratio_pow(enumeratio_ball(gamma, (1 // 2)), 2), const_pi(RR))	true	
+gamma-i-2-pi-sinh-pi-0-27203	(enumeratio_pow(enumeratio_ball(abs, enumeratio_ball(gamma, onei(CC))), 2))	0.272029054982133162950236583672037555840718363460315949506896783856246191369482	

@@ -1,0 +1,24 @@
+id	in	out	verdict
+erf-0	enumeratio_ball(erf, 0)	0.0	
+erf-infinity			
+erf-negativeinfinity	enumeratio_ball(erf, (-Inf))	non-finite argument	error
+erf-complexinfinity			
+a-floating-point-argument-evaluates-directly-to	enumeratio_ball(erf, 0.5)	0.5204998778130465376827466538919645287364515757579637000588057256471935217168533	
+a-machine-precision-argument	enumeratio_ball(erf, 0.95)	0.8208908072732779215855571355296570051433826761866844718561541922900859108884231	
+threads-element-wise-over-a-list-as-wolfram-s	Any[enumeratio_ball(erf, 0), enumeratio_ball(erf, 1)]	[0.0, 0.8427007929497148693412206350826092592960669979663029084599378978347172540960087]	
+complex-arguments-evaluate-directly	enumeratio_ball(erf, enumeratio_complex(1.5, -1))	(1.078399207498933450339332704058212369612161236680430666536585290045328572037602+0.02796371123865584944846589620590720850669453672086516245384023903560535666840492j)	
+two-arguments-the-generalized-erf-z-0-z-1-erf-z	enumeratio_ball((a, b) -> erf(b) - erf(a), 0.5, 1.5)	0.4456052686622641893842296077539833299449589034996730803911621207949393327068965	
+which-with-exact-arguments-is-the-difference-erf	enumeratio_ball((a, b) -> erf(b) - erf(a), 1, 2)	0.1526214720692378648208486212846436693148247990737571682784144283657200266239822	
+interval-arithmetic-erf-is-increasing-so-the			
+uncertainty-propagation-with-slope-frac-2-sqrt			
+to-40-significant-digits-every-one-correctly	enumeratio_n(enumeratio_ball(erf, 1), 40)	0.8427007929497148693412206350826092592961000000000000000000000000000000000000042	
+erf-1-sqrt-2-approx-0-6827-the-68-in-the	enumeratio_ball(erf, 0.7071067811865476)	0.6826894921370859302517765626378397729507466844353083997746274941990376898287244	
+the-standard-normal-cdf-phi-x-frac-12-1-erf-x	(0.5 * (1 + enumeratio_ball(erf, enumeratio_div(1.96, enumeratio_ball(sqrt, 2)))))	0.9750021048517795637871763076044464749059831779509204825747097974105514033112789	
+odd-function-erf-z-erf-z-here-at-z-2	enumeratio_equal((enumeratio_ball(erf, 2) + enumeratio_ball(erf, -2)), 0)	true	
+complementary-with-erfc-erf-z-erfc-z-1-see-erfc	enumeratio_equal((enumeratio_ball(erf, 2) + enumeratio_ball(erfc, 2)), 1)	true	
+oddness-applied-symbolically-erf-x-erf-x			
+erf-erfinv-x-x-symbolically-see-erfinv			
+on-the-imaginary-axis-erf-i-i-erfi-1	enumeratio_ball(erf, onei(CC))	(0.0+1.650425758797542876025337729561362443895679874874022877600257996316111304925634j)	
+frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the			
+an-exact-integer-argument-is-left-unevaluated	enumeratio_ball(erf, 1)	0.8427007929497148693412206350826092592960669979663029084599378978347172540960087	
+by-z-3-5-erf-is-already-within-10-6-of-its-limit	enumeratio_ball(erf, 3.5)	0.9999992569016276585872544763162439043642793399078272025374088904300564999604088	

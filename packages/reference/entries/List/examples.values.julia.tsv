@@ -1,14 +1,14 @@
-id	in
-2-times-list-1-2-3	(2 * [1, 2, 3])
-a-times-list-list-1-2-list-3-4	
-outer-f-list-1-2-list-a-b-c	
-prepend-list-1-2-3-list-a-b-c	
-flatten-list-list-1-2-list-a-b-c	
-map-f-list-1-2-3-4	
-list-a-b-c-plus-list-1-2-3	
-subsets-list-1-2-3	
-solve-list-x-minus-y-eq-1-x-plus-y-eq-0-x-y	
-map-f-list-list-1-2-list-3-4-list-5-6-list-2	
-solve-list-x-plus-y-plus-z-eq-0-x-plus-y-eq-1-y	
-exponentiale-pow-list-list-1-2-3-list-4-5-6	
-insert-list-1-2-3-2-list-a-b-c	
+id	in	out
+2-times-list-1-2-3	(2 * Any[1, 2, 3])	[2, 4, 6]
+a-times-list-list-1-2-list-3-4		
+outer-f-list-1-2-list-a-b-c		
+prepend-list-1-2-3-list-a-b-c		
+flatten-list-list-1-2-list-a-b-c		
+map-f-list-1-2-3-4		
+list-a-b-c-plus-list-1-2-3		
+subsets-list-1-2-3		
+solve-list-x-minus-y-eq-1-x-plus-y-eq-0-x-y		
+map-f-list-list-1-2-list-3-4-list-5-6-list-2		
+solve-list-x-plus-y-plus-z-eq-0-x-plus-y-eq-1-y		
+exponentiale-pow-list-list-1-2-3-list-4-5-6	Any[Any[enumeratio_pow(const_e(RR), 1), enumeratio_pow(const_e(RR), 2), enumeratio_pow(const_e(RR), 3)], Any[enumeratio_pow(const_e(RR), 4), enumeratio_pow(const_e(RR), 5), enumeratio_pow(const_e(RR), 6)]]	[[2.71828182845904523536028747135266249775724709369995957496696762772407663035352, 7.389056098930650227230427460575007813180315570551847324087127822522573796078846, 20.08553692318766774092852965458171789698790783855415014437893422969884587809136], [54.59815003314423907811026120286087840279073703861406872582659395855366209993228, 148.4131591025766034211155800405522796234876675938789890467528451109120648209496, 403.4287934927351226083871805433882796058998973571292026139671883251511806339566]]
+insert-list-1-2-3-2-list-a-b-c		

@@ -1,0 +1,52 @@
+id	in	out	verdict
+abs-neg-5	enumeratio_ball(abs, -5)	5.0	
+abs-5	enumeratio_ball(abs, 5)	5.0	
+0-is-the-only-value-with-x-0	enumeratio_ball(abs, 0)	0.0	
+abs-neg-7-over-2	enumeratio_ball(abs, (-7 // 2))	3.5	
+the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	enumeratio_ball(abs, enumeratio_complex(3, 4))	5.0	
+threads-element-wise-over-a-list	Any[enumeratio_ball(abs, -1), enumeratio_ball(abs, 2), enumeratio_ball(abs, -3)]	[1.0, 2.0, 3.0]	
+abs-neg-2p5	enumeratio_ball(abs, -2.5)	2.5	
+the-modulus-of-a-complex-number-with-approximate	enumeratio_ball(abs, enumeratio_complex(1.4, 2.3))	2.692582403567251817708644836441055617472028943206695499857626651397974490457919	
+threads-over-a-matrix-entry-by-entry	Any[Any[enumeratio_ball(abs, (1 // 2)), enumeratio_ball(abs, -1)], Any[enumeratio_ball(abs, (-5 // 3)), enumeratio_ball(abs, (1 // 2))]]	[[0.5, 1.0], [1.666666666666666666666666666666666666666666666666666666666666666666666666666661, 0.5]]	
+exact-numeric-constants	enumeratio_ball(abs, (-(const_pi(RR))))	3.141592653589793238462643383279502884197169399375105820974944592307816406286198	
+an-exact-complex-number-gives-an-exact-radical	enumeratio_ball(abs, enumeratio_complex(1, 1))	1.414213562373095048801688724209698078569671875376948073176679737990732478462102	
+abs-imaginaryunit	enumeratio_ball(abs, onei(CC))	1.0	
+e-i-pi-3-lies-on-the-unit-circle	enumeratio_ball(abs, enumeratio_ball(exp, (onei(CC) * enumeratio_div(const_pi(RR), 3))))	0.9999999999999999999999999999999999999999999999999999999999999999999999999999827	
+abs-negativeinfinity	enumeratio_ball(abs, (-Inf))	non-finite argument	error
+complex-infinity-has-infinite-magnitude-in-every			
+an-interval-maps-to-the-interval-of-absolute			
+an-interval-straddling-0-maps-to-0-the-larger			
+decides-the-sign-of-an-exact-numeric-expression	enumeratio_ball(abs, (enumeratio_ball(sqrt, 2) - 2))	0.585786437626904951198311275790301921430328124623051926823320262009267521537898	
+a-complex-radicand-inside-the-subtraction	enumeratio_ball(abs, (enumeratio_ball(sqrt, -10) - 2))	3.741657386773941385583748732316549301756019807778726946303745467320035156306928	
+n-abs-pi-plus-i-times-catalan-25			
+fullsimplify-matrixfunction-abs-list-list-1-over			
+abs-positiveinfinity	enumeratio_ball(abs, Inf)	non-finite argument	error
+abs-positiveinfinity-times-i	enumeratio_ball(abs, (Inf * enumeratio_complex(0, 1)))	NaN	disagree
+piecewiseexpand-abs-imaginaryunit-times-x-neg-2			
+complexexpand-abs-x			
+complexexpand-abs-x-plus-i-times-y			
+apply-derivative-abs-1-x			
+the-gap-between-two-temperatures-70-and-95	enumeratio_ball(abs, (70 - 95))	25.0	
+the-distance-between-the-points-1-i-and-4-5i-of	enumeratio_ball(abs, (enumeratio_complex(1, 1) - enumeratio_complex(4, 5)))	5.0	
+even-function-x-x	enumeratio_equal(enumeratio_ball(abs, -8), enumeratio_ball(abs, 8))	true	
+triangle-inequality-a-b-le-a-b			
+z-2-z-bar-z	enumeratio_equal(enumeratio_pow(enumeratio_ball(abs, enumeratio_complex(3, 4)), 2), (enumeratio_complex(3, 4) * enumeratio_ball(conj, enumeratio_complex(3, 4))))	true	
+multiplicative-ab-a-b	enumeratio_equal(enumeratio_ball(abs, (enumeratio_complex(1, 2) * enumeratio_complex(3, -1))), (enumeratio_ball(abs, enumeratio_complex(1, 2)) * enumeratio_ball(abs, enumeratio_complex(3, -1))))	true	
+abs-1	enumeratio_ball(abs, 1)	1.0	
+abs-neg-1	enumeratio_ball(abs, -1)	1.0	
+abs-neg-i	enumeratio_ball(abs, enumeratio_complex(0, -1))	1.0	
+abs-neg-1-plus-i	enumeratio_ball(abs, enumeratio_complex(-1, 1))	1.414213562373095048801688724209698078569671875376948073176679737990732478462102	
+abs-neg-1-minus-i	enumeratio_ball(abs, enumeratio_complex(-1, -1))	1.414213562373095048801688724209698078569671875376948073176679737990732478462102	
+abs-1-minus-i	enumeratio_ball(abs, enumeratio_complex(1, -1))	1.414213562373095048801688724209698078569671875376948073176679737990732478462102	
+abs-sqrt-3-plus-i	enumeratio_ball(abs, (enumeratio_ball(sqrt, 3) + enumeratio_complex(0, 1)))	1.999999999999999999999999999999999999999999999999999999999999999999999999999983	
+abs-1-plus-sqrt-3-times-i	enumeratio_ball(abs, (1 + enumeratio_complex(0, enumeratio_ball(sqrt, 3))))	1.999999999999999999999999999999999999999999999999999999999999999999999999999983	
+abs-neg-1-plus-sqrt-3-times-i	enumeratio_ball(abs, (-1 + enumeratio_complex(0, enumeratio_ball(sqrt, 3))))	1.999999999999999999999999999999999999999999999999999999999999999999999999999983	
+abs-neg-sqrt-3-plus-i	enumeratio_ball(abs, ((-(enumeratio_ball(sqrt, 3))) + enumeratio_complex(0, 1)))	1.999999999999999999999999999999999999999999999999999999999999999999999999999983	
+abs-neg-sqrt-3-minus-i	enumeratio_ball(abs, ((-(enumeratio_ball(sqrt, 3))) + enumeratio_complex(0, -1)))	1.999999999999999999999999999999999999999999999999999999999999999999999999999983	
+abs-neg-1-plus-neg-sqrt-3-times-i	enumeratio_ball(abs, (-1 + enumeratio_complex(0, (-(enumeratio_ball(sqrt, 3))))))	1.999999999999999999999999999999999999999999999999999999999999999999999999999983	
+abs-1-plus-neg-sqrt-3-times-i	enumeratio_ball(abs, (1 + enumeratio_complex(0, (-(enumeratio_ball(sqrt, 3))))))	1.999999999999999999999999999999999999999999999999999999999999999999999999999983	
+abs-sqrt-3-minus-i	enumeratio_ball(abs, (enumeratio_ball(sqrt, 3) + enumeratio_complex(0, -1)))	1.999999999999999999999999999999999999999999999999999999999999999999999999999983	
+abs-2	enumeratio_ball(abs, 2)	2.0	
+abs-1-over-2-pow-2	enumeratio_pow(enumeratio_ball(abs, (1 // 2)), 2)	0.25	
+abs-2-pow-2	enumeratio_pow(enumeratio_ball(abs, 2), 2)	4.0	
+doesn-t-factor-constants-out-of-a-symbolic			

@@ -3,17 +3,17 @@ id	in	out	verdict
 6-factorial	factorial(ZZ(6))	720	
 the-empty-product-is-1-by-convention	factorial(ZZ(0))	1	
 10-factorial	factorial(ZZ(10))	3628800	
-threads-element-wise-over-a-list	factorial(ZZ([1, 2, 3, 4]))	MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but 	error
+threads-element-wise-over-a-list	Any[factorial(ZZ(1)), factorial(ZZ(2)), factorial(ZZ(3)), factorial(ZZ(4))]	[1, 2, 6, 24]	
 frac-n-n-1-simplifies-to-n-under-simplify-plain			
 real-arguments-evaluate-as-gamma-n-1	factorial(ZZ(3.5))	InexactError: convert(ZZRingElem, 3.5)	error
 negative-non-integers-are-defined-too-2-5-gamma	factorial(ZZ(-2.5))	InexactError: convert(ZZRingElem, -2.5)	error
-complex-arguments-1-i-gamma-2-i	factorial(ZZ(complex(1, 1)))	MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but	error
+complex-arguments-1-i-gamma-2-i	factorial(ZZ(enumeratio_complex(1, 1)))	MethodError: no method matching (::ZZRing)(::ComplexFieldElem) The object of type `ZZRing` exists, b	error
 frac-12-gamma-frac-12-sqrt-pi-returned-as-a	factorial(ZZ((-1 // 2)))	AssertionError: denominator(x) == 1	error
-infty-infty			
+infty-infty	factorial(ZZ(Inf))	InexactError: convert(ZZRingElem, Inf)	error
 the-number-of-ways-to-arrange-8-distinct-books	factorial(ZZ(8))	40320	
-recurrence-n-n-n-1	(factorial(ZZ(5)) == (5 * factorial(ZZ(4))))	true	
+recurrence-n-n-n-1	enumeratio_equal(factorial(ZZ(5)), (5 * factorial(ZZ(4))))	true	
 extends-to-non-integers-via-the-gamma-function	factorial(ZZ((1 // 2)))	AssertionError: denominator(x) == 1	error
-n-gamma-n-1-see-gamma			
+n-gamma-n-1-see-gamma	enumeratio_equal(factorial(ZZ(5)), enumeratio_ball(gamma, 6))	true	
 the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e			
 sum-k-factorial-pow-neg-4-times-k-plus-2			
 sum-k-factorial-pow-neg-4-times-k-plus-3			

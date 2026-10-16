@@ -1,0 +1,49 @@
+id	in	out	verdict
+h-10-frac-7381-2520	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), 10)	2.928968253968253968253968253968253968253968253968253968253968253968253968253926	
+h-0-0-the-empty-sum	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), 0)	8.636168555094444625386351862800399571116000364436281385023703470168591803162427e-78	
+h-5-1-sum-k-1-5-k-15-a-negative-order-is-still	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 5, -1)	14.99999999999999999999999999999999999999999999999999999999999999999999999999986	
+a-floating-point-argument-evaluates-via-psi-z-1	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), 2.5)	1.680372305546776047832202423750313530515666397946156158425306647679879422727266	
+h-10-2-sum-k-1-10-k-2-exact	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 10, 2)	1.549767731166540690350214159737969261778785588309397833207357016880826404635909	
+h-1-the-first-term	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), 1)	1.0	
+h-10-3-exact-generalized-sum	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 10, 3)	1.197531985674193251668686286978048126952132998996188716521293996728615020376149	
+h-5-0-sum-k-1-5-1-5	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 5, 0)	5.0	
+h-0-3-the-empty-sum-at-a-nonzero-order	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 0, 3)	0.0	
+h-0-2-the-empty-sum-at-order-2	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 0, 2)	0.0	
+no-sum-below-n-0-one-argument-form	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), -1)	NaN	disagree
+no-sum-below-n-0-two-argument-form	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), -2, 3)	(NaN+NaNj)	disagree
+symbolic-n-one-argument-form-stays-symbolic			
+n-harmonicnumber-0p5	(enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), 0.5))	0.6137056388801093811655357570836468638489997312794894917586399810132127560606089	
+n-harmonicnumber-complex-3-plus-2i	(enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), enumeratio_complex(3, 2)))	(1.972576411044741156494151191314718020436816107607015826375519840240904657233575+0.5169611287960763822322414960067333730695439777431470516513256070610078161450628j)	
+n-harmonicnumber-1-over-2-order-2	(enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), (1 // 2), 2))	0.7101318663035471270551696667079496215621001975864031245288835412599850591935869	
+n-harmonicnumber-5-order-1-over-2	(enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 5, (1 // 2)))	3.231670645876131228191827876353061742020561360880906057461121644561448096661522	
+n-harmonicnumber-2p5-order-1-not-the-zeta-1-pole	(enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 2.5, 1))	1.680372305546776047832202423750313530515666397946156158425306647679879422727266	
+h-10-1-order-1-reduces-to-the-plain-h-10	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 10, 1)	2.928968253968253968253968253968253968253968253968253968253968253968253968253926	
+h-2-is-three-halves	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), 2)	1.5	
+h-neg0-5	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), -0.5)	-1.386294361119890618834464242916353136151000268720510508241360018986787243939374	
+h-neg2-5	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), -2.5)	1.28037230554677604783220242375031353051566639794615615842530664767987942272727	
+h-10-5	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), 10.5)	2.97545479443731447397434373617026372136369006330728281986156560715865314298704	
+n-harmonicnumber-7-3-rational	(enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), (7 // 3)))	1.623753313452155109038664444366562148315302467790934106041587460421125541037471	
+h-complex-neg1-5-plus-4i	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), enumeratio_complex(-1.5, 4))	(1.99164559645282876021036214496773034669544089172791462994586089869830886807988+1.816950172910536115863444247074492913299426963232379523561913763588185294784995j)	
+h-complex-0-2-minus-3i	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), enumeratio_complex(0.2, -3))	(1.698347903345157459970405907727536821246542949442663372169178432816206873526928-1.339552003998770453691097886286353997265400261010915532764783489547621007089621j)	
+h-2-5-order-2	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 2.5, 2)	1.314576310747991571499614111152394066006544642030847568973327985704429503638032	
+h-0-5-order-3	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 0.5, 3)	0.7876585810424342876015710309313000554100822459570067092463706679489707652821118	
+n-harmonicnumber-complex-3-plus-2i-order-2	(enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), enumeratio_complex(3, 2), 2))	(1.429588703523849901094925457239243857800540073275581488084998036450156225343163+0.1218196329874664344892580836356081022243994250752627675819577013775194901299112j)	
+h-complex-neg1-5-plus-4i-order-3-2	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), enumeratio_complex(-1.5, 4), (3 // 2))	(2.005917820915590399557960960505330492494460812509259706239369590965699932569098+0.7781594851952996017579226518277693527207386069827220995356491887354579500605071j)	
+non-integer-arguments-via-psi-z-1-gamma	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), 0.33)	0.4415236469373635451975166757850090819066941621565990152384005617679064029051241	
+the-generalized-form-off-the-integers-via-zeta-r	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 0.8, 3)	0.9401240489487769965261009129554215373729147245844745410616530029395305006558468	
+complex-arguments	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), enumeratio_complex(1.5, 2))	(1.61704942307448654051315835004421292784052720251575591191714937588854422893894+0.7801971357298586774476533951666245431623430834619532415131421910805052023602918j)	
+order-r-1-off-the-integers-is-plain-h-z-h-e-1	(enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), const_e(RR), 1))	1.750021380536541733573071656710458030031843552124115367792860183068126654734892	
+listable-threads-over-a-list	Any[enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), 2), enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), 3), enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), 5), enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), 7), enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), 11)]	[1.5, 1.833333333333333333333333333333333333333333333333333333333333333333333333333322, 2.283333333333333333333333333333333333333333333333333333333333333333333333333329, 2.59285714285714285714285714285714285714285714285714285714285714285714285714281, 3.019877344877344877344877344877344877344877344877344877344877344877344877344854]	
+threads-elementwise-over-an-array-of-orders-and	Any[Any[enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 2, (1 // 2)), enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 2, 2)], Any[enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 2, 2), enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 2, (1 // 2))]]	[[1.707106781186547524400844362104849039284835937688474036588339868995366239231042, 1.249999999999999999999999999999999999999999999999999999999999999999999999999983], [1.249999999999999999999999999999999999999999999999999999999999999999999999999983, 1.707106781186547524400844362104849039284835937688474036588339868995366239231042]]	
+interval-arithmetic-in-the-order			
+uncertainty-propagation-in-the-order			
+to-exactly-30-significant-digits-not-yet-31-come	enumeratio_n(enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), (1 // 2)), 30)	0.6137056388801093811655357570840000000000000000000000000000000000000000000000004	
+order-1-gives-h-z-itself-not-the-zeta-1-pole	(enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 2.5, 1))	1.680372305546776047832202423750313530515666397946156158425306647679879422727266	
+at-an-integer-order-1-agrees-exactly-with-the	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 10, 1)	2.928968253968253968253968253968253968253968253968253968253968253968253968253926	
+no-sum-below-n-0	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), -3)	NaN	disagree
+h-1-2-2-2-ln-2-exact-at-rational-arguments-by	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), (1 // 2))	0.6137056388801093811655357570836468638489997312794894917586399810132127560606089	
+h-1-4-4-frac-pi-2-3-ln-2	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), (1 // 4))	0.3497621315252674525169819439857188536749148972316813271504876753659109309478144	
+symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays			
+the-harmonic-series-diverges	enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), Inf)	non-finite argument	error
+h-infty-r-zeta-r-for-r-1-the-basel-sum	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), Inf, 2)	non-finite argument	error
+a-non-integer-order-stays-symbolic-under-plain	enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), 5, (1 // 2))	3.231670645876131228191827876353061742020561360880906057461121644561448096661522	inconclusive

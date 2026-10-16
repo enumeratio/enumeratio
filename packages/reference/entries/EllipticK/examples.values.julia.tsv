@@ -1,0 +1,12 @@
+id	in	out	verdict
+series-elliptick-x-x-0-5			
+normal-series-elliptick-x-x-positiveinfinity-2			
+n-elliptick-4-over-5-50	enumeratio_n(enumeratio_ball(elliptic_k, (4 // 5)), 50)	2.25720532682085365508325600452338739723541928174	
+list-elliptick-0-elliptick-1	Any[enumeratio_ball(elliptic_k, 0), enumeratio_ball(elliptic_k, 1)]	[1.570796326794896619231321691639751442098584699687552910487472296153908203143099, NaN]	disagree
+elliptick-positiveinfinity	enumeratio_ball(elliptic_k, Inf)	non-finite argument	error
+functionexpand-elliptick-list-list-neg-1-0-list			
+functionexpand-matrixfunction-elliptick-list			
+series-elliptick-m-m-0-3			
+elliptick-1-plus-sqrt-2-minus-sqrt-2-times-1	enumeratio_ball(elliptic_k, enumeratio_pow((1 + enumeratio_ball(sqrt, 2) + (-(enumeratio_ball(sqrt, (2 * (1 + enumeratio_ball(sqrt, 2))))))), 4))	1.571665689206437042031861058437591105397806921254527952296192373178656438735453	
+elliptick-1	enumeratio_ball(elliptic_k, 1)	NaN	disagree
+n-elliptick-2-plus-neg-i-times-neg-1-minus-2pi	(enumeratio_ball(elliptic_k, (2 + (enumeratio_complex(0, -1) * (-1 + (-2 * const_pi(RR)) + (-(enumeratio_pow(const_e(RR), (-(enumeratio_pow(const_pi(RR), 4)))))) + (-(enumeratio_pow(const_pi(RR), 2))) + enumeratio_pow((1 + const_pi(RR)), 2))))))	(1.311028777146059905232419794945559706841377564057167794242307268531110264352288+1.311028777146059905232419794945559706841377238706647461482821438118340709362018j)	disagree

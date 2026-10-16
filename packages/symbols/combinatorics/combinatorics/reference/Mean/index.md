@@ -26,6 +26,13 @@ bindings:
     form: oscar
     template: (sum($1) // length($1))
     arity: 1
+  - origin: mapped
+    form: julia
+    template: enumeratio_mean($1)
+    arity: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - $Mean(c) = \dfrac{\sum c}{Length(c)}$. See [[Length]].

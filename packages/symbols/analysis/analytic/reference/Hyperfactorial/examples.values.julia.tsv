@@ -1,0 +1,10 @@
+id	in	out	verdict
+1-1-2-2-3-3-4-4	Combinatorics.hyperfactorial(big(4))	27648	
+the-empty-product	Combinatorics.hyperfactorial(big(0))	1	
+hyperfactorial-1-5	Combinatorics.hyperfactorial(big(1.5))	MethodError: no method matching hyperfactorial(::BigFloat) The function `hyperfactorial` exists, but	error
+hyperfactorial-2-5	Combinatorics.hyperfactorial(big(2.5))	MethodError: no method matching hyperfactorial(::BigFloat) The function `hyperfactorial` exists, but	error
+hyperfactorial-6-25	Combinatorics.hyperfactorial(big(6.25))	MethodError: no method matching hyperfactorial(::BigFloat) The function `hyperfactorial` exists, but	error
+listable	Any[Combinatorics.hyperfactorial(big(1)), Combinatorics.hyperfactorial(big(2)), Combinatorics.hyperfactorial(big(3)), Combinatorics.hyperfactorial(big(4)), Combinatorics.hyperfactorial(big(5)), Combinatorics.hyperfactorial(big(6))]	[1, 4, 108, 27648, 86400000, 4031078400000]	
+continued-off-the-integers	Combinatorics.hyperfactorial(big(0.5))	MethodError: no method matching hyperfactorial(::BigFloat) The function `hyperfactorial` exists, but	error
+h-10-well-past-double-range-exact-bigint	Combinatorics.hyperfactorial(big(10))	215779412229418562091680268288000000000000000	
+hyperfactorial-one-half-stays-exact	Combinatorics.hyperfactorial(big((1 // 2)))	MethodError: no method matching hyperfactorial(::Rational{BigInt}) The function `hyperfactorial` exi	error
