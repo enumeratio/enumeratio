@@ -71,4 +71,4 @@ bindings:
 - Agrees with [[Floor]] exactly on integers.
 - Threads element-wise over a list.
 - A second argument rounds up to the nearest multiple of it -- the step needn't be an integer.
-- The second argument is a step, a multiple to ceil to, as in Wolfram's `Ceiling[x, a]`: $\mathrm{Ceil}(226, 10) = 230$. [[Round]]'s second argument is a step too. Round breaks ties away from zero where Wolfram rounds them to even (see [[Round]]).
+- The second argument is a step, a multiple to ceil to, as in Wolfram's `Ceiling[x, a]`: $\mathrm{Ceil}(226, 10) = 230$. [[Round]]'s second argument is a step too. Round breaks ties to even, as Wolfram does (see [[Round]]).

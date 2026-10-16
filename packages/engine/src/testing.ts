@@ -1,4 +1,5 @@
 import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
+import { setEngineDefaults } from "./defaults.ts";
 import type { Engine } from "./facade.ts";
 import { latexEntries, type LatexRule } from "./latex.ts";
 
@@ -8,6 +9,7 @@ export type Declare = (ce: Engine) => void;
 /** A fresh engine with `declares` applied in order. */
 export const createEngine = (...declares: readonly Declare[]): Engine => {
   const ce = bareEngine();
+  setEngineDefaults(ce);
   for (const declare of declares) declare(ce);
   return ce;
 };
@@ -26,6 +28,7 @@ export const createLatexEngine = (rules: readonly LatexRule[], ...declares: read
       dictionary: [...LATEX_DICTIONARY.filter((entry) => !replaced.has(entry.name)), ...latexEntries(rules)],
     }),
   });
+  setEngineDefaults(ce);
   for (const declare of declares) declare(ce);
   return ce;
 };

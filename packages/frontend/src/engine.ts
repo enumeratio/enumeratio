@@ -5,6 +5,7 @@
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-syntax";
+import { setEngineDefaults } from "@enumeratio/engine";
 
 let engine: ComputeEngine | undefined;
 let enginePromise: Promise<ComputeEngine> | undefined;
@@ -96,6 +97,7 @@ function createEngine(): Promise<ComputeEngine> {
     engine = new ComputeEngine({
       latexSyntax: displayLatexSyntax(LATEX_DICTIONARY, latexEntries),
     });
+    setEngineDefaults(engine);
     for (const fn of configurators) fn(engine);
     return engine;
   })());

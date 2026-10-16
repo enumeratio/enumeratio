@@ -90,11 +90,7 @@ const wolfram: readonly SourceRow[] = [
   { expr: ["Stirling", 5, 2], label: "second-kind Stirling → StirlingS2" },
   { expr: ["Log", 100, 10], label: "rewritten: value-first args flip to base-first" },
   { expr: ["List", 1, 2, 3], label: "a list is List[…]" },
-  {
-    expr: ["Round", 2.5],
-    label: "rounding",
-    divergence: "Wolfram evaluates this to 2 (round-half-to-even), not 3 (half-away-from-zero).",
-  },
+  { expr: ["Round", 2.5], label: "rounding" },
   {
     expr: ["Union", ["List", 3, 1, 2], ["List", 2, 4]],
     label: "set union",

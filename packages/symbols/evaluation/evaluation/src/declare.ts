@@ -7,6 +7,7 @@ import {
   defineMessages,
   emit,
   optionsOf,
+  setEngineDefaults,
   stringAt,
   symbolNameOf,
   withDeadline,
@@ -33,6 +34,9 @@ const msOf = (seconds: number): number => Math.max(0, seconds * 1000);
 
 export function declareEvaluation(ce: ComputeEngine): void {
   ce.declare(ABORTED, "symbol");
+
+  // The settings every engine we ship shares: this runs in each worker and each planned engine.
+  setEngineDefaults(ce);
 
   // Fixes to compute-engine's own heads (Take, Drop, Solve, Range, …), so every engine has them
   // whichever libraries it declares.
