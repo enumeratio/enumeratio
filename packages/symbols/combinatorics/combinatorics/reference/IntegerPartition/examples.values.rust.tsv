@@ -1,2 +1,2 @@
-id	in
-parts	list(vec![n(3), n(2), n(1)])
+id	in	out
+parts	list(vec![n(3), n(2), n(1)])	[3, 2, 1]
