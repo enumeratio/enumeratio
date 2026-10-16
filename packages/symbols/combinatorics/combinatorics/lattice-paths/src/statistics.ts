@@ -66,8 +66,8 @@ const longestRunOf = (value: number): MathJSON => [
   1,
 ];
 
-// Bounce and dinv both read the AREA SEQUENCE — a value per up-step, against the diagonal,
-// not the axis (a different reading from `Area` above, which sums the height profile). a_i
+// Area, dinv and bounce all read the AREA SEQUENCE — a value per up-step, against the diagonal,
+// not the axis (the height profile sums to twice the area plus n). a_i
 // is the height right before the i-th up step — read straight off `heightAfter`, at the
 // position just before that step, rather than folded up while walking the word: a fold's
 // accumulator has to stay one uniform element type across every index compute-engine looks
@@ -80,18 +80,23 @@ const heightBefore = (i: MathJSON): MathJSON => ["If", less(i, 2), 0, heightAfte
 /** a_1 .. a_n, one entry per up step: the height right before taking it. */
 const areaSequence: MathJSON = forEach(where(positions, isUp("i")), heightBefore("i"));
 /**
- * H(0) .. H(n-1): the height directly above column x, one entry per down step. The NE
- * y-coordinate right before the down step is the mountain height there plus how many down
- * steps already happened — the count is `x` itself, 0 for the first down step.
+ * The bounce path starts at the end of the path and travels toward the origin, so it reads the
+ * path from the right: H(x) for x = 0 .. n-1 is the height after the (n-x)-th up step, plus x
+ * (the up steps still to come). `ups` holds the positions of the up steps.
  */
-const columnCeilings: MathJSON = forEach(
-  where(positions, isDown("i")),
-  add(heightBefore("i"), count(upTo(subtract("i", 1)), isDown("k"), "k")),
+const bounceCeilings: MathJSON = bind(
+  "ups",
+  where(positions, isUp("i")),
+  forEach(
+    upTo(["Divide", length(), 2]),
+    add(heightAfter(at(subtract(add(["Divide", length(), 2], 1), "j"), "ups")), subtract("j", 1)),
+    "j",
+  ),
 );
 const areaAt = (i: MathJSON): MathJSON => at(i, areaSequence);
 const semilength: MathJSON = ["Divide", length(), 2];
 
-// One tick of the bounce walk. Accumulator is (k, blockIndex, total): k is the current
+// One tick of the bounce walk, over the ceilings read from the end. Accumulator is (k, blockIndex, total): k is the current
 // diagonal touch point, blockIndex counts how many climbs have happened so far, total is the
 // running bounce weight. Once k reaches n the walk is done and the tick is a no-op, which is
 // what lets a fixed n-tick fold stand in for "until k reaches n".
@@ -101,9 +106,9 @@ const bounceStep: MathJSON = [
   ["List", carried(1), carried(2), carried(3)],
   [
     "List",
-    at(add(carried(1), 1), columnCeilings),
+    at(add(carried(1), 1), "ceilings"),
     add(carried(2), 1),
-    add(carried(3), ["Multiply", carried(2), subtract(at(add(carried(1), 1), columnCeilings), carried(1))]),
+    add(carried(3), ["Multiply", carried(2), subtract(at(add(carried(1), 1), "ceilings"), carried(1))]),
   ],
 ];
 
@@ -252,6 +257,35 @@ const peakMaxima = (beats: "Greater" | "GreaterEqual"): MathJSON => [
   2,
 ];
 
+/** Haglund's area: the whole squares between the path and the zigzag, the sum of the area sequence. */
+const areaValue: MathJSON = nonEmpty(["Divide", subtract(["Sum", profile], semilength), 2]);
+const dinvValue: MathJSON = atLeast(
+  4,
+  sumOver(
+    upTo(semilength),
+    // Guarded rather than left to `Range(i+1, n)`: compute-engine's `Range` does not
+    // collapse to empty when its start exceeds its end (it returns the two endpoints
+    // instead — the same gotcha `atLeast`/`hasPair` exist to dodge, just at the OTHER
+    // end of the range), so the last position's empty tail needs an explicit floor.
+    [
+      "If",
+      less("i", semilength),
+      count(
+        ["Range", add("i", 1), semilength],
+        or(equals(areaAt("i"), areaAt("j")), equals(areaAt("i"), add(areaAt("j"), 1))),
+        "j",
+      ),
+      0,
+    ],
+  ),
+);
+/** The bounce statistic, from the bounce path that starts at the end of the path. */
+const bounceWalk = (field: number): MathJSON =>
+  bind("ceilings", bounceCeilings, ["At", fold(upTo(semilength), ["List", 0, 0, 0], bounceStep), field]);
+const bounceValue: MathJSON = atLeast(2, bounceWalk(3));
+/** The number of cells of the staircase below the diagonal, binomial(n, 2). */
+const triangle: MathJSON = ["Divide", ["Multiply", semilength, subtract(semilength, 1)], 2];
+
 export const DYCK_STATISTICS: readonly Definition[] = [
   stat("Height", "The greatest height the path reaches.", nonEmpty(["Max", profile])),
 
@@ -310,20 +344,15 @@ export const DYCK_STATISTICS: readonly Definition[] = [
 
   stat(
     "Area",
-    "The area between the path and the axis: the total of the heights after each step.",
-    nonEmpty(["Sum", profile]),
-    'Ours is the sum of the heights after each step. FindStat\'s St000012 "area" counts the whole squares under the path instead, and is not this statistic.',
+    "The whole squares between the path and the diagonal below it: the sum of the area sequence.",
+    areaValue,
+    "Haglund's area (FindStat St000012). Half of: the total of the heights after each step, less the semilength.",
   ),
   stat(
     "Coarea",
-    "The complement of the area within the enclosing triangle.",
-    nonEmpty(
-      subtract(
-        ["Divide", ["Multiply", ["Divide", length(), 2], add(["Divide", length(), 2], 1)], 2],
-        ["Divide", ["Sum", profile], 1],
-      ),
-    ),
-    "Defined against the n(n+1)/2 triangle for a path of 2n steps.",
+    "The complement of the area within the staircase: binomial(n, 2) less the area.",
+    nonEmpty(subtract(triangle, areaValue)),
+    "Zero for the highest path, UU...DD, whose area is binomial(n, 2).",
   ),
   stat("LongestAscent", "The longest run of consecutive up steps.", nonEmpty(longestRunOf(1))),
   stat("LongestDescent", "The longest run of consecutive down steps.", nonEmpty(longestRunOf(0))),
@@ -331,26 +360,7 @@ export const DYCK_STATISTICS: readonly Definition[] = [
   stat(
     "Dinv",
     "The dinv statistic, read from the area sequence.",
-    atLeast(
-      4,
-      sumOver(
-        upTo(semilength),
-        // Guarded rather than left to `Range(i+1, n)`: compute-engine's `Range` does not
-        // collapse to empty when its start exceeds its end (it returns the two endpoints
-        // instead — the same gotcha `atLeast`/`hasPair` exist to dodge, just at the OTHER
-        // end of the range), so the last position's empty tail needs an explicit floor.
-        [
-          "If",
-          less("i", semilength),
-          count(
-            ["Range", add("i", 1), semilength],
-            or(equals(areaAt("i"), areaAt("j")), equals(areaAt("i"), add(areaAt("j"), 1))),
-            "j",
-          ),
-          0,
-        ],
-      ),
-    ),
+    dinvValue,
     "dinv = #{i<j : a_i=a_j} + #{i<j : a_i=a_j+1}; the two counts never overlap (a_i=a_j and a_i=a_j+1 can't both hold), so this is one pass over the pairs.",
   ),
 
@@ -363,9 +373,24 @@ export const DYCK_STATISTICS: readonly Definition[] = [
   // walk (it has at most n climbs) and idles for the rest.
   stat(
     "Bounce",
-    "The bounce statistic, which walks the path bouncing off its own peaks.",
-    atLeast(2, ["At", fold(upTo(semilength), ["List", 0, 0, 0], bounceStep), 3]),
-    "Equidistributed with Area: (Bounce, Area) and (Area, Dinv) share the same bivariate distribution (see dyck.test.ts).",
+    "The bounce statistic: the sum of the bounce points of the path that bounces from its end back toward the origin.",
+    bounceValue,
+    "FindStat St000005. (Bounce, Area) and (Area, Dinv) share the same bivariate distribution (see dyck-statistics.test.ts).",
+  ),
+  stat(
+    "BounceCount",
+    "The number of bounce points of the bounce path, not counting the two ends.",
+    atLeast(2, subtract(bounceWalk(2), 1)),
+  ),
+  stat(
+    "DinvDeficit",
+    "The binomial(n, 2) less the area and the dinv: the boxes of the partition traced out by the path where leg minus arm is not 0 or 1.",
+    nonEmpty(subtract(subtract(triangle, areaValue), dinvValue)),
+  ),
+  stat(
+    "BounceDeficit",
+    "The binomial(n, 2) less the area and the bounce.",
+    nonEmpty(subtract(subtract(triangle, areaValue), bounceValue)),
   ),
 
   // ── FindStat's Dyck-path statistics, named after their descriptions ──────────────────────

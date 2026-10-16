@@ -204,7 +204,8 @@ test("Area and Returns (carrier-only) dispatch correctly over every already-type
     let h = 0;
     return steps.map((s) => (h += s === 1 ? 1 : -1));
   };
-  const area = (steps: number[]): number => heights(steps).reduce((a, b) => a + b, 0);
+  // Haglund's area: the whole squares between the path and the diagonal.
+  const area = (steps: number[]): number => (heights(steps).reduce((a, b) => a + b, 0) - steps.length / 2) / 2;
   const returns = (steps: number[]): number => heights(steps).filter((h) => h === 0).length;
 
   for (const row of rows) {

@@ -692,6 +692,12 @@ export const findstat: readonly FindStatMatch[] = [
     values: 1000,
   },
   {
+    head: "Area",
+    on: "DyckPath",
+    findstat: ["St000012", "St001295"],
+    values: 196,
+  },
+  {
     head: "LongestAscent",
     on: "DyckPath",
     findstat: ["St000444"],
@@ -702,6 +708,30 @@ export const findstat: readonly FindStatMatch[] = [
     on: "DyckPath",
     findstat: ["St000006"],
     values: 1000,
+  },
+  {
+    head: "Bounce",
+    on: "DyckPath",
+    findstat: ["St000005"],
+    values: 1000,
+  },
+  {
+    head: "BounceCount",
+    on: "DyckPath",
+    findstat: ["St000306"],
+    values: 1000,
+  },
+  {
+    head: "DinvDeficit",
+    on: "DyckPath",
+    findstat: ["St000369"],
+    values: 1200,
+  },
+  {
+    head: "BounceDeficit",
+    on: "DyckPath",
+    findstat: ["St000376"],
+    values: 1200,
   },
   {
     head: "FirstComponentSemilength",

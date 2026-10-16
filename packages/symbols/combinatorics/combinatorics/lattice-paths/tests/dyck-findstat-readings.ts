@@ -70,7 +70,50 @@ const profileOccurrences = (w: Word, profile: readonly number[]): number => {
   return found;
 };
 
+/** a_1 .. a_n: the height right before each up step, the area sequence. */
+const areaSequence = (w: Word): number[] => {
+  const h = heights(w);
+  return w.flatMap((s, i) => (s === 1 ? [h[i]!] : []));
+};
+const areaOf = (w: Word): number => sum(areaSequence(w));
+const dinvOf = (w: Word): number => {
+  const a = areaSequence(w);
+  let found = 0;
+  for (let i = 0; i < a.length; i++)
+    for (let j = i + 1; j < a.length; j++) {
+      if (a[i] === a[j]) found++;
+      if (a[i] === a[j]! + 1) found++;
+    }
+  return found;
+};
+/**
+ * The bounce path starts at the end and travels toward the origin, so it is the walk of the
+ * mirror image (reversed, up and down swapped) from the start: climb to the ceiling above the
+ * current diagonal point, cross to the diagonal, repeat. Returns the bounce points reached.
+ */
+const bouncePoints = (w: Word): number[] => {
+  const n = w.length / 2;
+  const mirror = w.toReversed().map((s) => 1 - s);
+  const h = heights(mirror);
+  // The ceiling above column x: the height before the x-th down step plus x.
+  const ceilings = mirror.flatMap((s, i) => (s === 0 ? [h[i]!] : [])).map((height, x) => height + x);
+  const points = [0];
+  while (points[points.length - 1]! < n) points.push(ceilings[points[points.length - 1]!]!);
+  return points;
+};
+const bounceOf = (w: Word): number => {
+  const points = bouncePoints(w);
+  // Each climb weighs its length by the number of crossings before it.
+  return sum(points.slice(1).map((k, c) => c * (k - points[c]!)));
+};
+const triangle = (w: Word): number => ((w.length / 2) * (w.length / 2 - 1)) / 2 + 0;
+
 export const DYCK_READINGS: Record<string, (w: Word) => number> = {
+  Area: areaOf,
+  Bounce: bounceOf,
+  BounceCount: (w) => (w.length === 0 ? 0 : bouncePoints(w).length - 2),
+  DinvDeficit: (w) => triangle(w) - areaOf(w) - dinvOf(w),
+  BounceDeficit: (w) => triangle(w) - areaOf(w) - bounceOf(w),
   UpStepsAtEvenPositions: (w) => w.filter((s, i) => s === 1 && (i + 1) % 2 === 0).length,
 
   UpperInteractions: (w) => interactions(w, 0),
@@ -194,6 +237,11 @@ export const DYCK_READINGS: Record<string, (w: Word) => number> = {
 
 /** The FindStat statistic each reading is held to. */
 export const DYCK_FINDSTAT: Record<string, string> = {
+  Area: "St000012",
+  Bounce: "St000005",
+  BounceCount: "St000306",
+  DinvDeficit: "St000369",
+  BounceDeficit: "St000376",
   UpStepsAtEvenPositions: "St000329",
   UpperInteractions: "St000331",
   PyramidWeight: "St000144",
