@@ -10,7 +10,7 @@ round-2p6	round(2.6)	3
 round-5p37	round(5.37)	5	
 round-neg-3p7	round(-3.7)	-4	
 idempotent-round-round-x-round-x	round(round(SR.var("x")))	ValueError: could not convert x to a real number	error
-round-neg-1-over-2-exact-tie	round((-1/2))	0	disagree
+round-neg-1-over-2-exact-tie	round((-1/2))	0	
 stays-symbolic	round(SR.var("x"))	ValueError: could not convert x to a real number	error
 to-the-nearest-ten			
 an-exact-argument-rounds-to-an-exact-rational			
@@ -21,8 +21,8 @@ round-226-10
 rounding-a-price-to-the-nearest-cent-19-995			
 a-negative-second-argument-rounds-to-the-nearest			
 rounding-to-0-decimal-places-matches-the-1			
-rounds-half-away-from-zero-not-banker-s-rounding	round(2.5)	2	disagree
-and-by-the-same-convention-2-5-rounds-to-3-not-2	round(-2.5)	-2	disagree
-round-5-over-2-exact-rational-tie	round((5/2))	2	disagree
-an-exact-half-rounds-away-from-zero-as-well	round((1/2))	0	disagree
+rounds-half-to-even	round(2.5)	2	
+minus-2-5-rounds-to-minus-2	round(-2.5)	-2	
+round-5-over-2-exact-rational-tie	round((5/2))	2	
+an-exact-half-rounds-to-even	round((1/2))	0	
 round-complexinfinity-is-complexinfinity-the	round(unsigned_infinity)	TypeError: type UnsignedInfinity doesn't define __round__ method	error

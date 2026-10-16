@@ -71,4 +71,4 @@ bindings:
 - $\lfloor -x \rfloor = -\lceil x \rceil$.
 - Threads element-wise over a list.
 - A second argument floors to the nearest multiple of it -- the step needn't be an integer.
-- The second argument is a step, a multiple to floor to, as in Wolfram's `Floor[x, a]`: $\mathrm{Floor}(226, 10) = 220$. [[Round]]'s second argument is a step too. Round breaks ties away from zero where Wolfram rounds them to even (see [[Round]]).
+- The second argument is a step, a multiple to floor to, as in Wolfram's `Floor[x, a]`: $\mathrm{Floor}(226, 10) = 220$. [[Round]]'s second argument is a step too. Round breaks ties to even, as Wolfram does (see [[Round]]).

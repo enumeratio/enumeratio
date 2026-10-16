@@ -9,6 +9,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
 import { combineNotation, type PackageNotation, registerNotation } from "@enumeratio/boxes";
+import { setEngineDefaults } from "@enumeratio/engine";
 import { registerTeXMacros } from "@enumeratio/formats/tex";
 import { typeset as typesetTeX } from "@enumeratio/formats/typeset";
 import { displayLatexSyntax } from "@enumeratio/frontend/display";
@@ -56,6 +57,7 @@ export async function makeEngine(): Promise<ComputeEngine> {
   const ce = new ComputeEngine({
     latexSyntax: displayLatexSyntax(LATEX_DICTIONARY, notation.latex),
   });
+  setEngineDefaults(ce);
   registerNotation(ce, notation.traditional);
   return ce;
 }

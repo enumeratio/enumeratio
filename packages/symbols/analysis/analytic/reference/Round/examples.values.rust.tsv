@@ -1,28 +1,28 @@
-id	in	out
-round-7-over-2	round(rational(n(7), n(2)))	4
-round-3p5	round(x(3.5))	4.0
-round-3p7	round(x(3.7))	4.0
-integers-pass-through-unchanged	round(n(5))	5
-a-second-argument-rounds-to-that-many-decimal		
-threads-element-wise-over-a-list	list(vec![round(x(1.5)), round(x(-1.5)), round(x(2.4))])	[2.0, -2.0, 2.0]
-round-2p4	round(x(2.4))	2.0
-round-2p6	round(x(2.6))	3.0
-round-5p37	round(x(5.37))	5.0
-round-neg-3p7	round(x(-3.7))	-4.0
-idempotent-round-round-x-round-x		
-round-neg-1-over-2-exact-tie	round(rational(n(-1), n(2)))	-1
-stays-symbolic		
-to-the-nearest-ten		
-an-exact-argument-rounds-to-an-exact-rational		
-evaluates-at-an-exact-constant-round-pi-3	round(x(std::f64::consts::PI))	3.0
-100e-approx-271-83-rounds-to-272	round((n(100) * x(std::f64::consts::E)))	272.0
-rounds-the-real-and-imaginary-parts-separately		
-round-226-10		
-rounding-a-price-to-the-nearest-cent-19-995		
-a-negative-second-argument-rounds-to-the-nearest		
-rounding-to-0-decimal-places-matches-the-1		
-rounds-half-away-from-zero-not-banker-s-rounding	round(x(2.5))	3.0
-and-by-the-same-convention-2-5-rounds-to-3-not-2	round(x(-2.5))	-3.0
-round-5-over-2-exact-rational-tie	round(rational(n(5), n(2)))	3
-an-exact-half-rounds-away-from-zero-as-well	round(rational(n(1), n(2)))	1
-round-complexinfinity-is-complexinfinity-the		
+id	in	out	verdict
+round-7-over-2	round(rational(n(7), n(2)))	4	
+round-3p5	round(x(3.5))	4.0	
+round-3p7	round(x(3.7))	4.0	
+integers-pass-through-unchanged	round(n(5))	5	
+a-second-argument-rounds-to-that-many-decimal			
+threads-element-wise-over-a-list	list(vec![round(x(1.5)), round(x(-1.5)), round(x(2.4))])	[2.0, -2.0, 2.0]	
+round-2p4	round(x(2.4))	2.0	
+round-2p6	round(x(2.6))	3.0	
+round-5p37	round(x(5.37))	5.0	
+round-neg-3p7	round(x(-3.7))	-4.0	
+idempotent-round-round-x-round-x			
+round-neg-1-over-2-exact-tie	round(rational(n(-1), n(2)))	-1	disagree
+stays-symbolic			
+to-the-nearest-ten			
+an-exact-argument-rounds-to-an-exact-rational			
+evaluates-at-an-exact-constant-round-pi-3	round(x(std::f64::consts::PI))	3.0	
+100e-approx-271-83-rounds-to-272	round((n(100) * x(std::f64::consts::E)))	272.0	
+rounds-the-real-and-imaginary-parts-separately			
+round-226-10			
+rounding-a-price-to-the-nearest-cent-19-995			
+a-negative-second-argument-rounds-to-the-nearest			
+rounding-to-0-decimal-places-matches-the-1			
+rounds-half-to-even	round(x(2.5))	3.0	disagree
+minus-2-5-rounds-to-minus-2	round(x(-2.5))	-3.0	disagree
+round-5-over-2-exact-rational-tie	round(rational(n(5), n(2)))	3	disagree
+an-exact-half-rounds-to-even	round(rational(n(1), n(2)))	1	disagree
+round-complexinfinity-is-complexinfinity-the			
