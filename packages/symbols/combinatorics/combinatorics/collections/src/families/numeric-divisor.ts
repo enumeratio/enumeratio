@@ -6,6 +6,8 @@
 // same reason numeric-sets.ts carries its own isPrime/sumProperDivisors rather than
 // importing them. isAbundant/sumProperDivisors below are literally copied from
 // numeric-sets.ts's AbundantNumbers helpers to share its predicate style, as asked.
+import type { EpsilFamily } from "./epsil.ts";
+import { withScanDefinitions } from "./scan-definitions.ts";
 import type { Declared, NumberKernel } from "./types.ts";
 
 // ---- shared: memoised "nth n with predicate(n)" scan (copied from numeric-sets.ts). ----
@@ -344,7 +346,7 @@ function cacheEntry(cache: ReturnType<typeof nthMatchCache>): Pick<NumberKernel,
   };
 }
 
-export const entries: NumberKernel[] = [
+export const kernels: NumberKernel[] = [
   {
     head: "DeficientNumbers",
     paramCount: 0,
@@ -483,3 +485,6 @@ export const entries: NumberKernel[] = [
     rank: (element) => luckyRankOf(Number(element)),
   },
 ];
+
+/** Where a family has an Epsil definition (./scan-definitions.ts), that with the kernel as its fast path. */
+export const entries: (NumberKernel | EpsilFamily)[] = withScanDefinitions(kernels);

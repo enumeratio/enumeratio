@@ -9,6 +9,7 @@
 // imported -- that file isn't meant to export its internals across the family boundary
 // (each family file owns its own kernel), so this is a deliberate, reported duplication.
 import type { EpsilFamily } from "./epsil.ts";
+import { withScanDefinitions } from "./scan-definitions.ts";
 import { withSequenceDefinitions } from "./sequence-definitions.ts";
 import type { NumberKernel } from "./types.ts";
 
@@ -701,7 +702,7 @@ export const kernels: NumberKernel[] = [
     // would never end.
     count: ([k]) => (k < 0 ? 0 : k === 0 ? 1 : Number.POSITIVE_INFINITY),
     unrank: ([k], r) => (k <= 0 ? (k === 0 && r === 0 ? 1 : Number.NaN) : kAlmostCacheFor(k).nth(r + 1)),
-    valid: (element, [k]) => omega(Number(element)) === k,
+    valid: (element, [k]) => Number(element) >= 1 && omega(Number(element)) === k,
     rank: (element, [k]) => kAlmostCacheFor(k).rankOf(Number(element)),
   },
   {
@@ -828,4 +829,4 @@ export const kernels: NumberKernel[] = [
   },
 ];
 
-export const entries: (NumberKernel | EpsilFamily)[] = withSequenceDefinitions(kernels);
+export const entries: (NumberKernel | EpsilFamily)[] = withScanDefinitions(withSequenceDefinitions(kernels));
