@@ -9,7 +9,7 @@ laplacetransform-1-t-s	laplace(1, SR.var("t"), SR.var("s"))	1/s
 laplacetransform-3-times-t-pow-2-plus-5t-minus-7	laplace(((3 * ((SR.var("t"))^2)) + (5 * SR.var("t")) + -7), SR.var("t"), SR.var("s"))	-7/s + 5/s^2 + 6/s^3	
 laplacetransform-exponentiale-pow-neg-a-times-t	laplace(((e)^(-(SR.var("a") * SR.var("t")))), SR.var("t"), SR.var("s"))	1/(a + s)	
 simplify-laplacetransform-b-times-sinh-a-times-t	SR(laplace((((SR.var("b") * sinh((SR.var("a") * SR.var("t")))) + (-1 * (SR.var("a") * sinh((SR.var("b") * SR.var("t")))))) * (((((SR.var("a"))^2) + (-1 * ((SR.var("b"))^2))))^-1)), SR.var("t"), SR.var("s"))).simplify_full()	a*b/(a^2*b^2 + s^4 - (a^2 + b^2)*s^2)	disagree
-laplacetransform-1-over-t-times-exponentiale-pow	laplace(((1 / SR.var("t")) * (((e)^SR.var("t")) + -1)), SR.var("t"), SR.var("s"))	True	
+laplacetransform-1-over-t-times-exponentiale-pow	laplace(((1 / SR.var("t")) * (((e)^SR.var("t")) + -1)), SR.var("t"), SR.var("s"))	TypeError: Computation failed since Maxima requested additional constraints; using the 'assume' command before 	error
 laplacetransform-1-over-sqrt-t-times-chebyshevt	laplace(((1 / sqrt(SR.var("t"))) * chebyshev_T(SR.var("n"), ((1 / (SR.var("t") + 1)) * ((-SR.var("t")) + 1))) * (((SR.var("t") + 1))^SR.var("n"))), SR.var("t"), SR.var("s"))	RuntimeError: hermite_eval: The index n must be a nonnegative integer	error
 laplacetransform-gamma-nu-a-times-1-over-t-t-s	laplace(gamma_inc(SR.var("nu"), (SR.var("a") * (1 / SR.var("t")))), SR.var("t"), SR.var("s"))	laplace(gamma(nu, a/t), t, s)	disagree
 laplacetransform-diracdelta-t-minus-1-t-s			

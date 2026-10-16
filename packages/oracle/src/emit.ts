@@ -720,7 +720,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       missing.push(`${head}/${operands.length}`);
       return "0";
     }
-    const mapping = mappingFor(head, operands.length, extra);
+    const mapping = mappingFor(head, operands.length, extra, system);
     let template = mapping?.emit[system];
     if (system === "sympy" && template !== undefined) {
       const first = operands[0] as MathJSON;

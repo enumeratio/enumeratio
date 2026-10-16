@@ -10,6 +10,7 @@ symbolic-n-binom-n-1-n	enumeratio_binomial(SR.var("n"), 1)	n
 binom-n-n-1-n-for-symbolic-n	enumeratio_binomial(SR.var("n"), (SR.var("n") - 1))	n	
 binom-m-m-1-m-for-symbolic-m	enumeratio_binomial(SR.var("m"), (SR.var("m") + -1))	m	
 n-binomial-7-over-3-1-over-5-1-digit	enumeratio_n(enumeratio_binomial((7/3), (1/5)), 1)	1.00000000000000	
+pole-in-the-numerator-binom-neg-3-0p5	enumeratio_binomial(-3, 0.5)	Infinity	
 threads-element-wise-over-a-list-as-wolfram-s	[enumeratio_binomial(2, 3), enumeratio_binomial(3, 3), enumeratio_binomial(5, 3), enumeratio_binomial(7, 3), enumeratio_binomial(11, 3)]	[0, 1, 10, 35, 165]	
 half-integer-arguments-evaluate-exactly-through	enumeratio_binomial((9/2), (7/2))	9/2	
 real-arguments-evaluate-through-the-gamma	enumeratio_binomial(8.5, -4.2)	0.0000604992484022837	
