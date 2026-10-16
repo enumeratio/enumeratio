@@ -8,6 +8,7 @@ import type { EpsilFamily } from "./epsil.ts";
 import { withDefinitions } from "./numeric-definitions.ts";
 import { withScanDefinitions } from "./scan-definitions.ts";
 import type { Declared, NumberKernel } from "./types.ts";
+import { declineWork, factorsOf, matchCache, memoBy, PRIME_BITS, sigmaOf } from "./work.ts";
 
 // ---- PrimeNumbers: the segmented sieve/BPSW primality of @enumeratio/residues (issue #205's
 // nth-prime work) — no separate sieve of our own to keep in sync with it. ----
@@ -15,7 +16,7 @@ import type { Declared, NumberKernel } from "./types.ts";
 /** The k-th prime (1-indexed). */
 function nthPrime(k: number): number {
   const p = sieveNthPrime(k);
-  if (p === undefined) throw new RangeError(`nthPrime: ${k} past PRIME_PI_LIMIT`);
+  if (p === undefined) return declineWork(`nthPrime: ${k} past PRIME_PI_LIMIT`);
   return p;
 }
 
@@ -24,79 +25,34 @@ function isPrime(n: number): boolean {
   return Number.isInteger(n) && n >= 0 && isPrimeBig(BigInt(n));
 }
 
+/** π(n) takes about x^(3/4) steps (measured: a second at 5·10^11), so a rank is answered up to this. */
+const PRIME_RANK_LIMIT = 5e11;
+
 /** 0-indexed rank of a prime (its position in the sequence), or -1 if not prime. π(n) − 1
  *  for a prime n is its rank; the segmented sieve answers π exactly and fast. */
 function primeRank(n: number): number {
-  return isPrime(n) ? primeCountUpTo(n) - 1 : -1;
-}
-
-// ---- shared: memoised "nth n with predicate(n)" scan, for families with no closed form. ----
-
-/** Grows a cache of matches as higher ranks or values are requested, so repeated At/rank
- *  queries against the same predicate don't rescan from 1 every time. */
-function nthMatchCache(predicate: (n: number) => boolean) {
-  const matches: number[] = [];
-  let scanned = 0;
-  const extendTo = (count: number) => {
-    while (matches.length < count) {
-      scanned++;
-      if (predicate(scanned)) matches.push(scanned);
-    }
-  };
-  return {
-    /** The k-th match (1-indexed). */
-    nth: (k: number): number => {
-      extendTo(k);
-      return matches[k - 1];
-    },
-    /** 0-indexed rank of `value`, or -1 if it isn't a match. */
-    rankOf: (value: number): number => {
-      if (!Number.isInteger(value) || value < 1) return -1;
-      while (scanned < value) {
-        scanned++;
-        if (predicate(scanned)) matches.push(scanned);
-      }
-      return matches.indexOf(value);
-    },
-  };
+  if (!isPrime(n)) return -1;
+  if (n > PRIME_RANK_LIMIT) return declineWork(`the rank of ${n}`);
+  return primeCountUpTo(n) - 1;
 }
 
 // ---- AbundantNumbers: sigma(n) (sum of proper divisors) > n. A005101: 12, 18, 20, 24, ... ----
 
-function sumProperDivisors(n: number): number {
-  if (n <= 1) return 0;
-  let sum = 1;
-  for (let d = 2; d * d <= n; d++) {
-    if (n % d !== 0) continue;
-    sum += d;
-    const cofactor = n / d;
-    if (cofactor !== d) sum += cofactor;
-  }
-  return sum;
-}
-
-const isAbundant = (n: number): boolean => n >= 1 && sumProperDivisors(n) > n;
-const abundantCache = nthMatchCache(isAbundant);
+/** σ(n) > 2n, σ from the factorisation: exact, and a few steps for any n a double holds. */
+const isAbundant = (n: number): boolean => Number.isSafeInteger(n) && n >= 1 && sigmaOf(n) > 2n * BigInt(n);
+const abundantCache = matchCache("AbundantNumbers", isAbundant);
 
 // ---- SmoothNumbers(k): every prime factor of n is <= k (1 counts, vacuously). One cache per k. ----
 
 function isKSmooth(n: number, k: number): boolean {
-  if (n < 1) return false;
-  let m = n;
-  for (let p = 2; p <= k && p <= m; p++) {
-    while (m % p === 0) m /= p;
-  }
-  return m === 1;
+  if (!Number.isSafeInteger(n) || n < 1) return false;
+  const factors = factorsOf(n);
+  return factors.length === 0 ? true : factors[factors.length - 1][0] <= k;
 }
 
-const smoothCaches = new Map<number, ReturnType<typeof nthMatchCache>>();
-function smoothCacheFor(k: number): ReturnType<typeof nthMatchCache> {
-  let cache = smoothCaches.get(k);
-  if (!cache) {
-    cache = nthMatchCache((n) => isKSmooth(n, k));
-    smoothCaches.set(k, cache);
-  }
-  return cache;
+const smoothCaches = new Map<number, ReturnType<typeof matchCache>>();
+function smoothCacheFor(k: number): ReturnType<typeof matchCache> {
+  return memoBy(smoothCaches, k, () => matchCache("SmoothNumbers", (n) => isKSmooth(n, k)));
 }
 
 /** The root of a perfect square, else 0. A float root of a nearby non-square can round to an integer
@@ -123,8 +79,19 @@ export const kernels: NumberKernel[] = [
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
     unrank: (_p, r) => nthPrime(r + 1),
-    valid: (element) => isPrime(Number(element)),
-    rank: (element) => primeRank(Number(element)),
+    // A bigint is read by Baillie–PSW: a proof below 2^64, and above it no composite is known to pass (a
+    // probable-prime test, as Wolfram's PrimeQ is at this size). The rank (π) is out of reach past 2^53.
+    bigElements: true,
+    valid: (element) => {
+      if (typeof element !== "bigint") return isPrime(Number(element));
+      if (element >= PRIME_BITS) return declineWork("primality of an element past 2^16384");
+      return isPrimeBig(element);
+    },
+    rank: (element) => {
+      if (typeof element === "bigint" && element > BigInt(Number.MAX_SAFE_INTEGER))
+        throw new RangeError(`PrimeNumbers: element ${element} exceeds 2^53; its kernel is not bigint yet`);
+      return primeRank(Number(element));
+    },
     declared: numeric("scan"),
   },
   {

@@ -17,3 +17,4 @@ signatures:
 
 - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
 - Takes a `DyckPath` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
+- Ours is the sum of the heights after each step. FindStat's St000012 "area" counts the whole squares under the path instead, and is not this statistic.
