@@ -28,21 +28,6 @@ export function LabeledGraphCount(n: number): number {
   return SubsetCount(Binomial(n, 2));
 }
 
-export function IsTournamentOf(e: unknown, n: number): boolean {
-  if (!Array.isArray(e) || e.length !== Binomial(n, 2)) return false;
-  const edges = edgePairs(n);
-  const seen = new Set<number>();
-  for (const pair of e as unknown[]) {
-    if (!Array.isArray(pair) || pair.length !== 2) return false;
-    const [u, v] = pair as number[];
-    if (!Number.isInteger(u) || !Number.isInteger(v) || u < 1 || v < 1 || u > n || v > n || u === v) return false;
-    const idx = edgeIndexOf(edges, u, v);
-    if (idx === 0 || seen.has(idx)) return false;
-    seen.add(idx);
-  }
-  return true;
-}
-
 export function TournamentRank(e: number[][], n: number): number {
   const edges = edgePairs(n);
   const bits = new Array(edges.length).fill(0);

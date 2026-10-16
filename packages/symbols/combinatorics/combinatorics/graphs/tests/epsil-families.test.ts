@@ -10,13 +10,13 @@ import { epsilKernelOn, type EpsilFamily, evaluateTables } from "../../collectio
 import {
   IsLabeledGraphByEdgesOf,
   IsLabeledGraphOf,
+  IsTournamentOf,
   LabeledGraphByEdgesCount,
   LabeledGraphByEdgesRank,
   LabeledGraphByEdgesUnrank,
 } from "../src/families/core.ts";
 import { labeledGraphs, labeledGraphsByEdges, tournaments } from "../src/families/epsil.ts";
 import {
-  IsTournamentOf,
   LabeledGraphCount,
   LabeledGraphRank,
   LabeledGraphUnrank,

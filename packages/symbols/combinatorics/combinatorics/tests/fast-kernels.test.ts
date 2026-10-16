@@ -242,12 +242,74 @@ test("a fast path is not part of the definitions' hash", () => {
   }
 });
 
-test("a retired reading is no runtime path: its family carries no fast kernel", () => {
+// What a retired family still ships: a count alone (`fastCount`), or for Tournaments a membership test alone,
+// since Epsil's walks the edge list quadratically (seconds a call at n = 100). Nothing else of a reading runs.
+const VALID_ONLY = new Set(["Tournaments"]);
+
+test("a retired reading is no runtime path: its family carries no fast kernel but a membership test", () => {
   const heads = new Set(allFamilies.filter(isEpsilFamily).map((family) => family.head));
   for (const head of Object.keys(RETIRED_FAST)) expect([head, heads.has(head)]).toEqual([head, true]);
-  for (const family of allFamilies.filter(isEpsilFamily).filter((f) => RETIRED_FAST[f.head] !== undefined))
-    expect([family.head, family.fast]).toEqual([family.head, undefined]);
+  for (const family of allFamilies.filter(isEpsilFamily).filter((f) => RETIRED_FAST[f.head] !== undefined)) {
+    if (!VALID_ONLY.has(family.head)) expect([family.head, family.fast]).toEqual([family.head, undefined]);
+    else {
+      expect(family.fast!.count([3])).toBeUndefined();
+      expect(family.fast!.unrank([3], 0)).toBeUndefined();
+      expect(family.fast!.rank([], [3])).toBeUndefined();
+    }
+  }
 });
+
+// `withRetiredFast` puts the whole reading in `fast`, which shadows what the family ships: so what it ships is
+// held to Epsil here too, as shipped. A shipped `fastCount` agrees with Epsil's count on the grid, and with the
+// reading's exact count at the edge and just past 2^53 (the reading's count is held to Epsil there, below); a
+// shipped membership test agrees with Epsil's on members and near misses.
+const shipped = allFamilies
+  .filter(isEpsilFamily)
+  .filter((family) => RETIRED_FAST[family.head] !== undefined)
+  .filter((family) => family.fastCount !== undefined || family.fast !== undefined);
+
+test("the retired families still shipping something are known", () => {
+  expect(shipped.filter((family) => family.fastCount === undefined).map((f) => f.head)).toEqual([...VALID_ONLY]);
+  expect(shipped.length).toBeGreaterThan(20);
+});
+
+for (const family of shipped) {
+  test(`${family.head}: what it ships agrees with Epsil, as shipped`, () => {
+    const reading = RETIRED_FAST[family.head];
+    const asShipped = kernelOn(ce, family);
+    const epsil = epsilKernelOn(ce, family);
+    expect(asShipped.fast).toBe(true);
+    const { grid, above } = paramGrid(withRetiredFast(family));
+    let rejected = 0;
+    for (const p of grid) {
+      const where = labelled(family, p);
+      if (family.fastCount !== undefined) {
+        expect([where, asShipped.count(p)]).toEqual([where, epsil.count(p)]);
+        expect([where, family.fastCount(p)]).toEqual([where, reading.count(p)]);
+      }
+      if (family.fast === undefined) continue;
+      const total = epsil.count(p);
+      if (typeof total !== "bigint" || total > MAX_SAFE) continue;
+      for (const r of ranksOf(total, family)) {
+        const member = epsil.unrank(p, r);
+        expect([where, member, asShipped.valid(member, p)]).toEqual([where, member, true]);
+        for (const near of mutations(member).slice(0, 8)) {
+          const expected = epsil.valid(near, p);
+          if (!expected) rejected++;
+          expect([where, near, asShipped.valid(near, p)]).toEqual([where, near, expected]);
+        }
+      }
+    }
+    if (family.fast !== undefined) expect(rejected).toBeGreaterThan(0);
+    // Just past 2^53 the shipped count is the reading's exact bigint (which is held to Epsil's above).
+    for (const p of above) {
+      const where = labelled(family, p);
+      const total = reading.count(p);
+      if (family.fastCount !== undefined && typeof total === "bigint")
+        expect([where, family.fastCount(p)]).toEqual([where, total]);
+    }
+  });
+}
 
 // A family may carry a fast count alone, leaving unrank, rank and membership to Epsil.
 const countFamilies = allFamilies

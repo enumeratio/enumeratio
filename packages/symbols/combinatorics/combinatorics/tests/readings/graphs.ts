@@ -2,9 +2,8 @@
 // Epsil until compiled Epsil made that unnecessary (BL-225); tests/fast-kernels.test.ts holds them to the
 // definitions.
 import type { FastKernel } from "../../collections/src/families/epsil.ts";
-import { IsLabeledGraphOf } from "../../graphs/src/families/core.ts";
+import { IsLabeledGraphOf, IsTournamentOf } from "../../graphs/src/families/core.ts";
 import {
-  IsTournamentOf,
   LabeledGraphCount,
   LabeledGraphRank,
   LabeledGraphUnrank,

@@ -43,6 +43,23 @@ export function IsLabeledGraphOf(e: unknown, n: number): boolean {
   return true;
 }
 
+// Membership of a tournament, the one op of Tournaments that stays ahead of Epsil: Epsil's walks the
+// edge list quadratically (seconds a call at n = 100, tens of seconds at 200); the rest is Epsil's.
+export function IsTournamentOf(e: unknown, n: number): boolean {
+  if (!Array.isArray(e) || e.length !== Binomial(n, 2)) return false;
+  const edges = edgePairs(n);
+  const seen = new Set<number>();
+  for (const pair of e as unknown[]) {
+    if (!Array.isArray(pair) || pair.length !== 2) return false;
+    const [u, v] = pair as number[];
+    if (!Number.isInteger(u) || !Number.isInteger(v) || u < 1 || v < 1 || u > n || v > n || u === v) return false;
+    const idx = edgeIndexOf(edges, u, v);
+    if (idx === 0 || seen.has(idx)) return false;
+    seen.add(idx);
+  }
+  return true;
+}
+
 // ─── LabeledGraphsByEdges(n,m): the (n,m) refinement — graphs on [n] with exactly m edges. Same
 // edge list as LabeledGraphs, just a KSubset instead of a Subset. ─────────────────────────────────
 export function LabeledGraphByEdgesCount(n: number, m: number): number {
@@ -67,7 +84,15 @@ export function IsLabeledGraphByEdgesOf(e: unknown, n: number, m: number): boole
 // The TS kernels above are the independent readings of each Epsil family (./epsil.ts) in tests/readings/,
 // in the same order; only LabeledGraphsByEdges still runs ahead of its definition.
 export const entries: EpsilFamily[] = [
-  tournaments,
+  {
+    ...tournaments,
+    fast: {
+      count: () => undefined,
+      unrank: () => undefined,
+      rank: () => undefined,
+      valid: (e, [n]) => IsTournamentOf(e, n),
+    },
+  },
   labeledGraphs,
   {
     ...labeledGraphsByEdges,
