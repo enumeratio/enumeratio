@@ -1,7 +1,7 @@
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/numeric-digits-primes.ts";
-import { entries as numericSets } from "../src/families/numeric-sets.ts";
+import { kernels as numericSets } from "../src/families/numeric-sets.ts";
 import { declareCollections } from "../src/library.ts";
 
 const byHead = new Map(entries.map((e) => [e.head, e]));

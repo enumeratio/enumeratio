@@ -62,6 +62,27 @@ const isDeep = (head: string, p: readonly number[]): boolean =>
 export const fibersOf = (family: EpsilFamily, deep: boolean): number[][] =>
   sampleParams(family.paramCount).filter((p) => isDeep(family.head, p) === deep);
 
+/** The ranks sampled in a fiber with no end: the first few, some between, and the last ones whose term a double
+ *  holds exactly (the last is found by bisection with the interpreter, which a constant sequence never leaves). */
+function unboundedRanks(ce: Engine, family: EpsilFamily, bind: Record<string, unknown>): bigint[] {
+  const safe = (r: bigint): boolean => {
+    const term = elementOf(evaluateEpsil(ce, family.epsil.unrank, { ...bind, _r: Number(r) }));
+    return typeof term === "number" && Number.isSafeInteger(term);
+  };
+  const ranks = new Set<bigint>([0n, 1n, 2n, 3n, 5n, 8n, 12n, 15n]);
+  const top = 2n ** 53n - 1n;
+  if (safe(top)) return [...ranks];
+  let [low, high] = [0n, top];
+  while (low + 1n < high) {
+    const mid = (low + high) / 2n;
+    if (safe(mid)) low = mid;
+    else high = mid;
+  }
+  for (const r of [low - 2n, low - 1n, low, low / 2n, low / 7n, low / 1000n, 12345n])
+    if (r >= 0n && r <= low) ranks.add(r);
+  return [...ranks];
+}
+
 /** A member one entry away from itself, which the family may or may not contain. */
 const nearMiss = (element: unknown): unknown =>
   Array.isArray(element)
@@ -100,18 +121,25 @@ export function disagreements(
     }
     const bind = table === undefined ? params : { ...params, _tables: table };
     const compiledBind = entries === undefined ? params : { ...params, _tables: entries };
-    const total = integerOf(evaluateEpsil(ce, family.epsil.count, bind));
+    const counted = evaluateEpsil(ce, family.epsil.count, bind);
+    // A fiber with no end is sampled by its first ranks, where a sequence's terms are small.
+    const unbounded = counted === "PositiveInfinity";
+    const total = unbounded ? 0n : integerOf(counted);
     if (total === undefined || total > BigInt(Number.MAX_SAFE_INTEGER)) continue;
-    if (runs.count !== undefined && attempt(runs.count, compiledBind) !== Number(total)) wrong.add("count");
-    if (total === 0n) continue;
-    for (const r of new Set([0n, total / 2n, total - 1n])) {
+    if (runs.count !== undefined && attempt(runs.count, compiledBind) !== (unbounded ? Infinity : Number(total)))
+      wrong.add("count");
+    if (total === 0n && !unbounded) continue;
+    for (const r of unbounded ? unboundedRanks(ce, family, bind) : new Set([0n, total / 2n, total - 1n])) {
       const element = elementOf(evaluateEpsil(ce, family.epsil.unrank, { ...bind, _r: Number(r) }));
       if (
         runs.unrank !== undefined &&
         JSON.stringify(attempt(runs.unrank, { ...compiledBind, _r: Number(r) })) !== JSON.stringify(element)
       )
         wrong.add("unrank");
-      if (runs.rank !== undefined && attempt(runs.rank, { ...compiledBind, _x: element }) !== Number(r))
+      // A sequence may repeat a term (a constant one), so its rank is the first place the term is found, as
+      // the interpreter reads it; elsewhere a member's rank is the rank it came from.
+      const place = unbounded ? integerOf(evaluateEpsil(ce, family.epsil.rank, { ...bind, _x: element })) : BigInt(r);
+      if (runs.rank !== undefined && attempt(runs.rank, { ...compiledBind, _x: element }) !== Number(place))
         wrong.add("rank");
       if (runs.valid !== undefined)
         for (const candidate of [element, nearMiss(element)]) {

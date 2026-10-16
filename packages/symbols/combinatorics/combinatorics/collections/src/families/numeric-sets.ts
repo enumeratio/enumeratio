@@ -4,6 +4,8 @@
 // (AbundantNumbers), and a one-parameter operator (SmoothNumbers(k)) — not the full 88-set
 // catalogue; see design/rendering-environments-planning or the spike report for the rest.
 import { isPrime as isPrimeBig, nthPrime as sieveNthPrime, primeCountUpTo } from "@enumeratio/residues";
+import type { EpsilFamily } from "./epsil.ts";
+import { withDefinitions } from "./numeric-definitions.ts";
 import type { Declared, NumberKernel } from "./types.ts";
 
 // ---- PrimeNumbers: the segmented sieve/BPSW primality of @enumeratio/residues (issue #205's
@@ -96,6 +98,13 @@ function smoothCacheFor(k: number): ReturnType<typeof nthMatchCache> {
   return cache;
 }
 
+/** The root of a perfect square, else 0. A float root of a nearby non-square can round to an integer
+ *  past 2^52, so the root is checked by squaring it, which a double holds exactly. */
+function squareRoot(n: number): number {
+  const root = Math.round(Math.sqrt(n));
+  return Number.isSafeInteger(n) && root >= 1 && root * root === n ? root : 0;
+}
+
 /** An infinite numeric set: `unrank` by `cost`, membership by a predicate. */
 const numeric = (cost: Declared["cost"]["unrank"], rest: Partial<Declared> = {}): Declared => ({
   carrier: "Numeric",
@@ -104,7 +113,9 @@ const numeric = (cost: Declared["cost"]["unrank"], rest: Partial<Declared> = {})
   ...rest,
 });
 
-export const entries: NumberKernel[] = [
+/** The families as TS kernels: where a family has an Epsil definition (./numeric-definitions.ts), the
+ *  fast path of it and its independent reading in tests. */
+export const kernels: NumberKernel[] = [
   {
     head: "PrimeNumbers",
     paramCount: 0,
@@ -121,16 +132,8 @@ export const entries: NumberKernel[] = [
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
     unrank: (_p, r) => (r + 1) * (r + 1),
-    valid: (element) => {
-      const n = Number(element);
-      const root = Math.sqrt(n);
-      return Number.isInteger(root) && root >= 1;
-    },
-    rank: (element) => {
-      const n = Number(element);
-      const root = Math.sqrt(n);
-      return Number.isInteger(root) && root >= 1 ? root - 1 : -1;
-    },
+    valid: (element) => squareRoot(Number(element)) > 0,
+    rank: (element) => squareRoot(Number(element)) - 1,
     declared: numeric("closed"),
   },
   {
@@ -161,3 +164,5 @@ export const entries: NumberKernel[] = [
     }),
   },
 ];
+
+export const entries: (NumberKernel | EpsilFamily)[] = withDefinitions(kernels);

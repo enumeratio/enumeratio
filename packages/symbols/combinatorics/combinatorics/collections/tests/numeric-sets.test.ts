@@ -1,6 +1,6 @@
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
-import { entries as numericSets } from "../src/families/numeric-sets.ts";
+import { kernels as numericSets } from "../src/families/numeric-sets.ts";
 import { declareCollections } from "../src/library.ts";
 
 // First terms per OEIS, used both to brute-force certify the kernels below and to ground

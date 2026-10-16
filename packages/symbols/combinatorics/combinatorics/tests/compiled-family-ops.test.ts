@@ -80,8 +80,9 @@ test("compiled family operations raise no programming errors", () => {
     for (const p of sampleParams(family.paramCount)) {
       if (ops.every((op) => called.has(op))) break;
       const total = quietly(() => kernel.count(p));
-      if (typeof total !== "bigint" || total === 0n || total > 1_000n) continue;
-      for (const r of new Set([0n, total / 2n, total - 1n])) {
+      const unbounded = total === Number.POSITIVE_INFINITY;
+      if (!unbounded && (typeof total !== "bigint" || total === 0n || total > 1_000n)) continue;
+      for (const r of unbounded ? [0n, 1n, 5n] : new Set([0n, (total as bigint) / 2n, (total as bigint) - 1n])) {
         const element = quietly(() => kernel.unrank(p, r));
         if (element === undefined) continue;
         quietly(() => kernel.rank(element, p));
