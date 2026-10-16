@@ -64,6 +64,21 @@ export const all = (condition: (x: string) => MathJSON, over: MathJSON, x: strin
   fold(and(`ok_${x}`, condition(x)), `ok_${x}`, x, "True", over);
 
 /**
+ * Whether `entry(1..count)` are distinct values in 1..n, in one pass: a list over the values marks
+ * each as seen, in place, and its last slot collects a repeat or a value out of range. Read the
+ * entries only through `At` (the step is a `ReplaceAt` the compiled fold fills in place).
+ */
+export const distinctIn = (n: MathJSON, count: MathJSON, entry: (j: string) => MathJSON, tag = "di"): MathJSON => {
+  const [seen, j, z] = [`${tag}_seen`, `${tag}_j`, `${tag}_z`];
+  const v = entry(j);
+  const mark = (slot: MathJSON): MathJSON => ["ReplaceAt", seen, slot, 1];
+  const bad = mark(add(n, 1));
+  const step = iff(and(["LessEqual", 1, v], ["LessEqual", v, n]), iff(equal(at(seen, v), 0), mark(v), bad), bad);
+  const marked = fold(step, seen, j, map(0, z, upTo(1, add(n, 1))), upTo(1, count));
+  return equal(at(marked, add(n, 1)), 0);
+};
+
+/**
  * A table T(s, c) for s = 0..rows − 1 and c = 0..width − 1, flat by rows: row 0 is `first(c)`,
  * row s is `next(prev, s, c, here)`, where `prev(s', c')` reads an earlier row (s' < s,
  * 0 ≤ c' < width) and `here(c')` an earlier column of this row (c' < c). Rows are joined one per
