@@ -84,3 +84,17 @@ test("a healthy batch costs one run", async () => {
   await runIn("wolfram", items(40), { batchRunner });
   expect(calls).toEqual([40]);
 });
+
+test("a lane past its deadline declines the batches not yet started, never runs them", async () => {
+  let ran = 0;
+  const batchRunner = async (sources: readonly string[]): Promise<Result[]> => {
+    ran += sources.length;
+    await new Promise((resolve) => setTimeout(resolve, 30));
+    return sources.map((s) => ({ value: `v:${s}` }));
+  };
+  const results = await runIn("rust", items(100), { batchRunner, deadline: Date.now() + 10 });
+  expect(results).toHaveLength(100);
+  expect(ran).toBeLessThan(100);
+  expect(results.at(-1)).toEqual({ error: "TimeoutError: lane budget spent" });
+  expect(results[0]).toEqual({ value: "v:s0" });
+});
