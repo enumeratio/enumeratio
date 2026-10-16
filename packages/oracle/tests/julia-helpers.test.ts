@@ -1,9 +1,23 @@
 import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { expect, test } from "vite-plus/test";
 import { runIn } from "../src/run.ts";
 
-// The Julia helpers run in Julia; a machine without it (the gate) skips them.
-const hasJulia = spawnSync("julia", ["--version"], { stdio: "ignore" }).status === 0;
+// The Julia helpers run in Julia with Nemo and Combinatorics.jl installed in packages/oracle/julia; a machine
+// without them (the gate) skips them. The probe only asks Julia to locate the packages, which is quick and
+// never precompiles, and is cut off at 30 s.
+const project = fileURLToPath(new URL("../julia", import.meta.url));
+const hasJulia =
+  spawnSync(
+    "julia",
+    [
+      `--project=${project}`,
+      "--startup-file=no",
+      "-e",
+      'exit(Base.find_package("Nemo") !== nothing && Base.find_package("Combinatorics") !== nothing ? 0 : 1)',
+    ],
+    { stdio: "ignore", timeout: 30_000, killSignal: "SIGKILL" },
+  ).status === 0;
 
 // What each of these once answered with a tight ball that was wrong, or agreed with by accident.
 test.skipIf(!hasJulia)(
