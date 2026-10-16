@@ -36,6 +36,7 @@ import { isSettled } from "@enumeratio/entry";
 import { referenceEntries } from "../src/node.ts";
 import { agreesInNorm, associates, roundsTo, undecidedIdentity } from "./plausible-compare.ts";
 import { cappedVerdicts } from "./oracle-verdict-capped.ts";
+import { hash, inLaneOrder, laneMinutes, verdictArguments } from "./plausible-lanes.ts";
 
 const entries = referenceEntries();
 const verdicts = cappedVerdicts();
@@ -50,18 +51,12 @@ const seed = option("seed") ?? new Date().toISOString().slice(0, 10);
 const perTemplate = Number(option("samples") ?? 3);
 const strict = args.includes("--strict");
 
-// One system's lane may spend this long before the samples not yet run are declined. The
-// Python job (setup and both drift rescans take ~10 of its 30 minutes) runs two lanes, so a
-// lane that stalls must not take the other's share.
-const LANE_MINUTES = Number(option("lane-minutes") ?? 8);
+// One system's lane may spend its budget (plausible-lanes.ts) before the samples not yet run are
+// declined: a lane that stalls must not take another's share of its job.
+const laneOverride = option("lane-minutes");
 
 // ── a seeded generator per template, so samples don't depend on iteration order ──
 
-const hash = (text: string): number => {
-  let h = 2166136261;
-  for (let i = 0; i < text.length; i++) h = Math.imul(h ^ text.charCodeAt(i), 16777619);
-  return h >>> 0;
-};
 const generator = (key: string): (() => number) => {
   let a = hash(`${seed}/${key}`);
   return () => {
@@ -484,6 +479,8 @@ interface Finding {
 const findings: Finding[] = [];
 /** Samples a lane declined (its kernel hit a cap or its time budget ran out), by template. */
 const declined = new Map<string, { timedOut: number; unrun: number; example: string }>();
+/** Each lane's sample budget in minutes, as run. */
+const budgets = new Map<System, number>();
 const lines: string[] = [
   `## Oracle Plausible — seed \`${seed}\``,
   "",
@@ -494,10 +491,15 @@ const lines: string[] = [
 ];
 
 for (const system of systems) {
-  const runnable = samples
-    .filter((sample) => expectedOf.has(sample.id))
-    .map((sample) => ({ sample, out: emit(sample.expr, system) }))
-    .filter((row) => row.out.ok);
+  const runnable = inLaneOrder(
+    samples
+      .filter((sample) => expectedOf.has(sample.id))
+      .map((sample) => ({ sample, out: emit(sample.expr, system) }))
+      .filter((row) => row.out.ok),
+    seed,
+    system,
+    (row) => row.sample.id,
+  );
   // A free symbol on a symbolic system is judged as an identity (does the difference
   // vanish?), as the scan does: two equal closed forms can be spelled differently.
   const symbolicMode: boolean[] = [];
@@ -516,11 +518,14 @@ for (const system of systems) {
     return agreement ?? plain;
   });
   process.stderr.write(`${system}: ${sources.length} samples — running…\n`);
-  const results = await runIn(system, sources, { deadline: Date.now() + LANE_MINUTES * 60_000 });
+  const budget = laneMinutes(system, laneOverride);
+  budgets.set(system, budget);
+  const results = await runIn(system, sources, { deadline: Date.now() + budget * 60_000 });
   let agree = 0;
   let inherited = 0;
   let automatic = 0;
   let found = 0;
+  let unrun = 0;
   const autos = new Map<string, number>();
   for (const [i, row] of runnable.entries()) {
     const result = results[i] as { value?: string; numeric?: string; error?: string };
@@ -531,17 +536,21 @@ for (const system of systems) {
         ? "error"
         : symbolicMode[i]
           ? interpretSymbolicAgreement(result.value ?? "")
-          : await verdicts.verdict(system, expected, result);
+          : await verdicts.verdict(...verdictArguments(system, row.sample.expr, expected, result));
     const slowCompare = judged === "timeout";
     const verdict: Verdict | "error" = slowCompare ? "error" : judged;
     const error = slowCompare ? "TimeoutError: comparison" : result.error;
     if (error?.startsWith("TimeoutError")) {
       const key = `${system} · ${row.sample.template.id}`;
       const entry = declined.get(key) ?? { timedOut: 0, unrun: 0, example: JSON.stringify(row.sample.expr) };
-      if (error.includes("lane budget")) entry.unrun++;
-      else entry.timedOut++;
       declined.set(key, entry);
-      // Declined, not agreement and not a finding.
+      // Declined, not agreement and not a finding. A sample the budget never reached was not sampled.
+      if (error.includes("lane budget")) {
+        entry.unrun++;
+        unrun++;
+        continue;
+      }
+      entry.timedOut++;
       autos.set("resource", (autos.get("resource") ?? 0) + 1);
       automatic++;
       continue;
@@ -589,7 +598,7 @@ for (const system of systems) {
     });
   }
   const autoText = [...autos].map(([kind, n]) => `${kind} ${n}`).join(", ") || "0";
-  lines.push(`| ${system} | ${runnable.length} | ${agree} | ${inherited} | ${autoText} | ${found} |`);
+  lines.push(`| ${system} | ${runnable.length - unrun} | ${agree} | ${inherited} | ${autoText} | ${found} |`);
   process.stderr.write(
     `${system}: agree ${agree}, inherited ${inherited}, automatic ${automatic}, findings ${found}\n`,
   );
@@ -600,7 +609,7 @@ if (declined.size > 0) {
   const total = (field: "timedOut" | "unrun") => [...declined.values()].reduce((n, d) => n + d[field], 0);
   lines.push("", "### Declined", "");
   lines.push(
-    `${total("timedOut")} samples timed out (kernel or comparison); ${total("unrun")} were not run (lane budget ${LANE_MINUTES} min).`,
+    `${total("timedOut")} samples timed out (kernel or comparison); ${total("unrun")} were not run (lane budget ${[...budgets].map(([system, minutes]) => `${system} ${minutes}`).join(", ")} min).`,
     "",
   );
   const slow = [...declined].filter(([, d]) => d.timedOut > 0).toSorted((a, b) => b[1].timedOut - a[1].timedOut);
