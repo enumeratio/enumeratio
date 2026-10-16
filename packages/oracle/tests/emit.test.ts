@@ -241,6 +241,41 @@ test("Julia reads a constant as a ball, a list as Any, and a decimal past a doub
   });
 });
 
+test("Rust threads a list into a `list(vec![…])` of calls, and writes a double as a float literal", () => {
+  expect(emit(["Quotient", ["List", 10, 20], 7], "rust")).toEqual({
+    ok: true,
+    source: "list(vec![quotient(n(10), n(7)), quotient(n(20), n(7))])",
+  });
+  expect(emit(["Sinh", ["List", ["List", 1, 2], ["List", 3, 4]]], "rust")).toEqual({
+    ok: true,
+    source: "list(vec![list(vec![sinh(n(1)), sinh(n(2))]), list(vec![sinh(n(3)), sinh(n(4))])])",
+  });
+  // The crate's own argument order, and the reciprocal a template writes out.
+  expect(emit(["BetaRegularized", { num: "0.25" }, 2, 3], "rust")).toEqual({
+    ok: true,
+    source: "beta_regularized(n(2), n(3), x(0.25))",
+  });
+  expect(emit(["Cot", 1], "rust")).toEqual({ ok: true, source: "(n(1) / tan(n(1)))" });
+  // `x(100)` would be an integer where the adapters take a double.
+  expect(emit(["Sinh", { num: "1e2" }], "rust")).toEqual({ ok: true, source: "sinh(x(100.0))" });
+  // An integer-valued number past 2^53 is that integer, which a float literal would round.
+  expect(emit(["PrimePi", 1e16], "rust")).toEqual({ ok: true, source: 'prime_pi(big("10000000000000000"))' });
+  expect(emit(["Sinh", { num: "-2.5e-3" }], "rust")).toEqual({ ok: true, source: "sinh(x(-0.0025))" });
+});
+
+test("a decimal outside the double range is not written to Rust, where it would be infinity or zero", () => {
+  expect(emit(["Sinh", { num: "1.0e1000" }], "rust")).toEqual({
+    ok: false,
+    missing: ["literal:outside-double-range"],
+  });
+  expect(emit(["Sinh", { num: "1e-400" }], "rust")).toEqual({
+    ok: false,
+    missing: ["literal:outside-double-range"],
+  });
+  // Zero is zero, however it is written.
+  expect(emit(["Sinh", { num: "0.0" }], "rust")).toEqual({ ok: true, source: "sinh(x(0.0))" });
+});
+
 test("a binding's threadArgOnly threads for its own system alone", () => {
   expect(emit(["FactorInteger", ["List", 12, 18]], "sympy")).toEqual({
     ok: true,

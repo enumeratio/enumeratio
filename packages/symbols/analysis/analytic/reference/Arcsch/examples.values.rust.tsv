@@ -1,0 +1,20 @@
+id	in	out	verdict
+n-arcsch-2	nf(asinh(n(1) / n(2)))	0.48121182505960347	
+a-pole-at-0	asinh(n(1) / n(0))	panic: denominator == 0	error
+arcsch-positiveinfinity			
+a-float-argument-evaluates-directly	asinh(n(1) / x(1.5))	0.6251451172504167	
+as-a-logarithm-arcsch-1-ln-1-sqrt-2			
+oddness-pulls-the-sign-out-of-a-symbolic			
+derivative-for-real-x-ne-0			
+n-arcsch-5-50	nf(asinh(n(1) / n(5)))	0.19869011034924142	
+arcsch-complexinfinity			
+arcsch-list-list-2i-0-list-i-neg-2-times-i			
+matrixfunction-function-arcsch-1-1-list-list-2i			
+arcsch-neg-i-times-sqrt-2-plus-neg-2-over-5			
+arcsch-2i-times-sqrt-1-over-2-plus-sqrt-2			
+arcsch-neg-2-times-i-times-sqrt-1-over-2-plus			
+arcsch-neg-i-times-sqrt-2-plus-2-over-5-times			
+arcsch-i-times-neg-sqrt-2-plus-sqrt-6			
+arcsch-i-times-neg-sqrt-6-plus-sqrt-2			
+arcsch-i-times-sqrt-2-plus-neg-2-over-5-times			
+arcsch-i-times-sqrt-2-plus-2-over-5-times-sqrt-5			

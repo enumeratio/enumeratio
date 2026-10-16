@@ -85,6 +85,26 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: integer_digits($1, n(10))
+    arity: 1
+    threadArgOnly: 1
+    note: The digits of the magnitude.
+    checked:
+      version: num-bigint 0.4.8
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: integer_digits($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: The digits of the magnitude; a base from 2 to 256.
+    checked:
+      version: num-bigint 0.4.8
+      on: 2026-10-16
 ---
 
 - Digits come out most significant first, matching ordinary positional notation.

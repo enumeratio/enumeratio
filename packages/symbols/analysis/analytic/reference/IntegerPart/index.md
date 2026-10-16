@@ -28,6 +28,14 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: trunc($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: num-rational 0.4.2
+      on: 2026-10-16
 ---
 
 - Truncates toward 0, unlike [[Floor]] (which rounds toward $-\infty$): $\mathrm{IntegerPart}(-2.4) = -2$, where $\mathrm{Floor}(-2.4) = -3$.

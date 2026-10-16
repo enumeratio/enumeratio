@@ -59,6 +59,14 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: ln_gamma($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
 ---
 
 - Defined via [[Gamma]]: $\operatorname{GammaLn}(z) = \ln \Gamma(z)$ for $z > 0$, where $\Gamma$ is positive so no branch-cut ambiguity arises.

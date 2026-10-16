@@ -54,6 +54,14 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: minimum($1, $2)
+    arity: 2
+    note: Two operands.
+    checked:
+      version: num-rational 0.4.2
+      on: 2026-10-16
 ---
 
 - The smallest of its arguments, or of a single list argument.

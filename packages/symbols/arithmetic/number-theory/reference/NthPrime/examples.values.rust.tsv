@@ -1,0 +1,43 @@
+id	in	out	verdict
+the-first-prime-is-2	nth_prime(n(1))	2	
+nthprime-10	nth_prime(n(10))	29	
+nthprime-100	nth_prime(n(100))	541	
+threads-element-wise-over-a-list-as-wolfram-s	list(vec![nth_prime(n(1)), nth_prime(n(3)), nth_prime(n(4)), nth_prime(n(10))])	[2, 5, 7, 29]	
+the-millionth-prime	nth_prime(n(1000000))	15485863	
+a-prime-gap-p-31-p-30-127-113	(nth_prime(n(31)) - nth_prime(n(30)))	14	
+nthprime-25	nth_prime(n(25))	97	
+array-nthprime-100-mod-10			
+n-100-times-last-foldlist-multiply-1-1-plus-neg			
+ismersenneprimeexponent-nthprime-4			
+isprime-neg-1-plus-2-pow-nthprime-4	is_prime((n(-1) + power(n(2), nth_prime(n(4)))))	true	
+1-over-product-neg-nthprime-n-pow-neg-s-plus-1-n			
+primepi-and-nthprime-are-inverses-pi-p-n-n	equal(prime_pi(nth_prime(n(100))), n(100))	true	
+primepi-nthprime-100	prime_pi(nth_prime(n(100)))	100	
+nthprime-1-plus-primepi-30	nth_prime((n(1) + prime_pi(n(30))))	31	
+primeomega-nthprime-5	prime_omega(nth_prime(n(5)))	1	
+divisors-nthprime-5			
+totient-nthprime-10			
+nthprime-2	nth_prime(n(2))	3	
+nthprime-3	nth_prime(n(3))	5	
+nthprime-4	nth_prime(n(4))	7	
+nthprime-5	nth_prime(n(5))	11	
+nthprime-6	nth_prime(n(6))	13	
+nthprime-7	nth_prime(n(7))	17	
+nthprime-30-in-primes			
+neg-1-plus-nthprime-10	(n(-1) + nth_prime(n(10)))	28	
+nthprime-8	nth_prime(n(8))	19	
+nthprime-9	nth_prime(n(9))	23	
+nthprime-11	nth_prime(n(11))	31	
+nthprime-12	nth_prime(n(12))	37	
+nthprime-13	nth_prime(n(13))	41	
+nthprime-14	nth_prime(n(14))	43	
+nthprime-15	nth_prime(n(15))	47	
+nthprime-16	nth_prime(n(16))	53	
+nthprime-17	nth_prime(n(17))	59	
+nthprime-18	nth_prime(n(18))	61	
+sin-pi-times-1-over-nthprime-2-times-1-plus	(power(sin((x(std::f64::consts::PI) * (n(1) / nth_prime(n(2))) * (n(1) + gamma(nth_prime(n(2)))))), n(2)) + power(sin((x(std::f64::consts::PI) * nth_prime(n(2)))), n(2)))	4.2891844608811835e-29	disagree
+1-over-neg-1-plus-exponentiale-pow-neg-2-times-i			
+sin-pi-times-1-over-nthprime-3-times-1-plus	(power(sin((x(std::f64::consts::PI) * (n(1) / nth_prime(n(3))) * (n(1) + gamma(nth_prime(n(3)))))), n(2)) + power(sin((x(std::f64::consts::PI) * nth_prime(n(3)))), n(2)))	4.962443284605206e-27	disagree
+1-over-neg-1-plus-exponentiale-pow-neg-2-times-2			
+n-must-be-a-positive-integer-compute-engine	nth_prime(n(0))	panic: assertion failed: n > 0	error
+the-1000th-prime	nth_prime(n(1000))	7919	

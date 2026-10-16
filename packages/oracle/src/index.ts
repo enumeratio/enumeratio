@@ -42,6 +42,7 @@ export {
   compare,
   compareCombination,
   compareCombinations,
+  compareMachine,
   comparePythonStructured,
   linearCombination,
   normalise,

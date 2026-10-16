@@ -1,0 +1,21 @@
+id	in	out	verdict
+a-pole-of-gamma-in-log-form	ln_gamma(n(0))	panic: non-finite result: inf	error
+a-floating-point-argument-evaluates-directly-to	ln_gamma(x(2.5))	0.2846828704729223	
+ln-gamma-100-5-where-gamma-100-5-itself-is-about	ln_gamma(x(100.5))	361.4355404677776	
+n-gammaln-of-a-negative-rational	nf(ln_gamma(rational(n(-1), n(3))))	panic: non-finite result: NaN	error
+at-a-pole-of-gamma-compute-engine-gives-the-real	ln_gamma(n(-1))	panic: non-finite result: NaN	error
+complex-arguments-here-the-principal-ln-gamma-z			
+a-huge-inexact-argument-should-still-evaluate			
+threads-over-a-list-and-the-integer-points	list(vec![ln_gamma(n(1)), ln_gamma(n(2)), ln_gamma(n(3))])	[-4.440892098500626e-16, 0.0, 0.6931471805599485]	disagree
+uncertainty-propagation-through-ln-gamma-with			
+to-30-significant-digits-not-yet-the-last-digit	nf(ln_gamma(rational(n(1), n(3))))	0.9854206469277671	
+gammaln-neg-0-5-is-the-real-log-magnitude	ln_gamma(x(-0.5))	panic: non-finite result: NaN	error
+used-to-get-ln-n-for-large-n-without-overflowing	equal(ln_gamma(n(11)), ln(factorial(n(10))))	true	
+defined-as-ln-gamma-z-here-at-z-5	equal(ln_gamma(n(5)), ln(gamma(n(5))))	true	
+gammaln-1-ln-gamma-1-ln-1-0	equal(ln_gamma(n(1)), n(0))	false	disagree
+inherits-gamma-s-recurrence-gammaln-z-1-gammaln	equal(ln_gamma(n(6)), (ln_gamma(n(5)) + ln(n(5))))	true	
+gammaln-1-2-frac-12-ln-pi-from-gamma-1-2-sqrt-pi	equal(ln_gamma(rational(n(1), n(2))), (rational(n(1), n(2)) * ln(x(std::f64::consts::PI))))	true	
+an-exact-positive-integer-now-reduces-too	ln_gamma(n(5))	3.1780538303479497	
+the-derivative-of-ln-gamma-is-the-digamma			
+off-the-positive-axis-gammaln-is-the-principal	ln_gamma(x(-1.5))	0.8600470153764785	
+gammaln-101-is-exactly-ln-100-letting-us-reason	equal(ln_gamma(n(101)), ln(factorial(n(100))))	true	

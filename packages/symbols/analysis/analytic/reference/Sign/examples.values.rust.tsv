@@ -1,0 +1,44 @@
+id	in	out
+sign-neg-3	signum(n(-3))	-1
+sign-3	signum(n(3))	1
+zero-is-its-own-sign	signum(n(0))	0
+sign-neg-1-over-2	signum(rational(n(-1), n(2)))	-1
+the-unit-complex-number-pointing-the-same		
+threads-element-wise-over-a-list	list(vec![signum(n(-3)), signum(n(0)), signum(n(7))])	[-1, 0, 1]
+sign-neg-2p5	signum(x(-2.5))	-1.0
+sign-3p14	signum(x(3.14))	1.0
+a-complex-number-with-approximate-parts		
+an-exact-complex-argument-comes-back-exact-sign		
+threads-over-a-matrix-entry-by-entry	list(vec![list(vec![signum(rational(n(1), n(2))), signum(n(-1))]), list(vec![signum(rational(n(-5), n(3))), signum(rational(n(1), n(2)))])])	[[1, -1], [-1, 1]]
+exact-numeric-constants	signum(x(std::f64::consts::PI))	1.0
+sign-neg-exponentiale	signum((-(x(std::f64::consts::E))))	-1.0
+sign-imaginaryunit		
+sign-positiveinfinity		
+an-interval-entirely-above-0-has-sign-1		
+decides-the-sign-of-the-exact-number-sqrt-2-2-by	signum((sqrt(n(2)) - n(2)))	-1.0
+2-sqrt-2-is-the-same-certified-decision-the	signum((n(2) - sqrt(n(2))))	1.0
+sign-123	signum(n(123))	1
+sign-123-minus-456i		
+fullsimplify-matrixfunction-sign-list-list-1		
+piecewiseexpand-sign-x-neg-2-lt-x-lt-2		
+sign-conjugate-1-plus-2i-eq-conjugate-sign-1		
+d-sign-x-x		
+sign-positiveinfinity-times-i		
+n-sign-exponentiale-plus-i-times-pi-20		
+tells-you-the-temperature-dropped-but-not-by-how	signum((n(70) - n(95)))	-1
+sign-z-z-z-see-abs		
+x-cdot-sign-x-x-here-at-x-5	equal((n(-5) * signum(n(-5))), abs(n(-5)))	true
+the-sign-of-a-nonzero-complex-number-lies-on-the		
+sign-1	signum(n(1))	1
+sign-neg-1	signum(n(-1))	-1
+sign-neg-i		
+sign-neg-1-plus-i		
+sign-neg-1-minus-i		
+sign-1-minus-i		
+sign-2	signum(n(2))	1
+findstat-st000037-1		
+findstat-st000037-2		
+findstat-st000037-3		
+nan-propagates-rather-than-being-treated-as-0		
+sign-complexinfinity-is-indeterminate-no		
+unit-circle-check-on-a-float-argument		

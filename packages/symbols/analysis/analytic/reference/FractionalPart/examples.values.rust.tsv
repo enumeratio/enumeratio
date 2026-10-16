@@ -1,0 +1,7 @@
+id	in	out
+fractionalpart-2p5	fract(x(2.5))	0.5
+fractionalpart-7-over-2	fract(rational(n(7), n(2)))	1/2
+keeps-the-sign-of-x-unlike-compute-engine-s	fract(rational(n(-7), n(2)))	-1/2
+exact-numeric-arguments-stay-exact	fract(x(std::f64::consts::PI))	0.14159265358979312
+threads-element-wise-over-a-list	list(vec![fract(rational(n(7), n(2))), fract(rational(n(-1), n(3)))])	[1/2, -1/3]
+zero-exactly-on-the-integers	fract(n(5))	0

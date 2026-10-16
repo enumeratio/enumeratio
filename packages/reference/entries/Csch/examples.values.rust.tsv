@@ -1,0 +1,15 @@
+id	in	out	verdict
+series-csch-x-x-0-10			
+normal-series-csch-x-x-2i-times-pi-3			
+n-csch-9-over-5-50	nf((n(1) / sinh(rational(n(9), n(5)))))	0.3398846914154937	
+csch-list-list-1-over-3-times-i-times-pi-neg-1			
+csch-positiveinfinity			
+csch-0	(n(1) / sinh(n(0)))	panic: non-finite result: inf	error
+d-csch-x-x			
+matrixfunction-function-csch-1-1-list-list-1			
+integrate-csch-x-x-nothing-nothing			
+functionmeromorphic-csch-x-x			
+neg-2-times-2-plus-2-times-csch-1-over-2-pow-2	((n(-2) * (n(2) + (n(2) * power((n(1) / sinh(rational(n(1), n(2)))), n(2)))) * power((n(1) / sinh(n(1))), n(2)) * power((n(1) / sinh(rational(n(1), n(2)))), n(4))) + power((n(1) / sinh(rational(n(1), n(2)))), n(8)))	0.0	disagree
+n-4-times-1-plus-csch-1-over-2-pow-2-times-csch	nf((n(4) * (n(1) + power((n(1) / sinh(rational(n(1), n(2)))), n(2))) * power((n(1) / sinh(n(1))), n(2))))	13.562237873143914	
+n-csch-1-over-2-plus-1-over-2-times-i-times-pi			
+n-4-times-1-plus-csch-2-pow-2-times-csch-4-pow-2	nf((n(4) * (n(1) + power((n(1) / sinh(n(2))), n(2))) * power((n(1) / sinh(n(4))), n(2))))	0.0057793186119286365	

@@ -39,6 +39,14 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: nth_prime($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: primal 0.3.3
+      on: 2026-10-16
 ---
 
 - Inverse of [[PrimePi]]: $\pi(p_n)=n$.

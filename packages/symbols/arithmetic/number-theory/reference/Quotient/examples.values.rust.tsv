@@ -1,0 +1,37 @@
+id	in	out	verdict
+quotient-17-5	quotient(n(17), n(5))	3	
+the-floor-not-truncation	quotient(n(-7), n(2))	-4	
+the-remainder-takes-the-sign-of-n	quotient(n(17), n(-5))	-4	
+7-5i-2-i-3-8-0-6i-rounded			
+real-arguments-lfloor-7-5-2-rfloor	quotient(x(7.5), n(2))	panic: an integer, not 7.5	error
+rational-arguments-lfloor-21-2-rfloor	quotient(rational(n(7), n(2)), rational(n(1), n(3)))	panic: an integer, not 7/2	error
+exact-past-2-53	quotient((factorial(n(25)) - n(1)), factorial(n(24)))	panic: an integer, not 1.5511210043330986e25	error
+quotient-m-n-d-is-lfloor-m-d-n-rfloor-so-m-n-q			
+listable-threads-over-a-list	list(vec![quotient(n(10), n(7)), quotient(n(20), n(7)), quotient(n(30), n(7))])	[1, 2, 4]	
+quotient-by-a-unit-is-the-dividend-itself-up-to			
+a-zero-dividend-quotients-to-0			
+quotient-by-a-gaussian-prime-norm-5			
+quotient-by-the-other-prime-above-5			
+quotient-by-a-real-prime-3-mod-4			
+a-real-dividend-by-a-gaussian-divisor			
+quotient-by-an-associate			
+quotient-by-a-negative-real-divisor			
+quotient-by-a-composite-gaussian-divisor-norm-25			
+a-gaussian-divisor-past-2-53-in-both-parts			
+quotient-by-1-4i-the-other-prime-above-17			
+a-large-norm-gaussian-divided-by-a-small-unit			
+quotient-by-1-negates-each-part			
+quotient-by-i-rotates-by-that-unit			
+a-negative-real-dividend-gaussian-divisor			
+quotient-by-an-associate-times-1			
+quotient-by-an-associate-times-i			
+quotient-by-the-other-prime-above-13			
+quotient-by-a-prime-above-13			
+quotient-by-a-real-prime-s-associate-by-the-unit			
+quotient-by-a-real-composite-5-squared			
+a-negative-associate-as-the-divisor			
+dividing-a-large-norm-gaussian-by-a-real-prime			
+dividing-by-zero-is-undefined			
+dividing-zero-by-zero-is-undefined	quotient(n(0), n(0))	panic: attempt to divide by zero	error
+m-n-quotient-m-n-mod-m-n-see-mod	((n(5) * quotient(n(17), n(5))) + mod_floor(n(17), n(5)))	17	
+2-5-2-5i-rounds-to-even-in-each-part			

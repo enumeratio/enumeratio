@@ -19,6 +19,14 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: fract($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: num-rational 0.4.2
+      on: 2026-10-16
 ---
 
 - Keeps the sign of x, unlike compute-engine's native [[Fract]], which always lands in $[0, 1)$: $\mathrm{FractionalPart}(-7/2) = -1/2$, where $\mathrm{Fract}(-7/2) = 1/2$.

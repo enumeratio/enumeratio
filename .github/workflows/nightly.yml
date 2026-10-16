@@ -195,6 +195,8 @@ jobs:
         with:
           workspaces: packages/oracle/rust
       - run: node packages/oracle/scripts/setup.ts rust
+      # The adapters' own tests build against the crates (the gate has no toolchain, so they skip there).
+      - run: pnpm --filter @enumeratio/oracle exec vp test run tests/rust-helpers.test.ts
       - uses: ./.github/actions/oracle-drift
         with:
           system: rust

@@ -55,6 +55,16 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: mod_inverse($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: num-bigint 0.4.8
+      on: 2026-10-16
 ---
 
 - Exists exactly when $\gcd(a, m)$ is a unit; the call is otherwise left unevaluated.

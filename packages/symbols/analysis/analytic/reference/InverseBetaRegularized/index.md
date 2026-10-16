@@ -15,6 +15,17 @@ bindings:
     environment: engine
     source: packages/symbols/analysis/analytic/src/inverse-regularized.ts
     note: Safeguarded Newton/bisection against native BetaRegularized.
+  - origin: mapped
+    form: rust
+    template: inverse_beta_regularized($2, $3, $1)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
 seeAlso:
   - BetaRegularized
   - InverseGammaRegularized

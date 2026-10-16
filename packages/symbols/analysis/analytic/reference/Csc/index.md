@@ -51,6 +51,15 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: (n(1) / sin($1))
+    arity: 1
+    threadArgOnly: 1
+    note: The reciprocal of sin.
+    checked:
+      version: rustc 1.98.1
+      on: 2026-10-16
 ---
 
 - $\csc(x) = \frac{1}{\sin(x)}$.

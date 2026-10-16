@@ -4,26 +4,26 @@ exact-value-at-a-special-angle	sin((x(std::f64::consts::PI) / n(6)))	0.499999999
 sin-pi-over-4	sin((x(std::f64::consts::PI) / n(4)))	0.7071067811865475	
 sin-pi-over-3	sin((x(std::f64::consts::PI) / n(3)))	0.8660254037844386	
 sin-pi-over-2	sin((x(std::f64::consts::PI) / n(2)))	1.0	
-sin-pi	sin(x(std::f64::consts::PI))	1.2246467991473532e-16	
+sin-pi	sin(x(std::f64::consts::PI))	1.2246467991473532e-16	disagree
 degrees-d-converts-to-radians-so-sin-60-circ-is			
 a-machine-precision-argument-evaluates	sin(x(1.2))	0.9320390859672263	
-a-huge-10-100-argument	nf(sin(power(n(10), n(100))))		
-a-huge-3-200-argument	nf(sin(power(n(3), n(200))))		
-a-huge-neg-7-60-argument	nf(sin((-(power(n(7), n(60))))))		
-a-huge-10-80-plus-1-over-3-argument	nf(sin(((power(n(10), n(80)) + n(1)) / n(3))))		
-sin-1-under-n	nf(sin(n(1)))		
+a-huge-10-100-argument	nf(sin(power(n(10), n(100))))	-0.3806377310050287	disagree
+a-huge-3-200-argument	nf(sin(power(n(3), n(200))))	-0.9735861004939432	disagree
+a-huge-neg-7-60-argument	nf(sin((-(power(n(7), n(60))))))	-0.03729014862736471	disagree
+a-huge-10-80-plus-1-over-3-argument	nf(sin(((power(n(10), n(80)) + n(1)) / n(3))))	-0.4987100472366955	disagree
+sin-1-under-n	nf(sin(n(1)))	0.8414709848078965	
 n-of-an-exact-argument-gives-an-arbitrary	nf(sin(rational(n(6), n(5))))	0.9320390859672263	
 evaluates-at-a-complex-argument			
-threads-element-wise-over-a-matrix	sin(list(vec![list(vec![(n(5) * (x(std::f64::consts::PI) / n(6))), n(0)]), list(vec![(n(3) * (x(std::f64::consts::PI) / n(2))), (-((x(std::f64::consts::PI) / n(2))))])]))	panic: threading: a list where the crate takes a scalar	error
+threads-element-wise-over-a-matrix	list(vec![list(vec![sin((n(5) * (x(std::f64::consts::PI) / n(6)))), sin(n(0))]), list(vec![sin((n(3) * (x(std::f64::consts::PI) / n(2)))), sin((-((x(std::f64::consts::PI) / n(2)))))])])	[[0.5000000000000003, 0.0], [-1.0, -1.0]]	
 exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4	sin((x(std::f64::consts::PI) / n(12)))	0.25881904510252074	
 sin-pi-8-frac-sqrt-2-sqrt-2-2	sin((x(std::f64::consts::PI) / n(8)))	0.3826834323650898	
 sin-pi-10-frac-sqrt-5-1-4	sin((x(std::f64::consts::PI) / n(10)))	0.3090169943749474	
 sin-5-pi-12-frac-sqrt-6-sqrt-2-4	sin((rational(n(5), n(12)) * x(std::f64::consts::PI)))	0.9659258262890683	
 sin-3-pi-8-frac-sqrt-2-sqrt-2-2	sin((rational(n(3), n(8)) * x(std::f64::consts::PI)))	0.9238795325112867	
 large-rational-multiples-of-pi-are-reduced	sin((rational(n(100), n(3)) * x(std::f64::consts::PI)))	-0.8660254037844414	
-any-integer-multiple-of-pi-is-a-zero-of-sine	sin((n(1000001) * x(std::f64::consts::PI)))	3.4473322826621095e-10	
-sin-negate-pi-is-also-zero	sin((-(x(std::f64::consts::PI))))	-1.2246467991473532e-16	
-sin-4-pi-is-zero	sin((n(4) * x(std::f64::consts::PI)))	-4.898587196589413e-16	
+any-integer-multiple-of-pi-is-a-zero-of-sine	sin((n(1000001) * x(std::f64::consts::PI)))	3.4473322826621095e-10	disagree
+sin-negate-pi-is-also-zero	sin((-(x(std::f64::consts::PI))))	-1.2246467991473532e-16	disagree
+sin-4-pi-is-zero	sin((n(4) * x(std::f64::consts::PI)))	-4.898587196589413e-16	disagree
 a-full-turn-shift-of-a-symbolic-argument-doesn-t			
 sin-i-pi-2-i-sinh-pi-2-exactly			
 n-decimalizes-sin-i-pi-2-not-just-the-exact-form			
@@ -35,7 +35,7 @@ an-imaginary-argument-rewrites-to-sinh-sin-ix-i
 oddness-pulls-the-sign-out-of-a-symbolic			
 a-half-period-shift-reduces-sin-x-pi-sin-x			
 sin-arcsin-x-x-for-every-x			
-sin-arcsin-2-2-past-the-real-domain			
+sin-arcsin-2-2-past-the-real-domain	sin(asin(n(2)))	panic: non-finite result: NaN	error
 sin-arcsin-of-a-complex-argument			
 sin-arccos-x-sqrt-1-x-2			
 sin-arctan-x-frac-x-sqrt-1-x-2			
@@ -48,7 +48,7 @@ taylor-series-about-0-only-odd-powers-appear
 the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1			
 to-30-significant-digits-every-one-correctly	nf(sin(n(1)))	0.8414709848078965	
 a-huge-24-40-argument-reduces-exactly-mod-2-pi	nf(sin(power(n(24), n(40))))	-0.5897765161315717	disagree
-n-sin-6-over-5-50	nf(sin(rational(n(6), n(5))))		
+n-sin-6-over-5-50	nf(sin(rational(n(6), n(5))))	0.9320390859672263	
 functiondomain-sin-x-x			
 functionrange-sin-x-x-y			
 functionperiod-sin-x-x			
@@ -60,7 +60,7 @@ functiondiscontinuities-sin-x-x
 matrixfunction-function-sin-1-1-list-list-5-over			
 assuming-m-in-integers-refine-sin-pi-times-m			
 assuming-m-in-integers-fullsimplify-sin-pi-times			
-threads-element-wise-over-a-list	sin(list(vec![n(0), (x(std::f64::consts::PI) / n(2)), x(std::f64::consts::PI)]))	panic: threading: a list where the crate takes a scalar	error
+threads-element-wise-over-a-list	list(vec![sin(n(0)), sin((x(std::f64::consts::PI) / n(2))), sin(x(std::f64::consts::PI))])	[0.0, 1.0, 1.2246467991473532e-16]	disagree
 degrees-d-converts-a-degree-measure-to-radians			
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	(power(sin((x(std::f64::consts::PI) / n(6))), n(2)) + power(cos((x(std::f64::consts::PI) / n(6))), n(2)))	1.0	
 odd-function-sin-x-sin-x	equal(sin((-((x(std::f64::consts::PI) / n(6))))), (-(sin((x(std::f64::consts::PI) / n(6))))))	true	
@@ -72,10 +72,10 @@ power-reduction-sin-2-x-frac-1-cos-2x-2
 euler-s-formula-sin-x-frac-e-ix-e-ix-2i			
 simplify-knows-the-pythagorean-identity			
 the-same-through-fullsimplify			
-sin-3-over-10-times-pi	sin((rational(n(3), n(10)) * x(std::f64::consts::PI)))		
+sin-3-over-10-times-pi	sin((rational(n(3), n(10)) * x(std::f64::consts::PI)))	0.8090169943749475	
 integrate-sin-t-pow-2-t-0-positiveinfinity			
 integrate-sin-t-pow-2-t-0-1-over-2-times-pi			
-neg-2-times-neg-2-times-sin-1-over-2-pow-4-plus	((n(-2) * ((n(-2) * power(sin(rational(n(1), n(2))), n(4))) + (n(2) * power(sin(rational(n(1), n(2))), n(2)))) * power(sin(n(1)), n(2))) + power(sin(n(1)), n(4)))		
+neg-2-times-neg-2-times-sin-1-over-2-pow-4-plus	((n(-2) * ((n(-2) * power(sin(rational(n(1), n(2))), n(4))) + (n(2) * power(sin(rational(n(1), n(2))), n(2)))) * power(sin(n(1)), n(2))) + power(sin(n(1)), n(4)))	0.0	disagree
 n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2			
 integrate-sin-t-pow-3-t-0-1-over-2-times-pi			
 n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2			
@@ -83,8 +83,8 @@ n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow
 n-integrate-1-over-t-times-sin-t-t-0			
 n-integrate-1-over-sqrt-t-times-sin-t-t-0			
 n-integrate-1-over-t-times-sin-1-over-2-times-t			
-n-sin-1-pow-2	nf(power(sin(n(1)), n(2)))		
-n-sin-1-over-2-plus-1-over-2-times-pi-pow-2	nf(power(sin((rational(n(1), n(2)) + (rational(n(1), n(2)) * x(std::f64::consts::PI)))), n(2)))		
+n-sin-1-pow-2	nf(power(sin(n(1)), n(2)))	0.7080734182735712	
+n-sin-1-over-2-plus-1-over-2-times-pi-pow-2	nf(power(sin((rational(n(1), n(2)) + (rational(n(1), n(2)) * x(std::f64::consts::PI)))), n(2)))	0.7701511529340699	
 1-radian-isn-t-a-recognized-special-angle-so	sin(n(1))	0.8414709848078965	
 sin-2-a-generic-argument-stays-symbolic	sin(n(2))	0.9092974268256817	
 sin-x-plus-y-stays-symbolic			

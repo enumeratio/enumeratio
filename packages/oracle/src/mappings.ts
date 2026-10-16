@@ -19,11 +19,11 @@ import type { System } from "./systems.ts";
 
 export { type Mapping, mappingsFromBindings } from "./mapping-rows.ts";
 
-/** Systems whose function calls need `threadArg`'s help: the Python family, and Julia/Nemo —
+/** Systems whose function calls need `threadArg`'s help: the Python family, Julia/Nemo and Rust —
  * our emit templates are plain calls (`binomial(ZZ($1), ZZ($2))`), not `f.($1)` broadcasts, so
- * a raw Julia `Vector` hits the same "no method" wall a bare Python list does. Only Wolfram's
- * own heads are Listable without this. */
-export const THREADS_MANUALLY: readonly System[] = ["sympy", "mpmath", "sage", "julia"];
+ * a raw Julia `Vector` (or Rust list) hits the same "no method" wall a bare Python list does. Only
+ * Wolfram's own heads are Listable without this. */
+export const THREADS_MANUALLY: readonly System[] = ["sympy", "mpmath", "sage", "julia", "rust"];
 
 /** Head → external-system source, generated from every head's `origin: mapped` `bindings:`
  * rows (https://github.com/enumeratio/enumeratio/wiki/Speculative-Symbol-Metadata step 5;

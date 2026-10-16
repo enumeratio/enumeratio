@@ -219,6 +219,9 @@ function bigO(given: MathJSON, walk: (node: MathJSON) => string): string {
   return exponent === undefined ? order : `Power[${order}, ${walk(exponent)}]`;
 }
 
+/** A double as Rust's float literal: `1e21` and `0.5` parse, but a bare `100` would be an integer there. */
+const rustFloat = (value: number): string => `x(${/^-?\d+$/.test(String(value)) ? `${value}.0` : value})`;
+
 /** Whether `node` is a real number written out: a literal, a rational, or arithmetic over them and the named constants. */
 function isRealNumber(node: MathJSON): boolean {
   if (typeof node === "number") return true;
@@ -288,7 +291,11 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       if (wl) return toWolfram(node);
       // Lean reads `f -1` as `f - 1`.
       // Rust values are the prelude's dynamic `V` (rust/src/prelude.rs).
-      if (system === "rust") return Number.isSafeInteger(node) ? `n(${node})` : `x(${node})`;
+      if (system === "rust") {
+        if (Number.isSafeInteger(node)) return `n(${node})`;
+        // Past 2^53 an integer-valued number is the integer it spells, not a float.
+        return Number.isInteger(node) ? `big("${BigInt(node)}")` : rustFloat(node);
+      }
       // Inside an N(x, d) answer past a double's digits `0.1` would be the double, not the decimal.
       if (system === "mpmath" && exact && !Number.isInteger(node)) return `mpf(${JSON.stringify(String(node))})`;
       if (system === "julia" && (!Number.isInteger(node) || /e/i.test(String(node))))
@@ -350,7 +357,16 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       const value = (node as { num?: unknown }).num;
       if (typeof value === "string") {
         if (wl) return toWolfram({ num: value });
-        if (system === "rust") return /^-?\d+$/.test(value) ? `big("${value}")` : `x(${value})`;
+        if (system === "rust") {
+          if (/^-?\d+$/.test(value)) return `big("${value}")`;
+          // A double holds a decimal to ~16 digits: one past its range would be infinity or zero, not the number.
+          const read = Number(value);
+          if (!Number.isFinite(read) || (read === 0 && /[1-9]/.test(value.replace(/e.*$/i, "")))) {
+            missing.push("literal:outside-double-range");
+            return "0";
+          }
+          return rustFloat(read);
+        }
         // A Python float literal holds 53 bits; SymPy keeps every digit of a longer decimal.
         if (system === "sympy" && /[.e]/i.test(value) && value.replace(/e.*$/i, "").replace(/\D/g, "").length > 15)
           return `Float(${JSON.stringify(value)}, 50)`;
@@ -422,11 +438,13 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
    */
   const threadOver = (node: MathJSON, template: string, others: readonly string[], threadArg: number): string => {
     if (isCall(node) && node[0] === "List") {
-      // Julia's `[1, true]` promotes to one element type; `Any[...]` keeps each as it is.
-      return `${system === "julia" ? "Any" : ""}[${node
+      const items = node
         .slice(1)
         .map((el) => threadOver(el, template, others, threadArg))
-        .join(", ")}]`;
+        .join(", ");
+      if (system === "rust") return `list(vec![${items}])`;
+      // Julia's `[1, true]` promotes to one element type; `Any[...]` keeps each as it is.
+      return `${system === "julia" ? "Any" : ""}[${items}]`;
     }
     const parts = [...others];
     parts.splice(threadArg - 1, 0, walk(node));

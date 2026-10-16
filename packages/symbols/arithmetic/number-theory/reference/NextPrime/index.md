@@ -60,6 +60,14 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: next_prime($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: primal 0.3.3
+      on: 2026-10-16
 ---
 
 - NextPrime(n) is the $(m+1)$th prime, where $m$ is the count of primes $\le n$.

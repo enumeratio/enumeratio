@@ -43,6 +43,15 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: is_square_free($1)
+    arity: 1
+    threadArgOnly: 1
+    note: Every exponent of the factorization is 1.
+    checked:
+      version: primal 0.3.3
+      on: 2026-10-16
 ---
 
 - An integer is squarefree if it is divisible by no perfect square other than 1.

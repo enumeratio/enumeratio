@@ -1,0 +1,46 @@
+id	in	out	verdict
+arcsin-0	asin(n(0))	0.0	
+arcsin-1-over-2	asin(rational(n(1), n(2)))	0.5235987755982988	
+the-top-of-the-principal-range	asin(n(1))	1.5707963267948966	
+arcsin-neg-1	asin(n(-1))	-1.5707963267948966	
+a-machine-precision-argument-evaluates	asin(x(0.4))	0.41151684606748806	
+outside-1-1-a-float-argument-gives-the-complex	asin(x(1.5))	panic: non-finite result: NaN	error
+outside-1-1-reduces-to-the-exact-closed-form	asin(n(2))	panic: non-finite result: NaN	error
+arbitrary-precision-via-n	nf(asin(rational(n(1), n(3))))	0.3398369094541219	
+evaluates-at-a-complex-argument			
+threads-element-wise-over-a-matrix	list(vec![list(vec![asin(n(1)), asin((n(1) / sqrt(n(2))))]), list(vec![asin(n(0)), asin((n(1) / sqrt(n(2))))])])	[[1.5707963267948966, 0.7853981633974482], [0.0, 0.7853981633974482]]	
+exact-inverse-of-a-special-value	asin((sqrt(n(2)) / n(2)))	0.7853981633974484	
+arcsin-sqrt-3-over-2	asin((sqrt(n(3)) / n(2)))	1.0471975511965976	
+recognizes-the-radical-value-sin-pi-12	asin(((sqrt(n(6)) - sqrt(n(2))) / n(4)))	0.26179938779914935	
+recognizes-sin-pi-10-frac-sqrt-5-1-4	asin(((sqrt(n(5)) - n(1)) / n(4)))	0.31415926535897937	
+interval-arithmetic-arcsin-frac-13-frac-12			
+uncertainty-propagation-arcsin-0-9-pm-0-1-approx			
+oddness-pulls-the-sign-out-of-a-symbolic			
+derivative-frac-1-sqrt-1-x-2			
+antiderivative			
+taylor-series-about-0			
+arcsin-sin-1-2-is-already-principal	asin(sin(rational(n(1), n(2))))	0.5	
+to-30-significant-digits-not-yet-the-last-digit	nf(asin(rational(n(1), n(3))))	0.3398369094541219	
+arcsin-2-past-1-1-the-odd-function-mirror-of	asin(n(-2))	panic: non-finite result: NaN	error
+arcsin-infinity-is-a-directed-infinity-along-the			
+arcsin-infinity-is-the-opposite-directed			
+n-arcsin-1-over-3-50	nf(asin(rational(n(1), n(3))))	0.3398369094541219	
+arcsin-3-over-2	asin(rational(n(3), n(2)))	panic: non-finite result: NaN	error
+sin-arcsin-x-x-on-the-principal-branch	equal(sin(asin(rational(n(1), n(2)))), rational(n(1), n(2)))	true	
+co-function-identity-arcsin-x-arccos-x-pi-2	equal((asin(rational(n(1), n(2))) + acos(rational(n(1), n(2)))), (x(std::f64::consts::PI) / n(2)))	true	
+as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2			
+arcsin-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	asin(((-((sqrt(n(2)) / n(4)))) * (n(-1) + sqrt(n(3)))))	-0.2617993877991494	
+arcsin-1-over-4-times-1-minus-sqrt-5	asin((rational(n(1), n(4)) * (n(1) + (-(sqrt(n(5)))))))	-0.31415926535897937	
+arcsin-1-over-2-times-sqrt-2-minus-sqrt-2	asin((rational(n(1), n(2)) * sqrt((n(2) + (-(sqrt(n(2))))))))	0.3926990816987241	
+arcsin-neg-1-over-2-times-sqrt-2-minus-sqrt-2	asin((rational(n(-1), n(2)) * sqrt((n(2) + (-(sqrt(n(2))))))))	-0.3926990816987241	
+arcsin-neg-1-over-2	asin(rational(n(-1), n(2)))	-0.5235987755982988	
+arcsin-1-over-2-times-sqrt-1-over-2-times-5	asin((rational(n(1), n(2)) * sqrt((rational(n(1), n(2)) * (n(5) + (-(sqrt(n(5)))))))))	0.6283185307179586	
+arcsin-neg-1-over-2-times-sqrt-1-over-2-times-5	asin((rational(n(-1), n(2)) * sqrt((rational(n(1), n(2)) * (n(5) + (-(sqrt(n(5)))))))))	-0.6283185307179586	
+arcsin-neg-sqrt-2-over-2	asin((-((sqrt(n(2)) / n(2)))))	-0.7853981633974484	
+arcsin-1-over-4-times-1-plus-sqrt-5	asin((rational(n(1), n(4)) * (n(1) + sqrt(n(5)))))	0.942477796076938	
+arcsin-1-over-4-times-neg-1-minus-sqrt-5	asin((rational(n(1), n(4)) * (n(-1) + (-(sqrt(n(5)))))))	-0.942477796076938	
+arcsin-neg-sqrt-3-over-2	asin((-((sqrt(n(3)) / n(2)))))	-1.0471975511965976	
+arcsin-1-over-2-times-sqrt-2-plus-sqrt-2	asin((rational(n(1), n(2)) * sqrt((n(2) + sqrt(n(2))))))	1.1780972450961724	
+not-simply-2-2-is-outside-the-principal-range-pi	asin(sin(n(2)))	1.1415926535897933	
+arcsin-sin-neg-2-mirrors-through-0	asin(sin(n(-2)))	-1.1415926535897933	
+arcsin-complexinfinity-is-complexinfinity			

@@ -3857,8 +3857,32 @@
             "missing": ["NthPrime/1"]
           },
           "rust": {
-            "reason": "unmapped",
-            "missing": ["NthPrime/1"]
+            "sources": [
+              "list(vec![nth_prime(n(95507)), nth_prime(n(93549)), nth_prime(n(99951)), nth_prime(n(99024)), nth_prime(n(96932)), nth_prime(n(92410)), nth_prime(n(92065)), nth_prime(n(99289))])",
+              "list(vec![nth_prime(n(95251)), nth_prime(n(92517)), nth_prime(n(92394)), nth_prime(n(99936)), nth_prime(n(90381)), nth_prime(n(99451)), nth_prime(n(91645)), nth_prime(n(92438))])",
+              "list(vec![nth_prime(n(98060)), nth_prime(n(97576)), nth_prime(n(98943)), nth_prime(n(99057)), nth_prime(n(93959)), nth_prime(n(99180)), nth_prime(n(97203)), nth_prime(n(92719))])",
+              "list(vec![nth_prime(n(97795)), nth_prime(n(97104)), nth_prime(n(96439)), nth_prime(n(99238)), nth_prime(n(91108)), nth_prime(n(96961)), nth_prime(n(93940)), nth_prime(n(99766))])",
+              "list(vec![nth_prime(n(98407)), nth_prime(n(90952)), nth_prime(n(93602)), nth_prime(n(90285)), nth_prime(n(99573)), nth_prime(n(96414)), nth_prime(n(96484)), nth_prime(n(90621))])",
+              "list(vec![nth_prime(n(96672)), nth_prime(n(91210)), nth_prime(n(93525)), nth_prime(n(98974)), nth_prime(n(95940)), nth_prime(n(98812)), nth_prime(n(90419)), nth_prime(n(96377))])",
+              "list(vec![nth_prime(n(98318)), nth_prime(n(99979)), nth_prime(n(99927)), nth_prime(n(93778)), nth_prime(n(96846)), nth_prime(n(94107)), nth_prime(n(96089)), nth_prime(n(91840))])",
+              "list(vec![nth_prime(n(93958)), nth_prime(n(94705)), nth_prime(n(94757)), nth_prime(n(96527)), nth_prime(n(95402)), nth_prime(n(93025)), nth_prime(n(97961)), nth_prime(n(98532))])",
+              "list(vec![nth_prime(n(95638)), nth_prime(n(92240)), nth_prime(n(95909)), nth_prime(n(94499)), nth_prime(n(90576)), nth_prime(n(91360)), nth_prime(n(94148)), nth_prime(n(95172))])",
+              "list(vec![nth_prime(n(97012)), nth_prime(n(98897)), nth_prime(n(92323)), nth_prime(n(96556)), nth_prime(n(98577)), nth_prime(n(95283)), nth_prime(n(95426)), nth_prime(n(94326))])",
+              "list(vec![nth_prime(n(93792)), nth_prime(n(95185)), nth_prime(n(99916)), nth_prime(n(93396)), nth_prime(n(98222)), nth_prime(n(93519)), nth_prime(n(95501)), nth_prime(n(93903))])",
+              "list(vec![nth_prime(n(96231)), nth_prime(n(98182)), nth_prime(n(94590)), nth_prime(n(91396)), nth_prime(n(92945)), nth_prime(n(93518)), nth_prime(n(92762)), nth_prime(n(90618))])",
+              "list(vec![nth_prime(n(99133)), nth_prime(n(99525)), nth_prime(n(98611)), nth_prime(n(91555)), nth_prime(n(92514)), nth_prime(n(96827)), nth_prime(n(94067)), nth_prime(n(95612))])",
+              "list(vec![nth_prime(n(95880)), nth_prime(n(96843)), nth_prime(n(97658)), nth_prime(n(99963)), nth_prime(n(99169)), nth_prime(n(90897)), nth_prime(n(97997)), nth_prime(n(98028))])",
+              "list(vec![nth_prime(n(92996)), nth_prime(n(92102)), nth_prime(n(93118)), nth_prime(n(96343)), nth_prime(n(94637)), nth_prime(n(99222)), nth_prime(n(90839)), nth_prime(n(97583))])",
+              "list(vec![nth_prime(n(98301)), nth_prime(n(99932)), nth_prime(n(92828)), nth_prime(n(94105)), nth_prime(n(92823)), nth_prime(n(96354)), nth_prime(n(99815)), nth_prime(n(90164))])",
+              "list(vec![nth_prime(n(90430)), nth_prime(n(94835)), nth_prime(n(93343)), nth_prime(n(97640)), nth_prime(n(96537)), nth_prime(n(90231)), nth_prime(n(98908)), nth_prime(n(95966))])",
+              "list(vec![nth_prime(n(92676)), nth_prime(n(93546)), nth_prime(n(97753)), nth_prime(n(91764)), nth_prime(n(94639)), nth_prime(n(96636)), nth_prime(n(97580)), nth_prime(n(99195))])",
+              "list(vec![nth_prime(n(97121)), nth_prime(n(96653)), nth_prime(n(98977)), nth_prime(n(93755)), nth_prime(n(91785)), nth_prime(n(99476)), nth_prime(n(93267)), nth_prime(n(95374))])",
+              "list(vec![nth_prime(n(96233)), nth_prime(n(94899)), nth_prime(n(94001)), nth_prime(n(99870)), nth_prime(n(92626)), nth_prime(n(92174)), nth_prime(n(98831)), nth_prime(n(92150))])",
+              "list(vec![nth_prime(n(93291)), nth_prime(n(95156)), nth_prime(n(99311)), nth_prime(n(94972)), nth_prime(n(99428)), nth_prime(n(93359)), nth_prime(n(92852)), nth_prime(n(90951))])",
+              "list(vec![nth_prime(n(95649)), nth_prime(n(98009)), nth_prime(n(91178)), nth_prime(n(91580)), nth_prime(n(99342)), nth_prime(n(91569)), nth_prime(n(96774)), nth_prime(n(92799))])",
+              "list(vec![nth_prime(n(98815)), nth_prime(n(97962)), nth_prime(n(97774)), nth_prime(n(92822)), nth_prime(n(96332)), nth_prime(n(94042)), nth_prime(n(99765)), nth_prime(n(97832))])",
+              "list(vec![nth_prime(n(93914)), nth_prime(n(91341)), nth_prime(n(92110)), nth_prime(n(97346)), nth_prime(n(98739)), nth_prime(n(97556)), nth_prime(n(92988)), nth_prime(n(97345))])"
+            ]
           }
         }
       },
@@ -4030,8 +4054,32 @@
             "missing": ["NthPrime/1"]
           },
           "rust": {
-            "reason": "unmapped",
-            "missing": ["NthPrime/1"]
+            "sources": [
+              "list(vec![nth_prime(n(9550730)), nth_prime(n(9354950)), nth_prime(n(9995006)), nth_prime(n(9902324))])",
+              "list(vec![nth_prime(n(9693213)), nth_prime(n(9240999)), nth_prime(n(9206491)), nth_prime(n(9928875))])",
+              "list(vec![nth_prime(n(9525076)), nth_prime(n(9251767)), nth_prime(n(9239410)), nth_prime(n(9993534))])",
+              "list(vec![nth_prime(n(9038162)), nth_prime(n(9945015)), nth_prime(n(9164551)), nth_prime(n(9243801))])",
+              "list(vec![nth_prime(n(9805969)), nth_prime(n(9757601)), nth_prime(n(9894240)), nth_prime(n(9905611))])",
+              "list(vec![nth_prime(n(9395863)), nth_prime(n(9917998)), nth_prime(n(9720242)), nth_prime(n(9271888))])",
+              "list(vec![nth_prime(n(9779458)), nth_prime(n(9710417)), nth_prime(n(9643879)), nth_prime(n(9923749))])",
+              "list(vec![nth_prime(n(9110872)), nth_prime(n(9696064)), nth_prime(n(9394001)), nth_prime(n(9976569))])",
+              "list(vec![nth_prime(n(9840674)), nth_prime(n(9095228)), nth_prime(n(9360169)), nth_prime(n(9028567))])",
+              "list(vec![nth_prime(n(9957288)), nth_prime(n(9641416)), nth_prime(n(9648421)), nth_prime(n(9062193))])",
+              "list(vec![nth_prime(n(9667184)), nth_prime(n(9121069)), nth_prime(n(9352511)), nth_prime(n(9897384))])",
+              "list(vec![nth_prime(n(9593978)), nth_prime(n(9881116)), nth_prime(n(9041930)), nth_prime(n(9637652))])",
+              "list(vec![nth_prime(n(9831803)), nth_prime(n(9997841)), nth_prime(n(9992696)), nth_prime(n(9377767))])",
+              "list(vec![nth_prime(n(9684579)), nth_prime(n(9410691)), nth_prime(n(9608920)), nth_prime(n(9184024))])",
+              "list(vec![nth_prime(n(9395791)), nth_prime(n(9470515)), nth_prime(n(9475743)), nth_prime(n(9652720))])",
+              "list(vec![nth_prime(n(9540214)), nth_prime(n(9302523)), nth_prime(n(9796040)), nth_prime(n(9853141))])",
+              "list(vec![nth_prime(n(9563758)), nth_prime(n(9224006)), nth_prime(n(9590898)), nth_prime(n(9449901))])",
+              "list(vec![nth_prime(n(9057638)), nth_prime(n(9136025)), nth_prime(n(9414764)), nth_prime(n(9517153))])",
+              "list(vec![nth_prime(n(9701167)), nth_prime(n(9889668)), nth_prime(n(9232305)), nth_prime(n(9655595))])",
+              "list(vec![nth_prime(n(9857696)), nth_prime(n(9528308)), nth_prime(n(9542604)), nth_prime(n(9432656))])",
+              "list(vec![nth_prime(n(9379231)), nth_prime(n(9518460)), nth_prime(n(9991532)), nth_prime(n(9339568))])",
+              "list(vec![nth_prime(n(9822166)), nth_prime(n(9351882)), nth_prime(n(9550137)), nth_prime(n(9390329))])",
+              "list(vec![nth_prime(n(9623137)), nth_prime(n(9818218)), nth_prime(n(9458955)), nth_prime(n(9139684))])",
+              "list(vec![nth_prime(n(9294563)), nth_prime(n(9351859)), nth_prime(n(9276210)), nth_prime(n(9061806))])"
+            ]
           }
         }
       },
@@ -4203,8 +4251,32 @@
             "missing": ["NthPrime/1"]
           },
           "rust": {
-            "reason": "unmapped",
-            "missing": ["NthPrime/1"]
+            "sources": [
+              "list(vec![nth_prime(n(955072951)), nth_prime(n(935494965)), nth_prime(n(999500563)), nth_prime(n(990232362))])",
+              "list(vec![nth_prime(n(969321293)), nth_prime(n(924099920)), nth_prime(n(920649106)), nth_prime(n(992887433))])",
+              "list(vec![nth_prime(n(952507573)), nth_prime(n(925176739)), nth_prime(n(923941076)), nth_prime(n(999353364))])",
+              "list(vec![nth_prime(n(903816211)), nth_prime(n(994501468)), nth_prime(n(916455109)), nth_prime(n(924380079))])",
+              "list(vec![nth_prime(n(980596848)), nth_prime(n(975760108)), nth_prime(n(989424003)), nth_prime(n(990561104))])",
+              "list(vec![nth_prime(n(939586352)), nth_prime(n(991799801)), nth_prime(n(972024137)), nth_prime(n(927188846))])",
+              "list(vec![nth_prime(n(977945810)), nth_prime(n(971041682)), nth_prime(n(964387887)), nth_prime(n(992374835))])",
+              "list(vec![nth_prime(n(911087264)), nth_prime(n(969606345)), nth_prime(n(939400104)), nth_prime(n(997656883))])",
+              "list(vec![nth_prime(n(984067327)), nth_prime(n(909522818)), nth_prime(n(936016886)), nth_prime(n(902856707))])",
+              "list(vec![nth_prime(n(995728789)), nth_prime(n(964141636)), nth_prime(n(964842056)), nth_prime(n(906219321))])",
+              "list(vec![nth_prime(n(966718369)), nth_prime(n(912106977)), nth_prime(n(935251120)), nth_prime(n(989738393))])",
+              "list(vec![nth_prime(n(959397752)), nth_prime(n(988111588)), nth_prime(n(904193050)), nth_prime(n(963765214))])",
+              "list(vec![nth_prime(n(983180266)), nth_prime(n(999784006)), nth_prime(n(999269507)), nth_prime(n(937776757))])",
+              "list(vec![nth_prime(n(968457891)), nth_prime(n(941069060)), nth_prime(n(960891979)), nth_prime(n(918402446))])",
+              "list(vec![nth_prime(n(939579130)), nth_prime(n(947051477)), nth_prime(n(947574266)), nth_prime(n(965271946))])",
+              "list(vec![nth_prime(n(954021370)), nth_prime(n(930252360)), nth_prime(n(979603963)), nth_prime(n(985314034))])",
+              "list(vec![nth_prime(n(956375763)), nth_prime(n(922400666)), nth_prime(n(959089789)), nth_prime(n(944990117))])",
+              "list(vec![nth_prime(n(905763799)), nth_prime(n(913602583)), nth_prime(n(941476425)), nth_prime(n(951715282))])",
+              "list(vec![nth_prime(n(970116710)), nth_prime(n(988966751)), nth_prime(n(923230573)), nth_prime(n(965559459))])",
+              "list(vec![nth_prime(n(985769538)), nth_prime(n(952830810)), nth_prime(n(954260413)), nth_prime(n(943265626))])",
+              "list(vec![nth_prime(n(937923128)), nth_prime(n(951845951)), nth_prime(n(999153117)), nth_prime(n(933956842))])",
+              "list(vec![nth_prime(n(982216530)), nth_prime(n(935188248)), nth_prime(n(955013714)), nth_prime(n(939032904))])",
+              "list(vec![nth_prime(n(962313669)), nth_prime(n(981821734)), nth_prime(n(945895477)), nth_prime(n(913968437))])",
+              "list(vec![nth_prime(n(929456327)), nth_prime(n(935185885)), nth_prime(n(927621058)), nth_prime(n(906180686))])"
+            ]
           }
         }
       }

@@ -1,0 +1,14 @@
+id	in	out	verdict
+series-coth-x-x-0-10			
+series-coth-x-x-2i-times-pi-3			
+n-coth-6-over-5-50	nf((n(1) / tanh(rational(n(6), n(5)))))	1.1995375441923508	
+coth-list-list-1-over-3-times-i-times-pi-neg-1			
+coth-positiveinfinity			
+coth-0	(n(1) / tanh(n(0)))	panic: non-finite result: inf	error
+d-coth-x-x			
+matrixfunction-function-coth-1-1-list-list-1			
+functionmeromorphic-coth-x-x			
+n-coth-1-times-coth-1-over-2	nf(((n(1) / tanh(n(1))) * (n(1) / tanh(rational(n(1), n(2))))))	2.841347188415585	
+n-coth-1-over-2-plus-1-over-2-times-i-times-pi			
+n-coth-2-times-coth-4	nf(((n(1) / tanh(n(2))) * (n(1) / tanh(n(4)))))	1.0380109149190357	
+n-coth-2-plus-1-over-2-times-i-times-pi			

@@ -1,0 +1,41 @@
+id	in	out	verdict
+n-sinh-0	nf(sinh(n(0)))	0.0	
+n-sinh-1	nf(sinh(n(1)))	1.1752011936438014	
+sinh-0	sinh(n(0))	0.0	
+a-float-argument-evaluates-directly-no-n-needed	sinh(x(1.4))	1.9043015014515339	
+series-sinh-x-x-0-10			
+arbitrary-precision-via-n	nf(sinh(rational(n(7), n(5))))	1.9043015014515339	
+evaluates-at-a-complex-argument			
+sinh-i-pi-2-i-sin-pi-2-i			
+element-wise-over-a-matrix-of-imaginary			
+interval-arithmetic-sinh-is-increasing-so-sinh-0			
+uncertainty-propagation-sinh-2-sqrt-3-pm-0-1			
+sinh-positiveinfinity			
+sinh-ln-2-frac-2-1-2-2-frac-34	sinh(ln(n(2)))	0.75	
+a-real-symbolic-argument-is-untouched			
+oddness-pulls-the-sign-out-of-a-symbolic			
+sinh-arsinh-x-x-for-every-x			
+sinh-arsinh-2-2-for-every-x	sinh(asinh(n(2)))	2.0	
+derivative-cosh-x			
+antiderivative			
+taylor-series-about-0			
+to-30-significant-digits-correctly-rounded	nf(sinh(n(1)))	1.1752011936438014	
+n-decimalizes-sinh-i-pi-2-not-just-the-exact			
+n-sinh-7-over-5-50	nf(sinh(rational(n(7), n(5))))	1.9043015014515339	
+sinh-1-over-5-times-i-times-pi			
+sinh-1-over-24-times-i-times-pi			
+matrixfunction-function-sinh-1-1-list-list-1			
+odd-function-sinh-x-sinh-x	equal(sinh((-(n(1)))), (-(sinh(n(1)))))	true	
+definition-in-terms-of-exp-sinh-x-frac-e-x-e-x-2	equal(sinh(n(1)), ((exp(n(1)) - exp((-(n(1))))) / n(2)))	true	
+the-definition-sinh-x-frac-e-x-e-x-2			
+sinh-1-over-12-times-i-times-pi			
+sinh-1-over-10-times-i-times-pi			
+sinh-1-over-9-times-i-times-pi			
+sinh-1-over-8-times-i-times-pi			
+sinh-1-over-7-times-i-times-pi			
+sinh-1-over-6-times-i-times-pi			
+sinh-2-over-9-times-i-times-pi			
+neg-2-times-2-times-sinh-1-over-2-pow-2-plus-2	((n(-2) * ((n(2) * power(sinh(rational(n(1), n(2))), n(2))) + (n(2) * power(sinh(rational(n(1), n(2))), n(4)))) * power(sinh(n(1)), n(2))) + power(sinh(n(1)), n(4)))	-2.220446049250313e-16	disagree
+n-sinh-1-over-2-plus-cosh-1-over-2-pow-2	nf(power((sinh(rational(n(1), n(2))) + cosh(rational(n(1), n(2)))), n(2)))	2.7182818284590455	
+n-neg-sinh-1-over-2-plus-cosh-1-over-2-pow-2	nf(power(((-(sinh(rational(n(1), n(2))))) + cosh(rational(n(1), n(2)))), n(2)))	0.36787944117144217	
+n-sinh-1-pow-2	nf(power(sinh(n(1)), n(2)))	1.3810978455418155	

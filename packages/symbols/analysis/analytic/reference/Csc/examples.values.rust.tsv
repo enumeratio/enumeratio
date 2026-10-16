@@ -1,0 +1,40 @@
+id	in	out	verdict
+csc-pi-over-6	(n(1) / sin((x(std::f64::consts::PI) / n(6))))	2.0000000000000004	
+csc-pi-over-4	(n(1) / sin((x(std::f64::consts::PI) / n(4))))	1.4142135623730951	
+csc-pi-over-2	(n(1) / sin((x(std::f64::consts::PI) / n(2))))	1.0	
+csc-60-circ-frac-2-sqrt-3-3-exactly			
+a-machine-precision-argument-evaluates	(n(1) / sin(x(1.2)))	1.0729163777098973	
+a-huge-24-40-argument	nf((n(1) / sin(power(n(24), n(40)))))	-1.695557508052614	disagree
+a-huge-10-100-argument	nf((n(1) / sin(power(n(10), n(100)))))	-2.62716992705799	disagree
+a-huge-3-200-argument	nf((n(1) / sin(power(n(3), n(200)))))	-1.0271305223982305	disagree
+a-huge-neg-7-60-argument	nf((n(1) / sin((-(power(n(7), n(60)))))))	-26.816734092236036	disagree
+a-huge-10-80-plus-1-over-3-argument	nf((n(1) / sin(((power(n(10), n(80)) + n(1)) / n(3)))))	-2.005173157310353	disagree
+csc-5-under-n	nf((n(1) / sin(n(5))))	-1.0428352127714058	
+series-csc-x-x-0-10			
+series-csc-x-x-pi-5			
+n-of-an-exact-argument-gives-an-arbitrary	nf((n(1) / sin(rational(n(6), n(5)))))	1.0729163777098973	
+evaluates-at-a-complex-argument			
+threads-element-wise-over-a-matrix-with	list(vec![list(vec![(n(1) / sin((x(std::f64::consts::PI) / n(3)))), (n(1) / sin(x(std::f64::consts::PI)))]), list(vec![(n(1) / sin((x(std::f64::consts::PI) / n(6)))), (n(1) / sin((-((x(std::f64::consts::PI) / n(2))))))])])	[[1.1547005383792517, 8165619676597685.0], [2.0000000000000004, -1.0]]	disagree
+csc-pi-12-sqrt-6-sqrt-2	(n(1) / sin((x(std::f64::consts::PI) / n(12))))	3.8637033051562737	
+csc-pi-10-1-sqrt-5	(n(1) / sin((x(std::f64::consts::PI) / n(10))))	3.23606797749979	
+csc-pi-over-5	(n(1) / sin((x(std::f64::consts::PI) / n(5))))	1.7013016167040798	
+interval-arithmetic-the-image-of-pi-6-pi-3-is			
+uncertainty-propagation-csc-2-pm-0-01-approx-1			
+oddness-pulls-the-sign-out-of-a-symbolic			
+derivative-csc-x-cot-x			
+antiderivative-ln-csc-x-cot-x			
+n-csc-6-over-5-50	nf((n(1) / sin(rational(n(6), n(5)))))	1.0729163777098973	
+matrixfunction-function-csc-1-1-list-list-1-over			
+csc-positiveinfinity			
+assuming-m-in-integers-refine-csc-pi-times-m			
+assuming-m-in-integers-fullsimplify-refine-csc			
+functionmeromorphic-csc-x-x			
+reciprocal-of-sin-csc-x-frac-1-sin-x	equal((n(1) / sin((x(std::f64::consts::PI) / n(6)))), (n(1) / sin((x(std::f64::consts::PI) / n(6)))))	true	
+csc-1-over-8-times-pi	(n(1) / sin((rational(n(1), n(8)) * x(std::f64::consts::PI))))	2.613125929752753	
+csc-3-over-10-times-pi	(n(1) / sin((rational(n(3), n(10)) * x(std::f64::consts::PI))))	1.2360679774997896	
+neg-2-times-neg-2-plus-2-times-csc-1-over-2-pow	((n(-2) * (n(-2) + (n(2) * power((n(1) / sin(rational(n(1), n(2)))), n(2)))) * power((n(1) / sin(n(1))), n(2)) * power((n(1) / sin(rational(n(1), n(2)))), n(4))) + power((n(1) / sin(rational(n(1), n(2)))), n(8)))	-1.1368683772161603e-13	disagree
+n-4-times-neg-1-plus-csc-1-over-2-pow-2-times	nf((n(4) * (n(-1) + power((n(1) / sin(rational(n(1), n(2)))), n(2))) * power((n(1) / sin(n(1))), n(2))))	18.92846257389356	
+n-csc-1-over-2-plus-1-over-2-times-pi-pow-2	nf(power((n(1) / sin((rational(n(1), n(2)) + (rational(n(1), n(2)) * x(std::f64::consts::PI))))), n(2)))	1.2984464104095246	
+n-4-times-neg-1-plus-csc-2-pow-2-times-csc-4-pow	nf((n(4) * (n(-1) + power((n(1) / sin(n(2))), n(2))) * power((n(1) / sin(n(4))), n(2))))	1.4627703597119728	
+a-pole-sin-0-0	(n(1) / sin(n(0)))	panic: non-finite result: inf	error
+csc-complexinfinity-is-indeterminate-for-the			

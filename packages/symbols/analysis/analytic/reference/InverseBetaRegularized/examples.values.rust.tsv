@@ -1,0 +1,9 @@
+id	in	out
+the-median-of-beta-2-3	inverse_beta_regularized(n(2), n(3), x(0.5))	0.3857275681323894
+inversebetaregularized-0p3-2p5-1p5	inverse_beta_regularized(x(2.5), x(1.5), x(0.3))	0.5094974124283432
+i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2	inverse_beta_regularized(n(2), n(1), x(0.25))	0.49999999999999967
+iinv-0-7-4-2	inverse_beta_regularized(n(4), n(2), x(0.7))	0.7819730842367751
+i-x-1-1-x-is-its-own-inverse		
+i-x-a-1-x-a-inverts-to-s-1-a		
+inversebetaregularized-0-2-3	inverse_beta_regularized(n(2), n(3), n(0))	0.0
+inversebetaregularized-1-2-3	inverse_beta_regularized(n(2), n(3), n(1))	1.0

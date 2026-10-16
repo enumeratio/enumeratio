@@ -98,6 +98,26 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: harmonic($1)
+    arity: 1
+    threadArgOnly: 1
+    note: Non-negative integer orders only.
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: generalized_harmonic($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: A non-negative integer order only.
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
 seeAlso:
   - PolyGamma
   - EulerGamma

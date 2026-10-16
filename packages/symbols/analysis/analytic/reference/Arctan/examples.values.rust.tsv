@@ -1,0 +1,48 @@
+id	in	out
+arctan-0	atan(n(0))	0.0
+arctan-1	atan(n(1))	0.7853981633974483
+arctan-sqrt-3	atan(sqrt(n(3)))	1.0471975511965979
+a-machine-precision-argument-evaluates	atan(x(0.5))	0.46364760900080615
+series-arctan-x-x-positiveinfinity-5		
+arbitrary-precision-via-n	nf(atan(rational(n(1), n(2))))	0.46364760900080615
+evaluates-at-a-complex-argument		
+wolfram-s-two-argument-arctan-x-y-is-compute	atan2(n(-1), n(-1))	-2.356194490192345
+arctan2-takes-y-first-the-angle-of-the-point-0-5	atan2(n(2), x(0.5))	1.3258176636680326
+arctan-2-sqrt-3-5-pi-12	atan((n(2) + sqrt(n(3))))	1.3089969389957472
+arctan-2-sqrt-3-pi-12	atan((n(2) - sqrt(n(3))))	0.2617993877991495
+arctan-sqrt-2-1-pi-8	atan((sqrt(n(2)) - n(1)))	0.39269908169872425
+arctan-1-over-sqrt-3	atan((n(1) / sqrt(n(3))))	0.5235987755982989
+arctan-neg-1	atan(n(-1))	-0.7853981633974483
+threads-element-wise-over-a-matrix	list(vec![list(vec![atan(n(0)), atan(n(1))]), list(vec![atan(n(-1)), atan(sqrt(n(3)))])])	[[0.0, 0.7853981633974483], [-0.7853981633974483, 1.0471975511965979]]
+interval-arithmetic-arctan-1-3-frac-pi-4-arctan		
+oddness-pulls-the-sign-out-of-a-symbolic		
+derivative-frac-1-1-x-2		
+antiderivative		
+gregory-s-series-about-0		
+the-limit-at-infty		
+to-30-significant-digits-every-one-correctly	nf(atan(rational(n(1), n(2))))	0.46364760900080615
+n-arctan-1-over-2-50	nf(atan(rational(n(1), n(2))))	0.46364760900080615
+arctan-list-list-1-sqrt-3-list-0-sqrt-3	list(vec![list(vec![atan(n(1)), atan(sqrt(n(3)))]), list(vec![atan(n(0)), atan(sqrt(n(3)))])])	[[0.7853981633974483, 1.0471975511965979], [0.0, 1.0471975511965979]]
+tan-arctan-x-x	equal(tan(atan(n(1))), n(1))	true
+as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2		
+arctan-neg-2-plus-sqrt-3	atan((n(-2) + sqrt(n(3))))	-0.2617993877991495
+arctan-neg-sqrt-1-plus-neg-2-over-5-times-sqrt-5	atan((-(sqrt((n(1) + (rational(n(-2), n(5)) * sqrt(n(5))))))))	-0.3141592653589792
+arctan-1-minus-sqrt-2	atan((n(1) + (-(sqrt(n(2))))))	-0.39269908169872425
+arctan-neg-sqrt-3-over-3	atan((-((sqrt(n(3)) / n(3)))))	-0.5235987755982988
+arctan-sqrt-5-minus-2-times-sqrt-5	atan(sqrt((n(5) + (n(-2) * sqrt(n(5))))))	0.6283185307179586
+arctan-neg-sqrt-5-minus-2-times-sqrt-5	atan((-(sqrt((n(5) + (n(-2) * sqrt(n(5))))))))	-0.6283185307179586
+arctan-neg-sqrt-1-plus-2-over-5-times-sqrt-5	atan((-(sqrt((n(1) + (rational(n(2), n(5)) * sqrt(n(5))))))))	-0.9424777960769379
+arctan-neg-sqrt-3	atan((-(sqrt(n(3)))))	-1.0471975511965979
+arctan-1-plus-sqrt-2	atan((n(1) + sqrt(n(2))))	1.1780972450961724
+n-arctan-1-over-3-plus-arctan-1-over-2	nf((atan(rational(n(1), n(3))) + atan(rational(n(1), n(2)))))	0.7853981633974483
+n-2-times-arctan-1-over-2-minus-arctan-1-over-7	nf(((n(2) * atan(rational(n(1), n(2)))) + (-(atan(rational(n(1), n(7)))))))	0.7853981633974484
+n-2-times-arctan-1-over-3-plus-arctan-1-over-7	nf(((n(2) * atan(rational(n(1), n(3)))) + atan(rational(n(1), n(7)))))	0.7853981633974483
+n-4-times-arctan-1-over-5-minus-arctan-1-over	nf(((n(4) * atan(rational(n(1), n(5)))) + (-(atan(rational(n(1), n(239)))))))	0.7853981633974484
+arctan-sqrt-1-plus-neg-2-over-5-times-sqrt-5	atan(sqrt((n(1) + (rational(n(-2), n(5)) * sqrt(n(5))))))	0.3141592653589792
+arctan-sqrt-1-plus-2-over-5-times-sqrt-5	atan(sqrt((n(1) + (rational(n(2), n(5)) * sqrt(n(5))))))	0.9424777960769379
+compute-engine-s-arctan-takes-only-one-argument		
+arctan-complexinfinity-is-indeterminate-z-re-i		
+the-horizontal-asymptote-as-x-to-infty		
+and-as-x-to-infty		
+euler-s-machin-like-identity-arctan-frac-12		
+machin-s-formula-4-arctan-frac-15-arctan-frac-1		

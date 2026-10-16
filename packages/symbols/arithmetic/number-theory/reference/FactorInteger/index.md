@@ -53,6 +53,15 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: factor_integer($1)
+    arity: 1
+    threadArgOnly: 1
+    note: Positive operands only.
+    checked:
+      version: primal 0.3.3
+      on: 2026-10-16
 ---
 
 - For $n=p_1^{k_1}\cdots p_m^{k_m}$, returns the pairs $\{p_1,k_1\},\ldots,\{p_m,k_m\}$ in increasing order of prime.

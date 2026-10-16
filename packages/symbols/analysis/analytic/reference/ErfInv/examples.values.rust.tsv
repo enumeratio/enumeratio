@@ -1,0 +1,31 @@
+id	in	out	verdict
+erfinv-0	erf_inv(n(0))	0.0	
+erfinv-1	erf_inv(n(1))	panic: non-finite result: inf	error
+erfinv-neg-1	erf_inv(n(-1))	panic: non-finite result: -inf	error
+a-floating-point-argument-evaluates-directly-to	erf_inv(x(0.5))	0.4769362762044699	
+a-machine-precision-argument	erf_inv(x(0.6))	0.5951160814499948	
+series-erfinv-x-x-0-3			
+threads-element-wise-over-a-list-as-wolfram-s	list(vec![erf_inv(n(0)), erf_inv(n(1))])	panic: non-finite result: inf	error
+two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x			
+interval-arithmetic-the-inverse-is-increasing-so			
+uncertainty-propagation			
+to-30-significant-digits-every-one-correctly	nf(erf_inv(rational(n(1), n(2))))	0.4769362762044699	
+n-erfinv-33-over-100-50	nf(erf_inv(rational(n(33), n(100))))	0.30133214613370585	
+functionexpand-matrixfunction-erfinv-list-list-0			
+erfinv-a-erf-a-z			
+functionexpand-erf-erfinv-s			
+erfinv-s-eq-erfinv-0-s			
+series-erfinv-x-x-0-8			
+series-erfinv-z0-s-z0-0-2			
+the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	(sqrt(n(2)) * erf_inv(x(0.95)))	1.9599639845400538	
+inverse-of-erf-erf-erfinv-x-x-see-erf	equal(erf(erf_inv(x(0.5))), x(0.5))	true	
+odd-erfinv-x-erfinv-x-applied-symbolically			
+frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2			
+isnumeric-erfinv-1-over-pi-1-over-2			
+erfinv-0-0			
+erfinv-0-1			
+erfinv-1-0			
+solve-erfinv-x-pow-3-plus-2-times-erfinv-x-eq-1			
+attributes-erfinv			
+outside-its-real-domain-1-1-compute-engine	erf_inv(n(2))	panic: non-finite result: inf	error
+blows-up-near-the-boundary-erfinv-0-9999-is	erf_inv(x(0.9999))	2.7510639057120803	

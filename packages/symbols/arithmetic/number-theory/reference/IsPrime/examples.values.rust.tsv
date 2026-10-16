@@ -4,20 +4,20 @@ id	in	out	verdict
 isprime-13	is_prime(n(13))	true	
 isprime-4	is_prime(n(4))	false	
 isprime-97	is_prime(n(97))	true	
-threads-element-wise-over-a-list	is_prime(list(vec![n(1), n(2), n(3), n(4), n(5), n(6)]))	panic: threading: a list where the crate takes a scalar	error
+threads-element-wise-over-a-list	list(vec![is_prime(n(1)), is_prime(n(2)), is_prime(n(3)), is_prime(n(4)), is_prime(n(5)), is_prime(n(6))])	[false, true, true, false, true, false]	
 isprime-5	is_prime(n(5))	true	
 isprime-7	is_prime(n(7))	true	
-threads-element-wise-over-a-short-list	is_prime(list(vec![n(2), n(3), n(4)]))	panic: threading: a list where the crate takes a scalar	error
-7-is-prime-its-associate-7-is-matching-wolfram-s	is_prime(n(-7))	panic: a non-negative integer	error
+threads-element-wise-over-a-short-list	list(vec![is_prime(n(2)), is_prime(n(3)), is_prime(n(4))])	[true, true, false]	
+7-is-prime-its-associate-7-is-matching-wolfram-s	is_prime(n(-7))	panic: a non-negative integer: the crate's parameter is unsigned	error
 a-gaussian-prime-its-norm-5-is-prime			
 5-2-i-2-i-splits-in-z-i			
-large-integers-10-3000-1-is-divisible-by-10-8-1	is_prime((power(n(10), n(3000)) + n(1)))	panic: a non-negative integer	error
-isprime-neg-1-is-false	is_prime(n(-1))	panic: a non-negative integer	error
-isprime-neg-4-is-false	is_prime(n(-4))	panic: a non-negative integer	error
-isprime-neg-2-is-true	is_prime(n(-2))	panic: a non-negative integer	error
-a-unit-is-not-prime	is_prime(n(1))		
+large-integers-10-3000-1-is-divisible-by-10-8-1	is_prime((power(n(10), n(3000)) + n(1)))	panic: an integer below 2^64: the crate's parameter is a machine word	error
+isprime-neg-1-is-false	is_prime(n(-1))	panic: a non-negative integer: the crate's parameter is unsigned	error
+isprime-neg-4-is-false	is_prime(n(-4))	panic: a non-negative integer: the crate's parameter is unsigned	error
+isprime-neg-2-is-true	is_prime(n(-2))	panic: a non-negative integer: the crate's parameter is unsigned	error
+a-unit-is-not-prime	is_prime(n(1))	false	
 i-a-unit-is-not-prime			
-0-is-not-prime	is_prime(n(0))		
+0-is-not-prime	is_prime(n(0))	false	
 the-ramified-prime-above-2			
 a-prime-above-5			
 the-other-prime-above-5			
@@ -38,19 +38,19 @@ a-real-composite-5-squared-is-not-prime
 1-is-not-prime-gaussian-or-not			
 0-is-not-prime-gaussian-or-not			
 a-common-choice-of-prime-modulus-for-hashing	is_prime(n(1000000007))	true	
-isprime-257	is_prime(n(257))		
-isprime-1-plus-2-pow-128	is_prime((n(1) + power(n(2), n(128))))		
+isprime-257	is_prime(n(257))	true	
+isprime-1-plus-2-pow-128	is_prime((n(1) + power(n(2), n(128))))	panic: an integer below 2^64: the crate's parameter is a machine word	error
 filter-range-1-100-function-isprimepower-1			
 an-odd-prime-stays-prime-in-z-i-exactly-when-p			
-isprime-37	is_prime(n(37))		
-isprime-29	is_prime(n(29))		
-isprime-17	is_prime(n(17))		
-isprime-12	is_prime(n(12))		
-isprime-23	is_prime(n(23))		
-isprime-24	is_prime(n(24))		
-isprime-list-7-11	is_prime(list(vec![n(7), n(11)]))		
-isprime-list-5-7-2	is_prime(list(vec![n(5), n(7), n(2)]))		
-isprime-19	is_prime(n(19))		
+isprime-37	is_prime(n(37))	true	
+isprime-29	is_prime(n(29))	true	
+isprime-17	is_prime(n(17))	true	
+isprime-12	is_prime(n(12))	false	
+isprime-23	is_prime(n(23))	true	
+isprime-24	is_prime(n(24))	false	
+isprime-list-7-11	list(vec![is_prime(n(7)), is_prime(n(11))])	[true, true]	
+isprime-list-5-7-2	list(vec![is_prime(n(5)), is_prime(n(7)), is_prime(n(2))])	[true, true, true]	
+isprime-19	is_prime(n(19))	true	
 divisorsum-19-function-1-1-isprime			
 filter-divisors-625-isprime			
 filter-divisors-2-434-500-isprime			

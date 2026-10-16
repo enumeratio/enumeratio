@@ -63,6 +63,7 @@ bindings:
     form: rust
     template: is_prime($1)
     arity: 1
+    threadArgOnly: 1
 ---
 
 - A prime has no positive divisors other than 1 and itself; 1 itself is not prime.

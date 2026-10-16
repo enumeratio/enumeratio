@@ -1,0 +1,24 @@
+id	in	out	verdict
+log2-8	log2(n(8))	3.0	
+log2-1	log2(n(1))	0.0	
+log2-1-024	log2(n(1024))	10.0	
+log2-2-pow-10	log2(power(n(2), n(10)))	10.0	
+a-machine-precision-argument-evaluates	log2(x(1.4142))	0.49998616442187416	
+series-log-x-plus-1-2-x-0-5			
+an-exact-negative-power-of-2-folds-too-log-2	log2(rational(n(1), n(8)))	-3.0	
+a-symbolic-argument-becomes-the-two-argument-log			
+an-integer-power-is-pulled-out-2-log-2-3	log2(n(9))	3.169925001442312	
+n-log2-9	nf(log2(n(9)))	3.169925001442312	
+log2-0	log2(n(0))	panic: non-finite result: -inf	error
+as-with-ln-the-logarithm-of-complex-infinity-is			
+element-wise-over-a-matrix-including-the-exact	list(vec![list(vec![log2(n(2)), log2(n(1))]), list(vec![log2(n(0)), log2(rational(n(1), n(2)))])])	panic: non-finite result: -inf	error
+interval-arithmetic-log-2-frac-13-2-log-2-3-1			
+uncertainty-propagation-log-2-frac-15-pm-0-01			
+derivative-frac-1-x-ln-2			
+to-30-significant-digits-every-one-correctly	nf(log2(n(3)))	1.584962500721156	
+n-log-45-2-100	nf((ln(n(45)) / ln(n(2))))	5.491853096329675	
+n-log-2-plus-i-2			
+fullsimplify-matrixfunction-log2-list-list-2-1			
+log-positiveinfinity-2			
+a-float-argument-folds-even-for-a-fractional	log2(x(0.5))	-1.0	
+same-as-log-z-2	equal(log2(n(8)), (ln(n(8)) / ln(n(2))))	true	

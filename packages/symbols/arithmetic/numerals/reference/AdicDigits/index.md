@@ -20,4 +20,12 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-09-28
+  - origin: mapped
+    form: rust
+    template: adic_digits($1, $2)
+    arity: 2
+    note: The unit part's digits, least significant first.
+    checked:
+      version: adic 0.5.2
+      on: 2026-10-16
 ---
