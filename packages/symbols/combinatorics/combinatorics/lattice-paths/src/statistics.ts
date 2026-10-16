@@ -148,6 +148,110 @@ const occurrencesOf = (a: number, b: number, c: number): MathJSON =>
   );
 const height: MathJSON = ["Max", profile];
 
+// ── FindStat's tunnels, runs, interactions and the rest ───────────────────────────────────
+
+/** Down steps among the first `i` steps. */
+const downsUpTo = (i: MathJSON): MathJSON => count(upTo(i), isDown("d"), "d");
+/** Heights at every vertex, the origin included: vertex `v` is entry `v + 1`. */
+const vertexProfile: MathJSON = ["Join", ["List", 0], profile];
+/** Positions of the down steps that are followed by an up step. */
+const valleyPositions: MathJSON = where(upTo(subtract(length(), 1)), and(isDown("i"), isUp(nextIndex)));
+/** 1 if two adjacent steps differ (one up and one down), else 0. */
+const differ = (a: MathJSON, b: MathJSON): MathJSON => ["If", equals(add(a, b), 1), 1, 0];
+
+/**
+ * For each position, the position of the up step matching it if it is a down step, else 0: the
+ * last up step before it that ends at the height the down step starts from (the path between
+ * stays at or above that height, or a later such up step would exist).
+ */
+const matchingUps: MathJSON = bind(
+  "h",
+  profile,
+  forEach(
+    positions,
+    [
+      "If",
+      isDown("p"),
+      [
+        "Max",
+        where(upTo(subtract("p", 1)), and(isUp("q"), equals(["At", "h", "q"], ["At", "h", subtract("p", 1)])), "q"),
+      ],
+      0,
+    ],
+    "p",
+  ),
+);
+/** Tunnels (an up step with its matching down step) accepted by `member`, given the matching positions as `m`. */
+const tunnelsWhere = (member: (p: MathJSON) => MathJSON): MathJSON =>
+  where(positions, and(isDown("p"), member("p")), "p");
+const centered = (p: MathJSON): MathJSON => equals(add(p, ["At", "m", p]), add(length(), 1));
+const leftOf = (p: MathJSON): MathJSON => less(add(p, ["At", "m", p]), add(length(), 1));
+/** Pairs of tunnels in the set, one strictly inside the other. */
+const nestedTunnelPairs = (member: (p: MathJSON) => MathJSON): MathJSON =>
+  bind(
+    "m",
+    matchingUps,
+    sumOver(
+      tunnelsWhere(member),
+      count(
+        upTo(subtract("p", 1)),
+        and(and(isDown("r"), member("r")), greater(["At", "m", "r"], ["At", "m", "p"])),
+        "r",
+      ),
+      "p",
+    ),
+  );
+const tunnelCount = (member: (p: MathJSON) => MathJSON): MathJSON =>
+  bind("m", matchingUps, ["Length", tunnelsWhere(member)]);
+
+/**
+ * The interactions of a path: runs of one step type build a count, and the next run of the other
+ * type uses it up one step at a time. Accumulator: (interactions, count, previous step).
+ */
+const interactions = (builder: number): MathJSON => [
+  "At",
+  fold(
+    x,
+    ["List", 0, 0, 0],
+    [
+      "If",
+      equals(visiting, builder),
+      ["List", carried(1), ["If", equals(carried(3), 1 - builder), 1, add(carried(2), 1)], builder],
+      [
+        "If",
+        greater(carried(2), 0),
+        ["List", add(carried(1), 1), subtract(carried(2), 1), 1 - builder],
+        ["List", carried(1), carried(2), 1 - builder],
+      ],
+    ],
+  ),
+  1,
+];
+
+/** Rises of a given length, counted by `test` on each length. */
+const risesWhere = (test: (r: MathJSON) => MathJSON): MathJSON =>
+  bind("lengths", riseLengths, count("lengths", test("r"), "r"));
+/** Whether step `i` differs from the step before it, or is the first. */
+const startsRun = (i: MathJSON): MathJSON => ["If", equals(i, 1), 1, differ(at(subtract(i, 1)), at(i))];
+/** Whether step `i` differs from the step after it, or is the last. */
+const endsRun = (i: MathJSON): MathJSON => ["If", equals(i, length()), 1, differ(at(i), at(add(i, 1)))];
+/** A hill of size `k` starting at step `i`: k up steps then k down steps, beginning on the axis. */
+const hillAt = (k: number): MathJSON => {
+  const steps = Array.from({ length: 2 * k }, (_, t) => equals(step(add("i", t)), t < k ? 1 : 0));
+  const shape = steps.reduce((all, one) => and(all, one));
+  return and(shape, equals(["If", equals("i", 1), 0, heightAfter(subtract("i", 1))], 0));
+};
+/** Peaks that are (weak or strict) left-to-right maxima among the peak heights. */
+const peakMaxima = (beats: "Greater" | "GreaterEqual"): MathJSON => [
+  "At",
+  fold(
+    peakHeights,
+    ["List", 0, 0],
+    ["If", [beats, visiting, carried(1)], ["List", visiting, add(carried(2), 1)], ["List", carried(1), carried(2)]],
+  ),
+  2,
+];
+
 export const DYCK_STATISTICS: readonly Definition[] = [
   stat("Height", "The greatest height the path reaches.", nonEmpty(["Max", profile])),
 
@@ -366,5 +470,263 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "LargestAreaSequenceEntry",
     "The largest entry of the area sequence: the greatest area to the right of an up step.",
     nonEmpty(["Max", areaSequence]),
+  ),
+
+  // ── more of FindStat's, again named after their descriptions ───────────────────────────────
+
+  stat(
+    "UpStepsAtEvenPositions",
+    "Up steps at an even position, counting from 1.",
+    nonEmpty(count(positions, and(isUp("i"), equals(["Mod", "i", 2], 0)))),
+  ),
+  stat(
+    "UpperInteractions",
+    "Over each valley, the shorter of the down run before it and the up run after it, summed: the factors of k down steps then k up steps.",
+    interactions(0),
+    "Over a valley, the shorter of the down run before it and the up run after it.",
+  ),
+  stat(
+    "PyramidWeight",
+    "Over each peak, the shorter of the up run before it and the down run after it, summed: the sizes of the maximal pyramids.",
+    interactions(1),
+  ),
+
+  stat(
+    "CenteredTunnels",
+    "Tunnels (an up step with its matching down step) centered on the middle of the path: positions summing to the length plus one.",
+    nonEmpty(tunnelCount(centered)),
+  ),
+  stat(
+    "LeftTunnels",
+    "Tunnels (an up step with its matching down step) left of the middle: positions summing to less than the length plus one.",
+    nonEmpty(tunnelCount(leftOf)),
+  ),
+  stat(
+    "NestedCenteredTunnelPairs",
+    "Pairs of centered tunnels, one strictly inside the other.",
+    nonEmpty(nestedTunnelPairs(centered)),
+  ),
+  stat(
+    "NestedLeftTunnelPairs",
+    "Pairs of left tunnels, one strictly inside the other.",
+    nonEmpty(nestedTunnelPairs(leftOf)),
+  ),
+  stat(
+    "ValleyTunnelSemilengthSum",
+    "The sum of the semilengths of the tunnels that end at a valley.",
+    hasPair(
+      bind("m", matchingUps, [
+        "Sum",
+        forEach(valleyPositions, ["Divide", add(subtract("p", ["At", "m", "p"]), 1), 2], "p"),
+      ]),
+    ),
+  ),
+  stat(
+    "CenteredMultitunnels",
+    "Factorizations of the path into three parts, the middle one a Dyck path and the outer two of equal length.",
+    nonEmpty(
+      bind(
+        "v",
+        vertexProfile,
+        count(
+          upTo(semilength),
+          and(equals(["At", "v", add(semilength, add("c", 1))], ["At", "v", add(subtract(semilength, "c"), 1)]), [
+            "GreaterEqual",
+            [
+              "Min",
+              forEach(
+                ["Range", add(subtract(semilength, "c"), 1), add(semilength, add("c", 1))],
+                ["At", "v", "j"],
+                "j",
+              ),
+            ],
+            ["At", "v", add(subtract(semilength, "c"), 1)],
+          ]),
+          "c",
+        ),
+      ),
+    ),
+  ),
+
+  stat("RisesOfLengthTwo", "Rises (maximal runs of up steps) of length 2.", hasPair(risesWhere((r) => equals(r, 2)))),
+  stat("RisesOfLengthThree", "Rises (maximal runs of up steps) of length 3.", hasPair(risesWhere((r) => equals(r, 3)))),
+  stat(
+    "RisesOfLengthAtLeastThree",
+    "Rises (maximal runs of up steps) of length at least 3.",
+    hasPair(risesWhere((r) => ["GreaterEqual", r, 3])),
+  ),
+  stat(
+    "RunsOfLengthOne",
+    "Maximal runs of equal steps that are a single step.",
+    hasPair(sumOver(positions, ["Multiply", startsRun("i"), endsRun("i")])),
+  ),
+  stat(
+    "RisesOfLengthOneAtOddHeight",
+    "Rises of length 1 that start at an odd height.",
+    atLeast(
+      3,
+      count(
+        upTo(subtract(length(), 2)),
+        and(and(isDown("i"), isUp(nextIndex)), and(isDown(add("i", 2)), equals(["Mod", heightAfter("i"), 2], 1))),
+      ),
+    ),
+  ),
+
+  stat(
+    "PeakRectangleAreaSum",
+    "The sum, over consecutive peaks, of the area of the rectangle they span with the valley between them.",
+    hasPair(
+      bind(
+        "peaks",
+        peakPositions,
+        bind("valleys", valleyPositions, [
+          "If",
+          equals(["Length", "valleys"], 0),
+          0,
+          [
+            "Sum",
+            forEach(
+              ["Range", 1, ["Length", "valleys"]],
+              [
+                "Multiply",
+                subtract(["At", "valleys", "a"], ["At", "peaks", "a"]),
+                subtract(["At", "peaks", add("a", 1)], ["At", "valleys", "a"]),
+              ],
+              "a",
+            ),
+          ],
+        ]),
+      ),
+    ),
+    "Positions are counted from 1; only differences enter.",
+  ),
+  stat(
+    "SkewHookPositionSum",
+    "The sum of the skew hook positions: after two up steps and a down step, the down step's rank among the down steps; after two down steps and an up step, the rank of the second down step.",
+    atLeast(
+      3,
+      sumOver(
+        ["Range", 3, length()],
+        [
+          "If",
+          and(and(isUp(subtract("i", 2)), isUp(subtract("i", 1))), isDown("i")),
+          downsUpTo("i"),
+          [
+            "If",
+            and(and(isDown(subtract("i", 2)), isDown(subtract("i", 1))), isUp("i")),
+            downsUpTo(subtract("i", 1)),
+            0,
+          ],
+        ],
+      ),
+    ),
+  ),
+  stat(
+    "MajorIndexEastCount",
+    "Over each valley, the down steps up to and including its down step; summed.",
+    hasPair(sumOver(valleyPositions, downsUpTo("i"))),
+  ),
+  stat(
+    "MajorIndexNorthCount",
+    "Over each valley, the up steps up to and including its down step; summed.",
+    hasPair(sumOver(valleyPositions, subtract("i", downsUpTo("i")))),
+  ),
+
+  stat(
+    "LongestZigzag",
+    "The length of the longest stretch of steps that alternate between up and down.",
+    [
+      "At",
+      fold(
+        x,
+        ["List", 0, 0, 2],
+        [
+          "If",
+          equals(carried(3), visiting),
+          ["List", carried(1), 1, visiting],
+          ["List", ["Max", ["List", carried(1), add(carried(2), 1)]], add(carried(2), 1), visiting],
+        ],
+      ),
+      1,
+    ],
+    "Starts the count again at 1 on a repeated step; the accumulator is (best, current, previous step), with 2 for no previous step.",
+  ),
+  stat(
+    "BicoloredMotzkinHeight",
+    "The height of the bicolored Motzkin path made by reading the steps in pairs: two up steps rise, two down steps fall.",
+    nonEmpty(["Divide", ["Max", forEach(upTo(semilength), heightAfter(["Multiply", 2, "i"]))], 2]),
+  ),
+  stat(
+    "BicoloredMotzkinLevelSteps",
+    "The level steps of that bicolored Motzkin path: pairs of steps with one up and one down.",
+    nonEmpty(
+      count(upTo(semilength), equals(add(step(subtract(["Multiply", 2, "i"], 1)), step(["Multiply", 2, "i"])), 1)),
+    ),
+  ),
+  stat(
+    "MinimalValleyHeight",
+    "The lowest height of a valley, or the semilength if the path has none.",
+    hasPair(
+      bind("valleyHeights", forEach(valleyPositions, heightAfter("i")), [
+        "If",
+        equals(["Length", "valleyHeights"], 0),
+        semilength,
+        ["Min", "valleyHeights"],
+      ]),
+    ),
+  ),
+  stat(
+    "HillsOfSizeTwo",
+    "Occurrences of two up steps then two down steps, starting on the axis.",
+    atLeast(4, count(upTo(subtract(length(), 3)), hillAt(2))),
+  ),
+  stat(
+    "HillsOfSizeThree",
+    "Occurrences of three up steps then three down steps, starting on the axis.",
+    atLeast(6, count(upTo(subtract(length(), 5)), hillAt(3))),
+  ),
+  stat("MinimalPeakHeight", "The height of the lowest peak.", hasPair(["Min", peakHeights])),
+  stat("LeftToRightMaximalPeaks", "Peaks higher than every peak to their left.", hasPair(peakMaxima("Greater"))),
+  stat(
+    "WeakLeftToRightMaximalPeaks",
+    "Peaks at least as high as every peak to their left.",
+    hasPair(peakMaxima("GreaterEqual")),
+  ),
+  stat(
+    "BoxWeight",
+    "The product, over the up steps, of one more than the number of down steps before it.",
+    nonEmpty(["Product", forEach(where(positions, isUp("i")), add(1, downsUpTo("i")))], 1),
+  ),
+  stat(
+    "MiddleNonRunHeight",
+    "The height of the middle turning point: the middle one of the peaks and valleys, left to right.",
+    hasPair(
+      bind(
+        "turns",
+        forEach(where(upTo(subtract(length(), 1)), equals(add(step("i"), step(nextIndex)), 1)), heightAfter("i")),
+        ["At", "turns", ["Divide", add(["Length", "turns"], 1), 2]],
+      ),
+    ),
+  ),
+  stat(
+    "SymmetryDegree",
+    "The number of step pairs, counting inward from the ends, at which the path agrees in height with its mirror image.",
+    nonEmpty(
+      bind(
+        "v",
+        vertexProfile,
+        count(
+          upTo(semilength),
+          and(
+            equals(
+              ["At", "v", subtract(["Multiply", 2, "c"], 1)],
+              ["At", "v", add(subtract(length(), subtract(["Multiply", 2, "c"], 3)), 0)],
+            ),
+            equals(["At", "v", ["Multiply", 2, "c"]], ["At", "v", add(subtract(length(), ["Multiply", 2, "c"]), 2)]),
+          ),
+          "c",
+        ),
+      ),
+    ),
   ),
 ];
