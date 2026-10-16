@@ -57,6 +57,8 @@ export interface Walk {
   readonly final?: (flag: MathJSON) => MathJSON;
   /** For tables the interpreter takes minutes to build past 2^53: unrank and rank decline there. */
   readonly declinePastDoubles?: true;
+  /** A count exact past 2^53, where the interpreter declines or takes seconds. */
+  readonly fastCount?: FastKernel["count"];
   readonly fast?: FastKernel;
 }
 
@@ -187,6 +189,7 @@ export const walkFamily = (walk: Walk): EpsilFamily => ({
   params: walk.params,
   ...(walk.declinePastDoubles === undefined ? {} : { declinePastDoubles: true as const }),
   ...(walk.fast === undefined ? {} : { fast: walk.fast }),
+  ...(walk.fastCount === undefined ? {} : { fastCount: walk.fastCount }),
   epsil: {
     count: walk.completions(walk.width, 0, walk.flag?.initial ?? 1),
     ...(walk.tables.length === 0

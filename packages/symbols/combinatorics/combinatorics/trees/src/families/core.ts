@@ -13,13 +13,9 @@ import { binaryTreeParentArrays } from "./binary-tree-parents.ts";
 import { binaryTrees, fullKAryTrees } from "./kary-trees.ts";
 import { orderedTrees } from "./ordered-trees.ts";
 import {
-  BinaryTreeCount,
   BinaryTreeUnrank,
   BinaryTreeRank,
   IsBinaryTree,
-  BinaryTreeParentArray,
-  BinaryTreeOfParentArray,
-  IsBinaryTreeParentArray,
   type BinTree,
   KAryTreeUnrank,
   KAryTreeRank,
@@ -31,23 +27,6 @@ import {
   IsOrderedTree,
   type OrdTree,
 } from "../../../collections/src/families/kernels-extra.ts";
-
-export const binaryTreeParentArraysKernel: NumberKernel = {
-  declared: {
-    carrier: "BinaryTreeParentArray",
-    params: [{ name: "n", role: "axis", min: 0 }],
-    cost: { count: "closed", unrank: "polynomial", rank: "polynomial", valid: "polynomial" },
-  },
-  head: "BinaryTreeParentArrays",
-  paramCount: 1,
-  kind: "ints",
-  carrier: "BinaryTreeParentArray",
-  count: ([n]) => BinaryTreeCount(n),
-  unrank: ([n], r) => BinaryTreeParentArray(BinaryTreeUnrank(n, r)),
-  valid: (e, [n]) => IsBinaryTreeParentArray(e, n),
-  rank: (e) => BinaryTreeRank(BinaryTreeOfParentArray(e as number[]) ?? 0),
-};
-
 // The nested families are Epsil definitions interpreted (a nested element has no compiled type), with
 // the TS kernels, which recurse over the tree natively, as their `fast` paths.
 export const binaryTreesFast: FastKernel = {
@@ -71,10 +50,7 @@ export const orderedTreesFast: FastKernel = {
 
 export const entries: (NumberKernel | EpsilFamily)[] = [
   { ...binaryTrees, fast: binaryTreesFast },
-  {
-    ...binaryTreeParentArrays,
-    fast: { ...binaryTreeParentArraysKernel, count: ([n]) => catalanExact(n) },
-  },
+  { ...binaryTreeParentArrays, fastCount: ([n]) => catalanExact(n) },
   { ...fullKAryTrees, fast: fullKAryTreesFast },
   { ...orderedTrees, fast: orderedTreesFast },
 ];

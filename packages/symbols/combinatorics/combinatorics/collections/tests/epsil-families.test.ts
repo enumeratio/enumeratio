@@ -8,38 +8,38 @@
 import { bareEngine } from "@enumeratio/engine/testing";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
+import { RETIRED_FAST } from "../../tests/readings/index.ts";
 import { allFamilies, type EpsilFamily, epsilKernelOn, evaluateTables, isEpsilFamily } from "../src/families/index.ts";
 import {
-  DyckPathCount,
   DyckPathRank,
   DyckPathUnrank,
+  KSubsetCount,
+  KSubsetRank,
+  KSubsetUnrank,
+} from "../src/families/kernels-extra.ts";
+import { IsSytTwoRowOf, SytTwoRowCount, SytTwoRowRank, SytTwoRowUnrank } from "../src/families/tableaux-trees.ts";
+import {
+  DyckPathCount,
   FibonacciWordCount,
   FibonacciWordRank,
   FibonacciWordUnrank,
   IsDyckPath,
   IsFibonacciWord,
   IsMultisetOf,
-  KSubsetCount,
-  KSubsetRank,
-  KSubsetUnrank,
   MultisetCount,
   MultisetRank,
   MultisetUnrank,
-} from "../src/families/kernels-extra.ts";
+} from "../../tests/readings/kernels/collections-kernels-extra.ts";
 import {
   IsRecursiveTreeOf,
   IsSytHookShapeOf,
-  IsSytTwoRowOf,
   RecursiveTreeCount,
   RecursiveTreeRank,
   RecursiveTreeUnrank,
   SytHookShapeCount,
   SytHookShapeRank,
   SytHookShapeUnrank,
-  SytTwoRowCount,
-  SytTwoRowRank,
-  SytTwoRowUnrank,
-} from "../src/families/tableaux-trees.ts";
+} from "../../tests/readings/kernels/collections-tableaux-trees.ts";
 
 const DEEP = process.env.DEEP_TESTS === "1";
 const ce = bareEngine();
@@ -116,12 +116,12 @@ const READINGS: Record<string, Reading> = {
     letters: WORD,
   },
   TriStrings: {
-    // The TS kernel is private to its module; its fast path, the family's own `fast`, reads it.
+    // The TS kernel is private to its module; the reading in tests/readings is it.
     params: sizes(9),
-    count: (p) => Number(familyOf("TriStrings").fast!.count(p)),
-    unrank: (p, r) => familyOf("TriStrings").fast!.unrank(p, r),
-    rank: (x, p) => familyOf("TriStrings").fast!.rank(x, p)!,
-    valid: (x, p) => familyOf("TriStrings").fast!.valid(x, p)!,
+    count: (p) => Number(RETIRED_FAST.TriStrings.count(p)),
+    unrank: (p, r) => RETIRED_FAST.TriStrings.unrank(p, r),
+    rank: (x, p) => RETIRED_FAST.TriStrings.rank(x, p)!,
+    valid: (x, p) => RETIRED_FAST.TriStrings.valid(x, p)!,
     exact: triStrings,
     letters: WORD,
   },
@@ -140,10 +140,10 @@ const READINGS: Record<string, Reading> = {
   },
   RiordanPaths: {
     params: sizes(8),
-    count: (p) => Number(familyOf("RiordanPaths").fast!.count(p)),
-    unrank: (p, r) => familyOf("RiordanPaths").fast!.unrank(p, r),
-    rank: (x, p) => familyOf("RiordanPaths").fast!.rank(x, p)!,
-    valid: (x, p) => familyOf("RiordanPaths").fast!.valid(x, p)!,
+    count: (p) => Number(RETIRED_FAST.RiordanPaths.count(p)),
+    unrank: (p, r) => RETIRED_FAST.RiordanPaths.unrank(p, r),
+    rank: (x, p) => RETIRED_FAST.RiordanPaths.rank(x, p)!,
+    valid: (x, p) => RETIRED_FAST.RiordanPaths.valid(x, p)!,
     exact: riordan,
     letters: WORD,
   },

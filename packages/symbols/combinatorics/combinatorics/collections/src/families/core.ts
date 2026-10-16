@@ -1,6 +1,6 @@
-// The originally hand-authored collections: Epsil definitions (./closed-forms.ts), each with its TS
-// kernel over the certified kernel library (./kernels*.ts) as a `fast` path where it lists the same
-// members in the same order.
+// The originally hand-authored collections: Epsil definitions (./closed-forms.ts). Their TS kernels,
+// over the certified kernel library (./kernels*.ts), are the independent readings tests/readings/
+// holds them to; FibonacciWords keeps an exact count past 2^53 (`fastCount`).
 import {
   binaryStrings,
   fibonacciWords,
@@ -14,89 +14,22 @@ import {
 import type { EpsilFamily } from "./epsil.ts";
 import { fibonacciWordsExact } from "./exact-recurrences.ts";
 import type { NumberKernel } from "./types.ts";
-import {
-  FibonacciWordRank,
-  FibonacciWordUnrank,
-  GrayCodeSubsetRank,
-  GrayCodeSubsetUnrank,
-  IsFibonacciWord,
-  IsLatticePathOf,
-  IsMultisetOf,
-  IsSubsetOf,
-  IsTupleOf,
-  IsBinaryString,
-  LatticePathCount,
-  LatticePathRank,
-  LatticePathUnrank,
-  MultisetCount,
-  MultisetRank,
-  MultisetUnrank,
-  SubsetCount,
-  TupleCount,
-  TupleRank,
-  TupleUnrank,
-  BinaryStringCount,
-  BinaryStringRank,
-  BinaryStringUnrank,
-} from "./kernels-extra.ts";
 
 // Closed-form families, defined in Epsil (./closed-forms.ts).
 const subsetsFamily = subsets({ head: "Subsets", params: ["_n"], carrier: "Finset", carrierParams: 1 });
 // Not carrier-typed here: out of scope for A-116 (only Subsets/KSubsets/Multisets asked for), though
 // its elements are the same Finset shape as Subsets'.
-const grayCodeSubsetsFamily = grayCodeSubsets({
-  head: "GrayCodeSubsets",
-  params: ["_n"],
-  fast: {
-    count: ([n]) => SubsetCount(n),
-    unrank: ([n], r) => GrayCodeSubsetUnrank(n, r),
-    rank: (x) => GrayCodeSubsetRank(x as number[]),
-    valid: (x, [n]) => IsSubsetOf(x as number[], n),
-  },
-});
+const grayCodeSubsetsFamily = grayCodeSubsets({ head: "GrayCodeSubsets", params: ["_n"] });
 const kSubsetsFamily = kSubsets({ head: "KSubsets", params: ["_n", "_k"], carrier: "Finset", carrierParams: 1 });
 const multisetsFamily = multisets({
   head: "Multisets",
   params: ["_n", "_k"],
   carrier: "Multiset",
   carrierParams: 1,
-  fast: {
-    count: ([n, k]) => MultisetCount(n, k),
-    unrank: ([n, k], r) => MultisetUnrank(n, k, r),
-    rank: (x) => MultisetRank(x as number[]),
-    valid: (x, [n, k]) => IsMultisetOf(x as number[], n, k),
-  },
 });
-const tuplesFamily = tuples({
-  head: "Tuples",
-  params: ["_n", "_k"],
-  fast: {
-    count: ([n, k]) => TupleCount(n, k),
-    unrank: ([n, k], r) => TupleUnrank(n, k, r),
-    rank: (x, [n]) => TupleRank(x as number[], n),
-    valid: (x, [n, k]) => IsTupleOf(x as number[], n, k),
-  },
-});
-const binaryStringsFamily = binaryStrings({
-  head: "BinaryStrings",
-  params: ["_n"],
-  fast: {
-    count: ([n]) => BinaryStringCount(n),
-    unrank: ([n], r) => BinaryStringUnrank(n, r),
-    rank: (x) => BinaryStringRank(x as number[]),
-    valid: (x, [n]) => IsBinaryString(x as number[], n),
-  },
-});
-const latticePathsFamily = latticePaths({
-  head: "LatticePaths",
-  params: ["_a", "_b"],
-  fast: {
-    count: ([a, b]) => LatticePathCount(a, b),
-    unrank: ([a, b], r) => LatticePathUnrank(a, b, r),
-    rank: (x) => LatticePathRank(x as number[]),
-    valid: (x, [a, b]) => IsLatticePathOf(x as number[], a, b),
-  },
-});
+const tuplesFamily = tuples({ head: "Tuples", params: ["_n", "_k"] });
+const binaryStringsFamily = binaryStrings({ head: "BinaryStrings", params: ["_n"] });
+const latticePathsFamily = latticePaths({ head: "LatticePaths", params: ["_a", "_b"] });
 
 // Kept separate from `entries` below only so collections/src/families/index.ts can splice
 // `latticePathsDyckPathsEntries` (DyckPaths) back in at the exact interior position it held
@@ -140,12 +73,7 @@ export const entriesBeforeSetPartitions: EpsilFamily[] = [
   fibonacciWords({
     head: "FibonacciWords",
     params: ["_n"],
-    fast: {
-      count: ([n]) => fibonacciWordsExact(n),
-      unrank: ([n], r) => FibonacciWordUnrank(n, r),
-      rank: (x) => FibonacciWordRank(x as number[]),
-      valid: (x, [n]) => IsFibonacciWord(x as number[], n),
-    },
+    fastCount: ([n]) => fibonacciWordsExact(n),
   }),
 ];
 

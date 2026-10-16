@@ -1,7 +1,7 @@
 import { expect, test } from "vite-plus/test";
 import { asNumbers } from "../../collections/tests/number-kernels.ts";
 import { entries } from "../src/families/prufer-sequences.ts";
-import { LabeledTreeCount } from "../../collections/src/families/kernels-extra.ts";
+import { LabeledTreeCount } from "../../tests/readings/kernels/collections-kernels-extra.ts";
 
 // Moved out of collections/tests/tableaux-trees.test.ts alongside the family (§4 step 5,
 // https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible):

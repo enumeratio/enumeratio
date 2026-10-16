@@ -180,6 +180,7 @@ const alternatingDefinitions: EpsilFamily = permutationRestriction({
   ),
 });
 // E(n): the interpreter's table takes seconds from n = 22, Seidel's triangle milliseconds.
+// Its direct membership test stays: Epsil's walks the element through a table, seconds a call from n = 1000.
 const alternatingPermutations = exactUpTo(alternatingDefinitions, 1000, ([n]) => zigzagExact(n), {
   valid: isAlternatingPermutation,
 });

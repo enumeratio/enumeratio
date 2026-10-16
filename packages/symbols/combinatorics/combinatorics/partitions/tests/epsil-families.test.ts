@@ -8,14 +8,14 @@ import { bareEngine } from "@enumeratio/engine/testing";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, epsilKernelOn } from "../../collections/src/families/epsil.ts";
+import { entries as listed, epsilEntries } from "../src/families/core.ts";
+import { entries as restricted } from "../src/families/partitions.ts";
 import {
   IsPartitionInBox,
   PartitionsInBoxCount,
   PartitionsInBoxRank,
   PartitionsInBoxUnrank,
-} from "../../collections/src/families/kernels-extra.ts";
-import { entries as listed, epsilEntries } from "../src/families/core.ts";
-import { entries as restricted } from "../src/families/partitions.ts";
+} from "../../tests/readings/kernels/collections-kernels-extra.ts";
 
 const ce = bareEngine();
 

@@ -1,6 +1,6 @@
 // Permutation-carrier families whose order is a mixed-radix number, defined in Epsil as closed
 // forms: EvenPermutations, LehmerCodes and SubexcedantSeqs, and Arrangements (KPermutations
-// under its own carrier). Their TS kernels (./permutations.ts) are the verified fast paths.
+// under its own carrier). Their TS kernels (./permutations.ts) are the independent readings tests/readings/ holds them to.
 
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {

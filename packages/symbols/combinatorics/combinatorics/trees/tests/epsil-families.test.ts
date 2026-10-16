@@ -11,15 +11,14 @@ import { type EpsilFamily, epsilKernelOn, evaluateTables } from "../../collectio
 import { pruferDecode } from "../../collections/src/families/kernels-extra.ts";
 import type { NumberKernel } from "../../collections/src/families/types.ts";
 import { binaryTreeParentArrays } from "../src/families/binary-tree-parents.ts";
-import { binaryTreeParentArraysKernel } from "../src/families/core.ts";
-import { entries as labeledEntries, labeledTreesKernel } from "../src/families/labeled.ts";
-import { entries as rootedForestEntries, rootedForestsKernel } from "../src/families/rooted-forests.ts";
+import { entries as labeledEntries } from "../src/families/labeled.ts";
+import { entries as rootedForestEntries } from "../src/families/rooted-forests.ts";
 import { nonCrossingTrees } from "../src/families/noncrossing-trees.ts";
-import {
-  entries as unlabeledEntries,
-  nonCrossingTreesKernel,
-  phylogeneticTreesKernel,
-} from "../src/families/unlabeled-trees.ts";
+import { entries as unlabeledEntries, phylogeneticTreesKernel } from "../src/families/unlabeled-trees.ts";
+import { binaryTreeParentArraysKernel } from "../../tests/readings/kernels/trees-core.ts";
+import { labeledTreesKernel } from "../../tests/readings/kernels/trees-labeled.ts";
+import { rootedForestsKernel } from "../../tests/readings/kernels/trees-rooted-forests.ts";
+import { nonCrossingTreesKernel } from "../../tests/readings/kernels/trees-unlabeled-trees.ts";
 
 const DEEP = process.env.DEEP_TESTS === "1";
 const ce = new ComputeEngine();

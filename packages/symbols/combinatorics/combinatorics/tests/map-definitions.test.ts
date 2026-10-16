@@ -5,16 +5,11 @@
 
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
-import {
-  BinaryTreeOfParentArray,
-  BinaryTreeParentArray,
-  BinaryTreeUnrank,
-  type BinTree,
-  DyckPathUnrank,
-} from "../collections/src/families/kernels-extra.ts";
+import { BinaryTreeUnrank, type BinTree, DyckPathUnrank } from "../collections/src/families/kernels-extra.ts";
 import { Factorial, PermutationUnrank } from "../collections/src/families/kernels.ts";
 import { CycleDecomposition, PermutationOfCycleDecomposition } from "../permutations/src/families/permutations.ts";
 import { evaluateDefinition, MAPS } from "../src/maps.ts";
+import { BinaryTreeOfParentArray, BinaryTreeParentArray } from "./readings/kernels/collections-kernels-extra.ts";
 
 const MAX = 4;
 const catalan = (n: number): number => (n === 0 ? 1 : ((4 * n - 2) * catalan(n - 1)) / (n + 1));

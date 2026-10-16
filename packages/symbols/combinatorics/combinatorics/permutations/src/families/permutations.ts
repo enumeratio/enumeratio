@@ -2,16 +2,8 @@
 // roadmap item don't collide on one file. Reuses ./kernels.ts (Factorial/PermutationUnrank/
 // PermutationRank/IsPermutationOf/LehmerCode/Inversions) wherever the element representation already
 // matches. EvenPermutations, LehmerCodes and SubexcedantSeqs are defined in Epsil (./closed-forms.ts):
-// their kernels here are the fast paths, and tests/fast-kernels.test.ts holds them to the definitions.
-import {
-  Factorial,
-  Inversions,
-  modRank,
-  IsPermutationOf,
-  LehmerCode,
-  PermutationRank,
-  PermutationUnrank,
-} from "../../../collections/src/families/kernels.ts";
+// their kernels here are the independent readings tests/readings/ holds them to.
+import { Factorial, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
 import { IntegerPartitionRank } from "../../../collections/src/families/kernels-combinatorics.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
@@ -31,145 +23,20 @@ import {
 // Lex-rank pairs (2m, 2m+1) always differ by swapping the trailing two entries (the factorial-base
 // digit at that place has weight 1 and only two values), so they have opposite parity — exactly one of
 // each pair is even. That makes "the r-th even permutation" just "whichever half of pair r is even".
-function evenPermutationCount(n: number): number {
-  return n <= 1 ? 1 : Factorial(n) / 2;
-}
-function evenPermutationUnrank(n: number, r: number): number[] {
-  if (n <= 1) return PermutationUnrank(n, 0);
-  const total = evenPermutationCount(n);
-  const rr = total > 0 ? modRank(Math.trunc(r), total) : 0;
-  const base = PermutationUnrank(n, 2 * rr);
-  return Inversions(base) % 2 === 0 ? base : PermutationUnrank(n, 2 * rr + 1);
-}
-function isEvenPermutation(perm: number[], n: number): boolean {
-  return IsPermutationOf(perm, n) && Inversions(perm) % 2 === 0;
-}
-
 // ─── LehmerCodes(n): the inversion tables, in their own order: read as factoradic numbers, which
 // is what makes the order implied rather than chosen. They match Permutations' lex order only
 // because that is the order we chose for Permutations. Element = LehmerCode(perm) ──
 // (length n, the last entry always 0).
-function permutationFromLehmerCode(L: number[], n: number): number[] {
-  const avail = Array.from({ length: n }, (_, i) => i + 1);
-  const res: number[] = [];
-  for (let i = 0; i < n; i++) {
-    const idx = L[i];
-    res.push(avail[idx]);
-    avail.splice(idx, 1);
-  }
-  return res;
-}
-function isValidLehmerCode(code: number[], n: number): boolean {
-  if (!Array.isArray(code) || code.length !== n) return false;
-  for (let i = 0; i < code.length; i++) {
-    const v = code[i];
-    if (!Number.isInteger(v) || v < 0 || v > n - 1 - i) return false;
-  }
-  return true;
-}
-
 // ─── SubexcedantSeqs(n): words (a₀,…,aₙ₋₁) with 0 ≤ aᵢ ≤ i (0-indexed) — its own factorial-base ────
 // odometer, a sibling of lehmer_codes with a different bound (aᵢ ≤ i here, vs the Lehmer code's aᵢ ≤ n−1−i).
-function subexcedantBlockSize(n: number, i: number): number {
-  return Factorial(n) / Factorial(i + 1); // completions after position i
-}
-function subexcedantUnrank(n: number, r: number): number[] {
-  const total = Factorial(n);
-  let x = total > 0 ? modRank(Math.trunc(r), total) : 0;
-  const terms: number[] = [];
-  for (let i = 0; i < n; i++) {
-    const bs = subexcedantBlockSize(n, i);
-    const d = Math.floor(x / bs);
-    terms.push(d);
-    x -= d * bs;
-  }
-  return terms;
-}
-function subexcedantRank(terms: number[], n: number): number {
-  let r = 0;
-  for (let i = 0; i < n; i++) r += terms[i] * subexcedantBlockSize(n, i);
-  return r;
-}
-function isSubexcedant(terms: number[], n: number): boolean {
-  if (!Array.isArray(terms) || terms.length !== n) return false;
-  for (let i = 0; i < n; i++) {
-    const v = terms[i];
-    if (!Number.isInteger(v) || v < 0 || v > i) return false;
-  }
-  return true;
-}
-
 // ─── KInversionPermutations(n,k): exactly k inversions — the Mahonian triangle. ────────────────────
 // k = the LehmerCode digit sum; digit i (0-indexed) ranges over [0, n−1−i], so counting/ranking is a
 // bounded-digit-sum mixed-radix problem — coefficients of ∏ᵢ(1+q+…+qⁱ), i.e. the q-factorial [n]_q!.
-const mahonianCache = new Map<number, number[][]>();
-function mahonianTable(n: number): number[][] {
-  let table = mahonianCache.get(n);
-  if (table) return table;
-  table = Array.from({ length: n + 1 });
-  table[n] = [1];
-  for (let pos = n - 1; pos >= 0; pos--) {
-    const maxDigit = n - 1 - pos;
-    const prev = table[pos + 1];
-    const poly: number[] = Array.from({ length: prev.length - 1 + maxDigit + 1 }, () => 0);
-    for (let d = 0; d <= maxDigit; d++) for (let s = 0; s < prev.length; s++) poly[d + s] += prev[s];
-    table[pos] = poly;
-  }
-  mahonianCache.set(n, table);
-  return table;
-}
-function kInversionUnrank(n: number, k: number, r: number): number[] {
-  if (n === 0) return [];
-  const table = mahonianTable(n);
-  let remaining = k;
-  let rr = r;
-  const code: number[] = [];
-  for (let pos = 0; pos < n - 1; pos++) {
-    const maxDigit = n - 1 - pos;
-    const restPoly = table[pos + 1];
-    let d = 0;
-    for (; d <= maxDigit; d++) {
-      const need = remaining - d;
-      const c = need >= 0 && need < restPoly.length ? restPoly[need] : 0;
-      if (rr < c) break;
-      rr -= c;
-    }
-    code.push(d);
-    remaining -= d;
-  }
-  return permutationFromLehmerCode([...code, 0], n);
-}
-function kInversionRank(perm: number[], n: number): number {
-  const code = LehmerCode(perm);
-  const table = mahonianTable(n);
-  let remaining = code.reduce((a, b) => a + b, 0);
-  let rank = 0;
-  for (let pos = 0; pos < code.length; pos++) {
-    const d = code[pos];
-    const restPoly = table[pos + 1];
-    for (let dd = 0; dd < d; dd++) {
-      const need = remaining - dd;
-      rank += need >= 0 && need < restPoly.length ? restPoly[need] : 0;
-    }
-    remaining -= d;
-  }
-  return rank;
-}
-
 // The table the TS kernel builds is whole polynomials per size, so a large n is left to Epsil.
-const MAHONIAN_FAST_MAX_N = 200;
-const withinMahonianTable = (n: number): number => {
-  if (n > MAHONIAN_FAST_MAX_N) throw new RangeError(`KInversionPermutations(${n}): too large for the TS table`);
-  return n;
-};
 const kInversionPermutationsFast: EpsilFamily = {
   ...kInversionPermutations,
-  fast: {
-    count: ([n, k]) => mahonianNumber(BigInt(n), BigInt(k)),
-    unrank: ([n, k], r) => kInversionUnrank(withinMahonianTable(n), k, r),
-    rank: (x, [n]) => kInversionRank(x as number[], withinMahonianTable(n)),
-    valid: (x, [n, k]) => IsPermutationOf(x as number[], n) && Inversions(x as number[]) === k,
-  },
+  // The Mahonian numbers, exact past 2^53 where the interpreter takes seconds.
+  fastCount: ([n, k]) => mahonianNumber(BigInt(n), BigInt(k)),
 };
 
 // ─── PermutationsAsCycles(n): every permutation of n in cycle notation, fixed points kept. ─────
@@ -246,36 +113,12 @@ export const PermutationsAsCyclesFamily: NumberKernel = {
 };
 
 export const entries: (NumberKernel | EpsilFamily)[] = [
-  // Defined in Epsil (./closed-forms.ts); the kernels above are their fast paths.
-  {
-    ...evenPermutations,
-    fast: {
-      count: ([n]) => evenPermutationCount(n),
-      unrank: ([n], r) => evenPermutationUnrank(n, r),
-      rank: (x) => Math.floor(PermutationRank(x as number[]) / 2),
-      valid: (x, [n]) => isEvenPermutation(x as number[], n),
-    },
-  },
+  // Defined in Epsil (./closed-forms.ts); the kernels above are the readings tests/readings/ holds them to.
+  evenPermutations,
   arrangements,
   permutationsAsCycles,
-  {
-    ...lehmerCodes,
-    fast: {
-      count: ([n]) => Factorial(n),
-      unrank: ([n], r) => LehmerCode(PermutationUnrank(n, r)),
-      rank: (x, [n]) => PermutationRank(permutationFromLehmerCode(x as number[], n)),
-      valid: (x, [n]) => isValidLehmerCode(x as number[], n),
-    },
-  },
-  {
-    ...subexcedantSeqs,
-    fast: {
-      count: ([n]) => Factorial(n),
-      unrank: ([n], r) => subexcedantUnrank(n, r),
-      rank: (x, [n]) => subexcedantRank(x as number[], n),
-      valid: (x, [n]) => isSubexcedant(x as number[], n),
-    },
-  },
+  lehmerCodes,
+  subexcedantSeqs,
   alternatingPermutations,
   connectedPermutations,
   kCyclePermutations,
