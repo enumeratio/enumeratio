@@ -129,8 +129,8 @@ export const DYCK_READINGS: Record<string, (w: Word) => number> = {
     }
     return total;
   },
-  MajorIndexEastCount: (w) => sum(valleyIndices(w).map((d) => w.slice(0, d + 1).filter((s) => s === 0).length)),
-  MajorIndexNorthCount: (w) => sum(valleyIndices(w).map((d) => w.slice(0, d + 1).filter((s) => s === 1).length)),
+  DownStepMajorIndex: (w) => sum(valleyIndices(w).map((d) => w.slice(0, d + 1).filter((s) => s === 0).length)),
+  UpStepMajorIndex: (w) => sum(valleyIndices(w).map((d) => w.slice(0, d + 1).filter((s) => s === 1).length)),
 
   LongestZigzag: (w) => {
     let best = 0;
@@ -166,8 +166,8 @@ export const DYCK_READINGS: Record<string, (w: Word) => number> = {
     const h = heights(w);
     return w.length === 0 ? 0 : Math.min(...peakIndices(w).map((i) => h[i + 1]!));
   },
-  LeftToRightMaximalPeaks: (w) => weakPeakMaxima(w, true),
-  WeakLeftToRightMaximalPeaks: (w) => weakPeakMaxima(w, false),
+  PeakLeftToRightMaxima: (w) => weakPeakMaxima(w, true),
+  WeakPeakLeftToRightMaxima: (w) => weakPeakMaxima(w, false),
   BoxWeight: (w) => {
     let level = 1;
     let weight = 1;
@@ -210,8 +210,8 @@ export const DYCK_FINDSTAT: Record<string, string> = {
   RisesOfLengthOneAtOddHeight: "St001172",
   PeakRectangleAreaSum: "St000645",
   SkewHookPositionSum: "St000946",
-  MajorIndexEastCount: "St000947",
-  MajorIndexNorthCount: "St001161",
+  DownStepMajorIndex: "St000947",
+  UpStepMajorIndex: "St001161",
   LongestZigzag: "St000981",
   BicoloredMotzkinHeight: "St001031",
   BicoloredMotzkinLevelSteps: "St001032",
@@ -219,8 +219,8 @@ export const DYCK_FINDSTAT: Record<string, string> = {
   HillsOfSizeTwo: "St001139",
   HillsOfSizeThree: "St001141",
   MinimalPeakHeight: "St001481",
-  LeftToRightMaximalPeaks: "St001732",
-  WeakLeftToRightMaximalPeaks: "St001733",
+  PeakLeftToRightMaxima: "St001732",
+  WeakPeakLeftToRightMaxima: "St001733",
   BoxWeight: "St001808",
   MiddleNonRunHeight: "St001910",
   SymmetryDegree: "St001523",

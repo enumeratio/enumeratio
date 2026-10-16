@@ -1,7 +1,7 @@
 ---
-name: LeftToRightMaximalPeaks
+name: PeakLeftToRightMaxima
 domain: Dyck path statistics
-signature: LeftToRightMaximalPeaks(path)
+signature: PeakLeftToRightMaxima(path)
 summary: Peaks higher than every peak to their left.
 catalog:
   - system: findstat
@@ -11,7 +11,7 @@ catalog:
 statOn:
   - DyckPath
 signatures:
-  - call: LeftToRightMaximalPeaks(path)
+  - call: PeakLeftToRightMaxima(path)
     description: Peaks higher than every peak to their left.
     library: enumeratio-combinatorics
     type: (dyck_path) -> number

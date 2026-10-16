@@ -950,13 +950,13 @@ export const findstat: readonly FindStatMatch[] = [
     values: 1200,
   },
   {
-    head: "MajorIndexEastCount",
+    head: "DownStepMajorIndex",
     on: "DyckPath",
     findstat: ["St000947"],
     values: 1200,
   },
   {
-    head: "MajorIndexNorthCount",
+    head: "UpStepMajorIndex",
     on: "DyckPath",
     findstat: ["St001161"],
     values: 1200,
@@ -1004,13 +1004,13 @@ export const findstat: readonly FindStatMatch[] = [
     values: 196,
   },
   {
-    head: "LeftToRightMaximalPeaks",
+    head: "PeakLeftToRightMaxima",
     on: "DyckPath",
     findstat: ["St001732"],
     values: 1200,
   },
   {
-    head: "WeakLeftToRightMaximalPeaks",
+    head: "WeakPeakLeftToRightMaxima",
     on: "DyckPath",
     findstat: ["St001733"],
     values: 1200,

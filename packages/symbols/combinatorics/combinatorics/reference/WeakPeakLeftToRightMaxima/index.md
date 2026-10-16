@@ -1,7 +1,7 @@
 ---
-name: WeakLeftToRightMaximalPeaks
+name: WeakPeakLeftToRightMaxima
 domain: Dyck path statistics
-signature: WeakLeftToRightMaximalPeaks(path)
+signature: WeakPeakLeftToRightMaxima(path)
 summary: Peaks at least as high as every peak to their left.
 catalog:
   - system: findstat
@@ -11,7 +11,7 @@ catalog:
 statOn:
   - DyckPath
 signatures:
-  - call: WeakLeftToRightMaximalPeaks(path)
+  - call: WeakPeakLeftToRightMaxima(path)
     description: Peaks at least as high as every peak to their left.
     library: enumeratio-combinatorics
     type: (dyck_path) -> number

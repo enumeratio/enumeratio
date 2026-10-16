@@ -291,6 +291,7 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "Hills",
     "Peaks at height 1 — an up step from the axis immediately followed by a down step.",
     hasPair(count(upTo(subtract(length(), 1)), and(and(isUp("i"), isDown(nextIndex)), equals(heightAfter("i"), 1)))),
+    "Hills of size one: a hill of size k is k up steps then k down steps from the axis (`HillsOfSizeTwo`, `HillsOfSizeThree`).",
   ),
 
   stat(
@@ -311,6 +312,7 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "Area",
     "The area between the path and the axis: the total of the heights after each step.",
     nonEmpty(["Sum", profile]),
+    'Ours is the sum of the heights after each step. FindStat\'s St000012 "area" counts the whole squares under the path instead, and is not this statistic.',
   ),
   stat(
     "Coarea",
@@ -559,6 +561,7 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "RunsOfLengthOne",
     "Maximal runs of equal steps that are a single step.",
     hasPair(sumOver(positions, ["Multiply", startsRun("i"), endsRun("i")])),
+    'Counts runs of both kinds of step, up and down; FindStat\'s title, "single rises", is misleading.',
   ),
   stat(
     "RisesOfLengthOneAtOddHeight",
@@ -622,13 +625,13 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     ),
   ),
   stat(
-    "MajorIndexEastCount",
-    "Over each valley, the down steps up to and including its down step; summed.",
+    "DownStepMajorIndex",
+    "The major index counting positions in down steps only: over each valley, the number of down steps up to and including its down step; summed.",
     hasPair(sumOver(valleyPositions, downsUpTo("i"))),
   ),
   stat(
-    "MajorIndexNorthCount",
-    "Over each valley, the up steps up to and including its down step; summed.",
+    "UpStepMajorIndex",
+    "The major index counting positions in up steps only: over each valley, the number of up steps up to its down step; summed.",
     hasPair(sumOver(valleyPositions, subtract("i", downsUpTo("i")))),
   ),
 
@@ -686,9 +689,9 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     atLeast(6, count(upTo(subtract(length(), 5)), hillAt(3))),
   ),
   stat("MinimalPeakHeight", "The height of the lowest peak.", hasPair(["Min", peakHeights])),
-  stat("LeftToRightMaximalPeaks", "Peaks higher than every peak to their left.", hasPair(peakMaxima("Greater"))),
+  stat("PeakLeftToRightMaxima", "Peaks higher than every peak to their left.", hasPair(peakMaxima("Greater"))),
   stat(
-    "WeakLeftToRightMaximalPeaks",
+    "WeakPeakLeftToRightMaxima",
     "Peaks at least as high as every peak to their left.",
     hasPair(peakMaxima("GreaterEqual")),
   ),
@@ -696,6 +699,7 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "BoxWeight",
     "The product, over the up steps, of one more than the number of down steps before it.",
     nonEmpty(["Product", forEach(where(positions, isUp("i")), add(1, downsUpTo("i")))], 1),
+    "Follows FindStat's Sage code and its data, not its description: the description gives 4 for the path UUDD, the code and every stored value give 1.",
   ),
   stat(
     "MiddleNonRunHeight",
@@ -728,5 +732,6 @@ export const DYCK_STATISTICS: readonly Definition[] = [
         ),
       ),
     ),
+    'FindStat\'s "degree of symmetry".',
   ),
 ];

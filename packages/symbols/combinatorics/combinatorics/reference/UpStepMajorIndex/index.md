@@ -1,18 +1,18 @@
 ---
-name: MajorIndexEastCount
+name: UpStepMajorIndex
 domain: Dyck path statistics
-signature: MajorIndexEastCount(path)
-summary: Over each valley, the down steps up to and including its down step; summed.
+signature: UpStepMajorIndex(path)
+summary: "The major index counting positions in up steps only: over each valley, the number of up steps up to its down step; summed."
 catalog:
   - system: findstat
-    identity: St000947
-    url: https://www.findstat.org/St000947
+    identity: St001161
+    url: https://www.findstat.org/St001161
     on: DyckPath
 statOn:
   - DyckPath
 signatures:
-  - call: MajorIndexEastCount(path)
-    description: Over each valley, the down steps up to and including its down step; summed.
+  - call: UpStepMajorIndex(path)
+    description: "The major index counting positions in up steps only: over each valley, the number of up steps up to its down step; summed."
     library: enumeratio-combinatorics
     type: (dyck_path) -> number
 ---
