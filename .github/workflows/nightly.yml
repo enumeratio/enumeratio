@@ -192,8 +192,23 @@ jobs:
       - uses: ./.github/actions/oracle-drift
         with:
           system: julia
-      - if: ${{ !cancelled() }} # sample even when the rescan above drifted
-        uses: ./.github/actions/oracle-plausible
+
+  # The Julia sampling is its own job, as Python's is: the lane gets its full 8-minute sample budget
+  # (plausible-lanes.ts) beside an install and the sampler's own start-up, without the rescan's time.
+  julia-oracle-plausible:
+    name: reference ⟷ Julia Plausible (Nemo, Combinatorics.jl)
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: "1.13" # packages/oracle/julia/Manifest.toml's julia_version
+      - uses: julia-actions/cache@v2
+      - run: node packages/oracle/scripts/setup.ts julia
+      - uses: ./.github/actions/oracle-plausible
         with:
           systems: julia
           ecosystem: Julia
@@ -217,6 +232,7 @@ jobs:
       - uses: ./.github/actions/oracle-drift
         with:
           system: rust
+      # The lane's sample budget is 5 minutes (plausible-lanes.ts); the rescan above takes about as long.
       - if: ${{ !cancelled() }} # sample even when the rescan above drifted
         uses: ./.github/actions/oracle-plausible
         with:
