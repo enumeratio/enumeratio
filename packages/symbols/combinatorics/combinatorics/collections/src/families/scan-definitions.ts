@@ -54,17 +54,27 @@ const beyond =
 /**
  * The scan of ./scan-definitions.ts. The fold over [1, bound] keeps one integer: minus the members
  * passed so far, until the one at the rank is met, then that member (the first positive value ends the
- * count). A bound that is too small would leave a count where a member should be, which the tests catch
- * (tests/scan-epsil.test.ts holds every bound to the n-th member).
+ * count). A bound that is too small leaves a count where the member should be: that is NaN, which the
+ * kernel refuses, never a value (tests/scan-epsil.test.ts also holds every bound to the n-th member).
  */
-function scan({ head, params = [], count = INFINITY, member, bound, reach }: Scan): EpsilFamily {
+export function scan({ head, params = [], count = INFINITY, member, bound, reach }: Scan): EpsilFamily {
   const [state, k, passed] = ["sn_s", "sn_k", "sn_c"];
-  const unrank = fold(
-    iff(greater(state, 0), state, iff(member(k), iff(equal(add(state, "_r"), 0), k, sub(state, 1)), state)),
-    state,
-    k,
-    0,
-    upTo(1, bound(add("_r", 1))),
+  const found = "sn_f";
+  const unrank = lets(
+    [
+      [
+        found,
+        fold(
+          iff(greater(state, 0), state, iff(member(k), iff(equal(add(state, "_r"), 0), k, sub(state, 1)), state)),
+          state,
+          k,
+          0,
+          upTo(1, bound(add("_r", 1))),
+        ),
+        "integer",
+      ],
+    ],
+    iff(greater(found, 0), found, "NaN"),
   );
   const valid = iff(atLeast("_x", 1), member("_x"), "False");
   const place = fold(iff(member(k), add(passed, 1), passed), passed, k, 0, upTo(1, sub("_x", 1)));

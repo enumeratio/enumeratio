@@ -19,7 +19,7 @@ import {
 import { entries as digits } from "../src/families/numeric-digits-primes.ts";
 import { entries as divisor } from "../src/families/numeric-divisor.ts";
 import { entries as sets } from "../src/families/numeric-sets.ts";
-import { definitions, scans } from "../src/families/scan-definitions.ts";
+import { definitions, scan, scans } from "../src/families/scan-definitions.ts";
 import { needsBigint } from "../src/families/types.ts";
 
 const ce = bareEngine();
@@ -342,4 +342,21 @@ test("the interpreted definitions give the same members and ranks", () => {
         MEMBER[head](x, p) ? "True" : "False",
       ]);
   }
+});
+
+// A bound that falls short must fail, not give a value: the odd numbers' n-th is 2n − 1, past a bound of n.
+test("a scan that ends before the member refuses to answer", () => {
+  const short = scan({
+    head: "ShortOdd",
+    member: (n) => ["Equal", ["Mod", n, 2], 1],
+    bound: (n) => n,
+    reach: { unrank: 100, rank: 100, member: 100 },
+  });
+  const kernel = epsilKernelOn(ce, short);
+  expect(kernel.unrank([], 0n)).toBe(1);
+  // r = 1 wants the second odd number, 3, which is past the bound 2.
+  expect(() => kernel.unrank([], 1n)).toThrow(/definition gave/);
+  expect(() => kernel.unrank([], 5n)).toThrow(/definition gave/);
+  expect(evaluateEpsil(ce, short.epsil.unrank, { _r: 1 })).toBe("NaN");
+  expect(evaluateEpsil(ce, short.epsil.unrank, { _r: 0 })).toBe(1);
 });
