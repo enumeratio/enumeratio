@@ -33,7 +33,7 @@ cos-arcsin-x-sqrt-1-x-2	Cos[ArcSin[x]]	Sqrt[1 - x^2]		\cos \left(\sin ^{-1}(x)\r
 cos-arctan-x-frac-1-sqrt-1-x-2	Cos[ArcTan[x]]	1/Sqrt[1 + x^2]		\cos \left(\tan ^{-1}(x)\right)	\frac{1}{\sqrt{x^2+1}}	
 derivative-sin-x	D[Cos[x], x]	-Sin[x]		\frac{\partial \cos (x)}{\partial x}	-\sin (x)	
 antiderivative	Integrate[Cos[x], x]	Sin[x]		\int \cos (x) \, dx	\sin (x)	
-taylor-series-about-0-only-even-powers-appear	Series[Cos[x], List[x, 0, 6]]					
+taylor-series-about-0-only-even-powers-appear	Series[Cos[x], List[x, 0, 6]]	SeriesData[x, 0, {1, 0, -1/2, 0, 1/24, 0, -1/720}, 0, 7, 1]		\text{Series}[\cos (x),\{x,0,6\}]	1-\frac{x^2}{2}+\frac{x^4}{24}-\frac{x^6}{720}+O\left(x^7\right)	
 to-30-significant-digits-every-one-correctly	N[Cos[1], 30]	0.5403023058681397174009366074429766037323104206179222276696`30.	0.540302305868139717400936607443	N[\cos (1),30]	0.540302305868139717400936607443	
 to-1-significant-digit	N[Cos[1], 1]	0.5403023058681397173`1.	0.5	N[\cos (1),1]	0.5	
 a-huge-10-100-argument-reduces-exactly-mod-2-pi	N[Cos[Power[10, 100]]]	0.9247242387519338		N\left[\cos \left(10^{100}\right)\right]	0.924724	disagree
@@ -52,9 +52,9 @@ assuming-m-in-integers-fullsimplify-refine-cos	Assuming[Element[m, Integers], Fu
 threads-element-wise-over-a-list	Cos[List[0, Divide[Pi, 2], Pi]]	{1, 0, -1}		\cos \left(\left\{0,\frac{\pi }{2},\pi \right\}\right)	\{1,0,-1\}	
 even-function-cos-x-cos-x	(Cos[Minus[Divide[Pi, 3]]] == Cos[Divide[Pi, 3]])	True		\cos \left(-\frac{\pi }{3}\right)=\cos \left(\frac{\pi }{3}\right)	\text{True}	
 co-function-identity-cos-x-sin-pi-2-x	(Cos[Divide[Pi, 6]] == Sin[Subtract[Divide[Pi, 2], Divide[Pi, 6]]])	True		\cos \left(\frac{\pi }{6}\right)=\sin \left(\frac{\pi }{2}-\frac{\pi }{6}\right)	\text{True}	
-double-angle-formula-cos-2x-cos-2-x-sin-2-x	TrigExpand[Cos[Times[2, x]]]					
-angle-addition-formula	TrigExpand[Cos[Plus[x, y]]]					
-power-reduction-cos-2-x-frac-1-cos-2x-2	TrigReduce[Power[Cos[x], 2]]					
+double-angle-formula-cos-2x-cos-2-x-sin-2-x	TrigExpand[Cos[Times[2, x]]]	Cos[x]^2 - Sin[x]^2		\text{TrigExpand}[\cos (2 x)]	\cos ^2(x)-\sin ^2(x)	
+angle-addition-formula	TrigExpand[Cos[Plus[x, y]]]	Cos[x]*Cos[y] - Sin[x]*Sin[y]		\text{TrigExpand}[\cos (x+y)]	\cos (x) \cos (y)-\sin (x) \sin (y)	
+power-reduction-cos-2-x-frac-1-cos-2x-2	TrigReduce[Power[Cos[x], 2]]	(1 + Cos[2*x])/2		\text{TrigReduce}\left[\cos ^2(x)\right]	\frac{1}{2} (\cos (2 x)+1)	
 euler-s-formula-cos-x-frac-e-ix-e-ix-2	TrigToExp[Cos[x]]	1/(2*E^(I*x)) + E^(I*x)/2		\text{TrigToExp}[\cos (x)]	\frac{e^{-i x}}{2}+\frac{e^{i x}}{2}	
 cos-3-over-10-times-pi	Cos[Times[Rational[3, 10], Pi]]	Sqrt[5/8 - Sqrt[5]/8]		\cos \left(\frac{3}{10} \pi \right)	\sqrt{\frac{5}{8}-\frac{\sqrt{5}}{8}}	
 integrate-cos-t-pow-2-t-0-1-over-2-times-pi	Integrate[Power[Cos[t], 2], List[t, 0, Times[Rational[1, 2], Pi]]]	Pi/4		\int_0^{\frac{1}{2} \pi } \cos ^2(t) \, dt	\frac{\pi }{4}	

@@ -27,12 +27,14 @@ import {
   type System,
   type Tree,
   type Verdict,
+  Undecided,
   valuesOnly,
 } from "@enumeratio/oracle";
 import { fromWolfram } from "@enumeratio/wolfram";
 import { measuredTolerance } from "../src/known.ts";
 
-const ce = new ComputeEngine();
+/** Boxing `x^a` types `a` as a number for good: each verdict starts on an engine of its own. */
+let ce = new ComputeEngine();
 
 /**
  * A leaf of the comparison: the number an expression has, else its symbolic text.
@@ -225,7 +227,18 @@ function iteratorsAsLimits(expr: MathJSON): MathJSON {
   ] as MathJSON;
 }
 
-export function verdictOf(
+export function verdictOf(...args: Parameters<typeof judge>): Verdict {
+  ce = new ComputeEngine();
+  try {
+    return judge(...args);
+  } catch (error) {
+    // A comparison that could not be made is undecided.
+    if (error instanceof Undecided) return "inconclusive";
+    throw error;
+  }
+}
+
+function judge(
   system: System,
   expected: MathJSON,
   result: Answer,

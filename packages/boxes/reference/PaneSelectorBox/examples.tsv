@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-inert	Basic		[PaneSelectorBox, [List, [List, "'1'", "'one'"], [List, "'2'", "'two'"]], [DynamicBox, n]]	[PaneSelectorBox, [List, [List, "'1'", "'one'"], [List, "'2'", "'two'"]], [DynamicBox, n]]	a box is inert: it evaluates to itself	shape	Not run against Wolfram (no kernel on this machine). Wolfram's documented shape is PaneSelectorBox[{1 -> "one", 2 -> "two"}, Dynamic[n]]; ours has rows for rules and DynamicBox[n] for Dynamic[n], as the control boxes do.
+id	section	role	expr	expected	caption
+inert	Basic		[PaneSelectorBox, [List, [List, "'1'", "'one'"], [List, "'2'", "'two'"]], [DynamicBox, n]]	[PaneSelectorBox, [List, [List, "'1'", "'one'"], [List, "'2'", "'two'"]], [DynamicBox, n]]	a box is inert: it evaluates to itself

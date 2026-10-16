@@ -1,2 +1,2 @@
-id	in
-inert	GraphicsComplexBox[RowBox[List[]]]
+id	in	out	tex.in	tex.out
+inert	GraphicsComplexBox[RowBox[List[]]]	GraphicsComplexBox[RowBox[{}]]	\text{GraphicsComplexBox}[\text{RowBox}[\{\}]]	\text{GraphicsComplexBox}[\text{RowBox}[\{\}]]

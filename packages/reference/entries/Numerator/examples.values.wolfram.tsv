@@ -1,6 +1,6 @@
 id	in	out	tex.in	tex.out	verdict
-numerator-3-4	Numerator[Rational[3, 4]]				
-numerator-of-an-integer	Numerator[5]				
+numerator-3-4	Numerator[Rational[3, 4]]	3	\text{Numerator}\left[\frac{3}{4}\right]	3	
+numerator-of-an-integer	Numerator[5]	5	\text{Numerator}[5]	5	
 numerator-2-over-3	Numerator[Rational[2, 3]]	2	\text{Numerator}\left[\frac{2}{3}\right]	2	
 numerator-x-minus-2-times-x-minus-1-times-x	Numerator[Times[Plus[x, -2], Plus[x, -1], Power[Plus[x, -3], -2]]]	(-2 + x)*(-1 + x)	\text{Numerator}\left[\frac{(x-2) (x-1)}{(x-3)^2}\right]	(x-2) (x-1)	
 numerator-sin-x-minus-2-pow-neg-b-times-sin-x	Numerator[Times[Power[Plus[Sin[x], -2], Minus[b]], Power[Sin[x], a]]]	Sin[x]^a	\text{Numerator}\left[(\sin (x)-2)^{-b} \sin ^a(x)\right]	\sin ^a(x)	disagree

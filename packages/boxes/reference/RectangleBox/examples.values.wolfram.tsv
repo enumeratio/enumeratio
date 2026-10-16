@@ -1,2 +1,2 @@
-id	in
-inert	RectangleBox[List[Min, List[0, 0]], List[Max, List[1, 2]]]
+id	in	out	tex.in	tex.out
+inert	RectangleBox[List[Min, List[0, 0]], List[Max, List[1, 2]]]	RectangleBox[{Min, {0, 0}}, {Max, {1, 2}}]	\text{RectangleBox}[\{\text{Min},\{0,0\}\},\{\text{Max},\{1,2\}\}]	\text{RectangleBox}[\{\text{Min},\{0,0\}\},\{\text{Max},\{1,2\}\}]

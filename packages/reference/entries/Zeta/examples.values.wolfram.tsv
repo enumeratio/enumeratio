@@ -30,13 +30,13 @@ n-zeta-i-neg-2-complex-s	N[Zeta[Complex[0, 1], -2]]	1.7725391250492961 - 1.05711
 fullsimplify-normal-series-zeta-x-x-0-2	FullSimplify[Normal[Series[Zeta[x], List[x, 0, 2]]]]	(-24 + x*(12*EulerGamma^2*x - Pi^2*x - 12*Log[2*Pi]*(2 + x*Log[2*Pi]) + 24*x*StieltjesGamma[1]))/48		\text{FullSimplify}[\text{Normal}[\text{Series}[\zeta (x),\{x,0,2\}]]]	\frac{1}{48} \left(x \left(24 \gamma _1 x-\pi ^2 x+12 \gamma ^2 x-12 \log (2 \pi ) (x \log (2 \pi )+2)\right)-24\right)	
 normal-series-zeta-x-x-positiveinfinity-6	Normal[Series[Zeta[x], List[x, Infinity, 6]]]	1 + 2^(-x) + 3^(-x) + 4^(-x) + 5^(-x) + 6^(-x)		\text{Normal}[\text{Series}[\zeta (x),\{x,\infty ,6\}]]	2^{-x}+3^{-x}+4^{-x}+5^{-x}+6^{-x}+1	inconclusive
 normal-series-zeta-x-x-1-2	Normal[Series[Zeta[x], List[x, 1, 2]]]	EulerGamma + (-1 + x)^(-1) - (-1 + x)*StieltjesGamma[1] + ((-1 + x)^2*StieltjesGamma[2])/2		\text{Normal}[\text{Series}[\zeta (x),\{x,1,2\}]]	\frac{1}{2} \gamma _2 (x-1)^2-\gamma _1 (x-1)+\frac{1}{x-1}+\gamma	
-zeta-inexact-s-negative-integer-a-abs-terms	Zeta[-1.500000001, -3]					
-zeta-complex-a-left-of-imaginary-axis	Zeta[Complex[-1.5, 1], Complex[-0.04412268481772066, 0.9990261201212289]]					
-n-zeta-3-neg-2p5-sums-abs-terms	N[Zeta[3, -2.5]]					
-n-zeta-2p5-neg-2p5	N[Zeta[2.5, -2.5]]					
-n-zeta-3-neg-2p5-plus-i	N[Zeta[3, Complex[-2.5, 1]]]					
-n-zeta-2p5-plus-i-neg-2p5	N[Zeta[Complex[2.5, 1], -2.5]]					
-zeta-3-133-at-a-negative-integer-a	Zeta[3.133, -2]					
+zeta-inexact-s-negative-integer-a-abs-terms	Zeta[-1.500000001, -3]	8.999094353308372 + 3.1210370826556225*^-18*I		\zeta (-1.5,-3)	8.99909\, +\text{3.1210370826556225$\grave{ }$*${}^{\wedge}$-18} i	
+zeta-complex-a-left-of-imaginary-axis	Zeta[Complex[-1.5, 1], Complex[-0.04412268481772066, 0.9990261201212289]]	1.5687779088740574 - 0.19283899130439777*I		\zeta (-1.5+i,-0.0441227+0.999026 i)	1.56878\, -0.192839 i	
+n-zeta-3-neg-2p5-sums-abs-terms	N[Zeta[3, -2.5]]	16.77469461841346		N[\zeta (3,-2.5)]	16.7747	
+n-zeta-2p5-neg-2p5	N[Zeta[2.5, -2.5]]	12.36804513848779		N[\zeta (2.5,-2.5)]	12.368	
+n-zeta-3-neg-2p5-plus-i	N[Zeta[3, Complex[-2.5, 1]]]	-1.3912718248112188 - 0.02886396524976546*I		N[\zeta (3,-2.5+i)]	-1.39127-0.028864 i	
+n-zeta-2p5-plus-i-neg-2p5	N[Zeta[Complex[2.5, 1], -2.5]]	9.479051146626311 + 6.677691995918281*I		N[\zeta (2.5\, +i,-2.5)]	9.47905\, +6.67769 i	
+zeta-3-133-at-a-negative-integer-a	Zeta[3.133, -2]	2.2916807133439048		\zeta (3.133,-2)	2.29168	
 on-the-critical-line-zeta-1-2-14i-0-02224-0	N[Zeta[Complex[0.5, 14]]]	0.022241142609994033 - 0.10325812326645277*I		N[\zeta (0.5\, +14 i)]	0.0222411\, -0.103258 i	
 two-argument-zeta-s-a-via-enumeratio-analytic	Zeta[2, 1]	Pi^2/6		\zeta (2,1)	\frac{\pi ^2}{6}	
 zeta-2-2-zeta-2-1-pi-2-6-1	Zeta[2, 2]	-1 + Pi^2/6		\zeta (2,2)	\frac{\pi ^2}{6}-1	

@@ -9,7 +9,7 @@ symbolic-n-binom-n-0-1-for-any-n	Binomial[n, 0]	1		\binom{n}{0}	1
 symbolic-n-binom-n-1-n	Binomial[n, 1]	n		\binom{n}{1}	n	
 binom-n-n-1-n-for-symbolic-n	Binomial[n, Subtract[n, 1]]	n		\binom{n}{n-1}	n	
 binom-m-m-1-m-for-symbolic-m	Binomial[m, Plus[m, -1]]	m		\binom{m}{m-1}	m	
-n-binomial-7-over-3-1-over-5-1-digit	N[Binomial[Rational[7, 3], Rational[1, 5]], 1]					
+n-binomial-7-over-3-1-over-5-1-digit	N[Binomial[Rational[7, 3], Rational[1, 5]], 1]	1.`1.	1.	N\left[\binom{\frac{7}{3}}{\frac{1}{5}},1\right]	1.	
 threads-element-wise-over-a-list-as-wolfram-s	Binomial[List[2, 3, 5, 7, 11], 3]	{0, 1, 10, 35, 165}		\binom{\{2,3,5,7,11\}}{3}	\{0,1,10,35,165\}	
 half-integer-arguments-evaluate-exactly-through	Binomial[Rational[9, 2], Rational[7, 2]]	9/2		\binom{\frac{9}{2}}{\frac{7}{2}}	\frac{9}{2}	
 real-arguments-evaluate-through-the-gamma	Binomial[8.5, -4.2]	0.00006049924840228362		\binom{8.5}{-4.2}	0.0000604992	

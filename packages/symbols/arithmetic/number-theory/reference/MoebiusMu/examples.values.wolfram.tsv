@@ -3,7 +3,7 @@ moebiusmu-1	MoebiusMu[1]	1	\mu (1)	1
 moebiusmu-11	MoebiusMu[11]	-1	\mu (11)	-1	
 12-22-3-is-not-squarefree	MoebiusMu[12]	0	\mu (12)	0	
 10-2-5-a-product-of-an-even-number-of-distinct	MoebiusMu[10]	1	\mu (10)	1	
-isprime-of-a-negative-beside-moebiusmu	List[PrimeQ[-2], MoebiusMu[11]]				
+isprime-of-a-negative-beside-moebiusmu	List[PrimeQ[-2], MoebiusMu[11]]	{True, -1}	\{\text{PrimeQ}[-2],\mu (11)\}	\{\text{True},-1\}	
 threads-element-wise-over-a-list-as-wolfram-s	MoebiusMu[List[1, 2, 3, 4]]	{1, -1, -1, 0}	\mu (\{1,2,3,4\})	\{1,-1,-1,0\}	
 gaussian-integers-5-6i-is-a-gaussian-prime-norm	MoebiusMu[Complex[5, 6]]	-1	\mu (5+6 i)	-1	
 listable-threads-over-a-list	MoebiusMu[List[4, 10, 17, 20]]	{0, 1, -1, 0}	\mu (\{4,10,17,20\})	\{0,1,-1,0\}	

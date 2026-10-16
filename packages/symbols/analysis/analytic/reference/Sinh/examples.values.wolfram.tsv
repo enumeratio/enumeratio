@@ -18,7 +18,7 @@ sinh-arsinh-x-x-for-every-x	Sinh[ArcSinh[x]]	x		\sinh \left(\sinh ^{-1}(x)\right
 sinh-arsinh-2-2-for-every-x	Sinh[ArcSinh[2]]	2		\sinh \left(\sinh ^{-1}(2)\right)	2	
 derivative-cosh-x	D[Sinh[x], x]	Cosh[x]		\frac{\partial \sinh (x)}{\partial x}	\cosh (x)	
 antiderivative	Integrate[Sinh[x], x]	Cosh[x]		\int \sinh (x) \, dx	\cosh (x)	
-taylor-series-about-0	Series[Sinh[x], List[x, 0, 5]]					
+taylor-series-about-0	Series[Sinh[x], List[x, 0, 5]]	SeriesData[x, 0, {1, 0, 1/6, 0, 1/120}, 1, 6, 1]		\text{Series}[\sinh (x),\{x,0,5\}]	x+\frac{x^3}{6}+\frac{x^5}{120}+O\left(x^6\right)	
 to-30-significant-digits-correctly-rounded	N[Sinh[1], 30]	1.1752011936438014568823818505956008151557179813340958702296`30.	1.17520119364380145688238185060	N[\sinh (1),30]	1.17520119364380145688238185060	
 n-decimalizes-sinh-i-pi-2-not-just-the-exact	N[Sinh[Times[I, Divide[Pi, 2]]]]	0. + 1.*I		N\left[\sinh \left(i \frac{\pi }{2}\right)\right]	0.\, +1. i	
 n-sinh-7-over-5-50	N[Sinh[Rational[7, 5]], 50]	1.90430150145153405514212382769742630955163868372129479120283226901463940858675`50.	1.9043015014515340551421238276974263095516386837213	N\left[\sinh \left(\frac{7}{5}\right),50\right]	1.9043015014515340551421238276974263095516386837213	

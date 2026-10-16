@@ -1,2 +1,2 @@
-id	in
-euler-gamma-to-20-digits	N[EulerGamma, 20]
+id	in	out	shown	tex.in	tex.out
+euler-gamma-to-20-digits	N[EulerGamma, 20]	0.57721566490153286060651209066033260702`20.	0.57721566490153286061	N[\gamma ,20]	0.57721566490153286061

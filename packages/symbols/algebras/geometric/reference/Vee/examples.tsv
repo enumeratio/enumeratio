@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-two-vectors-in-the-plane	Basic		[Vee, e_1, e_2, [CliffordAlgebra, 2]]	1	The regressive product of two vectors in the plane is a scalar
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+two-vectors-in-the-plane	Basic		[Vee, e_1, e_2, [CliffordAlgebra, 2]]	1	The regressive product of two vectors in the plane is a scalar	domain	Wolfram's Vee is an inert operator with no Clifford algebra argument, so the call stays unevaluated; ours is the regressive product, a scalar here.

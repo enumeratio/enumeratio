@@ -1,6 +1,6 @@
 id	in	out	shown	tex.in	tex.out	verdict
-ei-at-0	ExpIntegralEi[0]					
-ei-1	N[ExpIntegralEi[1]]					
+ei-at-0	ExpIntegralEi[0]	-Infinity		\text{Ei}(0)	-\infty	
+ei-1	N[ExpIntegralEi[1]]	1.8951178163559368		N[\text{Ei}(1)]	1.89512	
 normal-series-expintegralei-x-x-positiveinfinity	Normal[Series[ExpIntegralEi[x], List[x, Infinity, 6]]]	E^x*(120/x^6 + 24/x^5 + 6/x^4 + 2/x^3 + x^(-2) + x^(-1)) + (Log[-x^(-1)] - Log[-x] + 2*Log[x])/2		\text{Normal}[\text{Series}[\text{Ei}(x),\{x,\infty ,6\}]]	e^x \left(\frac{120}{x^6}+\frac{24}{x^5}+\frac{6}{x^4}+\frac{2}{x^3}+\frac{1}{x^2}+\frac{1}{x}\right)+\frac{1}{2} \left(\log \left(-\frac{1}{x}\right)-\log (-x)+2 \log (x)\right)	
 n-expintegralei-2-50	N[ExpIntegralEi[2], 50]	4.95423435600189016337950513022703527551805356242004205452682577917352597702753`50.	4.9542343560018901633795051302270352755180535624200	N[\text{Ei}(2),50]	4.9542343560018901633795051302270352755180535624200	
 expintegralei-list-positiveinfinity	ExpIntegralEi[List[Infinity, -Infinity, Times[Infinity, Complex[0, 1]], Times[Infinity, Complex[0, -1]]]]	{Infinity, 0, I*Pi, (-I)*Pi}		\text{Ei}(\{\infty ,-\infty ,\infty  i,\infty  (-i)\})	\{\infty ,0,i \pi ,-i \pi \}	disagree

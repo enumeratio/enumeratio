@@ -1,5 +1,5 @@
 id	in	out	shown	tex.in	tex.out
-bessely-0-1	N[BesselY[0, 1]]				
+bessely-0-1	N[BesselY[0, 1]]	0.0882569642156771		N[Y_0(1)]	0.088257
 normal-series-bessely-0-x-x-positiveinfinity-2	Normal[Series[BesselY[0, x], List[x, Infinity, 2]]]	E^(I*x)*((-1/16 + I/16)/(Sqrt[Pi]*x^(3/2)) - (1/2 + I/2)/(Sqrt[Pi]*Sqrt[x])) + ((-1/16 - I/16)/(Sqrt[Pi]*x^(3/2)) - (1/2 - I/2)/(Sqrt[Pi]*Sqrt[x]))/E^(I*x)		\text{Normal}[\text{Series}[Y_0(x),\{x,\infty ,2\}]]	e^{i x} \left(-\frac{\frac{1}{16}-\frac{i}{16}}{\sqrt{\pi } x^{3/2}}-\frac{\frac{1}{2}+\frac{i}{2}}{\sqrt{\pi } \sqrt{x}}\right)+e^{-i x} \left(-\frac{\frac{1}{16}+\frac{i}{16}}{\sqrt{\pi } x^{3/2}}-\frac{\frac{1}{2}-\frac{i}{2}}{\sqrt{\pi } \sqrt{x}}\right)
 n-bessely-0-1-50	N[BesselY[0, 1], 50]	0.08825696421567695798292676602351516282781752309067554671090412840032022081165`50.	0.088256964215676957982926766023515162827817523090676	N[Y_0(1),50]	0.088256964215676957982926766023515162827817523090676
 list-bessely-0-0-bessely-1-0	List[BesselY[0, 0], BesselY[1, 0]]	{-Infinity, ComplexInfinity}		\{Y_0(0),Y_1(0)\}	\{-\infty ,\text{ComplexInfinity}\}

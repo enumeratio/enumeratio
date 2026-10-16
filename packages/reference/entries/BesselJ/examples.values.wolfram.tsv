@@ -1,5 +1,5 @@
 id	in	out	shown	tex.in	tex.out
-besselj-0-1	N[BesselJ[0, 1]]				
+besselj-0-1	N[BesselJ[0, 1]]	0.7651976865579666		N[J_0(1)]	0.765198
 normal-series-besselj-0-x-x-positiveinfinity-3	Normal[Series[BesselJ[0, x], List[x, Infinity, 3]]]	(-9/(64*Sqrt[2*Pi]*x^(5/2)) + Sqrt[2/Pi]/Sqrt[x])*Cos[Pi/4 - x] - Sin[Pi/4 - x]/(4*Sqrt[2*Pi]*x^(3/2))		\text{Normal}[\text{Series}[J_0(x),\{x,\infty ,3\}]]	\left(\frac{\sqrt{\frac{2}{\pi }}}{\sqrt{x}}-\frac{9}{64 \sqrt{2 \pi } x^{5/2}}\right) \cos \left(\frac{\pi }{4}-x\right)-\frac{\sin \left(\frac{\pi }{4}-x\right)}{4 \sqrt{2 \pi } x^{3/2}}
 n-besselj-0-4-50	N[BesselJ[0, 4], 50]	-0.39714980986384737228659076845169804197561868528938883916513633243931168162706`50.	-0.39714980986384737228659076845169804197561868528939	N[J_0(4),50]	-0.39714980986384737228659076845169804197561868528939
 d-besselj-n-x-x	D[BesselJ[n, x], x]	(BesselJ[-1 + n, x] - BesselJ[1 + n, x])/2		\frac{\partial J_n(x)}{\partial x}	\frac{1}{2} (J_{n-1}(x)-J_{n+1}(x))

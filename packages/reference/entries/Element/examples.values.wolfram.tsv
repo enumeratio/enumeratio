@@ -1,6 +1,6 @@
 id	in	out	tex.in	tex.out	verdict
-three-is-an-integer	Element[3, Integers]				
-one-half-is-not-an-integer	Element[Rational[1, 2], Integers]				
+three-is-an-integer	Element[3, Integers]	True	3\in \mathbb{Z}	\text{True}	
+one-half-is-not-an-integer	Element[Rational[1, 2], Integers]	False	\frac{1}{2}\in \mathbb{Z}	\text{False}	
 pi-in-realnumbers	Element[Pi, Reals]	True	\pi \in \mathbb{R}	\text{True}	
 refine-sin-pi-times-x-x-in-integers	Refine[Sin[Times[Pi, x]], Element[x, Integers]]	0	\text{Refine}[\sin (\pi  x),x\in \mathbb{Z}]	0	
 refine-sqrt-x-plus-y-minus-2-pow-2-list-x-y-in	Refine[Sqrt[Power[Plus[x, y, -2], 2]], Element[List[x, y], Disk[]]]	2 - x - y	\text{Refine}\left[\sqrt{(x+y-2)^2},\{x,y\}\in \text{Disk}[]\right]	-x-y+2	

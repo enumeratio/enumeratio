@@ -44,7 +44,7 @@ second-derivative	D[Sin[x], x, x]	-Sin[x]		\frac{\partial ^2\sin (x)}{\partial x
 antiderivative	Integrate[Sin[x], x]	-Cos[x]		\int \sin (x) \, dx	-\cos (x)	
 area-under-one-arch-int-0-pi-sin-x-dx-2	Integrate[Sin[x], List[x, 0, Pi]]	2		\int_0^{\pi } \sin (x) \, dx	2	
 int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers	Integrate[Power[Sin[x], 3], x]	(-3*Cos[x])/4 + Cos[3*x]/12		\int \sin ^3(x) \, dx	\frac{1}{12} \cos (3 x)-\frac{3 \cos (x)}{4}	
-taylor-series-about-0-only-odd-powers-appear	Series[Sin[x], List[x, 0, 10]]					
+taylor-series-about-0-only-odd-powers-appear	Series[Sin[x], List[x, 0, 10]]	SeriesData[x, 0, {1, 0, -1/6, 0, 1/120, 0, -1/5040, 0, 1/362880}, 1, 11, 1]		\text{Series}[\sin (x),\{x,0,10\}]	x-\frac{x^3}{6}+\frac{x^5}{120}-\frac{x^7}{5040}+\frac{x^9}{362880}+O\left(x^{11}\right)	
 the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1	Limit[Divide[Sin[x], x], Rule[x, 0]]	1		\underset{x\to 0}{\text{lim}}\frac{\sin (x)}{x}	1	
 to-30-significant-digits-every-one-correctly	N[Sin[1], 30]	0.8414709848078965066525023216302989996225630607983710656728`30.	0.841470984807896506652502321630	N[\sin (1),30]	0.841470984807896506652502321630	
 a-huge-24-40-argument-reduces-exactly-mod-2-pi	N[Sin[Power[24, 40]]]	-0.5897765161315717		N\left[\sin \left(24^{40}\right)\right]	-0.589777	disagree
@@ -65,10 +65,10 @@ degrees-d-converts-a-degree-measure-to-radians	Sin[Times[30, Degree]]	1/2		\sin 
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	Plus[Power[Sin[Divide[Pi, 6]], 2], Power[Cos[Divide[Pi, 6]], 2]]	1		\sin ^2\left(\frac{\pi }{6}\right)+\cos ^2\left(\frac{\pi }{6}\right)	1	
 odd-function-sin-x-sin-x	(Sin[Minus[Divide[Pi, 6]]] == Minus[Sin[Divide[Pi, 6]]])	True		\sin \left(-\frac{\pi }{6}\right)=-\sin \left(\frac{\pi }{6}\right)	\text{True}	
 period-2-pi-adding-a-full-turn-doesn-t-change	Sin[Plus[Divide[Pi, 6], Times[2, Pi]]]	1/2		\sin \left(\frac{\pi }{6}+2 \pi \right)	\frac{1}{2}	
-double-angle-formula-via-trigexpand	TrigExpand[Sin[Times[2, x]]]					
-angle-addition-formula-via-trigexpand	TrigExpand[Sin[Plus[x, y]]]					
-triple-angle-formula	TrigExpand[Sin[Times[3, x]]]					
-power-reduction-sin-2-x-frac-1-cos-2x-2	TrigReduce[Power[Sin[x], 2]]					
+double-angle-formula-via-trigexpand	TrigExpand[Sin[Times[2, x]]]	2*Cos[x]*Sin[x]		\text{TrigExpand}[\sin (2 x)]	2 \sin (x) \cos (x)	
+angle-addition-formula-via-trigexpand	TrigExpand[Sin[Plus[x, y]]]	Cos[y]*Sin[x] + Cos[x]*Sin[y]		\text{TrigExpand}[\sin (x+y)]	\sin (x) \cos (y)+\cos (x) \sin (y)	
+triple-angle-formula	TrigExpand[Sin[Times[3, x]]]	3*Cos[x]^2*Sin[x] - Sin[x]^3		\text{TrigExpand}[\sin (3 x)]	3 \sin (x) \cos ^2(x)-\sin ^3(x)	
+power-reduction-sin-2-x-frac-1-cos-2x-2	TrigReduce[Power[Sin[x], 2]]	(1 - Cos[2*x])/2		\text{TrigReduce}\left[\sin ^2(x)\right]	\frac{1}{2} (1-\cos (2 x))	
 euler-s-formula-sin-x-frac-e-ix-e-ix-2i	TrigToExp[Sin[x]]	(I/2)/E^(I*x) - (I/2)*E^(I*x)		\text{TrigToExp}[\sin (x)]	\frac{1}{2} i e^{-i x}-\frac{1}{2} i e^{i x}	
 simplify-knows-the-pythagorean-identity	Simplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]	1		\text{Simplify}\left[\sin ^2(x)+\cos ^2(x)\right]	1	
 the-same-through-fullsimplify	FullSimplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]	1		\text{FullSimplify}\left[\sin ^2(x)+\cos ^2(x)\right]	1	
