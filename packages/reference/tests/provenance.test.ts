@@ -599,6 +599,7 @@ const NOVEL = [
   "FigureEightKnot",
   "FinePaths",
   "Finset",
+  "FirstAscent",
   "FirstBlockCardinality",
   "FirstComponentSemilength",
   "FirstDescent",

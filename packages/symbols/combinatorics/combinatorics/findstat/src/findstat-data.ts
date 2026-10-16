@@ -116,6 +116,18 @@ export const findstat: readonly FindStatMatch[] = [
     values: 873,
   },
   {
+    head: "FirstDescent",
+    on: "Permutation",
+    findstat: ["St000654"],
+    values: 1200,
+  },
+  {
+    head: "FirstAscent",
+    on: "Permutation",
+    findstat: ["St000990"],
+    values: 1200,
+  },
+  {
     head: "LastDescent",
     on: "Permutation",
     findstat: ["St000653"],
