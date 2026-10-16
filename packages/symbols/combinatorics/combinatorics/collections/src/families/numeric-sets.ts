@@ -6,6 +6,7 @@
 import { isPrime as isPrimeBig, nthPrime as sieveNthPrime, primeCountUpTo } from "@enumeratio/residues";
 import type { EpsilFamily } from "./epsil.ts";
 import { withDefinitions } from "./numeric-definitions.ts";
+import { withScanDefinitions } from "./scan-definitions.ts";
 import type { Declared, NumberKernel } from "./types.ts";
 
 // ---- PrimeNumbers: the segmented sieve/BPSW primality of @enumeratio/residues (issue #205's
@@ -165,4 +166,4 @@ export const kernels: NumberKernel[] = [
   },
 ];
 
-export const entries: (NumberKernel | EpsilFamily)[] = withDefinitions(kernels);
+export const entries: (NumberKernel | EpsilFamily)[] = withScanDefinitions(withDefinitions(kernels));

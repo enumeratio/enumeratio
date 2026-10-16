@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { entries as numericDivisor } from "../src/families/numeric-divisor.ts";
+import { kernels as numericDivisor } from "../src/families/numeric-divisor.ts";
 
 const byHead = new Map(numericDivisor.map((e) => [e.head, e]));
 

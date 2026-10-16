@@ -17,6 +17,7 @@ import {
   kernelOn,
 } from "../collections/src/families/epsil.ts";
 import { allFamilies } from "../collections/src/families/index.ts";
+import { definitions as scanDefinitions } from "../collections/src/families/scan-definitions.ts";
 import {
   Binomial,
   CompositionCount,
@@ -66,7 +67,9 @@ const unbounded = (family: EpsilFamily): boolean => {
 
 const withFast = allFamilies.filter(isEpsilFamily).filter((family) => family.fast !== undefined);
 const fastFamilies = withFast.filter((family) => !unbounded(family));
-const sequenceFamilies = withFast.filter(unbounded);
+// The predicate scans have a TS kernel that scans without end, which the doubling below would never leave.
+const sequenceFamilies = withFast.filter(unbounded).filter((family) => !scanDefinitions.has(family.head));
+const scanFamilies = withFast.filter((family) => scanDefinitions.has(family.head));
 
 /** The fiber the family's fast kernel counts at `p`, when that is a safe integer. */
 function countOf(family: EpsilFamily, p: number[]): bigint | undefined {
@@ -427,6 +430,52 @@ for (const family of sequenceFamilies) {
         expect([where, answer]).toEqual([where, epsil.unrank(p, r)]);
         // A term past a double is the exact bigint, never a rounded number.
         if (typeof epsil.unrank(p, r) !== "number") expect(typeof answer).toBe("bigint");
+      }
+    }
+  });
+}
+
+// A predicate scan's definition is a fold over the integers up to a proven bound: the interpreter reaches ranks of
+// tens to hundreds, so the fast path (a sieve or a cache) is compared there, and answers past it where Epsil declines.
+const SCAN_PARAMS: Record<string, number[][]> = {
+  KAlmostPrimes: [[0], [1], [2], [3]],
+  RoughNumbers: [[0], [2], [3], [6]],
+  KFreeIntegers: [[1], [2], [3]],
+  SmoothNumbers: [[1], [2], [3]],
+};
+
+for (const family of scanFamilies) {
+  test(`${family.head}: the fast path agrees with Epsil as far as Epsil reaches, and answers past it`, () => {
+    const fast = kernelOn(ce, family);
+    const epsil = epsilKernelOn(ce, family);
+    for (const p of SCAN_PARAMS[family.head] ?? [[]]) {
+      const where = labelled(family, p);
+      expect([where, fast.count(p)]).toEqual([where, epsil.count(p)]);
+      if (epsil.count(p) !== Number.POSITIVE_INFINITY) continue;
+      const declines = (r: number): boolean => family.early!.unrank!(BigInt(r), p) === "decline";
+      let reach = 0;
+      while (reach < 3000 && !declines(reach + 1)) reach++;
+      const members: number[] = [];
+      // Every rank to a hundred, then a sample up to the last the definition reaches.
+      for (let r = 0; r <= reach; r += r < 100 ? 1 : 37) {
+        const element = fast.unrank(p, BigInt(r)) as number;
+        expect([where, r, element]).toEqual([where, r, epsil.unrank(p, BigInt(r))]);
+        members.push(element);
+      }
+      const reaches = (x: number): boolean => family.early!.rank!(x, p) !== "decline";
+      for (const member of members) {
+        for (const near of [member - 2, member - 1, member, member + 1, member + 2]) {
+          const expected = epsil.valid(near, p);
+          expect([where, near, fast.valid(near, p)]).toEqual([where, near, expected]);
+          // The definition declines the rank of a member past its reach; a non-member's is -1 anywhere.
+          if (!expected || reaches(near))
+            expect([where, near, fast.rank(near, p)]).toEqual([where, near, epsil.rank(near, p)]);
+        }
+      }
+      // One rank past the reach, Epsil alone declines and the fast path gives the next member.
+      if (reach < 3000) {
+        expect(() => epsil.unrank(p, BigInt(reach + 1)), where).toThrow(RangeError);
+        expect([where, (fast.unrank(p, BigInt(reach + 1)) as number) > members.at(-1)!]).toEqual([where, true]);
       }
     }
   });
