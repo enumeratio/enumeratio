@@ -1,5 +1,5 @@
 id	in	out	shown	tex.in	tex.out
-besselk-0-1	N[BesselK[0, 1]]				
+besselk-0-1	N[BesselK[0, 1]]	0.42102443824070834		N[K_0(1)]	0.421024
 normal-series-besselk-0-x-x-positiveinfinity-4	Normal[Series[BesselK[0, x], List[x, Infinity, 4]]]	((-75*Sqrt[Pi/2])/(1024*x^(7/2)) + (9*Sqrt[Pi/2])/(128*x^(5/2)) - Sqrt[Pi/2]/(8*x^(3/2)) + Sqrt[Pi/2]/Sqrt[x])/E^x		\text{Normal}[\text{Series}[K_0(x),\{x,\infty ,4\}]]	e^{-x} \left(-\frac{\sqrt{\frac{\pi }{2}}}{8 x^{3/2}}+\frac{9 \sqrt{\frac{\pi }{2}}}{128 x^{5/2}}-\frac{75 \sqrt{\frac{\pi }{2}}}{1024 x^{7/2}}+\frac{\sqrt{\frac{\pi }{2}}}{\sqrt{x}}\right)
 n-besselk-0-4-50	N[BesselK[0, 4], 50]	0.01115967608585302426974519597983348922500902388847434054128735557848341902113`50.	0.011159676085853024269745195979833489225009023888474	N[K_0(4),50]	0.011159676085853024269745195979833489225009023888474
 list-besselk-0-0-besselk-1-0	List[BesselK[0, 0], BesselK[1, 0]]	{Infinity, ComplexInfinity}		\{K_0(0),K_1(0)\}	\{\infty ,\text{ComplexInfinity}\}

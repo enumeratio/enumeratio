@@ -1,2 +1,2 @@
-id	in
-two-vectors-in-the-plane	Vee[Subscript[e, 1], Subscript[e, 2], CliffordAlgebra[2]]
+id	in	out	tex.in	tex.out	verdict
+two-vectors-in-the-plane	Vee[Subscript[e, 1], Subscript[e, 2], CliffordAlgebra[2]]	Subscript[e, 1] \[Vee] Subscript[e, 2] \[Vee] CliffordAlgebra[2]	e_1\vee e_2\vee \text{CliffordAlgebra}[2]	e_1\vee e_2\vee \text{CliffordAlgebra}[2]	disagree

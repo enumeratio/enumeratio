@@ -1,3 +1,3 @@
-id	in
-ln-of-e	Log[E]
-e-to-20-digits	N[E, 20]
+id	in	out	shown	tex.in	tex.out
+ln-of-e	Log[E]	1		\log (e)	1
+e-to-20-digits	N[E, 20]	2.71828182845904523536028740430832960766`20.	2.7182818284590452354	N[e,20]	2.7182818284590452354

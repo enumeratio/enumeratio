@@ -174,12 +174,12 @@ n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5	N[HurwitzZeta[Complex[-0.5, 1], Comp
 n-hurwitzzeta-neg-0p5-plus-i-neg-0p5	N[HurwitzZeta[Complex[-0.5, 1], -0.5]]	-10.354125570387618 + 12.68837638092526*I		N[\zeta (-0.5+i,-0.5)]	-10.3541+12.6884 i	
 n-hurwitzzeta-neg-0p5-plus-i-neg-1p5	N[HurwitzZeta[Complex[-0.5, 1], -1.5]]	0.8250495553510326 + 38.73186936468635*I		N[\zeta (-0.5+i,-1.5)]	0.82505\, +38.7319 i	
 normal-series-hurwitzzeta-2-x-x-positiveinfinity	Normal[Series[HurwitzZeta[2, x], List[x, Infinity, 6]]]	-1/30*1/x^5 + 1/(6*x^3) + 1/(2*x^2) + x^(-1)		\text{Normal}[\text{Series}[\zeta (2,x),\{x,\infty ,6\}]]	-\frac{1}{30 x^5}+\frac{1}{6 x^3}+\frac{1}{2 x^2}+\frac{1}{x}	inconclusive
-n-hurwitzzeta-neg-27-2-over-5-1-digit	N[HurwitzZeta[-27, Rational[2, 5]], 1]					
-n-hurwitzzeta-3-neg-2p5	N[HurwitzZeta[3, -2.5]]					
-n-hurwitzzeta-2p5-neg-2p5	N[HurwitzZeta[2.5, -2.5]]					
-n-hurwitzzeta-3-neg-2p5-plus-i	N[HurwitzZeta[3, Complex[-2.5, 1]]]					
-n-hurwitzzeta-2p5-plus-i-neg-2p5	N[HurwitzZeta[Complex[2.5, 1], -2.5]]					
-n-hurwitzzeta-2-neg-0-999999999	N[HurwitzZeta[2, -0.999999999]]					
+n-hurwitzzeta-neg-27-2-over-5-1-digit	N[HurwitzZeta[-27, Rational[2, 5]], 1]	-788740.454876392025032413`1.	-800000.	N\left[\zeta \left(-27,\frac{2}{5}\right),1\right]	-800000.	
+n-hurwitzzeta-3-neg-2p5	N[HurwitzZeta[3, -2.5]]	0.0541020258208641		N[\zeta (3,-2.5)]	0.054102	
+n-hurwitzzeta-2p5-neg-2p5	N[HurwitzZeta[2.5, -2.5]]	6.24711063456881 - 6.1209345039189795*I		N[\zeta (2.5,-2.5)]	6.24711\, -6.12093 i	
+n-hurwitzzeta-3-neg-2p5-plus-i	N[HurwitzZeta[3, Complex[-2.5, 1]]]	0.03962992396995794 - 0.20102299207474436*I		N[\zeta (3,-2.5+i)]	0.0396299\, -0.201023 i	
+n-hurwitzzeta-2p5-plus-i-neg-2p5	N[HurwitzZeta[Complex[2.5, 1], -2.5]]	83.20468300633124 - 106.55160633101393*I		N[\zeta (2.5\, +i,-2.5)]	83.2047\, -106.552 i	
+n-hurwitzzeta-2-neg-0-999999999	N[HurwitzZeta[2, -0.999999999]]	9.999998345192786*^17		N[\zeta (2,-1.)]	1.\times 10^{18}	disagree
 a-positive-integer-a-peels-off-the-first-terms	HurwitzZeta[7, 5]	HurwitzZeta[7, 5]		\zeta (7,5)	\zeta (7,5)	
 complex-a	N[HurwitzZeta[2.3, Complex[8, 1]]]	0.054470082732130685 - 0.009448515336470249*I		N[\zeta (2.3,8+i)]	0.0544701\, -0.00944852 i	
 listable-threads-over-a-list-of-orders	HurwitzZeta[List[2, 3, 4], 0.5]	{4.934802200544678, 8.41439832211716, 16.234848505667077}		\zeta (\{2,3,4\},0.5)	\{4.9348,8.4144,16.2348\}	

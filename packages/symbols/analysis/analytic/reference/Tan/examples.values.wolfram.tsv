@@ -31,7 +31,7 @@ tan-arctan-2-2-for-every-x	Tan[ArcTan[2]]	2		\tan \left(\tan ^{-1}(2)\right)	2
 tan-arcsin-x-frac-x-sqrt-1-x-2	Tan[ArcSin[x]]	x/Sqrt[1 - x^2]		\tan \left(\sin ^{-1}(x)\right)	\frac{x}{\sqrt{1-x^2}}	
 derivative-sec-2-x	D[Tan[x], x]	Sec[x]^2		\frac{\partial \tan (x)}{\partial x}	\sec ^2(x)	
 antiderivative-ln-sec-x	Integrate[Tan[x], x]	-Log[Cos[x]]		\int \tan (x) \, dx	-\log (\cos (x))	inconclusive
-taylor-series-about-0	Series[Tan[x], List[x, 0, 7]]					
+taylor-series-about-0	Series[Tan[x], List[x, 0, 7]]	SeriesData[x, 0, {1, 0, 1/3, 0, 2/15, 0, 17/315}, 1, 8, 1]		\text{Series}[\tan (x),\{x,0,7\}]	x+\frac{x^3}{3}+\frac{2 x^5}{15}+\frac{17 x^7}{315}+O\left(x^8\right)	
 to-30-significant-digits-every-one-correctly	N[Tan[1], 30]	1.5574077246549022305069748074583601730872507723815200383853`30.	1.55740772465490223050697480746	N[\tan (1),30]	1.55740772465490223050697480746	
 n-tan-6-over-5-50	N[Tan[Rational[6, 5]], 50]	2.57215162212631893540999423603336395652940930604338927922563726223880705676197`50.	2.5721516221263189354099942360333639565294093060434	N\left[\tan \left(\frac{6}{5}\right),50\right]	2.5721516221263189354099942360333639565294093060434	
 functionrange-tan-x-x-y	FunctionRange[Tan[x], x, y]	True		\text{FunctionRange}[\tan (x),x,y]	\text{True}	

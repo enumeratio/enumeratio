@@ -1,8 +1,8 @@
 id	in	out	tex.in	tex.out	verdict
-implies-becomes-or-not	LogicalExpand[Implies[p, b]]				
+implies-becomes-or-not	LogicalExpand[Implies[p, b]]	b ||  !p	\text{LogicalExpand}[p\Rightarrow b]	b\lor \neg p	
 logicalexpand-p-factorial-q-r	LogicalExpand[And[p, Not[Or[q, r]]]]	p &&  !q &&  !r	\text{LogicalExpand}[p\land \neg (q\lor r)]	p\land \neg q\land \neg r	
 distributes-and-over-or	LogicalExpand[And[p, Or[b, r]]]	(b && p) || (p && r)	\text{LogicalExpand}[p\land (b\lor r)]	(b\land p)\lor (p\land r)	
-xor-eliminated-into-dnf	LogicalExpand[Xor[p, b]]				
+xor-eliminated-into-dnf	LogicalExpand[Xor[p, b]]	(b &&  !p) || (p &&  !b)	\text{LogicalExpand}[p\veebar b]	(b\land \neg p)\lor (p\land \neg b)	
 a-contradictory-term-drops-out	LogicalExpand[And[p, Not[p]]]	False	\text{LogicalExpand}[p\land \neg p]	\text{False}	
 logicalexpand-a-factorial-a	LogicalExpand[Or[a, Not[a]]]	True	\text{LogicalExpand}[a\lor \neg a]	\text{True}	disagree
 logicalexpand-a-factorial-a-2	LogicalExpand[And[a, Not[a]]]	False	\text{LogicalExpand}[a\land \neg a]	\text{False}	

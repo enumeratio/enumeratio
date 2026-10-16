@@ -22,7 +22,7 @@ uncertainty-propagation-e-2-pm-0-01-approx-7-389	Exp[Around[2, 0.01]]	Around[7.3
 around-0-still-fires-the-e-base-power-rule	N[Exp[Around[0, 0.1]]]	Around[1., 0.1]		N[\exp (0.00\pm 0.10)]	1.00\pm 0.10	
 its-own-derivative	D[Exp[x], x]	E^x		\frac{\partial }{\partial x}\exp (x)	e^x	
 its-own-antiderivative	Integrate[Exp[x], x]	E^x		\int \exp (x) \, dx	e^x	
-taylor-series-about-0	Series[Exp[x], List[x, 0, 4]]					
+taylor-series-about-0	Series[Exp[x], List[x, 0, 4]]	SeriesData[x, 0, {1, 1, 1/2, 1/6, 1/24}, 0, 5, 1]		\text{Series}[\exp (x),\{x,0,4\}]	1+x+\frac{x^2}{2}+\frac{x^3}{6}+\frac{x^4}{24}+O\left(x^5\right)	
 n-decimalizes-a-combined-product	N[Times[Exp[1], Exp[2]]]	20.085536923187668		N[\exp (1) \exp (2)]	20.0855	
 agrees-numerically-at-a-complex-point	N[Times[Exp[Complex[1.3, 0.7]], Exp[Complex[-0.4, 2.1]]]]	-2.3174930005102152 + 0.8239378963241751*I		N[\exp (1.3\, +0.7 i) \exp (-0.4+2.1 i)]	-2.31749+0.823938 i	
 to-50-significant-digits-every-one-correctly	N[Exp[1], 50]	2.71828182845904523536028747135266249775724709369995957495841999330501070030685`50.	2.7182818284590452353602874713526624977572470937000	N[\exp (1),50]	2.7182818284590452353602874713526624977572470937000	

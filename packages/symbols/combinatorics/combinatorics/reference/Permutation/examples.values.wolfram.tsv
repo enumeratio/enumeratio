@@ -1,2 +1,2 @@
-id	in
-one-line-word	List[2, 3, 1]
+id	in	out	tex.in	tex.out
+one-line-word	List[2, 3, 1]	{2, 3, 1}	\{2,3,1\}	\{2,3,1\}

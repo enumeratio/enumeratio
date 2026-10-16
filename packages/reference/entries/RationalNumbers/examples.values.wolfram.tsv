@@ -1,2 +1,2 @@
-id	in
-one-half-is-rational	Element[Rational[1, 2], Rationals]
+id	in	out	tex.in	tex.out
+one-half-is-rational	Element[Rational[1, 2], Rationals]	True	\frac{1}{2}\in \mathbb{Q}	\text{True}

@@ -1,2 +1,2 @@
-id	in
-golden-ratio-to-20-digits	N[GoldenRatio, 20]
+id	in	out	shown	tex.in	tex.out
+golden-ratio-to-20-digits	N[GoldenRatio, 20]	1.61803398874989484820458683436563811772`20.	1.6180339887498948482	N[\phi ,20]	1.6180339887498948482

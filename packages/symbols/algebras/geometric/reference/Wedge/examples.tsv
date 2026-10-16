@@ -1,4 +1,4 @@
-id	section	role	expr	expected	caption
-two-generators	Basic		[Wedge, e_1, e_2]	[Multiply, e_1, e_2]	
-the-wedge-is-anticommutative	Basic		[Wedge, e_2, e_1]	[Negate, [Multiply, e_1, e_2]]	
-three-generators	Basic		[Wedge, e_1, e_2, e_3]	[Multiply, e_1, e_2, e_3]	The trivector
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+two-generators	Basic		[Wedge, e_1, e_2]	[Multiply, e_1, e_2]		domain	Wolfram's Wedge is an inert operator with no geometric product, so Wedge[Subscript[e, 1], Subscript[e, 2]] stays unevaluated; ours multiplies the generators.
+the-wedge-is-anticommutative	Basic		[Wedge, e_2, e_1]	[Negate, [Multiply, e_1, e_2]]		domain	Wolfram's Wedge is an inert operator and does not know it anticommutes, so the call stays unevaluated.
+three-generators	Basic		[Wedge, e_1, e_2, e_3]	[Multiply, e_1, e_2, e_3]	The trivector	domain	Wolfram's Wedge is an inert operator with no geometric product, so the call stays unevaluated.

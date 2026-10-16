@@ -1,2 +1,2 @@
-id	in
-inert	Point3DBox[List[Points, List[List[0, 0, 0], List[1, 1, 1]]]]
+id	in	out	tex.in	tex.out
+inert	Point3DBox[List[Points, List[List[0, 0, 0], List[1, 1, 1]]]]	Point3DBox[{Points, {{0, 0, 0}, {1, 1, 1}}}]	\text{Point3DBox}\left[\left\{\text{Points},\left( \begin{array}{ccc}  0 & 0 & 0 \\  1 & 1 & 1 \\ \end{array} \right)\right\}\right]	\text{Point3DBox}\left[\left\{\text{Points},\left( \begin{array}{ccc}  0 & 0 & 0 \\  1 & 1 & 1 \\ \end{array} \right)\right\}\right]

@@ -1,2 +1,2 @@
-id	in
-inert	PanelBox["x", List[Background, "#f4f4f4"]]
+id	in	out	tex.in	tex.out
+inert	PanelBox["x", List[Background, "#f4f4f4"]]	PanelBox["x", {Background, "#f4f4f4"}]	\text{PanelBox}[\text{x},\{\text{Background},\text{$\#$f4f4f4}\}]	\text{PanelBox}[\text{x},\{\text{Background},\text{$\#$f4f4f4}\}]

@@ -1,2 +1,2 @@
-id	in
-inert	InsetBox["x", List[Size, 1]]
+id	in	out	tex.in	tex.out
+inert	InsetBox["x", List[Size, 1]]	InsetBox["x", {Size, 1}]	\text{InsetBox}[\text{x},\{\text{Size},1\}]	\text{InsetBox}[\text{x},\{\text{Size},1\}]

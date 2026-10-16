@@ -15,7 +15,7 @@ harmonic-numbers-via-digamma-psi-n-1-gamma-h-n	(Plus[PolyGamma[6], EulerGamma] =
 psi-1-gamma	(Plus[PolyGamma[1], EulerGamma] == 0)	True		\psi (1)+\gamma =0	\text{True}	
 recurrence-psi-z-1-psi-z-1-z-here-at-z-1	(PolyGamma[2] == Plus[PolyGamma[1], 1])	True		\psi (2)=\psi (1)+1	\text{True}	
 psi-1-2-gamma-2-ln-2	(Plus[PolyGamma[Rational[1, 2]], EulerGamma, Times[2, Log[2]]] == 0)	EulerGamma + 2*Log[2] + PolyGamma[0, 1/2] == 0		\psi \left(\frac{1}{2}\right)+\gamma +2 \log (2)=0	\gamma +2 \log (2)+\psi ^{(0)}\left(\frac{1}{2}\right)=0	
-psi-x-is-the-trigamma-psi-1-x	D[PolyGamma[x], x]	PolyGamma[1, x]		\frac{\partial \psi (x)}{\partial x}	\psi ^{(1)}(x)	disagree
+psi-x-is-the-trigamma-psi-1-x	D[PolyGamma[x], x]	PolyGamma[1, x]		\frac{\partial \psi (x)}{\partial x}	\psi ^{(1)}(x)	
 reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot	Subtract[PolyGamma[0.7], PolyGamma[0.3]]	2.2825006685021982		\psi (0.7)-\psi (0.3)	2.2825	
 psi-1-gamma-2	PolyGamma[1]	-EulerGamma		\psi (1)	-\gamma	
 psi-2-1-gamma-from-psi-n-1-psi-n-1-n	PolyGamma[2]	1 - EulerGamma		\psi (2)	1-\gamma	

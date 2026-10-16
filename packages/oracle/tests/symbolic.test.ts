@@ -322,6 +322,17 @@ test("alignFunctions: an expression spelled another way is ours when both are on
   expect(alignFunctions(other as never, ours as never)).toEqual(other);
 });
 
+test("alignFunctions: a key/value pair is one canonical form after its key was used as a number", () => {
+  const theirs = ["List", ["KeyValuePair", "a", "'a'"]];
+  const ours = ["List", ["Tuple", "a", "'a'"]];
+  // Comparing an example with `x^a` in it types `a` as a number in the shared engine for good.
+  echoesInput(
+    ["Assuming", ["Greater", "a", 0], ["List", ["Integrate", ["Power", "x", "a"], ["Limits", "x", 0, 1]]]] as never,
+    ["List", "a", ["Divide", 1, ["Add", "a", 1]]] as never,
+  );
+  expect(alignFunctions(theirs as never, ours as never)).toEqual(ours);
+});
+
 test("a relation answer is compared as a statement, not by its spelling", () => {
   const source = symbolicAgreementSource(
     "wolfram",

@@ -1,2 +1,2 @@
-id	in
-catalan-constant-to-20-digits	N[Catalan, 20]
+id	in	out	shown	tex.in	tex.out
+catalan-constant-to-20-digits	N[Catalan, 20]	0.91596559417721901505470246127766603241`20.	0.91596559417721901505	N[C,20]	0.91596559417721901505

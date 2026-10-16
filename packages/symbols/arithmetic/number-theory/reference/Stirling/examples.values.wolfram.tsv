@@ -2,7 +2,7 @@ id	in	out	tex.in	tex.out
 stirling-5-2	StirlingS2[5, 2]	15	\mathcal{S}_5^{(2)}	15
 stirling-6-3	StirlingS2[6, 3]	90	\mathcal{S}_6^{(3)}	90
 stirling-20-10	StirlingS2[20, 10]	5917584964655	\mathcal{S}_{20}^{(10)}	5917584964655
-stirling-0-3-against-a-sum-over-a-pole	(StirlingS2[0, 3] == Divide[Sum[Times[Power[-2, Subtract[3, j]], Binomial[-9, j], Power[j, 6]], List[j, 0, 3]], Factorial[-2]])			
+stirling-0-3-against-a-sum-over-a-pole	(StirlingS2[0, 3] == Divide[Sum[Times[Power[-2, Subtract[3, j]], Binomial[-9, j], Power[j, 6]], List[j, 0, 3]], Factorial[-2]])	True	\mathcal{S}_0^{(3)}=\frac{\sum _{j=0}^3 (-2)^{3-j} \binom{-9}{j} j^6}{(-2)!}	\text{True}
 exact-for-large-n	StirlingS2[50, 2]	562949953421311	\mathcal{S}_{50}^{(2)}	562949953421311
 threads-element-wise-over-a-list-as-wolfram-s	StirlingS2[List[2, 4, 6], 2]	{1, 7, 31}	\mathcal{S}_{\{2,4,6\}}^{(2)}	\{1,7,31\}
 the-ways-to-split-10-distinct-items-among-3	StirlingS2[10, 3]	9330	\mathcal{S}_{10}^{(3)}	9330

@@ -1,2 +1,2 @@
-id	in
-inert	DynamicModuleBox[DynamicBox[k]]
+id	in	out	tex.in	tex.out
+inert	DynamicModuleBox[DynamicBox[k]]	DynamicModuleBox[DynamicBox[k]]	\text{DynamicModuleBox}[\text{DynamicBox}[k]]	\text{DynamicModuleBox}[\text{DynamicBox}[k]]

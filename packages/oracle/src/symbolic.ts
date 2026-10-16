@@ -498,9 +498,18 @@ const COMBINING = new Set([
   "Pair",
 ]);
 
+/** `expr` with each `KeyValuePair` written as the `Tuple` it canonicalizes to. Left to the engine, a pair keyed
+ * by a symbol boxes as a type error once an earlier example has used that symbol as a number (`x^a`). */
+const pairsAsTuples = (expr: MathJSON): MathJSON =>
+  Array.isArray(expr)
+    ? (expr.map((part, i) =>
+        i === 0 && part === "KeyValuePair" ? "Tuple" : pairsAsTuples(part as MathJSON),
+      ) as MathJSON)
+    : expr;
+
 const canonicalText = (expr: MathJSON): string => {
   try {
-    return JSON.stringify(ce.box(expr as Parameters<ComputeEngine["box"]>[0]).json);
+    return JSON.stringify(ce.box(pairsAsTuples(expr) as Parameters<ComputeEngine["box"]>[0]).json);
   } catch {
     return JSON.stringify(expr);
   }
