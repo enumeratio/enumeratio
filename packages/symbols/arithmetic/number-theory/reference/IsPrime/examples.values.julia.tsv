@@ -8,13 +8,13 @@ threads-element-wise-over-a-list	Any[is_prime(ZZ(1)), is_prime(ZZ(2)), is_prime(
 isprime-5	is_prime(ZZ(5))	true	
 isprime-7	is_prime(ZZ(7))	true	
 threads-element-wise-over-a-short-list	Any[is_prime(ZZ(2)), is_prime(ZZ(3)), is_prime(ZZ(4))]	[true, true, false]	
-7-is-prime-its-associate-7-is-matching-wolfram-s	is_prime(ZZ(-7))	false	disagree
+7-is-prime-its-associate-7-is-matching-wolfram-s	is_prime(ZZ(-7))	false	
 a-gaussian-prime-its-norm-5-is-prime	is_prime(ZZ(enumeratio_complex(2, 1)))	MethodError: no method matching (::ZZRing)(::ComplexFieldElem) The object of type `ZZRing` exists, b	error
 5-2-i-2-i-splits-in-z-i			
 large-integers-10-3000-1-is-divisible-by-10-8-1	is_prime(ZZ((enumeratio_pow(10, 3000) + 1)))	false	
 isprime-neg-1-is-false	is_prime(ZZ(-1))	false	
 isprime-neg-4-is-false	is_prime(ZZ(-4))	false	
-isprime-neg-2-is-true	is_prime(ZZ(-2))	false	disagree
+isprime-neg-2-is-true	is_prime(ZZ(-2))	false	
 a-unit-is-not-prime	is_prime(ZZ(1))	false	
 i-a-unit-is-not-prime	is_prime(ZZ(enumeratio_complex(0, 1)))	MethodError: no method matching (::ZZRing)(::ComplexFieldElem) The object of type `ZZRing` exists, b	error
 0-is-not-prime	is_prime(ZZ(0))	false	

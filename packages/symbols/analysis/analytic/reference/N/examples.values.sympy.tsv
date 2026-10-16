@@ -32,6 +32,7 @@ n-exponentiale-pow-100-list-positiveinfinity-neg	N((S(E)**100), 30)	2.6881171418
 n-10-000-000-000-times-neg-exponentiale-pow-999	N((10000000000 * ((-(S(E)**Rational(999999999999, 10000000000))) + (S(E)**100))), 30)	2.68811714168172959132629897440e+43	
 n-exponentiale-pow-sin-1-000	N((S(E)**sin(1000)), 30)	2.28617368581217110222589085453	
 n-exponentiale-pow-sin-1-000-47	N((S(E)**sin(1000)), 30)	2.28617368581217110222589085453	
+n-accuracy-goal-resolves-the-cancellation	N((1 + (-sqrt((1 + (-(S(E)**-1000)))))), 30)		
 an-exact-tie-rounds-to-the-even-digit-0-125	N(Rational(1, 8), 30)	0.125000000000000000000000000000	disagree
 and-0-375-to-0-38	N(Rational(3, 8), 30)	0.375000000000000000000000000000	disagree
 n-pi-1-digit	N(pi, 30)	3.14159265358979323846264338328	disagree
