@@ -1,7 +1,7 @@
 ---
-name: OddSubsetSums
+name: DistinctOddSubsetSums
 domain: Partition statistics
-signature: OddSubsetSums(partition)
+signature: DistinctOddSubsetSums(partition)
 summary: Distinct odd sums of sub-multisets of the parts.
 catalog:
   - system: findstat
@@ -11,7 +11,7 @@ catalog:
 statOn:
   - IntegerPartition
 signatures:
-  - call: OddSubsetSums(partition)
+  - call: DistinctOddSubsetSums(partition)
     description: Distinct odd sums of sub-multisets of the parts.
     library: enumeratio-combinatorics
     type: (integer_partition) -> number

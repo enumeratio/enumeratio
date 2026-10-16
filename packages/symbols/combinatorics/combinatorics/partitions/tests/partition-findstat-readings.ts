@@ -72,6 +72,6 @@ export const PARTITION_READINGS: Record<string, (l: Partition) => number> = {
     return k;
   },
   DistinctSubsetSums: (l) => subsetSums(l).size,
-  EvenSubsetSums: (l) => [...subsetSums(l)].filter((s) => s % 2 === 0).length,
-  OddSubsetSums: (l) => [...subsetSums(l)].filter((s) => s % 2 === 1).length,
+  DistinctEvenSubsetSums: (l) => [...subsetSums(l)].filter((s) => s % 2 === 0).length,
+  DistinctOddSubsetSums: (l) => [...subsetSums(l)].filter((s) => s % 2 === 1).length,
 };

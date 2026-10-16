@@ -81,7 +81,7 @@ const EXPECTED: Record<string, (l: number[]) => number> = {
   ArmOfFirstCell: (l) => (l.length === 0 ? 0 : l[0]! - 1),
   LegOfFirstCell: (l) => (l.length === 0 ? 0 : l.length - 1),
   Corners: (l) => l.filter((p, i) => i === l.length - 1 || p > l[i + 1]!).length,
-  Perimeter: (l) => (l.length === 0 ? 0 : Math.max(...l) + l.length),
+  HalfPerimeter: (l) => (l.length === 0 ? 0 : Math.max(...l) + l.length),
   IsSelfConjugate: (l) => {
     const c = conjugate(l);
     return c.length === l.length && c.every((v, i) => v === l[i]) ? 1 : 0;

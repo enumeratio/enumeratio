@@ -818,13 +818,13 @@ export const findstat: readonly FindStatMatch[] = [
     values: 467,
   },
   {
-    head: "EvenSubsetSums",
+    head: "DistinctEvenSubsetSums",
     on: "IntegerPartition",
     findstat: ["St000547"],
     values: 272,
   },
   {
-    head: "OddSubsetSums",
+    head: "DistinctOddSubsetSums",
     on: "IntegerPartition",
     findstat: ["St000549"],
     values: 506,

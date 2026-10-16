@@ -1,7 +1,7 @@
 ---
-name: EvenSubsetSums
+name: DistinctEvenSubsetSums
 domain: Partition statistics
-signature: EvenSubsetSums(partition)
+signature: DistinctEvenSubsetSums(partition)
 summary: Distinct nonzero even sums of sub-multisets of the parts.
 catalog:
   - system: findstat
@@ -11,7 +11,7 @@ catalog:
 statOn:
   - IntegerPartition
 signatures:
-  - call: EvenSubsetSums(partition)
+  - call: DistinctEvenSubsetSums(partition)
     description: Distinct nonzero even sums of sub-multisets of the parts.
     library: enumeratio-combinatorics
     type: (integer_partition) -> number

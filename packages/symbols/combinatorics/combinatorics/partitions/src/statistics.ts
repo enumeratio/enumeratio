@@ -133,9 +133,10 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     nonEmpty(count(positions, ["Or", equals("i", length()), greater(here, at(add("i", 1)))])),
   ),
   stat(
-    "Perimeter",
-    "The perimeter of the Young diagram: largest part plus number of parts.",
+    "HalfPerimeter",
+    "Half the perimeter of the bounding rectangle of the Young diagram: largest part plus number of parts.",
     nonEmpty(add(largest, length())),
+    "FindStat's St000459 calls the hook length of the base cell the perimeter; that is `HookLengthOfFirstCell`, one less than this.",
   ),
 
   stat(
@@ -353,11 +354,13 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     "MaximalRectangleHalfPerimeter",
     "Half the perimeter of the rectangle inside the diagram that has the greatest perimeter.",
     nonEmpty(["Max", forEach(positions, add(here, "i"))]),
+    "One more than `LargestShiftedPart`, except that both are 0 on the empty partition.",
   ),
   stat(
     "LargestShiftedPart",
     "The largest part after adding i - 1 to the i-th part.",
     nonEmpty(["Max", forEach(positions, add(here, subtract("i", 1)))]),
+    "One less than `MaximalRectangleHalfPerimeter`, except that both are 0 on the empty partition.",
   ),
   stat(
     "RemovableHorizontalDominoes",
@@ -386,6 +389,7 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     "Pairs of cells in the same row: the sum over parts of the binomial coefficient of the part and 2.",
     nonEmpty(sumOver(positions, ["Divide", ["Multiply", here, subtract(here, 1)], 2])),
   ),
+  // Stays interpreted: the JavaScript compiler does not lower a cell-by-cell walk over a bound conjugate, as for the hook and diagonal statistics (pinned by `interpreted.test.ts`).
   stat(
     "CellsWithZeroLegAndOddArm",
     "Cells with leg 0 and an odd arm.",
@@ -393,7 +397,7 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
   ),
   stat(
     "CornerMajorIndex",
-    "The sum of the positions of the corners, counted from the bottom row.",
+    "The sum, over the corners, of the step number along the boundary path from the bottom left: (number of parts - i) + the i-th part.",
     nonEmpty(
       sumOver(positions, [
         "If",
@@ -402,6 +406,7 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
         0,
       ]),
     ),
+    "For (8, 6, 6, 4, 3, 3) the corners are at steps 3, 6, 9 and 13, so the value is 31 (FindStat's St000770 example).",
   ),
 
   // Sums and products of the parts.
@@ -506,14 +511,16 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     nonEmpty(bind("s", subsetSums, subtract(length("s"), 1))),
     'Follows FindStat\'s Sage code and its data, not its title: the "partial sums" it counts are the sums of arbitrary sub-multisets of the parts (the code runs over all subsets), not of the running prefixes.',
   ),
+  // Stays interpreted: the JavaScript compiler does not lower the fold that grows the subset-sum list (pinned by `interpreted.test.ts`).
   stat(
-    "EvenSubsetSums",
+    "DistinctEvenSubsetSums",
     "Distinct nonzero even sums of sub-multisets of the parts.",
     nonEmpty(bind("s", subsetSums, subtract(count("s", equals(["Mod", "i", 2], 0)), 1))),
     'Follows FindStat\'s Sage code and its data, not its title: the "partial sums" it counts are the sums of arbitrary sub-multisets of the parts (the code runs over all subsets), not of the running prefixes. The empty sum, 0, is not counted.',
   ),
+  // Stays interpreted, as above.
   stat(
-    "OddSubsetSums",
+    "DistinctOddSubsetSums",
     "Distinct odd sums of sub-multisets of the parts.",
     nonEmpty(bind("s", subsetSums, count("s", equals(["Mod", "i", 2], 1)))),
     'Follows FindStat\'s Sage code and its data, not its title: the "partial sums" it counts are the sums of arbitrary sub-multisets of the parts (the code runs over all subsets), not of the running prefixes.',
