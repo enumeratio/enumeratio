@@ -5,8 +5,8 @@ abs-5	enumeratio_ball(abs, 5)	5.0
 abs-neg-7-over-2	enumeratio_ball(abs, (-7 // 2))	3.5	
 the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	enumeratio_ball(abs, enumeratio_complex(3, 4))	5.0	
 threads-element-wise-over-a-list	Any[enumeratio_ball(abs, -1), enumeratio_ball(abs, 2), enumeratio_ball(abs, -3)]	[1.0, 2.0, 3.0]	
-abs-neg-2p5	enumeratio_ball(abs, -2.5)	2.5	
-the-modulus-of-a-complex-number-with-approximate	enumeratio_ball(abs, enumeratio_complex(1.4, 2.3))	2.692582403567251817708644836441055617472028943206695499857626651397974490457919	
+abs-neg-2p5	enumeratio_ball(abs, enumeratio_decimal("-2.5"))	2.5	
+the-modulus-of-a-complex-number-with-approximate	enumeratio_ball(abs, enumeratio_complex(enumeratio_decimal("1.4"), enumeratio_decimal("2.3")))	2.692582403567252015625355245770164778147560080822394418840194335008322981413801	
 threads-over-a-matrix-entry-by-entry	Any[Any[enumeratio_ball(abs, (1 // 2)), enumeratio_ball(abs, -1)], Any[enumeratio_ball(abs, (-5 // 3)), enumeratio_ball(abs, (1 // 2))]]	[[0.5, 1.0], [1.666666666666666666666666666666666666666666666666666666666666666666666666666661, 0.5]]	
 exact-numeric-constants	enumeratio_ball(abs, (-(const_pi(RR))))	3.141592653589793238462643383279502884197169399375105820974944592307816406286198	
 an-exact-complex-number-gives-an-exact-radical	enumeratio_ball(abs, enumeratio_complex(1, 1))	1.414213562373095048801688724209698078569671875376948073176679737990732478462102	
@@ -21,7 +21,7 @@ a-complex-radicand-inside-the-subtraction	enumeratio_ball(abs, (enumeratio_ball(
 n-abs-pi-plus-i-times-catalan-25			
 fullsimplify-matrixfunction-abs-list-list-1-over			
 abs-positiveinfinity	enumeratio_ball(abs, Inf)	non-finite argument	error
-abs-positiveinfinity-times-i	enumeratio_ball(abs, (Inf * enumeratio_complex(0, 1)))	NaN	disagree
+abs-positiveinfinity-times-i	enumeratio_ball(abs, (Inf * enumeratio_complex(0, 1)))	ball not finite	error
 piecewiseexpand-abs-imaginaryunit-times-x-neg-2			
 complexexpand-abs-x			
 complexexpand-abs-x-plus-i-times-y			

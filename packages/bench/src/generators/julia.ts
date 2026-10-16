@@ -46,9 +46,16 @@ const LITERAL = /(?<![\p{L}\p{N}_.])\d+(?:\.\d+)?(?:[eE][+-]?\d+)?(?![\p{L}\p{N}
  * quotes — nothing here does that today, but a future mapping might).
  */
 function hoistLiterals(
-  source: string,
+  text: string,
   next: () => number,
 ): { readonly body: string; readonly consts: readonly string[] } | undefined {
+  // A decimal is `enumeratio_decimal("1.5")`, its digits inside a string: the whole call is the literal.
+  const decimals: string[] = [];
+  const source = text.replace(/enumeratio_decimal\("[^"]*"\)/g, (call) => {
+    const id = `_r${next()}`;
+    decimals.push(`const ${id} = Ref(${call})`);
+    return `${id}[]`;
+  });
   const segments: { readonly text: string; readonly quoted: boolean }[] = [];
   let i = 0;
   while (i < source.length) {
@@ -77,7 +84,7 @@ function hoistLiterals(
           }),
     )
     .join("");
-  return { body, consts };
+  return { body, consts: [...decimals, ...consts] };
 }
 
 const JULIA_HARNESS_PRELUDE = `

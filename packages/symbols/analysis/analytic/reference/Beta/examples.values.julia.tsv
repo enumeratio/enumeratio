@@ -4,21 +4,21 @@ the-unit-square-case-int-0-1-1-dt-1	enumeratio_ball((a, b) -> gamma(a) * gamma(b
 beta-3-3	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 3, 3)	0.03333333333333333333333333333333333333333333333333333333333333333333333333333305	
 threads-element-wise-over-a-list-argument	Any[enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 1, 2), enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 2, 2)]	[0.5, 0.1666666666666666666666666666666666666666666666666666666666666666666666666666652]	
 b-5-4-frac-4-3-8-frac-1-280	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 5, 4)	0.003571428571428571428571428571428571428571428571428571428571428571428571428571407	
-machine-precision-arguments	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 2.3, 3.2)	0.05402979174835724164296177672063711094069052764200825187118952299630702951938266	
-four-arguments-at-floats	enumeratio_ball((z1, z2, a, b) -> _betainc(z2, a, b) - _betainc(z1, a, b), 0.2, 0.5, 2, 3)	0.04222499999999999857891452847979960853622883431845550331936726595895351112158773	
+machine-precision-arguments	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), enumeratio_decimal("2.3"), enumeratio_decimal("3.2"))	0.054029791748357237815440808178209193309992656275448087533298509091962051380232	
+four-arguments-at-floats	enumeratio_ball((z1, z2, a, b) -> _betainc(z2, a, b) - _betainc(z1, a, b), enumeratio_decimal("0.2"), enumeratio_decimal("0.5"), 2, 3)	0.04222500000000000000000000000000000000000000000000000000000000000000000000000067	
 half-integer-arguments-evaluate-exactly-through	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), (9 // 2), (7 // 2))	0.007669903939428206148590437947459723838371995603943129445739610821064004898159427	
 b-5-2-7-2-frac-3-pi-256-from-the-half-integer	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), (5 // 2), (7 // 2))	0.03681553890925538951323410214780667442418557889892702133955013194110722351116503	
-complex-arguments-should-evaluate-numerically	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), enumeratio_complex(2.5, 1), enumeratio_complex(1, -1))	(0.08310778366991162929749051534720931310925165684948629192604951967704016749779238+0.1421639442558703350830037065577912366563797310386563730514738988995666201220551j)	
+complex-arguments-should-evaluate-numerically	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), enumeratio_complex(enumeratio_decimal("2.5"), 1), enumeratio_complex(1, -1))	(0.08310778366991162929749051534720931310925165684948629192604951967704016749779238+0.1421639442558703350830037065577912366563797310386563730514738988995666201220551j)	
 three-arguments-the-incomplete-beta-b-z-a-b-int	enumeratio_ball(_betainc, (1 // 2), 2, 3)	0.05729166666666666666666666666666666666666666666666666666666666666666666666666685	
 four-arguments-the-generalized-incomplete-beta-b	enumeratio_ball((z1, z2, a, b) -> _betainc(z2, a, b) - _betainc(z1, a, b), (1 // 4), (1 // 2), 2, 3)	0.03548177083333333333333333333333333333333333333333333333333333333333333333333369	
-to-30-significant-digits-every-one-correctly	enumeratio_n(enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), (1 // 3), (1 // 4)), 30)	6.35358648555342153052878897202000000000000000000000000000000000000000000000001	
-b-1-2-1-2-pi-underlies-the-arcsine-distribution	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 0.5, 0.5)	3.141592653589793238462643383279502884197169399375105820974944592307816406286163	
+to-30-significant-digits-every-one-correctly	enumeratio_nshow(enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), (1 // 3), (1 // 4)), 30)	6.35358648555342153052878897202e+00	
+b-1-2-1-2-pi-underlies-the-arcsine-distribution	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), enumeratio_decimal("0.5"), enumeratio_decimal("0.5"))	3.141592653589793238462643383279502884197169399375105820974944592307816406286163	
 symmetric-b-a-b-b-b-a	enumeratio_equal(enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 2, 5), enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 5, 2))	true	
 ties-to-binomial-b-k-1-n-k-1-frac-1-n-1-binom-n	enumeratio_equal((9 * (enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 4, 6) * binomial(ZZ(8), ZZ(3)))), 1)	true	
 b-a-1-1-a-for-symbolic-a			
 b-2-b-frac-1-b-b-1-not-yet			
 partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the			
-a-nonpositive-integer-argument-is-a-pole-of-the	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), -1, 2)	(NaN+NaNj)	disagree
+a-nonpositive-integer-argument-is-a-pole-of-the	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), -1, 2)	ball not finite	error
 beta-1-over-2-1-over-2-times-beta-1-1-over-2	(enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), (1 // 2), (1 // 2)) * enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 1, (1 // 2)))	6.283185307179586476925286766559005768394338798750211641949889184615632812572189	
 beta-1-over-2-1-over-2-times-beta-1-2	(enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), (1 // 2), (1 // 2)) * enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), 1, 2))	1.570796326794896619231321691639751442098584699687552910487472296153908203143082	
 beta-of-positive-infinity-0-is-indeterminate	enumeratio_ball((a, b) -> gamma(a) * gamma(b) * rgamma(a + b), Inf, 0)	non-finite argument	error

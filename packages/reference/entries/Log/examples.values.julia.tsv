@@ -2,15 +2,15 @@ id	in	out	verdict
 default-base-is-10	enumeratio_ball(_log10, 100)	2.0	
 same-result-written-with-an-explicit-base	enumeratio_ball(_log_base, 100, 10)	2.0	
 base-2-via-the-explicit-second-argument	enumeratio_ball(_log_base, 8, 2)	3.0	
-log-in-a-negative-base	enumeratio_ball(_log_base, 2.5, -1)	(0.0-0.2916643985741245540798745635032592945861135746039784061731555397255584269095506j)	disagree
-log-3-1-5-at-machine-precision	enumeratio_ball(_log_base, 1.5, 3)	0.3690702464285425629004728856572391457004143598681195721293450561613147986190809	
+log-in-a-negative-base	enumeratio_ball(_log_base, enumeratio_decimal("2.5"), -1)	(0.0-0.2916643985741245540798745635032592945861135746039784061731555397255584269095506j)	disagree
+log-3-1-5-at-machine-precision	enumeratio_ball(_log_base, enumeratio_decimal("1.5"), 3)	0.3690702464285425629004728856572391457004143598681195721293450561613147986190809	
 log-9-3	enumeratio_ball(_log_base, 9, 3)	2.0	
 threads-over-a-list-of-values	Any[enumeratio_ball(_log_base, 2, 2), enumeratio_ball(_log_base, 4, 2), enumeratio_ball(_log_base, 8, 2)]	[1.0, 2.0, 3.0]	
-threads-over-a-list-of-bases	Any[enumeratio_ball(_log_base, 2.5, 2), enumeratio_ball(_log_base, 2.5, const_e(RR)), enumeratio_ball(_log_base, 2.5, 10)]	[1.321928094887362347870319429489390175864831393024580612054756395815934776608607, 0.9162907318741550651835272117680110714501012199082624677919678819807853657379671, 0.3979400086720376095725222105510139464636202370757829173791450777457836214511523]	
+threads-over-a-list-of-bases	Any[enumeratio_ball(_log_base, enumeratio_decimal("2.5"), 2), enumeratio_ball(_log_base, enumeratio_decimal("2.5"), const_e(RR)), enumeratio_ball(_log_base, enumeratio_decimal("2.5"), 10)]	[1.321928094887362347870319429489390175864831393024580612054756395815934776608607, 0.9162907318741550651835272117680110714501012199082624677919678819807853657379671, 0.3979400086720376095725222105510139464636202370757829173791450777457836214511523]	
 derivative-in-base-3-frac-1-x-ln-3			
 log-2-frac-18-3-an-exact-negative-power-of-the	enumeratio_ball(_log_base, (1 // 8), 2)	-3.0	
 confirms-the-default-base-is-10	enumeratio_equal(enumeratio_ball(_log10, 100), enumeratio_ball(_log_base, 100, 10))	true	
 product-rule-log-b-xy-log-b-x-log-b-y	enumeratio_equal(enumeratio_ball(_log_base, (8 * 4), 2), (enumeratio_ball(_log_base, 8, 2) + enumeratio_ball(_log_base, 4, 2)))	true	
 power-rule-log-b-x-k-k-log-b-x	enumeratio_equal(enumeratio_ball(_log_base, enumeratio_pow(2, 5), 2), (5 * enumeratio_ball(_log_base, 2, 2)))	true	
-log-10-0-infty	enumeratio_ball(_log10, 0)	(NaN+NaNj)	disagree
+log-10-0-infty	enumeratio_ball(_log10, 0)	ball not finite	error
 a-negative-argument-stays-symbolic-with-the	enumeratio_ball(_log10, -5)	(0.6989700043360188047862611052755069732318101185378914586895725388728918107255719+1.364376353841841347485783625431355770210127483723925399900854731995922817360266j)	

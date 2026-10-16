@@ -2,11 +2,11 @@ id	in	out	verdict
 n-forces-the-numeric-result-that-plain	(enumeratio_ball(tanh, 0))	0.0	
 n-tanh-1	(enumeratio_ball(tanh, 1))	0.7615941559557648881194582826047935904127685972579365515968105001219532445766371	
 stays-symbolic-even-at-0-same-as-sinh-and-cosh	enumeratio_ball(tanh, 0)	0.0	
-a-float-argument-evaluates-directly-no-n-needed	enumeratio_ball(tanh, 2.2)	0.975743130031451528927557962423336221129388258232464974775564244950014611320267	
+a-float-argument-evaluates-directly-no-n-needed	enumeratio_ball(tanh, enumeratio_decimal("2.2"))	0.9757431300314515204143066680301146527813050340579887493150816739173344072137137	
 series-tanh-x-x-0-10			
 series-tanh-x-x-1-over-2-times-i-times-pi-3			
 arbitrary-precision-via-n	(enumeratio_ball(tanh, (11 // 5)))	0.9757431300314515204143066680301146527813050340579887493150816739173344072137137	
-evaluates-at-a-complex-argument	enumeratio_ball(tanh, enumeratio_complex(2.5, 1))	(1.005548011895059983672932904319519725101743084960169346003924515180840715587515+0.01232213825582835354096963930861708995795799180031536934845749716777775580084546j)	
+evaluates-at-a-complex-argument	enumeratio_ball(tanh, enumeratio_complex(enumeratio_decimal("2.5"), 1))	(1.005548011895059983672932904319519725101743084960169346003924515180840715587515+0.01232213825582835354096963930861708995795799180031536934845749716777775580084546j)	
 interval-arithmetic-tanh-is-increasing-so-tanh-0			
 uncertainty-propagation-tanh-2-sqrt-3-pm-0-1			
 the-horizontal-asymptote-at-infty	enumeratio_ball(tanh, Inf)	non-finite argument	error
@@ -17,8 +17,8 @@ tanh-artanh-2-2-past-the-real-domain	enumeratio_ball(tanh, enumeratio_ball(_atan
 derivative-sech-2-x			
 antiderivative-ln-cosh-x			
 tanh-has-no-limit-at-complex-infinity-undefined			
-to-30-significant-digits-every-one-correctly	enumeratio_n(enumeratio_ball(tanh, 1), 30)	0.7615941559557648881194582826049999999999999999999999999999999999999999999999972	
-n-tanh-11-over-5-50	enumeratio_n(enumeratio_ball(tanh, (11 // 5)), 50)	0.9757431300314515204143066680301146527813050340579900000000000000000000000000029	
+to-30-significant-digits-every-one-correctly	enumeratio_nshow(enumeratio_ball(tanh, 1), 30)	7.61594155955764888119458282605e-01	
+n-tanh-11-over-5-50	enumeratio_nshow(enumeratio_ball(tanh, (11 // 5)), 50)	9.7574313003145152041430666803011465278130503405799e-01	
 tanh-list-list-1-over-3-times-i-times-pi-neg-1	Any[Any[enumeratio_ball(tanh, (enumeratio_complex(0, (1 // 3)) * const_pi(RR))), enumeratio_ball(tanh, (enumeratio_complex(0, (-1 // 3)) * const_pi(RR)))], Any[enumeratio_ball(tanh, 0), enumeratio_ball(tanh, (enumeratio_complex(0, (-1 // 6)) * const_pi(RR)))]]	[[(0.0+1.732050807568877293527446341505872366942805253810380628055806979451933016908694j), (0.0-1.732050807568877293527446341505872366942805253810380628055806979451933016908694j)], [0.0, (0.0-0.5773502691896257645091487805019574556476017512701268760186023264839776723029153j)]]	
 tanh-1-over-5-times-i-times-pi	enumeratio_ball(tanh, (enumeratio_complex(0, (1 // 5)) * const_pi(RR)))	(0.0+0.7265425280053608858954667574806187496160923929652084627500663273457493918456659j)	
 tanh-1-over-24-times-i-times-pi	enumeratio_ball(tanh, (enumeratio_complex(0, (1 // 24)) * const_pi(RR)))	(0.0+0.1316524975873958534715264574097171035928141022232375735535653257897598390106184j)	

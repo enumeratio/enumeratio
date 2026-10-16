@@ -6,6 +6,7 @@
 # answer's imaginary part is zero and every operand was real. A printed ball must be tight, so a scan
 # never agrees with a midpoint the ball does not vouch for.
 
+using Printf
 Nemo.set_precision!(Balls, 256)
 const RR = RealField()
 const CC = ComplexField()
@@ -64,17 +65,46 @@ function enumeratio_mod(a, b)
   x - y * floor(x / y)
 end
 
-# N(x, d): the value rounded to d significant digits, as Wolfram's N does (ties to even).
-function _big(x::RealFieldElem)
-  isfinite(x) && (accuracy_bits(x) >= 40 || radius(x) < 1e-15) || error("ball too wide")
+# N(x, d): the value to d significant digits, ties to the even digit (Wolfram shows N[1/8, 2] as 0.12 and
+# N[3/8, 2] as 0.38). The ball must vouch for d digits and a guard, or the row retries at more bits.
+function _big(x::RealFieldElem, digits = 0)
+  isfinite(x) || error("ball not finite")
+  need = digits == 0 ? 40 : ceil(Int, digits * 3.3219) + 8
+  accuracy_bits(x) >= need || (digits == 0 && radius(x) < 1e-15) || error("ball too wide")
   BigFloat(x)
 end
+
+# The value as a number, for N below another call.
 enumeratio_n(x::AbstractVector, d) = Any[enumeratio_n(e, d) for e in x]
 function enumeratio_n(x, d)
   d isa Integer || return x
   z = _c(x)
-  re, im = round(_big(real(z)), sigdigits = Int(d)), round(_big(imag(z)), sigdigits = Int(d))
+  re, im = round(_big(real(z), d), sigdigits = Int(d)), round(_big(imag(z), d), sigdigits = Int(d))
   iszero(imag(z)) ? re : complex(re, im)
+end
+
+# The value as its d digits, written `1.2e-01`, for an N that is the answer: the scan compares digit for digit.
+function _digits(v::BigFloat, d)
+  m, e = split(Printf.format(Printf.Format("%." * string(d - 1) * "e"), v), "e")
+  (occursin('.', m) ? m : m * ".") * "e" * e
+end
+enumeratio_nshow(x::AbstractVector, d) = Any[enumeratio_nshow(e, d) for e in x]
+function enumeratio_nshow(x, d)
+  d isa Integer || return x
+  z = _c(x)
+  re = _digits(_big(real(z), d), d)
+  iszero(imag(z)) && return re
+  im = _digits(_big(imag(z), d), d)
+  "(" * re * (startswith(im, "-") ? "-" * im[2:end] : "+" * im) * "j)"
+end
+
+# Exact decimal text, as a rational: no double rounds it, and a retry at more bits refines it.
+function enumeratio_decimal(text)
+  m = match(r"^([+-]?)(\d*)\.?(\d*)(?:[eE]([+-]?\d+))?$", text)
+  digits = parse(BigInt, m[2] * m[3] * "0") ÷ 10
+  e = (m[4] === nothing ? 0 : parse(Int, m[4])) - length(m[3])
+  r = e >= 0 ? (digits * big(10)^e) // 1 : digits // big(10)^(-e)
+  m[1] == "-" ? -r : r
 end
 
 # ── elementary functions Nemo has on real balls only, or not at all, by their principal branches ──
@@ -124,7 +154,12 @@ enumeratio_ceil(x) = _whole(ceil, x)
 enumeratio_round(x::_Plain) = round(BigInt, x)
 function enumeratio_round(x)
   z = _c(x)
-  r(v) = ZZ(round(BigInt, _big(v)))
+  # floor(v + 1/2) errors when the ball straddles an integer, i.e. holds a half-integer; an exact tie goes to even.
+  function r(v)
+    y = v + RR(1) / 2
+    k = floor(ZZRingElem, y)
+    iszero(radius(v)) && y == RR(k) ? (iseven(k) ? k : k - 1) : k
+  end
   iszero(imag(z)) ? r(real(z)) : CC(r(real(z)), r(imag(z)))
 end
 
@@ -160,6 +195,8 @@ end
 
 # The θ index a is 1 to 4, and the nome q gives τ = log(q) / (π i).
 function enumeratio_theta(a, z, q)
+  # log(0) has no value, but the series at q = 0 is the constant term: 0 for theta 1 and 2, 1 for 3 and 4.
+  iszero(_c(q)) && return Int(ZZ(a)) <= 2 ? CC(0) : CC(1)
   t = jacobi_theta(_c(z) / const_pi(RR), log(_c(q)) / (const_pi(RR) * onei(CC)))[Int(ZZ(a))]
   _collapse(t, _isreal(z) && _isreal(q))
 end
@@ -212,10 +249,13 @@ function enumeratio_lerch(z, s, a)
     error("no continuation past |z| = 1 for this a")
   end
   e = abs(Float64(midpoint(real(sc)))) + 1
+  la = abs(Float64(midpoint(real(ac))))
+  short(n) = log(max(r, 1e-300)) * n + e * log(n + la + 2) > -170
   n = 8
-  while n < 400_000 && log(max(r, 1e-300)) * n + e * log(n + abs(Float64(midpoint(real(ac)))) + 2) > -170
+  while short(n) && n < 400_000
     n = 2n
   end
+  short(n) && error("ball too wide: the series is too slow near |z| = 1")
   total, power = CC(0), CC(1)
   for k in 0:n
     total += power * (ac + k)^(-sc)
@@ -253,35 +293,33 @@ enumeratio_subfactorial(n) = enumeratio_ball((n) -> gamma(n + 1, CC(-1)) / const
 
 # ── printing: a value as the scan reads it ──
 
-# A ball too wide to vouch for its midpoint, or a NaN (a pole, or an argument reduction that lost all its
-# digits), is tried again at more bits.
+# A ball too wide to vouch for its midpoint, or not finite (a pole, an undefined value or an argument reduction
+# that lost all its digits look alike to arb: none is an answer), is tried again at more bits.
 function oracle_eval(src)
   try
     for bits in (256, 1024, 8192)
       Nemo.set_precision!(Balls, bits)
+      setprecision(BigFloat, bits)
       try
-        shown = show_oracle(Core.eval(Main, Meta.parse(src)))
-        occursin("NaN", shown) && bits < 8192 && continue
-        return shown
+        return show_oracle(Core.eval(Main, Meta.parse(src)))
       catch e
-        (e isa ErrorException && e.msg == "ball too wide" && bits < 8192) || rethrow()
+        msg = sprint(showerror, e)
+        (bits < 8192 && (msg in ("ball too wide", "ball not finite") || occursin("unique integer", msg))) || rethrow()
       end
     end
   finally
     Nemo.set_precision!(Balls, 256)
+    setprecision(BigFloat, 256)
   end
 end
 
-show_oracle(x::AbstractFloat) = isnan(x) ? "NaN" : isinf(x) ? (x > 0 ? "PositiveInfinity" : "NegativeInfinity") : string(x)
+show_oracle(x::AbstractFloat) = isnan(x) ? error("ball not finite") : isinf(x) ? (x > 0 ? "PositiveInfinity" : "NegativeInfinity") : string(x)
 show_oracle(x::Bool) = x ? "true" : "false"
 show_oracle(x::Tuple) = "(" * join(map(show_oracle, x), ", ") * ")"
 show_oracle(x::Pair) = show_oracle((x.first, x.second))
 
 function _show_real(x::RealFieldElem)
-  if !isfinite(x)
-    s = string(x)
-    return occursin("nan", s) || occursin("+/-", s) ? "NaN" : startswith(s, "-") ? "NegativeInfinity" : "PositiveInfinity"
-  end
+  isfinite(x) || error("ball not finite")
   accuracy_bits(x) >= 40 || radius(x) < 1e-15 || error("ball too wide")
   string(BigFloat(x))
 end

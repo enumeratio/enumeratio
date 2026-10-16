@@ -1,7 +1,7 @@
 id	in	out	verdict
 mean-list-1-2-3-4	enumeratio_mean(Any[1, 2, 3, 4])	2.5	
 mean-list-2-4-4-4-5-5-7-9	enumeratio_mean(Any[2, 4, 4, 4, 5, 5, 7, 9])	5.0	
-mean-list-1p21-3p4-2p15-4-1p55	enumeratio_mean(Any[1.21, 3.4, 2.15, 4, 1.55])	2.462	
+mean-list-1p21-3p4-2p15-4-1p55	enumeratio_mean(Any[enumeratio_decimal("1.21"), enumeratio_decimal("3.4"), enumeratio_decimal("2.15"), 4, enumeratio_decimal("1.55")])	2.462	
 given-a-matrix-mean-is-column-wise	enumeratio_mean(Any[Any[1, 10], Any[2, 20], Any[3, 30]])	[2.0, 20.0]	
 exact-rationals-give-an-exact-mean	enumeratio_mean(Any[(1 // 2), (1 // 3), (1 // 6)])	0.3333333333333333	
 symbolic-data-gives-an-exact-symbolic-mean-frac			

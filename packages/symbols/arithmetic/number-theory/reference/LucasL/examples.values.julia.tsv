@@ -6,14 +6,14 @@ lucasl-10	Combinatorics.lucasnum(10)	123
 series-lucasl-1-over-2-x-x-0-5			
 exact-at-any-size	Combinatorics.lucasnum(100)	792070839848372253127	
 an-odd-negative-index-flips-the-sign-l-11-l-11	Combinatorics.lucasnum(-11)	DomainError with -11: n must be nonnegative	error
-a-real-index-uses-l-nu-varphi-nu-cos-pi-nu	Combinatorics.lucasnum(2.3333333333333335)	MethodError: no method matching lucasnum(::Float64) The function `lucasnum` exists, but no method is	error
+a-real-index-uses-l-nu-varphi-nu-cos-pi-nu	Combinatorics.lucasnum(enumeratio_decimal("2.3333333333333335"))	MethodError: no method matching lucasnum(::Rational{BigInt}) The function `lucasnum` exists, but no 	error
 the-two-argument-lucas-polynomial-l-7-x-from-l-n			
 the-lucas-polynomial-at-x-1-is-the-lucas-number			
 special-value-of-the-lucas-polynomial-l-1-0-0			
 special-value-of-the-lucas-polynomial-l-0-0-2			
 l-2-x-x-2-2-threads-element-wise-over-a-matrix			
 threads-element-wise-over-a-list-as-wolfram-s	Any[Combinatorics.lucasnum(1), Combinatorics.lucasnum(2), Combinatorics.lucasnum(3), Combinatorics.lucasnum(4)]	[1, 3, 4, 7]	
-n-lucasl-11-over-3-50	enumeratio_n(Combinatorics.lucasnum((11 // 3)), 50)	MethodError: no method matching lucasnum(::Rational{Int64}) The function `lucasnum` exists, but no m	error
+n-lucasl-11-over-3-50	enumeratio_nshow(Combinatorics.lucasnum((11 // 3)), 50)	MethodError: no method matching lucasnum(::Rational{Int64}) The function `lucasnum` exists, but no m	error
 n-lucasl-1-plus-1-over-2-times-i	(Combinatorics.lucasnum(enumeratio_complex(1, (1 // 2))))	MethodError: no method matching lucasnum(::ComplexFieldElem) The function `lucasnum` exists, but no 	error
 lucasl-1-neg-x-eq-neg-lucasl-1-x			
 lucasl-2-neg-x-eq-lucasl-2-x			

@@ -8,19 +8,19 @@ log-2	enumeratio_ball(_log10, 2)	0.301029995663981195213738894724493026768189881
 series-log-x-plus-1-x-0-5			
 an-exact-negative-power-of-10-folds-too-log-10	enumeratio_ball(_log10, (1 // 100))	-2.0	
 a-symbolic-argument-becomes-compute-engine-s			
-log10-5p5	enumeratio_ball(_log10, 5.5)	0.7403626894942438455364610765185312149385123090043445532861115575526448429588289	
+log10-5p5	enumeratio_ball(_log10, enumeratio_decimal("5.5"))	0.7403626894942438455364610765185312149385123090043445532861115575526448429588289	
 threads-element-wise-over-a-list	Any[enumeratio_ball(_log10, 1), enumeratio_ball(_log10, 10), enumeratio_ball(_log10, 100), enumeratio_ball(_log10, 1000)]	[0.0, 1.0, 2.0, 3.0]	
-element-wise-over-a-matrix-including-the-exact	Any[Any[enumeratio_ball(_log10, 1), enumeratio_ball(_log10, 100)], Any[enumeratio_ball(_log10, 0), enumeratio_ball(_log10, (1 // 100))]]	[[0.0, 2.0], [(NaN+NaNj), -2.0]]	disagree
+element-wise-over-a-matrix-including-the-exact	Any[Any[enumeratio_ball(_log10, 1), enumeratio_ball(_log10, 100)], Any[enumeratio_ball(_log10, 0), enumeratio_ball(_log10, (1 // 100))]]	ball not finite	error
 as-with-ln-the-logarithm-of-complex-infinity-is			
 interval-arithmetic-log-10-frac-13-2-log-10-3			
 uncertainty-propagation-log-10-frac-1-101-pm-0			
 derivative-frac-1-x-ln-10			
-to-30-significant-digits-every-one-correctly	enumeratio_n(enumeratio_ball(_log10, 7), 30)	0.8450980400142568307122162585929999999999999999999999999999999999999999999999995	
+to-30-significant-digits-every-one-correctly	enumeratio_nshow(enumeratio_ball(_log10, 7), 30)	8.45098040014256830712216258593e-01	
 log-5	enumeratio_ball(_log10, 5)	0.6989700043360188047862611052755069732318101185378914586895725388728918107255719	
-n-log-45-100	enumeratio_n(enumeratio_ball(_log10, 45), 100)	1.653212513775343679376316911785737591632067846919283188349303819483350116292883	
+n-log-45-100	enumeratio_nshow(enumeratio_ball(_log10, 45), 100)	1.653212513775343679376316911785737591632067846919283188349303819483350116292897736599009459177046431e+00	
 n-log-4-plus-i	(enumeratio_ball(_log10, enumeratio_complex(4, 1)))	(0.6152244606891369642700849471641685150037836892125231986901842411723470311285565+0.1063928815800327301985388179830166943124143271207260275607451054743796784882629j)	
 fullsimplify-matrixfunction-log10-list-list-1			
 log-positiveinfinity	enumeratio_ball(_log10, Inf)	non-finite argument	error
-log-0	enumeratio_ball(_log10, 0)	(NaN+NaNj)	disagree
-a-float-argument-folds-even-for-a-fractional	enumeratio_ball(_log10, 0.001)	-2.999999999999999990959430001062933431095954295684983810678442959762067974458515	
+log-0	enumeratio_ball(_log10, 0)	ball not finite	error
+a-float-argument-folds-even-for-a-fractional	enumeratio_ball(_log10, enumeratio_decimal("0.001"))	-3.0	
 same-as-compute-engine-s-default-base-log	enumeratio_equal(enumeratio_ball(_log10, 1000), enumeratio_ball(_log10, 1000))	true	

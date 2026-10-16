@@ -1,18 +1,18 @@
 id	in	out	verdict
-e-1-3-2-gamma-0-3-2	enumeratio_ball(exp_integral_e, 1, 1.5)	0.1000195824066326519019093399116669782617300061403505850505670603647199164241685	
-expintegrale-2-1p5	enumeratio_ball(exp_integral_e, 2, 1.5)	0.07310078653848085108041646089651205394957662015055345116798472821324529199507346	
+e-1-3-2-gamma-0-3-2	enumeratio_ball(exp_integral_e, 1, enumeratio_decimal("1.5"))	0.1000195824066326519019093399116669782617300061403505850505670603647199164241685	
+expintegrale-2-1p5	enumeratio_ball(exp_integral_e, 2, enumeratio_decimal("1.5"))	0.07310078653848085108041646089651205394957662015055345116798472821324529199507346	
 e-3-2	(enumeratio_ball(exp_integral_e, 3, 2))	0.03013337979781589318747992296985684292516859697125829192056631109634917037750999	
-order-1-5-at-3-2	enumeratio_ball(exp_integral_e, 1.5, 3.2)	0.0091569914288709771738217916106825782222360793353349955779701037068264274141661	
+order-1-5-at-3-2	enumeratio_ball(exp_integral_e, enumeratio_decimal("1.5"), enumeratio_decimal("3.2"))	0.009156991428870979182421093157454456985228508584539574799223734103343647446925146	
 series-expintegrale-n-x-x-0-4			
 series-expintegrale-1-x-x-0-4			
 normal-series-expintegrale-n-x-x			
-non-integer-order	enumeratio_ball(exp_integral_e, 0.5, 2.5)	0.02841429970928975640155237233760435122547330618474943152164962888926105836630459	
+non-integer-order	enumeratio_ball(exp_integral_e, enumeratio_decimal("0.5"), enumeratio_decimal("2.5"))	0.02841429970928975640155237233760435122547330618474943152164962888926105836630459	
 exact-arguments-under-n	(enumeratio_ball(exp_integral_e, 1, 1))	0.2193839343955202736771637754601216490310472934069082075779786130735686985591382	
 n-expintegrale-1-plus-i-2-plus-3i	(enumeratio_ball(exp_integral_e, enumeratio_complex(1, 1), enumeratio_complex(2, 3)))	(-0.0189438305083736433171725663239807108975094615206496337216358923155058769117861+0.02044377010282997055662424019782260103776558408295793538098728599254250842104073j)	
 expintegrale-0-z			
 seriescoefficient-expintegrale-0-x-list-x-0-n			
 expintegrale-0-positiveinfinity	enumeratio_ball(exp_integral_e, 0, Inf)	non-finite argument	error
-n-expintegrale-3-11-over-5-50	enumeratio_n(enumeratio_ball(exp_integral_e, 3, (11 // 5)), 50)	0.02352065664827650000783171991176462591531261051651900000000000000000000000000005	
+n-expintegrale-3-11-over-5-50	enumeratio_nshow(enumeratio_ball(exp_integral_e, 3, (11 // 5)), 50)	2.3520656648276500007831719911764625915312610516519e-02	
 simplify-functionexpand-list-expintegrale-5			
 functionexpand-expintegrale-3-over-2-z			
 functionexpand-expintegrale-3-z			
@@ -22,5 +22,5 @@ functionexpand-expintegrale-n-z
 series-expintegrale-n-x-x-0-7			
 e-n-0-1-n-1-for-n-1	enumeratio_ball(exp_integral_e, 2, 0)	1.0	
 e-0-x-e-x-x			
-expintegrale-0-0	enumeratio_ball(exp_integral_e, 0, 0)	(NaN+NaNj)	disagree
+expintegrale-0-0	enumeratio_ball(exp_integral_e, 0, 0)	ball not finite	error
 expintegrale-3-0	enumeratio_ball(exp_integral_e, 3, 0)	0.5	

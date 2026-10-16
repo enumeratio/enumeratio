@@ -1,8 +1,8 @@
 id	in	out
 1f1-at-0	enumeratio_ball(hypergeometric_1f1, 1, 1, 0)	1.0
-1f1-1-2-1	enumeratio_n(enumeratio_ball(hypergeometric_1f1, 1, 2, 1), 20)	1.7182818284590452354
+1f1-1-2-1	enumeratio_nshow(enumeratio_ball(hypergeometric_1f1, 1, 2, 1), 20)	1.7182818284590452354e+00
 series-hypergeometric1f1-a-b-x-x-0-3		
 fullsimplify-normal-series-hypergeometric1f1-a-b		
-n-hypergeometric1f1-10-1-over-3-neg-1-50	enumeratio_n(enumeratio_ball(hypergeometric_1f1, 10, (1 // 3), -1), 50)	1.085646966277114418106099920005389482134181965565499999999999999999999999999992
+n-hypergeometric1f1-10-1-over-3-neg-1-50	enumeratio_nshow(enumeratio_ball(hypergeometric_1f1, 10, (1 // 3), -1), 50)	1.0856469662771144181060999200053894821341819655655e+00
 hypergeometric1f1-1-1-list-list-1-0-list-0-1	Any[Any[enumeratio_ball(hypergeometric_1f1, 1, 1, 1), enumeratio_ball(hypergeometric_1f1, 1, 1, 0)], Any[enumeratio_ball(hypergeometric_1f1, 1, 1, 0), enumeratio_ball(hypergeometric_1f1, 1, 1, 1)]]	[[2.71828182845904523536028747135266249775724709369995957496696762772407663035352, 1.0], [1.0, 2.71828182845904523536028747135266249775724709369995957496696762772407663035352]]
 matrixfunction-function-hypergeometric1f1-1-1-1		

@@ -4,7 +4,7 @@ isodd-4	is_odd(ZZ(4))	false
 negative-integers-count-too	is_odd(ZZ(-7))	true	
 isodd-0	is_odd(ZZ(0))	false	
 isodd-9	is_odd(ZZ(9))	true	
-a-non-integer-is-not-odd	is_odd(ZZ(3.5))	InexactError: convert(ZZRingElem, 3.5)	error
+a-non-integer-is-not-odd	is_odd(ZZ(enumeratio_decimal("3.5")))	AssertionError: denominator(x) == 1	error
 isodd-1-over-3	is_odd(ZZ((1 // 3)))	AssertionError: denominator(x) == 1	error
 big-integers	is_odd(ZZ((enumeratio_pow(2, 100) + 1)))	true	
 pi-is-known-not-to-be-an-integer-so-it-is	is_odd(ZZ(const_pi(RR)))	Argument must represent a unique integer	error

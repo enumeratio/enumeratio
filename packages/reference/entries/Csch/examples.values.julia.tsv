@@ -1,10 +1,10 @@
 id	in	out	verdict
 series-csch-x-x-0-10			
 normal-series-csch-x-x-2i-times-pi-3			
-n-csch-9-over-5-50	enumeratio_n(enumeratio_ball(_csch, (9 // 5)), 50)	0.3398846914154937071407581494665321179847761324367100000000000000000000000000008	
-csch-list-list-1-over-3-times-i-times-pi-neg-1	Any[Any[enumeratio_ball(_csch, (enumeratio_complex(0, (1 // 3)) * const_pi(RR))), enumeratio_ball(_csch, (enumeratio_complex(0, (-1 // 3)) * const_pi(RR)))], Any[enumeratio_ball(_csch, 0), enumeratio_ball(_csch, (enumeratio_complex(0, (-1 // 6)) * const_pi(RR)))]]	[[(0.0-1.154700538379251529018297561003914911295203502540253752037204652967955344605865j), (0.0+1.154700538379251529018297561003914911295203502540253752037204652967955344605865j)], [NaN, (0.0+2.0j)]]	disagree
+n-csch-9-over-5-50	enumeratio_nshow(enumeratio_ball(_csch, (9 // 5)), 50)	3.3988469141549370714075814946653211798477613243671e-01	
+csch-list-list-1-over-3-times-i-times-pi-neg-1	Any[Any[enumeratio_ball(_csch, (enumeratio_complex(0, (1 // 3)) * const_pi(RR))), enumeratio_ball(_csch, (enumeratio_complex(0, (-1 // 3)) * const_pi(RR)))], Any[enumeratio_ball(_csch, 0), enumeratio_ball(_csch, (enumeratio_complex(0, (-1 // 6)) * const_pi(RR)))]]	ball not finite	error
 csch-positiveinfinity	enumeratio_ball(_csch, Inf)	non-finite argument	error
-csch-0	enumeratio_ball(_csch, 0)	NaN	disagree
+csch-0	enumeratio_ball(_csch, 0)	ball not finite	error
 d-csch-x-x			
 matrixfunction-function-csch-1-1-list-list-1			
 integrate-csch-x-x-nothing-nothing			

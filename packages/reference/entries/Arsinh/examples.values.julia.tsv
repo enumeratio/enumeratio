@@ -1,5 +1,5 @@
 id	in	out	verdict
-n-arsinh-1-100	enumeratio_n(enumeratio_ball(_asinh, 1), 100)	0.8813735870195430252326093249797923090281603282616354107532956086533771842220185	
+n-arsinh-1-100	enumeratio_nshow(enumeratio_ball(_asinh, 1), 100)	8.813735870195430252326093249797923090281603282616354107532956086533771842220260878337068919102560429e-01	
 arsinh-positiveinfinity	enumeratio_ball(_asinh, Inf)	non-finite argument	error
 arsinh-0	enumeratio_ball(_asinh, 0)	0.0	
 d-arsinh-x-x			

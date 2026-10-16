@@ -1,7 +1,7 @@
 id	in	out	verdict
 besselk-0-1	(enumeratio_ball(bessel_k, 0, 1))	0.4210244382407083333356273792126090361362197482266604722989695514552126781380225	
 normal-series-besselk-0-x-x-positiveinfinity-4			
-n-besselk-0-4-50	enumeratio_n(enumeratio_ball(bessel_k, 0, 4), 50)	0.01115967608585302426974519597983348922500902388847400000000000000000000000000004	
-list-besselk-0-0-besselk-1-0	Any[enumeratio_ball(bessel_k, 0, 0), enumeratio_ball(bessel_k, 1, 0)]	[(NaN+NaNj), (NaN+NaNj)]	disagree
+n-besselk-0-4-50	enumeratio_nshow(enumeratio_ball(bessel_k, 0, 4), 50)	1.1159676085853024269745195979833489225009023888474e-02	
+list-besselk-0-0-besselk-1-0	Any[enumeratio_ball(bessel_k, 0, 0), enumeratio_ball(bessel_k, 1, 0)]	ball not finite	error
 d-besselk-n-x-x			
 normal-series-besselk-n-x-x-positiveinfinity-2			

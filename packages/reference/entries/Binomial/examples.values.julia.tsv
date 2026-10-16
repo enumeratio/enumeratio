@@ -9,11 +9,11 @@ symbolic-n-binom-n-0-1-for-any-n
 symbolic-n-binom-n-1-n			
 binom-n-n-1-n-for-symbolic-n			
 binom-m-m-1-m-for-symbolic-m			
-n-binomial-7-over-3-1-over-5-1-digit	enumeratio_n(binomial(ZZ((7 // 3)), ZZ((1 // 5))), 1)	AssertionError: denominator(x) == 1	error
+n-binomial-7-over-3-1-over-5-1-digit	enumeratio_nshow(binomial(ZZ((7 // 3)), ZZ((1 // 5))), 1)	AssertionError: denominator(x) == 1	error
 threads-element-wise-over-a-list-as-wolfram-s	Any[binomial(ZZ(2), ZZ(3)), binomial(ZZ(3), ZZ(3)), binomial(ZZ(5), ZZ(3)), binomial(ZZ(7), ZZ(3)), binomial(ZZ(11), ZZ(3))]	[0, 1, 10, 35, 165]	
 half-integer-arguments-evaluate-exactly-through	binomial(ZZ((9 // 2)), ZZ((7 // 2)))	AssertionError: denominator(x) == 1	error
-real-arguments-evaluate-through-the-gamma	binomial(ZZ(8.5), ZZ(-4.2))	InexactError: convert(ZZRingElem, 8.5)	error
-a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0	binomial(ZZ(0.5), ZZ(3))	InexactError: convert(ZZRingElem, 0.5)	error
+real-arguments-evaluate-through-the-gamma	binomial(ZZ(enumeratio_decimal("8.5")), ZZ(enumeratio_decimal("-4.2")))	AssertionError: denominator(x) == 1	error
+a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0	binomial(ZZ(enumeratio_decimal("0.5")), ZZ(3))	AssertionError: denominator(x) == 1	error
 a-rational-n-with-integer-k-gives-the-exact	binomial(ZZ((1 // 2)), ZZ(2))	AssertionError: denominator(x) == 1	error
 binom-1-2-3-frac-5-16-the-central-binomial	binomial(ZZ((-1 // 2)), ZZ(3))	AssertionError: denominator(x) == 1	error
 binom-n-n-1-for-symbolic-n			
@@ -21,7 +21,7 @@ binom-m-m-1-for-symbolic-m
 a-gaussian-integer-n-binom-1-i-5-frac-1-i-12	binomial(ZZ(enumeratio_complex(1, 1)), ZZ(5))	MethodError: no method matching (::ZZRing)(::ComplexFieldElem) The object of type `ZZRing` exists, b	error
 complex-n-and-k-evaluate-through-the-gamma	binomial(ZZ(enumeratio_complex(2, 1)), ZZ(enumeratio_complex(7, -3)))	MethodError: no method matching (::ZZRing)(::ComplexFieldElem) The object of type `ZZRing` exists, b	error
 interval-arithmetic-in-k-binom-1-2-k-is			
-n-binomial-7-over-3-1-over-5-20	enumeratio_n(binomial(ZZ((7 // 3)), ZZ((1 // 5))), 20)	AssertionError: denominator(x) == 1	error
+n-binomial-7-over-3-1-over-5-20	enumeratio_nshow(binomial(ZZ((7 // 3)), ZZ((1 // 5))), 20)	AssertionError: denominator(x) == 1	error
 binomial-n-4			
 matrixfunction-function-binomial-1-2-1-list-list			
 the-number-of-distinct-5-card-hands-dealt-from-a	binomial(ZZ(52), ZZ(5))	2598960	

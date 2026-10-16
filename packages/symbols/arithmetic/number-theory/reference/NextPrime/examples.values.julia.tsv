@@ -8,7 +8,7 @@ the-largest-prime-below-50
 threads-element-wise-over-a-list-as-wolfram-s	Any[next_prime(ZZ(1)), next_prime(ZZ(5)), next_prime(ZZ(10)), next_prime(ZZ(15))]	[2, 7, 11, 17]	
 large-integers-the-first-prime-past-a-googol-is	next_prime(ZZ(enumeratio_pow(10, 100)))	10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000267	
 rational-n-the-next-prime-above-7-2	next_prime(ZZ((7 // 2)))	AssertionError: denominator(x) == 1	error
-real-n-the-next-prime-above-100-5	next_prime(ZZ(100.5))	InexactError: convert(ZZRingElem, 100.5)	error
+real-n-the-next-prime-above-100-5	next_prime(ZZ(enumeratio_decimal("100.5")))	AssertionError: denominator(x) == 1	error
 findinstance-nextprime-p-eq-p-plus-1-0-lt-p-lt			
 nextprime-1-25			
 array-nextprime-100-mod-10			

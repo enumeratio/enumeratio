@@ -3,18 +3,18 @@ csc-pi-over-6	enumeratio_ball(_csc, enumeratio_div(const_pi(RR), 6))	2.0
 csc-pi-over-4	enumeratio_ball(_csc, enumeratio_div(const_pi(RR), 4))	1.414213562373095048801688724209698078569671875376948073176679737990732478462102	
 csc-pi-over-2	enumeratio_ball(_csc, enumeratio_div(const_pi(RR), 2))	1.0	
 csc-60-circ-frac-2-sqrt-3-3-exactly			
-a-machine-precision-argument-evaluates	enumeratio_ball(_csc, 1.2)	1.072916377709897247229319862637341059777454086998694933844568143032003677665759	
+a-machine-precision-argument-evaluates	enumeratio_ball(_csc, enumeratio_decimal("1.2"))	1.07291637770989722870511692243523915483763900669775787061004059509513225029657	
 a-huge-24-40-argument	(enumeratio_ball(_csc, enumeratio_pow(24, 40)))	2.499480403516114245745403495743348612277595922029911315345815385713421851946574	
 a-huge-10-100-argument	(enumeratio_ball(_csc, enumeratio_pow(10, 100)))	-2.685456817606348002023834385506766534610743704090484308267879997850795410203947	
-a-huge-3-200-argument	(enumeratio_ball(_csc, enumeratio_pow(3, 200)))	-1.065267094773902176582317205134334713437604263373494520533384774697045682465086	
+a-huge-3-200-argument	(enumeratio_ball(_csc, enumeratio_pow(3, 200)))	-1.065267094773902176582317205134334713437604263373494520533384774697045682465090346946079725251619620078730812554269987823325899358314292597919077874252864622051533565405710332071546492018664333841782844825219159699880014582703900801827917726965134289731327830716984098333489740583428780162596863441198044847796	
 a-huge-neg-7-60-argument	(enumeratio_ball(_csc, (-(enumeratio_pow(7, 60)))))	2.738813586755818206167883365145153909378330813156019073137767813044186975276226	
-a-huge-10-80-plus-1-over-3-argument	(enumeratio_ball(_csc, enumeratio_div((enumeratio_pow(10, 80) + 1), 3)))	1.014869562853670879001739576541731621825089509870804162522768494638202917082502	
+a-huge-10-80-plus-1-over-3-argument	(enumeratio_ball(_csc, enumeratio_div((enumeratio_pow(10, 80) + 1), 3)))	1.01486956285367087900173957654173162182508950987080416252276849463820291708250486032108958004416799037747434925160288486800273634741069382385953098115234670729952214043744960753137470151958675502882145637025367776756220798369947819965265456909231186211232741850267019010666970201505901400103745130267011550988	
 csc-5-under-n	(enumeratio_ball(_csc, 5))	-1.042835212771405819783119855907759843972351752364546174404470858222228857334698	
 series-csc-x-x-0-10			
 series-csc-x-x-pi-5			
 n-of-an-exact-argument-gives-an-arbitrary	(enumeratio_ball(_csc, (6 // 5)))	1.07291637770989722870511692243523915483763900669775787061004059509513225029657	
-evaluates-at-a-complex-argument	enumeratio_ball(_csc, enumeratio_complex(2.5, 1))	(0.5309655776211742076846759350844320866020737940438825701938132784905372795833879+0.5413229061900023322691170635360287966693582652982964675439995198033483700462582j)	
-threads-element-wise-over-a-matrix-with	Any[Any[enumeratio_ball(_csc, enumeratio_div(const_pi(RR), 3)), enumeratio_ball(_csc, const_pi(RR))], Any[enumeratio_ball(_csc, enumeratio_div(const_pi(RR), 6)), enumeratio_ball(_csc, (-(enumeratio_div(const_pi(RR), 2))))]]	[[1.154700538379251529018297561003914911295203502540253752037204652967955344605865, NaN], [2.0, -1.0]]	disagree
+evaluates-at-a-complex-argument	enumeratio_ball(_csc, enumeratio_complex(enumeratio_decimal("2.5"), 1))	(0.5309655776211742076846759350844320866020737940438825701938132784905372795833879+0.5413229061900023322691170635360287966693582652982964675439995198033483700462582j)	
+threads-element-wise-over-a-matrix-with	Any[Any[enumeratio_ball(_csc, enumeratio_div(const_pi(RR), 3)), enumeratio_ball(_csc, const_pi(RR))], Any[enumeratio_ball(_csc, enumeratio_div(const_pi(RR), 6)), enumeratio_ball(_csc, (-(enumeratio_div(const_pi(RR), 2))))]]	ball not finite	error
 csc-pi-12-sqrt-6-sqrt-2	enumeratio_ball(_csc, enumeratio_div(const_pi(RR), 12))	3.863703305156273146998972798915589470535619356033618201609372305241692855919453	
 csc-pi-10-1-sqrt-5	enumeratio_ball(_csc, enumeratio_div(const_pi(RR), 10))	3.236067977499789696409173668731276235440618359611525724270897245410520925637854	
 csc-pi-over-5	enumeratio_ball(_csc, enumeratio_div(const_pi(RR), 5))	1.701301616704079864363080994126022144480802807529633763673480484755768094727944	
@@ -23,7 +23,7 @@ uncertainty-propagation-csc-2-pm-0-01-approx-1
 oddness-pulls-the-sign-out-of-a-symbolic			
 derivative-csc-x-cot-x			
 antiderivative-ln-csc-x-cot-x			
-n-csc-6-over-5-50	enumeratio_n(enumeratio_ball(_csc, (6 // 5)), 50)	1.072916377709897228705116922435239154837639006697800000000000000000000000000002	
+n-csc-6-over-5-50	enumeratio_nshow(enumeratio_ball(_csc, (6 // 5)), 50)	1.0729163777098972287051169224352391548376390066978e+00	
 matrixfunction-function-csc-1-1-list-list-1-over			
 csc-positiveinfinity	enumeratio_ball(_csc, Inf)	non-finite argument	error
 assuming-m-in-integers-refine-csc-pi-times-m			
@@ -36,5 +36,5 @@ neg-2-times-neg-2-plus-2-times-csc-1-over-2-pow	((-2 * (-2 + (2 * enumeratio_pow
 n-4-times-neg-1-plus-csc-1-over-2-pow-2-times	((4 * (-1 + enumeratio_pow(enumeratio_ball(_csc, (1 // 2)), 2)) * enumeratio_pow(enumeratio_ball(_csc, 1), 2)))	18.92846257389355801064285442326415520373854153619252682803443980722771850373956	
 n-csc-1-over-2-plus-1-over-2-times-pi-pow-2	(enumeratio_pow(enumeratio_ball(_csc, ((1 // 2) + ((1 // 2) * const_pi(RR)))), 2))	1.298446410409524836883766498854359657792285522154900404712010315703054698425791	
 n-4-times-neg-1-plus-csc-2-pow-2-times-csc-4-pow	((4 * (-1 + enumeratio_pow(enumeratio_ball(_csc, 2), 2)) * enumeratio_pow(enumeratio_ball(_csc, 4), 2)))	1.462770359711973446096701790821342437175752696160278864061578844277633341328405	
-a-pole-sin-0-0	enumeratio_ball(_csc, 0)	NaN	disagree
+a-pole-sin-0-0	enumeratio_ball(_csc, 0)	ball not finite	error
 csc-complexinfinity-is-indeterminate-for-the			

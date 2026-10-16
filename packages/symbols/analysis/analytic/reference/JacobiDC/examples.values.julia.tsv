@@ -1,6 +1,6 @@
 id	in	out	verdict
-a-floating-point-argument-evaluates-directly-to	(enumeratio_jacobi(:dc, 0.6, 0.4))	1.124780426911555133901068265293296227442125366400480153336181835070661778057539	
-m-less-than-0-via-the-imaginary-modulus	(enumeratio_jacobi(:dc, 0.3, -0.7))	1.079939770083225143416085657643237162640368658453530080231452230971787349954922	
+a-floating-point-argument-evaluates-directly-to	(enumeratio_jacobi(:dc, enumeratio_decimal("0.6"), enumeratio_decimal("0.4")))	1.12478042691155514927345735592126039887608845121182621131056584756022096753309	
+m-less-than-0-via-the-imaginary-modulus	(enumeratio_jacobi(:dc, enumeratio_decimal("0.3"), enumeratio_decimal("-0.7")))	1.079939770083225151718245711638467939467580392565182633479669351918017075985492	
 d-jacobidc-u-m-m			
 series-jacobidc-u-m-u-0-5			
 series-jacobidc-z-m-m-0-2			

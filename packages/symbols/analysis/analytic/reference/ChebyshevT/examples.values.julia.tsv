@@ -2,13 +2,13 @@ id	in	out	verdict
 the-cubic			
 the-quartic			
 at-an-integer	enumeratio_chebyshev_t(5, 2)	362.0	
-at-a-real	enumeratio_chebyshev_t(5, 0.7)	-0.6708799999999997694288822458474642834990270543234179817349834763744706010066577	
-at-t0-0-7	(enumeratio_chebyshev_t(0, 0.7))	1.0	
-at-t1-0-7	(enumeratio_chebyshev_t(1, 0.7))	0.6999999999999999555910790149937383830547332763671875	
-at-t2-0-7	(enumeratio_chebyshev_t(2, 0.7))	-0.02000000000000012434497875801752858314222072111284794135717358606885163396782445	
-at-t5-0-7	(enumeratio_chebyshev_t(5, 0.7))	-0.6708799999999997694288822458474642834990270543234179817349834763744706010066577	
+at-a-real	enumeratio_chebyshev_t(5, enumeratio_decimal("0.7"))	-0.6708799999999999999999999999999999999999999999999999999999999999999999999999805	
+at-t0-0-7	(enumeratio_chebyshev_t(0, enumeratio_decimal("0.7")))	1.0	
+at-t1-0-7	(enumeratio_chebyshev_t(1, enumeratio_decimal("0.7")))	0.6999999999999999999999999999999999999999999999999999999999999999999999999999983	
+at-t2-0-7	(enumeratio_chebyshev_t(2, enumeratio_decimal("0.7")))	-0.02000000000000000000000000000000000000000000000000000000000000000000000000001105	
+at-t5-0-7	(enumeratio_chebyshev_t(5, enumeratio_decimal("0.7")))	-0.6708799999999999999999999999999999999999999999999999999999999999999999999999805	
 at-t5-2	(enumeratio_chebyshev_t(5, 2))	362.0	
-at-t-5-0-7	(enumeratio_chebyshev_t(-5, 0.7))	DomainError with -5: Index must be non-negative	error
+at-t-5-0-7	(enumeratio_chebyshev_t(-5, enumeratio_decimal("0.7")))	DomainError with -5: Index must be non-negative	error
 at-t4-2-3i	(enumeratio_chebyshev_t(4, enumeratio_complex(2, 3)))	complex argument	error
 chebyshevt-2-3	enumeratio_chebyshev_t(2, 3)	17.0	
 chebyshevt-10-x			

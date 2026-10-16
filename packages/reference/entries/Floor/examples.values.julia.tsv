@@ -1,11 +1,11 @@
 id	in	out	verdict
 floor-7-over-2	enumeratio_floor((7 // 2))	3	
-floor-3p7	enumeratio_floor(3.7)	3	
+floor-3p7	enumeratio_floor(enumeratio_decimal("3.7"))	3	
 integers-pass-through-unchanged	enumeratio_floor(5)	5	
-threads-element-wise-over-a-list	Any[enumeratio_floor(1.2), enumeratio_floor(-1.2), enumeratio_floor(3.7)]	[1, -2, 3]	
-floor-2p4	enumeratio_floor(2.4)	2	
-floor-2p6	enumeratio_floor(2.6)	2	
-floor-2p7	enumeratio_floor(2.7)	2	
+threads-element-wise-over-a-list	Any[enumeratio_floor(enumeratio_decimal("1.2")), enumeratio_floor(enumeratio_decimal("-1.2")), enumeratio_floor(enumeratio_decimal("3.7"))]	[1, -2, 3]	
+floor-2p4	enumeratio_floor(enumeratio_decimal("2.4"))	2	
+floor-2p6	enumeratio_floor(enumeratio_decimal("2.6"))	2	
+floor-2p7	enumeratio_floor(enumeratio_decimal("2.7"))	2	
 floor-add-x-1-a-free-variable-is-untouched			
 stays-symbolic			
 exact-radicals-are-decided-numerically	enumeratio_floor(enumeratio_ball(sqrt, 50))	7	
@@ -15,7 +15,7 @@ and-at-its-negative-lfloor-pi-rfloor-4	enumeratio_floor((-(const_pi(RR))))	-4
 a-second-argument-floors-to-a-multiple-of-it-the			
 the-step-needn-t-be-an-integer-3-5-cdot-lfloor			
 nor-rational-2-pi-e-approx-3-57-floors-to-the			
-floors-the-real-and-imaginary-parts-separately	enumeratio_floor(enumeratio_complex(5.37, -1.3))	(5.0-2.0j)	
+floors-the-real-and-imaginary-parts-separately	enumeratio_floor(enumeratio_complex(enumeratio_decimal("5.37"), enumeratio_decimal("-1.3")))	(5.0-2.0j)	
 floor-list-list-1-over-2-neg-1-list-0-neg-1-over	Any[Any[enumeratio_floor((1 // 2)), enumeratio_floor(-1)], Any[enumeratio_floor(0), enumeratio_floor((-1 // 2))]]	[[0, -1], [0, -1]]	
 matrixfunction-floor-list-list-1-over-2-neg-1			
 floor-0	enumeratio_floor(0)	0	
@@ -45,5 +45,5 @@ floor-1-over-2-plus-sqrt-10-over-2	enumeratio_floor(((1 // 2) + enumeratio_div(e
 floor-sqrt-2-plus-sqrt-3	enumeratio_floor((enumeratio_ball(sqrt, 2) + enumeratio_ball(sqrt, 3)))	3	
 floor-1-plus-floor-5-over-6-plus-floor-7-over-6	(enumeratio_floor(1) + enumeratio_floor((5 // 6)) + enumeratio_floor((7 // 6)))	2	
 a-zero-divisor-inside-floor	enumeratio_floor(enumeratio_div(17, 0))	DivideError: integer division error	error
-rounds-toward-infty-not-toward-0-floor-3-2-is-4	enumeratio_floor(-3.2)	-4	
+rounds-toward-infty-not-toward-0-floor-3-2-is-4	enumeratio_floor(enumeratio_decimal("-3.2"))	-4	
 infinities-pass-through-unchanged	enumeratio_floor((-Inf))	InexactError: BigInt(-Inf)	error

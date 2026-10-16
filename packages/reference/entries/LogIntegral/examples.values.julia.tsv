@@ -1,8 +1,8 @@
 id	in	out	verdict
 li-at-0	enumeratio_ball(log_integral, 0)	0.0	
 li-2	(enumeratio_ball(log_integral, 2))	1.045163780117492784844588889194613136522615578151201575832909144075013205210352	
-n-logintegral-2-50	enumeratio_n(enumeratio_ball(log_integral, 2), 50)	1.045163780117492784844588889194613136522615578151200000000000000000000000000007	
-logintegral-1	enumeratio_ball(log_integral, 1)	(NaN+NaNj)	disagree
+n-logintegral-2-50	enumeratio_nshow(enumeratio_ball(log_integral, 2), 50)	1.0451637801174927848445888891946131365226155781512e+00	
+logintegral-1	enumeratio_ball(log_integral, 1)	ball not finite	error
 logintegral-positiveinfinity	enumeratio_ball(log_integral, Inf)	non-finite argument	error
 d-logintegral-x-x			
 series-logintegral-x-x-2-3			

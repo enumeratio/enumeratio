@@ -5,7 +5,7 @@ max-neg-1-neg-5	enumeratio_max(-1, -5)	-1
 a-single-argument-is-returned-unchanged	enumeratio_max(3)	3	
 max-9-2	enumeratio_max(9, 2)	9	
 max-list-4-1-7-2	enumeratio_max(Any[4, 1, 7, 2])	7	
-max-5p56-neg-4p8-7p3	enumeratio_max(5.56, -4.8, 7.3)	7.3	
+max-5p56-neg-4p8-7p3	enumeratio_max(enumeratio_decimal("5.56"), enumeratio_decimal("-4.8"), enumeratio_decimal("7.3"))	7.3	
 max-of-a-complex-and-a-real	enumeratio_max(enumeratio_ball(sqrt, -1), (3 // 2))	complex argument	error
 nested-lists-are-flattened-into-the-pool	enumeratio_max(2, 3, Any[Any[(1 // 2), -1], Any[(-5 // 3), (1 // 2)]])	3	
 exact-numbers-are-compared-numerically	enumeratio_max(enumeratio_ball(sqrt, 2), (3 // 2))	1.5	

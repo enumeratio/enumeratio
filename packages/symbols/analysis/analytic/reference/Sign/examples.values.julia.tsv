@@ -5,9 +5,9 @@ zero-is-its-own-sign	enumeratio_sign(0)	0
 sign-neg-1-over-2	enumeratio_sign((-1 // 2))	-1.0	
 the-unit-complex-number-pointing-the-same	enumeratio_sign(enumeratio_complex(3, 4))	(0.5999999999999999999999999999999999999999999999999999999999999999999999999999948+0.7999999999999999999999999999999999999999999999999999999999999999999999999999931j)	
 threads-element-wise-over-a-list	Any[enumeratio_sign(-3), enumeratio_sign(0), enumeratio_sign(7)]	[-1, 0, 1]	
-sign-neg-2p5	enumeratio_sign(-2.5)	-1.0	
-sign-3p14	enumeratio_sign(3.14)	1.0	
-a-complex-number-with-approximate-parts	enumeratio_sign(enumeratio_complex(1.4, 2.3))	(0.5199469468957452220426942766712155410324840496053926104695110804415570082923406+0.8541985556144385672893840254045491174735002133907021499750567526302098837401453j)	
+sign-neg-2p5	enumeratio_sign(enumeratio_decimal("-2.5"))	-1.0	
+sign-3p14	enumeratio_sign(enumeratio_decimal("3.14"))	1.0	
+a-complex-number-with-approximate-parts	enumeratio_sign(enumeratio_complex(enumeratio_decimal("1.4"), enumeratio_decimal("2.3")))	(0.5199469468957452168104134267694111295733219466415658188105202853809175412385307+0.8541985556144385704742506296926039985847431980540009880458547545543645320347308j)	
 an-exact-complex-argument-comes-back-exact-sign	enumeratio_sign(enumeratio_complex(1, 1))	(0.707106781186547524400844362104849039284835937688474036588339868995366239231051+0.707106781186547524400844362104849039284835937688474036588339868995366239231051j)	
 threads-over-a-matrix-entry-by-entry	Any[Any[enumeratio_sign((1 // 2)), enumeratio_sign(-1)], Any[enumeratio_sign((-5 // 3)), enumeratio_sign((1 // 2))]]	[[1.0, -1], [-1.0, 1.0]]	
 exact-numeric-constants	enumeratio_sign(const_pi(RR))	1.0	
@@ -23,8 +23,8 @@ fullsimplify-matrixfunction-sign-list-list-1
 piecewiseexpand-sign-x-neg-2-lt-x-lt-2			
 sign-conjugate-1-plus-2i-eq-conjugate-sign-1	enumeratio_equal(enumeratio_sign(enumeratio_ball(conj, enumeratio_complex(1, 2))), enumeratio_ball(conj, enumeratio_sign(enumeratio_complex(1, 2))))	true	
 d-sign-x-x			
-sign-positiveinfinity-times-i	enumeratio_sign((Inf * enumeratio_complex(0, 1)))	(NaN+NaNj)	disagree
-n-sign-exponentiale-plus-i-times-pi-20	enumeratio_n(enumeratio_sign((const_e(RR) + (enumeratio_complex(0, 1) * const_pi(RR)))), 20)	(0.6543211207366890281900000000000000000000000000000000000000000000000000000000006+0.7562168147812393224700000000000000000000000000000000000000000000000000000000041j)	
+sign-positiveinfinity-times-i	enumeratio_sign((Inf * enumeratio_complex(0, 1)))	ball not finite	error
+n-sign-exponentiale-plus-i-times-pi-20	enumeratio_nshow(enumeratio_sign((const_e(RR) + (enumeratio_complex(0, 1) * const_pi(RR)))), 20)	(6.5432112073668902819e-01+7.5621681478123932247e-01j)	
 tells-you-the-temperature-dropped-but-not-by-how	enumeratio_sign((70 - 95))	-1	
 sign-z-z-z-see-abs	enumeratio_equal(enumeratio_sign(enumeratio_complex(3, 4)), enumeratio_div(enumeratio_complex(3, 4), enumeratio_ball(abs, enumeratio_complex(3, 4))))	true	
 x-cdot-sign-x-x-here-at-x-5	enumeratio_equal((-5 * enumeratio_sign(-5)), enumeratio_ball(abs, -5))	true	
@@ -39,6 +39,6 @@ sign-2	enumeratio_sign(2)	1
 findstat-st000037-1			
 findstat-st000037-2			
 findstat-st000037-3			
-nan-propagates-rather-than-being-treated-as-0	enumeratio_sign(NaN)	NaN	
+nan-propagates-rather-than-being-treated-as-0	enumeratio_sign(NaN)	ball not finite	error
 sign-complexinfinity-is-indeterminate-no			
-unit-circle-check-on-a-float-argument	enumeratio_equal(enumeratio_ball(abs, enumeratio_sign(enumeratio_complex(-0.07244062047889377, -0.9973727269705307))), 1)	true	
+unit-circle-check-on-a-float-argument	enumeratio_equal(enumeratio_ball(abs, enumeratio_sign(enumeratio_complex(enumeratio_decimal("-0.07244062047889377"), enumeratio_decimal("-0.9973727269705307")))), 1)	true	

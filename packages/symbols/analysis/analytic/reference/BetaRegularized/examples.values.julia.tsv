@@ -1,21 +1,21 @@
 id	in	out
 betaregularized-0-2-3	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 0, 2, 3)	0.0
 betaregularized-1-2-3	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 1, 2, 3)	1.000000000000000000000000000000000000000000000000000000000000000000000000000052
-a-floating-point-x-evaluates-directly-to-a	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 0.5, 2, 3)	0.6875
-i-x-1-1-x-the-uniform-distribution-s-own-cdf	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 0.5, 1, 1)	0.5
-non-integer-parameters	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 0.4, 2.5, 3.5)	0.4869041915261173978018393139424595001845863603333759024549149138370056770078324
+a-floating-point-x-evaluates-directly-to-a	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), enumeratio_decimal("0.5"), 2, 3)	0.6875
+i-x-1-1-x-the-uniform-distribution-s-own-cdf	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), enumeratio_decimal("0.5"), 1, 1)	0.5
+non-integer-parameters	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), enumeratio_decimal("0.4"), enumeratio_decimal("2.5"), enumeratio_decimal("3.5"))	0.4869041915261173552540327312627582424339945138607593675003368288627519969853095
 i-1-2-2-3-11-16-exactly	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), (1 // 2), 2, 3)	0.6875
-threads-element-wise-over-a-list-as-wolfram-s	Any[enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 0.5, 1, 1), enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 0.5, 2, 1)]	[0.5, 0.25]
-x-outside-0-1-by-continuation-real-here-as-b-5	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 2, 0.5, 5)	1.182194149796259142357661667894044487554335083322917529921130718476627931214421
+threads-element-wise-over-a-list-as-wolfram-s	Any[enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), enumeratio_decimal("0.5"), 1, 1), enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), enumeratio_decimal("0.5"), 2, 1)]	[0.5, 0.25]
+x-outside-0-1-by-continuation-real-here-as-b-5	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 2, enumeratio_decimal("0.5"), 5)	1.182194149796259142357661667894044487554335083322917529921130718476627931214421
 four-arguments-the-generalized-i-z-1-a-b-i-z-0-a		
 interval-arithmetic-i-x-2-1-x-2		
 uncertainty-propagation		
-to-30-significant-digits-every-one-correctly	enumeratio_n(enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), (1 // 3), 2, 3), 30)	0.4074074074074074074074074074070000000000000000000000000000000000000000000000018
-binomial-cdf-via-the-regularized-beta-for-x-sim	enumeratio_equal(enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 0.7, 3, 2), (enumeratio_pow(0.7, 4) + (4 * 0.3 * enumeratio_pow(0.7, 3))))	true
-symmetry-i-x-a-b-i-1-x-b-a-1	enumeratio_equal((enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 0.3, 2, 3) + enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 0.7, 3, 2)), 1)	true
-i-1-2-a-a-1-2-for-any-a-here-at-a-10	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 0.5, 10, 10)	0.5
-i-x-a-1-x-a-here-0-2111-5	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 0.2111111111111111, 5, 1)	0.0004193295398736642388234612443828420185307507599649210577539940915746892349429797
-the-arcsine-distribution-s-median-i-1-2-1-2-1-2	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), 0.5, (1 // 2), (1 // 2))	0.499999999999999999999999999999999999999999999999999999999999999999999999999987
+to-30-significant-digits-every-one-correctly	enumeratio_nshow(enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), (1 // 3), 2, 3), 30)	4.07407407407407407407407407407e-01
+binomial-cdf-via-the-regularized-beta-for-x-sim	enumeratio_equal(enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), enumeratio_decimal("0.7"), 3, 2), (enumeratio_pow(enumeratio_decimal("0.7"), 4) + (4 * enumeratio_decimal("0.3") * enumeratio_pow(enumeratio_decimal("0.7"), 3))))	true
+symmetry-i-x-a-b-i-1-x-b-a-1	enumeratio_equal((enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), enumeratio_decimal("0.3"), 2, 3) + enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), enumeratio_decimal("0.7"), 3, 2)), 1)	true
+i-1-2-a-a-1-2-for-any-a-here-at-a-10	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), enumeratio_decimal("0.5"), 10, 10)	0.5
+i-x-a-1-x-a-here-0-2111-5	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), enumeratio_decimal("0.2111111111111111"), 5, 1)	0.000419329539873664134599231147013508880760046740841739910921438127672780233365505
+the-arcsine-distribution-s-median-i-1-2-1-2-1-2	enumeratio_ball((z, a, b) -> _betainc(z, a, b) / _beta(a, b), enumeratio_decimal("0.5"), (1 // 2), (1 // 2))	0.499999999999999999999999999999999999999999999999999999999999999999999999999987
 i-x-1-1-x-symbolically		
 i-x-a-1-x-a-symbolically		
 i-x-1-b-1-1-x-b		

@@ -212,11 +212,26 @@ test("Julia reads a constant as a ball, a list as Any, and a decimal past a doub
   });
   // A mixed list keeps each element's type, where `[1, true]` would promote.
   expect(emit(["List", 1, "True"], "julia")).toEqual({ ok: true, source: "Any[1, true]" });
+  // Every decimal is read exactly, as a rational: 0.1 is no double, and 1e-400 does not underflow.
   expect(emit(["Exp", { num: "1.0e1000" }], "julia")).toEqual({
     ok: true,
-    source: 'enumeratio_ball(exp, parse(BigFloat, "1.0e1000"))',
+    source: 'enumeratio_ball(exp, enumeratio_decimal("1.0e1000"))',
   });
-  expect(emit(["Exp", { num: "1.5" }], "julia")).toEqual({ ok: true, source: "enumeratio_ball(exp, 1.5)" });
+  expect(emit(["Exp", 0.1], "julia")).toEqual({ ok: true, source: 'enumeratio_ball(exp, enumeratio_decimal("0.1"))' });
+  expect(emit(["Exp", { num: "1e-400" }], "julia")).toEqual({
+    ok: true,
+    source: 'enumeratio_ball(exp, enumeratio_decimal("1e-400"))',
+  });
+  // N(x, d) as the answer writes its digits out; below another call it is the rounded number.
+  expect(emit(["N", "Pi", 5], "julia")).toEqual({ ok: true, source: "enumeratio_nshow(const_pi(RR), 5)" });
+  expect(emit(["List", ["N", "Pi", 5], ["N", "ExponentialE", 5]], "julia")).toEqual({
+    ok: true,
+    source: "Any[enumeratio_nshow(const_pi(RR), 5), enumeratio_nshow(const_e(RR), 5)]",
+  });
+  expect(emit(["Equal", ["N", "Pi", 1], "Pi"], "julia")).toEqual({
+    ok: true,
+    source: "enumeratio_equal(enumeratio_n(const_pi(RR), 1), const_pi(RR))",
+  });
   // An infinity is Julia's own, which the ball helpers decline rather than guess at.
   expect(emit(["Gamma", "PositiveInfinity"], "julia")).toEqual({ ok: true, source: "enumeratio_ball(gamma, Inf)" });
   // A threaded special function builds a list of ball calls.

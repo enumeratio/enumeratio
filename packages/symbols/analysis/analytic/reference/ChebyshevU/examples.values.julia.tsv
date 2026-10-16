@@ -1,13 +1,13 @@
 id	in	out	verdict
 the-quadratic			
 the-cubic			
-at-a-real	enumeratio_chebyshev_u(5, 0.7)	-1.397759999999999883470991335343485582335304601542334320102387484262756792134686	
-at-u0-0-7	(enumeratio_chebyshev_u(0, 0.7))	1.0	
-at-u1-0-7	(enumeratio_chebyshev_u(1, 0.7))	1.399999999999999911182158029987476766109466552734375	
-at-u5-0-7	(enumeratio_chebyshev_u(5, 0.7))	-1.397759999999999883470991335343485582335304601542334320102387484262756792134686	
-at-u-1-0-7	(enumeratio_chebyshev_u(-1, 0.7))	DomainError with -1: Index must be non-negative	error
-at-u-2-0-7	(enumeratio_chebyshev_u(-2, 0.7))	DomainError with -2: Index must be non-negative	error
-at-u-5-0-7	(enumeratio_chebyshev_u(-5, 0.7))	DomainError with -5: Index must be non-negative	error
+at-a-real	enumeratio_chebyshev_u(5, enumeratio_decimal("0.7"))	-1.397759999999999999999999999999999999999999999999999999999999999999999999999975	
+at-u0-0-7	(enumeratio_chebyshev_u(0, enumeratio_decimal("0.7")))	1.0	
+at-u1-0-7	(enumeratio_chebyshev_u(1, enumeratio_decimal("0.7")))	1.399999999999999999999999999999999999999999999999999999999999999999999999999997	
+at-u5-0-7	(enumeratio_chebyshev_u(5, enumeratio_decimal("0.7")))	-1.397759999999999999999999999999999999999999999999999999999999999999999999999975	
+at-u-1-0-7	(enumeratio_chebyshev_u(-1, enumeratio_decimal("0.7")))	DomainError with -1: Index must be non-negative	error
+at-u-2-0-7	(enumeratio_chebyshev_u(-2, enumeratio_decimal("0.7")))	DomainError with -2: Index must be non-negative	error
+at-u-5-0-7	(enumeratio_chebyshev_u(-5, enumeratio_decimal("0.7")))	DomainError with -5: Index must be non-negative	error
 at-u4-2-3i	(enumeratio_chebyshev_u(4, enumeratio_complex(2, 3)))	complex argument	error
 chebyshevu-2-3	enumeratio_chebyshev_u(2, 3)	35.0	
 chebyshevu-10-x			

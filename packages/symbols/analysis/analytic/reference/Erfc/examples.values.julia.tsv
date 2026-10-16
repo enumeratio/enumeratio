@@ -2,17 +2,17 @@ id	in	out	verdict
 erfc-0	enumeratio_ball(erfc, 0)	1.0	
 erfc-infinity			
 erfc-negativeinfinity	enumeratio_ball(erfc, (-Inf))	non-finite argument	error
-a-floating-point-argument-evaluates-directly-to	enumeratio_ball(erfc, 0.5)	0.4795001221869534623172533461080354712635484242420362999411942743528064782831467	
-a-machine-precision-argument	enumeratio_ball(erfc, 1.5)	0.03389485352468927293302373835405214131858952074236321955003215355786714557624914	
+a-floating-point-argument-evaluates-directly-to	enumeratio_ball(erfc, enumeratio_decimal("0.5"))	0.4795001221869534623172533461080354712635484242420362999411942743528064782831467	
+a-machine-precision-argument	enumeratio_ball(erfc, enumeratio_decimal("1.5"))	0.03389485352468927293302373835405214131858952074236321955003215355786714557624914	
 series-erfc-x-x-0-10			
 normal-series-erfc-x-x-positiveinfinity-5			
 threads-element-wise-over-a-list-as-wolfram-s	Any[enumeratio_ball(erfc, 0), enumeratio_ball(erfc, 1)]	[1.0, 0.1572992070502851306587793649173907407039330020336970915400621021652827459039891]	
-complex-arguments-should-evaluate-as-they-do-for	enumeratio_ball(erfc, enumeratio_complex(1.5, -1))	(-0.07839920749893345033933270405821236961216123668043066653658529004532857203760918-0.02796371123865584944846589620590720850669453672086516245384023903560535666840465j)	
+complex-arguments-should-evaluate-as-they-do-for	enumeratio_ball(erfc, enumeratio_complex(enumeratio_decimal("1.5"), -1))	(-0.07839920749893345033933270405821236961216123668043066653658529004532857203760918-0.02796371123865584944846589620590720850669453672086516245384023903560535666840465j)	
 listable-threads-over-its-limits-at-pm-infty	Any[enumeratio_ball(erfc, Inf), enumeratio_ball(erfc, (-Inf))]	non-finite argument	error
 interval-arithmetic-erfc-is-decreasing-so-the			
 uncertainty-propagation			
-to-30-significant-digits-every-one-correctly	enumeratio_n(enumeratio_ball(erfc, 2), 30)	0.004677734981047265837930743632749999999999999999999999999999999999999999999999987	
-n-erfc-3-over-2-50	enumeratio_n(enumeratio_ball(erfc, (3 // 2)), 50)	0.03389485352468927293302373835405214131858952074236299999999999999999999999999994	
+to-30-significant-digits-every-one-correctly	enumeratio_nshow(enumeratio_ball(erfc, 2), 30)	4.67773498104726583793074363275e-03	
+n-erfc-3-over-2-50	enumeratio_nshow(enumeratio_ball(erfc, (3 // 2)), 50)	3.3894853524689272933023738354052141318589520742363e-02	
 functionexpand-matrixfunction-erfc-list-list-0-1			
 fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2			
 series-erfc-x-x-0-7			
@@ -22,7 +22,7 @@ definition-erf-z-erfc-z-1-see-erf	enumeratio_equal((enumeratio_ball(erf, 2) + en
 erfc-x-2-erfc-x-applied-symbolically			
 frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2			
 an-exact-integer-argument-is-left-unevaluated	enumeratio_ball(erfc, 1)	0.1572992070502851306587793649173907407039330020336970915400621021652827459039891	
-far-in-the-tail-erfc-keeps-full-relative	enumeratio_ball(erfc, 9.5)	3.769214485654879941677087321047321969620893083489005913193371528653365055154255e-41	
-whereas-1-erf-9-5-cancels-to-exactly-0-in	(1 - enumeratio_ball(erf, 9.5))	3.769214485654879941677087321047321970353429664293302593626817329878091278355173e-41	
+far-in-the-tail-erfc-keeps-full-relative	enumeratio_ball(erfc, enumeratio_decimal("9.5"))	3.769214485654879941677087321047321969620893083489005913193371528653365055154255e-41	
+whereas-1-erf-9-5-cancels-to-exactly-0-in	(1 - enumeratio_ball(erf, enumeratio_decimal("9.5")))	3.769214485654879941677087321047321970353429664293302593626817329878091278355173e-41	
 erfc-complexinfinity-is-indeterminate-inheriting			
-the-gaussian-tail-shrinks-fast-only-about-7	enumeratio_ball(erfc, 3.5)	7.430983723414127455236837560956357206600921727974625911095699435000395905293932e-7	
+the-gaussian-tail-shrinks-fast-only-about-7	enumeratio_ball(erfc, enumeratio_decimal("3.5"))	7.430983723414127455236837560956357206600921727974625911095699435000395905293932e-7	

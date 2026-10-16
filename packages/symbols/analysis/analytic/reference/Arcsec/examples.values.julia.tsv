@@ -4,12 +4,12 @@ arcsec-2	enumeratio_ball(_asec, 2)	1.0471975511965977461542144610931676280657231
 arcsec-sqrt-2-pi-4	enumeratio_ball(_asec, enumeratio_ball(sqrt, 2))	0.7853981633974483096156608458198757210492923498437764552437361480769541015715495	
 arcsec-neg-1	enumeratio_ball(_asec, -1)	3.141592653589793238462643383279502884197169399375105820974944592307816406286198	
 arcsec-2-2-pi-3	enumeratio_ball(_asec, -2)	2.094395102393195492308428922186335256131446266250070547316629728205210937524121	
-inside-1-1-the-value-is-purely-imaginary	enumeratio_ball(_asec, 0.5)	(0.0+1.316957896924816708625046347307968444026981971467516479768472256920460185416428j)	
+inside-1-1-the-value-is-purely-imaginary	enumeratio_ball(_asec, enumeratio_decimal("0.5"))	(0.0+1.316957896924816708625046347307968444026981971467516479768472256920460185416428j)	
 arcsec-positiveinfinity	enumeratio_ball(_asec, Inf)	non-finite argument	error
-a-pole-arcsec-0-is-complex-infinity	enumeratio_ball(_asec, 0)	(NaN+NaNj)	disagree
+a-pole-arcsec-0-is-complex-infinity	enumeratio_ball(_asec, 0)	ball not finite	error
 derivative-for-real-x-1			
-n-arcsec-5-50	enumeratio_n(enumeratio_ball(_asec, 5), 50)	1.369438406004565827776196139422128031858546618285299999999999999999999999999992	
-arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	Any[Any[enumeratio_ball(_asec, enumeratio_ball(sqrt, 2)), enumeratio_ball(_asec, (-(enumeratio_ball(sqrt, 2))))], Any[enumeratio_ball(_asec, 0), enumeratio_ball(_asec, (-(enumeratio_ball(sqrt, 2))))]]	[[0.7853981633974483096156608458198757210492923498437764552437361480769541015715495, 2.356194490192344928846982537459627163147877049531329365731208444230862304714666], [(NaN+NaNj), 2.356194490192344928846982537459627163147877049531329365731208444230862304714666]]	disagree
+n-arcsec-5-50	enumeratio_nshow(enumeratio_ball(_asec, 5), 50)	1.3694384060045658277761961394221280318585466182853e+00	
+arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	Any[Any[enumeratio_ball(_asec, enumeratio_ball(sqrt, 2)), enumeratio_ball(_asec, (-(enumeratio_ball(sqrt, 2))))], Any[enumeratio_ball(_asec, 0), enumeratio_ball(_asec, (-(enumeratio_ball(sqrt, 2))))]]	ball not finite	error
 arcsec-2-over-3-times-sqrt-3	enumeratio_ball(_asec, ((2 // 3) * enumeratio_ball(sqrt, 3)))	0.5235987755982988730771072305465838140328615665625176368291574320513027343810215	
 arcsec-complexinfinity			
 matrixfunction-function-arcsec-1-1-list-list			

@@ -4,7 +4,7 @@ iseven-3	is_even(ZZ(3))	false
 zero-is-even	is_even(ZZ(0))	true	
 negative-integers-count-too	is_even(ZZ(-4))	true	
 iseven-8	is_even(ZZ(8))	true	
-a-non-integer-is-not-even	is_even(ZZ(2.5))	InexactError: convert(ZZRingElem, 2.5)	error
+a-non-integer-is-not-even	is_even(ZZ(enumeratio_decimal("2.5")))	AssertionError: denominator(x) == 1	error
 big-integers	is_even(ZZ(enumeratio_pow(2, 100)))	true	
 iseven-10-factorial	is_even(ZZ(factorial(ZZ(10))))	true	
 threads-element-wise-over-a-list	Any[is_even(ZZ(1)), is_even(ZZ(2)), is_even(ZZ(3))]	[false, true, false]	

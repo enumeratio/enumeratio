@@ -4,13 +4,13 @@ stays-symbolic-when-the-radicand-isn-t-a-perfect	enumeratio_ball(sqrt, 2)	1.4142
 sqrt-4-over-9	enumeratio_ball(sqrt, (4 // 9))	0.6666666666666666666666666666666666666666666666666666666666666666666666666666609	
 sqrt-0	enumeratio_ball(sqrt, 0)	0.0	
 a-perfect-square-radicand-evaluates-exactly-even	enumeratio_ball(sqrt, -4)	(0.0+2.0j)	
-an-approximate-number-gives-an-approximate-root	enumeratio_ball(sqrt, 3.5)	1.870828693386970692791874366158274650878009903889363473151872733660017578153464	
+an-approximate-number-gives-an-approximate-root	enumeratio_ball(sqrt, enumeratio_decimal("3.5"))	1.870828693386970692791874366158274650878009903889363473151872733660017578153464	
 pulls-perfect-square-factors-out-of-the-radical	enumeratio_ball(sqrt, 200)	14.14213562373095048801688724209698078569671875376948073176679737990732478462099	
 sqrt-neg-25	enumeratio_ball(sqrt, -25)	(0.0+5.0j)	
 sqrt-8	enumeratio_ball(sqrt, 8)	2.828427124746190097603377448419396157139343750753896146353359475981464956924204	
 rationalizes-the-denominator	enumeratio_ball(sqrt, (1 // 2))	0.707106781186547524400844362104849039284835937688474036588339868995366239231051	
 sqrt-12-over-5	enumeratio_ball(sqrt, (12 // 5))	1.549193338482966754071706159912959844333168682116636330635029506445393236774781	
-sqrt-neg-2p5	enumeratio_ball(sqrt, -2.5)	(0.0+1.581138830084189665999446772216359266859777569662608413428752426396297219319615j)	
+sqrt-neg-2p5	enumeratio_ball(sqrt, enumeratio_decimal("-2.5"))	(0.0+1.581138830084189665999446772216359266859777569662608413428752426396297219319615j)	
 an-exact-complex-square-2-i-2-3-4i	enumeratio_ball(sqrt, enumeratio_complex(3, 4))	(2.0+1.0j)	
 sqrt-positiveinfinity	enumeratio_ball(sqrt, Inf)	non-finite argument	error
 sqrt-negativeinfinity	enumeratio_ball(sqrt, (-Inf))	non-finite argument	error
@@ -18,8 +18,8 @@ threads-element-wise-over-a-list	Any[enumeratio_ball(sqrt, 1), enumeratio_ball(s
 threads-over-a-matrix-entry-by-entry-this-is-not	Any[Any[enumeratio_ball(sqrt, (1 // 2)), enumeratio_ball(sqrt, -1)], Any[enumeratio_ball(sqrt, 0), enumeratio_ball(sqrt, (1 // 2))]]	[[0.707106781186547524400844362104849039284835937688474036588339868995366239231051, (0.0+1.0j)], [0.0, 0.707106781186547524400844362104849039284835937688474036588339868995366239231051]]	
 interval-arithmetic-sqrt-is-increasing-so-sqrt-1			
 uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1			
-to-45-significant-digits-every-one-correctly	enumeratio_n(enumeratio_ball(sqrt, 2), 45)	1.414213562373095048801688724209698078569671879999999999999999999999999999999996	
-an-approximate-negative-radicand-stays-complex	enumeratio_ball(sqrt, -2.875)	(0.0+1.695582495781317034766139081656492276298937080980822058187554895520182065996773j)	
+to-45-significant-digits-every-one-correctly	enumeratio_nshow(enumeratio_ball(sqrt, 2), 45)	1.41421356237309504880168872420969807856967188e+00	
+an-approximate-negative-radicand-stays-complex	enumeratio_ball(sqrt, enumeratio_decimal("-2.875"))	(0.0+1.695582495781317034766139081656492276298937080980822058187554895520182065996773j)	
 sqrt-neg-4-over-9	enumeratio_ball(sqrt, (-4 // 9))	(0.0+0.6666666666666666666666666666666666666666666666666666666666666666666666666666609j)	
 sqrt-neg-1-half	enumeratio_ball(sqrt, (-1 // 2))	(0.0+0.707106781186547524400844362104849039284835937688474036588339868995366239231051j)	
 sqrt-neg-1	enumeratio_ball(sqrt, -1)	(0.0+1.0j)	

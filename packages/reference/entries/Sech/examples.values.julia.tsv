@@ -1,6 +1,6 @@
 id	in	out	verdict
 series-sech-x-x-0-10			
-n-sech-9-over-5-50	enumeratio_n(enumeratio_ball(_sech, (9 // 5)), 50)	0.3218048695065878683502208855416080167440961125987300000000000000000000000000007	
+n-sech-9-over-5-50	enumeratio_nshow(enumeratio_ball(_sech, (9 // 5)), 50)	3.2180486950658786835022088554160801674409611259873e-01	
 sech-list-list-1-over-3-times-i-times-pi-neg-1	Any[Any[enumeratio_ball(_sech, (enumeratio_complex(0, (1 // 3)) * const_pi(RR))), enumeratio_ball(_sech, (enumeratio_complex(0, (-1 // 3)) * const_pi(RR)))], Any[enumeratio_ball(_sech, 0), enumeratio_ball(_sech, (enumeratio_complex(0, (-1 // 6)) * const_pi(RR)))]]	[[1.999999999999999999999999999999999999999999999999999999999999999999999999999931, 1.999999999999999999999999999999999999999999999999999999999999999999999999999931], [1.0, 1.154700538379251529018297561003914911295203502540253752037204652967955344605865]]	
 sech-positiveinfinity	enumeratio_ball(_sech, Inf)	non-finite argument	error
 sech-0	enumeratio_ball(_sech, 0)	1.0	

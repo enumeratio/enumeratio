@@ -3,8 +3,8 @@ multinomial-1-2-1	enumeratio_multinomial(1, 2, 1)	12
 multinomial-2-3-4	enumeratio_multinomial(2, 3, 4)	1260	
 threads-element-wise-over-a-list-as-wolfram-s	enumeratio_multinomial(Any[2, 3, 5], 3)	MethodError: no method matching ComplexFieldElem(::Vector{Any}, ::Int64) The type `ComplexFieldElem`	error
 zero-parts-contribute-0-1	enumeratio_multinomial(0, 0, 1)	1	
-real-arguments-evaluate-via-the-gamma-function	enumeratio_multinomial(2, 0.2, 5)	34.31780352000000088810580223253055918528543202758351032281665993859293038528486	
-complex-arguments-evaluate-via-the-gamma	enumeratio_multinomial(enumeratio_complex(1, 1), 0.2, 4)	(2.894060302449624018574771326768120955737251576677885057893897612299268987478978+9.104625875691286587925649455984175572284016831663079766140436789930436817289721j)	
+real-arguments-evaluate-via-the-gamma-function	enumeratio_multinomial(2, enumeratio_decimal("0.2"), 5)	34.31780351999999999999999999999999999999999999999999999999999999999999999999699	
+complex-arguments-evaluate-via-the-gamma	enumeratio_multinomial(enumeratio_complex(1, 1), enumeratio_decimal("0.2"), 4)	(2.894060302449623970353812798456403178098363412218561519477243208903583175970492+9.104625875691286375563278787165696118113160642194084762588261826609272077097192j)	
 an-around-argument-should-propagate-its			
 the-number-of-distinct-letter-arrangements-of	enumeratio_multinomial(1, 4, 4, 2)	34650	
 the-coefficient-of-a-2-b-3-c-in-a-b-c-6	enumeratio_multinomial(2, 3, 1)	60	

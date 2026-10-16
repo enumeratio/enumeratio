@@ -8,7 +8,7 @@ stays-symbolic
 neg-1-plus-2i	(-(enumeratio_complex(1, 2)))	(-1.0-2.0j)
 threads-over-a-matrix-entry-by-entry	Any[Any[(-(1)), (-(-2))], Any[(-(3)), (-(4))]]	[[-1, 2], [-3, -4]]
 folds-into-a-numeric-coefficient		
-recording-a-42-50-charge-as-a-negative-balance	(-(42.5))	-42.5
+recording-a-42-50-charge-as-a-negative-balance	(-(enumeratio_decimal("42.5")))	-42.5
 double-negation-cancels-x-x		
 distributes-over-a-sum-a-b-a-b		
 a-b-b-a		

@@ -5,7 +5,7 @@ min-neg-1-neg-5	enumeratio_min(-1, -5)	-5
 a-single-argument-is-returned-unchanged	enumeratio_min(3)	3	
 min-9-2	enumeratio_min(9, 2)	2	
 min-list-4-1-7-2	enumeratio_min(Any[4, 1, 7, 2])	1	
-min-5p56-neg-4p8-7p3	enumeratio_min(5.56, -4.8, 7.3)	-4.8	
+min-5p56-neg-4p8-7p3	enumeratio_min(enumeratio_decimal("5.56"), enumeratio_decimal("-4.8"), enumeratio_decimal("7.3"))	-4.8	
 min-min-folds-into-a-normal-call	enumeratio_min(enumeratio_min(), 5)	ArgumentError: reducing over an empty collection is not allowed; consider supplying `init` to the re	error
 nested-lists-are-flattened-into-the-pool	enumeratio_min(2, 3, Any[Any[(1 // 2), -1], Any[(-5 // 3), (1 // 2)]])	-1.6666666666666667	
 exact-numbers-are-compared-numerically	enumeratio_min(enumeratio_ball(sqrt, 2), (3 // 2))	1.414213562373095048801688724209698078569671875376948073176679737990732478462102	

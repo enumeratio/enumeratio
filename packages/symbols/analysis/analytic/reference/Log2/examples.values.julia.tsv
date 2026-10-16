@@ -3,22 +3,22 @@ log2-8	enumeratio_ball(_log2, 8)	3.0
 log2-1	enumeratio_ball(_log2, 1)	0.0	
 log2-1-024	enumeratio_ball(_log2, 1024)	10.0	
 log2-2-pow-10	enumeratio_ball(_log2, enumeratio_pow(2, 10))	10.0	
-a-machine-precision-argument-evaluates	enumeratio_ball(_log2, 1.4142)	0.4999861644218741560739731205690091608678009755688936229557686585844944283130911	
+a-machine-precision-argument-evaluates	enumeratio_ball(_log2, enumeratio_decimal("1.4142"))	0.4999861644218742564670311385842522543088332966288635698455156909774936196938549	
 series-log-x-plus-1-2-x-0-5			
 an-exact-negative-power-of-2-folds-too-log-2	enumeratio_ball(_log2, (1 // 8))	-3.0	
 a-symbolic-argument-becomes-the-two-argument-log			
 an-integer-power-is-pulled-out-2-log-2-3	enumeratio_ball(_log2, 9)	3.169925001442312362907477887895633017519628815384962120911505309082196455588664	
 n-log2-9	(enumeratio_ball(_log2, 9))	3.169925001442312362907477887895633017519628815384962120911505309082196455588664	
-log2-0	enumeratio_ball(_log2, 0)	(NaN+NaNj)	disagree
+log2-0	enumeratio_ball(_log2, 0)	ball not finite	error
 as-with-ln-the-logarithm-of-complex-infinity-is			
-element-wise-over-a-matrix-including-the-exact	Any[Any[enumeratio_ball(_log2, 2), enumeratio_ball(_log2, 1)], Any[enumeratio_ball(_log2, 0), enumeratio_ball(_log2, (1 // 2))]]	[[1.0, 0.0], [(NaN+NaNj), -1.0]]	disagree
+element-wise-over-a-matrix-including-the-exact	Any[Any[enumeratio_ball(_log2, 2), enumeratio_ball(_log2, 1)], Any[enumeratio_ball(_log2, 0), enumeratio_ball(_log2, (1 // 2))]]	ball not finite	error
 interval-arithmetic-log-2-frac-13-2-log-2-3-1			
 uncertainty-propagation-log-2-frac-15-pm-0-01			
 derivative-frac-1-x-ln-2			
-to-30-significant-digits-every-one-correctly	enumeratio_n(enumeratio_ball(_log2, 3), 30)	1.584962500721156181453738943949999999999999999999999999999999999999999999999998	
-n-log-45-2-100	enumeratio_n(enumeratio_ball(_log_base, 45, 2), 100)	5.491853096329674710777797317385023193384460208409542732966261704898131232197254	
+to-30-significant-digits-every-one-correctly	enumeratio_nshow(enumeratio_ball(_log2, 3), 30)	1.58496250072115618145373894395e+00	
+n-log-45-2-100	enumeratio_nshow(enumeratio_ball(_log_base, 45, 2), 100)	5.491853096329674710777797317385023193384460208409542732966261704898131232197342340894700693195546639e+00	
 n-log-2-plus-i-2	(enumeratio_ball(_log_base, enumeratio_complex(2, 1), 2))	(1.160964047443681173935159714744695087932415696512290306027378197907967388304295+0.6689021062254880981756097310013542867889085264357069829071355097715890489360816j)	
 fullsimplify-matrixfunction-log2-list-list-2-1			
 log-positiveinfinity-2	enumeratio_ball(_log_base, Inf, 2)	non-finite argument	error
-a-float-argument-folds-even-for-a-fractional	enumeratio_ball(_log2, 0.5)	-1.0	
+a-float-argument-folds-even-for-a-fractional	enumeratio_ball(_log2, enumeratio_decimal("0.5"))	-1.0	
 same-as-log-z-2	enumeratio_equal(enumeratio_ball(_log2, 8), enumeratio_ball(_log_base, 8, 2))	true	

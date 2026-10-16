@@ -1,5 +1,5 @@
 id	in	out	verdict
-the-absolute-value-of-a-real-number	enumeratio_ball(abs, -2.5)	2.5	
+the-absolute-value-of-a-real-number	enumeratio_ball(abs, enumeratio_decimal("-2.5"))	2.5	
 realabs-neg-7-over-2	enumeratio_ball(abs, (-7 // 2))	3.5	
 realabs-2	enumeratio_ball(abs, 2)	2.0	
 d-realabs-x-x			

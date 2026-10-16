@@ -9,8 +9,8 @@ catalannumber-0-past-neg-1	Combinatorics.catalannum(-2)	DomainError with -2: n m
 catalannumber-neg-5-is-also-0	Combinatorics.catalannum(-5)	DomainError with -5: n must be nonnegative	error
 threads-element-wise-over-a-list-as-wolfram-s	Any[Combinatorics.catalannum(1), Combinatorics.catalannum(2), Combinatorics.catalannum(3), Combinatorics.catalannum(4)]	[1, 2, 5, 14]	
 half-integer-arguments-evaluate-exactly-through	Combinatorics.catalannum((5 // 2))	MethodError: no method matching catalannum(::Rational{Int64}) The function `catalannum` exists, but 	error
-real-arguments-evaluate-as-frac-gamma-2n-1-gamma	Combinatorics.catalannum(2.3)	MethodError: no method matching catalannum(::Float64) The function `catalannum` exists, but no metho	error
-complex-arguments-evaluate-through-the-same	Combinatorics.catalannum(enumeratio_complex(1.2, 1))	MethodError: no method matching catalannum(::ComplexFieldElem) The function `catalannum` exists, but	error
+real-arguments-evaluate-as-frac-gamma-2n-1-gamma	Combinatorics.catalannum(enumeratio_decimal("2.3"))	MethodError: no method matching catalannum(::Rational{BigInt}) The function `catalannum` exists, but	error
+complex-arguments-evaluate-through-the-same	Combinatorics.catalannum(enumeratio_complex(enumeratio_decimal("1.2"), 1))	MethodError: no method matching catalannum(::ComplexFieldElem) The function `catalannum` exists, but	error
 c-1-2-frac-8-3-pi-by-analytic-continuation	Combinatorics.catalannum((1 // 2))	MethodError: no method matching catalannum(::Rational{Int64}) The function `catalannum` exists, but 	error
 an-interval-argument-should-give-an-enclosing			
 the-5-ways-to-balance-3-pairs-of-parentheses	Combinatorics.catalannum(3)	5	

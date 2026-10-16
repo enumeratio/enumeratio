@@ -1,5 +1,5 @@
 id	in	out	verdict
-n-artanh-1-over-2-50	enumeratio_n(enumeratio_ball(_atanh, (1 // 2)), 50)	0.549306144334054845697622618461262852323745278911369999999999999999999999999999	
+n-artanh-1-over-2-50	enumeratio_nshow(enumeratio_ball(_atanh, (1 // 2)), 50)	5.4930614433405484569762261846126285232374527891137e-01	
 artanh-positiveinfinity	enumeratio_ball(_atanh, Inf)	non-finite argument	error
 artanh-0	enumeratio_ball(_atanh, 0)	0.0	
 d-artanh-x-x			

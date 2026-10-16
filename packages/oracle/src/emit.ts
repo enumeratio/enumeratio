@@ -291,6 +291,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       if (system === "rust") return Number.isSafeInteger(node) ? `n(${node})` : `x(${node})`;
       // Inside an N(x, d) answer past a double's digits `0.1` would be the double, not the decimal.
       if (system === "mpmath" && exact && !Number.isInteger(node)) return `mpf(${JSON.stringify(String(node))})`;
+      if (system === "julia" && (!Number.isInteger(node) || /e/i.test(String(node))))
+        return `enumeratio_decimal(${JSON.stringify(String(node))})`;
       return system === "mathlib4" && node < 0 ? `(${node})` : String(node);
     }
     if (typeof node === "boolean") return node ? "True" : "False";
@@ -360,14 +362,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
           !(Math.abs(Number(value)) > 0 && Number.isFinite(Number(value)))
         )
           return `Float(${JSON.stringify(value)})`;
-        // Julia reads a decimal as a double: past its digits, or its range, it goes through BigFloat.
-        if (
-          system === "julia" &&
-          /[.e]/i.test(value) &&
-          (value.replace(/e.*$/i, "").replace(/\D/g, "").replace(/^0+/, "").length > 15 ||
-            !Number.isFinite(Number(value)))
-        )
-          return `parse(BigFloat, ${JSON.stringify(value)})`;
+        // A decimal is exact in Julia: a rational, which no double rounds or underflows, and which a retry at more bits refines.
+        if (system === "julia" && /[.e]/i.test(value)) return `enumeratio_decimal(${JSON.stringify(value)})`;
         // mpmath reads a string at its own precision: a longer decimal, or one past the double range, would round or overflow as a float.
         if (
           system === "mpmath" &&
@@ -385,6 +381,11 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     }
     const head = node[0] as string;
     const operands = node.slice(1);
+    if (system === "julia" && head === "List" && answers.has(node))
+      for (const entry of operands) answers.add(entry as MathJSON);
+    // Below the answer, Julia's N(x, d) is the rounded number, not the digits written out.
+    if (system === "julia" && head === "N" && operands.length === 2 && !answers.has(node))
+      return `enumeratio_n(${walk(operands[0] as MathJSON)}, ${walk(operands[1] as MathJSON)})`;
     if (system === "mpmath") {
       if (head === "List" && answers.has(node)) for (const entry of operands) answers.add(entry as MathJSON);
       // N(x, d) answers in text (run.ts), which can't be an operand: below the answer it is plain N(x).

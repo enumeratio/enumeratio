@@ -40,6 +40,21 @@ test("mpmath's N(x, d) digits must match, and the value must not disagree: sign 
   expect(verdictOf("mpmath", { num: "0.5000" }, answer("0.5001"), undefined, true, call)).toBe("disagree");
 });
 
+test("Julia's N(x, d) is judged digit for digit too: a 1e-9 agreement does not vouch for 50 digits", () => {
+  const call = ["N", "x", 50];
+  const ours = { num: "0.11111111111111111111111111111111111111111111111111" };
+  const answer = (value: string) => ({ value });
+  expect(
+    verdictOf("julia", ours, answer("1.1111111111111111111111111111111111111111111111111e-01"), undefined, true, call),
+  ).toBe("agree");
+  // Right to 16 digits, wrong after: the tolerant comparison alone would agree.
+  expect(
+    verdictOf("julia", ours, answer("1.1111111111111111999999999999999999999999999999999e-01"), undefined, true, call),
+  ).toBe("disagree");
+  // A tiny value agrees with anything under an absolute tolerance, but not on its digits.
+  expect(verdictOf("julia", { num: "1.5e-30" }, answer("2.5e-30"), undefined, true, ["N", "x", 2])).toBe("disagree");
+});
+
 test("a lone integer answer to N(x, d) is judged by the digits Wolfram displays", () => {
   const e = { value: "2.7182818284590452354`1.", numeric: "2.7182818284590452354`1.", shown: "3." };
   expect(verdictOf("wolfram", 3, e, undefined, true)).toBe("agree");

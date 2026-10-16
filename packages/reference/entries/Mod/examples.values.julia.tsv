@@ -11,7 +11,7 @@ gaussian-mod-a-gaussian-unit-multiple	enumeratio_mod(enumeratio_complex(1000, -1
 a-third-argument-offsets-the-range-the-result			
 with-offset-1-the-residues-run-1-2-3-rather-than			
 rationals-are-reduced-exactly	enumeratio_mod((5 // 2), 2)	0.5	
-3p14-mod-2	enumeratio_mod(3.14, 2)	1.1400000000000001	
+3p14-mod-2	enumeratio_mod(enumeratio_decimal("3.14"), 2)	1.14	
 an-exact-irrational-reduces-exactly-to-2-sqrt-7	enumeratio_mod(enumeratio_ball(sqrt, 28), 3)	2.291502622129181181003231507278520851420518366164900360736668918402137646460527	
 a-symbolic-constant-reduces-exactly-to-pi-2	enumeratio_mod(const_pi(RR), 2)	1.141592653589793238462643383279502884197169399375105820974944592307816406286198	
 a-10-001-digit-dividend	enumeratio_mod(enumeratio_pow(10, 10000), 10007)	6333	
@@ -84,6 +84,6 @@ division-by-a-0-modulus-yields-nan-rather-than	enumeratio_mod(5, 0)	DivideError:
 periodicity-with-a-zero-modulus-on-one-side	enumeratio_equal(enumeratio_mod(35, 13), enumeratio_mod((17 + (3 * 5)), 0))	DivideError: integer division error	error
 rounding-ties-to-even-means-1-and-1-both-appear	Any[enumeratio_mod(enumeratio_complex(1, 2), 2), enumeratio_mod(enumeratio_complex(3, 2), 2)]	complex argument	error
 a-free-symbol-is-untouched			
-an-infinite-dividend-has-no-remainder	enumeratio_mod(Inf, 3)	NaN	
+an-infinite-dividend-has-no-remainder	enumeratio_mod(Inf, 3)	ball not finite	error
 an-infinite-modulus-leaves-the-dividend-whole	enumeratio_mod(5, Inf)	5.0	inconclusive
 mod-with-complexinfinity-stays-unevaluated			

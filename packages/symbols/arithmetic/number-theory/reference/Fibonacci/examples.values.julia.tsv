@@ -5,7 +5,7 @@ fibonacci-10	BigInt(fibonacci(ZZ(10)))	55
 fibonacci-20	BigInt(fibonacci(ZZ(20)))	6765	
 fibonacci-8	BigInt(fibonacci(ZZ(8)))	21	
 exact-at-any-size-f-100-has-21-digits	BigInt(fibonacci(ZZ(100)))	354224848179261915075	
-a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	BigInt(fibonacci(ZZ(1.5)))	InexactError: convert(ZZRingElem, 1.5)	error
+a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	BigInt(fibonacci(ZZ(enumeratio_decimal("1.5"))))	AssertionError: denominator(x) == 1	error
 the-two-argument-fibonacci-polynomial-f-7-x-from			
 the-fibonacci-polynomial-at-a-real-order-and			
 special-value-of-the-fibonacci-polynomial-f-1-0			
@@ -14,7 +14,7 @@ f-3-x-x-2-1-threads-element-wise-over-a-matrix
 threads-element-wise-over-a-list-as-wolfram-s	Any[BigInt(fibonacci(ZZ(1))), BigInt(fibonacci(ZZ(2))), BigInt(fibonacci(ZZ(3))), BigInt(fibonacci(ZZ(4)))]	[1, 1, 2, 3]	
 fibonacci-n-x-symbolic-order-stays-exact			
 fibonacci-half-x-exact-closed-form			
-n-fibonacci-15-over-17-50	enumeratio_n(BigInt(fibonacci(ZZ((15 // 17)))), 50)	AssertionError: denominator(x) == 1	error
+n-fibonacci-15-over-17-50	enumeratio_nshow(BigInt(fibonacci(ZZ((15 // 17)))), 50)	AssertionError: denominator(x) == 1	error
 n-fibonacci-5-8-minus-i			
 functionexpand-fibonacci-n-x			
 functionexpand-fibonacci-1-over-2-x			
