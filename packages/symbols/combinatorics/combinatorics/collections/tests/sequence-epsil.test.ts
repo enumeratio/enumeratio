@@ -247,6 +247,12 @@ for (const head of definitions.keys()) {
         expect([r, full(head).unrank([], BigInt(r))]).toEqual([r, asTerm(x)]);
         const kernel = epsil(head);
         expect([r, kernel.unrank([], BigInt(r))]).toEqual([r, asTerm(x)]);
+        // A member too big to scan for in a second or two is declined, a member never denied.
+        if (definitions.get(head)!.early?.member?.(x as never, []) === "decline") {
+          expect([r, answer(() => kernel.valid(asTerm(x) as never, []))]).toEqual([r, "declined"]);
+          expect([r, answer(() => kernel.rank(asTerm(x) as never, []))]).toEqual([r, "declined"]);
+          continue;
+        }
         expect([r, kernel.valid(asTerm(x) as never, [])]).toEqual([r, true]);
         expect([r, kernel.rank(asTerm(x) as never, [])]).toEqual([r, BigInt(places.get(x)!)]);
         for (const y of DEEP ? [x - 1n, x + 1n, 2n * x, x / 2n] : [x + 1n])

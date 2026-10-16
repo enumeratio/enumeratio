@@ -36,6 +36,9 @@ interface Walk {
   readonly from?: number;
   /** At least how many ranks each bit of a term adds (the reciprocal of its growth's base-2 logarithm, rounded up). */
   readonly perBit: number;
+  /** The bits of the largest member whose membership and rank the scan answers in a second or two (measured):
+   *  the scan takes about as many steps as the member has ranks, each on a number that size. */
+  readonly maxBits: number;
 }
 
 /**
@@ -44,7 +47,7 @@ interface Walk {
  * early or repeat a term; the scan covers `perBit` ranks for each bit of `_x`, and stops at the first
  * term above it once the terms no longer decrease (`from`).
  */
-function walked({ head, seed, next, from = 0, perBit }: Walk): EpsilFamily {
+function walked({ head, seed, next, from = 0, perBit, maxBits }: Walk): EpsilFamily {
   const [window, n] = ["wk_w", "wk_n"];
   const k = seed.length;
   const t = (j: number): MathJSON => at(window, j);
@@ -79,8 +82,7 @@ function walked({ head, seed, next, from = 0, perBit }: Walk): EpsilFamily {
       valid: iff(["GreaterEqual", "_x", 0], ["GreaterEqual", place, 0], "False"),
     },
     early: {
-      // A scan over thousands of digits' worth of ranks.
-      member: (x) => (typeof x === "bigint" && x >= 1n << 20_000n ? "decline" : undefined),
+      member: (x) => (typeof x === "bigint" && x >= 1n << BigInt(maxBits) ? "decline" : undefined),
       unrank: (r) => (r > REACH ? "decline" : undefined),
     },
   };
@@ -105,7 +107,7 @@ const schroder = (r: MathJSON): MathJSON => total(r, (k) => mul(["Binomial", add
  * ./numeric-definitions.ts: its terms are sums, and a sum of binomials of the rank is exact in doubles
  * while the term is.
  */
-const summed = (head: string, term: (r: MathJSON) => MathJSON, repeatsFirst = false): EpsilFamily => ({
+const summed = (head: string, maxBits: number, term: (r: MathJSON) => MathJSON, repeatsFirst = false): EpsilFamily => ({
   ...sequence({
     head,
     term,
@@ -115,7 +117,7 @@ const summed = (head: string, term: (r: MathJSON) => MathJSON, repeatsFirst = fa
   }),
   // A term is a sum of as many binomials as its rank, and the descent tries a few ranks.
   early: {
-    member: (x) => (typeof x === "bigint" && x >= 1n << 1500n ? "decline" : undefined),
+    member: (x) => (typeof x === "bigint" && x >= 1n << BigInt(maxBits) ? "decline" : undefined),
     unrank: (r) => (r > SUMMED_REACH ? "decline" : undefined),
   },
 });
@@ -242,23 +244,30 @@ const stern: EpsilFamily = (() => {
 })();
 
 const families: readonly EpsilFamily[] = [
-  walked({ head: "FibonacciNumbers", seed: [0, 1], perBit: 2, next: (t) => add(t(1), t(2)) }),
-  walked({ head: "LucasNumbers", seed: [2, 1], from: 1, perBit: 2, next: (t) => add(t(1), t(2)) }),
-  walked({ head: "JacobsthalNumbers", seed: [0, 1], perBit: 2, next: (t) => add(t(2), mul(2, t(1))) }),
-  walked({ head: "PellNumbers", seed: [0, 1], perBit: 2, next: (t) => add(mul(2, t(2)), t(1)) }),
-  walked({ head: "TribonacciNumbers", seed: [0, 0, 1], perBit: 2, next: (t) => add(t(1), t(2), t(3)) }),
+  walked({ head: "FibonacciNumbers", seed: [0, 1], perBit: 2, maxBits: 2200, next: (t) => add(t(1), t(2)) }),
+  walked({ head: "LucasNumbers", seed: [2, 1], from: 1, perBit: 2, maxBits: 2200, next: (t) => add(t(1), t(2)) }),
+  walked({ head: "JacobsthalNumbers", seed: [0, 1], perBit: 2, maxBits: 3000, next: (t) => add(t(2), mul(2, t(1))) }),
+  walked({ head: "PellNumbers", seed: [0, 1], perBit: 2, maxBits: 3000, next: (t) => add(mul(2, t(2)), t(1)) }),
+  walked({ head: "TribonacciNumbers", seed: [0, 0, 1], perBit: 2, maxBits: 2600, next: (t) => add(t(1), t(2), t(3)) }),
   // P(n + 3) = P(n + 1) + P(n): the term two back in the recurrence of the OEIS, read off the window.
-  walked({ head: "PadovanSequence", seed: [1, 0, 0], from: 4, perBit: 3, next: (t) => add(t(1), t(2)) }),
-  walked({ head: "PerrinSequence", seed: [3, 0, 2], from: 4, perBit: 3, next: (t) => add(t(1), t(2)) }),
+  walked({ head: "PadovanSequence", seed: [1, 0, 0], from: 4, perBit: 3, maxBits: 1300, next: (t) => add(t(1), t(2)) }),
+  walked({ head: "PerrinSequence", seed: [3, 0, 2], from: 4, perBit: 3, maxBits: 1300, next: (t) => add(t(1), t(2)) }),
   // n! and (2n − 1)!! as the terms 1!, 2!, … and 1!!, 3!!, …: each the one before times the next factor.
-  walked({ head: "FactorialNumbers", seed: [1], perBit: 1, next: (t, n) => mul(t(1), add(n, 2)) }),
-  walked({ head: "DoubleFactorialNumbers", seed: [1], perBit: 1, next: (t, n) => mul(t(1), add(mul(2, n), 3)) }),
+  walked({ head: "FactorialNumbers", seed: [1], perBit: 1, maxBits: 8000, next: (t, n) => mul(t(1), add(n, 2)) }),
+  walked({
+    head: "DoubleFactorialNumbers",
+    seed: [1],
+    perBit: 1,
+    maxBits: 8000,
+    next: (t, n) => mul(t(1), add(mul(2, n), 3)),
+  }),
   // Cat(n + 1) = Cat(n) (4n + 2)/(n + 2), the quotient taken first: Cat(n) is divisible by (n + 2)/g
   // for g = gcd(4n + 2, n + 2), and the product after it is the next term, no larger.
   walked({
     head: "CatalanNumbers",
     seed: [1],
     perBit: 1,
+    maxBits: 1500,
     next: (t, n) =>
       lets(
         [
@@ -271,12 +280,17 @@ const families: readonly EpsilFamily[] = [
       ),
   }),
   // M(n) = Σ C(n, 2k) Cat(k)
-  summed("MotzkinNumbers", (r) => total(quotient(r, 2), (k) => mul(["Binomial", r, mul(2, k)], catalanAt(k))), true),
+  summed(
+    "MotzkinNumbers",
+    900,
+    (r) => total(quotient(r, 2), (k) => mul(["Binomial", r, mul(2, k)], catalanAt(k))),
+    true,
+  ),
   // D(n) = Σ C(n, k) C(n + k, k)
-  summed("CentralDelannoyNumbers", (r) => total(r, (k) => mul(["Binomial", r, k], ["Binomial", add(r, k), k]))),
+  summed("CentralDelannoyNumbers", 1000, (r) => total(r, (k) => mul(["Binomial", r, k], ["Binomial", add(r, k), k]))),
   // s(0) = 1, s(n) = S(n)/2
-  summed("LittleSchroderNumbers", (r) => iff(equal(r, 0), 1, ["Divide", schroder(r), 2]), true),
-  summed("SchroederNumbers", schroder),
+  summed("LittleSchroderNumbers", 700, (r) => iff(equal(r, 0), 1, ["Divide", schroder(r), 2]), true),
+  summed("SchroederNumbers", 700, schroder),
   byWeight("EvilNumbers", 0),
   byWeight("OdiousNumbers", 1),
   thueMorse,
