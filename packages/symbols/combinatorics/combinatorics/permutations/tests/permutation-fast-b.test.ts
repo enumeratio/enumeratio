@@ -11,6 +11,7 @@ checkAgainstEngine([
   "RightToLeftMaxima",
   "RightToLeftMinima",
   "FirstDescent",
+  "FirstAscent",
   "LastDescent",
   "Runs",
   "Depth",

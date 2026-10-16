@@ -466,8 +466,15 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
 
   word(
     "FirstDescent",
-    "The smallest descent position, or 0 when p is increasing.",
-    hasPair(["If", equals(count(adjacent, fallsAfter), 0), 0, ["Min", where(adjacent, fallsAfter)]]),
+    "The smallest descent position, or n when p is increasing.",
+    hasPair(["If", equals(count(adjacent, fallsAfter), 0), length(), ["Min", where(adjacent, fallsAfter)]], length()),
+    "FindStat St000654: p(n+1) = 0, so position n always descends.",
+  ),
+  word(
+    "FirstAscent",
+    "The smallest ascent position, or n when p is decreasing.",
+    hasPair(["If", equals(count(adjacent, risesAfter), 0), length(), ["Min", where(adjacent, risesAfter)]], length()),
+    "FindStat St000990.",
   ),
   word(
     "LastDescent",
