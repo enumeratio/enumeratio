@@ -145,10 +145,13 @@ export async function withFile<T>(name: string, program: string, run: (file: str
 }
 
 /** The `wolframscript` arguments that run the program in `file` and print its last value, as
- * `-code` would. `Get` reads Latin-1 unless told UTF-8. */
+ * `-code` would. `Get` reads Latin-1 unless told UTF-8. Output is ASCII (`\[Pi]`, `(x)`), as a Mac prints
+ * it, so a record does not change with the platform's locale. */
 export const wolframFileArgs = (file: string): string[] => [
   "-code",
   `Get[${JSON.stringify(file)}, CharacterEncoding -> "UTF-8"]`,
+  "-charset",
+  "ASCII",
 ];
 
 /** `runKernel` for a Wolfram program of any size: the program is handed over in a file. */
