@@ -126,14 +126,21 @@ function isCarmichael(n: number): boolean {
 // calls its predicate on every integer exactly once, in increasing order, so a predicate
 // closing over "best so far" is safe -- each n is only ever classified once. ----
 
+/** Listing the divisors of n costs a few microseconds near 10^5 (measured), growing with its square root. */
+const divisorsCost = (n: number): number => 150 + 2 * Math.sqrt(n);
+
 function highlyCompositeCache() {
   let maxDivisorCount = 0;
-  return matchCache("HighlyCompositeNumbers", (n) => {
-    const t = numDivisorsOf(n);
-    if (t <= maxDivisorCount) return false;
-    maxDivisorCount = t;
-    return true;
-  });
+  return matchCache(
+    "HighlyCompositeNumbers",
+    (n) => {
+      const t = numDivisorsOf(n);
+      if (t <= maxDivisorCount) return false;
+      maxDivisorCount = t;
+      return true;
+    },
+    { cost: divisorsCost },
+  );
 }
 const highlyComposite = highlyCompositeCache();
 
@@ -141,13 +148,17 @@ function superabundantCache() {
   // Best abundancy sigma(n)/n so far, compared by cross-multiplication to stay exact.
   let bestSigma = 0;
   let bestN = 1;
-  return matchCache("SuperabundantNumbers", (n) => {
-    const s = sigmaOf(n);
-    if (s * bestN <= bestSigma * n) return false;
-    bestSigma = s;
-    bestN = n;
-    return true;
-  });
+  return matchCache(
+    "SuperabundantNumbers",
+    (n) => {
+      const s = sigmaOf(n);
+      if (s * bestN <= bestSigma * n) return false;
+      bestSigma = s;
+      bestN = n;
+      return true;
+    },
+    { cost: divisorsCost },
+  );
 }
 const superabundant = superabundantCache();
 
@@ -339,7 +350,7 @@ export const kernels: NumberKernel[] = [
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry("PracticalNumbers", isPractical),
+    ...predicateEntry("PracticalNumbers", isPractical, () => 300),
   },
   {
     head: "HighlyCompositeNumbers",
@@ -360,7 +371,7 @@ export const kernels: NumberKernel[] = [
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry("ArithmeticNumbers", isArithmetic),
+    ...predicateEntry("ArithmeticNumbers", isArithmetic, () => 300),
   },
   {
     head: "UntouchableNumbers",
@@ -388,7 +399,7 @@ export const kernels: NumberKernel[] = [
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
-    ...predicateEntry("PerfectPowerNumbers", isPerfectPower, () => 3000),
+    ...predicateEntry("PerfectPowerNumbers", isPerfectPower, (n) => 200 + 0.6 * Math.sqrt(n)),
   },
   {
     head: "SquareFreeNumbers",

@@ -5,9 +5,12 @@
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, kernelOn, liftFamily } from "../src/families/epsil.ts";
+import { collectionsEntries } from "../src/families/index.ts";
+import { entries as setEntries } from "../src/families/numeric-sets.ts";
 import { kernels as digitsPrimes } from "../src/families/numeric-digits-primes.ts";
 import { entries as sequenceEntries, kernels as recurrence } from "../src/families/numeric-recurrence.ts";
 import { numberKernel } from "../src/families/types.ts";
+import { matchCache } from "../src/families/work.ts";
 import { declareCollections } from "../src/library.ts";
 
 const DEEP = process.env.DEEP_TESTS === "1";
@@ -168,7 +171,50 @@ test("a derived value past 2^53 declines: 2n + 1 for a Sophie Germain prime", ()
   expect(() => sophie.valid(9007199254740881, [])).toThrow(/not bigint yet/); // 2^53 - 111, prime
 });
 
+test("no numeric family takes a non-integer or a negative for a member, or fails on one", () => {
+  const scalars = collectionsEntries.filter((family) => family.kind === "scalar");
+  expect(scalars.length).toBeGreaterThan(60);
+  const bad: string[] = [];
+  for (const family of scalars) {
+    const collection = family.paramCount === 0 ? family.head : [family.head, ...Array(family.paramCount).fill(3)];
+    for (const x of [1.5, ["Divide", 1, 2], ["Sqrt", 2], -1, ["Negate", 1.5]]) {
+      const answer = run(["Element", x, collection]);
+      // False, or no answer: never True and never an Error.
+      if (answer.toString() === '"True"' || JSON.stringify(answer.json).includes("Error"))
+        bad.push(`${family.head}: Element(${JSON.stringify(x)}) = ${answer.toString()}`);
+    }
+  }
+  expect(bad).toEqual([]);
+});
+
+test("a scan whose predicate throws leaves the integer for the next call", () => {
+  let armed = true;
+  const cache = matchCache("Test", (n) => {
+    if (n === 5 && armed) throw new RangeError("not now");
+    return n % 5 === 0;
+  });
+  expect(() => cache.rankOf(5)).toThrow(/not now/);
+  armed = false;
+  expect(cache.rankOf(5)).toBe(0);
+  expect(cache.nth(2)).toBe(10);
+});
+
+test("a scan past the work budget throws the work decline, and a scan inside it answers", () => {
+  const abundant = kernelOn(ce, liftFamily(setEntries.find((f) => f.head === "AbundantNumbers")!));
+  const started = performance.now();
+  expect(() => abundant.rank(10 ** 8, [])).toThrow(/past the work this kernel does/);
+  expect(abundant.rank(300_000, [])).toBeGreaterThan(0n);
+  expect(performance.now() - started).toBeLessThan(10_000);
+});
+
+test("primality past 2^16384 declines rather than spend seconds on it", () => {
+  expect(element(2n ** 521n - 1n, "PrimeNumbers")).toBe('"True"');
+  expect(run(["Element", big(2n ** 20_000n + 1n), "PrimeNumbers"]).operator).toBe("Element");
+});
+
 test.skipIf(!DEEP)("terms far past 2^53 (DEEP_TESTS)", () => {
+  const abundant = kernelOn(ce, liftFamily(setEntries.find((f) => f.head === "AbundantNumbers")!));
+  expect(abundant.rank(1_000_000, [])).toBeGreaterThan(0n);
   const f1000 = fibonacci(1000);
   expect(element(f1000, "FibonacciNumbers")).toBe('"True"');
   expect(element(f1000 + 1n, "FibonacciNumbers")).toBe('"False"');

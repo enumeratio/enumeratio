@@ -24,6 +24,13 @@ export const isWorkDecline = (error: unknown): boolean =>
 export const exactly = (what: string, value: number): number =>
   Number.isSafeInteger(value) ? value : declineWork(`${what} ${value} exceeds 2^53`);
 
+/** The elements the bigint routes read at most this wide (square roots, bisections, scans of terms): a few
+ *  milliseconds at 2^15 bits. */
+export const MAX_BITS = 1n << 32_768n;
+
+/** Baillie–PSW is cubic in the bits and takes about a second at 2^16384, so primality stops there. */
+export const PRIME_BITS = 1n << 16_384n;
+
 /** Below this, trial division beats the bigint routes. */
 const TRIAL = 1e6;
 
@@ -87,9 +94,10 @@ export function memoBy<K, V>(entries: Map<K, V>, key: K, make: () => V, limit = 
 
 /** What testing the integer `n` costs, in steps: a trial division's square root by default. */
 export type Cost = (n: number) => number;
-const trialCost: Cost = (n) => Math.sqrt(n) + 4;
+/** A predicate that factors n: a factorisation costs about a sixth of its worst case, the square root (measured). */
+const trialCost: Cost = (n) => Math.sqrt(n) / 6 + 30;
 /** A predicate over the digits or bits of n. */
-export const digitCost: Cost = () => 60;
+export const digitCost: Cost = () => 50;
 
 /**
  * The integers from `start` that pass `predicate`, found by one scan upward that every question extends and
@@ -104,10 +112,13 @@ export function matchCache(
   const matches: number[] = [];
   let scanned = start - 1;
   const step = (budget: { work: number }): void => {
-    scanned++;
-    if (predicate(scanned)) matches.push(scanned);
-    budget.work += cost(scanned);
-    if (budget.work > WORK) declineWork(`${head}: scanning past ${scanned}`);
+    // `scanned` moves on only once the predicate has answered: one that throws leaves its integer to the next call.
+    const next = scanned + 1;
+    const hit = predicate(next);
+    scanned = next;
+    if (hit) matches.push(next);
+    budget.work += cost(next);
+    if (budget.work > WORK) declineWork(`${head}: scanning past ${next}`);
   };
   return {
     /** The k-th match (1-indexed). */

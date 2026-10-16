@@ -14,7 +14,7 @@ import type { EpsilFamily } from "./epsil.ts";
 import { withDefinitions } from "./numeric-definitions.ts";
 import { withSequenceDefinitions } from "./sequence-definitions.ts";
 import { bigAware, type Declared, type NumberKernel } from "./types.ts";
-import { declineWork } from "./work.ts";
+import { declineWork, MAX_BITS } from "./work.ts";
 
 const MAX_SAFE_BIG = BigInt(Number.MAX_SAFE_INTEGER);
 const MIN_SAFE_BIG = BigInt(Number.MIN_SAFE_INTEGER);
@@ -26,10 +26,6 @@ const MIN_SAFE_BIG = BigInt(Number.MIN_SAFE_INTEGER);
 function narrow(x: bigint): number {
   return x >= MIN_SAFE_BIG && x <= MAX_SAFE_BIG ? Number(x) : (x as unknown as number);
 }
-
-/** The elements read at most this wide: the square roots, bisections and scans below cost a few
- *  milliseconds at 2^15, and a scan's cache (factorials) a few megabytes. Wider declines. */
-const MAX_BITS = 1n << 32_768n;
 
 /** Loosely read an element (number or bigint, whatever the caller has) as a bigint,
  *  or `undefined` if it isn't an integer at all. */

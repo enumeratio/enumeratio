@@ -136,6 +136,9 @@ const exact = (head: string, what: string, n: number, p: number[]): bigint => {
 export const needsBigint = (error: unknown): boolean =>
   error instanceof RangeError && error.message.includes("not bigint yet");
 
+/** A scalar element is an integer, a safe one or a bigint: anything else (NaN from 1.5, √2 or a symbol) is no member. */
+const isScalar = (element: unknown): boolean => typeof element === "bigint" || Number.isSafeInteger(element);
+
 /** Refuse (RangeError) an element past 2^53 that a kernel in plain numbers can only read rounded. */
 const refuseBig = (head: string, element: unknown): void => {
   if (
@@ -153,12 +156,11 @@ export function numberKernel(k: NumberKernel): FamilyKernel {
     head: k.head,
     paramCount: k.paramCount,
     kind: k.kind,
-    valid: bigElements
-      ? k.valid
-      : (element, p) => {
-          refuseBig(k.head, element);
-          return k.valid(element, p);
-        },
+    valid: (element, p) => {
+      if (k.kind === "scalar" && !isScalar(element)) return false;
+      if (!bigElements) refuseBig(k.head, element);
+      return k.valid(element, p);
+    },
     ...(k.carrier === undefined ? {} : { carrier: k.carrier }),
     ...(k.carrierParams === undefined ? {} : { carrierParams: k.carrierParams }),
     ...(k.carrierElements === undefined ? {} : { carrierElements: k.carrierElements }),
@@ -174,6 +176,7 @@ export function numberKernel(k: NumberKernel): FamilyKernel {
       return k.unrank(p, Number(r));
     },
     rank: (element, p) => {
+      if (k.kind === "scalar" && !isScalar(element)) return -1n;
       if (!bigElements) refuseBig(k.head, element);
       const r = k.rank(element, p);
       return r < 0 ? -1n : exact(k.head, "rank", r, p);

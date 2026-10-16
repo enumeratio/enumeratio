@@ -243,7 +243,7 @@ function isKaprekar(n: number): boolean {
   }
   return false;
 }
-const kaprekarCache = matchCache("KaprekarNumbers", isKaprekar, { cost: () => 300 });
+const kaprekarCache = matchCache("KaprekarNumbers", isKaprekar, { cost: () => 200 });
 
 // ---- Evil/Odious/Pernicious: A001969 / A000069 / A052294, by binary weight (popcount).
 // Evil starts at 0 (popcount 0, even), the one family here whose first term isn't >= 1. ----

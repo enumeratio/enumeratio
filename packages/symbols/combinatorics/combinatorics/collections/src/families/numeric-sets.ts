@@ -8,7 +8,7 @@ import type { EpsilFamily } from "./epsil.ts";
 import { withDefinitions } from "./numeric-definitions.ts";
 import { withScanDefinitions } from "./scan-definitions.ts";
 import type { Declared, NumberKernel } from "./types.ts";
-import { declineWork, factorsOf, matchCache, memoBy, sigmaOf } from "./work.ts";
+import { declineWork, factorsOf, matchCache, memoBy, PRIME_BITS, sigmaOf } from "./work.ts";
 
 // ---- PrimeNumbers: the segmented sieve/BPSW primality of @enumeratio/residues (issue #205's
 // nth-prime work) — no separate sieve of our own to keep in sync with it. ----
@@ -79,9 +79,14 @@ export const kernels: NumberKernel[] = [
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,
     unrank: (_p, r) => nthPrime(r + 1),
-    // BPSW reads a bigint exactly; the rank (π) is out of reach past 2^53.
+    // A bigint is read by Baillie–PSW: a proof below 2^64, and above it no composite is known to pass (a
+    // probable-prime test, as Wolfram's PrimeQ is at this size). The rank (π) is out of reach past 2^53.
     bigElements: true,
-    valid: (element) => (typeof element === "bigint" ? isPrimeBig(element) : isPrime(Number(element))),
+    valid: (element) => {
+      if (typeof element !== "bigint") return isPrime(Number(element));
+      if (element >= PRIME_BITS) return declineWork("primality of an element past 2^16384");
+      return isPrimeBig(element);
+    },
     rank: (element) => {
       if (typeof element === "bigint" && element > BigInt(Number.MAX_SAFE_INTEGER))
         throw new RangeError(`PrimeNumbers: element ${element} exceeds 2^53; its kernel is not bigint yet`);
