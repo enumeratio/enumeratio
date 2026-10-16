@@ -1,0 +1,17 @@
+id	in	out	verdict
+n-arcoth-2	enumeratio_n(arccoth(2))	0.549306144334055	
+series-arcoth-x-x-positiveinfinity-5	SR(arccoth(SR.var("x"))).series(SR.var("x") == oo, 5 + 1)	None	inconclusive
+a-logarithmic-singularity-at-1	arccoth(1)	+Infinity	
+arcoth-positiveinfinity	arccoth(oo)	0	
+a-float-argument-evaluates-directly	arccoth(3.5)	0.293893332451059	
+as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1	SR(arccoth(2)).exponentialize()	1/2*log(3)	
+oddness-pulls-the-sign-out-of-a-symbolic	arccoth((-SR.var("x")))	True	
+derivative-frac-1-1-x-2	diff(arccoth(SR.var("x")), SR.var("x"))	True	
+n-arcoth-2-50	enumeratio_n(arccoth(2), 50)	0.549306144334055	
+arcoth-complexinfinity	arccoth(unsigned_infinity)	0	
+arcoth-neg-1	arccoth(-1)	-Infinity	
+arcoth-list-list-i-neg-i-list-0-neg-i	[[arccoth((0 + 1*I)), arccoth((0 + -1*I))], [arccoth(0), arccoth((0 + -1*I))]]	[[arccoth(I), arccoth(-I)], [1/2*I*pi, arccoth(-I)]]	
+matrixfunction-function-arcoth-1-1-list-list-i			
+arcoth-1-over-2	arccoth((1/2))	1/2*I*pi + 1/2*log(3)	disagree
+arcoth-neg-1-over-2	arccoth((-1/2))	-1/2*I*pi - 1/2*log(3)	disagree
+arcoth-0	arccoth(0)	1/2*I*pi	

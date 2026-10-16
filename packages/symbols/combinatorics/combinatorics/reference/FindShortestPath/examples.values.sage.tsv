@@ -1,0 +1,5 @@
+id	in	out
+shortest-path-along-a-path-graph	(enumeratio_graph(graphs.PathGraph(5))).shortest_path(1, 5)	[1, 2, 3, 4, 5]
+no-path-back-against-directed-edges		
+a-path-crossing-both-directed-and-undirected		
+a-weighted-shortcut-loses-to-three-cheaper-hops		

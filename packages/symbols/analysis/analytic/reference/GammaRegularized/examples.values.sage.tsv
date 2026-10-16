@@ -1,0 +1,35 @@
+id	in	out	verdict
+q-a-0-1-for-any-a	(gamma_inc(1, 0) / gamma(1))	1	
+q-1-z-e-z-here-at-z-1	(gamma_inc(1, 1) / gamma(1))	e^(-1)	
+floating-point-arguments-evaluate-directly-to-a	(gamma_inc(2.5, 1.5) / gamma(2.5))	0.699985835878627	
+q-1-z-e-z-at-z-1-5	(gamma_inc(1, 1.5) / gamma(1))	0.223130160148430	
+q-2-3-3-4-3-e-3-3	(gamma_inc(2, 3.3) / gamma(2))	0.158597619825332	
+q-1-0-2-all-integers			
+q-2-5-1-5-3			
+q-0-5-0-0-25			
+q-3-1-7-all-integers			
+q-2-5-0-complex-1-5-plus-i			
+q-complex-2-plus-i-0-1-5			
+q-three-complex-arguments			
+q-0-1-4-all-integers			
+threads-element-wise-over-a-list-as-wolfram-s	[(gamma_inc(1, 1) / gamma(1)), (gamma_inc(2, 1) / gamma(2))]	[e^(-1), gamma(2, 1)]	
+complex-order-under-n	enumeratio_n((gamma_inc((1 + 1*I), 2.5) / gamma((1 + 1*I))))	0.00794706062011912 + 0.152536778541018*I	
+three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2			
+which-at-an-integer-order-equally-evaluates-to			
+listable-over-its-limits-q-1-infty-infty-q-1	[(gamma_inc(1, -oo) / gamma(1)), (gamma_inc(1, oo) / gamma(1))]	[+Infinity, 0]	
+listable-threads-elementwise-over-a-matrix	[[(gamma_inc(2, 3.5) / gamma(2)), (gamma_inc(2, 0) / gamma(2))], [(gamma_inc(2, 0) / gamma(2)), (gamma_inc(2, 6.5) / gamma(2))]]	[[0.135888225400433, 1], [1, 0.0112757939473318]]	
+interval-arithmetic-q-is-decreasing-in-z			
+to-30-significant-digits-not-yet-the-last-digit	enumeratio_n((gamma_inc(2, 1) / gamma(2)), 30)	0.735758882342885	
+q-s-z-at-a-complex-order-s-beyond-what-the	enumeratio_n((gamma_inc((2 + 1*I), 1.5) / gamma((2 + 1*I))))	0.617652231045063 + 0.333481540658553*I	
+the-cdf-of-a-poisson-lambda-2-random-variable-at	(gamma_inc(3, 2) / gamma(3))	1/2*gamma(3, 2)	
+three-arguments-p-5-2-3-2-q-5-2-0-3-2-the-gamma			
+the-chi-2-1-cdf-p-1-2-x-2-at-the-familiar	(1 - (gamma_inc(0.5, 1.9207294103470425) / gamma(0.5)))	0.949999999999999	
+the-polynomial-closed-form-for-an-integer-order	(gamma_inc(5, -1) / gamma(5))	1/24*gamma(5, -1)	
+q-a-0-z-1-q-a-z-even-for-negative-a-where-gamma			
+q-a-0-1-for-symbolic-a	(gamma_inc(SR.var("a"), 0) / gamma(SR.var("a")))	1	
+q-a-infty-0	(gamma_inc(SR.var("a"), oo) / gamma(SR.var("a")))	gamma(a, +Infinity)/gamma(a)	inconclusive
+q-1-x-e-x-symbolically	(gamma_inc(1, SR.var("x")) / gamma(1))	True	
+q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s	(gamma_inc(2, SR.var("x")) / gamma(2))	True	
+q-1-2-x-erfc-sqrt-x-see-erfc	(gamma_inc((1/2), SR.var("x")) / gamma((1/2)))	True	
+a-non-integer-order-combined-with-negative-z	(gamma_inc(2.5, -1) / gamma(2.5))	1.00000000000000 - 0.628008230288381*I	
+gamma-regularized-0-0-is-indeterminate	(gamma_inc(0, 0) / gamma(0))	RuntimeError: indeterminate expression: 0 * infinity encountered.	error

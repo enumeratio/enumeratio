@@ -21,6 +21,14 @@ seeAlso:
   - Mode
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: median($1)
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - For an odd-length collection, the median is the middle element of [[Sort]]'s result; for even length, it's the average of the two middle elements.

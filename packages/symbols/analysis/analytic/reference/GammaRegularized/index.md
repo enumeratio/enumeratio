@@ -29,6 +29,16 @@ bindings:
       on: 2026-10-14
     note: SymPy has no regularized incomplete gamma; it is written out as its definition, Gamma(a, z) / Gamma(a).
   - origin: mapped
+    form: sage
+    template: (gamma_inc($1, $2) / gamma($1))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
     form: julia
     template: enumeratio_ball(gamma_regularized, $1, $2)
     arity: 2

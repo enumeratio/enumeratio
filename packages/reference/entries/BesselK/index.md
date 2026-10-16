@@ -27,6 +27,16 @@ bindings:
       version: 1.3.0
       on: 2026-10-15
   - origin: mapped
+    form: sage
+    template: bessel_K($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
     form: julia
     template: enumeratio_ball(bessel_k, $1, $2)
     arity: 2

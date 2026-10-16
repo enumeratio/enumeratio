@@ -44,6 +44,16 @@ bindings:
       on: 2026-10-14
     note: "SymPy has no Quotient: `//` on SymPy numbers is the floor of the exact quotient, so a Gaussian integer is floored part by part where ours rounds each part to the nearest."
   - origin: mapped
+    form: sage
+    template: floor(($1) / ($2))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
     form: julia
     template: fdiv(ZZ($1), ZZ($2))
     arity: 2

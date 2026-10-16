@@ -18,6 +18,14 @@ seeAlso:
   - ContinuedFraction
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: continued_fraction($1).value()
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Takes the list of terms $[a_0; a_1, \ldots]$, or $[a_0, [\text{period}]]$ for a periodic tail, as Wolfram's does; [[ContinuedFraction]] is its inverse.

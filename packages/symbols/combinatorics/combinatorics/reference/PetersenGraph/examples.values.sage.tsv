@@ -1,0 +1,5 @@
+id	in	out
+petersen-is-3-regular	(enumeratio_graph(graphs.PetersenGraph())).degree()	[3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+petersen-is-not-bipartite	(enumeratio_graph(graphs.PetersenGraph())).is_bipartite()	False
+petersen-has-10-vertices	(enumeratio_graph(graphs.PetersenGraph())).order()	10
+petersen-has-15-edges	(enumeratio_graph(graphs.PetersenGraph())).size()	15

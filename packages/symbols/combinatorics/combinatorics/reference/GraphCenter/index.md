@@ -14,6 +14,14 @@ seeAlso:
   - VertexEccentricity
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: ($1).center()
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - A vertex with an infinite eccentricity (unreachable from some other vertex) is never in the center, even on a disconnected graph where every FINITE eccentricity happens to tie.

@@ -1,0 +1,28 @@
+id	in	out	verdict
+erfc-0	erfc(0)	1	
+erfc-infinity	erfc(oo)	0	
+erfc-negativeinfinity	erfc(-oo)	2	
+a-floating-point-argument-evaluates-directly-to	erfc(0.5)	0.479500122186953	
+a-machine-precision-argument	erfc(1.5)	0.0338948535246893	
+series-erfc-x-x-0-10	SR(erfc(SR.var("x"))).series(SR.var("x") == 0, 10 + 1)	True	
+normal-series-erfc-x-x-positiveinfinity-5	(SR(erfc(SR.var("x"))).series(SR.var("x") == oo, 5 + 1)).truncate()	None	inconclusive
+threads-element-wise-over-a-list-as-wolfram-s	[erfc(0), erfc(1)]	[1, erfc(1)]	
+complex-arguments-should-evaluate-as-they-do-for	erfc((1.5 + -1*I))	-0.0783992074989334 - 0.0279637112386559*I	
+listable-threads-over-its-limits-at-pm-infty	[erfc(oo), erfc(-oo)]	[0, 2]	
+interval-arithmetic-erfc-is-decreasing-so-the			
+uncertainty-propagation			
+to-30-significant-digits-every-one-correctly	enumeratio_n(erfc(2), 30)	0.00467773498104727	
+n-erfc-3-over-2-50	enumeratio_n(erfc((3/2)), 50)	0.0338948535246893	
+functionexpand-matrixfunction-erfc-list-list-0-1			
+fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2	SR(enumeratio_equal(erfc((-SR.var("z"))), ((-erfc(SR.var("z"))) + 2))).simplify_full()	1	inconclusive
+series-erfc-x-x-0-7	SR(erfc(SR.var("x"))).series(SR.var("x") == 0, 7 + 1)	True	
+normal-series-erfc-x-x-positiveinfinity-1	(SR(erfc(SR.var("x"))).series(SR.var("x") == oo, 1 + 1)).truncate()	None	inconclusive
+erfc-z-2-erfc-z-here-at-z-1	enumeratio_equal((erfc(-1) + erfc(1)), 2)	True	
+definition-erf-z-erfc-z-1-see-erf	enumeratio_equal((erf(2) + erfc(2)), 1)	True	
+erfc-x-2-erfc-x-applied-symbolically	erfc((-SR.var("x")))	True	
+frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	diff(erfc(SR.var("x")), SR.var("x"))	True	
+an-exact-integer-argument-is-left-unevaluated	erfc(1)	erfc(1)	
+far-in-the-tail-erfc-keeps-full-relative	erfc(9.5)	3.76921448565488e-41	
+whereas-1-erf-9-5-cancels-to-exactly-0-in	(1 - erf(9.5))	0.000000000000000	
+erfc-complexinfinity-is-indeterminate-inheriting	erfc(unsigned_infinity)	Infinity	disagree
+the-gaussian-tail-shrinks-fast-only-about-7	erfc(3.5)	7.43098372341413e-7	

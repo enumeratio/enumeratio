@@ -1,0 +1,9 @@
+id	in	out
+the-binary-tree		
+the-ordered-tree		
+findstat-st000411-1	enumeratio_stat("BinaryTree", [0, [0, 0]], "TreeFactorial")	2
+findstat-st000411-2	enumeratio_stat("BinaryTree", [[0, 0], 0], "TreeFactorial")	2
+findstat-st000411-3	enumeratio_stat("BinaryTree", [0, [0, [0, 0]]], "TreeFactorial")	6
+findstat-st000410-1	enumeratio_stat("OrderedTree", [[]], "TreeFactorial")	2
+findstat-st000410-2	enumeratio_stat("OrderedTree", [[[]]], "TreeFactorial")	6
+findstat-st000410-3	enumeratio_stat("OrderedTree", [[], []], "TreeFactorial")	3

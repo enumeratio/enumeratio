@@ -1,0 +1,20 @@
+id	in	out	verdict
+expand-x-1-2-into-x-2-2x-1	SR((((SR.var("x") + 1))^2)).expand()	True	
+expand-x-1-x-1-into-the-difference-of-squares	SR(((SR.var("x") + 1) * (SR.var("x") + -1))).expand()	True	
+expand-x-plus-3-times-x-plus-2	SR(((SR.var("x") + 3) * (SR.var("x") + 2))).expand()	True	
+expand-1-plus-x-pow-3-times-5-times-x-pow-2-plus	SR(((((1 + SR.var("x")))^3) * ((5 * ((SR.var("x"))^2)) + 1) * (((SR.var("x"))^5) + 1))).expand()	True	
+expand-x-plus-y-pow-5-minus-x-pow-5-plus-y-pow-5	SR(((((SR.var("x") + SR.var("y")))^5) + (-1 * (((SR.var("x"))^5) + ((SR.var("y"))^5))))).expand()	True	
+expand-x-y-3-a-two-variable-binomial-power	SR((((SR.var("x") + SR.var("y")))^3)).expand()	True	
+expand-x-plus-y-pow-2-times-x-minus-y-pow-2	SR(((((SR.var("x") + SR.var("y")))^2) * (((SR.var("x") + (-1 * SR.var("y"))))^2))).expand()	True	
+expand-x-plus-y-pow-2-times-x-minus-y-pow-2-pow	SR(((((SR.var("x") + SR.var("y")))^2) * (((((SR.var("x") + (-1 * SR.var("y"))))^2))^-1))).expand()	True	
+expand-sin-x-plus-cos-x-pow-2	SR((((sin(SR.var("x")) + cos(SR.var("x"))))^2)).expand()	True	
+expand-sqrt-1-plus-x-pow-2	SR(sqrt((((1 + SR.var("x")))^2))).expand()	sqrt(x^2 + 2*x + 1)	disagree
+expand-x-plus-y-pow-2-times-z-plus-y-pow-2-pow	SR(((((SR.var("x") + SR.var("y")))^2) * (((((SR.var("z") + SR.var("y")))^2))^-1))).expand()	True	
+x-pow-5-plus-5-times-x-pow-4-plus-10-times-x-pow	enumeratio_equal((((SR.var("x"))^5) + (5 * ((SR.var("x"))^4)) + (10 * ((SR.var("x"))^3)) + (10 * ((SR.var("x"))^2)) + (5 * SR.var("x")) + 1), SR((((SR.var("x") + 1))^5)).expand())	True	
+expand-x-plus-imaginaryunit-times-x-minus	SR(((SR.var("x") + I) * (SR.var("x") + (-1 * I)))).expand()	True	
+expand-x-pow-s-plus-2-times-exponentiale-pow-neg	SR((((((SR.var("x"))^SR.var("s")) + (2 * ((e)^(-1 * SR.var("x"))))))^3)).expand()	True	
+expand-1-minus-x-times-neg-1-minus-x-times-1	SR(((1 + (-1 * SR.var("x"))) * (-1 + (-1 * SR.var("x"))) * (1 + (-1 * SR.var("x"))) * (-1 + (-1 * SR.var("x"))))).expand()	True	
+expand-1-plus-x-plus-y-times-2-minus-x-pow-3	SR(((1 + SR.var("x") + SR.var("y")) * (((2 + (-1 * SR.var("x"))))^3))).expand()	True	
+expand-1-plus-x-times-2-plus-x-times-3-plus-x	SR(((1 + SR.var("x")) * (2 + SR.var("x")) * (3 + SR.var("x")))).expand()	True	
+expand-product-x-plus-i-i-6			
+expand-product-x-plus-k-k-6	SR(product((SR.var("x") + SR.var("k")), SR.var("k"), 1, 6)).expand()	True	

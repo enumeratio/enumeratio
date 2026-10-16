@@ -1,0 +1,18 @@
+id	in	out
+primeomega-30	sum(e for _, e in factor(30))	3
+primeomega-360	sum(e for _, e in factor(360))	6
+primeomega-12	sum(e for _, e in factor(12))	3
+threads-element-wise-over-a-list-as-wolfram-s	[sum(e for _, e in factor(4)), sum(e for _, e in factor(12)), sum(e for _, e in factor(24))]	[2, 3, 4]
+large-integers	sum(e for _, e in factor(enumeratio_factorial(30)))	59
+gaussian-integers-5-9i-has-norm-106-2-cdot-53-so	sum(e for _, e in factor((5 + 9*I)))	2
+gaussianintegers-true-12-1-i-4-cdot-3		
+listable-over-a-range		
+primeomega-28	sum(e for _, e in factor(28))	3
+negative-n-the-sign-is-a-unit	sum(e for _, e in factor(-12))	3
+completely-additive-omega-mn-omega-m-omega-n-for	enumeratio_equal(sum(e for _, e in factor((24 * 40))), (sum(e for _, e in factor(24)) + sum(e for _, e in factor(40))))	True
+omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3		
+primeomega-100	sum(e for _, e in factor(100))	4
+primeomega-16-807	sum(e for _, e in factor(16807))	5
+primeomega-165-eq-primenu-165	enumeratio_equal(sum(e for _, e in factor(165)), len(prime_divisors(165)))	True
+all-range-1-100-function-primenu-1-lt-eq		
+1-has-no-prime-factors	sum(e for _, e in factor(1))	0

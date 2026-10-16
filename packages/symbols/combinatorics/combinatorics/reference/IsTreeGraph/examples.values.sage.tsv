@@ -1,0 +1,7 @@
+id	in	out
+a-star-is-a-tree	(enumeratio_graph(graphs.StarGraph(5 - 1))).is_tree()	True
+a-cycle-is-not-a-tree	(enumeratio_graph(graphs.CycleGraph(4))).is_tree()	False
+a-disconnected-forest-is-not-a-tree	(Graph([[1, 2, 3, 4], [(1, 2), (3, 4)]], format="vertices_and_edges", loops=True, multiedges=True)).is_tree()	False
+a-path-is-a-tree	(enumeratio_graph(graphs.PathGraph(5))).is_tree()	True
+a-ternary-complete-tree-is-a-tree	(enumeratio_graph(graphs.BalancedTree(3, 3 - 1))).is_tree()	True
+a-complete-graph-past-k2-is-not-a-tree	(enumeratio_graph(graphs.CompleteGraph(4))).is_tree()	False

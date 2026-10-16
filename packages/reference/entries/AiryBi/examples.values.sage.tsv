@@ -1,0 +1,10 @@
+id	in	out	verdict
+bi-0	enumeratio_n(airy_bi(0))	0.614926627446001	
+series-airybi-x-x-0-4	SR(airy_bi(SR.var("x"))).series(SR.var("x") == 0, 4 + 1)	True	
+normal-series-airybi-x-x-positiveinfinity-2	(SR(airy_bi(SR.var("x"))).series(SR.var("x") == oo, 2 + 1)).truncate()	None	inconclusive
+n-airybi-2-50	enumeratio_n(airy_bi(2), 50)	3.29809499997821	
+n-functionrange-airybi-x-x-y			
+d-airybi-x-x	diff(airy_bi(SR.var("x")), SR.var("x"))	True	
+series-airybi-x-x-0-7	SR(airy_bi(SR.var("x"))).series(SR.var("x") == 0, 7 + 1)	True	
+normal-series-airybi-x-x-directedinfinity-z-1			
+simplify-functionexpand-airybi-z-times			

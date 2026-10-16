@@ -35,6 +35,18 @@ bindings:
       version: 1.3.0
       on: 2026-10-15
   - origin: mapped
+    form: sage
+    template: hypergeometric([$1, $2], [$3], $4)
+    arity: 4
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+      - 4
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
     form: julia
     template: enumeratio_ball(hypergeometric_2f1, $1, $2, $3, $4)
     arity: 4

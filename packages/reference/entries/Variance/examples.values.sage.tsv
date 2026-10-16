@@ -1,0 +1,8 @@
+id	in	out	verdict
+variance-list-1-2-3-4	variance([1, 2, 3, 4])	5/3	
+variance-n-list-1-2-3-4-30	variance(enumeratio_n([1, 2, 3, 4], 30))	1.66666666666667	
+n-variance-ts	enumeratio_n(variance(SR.var("ts")))	TypeError: 'sage.symbolic.expression.Expression' object is not iterable	error
+variance-binomialdistribution-n-p			
+variance-probabilitydistribution-sqrt-2-times-1			
+n-list-mean-data-variance-data	enumeratio_n([mean(SR.var("data")), variance(SR.var("data"))])	TypeError: 'sage.symbolic.expression.Expression' object is not iterable	error
+n-variance-heights	enumeratio_n(variance(SR.var("heights")))	TypeError: 'sage.symbolic.expression.Expression' object is not iterable	error

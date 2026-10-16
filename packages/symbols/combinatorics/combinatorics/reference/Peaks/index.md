@@ -26,6 +26,14 @@ statOn:
   - MotzkinPath
   - Permutation
   - SchroederPath
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_stat("Permutation", $1, "Peaks")
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Only interior positions count ($1 < i < n$), so $\mathrm{Peaks}(p) = 0$ whenever $n \leq 2$

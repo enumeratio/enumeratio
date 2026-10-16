@@ -21,7 +21,7 @@ length-string	enumeratio_length("string")	0
 the-cardinality-of-a-finset	enumeratio_length([1, 3, 4])	3	
 the-empty-finset-has-no-members	enumeratio_length([])	0	
 length-x-pow-9-plus-x-pow-2-plus-x-plus-1	enumeratio_length((((SR.var("x"))^9) + ((SR.var("x"))^2) + SR.var("x") + 1))	4	
-length-integerdigits-1-000-factorial			
+length-integerdigits-1-000-factorial	enumeratio_length((Integer(abs(enumeratio_factorial(1000))).digits(10) or [0])[::-1])	2568	
 map-length-list-list-a-b-list-a-b-c-list-x			
 length-list-list-a-b-c-list-d-k-f	enumeratio_length([[SR.var("a"), SR.var("b"), SR.var("c")], [SR.var("d"), SR.var("k"), SR.var("f")]])	2	
 length-join-a-b-length-a-length-b-see-join			

@@ -26,6 +26,13 @@ bindings:
     form: combinatorica
     template: DurfeeSquare[$1]
     arity: 1
+  - origin: mapped
+    form: sage
+    template: enumeratio_stat("IntegerPartition", $1, "DurfeeSquare")
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

@@ -22,6 +22,13 @@ bindings:
     checked:
       version: 15.0.0
       on: 2026-09-28
+  - origin: mapped
+    form: sage
+    template: enumeratio_graph(graphs.PathGraph($1))
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - `PathGraph(n)` is a convenience this library adds; `PathGraph[3]` is an ERROR in real Wolfram (kernel-verified) — it only accepts a vertex list. Both forms are accepted here, but the Wolfram transpiler treats the whole head as foreign (its own context, not a plain rename) since it cannot tell the two call shapes apart — see `FOREIGN` in `@enumeratio/wolfram`.

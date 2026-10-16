@@ -21,7 +21,7 @@ sign-123	enumeratio_sign(123)	1
 sign-123-minus-456i	enumeratio_sign((123 + -456*I))	-(152/24785*I - 41/24785)*sqrt(24785)	
 fullsimplify-matrixfunction-sign-list-list-1			
 piecewiseexpand-sign-x-neg-2-lt-x-lt-2			
-sign-conjugate-1-plus-2i-eq-conjugate-sign-1			
+sign-conjugate-1-plus-2i-eq-conjugate-sign-1	enumeratio_equal(enumeratio_sign(conjugate((1 + 2*I))), conjugate(enumeratio_sign((1 + 2*I))))	True	
 d-sign-x-x	diff(enumeratio_sign(SR.var("x")), SR.var("x"))	2*dirac_delta(x)	inconclusive
 sign-positiveinfinity-times-i	enumeratio_sign((oo * (0 + 1*I)))	(I)*Infinity	disagree
 n-sign-exponentiale-plus-i-times-pi-20	enumeratio_n(enumeratio_sign((e + ((0 + 1*I) * pi))), 20)	0.654321120736689 + 0.756216814781239*I	
@@ -36,9 +36,9 @@ sign-neg-1-plus-i	enumeratio_sign((-1 + 1*I))	(1/2*I - 1/2)*sqrt(2)
 sign-neg-1-minus-i	enumeratio_sign((-1 + -1*I))	-(1/2*I + 1/2)*sqrt(2)	
 sign-1-minus-i	enumeratio_sign((1 + -1*I))	-(1/2*I - 1/2)*sqrt(2)	
 sign-2	enumeratio_sign(2)	1	
-findstat-st000037-1			
-findstat-st000037-2			
-findstat-st000037-3			
+findstat-st000037-1	enumeratio_stat("Permutation", [1], "Sign")	1	
+findstat-st000037-2	enumeratio_stat("Permutation", [1, 2], "Sign")	1	
+findstat-st000037-3	enumeratio_stat("Permutation", [2, 1], "Sign")	-1	
 nan-propagates-rather-than-being-treated-as-0	enumeratio_sign(NaN)	-1	inconclusive
 sign-complexinfinity-is-indeterminate-no	enumeratio_sign(unsigned_infinity)	sgn(Infinity)	disagree
 unit-circle-check-on-a-float-argument	enumeratio_equal(enumeratio_abs(enumeratio_sign((-0.07244062047889377 + -0.9973727269705307*I))), 1)	True	

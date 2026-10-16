@@ -14,6 +14,14 @@ seeAlso:
   - Graph
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: ($1).shortest_path($2, $3)
+    arity: 3
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - A directed edge is only traversable forward; an undirected edge, either way.

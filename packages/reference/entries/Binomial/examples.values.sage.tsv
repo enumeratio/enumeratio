@@ -29,13 +29,13 @@ the-probability-of-exactly-3-heads-in-10-fair	(binomial(10, 3) / ((2)^10))	15/12
 symmetry-binom-n-k-binom-n-n-k	enumeratio_equal(binomial(10, 3), binomial(10, 7))	True	
 pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n	enumeratio_equal((binomial(9, 2) + binomial(9, 3)), binomial(10, 3))	True	
 row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4	enumeratio_equal((binomial(4, 0) + binomial(4, 1) + binomial(4, 2) + binomial(4, 3) + binomial(4, 4)), ((2)^4))	True	
-sum-of-squares-along-a-row-sum-k-binom-n-k-2			
-vandermonde-s-identity-sum-k-binom-m-k-binom-n-r			
-the-alternating-row-sum-vanishes-sum-k-1-k-binom			
+sum-of-squares-along-a-row-sum-k-binom-n-k-2	enumeratio_equal(sum(((binomial(6, SR.var("k")))^2), SR.var("k"), 0, 6), binomial(12, 6))	True	
+vandermonde-s-identity-sum-k-binom-m-k-binom-n-r	enumeratio_equal(sum((binomial(5, SR.var("k")) * binomial(4, (3 - SR.var("k")))), SR.var("k"), 0, 3), binomial(9, 3))	True	
+the-alternating-row-sum-vanishes-sum-k-1-k-binom	sum((((-1)^SR.var("k")) * binomial(6, SR.var("k"))), SR.var("k"), 0, 6)	0	
 the-factorial-form-binom-n-k-frac-n-k-n-k-see	enumeratio_equal(binomial(7, 3), (enumeratio_factorial(7) / (enumeratio_factorial(3) * enumeratio_factorial(4))))	True	
 binomial-1-over-2-neg-1-over-2-plus-binomial-1	(binomial((1/2), (-1/2)) + binomial((1/2), (1/2)))	3/2	
-sum-binomial-2-k-pow-2-times-binomial-k-plus-2-k			
-sum-binomial-2-2k-plus-1-times-2-pow-k-k-0-floor			
+sum-binomial-2-k-pow-2-times-binomial-k-plus-2-k	sum((((binomial(2, SR.var("k")))^2) * ((binomial((SR.var("k") + 2), SR.var("k")))^2)), SR.var("k"), 0, 2)	73	
+sum-binomial-2-2k-plus-1-times-2-pow-k-k-0-floor	sum((binomial(2, ((2 * SR.var("k")) + 1)) * ((2)^SR.var("k"))), SR.var("k"), 0, enumeratio_floor((1/2)))	2	
 binomial-1-over-2-1-over-2-plus-binomial-1-over	(binomial((1/2), (1/2)) + binomial((1/2), (3/2)))	1	
 choosing-more-elements-than-available-k-n-gives	binomial(5, 7)	0	
 a-negative-k-also-gives-0	binomial(5, -1)	0	

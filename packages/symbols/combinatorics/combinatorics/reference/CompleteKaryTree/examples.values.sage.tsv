@@ -1,0 +1,16 @@
+id	in	out	verdict
+a-3-level-binary-tree-has-7-vertices	(enumeratio_graph(graphs.BalancedTree(2, 3 - 1))).order()	7	
+a-single-level-tree-is-one-vertex	(enumeratio_graph(graphs.BalancedTree(2, 1 - 1))).order()	1	
+a-3-level-binary-tree-is-a-tree	(enumeratio_graph(graphs.BalancedTree(2, 3 - 1))).is_tree()	True	
+root-degree-of-a-ternary-tree	(enumeratio_graph(graphs.BalancedTree(3, 3 - 1))).degree(1)	3	
+a-3-level-ternary-tree-has-13-vertices	(enumeratio_graph(graphs.BalancedTree(3, 3 - 1))).order()	13	
+the-1-arg-form-defaults-to-binary			
+edge-list-of-a-3-level-binary-tree			
+completekarytree-5			
+completekarytree-3-3	enumeratio_graph(graphs.BalancedTree(3, 3 - 1))	Balanced tree	disagree
+completekarytree-2-3	enumeratio_graph(graphs.BalancedTree(3, 2 - 1))	Balanced tree	disagree
+map-function-vertexeccentricity-completekarytree			
+isbipartitegraph-completekarytree-3-3	(enumeratio_graph(graphs.BalancedTree(3, 3 - 1))).is_bipartite()	True	
+isacyclicgraph-completekarytree-3-3	(lambda g: g.is_directed_acyclic() if g.is_directed() else g.is_forest())(enumeratio_graph(graphs.BalancedTree(3, 3 - 1)))	True	
+isloopfreegraph-completekarytree-3-3	(not (enumeratio_graph(graphs.BalancedTree(3, 3 - 1))).has_loops())	True	
+completekarytree-3-4	enumeratio_graph(graphs.BalancedTree(4, 3 - 1))	Balanced tree	disagree

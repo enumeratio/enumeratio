@@ -10,11 +10,11 @@ subtracting-two-classes-mod-7	(Mod(2, 7) - Mod(5, 7))	4
 multiplying-two-classes-mod-7	(Mod(3, 7) * Mod(5, 7))	1	
 power-with-exponent-negative-1-is-the-inverse	((Mod(3, 7))^-1)	5	
 negating-a-class-mod-7	(-Mod(3, 7))	4	
-chineseremainder-residueclass-2-3-and-3-5			
+chineseremainder-residueclass-2-3-and-3-5	CRT_list(Mod(2, 3), Mod(3, 5))	ValueError: arguments to CRT_list should be lists	error
 multiplicativeorder-residueclass-2-7			
-chineseremainder-residueclass-1-4-and-3-6			
+chineseremainder-residueclass-1-4-and-3-6	CRT_list(Mod(1, 4), Mod(3, 6))	ValueError: arguments to CRT_list should be lists	error
 different-moduli-do-not-combine	(Mod(2, 4) + Mod(1, 6))	1	disagree
 2-is-not-a-unit-mod-4-and-the-message-says-so	(1 / Mod(2, 4))	ZeroDivisionError: inverse of Mod(2, 4) does not exist	error
-odd-mod-4-and-even-mod-6-at-once-no-such-class			
+odd-mod-4-and-even-mod-6-at-once-no-such-class	CRT_list(Mod(1, 4), Mod(2, 6))	ValueError: arguments to CRT_list should be lists	error
 a-non-unit-denominator-mod-4-stays-unevaluated	Mod((1/2), 4)	ZeroDivisionError: inverse of Mod(2, 4) does not exist	error
 power-with-negative-exponent-of-a-non-unit	((Mod(2, 4))^-1)	ZeroDivisionError: inverse of Mod(2, 4) does not exist	error

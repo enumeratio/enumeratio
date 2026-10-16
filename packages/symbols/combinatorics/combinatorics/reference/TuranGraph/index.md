@@ -12,6 +12,14 @@ seeAlso:
   - CompleteGraph
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_graph(graphs.TuranGraph($1, $2))
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - The extremal K_(r+1)-free graph on n vertices with the most edges (Turán's theorem). r = n gives CompleteGraph(n); r = 1 gives the empty graph on n vertices.

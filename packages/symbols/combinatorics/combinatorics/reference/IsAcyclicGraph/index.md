@@ -13,6 +13,14 @@ seeAlso:
   - IsPathGraph
 names:
   wolfram: AcyclicGraphQ
+bindings:
+  - origin: mapped
+    form: sage
+    template: "(lambda g: g.is_directed_acyclic() if g.is_directed() else g.is_forest())($1)"
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Wolfram calls this `AcyclicGraphQ`; this library uses the `Is…` spelling everywhere.

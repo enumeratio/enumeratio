@@ -28,6 +28,14 @@ names:
   wolfram: SquareFreeQ
 bindings:
   - origin: mapped
+    form: sage
+    template: is_squarefree($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
     form: julia
     template: is_squarefree(ZZ($1))
     arity: 1

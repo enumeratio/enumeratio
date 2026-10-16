@@ -1,0 +1,6 @@
+id	in	out	verdict
+standarddeviation-list-1-2-3-4	std([1, 2, 3, 4])	sqrt(5/3)	
+standarddeviation-n-list-1-2-3-4-30	std(enumeratio_n([1, 2, 3, 4], 30))	1.29099444873581	
+n-standarddeviation-ts	enumeratio_n(std(SR.var("ts")))	TypeError: 'sage.symbolic.expression.Expression' object is not iterable	error
+standarddeviation-binomialdistribution-n-p			
+standarddeviation-probabilitydistribution-sqrt-2			

@@ -32,6 +32,16 @@ bindings:
       on: 2026-10-12
     note: SymPy's jacobi_symbol raises unless the lower argument is odd and positive.
   - origin: mapped
+    form: sage
+    template: jacobi_symbol($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
     form: julia
     template: jacobi_symbol(ZZ($1), ZZ($2))
     arity: 2

@@ -13,7 +13,7 @@ the-horizontal-asymptote-at-infty	enumeratio_ball(tanh, Inf)	non-finite argument
 tanh-i-pi-4-i-tan-pi-4-i	enumeratio_ball(tanh, (onei(CC) * enumeratio_div(const_pi(RR), 4)))	(0.0+0.9999999999999999999999999999999999999999999999999999999999999999999999999999914j)	
 oddness-pulls-the-sign-out-of-a-symbolic			
 tanh-artanh-x-x-for-every-x			
-tanh-artanh-2-2-past-the-real-domain	enumeratio_ball(tanh, enumeratio_ball(_atanh, 2))	(1.999999999999999999999999999999999999999999999999999999999999999999999999999983+1.64537616146902811499076012863970857437929461596329011051153211882951662337111e-77j)	
+tanh-artanh-2-2-past-the-real-domain	enumeratio_ball(tanh, enumeratio_ball(_atanh, 2))	(1.999999999999999999999999999999999999999999999999999999999999999999999999999983-1.64537616146902811499076012863970857437929461596329011051153211882951662337111e-77j)	
 derivative-sech-2-x			
 antiderivative-ln-cosh-x			
 tanh-has-no-limit-at-complex-infinity-undefined			

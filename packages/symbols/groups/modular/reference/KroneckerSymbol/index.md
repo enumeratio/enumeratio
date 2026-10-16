@@ -37,6 +37,16 @@ bindings:
       on: 2026-10-12
     note: kronecker_symbol is SymPy's extension of the Jacobi symbol to every integer n.
   - origin: mapped
+    form: sage
+    template: kronecker($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
     form: julia
     template: kronecker_symbol(ZZ($1), ZZ($2))
     arity: 2

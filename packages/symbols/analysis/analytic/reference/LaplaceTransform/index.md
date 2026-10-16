@@ -14,6 +14,13 @@ bindings:
     form: typescript
     environment: engine
     source: packages/symbols/analysis/analytic/src/transforms.ts
+  - origin: mapped
+    form: sage
+    template: laplace($1, $2, $3)
+    arity: 3
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 seeAlso:
   - InverseLaplaceTransform
   - FourierTransform

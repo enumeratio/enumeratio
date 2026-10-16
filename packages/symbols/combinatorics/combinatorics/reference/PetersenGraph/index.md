@@ -13,6 +13,14 @@ seeAlso:
   - IsBipartiteGraph
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_graph(graphs.PetersenGraph())
+    arity: 0
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - 3-regular, non-bipartite (girth 5, so it has odd cycles), and connected — every property a reader would reach for this graph to demonstrate.

@@ -1,0 +1,8 @@
+id	in	out	verdict
+wheel-6-edge-count	(enumeratio_graph(graphs.WheelGraph(6))).size()	10	
+wheelgraph-8	enumeratio_graph(graphs.WheelGraph(8))	Wheel graph	disagree
+wheelgraph-5	enumeratio_graph(graphs.WheelGraph(5))	Wheel graph	disagree
+wheelgraph-6	enumeratio_graph(graphs.WheelGraph(6))	Wheel graph	disagree
+map-function-vertexeccentricity-wheelgraph-6-1-1			
+wheelgraph-4	enumeratio_graph(graphs.WheelGraph(4))	Wheel graph	disagree
+list-wheelgraph-4-completegraph-4	[enumeratio_graph(graphs.WheelGraph(4)), enumeratio_graph(graphs.CompleteGraph(4))]	[Wheel graph: Graph on 4 vertices, Complete graph: Graph on 4 vertices]	disagree

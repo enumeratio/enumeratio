@@ -15,6 +15,14 @@ signatures:
     description: The number of blocks.
     library: enumeratio-combinatorics
     type: (set_partition) -> number
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_stat("SetPartition", $1, "Blocks")
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Defined over `SetPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

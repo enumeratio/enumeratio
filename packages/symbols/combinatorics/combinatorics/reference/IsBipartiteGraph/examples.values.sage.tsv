@@ -1,0 +1,7 @@
+id	in	out
+even-cycle-is-bipartite	(enumeratio_graph(graphs.CycleGraph(6))).is_bipartite()	True
+odd-cycle-is-not	(enumeratio_graph(graphs.CycleGraph(5))).is_bipartite()	False
+a-self-loop-is-never-bipartite	(Graph([(1, 1)], format="list_of_edges", loops=True, multiedges=True)).is_bipartite()	False
+a-4-cycle-is-bipartite	(enumeratio_graph(graphs.CycleGraph(4))).is_bipartite()	True
+a-path-is-always-bipartite	(enumeratio_graph(graphs.PathGraph(7))).is_bipartite()	True
+isbipartitegraph-cyclegraph-3	(enumeratio_graph(graphs.CycleGraph(3))).is_bipartite()	False

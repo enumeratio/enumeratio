@@ -1,0 +1,20 @@
+id	in	out	verdict
+2000-5-3-cdot-16	Integer(2000).valuation(5)	3	
+base-10-by-default	Integer(2000).valuation(10)	3	
+trailing-zeros-in-base-10	Integer(1230000).valuation(10)	4	
+integerexponent-2-pow-10-times-3-pow-4-2	Integer((((2)^10) * ((3)^4))).valuation(2)	10	
+integerexponent-1000-base-10	Integer(1000).valuation(10)	3	
+integerexponent-1024-base-4	Integer(1024).valuation(4)	5	
+integerexponent-1-152-2	Integer(1152).valuation(2)	7	
+integerexponent-144-2	Integer(144).valuation(2)	4	
+composite-base-1728-2-6-3-3-so-6-3-divides-it	Integer(1728).valuation(6)	3	
+negative-integers	Integer(-1000).valuation(10)	3	
+threads-over-a-list	[Integer(10).valuation(10), Integer(100).valuation(10), Integer(1000).valuation(10)]	[1, 2, 3]	
+gaussian-integers-8i-i-cdot-i-3-1-i-6	Integer((0 + 8*I)).valuation((1 + 1*I))	TypeError: Unable to coerce 8*I to an integer	error
+negative-integers-base-2	Integer(-24).valuation(2)	3	
+the-trailing-zeros-of-100	Integer(enumeratio_factorial(100)).valuation(10)	24	
+integerexponent-range-1-50-2			
+legendre-s-formula-lfloor-100-7-rfloor-lfloor	Integer(enumeratio_factorial(100)).valuation(7)	16	
+integerexponent-2-524-2	Integer(2524).valuation(2)	2	
+integerexponent-0-5	Integer(0).valuation(5)	+Infinity	
+base-1-has-no-well-defined-p-adic-valuation-so	Integer(10).valuation(1)	ValueError: You can only compute the valuation with respect to a integer larger than 1.	error

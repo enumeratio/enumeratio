@@ -18,6 +18,14 @@ signatures:
     overrides: enumeratio-analytic
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: matrix($1).rank()
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Written $\operatorname{rank} A$. Row rank equals column rank, so $\operatorname{rank} A = \operatorname{rank} A^\top$.

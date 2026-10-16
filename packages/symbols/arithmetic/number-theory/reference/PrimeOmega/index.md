@@ -34,6 +34,14 @@ bindings:
       on: 2026-10-12
     note: primeomega counts prime factors with multiplicity of an integer; a Gaussian integer is not one.
   - origin: mapped
+    form: sage
+    template: sum(e for _, e in factor($1))
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
     form: julia
     template: enumeratio_prime_omega($1)
     arity: 1

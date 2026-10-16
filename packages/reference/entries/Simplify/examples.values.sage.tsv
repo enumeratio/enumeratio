@@ -1,0 +1,4 @@
+id	in	out
+sine-over-cosine	SR((sin(SR.var("x")) / cos(SR.var("x")))).simplify_full()	True
+hyperbolic-quotient	SR((sinh(SR.var("x")) / cosh(SR.var("x")))).simplify_full()	True
+hyperbolic-identity	SR((((cosh(SR.var("x")))^2) - ((sinh(SR.var("x")))^2))).simplify_full()	1

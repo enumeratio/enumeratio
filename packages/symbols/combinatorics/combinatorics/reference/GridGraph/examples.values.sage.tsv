@@ -1,0 +1,12 @@
+id	in	out	verdict
+a-3-by-4-grid	(enumeratio_graph(graphs.GridGraph([3, 4]))).order()	12	
+edge-count-of-a-3-by-4-grid	(enumeratio_graph(graphs.GridGraph([3, 4]))).size()	17	
+list-gridgraph-list-2-2-2-gridgraph-list-2-2-2-2	[enumeratio_graph(graphs.GridGraph([2, 2, 2])), enumeratio_graph(graphs.GridGraph([2, 2, 2, 2]))]	[Grid Graph for [2, 2, 2]: Graph on 8 vertices, Grid Graph for [2, 2, 2, 2]: Graph on 16 vertices]	disagree
+gridgraph-list-2-3	enumeratio_graph(graphs.GridGraph([2, 3]))	Grid Graph for [2, 3]	disagree
+map-function-vertexeccentricity-gridgraph-list-3			
+ispathgraph-gridgraph-list-1-4			
+ispathgraph-gridgraph-list-4-1			
+ispathgraph-gridgraph-list-1-4-1			
+isbipartitegraph-gridgraph-list-3-4	(enumeratio_graph(graphs.GridGraph([3, 4]))).is_bipartite()	True	
+list-gridgraph-list-2-2-cyclegraph-4	[enumeratio_graph(graphs.GridGraph([2, 2])), enumeratio_graph(graphs.CycleGraph(4))]	[Grid Graph for [2, 2]: Graph on 4 vertices, Cycle graph: Graph on 4 vertices]	disagree
+list-gridgraph-list-2-2-2-hypercubegraph-3	[enumeratio_graph(graphs.GridGraph([2, 2, 2])), enumeratio_graph(graphs.CubeGraph(3))]	[Grid Graph for [2, 2, 2]: Graph on 8 vertices, 3-Cube: Graph on 8 vertices]	disagree

@@ -1,0 +1,8 @@
+id	in	out
+li-at-0	log_integral(0)	0
+li-2	enumeratio_n(log_integral(2))	1.04516378011749
+n-logintegral-2-50	enumeratio_n(log_integral(2), 50)	1.04516378011749
+logintegral-1	log_integral(1)	log_integral(1)
+logintegral-positiveinfinity	log_integral(oo)	log_integral(+Infinity)
+d-logintegral-x-x	diff(log_integral(SR.var("x")), SR.var("x"))	True
+series-logintegral-x-x-2-3	SR(log_integral(SR.var("x"))).series(SR.var("x") == 2, 3 + 1)	True

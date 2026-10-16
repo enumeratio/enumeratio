@@ -33,6 +33,13 @@ bindings:
     form: combinatorica
     template: Inversions[$1]
     arity: 1
+  - origin: mapped
+    form: sage
+    template: enumeratio_stat("Permutation", $1, "Inversions")
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Ranges from $0$ (the identity) to $\binom{n}{2}$ (the reversal $n, n-1, \dots, 1$)

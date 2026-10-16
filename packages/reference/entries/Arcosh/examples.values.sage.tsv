@@ -1,0 +1,21 @@
+id	in	out	verdict
+arcosh-of-a-pure-imaginary-argument	arccosh((sqrt(-13) / 3))	arccosh(1/3*sqrt(-13))	disagree
+arcosh-infinity-is-infinity-not-infinity-the	arccosh(-oo)	+Infinity	disagree
+n-arcosh-5-50	enumeratio_n(arccosh(5), 50)	2.29243166956118	
+arcosh-list-list-1-sqrt-2-over-2-list-0-neg-sqrt	[[arccosh(1), arccosh((sqrt(2) / 2))], [arccosh(0), arccosh((-(sqrt(2) / 2)))]]	[[0, arccosh(1/2*sqrt(2))], [1/2*I*pi, arccosh(-1/2*sqrt(2))]]	
+arcosh-positiveinfinity	arccosh(oo)	+Infinity	
+arcosh-1	arccosh(1)	0	
+integrate-arcosh-x-x-0-1	integrate(arccosh(SR.var("x")), SR.var("x"), 0, 1)	I	
+d-arcosh-x-x	diff(arccosh(SR.var("x")), SR.var("x"))	None	inconclusive
+integrate-arcosh-x-x-nothing-nothing	integrate(arccosh(SR.var("x")), SR.var("x"))	True	
+arcosh-complexinfinity	arccosh(unsigned_infinity)	+Infinity	disagree
+arcosh-neg-2	arccosh(-2)	I*pi - arccosh(2)	disagree
+arcosh-3-over-5	arccosh((3/5))	arccosh(3/5)	
+arcosh-1-over-2-times-sqrt-1-over-2-times-5	arccosh(((1/2) * sqrt(((1/2) * (5 + (-sqrt(5)))))))	arccosh(1/2*sqrt(-1/2*sqrt(5) + 5/2))	
+arcosh-neg-1-over-2-times-sqrt-1-over-2-times-5	arccosh(((-1/2) * sqrt(((1/2) * (5 + (-sqrt(5)))))))	arccosh(-1/2*sqrt(-1/2*sqrt(5) + 5/2))	
+arcosh-0	arccosh(0)	1/2*I*pi	
+arcosh-sqrt-2-over-4-times-neg-1-plus-sqrt-3	arccosh(((sqrt(2) / 4) * (-1 + sqrt(3))))	arccosh(1/4*sqrt(2)*(sqrt(3) - 1))	
+arcosh-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	arccosh(((-(sqrt(2) / 4)) * (-1 + sqrt(3))))	arccosh(-1/4*sqrt(2)*(sqrt(3) - 1))	
+arcosh-1-over-4-times-neg-1-plus-sqrt-5	arccosh(((1/4) * (-1 + sqrt(5))))	arccosh(1/4*sqrt(5) - 1/4)	
+arcosh-1-over-4-times-1-minus-sqrt-5	arccosh(((1/4) * (1 + (-sqrt(5)))))	arccosh(-1/4*sqrt(5) + 1/4)	
+arcosh-1-over-2-times-sqrt-2-minus-sqrt-2	arccosh(((1/2) * sqrt((2 + (-sqrt(2))))))	arccosh(1/2*sqrt(-sqrt(2) + 2))	

@@ -19,6 +19,16 @@ bindings:
     form: wolfram
     environment: external
     note: QFactorial[n, q].
+  - origin: mapped
+    form: sage
+    template: enumeratio_q_factorial($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 seeAlso:
   - QPochhammer
   - QBinomial

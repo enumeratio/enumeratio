@@ -80,6 +80,27 @@ bindings:
       version: 1.3.0
       on: 2026-10-15
   - origin: mapped
+    form: sage
+    template: laguerre($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: sage
+    template: gen_laguerre($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
     form: julia
     template: enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), $1, $2)
     arity: 2

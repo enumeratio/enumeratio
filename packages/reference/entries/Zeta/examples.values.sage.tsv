@@ -27,9 +27,9 @@ zeta-5-2-neg-2-stays-symbolic	hurwitz_zeta((5/2), -2)	hurwitz_zeta(5/2, -2)	inco
 n-zeta-1-2-neg-1-converges-by-continuation	enumeratio_n(hurwitz_zeta((1/2), -1))	ValueError: Hurwitz zeta complex infinity	error
 n-zeta-neg-3-2-neg-1-matches-wolfram	enumeratio_n(hurwitz_zeta((-3/2), -1))	ValueError: Hurwitz zeta complex infinity	error
 n-zeta-i-neg-2-complex-s	enumeratio_n(hurwitz_zeta((0 + 1*I), -2))	ValueError: Hurwitz zeta complex infinity	error
-fullsimplify-normal-series-zeta-x-x-0-2			
-normal-series-zeta-x-x-positiveinfinity-6			
-normal-series-zeta-x-x-1-2			
+fullsimplify-normal-series-zeta-x-x-0-2	(SR(zeta(SR.var("x"))).series(SR.var("x") == 0, 2 + 1)).truncate()	True	
+normal-series-zeta-x-x-positiveinfinity-6	(SR(zeta(SR.var("x"))).series(SR.var("x") == oo, 6 + 1)).truncate()	None	inconclusive
+normal-series-zeta-x-x-1-2	(SR(zeta(SR.var("x"))).series(SR.var("x") == 1, 2 + 1)).truncate()	True	
 zeta-inexact-s-negative-integer-a-abs-terms	hurwitz_zeta(-1.500000001, -3)	hurwitz_zeta(-1.50000000100000, -3)	inconclusive
 zeta-complex-a-left-of-imaginary-axis	hurwitz_zeta((-1.5 + 1*I), (-0.04412268481772066 + 0.9990261201212289*I))	-2.07051414112865 + 3.28265267676808*I	disagree
 n-zeta-3-neg-2p5-sums-abs-terms	enumeratio_n(hurwitz_zeta(3, -2.5))	0.0541020258208637	disagree
@@ -82,8 +82,8 @@ zeta-2-9	hurwitz_zeta(2, 9)	1/6*pi^2 - 1077749/705600
 zeta-2-10	hurwitz_zeta(2, 10)	1/6*pi^2 - 9778141/6350400	
 zeta-4-1	hurwitz_zeta(4, 1)	1/90*pi^4	
 zeta-4-2	hurwitz_zeta(4, 2)	1/90*pi^4 - 1	
-sum-zeta-2k-times-zeta-neg-2-times-k-plus-4-k-1			
-sum-zeta-2k-times-zeta-neg-2-times-k-plus-6-k-1			
+sum-zeta-2k-times-zeta-neg-2-times-k-plus-4-k-1	sum((zeta((2 * SR.var("k"))) * zeta(((-2 * SR.var("k")) + 4))), SR.var("k"), 1, 1)	1/36*pi^4	
+sum-zeta-2k-times-zeta-neg-2-times-k-plus-6-k-1	sum((zeta((2 * SR.var("k"))) * zeta(((-2 * SR.var("k")) + 6))), SR.var("k"), 1, 2)	1/270*pi^6	
 zeta-0-0-the-n-a-0-term-is-0-0-kept	hurwitz_zeta(0, 0)	1/2	
 odd-integers-geq-3-have-no-known-closed-form	zeta(3)	zeta(3)	
 zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s	enumeratio_n(hurwitz_zeta(3, (-1/2)))	0.414398322117160	disagree

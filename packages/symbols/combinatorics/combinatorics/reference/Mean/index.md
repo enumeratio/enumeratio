@@ -27,6 +27,13 @@ bindings:
     template: (sum($1) // length($1))
     arity: 1
   - origin: mapped
+    form: sage
+    template: mean($1)
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
     form: julia
     template: enumeratio_mean($1)
     arity: 1

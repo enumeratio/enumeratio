@@ -32,6 +32,12 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: sage
+    template: multinomial($*,)
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
     form: julia
     template: enumeratio_multinomial($*,)
     checked:

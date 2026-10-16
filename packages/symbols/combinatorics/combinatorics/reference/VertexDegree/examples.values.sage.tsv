@@ -1,0 +1,6 @@
+id	in	out
+degrees-around-a-path	(enumeratio_graph(graphs.PathGraph(5))).degree()	[1, 2, 2, 2, 1]
+the-degree-of-one-vertex	(enumeratio_graph(graphs.StarGraph(6 - 1))).degree(1)	5
+a-self-loop-counts-twice-at-its-own-vertex	(Graph([(1, 2), (2, 3), (3, 1), (1, 1)], format="list_of_edges", loops=True, multiedges=True)).degree()	[4, 2, 2]
+the-degree-of-vertex-2-in-a-mixed-graph		
+the-degree-of-vertex-3-in-a-mixed-graph		

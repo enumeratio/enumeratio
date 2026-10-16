@@ -13,6 +13,14 @@ seeAlso:
   - CycleGraph
 names:
   wolfram: BipartiteGraphQ
+bindings:
+  - origin: mapped
+    form: sage
+    template: ($1).is_bipartite()
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Wolfram calls this `BipartiteGraphQ`; this library uses the `Is…` spelling everywhere.

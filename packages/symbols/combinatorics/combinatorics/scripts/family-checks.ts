@@ -63,16 +63,38 @@ export const fibersOf = (family: EpsilFamily, deep: boolean): number[][] =>
   sampleParams(family.paramCount).filter((p) => isDeep(family.head, p) === deep);
 
 /** The ranks sampled in a fiber with no end: the first few, some between, and the last ones whose term a double
- *  holds exactly (the last is found by bisection with the interpreter, which a constant sequence never leaves). */
+ *  holds exactly. The last is found by doubling the rank until its term is out of reach (a fold over the
+ *  ranks costs what the rank does), then bisecting, with the interpreter; a rank the family declines isn't tried. */
 function unboundedRanks(ce: Engine, family: EpsilFamily, bind: Record<string, unknown>): bigint[] {
   const safe = (r: bigint): boolean => {
     const term = elementOf(evaluateEpsil(ce, family.epsil.unrank, { ...bind, _r: Number(r) }));
     return typeof term === "number" && Number.isSafeInteger(term);
   };
+  const params = family.params.map((name) => Number(bind[name]));
+  const reached = (r: bigint): boolean => family.early?.unrank?.(r, params) !== "decline";
   const ranks = new Set<bigint>([0n, 1n, 2n, 3n, 5n, 8n, 12n, 15n]);
   const top = 2n ** 53n - 1n;
-  if (safe(top)) return [...ranks];
-  let [low, high] = [0n, top];
+  // The farthest rank tried: the top, or the last one the family answers.
+  let limit = top;
+  if (!reached(limit)) {
+    let [near, far] = [0n, top];
+    while (near + 1n < far) {
+      const mid = (near + far) / 2n;
+      if (reached(mid)) near = mid;
+      else far = mid;
+    }
+    limit = near;
+  }
+  let [low, high] = [0n, 16n];
+  while (high <= limit && safe(high)) [low, high] = [high, high * 2n];
+  if (high > limit) {
+    if (safe(limit)) {
+      // Every rank tried has a term a double holds: a constant or slow sequence, or one that is reached no farther.
+      for (const r of [limit / 3n, limit]) ranks.add(r);
+      return [...ranks];
+    }
+    high = limit;
+  }
   while (low + 1n < high) {
     const mid = (low + high) / 2n;
     if (safe(mid)) low = mid;
@@ -80,7 +102,8 @@ function unboundedRanks(ce: Engine, family: EpsilFamily, bind: Record<string, un
   }
   for (const r of [low - 2n, low - 1n, low, low / 2n, low / 7n, low / 1000n, 12345n])
     if (r >= 0n && r <= low) ranks.add(r);
-  return [...ranks];
+  // The first few ranks are only sampled where their terms are safe.
+  return [...ranks].filter((r) => r <= low);
 }
 
 /** A member one entry away from itself, which the family may or may not contain. */
@@ -138,11 +161,16 @@ export function disagreements(
         wrong.add("unrank");
       // A sequence may repeat a term (a constant one), so its rank is the first place the term is found, as
       // the interpreter reads it; elsewhere a member's rank is the rank it came from.
-      const place = unbounded ? integerOf(evaluateEpsil(ce, family.epsil.rank, { ...bind, _x: element })) : BigInt(r);
-      if (runs.rank !== undefined && attempt(runs.rank, { ...compiledBind, _x: element }) !== Number(place))
-        wrong.add("rank");
+      // A rank the family declines (a search too long to run) is not checked.
+      if (!(unbounded && family.early?.rank?.(element as never, p) === "decline")) {
+        const place = unbounded ? integerOf(evaluateEpsil(ce, family.epsil.rank, { ...bind, _x: element })) : BigInt(r);
+        if (runs.rank !== undefined && attempt(runs.rank, { ...compiledBind, _x: element }) !== Number(place))
+          wrong.add("rank");
+      }
       if (runs.valid !== undefined)
         for (const candidate of [element, nearMiss(element)]) {
+          // The kernel hands compiled code only safe integers (a neighbour of the last term may not be one).
+          if (typeof candidate === "number" && !Number.isSafeInteger(candidate)) continue;
           const expected = evaluateEpsil(ce, family.epsil.valid, { ...bind, _x: elementJson(candidate) }) === "True";
           if (attempt(runs.valid, { ...compiledBind, _x: candidate }) !== expected) wrong.add("valid");
         }

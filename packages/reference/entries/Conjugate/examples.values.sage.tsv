@@ -1,0 +1,19 @@
+id	in	out
+conjugate-0	conjugate(0)	0
+conjugate-1	conjugate(1)	1
+conjugate-neg-1	conjugate(-1)	-1
+conjugate-neg-i	conjugate((0 + -1*I))	I
+conjugate-1-plus-i	conjugate((1 + 1*I))	-I + 1
+conjugate-neg-1-plus-i	conjugate((-1 + 1*I))	-I - 1
+conjugate-neg-1-minus-i	conjugate((-1 + -1*I))	I - 1
+conjugate-1-minus-i	conjugate((1 + -1*I))	I + 1
+conjugate-1-plus-sqrt-3-times-i	conjugate((1 + (0 + sqrt(3)*I)))	-I*sqrt(3) + 1
+conjugate-neg-1-plus-sqrt-3-times-i	conjugate((-1 + (0 + sqrt(3)*I)))	-I*sqrt(3) - 1
+conjugate-neg-sqrt-3-minus-i	conjugate(((-sqrt(3)) + (0 + -1*I)))	-sqrt(3) + I
+conjugate-neg-1-plus-neg-sqrt-3-times-i	conjugate((-1 + (0 + (-sqrt(3))*I)))	I*sqrt(3) - 1
+conjugate-1-plus-neg-sqrt-3-times-i	conjugate((1 + (0 + (-sqrt(3))*I)))	I*sqrt(3) + 1
+conjugate-sqrt-3-minus-i	conjugate((sqrt(3) + (0 + -1*I)))	sqrt(3) + I
+conjugate-2	conjugate(2)	2
+conjugate-i	conjugate((0 + 1*I))	-I
+conjugate-sqrt-3-plus-i	conjugate((sqrt(3) + (0 + 1*I)))	sqrt(3) - I
+conjugate-neg-sqrt-3-plus-i	conjugate(((-sqrt(3)) + (0 + 1*I)))	-sqrt(3) - I

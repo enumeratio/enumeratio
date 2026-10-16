@@ -19,6 +19,17 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: QPochhammer[a, q, n]; mpmath.qp(a, q, n).
+  - origin: mapped
+    form: sage
+    template: enumeratio_q_pochhammer($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 seeAlso:
   - QFactorial
   - QBinomial

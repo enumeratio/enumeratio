@@ -13,6 +13,14 @@ seeAlso:
   - StarGraph
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_graph(graphs.WheelGraph($1))
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - EdgeCount = 2(n - 1): n - 1 spokes plus the n - 1 rim edges. Vertex numbering (which vertex is the hub) is kernel-unverified against a live Wolfram session.

@@ -27,7 +27,7 @@ a-negative-real-composite
 divisors-3	enumeratio_divisors(3)	[1, 3]	
 8-times-sum-filter-divisors-20-function			
 filter-range-1-9-999-function-sum-divisors-1-eq			
-the-divisor-count-d-n-equals-sigma-0-n-see			
+the-divisor-count-d-n-equals-sigma-0-n-see	enumeratio_equal(enumeratio_length(enumeratio_divisors(20)), sigma(20, 0))	True	
 divisors-2	enumeratio_divisors(2)	[1, 2]	
 divisors-4	enumeratio_divisors(4)	[1, 2, 4]	
 divisors-5	enumeratio_divisors(5)	[1, 5]	

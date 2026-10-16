@@ -27,6 +27,13 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: "The iterator (Limits or Tuple, k from a to b, or from 1 when a is Nothing) is emitted as SymPy's (k, a, b). SymPy sums reversed bounds by Karr's convention: b < a - 1 gives a negative sum."
+  - origin: mapped
+    form: sage
+    template: sum($1, $2)
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 stub: engine
 statOn:
   - Finset

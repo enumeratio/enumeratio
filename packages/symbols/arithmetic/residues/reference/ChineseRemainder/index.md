@@ -27,6 +27,14 @@ references:
     identity: Chinese remainder theorem
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: CRT_list($1, $2)
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - When the moduli are pairwise coprime, the result is unique modulo $m_1m_2\cdots m_n$ by the Chinese remainder theorem.
