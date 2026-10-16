@@ -5,8 +5,8 @@ a-logarithmic-singularity-at-1	arccoth(1)	+Infinity
 arcoth-positiveinfinity	arccoth(oo)	0	
 a-float-argument-evaluates-directly	arccoth(3.5)	0.293893332451059	
 as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1	SR(arccoth(2)).exponentialize()	1/2*log(3)	
-oddness-pulls-the-sign-out-of-a-symbolic	arccoth((-SR.var("x")))	True	
-derivative-frac-1-1-x-2	diff(arccoth(SR.var("x")), SR.var("x"))	True	
+oddness-pulls-the-sign-out-of-a-symbolic	arccoth((-SR.var("x")))	arccoth(-x)	
+derivative-frac-1-1-x-2	diff(arccoth(SR.var("x")), SR.var("x"))	-1/(x^2 - 1)	
 n-arcoth-2-50	enumeratio_n(arccoth(2), 50)	0.549306144334055	
 arcoth-complexinfinity	arccoth(unsigned_infinity)	0	
 arcoth-neg-1	arccoth(-1)	-Infinity	

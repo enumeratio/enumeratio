@@ -23,5 +23,5 @@ gamma-3-1-gamma-3-order-1-at-a-1-is-just-the
 gamma-n-a-has-poles-at-the-nonpositive-integers			
 orders-past-30-stay-unevaluated-even-under-n-the	stieltjes(40)	stieltjes(40)	disagree
 stieltjesgamma-2-1			
-n-stieltjesgamma-2n	enumeratio_n(stieltjes((2 * SR.var("n"))))	True	
+n-stieltjesgamma-2n	enumeratio_n(stieltjes((2 * SR.var("n"))))	stieltjes(2*n)	
 n-stieltjesgamma-2n-3-over-2			

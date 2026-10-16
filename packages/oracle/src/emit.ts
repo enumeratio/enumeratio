@@ -148,6 +148,15 @@ const mentions = (node: MathJSON, heads: ReadonlySet<string>): boolean =>
 
 /** Heads whose operands thread over lists, which Python's own operators do not. */
 const BROADCAST_HEADS = new Set(["Add", "Subtract", "Multiply", "Divide", "Power"]);
+/** Bits for a decimal read inside N(…): the 200 at which Sage matches ours to 20 digits near a pole. */
+const SAGE_DECIMAL_BITS = 200;
+
+/** Whether a decimal's text is a double exactly (0.25, not 0.1): its fraction is k/2^m. */
+const isDyadic = (text: string): boolean => {
+  const [, digits = "", fraction = ""] = /^-?(\d*)\.?(\d*)$/.exec(text) ?? [];
+  return text.match(/e/i) === null && BigInt(digits + fraction || "0") % 5n ** BigInt(fraction.length) === 0n;
+};
+
 const PYTHON_FAMILY: readonly System[] = ["sympy", "mpmath", "sage"];
 
 /** Emit `expr` as source for `system`, collecting every head it has no mapping for. */
@@ -285,6 +294,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
   const answers = new Set<MathJSON>([expr]);
   // Whether the walk is inside the operand of an mpmath N(x, d) answer with d past a double's digits.
   let exact = false;
+  // Bits for the decimals inside a Sage N(x[, d]) operand: ours reads them as decimals, not as the nearest double.
+  let decimalBits = 0;
   const walk = (node: MathJSON): string => {
     // Wolfram's exponent marker is `*^`, and `1e-11` there is `1 * e - 11`.
     if (typeof node === "number") {
@@ -298,6 +309,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       }
       // Inside an N(x, d) answer past a double's digits `0.1` would be the double, not the decimal.
       if (system === "mpmath" && exact && !Number.isInteger(node)) return `mpf(${JSON.stringify(String(node))})`;
+      if (system === "sage" && decimalBits > 0 && !Number.isInteger(node) && !isDyadic(String(node)))
+        return `RealField(${decimalBits})(${JSON.stringify(String(node))})`;
       if (system === "julia" && (!Number.isInteger(node) || /e/i.test(String(node))))
         return `enumeratio_decimal(${JSON.stringify(String(node))})`;
       return system === "mathlib4" && node < 0 ? `(${node})` : String(node);
@@ -421,11 +434,18 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     const fresh = binders.filter((v) => !bound.has(v));
     for (const v of fresh) bound.add(v);
     const wasExact = exact;
+    const wasBits = decimalBits;
+    if (system === "sage" && head === "N")
+      decimalBits = Math.max(
+        SAGE_DECIMAL_BITS,
+        typeof operands[1] === "number" ? Math.ceil(operands[1] * 3.33) + 64 : 0,
+      );
     if (system === "mpmath" && head === "N" && typeof operands[1] === "number" && operands[1] > 15) exact = true;
     try {
       return walkCall(head, operands);
     } finally {
       exact = wasExact;
+      decimalBits = wasBits;
       for (const v of fresh) bound.delete(v);
     }
   };
@@ -700,7 +720,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       missing.push(`${head}/${operands.length}`);
       return "0";
     }
-    const mapping = mappingFor(head, operands.length, extra);
+    const mapping = mappingFor(head, operands.length, extra, system);
     let template = mapping?.emit[system];
     if (system === "sympy" && template !== undefined) {
       const first = operands[0] as MathJSON;

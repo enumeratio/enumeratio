@@ -4,7 +4,7 @@ id	in	out	verdict
 the-empty-product-is-1-by-convention	enumeratio_factorial(0)	1	
 10-factorial	enumeratio_factorial(10)	3628800	
 threads-element-wise-over-a-list	enumeratio_factorial([1, 2, 3, 4])	[1, 2, 6, 24]	
-frac-n-n-1-simplifies-to-n-under-simplify-plain	SR((enumeratio_factorial(SR.var("n")) / enumeratio_factorial((SR.var("n") - 1)))).simplify_full()	True	
+frac-n-n-1-simplifies-to-n-under-simplify-plain	SR((enumeratio_factorial(SR.var("n")) / enumeratio_factorial((SR.var("n") - 1)))).simplify_full()	n	
 real-arguments-evaluate-as-gamma-n-1	enumeratio_factorial(3.5)	11.6317283965674	
 negative-non-integers-are-defined-too-2-5-gamma	enumeratio_factorial(-2.5)	2.36327180120735	
 complex-arguments-1-i-gamma-2-i	enumeratio_factorial((1 + 1*I))	factorial(I + 1)	disagree

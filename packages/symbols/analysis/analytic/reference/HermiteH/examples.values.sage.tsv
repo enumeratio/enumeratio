@@ -1,16 +1,16 @@
 id	in	out	verdict
-the-quadratic	hermite(2, SR.var("x"))	True	
-the-cubic	hermite(3, SR.var("x"))	True	
+the-quadratic	hermite(2, SR.var("x"))	4*x^2 - 2	
+the-cubic	hermite(3, SR.var("x"))	8*x^3 - 12*x	
 at-an-integer	hermite(4, 2)	76	
 at-a-real	hermite(5, 0.7)	34.4982400000000	
 the-derivative	diff(hermite(SR.var("n"), SR.var("x")), SR.var("x"))	RuntimeError: hermite_eval: The index n must be a nonnegative integer	error
-at-t5-0-7	enumeratio_n(hermite(5, 0.7))	34.4982400000000	
-at-t10-1-3	enumeratio_n(hermite(10, 1.3))	-66123.4130330624	
+at-t5-0-7	enumeratio_n(hermite(5, RealField(200)("0.7")))	34.4982400000000	
+at-t10-1-3	enumeratio_n(hermite(10, RealField(200)("1.3")))	-66123.4130330624	
 at-t4-2-3i	enumeratio_n(hermite(4, (2 + 3*I)))	-1652.00000000000 - 2496.00000000000*I	
 at-a-rational	hermite(5, (1/3))	8312/243	
 at-a-complex-argument	hermite(4, (2 + 3*I))	-2496*I - 1652	
-a-symbolic-order-stays-unevaluated	hermite(SR.var("n"), SR.var("x"))	True	
-hermiteh-10-x	hermite(10, SR.var("x"))	True	
+a-symbolic-order-stays-unevaluated	hermite(SR.var("n"), SR.var("x"))	hermite(n, x)	
+hermiteh-10-x	hermite(10, SR.var("x"))	1024*x^10 - 23040*x^8 + 161280*x^6 - 403200*x^4 + 302400*x^2 - 30240	
 at-zero	hermite(6, 0)	-120	
 parity	enumeratio_equal(hermite(5, (-1/3)), (-hermite(5, (1/3))))	True	
 recurrence	(hermite(5, 3) - ((6 * hermite(4, 3)) - (8 * hermite(3, 3))))	0	

@@ -4,7 +4,7 @@ erfinv-1	erfinv(1)	oo
 erfinv-neg-1	erfinv(-1)	-oo	
 a-floating-point-argument-evaluates-directly-to	erfinv(0.5)	0.476936276204470	
 a-machine-precision-argument	erfinv(0.6)	0.595116081449995	
-series-erfinv-x-x-0-3	series(erfinv(Symbol("x")), Symbol("x"), 0, 3 + 1)	True	
+series-erfinv-x-x-0-3	series(erfinv(Symbol("x")), Symbol("x"), 0, 3 + 1)	sqrt(pi)*x/2 + pi**(3/2)*x**3/24 + O(x**4)	
 threads-element-wise-over-a-list-as-wolfram-s	[erfinv(0), erfinv(1)]	[0, oo]	
 two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x			
 interval-arithmetic-the-inverse-is-increasing-so	erfinv(AccumBounds(0.5, 0.6))	erfinv(AccumBounds(0.5, 0.6))	disagree
@@ -15,12 +15,12 @@ functionexpand-matrixfunction-erfinv-list-list-0
 erfinv-a-erf-a-z			
 functionexpand-erf-erfinv-s			
 erfinv-s-eq-erfinv-0-s			
-series-erfinv-x-x-0-8	series(erfinv(Symbol("x")), Symbol("x"), 0, 8 + 1)	True	
+series-erfinv-x-x-0-8	series(erfinv(Symbol("x")), Symbol("x"), 0, 8 + 1)	sqrt(pi)*x/2 + pi**(3/2)*x**3/24 + 7*pi**(5/2)*x**5/960 + 127*pi**(7/2)*x**7/80640 + O(x**9)	
 series-erfinv-z0-s-z0-0-2			
 the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	(sqrt(2) * erfinv(0.95))	1.38590382434968*sqrt(2)	
 inverse-of-erf-erf-erfinv-x-x-see-erf	enumeratio_equal(erf(erfinv(0.5)), 0.5)	True	
 odd-erfinv-x-erfinv-x-applied-symbolically	erfinv((-Symbol("x")))	None	inconclusive
-frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2	diff(erfinv(Symbol("x")), Symbol("x"))	True	
+frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2	diff(erfinv(Symbol("x")), Symbol("x"))	sqrt(pi)*exp(erfinv(x)**2)/2	
 isnumeric-erfinv-1-over-pi-1-over-2			
 erfinv-0-0			
 erfinv-0-1			

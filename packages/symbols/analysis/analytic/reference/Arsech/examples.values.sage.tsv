@@ -4,11 +4,11 @@ arsech-1-0-exactly	arcsech(1)	0
 a-logarithmic-singularity-at-0	arcsech(0)	+Infinity	
 a-float-argument-evaluates-directly	arcsech(0.25)	2.06343706889556	
 past-1-the-value-is-imaginary-arsech-2-arcosh	arcsech(2)	arcsech(2)	
-derivative-frac-1-x-sqrt-1-x-2	diff(arcsech(SR.var("x")), SR.var("x"))	True	
+derivative-frac-1-x-sqrt-1-x-2	diff(arcsech(SR.var("x")), SR.var("x"))	-1/(sqrt(-x^2 + 1)*x)	
 n-arsech-1-over-3-50	enumeratio_n(arcsech((1/3)), 50)	1.76274717403909	
 arsech-list-list-2-0-list-1-neg-2	[[arcsech(2), arcsech(0)], [arcsech(1), arcsech(-2)]]	[[arcsech(2), +Infinity], [0, I*pi - arcsech(2)]]	
 arsech-positiveinfinity	arcsech(oo)	1/2*I*pi	
-trigtoexp-arsech-z	SR(arcsech(SR.var("z"))).exponentialize()	True	
+trigtoexp-arsech-z	SR(arcsech(SR.var("z"))).exponentialize()	arcsech(z)	
 matrixfunction-function-arsech-1-1-list-list-2-0			
 integrate-arsech-x-x-nothing-nothing	integrate(arcsech(SR.var("x")), SR.var("x"))	None	inconclusive
 arsech-neg-2	arcsech(-2)	I*pi - arcsech(2)	

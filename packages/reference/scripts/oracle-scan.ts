@@ -277,11 +277,9 @@ for (const system of systems) {
       symbolicMode[index] = false;
     }
   }
-  // The agreement program's `True`, and the TeX of the program itself, are not what Wolfram answers or how it
+  // The agreement program's `True`, and the TeX of the program itself, are not what the kernel answers or how it
   // writes the input: a decided row shows the plain input's answer and TeX, and the verdict stays the program's.
-  const decided = isWolframFamily(system)
-    ? runnable.flatMap((_row, index) => (symbolicMode[index] ? [index] : []))
-    : [];
+  const decided = runnable.flatMap((_row, index) => (symbolicMode[index] ? [index] : []));
   if (decided.length > 0) {
     const plain = await runIn(
       system,
@@ -291,7 +289,9 @@ for (const system of systems) {
     for (const [at, index] of decided.entries()) {
       const answered = plain[at] as (typeof results)[number];
       const program = results[index] as (typeof results)[number];
-      if ("error" in answered || "error" in program || answered.display === undefined) {
+      // The check's own error is its verdict, recorded as it is.
+      if ("error" in program) continue;
+      if ("error" in answered || answered.display === undefined) {
         // The record would show the check's `True` and its TeX: leave the committed row as it is.
         const id = (runnable[index] as { item: Case }).item.id;
         process.stderr.write(`${system}: ${id}: the plain input gave no answer to record; its row is not written\n`);

@@ -4,7 +4,7 @@ arsech-1-0-exactly	asech(1)	0
 a-logarithmic-singularity-at-0	asech(0)	oo	
 a-float-argument-evaluates-directly	asech(0.25)	2.06343706889556	
 past-1-the-value-is-imaginary-arsech-2-arcosh	asech(2)	I*pi/3	
-derivative-frac-1-x-sqrt-1-x-2	diff(asech(Symbol("x")), Symbol("x"))	True	
+derivative-frac-1-x-sqrt-1-x-2	diff(asech(Symbol("x")), Symbol("x"))	-1/(x*sqrt(1 - x**2))	
 n-arsech-1-over-3-50	N(asech(Rational(1, 3)), 30)	1.76274717403908605046521864996	
 arsech-list-list-2-0-list-1-neg-2	[[asech(2), asech(0)], [asech(1), asech(-2)]]	[[I*pi/3, oo], [0, 2*I*pi/3]]	
 arsech-positiveinfinity	asech(oo)	I*pi/2	

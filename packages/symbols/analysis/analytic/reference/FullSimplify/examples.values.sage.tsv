@@ -1,14 +1,14 @@
 id	in	out
 the-pythagorean-identity	SR((((sin(SR.var("x")))^2) + ((cos(SR.var("x")))^2))).simplify_full()	1
-recognizes-the-definition-of-sinh	SR(((exp(SR.var("x")) - exp((-SR.var("x")))) / 2)).simplify_full()	True
-folds-the-double-angle-product	SR((2 * sin(SR.var("x")) * cos(SR.var("x")))).simplify_full()	True
-the-functional-equation-of-gamma	SR((gamma((SR.var("x") + 1)) / gamma(SR.var("x")))).simplify_full()	True
+recognizes-the-definition-of-sinh	SR(((exp(SR.var("x")) - exp((-SR.var("x")))) / 2)).simplify_full()	1/2*(e^(2*x) - 1)*e^(-x)
+folds-the-double-angle-product	SR((2 * sin(SR.var("x")) * cos(SR.var("x")))).simplify_full()	2*cos(x)*sin(x)
+the-functional-equation-of-gamma	SR((gamma((SR.var("x") + 1)) / gamma(SR.var("x")))).simplify_full()	x
 denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3	SR(((sqrt(2) + sqrt(3)) - sqrt((5 + (2 * sqrt(6)))))).simplify_full()	sqrt(3) + sqrt(2) - sqrt(2*sqrt(6) + 5)
 the-hyperbolic-pythagorean-identity	SR((((cosh(SR.var("x")))^2) - ((sinh(SR.var("x")))^2))).simplify_full()	1
-fullsimplify-x-pow-10-minus-1-times-x-pow-10	SR(((((SR.var("x"))^10) + -1) * (((SR.var("x"))^10) + 1))).simplify_full()	True
+fullsimplify-x-pow-10-minus-1-times-x-pow-10	SR(((((SR.var("x"))^10) + -1) * (((SR.var("x"))^10) + 1))).simplify_full()	x^20 - 1
 fullsimplify-neg-4-times-arctan-1-over-239-plus	SR(((-4 * arctan((1/239))) + (16 * arctan((1/5))))).simplify_full()	16*arctan(1/5) - 4*arctan(1/239)
-fullsimplify-4-times-sin-x-times-cos-x-plus-4	SR(((4 * sin(SR.var("x")) * cos(SR.var("x"))) + (4 * ((sin(SR.var("x")))^2) * ((cos(SR.var("x")))^2)) + 1)).simplify_full()	True
-fullsimplify-1-minus-i-times-exponentiale-pow-i	SR((((1 + -1*I) * ((e)^((0 + 1*I) * SR.var("x")))) + ((1 + 1*I) * ((e)^((0 + -1*I) * SR.var("x")))))).simplify_full()	True
+fullsimplify-4-times-sin-x-times-cos-x-plus-4	SR(((4 * sin(SR.var("x")) * cos(SR.var("x"))) + (4 * ((sin(SR.var("x")))^2) * ((cos(SR.var("x")))^2)) + 1)).simplify_full()	4*cos(x)^2*sin(x)^2 + 4*cos(x)*sin(x) + 1
+fullsimplify-1-minus-i-times-exponentiale-pow-i	SR((((1 + -1*I) * ((e)^((0 + 1*I) * SR.var("x")))) + ((1 + 1*I) * ((e)^((0 + -1*I) * SR.var("x")))))).simplify_full()	2*cos(x) + 2*sin(x)
 assuming-re-x-gt-0-fullsimplify-exponentiale-pow		
-a-bare-exp-is-left-alone	SR(exp(SR.var("x"))).simplify_full()	True
+a-bare-exp-is-left-alone	SR(exp(SR.var("x"))).simplify_full()	e^x
 assuming-real-x-gt-0-fullsimplify-exponentiale		

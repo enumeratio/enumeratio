@@ -5,8 +5,8 @@ a-logarithmic-singularity-at-1	acoth(1)	oo
 arcoth-positiveinfinity	acoth(oo)	0	
 a-float-argument-evaluates-directly	acoth(3.5)	0.293893332451060	
 as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1			
-oddness-pulls-the-sign-out-of-a-symbolic	acoth((-Symbol("x")))	True	
-derivative-frac-1-1-x-2	diff(acoth(Symbol("x")), Symbol("x"))	True	
+oddness-pulls-the-sign-out-of-a-symbolic	acoth((-Symbol("x")))	-acoth(x)	
+derivative-frac-1-1-x-2	diff(acoth(Symbol("x")), Symbol("x"))	1/(1 - x**2)	
 n-arcoth-2-50	N(acoth(2), 30)	0.549306144334054845697622618461	
 arcoth-complexinfinity	acoth(zoo)	0	
 arcoth-neg-1	acoth(-1)	-oo	

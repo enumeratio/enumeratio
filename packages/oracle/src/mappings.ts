@@ -33,11 +33,19 @@ export const MAPPINGS: readonly Mapping[] = MAPPINGS_DATA;
 
 /**
  * The mapping that applies to a head at a given arity, preferring the arity-specific one; `extra`
- * (a library's own, `mappingsFromBindings`) before the system's.
+ * (a library's own, `mappingsFromBindings`) before the system's. With `system`, only rows that emit for it.
  */
-export function mappingFor(head: string, arity: number, extra: readonly Mapping[] = []): Mapping | undefined {
+export function mappingFor(
+  head: string,
+  arity: number,
+  extra: readonly Mapping[] = [],
+  system?: System,
+): Mapping | undefined {
   for (const table of [extra, MAPPINGS]) {
-    const rows = table.filter((mapping) => mapping.head === head);
+    // An arity-specific row for another system (Max/2 for Rust) must not hide the general row for this one.
+    const rows = table.filter(
+      (mapping) => mapping.head === head && (system === undefined || mapping.emit[system] !== undefined),
+    );
     const found = rows.find((mapping) => mapping.arity === arity) ?? rows.find((m) => m.arity === undefined);
     if (found !== undefined) return found;
   }

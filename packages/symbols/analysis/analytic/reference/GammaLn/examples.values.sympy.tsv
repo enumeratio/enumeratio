@@ -16,6 +16,6 @@ gammaln-1-ln-gamma-1-ln-1-0	enumeratio_equal(loggamma(1), 0)	True
 inherits-gamma-s-recurrence-gammaln-z-1-gammaln	enumeratio_equal(loggamma(6), (loggamma(5) + log(5)))	True	
 gammaln-1-2-frac-12-ln-pi-from-gamma-1-2-sqrt-pi	enumeratio_equal(loggamma(Rational(1, 2)), (Rational(1, 2) * log(pi)))	True	
 an-exact-positive-integer-now-reduces-too	loggamma(5)	log(24)	
-the-derivative-of-ln-gamma-is-the-digamma	diff(loggamma(Symbol("x")), Symbol("x"))	True	
+the-derivative-of-ln-gamma-is-the-digamma	diff(loggamma(Symbol("x")), Symbol("x"))	polygamma(0, x)	
 off-the-positive-axis-gammaln-is-the-principal	loggamma(-1.5)	0.860047015376481 - 6.28318530717959*I	inconclusive
 gammaln-101-is-exactly-ln-100-letting-us-reason	enumeratio_equal(loggamma(101), log(factorial(100)))	True	

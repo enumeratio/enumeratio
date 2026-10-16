@@ -1,17 +1,17 @@
 id	in	out	verdict
-f-0-5-0-3	enumeratio_n(elliptic_f(0.5, 0.3))	0.506140211962355	
-f-1-2-0-7	enumeratio_n(elliptic_f(1.2, 0.7))	1.42944843302276	
-f-0-8-0-4	enumeratio_n(elliptic_f(-0.8, 0.4))	-0.833343010862597	
-f-2-5-0-3	enumeratio_n(elliptic_f(2.5, 0.3))	2.77338117755762	
-f-3-0-6	enumeratio_n(elliptic_f(-3, 0.6))	-3.75725857740599	
-f-0-3-0-4i-0-5	enumeratio_n(elliptic_f((0.3 + 0.4*I), 0.5))	0.290232021665395 + 0.403598147717592*I	
-f-1-0-5i-0-2	enumeratio_n(elliptic_f((1 + -0.5*I), 0.2))	1.01354647305134 - 0.541034456084455*I	
-f-0-6-0-57-0-23i	enumeratio_n(elliptic_f(0.6, (0.57 + 0.23*I)))	0.620516755370609 + 0.00922590650108183*I	
-f-1-1-0-1-0-9i	enumeratio_n(elliptic_f(1.1, (0.1 + 0.9*I)))	1.06663270237072 + 0.145868959723651*I	
-f-3-711592653589793-0-57-0-23i	enumeratio_n(elliptic_f(3.711592653589793, (0.57 + 0.23*I)))	4.30741994832229 + 0.425476694131428*I	
-f-3-711592653589793-0-23i-0-57-0-23i	enumeratio_n(elliptic_f((3.711592653589793 + 0.23*I), (0.57 + 0.23*I)))	4.28976443470057 + 0.671112429987334*I	
-f-3-0-57-0-23i	enumeratio_n(elliptic_f(-3, (0.57 + 0.23*I)))	-3.57795767331208 - 0.417536385803403*I	
-f-4-5-0-1-0-9i	enumeratio_n(elliptic_f(4.5, (0.1 + 0.9*I)))	4.20950241998387 + 0.827759281089238*I	
+f-0-5-0-3	enumeratio_n(elliptic_f(0.5, RealField(200)("0.3")))	0.506140211962355	
+f-1-2-0-7	enumeratio_n(elliptic_f(RealField(200)("1.2"), RealField(200)("0.7")))	1.42944843302276	
+f-0-8-0-4	enumeratio_n(elliptic_f(RealField(200)("-0.8"), RealField(200)("0.4")))	-0.833343010862597	
+f-2-5-0-3	enumeratio_n(elliptic_f(2.5, RealField(200)("0.3")))	2.77338117755762	
+f-3-0-6	enumeratio_n(elliptic_f(-3, RealField(200)("0.6")))	-3.75725857740599	
+f-0-3-0-4i-0-5	enumeratio_n(elliptic_f((RealField(200)("0.3") + RealField(200)("0.4")*I), 0.5))	0.290232021665395 + 0.403598147717592*I	
+f-1-0-5i-0-2	enumeratio_n(elliptic_f((1 + -0.5*I), RealField(200)("0.2")))	1.01354647305134 - 0.541034456084455*I	
+f-0-6-0-57-0-23i	enumeratio_n(elliptic_f(RealField(200)("0.6"), (RealField(200)("0.57") + RealField(200)("0.23")*I)))	0.620516755370609 + 0.00922590650108183*I	
+f-1-1-0-1-0-9i	enumeratio_n(elliptic_f(RealField(200)("1.1"), (RealField(200)("0.1") + RealField(200)("0.9")*I)))	1.06663270237071 + 0.145868959723651*I	
+f-3-711592653589793-0-57-0-23i	enumeratio_n(elliptic_f(RealField(200)("3.711592653589793"), (RealField(200)("0.57") + RealField(200)("0.23")*I)))	4.30741994832229 + 0.425476694131428*I	
+f-3-711592653589793-0-23i-0-57-0-23i	enumeratio_n(elliptic_f((RealField(200)("3.711592653589793") + RealField(200)("0.23")*I), (RealField(200)("0.57") + RealField(200)("0.23")*I)))	4.28976443470058 + 0.671112429987334*I	
+f-3-0-57-0-23i	enumeratio_n(elliptic_f(-3, (RealField(200)("0.57") + RealField(200)("0.23")*I)))	-3.57795767331208 - 0.417536385803403*I	
+f-4-5-0-1-0-9i	enumeratio_n(elliptic_f(4.5, (RealField(200)("0.1") + RealField(200)("0.9")*I)))	4.20950241998387 + 0.827759281089238*I	
 f-jacobiamplitude-0-0-m-0	elliptic_f(jacobi_am(0, 0), 0)	0	
 f-jacobiamplitude-0-1-m-1	elliptic_f(jacobi_am(0, 1), 1)	0	
 f-phi-arccsc-0-m-0	elliptic_f(arccsc(0), 0)	NaN	disagree

@@ -5,12 +5,12 @@ rational-order-7-3-at-2-5	hypergeometric([], [(7/3)], 2.5)	2.56029269391997
 complex-order-1-plus-i-at-0-5	enumeratio_n(hypergeometric([], [(1 + 1*I)], 0.5))	1.26248414130763 - 0.289645741340912*I	
 order-2-at-a-complex-argument	enumeratio_n(hypergeometric([], [2], (0.5 + 0.5*I)))	1.24817563688593 + 0.293401296264334*I	
 negative-order-neg-0-5-at-0-3	hypergeometric([], [-0.5], 0.3)	0.207633759462581	
-complex-order-and-argument	enumeratio_n(hypergeometric([], [(-2.5 + 1.5*I)], (1.2 + -0.8*I)))	0.632186477801755 + 0.0225531925472149*I	
-series-hypergeometric0f1-a-x-x-0-4	SR(hypergeometric([], [SR.var("a")], SR.var("x"))).series(SR.var("x") == 0, 4 + 1)	True	
+complex-order-and-argument	enumeratio_n(hypergeometric([], [(-2.5 + 1.5*I)], (RealField(200)("1.2") + RealField(200)("-0.8")*I)))	0.632186477801755 + 0.0225531925472149*I	
+series-hypergeometric0f1-a-x-x-0-4	SR(hypergeometric([], [SR.var("a")], SR.var("x"))).series(SR.var("x") == 0, 4 + 1)	1 + (1/a)*x + (1/2/((a + 1)*a))*x^2 + (1/6/((a + 2)*(a + 1)*a))*x^3 + (1/24/((a + 3)*(a + 2)*(a + 1)*a))*x^4 + Order(x^5)	
 fullsimplify-normal-series-hypergeometric0f1-a-x	(SR(hypergeometric([], [SR.var("a")], SR.var("x"))).series(SR.var("x") == oo, 1 + 1)).truncate()	None	inconclusive
 n-hypergeometric0f1-1-neg-2-50	enumeratio_n(hypergeometric([], [1], -2), 50)	-0.196548095270468	
 matrixfunction-function-hypergeometric0f1-1-over			
-series-hypergeometric0f1-a-x-x-0-3	SR(hypergeometric([], [SR.var("a")], SR.var("x"))).series(SR.var("x") == 0, 3 + 1)	True	
+series-hypergeometric0f1-a-x-x-0-3	SR(hypergeometric([], [SR.var("a")], SR.var("x"))).series(SR.var("x") == 0, 3 + 1)	1 + (1/a)*x + (1/2/((a + 1)*a))*x^2 + (1/6/((a + 2)*(a + 1)*a))*x^3 + Order(x^4)	
 n-neg-1-over-4-times-hypergeometric0f1-1-over-2	enumeratio_n((((-1/4) * hypergeometric([], [(1/2)], (1/2))) + ((1/4) * hypergeometric([], [(-1/2)], (1/2))) + ((1/2) * hypergeometric([], [(3/2)], (1/2)))))	0.000000000000000	
 n-neg-1-over-4-times-hypergeometric0f1-1-over-3	enumeratio_n((((-1/4) * ((hypergeometric([], [(1/2)], (1/2)))^2)) + ((1/2) * ((hypergeometric([], [(3/2)], (1/2)))^2))))	-0.250000000000000	
 n-2-times-hypergeometric0f1-3-over-2-2-plus-neg	enumeratio_n(((2 * hypergeometric([], [(3/2)], 2)) + ((-1/4) * hypergeometric([], [(1/2)], 2)) + ((1/4) * hypergeometric([], [(-1/2)], 2))))	0.000000000000000	

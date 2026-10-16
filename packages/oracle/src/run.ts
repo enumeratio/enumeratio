@@ -778,6 +778,19 @@ def enumeratio_primitive_root_list(n):
     return sorted(int(power_mod(g, k, n)) for k in range(1, phi + 1) if gcd(k, phi) == 1)
 
 ${HELD_ALIKE}
+# Sage's binomial wants m or x - m an integer; otherwise it is the Gamma ratio, as ours is.
+def enumeratio_binomial(x, m):
+    try:
+        return binomial(x, m)
+    except TypeError:
+        # A pole of Gamma(x + 1) over finite Gamma factors: a complex infinity, as ours.
+        try:
+            if ZZ(x + 1) <= 0:
+                return unsigned_infinity
+        except (TypeError, ValueError):
+            pass
+        return gamma(x + 1) / (gamma(m + 1) * gamma(x - m + 1))
+
 # A Gaussian integer a + bi (b != 0) written as a symbolic-ring number has no gcd, divisors or
 # factorization there; ZZ[I] does. Anything that is not an exact Gaussian integer comes back
 # unchanged.

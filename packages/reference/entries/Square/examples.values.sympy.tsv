@@ -2,7 +2,7 @@ id	in	out	verdict
 square-5	(5)**2	25	
 same-result-for-x-and-x	(-5)**2	25	
 square-2-over-3	(Rational(2, 3))**2	4/9	
-canonicalizes-to-x-2	(Symbol("x"))**2	True	
+canonicalizes-to-x-2	(Symbol("x"))**2	x**2	
 threads-element-wise-over-a-list	([2, 3, -4])**2	TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'	error
 the-area-of-a-3-3-square-tile	(3)**2	9	
 even-function-x-2-x-2	enumeratio_equal((-5)**2, (5)**2)	True	

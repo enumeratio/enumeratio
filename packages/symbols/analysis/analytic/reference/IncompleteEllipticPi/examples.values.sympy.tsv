@@ -16,6 +16,6 @@ a-complex-amplitude-phi-where-native-ellipticpi	N(elliptic_pi(0.2, (1.2 + 0.5*I)
 all-three-arguments-complex-matches-mpmath-s	N(elliptic_pi((1.17 + 0.45*I), (1.17 + 0.45*I), (1.17 + 0.45*I)), 30)	0.343014061827736653324278940856 + 1.07868566935499592295076499328*I	
 characteristic-n-1	N(elliptic_pi(0.3, 1.1, 0.4), 30)	1.32380081504749336218651478703	
 n-0-reduces-to-the-incomplete-elliptic-integral	N(elliptic_pi(0, 0.4, 0.3), 30)	0.403164991947139228489760398588	
-symbolic-arguments-are-left-unevaluated-rather	elliptic_pi(Symbol("n"), Symbol("phi"), Symbol("m"))	True	
+symbolic-arguments-are-left-unevaluated-rather	elliptic_pi(Symbol("n"), Symbol("phi"), Symbol("m"))	elliptic_pi(n, phi, m)	
 n-0-phi-arccsc-0-m-0	elliptic_pi(0, acsc(0), 0)	zoo	disagree
 n-0-phi-pi-plus-arccsc-0-m-0	elliptic_pi(0, (pi + acsc(0)), 0)	zoo	disagree

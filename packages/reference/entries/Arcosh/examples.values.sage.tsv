@@ -7,7 +7,7 @@ arcosh-positiveinfinity	arccosh(oo)	+Infinity
 arcosh-1	arccosh(1)	0	
 integrate-arcosh-x-x-0-1	integrate(arccosh(SR.var("x")), SR.var("x"), 0, 1)	I	
 d-arcosh-x-x	diff(arccosh(SR.var("x")), SR.var("x"))	None	inconclusive
-integrate-arcosh-x-x-nothing-nothing	integrate(arccosh(SR.var("x")), SR.var("x"))	True	
+integrate-arcosh-x-x-nothing-nothing	integrate(arccosh(SR.var("x")), SR.var("x"))	x*arccosh(x) - sqrt(x^2 - 1)	
 arcosh-complexinfinity	arccosh(unsigned_infinity)	+Infinity	disagree
 arcosh-neg-2	arccosh(-2)	I*pi - arccosh(2)	disagree
 arcosh-3-over-5	arccosh((3/5))	arccosh(3/5)	

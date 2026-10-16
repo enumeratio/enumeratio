@@ -6,8 +6,8 @@ pochhammer-3-4	rising_factorial(3, 4)	360
 10-11-12-13-14-15	rising_factorial(10, 6)	3603600	
 at-pochhammer-3-2	enumeratio_n(rising_factorial(3, 2))	12.0000000000000	
 threads-element-wise-over-a-list-as-wolfram-s	[rising_factorial(2, 2), rising_factorial(3, 2), rising_factorial(4, 2)]	[6, 12, 20]	
-a-symbolic-base-with-integer-order-expands-to	rising_factorial(SR.var("n"), 5)	True	
-a-negative-order-expands-to-the-reciprocal	rising_factorial(SR.var("n"), -5)	True	
+a-symbolic-base-with-integer-order-expands-to	rising_factorial(SR.var("n"), 5)	(n + 4)*(n + 3)*(n + 2)*(n + 1)*n	
+a-negative-order-expands-to-the-reciprocal	rising_factorial(SR.var("n"), -5)	gamma(n - 5)/gamma(n)	
 real-base-and-order-evaluate-as-frac-gamma-a-n	rising_factorial(2.4, 8.5)	2.31022467324071e6	
 a-zero-base-gives-0-for-any-positive-order	rising_factorial(0, 1285)	0	
 a-rational-base-frac-12-cdot-frac-32-cdot-frac	rising_factorial((1/2), 3)	15/8	
@@ -17,7 +17,7 @@ dividing-by-k-counts-multisets-binom-n-k-1-k	(rising_factorial(5, 3) / enumerati
 1-n-n-since-the-rising-factorial-from-1-just	enumeratio_equal(rising_factorial(1, 5), enumeratio_factorial(5))	True	
 negative-order-gives-the-reciprocal-a-n-frac-1-a	rising_factorial(5, -2)	1/12	
 order-0-is-the-empty-product-a-0-1	rising_factorial(SR.var("a"), 0)	1	
-a-1-a	rising_factorial(SR.var("a"), 1)	True	
+a-1-a	rising_factorial(SR.var("a"), 1)	a	
 the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see	enumeratio_equal(rising_factorial(4, 3), (gamma(7) / gamma(4)))	True	
 rising-and-falling-factorials-x-underline-n-1-n	enumeratio_equal(falling_factorial(5, 3), (-1 * rising_factorial(-5, 3)))	True	
 if-a-is-a-non-positive-integer-with-a-n-the	rising_factorial(-3, 4)	0	

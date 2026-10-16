@@ -27,7 +27,7 @@ including-negative-half-integers-gamma-3-2-frac	gamma((-3/2))	4/3*sqrt(pi)
 gamma-infty-infty	gamma(oo)	gamma(+Infinity)	
 values-far-past-the-double-range-gamma-200-5	gamma(200.5)	5.57316894480138e373	
 two-arguments-the-upper-incomplete-gamma-gamma-5	gamma_inc(2.5, 1.5)	0.930519442786792	
-an-integer-order-reduces-to-a-closed-form-gamma	gamma_inc(2, SR.var("x"))	True	
+an-integer-order-reduces-to-a-closed-form-gamma	gamma_inc(2, SR.var("x"))	gamma(2, x)	
 gamma-2-1-2-e-the-same-closed-form-at-an-exact	gamma_inc(2, 1)	gamma(2, 1)	
 listable-threads-elementwise-over-a-matrix-and	[[gamma_inc(2, (7/2)), gamma_inc(2, 0)], [gamma_inc(2, 0), gamma_inc(2, (13/2))]]	[[gamma(2, 7/2), 1], [1, gamma(2, 13/2)]]	
 interval-arithmetic-the-image-of-1-4-1-5-whose			
@@ -43,12 +43,12 @@ extends-the-factorial-gamma-n-1-n-so-gamma-6-5	enumeratio_equal(gamma(6), enumer
 functional-equation-gamma-z-1-z-gamma-z-here-at	enumeratio_equal(gamma(6), (5 * gamma(5)))	True	
 reflection-formula-gamma-z-gamma-1-z-pi-sin-pi-z	enumeratio_equal((gamma((1/3)) * gamma((2/3))), (pi / sin((pi / 3))))	True	
 gamma-1-2-sqrt-pi	enumeratio_equal(gamma((1/2)), sqrt(pi))	True	
-gamma-1-z-e-z-exact-and-symbolic-in-z	gamma_inc(1, SR.var("z"))	True	
-so-gamma-1-z-1-e-z-the-exponential-distribution	(gamma_inc(1, 0) - gamma_inc(1, SR.var("z")))	True	
-now-that-gamma-2-z-has-a-closed-form-the-three	(gamma_inc(2, 0) - gamma_inc(2, SR.var("z")))	True	
-gamma-a-0-gamma-a-the-incomplete-gamma-from-zero	gamma_inc(SR.var("a"), 0)	True	
+gamma-1-z-e-z-exact-and-symbolic-in-z	gamma_inc(1, SR.var("z"))	e^(-z)	
+so-gamma-1-z-1-e-z-the-exponential-distribution	(gamma_inc(1, 0) - gamma_inc(1, SR.var("z")))	-e^(-z) + 1	
+now-that-gamma-2-z-has-a-closed-form-the-three	(gamma_inc(2, 0) - gamma_inc(2, SR.var("z")))	-gamma(2, z) + 1	
+gamma-a-0-gamma-a-the-incomplete-gamma-from-zero	gamma_inc(SR.var("a"), 0)	gamma(a)	
 gamma-0-z-e-1-z-the-exponential-integral-e-1-3-2	gamma_inc(0, 1.5)	0.100019582406633	
-gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc	gamma_inc((1/2), SR.var("x"))	True	
+gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc	gamma_inc((1/2), SR.var("x"))	-sqrt(pi)*(erf(sqrt(x)) - 1)	
 gamma-x-gamma-x-psi-x-so-the-logarithmic	(diff(gamma(SR.var("x")), SR.var("x")) / gamma(SR.var("x")))	psi(x)	disagree
 1-over-gamma-1-over-2	(1 / gamma((1/2)))	1/sqrt(pi)	
 gamma-1-over-2-pow-2	((gamma((1/2)))^2)	pi	
