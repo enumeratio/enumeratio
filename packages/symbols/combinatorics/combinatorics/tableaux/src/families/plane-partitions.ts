@@ -12,7 +12,9 @@
 // array, a slice per shape; a shape's corner-removed subshapes are found by walking the trie, once per set
 // of corners.
 
-const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
+import { modRank } from "../../../collections/src/families/kernels.ts";
+
+const normRank = (r: number, total: number): number => (total > 0 ? modRank(Math.trunc(r), total) : 0);
 
 const sum = (a: readonly number[]): number => a.reduce((x, y) => x + y, 0);
 

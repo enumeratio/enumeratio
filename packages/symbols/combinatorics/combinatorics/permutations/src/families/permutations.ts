@@ -6,6 +6,7 @@
 import {
   Factorial,
   Inversions,
+  modRank,
   IsPermutationOf,
   LehmerCode,
   PermutationRank,
@@ -59,7 +60,7 @@ function evenPermutationCount(n: number): number {
 function evenPermutationUnrank(n: number, r: number): number[] {
   if (n <= 1) return PermutationUnrank(n, 0);
   const total = evenPermutationCount(n);
-  const rr = total > 0 ? ((Math.trunc(r) % total) + total) % total : 0;
+  const rr = total > 0 ? modRank(Math.trunc(r), total) : 0;
   const base = PermutationUnrank(n, 2 * rr);
   return Inversions(base) % 2 === 0 ? base : PermutationUnrank(n, 2 * rr + 1);
 }
@@ -97,7 +98,7 @@ function subexcedantBlockSize(n: number, i: number): number {
 }
 function subexcedantUnrank(n: number, r: number): number[] {
   const total = Factorial(n);
-  let x = total > 0 ? ((Math.trunc(r) % total) + total) % total : 0;
+  let x = total > 0 ? modRank(Math.trunc(r), total) : 0;
   const terms: number[] = [];
   for (let i = 0; i < n; i++) {
     const bs = subexcedantBlockSize(n, i);
