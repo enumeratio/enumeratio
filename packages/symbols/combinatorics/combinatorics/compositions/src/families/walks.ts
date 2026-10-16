@@ -2,8 +2,7 @@
 // differs, smaller first, as a walk (collections/src/families/part-walk.ts) over the sum left and
 // a context. Parts drawn from a set need no context; the others carry what the next part depends
 // on: the parts to go, the part before, or that part and whether the next must rise or fall.
-// Their TS kernels (compositions.ts) stay as the `fast` paths, held to these by
-// tests/fast-kernels.test.ts.
+// Their TS kernels (compositions.ts) are the independent readings tests/readings/ holds these to.
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import { partSets, partWalk, type PartWalk } from "../../../collections/src/families/part-walk.ts";
 import {

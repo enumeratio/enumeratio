@@ -6,7 +6,6 @@
 import type { AnyFamily, EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {
   exactUpTo,
-  isInvolutionPermutation,
   isKCyclePermutation,
   stirlingFirstExact,
   telephoneExact,
@@ -15,27 +14,6 @@ import {
 } from "../../../collections/src/families/exact-triangles.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
 import { and, cell, distinctIn, equal, iff, lets, mul, rowTable } from "../../../collections/src/families/tables.ts";
-import {
-  Factorial,
-  IsPermutationOf,
-  PermutationRank,
-  PermutationUnrank,
-} from "../../../collections/src/families/kernels.ts";
-import {
-  ColoredPermutationCount,
-  ColoredPermutationRank,
-  ColoredPermutationUnrank,
-  IsColoredPermutationOf,
-  IsKPermutationOf,
-  IsSignedPermutationOf,
-  KPermutationCount,
-  KPermutationRank,
-  KPermutationUnrank,
-  SignedPermutationCount,
-  SignedPermutationRank,
-  SignedPermutationUnrank,
-} from "../../../collections/src/families/kernels-extra.ts";
-
 type MathJSON = unknown;
 
 // Every Range states its step: compute-engine counts down when the end is below the start.
@@ -126,12 +104,6 @@ export const symmetricGroup: EpsilFamily = {
   paramCount: 1,
   kind: "ints",
   params: ["_n"],
-  fast: {
-    count: ([n]) => Factorial(n),
-    unrank: ([n], r) => PermutationUnrank(n, r),
-    rank: (x) => PermutationRank(x as number[]),
-    valid: (x, [n]) => IsPermutationOf(x as number[], n),
-  },
   epsil: {
     count: ["Factorial", "_n"],
     unrank: lexUnrank("_n", "_n", "_r"),
@@ -146,12 +118,6 @@ export const kPermutations: EpsilFamily = {
   paramCount: 2,
   kind: "ints",
   params: ["_n", "_k"],
-  fast: {
-    count: ([n, k]) => (k > n ? 0 : KPermutationCount(n, k)),
-    unrank: ([n, k], r) => KPermutationUnrank(n, k, r),
-    rank: (x, [n]) => KPermutationRank(x as number[], n),
-    valid: (x, [n, k]) => IsKPermutationOf(x as number[], n, k),
-  },
   epsil: {
     count: ["If", ["LessEqual", "_k", "_n"], falling("_n", "_k"), 0],
     unrank: lexUnrank("_n", "_k", "_r"),
@@ -177,12 +143,6 @@ const signedPermutations: EpsilFamily = {
   paramCount: 1,
   kind: "ints",
   params: ["_n"],
-  fast: {
-    count: ([n]) => SignedPermutationCount(n),
-    unrank: ([n], r) => SignedPermutationUnrank(n, r),
-    rank: (x) => SignedPermutationRank(x as number[]),
-    valid: (x, [n]) => IsSignedPermutationOf(x as number[], n),
-  },
   epsil: {
     count: ["Multiply", ["Power", 2, "_n"], ["Factorial", "_n"]],
     unrank: map(
@@ -219,18 +179,6 @@ const colouredPermutations: EpsilFamily = {
   kind: "blocks",
   params: ["_n", "_k"],
   elementType: "tuple<list<integer>, list<integer>>",
-  fast: {
-    count: ([n, k]) => ColoredPermutationCount(n, k),
-    unrank: ([n, k], r) => ColoredPermutationUnrank(n, k, r),
-    rank: (x, [, k]) => {
-      const [image, colours] = x as number[][];
-      return ColoredPermutationRank(image, colours, k);
-    },
-    valid: (x, [n, k]) => {
-      const [image, colours] = x as number[][];
-      return (x as number[][]).length === 2 && IsColoredPermutationOf(image, colours, n, k);
-    },
-  },
   epsil: {
     count: ["If", ["Equal", "_n", 0], 1, ["Multiply", ["Power", "_k", "_n"], ["Factorial", "_n"]]],
     unrank: [
@@ -439,9 +387,7 @@ const involutionDefinitions: EpsilFamily = permutationRestriction({
 });
 
 // T(n) past 2^53 (from n = 24) is a table the interpreter takes seconds over; the recurrence is O(n).
-const involutions = exactUpTo(involutionDefinitions, 5000, ([n]) => telephoneExact(n), {
-  valid: isInvolutionPermutation,
-});
+const involutions = exactUpTo(involutionDefinitions, 5000, ([n]) => telephoneExact(n));
 
 export const epsilEntries: readonly EpsilFamily[] = [
   symmetricGroup,

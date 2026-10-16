@@ -8,6 +8,8 @@ import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, epsilKernelOn } from "../../collections/src/families/epsil.ts";
 import { CompositionCount, IsCompositionOf } from "../../collections/src/families/kernels-combinatorics.ts";
+import { entries as restricted } from "../src/families/compositions.ts";
+import { epsilEntries } from "../src/families/core.ts";
 import {
   CompositionsIntoKPartsCount,
   CompositionsIntoKPartsRank,
@@ -17,9 +19,7 @@ import {
   WeakCompositionCount,
   WeakCompositionRank,
   WeakCompositionUnrank,
-} from "../../collections/src/families/kernels-extra.ts";
-import { entries as restricted } from "../src/families/compositions.ts";
-import { epsilEntries } from "../src/families/core.ts";
+} from "../../tests/readings/kernels/collections-kernels-extra.ts";
 
 const ce = bareEngine();
 

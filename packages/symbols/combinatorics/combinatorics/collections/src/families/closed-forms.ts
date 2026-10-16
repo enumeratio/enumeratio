@@ -3,9 +3,8 @@
 // (see ./epsil.ts). Shared by the areas that carry them (collections, words, trees), each giving a
 // family its own head and carrier.
 //
-// The TS kernels these replaced (kernels-extra.ts: SubsetUnrank, TupleRank, …, words.ts's Gray
-// code) stay as the independent reading the agreement tests check against, and as a family's `fast`
-// path where they list in the same order.
+// The TS kernels these replaced (SubsetUnrank, TupleRank, …, the Gray code) are the independent
+// readings the agreement tests check against (tests/readings/), not runtime paths.
 
 import type { EpsilFamily, FastKernel } from "./epsil.ts";
 import { cell, choose, colexDigits, distinctIn, iff, lets, less, pascalTable, rowTable } from "./tables.ts";
@@ -53,7 +52,7 @@ interface Shape {
   readonly carrier?: string;
   readonly carrierParams?: number;
   readonly params: readonly string[];
-  readonly fast?: FastKernel;
+  readonly fastCount?: FastKernel["count"];
 }
 const shapeOf = (s: Shape) => ({
   head: s.head,
@@ -62,7 +61,7 @@ const shapeOf = (s: Shape) => ({
   paramCount: s.params.length as 1 | 2,
   kind: "ints" as const,
   params: s.params,
-  ...(s.fast === undefined ? {} : { fast: s.fast }),
+  ...(s.fastCount === undefined ? {} : { fastCount: s.fastCount }),
 });
 
 /**

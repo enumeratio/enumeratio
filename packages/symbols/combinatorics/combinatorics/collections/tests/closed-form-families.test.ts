@@ -6,13 +6,14 @@
 import { bareEngine } from "@enumeratio/engine/testing";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
+import { ternaryGrayList } from "../../words/src/families/binary-word-families.ts";
+import { allFamilies, type EpsilFamily, epsilKernelOn, evaluateTables, isEpsilFamily } from "../src/families/index.ts";
 import {
   PruferSequenceCount,
   PruferSequenceRank,
   PruferSequenceUnrank,
   IsPruferSequenceOf,
-} from "../../trees/src/families/prufer-sequences.ts";
-import { ternaryGrayList } from "../../words/src/families/binary-word-families.ts";
+} from "../../tests/readings/kernels/trees-prufer-sequences.ts";
 import {
   grayCodeCount,
   grayCodeRank,
@@ -21,8 +22,7 @@ import {
   palindromeRank,
   palindromeUnrank,
   palindromeValid,
-} from "../../words/src/families/words.ts";
-import { allFamilies, type EpsilFamily, epsilKernelOn, evaluateTables, isEpsilFamily } from "../src/families/index.ts";
+} from "../../tests/readings/kernels/words-words.ts";
 import {
   BinaryStringCount,
   IsMultisetOf,
@@ -34,13 +34,13 @@ import {
   GrayCodeSubsetRank,
   GrayCodeSubsetUnrank,
   IsBinaryString,
-  IsSubsetOf,
   IsTupleOf,
   SubsetCount,
   TupleCount,
   TupleRank,
   TupleUnrank,
-} from "../src/families/kernels-extra.ts";
+  IsSubsetOf,
+} from "../../tests/readings/kernels/collections-kernels-extra.ts";
 
 const ce = bareEngine();
 

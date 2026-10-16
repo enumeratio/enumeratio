@@ -13,13 +13,13 @@
 // `eulerPhi` are used ONLY by the bracelet families and moved outright (removed from
 // collections' copy).
 import { braceletCountExact } from "../../../collections/src/families/exact-counts.ts";
-import { floorDiv, modRank } from "../../../collections/src/families/kernels.ts";
+import { modRank } from "../../../collections/src/families/kernels.ts";
 import { ternaryGrayCodes } from "../../../collections/src/families/closed-forms.ts";
 import { stirlingPermutations } from "./epsil.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
-const normRank = (r: number, total: number): number => (total > 0 ? modRank(Math.trunc(r), total) : 0);
+export const normRank = (r: number, total: number): number => (total > 0 ? modRank(Math.trunc(r), total) : 0);
 
 function arraysEqual(a: number[], b: number[]): boolean {
   if (a.length !== b.length) return false;
@@ -212,62 +212,6 @@ export function ternaryGrayList(n: number): number[][] {
 // still adjacent in the final word (nothing was inserted after it), so peeling off its two
 // adjacent occurrences — whose left index is exactly the d_n that was chosen — and repeating for
 // n-1, n-2, … recovers every digit. ──────────────────────────────────────────────────────────────
-export function stirlingCount(n: number): number {
-  let c = 1;
-  for (let k = 2; k <= n; k++) c *= 2 * k - 1;
-  return c;
-}
-export function stirlingUnrank(n: number, r: number): number[] {
-  const total = stirlingCount(n);
-  let rem = normRank(r, total);
-  const digits: number[] = Array.from<number>({ length: n + 1 }).fill(0); // digits[k] for k=2..n
-  for (let k = n; k >= 2; k--) {
-    const radix = 2 * k - 1;
-    digits[k] = rem % radix;
-    rem = floorDiv(rem, radix);
-  }
-  let word: number[] = n >= 1 ? [1, 1] : [];
-  for (let k = 2; k <= n; k++) {
-    const gap = digits[k];
-    word = [...word.slice(0, gap), k, k, ...word.slice(gap)];
-  }
-  return word;
-}
-export function stirlingRank(word: number[], n: number): number {
-  // Decode top-down (k=n downTo 2) to recover each digit d_k, but Horner-combine bottom-up
-  // (k=2..n ascending) — d_2 is the most-significant digit, d_n the least, matching unrank's
-  // extraction order (mod-then-divide from k=n down to k=2 peels off the LEAST significant
-  // digit first).
-  let w = word.slice();
-  const digits: number[] = Array.from<number>({ length: n + 1 }).fill(0);
-  for (let k = n; k >= 2; k--) {
-    const gap = w.indexOf(k);
-    digits[k] = gap;
-    w = [...w.slice(0, gap), ...w.slice(gap + 2)];
-  }
-  let rank = 0;
-  for (let k = 2; k <= n; k++) {
-    const radix = 2 * k - 1;
-    rank = rank * radix + digits[k];
-  }
-  return rank;
-}
-export function stirlingValid(word: unknown, n: number): boolean {
-  if (!Array.isArray(word) || word.length !== 2 * n) return false;
-  const counts = Array.from<number>({ length: n + 1 }).fill(0);
-  for (const v of word) {
-    if (typeof v !== "number" || !Number.isInteger(v) || v < 1 || v > n) return false;
-    counts[v]++;
-  }
-  for (let i = 1; i <= n; i++) if (counts[i] !== 2) return false;
-  for (let i = 1; i <= n; i++) {
-    const first = word.indexOf(i);
-    const last = word.lastIndexOf(i);
-    for (let j = first + 1; j < last; j++) if ((word[j] as number) <= i) return false;
-  }
-  return true;
-}
-
 /** Words up to rotation (or reflection): unrank and rank enumerate all base^size words. */
 const wordClass = (carrier: string, base?: number): Declared => ({
   carrier,
@@ -289,17 +233,6 @@ const ternaryGrayCodesFamily = ternaryGrayCodes({
   params: ["_n"],
   carrier: "TernaryGrayCode",
 });
-
-// The TS insertion walk is ~7-10x faster than Epsil's, in the same order.
-const stirlingPermutationsFast: EpsilFamily = {
-  ...stirlingPermutations,
-  fast: {
-    count: ([n]) => stirlingCount(n),
-    unrank: ([n], r) => stirlingUnrank(n, r),
-    rank: (x, [n]) => stirlingRank(x as number[], n),
-    valid: (x, [n]) => stirlingValid(x, n),
-  },
-};
 
 export const entries: (NumberKernel | EpsilFamily)[] = [
   // BinaryBracelets(n): binary words up to rotation and reflection — Bracelets(n, 2), A000029.
@@ -330,5 +263,5 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
     declared: wordClass("Word"),
   },
   ternaryGrayCodesFamily,
-  stirlingPermutationsFast,
+  stirlingPermutations,
 ];
