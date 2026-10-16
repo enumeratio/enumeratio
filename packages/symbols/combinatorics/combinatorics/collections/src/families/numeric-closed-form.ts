@@ -14,6 +14,8 @@
 // file doesn't own. `Element(hugeValue, FactorialNumbers)` is therefore only reliable
 // within that range; direct kernel calls (as in this package's tests) can still pass a
 // bigint straight through.
+import type { EpsilFamily } from "./epsil.ts";
+import { withDefinitions } from "./numeric-definitions.ts";
 import type { Declared, NumberKernel } from "./types.ts";
 
 const MAX_SAFE_BIG = BigInt(Number.MAX_SAFE_INTEGER);
@@ -208,7 +210,9 @@ const primorialAt = growingSequence((_index0, prev) => {
 
 const CLOSED: Declared["cost"] = { count: "closed", unrank: "closed", rank: "closed", valid: "closed" };
 
-export const entries: NumberKernel[] = [
+/** The families as TS kernels: the fast paths of the Epsil definitions (./numeric-definitions.ts)
+ *  and, in tests, their independent reading. */
+export const kernels: NumberKernel[] = [
   // ---- figurate numbers: all k-gonal, P(k, n) = ((k-2)n^2 - (k-4)n)/2. ----
   quadraticFamily("TriangularNumbers", 1n, 1n, 0n, 2n), // P(3, n) = n(n+1)/2, A000217
   quadraticFamily("PentagonalNumbers", 3n, -1n, 0n, 2n), // P(5, n) = n(3n-1)/2, A000326
@@ -283,7 +287,7 @@ export const entries: NumberKernel[] = [
     head: "PolygonalNumbers",
     paramCount: 1,
     kind: "scalar",
-    count: () => Number.POSITIVE_INFINITY,
+    count: ([k]) => (k < 3 ? 0 : Number.POSITIVE_INFINITY),
     unrank: ([k], r) => {
       const { a, b, c, denom } = polygonalCoeffs(BigInt(k));
       return narrow(quadraticTerm(a, b, c, denom, BigInt(r + 1)));
@@ -302,3 +306,5 @@ export const entries: NumberKernel[] = [
     },
   },
 ];
+
+export const entries: (NumberKernel | EpsilFamily)[] = withDefinitions(kernels);

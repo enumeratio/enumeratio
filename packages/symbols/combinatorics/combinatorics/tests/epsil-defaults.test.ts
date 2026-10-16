@@ -22,10 +22,11 @@ function sampleParams(count: number): number[][] {
   );
 }
 
-/** The first small params whose fiber has between 1 and 200 members, and one whose fiber is empty. */
-function smallFibers(family: EpsilFamily): { some?: number[]; total?: bigint; empty?: number[] } {
+/** The first small params whose fiber has between 1 and 200 members, one whose fiber is empty, and one
+ *  whose fiber has no end (the terms of a sequence). */
+function smallFibers(family: EpsilFamily): { some?: number[]; total?: bigint; empty?: number[]; endless?: number[] } {
   const kernel = epsilKernelOn(ce, family);
-  const found: { some?: number[]; total?: bigint; empty?: number[] } = {};
+  const found: { some?: number[]; total?: bigint; empty?: number[]; endless?: number[] } = {};
   for (const p of sampleParams(family.paramCount)) {
     let total: unknown;
     try {
@@ -33,6 +34,7 @@ function smallFibers(family: EpsilFamily): { some?: number[]; total?: bigint; em
     } catch {
       continue;
     }
+    if (total === Number.POSITIVE_INFINITY) found.endless ??= p;
     if (typeof total !== "bigint") continue;
     if (total === 0n) found.empty ??= p;
     else if (total <= 200n && found.some === undefined) [found.some, found.total] = [p, total];
@@ -45,7 +47,7 @@ test("every Epsil family refuses a rank outside its fiber", () => {
   let tested = 0;
   for (const family of families) {
     const at = (p: number[]): string => `${family.head}(${p.join(", ")})`;
-    const { some, total, empty } = smallFibers(family);
+    const { some, total, empty, endless } = smallFibers(family);
     for (const kernel of [kernelOn(ce, family), epsilKernelOn(ce, family)]) {
       if (some !== undefined) {
         for (const r of [total!, total! + 1n, -1n])
@@ -53,8 +55,12 @@ test("every Epsil family refuses a rank outside its fiber", () => {
         expect(kernel.unrank(some, total! - 1n), `${at(some)} at the last rank`).toBeDefined();
       }
       if (empty !== undefined) expect(() => kernel.unrank(empty, 0n), `${at(empty)} at 0`).toThrow(RangeError);
+      if (endless !== undefined) {
+        expect(() => kernel.unrank(endless, -1n), `${at(endless)} at -1`).toThrow(RangeError);
+        expect(kernel.unrank(endless, 0n), `${at(endless)} at the first rank`).toBeDefined();
+      }
     }
-    if (some !== undefined || empty !== undefined) tested++;
+    if (some !== undefined || empty !== undefined || endless !== undefined) tested++;
   }
   // Every family has small params to look at; a new one that does not needs a reason here.
   expect(tested).toBe(families.length);

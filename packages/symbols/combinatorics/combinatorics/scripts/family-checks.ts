@@ -62,6 +62,9 @@ const isDeep = (head: string, p: readonly number[]): boolean =>
 export const fibersOf = (family: EpsilFamily, deep: boolean): number[][] =>
   sampleParams(family.paramCount).filter((p) => isDeep(family.head, p) === deep);
 
+/** The ranks sampled in a fiber with no end. */
+const UNBOUNDED_RANKS: readonly bigint[] = [0n, 1n, 2n, 3n, 5n, 8n, 12n, 15n];
+
 /** A member one entry away from itself, which the family may or may not contain. */
 const nearMiss = (element: unknown): unknown =>
   Array.isArray(element)
@@ -100,18 +103,25 @@ export function disagreements(
     }
     const bind = table === undefined ? params : { ...params, _tables: table };
     const compiledBind = entries === undefined ? params : { ...params, _tables: entries };
-    const total = integerOf(evaluateEpsil(ce, family.epsil.count, bind));
+    const counted = evaluateEpsil(ce, family.epsil.count, bind);
+    // A fiber with no end is sampled by its first ranks, where a sequence's terms are small.
+    const unbounded = counted === "PositiveInfinity";
+    const total = unbounded ? 0n : integerOf(counted);
     if (total === undefined || total > BigInt(Number.MAX_SAFE_INTEGER)) continue;
-    if (runs.count !== undefined && attempt(runs.count, compiledBind) !== Number(total)) wrong.add("count");
-    if (total === 0n) continue;
-    for (const r of new Set([0n, total / 2n, total - 1n])) {
+    if (runs.count !== undefined && attempt(runs.count, compiledBind) !== (unbounded ? Infinity : Number(total)))
+      wrong.add("count");
+    if (total === 0n && !unbounded) continue;
+    for (const r of unbounded ? UNBOUNDED_RANKS : new Set([0n, total / 2n, total - 1n])) {
       const element = elementOf(evaluateEpsil(ce, family.epsil.unrank, { ...bind, _r: Number(r) }));
       if (
         runs.unrank !== undefined &&
         JSON.stringify(attempt(runs.unrank, { ...compiledBind, _r: Number(r) })) !== JSON.stringify(element)
       )
         wrong.add("unrank");
-      if (runs.rank !== undefined && attempt(runs.rank, { ...compiledBind, _x: element }) !== Number(r))
+      // A sequence may repeat a term (a constant one), so its rank is the first place the term is found, as
+      // the interpreter reads it; elsewhere a member's rank is the rank it came from.
+      const place = unbounded ? integerOf(evaluateEpsil(ce, family.epsil.rank, { ...bind, _x: element })) : BigInt(r);
+      if (runs.rank !== undefined && attempt(runs.rank, { ...compiledBind, _x: element }) !== Number(place))
         wrong.add("rank");
       if (runs.valid !== undefined)
         for (const candidate of [element, nearMiss(element)]) {

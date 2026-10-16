@@ -55,7 +55,18 @@ const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
 // How far each axis is scanned for the edge of the fast path.
 const SCAN = 90;
 
-const fastFamilies = allFamilies.filter(isEpsilFamily).filter((family) => family.fast !== undefined);
+/** Whether the family's fibers have no end: the terms of a sequence, held to Epsil in their own section below. */
+const unbounded = (family: EpsilFamily): boolean => {
+  try {
+    return family.fast?.count(Array<number>(family.paramCount).fill(3)) === Number.POSITIVE_INFINITY;
+  } catch {
+    return false;
+  }
+};
+
+const withFast = allFamilies.filter(isEpsilFamily).filter((family) => family.fast !== undefined);
+const fastFamilies = withFast.filter((family) => !unbounded(family));
+const sequenceFamilies = withFast.filter(unbounded);
 
 /** The fiber the family's fast kernel counts at `p`, when that is a safe integer. */
 function countOf(family: EpsilFamily, p: number[]): bigint | undefined {
@@ -348,6 +359,70 @@ for (const family of fastFamilies) {
     }
     // The near misses must include some the family rejects, or membership went unchecked.
     expect(rejected).toBeGreaterThan(0);
+  });
+}
+
+// A sequence has no fiber to run out: its fast path answers the terms a double holds exactly, and declines
+// the first one past 2^53, which Epsil answers with an exact integer (a bigint where a number would round).
+/** Each sequence's params: PolygonalNumbers(k) for a few sides' worth. */
+const SEQUENCE_PARAMS: Record<string, number[][]> = { PolygonalNumbers: [[3], [5], [8], [30]] };
+const sequenceParams = (family: EpsilFamily): number[][] => SEQUENCE_PARAMS[family.head] ?? [[]];
+
+for (const family of sequenceFamilies) {
+  test(`${family.head}: the fast path agrees with Epsil, and stops at the last term a double holds`, () => {
+    const fast = kernelOn(ce, family);
+    const epsil = epsilKernelOn(ce, family);
+    for (const p of sequenceParams(family)) {
+      const where = labelled(family, p);
+      expect([where, fast.count(p)]).toEqual([where, Number.POSITIVE_INFINITY]);
+      expect([where, epsil.count(p)]).toEqual([where, Number.POSITIVE_INFINITY]);
+      // The first rank the fast path declines (a constant sequence has none), searched up from 2^40.
+      const holds = (r: number): boolean => {
+        try {
+          return family.fast!.unrank(p, r) !== undefined;
+        } catch {
+          return false; // a term too large for the kernel at all
+        }
+      };
+      let [low, high] = [0, 2 ** 40];
+      while (holds(high) && high < 2 ** 52) high *= 2;
+      if (holds(high)) low = high;
+      else
+        while (low + 1 < high) {
+          const mid = Math.floor((low + high) / 2);
+          if (holds(mid)) low = mid;
+          else high = mid;
+        }
+      const ranks = new Set<number>();
+      for (let r = 0; r < 60; r++) ranks.add(r);
+      for (let r = Math.max(0, low - 3); r <= low + 3; r++) ranks.add(r);
+      for (const r of [1234, 98765, 2 ** 30 + 1]) if (holds(r)) ranks.add(r);
+      const members: Element[] = [];
+      for (const r of [...ranks].toSorted((a, b) => a - b)) {
+        const element = fast.unrank(p, BigInt(r));
+        expect([where, r, element]).toEqual([where, r, epsil.unrank(p, BigInt(r))]);
+        expect([where, r, fast.rank(element, p)]).toEqual([where, r, epsil.rank(element, p)]);
+        expect([where, element, fast.valid(element, p)]).toEqual([where, element, true]);
+        members.push(element);
+      }
+      // Near misses: a number is a member of the sequence or it is not, and both read it the same.
+      let rejected = 0;
+      for (const member of members.filter((m) => typeof m === "number")) {
+        for (const near of [member - 2, member - 1, member + 1, member + 2]) {
+          const expected = epsil.valid(near, p);
+          if (!expected) rejected++;
+          expect([where, near, fast.valid(near, p)]).toEqual([where, near, expected]);
+          expect([where, near, fast.rank(near, p)]).toEqual([where, near, epsil.rank(near, p)]);
+        }
+      }
+      expect(rejected).toBeGreaterThan(0);
+      // Where the fast path declines, the kernel's answer is Epsil's own.
+      if (!holds(high)) {
+        const r = BigInt(high);
+        expect([where, fast.unrank(p, r)]).toEqual([where, epsil.unrank(p, r)]);
+        expect(typeof fast.unrank(p, r)).toBe("bigint");
+      }
+    }
   });
 }
 
