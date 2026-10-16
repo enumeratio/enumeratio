@@ -41,3 +41,4 @@ unbounded: true
 - OEIS A000040.
 - Membership goes through [[Element]]: $Element(11, PrimeNumbers)$ is true, $Element(9, PrimeNumbers)$ is false.
 - Distinct from [[Primes]], compute-engine's own `set<integer>` constant: a value can't be extended, so the two don't share one name.
+- Past $2^{53}$ membership is a Baillie–PSW test: a proof below $2^{64}$, and above it a probable-prime test (no composite is known to pass it), as Wolfram's `PrimeQ` is. Past $2^{16384}$, and for the position of a prime past about $5 \cdot 10^{11}$, [[Element]] and the rank stay unevaluated.

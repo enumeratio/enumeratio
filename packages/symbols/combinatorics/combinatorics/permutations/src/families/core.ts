@@ -14,7 +14,7 @@ import {
   transpositionUnrank,
 } from "../../../collections/src/families/exact-triangles.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
-import { and, cell, equal, iff, lets, mul, rowTable } from "../../../collections/src/families/tables.ts";
+import { and, cell, distinctIn, equal, iff, lets, mul, rowTable } from "../../../collections/src/families/tables.ts";
 import {
   Factorial,
   IsPermutationOf,
@@ -56,20 +56,20 @@ const at = (list: MathJSON, index: MathJSON): MathJSON => ["At", list, index];
 const quotient = (a: MathJSON, b: MathJSON): MathJSON => ["Divide", sub(a, ["Mod", a, b]), b];
 const all = (condition: (j: string) => MathJSON, over: MathJSON, j = "j"): MathJSON =>
   fold(["And", "ok", condition(j)], "ok", j, "True", over);
-const between = (x: MathJSON, low: MathJSON, high: MathJSON): MathJSON => [
+export const between = (x: MathJSON, low: MathJSON, high: MathJSON): MathJSON => [
   "And",
   ["LessEqual", low, x],
   ["LessEqual", x, high],
 ];
 
 /** m (m − 1) ⋯ (m − t + 1): the number of ways to fill t slots from m. */
-const falling = (m: MathJSON, t: MathJSON, v = "f"): MathJSON =>
+export const falling = (m: MathJSON, t: MathJSON, v = "f"): MathJSON =>
   fold(["Multiply", "product", v], "product", v, 1, upTo(add(sub(m, t), 1), m));
 
 /** Digit j (1-based) of r in the mixed radix of a k-permutation of n: slot j has n − j + 1
  *  choices, and a digit there is worth the ways to fill the slots after it, (n − j)! when every
  *  slot is filled. */
-const digit = (n: MathJSON, k: MathJSON, r: MathJSON, j: MathJSON): MathJSON => [
+export const digit = (n: MathJSON, k: MathJSON, r: MathJSON, j: MathJSON): MathJSON => [
   "Mod",
   quotient(r, JSON.stringify(n) === JSON.stringify(k) ? ["Factorial", sub(n, j)] : falling(sub(n, j), sub(k, j))),
   add(sub(n, j), 1),
@@ -90,11 +90,12 @@ const lexEntry = (n: MathJSON, k: MathJSON, r: MathJSON, j: MathJSON): MathJSON 
     downTo(sub(j, 1), 1),
   );
 
-const lexUnrank = (n: MathJSON, k: MathJSON, r: MathJSON): MathJSON => map(lexEntry(n, k, r, "j"), "j", upTo(1, k));
+export const lexUnrank = (n: MathJSON, k: MathJSON, r: MathJSON): MathJSON =>
+  map(lexEntry(n, k, r, "j"), "j", upTo(1, k));
 
 /** The lex rank of a k-permutation of n whose entry j is `entry(j)`: digit j is how many values
  *  below entry j are still free, read in Horner form. */
-const lexRank = (n: MathJSON, k: MathJSON, entry: (j: MathJSON) => MathJSON): MathJSON =>
+export const lexRank = (n: MathJSON, k: MathJSON, entry: (j: MathJSON) => MathJSON): MathJSON =>
   fold(
     add(
       ["Multiply", "r", add(sub(n, "j"), 1)],
@@ -109,15 +110,8 @@ const lexRank = (n: MathJSON, k: MathJSON, entry: (j: MathJSON) => MathJSON): Ma
     upTo(1, k),
   );
 
-/** Whether `entry(1..k)` are distinct values in 1..n. */
-const injective = (n: MathJSON, k: MathJSON, entry: (j: MathJSON) => MathJSON): MathJSON =>
-  all(
-    (j) => ["And", between(entry(j), 1, n), all((i) => ["NotEqual", entry(i), entry(j)], upTo(1, sub(j, 1)), "i")],
-    upTo(1, k),
-  );
-
-const element = (j: MathJSON): MathJSON => at("_x", j);
-const hasLength = (list: MathJSON, length: MathJSON, then: MathJSON): MathJSON => [
+export const element = (j: MathJSON): MathJSON => at("_x", j);
+export const hasLength = (list: MathJSON, length: MathJSON, then: MathJSON): MathJSON => [
   "If",
   ["Equal", ["Length", list], length],
   then,
@@ -142,12 +136,12 @@ export const symmetricGroup: EpsilFamily = {
     count: ["Factorial", "_n"],
     unrank: lexUnrank("_n", "_n", "_r"),
     rank: lexRank("_n", "_n", element),
-    valid: hasLength("_x", "_n", injective("_n", "_n", element)),
+    valid: hasLength("_x", "_n", distinctIn("_n", "_n", element)),
   },
 };
 
 /** The k-permutations (arrangements) of n, n!/(n − k)! of them, in lex order. */
-const kPermutations: EpsilFamily = {
+export const kPermutations: EpsilFamily = {
   head: "KPermutations",
   paramCount: 2,
   kind: "ints",
@@ -162,7 +156,7 @@ const kPermutations: EpsilFamily = {
     count: ["If", ["LessEqual", "_k", "_n"], falling("_n", "_k"), 0],
     unrank: lexUnrank("_n", "_k", "_r"),
     rank: lexRank("_n", "_k", element),
-    valid: hasLength("_x", "_k", injective("_n", "_k", element)),
+    valid: hasLength("_x", "_k", distinctIn("_n", "_k", element)),
   },
 };
 
@@ -208,7 +202,7 @@ const signedPermutations: EpsilFamily = {
       ],
       lexRank("_n", "_n", magnitude),
     ),
-    valid: hasLength("_x", "_n", injective("_n", "_n", magnitude)),
+    valid: hasLength("_x", "_n", distinctIn("_n", "_n", magnitude)),
   },
 };
 
@@ -256,7 +250,7 @@ const colouredPermutations: EpsilFamily = {
         "_n",
         hasLength(at("_x", 2), "_n", [
           "And",
-          injective("_n", "_n", image),
+          distinctIn("_n", "_n", image),
           all((j) => between(colour(j), 0, sub("_k", 1)), upTo(1, "_n")),
         ]),
       ),
@@ -340,6 +334,8 @@ const kCycleDefinitions: EpsilFamily = permutationRestriction({
     ),
   ],
   state: cycleState,
+  // The cycles the state closed number k: membership then reads no table, which overflows doubles from n = 171.
+  predicate: equal(closedCycles, "_k"),
   completions: lets(
     [
       ["left", sub("_k", closedCycles), "integer"],
@@ -423,6 +419,8 @@ const involutionDefinitions: EpsilFamily = permutationRestriction({
   paramCount: 1,
   params: ["_n"],
   tables: ["telephones", telephoneTable],
+  // Self-inverse directly: membership then reads no table, which past T(23) doesn't fit in doubles.
+  predicate: all((q) => ["Equal", at("_x", at("_x", q)), q], upTo(1, "_n"), "iv"),
   completions: [
     "If",
     all((q) => ["If", ["LessEqual", pre(q), "filled"], ["Equal", pre(pre(q)), q], "True"], filledSlots, "iq"),

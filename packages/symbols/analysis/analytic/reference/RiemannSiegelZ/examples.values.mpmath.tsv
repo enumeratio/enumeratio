@@ -1,0 +1,16 @@
+id	in	out	verdict
+riemannsiegelz-1p5	siegelz(1.5)	-0.595568336782886970481068891603	
+riemannsiegelz-20p5	siegelz(20.5)	0.599328702514751321387209891229	
+riemannsiegelz-100	(siegelz(100))	2.69269705666446347499537982869	
+fullsimplify-series-riemannsiegelz-x-x-0-2			
+n-riemannsiegelz-1-over-3	(siegelz((mpf(1)/3)))	-1.23218677906326315211667240246	
+n-riemannsiegelz-neg-12	(siegelz(-12))	-1.25988883412447225689352554257	
+n-riemannsiegelz-5-over-4-50	enumeratio_n(lambda: (siegelz((mpf(5)/4))), 50)	-0.65081889537920883712698417960938732591709344035087	
+n-riemannsiegelz-4-over-3-20	enumeratio_n(lambda: (siegelz((mpf(4)/3))), 20)	-0.62963915044348153965	
+n-riemannsiegelz-4-plus-i	(siegelz(mpc(4, 1)))	(-0.58929997497107950545081237577 - 0.104133167496573426945915482548j)	
+n-riemannsiegelz-10	(siegelz(10))	-1.54919454618102238908521730186	
+series-riemannsiegelz-x-x-0-2			
+fullsimplify-normal-series-riemannsiegelz-x-x-x0			
+n-imaginary-riemannsiegelz-100-000-plus-neg-i	enumeratio_n(lambda: (im(siegelz((100000 + (mpc(0, -1) * ((10)**-50)))))), 20)	3.3998467604389312415e-50	disagree
+z-0-zeta-1-2	(siegelz(0))	-1.46035450880958681288949915252	
+fullsimplify-zeta-i-times-t-plus-1-over-2-minus			

@@ -1,0 +1,8 @@
+id	in	out	verdict
+ei-at-0	ei(0)	-inf	
+ei-1	(ei(1))	1.89511781635593675546652093433	
+normal-series-expintegralei-x-x-positiveinfinity			
+n-expintegralei-2-50	enumeratio_n(lambda: (ei(2)), 50)	4.9542343560018901633795051302270352755180535624200	
+expintegralei-list-positiveinfinity	[ei(inf), ei(-inf), ei((inf * mpc(0, 1))), ei((inf * mpc(0, -1)))]	[mpf('+inf'), mpf('0.0'), mpc(real='nan', imag='nan'), mpc(real='nan', imag='nan')]	disagree
+expintegralei-complexinfinity			
+d-expintegralei-x-x			

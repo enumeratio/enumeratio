@@ -1,0 +1,7 @@
+id	in	out	verdict
+erfi-0	enumeratio_ball(erfi, 0)	0.0	
+erfi-0p5	enumeratio_ball(erfi, enumeratio_decimal("0.5"))	0.6149520946965109808396811856236413930513456178954035723266386934995887895613311	
+erfi-1	(enumeratio_ball(erfi, 1))	1.650425758797542876025337729561362443895679874874022877600257996316111304925634	
+threads-element-wise-over-a-list	Any[enumeratio_ball(erfi, 0), enumeratio_ball(erfi, 1)]	[0.0, 1.650425758797542876025337729561362443895679874874022877600257996316111304925634]	
+listable-threads-over-its-limits-at-pm-infty	Any[enumeratio_ball(erfi, Inf), enumeratio_ball(erfi, (-Inf))]	non-finite argument	error
+erfi-complexinfinity-is-indeterminate-inheriting			

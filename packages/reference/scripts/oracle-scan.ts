@@ -49,6 +49,7 @@ import {
   symbolicAgreementSource,
   SYSTEMS,
   type System,
+  restoreNames,
   type Verdict,
   wiredSystems,
 } from "@enumeratio/oracle";
@@ -225,8 +226,10 @@ for (const system of systems) {
   // Wolfram doesn't answer a picture or a control with a value to compare, so its lane leaves them
   // (and their rows) alone, unless `--ids` names one.
   // Combinatorica is asked only about the heads its map covers; everything else is the Wolfram lane's.
+  // A row marked `<system>.skip` in examples.tsv opts out of the lane, even for a named `--ids`.
   const asked = cases.filter(
     (item) =>
+      records.get(item.head)?.[item.key]?.[system]?.skip !== true &&
       (!isWolframFamily(system) || idFilter?.has(item.id) === true || !showsPicture(item.head, item.expr)) &&
       (system !== "combinatorica" || emit(item.expr, system, library?.mappings).ok),
   );
@@ -274,6 +277,36 @@ for (const system of systems) {
       symbolicMode[index] = false;
     }
   }
+  // The agreement program's `True`, and the TeX of the program itself, are not what Wolfram answers or how it
+  // writes the input: a decided row shows the plain input's answer and TeX, and the verdict stays the program's.
+  const decided = isWolframFamily(system)
+    ? runnable.flatMap((_row, index) => (symbolicMode[index] ? [index] : []))
+    : [];
+  if (decided.length > 0) {
+    const plain = await runIn(
+      system,
+      decided.map((index) => plainSources[index] as string),
+      { itemSeconds: capItem },
+    );
+    for (const [at, index] of decided.entries()) {
+      const answered = plain[at] as (typeof results)[number];
+      const program = results[index] as (typeof results)[number];
+      if ("error" in answered || "error" in program || answered.display === undefined) {
+        // The record would show the check's `True` and its TeX: leave the committed row as it is.
+        const id = (runnable[index] as { item: Case }).item.id;
+        process.stderr.write(`${system}: ${id}: the plain input gave no answer to record; its row is not written\n`);
+        scannedIdsBySystem.get(system)?.delete(id);
+        continue;
+      }
+      const { shown: _shown, tex: _tex, ...rest } = program;
+      results[index] = {
+        ...rest,
+        display: answered.display,
+        ...(answered.shown === undefined ? {} : { shown: answered.shown }),
+        ...(answered.tex === undefined ? {} : { tex: answered.tex }),
+      };
+    }
+  }
 
   const outcomes: Outcome[] = [];
   const missing: Record<string, number> = {};
@@ -285,13 +318,20 @@ for (const system of systems) {
   }
   for (const [index, row] of runnable.entries()) {
     const source = plainSources[index] as string;
-    const result = results[index] as {
+    const answered = results[index] as {
       value?: string;
       display?: string;
       numeric?: string;
       shown?: string;
       tex?: { input: string; output: string };
       error?: string;
+    };
+    // A name written under a spare one (a Sage keyword) is its own name in the answer.
+    const renamed = row.out.ok ? row.out.renamed : undefined;
+    const result = {
+      ...answered,
+      ...(answered.value === undefined ? {} : { value: restoreNames(answered.value, renamed) }),
+      ...(answered.display === undefined ? {} : { display: restoreNames(answered.display, renamed) }),
     };
     if (result.error !== undefined) {
       outcomes.push({

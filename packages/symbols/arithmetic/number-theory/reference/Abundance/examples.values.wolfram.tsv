@@ -1,0 +1,13 @@
+id	in	out	tex.in	tex.out	verdict
+abundance-12	DivisorSigma[1, Abs[12]] - 2 Abs[12]	4	\sigma _1(| 12| )-2 | 12|	4	
+abundance-28	DivisorSigma[1, Abs[28]] - 2 Abs[28]	0	\sigma _1(| 28| )-2 | 28|	0	
+abundance-15	DivisorSigma[1, Abs[15]] - 2 Abs[15]	-6	\sigma _1(| 15| )-2 | 15|	-6	
+abundance-1	DivisorSigma[1, Abs[1]] - 2 Abs[1]	-1	\sigma _1(| 1| )-2 | 1|	-1	
+negative-n-the-sign-is-a-unit	DivisorSigma[1, Abs[-12]] - 2 Abs[-12]	4	\sigma _1(| -12| )-2 | -12|	4	
+listable-over-a-list	DivisorSigma[1, Abs[List[6, 12, 15]]] - 2 Abs[List[6, 12, 15]]	{0, 4, -6}	\sigma _1(| \{6,12,15\}| )-2 | \{6,12,15\}|	\{0,4,-6\}	
+large-integers-powers-of-two-are-always-1-short	DivisorSigma[1, Abs[Power[2, 40]]] - 2 Abs[Power[2, 40]]	-1	\sigma _1\left(\left| 2^{40}\right| \right)-2 \left| 2^{40}\right|	-1	
+the-smallest-odd-abundant-number	DivisorSigma[1, Abs[945]] - 2 Abs[945]	30	\sigma _1(| 945| )-2 | 945|	30	
+classify-by-sign	Sign[DivisorSigma[1, Abs[12]] - 2 Abs[12]]	1	\text{sgn}(\sigma _1(| 12| )-2 | 12| )	1	
+abundance-is-the-aliquot-sum-minus-n	(DivisorSigma[1, Abs[12]] - 2 Abs[12] == Subtract[DivisorSigma[1, Abs[12]] - Abs[12], 12])	True	\sigma _1(| 12| )-2 | 12| =(\sigma _1(| 12| )-| 12| )-12	\text{True}	
+perfect-numbers-have-abundance-0	(DivisorSigma[1, Abs[496]] - 2 Abs[496] == 0)	True	\sigma _1(| 496| )-2 | 496| =0	\text{True}	
+zero-stays-unevaluated	DivisorSigma[1, Abs[0]] - 2 Abs[0]	DivisorSigma[1, 0]	\sigma _1(| 0| )-2 | 0|	\sigma _1(0)	disagree

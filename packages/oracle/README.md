@@ -18,8 +18,9 @@ emitter reuses.
   `interpretSymbolicAgreement` (does a symbolic difference vanish, for `wolfram`/`sympy`/
   `sage`), `DIVERGENCE_KINDS`/`Divergence` (the classification an unresolved disagreement
   needs before a scan can pass).
+- **Symbolic rows** (a free symbol): the verdict is the identity check. On `wolfram` a record's `out` and `tex` are the raw answer of the plain input; `sympy` and `sage` still record the check's.
 - **`runBounded`/`runKernel`** — re-exported from `@enumeratio/utils/bounded`, where the memory watchdog lives so libraries' golden scripts can use it without an edge to oracle.
-- **`julia/`, `oscar/`, `lean/`, `python/`, `rust/`** — each wired system's project files
+- **`julia/`, `oscar/`, `lean/`, `python/`, `rust/`** — each wired system's project files (`julia/preamble.jl` and `oscar/preamble.jl` hold the helpers their emit templates call)
   (`Project.toml`/`Manifest.toml`, `lakefile.toml`, `requirements.txt`, `Cargo.toml`) and, for
   Rust, the batch-runner source. `kernels.json` pins the release (version and build date) a scan
   ran against, for a report's provenance. A pin compares the release only: `kernel-pin.ts`

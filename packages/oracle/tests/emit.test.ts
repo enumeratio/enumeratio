@@ -23,7 +23,7 @@ test("a mapping is chosen by signature, not by name alone", () => {
   // and the systems disagree about which name carries which.
   expect(mappingFor("Zeta", 1)?.emit.wolfram).toBe("Zeta[$1]");
   expect(mappingFor("Zeta", 2)?.emit.wolfram).toBe("Zeta[$1, $2]");
-  expect(mappingFor("Zeta", 2)?.emit.sage).toBe("enumeratio_zeta_pair($1, $2)");
+  expect(mappingFor("Zeta", 2)?.emit.sage).toBe("hurwitz_zeta($1, $2)");
   // SymPy and mpmath overload one name across both arities.
   expect(mappingFor("Zeta", 1)?.emit.sympy).toBe("zeta($1)");
   expect(mappingFor("Zeta", 2)?.emit.sympy).toBe("zeta($1, $2)");
@@ -32,7 +32,7 @@ test("a mapping is chosen by signature, not by name alone", () => {
 });
 
 test("emitting fills positional and variadic templates", () => {
-  expect(emit(["Zeta", 2, 1], "sage")).toEqual({ ok: true, source: "enumeratio_zeta_pair(2, 1)" });
+  expect(emit(["Zeta", 2, 1], "sage")).toEqual({ ok: true, source: "hurwitz_zeta(2, 1)" });
   expect(emit(["Add", 1, 2, 3], "sympy")).toEqual({ ok: true, source: "(1 + 2 + 3)" });
   expect(emit(["Multiply", 2, 3], "sympy")).toEqual({ ok: true, source: "(2 * 3)" });
   // Lean reads `f -1` as `f - 1`.
@@ -90,11 +90,11 @@ test("threadArg rebuilds a List's nesting as Julia list literals too", () => {
   expect(emit(["Binomial", ["List", 2, 3, 5, 7, 11], 3], "julia")).toEqual({
     ok: true,
     source:
-      "[binomial(ZZ(2), ZZ(3)), binomial(ZZ(3), ZZ(3)), binomial(ZZ(5), ZZ(3)), binomial(ZZ(7), ZZ(3)), binomial(ZZ(11), ZZ(3))]",
+      "Any[binomial(ZZ(2), ZZ(3)), binomial(ZZ(3), ZZ(3)), binomial(ZZ(5), ZZ(3)), binomial(ZZ(7), ZZ(3)), binomial(ZZ(11), ZZ(3))]",
   });
   expect(emit(["GCD", 12, ["List", 3, 7, 40]], "julia")).toEqual({
     ok: true,
-    source: "[gcd(ZZ(12), ZZ(3)), gcd(ZZ(12), ZZ(7)), gcd(ZZ(12), ZZ(40))]",
+    source: "Any[gcd(ZZ(12), ZZ(3)), gcd(ZZ(12), ZZ(7)), gcd(ZZ(12), ZZ(40))]",
   });
 });
 
@@ -108,9 +108,8 @@ test("a Power base is parenthesised, so a negative literal doesn't leak past una
   expect(emit(["Power", 2, 10], "mpmath")).toEqual({ ok: true, source: "((2)**10)" });
   // S() keeps a negative exponent exact in SymPy rather than a float.
   expect(emit(["Power", 2, -1], "sympy")).toEqual({ ok: true, source: "(S(2)**-1)" });
-  // Julia/Oscar and Lean were never affected: `big($1)` and the negative-literal special
-  // case already parenthesise the base.
-  expect(emit(["Power", -1, 2], "julia")).toEqual({ ok: true, source: "(big(-1)^2)" });
+  // Julia passes the base as a call argument; Lean's negative-literal special case parenthesises it.
+  expect(emit(["Power", -1, 2], "julia")).toEqual({ ok: true, source: "enumeratio_pow(-1, 2)" });
   expect(emit(["Power", -1, 2], "mathlib4")).toEqual({ ok: true, source: "((-1) ^ 2)" });
 });
 
@@ -161,8 +160,8 @@ test("an unmappable expression names exactly what is missing", () => {
   // …including when the gap is nested inside something we do know.
   expect(unmappedHeads(["Add", 1, ["JonesPolynomial", 2]], "sympy")).toEqual(["JonesPolynomial/1"]);
   // A head mapped for one system may be unmapped for another; that is not a maths claim.
-  expect(emit(["Quotient", 7, 2], "wolfram").ok).toBe(true);
-  expect(emit(["Quotient", 7, 2], "sympy").ok).toBe(false);
+  expect(emit(["Mean", ["List", 1, 2]], "wolfram").ok).toBe(true);
+  expect(emit(["Mean", ["List", 1, 2]], "sympy").ok).toBe(false);
 });
 
 test("SymPy keeps a residue class through Power and Divide, and reads an Interval's Abs with abs()", () => {
@@ -176,6 +175,105 @@ test("SymPy keeps a residue class through Power and Divide, and reads an Interva
   expect(source(["Abs", -3])).toBe("Abs(-3)");
   // factorrat takes rationals, so a Gaussian integer is unmapped, not an AttributeError.
   expect(source(["FactorInteger", ["Complex", 3, 4]])).toBeUndefined();
+});
+
+test("a bare Infinity is oo for SymPy and Sage, and Wolfram still reads it as its own", () => {
+  expect(emit(["Erf", "Infinity"], "sympy")).toEqual({ ok: true, source: "erf(oo)" });
+  expect(emit(["Erf", "Infinity"], "sage")).toEqual({ ok: true, source: "erf(oo)" });
+  expect(emit(["Erf", "Infinity"], "wolfram").ok).toBe(true);
+});
+
+test("SymPy reads a float past the double range as a Float, not Python's inf", () => {
+  expect(emit(["Exp", { num: "1.0e1000" }], "sympy")).toEqual({ ok: true, source: 'exp(Float("1.0e1000"))' });
+  expect(emit(["Exp", { num: "1.5" }], "sympy")).toEqual({ ok: true, source: "exp(1.5)" });
+});
+
+test("mpmath reads a decimal past a double's digits or range from its text, and N(x, d) runs at d digits", () => {
+  const long = "0.12345678901234567890123";
+  expect(emit(["Exp", { num: long }], "mpmath")).toEqual({ ok: true, source: `exp(mpf("${long}"))` });
+  expect(emit(["Exp", { num: "1.0e1000" }], "mpmath")).toEqual({ ok: true, source: 'exp(mpf("1.0e1000"))' });
+  expect(emit(["Exp", { num: "1.5" }], "mpmath")).toEqual({ ok: true, source: "exp(1.5)" });
+  expect(emit(["N", ["Exp", 1], 50], "mpmath")).toEqual({ ok: true, source: "enumeratio_n(lambda: (exp(1)), 50)" });
+});
+
+test("inside an mpmath N(x, d) past a double's digits every decimal is read from its text", () => {
+  expect(emit(["N", ["Sin", 0.1], 50], "mpmath")).toEqual({
+    ok: true,
+    source: 'enumeratio_n(lambda: (sin(mpf("0.1"))), 50)',
+  });
+  expect(emit(["N", ["Sin", 0.1], 10], "mpmath")).toEqual({ ok: true, source: "enumeratio_n(lambda: (sin(0.1)), 10)" });
+  expect(emit(["Sin", 0.1], "mpmath")).toEqual({ ok: true, source: "sin(0.1)" });
+});
+
+test("Julia reads a constant as a ball, a list as Any, and a decimal past a double from its text", () => {
+  expect(emit(["Sin", ["Divide", "Pi", 6]], "julia")).toEqual({
+    ok: true,
+    source: "enumeratio_ball(sin, enumeratio_div(const_pi(RR), 6))",
+  });
+  // A mixed list keeps each element's type, where `[1, true]` would promote.
+  expect(emit(["List", 1, "True"], "julia")).toEqual({ ok: true, source: "Any[1, true]" });
+  // Every decimal is read exactly, as a rational: 0.1 is no double, and 1e-400 does not underflow.
+  expect(emit(["Exp", { num: "1.0e1000" }], "julia")).toEqual({
+    ok: true,
+    source: 'enumeratio_ball(exp, enumeratio_decimal("1.0e1000"))',
+  });
+  expect(emit(["Exp", 0.1], "julia")).toEqual({ ok: true, source: 'enumeratio_ball(exp, enumeratio_decimal("0.1"))' });
+  expect(emit(["Exp", { num: "1e-400" }], "julia")).toEqual({
+    ok: true,
+    source: 'enumeratio_ball(exp, enumeratio_decimal("1e-400"))',
+  });
+  // N(x, d) as the answer writes its digits out; below another call it is the rounded number.
+  expect(emit(["N", "Pi", 5], "julia")).toEqual({ ok: true, source: "enumeratio_nshow(const_pi(RR), 5)" });
+  expect(emit(["List", ["N", "Pi", 5], ["N", "ExponentialE", 5]], "julia")).toEqual({
+    ok: true,
+    source: "Any[enumeratio_nshow(const_pi(RR), 5), enumeratio_nshow(const_e(RR), 5)]",
+  });
+  expect(emit(["Equal", ["N", "Pi", 1], "Pi"], "julia")).toEqual({
+    ok: true,
+    source: "enumeratio_equal(enumeratio_n(const_pi(RR), 1), const_pi(RR))",
+  });
+  // An infinity is Julia's own, which the ball helpers decline rather than guess at.
+  expect(emit(["Gamma", "PositiveInfinity"], "julia")).toEqual({ ok: true, source: "enumeratio_ball(gamma, Inf)" });
+  // A threaded special function builds a list of ball calls.
+  expect(emit(["Gamma", ["List", 1, 2]], "julia")).toEqual({
+    ok: true,
+    source: "Any[enumeratio_ball(gamma, 1), enumeratio_ball(gamma, 2)]",
+  });
+});
+
+test("Rust threads a list into a `list(vec![…])` of calls, and writes a double as a float literal", () => {
+  expect(emit(["Quotient", ["List", 10, 20], 7], "rust")).toEqual({
+    ok: true,
+    source: "list(vec![quotient(n(10), n(7)), quotient(n(20), n(7))])",
+  });
+  expect(emit(["Sinh", ["List", ["List", 1, 2], ["List", 3, 4]]], "rust")).toEqual({
+    ok: true,
+    source: "list(vec![list(vec![sinh(n(1)), sinh(n(2))]), list(vec![sinh(n(3)), sinh(n(4))])])",
+  });
+  // The crate's own argument order, and the reciprocal a template writes out.
+  expect(emit(["BetaRegularized", { num: "0.25" }, 2, 3], "rust")).toEqual({
+    ok: true,
+    source: "beta_regularized(n(2), n(3), x(0.25))",
+  });
+  expect(emit(["Cot", 1], "rust")).toEqual({ ok: true, source: "(n(1) / tan(n(1)))" });
+  // `x(100)` would be an integer where the adapters take a double.
+  expect(emit(["Sinh", { num: "1e2" }], "rust")).toEqual({ ok: true, source: "sinh(x(100.0))" });
+  // An integer-valued number past 2^53 is that integer, which a float literal would round.
+  expect(emit(["PrimePi", 1e16], "rust")).toEqual({ ok: true, source: 'prime_pi(big("10000000000000000"))' });
+  expect(emit(["Sinh", { num: "-2.5e-3" }], "rust")).toEqual({ ok: true, source: "sinh(x(-0.0025))" });
+});
+
+test("a decimal outside the double range is not written to Rust, where it would be infinity or zero", () => {
+  expect(emit(["Sinh", { num: "1.0e1000" }], "rust")).toEqual({
+    ok: false,
+    missing: ["literal:outside-double-range"],
+  });
+  expect(emit(["Sinh", { num: "1e-400" }], "rust")).toEqual({
+    ok: false,
+    missing: ["literal:outside-double-range"],
+  });
+  // Zero is zero, however it is written.
+  expect(emit(["Sinh", { num: "0.0" }], "rust")).toEqual({ ok: true, source: "sinh(x(0.0))" });
 });
 
 test("a binding's threadArgOnly threads for its own system alone", () => {
@@ -339,6 +437,10 @@ test("an option key and a number set go to Wolfram as its own names", () => {
   });
   // Working over the integers mod p is Wolfram's `Modulus -> p`.
   expect(emit(["IsPrime", 5, ["KeyValuePair", "Over", ["QuotientRing", "Integers", 7]]], "wolfram")).toMatchObject({
+    source: "PrimeQ[5, Rule[Modulus, 7]]",
+  });
+  // The option as canonical form writes it, a `Tuple`, is the same option.
+  expect(emit(["IsPrime", 5, ["Tuple", "Over", ["QuotientRing", "Integers", 7]]], "wolfram")).toMatchObject({
     source: "PrimeQ[5, Rule[Modulus, 7]]",
   });
 });
@@ -553,6 +655,91 @@ test("compute-engine's canonical Function and iterator forms emit as Wolfram wri
   });
 });
 
+test("SymPy's series order is one past ours, and Normal and the simplifiers go round a series", () => {
+  const sympy = (expr: unknown) => {
+    const out = emit(expr as never, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  const series = ["Series", ["Sin", "x"], "x", 0, 5];
+  expect(sympy(series)).toBe('series(sin(Symbol("x")), Symbol("x"), 0, 5 + 1)');
+  expect(sympy(["Normal", series])).toBe('(series(sin(Symbol("x")), Symbol("x"), 0, 5 + 1)).removeO()');
+  expect(sympy(["FullSimplify", ["Normal", series]])).toBe(
+    'simplify((series(sin(Symbol("x")), Symbol("x"), 0, 5 + 1)).removeO())',
+  );
+  // Around anything else a simplifier is SymPy's one `simplify`, threaded over a list, and Normal hands it back.
+  expect(sympy(["Normal", ["Sin", "x"]])).toBe('sin(Symbol("x"))');
+  expect(sympy(["Simplify", ["Sin", "x"]])).toBe('simplify(sin(Symbol("x")))');
+  expect(sympy(["FullSimplify", ["Sin", "x"]])).toBe('simplify(sin(Symbol("x")))');
+  // Assumptions are not mapped.
+  expect(sympy(["Simplify", ["Sin", "x"], ["Greater", "x", 0]])).toBeUndefined();
+});
+
+test("SymPy reads a derivative ours holds at a point as differentiating in each argument, then substituting", () => {
+  const source = (expr: unknown): string | undefined => {
+    const out = emit(expr as never, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  expect(source(["Apply", ["Derivative", "ChebyshevT", 0, 5], 5, 0])).toBe(
+    '(diff(chebyshevt(5, Symbol("_d1", real=True)), (Symbol("_d1", real=True), 5))).subs({Symbol("_d1", real=True): 0})',
+  );
+  // Orders and points pair off, one to an argument.
+  expect(source(["Apply", ["Derivative", "ChebyshevT", 5], 5, 0])).toBeUndefined();
+  // The variable is real only at a real point: sqrt(t**2) differentiates to 1 at I, not to sign(I).
+  expect(source(["Apply", ["Derivative", "Sin", 1], ["Complex", 0, 1]])).toBe(
+    '(diff(sin(Symbol("_d1")), (Symbol("_d1"), 1))).subs({Symbol("_d1"): (0 + 1*I)})',
+  );
+  expect(source(["Apply", ["Derivative", "Sin", 1], "x"])).toContain('Symbol("_d1")');
+  expect(source(["Apply", ["Derivative", "Sin", 1], "x"])).not.toContain("real=True");
+  // A derivative inside a point is its own, under names of its own (the outer point is no plain number).
+  expect(source(["Apply", ["Derivative", "Sin", 1], ["Apply", ["Derivative", "Cos", 1], 2]])).toBe(
+    '(diff(sin(Symbol("_d1")), (Symbol("_d1"), 1))).subs({Symbol("_d1"): ' +
+      '(diff(cos(Symbol("_d2", real=True)), (Symbol("_d2", real=True), 1))).subs({Symbol("_d2", real=True): 2})})',
+  );
+});
+
+test("SymPy's integrate takes a bare variable or a tuple, its first iterator the innermost", () => {
+  const sympy = (expr: unknown) => {
+    const out = emit(expr as never, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  expect(sympy(["Integrate", ["Sin", "x"], "x"])).toBe('integrate(sin(Symbol("x")), Symbol("x"))');
+  const body = ["Function", ["Block", ["Sin", "x"]], "x"];
+  expect(sympy(["Integrate", body, ["Limits", "x", "Nothing", "Nothing"]])).toBe(
+    'integrate(sin(Symbol("x")), Symbol("x"))',
+  );
+  expect(sympy(["Integrate", body, ["Limits", "x", 0, "Pi"]])).toBe(
+    'integrate(sin(Symbol("x")), (Symbol("x"), 0, pi))',
+  );
+  // Ours integrates the first limit last, as Wolfram's.
+  expect(sympy(["Integrate", ["Multiply", "x", "y"], ["Limits", "x", 0, 1], ["Limits", "y", 0, "x"]])).toBe(
+    'integrate((Symbol("x") * Symbol("y")), (Symbol("y"), 0, Symbol("x")), (Symbol("x"), 0, 1))',
+  );
+  // Any number of iterators, reversed; a call with none has no variable to take.
+  const triple = ["Multiply", "x", "y", "z"];
+  expect(sympy(["Integrate", triple, ["Limits", "x", 0, 1], ["Limits", "y", 0, 1], ["Limits", "z", 0, "y"]])).toBe(
+    'integrate((Symbol("x") * Symbol("y") * Symbol("z")), (Symbol("z"), 0, Symbol("y")), (Symbol("y"), 0, 1), (Symbol("x"), 0, 1))',
+  );
+  expect(sympy(["Integrate", ["Function", ["Block", triple], "x", "y", "z"], "x", "y", "z"])).toBe(
+    'integrate((Symbol("x") * Symbol("y") * Symbol("z")), Symbol("z"), Symbol("y"), Symbol("x"))',
+  );
+  expect(sympy(["Integrate", "x"])).toBeUndefined();
+});
+
+test("SymPy's Boole is a Piecewise over its condition, chains and connectives kept whole", () => {
+  const sympy = (expr: unknown) => {
+    const out = emit(expr as never, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  expect(sympy(["Boole", ["Less", 1, "x"]])).toBe('Piecewise((1, Lt(1, Symbol("x"))), (0, True))');
+  // A chain is the conjunction of its neighbors.
+  expect(sympy(["Boole", ["LessEqual", 1, "x", 2]])).toBe(
+    'Piecewise((1, And(Le(1, Symbol("x")), Le(Symbol("x"), 2))), (0, True))',
+  );
+  expect(sympy(["Boole", ["Not", ["Or", ["Greater", "x", 1], ["GreaterEqual", "x", "y"], ["Less", "y", 0]]]])).toBe(
+    'Piecewise((1, Not(Or(Gt(Symbol("x"), 1), Ge(Symbol("x"), Symbol("y")), Lt(Symbol("y"), 0)))), (0, True))',
+  );
+});
+
 test("a library's heads emit through its own mappings, called by namespace", () => {
   const fig = mappingsFromBindings([
     {
@@ -602,4 +789,53 @@ test("BigO emits to Wolfram with the exponent outside O, and the center in it", 
     ok: true,
     source: "Power[O[x, Infinity], 7]",
   });
+});
+
+// Sage takes its sums, integrals, series, graphs and statistics through its own calls, with the variables symbols.
+test("Sage: sums and integrals over symbols, a series with its Order term, graphs, and named statistics", () => {
+  expect(emit(["Sum", ["Power", "k", 2], ["Limits", "k", 1, 10]], "sage")).toMatchObject({
+    source: 'sum(((SR.var("k"))^2), SR.var("k"), 1, 10)',
+    freeSymbols: ["k"],
+  });
+  // The first limit is the outermost integral.
+  expect(
+    emit(["Integrate", ["Multiply", "x", "y"], ["Limits", "x", 0, 1], ["Limits", "y", 0, 2]], "sage"),
+  ).toMatchObject({
+    source: 'integrate(integrate((SR.var("x") * SR.var("y")), SR.var("y"), 0, 2), SR.var("x"), 0, 1)',
+  });
+  expect(emit(["Series", ["Sin", "x"], "x", 0, 5], "sage")).toMatchObject({
+    source: 'SR(sin(SR.var("x"))).series(SR.var("x") == 0, 5 + 1)',
+  });
+  expect(emit(["Graph", ["List", 1, 2, 3], ["List", ["DirectedEdge", 1, 2]]], "sage")).toEqual({
+    ok: true,
+    source: 'DiGraph([[1, 2, 3], [(1, 2)]], format="vertices_and_edges", loops=True, multiedges=True)',
+  });
+  expect(emit(["CombinatorialStat", ["Permutation", ["List", 3, 1, 2]], "'Descents'"], "sage")).toEqual({
+    ok: true,
+    source: 'enumeratio_stat("Permutation", [3, 1, 2], "Descents")',
+  });
+  // A statistic Sage has no method for stays unmapped.
+  expect(emit(["CombinatorialStat", ["Permutation", ["List", 3, 1, 2]], "'NoSuchStat'"], "sage").ok).toBe(false);
+});
+
+// Sage differentiates Abs as on the line, so a held derivative is real only at real points, and none is answered off them.
+test("Sage: a held derivative's variable is real at real points, and a non-holomorphic one is unmapped at a complex point", () => {
+  const at = (point: MathJSON): MathJSON => ["Apply", ["Derivative", "Abs", 1], point];
+  expect(emit(at(2), "sage")).toEqual({
+    ok: true,
+    source:
+      '(diff(enumeratio_abs(SR.var("_d1", domain="real")), SR.var("_d1", domain="real"), 1)).subs({SR.var("_d1", domain="real"): 2})',
+  });
+  expect(emit(at(["Complex", 2, 1]), "sage")).toMatchObject({ ok: false });
+  // A holomorphic function is differentiated the same at any point.
+  expect(emit(["Apply", ["Derivative", "Sin", 1], ["Complex", 2, 1]], "sage").ok).toBe(true);
+});
+
+// Sage's graph families are numbered from 1 in its own sorted order, which ours is not for these three.
+test("Sage: a query that reads vertex numbers is unmapped over a graph Sage numbers otherwise, a numbering-free one is not", () => {
+  const turan: MathJSON = ["TuranGraph", 5, 3];
+  expect(emit(["VertexDegree", turan, 1], "sage")).toMatchObject({ ok: false, missing: ["VertexDegree/numbering"] });
+  expect(emit(["GraphDistance", ["GridGraph", ["List", 2, 3]], 1, 6], "sage").ok).toBe(false);
+  expect(emit(["EdgeCount", turan], "sage").ok).toBe(true);
+  expect(emit(["VertexDegree", ["CycleGraph", 5], 1], "sage").ok).toBe(true);
 });

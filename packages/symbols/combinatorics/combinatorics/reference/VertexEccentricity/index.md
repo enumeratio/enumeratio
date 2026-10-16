@@ -17,6 +17,14 @@ seeAlso:
   - GraphCenter
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: ($1).eccentricity($2)
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - The moment any OTHER vertex is unreachable from v, the eccentricity is PositiveInfinity -- not just the max over whatever happens to be reachable.

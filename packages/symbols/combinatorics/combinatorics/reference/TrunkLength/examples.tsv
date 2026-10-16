@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-ordered-tree			[TrunkLength, [OrderedTree, [List, [List], [List, [List]], [List]]]]	0			the ordered tree $[[],[[]],[]]$
+findstat-st000974-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'TrunkLength'"]	1	1	FindStat St000974	FindStat's value for [[]]
+findstat-st000974-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'TrunkLength'"]	2	2	FindStat St000974	FindStat's value for [[[]]]
+findstat-st000974-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'TrunkLength'"]	0	0	FindStat St000974	FindStat's value for [[],[]]

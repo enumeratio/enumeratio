@@ -1,0 +1,26 @@
+id	in	out	verdict
+ln-gamma-3-ln-2-ln-2	loggamma(3)	log(2)	
+ln-gamma-1-0	loggamma(1)	0	
+ln-gamma-2-5-ln-1-3293-to-the-engine-s-working	loggamma(2.5)	0.284682870472919	
+ln-gamma-5-ln-4-ln-24-split-into-prime	loggamma(5)	log(24)	
+log-gamma-neg-2-is-a-pole	loggamma(-2)	oo	
+log-gamma-neg-3-is-a-pole	loggamma(-3)	oo	
+n-log-gamma-5-over-2-to-40-digits	N(loggamma(Rational(5, 2)), 30)	0.284682870472919159632494669683	
+n-loggamma-15-pow-300-past-a-double	N(loggamma((S(15)**300)), 30)	RecursionError: maximum recursion depth exceeded	error
+to-the-engine-s-working-precision	loggamma(2.2)	0.0969474667906389	
+complex-arguments	loggamma((2.5 + 3*I))	-1.47095461034884 + 2.8226156382608*I	
+threads-elementwise-over-an-array	[[loggamma(Rational(1, 2)), loggamma(-1)], [loggamma(0), loggamma(Rational(1, 2))]]	[[log(sqrt(pi)), oo], [oo, log(sqrt(pi))]]	
+exact-negative-half-integers-ln-gamma-frac-32-ln	loggamma(Rational(-3, 2))	loggamma(-3/2)	
+ln-gamma-infty-infty	loggamma(oo)	oo	
+huge-arguments-ln-gamma-10-300-approx-6-898	N(loggamma((S(10)**300)), 30)	RecursionError: maximum recursion depth exceeded	error
+interval-arithmetic-decreasing-here-so-the	loggamma(AccumBounds(0.41, 0.42))	loggamma(AccumBounds(0.41, 0.42))	disagree
+uncertainty-propagation-with-psi-1-2-as-the			
+to-30-significant-digits-not-yet-the-last-digit	N(loggamma(Rational(1, 3)), 30)	0.985420646927767069187174036978	
+negative-non-integer-correctly-rounded	N(loggamma(-2.5), 30)	-0.0562437164976740539001909269246 - 9.42477796076937934799389040563*I	
+log-gamma-neg-0-5-is-the-principal-continuation	loggamma(-0.5)	1.26551212348465 - 3.14159265358979*I	
+ln-gamma-frac-12-frac-12-ln-pi-from-gamma-frac	loggamma(Rational(1, 2))	log(sqrt(pi))	
+a-pole-of-gamma	loggamma(0)	oo	
+on-the-negative-axis-gamma-frac-32-frac-43-sqrt	loggamma(-1.5)	0.860047015376481 - 6.28318530717959*I	
+half-integers-past-frac-12-ln-gamma-frac-32-ln	loggamma(Rational(3, 2))	log(sqrt(pi)/2)	
+off-the-positive-axis-this-is-the-continuation	loggamma((-2.5 + 1.5*I))	-3.71751345119179 - 7.71306552583419*I	
+log-gamma-negativeinfinity-is-indeterminate	loggamma(-oo)	zoo	disagree

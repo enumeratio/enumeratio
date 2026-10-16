@@ -1,0 +1,41 @@
+id	in	out	verdict
+the-quadratic			
+the-cubic			
+at-a-real	chebyu(5, 0.7)	-1.39775999999999988347099133534	
+at-u0-0-7	(chebyu(0, 0.7))	1.0	
+at-u1-0-7	(chebyu(1, 0.7))	1.39999999999999991118215802999	
+at-u5-0-7	(chebyu(5, 0.7))	-1.39775999999999988347099133534	
+at-u-1-0-7	(chebyu(-1, 0.7))	0.0	
+at-u-2-0-7	(chebyu(-2, 0.7))	-1.0	
+at-u-5-0-7	(chebyu(-5, 0.7))	0.0560000000000003446132268436486	
+at-u4-2-3i	(chebyu(4, mpc(2, 3)))	(-1843.0 - 2064.0j)	
+chebyshevu-2-3	chebyu(2, 3)	35.0	
+chebyshevu-10-x			
+series-chebyshevu-5-x-x-0-5			
+u-of-a-negative-order-at-a-rational	chebyu(-7, (mpf(1)/2))	ValueError: hypsum() failed to converge to the requested 113 bits of accuracy	error
+at-a-rational	chebyu(3, (mpf(1)/2))	-1.0	
+at-a-complex-argument	chebyu(4, mpc(2, 3))	(-1843.0 - 2064.0j)	
+a-symbolic-order-stays-unevaluated			
+chebyshevu-2-5	chebyu(2, 5)	99.0	
+chebyshevu-0-0	chebyu(0, 0)	1.0	
+chebyshevu-0-positiveinfinity	chebyu(0, inf)	1.0	
+chebyshevu-7-x			
+chebyshevu-1-neg-x-eq-neg-chebyshevu-1-x			
+chebyshevu-2-neg-x-eq-chebyshevu-2-x			
+matrixfunction-function-chebyshevu-2-1-1-list			
+at-1	chebyu(5, 1)	6.0	
+at-minus-1	chebyu(5, -1)	-6.0	
+recurrence	(chebyu(4, (mpf(1)/3)) - (((mpf(2)/3) * chebyu(3, (mpf(1)/3))) - chebyu(2, (mpf(1)/3))))	-2.46519032881566189191165176651e-32	
+order-minus-1			
+negative-order			
+chebyshevu-0-1	chebyu(0, 1)	1.0	
+chebyshevu-0-neg-1-over-2-times-i	chebyu(0, mpc(0, (mpf(-1)/2)))	(1.0 + 0.0j)	
+chebyshevu-1-neg-1-over-2-times-i	chebyu(1, mpc(0, (mpf(-1)/2)))	(0.0 - 1.0j)	
+chebyshevu-1-positiveinfinity	chebyu(1, inf)	2.0	inconclusive
+chebyshevu-1-negativeinfinity	chebyu(1, -inf)	2.0	inconclusive
+chebyshevu-2-positiveinfinity	chebyu(2, inf)	3.0	inconclusive
+chebyshevu-2-negativeinfinity	chebyu(2, -inf)	3.0	inconclusive
+sum-chebyshevu-k-1-over-2-times-chebyshevu-k-2-k			
+sum-chebyshevu-k-1-over-2-times-chebyshevu-k-2-2			
+n-integrate-sqrt-neg-t-pow-2-plus-1-times			
+n-integrate-chebyshevu-2-t-times-chebyshevu-3-t			

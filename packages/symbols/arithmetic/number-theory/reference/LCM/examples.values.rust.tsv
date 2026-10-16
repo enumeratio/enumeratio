@@ -8,7 +8,7 @@ negative-integers
 gaussian-primes-of-norm-41-and-13-the-lcm-is-the			
 gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3			
 big-integers-the-exact-118-digit-lcm-past-where	lcm(factorial(n(20)), (power(n(10), n(100)) + n(3)))	panic: an integer, not 2.43290200817664e18	error
-listable-a-single-list-argument-threads-element	lcm(n(12), list(vec![n(3), n(7), n(40)]))	panic: threading: a list where the crate takes a scalar	error
+listable-a-single-list-argument-threads-element	list(vec![lcm(n(12), n(3)), lcm(n(12), n(7)), lcm(n(12), n(40))])	[12, 84, 120]	
 a-large-integer-against-a-negative-rational	lcm(factorial(n(20)), (power(n(10), n(-1)) + n(-2)))	panic: an integer, not 2.43290200817664e18	error
 lcm-with-a-unit-is-the-other-argument-normalised			
 lcm-with-i-a-unit-is-the-other-argument			
@@ -22,7 +22,7 @@ lcm-with-a-negative-real-prime
 lcm-of-two-large-norm-gaussians			
 lcm-past-2-53-in-both-parts			
 a-real-split-prime-and-its-gaussian-factor			
-lcm-of-two-real-composites-plain-integer-case	lcm(n(4), n(9))		
+lcm-of-two-real-composites-plain-integer-case	lcm(n(4), n(9))	36	
 lcm-with-a-negative-real-composite			
 lcm-with-an-associate-times-1			
 lcm-with-an-associate-times-i			
@@ -35,11 +35,11 @@ lcm-of-two-composites-sharing-the-prime-above-13
 lcm-of-a-lazy-range-1-10-not-a-materialised-list			
 reduceconditions-lcm-a-3-lt-3a-neg-10-lt-a-lt-10			
 the-smallest-number-divisible-by-each-of-1			
-lcm-10-15	lcm(n(10), n(15))		
+lcm-10-15	lcm(n(10), n(15))	30	
 foldlist-lcm-1-range-2-10			
 ln-lcm-range-1-10			
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd	equal((gcd(n(27), n(81)) * lcm(n(27), n(81))), (n(27) * n(81)))	true	
-lcm-27-81	lcm(n(27), n(81))		
+lcm-27-81	lcm(n(27), n(81))	81	
 lcm-6-11-25-eq-1-650			
 lcm-5-7-2-eq-70			
 ln-1-over-lcm-range-1-4-times-lcm-range-1-5			

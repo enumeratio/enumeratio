@@ -27,6 +27,14 @@ names:
   wolframIdentity: true
 attributes:
   - HoldAll
+bindings:
+  - origin: mapped
+    form: sage
+    template: product($1, $2)
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - The empty product is 1 by convention, matching $Factorial(0)$. See [[Factorial]].

@@ -24,7 +24,7 @@ piecewiseexpand-floor-x-2-0-lt-x-lt-4
 d-floor-x-x	diff(floor(Symbol("x")), Symbol("x"))	Derivative(floor(x), x)	inconclusive
 how-many-full-5-item-packs-fit-in-17-items	floor((S(17) / 5))	3	
 legendre-s-formula-100-ends-in-lfloor-100-5	(floor((S(100) / 5)) + floor((S(100) / 25)))	24	
-the-number-of-decimal-digits-of-n-is-lfloor-log			
+the-number-of-decimal-digits-of-n-is-lfloor-log	(floor(log(12345, 10)) + 1)	5	
 the-first-four-digits-of-e	floor((1000 * E))	2718	
 floor-10-over-997-times-powermod-10-999-999-997	floor((Rational(10, 997) * (pow(ZZ.convert(10), ZZ.convert(999999), ZZ.convert(997)) % 997)))	2	
 for-a-non-integer-x-lceil-x-rceil-lfloor-x	enumeratio_equal((floor(Rational(7, 2)) + 1), ceiling(Rational(7, 2)))	True	

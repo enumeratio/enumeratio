@@ -1,0 +1,14 @@
+id	in	out	verdict
+a-floating-point-argument-evaluates-directly-to	enumeratio_n(jacobi_sc(0.6, 0.4))	0.664744322732859	
+m-greater-than-1-via-the-reciprocal-modulus	enumeratio_n(jacobi_sc(1.2, 3))	0.666077181942274 - 7.67344030794316e-20*I	
+d-jacobisc-u-m-m	diff(jacobi_sc(SR.var("u"), SR.var("m")), SR.var("m"))	1/2*((u + elliptic_e(arcsin(jacobi_sn(u, m)), m)/(m - 1))*jacobi_cn(u, m)*jacobi_dn(u, m)/m - jacobi_cn(u, m)^2*jacobi_sn(u, m)/(m - 1))/jacobi_cn(u, m) + 1/2*((u + elliptic_e(arcsin(jacobi_sn(u, m)), m)/(m - 1))*jacobi_dn(u, m)*jacobi_sn(u, m)/m - jacobi_cn(u, m)*jacobi_sn(u, m)^2/(m - 1))*jacobi_sn(u, m)/jacobi_cn(u, m)^2	disagree
+series-jacobisc-u-m-u-0-5	SR(jacobi_sc(SR.var("u"), SR.var("m"))).series(SR.var("u") == 0, 5 + 1)	True	
+series-jacobisc-z-m-m-0-2	SR(jacobi_sc(SR.var("z"), SR.var("m"))).series(SR.var("m") == 0, 2 + 1)	ValueError: power::eval(): division by zero	error
+u-0-is-0-for-any-m	jacobi_sc(0, SR.var("m"))	0	
+n-jacobisc-sqrt-2-over-4-times-i-neg-1	enumeratio_n(jacobi_sc((0 + (sqrt(2) / 4)*I), -1))	0.332870852168694*I	
+n-jacobisc-1-over-2-times-1-plus-sqrt-2-over-2-1	enumeratio_n(jacobi_sc(((1/2) * (1 + (sqrt(2) / 2))), ((((1 + (-(sqrt(2) / 2))))^2) * (((1 + (sqrt(2) / 2)))^-2))))	1.14044382950629	
+n-jacobisc-sqrt-2-times-i-neg-1	enumeratio_n(jacobi_sc((0 + sqrt(2)*I), -1))	0.703332475251434*I	
+n-jacobisc-2-times-1-plus-sqrt-2-over-2-1-minus	enumeratio_n(jacobi_sc((2 * (1 + (sqrt(2) / 2))), ((((1 + (-(sqrt(2) / 2))))^2) * (((1 + (sqrt(2) / 2)))^-2))))	0.254314476338385	
+symbolic-arguments-are-left-unevaluated-rather	jacobi_sc(SR.var("u"), SR.var("m"))	True	
+m-1-at-a-shared-pole-of-sn-and-cn	enumeratio_n(jacobi_sc(((1/2) * I * pi), 1))	1.00000000000000*I	
+u-1e16-declines-rather-than-answering-wrong	enumeratio_n(jacobi_sc(((10)^16), (1/4)))	-7.95279020460493	inconclusive

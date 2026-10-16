@@ -16,4 +16,18 @@ signatures:
     overrides: compute-engine
 attributes:
   - HoldAll
+bindings:
+  - origin: mapped
+    form: sympy
+    template: integrate($*,)
+    checked:
+      version: 1.14.0
+      on: 2026-10-15
+    note: Any number of iterators. A bare variable, or Limits(x, Nothing, Nothing), is an indefinite integral, which the scan compares up to a constant. An iterator is SymPy's (x, a, b). The first limit is the outermost, as Wolfram's, so the iterators are emitted in reverse; SymPy integrates its first iterator innermost.
+  - origin: mapped
+    form: sage
+    template: integrate($*,)
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---

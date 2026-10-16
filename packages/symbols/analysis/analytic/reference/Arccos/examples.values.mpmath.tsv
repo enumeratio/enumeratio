@@ -1,0 +1,40 @@
+id	in	out	verdict
+arccos-1	acos(1)	0.0	
+arccos-1-over-2	acos((mpf(1)/2))	1.04719755119659774615421446109	
+arccos-0	acos(0)	1.57079632679489661923132169164	
+the-top-of-the-principal-range	acos(-1)	3.14159265358979323846264338328	
+a-machine-precision-argument-evaluates	acos(0.4)	1.15927948072740857561953118151	
+outside-1-1-the-value-is-purely-imaginary	acos(1.5)	(0.0 + 0.962423650119206894995517826849j)	
+arbitrary-precision-via-n	(acos((mpf(1)/3)))	1.23095941734077468213492917825	
+evaluates-at-a-complex-argument	acos(mpc(2.5, 1))	(0.40617281650551155656839899253 - 1.65869329885643274976739341981j)	
+threads-element-wise-over-a-matrix	[[acos(1), acos((mpmathify(1) / sqrt(2)))], [acos(0), acos((mpmathify(1) / sqrt(2)))]]	[[mpf('0.0'), mpf('0.785398163397448309615660845819932')], [mpf('1.57079632679489661923132169163967'), mpf('0.785398163397448309615660845819932')]]	
+exact-inverse-of-a-special-value	acos((mpmathify(sqrt(3)) / 2))	0.523598775598298873077107230547	
+arccos-neg-sqrt-2-over-2	acos((-(mpmathify(sqrt(2)) / 2)))	2.35619449019234492884698253746	
+recognizes-cos-pi-5-frac-1-sqrt-5-4	acos((mpmathify((1 + sqrt(5))) / 4))	0.628318530717958647692528676656	
+interval-arithmetic-decreasing-so-arccos-frac-13			
+uncertainty-propagation-arccos-0-9-pm-0-1-approx			
+derivative-frac-1-sqrt-1-x-2			
+antiderivative			
+not-simply-4-4-is-outside-the-principal-range-0	acos(cos(4))	2.28318530717958647692528676656	
+arccos-infinity-is-a-directed-infinity-along-the	acos(inf)	(0.0 + +infj)	disagree
+arccos-infinity-is-the-opposite-directed	acos(-inf)	(3.14159265358979323846264338328 - +infj)	disagree
+n-arccos-1-over-3-50	enumeratio_n(lambda: (acos((mpf(1)/3))), 50)	1.2309594173407746821349291782479873757103400093551	
+integrate-arccos-x-x-neg-1-1			
+outside-1-1-reduces-to-the-exact-closed-form	acos(2)	(0.0 + 1.31695789692481670862504634731j)	
+arccos-neg-2	acos(-2)	(3.14159265358979323846264338328 - 1.31695789692481670862504634731j)	
+cos-arccos-x-x-on-the-principal-branch	almosteq(cos(acos((mpf(1)/2))), (mpf(1)/2), 1e-20)	True	
+reflection-arccos-x-pi-arccos-x			
+arccos-sqrt-2-over-4-times-neg-1-plus-sqrt-3	acos(((mpmathify(sqrt(2)) / 4) * (-1 + sqrt(3))))	1.30899693899574718269276807637	
+arccos-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	acos(((-(mpmathify(sqrt(2)) / 4)) * (-1 + sqrt(3))))	1.83259571459404605576987530691	
+arccos-1-over-4-times-neg-1-plus-sqrt-5	acos(((mpf(1)/4) * (-1 + sqrt(5))))	1.25663706143591729538505735331	
+arccos-1-over-4-times-1-minus-sqrt-5	acos(((mpf(1)/4) * (1 + (-sqrt(5)))))	1.88495559215387594307758602997	
+arccos-1-over-2-times-sqrt-2-minus-sqrt-2	acos(((mpf(1)/2) * sqrt((2 + (-sqrt(2))))))	1.17809724509617246442349126873	
+arccos-neg-1-over-2-times-sqrt-2-minus-sqrt-2	acos(((mpf(-1)/2) * sqrt((2 + (-sqrt(2))))))	1.96349540849362077403915211455	
+arccos-neg-1-over-2	acos((mpf(-1)/2))	2.09439510239319549230842892219	
+arccos-1-over-2-times-sqrt-1-over-2-times-5	acos(((mpf(1)/2) * sqrt(((mpf(1)/2) * (5 + (-sqrt(5)))))))	0.942477796076937971538793014984	
+arccos-neg-1-over-2-times-sqrt-1-over-2-times-5	acos(((mpf(-1)/2) * sqrt(((mpf(1)/2) * (5 + (-sqrt(5)))))))	2.1991148575128552669238503683	
+arccos-sqrt-2-over-2	acos((mpmathify(sqrt(2)) / 2))	0.78539816339744830961566084582	
+arccos-1-over-4-times-neg-1-minus-sqrt-5	acos(((mpf(1)/4) * (-1 + (-sqrt(5)))))	2.51327412287183459077011470662	
+arccos-neg-sqrt-3-over-2	acos((-(mpmathify(sqrt(3)) / 2)))	2.61799387799149436538553615273	
+arccos-1-over-2-times-sqrt-2-plus-sqrt-2	acos(((mpf(1)/2) * sqrt((2 + sqrt(2)))))	0.39269908169872415480783042291	
+arccos-complexinfinity-is-complexinfinity			

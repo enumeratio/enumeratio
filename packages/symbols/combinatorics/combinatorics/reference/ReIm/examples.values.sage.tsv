@@ -1,0 +1,23 @@
+id	in	out	verdict
+real-and-imaginary-parts	[real_part((3 + 4*I)), imag_part((3 + 4*I))]	[3, 4]	
+reim-5-plus-12i	[real_part((5 + 12*I)), imag_part((5 + 12*I))]	[5, 12]	
+reim-3	[real_part(3), imag_part(3)]	[3, 0]	
+reim-list-i-neg-1-neg-i-1	[[real_part((0 + 1*I)), imag_part((0 + 1*I))], [real_part(-1), imag_part(-1)], [real_part((0 + -1*I)), imag_part((0 + -1*I))], [real_part(1), imag_part(1)]]	[[0, 1], [-1, 0], [0, -1], [1, 0]]	
+threads-over-a-list	[[real_part((1 + 2*I)), imag_part((1 + 2*I))], [real_part((3 + 4*I)), imag_part((3 + 4*I))]]	[[1, 2], [3, 4]]	
+reim-neg-3	[real_part(-3), imag_part(-3)]	[-3, 0]	
+reim-3-over-5	[real_part((3/5)), imag_part((3/5))]	[3/5, 0]	
+reim-root-neg-17-4	[real_part(real_nth_root(-17, 4)), imag_part(real_nth_root(-17, 4))]	ValueError: no real nth root of negative real number with even n	error
+reim-gamma-neg-1-over-2	[real_part(gamma((-1/2))), imag_part(gamma((-1/2)))]	[-2*sqrt(pi), 0]	
+reim-list-list-1-neg-1-0-list-0-1	[[[real_part(1), imag_part(1)], [real_part(-1), imag_part(-1)], [real_part(0), imag_part(0)]], [[real_part(0), imag_part(0)], [real_part(1), imag_part(1)]]]	[[[1, 0], [-1, 0], [0, 0]], [[0, 0], [1, 0]]]	
+reim-z	[real_part(SR.var("z")), imag_part(SR.var("z"))]	True	
+reim-2z	[real_part((2 * SR.var("z"))), imag_part((2 * SR.var("z")))]	True	
+reim-w-plus-z	[real_part((SR.var("w") + SR.var("z"))), imag_part((SR.var("w") + SR.var("z")))]	True	
+reim-list-a-list-b-c	[[real_part(SR.var("a")), imag_part(SR.var("a"))], [[real_part(SR.var("b")), imag_part(SR.var("b"))], [real_part(SR.var("c")), imag_part(SR.var("c"))]]]	True	
+reim-exponentiale-pow-2-over-3-times-i-times-pi	[real_part(((e)^((0 + (2/3)*I) * pi))), imag_part(((e)^((0 + (2/3)*I) * pi)))]	[-1/2, 1/2*sqrt(3)]	
+rank-reim-mat			
+reim-2x-plus-i	[real_part(((2 * SR.var("x")) + (0 + 1*I))), imag_part(((2 * SR.var("x")) + (0 + 1*I)))]	True	
+shape-reim-mat			
+reim-5-times-exponentiale-pow-3-over-4-times-i	[real_part((5 * ((e)^((0 + (3/4)*I) * pi)))), imag_part((5 * ((e)^((0 + (3/4)*I) * pi))))]	[-5/2*sqrt(2), 5/2*sqrt(2)]	
+reim-i	[real_part((0 + 1*I)), imag_part((0 + 1*I))]	[0, 1]	
+reim-list-i-neg-i-0	[[real_part((0 + 1*I)), imag_part((0 + 1*I))], [real_part((0 + -1*I)), imag_part((0 + -1*I))], [real_part(0), imag_part(0)]]	[[0, 1], [0, -1], [0, 0]]	
+replaceall-reim-z-rule-z-list-imaginaryunit-neg			

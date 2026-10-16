@@ -1,0 +1,22 @@
+id	in	out	verdict
+betaregularized-0-2-3	beta_regularized(n(2), n(3), n(0))	0.0	
+betaregularized-1-2-3	beta_regularized(n(2), n(3), n(1))	1.0	
+a-floating-point-x-evaluates-directly-to-a	beta_regularized(n(2), n(3), x(0.5))	0.6874999999999998	
+i-x-1-1-x-the-uniform-distribution-s-own-cdf	beta_regularized(n(1), n(1), x(0.5))	0.49999999999999956	
+non-integer-parameters	beta_regularized(x(2.5), x(3.5), x(0.4))	0.48690419152611486	
+i-1-2-2-3-11-16-exactly	beta_regularized(n(2), n(3), rational(n(1), n(2)))	0.6874999999999998	
+threads-element-wise-over-a-list-as-wolfram-s	list(vec![beta_regularized(n(1), n(1), x(0.5)), beta_regularized(n(2), n(1), x(0.5))])	[0.49999999999999956, 0.25000000000000094]	
+x-outside-0-1-by-continuation-real-here-as-b-5	beta_regularized(x(0.5), n(5), n(2))	panic: statrs: XOutOfRange	error
+four-arguments-the-generalized-i-z-1-a-b-i-z-0-a			
+interval-arithmetic-i-x-2-1-x-2			
+uncertainty-propagation			
+to-30-significant-digits-every-one-correctly	nf(beta_regularized(n(2), n(3), rational(n(1), n(3))))	0.4074074074074075	
+binomial-cdf-via-the-regularized-beta-for-x-sim	equal(beta_regularized(n(3), n(2), x(0.7)), (power(x(0.7), n(4)) + (n(4) * x(0.3) * power(x(0.7), n(3)))))	true	
+symmetry-i-x-a-b-i-1-x-b-a-1	equal((beta_regularized(n(2), n(3), x(0.3)) + beta_regularized(n(3), n(2), x(0.7))), n(1))	true	
+i-1-2-a-a-1-2-for-any-a-here-at-a-10	beta_regularized(n(10), n(10), x(0.5))	0.5000000000000085	
+i-x-a-1-x-a-here-0-2111-5	beta_regularized(n(5), n(1), x(0.2111111111111111))	0.00041932953987366137	
+the-arcsine-distribution-s-median-i-1-2-1-2-1-2	beta_regularized(rational(n(1), n(2)), rational(n(1), n(2)), x(0.5))	0.5000000000000004	
+i-x-1-1-x-symbolically			
+i-x-a-1-x-a-symbolically			
+i-x-1-b-1-1-x-b			
+an-x-outside-0-1-is-left-unevaluated-rather-than	beta_regularized(n(2), n(3), n(2))	panic: statrs: XOutOfRange	error

@@ -1,0 +1,12 @@
+id	in	out
+series-elliptick-x-x-0-5		
+normal-series-elliptick-x-x-positiveinfinity-2		
+n-elliptick-4-over-5-50	enumeratio_n(lambda: (ellipk((mpf(4)/5))), 50)	2.2572053268208536550832560045233873972354192817400
+list-elliptick-0-elliptick-1	[ellipk(0), ellipk(1)]	[mpf('1.57079632679489661923132169163967'), mpf('+inf')]
+elliptick-positiveinfinity	ellipk(inf)	(0.0 + 0.0j)
+functionexpand-elliptick-list-list-neg-1-0-list		
+functionexpand-matrixfunction-elliptick-list		
+series-elliptick-m-m-0-3		
+elliptick-1-plus-sqrt-2-minus-sqrt-2-times-1	ellipk((((1 + sqrt(2) + (-sqrt((2 * (1 + sqrt(2)))))))**4))	1.57166568920643704203186105844
+elliptick-1	ellipk(1)	+inf
+n-elliptick-2-plus-neg-i-times-neg-1-minus-2pi	(ellipk((2 + (mpc(0, -1) * (-1 + (-2 * pi) + (-((e)**(-((pi)**4)))) + (-((pi)**2)) + (((1 + pi))**2))))))	(1.31102877714605990523241979495 - 1.31102877714605990523241979495j)

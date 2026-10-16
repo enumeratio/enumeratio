@@ -1,0 +1,35 @@
+id	in	out	verdict
+q-a-0-1-for-any-a	(uppergamma(1, 0) / gamma(1))	1	
+q-1-z-e-z-here-at-z-1	(uppergamma(1, 1) / gamma(1))	exp(-1)	
+floating-point-arguments-evaluate-directly-to-a	(uppergamma(2.5, 1.5) / gamma(2.5))	0.699985835878628	
+q-1-z-e-z-at-z-1-5	(uppergamma(1, 1.5) / gamma(1))	0.223130160148430	
+q-2-3-3-4-3-e-3-3	(uppergamma(2, 3.3) / gamma(2))	0.158597619825332	
+q-1-0-2-all-integers			
+q-2-5-1-5-3			
+q-0-5-0-0-25			
+q-3-1-7-all-integers			
+q-2-5-0-complex-1-5-plus-i			
+q-complex-2-plus-i-0-1-5			
+q-three-complex-arguments			
+q-0-1-4-all-integers			
+threads-element-wise-over-a-list-as-wolfram-s	[(uppergamma(1, 1) / gamma(1)), (uppergamma(2, 1) / gamma(2))]	[exp(-1), 2*exp(-1)]	
+complex-order-under-n	N((uppergamma((1 + 1*I), 2.5) / gamma((1 + 1*I))), 30)	0.00794706062011912574500371299526 + 0.152536778541018395090430043824*I	
+three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2			
+which-at-an-integer-order-equally-evaluates-to			
+listable-over-its-limits-q-1-infty-infty-q-1	[(uppergamma(1, -oo) / gamma(1)), (uppergamma(1, oo) / gamma(1))]	[oo, 0]	
+listable-threads-elementwise-over-a-matrix	[[(uppergamma(2, 3.5) / gamma(2)), (uppergamma(2, 0) / gamma(2))], [(uppergamma(2, 0) / gamma(2)), (uppergamma(2, 6.5) / gamma(2))]]	[[0.135888225400433, 1], [1, 0.0112757939473318]]	
+interval-arithmetic-q-is-decreasing-in-z	(uppergamma(Rational(2, 5), AccumBounds(0.21, 0.22)) / gamma(Rational(2, 5)))	uppergamma(2/5, AccumBounds(0.21, 0.22))/gamma(2/5)	disagree
+to-30-significant-digits-not-yet-the-last-digit	N((uppergamma(2, 1) / gamma(2)), 30)	0.735758882342884643191047540323	
+q-s-z-at-a-complex-order-s-beyond-what-the	N((uppergamma((2 + 1*I), 1.5) / gamma((2 + 1*I))), 30)	0.617652231045063287286659291711 + 0.333481540658552611891590551225*I	
+the-cdf-of-a-poisson-lambda-2-random-variable-at	(uppergamma(3, 2) / gamma(3))	5*exp(-2)	
+three-arguments-p-5-2-3-2-q-5-2-0-3-2-the-gamma			
+the-chi-2-1-cdf-p-1-2-x-2-at-the-familiar	(1 - (uppergamma(0.5, 1.9207294103470425) / gamma(0.5)))	0.949999999999999	
+the-polynomial-closed-form-for-an-integer-order	(uppergamma(5, -1) / gamma(5))	3*E/8	
+q-a-0-z-1-q-a-z-even-for-negative-a-where-gamma			
+q-a-0-1-for-symbolic-a	(uppergamma(Symbol("a"), 0) / gamma(Symbol("a")))	uppergamma(a, 0)/gamma(a)	inconclusive
+q-a-infty-0	(uppergamma(Symbol("a"), oo) / gamma(Symbol("a")))	0	
+q-1-x-e-x-symbolically	(uppergamma(1, Symbol("x")) / gamma(1))	True	
+q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s	(uppergamma(2, Symbol("x")) / gamma(2))	True	
+q-1-2-x-erfc-sqrt-x-see-erfc	(uppergamma(Rational(1, 2), Symbol("x")) / gamma(Rational(1, 2)))	True	
+a-non-integer-order-combined-with-negative-z	(uppergamma(2.5, -1) / gamma(2.5))	0.752252778063675*uppergamma(2.5, -1)	
+gamma-regularized-0-0-is-indeterminate	(uppergamma(0, 0) / gamma(0))	0	inconclusive

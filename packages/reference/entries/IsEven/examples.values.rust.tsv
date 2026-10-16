@@ -1,0 +1,14 @@
+id	in	out	verdict
+iseven-4	is_even(n(4))	true	
+iseven-3	is_even(n(3))	false	
+zero-is-even	is_even(n(0))	true	
+negative-integers-count-too	is_even(n(-4))	true	
+iseven-8	is_even(n(8))	true	
+a-non-integer-is-not-even	is_even(x(2.5))	panic: an integer, not 2.5	error
+big-integers	is_even(power(n(2), n(100)))	true	
+iseven-10-factorial	is_even(factorial(n(10)))	panic: an integer, not 3628800.0	error
+threads-element-wise-over-a-list	list(vec![is_even(n(1)), is_even(n(2)), is_even(n(3))])	[false, true, false]	
+select-the-even-numbers-up-to-10			
+every-integer-is-exactly-one-of-odd-and-even-see			
+iseven-12	is_even(n(12))	true	
+a-symbol-stays-undecided-rather-than-false			

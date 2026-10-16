@@ -1,0 +1,24 @@
+id	in	out
+log2-8	log(8, 2)	3
+log2-1	log(1, 2)	0
+log2-1-024	log(1024, 2)	10
+log2-2-pow-10	log(((2)^10), 2)	10
+a-machine-precision-argument-evaluates	log(1.4142, 2)	0.499986164421874
+series-log-x-plus-1-2-x-0-5	SR(log((SR.var("x") + 1), 2)).series(SR.var("x") == 0, 5 + 1)	True
+an-exact-negative-power-of-2-folds-too-log-2	log((1/8), 2)	-3
+a-symbolic-argument-becomes-the-two-argument-log	log(SR.var("x"), 2)	True
+an-integer-power-is-pulled-out-2-log-2-3	log(9, 2)	2*log(3)/log(2)
+n-log2-9	enumeratio_n(log(9, 2))	3.16992500144231
+log2-0	log(0, 2)	-Infinity
+as-with-ln-the-logarithm-of-complex-infinity-is	log(unsigned_infinity, 2)	+Infinity
+element-wise-over-a-matrix-including-the-exact	[[log(2, 2), log(1, 2)], [log(0, 2), log((1/2), 2)]]	[[1, 0], [-Infinity, -1]]
+interval-arithmetic-log-2-frac-13-2-log-2-3-1		
+uncertainty-propagation-log-2-frac-15-pm-0-01		
+derivative-frac-1-x-ln-2	diff(log(SR.var("x"), 2), SR.var("x"))	True
+to-30-significant-digits-every-one-correctly	enumeratio_n(log(3, 2), 30)	1.58496250072116
+n-log-45-2-100	enumeratio_n(log(45, 2), 100)	5.49185309632967
+n-log-2-plus-i-2	enumeratio_n(log((2 + 1*I), 2))	1.16096404744368 + 0.668902106225488*I
+fullsimplify-matrixfunction-log2-list-list-2-1		
+log-positiveinfinity-2	log(oo, 2)	+Infinity
+a-float-argument-folds-even-for-a-fractional	log(0.5, 2)	-1.00000000000000
+same-as-log-z-2	enumeratio_equal(log(8, 2), log(8, 2))	True

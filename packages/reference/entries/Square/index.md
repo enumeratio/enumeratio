@@ -26,6 +26,22 @@ bindings:
     form: sage
     template: ($1)^2
     arity: 1
+  - origin: mapped
+    form: julia
+    template: enumeratio_pow($1, 2)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: power($1, n(2))
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: num-integer 0.1.47
+      on: 2026-10-16
 ---
 
 - Canonicalizes to $x^2$: $\mathrm{Square}(x)$ and $\mathrm{Power}(x, 2)$ are the same expression. See [[Sqrt]].

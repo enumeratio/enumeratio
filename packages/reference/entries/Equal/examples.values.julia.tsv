@@ -1,12 +1,12 @@
-id	in
-4-eq-4	(4 == 4)
-n-pi-1-eq-pi	
-n-pi-20-eq-pi	
-sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	
-x-eq-x	
-3-eq-3-eq-3	
-list-1-2-eq-list-1-2	([1, 2] == [1, 2])
-n-pi-20-eq-pi-times-1-plus-256-times-10-pow-neg	
-list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	
-solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	
-fullsimplify-p-q-eq-q-p	
+id	in	out
+4-eq-4	enumeratio_equal(4, 4)	true
+n-pi-1-eq-pi	enumeratio_equal(enumeratio_n(const_pi(RR), 1), const_pi(RR))	false
+n-pi-20-eq-pi	enumeratio_equal(enumeratio_n(const_pi(RR), 20), const_pi(RR))	true
+sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	enumeratio_equal((enumeratio_ball(sqrt, 2) + enumeratio_ball(sqrt, 3)), enumeratio_ball(sqrt, (5 + (2 * enumeratio_ball(sqrt, 6)))))	true
+x-eq-x		
+3-eq-3-eq-3		
+list-1-2-eq-list-1-2	enumeratio_equal(Any[1, 2], Any[1, 2])	true
+n-pi-20-eq-pi-times-1-plus-256-times-10-pow-neg	enumeratio_equal(enumeratio_n(const_pi(RR), 20), (const_pi(RR) * (1 + (256 * enumeratio_pow(10, -20)))))	true
+list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5		
+solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0		
+fullsimplify-p-q-eq-q-p		

@@ -38,6 +38,14 @@ bindings:
     form: typescript
     environment: engine
     source: packages/ce-patches/src/compute-engine/numerics/barnes-g.ts
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(log_barnes_g, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 seeAlso:
   - BarnesG
   - LogGamma

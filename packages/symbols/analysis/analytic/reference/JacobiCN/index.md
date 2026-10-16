@@ -15,6 +15,37 @@ seeAlso:
   - EllipticK
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: ellipfun('cn', $1, m=$2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: jacobi_cn($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_jacobi(:cn, $1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.

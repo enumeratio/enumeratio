@@ -1,0 +1,18 @@
+id	in	out	verdict
+multinomial-1-2-1	multinomial(1, 2, 1)	12	
+multinomial-2-3-4	multinomial(2, 3, 4)	1260	
+threads-element-wise-over-a-list-as-wolfram-s	multinomial([2, 3, 5], 3)	ValueError: multinomial takes only one iterable argument	error
+zero-parts-contribute-0-1	multinomial(0, 0, 1)	1	
+real-arguments-evaluate-via-the-gamma-function	multinomial(2, 0.2, 5)	34.3178035200000	
+complex-arguments-evaluate-via-the-gamma	multinomial((1 + 1*I), 0.2, 4)	TypeError: either m or x-m must be an integer	error
+an-around-argument-should-propagate-its			
+the-number-of-distinct-letter-arrangements-of	multinomial(1, 4, 4, 2)	34650	
+the-coefficient-of-a-2-b-3-c-in-a-b-c-6	multinomial(2, 3, 1)	60	
+with-two-arguments-it-reduces-to-binomial-binom	enumeratio_equal(multinomial(7, 3), binomial(10, 3))	True	
+orderless-permuting-the-arguments-doesn-t-change	enumeratio_equal(multinomial(1, 2, 3), multinomial(3, 1, 2))	True	
+the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3	enumeratio_equal(multinomial(3, 4, 5), (enumeratio_factorial(12) / (enumeratio_factorial(3) * enumeratio_factorial(4) * enumeratio_factorial(5))))	True	
+all-ones-parts-give-n-every-part-is-a-single	multinomial(1, 1, 1, 1)	24	
+all-zero-arguments-still-give-the-empty-product	multinomial(0, 0, 0)	1	
+a-single-argument-is-always-1-there-s-only-one	multinomial(5)	1	
+a-single-symbolic-argument-is-also-1	multinomial(SR.var("n"))	1	
+with-no-arguments-it-is-the-empty-product-1	multinomial()	IndexError: tuple index out of range	error

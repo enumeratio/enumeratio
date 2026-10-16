@@ -1,0 +1,27 @@
+id	in	out	verdict
+gamma-0-gamma-euler-s-constant	stieltjes(0)	euler_gamma	
+no-closed-form-past-gamma-0-stays-symbolic-until	stieltjes(1)	stieltjes(1)	inconclusive
+gamma-1-frac-32-numerically-a-floating-point			
+gamma-3-frac-12-0-66742			
+gamma-2-frac-32			
+gamma-1-0-0728158-under-n	enumeratio_n(stieltjes(1))	-0.0728158454836767	
+gamma-2-0-00969036-under-n	enumeratio_n(stieltjes(2))	-0.00969036319287232	
+n-stieltjesgamma-1-50	enumeratio_n(stieltjes(1), 50)	-0.0728158454836767	
+n-stieltjesgamma-2-1-over-2-50			
+complex-a			
+listable-in-the-order-n-threads-over-a-list			
+interval-arithmetic-in-a			
+to-30-significant-digits-not-yet-the-requested	enumeratio_n(stieltjes(1), 30)	-0.0728158454836767	
+certified-digits-gamma-1	enumeratio_n(stieltjes(1), 40)	-0.0728158454836767	
+certified-digits-gamma-2-1-3			
+gamma-0-a-psi-a-symbolically-in-a			
+gamma-n-1-gamma-n-the-two-argument-form-reduces			
+gamma-0-1-psi-1-gamma-polygamma-0-z-routes			
+gamma-0-frac-12-psi-frac-12-gamma-2-ln-2-now			
+gamma-3-1-gamma-3-order-1-at-a-1-is-just-the			
+0-lt-stieltjesgamma-10-lt-10-pow-neg-3			
+gamma-n-a-has-poles-at-the-nonpositive-integers			
+orders-past-30-stay-unevaluated-even-under-n-the	stieltjes(40)	stieltjes(40)	disagree
+stieltjesgamma-2-1			
+n-stieltjesgamma-2n	enumeratio_n(stieltjes((2 * SR.var("n"))))	True	
+n-stieltjesgamma-2n-3-over-2			

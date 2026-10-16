@@ -1,0 +1,16 @@
+id	in	out	verdict
+j-3-2-1-4-4934-also-the-first-positive-root-of	(besseljzero((mpf(3)/2), 1))	4.49340945790906417530788092728	
+j-0-1-2-4048	(besseljzero(0, 1))	2.40482555769577276862163187933	
+the-third-zero-of-j-0	(besseljzero(0, 3))	8.65372791291101221695419871266	
+j-3-2-2	(besseljzero((mpf(3)/2), 2))	7.72525183693770716419506893306	
+j-1-2	(besseljzero(1, 2))	7.01558666981561875353704998148	
+j-5-2-1	(besseljzero((mpf(5)/2), 1))	5.76345919689454979140646665395	
+series-besseljzero-n-x-x-0-1			
+n-besseljzero-of-a-negative-order	(besseljzero((mpf(-1)/2), 2))	ValueError: v cannot be negative	error
+n-list-besseljzero-0-1-besseljzero-0-2	([besseljzero(0, 1), besseljzero(0, 2), besseljzero(0, 3)])	[mpf('2.40482555769577276862163187932641'), mpf('5.52007811028631064959660411281274'), mpf('8.6537279129110122169541987126612')]	
+j-0-1-to-20-digits	enumeratio_n(lambda: (besseljzero(0, 1)), 20)	2.4048255576957727686	
+the-third-zero-of-j-0-to-30-digits	enumeratio_n(lambda: (besseljzero(0, 3)), 30)	8.65372791291101221695419871266	
+simplify-normal-series-besseljzero-n-x-x-0-2			
+series-besseljzero-n-x-x-x0-1			
+n-1-over-pi-times-besseljzero-1-1	(((mpmathify(1) / pi) * besseljzero(1, 1)))	1.21966989126650445492653884747	
+tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first			

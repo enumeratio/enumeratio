@@ -1,0 +1,41 @@
+id	in	out	verdict
+the-quadratic			
+the-cubic			
+at-a-real	enumeratio_chebyshev_u(5, enumeratio_decimal("0.7"))	-1.397759999999999999999999999999999999999999999999999999999999999999999999999975	
+at-u0-0-7	(enumeratio_chebyshev_u(0, enumeratio_decimal("0.7")))	1.0	
+at-u1-0-7	(enumeratio_chebyshev_u(1, enumeratio_decimal("0.7")))	1.399999999999999999999999999999999999999999999999999999999999999999999999999997	
+at-u5-0-7	(enumeratio_chebyshev_u(5, enumeratio_decimal("0.7")))	-1.397759999999999999999999999999999999999999999999999999999999999999999999999975	
+at-u-1-0-7	(enumeratio_chebyshev_u(-1, enumeratio_decimal("0.7")))	DomainError with -1: Index must be non-negative	error
+at-u-2-0-7	(enumeratio_chebyshev_u(-2, enumeratio_decimal("0.7")))	DomainError with -2: Index must be non-negative	error
+at-u-5-0-7	(enumeratio_chebyshev_u(-5, enumeratio_decimal("0.7")))	DomainError with -5: Index must be non-negative	error
+at-u4-2-3i	(enumeratio_chebyshev_u(4, enumeratio_complex(2, 3)))	complex argument	error
+chebyshevu-2-3	enumeratio_chebyshev_u(2, 3)	35.0	
+chebyshevu-10-x			
+series-chebyshevu-5-x-x-0-5			
+u-of-a-negative-order-at-a-rational	enumeratio_chebyshev_u(-7, (1 // 2))	DomainError with -7: Index must be non-negative	error
+at-a-rational	enumeratio_chebyshev_u(3, (1 // 2))	-1.0	
+at-a-complex-argument	enumeratio_chebyshev_u(4, enumeratio_complex(2, 3))	complex argument	error
+a-symbolic-order-stays-unevaluated			
+chebyshevu-2-5	enumeratio_chebyshev_u(2, 5)	99.0	
+chebyshevu-0-0	enumeratio_chebyshev_u(0, 0)	1.0	
+chebyshevu-0-positiveinfinity	enumeratio_chebyshev_u(0, Inf)	non-finite argument	error
+chebyshevu-7-x			
+chebyshevu-1-neg-x-eq-neg-chebyshevu-1-x			
+chebyshevu-2-neg-x-eq-chebyshevu-2-x			
+matrixfunction-function-chebyshevu-2-1-1-list			
+at-1	enumeratio_chebyshev_u(5, 1)	6.0	
+at-minus-1	enumeratio_chebyshev_u(5, -1)	-6.0	
+recurrence	(enumeratio_chebyshev_u(4, (1 // 3)) - (((2 // 3) * enumeratio_chebyshev_u(3, (1 // 3))) - enumeratio_chebyshev_u(2, (1 // 3))))	-1.943137924896250040711929169130089903501100081998163311630333280787933155711546e-77	
+order-minus-1			
+negative-order			
+chebyshevu-0-1	enumeratio_chebyshev_u(0, 1)	1.0	
+chebyshevu-0-neg-1-over-2-times-i	enumeratio_chebyshev_u(0, enumeratio_complex(0, (-1 // 2)))	complex argument	error
+chebyshevu-1-neg-1-over-2-times-i	enumeratio_chebyshev_u(1, enumeratio_complex(0, (-1 // 2)))	complex argument	error
+chebyshevu-1-positiveinfinity	enumeratio_chebyshev_u(1, Inf)	non-finite argument	error
+chebyshevu-1-negativeinfinity	enumeratio_chebyshev_u(1, (-Inf))	non-finite argument	error
+chebyshevu-2-positiveinfinity	enumeratio_chebyshev_u(2, Inf)	non-finite argument	error
+chebyshevu-2-negativeinfinity	enumeratio_chebyshev_u(2, (-Inf))	non-finite argument	error
+sum-chebyshevu-k-1-over-2-times-chebyshevu-k-2-k			
+sum-chebyshevu-k-1-over-2-times-chebyshevu-k-2-2			
+n-integrate-sqrt-neg-t-pow-2-plus-1-times			
+n-integrate-chebyshevu-2-t-times-chebyshevu-3-t			

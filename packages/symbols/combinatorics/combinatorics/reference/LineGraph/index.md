@@ -13,6 +13,14 @@ seeAlso:
   - AdjacencyGraph
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: ($1).line_graph()
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - EdgeCount(LineGraph(g)) = sum over v of C(VertexDegree(v), 2) for a simple g -- every pair of edges sharing vertex v contributes one line-graph edge.

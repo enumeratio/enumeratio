@@ -1,4 +1,4 @@
-id	in	out	shown	tex.in	tex.out	verdict
-besseli-0-1	N[BesselI[0, 1]]					
-normal-series-besseli-0-x-x-positiveinfinity-2	Normal[Series[BesselI[0, x], List[x, Infinity, 2]]]	Indeterminate		\text{Indeterminate}	\text{Indeterminate}	inconclusive
-n-besseli-0-1-50	N[BesselI[0, 1], 50]	1.26606587775200833559824462521471753760767031135496220676312084581981678703738`50.	1.2660658777520083355982446252147175376076703113550	N[I_0(1),50]	1.2660658777520083355982446252147175376076703113550	
+id	in	out	shown	tex.in	tex.out
+besseli-0-1	N[BesselI[0, 1]]	1.2660658777520082		N[I_0(1)]	1.26607
+normal-series-besseli-0-x-x-positiveinfinity-2	Normal[Series[BesselI[0, x], List[x, Infinity, 2]]]	((-1/8*I)/(Sqrt[2*Pi]*x^(3/2)) + I/(Sqrt[2*Pi]*Sqrt[x]))/E^x + E^x*(1/(8*Sqrt[2*Pi]*x^(3/2)) + 1/(Sqrt[2*Pi]*Sqrt[x]))		\text{Normal}[\text{Series}[I_0(x),\{x,\infty ,2\}]]	e^x \left(\frac{1}{8 \sqrt{2 \pi } x^{3/2}}+\frac{1}{\sqrt{2 \pi } \sqrt{x}}\right)+e^{-x} \left(\frac{i}{\sqrt{2 \pi } \sqrt{x}}-\frac{i}{8 \sqrt{2 \pi } x^{3/2}}\right)
+n-besseli-0-1-50	N[BesselI[0, 1], 50]	1.26606587775200833559824462521471753760767031135496220676312084581981678703738`50.	1.2660658777520083355982446252147175376076703113550	N[I_0(1),50]	1.2660658777520083355982446252147175376076703113550

@@ -1,0 +1,5 @@
+id	in	out
+besselj-0-1	(besselj(0, 1))	0.765197686557966551449717526103
+normal-series-besselj-0-x-x-positiveinfinity-3		
+n-besselj-0-4-50	enumeratio_n(lambda: (besselj(0, 4)), 50)	-0.39714980986384737228659076845169804197561868528939
+d-besselj-n-x-x		

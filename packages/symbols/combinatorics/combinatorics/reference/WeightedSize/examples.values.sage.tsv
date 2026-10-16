@@ -1,0 +1,6 @@
+id	in	out
+the-partition-4-2-1-of-7	enumeratio_stat("IntegerPartition", [4, 2, 1], "WeightedSize")	4
+the-partition-3-3-1-of-7	enumeratio_stat("IntegerPartition", [3, 3, 1], "WeightedSize")	5
+findstat-st000185-1	enumeratio_stat("IntegerPartition", [1], "WeightedSize")	0
+findstat-st000185-2	enumeratio_stat("IntegerPartition", [2], "WeightedSize")	0
+findstat-st000185-3	enumeratio_stat("IntegerPartition", [3], "WeightedSize")	0

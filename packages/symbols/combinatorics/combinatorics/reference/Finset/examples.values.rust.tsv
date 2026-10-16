@@ -1,2 +1,2 @@
-id	in
-from-its-characteristic-word	list(vec![n(0), n(1), n(1), n(0), n(1)])
+id	in	out	verdict
+from-its-characteristic-word	list(vec![n(0), n(1), n(1), n(0), n(1)])	[0, 1, 1, 0, 1]	disagree

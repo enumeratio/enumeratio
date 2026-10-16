@@ -1,0 +1,11 @@
+id	in	out	verdict
+n-artanh-1-over-2-50	nf(atanh(rational(n(1), n(2))))	0.5493061443340549	
+artanh-positiveinfinity			
+artanh-0	atanh(n(0))	0.0	
+d-artanh-x-x			
+fullsimplify-neg-1-over-x-times-y-plus-1-times-x			
+trigtoexp-artanh-z			
+integrate-artanh-x-x-nothing-nothing			
+artanh-2	atanh(n(2))	panic: non-finite result: NaN	error
+artanh-neg-2	atanh(n(-2))	panic: non-finite result: NaN	error
+artanh-complexinfinity-is-indeterminate-the-sign			

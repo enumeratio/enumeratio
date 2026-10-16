@@ -7,6 +7,7 @@ mod-7-3	(7 % 3)	1
 5-mod-3	(5 % 3)	2	
 1-plus-4-mod-3	(1 + (4 % 3))	2	
 integermod-keeps-the-modulus	GF(5, symmetric=False)(17)	2 mod 5	
+gaussian-mod-a-gaussian-unit-multiple	((1000 + -1*I) % (1 + -1*I))	TypeError: Invalid comparison of non-real (1 - I)**2*(-500*I - 250*(1 - I)**2)/2	error
 a-third-argument-offsets-the-range-the-result			
 with-offset-1-the-residues-run-1-2-3-rather-than			
 rationals-are-reduced-exactly	(Rational(5, 2) % 2)	1/2	
@@ -54,7 +55,7 @@ generatingfunction-n-mod-4-n-x
 list-a-b-c-list-1-plus-neg-1-plus-range-1-10-mod			
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	enumeratio_equal((17 % 5), ((17 + (3 * 5)) % 5))	True	
 a-negative-modulus-gives-a-result-in-n-0	(-5 % -3)	-2	
-the-remainder-of-quotient			
+the-remainder-of-quotient	enumeratio_equal(((7 + 5*I) % (2 + 1*I)), ((7 + 5*I) - ((2 + 1*I) * (S((7 + 5*I)) // S((2 + 1*I))))))	False	disagree
 5-mod-3-eq-2-mod-3	enumeratio_equal((5 % 3), (2 % 3))	True	
 2-mod-3-eq-8-mod-3	enumeratio_equal((2 % 3), (8 % 3))	True	
 0-mod-1	(0 % 1)	0	

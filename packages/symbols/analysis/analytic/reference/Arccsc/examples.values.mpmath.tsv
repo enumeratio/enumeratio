@@ -1,0 +1,32 @@
+id	in	out	verdict
+arccsc-1	acsc(1)	1.57079632679489661923132169164	
+arccsc-2	acsc(2)	0.523598775598298873077107230547	
+arccsc-sqrt-2-pi-4	acsc(sqrt(2))	0.78539816339744830961566084582	
+an-odd-function	acsc(-2)	-0.523598775598298873077107230547	
+inside-1-1-the-value-is-complex	acsc(0.5)	(1.57079632679489661923132169164 - 1.31695789692481670862504634731j)	
+arccsc-positiveinfinity	acsc(inf)	0.0	
+a-pole-arccsc-0-is-complex-infinity	acsc(0)	ZeroDivisionError: 	error
+derivative-for-real-x-1			
+n-arccsc-5-50	enumeratio_n(lambda: (acsc(5)), 50)	0.20135792079033079145512555221762341024003808140223	
+arccsc-list-list-sqrt-2-neg-sqrt-2-list-0-neg	[[acsc(sqrt(2)), acsc((-sqrt(2)))], [acsc(0), acsc((-sqrt(2)))]]	ZeroDivisionError: 	error
+list-arccsc-neg-sqrt-2-arccsc-neg-2-over-3-times	[acsc((-sqrt(2))), acsc(((mpf(-2)/3) * sqrt(3))), acsc(((mpf(2)/3) * sqrt(3))), acsc(sqrt(2))]	[mpf('-0.785398163397448309615660845819833'), mpf('-1.04719755119659774615421446109344'), mpf('1.04719755119659774615421446109344'), mpf('0.785398163397448309615660845819833')]	
+arccsc-complexinfinity			
+arccsc-list-1-neg-1-0	[acsc(1), acsc(-1), acsc(0)]	ZeroDivisionError: 	error
+matrixfunction-function-arccsc-1-1-list-list			
+arccsc-1-over-2	acsc((mpf(1)/2))	(1.57079632679489661923132169164 - 1.31695789692481670862504634731j)	
+arccsc-neg-1-over-2	acsc((mpf(-1)/2))	(-1.57079632679489661923132169164 + 1.31695789692481670862504634731j)	
+undoes-csc-csc-arccsc-x-x	almosteq(csc(acsc(2)), 2, 1e-20)	True	
+arccsc-neg-1	acsc(-1)	-1.57079632679489661923132169164	
+arccsc-neg-sqrt-2-plus-sqrt-6	acsc(((-sqrt(2)) + sqrt(6)))	1.30899693899574718269276807637	
+arccsc-neg-sqrt-6-plus-sqrt-2	acsc(((-sqrt(6)) + sqrt(2)))	-1.30899693899574718269276807637	
+arccsc-2-times-sqrt-1-over-2-plus-sqrt-2	acsc((2 * sqrt((mpmathify(1) / (2 + sqrt(2))))))	1.17809724509617246442349126873	
+arccsc-neg-2-times-sqrt-1-over-2-plus-sqrt-2	acsc((-2 * sqrt((mpmathify(1) / (2 + sqrt(2))))))	-1.17809724509617246442349126873	
+arccsc-2-over-3-times-sqrt-3	acsc(((mpf(2)/3) * sqrt(3)))	1.04719755119659774615421446109	
+arccsc-neg-2-over-3-times-sqrt-3	acsc(((mpf(-2)/3) * sqrt(3)))	-1.04719755119659774615421446109	
+arccsc-neg-1-plus-sqrt-5	acsc((-1 + sqrt(5)))	0.942477796076937971538793014984	
+arccsc-1-minus-sqrt-5	acsc((1 + (-sqrt(5))))	-0.942477796076937971538793014984	
+arccsc-neg-sqrt-2	acsc((-sqrt(2)))	-0.78539816339744830961566084582	
+arccsc-sqrt-2-plus-neg-2-over-5-times-sqrt-5	acsc(sqrt((2 + ((mpf(-2)/5) * sqrt(5)))))	1.25663706143591729538505735331	
+arccsc-neg-sqrt-2-plus-neg-2-over-5-times-sqrt-5	acsc((-sqrt((2 + ((mpf(-2)/5) * sqrt(5))))))	-1.25663706143591729538505735331	
+arccsc-sqrt-2-plus-2-over-5-times-sqrt-5	acsc(sqrt((2 + ((mpf(2)/5) * sqrt(5)))))	0.628318530717958647692528676656	
+arccsc-neg-sqrt-2-plus-2-over-5-times-sqrt-5	acsc((-sqrt((2 + ((mpf(2)/5) * sqrt(5))))))	-0.628318530717958647692528676656	

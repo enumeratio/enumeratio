@@ -1,0 +1,12 @@
+id	in	out
+ellipticf-list-list-1-0-list-0-1-0	[[ellipf(1, 0), ellipf(0, 0)], [ellipf(0, 0), ellipf(1, 0)]]	[[mpf('1.0'), mpf('0.0')], [mpf('0.0'), mpf('1.0')]]
+matrixfunction-function-ellipticf-1-0-1-list		
+n-ellipticf-12-over-5-3-50	enumeratio_n(lambda: (ellipf((mpf(12)/5), 3)), 50)	(1.0010773804561062360796595863838358931497135904585-1.9231661895046253531841444093352781715706878703094j)
+list-ellipticf-0-m-ellipticf-1-over-2-times-pi-m		
+ellipticf-0-1	ellipf(0, 1)	0.0
+ellipticf-0-0	ellipf(0, 0)	0.0
+ellipticf-jacobiamplitude-0-0-0		
+ellipticf-jacobiamplitude-0-1-1		
+solve-ellipticf-z-m-pow-3-plus-ellipticf-z-m-eq		
+n-2-times-ellipticf-1-over-2-1-over-2	((2 * ellipf((mpf(1)/2), (mpf(1)/2))))	1.02093427125600951267220818222
+n-ellipticf-1-over-3-1-over-2-plus-ellipticf-1	((ellipf((mpf(1)/3), (mpf(1)/2)) + ellipf((mpf(1)/2), (mpf(1)/2))))	0.846894634165577754322134285461

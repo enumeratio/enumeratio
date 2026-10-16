@@ -1,0 +1,38 @@
+id	in	out	verdict
+the-cubic			
+the-quartic			
+at-an-integer	enumeratio_chebyshev_t(5, 2)	362.0	
+at-a-real	enumeratio_chebyshev_t(5, enumeratio_decimal("0.7"))	-0.6708799999999999999999999999999999999999999999999999999999999999999999999999805	
+at-t0-0-7	(enumeratio_chebyshev_t(0, enumeratio_decimal("0.7")))	1.0	
+at-t1-0-7	(enumeratio_chebyshev_t(1, enumeratio_decimal("0.7")))	0.6999999999999999999999999999999999999999999999999999999999999999999999999999983	
+at-t2-0-7	(enumeratio_chebyshev_t(2, enumeratio_decimal("0.7")))	-0.02000000000000000000000000000000000000000000000000000000000000000000000000001105	
+at-t5-0-7	(enumeratio_chebyshev_t(5, enumeratio_decimal("0.7")))	-0.6708799999999999999999999999999999999999999999999999999999999999999999999999805	
+at-t5-2	(enumeratio_chebyshev_t(5, 2))	362.0	
+at-t-5-0-7	(enumeratio_chebyshev_t(-5, enumeratio_decimal("0.7")))	DomainError with -5: Index must be non-negative	error
+at-t4-2-3i	(enumeratio_chebyshev_t(4, enumeratio_complex(2, 3)))	complex argument	error
+chebyshevt-2-3	enumeratio_chebyshev_t(2, 3)	17.0	
+chebyshevt-10-x			
+series-chebyshevt-5-x-x-0-5			
+at-a-rational	enumeratio_chebyshev_t(5, (1 // 3))	0.9917695473251028806584362139917695473251028806584362139917695473251028806584326	
+at-a-complex-argument	enumeratio_chebyshev_t(4, enumeratio_complex(2, 3))	complex argument	error
+a-symbolic-order-stays-unevaluated			
+chebyshevt-2-5	enumeratio_chebyshev_t(2, 5)	49.0	
+chebyshevt-0-0	enumeratio_chebyshev_t(0, 0)	1.0	
+chebyshevt-0-positiveinfinity	enumeratio_chebyshev_t(0, Inf)	non-finite argument	error
+chebyshevt-7-x			
+chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x			
+chebyshevt-2-neg-x-eq-chebyshevt-2-x			
+matrixfunction-function-chebyshevt-2-1-1-list			
+cos-n-theta	enumeratio_equal(enumeratio_chebyshev_t(6, (1 // 2)), enumeratio_ball(cos, (6 * enumeratio_div(const_pi(RR), 3))))	true	
+at-1	enumeratio_chebyshev_t(7, 1)	1.0	
+at-minus-1	enumeratio_chebyshev_t(7, -1)	-1.0	
+parity	enumeratio_equal(enumeratio_chebyshev_t(5, (-1 // 3)), (-(enumeratio_chebyshev_t(5, (1 // 3)))))	true	
+negative-order			
+pell-identity	(enumeratio_pow(enumeratio_chebyshev_t(4, 3), 2) - (8 * enumeratio_pow(enumeratio_chebyshev_u(3, 3), 2)))	1.0	
+chebyshevt-0-1	enumeratio_chebyshev_t(0, 1)	1.0	
+chebyshevt-1-positiveinfinity	enumeratio_chebyshev_t(1, Inf)	non-finite argument	error
+chebyshevt-1-negativeinfinity	enumeratio_chebyshev_t(1, (-Inf))	non-finite argument	error
+chebyshevt-2-positiveinfinity	enumeratio_chebyshev_t(2, Inf)	non-finite argument	error
+chebyshevt-2-negativeinfinity	enumeratio_chebyshev_t(2, (-Inf))	non-finite argument	error
+sum-chebyshevt-k-1-over-2-times-chebyshevt-k-2-k			
+sum-chebyshevt-k-1-over-2-times-chebyshevt-k-2-2			

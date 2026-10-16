@@ -53,9 +53,12 @@ bindings:
     note: "The single most valuable row: a large share of documented examples are identities written as Equal."
   - origin: mapped
     form: julia
-    template: ($1 == $2)
+    template: enumeratio_equal($1, $2)
     arity: 2
     note: "The single most valuable row: a large share of documented examples are identities written as Equal."
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
   - origin: mapped
     form: mathlib4
     template: (decide ($1 = $2))

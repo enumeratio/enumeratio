@@ -1,0 +1,27 @@
+id	in	out	verdict
+gamma-0-gamma-euler-s-constant	stieltjes(0)	0.577215664901532860606512090082	
+no-closed-form-past-gamma-0-stays-symbolic-until	stieltjes(1)	-0.0728158454836767248605863758749	
+gamma-1-frac-32-numerically-a-floating-point	stieltjes(1, 1.5)	0.0328346803149491011257770737383	
+gamma-3-frac-12-0-66742	stieltjes(3, 0.5)	-0.667424273711380739555989196797	
+gamma-2-frac-32	stieltjes(2, 1.5)	0.00795844738388786208750600967045	
+gamma-1-0-0728158-under-n	(stieltjes(1))	-0.0728158454836767248605863758749	
+gamma-2-0-00969036-under-n	(stieltjes(2))	-0.00969036319287231848453038603521	
+n-stieltjesgamma-1-50	enumeratio_n(lambda: (stieltjes(1)), 50)	-0.072815845483676724860586375874901319137736338334338	
+n-stieltjesgamma-2-1-over-2-50	enumeratio_n(lambda: (stieltjes(2, (mpf(1)/2))), 50)	0.96886447522029071142171106232378065418259804476042	
+complex-a	(stieltjes(2, mpc(1, 1)))	TimeoutError: over 30s	error
+listable-in-the-order-n-threads-over-a-list	[stieltjes(1, 0.5), stieltjes(2, 0.5), stieltjes(3, 0.5)]	[mpf('-1.35345968080494151770868716917802'), mpf('0.968864475220290711421711062323782'), mpf('-0.667424273711380739555989196796919')]	
+interval-arithmetic-in-a			
+to-30-significant-digits-not-yet-the-requested	enumeratio_n(lambda: (stieltjes(1)), 30)	-0.0728158454836767248605863758749	
+certified-digits-gamma-1	enumeratio_n(lambda: (stieltjes(1)), 40)	-0.07281584548367672486058637587490131913774	
+certified-digits-gamma-2-1-3	enumeratio_n(lambda: (stieltjes(2, (mpf(1)/3))), 40)	3.619163909618963629887182216185941703294	
+gamma-0-a-psi-a-symbolically-in-a			
+gamma-n-1-gamma-n-the-two-argument-form-reduces	stieltjes(1, 1)	-0.0728158454836767248605863758749	
+gamma-0-1-psi-1-gamma-polygamma-0-z-routes	stieltjes(0, 1)	0.577215664901532860606512090082	
+gamma-0-frac-12-psi-frac-12-gamma-2-ln-2-now	stieltjes(0, (mpf(1)/2))	1.963510026021423479440976333	
+gamma-3-1-gamma-3-order-1-at-a-1-is-just-the	stieltjes(3, 1)	0.00205383442030334586616004654275	
+0-lt-stieltjesgamma-10-lt-10-pow-neg-3			
+gamma-n-a-has-poles-at-the-nonpositive-integers	stieltjes(2, -1)	(4.30562069336769760726568346104 + 10.3354255600999400584921050224j)	disagree
+orders-past-30-stay-unevaluated-even-under-n-the	stieltjes(40)	0.24872155939461546508449191044	inconclusive
+stieltjesgamma-2-1	stieltjes(2, 1)	-0.00969036319287231848453038603521	
+n-stieltjesgamma-2n			
+n-stieltjesgamma-2n-3-over-2			

@@ -1,0 +1,35 @@
+id	in	out	verdict
+stirlings1-5-2	stirling(5, 2, kind=1, signed=True)	-50	
+stirlings1-4-2	stirling(4, 2, kind=1, signed=True)	11	
+s-n-n-is-always-1	stirling(3, 3, kind=1, signed=True)	1	
+s-n-0-is-0-for-n-0	stirling(5, 0, kind=1, signed=True)	0	
+stirlings1-20-10	stirling(20, 10, kind=1, signed=True)	381922055502195	
+threads-element-wise-over-a-list-as-wolfram-s	[stirling(2, 2, kind=1, signed=True), stirling(4, 2, kind=1, signed=True), stirling(6, 2, kind=1, signed=True)]	[1, 11, 274]	
+exact-for-large-n	stirling(50, 2, kind=1, signed=True)	2724619372591264761651711494187624530726005154239846809600000000	
+a-mid-sized-n-and-k-past-the-fast-paths	stirling(40, 14, kind=1, signed=True)	1640591781294212129275881145293779479141760	
+the-number-of-permutations-of-5-elements-with	stirling(5, 3, kind=1, signed=True)	35	
+abs-stirlings1-n-range-1-n			
+the-unsigned-values-in-a-row-sum-to-n	enumeratio_equal(summation(Abs(stirling(4, Symbol("k"), kind=1, signed=True)), (Symbol("k"), 0, 4)), factorial(4))	ValueError: k is not an integer	error
+the-signed-row-sum-vanishes-for-n-ge-2	summation(stirling(6, Symbol("k"), kind=1, signed=True), (Symbol("k"), 0, 6))	ValueError: k is not an integer	error
+s-n-n-1-binom-n-2	enumeratio_equal(stirling(6, 5, kind=1, signed=True), (-binomial(6, 2)))	True	
+the-generating-property-sum-k-s-n-k-x-k-x-x-1-x			
+n-stirlings1-100-11	N(stirling(100, 11, kind=1, signed=True), 30)	-3.90376773476389796543585013048e+155	
+stirlings1-0-1	stirling(0, 1, kind=1, signed=True)	0	
+stirlings1-1-0	stirling(1, 0, kind=1, signed=True)	0	
+stirlings1-1-1	stirling(1, 1, kind=1, signed=True)	1	
+stirlings1-1-2	stirling(1, 2, kind=1, signed=True)	0	
+stirlings1-2-0	stirling(2, 0, kind=1, signed=True)	0	
+stirlings1-2-1	stirling(2, 1, kind=1, signed=True)	-1	
+stirlings1-2-2	stirling(2, 2, kind=1, signed=True)	1	
+stirlings1-2-3	stirling(2, 3, kind=1, signed=True)	0	
+stirlings1-3-0	stirling(3, 0, kind=1, signed=True)	0	
+stirlings1-3-1	stirling(3, 1, kind=1, signed=True)	2	
+stirlings1-3-2	stirling(3, 2, kind=1, signed=True)	-3	
+stirlings1-3-4	stirling(3, 4, kind=1, signed=True)	0	
+stirlings1-4-0	stirling(4, 0, kind=1, signed=True)	0	
+stirlings1-4-1	stirling(4, 1, kind=1, signed=True)	-6	
+stirlings1-4-3	stirling(4, 3, kind=1, signed=True)	-6	
+the-empty-case-s-0-0-1-by-convention-distinct	stirling(0, 0, kind=1, signed=True)	1	
+k-n-is-0	stirling(5, 6, kind=1, signed=True)	0	
+a-negative-k-stays-symbolic	stirling(4, -1, kind=1, signed=True)	-1	inconclusive
+s-n-1-1-n-1-n-1-so-s-10-1-9	stirling(10, 1, kind=1, signed=True)	-362880	

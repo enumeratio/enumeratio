@@ -47,6 +47,14 @@ test("Wolfram full form reaches the enumeratio combinatorial heads", () => {
   expect(s.evaluate(":wl Inversions[List[3, 1, 2]]").expr.toString()).toBe("2");
 });
 
+test("Midpoint of two Points keeps the Point head, alongside the graphics primitives", () => {
+  const s = new Session();
+  expect(s.evaluate("Midpoint(Point([0, 0]), Point([2, 2]))").expr.json).toEqual(["Point", ["List", 1, 1]]);
+  expect(s.evaluate("Midpoint([1, 1], [2, 3])").expr.json).toEqual(["List", ["Rational", 3, 2], 2]);
+  // Still a graphics primitive: held as written.
+  expect(s.evaluate("Show(Point([1, 2]))").expr.operator).toBe("Show");
+});
+
 test("Epsil is the default input; $…$ islands parse LaTeX", () => {
   const s = new Session();
   expect(s.evaluate("Binomial(10, 3)").expr.toString()).toBe("120");

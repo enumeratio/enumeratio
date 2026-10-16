@@ -1,0 +1,26 @@
+id	in	out
+the-cube-root-of-a-perfect-cube	cbrt(n(8))	2.0
+the-real-root-of-a-negative-number-not-a-complex	cbrt(n(-27))	-3.0
+at-a-non-perfect-cube-n-forces-the-numeric	nf(cbrt(n(2)))	1.2599210498948732
+series-cuberoot-x-x-neg-1-5		
+threads-element-wise-over-a-list	list(vec![cbrt(n(-8)), cbrt(n(27))])	[-2.0, 3.0]
+cuberoot-128	cbrt(n(128))	5.039684199579493
+n-cuberoot-18-100	nf(cbrt(n(18)))	2.6207413942088964
+cuberoot-list-list-1-over-2-neg-1-list-neg-5	list(vec![list(vec![cbrt(rational(n(1), n(2))), cbrt(n(-1))]), list(vec![cbrt(rational(n(-5), n(3))), cbrt(rational(n(1), n(2)))])])	[[0.7937005259840998, -1.0], [-1.1856311014966876, 0.7937005259840998]]
+matrixfunction-cuberoot-list-list-1-over-2-neg-1		
+cuberoot-0	cbrt(n(0))	0.0
+cuberoot-positiveinfinity		
+cuberoot-negativeinfinity		
+cuberoot-x-eq-surd-x-3		
+fullsimplify-d-integrate-cuberoot-x-x-nothing		
+fullsimplify-integrate-sin-x-times-cuberoot-x-x		
+d-cuberoot-x-x		
+solve-cuberoot-x-eq-3-times-2-pow-neg-1-x		
+fullsimplify-d-cuberoot-x-list-x-k		
+seriescoefficient-cuberoot-x-list-x-1-n		
+fullsimplify-fourierseries-cuberoot-x-x-1		
+fullsimplify-integrate-cuberoot-x-times		
+series-cuberoot-x-x-1-4		
+fullsimplify-series-cuberoot-x-x-x0-2		
+the-same-as-root-with-index-3		
+cuberoot-neg-8	cbrt(n(-8))	-2.0

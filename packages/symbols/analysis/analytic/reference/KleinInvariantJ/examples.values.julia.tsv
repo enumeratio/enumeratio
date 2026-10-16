@@ -1,0 +1,8 @@
+id	in	out	verdict
+j-i-1	(enumeratio_ball(t -> j_invariant(t) / 1728, enumeratio_complex(0, 1)))	1.000000000000000000000000000000000000000000000000000000000000000000000000000069	
+j-2i-66-3-1728-1331-8	(enumeratio_ball(t -> j_invariant(t) / 1728, enumeratio_complex(0, 2)))	166.3750000000000000000000000000000000000000000000000000000000000000000000000332	
+j-1-2i-modular-invariance-with-2i	(enumeratio_ball(t -> j_invariant(t) / 1728, enumeratio_complex(1, 2)))	166.3750000000000000000000000000000000000000000000000000000000000000000000000332	
+exact-at-the-elliptic-point-i	enumeratio_ball(t -> j_invariant(t) / 1728, enumeratio_complex(0, 1))	1.000000000000000000000000000000000000000000000000000000000000000000000000000069	
+tau-1e22-declines-rather-than-answering-wrong	(enumeratio_ball(t -> j_invariant(t) / 1728, (onei(CC) + (const_pi(RR) * enumeratio_pow(10, 22)))))	(-0.01940530239184223123825938526947796688486267572139242154049282549288593110997431-0.06832601696274367754878193368270431260399653197395538413294642408426607695926859j)	disagree
+tau-1e22-mpmath-true-value	(enumeratio_ball(t -> j_invariant(t) / 1728, (onei(CC) + (const_pi(RR) * enumeratio_pow(10, 22)))))		
+heegner-number-163-j-bigl-frac-1-i-sqrt-163-2	(enumeratio_ball(t -> j_invariant(t) / 1728, ((1 // 2) * (1 + enumeratio_complex(0, enumeratio_ball(sqrt, 163))))))	-1.519313730559999999999999999999999999999999999999999999999999999999999999999125e14	

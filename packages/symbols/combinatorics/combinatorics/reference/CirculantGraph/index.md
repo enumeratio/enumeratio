@@ -16,6 +16,14 @@ seeAlso:
   - HararyGraph
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_graph(graphs.CirculantGraph($1, $2))
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Each vertex has degree 2 per offset, except an offset of exactly n/2 (n even), which gives only one edge per vertex (i and i + n/2 are each other's only match at that offset).

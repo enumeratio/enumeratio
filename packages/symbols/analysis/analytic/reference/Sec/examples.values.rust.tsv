@@ -1,0 +1,42 @@
+id	in	out	verdict
+sec-0	(n(1) / cos(n(0)))	1.0	
+sec-pi-over-4	(n(1) / cos((x(std::f64::consts::PI) / n(4))))	1.414213562373095	
+sec-pi-over-3	(n(1) / cos((x(std::f64::consts::PI) / n(3))))	1.9999999999999996	
+sec-pi	(n(1) / cos(x(std::f64::consts::PI)))	-1.0	
+sec-30-circ-frac-2-sqrt-3-3-exactly			
+a-machine-precision-argument-evaluates	(n(1) / cos(x(1.2)))	2.759703601332406	
+a-huge-24-40-argument	nf((n(1) / cos(power(n(24), n(40)))))	-1.238288107574019	disagree
+a-huge-10-100-argument	nf((n(1) / cos(power(n(10), n(100)))))	1.0814034693733812	disagree
+a-huge-3-200-argument	nf((n(1) / cos(power(n(3), n(200)))))	-4.379814332824611	disagree
+a-huge-neg-7-60-argument	nf((n(1) / cos((-(power(n(7), n(60)))))))	-1.0006960035500068	disagree
+a-huge-10-80-plus-1-over-3-argument	nf((n(1) / cos(((power(n(10), n(80)) + n(1)) / n(3)))))	1.1537100890123533	disagree
+sec-3-under-n	nf((n(1) / cos(n(3))))	-1.0101086659079939	
+series-sec-x-x-0-10			
+series-sec-x-x-3-over-2-times-pi-5			
+n-of-an-exact-argument-gives-an-arbitrary	nf((n(1) / cos(rational(n(6), n(5)))))	2.759703601332406	
+evaluates-at-a-complex-argument			
+threads-element-wise-over-a-matrix	list(vec![list(vec![(n(1) / cos((n(5) * (x(std::f64::consts::PI) / n(6))))), (n(1) / cos(n(0)))]), list(vec![(n(1) / cos((x(std::f64::consts::PI) / n(6)))), (n(1) / cos((-((x(std::f64::consts::PI) / n(4))))))])])	[[-1.1547005383792517, 1.0], [1.1547005383792515, 1.414213562373095]]	
+sec-pi-12-sqrt-6-sqrt-2	(n(1) / cos((x(std::f64::consts::PI) / n(12))))	1.035276180410083	
+sec-pi-5-sqrt-5-1	(n(1) / cos((x(std::f64::consts::PI) / n(5))))	1.2360679774997896	
+sec-pi-8-sqrt-4-2-sqrt-2	(n(1) / cos((x(std::f64::consts::PI) / n(8))))	1.082392200292394	
+interval-arithmetic-the-image-of-pi-6-pi-3-is			
+uncertainty-propagation-sec-2-pm-0-01-approx-2			
+evenness-drops-the-sign-of-a-symbolic-argument			
+derivative-sec-x-tan-x			
+antiderivative-ln-sec-x-tan-x			
+n-sec-6-over-5-50	nf((n(1) / cos(rational(n(6), n(5)))))	2.759703601332406	
+matrixfunction-function-sec-1-1-list-list-5-over			
+sec-positiveinfinity			
+assuming-m-in-integers-refine-sec-pi-times-1			
+assuming-m-in-integers-fullsimplify-refine-sec			
+functionmeromorphic-sec-x-x			
+reciprocal-of-cos-sec-x-frac-1-cos-x	equal((n(1) / cos((x(std::f64::consts::PI) / n(3)))), (n(1) / cos((x(std::f64::consts::PI) / n(3)))))	true	
+pythagorean-identity-1-tan-2-x-sec-2-x	equal((n(1) + power(tan((x(std::f64::consts::PI) / n(6))), n(2))), power((n(1) / cos((x(std::f64::consts::PI) / n(6)))), n(2)))	true	
+sec-1-over-10-times-pi	(n(1) / cos((rational(n(1), n(10)) * x(std::f64::consts::PI))))	1.0514622242382672	
+sec-3-over-10-times-pi	(n(1) / cos((rational(n(3), n(10)) * x(std::f64::consts::PI))))	1.7013016167040798	
+n-2-minus-sec-1-over-2-pow-2-times-sec-1	nf(((n(2) + (-(power((n(1) / cos(rational(n(1), n(2)))), n(2))))) * (n(1) / cos(n(1)))))	1.2984464104095252	
+n-2-times-sec-1-times-sec-1-over-2-pow-2-plus	nf(((n(2) * (n(1) / cos(n(1))) * power((n(1) / cos(rational(n(1), n(2)))), n(2))) + (((n(-2) * power((n(1) / cos(rational(n(1), n(2)))), n(2))) + power((n(1) / cos(rational(n(1), n(2)))), n(4))) * power((n(1) / cos(n(1))), n(2))) + (-(power((n(1) / cos(rational(n(1), n(2)))), n(4))))))	-6.661338147750939e-16	disagree
+n-sec-1-over-2-plus-1-over-2-times-pi-pow-2	nf(power((n(1) / cos((rational(n(1), n(2)) + (rational(n(1), n(2)) * x(std::f64::consts::PI))))), n(2)))	4.350685299340045	
+n-2-minus-sec-2-pow-2-times-sec-4	nf(((n(2) + (-(power((n(1) / cos(n(2))), n(2))))) * (n(1) / cos(n(4)))))	5.7743992040419165	
+a-pole-cos-pi-2-0	(n(1) / cos((x(std::f64::consts::PI) / n(2))))	1.633123935319537e16	inconclusive
+sec-complexinfinity-is-indeterminate-for-the			

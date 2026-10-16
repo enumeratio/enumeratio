@@ -5,8 +5,6 @@
   "packages/symbols/algebras/hecke/src/declare.ts",
   "packages/symbols/algebras/hecke/src/notation.ts",
   "packages/symbols/algebras/hecke/tests/heads.test.ts",
-  "packages/symbols/algebras/hopf/src/declare.ts",
-  "packages/symbols/algebras/hopf/tests/heads.test.ts",
   "packages/symbols/analysis/analytic/scripts/collect-elementary-goldens.ts",
   "packages/symbols/analysis/analytic/src/around.ts",
   "packages/symbols/analysis/analytic/src/bell-y.ts",

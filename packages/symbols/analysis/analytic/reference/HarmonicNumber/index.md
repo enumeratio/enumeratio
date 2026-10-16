@@ -25,6 +25,99 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: HarmonicNumber[n] / HarmonicNumber[n, r]; mpmath.harmonic(n) (one-argument only — mpmath has no generalized order).
+  - origin: mapped
+    form: sympy
+    template: harmonic($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+  - origin: mapped
+    form: sympy
+    template: harmonic($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: harmonic($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: mpmath
+    template: (harmonic($1) if ($2) == 1 else zeta($2) - zeta($2, ($1) + 1))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: H(n, r) = ζ(r) − ζ(r, n + 1), the plain harmonic number at r = 1.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: harmonic_number($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: sage
+    template: harmonic_number($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(x -> digamma(x + 1) + const_euler(RR), $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: "enumeratio_ball((n, r) -> r == 1 ? digamma(n + 1) + const_euler(RR) : zeta(r) - zeta(r, n + 1), $1, $2)"
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: harmonic($1)
+    arity: 1
+    threadArgOnly: 1
+    note: Non-negative integer orders only.
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: generalized_harmonic($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: A non-negative integer order only.
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
 seeAlso:
   - PolyGamma
   - EulerGamma

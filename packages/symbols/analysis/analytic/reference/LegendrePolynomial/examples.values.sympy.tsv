@@ -1,0 +1,20 @@
+id	in	out
+the-quadratic	legendre(2, Symbol("x"))	True
+the-cubic	legendre(3, Symbol("x"))	True
+the-quartic	legendre(4, Symbol("x"))	True
+at-a-real	legendre(5, 0.7)	-0.365198750000000
+at-p0-0-7	N(legendre(0, 0.7), 30)	1.00000000000000000000000000000
+at-p1-0-7	N(legendre(1, 0.7), 30)	0.699999999999999955591079014994
+at-p2-0-7	N(legendre(2, 0.7), 30)	0.234999999999999875655021241982
+at-p5-0-7	N(legendre(5, 0.7), 30)	-0.365198749999999794368932271027
+at-p-1-0-7	N(legendre(-1, 0.7), 30)	1.00000000000000000000000000000
+at-p-4-0-7	N(legendre(-4, 0.7), 30)	-0.192500000000000004440892098501
+at-p4-2-3i	N(legendre(4, (2 + 3*I)), 30)	-501.5 - 570.0*I
+at-a-rational	legendre(3, Rational(1, 2))	-7/16
+at-a-complex-argument	legendre(3, (2 + 3*I))	-3 - 9*I/2 + 5*(2 + 3*I)**3/2
+a-symbolic-order-stays-unevaluated	legendre(Symbol("n"), Symbol("x"))	True
+at-1	legendre(6, 1)	1
+at-minus-1	legendre(5, -1)	-1
+at-0	legendre(4, 0)	3/8
+bonnet-recurrence	enumeratio_equal((4 * legendre(4, 3)), ((7 * 3 * legendre(3, 3)) - (3 * legendre(2, 3))))	True
+negative-order	legendre(-3, Symbol("x"))	True

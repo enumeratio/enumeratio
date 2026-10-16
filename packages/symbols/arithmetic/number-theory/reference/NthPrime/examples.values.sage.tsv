@@ -1,0 +1,43 @@
+id	in	out	verdict
+the-first-prime-is-2	nth_prime(1)	2	
+nthprime-10	nth_prime(10)	29	
+nthprime-100	nth_prime(100)	541	
+threads-element-wise-over-a-list-as-wolfram-s	[nth_prime(1), nth_prime(3), nth_prime(4), nth_prime(10)]	[2, 5, 7, 29]	
+the-millionth-prime	nth_prime(1000000)	15485863	
+a-prime-gap-p-31-p-30-127-113	(nth_prime(31) - nth_prime(30))	14	
+nthprime-25	nth_prime(25)	97	
+array-nthprime-100-mod-10			
+n-100-times-last-foldlist-multiply-1-1-plus-neg			
+ismersenneprimeexponent-nthprime-4			
+isprime-neg-1-plus-2-pow-nthprime-4	is_prime((-1 + ((2)^nth_prime(4))))	True	
+1-over-product-neg-nthprime-n-pow-neg-s-plus-1-n	(1 / product(((-((nth_prime(SR.var("n")))^(-SR.var("s")))) + 1), SR.var("n"), 1, 6))	ValueError: cannot convert n to int	error
+primepi-and-nthprime-are-inverses-pi-p-n-n	enumeratio_equal(prime_pi(nth_prime(100)), 100)	True	
+primepi-nthprime-100	prime_pi(nth_prime(100))	100	
+nthprime-1-plus-primepi-30	nth_prime((1 + prime_pi(30)))	31	
+primeomega-nthprime-5	sum(e for _, e in factor(nth_prime(5)))	1	
+divisors-nthprime-5	enumeratio_divisors(nth_prime(5))	[1, 11]	
+totient-nthprime-10	euler_phi(nth_prime(10))	28	
+nthprime-2	nth_prime(2)	3	
+nthprime-3	nth_prime(3)	5	
+nthprime-4	nth_prime(4)	7	
+nthprime-5	nth_prime(5)	11	
+nthprime-6	nth_prime(6)	13	
+nthprime-7	nth_prime(7)	17	
+nthprime-30-in-primes			
+neg-1-plus-nthprime-10	(-1 + nth_prime(10))	28	
+nthprime-8	nth_prime(8)	19	
+nthprime-9	nth_prime(9)	23	
+nthprime-11	nth_prime(11)	31	
+nthprime-12	nth_prime(12)	37	
+nthprime-13	nth_prime(13)	41	
+nthprime-14	nth_prime(14)	43	
+nthprime-15	nth_prime(15)	47	
+nthprime-16	nth_prime(16)	53	
+nthprime-17	nth_prime(17)	59	
+nthprime-18	nth_prime(18)	61	
+sin-pi-times-1-over-nthprime-2-times-1-plus	(((sin((pi * (1 / nth_prime(2)) * (1 + gamma(nth_prime(2))))))^2) + ((sin((pi * nth_prime(2))))^2))	0	
+1-over-neg-1-plus-exponentiale-pow-neg-2-times-i	((1 / (-1 + ((e)^((0 + -2*I) * pi * (1 / nth_prime(2)))))) * (-1 + ((e)^((0 + 2*I) * pi * (1 / nth_prime(2)) * gamma(nth_prime(2))))))	1	
+sin-pi-times-1-over-nthprime-3-times-1-plus	(((sin((pi * (1 / nth_prime(3)) * (1 + gamma(nth_prime(3))))))^2) + ((sin((pi * nth_prime(3))))^2))	0	
+1-over-neg-1-plus-exponentiale-pow-neg-2-times-2	((1 / (-1 + ((e)^((0 + -2*I) * pi * (1 / nth_prime(3)))))) * (-1 + ((e)^((0 + 2*I) * pi * (1 / nth_prime(3)) * gamma(nth_prime(3))))))	1	
+n-must-be-a-positive-integer-compute-engine	nth_prime(0)	ValueError: nth prime meaningless for nonpositive n (=0)	error
+the-1000th-prime	nth_prime(1000)	7919	

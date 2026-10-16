@@ -1,3 +1,5 @@
+import { DEFINED_NAMES } from "@enumeratio/oracle";
+import { isSystemName, REVERSE_HEADS } from "@enumeratio/wolfram";
 import { expect, test } from "vite-plus/test";
 import { adaptInput, assignedNames, bucketOf, judge, mentions, showsPicture } from "../scripts/wolfram-examples.ts";
 
@@ -39,6 +41,22 @@ test("Wolfram's variables i and e stay variables, not the imaginary unit and Eul
   expect(adaptInput("HoldComplete[List[d, e, Power[E, k]]]")).toEqual({
     ok: true,
     expr: ["List", "d", "m", ["Power", "ExponentialE", "k"]],
+  });
+});
+
+test("a variable of the example's own that we define comes back under a name we don't", () => {
+  // Every name compute-engine defines that Wolfram doesn't: written as a variable there, it must not read as ours here.
+  const ours = [...DEFINED_NAMES].filter((name) => /^[A-Za-z][A-Za-z0-9]*$/.test(name) && !isSystemName(name));
+  expect(ours.length).toBeGreaterThan(10);
+  const captured = ours.filter((name) => {
+    const adapted = adaptInput(`HoldComplete[Plus[${name}, 1]]`);
+    return adapted.ok && JSON.stringify(adapted.expr).includes(`"${name}"`) && !(name in REVERSE_HEADS);
+  });
+  expect(captured).toEqual([]);
+  // Round trip through our reading: the renamed variable stays one variable, used where it was.
+  expect(adaptInput("HoldComplete[Times[e, Plus[e, i]]]")).toEqual({
+    ok: true,
+    expr: ["Multiply", "m", ["Add", "m", "k"]],
   });
 });
 

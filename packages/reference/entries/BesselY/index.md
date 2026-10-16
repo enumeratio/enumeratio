@@ -6,6 +6,11 @@ summary: Bessel function of the second kind (Neumann function)
 signatures:
   - call: "BesselY(order: complex, complex | infinity) -> number"
     description: as compute-engine declares it
+  - call: "BesselY(order: complex, complex | infinity) -> number"
+    description: As native, and keeps its digits past a double's for integer order and positive real argument (N(BesselY(0, 1), 50)).
+    library: enumeratio-analytic
+    type: "(order: complex, complex | infinity) -> number"
+    overrides: compute-engine
 references:
   - system: wikipedia
     identity: Bessel function
@@ -17,4 +22,35 @@ names:
   dlmf: Bessel function of the second kind
   wolframIdentity: true
 stub: engine
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: bessely($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: bessel_Y($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(bessel_y, $1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---

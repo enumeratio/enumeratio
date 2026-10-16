@@ -10,6 +10,14 @@ signatures:
     description: Points where the path touches the axis — the returns.
     library: enumeratio-combinatorics
     type: (dyck_path) -> number
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_stat("DyckPath", $1, "TouchPointCount")
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

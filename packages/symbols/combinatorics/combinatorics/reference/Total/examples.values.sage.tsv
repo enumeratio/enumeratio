@@ -1,0 +1,4 @@
+id	in	out	verdict
+total-of-a-list	sum([1, 2, 3])	6	
+total-of-a-matrix-is-columnwise	sum([[1, 2], [3, 4]])	TypeError: unsupported operand type(s) for +: 'int' and 'list'	error
+total-of-symbols	sum([SR.var("a"), SR.var("b"), SR.var("c")])	True	

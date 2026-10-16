@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[UnaryNodes, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	1			the binary tree $[[.,.],[[.,.],.]]$
+findstat-st000385-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'UnaryNodes'"]	1	1	FindStat St000385	FindStat's value for [.,[.,.]]
+findstat-st000385-2	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'UnaryNodes'"]	1	1	FindStat St000385	FindStat's value for [[.,.],.]
+findstat-st000385-3	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, [List, 0, 0]]]], "'UnaryNodes'"]	2	2	FindStat St000385	FindStat's value for [.,[.,[.,.]]]

@@ -1,0 +1,7 @@
+id	in	out
+the-one-line-word-312	enumeratio_stat("Permutation", [3, 1, 2], "OccurrencesOf312")	1
+the-one-line-word-312-as-a-plain-list	enumeratio_stat("Permutation", [3, 1, 2], "OccurrencesOf312")	1
+the-one-line-word-2413	enumeratio_stat("Permutation", [2, 4, 1, 3], "OccurrencesOf312")	1
+findstat-st000217-1	enumeratio_stat("Permutation", [1], "OccurrencesOf312")	0
+findstat-st000217-2	enumeratio_stat("Permutation", [1, 2], "OccurrencesOf312")	0
+findstat-st000217-3	enumeratio_stat("Permutation", [2, 1], "OccurrencesOf312")	0

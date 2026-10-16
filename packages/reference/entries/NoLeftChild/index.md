@@ -1,9 +1,0 @@
----
-name: NoLeftChild
-domain: Combinatorics
-signature: NoLeftChild(...)
-summary: Nodes with no left child
-statOn:
-  - BinaryTree
-stub: carrier
----

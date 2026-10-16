@@ -1,0 +1,31 @@
+id	in	out	verdict
+issquarefree-10	is_squarefree(ZZ(10))	true	
+issquarefree-4	is_squarefree(ZZ(4))	false	
+issquarefree-12	is_squarefree(ZZ(12))	false	
+every-prime-is-squarefree	is_squarefree(ZZ(17))	true	
+issquarefree-20	is_squarefree(ZZ(20))	false	
+issquarefree-of-zero	is_squarefree(ZZ(0))	false	
+threads-element-wise-over-a-list	Any[is_squarefree(ZZ(10)), is_squarefree(ZZ(4)), is_squarefree(ZZ(12))]	[true, false, false]	
+gaussian-integers-3-2i-is-a-gaussian-prime	is_squarefree(ZZ(enumeratio_complex(3, 2)))	MethodError: no method matching (::ZZRing)(::ComplexFieldElem) The object of type `ZZRing` exists, b	error
+gaussianintegers-true-2-i-1-i-2			
+rationals-numerator-and-denominator-are-both	is_squarefree(ZZ((2 // 3)))	AssertionError: denominator(x) == 1	error
+polynomials-x-2-6x-6-has-no-repeated-factor			
+multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor			
+squarefree-as-a-polynomial-in-x-alone-y-is-just			
+but-not-in-y-alone-y-appears-squared			
+a-non-squarefree-rational	is_squarefree(ZZ((4 // 3)))	AssertionError: denominator(x) == 1	error
+x-1-2-has-a-repeated-root			
+x-3-y-3-has-no-repeated-factor			
+issquarefree-3-plus-10-pow-70	is_squarefree(ZZ((3 + enumeratio_pow(10, 70))))	true	
+issquarefree-2	is_squarefree(ZZ(2))	true	
+issquarefree-x-pow-2-minus-3			
+n-1-over-100-000-times-length-filter-range-1-100			
+issquarefree-q			
+n-is-squarefree-exactly-when-mu-n-neq-0-see			
+issquarefree-210	is_squarefree(ZZ(210))	true	
+issquarefree-14	is_squarefree(ZZ(14))	true	
+isprimepower-17-issquarefree-17			
+issquarefree-x-pow-2-minus-2x-plus-1-x			
+simplify-issquarefree-a-pow-2-a-in-integers			
+issquarefree-expand-x-plus-1-pow-3-times-x-plus			
+1-is-vacuously-squarefree-it-has-no-repeated	is_squarefree(ZZ(1))	true	

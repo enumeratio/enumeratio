@@ -1,0 +1,40 @@
+id	in	out	verdict
+arccos-1	acos(n(1))	0.0	
+arccos-1-over-2	acos(rational(n(1), n(2)))	1.0471975511965976	
+arccos-0	acos(n(0))	1.5707963267948966	
+the-top-of-the-principal-range	acos(n(-1))	3.141592653589793	
+a-machine-precision-argument-evaluates	acos(x(0.4))	1.1592794807274085	
+outside-1-1-the-value-is-purely-imaginary	acos(x(1.5))	panic: non-finite result: NaN	error
+arbitrary-precision-via-n	nf(acos(rational(n(1), n(3))))	1.2309594173407747	
+evaluates-at-a-complex-argument			
+threads-element-wise-over-a-matrix	list(vec![list(vec![acos(n(1)), acos((n(1) / sqrt(n(2))))]), list(vec![acos(n(0)), acos((n(1) / sqrt(n(2))))])])	[[0.0, 0.7853981633974484], [1.5707963267948966, 0.7853981633974484]]	
+exact-inverse-of-a-special-value	acos((sqrt(n(3)) / n(2)))	0.5235987755982989	
+arccos-neg-sqrt-2-over-2	acos((-((sqrt(n(2)) / n(2)))))	2.356194490192345	
+recognizes-cos-pi-5-frac-1-sqrt-5-4	acos(((n(1) + sqrt(n(5))) / n(4)))	0.6283185307179586	
+interval-arithmetic-decreasing-so-arccos-frac-13			
+uncertainty-propagation-arccos-0-9-pm-0-1-approx			
+derivative-frac-1-sqrt-1-x-2			
+antiderivative			
+not-simply-4-4-is-outside-the-principal-range-0	acos(cos(n(4)))	2.2831853071795867	
+arccos-infinity-is-a-directed-infinity-along-the			
+arccos-infinity-is-the-opposite-directed			
+n-arccos-1-over-3-50	nf(acos(rational(n(1), n(3))))	1.2309594173407747	
+integrate-arccos-x-x-neg-1-1			
+outside-1-1-reduces-to-the-exact-closed-form	acos(n(2))	panic: non-finite result: NaN	error
+arccos-neg-2	acos(n(-2))	panic: non-finite result: NaN	error
+cos-arccos-x-x-on-the-principal-branch	equal(cos(acos(rational(n(1), n(2)))), rational(n(1), n(2)))	true	
+reflection-arccos-x-pi-arccos-x			
+arccos-sqrt-2-over-4-times-neg-1-plus-sqrt-3	acos(((sqrt(n(2)) / n(4)) * (n(-1) + sqrt(n(3)))))	1.3089969389957472	
+arccos-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	acos(((-((sqrt(n(2)) / n(4)))) * (n(-1) + sqrt(n(3)))))	1.832595714594046	
+arccos-1-over-4-times-neg-1-plus-sqrt-5	acos((rational(n(1), n(4)) * (n(-1) + sqrt(n(5)))))	1.2566370614359172	
+arccos-1-over-4-times-1-minus-sqrt-5	acos((rational(n(1), n(4)) * (n(1) + (-(sqrt(n(5)))))))	1.8849555921538759	
+arccos-1-over-2-times-sqrt-2-minus-sqrt-2	acos((rational(n(1), n(2)) * sqrt((n(2) + (-(sqrt(n(2))))))))	1.1780972450961724	
+arccos-neg-1-over-2-times-sqrt-2-minus-sqrt-2	acos((rational(n(-1), n(2)) * sqrt((n(2) + (-(sqrt(n(2))))))))	1.9634954084936207	
+arccos-neg-1-over-2	acos(rational(n(-1), n(2)))	2.0943951023931957	
+arccos-1-over-2-times-sqrt-1-over-2-times-5	acos((rational(n(1), n(2)) * sqrt((rational(n(1), n(2)) * (n(5) + (-(sqrt(n(5)))))))))	0.9424777960769379	
+arccos-neg-1-over-2-times-sqrt-1-over-2-times-5	acos((rational(n(-1), n(2)) * sqrt((rational(n(1), n(2)) * (n(5) + (-(sqrt(n(5)))))))))	2.199114857512855	
+arccos-sqrt-2-over-2	acos((sqrt(n(2)) / n(2)))	0.7853981633974483	
+arccos-1-over-4-times-neg-1-minus-sqrt-5	acos((rational(n(1), n(4)) * (n(-1) + (-(sqrt(n(5)))))))	2.5132741228718345	
+arccos-neg-sqrt-3-over-2	acos((-((sqrt(n(3)) / n(2)))))	2.6179938779914944	
+arccos-1-over-2-times-sqrt-2-plus-sqrt-2	acos((rational(n(1), n(2)) * sqrt((n(2) + sqrt(n(2))))))	0.3926990816987242	
+arccos-complexinfinity-is-complexinfinity			

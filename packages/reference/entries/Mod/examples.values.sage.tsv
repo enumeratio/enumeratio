@@ -4,9 +4,10 @@ id	in	out	verdict
 the-result-takes-the-sign-of-the-modulus	enumeratio_mod(-7, 3)	2	
 threads-element-wise-over-a-list	enumeratio_mod([1, 2, 3, 4, 5], 3)	[1, 2, 0, 1, 2]	
 mod-7-3	enumeratio_mod(7, 3)	1	
-5-mod-3	enumeratio_mod(5, 3)		
-1-plus-4-mod-3	(1 + enumeratio_mod(4, 3))		
+5-mod-3	enumeratio_mod(5, 3)	2	
+1-plus-4-mod-3	(1 + enumeratio_mod(4, 3))	2	
 integermod-keeps-the-modulus	Mod(17, 5)	2	
+gaussian-mod-a-gaussian-unit-multiple	enumeratio_mod((1000 + -1*I), (1 + -1*I))	-I	
 a-third-argument-offsets-the-range-the-result			
 with-offset-1-the-residues-run-1-2-3-rather-than			
 rationals-are-reduced-exactly	enumeratio_mod((5/2), 2)	1/2	
@@ -21,68 +22,68 @@ gaussian-integers-the-quotient-rounds-so-each	enumeratio_mod((7 + 5*I), 3)	-I + 
 a-gaussian-modulus-7-5i-2-i-4-i-i	enumeratio_mod((7 + 5*I), (2 + 1*I))	-I	
 exact-in-both-parts-past-2-53	enumeratio_mod((100000000000000000001 + 9007199254740993*I), (2 + 1*I))	0	
 eulers-number-mod-2-reduces-exactly	enumeratio_mod(e, 2)	e - 2	
-gaussian-reduced-by-a-unit-modulus-is-always-0	enumeratio_mod((3 + 4*I), 1)		
-gaussian-reduced-by-i-is-always-0	enumeratio_mod((3 + 4*I), (0 + 1*I))		
-a-zero-dividend-reduces-to-0	enumeratio_mod(0, (2 + 1*I))		
-reducing-by-a-gaussian-prime-norm-5	enumeratio_mod((3 + 4*I), (2 + 1*I))		
-reducing-by-the-other-prime-above-5	enumeratio_mod((3 + 4*I), (2 + -1*I))		
-reducing-by-a-real-prime-3-mod-4	enumeratio_mod((3 + 4*I), 3)		
-reducing-a-real-dividend-by-a-gaussian-modulus	enumeratio_mod(5, (2 + 1*I))		
-reducing-by-an-associate-gives-a-remainder	enumeratio_mod((8 + 2*I), (-4 + 3*I))		
-reducing-by-a-negative-real-modulus	enumeratio_mod((3 + 4*I), -7)		
-reducing-by-a-composite-gaussian-modulus-norm-25	enumeratio_mod((123 + 456*I), (3 + 4*I))		
-a-gaussian-modulus-past-2-53-in-both-parts	enumeratio_mod((100000000000000000001 + 9007199254740993*I), (4 + 1*I))		
-reducing-by-1-4i-the-other-prime-above-17	enumeratio_mod((8 + 2*I), (1 + 4*I))		
-a-real-dividend-mod-a-real-modulus-stays-plain	enumeratio_mod(9, 3)		
-reducing-a-large-norm-gaussian-by-a-small-unit	enumeratio_mod((1000 + 1*I), (1 + 1*I))		
-reducing-by-1-a-unit-is-always-0	enumeratio_mod((2 + 1*I), -1)		
-reducing-by-i-a-unit-is-always-0	enumeratio_mod((5 + 5*I), (0 + -1*I))		
-a-negative-real-dividend-gaussian-modulus	enumeratio_mod((-5 + -5*I), (2 + 1*I))		
-reducing-0-by-0-is-undefined-like-the-rational	enumeratio_mod(0, 0)		
-reducing-by-an-associate-times-1	enumeratio_mod((8 + 2*I), (-3 + -4*I))		
-reducing-by-an-associate-times-i	enumeratio_mod((8 + 2*I), (4 + -3*I))		
-reducing-by-the-other-prime-above-13	enumeratio_mod((6 + 8*I), (2 + 3*I))		
-reducing-by-a-prime-above-13	enumeratio_mod((6 + 8*I), (3 + 2*I))		
-reducing-a-real-prime-s-associate-by-the-unit-i	enumeratio_mod((3 + 4*I), (0 + 7*I))		
-reducing-by-a-real-composite-5-squared	enumeratio_mod((3 + 4*I), 25)		
-a-negative-associate-as-the-modulus	enumeratio_mod((6 + 8*I), (-2 + -3*I))		
-reducing-by-a-real-prime-19	enumeratio_mod((123 + 456*I), 19)		
-1-plus-16-mod-5	(1 + enumeratio_mod(16, 5))		
+gaussian-reduced-by-a-unit-modulus-is-always-0	enumeratio_mod((3 + 4*I), 1)	0	
+gaussian-reduced-by-i-is-always-0	enumeratio_mod((3 + 4*I), (0 + 1*I))	0	
+a-zero-dividend-reduces-to-0	enumeratio_mod(0, (2 + 1*I))	0	
+reducing-by-a-gaussian-prime-norm-5	enumeratio_mod((3 + 4*I), (2 + 1*I))	0	
+reducing-by-the-other-prime-above-5	enumeratio_mod((3 + 4*I), (2 + -1*I))	1	
+reducing-by-a-real-prime-3-mod-4	enumeratio_mod((3 + 4*I), 3)	I	
+reducing-a-real-dividend-by-a-gaussian-modulus	enumeratio_mod(5, (2 + 1*I))	0	
+reducing-by-an-associate-gives-a-remainder	enumeratio_mod((8 + 2*I), (-4 + 3*I))	I + 1	
+reducing-by-a-negative-real-modulus	enumeratio_mod((3 + 4*I), -7)	-3*I + 3	
+reducing-by-a-composite-gaussian-modulus-norm-25	enumeratio_mod((123 + 456*I), (3 + 4*I))	-I - 1	
+a-gaussian-modulus-past-2-53-in-both-parts	enumeratio_mod((100000000000000000001 + 9007199254740993*I), (4 + 1*I))	2*I	
+reducing-by-1-4i-the-other-prime-above-17	enumeratio_mod((8 + 2*I), (1 + 4*I))	-1	
+a-real-dividend-mod-a-real-modulus-stays-plain	enumeratio_mod(9, 3)	0	
+reducing-a-large-norm-gaussian-by-a-small-unit	enumeratio_mod((1000 + 1*I), (1 + 1*I))	I	
+reducing-by-1-a-unit-is-always-0	enumeratio_mod((2 + 1*I), -1)	0	
+reducing-by-i-a-unit-is-always-0	enumeratio_mod((5 + 5*I), (0 + -1*I))	0	
+a-negative-real-dividend-gaussian-modulus	enumeratio_mod((-5 + -5*I), (2 + 1*I))	0	
+reducing-0-by-0-is-undefined-like-the-rational	enumeratio_mod(0, 0)	ZeroDivisionError: Integer modulo by zero	error
+reducing-by-an-associate-times-1	enumeratio_mod((8 + 2*I), (-3 + -4*I))	I + 1	
+reducing-by-an-associate-times-i	enumeratio_mod((8 + 2*I), (4 + -3*I))	I + 1	
+reducing-by-the-other-prime-above-13	enumeratio_mod((6 + 8*I), (2 + 3*I))	-I	
+reducing-by-a-prime-above-13	enumeratio_mod((6 + 8*I), (3 + 2*I))	-I - 1	
+reducing-a-real-prime-s-associate-by-the-unit-i	enumeratio_mod((3 + 4*I), (0 + 7*I))	-3*I + 3	
+reducing-by-a-real-composite-5-squared	enumeratio_mod((3 + 4*I), 25)	4*I + 3	
+a-negative-associate-as-the-modulus	enumeratio_mod((6 + 8*I), (-2 + -3*I))	-I	
+reducing-by-a-real-prime-19	enumeratio_mod((123 + 456*I), 19)	9	
+1-plus-16-mod-5	(1 + enumeratio_mod(16, 5))	2	
 generatingfunction-n-mod-4-n-x			
-282-475-249-mod-11	enumeratio_mod(282475249, 11)		
-7-pow-totient-12-mod-12	enumeratio_mod(((7)^enumeratio_euler_phi(12)), 12)		
+282-475-249-mod-11	enumeratio_mod(282475249, 11)	1	
+7-pow-totient-12-mod-12	enumeratio_mod(((7)^euler_phi(12)), 12)	1	
 list-a-b-c-list-1-plus-neg-1-plus-range-1-10-mod			
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	enumeratio_equal(enumeratio_mod(17, 5), enumeratio_mod((17 + (3 * 5)), 5))	True	
 a-negative-modulus-gives-a-result-in-n-0	enumeratio_mod(-5, -3)	-2	
-the-remainder-of-quotient			
-5-mod-3-eq-2-mod-3	enumeratio_equal(enumeratio_mod(5, 3), enumeratio_mod(2, 3))		
-2-mod-3-eq-8-mod-3	enumeratio_equal(enumeratio_mod(2, 3), enumeratio_mod(8, 3))		
-0-mod-1	enumeratio_mod(0, 1)		
-1-mod-2	enumeratio_mod(1, 2)		
-1-mod-3	enumeratio_mod(1, 3)		
-2-mod-3	enumeratio_mod(2, 3)		
-3-mod-3	enumeratio_mod(3, 3)		
-4-mod-3	enumeratio_mod(4, 3)		
-8-mod-3-eq-5-mod-3	enumeratio_equal(enumeratio_mod(8, 3), enumeratio_mod(5, 3))		
-8-mod-2	enumeratio_mod(8, 2)		
-17-mod-6	enumeratio_mod(17, 6)		
-12-mod-8	enumeratio_mod(12, 8)		
-neg-3-mod-neg-2	enumeratio_mod(-3, -2)		
-neg-27-over-10-mod-23-over-5	enumeratio_mod((-27/10), (23/5))		
-0-mod-2	enumeratio_mod(0, 2)		
-1-mod-1	enumeratio_mod(1, 1)		
-15-mod-7	enumeratio_mod(15, 7)		
-pi-mod-exponentiale	enumeratio_mod(pi, e)		
-2-pow-totient-3-mod-3	enumeratio_mod(((2)^enumeratio_euler_phi(3)), 3)		
-1-plus-neg-1-plus-nthprime-2-factorial-mod			
-2-minus-jacobisymbol-2-3-mod-3			
-1-plus-neg-1-plus-nthprime-3-factorial-mod			
-2pi-mod-exponentiale	enumeratio_mod((2 * pi), e)		
-neg-pi-mod-2	enumeratio_mod((-pi), 2)		
+the-remainder-of-quotient	enumeratio_equal(enumeratio_mod((7 + 5*I), (2 + 1*I)), ((7 + 5*I) - ((2 + 1*I) * floor(((7 + 5*I)) / ((2 + 1*I))))))	ValueError: floor is not defined for complex quadratic number field	error
+5-mod-3-eq-2-mod-3	enumeratio_equal(enumeratio_mod(5, 3), enumeratio_mod(2, 3))	True	
+2-mod-3-eq-8-mod-3	enumeratio_equal(enumeratio_mod(2, 3), enumeratio_mod(8, 3))	True	
+0-mod-1	enumeratio_mod(0, 1)	0	
+1-mod-2	enumeratio_mod(1, 2)	1	
+1-mod-3	enumeratio_mod(1, 3)	1	
+2-mod-3	enumeratio_mod(2, 3)	2	
+3-mod-3	enumeratio_mod(3, 3)	0	
+4-mod-3	enumeratio_mod(4, 3)	1	
+8-mod-3-eq-5-mod-3	enumeratio_equal(enumeratio_mod(8, 3), enumeratio_mod(5, 3))	True	
+8-mod-2	enumeratio_mod(8, 2)	0	
+17-mod-6	enumeratio_mod(17, 6)	5	
+12-mod-8	enumeratio_mod(12, 8)	4	
+neg-3-mod-neg-2	enumeratio_mod(-3, -2)	-1	
+neg-27-over-10-mod-23-over-5	enumeratio_mod((-27/10), (23/5))	19/10	
+0-mod-2	enumeratio_mod(0, 2)	0	
+1-mod-1	enumeratio_mod(1, 1)	0	
+15-mod-7	enumeratio_mod(15, 7)	1	
+pi-mod-exponentiale	enumeratio_mod(pi, e)	pi - e	
+2-pow-totient-3-mod-3	enumeratio_mod(((2)^euler_phi(3)), 3)	1	
+1-plus-neg-1-plus-nthprime-2-factorial-mod	enumeratio_mod((1 + enumeratio_factorial((-1 + nth_prime(2)))), nth_prime(2))	0	
+2-minus-jacobisymbol-2-3-mod-3	enumeratio_mod((2 + (-jacobi_symbol(2, 3))), 3)	0	
+1-plus-neg-1-plus-nthprime-3-factorial-mod	enumeratio_mod((1 + enumeratio_factorial((-1 + nth_prime(3)))), nth_prime(3))	0	
+2pi-mod-exponentiale	enumeratio_mod((2 * pi), e)	2*pi - 2*e	
+neg-pi-mod-2	enumeratio_mod((-pi), 2)	-pi + 4	
 division-by-a-0-modulus-yields-nan-rather-than	enumeratio_mod(5, 0)	ZeroDivisionError: Integer modulo by zero	error
 periodicity-with-a-zero-modulus-on-one-side	enumeratio_equal(enumeratio_mod(35, 13), enumeratio_mod((17 + (3 * 5)), 0))	ZeroDivisionError: Integer modulo by zero	error
 rounding-ties-to-even-means-1-and-1-both-appear	[enumeratio_mod((1 + 2*I), 2), enumeratio_mod((3 + 2*I), 2)]	[1, -1]	
 a-free-symbol-is-untouched	enumeratio_mod(SR.var("x"), 2)	TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'	error
-an-infinite-dividend-has-no-remainder	enumeratio_mod(oo, 3)		
-an-infinite-modulus-leaves-the-dividend-whole	enumeratio_mod(5, oo)		
-mod-with-complexinfinity-stays-unevaluated	enumeratio_mod(unsigned_infinity, 3)		
+an-infinite-dividend-has-no-remainder	enumeratio_mod(oo, 3)	ValueError: Calling floor() on infinity or NaN	error
+an-infinite-modulus-leaves-the-dividend-whole	enumeratio_mod(5, oo)	SignError: cannot multiply infinity by zero	error
+mod-with-complexinfinity-stays-unevaluated	enumeratio_mod(unsigned_infinity, 3)	ValueError: quotient of number < oo by number < oo not defined	error

@@ -1,0 +1,18 @@
+id	in	out	verdict
+primeomega-30	prime_omega(n(30))	3	
+primeomega-360	prime_omega(n(360))	6	
+primeomega-12	prime_omega(n(12))	3	
+threads-element-wise-over-a-list-as-wolfram-s	list(vec![prime_omega(n(4)), prime_omega(n(12)), prime_omega(n(24))])	[2, 3, 4]	
+large-integers	prime_omega(factorial(n(30)))	panic: an integer, not 2.6525285981219103e32	error
+gaussian-integers-5-9i-has-norm-106-2-cdot-53-so			
+gaussianintegers-true-12-1-i-4-cdot-3			
+listable-over-a-range			
+primeomega-28	prime_omega(n(28))	3	
+negative-n-the-sign-is-a-unit	prime_omega(n(-12))	panic: a non-negative integer: the crate's parameter is unsigned	error
+completely-additive-omega-mn-omega-m-omega-n-for	equal(prime_omega((n(24) * n(40))), (prime_omega(n(24)) + prime_omega(n(40))))	true	
+omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3	greater_equal(prime_omega(n(8)), prime_nu(n(8)))	true	
+primeomega-100	prime_omega(n(100))	4	
+primeomega-16-807	prime_omega(n(16807))	5	
+primeomega-165-eq-primenu-165	equal(prime_omega(n(165)), prime_nu(n(165)))	true	
+all-range-1-100-function-primenu-1-lt-eq			
+1-has-no-prime-factors	prime_omega(n(1))	0	

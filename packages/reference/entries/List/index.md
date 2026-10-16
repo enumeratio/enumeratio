@@ -24,7 +24,10 @@ bindings:
     template: "[$*,]"
   - origin: mapped
     form: julia
-    template: "[$*,]"
+    template: Any[$*,]
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
   - origin: mapped
     form: mathlib4
     template: "[$*,]"

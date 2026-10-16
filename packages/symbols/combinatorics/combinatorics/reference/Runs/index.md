@@ -22,6 +22,13 @@ bindings:
     template: Length[Runs[$1]]
     arity: 1
     note: Combinatorica's Runs returns the runs themselves; ours is their count.
+  - origin: mapped
+    form: sage
+    template: enumeratio_stat("Permutation", $1, "Runs")
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

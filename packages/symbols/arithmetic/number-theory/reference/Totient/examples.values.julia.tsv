@@ -4,32 +4,32 @@ totient-36	euler_phi(ZZ(36))	12
 totient-1	euler_phi(ZZ(1))	1	
 totient-10	euler_phi(ZZ(10))	4	
 varphi-0-0-as-in-wolfram	euler_phi(ZZ(0))	DomainError with 0: Argument must be positive	error
-threads-element-wise-over-a-list-as-wolfram-s	[euler_phi(ZZ(2)), euler_phi(ZZ(4)), euler_phi(ZZ(6))]	[1, 2, 2]	
+threads-element-wise-over-a-list-as-wolfram-s	Any[euler_phi(ZZ(2)), euler_phi(ZZ(4)), euler_phi(ZZ(6))]	[1, 2, 2]	
 large-integers-varphi-50	euler_phi(ZZ(factorial(ZZ(50))))	4218559200885839042679312107816703841788854953574400000000000000	
 negative-n-varphi-n-varphi-n	euler_phi(ZZ(-10))	DomainError with -10: Argument must be positive	error
 rsa-key-setup-varphi-17-times-23-16-times-22-352	euler_phi(ZZ(391))	352	
-euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when			
+euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when	powermod(ZZ(7), ZZ(euler_phi(ZZ(10))), ZZ(10))	1	
 sum-d-mid-n-varphi-d-n-checked-over-the-divisors	(euler_phi(ZZ(1)) + euler_phi(ZZ(2)) + euler_phi(ZZ(3)) + euler_phi(ZZ(4)) + euler_phi(ZZ(6)) + euler_phi(ZZ(12)))	12	
-multiplicative-varphi-mn-varphi-m-varphi-n-when	(euler_phi(ZZ(12)) == (euler_phi(ZZ(4)) * euler_phi(ZZ(3))))	true	
+multiplicative-varphi-mn-varphi-m-varphi-n-when	enumeratio_equal(euler_phi(ZZ(12)), (euler_phi(ZZ(4)) * euler_phi(ZZ(3))))	true	
 varphi-p-p-1-for-a-prime-p	euler_phi(ZZ(17))	16	
 varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	euler_phi(ZZ(81))	54	
-totient-100	euler_phi(ZZ(100))		
-totient-35	euler_phi(ZZ(35))		
+totient-100	euler_phi(ZZ(100))	40	
+totient-35	euler_phi(ZZ(35))	24	
 divides-carmichaellambda-8-totient-8			
 list-totient-25-carmichaellambda-25			
 divisorsum-15-totient-eq-15			
-totient-1-023-eq-totient-3-times-totient-11	(euler_phi(ZZ(1023)) == (euler_phi(ZZ(3)) * euler_phi(ZZ(11)) * euler_phi(ZZ(31))))		
-totient-2	euler_phi(ZZ(2))		
-totient-3	euler_phi(ZZ(3))		
-totient-4	euler_phi(ZZ(4))		
-totient-5	euler_phi(ZZ(5))		
-totient-6	euler_phi(ZZ(6))		
-totient-7	euler_phi(ZZ(7))		
-totient-8	euler_phi(ZZ(8))		
-totient-9	euler_phi(ZZ(9))		
-totient-11	euler_phi(ZZ(11))		
-totient-13	euler_phi(ZZ(13))		
-totient-14	euler_phi(ZZ(14))		
-totient-15	euler_phi(ZZ(15))		
-totient-16	euler_phi(ZZ(16))		
+totient-1-023-eq-totient-3-times-totient-11	enumeratio_equal(euler_phi(ZZ(1023)), (euler_phi(ZZ(3)) * euler_phi(ZZ(11)) * euler_phi(ZZ(31))))	true	
+totient-2	euler_phi(ZZ(2))	1	
+totient-3	euler_phi(ZZ(3))	2	
+totient-4	euler_phi(ZZ(4))	2	
+totient-5	euler_phi(ZZ(5))	4	
+totient-6	euler_phi(ZZ(6))	2	
+totient-7	euler_phi(ZZ(7))	6	
+totient-8	euler_phi(ZZ(8))	4	
+totient-9	euler_phi(ZZ(9))	6	
+totient-11	euler_phi(ZZ(11))	10	
+totient-13	euler_phi(ZZ(13))	12	
+totient-14	euler_phi(ZZ(14))	6	
+totient-15	euler_phi(ZZ(15))	8	
+totient-16	euler_phi(ZZ(16))	8	
 assuming-p-in-primes-r-in-integers-r-gt-0			

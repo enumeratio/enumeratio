@@ -18,6 +18,13 @@ signatures:
     library: enumeratio-structures
     type: (any*) -> any
     overrides: enumeratio-analytic
+  - call: Max(finset)
+    description: the largest member of a [[Finset]].
+    library: enumeratio-combinatorics
+    type: (any*) -> any
+    overrides: enumeratio-structures
+    on:
+      - Finset
 seeAlso:
   - Min
   - Clamp
@@ -36,6 +43,20 @@ bindings:
     form: sage
     template: enumeratio_max($*,)
     note: Wolfram (and our Max) flattens nested lists into one pool; bare SymPy Max()/Sage max() on a list (or a list of lists) either raise or compare lexicographically instead, so both go through a flattening helper (run.ts's SYMPY_PREAMBLE / SAGE_PREAMBLE).
+  - origin: mapped
+    form: julia
+    template: enumeratio_max($*,)
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: maximum($1, $2)
+    arity: 2
+    note: Two operands.
+    checked:
+      version: num-rational 0.4.2
+      on: 2026-10-16
 ---
 
 - The largest of its arguments, or of a single list argument.
@@ -43,3 +64,4 @@ bindings:
 - Commutative and associative: order and grouping don't matter.
 - NaN poisons the result: it beats every other comparison, even $+\infty$.
 - With no arguments, compute-engine returns NaN rather than $-\infty$, the true identity element.
+- Takes a [[Finset]] too: its largest member, and NaN for the empty one, as for an empty list.

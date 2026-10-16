@@ -14,8 +14,10 @@ import { type Definition, headsOf, signatureOf } from "./types.ts";
 
 /** Heads that carry no meaning of their own — expression plumbing, not operations.
  *  `Apply` is here as the other half of `Function`: applied to a lambda it is `bind`, a
- *  `let`, and binds no more mathematics than the lambda does. */
-const STRUCTURAL = new Set(["Function", "Apply", "Delimiter", "Sequence", "Hold"]);
+ *  `let`, and binds no more mathematics than the lambda does. `self` is a recursive
+ *  function's call to itself (`recurse`), a bound name rather than a head; `Element` is the
+ *  leaf test `isLeaf` spells (`Equal` would thread over a list). */
+const STRUCTURAL = new Set(["Function", "Apply", "Delimiter", "Sequence", "Hold", "self", "Element"]);
 
 /** Every head appearing in any definition, with how many definitions use it. */
 export function headUsage(definitions: readonly Definition[] = ALL_STATISTICS): Map<string, number> {

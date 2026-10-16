@@ -34,11 +34,15 @@ bindings:
       on: 2026-09-28
   - origin: mapped
     form: mpmath
-    environment: external
     note: clsin(n, θ) for even n, clcos(n, θ) for odd n. Wolfram has no head; Im/Re PolyLog[n, E^(I θ)] instead.
     checked:
       version: 1.3.0
       on: 2026-09-27
+    template: (clsin($1, $2) if ($1) % 2 == 0 else clcos($1, $2))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
 seeAlso:
   - PolyLog
   - DirichletBeta

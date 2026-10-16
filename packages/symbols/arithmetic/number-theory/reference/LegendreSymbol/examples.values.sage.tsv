@@ -1,0 +1,8 @@
+id	in	out	verdict
+2-is-a-quadratic-residue-mod-7-32-2-mod-7	legendre_symbol(2, 7)	1	
+3-is-not-a-quadratic-residue-mod-7	legendre_symbol(3, 7)	-1	
+0-when-p-divides-n	legendre_symbol(14, 7)	0	
+listable-in-n-the-residues-mod-7-are-1-2-4	[legendre_symbol(1, 7), legendre_symbol(2, 7), legendre_symbol(3, 7), legendre_symbol(4, 7), legendre_symbol(5, 7), legendre_symbol(6, 7)]	[1, 1, -1, 1, -1, -1]	
+1-is-a-residue-mod-p-exactly-when-p-equiv-1-pmod	legendre_symbol(-1, 13)	1	
+euler-s-criterion-a-p-equiv-a-p-1-2-pmod-p-here	enumeratio_equal(legendre_symbol(3, 7), (enumeratio_power_mod(3, 3, 7) - 7))	True	
+9-is-not-prime-so-the-call-stays-symbolic-see	legendre_symbol(2, 9)	ValueError: p must be a prime	error

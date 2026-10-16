@@ -1,0 +1,36 @@
+id	in	out
+re-of-3-plus-4i-is-3	re(mpc(3, 4))	3.0
+re-of-a-real-number-is-itself	re(5)	5.0
+re-of-pi-is-pi-a-real-symbolic-constant	re(pi)	3.14159265358979323846264338328
+real-2-plus-3i	re(mpc(2, 3))	2.0
+real-2-times-exponentiale-pow-1-over-3-times-i	re((2 * ((e)**(mpc(0, (mpf(1)/3)) * pi))))	1.0
+real-3-over-2-plus-4-over-5-times-i	re(mpc((mpf(3)/2), (mpf(4)/5)))	1.5
+n-real-exponentiale-plus-i-times-pi-25	enumeratio_n(lambda: (re((e + (mpc(0, 1) * pi)))), 25)	2.718281828459045235360287
+real-41-over-25-minus-2i	re(mpc((mpf(41)/25), -2))	1.64
+real-list-list-1-u-list-v-neg-i		
+real-0	re(0)	0.0
+real-positiveinfinity	re(inf)	+inf
+real-positiveinfinity-times-i	re((inf * mpc(0, 1)))	nan
+real-complexinfinity		
+piecewiseexpand-re-imaginaryunit-times-x-neg-2		
+simplify-re-x-x-gt-0		
+a-gaussian-integer-is-a-complex-number	re((mpc(2, 1) * mpc(1, 3)))	-1.0
+re-of-a-symbolic-value-stays-unevaluated		
+real-1	re(1)	1.0
+real-neg-1	re(-1)	-1.0
+real-neg-i	re(mpc(0, -1))	0.0
+real-1-plus-i	re(mpc(1, 1))	1.0
+real-neg-1-plus-i	re(mpc(-1, 1))	-1.0
+real-neg-1-minus-i	re(mpc(-1, -1))	-1.0
+real-1-minus-i	re(mpc(1, -1))	1.0
+real-1-plus-sqrt-3-times-i	re((1 + mpc(0, sqrt(3))))	1.0
+real-neg-1-plus-sqrt-3-times-i	re((-1 + mpc(0, sqrt(3))))	-1.0
+list-real-x-times-exponentiale-pow-1-over-5		
+real-neg-sqrt-3-minus-i	re(((-sqrt(3)) + mpc(0, -1)))	-1.73205080756887729352744634151
+real-neg-1-plus-neg-sqrt-3-times-i	re((-1 + mpc(0, (-sqrt(3)))))	-1.0
+real-1-plus-neg-sqrt-3-times-i	re((1 + mpc(0, (-sqrt(3)))))	1.0
+real-sqrt-3-minus-i	re((sqrt(3) + mpc(0, -1)))	1.73205080756887729352744634151
+real-2	re(2)	2.0
+real-i	re(mpc(0, 1))	0.0
+real-sqrt-3-plus-i	re((sqrt(3) + mpc(0, 1)))	1.73205080756887729352744634151
+real-neg-sqrt-3-plus-i	re(((-sqrt(3)) + mpc(0, 1)))	-1.73205080756887729352744634151

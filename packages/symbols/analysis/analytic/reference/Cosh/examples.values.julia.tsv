@@ -1,0 +1,39 @@
+id	in	out	verdict
+n-cosh-0	(enumeratio_ball(cosh, 0))	1.0	
+n-cosh-1	(enumeratio_ball(cosh, 1))	1.54308063481524377847790562075706168260152911236586370473740221471076906304922	
+cosh-0	enumeratio_ball(cosh, 0)	1.0	
+a-float-argument-evaluates-directly-no-n-needed	enumeratio_ball(cosh, enumeratio_decimal("1.2"))	1.81065556732437479308787251834243339002242802785004202113415107901894740094738	
+series-cosh-x-x-0-10			
+arbitrary-precision-via-n	(enumeratio_ball(cosh, (6 // 5)))	1.81065556732437479308787251834243339002242802785004202113415107901894740094738	
+evaluates-at-a-complex-argument	enumeratio_ball(cosh, enumeratio_complex(enumeratio_decimal("2.5"), 1))	(3.313290146113224289502174073668712493903513406283056429242841426172304069316814+5.091071522949698245296888033280488779624033806310763038285576607431925900317078j)	
+cosh-i-pi-cos-pi-1	enumeratio_ball(cosh, (onei(CC) * const_pi(RR)))	-0.9999999999999999999999999999999999999999999999999999999999999999999999999999914	
+element-wise-over-a-matrix-of-imaginary	Any[Any[enumeratio_ball(cosh, (onei(CC) * enumeratio_div((1 * const_pi(RR)), 3))), enumeratio_ball(cosh, (-((onei(CC) * enumeratio_div((1 * const_pi(RR)), 3)))))], Any[enumeratio_ball(cosh, 0), enumeratio_ball(cosh, (-((onei(CC) * enumeratio_div((1 * const_pi(RR)), 6)))))]]	[[0.5, 0.5], [1.0, 0.8660254037844386467637231707529361834714026269051903140279034897259665084543988]]	
+interval-arithmetic-cosh-0-ln-3-1-frac-53-not			
+uncertainty-propagation-cosh-2-sqrt-3-pm-0-1			
+cosh-positiveinfinity	enumeratio_ball(cosh, Inf)	non-finite argument	error
+evenness-drops-the-sign-of-a-symbolic-argument			
+cosh-arcosh-x-x-for-every-x			
+cosh-arcosh-2-2	enumeratio_ball(cosh, enumeratio_ball(_acosh, 2))	1.999999999999999999999999999999999999999999999999999999999999999999999999999965	
+cosh-arcosh-of-a-complex-argument	enumeratio_ball(cosh, enumeratio_ball(_acosh, enumeratio_complex(0, 3)))	(1.734378759329035909634083472764436791779555852173849825454386777398839220240447e-77+2.999999999999999999999999999999999999999999999999999999999999999999999999999862j)	
+derivative-sinh-x			
+antiderivative			
+to-30-significant-digits-every-one-correctly	enumeratio_nshow(enumeratio_ball(cosh, 1), 30)	1.54308063481524377847790562076e+00	
+n-cosh-6-over-5-50	enumeratio_nshow(enumeratio_ball(cosh, (6 // 5)), 50)	1.8106555673243747930878725183424333900224280278500e+00	
+cosh-1-over-5-times-i-times-pi	enumeratio_ball(cosh, (enumeratio_complex(0, (1 // 5)) * const_pi(RR)))	0.8090169943749474241022934171828190588601545899028814310677243113526302314094549	
+cosh-1-over-24-times-i-times-pi	enumeratio_ball(cosh, (enumeratio_complex(0, (1 // 24)) * const_pi(RR)))	0.9914448613738104111445575269285628712777382744481022714587746035289220684050763	
+matrixfunction-function-cosh-1-1-list-list-1			
+even-function-cosh-x-cosh-x	enumeratio_equal(enumeratio_ball(cosh, (-(1))), enumeratio_ball(cosh, 1))	true	
+hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	enumeratio_equal((enumeratio_pow(enumeratio_ball(cosh, 1), 2) - enumeratio_pow(enumeratio_ball(sinh, 1), 2)), 1)	true	
+the-definition-cosh-x-frac-e-x-e-x-2			
+cosh-2-x-sinh-2-x-should-simplify-to-1			
+cosh-1-over-12-times-i-times-pi	enumeratio_ball(cosh, (enumeratio_complex(0, (1 // 12)) * const_pi(RR)))	0.9659258262890682867497431997288973676339048390084045504023430763104232139798545	
+cosh-1-over-10-times-i-times-pi	enumeratio_ball(cosh, (enumeratio_complex(0, (1 // 10)) * const_pi(RR)))	0.9510565162951535721164393333793821434056986341257502224473056444301531700851873	
+cosh-1-over-9-times-i-times-pi	enumeratio_ball(cosh, (enumeratio_complex(0, (1 // 9)) * const_pi(RR)))	0.9396926207859083840541092773247314699362081342644646330902866627742212109958853	
+cosh-1-over-8-times-i-times-pi	enumeratio_ball(cosh, (enumeratio_complex(0, (1 // 8)) * const_pi(RR)))	0.9238795325112867561281831893967882868224166258636424861150977312805350075010968	
+cosh-1-over-7-times-i-times-pi	enumeratio_ball(cosh, (enumeratio_complex(0, (1 // 7)) * const_pi(RR)))	0.9009688679024191262361023195074450511659191621318571500535624231994324204279401	
+cosh-1-over-6-times-i-times-pi	enumeratio_ball(cosh, (enumeratio_complex(0, (1 // 6)) * const_pi(RR)))	0.8660254037844386467637231707529361834714026269051903140279034897259665084543988	
+cosh-2-over-9-times-i-times-pi	enumeratio_ball(cosh, (enumeratio_complex(0, (2 // 9)) * const_pi(RR)))	0.7660444431189780352023926505554166739358324570803952458540452846421553888568742	
+n-sinh-1-over-2-plus-cosh-1-over-2-pow-2	(enumeratio_pow((enumeratio_ball(sinh, (1 // 2)) + enumeratio_ball(cosh, (1 // 2))), 2))	2.718281828459045235360287471352662497757247093699959574966967627724076630353451	
+n-neg-sinh-1-over-2-plus-cosh-1-over-2-pow-2	(enumeratio_pow(((-(enumeratio_ball(sinh, (1 // 2)))) + enumeratio_ball(cosh, (1 // 2))), 2))	0.3678794411714423215955237701614608674458111310317678345078368016974614957449025	
+n-neg-2-times-cosh-1-times-cosh-1-over-2-pow-2	(((-2 * enumeratio_ball(cosh, 1) * enumeratio_pow(enumeratio_ball(cosh, (1 // 2)), 2)) + (2 * enumeratio_pow(enumeratio_ball(cosh, (1 // 2)), 2)) + enumeratio_pow(enumeratio_ball(cosh, 1), 2)))	1.0	
+n-cosh-1-over-2-plus-1-over-2-times-i-times-pi	(enumeratio_pow(enumeratio_ball(cosh, ((1 // 2) + (enumeratio_complex(0, (1 // 2)) * const_pi(RR)))), 2))	(-0.2715403174076218892389528103785308413007645561829318523687011073553845315245927+6.445493429838193477203279829243776366547223329801881567056450467615920857303269e-78j)	

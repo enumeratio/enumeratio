@@ -32,6 +32,31 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: subfactorial(n) is the number of derangements, !n.
+  - origin: mapped
+    form: mpmath
+    template: (gammainc(($1) + 1, -1) / e)
+    arity: 1
+    threadArgOnly: 1
+    note: Γ(n + 1, −1)/e, Wolfram's closed form.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: subfactorial($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_subfactorial($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Closed form $D_n = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!}$, so $D_n$ is n! divided by e and rounded to the nearest integer.

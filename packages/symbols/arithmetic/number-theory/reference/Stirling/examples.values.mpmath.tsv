@@ -1,0 +1,40 @@
+id	in	out	verdict
+stirling-5-2	stirling2(5, 2)	15.0	
+stirling-6-3	stirling2(6, 3)	90.0	
+stirling-20-10	stirling2(20, 10)	5917584964655.0	
+stirling-0-3-against-a-sum-over-a-pole			
+exact-for-large-n	stirling2(50, 2)	562949953421311.0	
+threads-element-wise-over-a-list-as-wolfram-s	[stirling2(2, 2), stirling2(4, 2), stirling2(6, 2)]	[mpf('1.0'), mpf('7.0'), mpf('31.0')]	
+the-ways-to-split-10-distinct-items-among-3	stirling2(10, 3)	9330.0	
+stirling-n-range-1-n			
+sum-stirling-6-k-times-apply-derivative-f-k			
+one-block-means-one-partition-s-n-1-1	stirling2(5, 1)	1.0	
+singletons-only-s-n-n-1	stirling2(5, 5)	1.0	
+row-sums-give-the-bell-numbers			
+two-blocks-s-n-2-2-n-1-1	almosteq(stirling2(10, 2), (((2)**9) - 1), 1e-20)	True	
+s-n-n-1-binom-n-2-one-block-is-a-pair	almosteq(stirling2(6, 5), binomial(6, 2), 1e-20)	True	
+explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j			
+orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m			
+n-stirling-120-10	(stirling2(120, 10))	2.75564293332645612796076533812e+113	
+stirling-10-4	stirling2(10, 4)	34105.0	
+stirling-1-0	stirling2(1, 0)	0.0	
+stirling-1-1	stirling2(1, 1)	1.0	
+stirling-1-2	stirling2(1, 2)	0.0	
+stirling-2-0	stirling2(2, 0)	0.0	
+stirling-2-1	stirling2(2, 1)	1.0	
+stirling-2-2	stirling2(2, 2)	1.0	
+stirling-2-3	stirling2(2, 3)	0.0	
+stirling-3-0	stirling2(3, 0)	0.0	
+stirling-3-1	stirling2(3, 1)	1.0	
+stirling-3-2	stirling2(3, 2)	3.0	
+stirling-3-3	stirling2(3, 3)	1.0	
+stirling-3-4	stirling2(3, 4)	0.0	
+stirling-4-0	stirling2(4, 0)	0.0	
+stirling-4-1	stirling2(4, 1)	1.0	
+stirling-4-2	stirling2(4, 2)	7.0	
+stirling-4-3	stirling2(4, 3)	6.0	
+the-empty-set-has-one-partition-into-no-blocks	stirling2(0, 0)	1.0	
+no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	stirling2(5, 0)	0.0	
+k-n-is-0	stirling2(3, 5)	0.0	
+stirling-0-1-is-also-0	stirling2(0, 1)	0.0	
+a-negative-k-stays-symbolic	stirling2(10, -5)	ValueError: 	error

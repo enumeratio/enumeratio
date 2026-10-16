@@ -1,5 +1,6 @@
-id	in
-khinchin-s-constant	enumeratio_n(khinchin)
-n-khinchin-50	enumeratio_n(khinchin, 50)
-round-khinchin-pow-100	
-2-lt-khinchin-lt-3	
+id	in	out
+khinchin-s-constant	enumeratio_n(khinchin)	2.68545200106531
+n-khinchin-50	enumeratio_n(khinchin, 50)	2.68545200106531
+n-khinchin-100	enumeratio_n(khinchin, 100)	2.68545200106531
+round-khinchin-pow-100	round(((khinchin)^100))	7975160530073655774671985794452796861418592
+2-lt-khinchin-lt-3		

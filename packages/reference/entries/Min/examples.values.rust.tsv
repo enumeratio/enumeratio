@@ -1,0 +1,25 @@
+id	in	out	verdict
+min-3-1-4-1-5			
+also-accepts-a-single-list-argument			
+min-neg-1-neg-5	minimum(n(-1), n(-5))	-5	
+a-single-argument-is-returned-unchanged			
+min-9-2	minimum(n(9), n(2))	2	
+min-list-4-1-7-2			
+min-5p56-neg-4p8-7p3			
+min-min-folds-into-a-normal-call			
+nested-lists-are-flattened-into-the-pool			
+exact-numbers-are-compared-numerically	minimum(sqrt(n(2)), rational(n(3), n(2)))	1.4142135623730951	
+the-numeric-arguments-collapse-to-their-minimum			
+compares-exact-constants-numerically-min-e-pi-5			
+the-min-of-two-intervals-is-the-interval-of			
+the-smallest-member-of-a-finset			
+the-day-s-low-from-the-same-hourly-readings-see			
+commutative-order-doesn-t-matter	equal(minimum(n(3), n(7)), minimum(n(7), n(3)))	true	
+min-a-b-max-a-b-a-b-see-max	equal((minimum(n(4), n(9)) + maximum(n(4), n(9))), (n(4) + n(9)))	true	
+idempotent-min-x-x-x			
+infinities-participate-directly-in-the			
+multiple-arguments-lists-included-are-flattened	minimum(list(vec![n(3), n(1)]), n(0))	panic: threading: a list where the crate takes a scalar	error
+with-no-arguments-it-returns-the-identity			
+the-min-of-an-empty-list-is-nan			
+min-with-complexinfinity-stays-unevaluated			
+the-smallest-member-of-the-empty-finset			

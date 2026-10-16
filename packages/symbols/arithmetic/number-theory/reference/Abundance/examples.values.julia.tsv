@@ -1,0 +1,13 @@
+id	in	out	verdict
+abundance-12	(divisor_sigma(abs(ZZ(12)), 1) - 2 * abs(ZZ(12)))	4	
+abundance-28	(divisor_sigma(abs(ZZ(28)), 1) - 2 * abs(ZZ(28)))	0	
+abundance-15	(divisor_sigma(abs(ZZ(15)), 1) - 2 * abs(ZZ(15)))	-6	
+abundance-1	(divisor_sigma(abs(ZZ(1)), 1) - 2 * abs(ZZ(1)))	-1	
+negative-n-the-sign-is-a-unit	(divisor_sigma(abs(ZZ(-12)), 1) - 2 * abs(ZZ(-12)))	4	
+listable-over-a-list	Any[(divisor_sigma(abs(ZZ(6)), 1) - 2 * abs(ZZ(6))), (divisor_sigma(abs(ZZ(12)), 1) - 2 * abs(ZZ(12))), (divisor_sigma(abs(ZZ(15)), 1) - 2 * abs(ZZ(15)))]	[0, 4, -6]	
+large-integers-powers-of-two-are-always-1-short	(divisor_sigma(abs(ZZ(enumeratio_pow(2, 40))), 1) - 2 * abs(ZZ(enumeratio_pow(2, 40))))	-1	
+the-smallest-odd-abundant-number	(divisor_sigma(abs(ZZ(945)), 1) - 2 * abs(ZZ(945)))	30	
+classify-by-sign	enumeratio_sign((divisor_sigma(abs(ZZ(12)), 1) - 2 * abs(ZZ(12))))	1	
+abundance-is-the-aliquot-sum-minus-n	enumeratio_equal((divisor_sigma(abs(ZZ(12)), 1) - 2 * abs(ZZ(12))), ((divisor_sigma(abs(ZZ(12)), 1) - abs(ZZ(12))) - 12))	true	
+perfect-numbers-have-abundance-0	enumeratio_equal((divisor_sigma(abs(ZZ(496)), 1) - 2 * abs(ZZ(496))), 0)	true	
+zero-stays-unevaluated	(divisor_sigma(abs(ZZ(0)), 1) - 2 * abs(ZZ(0)))	DomainError with 0: Argument must be positive	error

@@ -25,6 +25,48 @@ references:
 names:
   fungrim: LogGamma
   wolfram: LogGamma
+bindings:
+  - origin: mapped
+    form: sympy
+    template: loggamma($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: SymPy's loggamma is the principal continuation, as Wolfram's LogGamma is, so the real log-magnitude GammaLn takes at a negative real differs from it.
+  - origin: mapped
+    form: mpmath
+    template: loggamma($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: log_gamma($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(lgamma, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: ln_gamma($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
 ---
 
 - Defined via [[Gamma]]: $\operatorname{GammaLn}(z) = \ln \Gamma(z)$ for $z > 0$, where $\Gamma$ is positive so no branch-cut ambiguity arises.

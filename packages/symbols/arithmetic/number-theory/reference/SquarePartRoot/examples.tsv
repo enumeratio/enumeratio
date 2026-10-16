@@ -1,0 +1,13 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sage.kind	sage.note
+squarepartroot-12			[SquarePartRoot, 12]	2	$12 = 2^2\cdot3$				
+squarepartroot-360			[SquarePartRoot, 360]	6	$360 = 6^2\cdot10$				
+a-square-free-number-has-root-1			[SquarePartRoot, 30]	1	A square-free number has no square part: the root is 1				
+squarepartroot-1			[SquarePartRoot, 1]	1					
+negative-n-the-sign-is-a-unit	Scope		[SquarePartRoot, -12]	2	Negative $n$: the sign is a unit				
+listable-over-a-list	Scope		[SquarePartRoot, [List, 8, 9, 10]]	[List, 2, 3, 1]	Listable over a list				
+large-integers-10	Scope		[SquarePartRoot, [Factorial, 10]]	720	Large integers: $10! = 720^2\cdot7$				
+the-root-of-a-perfect-square-is-its-square-root	Applications		[SquarePartRoot, 144]	12	A perfect square's root is its square root, $\sqrt{144}=12$				
+simplifying-sqrt-1000	Applications		[SquarePartRoot, 1000]	10	Simplifying $\sqrt{1000}=10\sqrt{10}$: the coefficient pulled out is $s$				
+n-is-s-squared-times-q	Properties		[Equal, 360, [Multiply, [Power, [SquarePartRoot, 360], 2], [SquareFreePart, 360]]]	True	$n=s^2 q$. See [[SquareFreePart]]				
+a-number-is-square-free-when-the-root-is-1	Properties		[Equal, [SquarePartRoot, 70], 1]	True	$n$ is square-free exactly when $s=1$. See [[IsSquareFree]]				
+zero-stays-unevaluated	Possible issues		[SquarePartRoot, 0]	[SquarePartRoot, 0]	Zero is outside the domain, so it stays unevaluated	undefined-form	Both decline: the mapping's 0^0 from Wolfram's FactorInteger[0] is Indeterminate, where ours stays unevaluated.	domain	Sage's squarefree_part of 0 is 0, so the mapping's quotient divides by zero.

@@ -18,40 +18,57 @@ import {
 import { CARRIER_NAMES, CARRIER_PARAMS } from "./carrier-names-data.ts";
 import { DEFINED_NAMES } from "./defined-names-data.ts";
 import { type Mapping, mappingFor, THREADS_MANUALLY } from "./mappings.ts";
+import { isReserved, SAGE_UNBINDABLE, spareName } from "./reserved.ts";
+import { SAGE_STATS } from "./sage-stats.ts";
 import { isWolframFamily, type System } from "./systems.ts";
 
 export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 
 export type Emitted =
-  | { readonly ok: true; readonly source: string; readonly freeSymbols?: readonly string[] }
+  | {
+      readonly ok: true;
+      readonly source: string;
+      readonly freeSymbols?: readonly string[];
+      /** Names written under another name, because the system holds theirs (or refuses them): name → spelling. */
+      readonly renamed?: Readonly<Record<string, string>>;
+    }
   | { readonly ok: false; readonly missing: readonly string[] };
 
 const isCall = (value: MathJSON): value is readonly MathJSON[] => Array.isArray(value) && typeof value[0] === "string";
 
 /** compute-engine symbol constants, per system. */
 const CONSTANTS: Record<string, Partial<Record<System, string>>> = {
-  Pi: { wolfram: "Pi", sympy: "pi", mpmath: "pi", sage: "pi", rust: "x(std::f64::consts::PI)" },
+  Pi: { wolfram: "Pi", sympy: "pi", mpmath: "pi", sage: "pi", julia: "const_pi(RR)", rust: "x(std::f64::consts::PI)" },
   ExponentialE: {
     wolfram: "E",
     sympy: "E",
     mpmath: "e",
     sage: "e",
+    julia: "const_e(RR)",
     rust: "x(std::f64::consts::E)",
   },
-  ImaginaryUnit: { wolfram: "I", sympy: "I", mpmath: "mpc(0,1)", sage: "I" },
-  EulerGamma: { wolfram: "EulerGamma", sympy: "EulerGamma", mpmath: "euler", sage: "euler_gamma" },
+  ImaginaryUnit: { wolfram: "I", sympy: "I", mpmath: "mpc(0,1)", sage: "I", julia: "onei(CC)" },
+  EulerGamma: {
+    wolfram: "EulerGamma",
+    sympy: "EulerGamma",
+    mpmath: "euler",
+    sage: "euler_gamma",
+    julia: "const_euler(RR)",
+  },
   GoldenRatio: {
     wolfram: "GoldenRatio",
     sympy: "GoldenRatio",
     mpmath: "phi",
     sage: "golden_ratio",
+    julia: "((1 + sqrt(RR(5))) / 2)",
   },
-  True: { wolfram: "True", sympy: "True", mpmath: "True", sage: "True", rust: "V::Bool(true)" },
+  True: { wolfram: "True", sympy: "True", mpmath: "True", sage: "True", julia: "true", rust: "V::Bool(true)" },
   False: {
     wolfram: "False",
     sympy: "False",
     mpmath: "False",
     sage: "False",
+    julia: "false",
     rust: "V::Bool(false)",
   },
   // Named values, not free variables — a bare `NaN` or `ComplexInfinity` used to fall through
@@ -59,16 +76,16 @@ const CONSTANTS: Record<string, Partial<Record<System, string>>> = {
   // system fix below (#A-72) would otherwise turn into a bogus `Symbol("NaN")`: a variable
   // named NaN, not the not-a-number value. sympy has no exact Glaisher/Khinchin, so those two
   // stay unmapped there rather than guessed at.
-  NaN: { wolfram: "Indeterminate", sympy: "nan", mpmath: "nan", sage: "NaN" },
+  NaN: { wolfram: "Indeterminate", sympy: "nan", mpmath: "nan", sage: "NaN", julia: "NaN" },
   // Our other named "no value" answer, for an exact indeterminate form (0/0) rather than a
   // floating-point result — Wolfram (and every other system here) has only the one notion,
   // so it emits identically to NaN above.
-  Indeterminate: { wolfram: "Indeterminate", sympy: "nan", mpmath: "nan", sage: "NaN" },
+  Indeterminate: { wolfram: "Indeterminate", sympy: "nan", mpmath: "nan", sage: "NaN", julia: "NaN" },
   ComplexInfinity: { wolfram: "ComplexInfinity", sympy: "zoo", sage: "unsigned_infinity" },
-  PositiveInfinity: { wolfram: "Infinity", sympy: "oo", mpmath: "inf", sage: "oo" },
-  NegativeInfinity: { wolfram: "-Infinity", sympy: "-oo", mpmath: "-inf", sage: "-oo" },
-  ConstGlaisher: { wolfram: "Glaisher", mpmath: "glaisher", sage: "glaisher" },
-  Khinchin: { wolfram: "Khinchin", mpmath: "khinchin", sage: "khinchin" },
+  PositiveInfinity: { wolfram: "Infinity", sympy: "oo", mpmath: "inf", sage: "oo", julia: "Inf" },
+  NegativeInfinity: { wolfram: "-Infinity", sympy: "-oo", mpmath: "-inf", sage: "-oo", julia: "(-Inf)" },
+  ConstGlaisher: { wolfram: "Glaisher", mpmath: "glaisher", sage: "glaisher", julia: "const_glaisher(RR)" },
+  Khinchin: { wolfram: "Khinchin", mpmath: "khinchin", sage: "khinchin", julia: "const_khinchin(RR)" },
   // Our carrier's plural type-space symbol, now DEFINED_NAMES-defined (declareCarriers'
   // default plural folding). Without an entry here it would fall into the DEFINED_NAMES
   // branch below and get reported missing whenever it appears as a bare option VALUE
@@ -100,6 +117,35 @@ function fill(template: string, parts: readonly string[]): string {
   return template.replace(/\$(\d)/g, (_match, index: string) => parts[Number(index) - 1] ?? "");
 }
 
+/** Functions with no derivative in a complex variable: Sage would differentiate them as on the line. */
+const NON_HOLOMORPHIC = new Set([
+  "Abs",
+  "Sign",
+  "Conjugate",
+  "Real",
+  "Imaginary",
+  "Argument",
+  "Floor",
+  "Ceil",
+  "Round",
+]);
+
+/** Graph constructors whose vertex numbering is not Sage's sorted order, and the queries that read a numbering. */
+const UNSORTED_GRAPHS = new Set(["TuranGraph", "HararyGraph", "GridGraph"]);
+const NUMBERED_QUERIES = new Set([
+  "VertexDegree",
+  "VertexEccentricity",
+  "GraphDistance",
+  "FindShortestPath",
+  "GraphCenter",
+  "VertexList",
+  "AdjacencyMatrix",
+  "ConnectedComponents",
+  "EdgeList",
+]);
+const mentions = (node: MathJSON, heads: ReadonlySet<string>): boolean =>
+  isCall(node) && (heads.has(node[0] as string) || node.slice(1).some((child) => mentions(child as MathJSON, heads)));
+
 /** Heads whose operands thread over lists, which Python's own operators do not. */
 const BROADCAST_HEADS = new Set(["Add", "Subtract", "Multiply", "Divide", "Power"]);
 const PYTHON_FAMILY: readonly System[] = ["sympy", "mpmath", "sage"];
@@ -119,6 +165,14 @@ const isResidue = (node: MathJSON): boolean =>
   (node[0] === "IntegerMod" ||
     (["Add", "Subtract", "Multiply", "Negate", "Divide", "Power"].includes(node[0] as string) &&
       node.slice(1).some((operand) => isResidue(operand as MathJSON))));
+
+/** Every name `node` writes, quoted strings aside. */
+const namesIn = (node: MathJSON, into = new Set<string>()): Set<string> => {
+  if (typeof node === "string") {
+    if (!/^'.*'$/s.test(node)) into.add(node);
+  } else if (Array.isArray(node)) for (const child of node) namesIn(child as MathJSON, into);
+  return into;
+};
 
 /** Whether a symbol (a free or bound variable) appears anywhere in `node`. */
 const hasSymbol = (node: MathJSON): boolean =>
@@ -165,6 +219,30 @@ function bigO(given: MathJSON, walk: (node: MathJSON) => string): string {
   return exponent === undefined ? order : `Power[${order}, ${walk(exponent)}]`;
 }
 
+/** A double as Rust's float literal: `1e21` and `0.5` parse, but a bare `100` would be an integer there. */
+const rustFloat = (value: number): string => `x(${/^-?\d+$/.test(String(value)) ? `${value}.0` : value})`;
+
+/** Whether `node` is a real number written out: a literal, a rational, or arithmetic over them and the named constants. */
+function isRealNumber(node: MathJSON): boolean {
+  if (typeof node === "number") return true;
+  if (typeof node === "string") return ["Pi", "ExponentialE", "EulerGamma", "GoldenRatio"].includes(node);
+  if (isCall(node))
+    return (
+      ["Rational", "Negate", "Add", "Subtract", "Multiply", "Divide"].includes(node[0] as string) &&
+      node.slice(1).every((operand) => isRealNumber(operand))
+    );
+  return typeof (node as { num?: unknown }).num === "string";
+}
+
+/** The `Series(f, x, x0, n)` call under any `Normal`/`Simplify`/`FullSimplify` wrappers, if that is all `expr` is. */
+export function seriesCall(expr: MathJSON): readonly MathJSON[] | undefined {
+  if (!isCall(expr)) return undefined;
+  if (expr[0] === "Series" && expr.length === 5) return expr;
+  return ["Normal", "Simplify", "FullSimplify"].includes(expr[0] as string) && expr.length === 2
+    ? seriesCall(expr[1] as MathJSON)
+    : undefined;
+}
+
 /** `expr` as `system`'s source. `extra` maps a library's heads (`mappingsFromBindings`), which an
  *  expression calls by namespace: `MemberCall(ns, "Name", …)` is emitted as `ns.Name(…)`. */
 export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] = []): Emitted {
@@ -175,18 +253,53 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
   // Every free bare symbol actually seen, regardless of system — the numeric-only lanes still
   // report it as missing, but the caller (a symbolic-agreement check) needs the names either way.
   const free = new Set<string>();
+  // A name the system's namespace already holds, written under a spare one: a `Sum` index
+  // `e` would capture the `e` that `ExponentialE` emits. Computed once, so every use agrees.
+  const renamed = new Map<string, string>();
+  let taken: ReadonlySet<string> | undefined;
+  const spared = (name: string): string => {
+    taken ??= namesIn(expr);
+    let spare = renamed.get(name);
+    if (spare === undefined) renamed.set(name, (spare = spareName(system, name, taken)));
+    return spare;
+  };
+  // The variables of a held derivative (below), named apart for each one, and those taken at real points.
+  let derivatives = 0;
+  const realDummies = new Set<string>();
+  const boundName = (name: string): string => {
+    if (wl) return isSystemName(name) ? `${CONTEXT}${name}` : name;
+    // The symbols a held derivative differentiates are Sage variables, not Python names.
+    if (system === "sage" && /^_d\d+$/.test(name))
+      return `SR.var(${JSON.stringify(name)}${realDummies.has(name) ? ', domain="real"' : ""})`;
+    // A real variable lets Abs and sign differentiate as they do on the line; at a complex point (sqrt(t**2) at I)
+    // it would be the wrong function to differentiate.
+    if (system === "sympy") return `Symbol(${JSON.stringify(name)}${realDummies.has(name) ? ", real=True" : ""})`;
+    return isReserved(system, name) ? spared(name) : name;
+  };
 
   // Combinatorica is the Wolfram transpiler plus its own head map: an expression with no map row
   // in it would only run in core Wolfram, which the `wolfram` lane already does.
   let fromCombinatorica = false;
 
+  // The expression itself, and what a list of answers holds: where mpmath's N(x, d) can round to d digits.
+  const answers = new Set<MathJSON>([expr]);
+  // Whether the walk is inside the operand of an mpmath N(x, d) answer with d past a double's digits.
+  let exact = false;
   const walk = (node: MathJSON): string => {
     // Wolfram's exponent marker is `*^`, and `1e-11` there is `1 * e - 11`.
     if (typeof node === "number") {
       if (wl) return toWolfram(node);
       // Lean reads `f -1` as `f - 1`.
       // Rust values are the prelude's dynamic `V` (rust/src/prelude.rs).
-      if (system === "rust") return Number.isSafeInteger(node) ? `n(${node})` : `x(${node})`;
+      if (system === "rust") {
+        if (Number.isSafeInteger(node)) return `n(${node})`;
+        // Past 2^53 an integer-valued number is the integer it spells, not a float.
+        return Number.isInteger(node) ? `big("${BigInt(node)}")` : rustFloat(node);
+      }
+      // Inside an N(x, d) answer past a double's digits `0.1` would be the double, not the decimal.
+      if (system === "mpmath" && exact && !Number.isInteger(node)) return `mpf(${JSON.stringify(String(node))})`;
+      if (system === "julia" && (!Number.isInteger(node) || /e/i.test(String(node))))
+        return `enumeratio_decimal(${JSON.stringify(String(node))})`;
       return system === "mathlib4" && node < 0 ? `(${node})` : String(node);
     }
     if (typeof node === "boolean") return node ? "True" : "False";
@@ -195,6 +308,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       if (/^'.*'$/s.test(node)) return JSON.stringify(node.slice(1, -1));
       const constant = CONSTANTS[node]?.[system];
       if (constant !== undefined) return constant;
+      // A bare `Infinity` is `oo` for SymPy and Sage; scoped here, since a CONSTANTS row would make it missing elsewhere.
+      if ((system === "sympy" || system === "sage") && node === "Infinity") return "oo";
       // Wolfram also knows the rest of the constants, the slots a Function binds, and a
       // mapped head passed as a value (`Fold(Add, 0, xs)`).
       if (wl && (node in SYMBOLS || node in HEADS || /^_\d+$/.test(node))) return toWolfram(node);
@@ -231,21 +346,50 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         free.add(node);
         if (wl) return wolframFree(node);
         if (system === "sympy") return `Symbol(${JSON.stringify(node)})`;
-        if (system === "sage") return `SR.var(${JSON.stringify(node)})`;
+        // `SR.var` refuses a keyword; it is written under a spare name, as a bound one is.
+        if (system === "sage") return `SR.var(${JSON.stringify(SAGE_UNBINDABLE.has(node) ? spared(node) : node)})`;
         missing.push(`symbol:${node}`);
         return node;
       }
-      // SymPy has no bare `k`: an iterator's variable is a Symbol there.
-      return system === "sympy" ? `Symbol(${JSON.stringify(node)})` : node;
+      return boundName(node);
     }
     if (!isCall(node)) {
       const value = (node as { num?: unknown }).num;
       if (typeof value === "string") {
         if (wl) return toWolfram({ num: value });
-        if (system === "rust") return /^-?\d+$/.test(value) ? `big("${value}")` : `x(${value})`;
+        if (system === "rust") {
+          if (/^-?\d+$/.test(value)) return `big("${value}")`;
+          // A double holds a decimal to ~16 digits: one past its range would be infinity or zero, not the number.
+          const read = Number(value);
+          if (!Number.isFinite(read) || (read === 0 && /[1-9]/.test(value.replace(/e.*$/i, "")))) {
+            missing.push("literal:outside-double-range");
+            return "0";
+          }
+          return rustFloat(read);
+        }
         // A Python float literal holds 53 bits; SymPy keeps every digit of a longer decimal.
         if (system === "sympy" && /[.e]/i.test(value) && value.replace(/e.*$/i, "").replace(/\D/g, "").length > 15)
           return `Float(${JSON.stringify(value)}, 50)`;
+        // Past the double range Python reads `1.0e1000` as inf (or `1e-1000` as 0) before SymPy sees it.
+        if (
+          system === "sympy" &&
+          /[.e]/i.test(value) &&
+          /[1-9]/.test(value.replace(/e.*$/i, "")) &&
+          !(Math.abs(Number(value)) > 0 && Number.isFinite(Number(value)))
+        )
+          return `Float(${JSON.stringify(value)})`;
+        // A decimal is exact in Julia: a rational, which no double rounds or underflows, and which a retry at more bits refines.
+        if (system === "julia" && /[.e]/i.test(value)) return `enumeratio_decimal(${JSON.stringify(value)})`;
+        // mpmath reads a string at its own precision: a longer decimal, or one past the double range, would round or overflow as a float.
+        if (
+          system === "mpmath" &&
+          /[.e]/i.test(value) &&
+          (exact ||
+            value.replace(/e.*$/i, "").replace(/\D/g, "").replace(/^0+/, "").length > 15 ||
+            (/[1-9]/.test(value.replace(/e.*$/i, "")) &&
+              !(Math.abs(Number(value)) > 0 && Number.isFinite(Number(value)))))
+        )
+          return `mpf(${JSON.stringify(value)})`;
         return value;
       }
       missing.push("literal:unrecognised");
@@ -253,9 +397,21 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     }
     const head = node[0] as string;
     const operands = node.slice(1);
+    if (system === "julia" && head === "List" && answers.has(node))
+      for (const entry of operands) answers.add(entry as MathJSON);
+    // Below the answer, Julia's N(x, d) is the rounded number, not the digits written out.
+    if (system === "julia" && head === "N" && operands.length === 2 && !answers.has(node))
+      return `enumeratio_n(${walk(operands[0] as MathJSON)}, ${walk(operands[1] as MathJSON)})`;
+    if (system === "mpmath") {
+      if (head === "List" && answers.has(node)) for (const entry of operands) answers.add(entry as MathJSON);
+      // N(x, d) answers in text (run.ts), which can't be an operand: below the answer it is plain N(x).
+      if (head === "N" && operands.length === 2 && !answers.has(node)) return walk(operands[0] as MathJSON);
+    }
     const iterated = (head === "Sum" || head === "Product") && operands.length > 1 ? operands.slice(1) : [];
     // A `Limits` iterator binds only for SymPy's Sum (below); the Wolfram lane keeps its free `k`.
     const binders = iterated.flatMap((it) =>
+      // Sage's own sum keeps the index a symbol (below); a library's row for it binds the name.
+      (system !== "sage" || extra.some((m) => m.head === head)) &&
       isCall(it) &&
       (it[0] === "Tuple" || it[0] === "List" || (system === "sympy" && it[0] === "Limits")) &&
       typeof it[1] === "string"
@@ -264,9 +420,12 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     );
     const fresh = binders.filter((v) => !bound.has(v));
     for (const v of fresh) bound.add(v);
+    const wasExact = exact;
+    if (system === "mpmath" && head === "N" && typeof operands[1] === "number" && operands[1] > 15) exact = true;
     try {
       return walkCall(head, operands);
     } finally {
+      exact = wasExact;
       for (const v of fresh) bound.delete(v);
     }
   };
@@ -279,10 +438,13 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
    */
   const threadOver = (node: MathJSON, template: string, others: readonly string[], threadArg: number): string => {
     if (isCall(node) && node[0] === "List") {
-      return `[${node
+      const items = node
         .slice(1)
         .map((el) => threadOver(el, template, others, threadArg))
-        .join(", ")}]`;
+        .join(", ");
+      if (system === "rust") return `list(vec![${items}])`;
+      // Julia's `[1, true]` promotes to one element type; `Any[...]` keeps each as it is.
+      return `${system === "julia" ? "Any" : ""}[${items}]`;
     }
     const parts = [...others];
     parts.splice(threadArg - 1, 0, walk(node));
@@ -354,7 +516,13 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       }
     }
     // SymPy's `summation(f, (k, a, b))`: the iterator is a tuple, from 1 when its start is `Nothing` or left out.
-    if (system === "sympy" && head === "Sum" && operands.length === 2) {
+    // Sage's `sum(f, k, a, b)` and `product(f, k, a, b)` take the iterator's parts as arguments, k a symbol.
+    if (
+      (system === "sympy"
+        ? head === "Sum"
+        : system === "sage" && (head === "Sum" || head === "Product") && !extra.some((m) => m.head === head)) &&
+      operands.length === 2
+    ) {
       const iterator = operands[1] as MathJSON;
       const bounds = isCall(iterator) ? iterator.slice(2) : [];
       if (
@@ -365,9 +533,121 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       ) {
         const [from, to] = bounds.length === 1 ? [1, bounds[0]] : bounds;
         const range = [iterator[1], from === "Nothing" ? 1 : from, to].map((part) => walk(part as MathJSON));
-        const summation = mappingFor(head, 2, extra)?.emit.sympy;
-        if (summation !== undefined) return fill(summation, [walk(operands[0] as MathJSON), `(${range.join(", ")})`]);
+        const summation = mappingFor(head, 2, extra)?.emit[system];
+        if (summation !== undefined)
+          return fill(summation, [
+            walk(operands[0] as MathJSON),
+            system === "sage" ? range.join(", ") : `(${range.join(", ")})`,
+          ]);
       }
+    }
+    // A derivative ours holds at a point (`Series` coefficients): `Apply(Derivative(f, o1, …), a1, …)` is f
+    // differentiated o_i times in its i-th argument, there. The differentiated arguments are symbols of their own,
+    // substituted afterwards.
+    if ((system === "sympy" || system === "sage") && head === "Apply" && operands.length >= 2) {
+      const callee = operands[0] as MathJSON;
+      const orders = isCall(callee) && callee[0] === "Derivative" ? callee.slice(2) : [];
+      if (
+        isCall(callee) &&
+        typeof callee[1] === "string" &&
+        orders.length === operands.length - 1 &&
+        orders.every((order) => Number.isInteger(order) && (order as number) >= 0)
+      ) {
+        const names = orders.map((order) => (order === 0 ? undefined : `_d${++derivatives}`));
+        const differentiated = names.filter((name): name is string => name !== undefined);
+        const real = names.every((name, i) => name === undefined || isRealNumber(operands[i + 1] as MathJSON));
+        // Sage differentiates Abs and sign as it would on the line whatever the point: off it, no answer.
+        if (system === "sage" && !real && NON_HOLOMORPHIC.has(callee[1] as string)) {
+          missing.push(`${head}/derivative-at-a-complex-point`);
+          return "0";
+        }
+        for (const name of differentiated) {
+          bound.add(name);
+          if (real) realDummies.add(name);
+        }
+        try {
+          const body = walk([callee[1], ...names.map((name, i) => name ?? operands[i + 1]!)] as MathJSON);
+          if (differentiated.length === 0) return body;
+          const steps = names.flatMap((name, i) =>
+            name === undefined
+              ? []
+              : [
+                  system === "sage"
+                    ? `${walk(name)}, ${orders[i] as number}`
+                    : `(${walk(name)}, ${orders[i] as number})`,
+                ],
+          );
+          const points = names.flatMap((name, i) =>
+            name === undefined ? [] : [`${walk(name)}: ${walk(operands[i + 1] as MathJSON)}`],
+          );
+          return `(diff(${body}, ${steps.join(", ")})).subs({${points.join(", ")}})`;
+        } finally {
+          for (const name of differentiated) {
+            bound.delete(name);
+            realDummies.delete(name);
+          }
+        }
+      }
+    }
+    // SymPy's `integrate(f, (x, a, b))`: a bare variable (or `Limits(x, Nothing, Nothing)`) is an indefinite
+    // integral. Our first limit is the outermost, as Wolfram's; SymPy's first is the innermost.
+    if ((system === "sympy" || system === "sage") && head === "Integrate" && operands.length >= 2) {
+      const [integrand, ...specs] = operands as [MathJSON, ...MathJSON[]];
+      const function_ = isCall(integrand) && integrand[0] === "Function" ? integrand : undefined;
+      const wrapped = function_?.[1] as MathJSON | undefined;
+      const body =
+        function_ === undefined
+          ? integrand
+          : isCall(wrapped as MathJSON) && (wrapped as readonly MathJSON[])[0] === "Block"
+            ? (wrapped as readonly MathJSON[])[1]!
+            : wrapped!;
+      const iterators = specs.map((spec) => {
+        if (typeof spec === "string") return walk(spec);
+        if (isCall(spec) && ["Limits", "Tuple", "List"].includes(spec[0] as string) && spec.length === 4) {
+          const [, name, from, to] = spec as unknown as [string, MathJSON, MathJSON, MathJSON];
+          if (typeof name === "string")
+            return from === "Nothing" && to === "Nothing"
+              ? walk(name)
+              : system === "sage"
+                ? [name, from, to].map((part) => walk(part)).join(", ")
+                : `(${[name, from, to].map((part) => walk(part)).join(", ")})`;
+        }
+        return undefined;
+      });
+      const integral = mappingFor(head, operands.length, extra)?.emit[system];
+      if (integral !== undefined && iterators.every((iterator) => iterator !== undefined)) {
+        // Sage integrates one variable at a time, the last iterator innermost.
+        if (system === "sage")
+          return (iterators as string[])
+            .toReversed()
+            .reduce((inner, iterator) => fill(integral, [inner, iterator]), walk(body));
+        return fill(integral, [walk(body), ...(iterators as string[]).toReversed()]);
+      }
+    }
+    // Without an iterator `integrate(f)` would pick the variable itself.
+    if ((system === "sympy" || system === "sage") && head === "Integrate" && operands.length < 2) {
+      missing.push(`${head}/${operands.length}`);
+      return "0";
+    }
+    // A series SymPy answers with its O-term: `Normal` is `removeO`, and its simplifier leaves the O alone.
+    if (
+      system === "sympy" &&
+      ["Normal", "Simplify", "FullSimplify"].includes(head) &&
+      operands.length === 1 &&
+      seriesCall(operands[0] as MathJSON) !== undefined
+    ) {
+      const series = walk(operands[0] as MathJSON);
+      return head === "Normal" ? `(${series}).removeO()` : `simplify(${series})`;
+    }
+    // Sage's series answers its Order term too: `Normal` is its `truncate()`.
+    if (
+      system === "sage" &&
+      ["Normal", "Simplify", "FullSimplify"].includes(head) &&
+      operands.length === 1 &&
+      seriesCall(operands[0] as MathJSON) !== undefined
+    ) {
+      const series = walk(operands[0] as MathJSON);
+      return head === "Normal" ? `(${series}).truncate()` : series;
     }
     // factorrat takes rationals; a Gaussian integer is not one, and SymPy has no factorization of it to ask for.
     if (system === "sympy" && head === "FactorInteger" && operands.length === 1) {
@@ -376,6 +656,49 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         missing.push("FactorInteger/Complex");
         return "0";
       }
+    }
+    // A query that reads vertex numbers of a graph Sage numbers otherwise than ours would compare under two numberings.
+    if (
+      system === "sage" &&
+      NUMBERED_QUERIES.has(head) &&
+      operands.some((op) => mentions(op as MathJSON, UNSORTED_GRAPHS))
+    ) {
+      missing.push(`${head}/numbering`);
+      return "0";
+    }
+    // A graph is Sage's Graph or DiGraph, by its edges; loops and parallel edges are kept, as ours keeps them.
+    if (system === "sage" && head === "Graph" && (operands.length === 1 || operands.length === 2)) {
+      const edges = operands[operands.length - 1] as MathJSON;
+      const kinds =
+        isCall(edges) && edges[0] === "List" ? new Set(edges.slice(1).map((e) => (isCall(e) ? e[0] : ""))) : undefined;
+      const directed = kinds?.has("DirectedEdge") === true;
+      if (
+        kinds === undefined ||
+        [...kinds].some((kind) => kind !== "UndirectedEdge" && kind !== "DirectedEdge") ||
+        (directed && kinds.has("UndirectedEdge"))
+      ) {
+        missing.push(`${head}/${operands.length}`);
+        return "0";
+      }
+      const list = walk(edges);
+      const constructor = directed ? "DiGraph" : "Graph";
+      return operands.length === 1
+        ? `${constructor}(${list}, format="list_of_edges", loops=True, multiedges=True)`
+        : `${constructor}([${walk(operands[0] as MathJSON)}, ${list}], format="vertices_and_edges", loops=True, multiedges=True)`;
+    }
+    // A statistic by name, on the carrier it is of: Sage builds the object the carrier names (run.ts).
+    if (system === "sage" && head === "CombinatorialStat" && operands.length === 2) {
+      const [object, label] = operands as [MathJSON, MathJSON];
+      const name = typeof label === "string" && /^'.*'$/s.test(label) ? label.slice(1, -1) : undefined;
+      if (
+        isCall(object) &&
+        object.length === 2 &&
+        name !== undefined &&
+        SAGE_STATS[object[0] as string]?.[name] !== undefined
+      )
+        return `enumeratio_stat(${JSON.stringify(object[0])}, ${walk(object[1] as MathJSON)}, ${JSON.stringify(name)})`;
+      missing.push(`${head}/${operands.length}`);
+      return "0";
     }
     const mapping = mappingFor(head, operands.length, extra);
     let template = mapping?.emit[system];
@@ -512,10 +835,11 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     }
     // An option key (`Graph(…, EdgeWeight -> w)`) names the option, Wolfram's own where the head is
     // the same function, so it is not a free variable. `Over` is ours: translated where Wolfram has
-    // the ring as an option, ours alone (contexted) where it doesn't.
+    // the ring as an option, ours alone (contexted) where it doesn't. Canonical form writes
+    // the option `Over -> R` as `Tuple(Over, R)`.
     if (
       wl &&
-      (head === "Rule" || head === "KeyValuePair") &&
+      (head === "Rule" || head === "KeyValuePair" || (head === "Tuple" && operands[0] === "Over")) &&
       operands.length === 2 &&
       typeof operands[0] === "string" &&
       isSystemName(operands[0]) &&
@@ -559,7 +883,12 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
   const source = walk(expr);
   if (missing.length > 0) return { ok: false, missing };
   if (system === "combinatorica" && !fromCombinatorica) return { ok: false, missing: [] };
-  return { ok: true, source, ...(free.size > 0 ? { freeSymbols: [...free].toSorted() } : {}) };
+  return {
+    ok: true,
+    source,
+    ...(free.size > 0 ? { freeSymbols: [...free].toSorted() } : {}),
+    ...(renamed.size > 0 ? { renamed: Object.fromEntries(renamed) } : {}),
+  };
 }
 
 /** Which heads in an expression have no mapping for a system — the work queue. */

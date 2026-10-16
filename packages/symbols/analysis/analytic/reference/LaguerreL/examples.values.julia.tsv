@@ -1,0 +1,18 @@
+id	in	out
+the-linear		
+the-quadratic		
+the-cubic		
+at-an-integer	enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), 3, 2)	-0.3333333333333333333333333333333333333333333333333333333333333333333333333333218
+at-a-real	enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), 4, enumeratio_decimal("0.7"))	-0.5486625000000000000000000000000000000000000000000000000000000000000000000000226
+the-generalized-linear		
+the-generalized-quadratic		
+at-a-real-generalized	enumeratio_ball((n, a, x) -> _rising(a + 1, n) * rgamma(n + 1) * hypergeometric_1f1(-n, a + 1, x), 3, enumeratio_decimal("0.5"), enumeratio_decimal("1.3"))	-0.9086666666666666666666666666666666666666666666666666666666666666666666666666651
+at-a-complex-argument	enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), 2, enumeratio_complex(2, 3))	-5.5
+at-a-complex-parameter	enumeratio_ball((n, a, x) -> _rising(a + 1, n) * rgamma(n + 1) * hypergeometric_1f1(-n, a + 1, x), 2, enumeratio_complex(enumeratio_decimal("0.5"), 1), enumeratio_decimal("0.7"))	(-0.1299999999999999999999999999999999999999999999999999999999999999999999999999725+1.299999999999999999999999999999999999999999999999999999999999999999999999999993j)
+a-symbolic-order-stays-unevaluated		
+the-derivative		
+the-derivative-generalized		
+at-zero	enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), 5, 0)	1.0
+at-zero-generalized		
+recurrence	((3 * enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), 3, 3)) - (((5 - 3) * enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), 2, 3)) - (2 * enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), 1, 3))))	0.0
+at-t10-1-3	(enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), 10, enumeratio_decimal("1.3")))	0.5459557656614817294973544973544973544973544973544973544973544973544973544978689

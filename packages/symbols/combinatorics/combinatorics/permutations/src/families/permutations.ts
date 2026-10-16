@@ -1,26 +1,22 @@
-// Permutation-carrier families that were catalogued (packages/reference/entries/) but never
-// wired to a kernel. Kept in its own file (rather than folded into core.ts) so parallel batches of this
-// same roadmap item don't collide on one file. Reuses ./kernels.ts (Factorial/PermutationUnrank/
-// PermutationRank/IsPermutationOf/LehmerCode/Inversions) and ./kernels-extra.ts (KPermutation*) wherever
-// the element representation already matches; only genuinely new combinatorics get new code here.
+// Permutation-carrier families beyond core.ts. Kept in its own file so parallel batches of this
+// roadmap item don't collide on one file. Reuses ./kernels.ts (Factorial/PermutationUnrank/
+// PermutationRank/IsPermutationOf/LehmerCode/Inversions) wherever the element representation already
+// matches. EvenPermutations, LehmerCodes and SubexcedantSeqs are defined in Epsil (./closed-forms.ts):
+// their kernels here are the fast paths, and tests/fast-kernels.test.ts holds them to the definitions.
 import {
   Factorial,
   Inversions,
+  modRank,
   IsPermutationOf,
   LehmerCode,
   PermutationRank,
   PermutationUnrank,
 } from "../../../collections/src/families/kernels.ts";
-import {
-  IsKPermutationOf,
-  KPermutationCount,
-  KPermutationRank,
-  KPermutationUnrank,
-} from "../../../collections/src/families/kernels-extra.ts";
 import { IntegerPartitionRank } from "../../../collections/src/families/kernels-combinatorics.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import { mahonianNumber } from "../mahonian.ts";
+import { arrangements, evenPermutations, lehmerCodes, subexcedantSeqs } from "./closed-forms.ts";
 import { kCyclePermutations } from "./core.ts";
 import { permutationsAsCycles } from "./cycles.ts";
 import {
@@ -30,24 +26,6 @@ import {
   kInversionPermutations,
   permutationsAvoiding3,
 } from "./restrictions.ts";
-
-// helper to cut boilerplate for the flat (number[]) shape; mirrors core.ts's private `ints`.
-const ints = (
-  head: string,
-  paramCount: 1 | 2,
-  count: (p: number[]) => number,
-  unrank: (p: number[], r: number) => number[],
-  valid: (e: number[], p: number[]) => boolean,
-  rank: (e: number[], p: number[]) => number,
-): NumberKernel => ({
-  head,
-  paramCount,
-  kind: "ints",
-  count,
-  unrank,
-  valid: (e, p) => valid(e as number[], p),
-  rank: (e, p) => rank(e as number[], p),
-});
 
 // ─── EvenPermutations(n): the alternating group Aₙ, one-line words. ────────────────────────────────
 // Lex-rank pairs (2m, 2m+1) always differ by swapping the trailing two entries (the factorial-base
@@ -59,7 +37,7 @@ function evenPermutationCount(n: number): number {
 function evenPermutationUnrank(n: number, r: number): number[] {
   if (n <= 1) return PermutationUnrank(n, 0);
   const total = evenPermutationCount(n);
-  const rr = total > 0 ? ((Math.trunc(r) % total) + total) % total : 0;
+  const rr = total > 0 ? modRank(Math.trunc(r), total) : 0;
   const base = PermutationUnrank(n, 2 * rr);
   return Inversions(base) % 2 === 0 ? base : PermutationUnrank(n, 2 * rr + 1);
 }
@@ -97,7 +75,7 @@ function subexcedantBlockSize(n: number, i: number): number {
 }
 function subexcedantUnrank(n: number, r: number): number[] {
   const total = Factorial(n);
-  let x = total > 0 ? ((Math.trunc(r) % total) + total) % total : 0;
+  let x = total > 0 ? modRank(Math.trunc(r), total) : 0;
   const terms: number[] = [];
   for (let i = 0; i < n; i++) {
     const bs = subexcedantBlockSize(n, i);
@@ -268,50 +246,35 @@ export const PermutationsAsCyclesFamily: NumberKernel = {
 };
 
 export const entries: (NumberKernel | EpsilFamily)[] = [
+  // Defined in Epsil (./closed-forms.ts); the kernels above are their fast paths.
   {
-    ...ints(
-      "EvenPermutations",
-      1,
-      ([n]) => evenPermutationCount(n),
-      ([n], r) => evenPermutationUnrank(n, r),
-      (a, [n]) => isEvenPermutation(a, n),
-      (a) => Math.floor(PermutationRank(a) / 2),
-    ),
-    carrier: "Permutation",
+    ...evenPermutations,
+    fast: {
+      count: ([n]) => evenPermutationCount(n),
+      unrank: ([n], r) => evenPermutationUnrank(n, r),
+      rank: (x) => Math.floor(PermutationRank(x as number[]) / 2),
+      valid: (x, [n]) => isEvenPermutation(x as number[], n),
+    },
   },
-  {
-    ...ints(
-      "Arrangements",
-      2,
-      ([n, k]) => KPermutationCount(n, k),
-      ([n, k], r) => KPermutationUnrank(n, k, r),
-      (a, [n, k]) => IsKPermutationOf(a, n, k),
-      (a, [n]) => KPermutationRank(a, n),
-    ),
-    carrier: "Arrangement",
-  },
+  arrangements,
   permutationsAsCycles,
   {
-    ...ints(
-      "LehmerCodes",
-      1,
-      ([n]) => Factorial(n),
-      ([n], r) => LehmerCode(PermutationUnrank(n, r)),
-      (a, [n]) => isValidLehmerCode(a, n),
-      (a, [n]) => PermutationRank(permutationFromLehmerCode(a, n)),
-    ),
-    carrier: "PermutationInversion",
+    ...lehmerCodes,
+    fast: {
+      count: ([n]) => Factorial(n),
+      unrank: ([n], r) => LehmerCode(PermutationUnrank(n, r)),
+      rank: (x, [n]) => PermutationRank(permutationFromLehmerCode(x as number[], n)),
+      valid: (x, [n]) => isValidLehmerCode(x as number[], n),
+    },
   },
   {
-    ...ints(
-      "SubexcedantSeqs",
-      1,
-      ([n]) => Factorial(n),
-      ([n], r) => subexcedantUnrank(n, r),
-      (a, [n]) => isSubexcedant(a, n),
-      (a, [n]) => subexcedantRank(a, n),
-    ),
-    carrier: "SubexcedantSeq",
+    ...subexcedantSeqs,
+    fast: {
+      count: ([n]) => Factorial(n),
+      unrank: ([n], r) => subexcedantUnrank(n, r),
+      rank: (x, [n]) => subexcedantRank(x as number[], n),
+      valid: (x, [n]) => isSubexcedant(x as number[], n),
+    },
   },
   alternatingPermutations,
   connectedPermutations,

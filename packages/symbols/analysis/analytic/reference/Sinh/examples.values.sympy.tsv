@@ -3,7 +3,7 @@ n-sinh-0	N(sinh(0), 30)	0
 n-sinh-1	N(sinh(1), 30)	1.17520119364380145688238185060	
 sinh-0	sinh(0)	0	
 a-float-argument-evaluates-directly-no-n-needed	sinh(1.4)	1.90430150145153	
-series-sinh-x-x-0-10			
+series-sinh-x-x-0-10	series(sinh(Symbol("x")), Symbol("x"), 0, 10 + 1)	True	
 arbitrary-precision-via-n	N(sinh(Rational(7, 5)), 30)	1.90430150145153405514212382770	
 evaluates-at-a-complex-argument	sinh((2.5 + 1*I))	3.26893943207955 + 5.1601436675797*I	
 sinh-i-pi-2-i-sin-pi-2-i	sinh((I * (S(pi) / 2)))	I	
@@ -14,11 +14,11 @@ sinh-positiveinfinity	sinh(oo)	oo
 sinh-ln-2-frac-2-1-2-2-frac-34	sinh(log(2))	sinh(log(2))	
 a-real-symbolic-argument-is-untouched	sinh(Symbol("x"))	True	
 oddness-pulls-the-sign-out-of-a-symbolic	sinh((-Symbol("x")))	True	
-sinh-arsinh-x-x-for-every-x			
-sinh-arsinh-2-2-for-every-x			
+sinh-arsinh-x-x-for-every-x	sinh(asinh(Symbol("x")))	True	
+sinh-arsinh-2-2-for-every-x	sinh(asinh(2))	2	
 derivative-cosh-x	diff(sinh(Symbol("x")), Symbol("x"))	True	
-antiderivative			
-taylor-series-about-0			
+antiderivative	integrate(sinh(Symbol("x")), Symbol("x"))	True	
+taylor-series-about-0	series(sinh(Symbol("x")), Symbol("x"), 0, 5 + 1)	True	
 to-30-significant-digits-correctly-rounded	N(sinh(1), 30)	1.17520119364380145688238185060	
 n-decimalizes-sinh-i-pi-2-not-just-the-exact	N(sinh((I * (S(pi) / 2))), 30)	1.0*I	
 n-sinh-7-over-5-50	N(sinh(Rational(7, 5)), 30)	1.90430150145153405514212382770	

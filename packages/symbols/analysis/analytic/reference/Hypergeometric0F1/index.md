@@ -18,6 +18,37 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: Hypergeometric0F1[b,z]; mpmath.hyp0f1(b,z).
+  - origin: mapped
+    form: sympy
+    template: N(hyper([], [$1], $2))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: SymPy's hyper stays held at numeric arguments until N, so the template evaluates it.
+  - origin: mapped
+    form: mpmath
+    template: hyp0f1($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: hypergeometric([], [$1], $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 seeAlso:
   - Hypergeometric0F1Regularized
   - BesselJ

@@ -1,0 +1,7 @@
+id	in	out	verdict
+q3-has-8-vertices-12-edges	[(enumeratio_graph(graphs.CubeGraph(3))).order(), (enumeratio_graph(graphs.CubeGraph(3))).size()]	[8, 12]	
+hypercubegraph-3	enumeratio_graph(graphs.CubeGraph(3))	3-Cube	disagree
+map-function-vertexeccentricity-hypercubegraph-3			
+isbipartitegraph-hypercubegraph-3	(enumeratio_graph(graphs.CubeGraph(3))).is_bipartite()	True	
+hypercubegraph-2	enumeratio_graph(graphs.CubeGraph(2))	2-Cube	disagree
+sort-eigenvalues-adjacencymatrix-hypercubegraph			

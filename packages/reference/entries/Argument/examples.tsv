@@ -1,13 +1,14 @@
-id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
-argument-i	Basic		[Argument, [Complex, 0, 1]]	[Multiply, [Rational, 1, 2], Pi]	$\arg(i) = \pi/2$			
-argument-1-plus-i	Basic		[Argument, [Complex, 1, 1]]	[Multiply, [Rational, 1, 4], Pi]				
-argument-neg-1			[Argument, -1]	Pi				
-n-argument-exponentiale-plus-i-times-pi-20	Scope	triage	[N, [Argument, [Add, ExponentialE, [Multiply, [Complex, 0, 1], Pi]]], 20]	{num: "0.85751178635584627029"}		compare	unclassified	""
-argument-neg-123	Scope		[Argument, -123]	Pi				
-argument-123-minus-456i	Scope		[Argument, [Complex, 123, -456]]	[Arctan, [Rational, -152, 41]]				
-argument-list-list-1-over-2-neg-1-list-neg-5	Scope		[Argument, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]	[List, [List, 0, Pi], [List, Pi, 0]]				
-fullsimplify-matrixfunction-argument-list-list-1	Scope		[FullSimplify, [MatrixFunction, Argument, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]]	[List, [List, [Multiply, [Rational, 1, 2], Pi], [Multiply, [Divide, [Sqrt, 15], 10], Pi]], [List, [Multiply, [Divide, [Sqrt, 15], 6], Pi], [Multiply, [Rational, 1, 2], Pi]]]				
-argument-0	Scope		[Argument, 0]	0				
-argument-positiveinfinity	Scope		[Argument, PositiveInfinity]	0				
-argument-negativeinfinity	Scope		[Argument, NegativeInfinity]	Pi				
-argument-positiveinfinity-times-i	Scope	triage	[Argument, [Multiply, PositiveInfinity, [Complex, 0, 1]]]	Indeterminate		ours?	unclassified	""
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	wolfram.issue	sage.kind	sage.note	sympy.kind	sympy.note	mpmath.kind	mpmath.note	julia.kind	julia.note
+argument-i	Basic		[Argument, [Complex, 0, 1]]	[Multiply, [Rational, 1, 2], Pi]	$\arg(i) = \pi/2$											
+argument-1-plus-i	Basic		[Argument, [Complex, 1, 1]]	[Multiply, [Rational, 1, 4], Pi]												
+argument-neg-1			[Argument, -1]	Pi												
+argument-of-a-list-holding-0		test	[Argument, [List, 0, [Rational, -1, 2]]]	[List, 0, Pi]							convention	Ours and Wolfram's Arg[0] are 0; SymPy's arg(0) is nan, the argument of zero being undefined, so the list element differs.				
+n-argument-exponentiale-plus-i-times-pi-20	Scope		[N, [Argument, [Add, ExponentialE, [Multiply, [Complex, 0, 1], Pi]]], 20]	{num: "0.85751178635584626501"}												
+argument-neg-123	Scope		[Argument, -123]	Pi												
+argument-123-minus-456i	Scope		[Argument, [Complex, 123, -456]]	[Arctan, [Rational, -152, 41]]												
+argument-list-list-1-over-2-neg-1-list-neg-5	Scope		[Argument, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]	[List, [List, 0, Pi], [List, Pi, 0]]												
+fullsimplify-matrixfunction-argument-list-list-1	Scope		[FullSimplify, [MatrixFunction, Argument, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]]	[List, [List, [Multiply, [Rational, 1, 2], Pi], [Multiply, [Divide, [Sqrt, 15], 10], Pi]], [List, [Multiply, [Divide, [Sqrt, 15], 6], Pi], [Multiply, [Rational, 1, 2], Pi]]]												
+argument-0	Scope		[Argument, 0]	0							convention	Ours and Wolfram's Arg[0] are 0; SymPy's arg(0) is nan, the argument of zero being undefined.				
+argument-positiveinfinity	Scope		[Argument, PositiveInfinity]	0											emit	Nemo's balls have no infinite point, so an infinite operand can't be put to Julia; the call is not asked.
+argument-negativeinfinity	Scope		[Argument, NegativeInfinity]	Pi											emit	Nemo's balls have no infinite point, so an infinite operand can't be put to Julia; the call is not asked.
+argument-positiveinfinity-times-i	Scope		[Argument, [Multiply, PositiveInfinity, [Complex, 0, 1]]]	Indeterminate		ours	I * Infinity evaluates to ComplexInfinity before Argument sees it, so the direction is lost and Argument answers Indeterminate; Wolfram's DirectedInfinity[I] has argument Pi/2. The same cause as ExpIntegralEi at +-I Infinity.	911	unevaluated	Sage leaves arg(I*Infinity) held; ours answers Indeterminate where Wolfram and SymPy answer pi/2.			convention	mpmath keeps the direction of i·∞ (as Wolfram does), so arg is π/2; ours reads it as ~oo, which has no argument. compute-engine keeps one complex infinity, ~oo, and no directed one (cortex-js/compute-engine#401).	emit	compute-engine answers "Indeterminate", which an arb ball cannot represent (it has no infinite point, and its NaN does not tell a pole from an undefined value or lost precision), so Julia's non-finite ball says nothing about it.

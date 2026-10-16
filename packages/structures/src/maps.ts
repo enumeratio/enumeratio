@@ -18,8 +18,17 @@ import { applyComposition } from "./compose.ts";
 import { extendBuiltin } from "./extend.ts";
 import { registerEquivalence, registerOperation } from "./operations.ts";
 
-/** A map's law: f∘f = id, f∘f = f, or g∘f = id for the named map g. */
-export type Law = "involution" | "idempotent" | { readonly inverse: string };
+/** A map's law: f∘f = id, f∘f = f, g∘f = id for the named map g, or f onto (`surjection`) or
+ *  one-to-one and onto (`bijection`) its target. The last two are checked per size, against
+ *  `graded`'s collections, not at one element. */
+export type Law = "involution" | "idempotent" | "surjection" | "bijection" | { readonly inverse: string };
+
+/** The collections a map's size-n piece comes from and goes to: sizes n and n + `sizeOffset`. */
+export interface Graded {
+  readonly from: string;
+  readonly to: string;
+  readonly sizeOffset?: number;
+}
 
 export interface MapDeclaration {
   readonly name: string;
@@ -57,6 +66,9 @@ export interface MapDeclaration {
    * can make; it lets either collection borrow the other's ranking.
    */
   readonly orderIsomorphism?: { readonly from: string; readonly to: string; readonly sizeOffset?: number };
+  /** Whether the map is graded: it sends each member of `from` at size n into `to` at size
+   *  n + `sizeOffset` (FindStat's "Graded map"). */
+  readonly graded?: Graded;
 }
 
 /** What a map's definition gives for `contents` (MathJSON): the body, materialised, or

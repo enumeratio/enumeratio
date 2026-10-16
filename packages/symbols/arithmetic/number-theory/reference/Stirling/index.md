@@ -59,6 +59,17 @@ bindings:
     arity: 2
     threadArg: 1
     note: compute-engine's Stirling is the SECOND kind (Wolfram's StirlingS2). Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
+  - origin: mapped
+    form: mpmath
+    template: stirling2($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: The second kind.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 catalog:
   - system: wolfram
     identity: StirlingS2

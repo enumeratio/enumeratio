@@ -8,11 +8,11 @@
 // src/maps.ts's Rsk/RskInsertion/RskRecording) -- the same idea as `carrierParams` (#437-style
 // packs raw params instead), applied to a sub-element rather than a param.
 import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
-import { Factorial, PermutationRank, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
+import { Factorial, modRank, PermutationRank, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
 import { IsStandardTableauOf } from "../../../collections/src/families/tableaux-trees.ts";
 import { standardTableauPairs } from "./rsk-pairs.ts";
 
-const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
+const normRank = (r: number, total: number): number => (total > 0 ? modRank(Math.trunc(r), total) : 0);
 
 // Defined in Epsil (./rsk-pairs.ts), interpreted since the element is nested: the kernel below is its
 // fast path, in the same order.

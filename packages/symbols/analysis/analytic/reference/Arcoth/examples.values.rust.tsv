@@ -1,0 +1,17 @@
+id	in	out	verdict
+n-arcoth-2	nf(atanh(n(1) / n(2)))	0.5493061443340549	
+series-arcoth-x-x-positiveinfinity-5			
+a-logarithmic-singularity-at-1	atanh(n(1) / n(1))	panic: non-finite result: inf	error
+arcoth-positiveinfinity			
+a-float-argument-evaluates-directly	atanh(n(1) / x(3.5))	0.2938933324510595	
+as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1			
+oddness-pulls-the-sign-out-of-a-symbolic			
+derivative-frac-1-1-x-2			
+n-arcoth-2-50	nf(atanh(n(1) / n(2)))	0.5493061443340549	
+arcoth-complexinfinity			
+arcoth-neg-1	atanh(n(1) / n(-1))	panic: non-finite result: -inf	error
+arcoth-list-list-i-neg-i-list-0-neg-i			
+matrixfunction-function-arcoth-1-1-list-list-i			
+arcoth-1-over-2	atanh(n(1) / rational(n(1), n(2)))	panic: non-finite result: NaN	error
+arcoth-neg-1-over-2	atanh(n(1) / rational(n(-1), n(2)))	panic: non-finite result: NaN	error
+arcoth-0	atanh(n(1) / n(0))	panic: denominator == 0	error

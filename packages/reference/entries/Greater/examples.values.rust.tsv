@@ -1,0 +1,8 @@
+id	in	out
+0-lt-1	less(n(0), n(1))	true
+4-over-3-lt-3-over-2	less(rational(n(4), n(3)), rational(n(3), n(2)))	true
+1-minus-128-times-10-pow-neg-16-lt-1	less((n(1) + (n(-128) * power(n(10), n(-16)))), n(1))	true
+1-minus-256-times-10-pow-neg-16-lt-1	less((n(1) + (n(-256) * power(n(10), n(-16)))), n(1))	true
+pi-pow-exponentiale-lt-exponentiale-pow-pi	less(power(x(std::f64::consts::PI), x(std::f64::consts::E)), power(x(std::f64::consts::E), x(std::f64::consts::PI)))	true
+refine-sqrt-x-pow-2-x-gt-0		
+integrate-boole-1-lt-x-pow-2-plus-y-pow-2-lt-2		

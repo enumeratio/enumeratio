@@ -23,6 +23,13 @@ signatures:
     library: enumeratio-structures
     type: (any*) -> any
     overrides: enumeratio-combinatorics
+  - call: Min(finset)
+    description: the smallest member of a [[Finset]].
+    library: enumeratio-combinatorics
+    type: (any*) -> any
+    overrides: enumeratio-structures
+    on:
+      - Finset
 seeAlso:
   - Max
   - Clamp
@@ -41,6 +48,20 @@ bindings:
     form: sage
     template: enumeratio_min($*,)
     note: Same flattening as Max.
+  - origin: mapped
+    form: julia
+    template: enumeratio_min($*,)
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: minimum($1, $2)
+    arity: 2
+    note: Two operands.
+    checked:
+      version: num-rational 0.4.2
+      on: 2026-10-16
 ---
 
 - The smallest of its arguments, or of a single list argument.
@@ -49,3 +70,4 @@ bindings:
 - $\min(a,b) + \max(a,b) = a + b$ for any two values. See [[Max]].
 - Infinities participate directly in the comparison.
 - With no arguments at all, returns the identity element $+\infty$.
+- Takes a [[Finset]] too: its smallest member, and NaN for the empty one, as for an empty list.

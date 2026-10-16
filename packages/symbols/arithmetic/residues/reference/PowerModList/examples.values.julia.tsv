@@ -2,6 +2,7 @@ id	in	out
 the-square-roots-of-3-modulo-11-5-2-25-and-6-2		
 the-cube-roots-of-unity-modulo-7-since-3-mid-6		
 an-integer-exponent-is-an-ordinary-power-2-10		
+root-of-a-non-invertible-base		
 a-general-exponent-s-r-every-x-with-x-2-equiv-2		
 the-three-cube-roots-of-2-2-4-since-3-mid-30		
 exponent-1-is-the-modular-inverse-3-cdot-5-15		
@@ -21,7 +22,7 @@ an-integer-exponent-mod-100-not-1000
 a-rational-base-with-integer-exponent-1		
 threads-over-a-shorter-list-of-bases		
 the-split-units-of-z-15-j-1-mapsto-4-is-a-ring		
-so-the-identity-1-j-1-j-0-transports-by-j-mapsto	mod(((1 + 4) * (1 - 4)), 15)	0
+so-the-identity-1-j-1-j-0-transports-by-j-mapsto	enumeratio_mod(((1 + 4) * (1 - 4)), 15)	0
 imaginary-units-of-z-65-exist-because-5-and-13		
 rabin-decryption-knowing-the-factors-of-n-the		
 mod-a-prime-there-are-exactly-gcd-r-p-1-r-th		

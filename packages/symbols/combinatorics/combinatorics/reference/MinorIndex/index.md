@@ -2,7 +2,7 @@
 name: MinorIndex
 domain: Permutation statistics
 signature: MinorIndex(p)
-summary: 'The minor index of $p$: the sum of the ascent positions $\sum_{p_i < p_{i+1}} i$ (the comajor index).'
+summary: 'The minor index of $p$: the sum of the ascent positions $\sum_{p_i < p_{i+1}} i$.'
 signatures:
   - call: MinorIndex(p)
     description: the minor index of a one-line permutation $p$

@@ -59,6 +59,52 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: SymPy's digits returns the base first, then the digits, so the template drops that leading base; for a negative n the base is negated and the digits are those of |n|. A numeral system in the base slot has no counterpart.
+  - origin: mapped
+    form: sage
+    template: (Integer(abs($1)).digits(10) or [0])[::-1]
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: sage
+    template: (Integer(abs($1)).digits($2) or [0])[::-1]
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: reverse(digits(abs(BigInt($1))))
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: integer_digits($1, n(10))
+    arity: 1
+    threadArgOnly: 1
+    note: The digits of the magnitude.
+    checked:
+      version: num-bigint 0.4.8
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: integer_digits($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: The digits of the magnitude; a base from 2 to 256.
+    checked:
+      version: num-bigint 0.4.8
+      on: 2026-10-16
 ---
 
 - Digits come out most significant first, matching ordinary positional notation.

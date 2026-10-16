@@ -1,0 +1,31 @@
+id	in	out	verdict
+erfinv-0	erfinv(0)	0.0	
+erfinv-1	erfinv(1)	+inf	
+erfinv-neg-1	erfinv(-1)	-inf	
+a-floating-point-argument-evaluates-directly-to	erfinv(0.5)	0.476936276204469873381418353643	
+a-machine-precision-argument	erfinv(0.6)	0.595116081449994821978121467041	
+series-erfinv-x-x-0-3			
+threads-element-wise-over-a-list-as-wolfram-s	[erfinv(0), erfinv(1)]	[mpf('0.0'), mpf('+inf')]	
+two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x			
+interval-arithmetic-the-inverse-is-increasing-so			
+uncertainty-propagation			
+to-30-significant-digits-every-one-correctly	enumeratio_n(lambda: (erfinv((mpf(1)/2))), 30)	0.476936276204469873381418353643	
+n-erfinv-33-over-100-50	enumeratio_n(lambda: (erfinv((mpf(33)/100))), 50)	0.30133214613370582612850271815839477396582428282853	
+functionexpand-matrixfunction-erfinv-list-list-0			
+erfinv-a-erf-a-z			
+functionexpand-erf-erfinv-s			
+erfinv-s-eq-erfinv-0-s			
+series-erfinv-x-x-0-8			
+series-erfinv-z0-s-z0-0-2			
+the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	(sqrt(2) * erfinv(0.95))	1.95996398454005385560443064983	
+inverse-of-erf-erf-erfinv-x-x-see-erf	almosteq(erf(erfinv(0.5)), 0.5, 1e-20)	True	
+odd-erfinv-x-erfinv-x-applied-symbolically			
+frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2			
+isnumeric-erfinv-1-over-pi-1-over-2			
+erfinv-0-0			
+erfinv-0-1			
+erfinv-1-0			
+solve-erfinv-x-pow-3-plus-2-times-erfinv-x-eq-1			
+attributes-erfinv			
+outside-its-real-domain-1-1-compute-engine	erfinv(2)	ValueError: erfinv(x) is defined only for -1 <= x <= 1	error
+blows-up-near-the-boundary-erfinv-0-9999-is	erfinv(0.9999)	2.75106390571207969174259359258	

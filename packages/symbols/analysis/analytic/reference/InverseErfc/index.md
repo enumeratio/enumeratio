@@ -14,6 +14,14 @@ bindings:
     form: typescript
     environment: engine
     source: packages/symbols/analysis/analytic/src/inverse-erfc.ts
+  - origin: mapped
+    form: rust
+    template: erfc_inv($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
 seeAlso:
   - Erfc
 names:

@@ -1,0 +1,31 @@
+id	in	out	verdict
+issquarefree-10	is_square_free(n(10))	true	
+issquarefree-4	is_square_free(n(4))	false	
+issquarefree-12	is_square_free(n(12))	false	
+every-prime-is-squarefree	is_square_free(n(17))	true	
+issquarefree-20	is_square_free(n(20))	false	
+issquarefree-of-zero	is_square_free(n(0))	panic: zero has no factorization	error
+threads-element-wise-over-a-list	list(vec![is_square_free(n(10)), is_square_free(n(4)), is_square_free(n(12))])	[true, false, false]	
+gaussian-integers-3-2i-is-a-gaussian-prime			
+gaussianintegers-true-2-i-1-i-2			
+rationals-numerator-and-denominator-are-both	is_square_free(rational(n(2), n(3)))	panic: an integer, not 2/3	error
+polynomials-x-2-6x-6-has-no-repeated-factor			
+multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor			
+squarefree-as-a-polynomial-in-x-alone-y-is-just			
+but-not-in-y-alone-y-appears-squared			
+a-non-squarefree-rational	is_square_free(rational(n(4), n(3)))	panic: an integer, not 4/3	error
+x-1-2-has-a-repeated-root			
+x-3-y-3-has-no-repeated-factor			
+issquarefree-3-plus-10-pow-70	is_square_free((n(3) + power(n(10), n(70))))	panic: an integer below 2^64: the crate's parameter is a machine word	error
+issquarefree-2	is_square_free(n(2))	true	
+issquarefree-x-pow-2-minus-3			
+n-1-over-100-000-times-length-filter-range-1-100			
+issquarefree-q			
+n-is-squarefree-exactly-when-mu-n-neq-0-see			
+issquarefree-210	is_square_free(n(210))	true	
+issquarefree-14	is_square_free(n(14))	true	
+isprimepower-17-issquarefree-17			
+issquarefree-x-pow-2-minus-2x-plus-1-x			
+simplify-issquarefree-a-pow-2-a-in-integers			
+issquarefree-expand-x-plus-1-pow-3-times-x-plus			
+1-is-vacuously-squarefree-it-has-no-repeated	is_square_free(n(1))	true	

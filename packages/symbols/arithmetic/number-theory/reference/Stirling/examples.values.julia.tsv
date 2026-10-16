@@ -2,36 +2,37 @@ id	in	out	verdict
 stirling-5-2	Combinatorics.stirlings2(big(5), 2)	15	
 stirling-6-3	Combinatorics.stirlings2(big(6), 3)	90	
 stirling-20-10	Combinatorics.stirlings2(big(20), 10)	5917584964655	
+stirling-0-3-against-a-sum-over-a-pole			
 exact-for-large-n	Combinatorics.stirlings2(big(50), 2)	562949953421311	
-threads-element-wise-over-a-list-as-wolfram-s	[Combinatorics.stirlings2(big(2), 2), Combinatorics.stirlings2(big(4), 2), Combinatorics.stirlings2(big(6), 2)]	[1, 7, 31]	
+threads-element-wise-over-a-list-as-wolfram-s	Any[Combinatorics.stirlings2(big(2), 2), Combinatorics.stirlings2(big(4), 2), Combinatorics.stirlings2(big(6), 2)]	[1, 7, 31]	
 the-ways-to-split-10-distinct-items-among-3	Combinatorics.stirlings2(big(10), 3)	9330	
 stirling-n-range-1-n			
 sum-stirling-6-k-times-apply-derivative-f-k			
 one-block-means-one-partition-s-n-1-1	Combinatorics.stirlings2(big(5), 1)	1	
 singletons-only-s-n-n-1	Combinatorics.stirlings2(big(5), 5)	1	
 row-sums-give-the-bell-numbers			
-two-blocks-s-n-2-2-n-1-1	(Combinatorics.stirlings2(big(10), 2) == ((big(2)^9) - 1))	true	
-s-n-n-1-binom-n-2-one-block-is-a-pair	(Combinatorics.stirlings2(big(6), 5) == binomial(ZZ(6), ZZ(2)))	true	
+two-blocks-s-n-2-2-n-1-1	enumeratio_equal(Combinatorics.stirlings2(big(10), 2), (enumeratio_pow(2, 9) - 1))	true	
+s-n-n-1-binom-n-2-one-block-is-a-pair	enumeratio_equal(Combinatorics.stirlings2(big(6), 5), binomial(ZZ(6), ZZ(2)))	true	
 explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j			
 orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m			
-n-stirling-120-10	(Combinatorics.stirlings2(big(120), 10))		
-stirling-10-4	Combinatorics.stirlings2(big(10), 4)		
-stirling-1-0	Combinatorics.stirlings2(big(1), 0)		
-stirling-1-1	Combinatorics.stirlings2(big(1), 1)		
-stirling-1-2	Combinatorics.stirlings2(big(1), 2)		
-stirling-2-0	Combinatorics.stirlings2(big(2), 0)		
-stirling-2-1	Combinatorics.stirlings2(big(2), 1)		
-stirling-2-2	Combinatorics.stirlings2(big(2), 2)		
-stirling-2-3	Combinatorics.stirlings2(big(2), 3)		
-stirling-3-0	Combinatorics.stirlings2(big(3), 0)		
-stirling-3-1	Combinatorics.stirlings2(big(3), 1)		
-stirling-3-2	Combinatorics.stirlings2(big(3), 2)		
-stirling-3-3	Combinatorics.stirlings2(big(3), 3)		
-stirling-3-4	Combinatorics.stirlings2(big(3), 4)		
-stirling-4-0	Combinatorics.stirlings2(big(4), 0)		
-stirling-4-1	Combinatorics.stirlings2(big(4), 1)		
-stirling-4-2	Combinatorics.stirlings2(big(4), 2)		
-stirling-4-3	Combinatorics.stirlings2(big(4), 3)		
+n-stirling-120-10	(Combinatorics.stirlings2(big(120), 10))	TimeoutError: over 60 s	error
+stirling-10-4	Combinatorics.stirlings2(big(10), 4)	34105	
+stirling-1-0	Combinatorics.stirlings2(big(1), 0)	0	
+stirling-1-1	Combinatorics.stirlings2(big(1), 1)	1	
+stirling-1-2	Combinatorics.stirlings2(big(1), 2)	0	
+stirling-2-0	Combinatorics.stirlings2(big(2), 0)	0	
+stirling-2-1	Combinatorics.stirlings2(big(2), 1)	1	
+stirling-2-2	Combinatorics.stirlings2(big(2), 2)	1	
+stirling-2-3	Combinatorics.stirlings2(big(2), 3)	0	
+stirling-3-0	Combinatorics.stirlings2(big(3), 0)	0	
+stirling-3-1	Combinatorics.stirlings2(big(3), 1)	1	
+stirling-3-2	Combinatorics.stirlings2(big(3), 2)	3	
+stirling-3-3	Combinatorics.stirlings2(big(3), 3)	1	
+stirling-3-4	Combinatorics.stirlings2(big(3), 4)	0	
+stirling-4-0	Combinatorics.stirlings2(big(4), 0)	0	
+stirling-4-1	Combinatorics.stirlings2(big(4), 1)	1	
+stirling-4-2	Combinatorics.stirlings2(big(4), 2)	7	
+stirling-4-3	Combinatorics.stirlings2(big(4), 3)	6	
 the-empty-set-has-one-partition-into-no-blocks	Combinatorics.stirlings2(big(0), 0)	1	
 no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	Combinatorics.stirlings2(big(5), 0)	0	
 k-n-is-0	Combinatorics.stirlings2(big(3), 5)	0	

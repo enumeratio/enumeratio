@@ -19,6 +19,43 @@ bindings:
     environment: engine
     source: packages/symbols/analysis/analytic/src/lambert-w.ts
     note: Halley's iteration in the complex plane for k ∉ {0, -1}; structural pattern matching for the exact cases.
+  - origin: mapped
+    form: mpmath
+    template: lambertw($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: mpmath
+    template: lambertw($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: "mpmath takes the branch second: lambertw(z, k)."
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: lambert_w($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: sage
+    template: lambert_w($2, $1)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 seeAlso:
   - Exp
   - Ln

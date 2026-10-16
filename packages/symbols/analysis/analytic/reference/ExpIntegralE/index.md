@@ -15,6 +15,57 @@ bindings:
     environment: engine
     source: packages/symbols/analysis/analytic/src/exp-integral-e.ts
     note: z^(n-1)·Γ(1-n, z), with the n = 0 and z = 0 removable cases handled ahead of it.
+  - origin: mapped
+    form: sympy
+    template: expint($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: expint($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: exp_integral_e($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(exp_integral_e, $1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: exp_integral_e($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    note: A non-negative integer order and x >= 0 only.
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
 seeAlso:
   - Gamma
   - GammaRegularized

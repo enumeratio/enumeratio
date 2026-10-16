@@ -1,6 +1,7 @@
-// The one place that reads compute-engine internals the compile stance (extend.ts) depends on:
-// which definition is the library's own, and which parts of one make an extension "a user definition"
-// to the compiler (`library-shadowing`, 0.152). A compute-engine bump has to re-check both:
+// The one place that reads compute-engine internals the compile stance (extend.ts) and the modular
+// fast path (modular.ts) depend on: which definition is the library's own, which parts of one make an
+// extension "a user definition" to the compiler (`library-shadowing`, 0.152), and the prototype function
+// nodes share. A compute-engine bump has to re-check all three:
 // tests/ce-internals.test.ts fails until `CHECKED_COMPUTE_ENGINE` is moved on with it.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
@@ -40,4 +41,22 @@ export function shadowsLibrary(ce: ComputeEngine, name: string, operator: Operat
   return (
     library !== undefined && operator !== library && SHADOWING_FIELDS.some((key) => operator[key] !== library[key])
   );
+}
+
+/** The `evaluate` entry points of function nodes, as `modular.ts` wraps them. */
+export interface FunctionNodePrototype {
+  evaluate?: unknown;
+  evaluateAsync?: unknown;
+}
+
+/**
+ * The prototype every function node of `ce`'s compute-engine copy shares, or undefined when it no longer
+ * carries both `evaluate` and `evaluateAsync` (a bump that moved them: the fast path then stays off).
+ */
+export function functionNodePrototype(ce: ComputeEngine): FunctionNodePrototype | undefined {
+  const sample = ce.function("Mod", [ce.number(1), ce.number(2)]);
+  const prototype = Object.getPrototypeOf(sample) as FunctionNodePrototype | null;
+  return prototype !== null && typeof prototype.evaluate === "function" && typeof prototype.evaluateAsync === "function"
+    ? prototype
+    : undefined;
 }

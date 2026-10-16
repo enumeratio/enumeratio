@@ -1,0 +1,5 @@
+id	in	out
+riemannsiegeltheta-1p5	siegeltheta(1.5)	-2.19819085737941038525809514031
+n-riemannsiegeltheta-10	(siegeltheta(10))	-3.06707439628989529170201353481
+riemannsiegeltheta-50	(siegeltheta(50))	26.4613660701614096474549544118
+riemannsiegeltheta-0	siegeltheta(0)	0.0

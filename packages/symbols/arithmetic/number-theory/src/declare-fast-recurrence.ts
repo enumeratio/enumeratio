@@ -37,13 +37,7 @@ export function declareFastRecurrence(ce: Engine): void {
     });
   }
 
-  // `Mod(Fibonacci(n), p)` gets its speedup for free: Fibonacci/LucasL's own evaluate
-  // (above) already answers in O(log n) via fast doubling, so Mod only ever reduces an
-  // already-cheap-to-produce value — no separate modular fast path needed. (An earlier
-  // version of this tried to intercept `Mod(Fibonacci(n), p)` with a `canonical` hook on
-  // `Mod` itself, to skip building the exact value; compute-engine's non-lazy canonical
-  // contract makes that unsafe to attach to a native head with no canonical of its own —
-  // any call the hook declines comes back marked `canonical: false` and never reaches the
-  // engine's default argument processing, breaking every other `Mod` call. Not worth it:
-  // fast doubling already gets `Mod(Fibonacci(10^6), p)` from 6.4s to single-digit ms.)
+  // `Mod(Fibonacci(n), p)` never reaches these: declare-modular-kernels.ts answers it modulo p
+  // before Fibonacci is evaluated. (A `canonical` hook on `Mod` was tried for that and broke
+  // every call it declined; modular.ts in @enumeratio/engine says what it does instead.)
 }

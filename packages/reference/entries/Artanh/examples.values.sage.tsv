@@ -1,0 +1,11 @@
+id	in	out	verdict
+n-artanh-1-over-2-50	enumeratio_n(arctanh((1/2)), 50)	0.549306144334055	
+artanh-positiveinfinity	arctanh(oo)	-1/2*I*pi	
+artanh-0	arctanh(0)	0	
+d-artanh-x-x	diff(arctanh(SR.var("x")), SR.var("x"))	True	
+fullsimplify-neg-1-over-x-times-y-plus-1-times-x	SR(((-((1 / ((SR.var("x") * SR.var("y")) + 1)) * (SR.var("x") + SR.var("y")))) + tanh((arctanh(SR.var("x")) + arctanh(SR.var("y")))))).simplify_full()	True	
+trigtoexp-artanh-z	SR(arctanh(SR.var("z"))).exponentialize()	True	
+integrate-artanh-x-x-nothing-nothing	integrate(arctanh(SR.var("x")), SR.var("x"))	True	
+artanh-2	arctanh(2)	1/2*I*pi + 1/2*log(3)	disagree
+artanh-neg-2	arctanh(-2)	-1/2*I*pi - 1/2*log(3)	disagree
+artanh-complexinfinity-is-indeterminate-the-sign	arctanh(unsigned_infinity)	RuntimeError: arctanh_eval(): arctanh(unsigned_infinity) encountered	error

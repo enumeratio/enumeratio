@@ -37,4 +37,38 @@ mapOn:
   - IntegerPartition
 names:
   wolfram: Conjugate
+bindings:
+  - origin: mapped
+    form: sympy
+    template: conjugate($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: The complex conjugate only; the record's mapOn partition meanings have no SymPy counterpart.
+  - origin: mapped
+    form: mpmath
+    template: conj($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: conjugate($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(conj, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---

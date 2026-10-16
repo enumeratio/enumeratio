@@ -54,9 +54,9 @@ bindings:
     note: "The digit count is dropped: lanes compare numbers to a relative tolerance, so the full-precision value is the better witness."
   - origin: mapped
     form: mpmath
-    template: ($1)
+    template: "enumeratio_n(lambda: ($1), $2)"
     arity: 2
-    note: "The digit count is dropped: lanes compare numbers to a relative tolerance, so the full-precision value is the better witness."
+    note: Past a double's 15 digits the operand runs at the requested precision (plus 20 guard digits) and the answer is rounded to it; below, the digit count is dropped.
   - origin: mapped
     form: sage
     template: enumeratio_n($1, $2)
@@ -69,9 +69,12 @@ bindings:
     note: "The digit count is dropped: lanes compare numbers to a relative tolerance, so the full-precision value is the better witness."
   - origin: mapped
     form: julia
-    template: ($1)
+    template: enumeratio_nshow($1, $2)
     arity: 2
-    note: "The digit count is dropped: lanes compare numbers to a relative tolerance, so the full-precision value is the better witness."
+    note: N(x, d) as the answer is written out to d significant digits, ties to the even digit (Wolfram shows N[1/8, 2] as 0.12), so the scan compares digit for digit; below another call it is the rounded number.
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
   - origin: mapped
     form: rust
     template: nf($1)

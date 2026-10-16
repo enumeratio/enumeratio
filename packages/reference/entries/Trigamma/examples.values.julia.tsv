@@ -1,0 +1,2 @@
+id	in	out
+trigamma-1-to-20-digits	enumeratio_nshow(enumeratio_ball(z -> polygamma(CC(1), z), 1), 20)	1.6449340668482264365e+00

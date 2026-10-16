@@ -268,6 +268,8 @@ test("Midpoint's two points travel as Wolfram's list of two", () => {
 
 test("a named character reads back as the character", () => {
   expect(fromWolfram('"\\[Limit]\\[Alpha]a"')).toBe("'\uf438\u03b1a'");
+  // The other two escapes a kernel prints: a UTF-16 unit and a code point.
+  expect(fromWolfram(String.raw`"\:03e8\|01f600"`)).toBe("'Ϩ\u{1f600}'");
   // A name the table lacks stays as the kernel wrote it.
   expect(fromWolfram('"\\[NoSuchName]"')).toBe("'\\[NoSuchName]'");
 });
@@ -333,6 +335,19 @@ test("names Wolfram spells for something ours spells differently", () => {
   expect(fromWolfram("UnsameQ[a, b]")).toEqual(["Not", ["Same", "a", "b"]]);
   expect(fromWolfram("Insert[xs, y, 2]")).toEqual(["Insert", "xs", 2, "y"]);
   expect(fromWolfram("Residue[f, List[z, 0]]")).toEqual(["Residue", "f", "z", 0]);
+});
+
+test("PermutationLength, PermutationMax and PermutationMin read as Length, Max and Min of the support", () => {
+  const support = ["PermutationSupport", ["Permutation", ["List", 2, 3, 1]]];
+  expect(fromWolfram("PermutationLength[List[2, 3, 1]]")).toEqual(["Length", support]);
+  expect(fromWolfram("PermutationMax[List[2, 3, 1]]")).toEqual(["Max", 0, support]);
+  expect(fromWolfram("PermutationMin[List[2, 3, 1]]")).toEqual(["Min", "PositiveInfinity", support]);
+});
+
+test("Range[a, b] states its step: ours counts down without one, Wolfram's is empty", () => {
+  expect(fromWolfram("Range[1, n]")).toEqual(["Range", 1, "n", 1]);
+  expect(fromWolfram("Range[n]")).toEqual(["Range", 1, "n", 1]);
+  expect(fromWolfram("Range[1, 10, 2]")).toEqual(["Range", 1, 10, 2]);
 });
 
 test("Modulus -> p is working over the integers mod p", () => {

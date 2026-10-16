@@ -34,6 +34,29 @@ seeAlso:
   - ChineseRemainder
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: sum(d * 10^k for k, d in enumerate(reversed($1)))
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: sage
+    template: sum(d * ($2)^k for k, d in enumerate(reversed($1)))
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: from_digits($1, $2)
+    arity: 2
+    note: A list of digits and an integer base from 2 to 256.
+    checked:
+      version: num-bigint 0.4.8
+      on: 2026-10-16
 ---
 
 - A digit string that denotes NO integer leaves the call standing: two adjacent Zeckendorf ones, an out-of-range mixed-radix digit, residues that no integer satisfies

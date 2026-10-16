@@ -8,6 +8,7 @@ gaussian-integers-3-i-1-i-2-i	primenu((3 + 1*I))	TypeError: n should be an integ
 gaussianintegers-true-5-splits-so-105-has-4			
 listable-over-a-range			
 primenu-30	primenu(30)	3	
+negative-n-the-sign-is-a-unit	primenu(-12)	ValueError: n should be a positive integer	error
 moebiusmu-42-eq-neg-1-pow-primenu-42	enumeratio_equal(mobius(42), (S(-1)**primenu(42)))	True	
 liouvillelambda-42-eq-neg-1-pow-primenu-42			
 primenu-n-is-the-length-of-factorinteger-n	enumeratio_equal(primenu(50), (len(list(factorrat(S(50)).items())) if hasattr(list(factorrat(S(50)).items()), '__len__') else (len((list(factorrat(S(50)).items())).args) if hasattr(list(factorrat(S(50)).items()), 'args') else 0)))	True	

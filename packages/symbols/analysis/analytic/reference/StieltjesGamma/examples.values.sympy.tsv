@@ -1,0 +1,27 @@
+id	in	out	verdict
+gamma-0-gamma-euler-s-constant	stieltjes(0)	EulerGamma	
+no-closed-form-past-gamma-0-stays-symbolic-until	stieltjes(1)	stieltjes(1)	
+gamma-1-frac-32-numerically-a-floating-point	stieltjes(1, 1.5)	stieltjes(1, 1.5)	
+gamma-3-frac-12-0-66742	stieltjes(3, 0.5)	stieltjes(3, 0.5)	
+gamma-2-frac-32	stieltjes(2, 1.5)	stieltjes(2, 1.5)	
+gamma-1-0-0728158-under-n	N(stieltjes(1), 30)	-0.0728158454836767248605863758749	
+gamma-2-0-00969036-under-n	N(stieltjes(2), 30)	-0.00969036319287231848453038603521	
+n-stieltjesgamma-1-50	N(stieltjes(1), 30)	-0.0728158454836767248605863758749	
+n-stieltjesgamma-2-1-over-2-50	N(stieltjes(2, Rational(1, 2)), 30)	0.968864475220290711421711062324	
+complex-a	N(stieltjes(2, (1 + 1*I)), 30)	TimeoutError: over 30s	error
+listable-in-the-order-n-threads-over-a-list	[stieltjes(1, 0.5), stieltjes(2, 0.5), stieltjes(3, 0.5)]	[stieltjes(1, 0.5), stieltjes(2, 0.5), stieltjes(3, 0.5)]	
+interval-arithmetic-in-a	stieltjes(2, AccumBounds(2.34, 2.35))	stieltjes(2, AccumBounds(2.34, 2.35))	disagree
+to-30-significant-digits-not-yet-the-requested	N(stieltjes(1), 30)	-0.0728158454836767248605863758749	
+certified-digits-gamma-1	N(stieltjes(1), 30)	-0.0728158454836767248605863758749	
+certified-digits-gamma-2-1-3	N(stieltjes(2, Rational(1, 3)), 30)	3.61916390961896362988718221619	
+gamma-0-a-psi-a-symbolically-in-a	stieltjes(0, Symbol("a"))	False	disagree
+gamma-n-1-gamma-n-the-two-argument-form-reduces	stieltjes(1, 1)	stieltjes(1, 1)	
+gamma-0-1-psi-1-gamma-polygamma-0-z-routes	stieltjes(0, 1)	EulerGamma	
+gamma-0-frac-12-psi-frac-12-gamma-2-ln-2-now	stieltjes(0, Rational(1, 2))	stieltjes(0, 1/2)	
+gamma-3-1-gamma-3-order-1-at-a-1-is-just-the	stieltjes(3, 1)	stieltjes(3, 1)	
+0-lt-stieltjesgamma-10-lt-10-pow-neg-3	And(Lt(0, stieltjes(10)), Lt(stieltjes(10), (S(10)**-3)))	True	
+gamma-n-a-has-poles-at-the-nonpositive-integers	stieltjes(2, -1)	zoo	
+orders-past-30-stay-unevaluated-even-under-n-the	stieltjes(40)	stieltjes(40)	inconclusive
+stieltjesgamma-2-1	stieltjes(2, 1)	stieltjes(2, 1)	
+n-stieltjesgamma-2n	N(stieltjes((2 * Symbol("n"))), 30)	True	
+n-stieltjesgamma-2n-3-over-2	N(stieltjes((2 * Symbol("n")), Rational(3, 2)), 30)	stieltjes(2*n, 3/2)	disagree

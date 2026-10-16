@@ -13,6 +13,23 @@ seeAlso:
   - PrimeOmega
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: (-1)^sum(e for _, e in factor($1))
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_liouville($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Completely multiplicative: $\lambda(mn)=\lambda(m)\lambda(n)$ for every $m,n$, not just coprime ones — unlike [[MoebiusMu]].

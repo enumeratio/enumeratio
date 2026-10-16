@@ -1,0 +1,14 @@
+id	in	out	verdict
+iscomposite-4	(abs(ZZ(4)) > 1 && !is_prime(abs(ZZ(4))))	true	
+iscomposite-13	(abs(ZZ(13)) > 1 && !is_prime(abs(ZZ(13))))	false	
+iscomposite-of-a-negative-integer	(abs(ZZ(-49)) > 1 && !is_prime(abs(ZZ(-49))))	true	disagree
+iscomposite-1-plus-10-pow-3-000	(abs(ZZ((1 + enumeratio_pow(10, 3000)))) > 1 && !is_prime(abs(ZZ((1 + enumeratio_pow(10, 3000))))))	true	
+iscomposite-list-1-2-3-4-5-6	Any[(abs(ZZ(1)) > 1 && !is_prime(abs(ZZ(1)))), (abs(ZZ(2)) > 1 && !is_prime(abs(ZZ(2)))), (abs(ZZ(3)) > 1 && !is_prime(abs(ZZ(3)))), (abs(ZZ(4)) > 1 && !is_prime(abs(ZZ(4)))), (abs(ZZ(5)) > 1 && !is_prime(abs(ZZ(5)))), (abs(ZZ(6)) > 1 && !is_prime(abs(ZZ(6))))]	[false, false, false, true, false, true]	
+iscomposite-5	(abs(ZZ(5)) > 1 && !is_prime(abs(ZZ(5))))	false	
+iscomposite-3-plus-i	(abs(ZZ(enumeratio_complex(3, 1))) > 1 && !is_prime(abs(ZZ(enumeratio_complex(3, 1)))))	MethodError: no method matching (::ZZRing)(::ComplexFieldElem) The object of type `ZZRing` exists, b	error
+iscomposite-8	(abs(ZZ(8)) > 1 && !is_prime(abs(ZZ(8))))	true	
+iscomposite-12	(abs(ZZ(12)) > 1 && !is_prime(abs(ZZ(12))))	true	
+iscomposite-67	(abs(ZZ(67)) > 1 && !is_prime(abs(ZZ(67))))	false	
+iscomposite-28	(abs(ZZ(28)) > 1 && !is_prime(abs(ZZ(28))))	true	
+iscomposite-60	(abs(ZZ(60)) > 1 && !is_prime(abs(ZZ(60))))	true	
+iscomposite-48-828-125	(abs(ZZ(48828125)) > 1 && !is_prime(abs(ZZ(48828125))))	true	

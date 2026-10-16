@@ -1,0 +1,7 @@
+id	in	out	verdict
+transpose-list-list-a-x-list-b-y-list-c-z	[list(r) for r in matrix([[SR.var("a"), SR.var("x")], [SR.var("b"), SR.var("y")], [SR.var("c"), SR.var("z")]]).transpose().rows()]	True	
+chop-dot-u-transpose-u			
+chop-dot-v-transpose-v			
+chop-dot-q-transpose-q			
+conjugate-transpose-m	conjugate([list(r) for r in matrix(SR.var("m")).transpose().rows()])	TypeError: the dimensions of the matrix must be specified	error
+shape-transpose-a-perm			

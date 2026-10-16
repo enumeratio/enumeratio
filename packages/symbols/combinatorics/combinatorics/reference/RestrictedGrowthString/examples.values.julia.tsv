@@ -1,2 +1,2 @@
 id	in
-from-a-set-partition	[[1, 3], [2], [4]]
+from-a-set-partition	Any[Any[1, 3], Any[2], Any[4]]

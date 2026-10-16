@@ -7,7 +7,7 @@ count-of-twinprimes-is-nan		test	[Count, TwinPrimes]	NaN	Count is NaN for an ope
 count-of-narcissisticnumbers-is-the-exact-88		test	[Count, NarcissisticNumbers]	88	NarcissisticNumbers is proven finite, so Count gives the exact 88, not +oo					
 count-of-squarefreenumbers-is-infinite		test	[Count, SquareFreeNumbers]	PositiveInfinity						
 count-of-perfectnumbers-is-nan		test	[Count, PerfectNumbers]	NaN	Count is NaN since it's unknown whether infinitely many perfect numbers exist					
-subsets-of-a-60-element-range-exactly		test	[Count, [Subsets, [Range, 60]]]	{num: "1152921504606846976"}	Past $2^{53}$ the count is an exact integer, not a rounded double				domain	Wolfram's Length[Subsets[...]] materialises the family and aborts; this count is the exact closed form
+subsets-of-a-60-element-range-exactly		test	[Count, [Subsets, [Range, 60]]]	{num: "1152921504606846976"}	Past $2^{53}$ the count is an exact integer, not a rounded double				resource	Wolfram's Length[Subsets[...]] materialises the family and hits the scan's time or memory cap ($Aborted); this count is the exact closed form.
 permutations-of-a-23-element-range-exactly		test	[Count, [Permutations, [Range, 23]]]	{num: "25852016738884976640000"}	$23!$, exact					
 the-value-can-itself-be-a-list	Scope		[Count, [List, [List, 1, 2], [List, 1, 2], 3], [List, 1, 2]]	2	The value can itself be a list					
 a-predicate-counts-the-elements-satisfying-it	Scope		[Count, [List, 1, 2, 3, 4], [Function, [Greater, _1, 2]]]	2	A predicate counts the elements satisfying it, like Wolfram's pattern test $\_?(\# > 2 \&)$	Unreadable				

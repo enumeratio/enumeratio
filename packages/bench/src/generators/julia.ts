@@ -1,6 +1,6 @@
 // Native harness generator for Nemo+Combinatorics ("julia") and Oscar ("oscar"): one Julia
 // script per system, self-contained, implementing the contract in generate.ts. The two systems
-// share everything but the `using` line, the project, and (for Oscar) the preamble include —
+// share everything but the `using` line, the project, and the preamble include —
 // all three come from `preludeFor`, so this stays in lockstep with the oracle scan.
 
 import { join, relative, sep } from "node:path";
@@ -20,7 +20,7 @@ export const CACHES_OSCAR: "cleared" | "uncleared" = "uncleared";
 const here = (path: string): string => join(ROOT, path);
 const generatedDir = (system: JuliaSystem): string => here(`generated/${system}/`);
 
-// `preludeFor`'s Oscar preamble `include`s preamble.jl by its absolute path on this checkout,
+// `preludeFor`'s preamble `include`s preamble.jl by its absolute path on this checkout,
 // which isn't safe to bake into a committed file (a different clone, or even this worktree,
 // puts the repo somewhere else). Repointing it at a path relative to the generated harness's
 // own directory keeps the file identical everywhere the repo is checked out.
@@ -46,9 +46,16 @@ const LITERAL = /(?<![\p{L}\p{N}_.])\d+(?:\.\d+)?(?:[eE][+-]?\d+)?(?![\p{L}\p{N}
  * quotes — nothing here does that today, but a future mapping might).
  */
 function hoistLiterals(
-  source: string,
+  text: string,
   next: () => number,
 ): { readonly body: string; readonly consts: readonly string[] } | undefined {
+  // A decimal is `enumeratio_decimal("1.5")`, its digits inside a string: the whole call is the literal.
+  const decimals: string[] = [];
+  const source = text.replace(/enumeratio_decimal\("[^"]*"\)/g, (call) => {
+    const id = `_r${next()}`;
+    decimals.push(`const ${id} = Ref(${call})`);
+    return `${id}[]`;
+  });
   const segments: { readonly text: string; readonly quoted: boolean }[] = [];
   let i = 0;
   while (i < source.length) {
@@ -77,7 +84,7 @@ function hoistLiterals(
           }),
     )
     .join("");
-  return { body, consts };
+  return { body, consts: [...decimals, ...consts] };
 }
 
 const JULIA_HARNESS_PRELUDE = `

@@ -1,0 +1,25 @@
+id	in	out	verdict
+max-3-1-4-1-5			
+also-accepts-a-single-list-argument			
+max-neg-1-neg-5	maximum(n(-1), n(-5))	-1	
+a-single-argument-is-returned-unchanged			
+max-9-2	maximum(n(9), n(2))	9	
+max-list-4-1-7-2			
+max-5p56-neg-4p8-7p3			
+max-of-a-complex-and-a-real	maximum(sqrt(n(-1)), rational(n(3), n(2)))	panic: non-finite result: NaN	error
+nested-lists-are-flattened-into-the-pool			
+exact-numbers-are-compared-numerically	maximum(sqrt(n(2)), rational(n(3), n(2)))	3/2	
+max-1-positiveinfinity			
+the-numeric-arguments-collapse-to-their-maximum			
+compares-exact-constants-numerically-max-e-pi-2			
+the-max-of-two-intervals-is-the-interval-of			
+the-largest-member-of-a-finset			
+the-day-s-high-from-a-handful-of-hourly-readings			
+commutative-order-doesn-t-matter	equal(maximum(n(3), n(7)), maximum(n(7), n(3)))	true	
+multiple-list-arguments-are-flattened-into-one	equal(maximum(list(vec![n(3), n(1), n(4)]), list(vec![n(9), n(2)])), n(9))	panic: threading: a list where the crate takes a scalar	error
+idempotent-max-x-x-x			
+with-no-arguments-compute-engine-returns-nan			
+nan-poisons-the-result-overriding-every-other			
+the-max-of-an-empty-list-is-nan-too			
+max-with-complexinfinity-stays-unevaluated			
+the-largest-member-of-the-empty-finset			

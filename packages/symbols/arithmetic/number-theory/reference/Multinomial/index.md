@@ -30,6 +30,19 @@ references:
     identity: MultinomialCoefficient
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: multinomial($*,)
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_multinomial($*,)
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Counts the ways to split $k_1 + k_2 + \cdots$ labeled items into groups of the given sizes.

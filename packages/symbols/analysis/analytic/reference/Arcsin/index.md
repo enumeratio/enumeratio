@@ -26,6 +26,47 @@ names:
   fungrim: Asin
   dlmf: arcsine function
   wolfram: ArcSin
+bindings:
+  - origin: mapped
+    form: sympy
+    template: asin($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: asin($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: arcsin($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(_asin, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: asin($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: rustc 1.98.1
+      on: 2026-10-16
 ---
 
 - Real-valued only for $x \in [-1, 1]$; outside that range the result is complex.

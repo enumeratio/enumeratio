@@ -10,6 +10,15 @@ signatures:
     type: (number) -> number
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(x -> 2 * atan(tanh(x / 2)), $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - $\operatorname{gd}(0) = 0$, and $\operatorname{gd}(x) \to \pm\pi/2$ as $x \to \pm\infty$ -- the horizontal asymptotes.

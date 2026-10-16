@@ -1,0 +1,5 @@
+id	in	out	verdict
+a-2-cycle-and-a-downstream-only-vertex	(lambda g: g.strongly_connected_components() if g.is_directed() else g.connected_components())(DiGraph([[1, 2, 3], [(1, 2), (2, 1), (2, 3)]], format="vertices_and_edges", loops=True, multiedges=True))	[[3], [1, 2]]	disagree
+length-first-connectedcomponents-g			
+length-connectedcomponents-g-minus-1	(enumeratio_length((lambda g: g.strongly_connected_components() if g.is_directed() else g.connected_components())(SR.var("g"))) + -1)	AttributeError: 'sage.symbolic.expression.Expression' object has no attribute 'is_directed'	error
+length-connectedcomponents-g	enumeratio_length((lambda g: g.strongly_connected_components() if g.is_directed() else g.connected_components())(SR.var("g")))	AttributeError: 'sage.symbolic.expression.Expression' object has no attribute 'is_directed'	error

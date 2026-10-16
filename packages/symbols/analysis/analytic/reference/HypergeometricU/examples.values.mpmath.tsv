@@ -1,0 +1,13 @@
+id	in	out	verdict
+a-generic-point-checked-against-mpmath-s-hyperu	hyperu(1, 2.5, 3)	0.382340662490383708915839427989	
+a-0-5-b-1-5-at-2	hyperu(0.5, 1.5, 2)	0.707106781186547524400844362105	
+a-complex-argument	(hyperu(1, 2.5, mpc(0.5, 0.5)))	(1.11875571194671378468371127275 - 1.71711153708952378822531515268j)	
+complex-a-at-1-5	(hyperu(mpc(1, 0.5), 2.5, 1.5))	(0.862949429353628629133617034909 - 0.337017321736867924720114968161j)	
+b-negative-1-5-at-0-8	hyperu(2, -1.5, 0.8)	0.0583238382561637674605161887757	
+b-next-to-an-integer-is-real-and-checked	(hyperu((mpf(1)/3), 1.001, 2))	0.761028605867025620893189027845	
+n-1-over-2-times-hypergeometricu-3-over-2-1-over	((((mpf(1)/2) * hyperu((mpf(3)/2), (mpf(1)/2), (mpf(1)/2))) + (-hyperu((mpf(1)/2), (mpf(1)/2), (mpf(1)/2))) + hyperu((mpf(-1)/2), (mpf(1)/2), (mpf(1)/2))))	6.37482811592175067361528698996e-32	
+n-1-over-2-times-hypergeometricu-1-over-2-3-over	((((mpf(1)/2) * hyperu((mpf(1)/2), (mpf(3)/2), (mpf(1)/2))) + (-hyperu((mpf(1)/2), (mpf(-1)/2), (mpf(1)/2)))))	ValueError: hypsum() failed to converge to the requested 113 bits of accuracy	error
+n-neg-5-over-2-times-hypergeometricu-1-over-2-1	((((mpf(-5)/2) * hyperu((mpf(1)/2), (mpf(1)/2), 2)) + ((mpf(1)/2) * hyperu((mpf(3)/2), (mpf(1)/2), 2)) + hyperu((mpf(-1)/2), (mpf(1)/2), 2)))	1.27496562318435013472305739799e-31	
+n-2-times-hypergeometricu-1-over-2-3-over-2-2	(((2 * hyperu((mpf(1)/2), (mpf(3)/2), 2)) + ((mpf(-3)/2) * hyperu((mpf(1)/2), (mpf(1)/2), 2)) + (-hyperu((mpf(1)/2), (mpf(-1)/2), 2))))	9.86076131526264756764660706603e-32	
+integer-b-stays-symbolic-the-connection-formula	hyperu(1, 2, 3)	0.333333333333333333333333333333	inconclusive
+b-too-near-an-integer-stays-symbolic	(hyperu((mpf(1)/3), 1.00001, 2))	0.760937579518240736425829987346	inconclusive

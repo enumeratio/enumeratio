@@ -9,6 +9,7 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { compileTyped, definitionHash, type GeneratedRun, runtimeHelpers } from "@enumeratio/engine/compiled";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { COMPILED_FAMILIES } from "./compiled-families.generated.js";
+import { isWorkDecline } from "./work.ts";
 import {
   type Count,
   type Element,
@@ -45,6 +46,8 @@ export type FastKernel = {
   readonly unrank: (p: number[], r: number) => ReturnType<NumberKernel["unrank"]> | undefined;
   readonly rank: (element: unknown, p: number[]) => number | undefined;
   readonly valid: (element: unknown, p: number[]) => boolean | undefined;
+  /** `valid` reads a bigint element past 2^53 exactly; without it that element never reaches the fast path. */
+  readonly bigElements?: true;
 };
 
 export interface EpsilFamily extends FamilyShape {
@@ -71,6 +74,11 @@ export interface EpsilFamily extends FamilyShape {
     /** Membership of a well-formed `element`: false where it is certainly no member, "decline"
      *  where the question is too big to try, undefined to go on to the definition. */
     readonly member?: (element: unknown, p: readonly number[]) => false | "decline" | undefined;
+    /** In a fiber with no end, "decline" where the term at `rank` is too far out for the definition to
+     *  reach in reasonable time (a fold over the ranks): the fast path still answers what it holds. */
+    readonly unrank?: (rank: bigint, p: readonly number[]) => "decline" | undefined;
+    /** Likewise for the rank of a member `element` (a search over its possible neighbours). */
+    readonly rank?: (element: unknown, p: readonly number[]) => "decline" | undefined;
   };
   readonly epsil: FamilyEpsil;
   /** A verified fast path: used while the fiber's count is a safe integer, ahead of Epsil.
@@ -148,7 +156,7 @@ const MEMO_LIMIT = 1n << 131_072n;
 function wellFormed(kind: FamilyShape["kind"], value: unknown): boolean {
   switch (kind) {
     case "scalar":
-      return isInteger(value);
+      return isInteger(value) || typeof value === "bigint";
     case "ints":
       return Array.isArray(value) && value.every(isInteger);
     case "blocks":
@@ -158,10 +166,11 @@ function wellFormed(kind: FamilyShape["kind"], value: unknown): boolean {
   }
 }
 
-export const elementJson = (value: unknown): unknown =>
-  Array.isArray(value) ? ["List", ...value.map(elementJson)] : value;
+const bigintJson = (value: bigint): unknown =>
+  value <= MAX_SAFE && value >= -MAX_SAFE ? Number(value) : { num: value.toString() };
 
-const bigintJson = (value: bigint): unknown => (value <= MAX_SAFE ? Number(value) : { num: value.toString() });
+export const elementJson = (value: unknown): unknown =>
+  Array.isArray(value) ? ["List", ...value.map(elementJson)] : typeof value === "bigint" ? bigintJson(value) : value;
 
 /** An interpreted integer result, exactly; undefined for anything else. */
 export function integerOf(json: unknown): bigint | undefined {
@@ -171,6 +180,20 @@ export function integerOf(json: unknown): bigint | undefined {
   const match = typeof num === "string" ? /^(-?\d+)(?:e\+?(\d+))?$/.exec(num) : null;
   return match === null ? undefined : BigInt(match[1]) * 10n ** BigInt(match[2] ?? 0);
 }
+
+/** An interpreted term of a scalar family: a number where it is exact in one, else the bigint itself,
+ *  cast through `Element` (as the TS kernels' terms were; compute-engine boxes either). */
+const termOf = (json: unknown): Element | undefined => {
+  const big = integerOf(json);
+  return big === undefined
+    ? undefined
+    : big <= MAX_SAFE && big >= -MAX_SAFE
+      ? Number(big)
+      : (big as unknown as Element);
+};
+
+/** Whether an interpreted answer still holds a power or a search the interpreter left unevaluated. */
+const unexpanded = (json: unknown): boolean => /"(Power|Reduce)"/.test(JSON.stringify(json));
 
 /** A `tables` expression at `params`, interpreted. compute-engine can leave the last entry of a
  *  fold of rows an unevaluated sum, so an entry that isn't an integer is evaluated again. */
@@ -211,6 +234,10 @@ export interface KernelOptions {
   readonly onTables?: (params: readonly number[], precision: "double" | "exact") => void;
   /** `false` ignores the family's `fast` path, so the kernel runs its Epsil definitions alone. */
   readonly fast?: boolean;
+  /** Called with whatever compiled code throws, before the kernel falls back to the interpreter, which
+   *  answers as if it hadn't. A ReferenceError, SyntaxError or TypeError here is a bug in the generated
+   *  code; tests/compiled-family-ops.test.ts fails on one. */
+  readonly onCompiledError?: (operation: Operation, error: unknown) => void;
 }
 
 /** A map holding at most `size` entries, dropping the least recently read or written. */
@@ -292,7 +319,8 @@ export function kernelOn(
     if (code === null) return undefined;
     try {
       return code(vars);
-    } catch {
+    } catch (error) {
+      options.onCompiledError?.(operation, error);
       return undefined;
     }
   };
@@ -340,6 +368,7 @@ export function kernelOn(
         // params, so it isn't kept.
         if (error instanceof RangeError && error.message.includes("beyond the safe integer range")) value = "overflow";
         else if (error instanceof RangeError && error.message.includes("call stack")) return undefined;
+        else options.onCompiledError?.("tables", error);
       }
       table = Array.isArray(value) && value.every(Number.isInteger) ? (value as number[]) : null;
       if (
@@ -406,8 +435,9 @@ export function kernelOn(
       const doubled = typeof raw === "number" && Number.isFinite(raw) && !Number.isSafeInteger(raw);
       if (declinePastDoubles === "count" && (doubled || early?.pastDoubles?.(p) === true)) return decline(p);
       const fromQuick = typeof raw === "bigint" ? raw : Number.isSafeInteger(raw) ? BigInt(raw as number) : undefined;
-      const fast = fromQuick ?? run("count", p, {});
+      const fast = (raw === Number.POSITIVE_INFINITY ? raw : fromQuick) ?? run("count", p, {});
       if (typeof fast === "bigint") total = fast;
+      else if (fast === Number.POSITIVE_INFINITY) total = fast;
       else if (isInteger(fast)) total = BigInt(fast);
       else if (declinePastDoubles === "count" && wellParamed(p)) return decline(p);
       else {
@@ -441,19 +471,29 @@ export function kernelOn(
     return typeof total === "bigint" && total <= FAST_LIMIT && wellParamed(p);
   };
 
-  const valid = (element: unknown, p: number[]): boolean => {
-    if (!wellFormed(family.kind, element)) return false;
+  // A scalar read as a bigint past what a number holds exactly, which only the interpreter answers.
+  const beyondDoubles = (element: unknown): boolean =>
+    typeof element === "bigint" && (element > MAX_SAFE || element < -MAX_SAFE);
+
+  const valid = (given: unknown, p: number[]): boolean => {
+    if (!wellFormed(family.kind, given)) return false;
+    const element = typeof given === "bigint" && !beyondDoubles(given) ? Number(given) : given;
     const settledEarly = early?.member?.(element, p);
     if (settledEarly === false) return false;
-    if (settledEarly === "decline") return decline(p);
-    // Membership never reads the count: the fast path answers at any params it reads as written.
-    if (quick !== undefined && wellParamed(p)) {
+    // Membership never reads the count: the fast path answers at any params it reads as written, a
+    // bigint element only if it says it reads one exactly. It goes ahead of the decline, which is for
+    // the interpreter's reach alone.
+    if (quick !== undefined && wellParamed(p) && (!beyondDoubles(element) || quick.bigElements === true)) {
       try {
         const answer = quick.valid(element, p);
         if (typeof answer === "boolean") return answer;
-      } catch {}
+      } catch (error) {
+        // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+        if (isWorkDecline(error)) throw error;
+      }
     }
-    const fast = run("valid", p, { _x: element });
+    if (settledEarly === "decline") return decline(p);
+    const fast = beyondDoubles(element) ? undefined : run("valid", p, { _x: element });
     if (typeof fast === "boolean") return fast;
     // A compiled answer that isn't a boolean can't tell: decline rather than interpret the definition
     // (and its table) to find out. Only a compiled run that threw or never compiled reaches the interpreter.
@@ -486,16 +526,44 @@ export function kernelOn(
           try {
             const element = quick.unrank(p, Number(r));
             if (element !== undefined) return element;
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         return decline(p);
+      }
+      // A fiber with no end (the terms of a sequence): doubles answer what they hold exactly, the
+      // interpreter the terms past that.
+      if (total === Number.POSITIVE_INFINITY) {
+        if (r < 0n) throw new RangeError(`${family.head}(${p.join(", ")}): rank ${r} is outside the fiber`);
+        if (r <= MAX_SAFE && quick !== undefined && wellParamed(p)) {
+          try {
+            const element = quick.unrank(p, Number(r));
+            if (element !== undefined) return element;
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
+        }
+        if (early?.unrank?.(r, p) === "decline") return decline(p);
+        if (r <= MAX_SAFE) {
+          const fast = run("unrank", p, { _r: Number(r) });
+          if (wellFormed(family.kind, fast)) return fast as Element;
+        }
+        const json = interpret("unrank", p, { _r: bigintJson(r) });
+        // A term left unevaluated (a power too large to expand) is past the interpreter: unknown, not a bad definition.
+        return termOf(json) ?? (unexpanded(json) ? decline(p) : fail("unrank", p, json));
       }
       if (typeof total === "bigint" && total <= MAX_SAFE) {
         if (quick !== undefined && r >= 0n && r < total && total <= FAST_LIMIT && wellParamed(p)) {
           try {
             const element = quick.unrank(p, Number(r));
             if (element !== undefined) return element;
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         const fast = run("unrank", p, { _r: Number(r) });
         if (wellFormed(family.kind, fast)) return fast as Element;
@@ -503,18 +571,53 @@ export function kernelOn(
       const json = interpret("unrank", p, { _r: bigintJson(r) });
       return elementOf(json) ?? fail("unrank", p, json);
     },
-    rank: (element, p) => {
-      if (!valid(element, p)) return -1n;
+    rank: (given, p) => {
+      if (!valid(given, p)) return -1n;
+      const element = typeof given === "bigint" && !beyondDoubles(given) ? Number(given) : given;
       const known = knownCount(p);
       // A member of a one-member fiber is that fiber's only place, whatever the size.
       if (known === 1n) return 0n;
+      // A fiber with no end: as in unrank, doubles where the element is one, else the interpreter.
+      if (known === Number.POSITIVE_INFINITY) {
+        if (!beyondDoubles(element)) {
+          if (quick !== undefined && wellParamed(p)) {
+            try {
+              const place = quick.rank(element, p);
+              if (isInteger(place)) return BigInt(place);
+            } catch (error) {
+              // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+              if (isWorkDecline(error)) throw error;
+            }
+          }
+          if (early?.rank?.(element, p) === "decline") return decline(p);
+          const fast = run("rank", p, { _x: element });
+          if (isInteger(fast)) return BigInt(fast);
+        } else {
+          // As in `valid`: a fast path that reads a bigint exactly answers, within its own bounds, ahead of the decline.
+          if (quick?.bigElements === true && wellParamed(p)) {
+            try {
+              const place = quick.rank(element, p);
+              if (isInteger(place)) return BigInt(place);
+            } catch (error) {
+              // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+              if (isWorkDecline(error)) throw error;
+            }
+          }
+          if (early?.rank?.(element, p) === "decline") return decline(p);
+        }
+        const json = interpret("rank", p, { _x: elementJson(element) });
+        return integerOf(json) ?? (beyondDoubles(element) || unexpanded(json) ? decline(p) : fail("rank", p, json));
+      }
       if (known === undefined || (declinePastDoubles === "count" && typeof known === "bigint" && known > MAX_SAFE)) {
         // Past 2^53, as above: the fast rank answers where a double holds it.
         if (quick !== undefined && wellParamed(p)) {
           try {
             const place = quick.rank(element, p);
             if (isInteger(place)) return BigInt(place);
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         return decline(p);
       }
@@ -523,7 +626,10 @@ export function kernelOn(
           try {
             const place = quick.rank(element, p);
             if (isInteger(place)) return BigInt(place);
-          } catch {}
+          } catch (error) {
+            // A decline for too much work is final (Epsil is no cheaper); any other throw leaves it to Epsil.
+            if (isWorkDecline(error)) throw error;
+          }
         }
         const fast = run("rank", p, { _x: element });
         if (isInteger(fast)) return BigInt(fast);

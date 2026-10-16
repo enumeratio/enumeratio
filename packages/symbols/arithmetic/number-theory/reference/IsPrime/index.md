@@ -39,8 +39,10 @@ bindings:
     arity: 1
   - origin: mapped
     form: sage
-    template: enumeratio_is_prime($1)
+    template: is_prime($1)
     arity: 1
+    threadArgOnly:
+      - 1
   - origin: mapped
     form: oscar
     template: is_prime(ZZ($1))
@@ -49,6 +51,10 @@ bindings:
     form: julia
     template: is_prime(ZZ($1))
     arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
   - origin: mapped
     form: mathlib4
     template: (decide (Nat.Prime $1))
@@ -57,6 +63,7 @@ bindings:
     form: rust
     template: is_prime($1)
     arity: 1
+    threadArgOnly: 1
 ---
 
 - A prime has no positive divisors other than 1 and itself; 1 itself is not prime.

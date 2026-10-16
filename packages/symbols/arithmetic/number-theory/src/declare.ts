@@ -28,10 +28,12 @@ import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gauss
 import { NUMBER_THEORY_CARRIERS } from "./carrier-data.ts";
 import { declareAlgebraic } from "./declare-algebraic.ts";
 import { declareBacklog } from "./declare-backlog.ts";
+import { declareDivisorParts } from "./declare-divisor-parts.ts";
 import { declareFastFactorial } from "./declare-fast-factorial.ts";
 import { declareFastGcd } from "./declare-fast-gcd.ts";
 import { declareFastPrimes } from "./declare-fast-primes.ts";
 import { declareFastRecurrence } from "./declare-fast-recurrence.ts";
+import { declareModularKernels } from "./declare-modular-kernels.ts";
 import { declareGaussian, declareGaussianRationalGcdLcm, declareIntegerExponentGaussian } from "./declare-gaussian.ts";
 import { declareWidened } from "./declare-widened.ts";
 import { gaussianPowerModList } from "./gaussian-roots.ts";
@@ -74,6 +76,7 @@ export function declareNumberTheory(ce: Engine): void {
   declareGaussianRationalGcdLcm(ce);
   declareWidened(ce);
   declareBacklog(ce);
+  declareDivisorParts(ce);
 
   // compute-engine's integer functions reject a list argument with a type error (or leave
   // the call unevaluated); Wolfram's thread over it: Totient([2, 4, 6]) is [1, 2, 2].
@@ -630,4 +633,5 @@ function declareCombinatoricsGamma113(ce: Engine): void {
   declareFastPrimes(ce);
   declareFastFactorial(ce);
   declareFastGcd(ce);
+  declareModularKernels(ce);
 }

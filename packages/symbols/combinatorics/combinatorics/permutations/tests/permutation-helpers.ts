@@ -7,6 +7,7 @@ import { expect, test } from "vite-plus/test";
 import { applyDefinition } from "../../src/statistics/declare.ts";
 import { PERMUTATION_STATISTICS } from "../src/statistics.ts";
 import { bySignature } from "../../src/statistics/types.ts";
+import { FINDSTAT_READINGS } from "./permutation-findstat-readings.ts";
 
 export const ce = bareEngine();
 export const index = bySignature(PERMUTATION_STATISTICS);
@@ -164,14 +165,12 @@ export const EXPECTED: Record<string, (p: number[]) => number | number[]> = {
   ThreeCycleCount: (p) => cycleLengths(p).filter((l) => l === 3).length,
   PermutationOrder: (p) => cycleLengths(p).reduce((a, b) => (a * b) / gcd(a, b), 1),
   PermutationSupport: (p) => positionsWhere(p, (i) => p[i - 1] !== i),
-  PermutationLength: (p) => positionsWhere(p, (i) => p[i - 1] !== i).length,
-  PermutationMax: (p) => Math.max(0, ...positionsWhere(p, (i) => p[i - 1] !== i)),
-  PermutationMin: (p) => Math.min(Infinity, ...positionsWhere(p, (i) => p[i - 1] !== i)),
   LongestRun: longestRun,
   LongestIncreasingSubsequence: (p) => piles(p, (top, x) => top < x),
   LongestDecreasingSubsequence: (p) => piles(p, (top, x) => top > x),
   LargestRunLength: longestRun,
   Denert: denert,
+  ...FINDSTAT_READINGS,
 };
 
 /** Generate `${head} agrees over every permutation of 1..N` for each of `heads`, against

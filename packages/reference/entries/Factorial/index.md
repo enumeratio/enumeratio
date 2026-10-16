@@ -48,6 +48,10 @@ bindings:
     form: julia
     template: factorial(ZZ($1))
     arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
   - origin: mapped
     form: mathlib4
     template: (Nat.factorial $1)
@@ -56,6 +60,15 @@ bindings:
     form: rust
     template: factorial($1)
     arity: 1
+    threadArgOnly: 1
+  - origin: mapped
+    form: mpmath
+    template: factorial($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 catalog:
   - system: mathlib4
     identity: Nat.factorial

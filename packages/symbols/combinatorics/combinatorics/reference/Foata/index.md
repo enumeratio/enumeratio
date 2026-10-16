@@ -15,6 +15,11 @@ signatures:
     description: "Foata's fundamental bijection: cycles rotated to their max, ordered by increasing max, parentheses erased."
     library: enumeratio-combinatorics
     type: (permutation) -> permutation
+laws:
+  - bijection
+  - graded:
+      from: Permutations
+      to: Permutations
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

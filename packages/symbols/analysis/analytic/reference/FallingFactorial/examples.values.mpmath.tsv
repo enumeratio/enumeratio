@@ -1,0 +1,14 @@
+id	in	out
+falling-factorial-5-3-60	ff(5, 3)	60.0
+fallingfactorial-10-2	ff(10, 2)	90.0
+fallingfactorial-x-8		
+fullsimplify-series-fallingfactorial-x-5-x-0-5		
+series-fallingfactorial-x-4-x-neg-1-3		
+falling-factorial-3-5-0	ff(3, 5)	0.0
+falling-factorial-half-2-neg-1-4	ff((mpf(1)/2), 2)	-0.25
+fallingfactorial-4-2	ff(4, 2)	12.0
+functionexpand-fallingfactorial-x-4		
+fallingfactorial-n-0		
+fallingfactorial-x-plus-bigo-x-pow-5-10		
+fallingfactorial-10-3	ff(10, 3)	720.0
+differencedelta-fallingfactorial-x-n-x		

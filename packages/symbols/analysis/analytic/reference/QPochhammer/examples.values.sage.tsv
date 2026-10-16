@@ -1,0 +1,19 @@
+id	in	out	verdict
+1-2-1-6-1-18-85	enumeratio_q_pochhammer(2, 3, 3)	-85	
+exact-rational-arithmetic-no-n-needed	enumeratio_q_pochhammer((1/2), (1/2), 3)	21/64	
+qpochhammer-2-3-3	enumeratio_n(enumeratio_q_pochhammer(2, 3, 3))	-85.0000000000000	
+qpochhammer-1-2-1-2-3	enumeratio_n(enumeratio_q_pochhammer((1/2), (1/2), 3))	0.328125000000000	
+qpochhammer-3-2-4	enumeratio_n(enumeratio_q_pochhammer(3, 2, 4))	2530.00000000000	
+qpochhammer-1-3-2	enumeratio_n(enumeratio_q_pochhammer(-1, 3, 2))	8.00000000000000	
+the-infinite-product-euler-s-function-at-q-frac	enumeratio_q_pochhammer(0.5, 0.5, oo)	ValueError: +Infinity must be an integer	error
+qpochhammer-3-5-9	enumeratio_q_pochhammer(3, 5, 9)	-175258163137268414822846915072	
+functionexpand-qpochhammer-a-2-1			
+qpochhammer-1-over-2-plus-1-over-2-times-i-1	enumeratio_q_pochhammer(((1/2) + (1/2)*I), ((1/2) + (-1/2)*I), 10)	-25488603/268435456*I + 95264271/268435456	
+matrixfunction-function-qpochhammer-3-1-5-1-list			
+functionexpand-qpochhammer-2-q-5			
+normal-series-qpochhammer-n-q-x-q-0-3	(SR(enumeratio_q_pochhammer(SR.var("n"), SR.var("q"), SR.var("x"))).series(SR.var("q") == 0, 3 + 1)).truncate()	ValueError: x must be an integer	error
+the-empty-product	enumeratio_q_pochhammer(SR.var("a"), SR.var("q"), 0)	1	
+qpochhammer-0-0-0	enumeratio_q_pochhammer(0, 0, 0)	1	
+qpochhammer-0-0-1	enumeratio_q_pochhammer(0, 0, 1)	1	
+a-negative-n-stays-symbolic	enumeratio_q_pochhammer(2, 3, -2)	27/7	inconclusive
+infinite-product-symbolic-for-exact-operands	enumeratio_q_pochhammer((1/2), (1/2), oo)	ValueError: +Infinity must be an integer	error

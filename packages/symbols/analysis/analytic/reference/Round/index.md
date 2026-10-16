@@ -29,6 +29,60 @@ references:
     identity: NearestIntegerFunction
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: round($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: SymPy's round, like Wolfram's, sends a tie to the even integer and rounds a complex number part by part; compute-engine's ties go away from zero.
+  - origin: mapped
+    form: sympy
+    template: (round(S($1) / ($2)) * ($2))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: nint($1)
+    arity: 1
+    threadArgOnly: 1
+    note: mpmath rounds half to even.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: round($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_round($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: round($1)
+    arity: 1
+    threadArgOnly: 1
+    note: Ties go away from zero, as num-rational's `round` and std's do.
+    checked:
+      version: num-rational 0.4.2
+      on: 2026-10-16
 ---
 
 - Rounds to the nearest integer, with ties (an exact .5) breaking away from 0: $\mathrm{Round}(2.5) = 3$ and $\mathrm{Round}(-2.5) = -3$.

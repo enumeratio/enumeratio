@@ -1,0 +1,16 @@
+id	in	out
+eta-1-ln-2-the-alternating-harmonic-series	altzeta(1)	0.693147180559945309417232121458
+eta-2-pi-2-12	altzeta(2)	0.822467033424113218236207583323
+eta-3-frac-34-zeta-3-no-closed-form-beyond-apery	altzeta(3)	0.901542677369695714049803621134
+on-the-critical-line-through-1-2-1-s-zeta-s-so	altzeta(0.5)	0.604898643421630370247265914236
+numeric-for-a-floating-point-argument	altzeta(1.5)	0.765147024625407945367268758603
+complex-arguments	altzeta(mpc(3.5, 2.5))	(1.00010972780469765476482222738 + 0.0781289120414831663164628375752j)
+threads-elementwise-over-an-array	[[altzeta((mpf(1)/2)), altzeta(-1)], [altzeta(0), altzeta((mpf(1)/2))]]	[[mpf('0.604898643421630370247265914236001'), mpf('0.25')], [mpf('0.5'), mpf('0.604898643421630370247265914236001')]]
+eta-s-to-1-as-s-to-infty	altzeta(inf)	1.0
+interval-arithmetic-over-an-increasing-stretch		
+uncertainty-propagation-eta-2-pm-0-01-0-82247-pm		
+to-30-significant-digits-not-yet-the-last-digit	enumeratio_n(lambda: (altzeta((mpf(1)/2))), 30)	0.604898643421630370247265914236
+nonpositive-integers-eta-n-2-n-1-1-b-n-1-n-1	[altzeta(0), altzeta(-1), altzeta(-2), altzeta(-3)]	[mpf('0.5'), mpf('0.25'), mpf('0.0'), mpf('-0.125')]
+eta-4-frac-78-zeta-4-7-pi-4-720	altzeta(4)	0.947032829497245917576503234474
+rewriting-in-terms-of-zeta-eta-s-1-2-1-s-zeta-s		
+an-exact-non-integer-argument-stays-symbolic	altzeta((mpf(1)/2))	0.604898643421630370247265914236

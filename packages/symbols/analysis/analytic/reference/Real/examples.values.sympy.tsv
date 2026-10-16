@@ -1,0 +1,3 @@
+id	in	out
+of-a-complex-number	re((3 + 4*I))	3
+of-an-infinity	re(oo)	oo

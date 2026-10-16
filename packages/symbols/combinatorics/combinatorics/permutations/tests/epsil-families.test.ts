@@ -6,10 +6,12 @@
 import { bareEngine } from "@enumeratio/engine/testing";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
-import { type EpsilFamily, epsilKernelOn } from "../../collections/src/families/epsil.ts";
+import { type EpsilFamily, epsilKernelOn, kernelOn } from "../../collections/src/families/epsil.ts";
+import type { FamilyKernel } from "../../collections/src/families/types.ts";
 import {
   Inversions,
   IsPermutationOf,
+  LehmerCode,
   PermutationRank,
   PermutationUnrank,
 } from "../../collections/src/families/kernels.ts";
@@ -30,9 +32,10 @@ import {
   SignedPermutationRank,
   SignedPermutationUnrank,
 } from "../../collections/src/families/kernels-extra.ts";
+import { arrangements, evenPermutations, lehmerCodes, subexcedantSeqs } from "../src/families/closed-forms.ts";
 import { epsilEntries, kCyclePermutations } from "../src/families/core.ts";
 import { permutationsAsCycles } from "../src/families/cycles.ts";
-import { PermutationsAsCyclesFamily } from "../src/families/permutations.ts";
+import { entries as permutationsEntries, PermutationsAsCyclesFamily } from "../src/families/permutations.ts";
 import {
   adjacentTranspositionInvolutions,
   alternatingPermutations,
@@ -178,6 +181,50 @@ function cycleNeighbours(cycles: number[][]): number[][][] {
   ];
 }
 
+/** A family given by listing its members at each params, in order. Membership is being listed. */
+function listing(params: number[][], members: (p: number[]) => number[][]): Reading {
+  const cache = new Map<string, { list: number[][]; place: Map<string, number> }>();
+  const listed = (p: number[]) => {
+    const key = p.join();
+    if (!cache.has(key)) {
+      const list = members(p);
+      cache.set(key, { list, place: new Map(list.map((x, r) => [x.join(), r])) });
+    }
+    return cache.get(key)!;
+  };
+  return {
+    params,
+    count: (p) => listed(p).list.length,
+    unrank: (p, r) => listed(p).list[r],
+    rank: (x: number[], p) => listed(p).place.get(x.join()) ?? -1,
+    valid: (x: number[], p) => Array.isArray(x) && listed(p).place.has(x.join()),
+    near: ([n]) => {
+      const p = [n];
+      // Every word over a little more than the entries a member has, then a step from each member.
+      const nearby = n <= 5 ? words(n, span(-1, n + 1)) : [];
+      const steps = listed(p).list.flatMap((x) => [
+        ...x.flatMap((v, i) => [-1, 1].map((d) => x.with(i, v + d))),
+        ...(x.length > 1 ? [[x[1], x[0], ...x.slice(2)]] : []),
+        x.slice(0, -1),
+        [...x, x[0] ?? 0],
+        x.toReversed(),
+      ]);
+      return [...nearby, ...steps];
+    },
+  };
+}
+
+/** The permutations of n in lex order. */
+const lexPermutations = (n: number): number[][] =>
+  Array.from({ length: factorial(n) }, (_, r) => PermutationUnrank(n, r));
+
+/** Words (a_1, …, a_n) with 0 ≤ a_j ≤ j − 1, in lex order. */
+const subexcedants = (n: number): number[][] =>
+  Array.from({ length: n }, (_, j) => j).reduce<number[][]>(
+    (rest, j) => rest.flatMap((w) => span(0, j).map((a) => [...w, a])),
+    [[]],
+  );
+
 const READINGS: Record<string, Reading> = {
   // The TS kernel enumerates every permutation of n and sorts; the Epsil definition unranks directly.
   PermutationsAsCycles: {
@@ -215,6 +262,11 @@ const READINGS: Record<string, Reading> = {
     valid: (x: number[], [n, k]) => IsKPermutationOf(x, n, k),
     near: ([n, k]) => [...words(k, span(0, n + 1)), ...words(k + 1, span(1, n))],
   },
+  EvenPermutations: listing([[0], [1], [2], [3], [4], [5], [6], [7]], ([n]) =>
+    lexPermutations(n).filter((x) => Inversions(x) % 2 === 0),
+  ),
+  LehmerCodes: listing([[0], [1], [2], [3], [4], [5], [6], [7]], ([n]) => lexPermutations(n).map((x) => LehmerCode(x))),
+  SubexcedantSeqs: listing([[0], [1], [2], [3], [4], [5], [6], [7]], ([n]) => subexcedants(n)),
   SignedPermutations: {
     params: [[0], [1], [2], [3], [4]],
     count: ([n]) => SignedPermutationCount(n),
@@ -245,20 +297,24 @@ const READINGS: Record<string, Reading> = {
     ],
     (x, [, k]) => turns(x, (a, b) => a > b) === k,
   ),
-  KInversionPermutations: lexRestriction(
-    [
-      [0, 0],
-      [3, 0],
-      [3, 2],
-      [4, 3],
-      [5, 10],
-      [5, 4],
-      [2, 3],
-      // Seconds to filter 6! permutations: nightly.
-      ...(process.env.DEEP_TESTS ? [[6, 7]] : []),
-    ],
-    (x, [n, k]) => IsPermutationOf(x, n) && Inversions(x) === k,
-  ),
+  KInversionPermutations: {
+    ...lexRestriction(
+      [
+        [0, 0],
+        [3, 0],
+        [3, 2],
+        [4, 3],
+        [5, 10],
+        [5, 4],
+        [2, 3],
+        // Seconds to filter 6! permutations: nightly.
+        ...(process.env.DEEP_TESTS ? [[6, 7]] : []),
+      ],
+      (x, [n, k]) => IsPermutationOf(x, n) && Inversions(x) === k,
+    ),
+    // Not params.at(-2): that is the empty [2, 3] once DEEP_TESTS appends [6, 7].
+    interpretAt: [5, 4],
+  },
   // Every inversion is of adjacent entries. Seconds to filter 6! permutations: nightly.
   AdjacentTranspositionInvolutions: {
     ...lexRestriction([[0], [1], [2], [3], [4], [5], ...(process.env.DEEP_TESTS ? [[6]] : [])], (x) =>
@@ -328,6 +384,8 @@ const READINGS: Record<string, Reading> = {
   },
 };
 
+READINGS.Arrangements = READINGS.KPermutations;
+
 const byHead = new Map(
   [
     ...epsilEntries,
@@ -345,26 +403,39 @@ const byHead = new Map(
     vexillaryPermutations,
     grassmannianPermutations,
     cograssmannianPermutations,
+    evenPermutations,
+    lehmerCodes,
+    subexcedantSeqs,
+    arrangements,
   ].map((family) => [family.head, family]),
 );
 
-for (const [head, reading] of Object.entries(READINGS)) {
-  const family = byHead.get(head)!;
-  const kernel = epsilKernelOn(ce, family);
-  for (const p of reading.params) {
-    test(`${head}(${p.join(", ")}) agrees with its TS reading`, () => {
-      const total = reading.count(p);
-      expect(kernel.count(p)).toBe(BigInt(total));
-      for (let r = 0; r < total; r++) {
-        const element = kernel.unrank(p, BigInt(r));
-        expect(element).toEqual(reading.unrank(p, r));
-        expect(kernel.rank(element, p)).toBe(BigInt(r));
-        expect(reading.rank(element as never, p)).toBe(r);
-      }
-      for (const candidate of reading.near(p))
-        expect([candidate, kernel.valid(candidate, p)]).toEqual([candidate, reading.valid(candidate as never, p)]);
-    });
+function agrees(kernel: FamilyKernel, reading: Reading, p: number[]): void {
+  const total = reading.count(p);
+  expect(kernel.count(p)).toBe(BigInt(total));
+  for (let r = 0; r < total; r++) {
+    const element = kernel.unrank(p, BigInt(r));
+    expect(element).toEqual(reading.unrank(p, r));
+    expect(kernel.rank(element, p)).toBe(BigInt(r));
+    expect(reading.rank(element as never, p)).toBe(r);
   }
+  for (const candidate of reading.near(p))
+    expect([candidate, kernel.valid(candidate, p)]).toEqual([candidate, reading.valid(candidate as never, p)]);
+}
+
+for (const [head, reading] of Object.entries(READINGS)) {
+  const kernel = epsilKernelOn(ce, byHead.get(head)!);
+  for (const p of reading.params)
+    test(`${head}(${p.join(", ")}) agrees with its TS reading`, () => agrees(kernel, reading, p));
+}
+
+// The families defined as closed forms keep their TS kernels as fast paths: the same listings, exhaustively.
+for (const head of ["EvenPermutations", "Arrangements", "LehmerCodes", "SubexcedantSeqs"]) {
+  const kernel = kernelOn(ce, permutationsEntries.find((family) => family.head === head) as EpsilFamily);
+  test(`${head}: the fast path agrees with its TS reading`, () => {
+    expect(kernel.fast).toBe(true);
+    for (const p of READINGS[head].params) agrees(kernel, READINGS[head], p);
+  });
 }
 
 /** The definitions as the interpreter reads them, bypassing compiled code. */

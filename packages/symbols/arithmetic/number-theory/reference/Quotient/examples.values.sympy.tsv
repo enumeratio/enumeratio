@@ -1,0 +1,37 @@
+id	in	out	verdict
+quotient-17-5	(S(17) // S(5))	3	
+the-floor-not-truncation	(S(-7) // S(2))	-4	
+the-remainder-takes-the-sign-of-n	(S(17) // S(-5))	-4	
+7-5i-2-i-3-8-0-6i-rounded	(S((7 + 5*I)) // S((2 + 1*I)))	3	inconclusive
+real-arguments-lfloor-7-5-2-rfloor	(S(7.5) // S(2))	3	
+rational-arguments-lfloor-21-2-rfloor	(S(Rational(7, 2)) // S(Rational(1, 3)))	10	
+exact-past-2-53	(S((factorial(25) - 1)) // S(factorial(24)))	24	
+quotient-m-n-d-is-lfloor-m-d-n-rfloor-so-m-n-q			
+listable-threads-over-a-list	[(S(10) // S(7)), (S(20) // S(7)), (S(30) // S(7))]	[1, 2, 4]	
+quotient-by-a-unit-is-the-dividend-itself-up-to	(S((3 + 4*I)) // S((0 + 1*I)))	4 - 3*I	
+a-zero-dividend-quotients-to-0	(S(0) // S((2 + 1*I)))	0	
+quotient-by-a-gaussian-prime-norm-5	(S((3 + 4*I)) // S((2 + 1*I)))	2 + I	
+quotient-by-the-other-prime-above-5	(S((3 + 4*I)) // S((2 + -1*I)))	2*I	
+quotient-by-a-real-prime-3-mod-4	(S((3 + 4*I)) // S(3))	1 + I	
+a-real-dividend-by-a-gaussian-divisor	(S(5) // S((2 + 1*I)))	2 - I	
+quotient-by-an-associate	(S((8 + 2*I)) // S((-4 + 3*I)))	-2 - 2*I	disagree
+quotient-by-a-negative-real-divisor	(S((3 + 4*I)) // S(-7))	-1 - I	disagree
+quotient-by-a-composite-gaussian-divisor-norm-25	(S((123 + 456*I)) // S((3 + 4*I)))	87 + 35*I	disagree
+a-gaussian-divisor-past-2-53-in-both-parts	(S((100000000000000000001 + 9007199254740993*I)) // S((4 + 1*I)))	23529941599956161235 - 5880233600175355061*I	
+quotient-by-1-4i-the-other-prime-above-17	(S((8 + 2*I)) // S((1 + 4*I)))	-2*I	disagree
+a-large-norm-gaussian-divided-by-a-small-unit	(S((1000 + 1*I)) // S((1 + 1*I)))	500 - 500*I	
+quotient-by-1-negates-each-part	(S((2 + 1*I)) // S(-1))	-2 - I	
+quotient-by-i-rotates-by-that-unit	(S((5 + 5*I)) // S((0 + -1*I)))	-5 + 5*I	
+a-negative-real-dividend-gaussian-divisor	(S((-5 + -5*I)) // S((2 + 1*I)))	-3 - I	
+quotient-by-an-associate-times-1	(S((8 + 2*I)) // S((-3 + -4*I)))	-2 + I	disagree
+quotient-by-an-associate-times-i	(S((8 + 2*I)) // S((4 + -3*I)))	1 + I	
+quotient-by-the-other-prime-above-13	(S((6 + 8*I)) // S((2 + 3*I)))	2 - I	inconclusive
+quotient-by-a-prime-above-13	(S((6 + 8*I)) // S((3 + 2*I)))	2	inconclusive
+quotient-by-a-real-prime-s-associate-by-the-unit	(S((3 + 4*I)) // S((0 + 7*I)))	-I	inconclusive
+quotient-by-a-real-composite-5-squared	(S((3 + 4*I)) // S(25))	0	
+a-negative-associate-as-the-divisor	(S((6 + 8*I)) // S((-2 + -3*I)))	-3	
+dividing-a-large-norm-gaussian-by-a-real-prime	(S((123 + 456*I)) // S(19))	6 + 24*I	
+dividing-by-zero-is-undefined	(S((3 + 4*I)) // S(0))	zoo	disagree
+dividing-zero-by-zero-is-undefined	(S(0) // S(0))	ZeroDivisionError: integer division or modulo by zero	error
+m-n-quotient-m-n-mod-m-n-see-mod	((5 * (S(17) // S(5))) + (17 % 5))	17	
+2-5-2-5i-rounds-to-even-in-each-part	(S((5 + 5*I)) // S(2))	2 + 2*I	

@@ -1,0 +1,8 @@
+id	in	out	verdict
+centre-degree-of-a-6-vertex-star	(enumeratio_graph(graphs.StarGraph(6 - 1))).degree(1)	5	
+stargraph-8	enumeratio_graph(graphs.StarGraph(8 - 1))	Star graph	disagree
+stargraph-6	enumeratio_graph(graphs.StarGraph(6 - 1))	Star graph	disagree
+map-function-vertexeccentricity-stargraph-6-1-1			
+istreegraph-stargraph-5	(enumeratio_graph(graphs.StarGraph(5 - 1))).is_tree()	True	
+isbipartitegraph-stargraph-5	(enumeratio_graph(graphs.StarGraph(5 - 1))).is_bipartite()	True	
+stargraph-7	enumeratio_graph(graphs.StarGraph(7 - 1))	Star graph	disagree

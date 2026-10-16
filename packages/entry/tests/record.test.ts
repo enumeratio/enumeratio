@@ -34,3 +34,14 @@ test("a head's notation round-trips through notation.json, and a record without 
   expect(decodeHead(files).notation).toEqual(notation);
   expect((await headFiles({ entry, body: "" })).has("notation.json")).toBe(false);
 });
+
+test("a system's skip and note round-trip through examples.tsv's <system>.skip columns", async () => {
+  const withExamples = {
+    ...entry,
+    examples: [{ id: "a", expr: ["Mod", 5, 3], expected: 2 }],
+  } as unknown as ReferenceEntry;
+  const implementations = { a: { wolfram: { in: "Mod[5, 3]", skip: true, note: "A picture, nothing to compare." } } };
+  const files = await headFiles({ entry: withExamples, body: "", implementations });
+  expect(files.get("examples.tsv")).toContain("wolfram.skip");
+  expect(decodeHead(files).implementations).toEqual(implementations);
+});

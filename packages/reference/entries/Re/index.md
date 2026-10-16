@@ -13,4 +13,31 @@ seeAlso:
   - Argument
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: re($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: re($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: real_part($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
+
+- A Gaussian integer is a complex number with integer parts, so `Re` and [[Imaginary]] read its two coordinates; there is no separate head for them.

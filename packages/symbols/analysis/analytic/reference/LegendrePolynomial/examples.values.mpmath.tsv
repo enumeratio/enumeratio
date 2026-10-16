@@ -1,0 +1,20 @@
+id	in	out
+the-quadratic		
+the-cubic		
+the-quartic		
+at-a-real	legendre(5, 0.7)	-0.365198749999999931896144111931
+at-p0-0-7	(legendre(0, 0.7))	1.0
+at-p1-0-7	(legendre(1, 0.7))	0.699999999999999955591079014994
+at-p2-0-7	(legendre(2, 0.7))	0.234999999999999906741265931487
+at-p5-0-7	(legendre(5, 0.7))	-0.365198749999999931896144111931
+at-p-1-0-7	(legendre(-1, 0.7))	1.0
+at-p-4-0-7	(legendre(-4, 0.7))	-0.192500000000000096589403142389
+at-p4-2-3i	(legendre(4, mpc(2, 3)))	(-501.5 - 570.0j)
+at-a-rational	legendre(3, (mpf(1)/2))	-0.4375
+at-a-complex-argument	legendre(3, mpc(2, 3))	(-118.0 + 18.0j)
+a-symbolic-order-stays-unevaluated		
+at-1	legendre(6, 1)	1.0
+at-minus-1	legendre(5, -1)	-1.0
+at-0	legendre(4, 0)	0.375
+bonnet-recurrence	almosteq((4 * legendre(4, 3)), ((7 * 3 * legendre(3, 3)) - (3 * legendre(2, 3))), 1e-20)	True
+negative-order		

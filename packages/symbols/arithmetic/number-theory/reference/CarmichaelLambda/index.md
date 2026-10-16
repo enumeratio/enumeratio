@@ -26,6 +26,14 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: reduced_totient is SymPy's Carmichael function.
+  - origin: mapped
+    form: sage
+    template: carmichael_lambda($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - compute-engine has this natively; the gap closed here is Wolfram's $\lambda(-n)=\lambda(n)$ and threading over a list, which the native handler left unevaluated.

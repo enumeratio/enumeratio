@@ -298,9 +298,24 @@ function applyNamed(name: string, args: MathJson[]): MathJson | undefined {
     // The partition number is a count.
     case "PartitionsP":
       return args.length === 1 ? ["Count", ["IntegerPartitions", args[0]!]] : undefined;
+    // `Range[a, b]` is empty when b < a; ours with no step counts down, so the step is stated.
+    case "Range":
+      return args.length === 1
+        ? ["Range", 1, args[0]!, 1]
+        : args.length === 2
+          ? ["Range", args[0]!, args[1]!, 1]
+          : undefined;
     // `Signature[perm]` is the sign of a permutation.
     case "Signature":
       return args.length === 1 && isList(args[0]) ? ["Sign", ["Permutation", args[0]]] : undefined;
+    // The moved-point statistics are Length, Max and Min of the support. At the identity the
+    // support is empty, where ours gives NaN for Max and Min, so they carry Wolfram's answers (0, ∞).
+    case "PermutationLength":
+      return args.length === 1 && isList(args[0]) ? ["Length", support(args[0])] : undefined;
+    case "PermutationMax":
+      return args.length === 1 && isList(args[0]) ? ["Max", 0, support(args[0])] : undefined;
+    case "PermutationMin":
+      return args.length === 1 && isList(args[0]) ? ["Min", "PositiveInfinity", support(args[0])] : undefined;
     // `ProductLog[k, z]` puts the branch first.
     case "ProductLog":
       return args.length === 2 ? ["LambertW", args[1]!, args[0]!] : undefined;
@@ -315,6 +330,7 @@ function applyNamed(name: string, args: MathJson[]): MathJson | undefined {
 }
 
 const isList = (node: MathJson): node is MathJson[] => Array.isArray(node) && node[0] === "List";
+const support = (word: MathJson): MathJson => ["PermutationSupport", ["Permutation", word]];
 /** A bare identifier or a non-negative integer — what can sit either side of a `_`. */
 const isPlain = (node: MathJson): node is string | number =>
   (typeof node === "string" && /^[A-Za-z][A-Za-z0-9]*$/.test(node)) ||

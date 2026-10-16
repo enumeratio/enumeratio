@@ -41,6 +41,14 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: SymPy's divisors is over the integers (positive divisors of |n|); a Gaussian integer is not one, and the Over -> GaussianIntegers form has no counterpart.
+  - origin: mapped
+    form: julia
+    template: sort(divisors(ZZ($1)))
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - Includes both 1 and $n$ itself; a prime's only divisors are those two.

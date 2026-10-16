@@ -3,19 +3,19 @@ zeta-2-1-zeta-2-pi-2-6-reduces-to-the-ordinary	zeta(2, 1)	1.64493406684822643647
 zeta-2-2-pi-2-6-1	zeta(2, 2)	0.644934066848226436472415166646	
 an-inexact-a-evaluates-numerically-without-n	zeta(3, 0.2)	125.739018057217945694903993229	
 inside-the-critical-strip-under-n	(zeta(0.51, 0.87))	-1.32015502369495840434831283695	
-precise-zeta-s-neg-41-2-a-3-10-d80	(zeta((mpf(-41)/2), (mpf(3)/10)))	136.361935791831144171775099936	
-precise-zeta-s-neg-81-2-a-2-5-d40	(zeta((mpf(-81)/2), (mpf(2)/5)))	7724997484091588.75677781408441	
-precise-zeta-s-neg-81-2-a-2-5-d80	(zeta((mpf(-81)/2), (mpf(2)/5)))	7724997484091588.75677781408441	
-precise-zeta-s-neg-21-2-a-3-10-d40	(zeta((mpf(-21)/2), (mpf(3)/10)))	-0.0140408398381087152333772105725	
-precise-zeta-s-neg-21-2-a-3-10-d80	(zeta((mpf(-21)/2), (mpf(3)/10)))	-0.0140408398381087152333772105725	
-precise-zeta-s-neg-11-2-a-27-10-d40	(zeta((mpf(-11)/2), (mpf(27)/10)))	-18.6499577040875707562097720682	
-precise-zeta-s-neg-11-2-a-27-10-d80	(zeta((mpf(-11)/2), (mpf(27)/10)))	-18.6499577040875707562097720682	
-precise-zeta-s-neg-5-2-a-3-10-d40	(zeta((mpf(-5)/2), (mpf(3)/10)))	-0.00949638093151452001727383524968	
-precise-zeta-s-neg-5-2-a-3-10-d80	(zeta((mpf(-5)/2), (mpf(3)/10)))	-0.00949638093151452001727383524968	
-precise-zeta-s-neg-1-2-a-1-20-d40	(zeta((mpf(-1)/2), (mpf(1)/20)))	-0.0215944432602647433393546867694	
-precise-zeta-s-neg-1-2-a-1-20-d80	(zeta((mpf(-1)/2), (mpf(1)/20)))	-0.0215944432602647433393546867694	
-precise-zeta-s-1-2-a-5-4-d40	(zeta((mpf(1)/2), (mpf(5)/4)))	-1.76003647550436904466242568984	
-precise-zeta-s-1-2-a-5-4-d80	(zeta((mpf(1)/2), (mpf(5)/4)))	-1.76003647550436904466242568984	
+precise-zeta-s-neg-41-2-a-3-10-d80	enumeratio_n(lambda: (zeta((mpf(-41)/2), (mpf(3)/10))), 80)	136.36193579183114417177509993639886142857587538781700060943523105392647565147151	
+precise-zeta-s-neg-81-2-a-2-5-d40	enumeratio_n(lambda: (zeta((mpf(-81)/2), (mpf(2)/5))), 40)	7724997484091588.756777814084408304304822	
+precise-zeta-s-neg-81-2-a-2-5-d80	enumeratio_n(lambda: (zeta((mpf(-81)/2), (mpf(2)/5))), 80)	7724997484091588.7567778140844083043048222894454447353278412159834720984602706629	
+precise-zeta-s-neg-21-2-a-3-10-d40	enumeratio_n(lambda: (zeta((mpf(-21)/2), (mpf(3)/10))), 40)	-0.01404083983810871523337721057250174060732	
+precise-zeta-s-neg-21-2-a-3-10-d80	enumeratio_n(lambda: (zeta((mpf(-21)/2), (mpf(3)/10))), 80)	-0.014040839838108715233377210572501740607316197108254222355828919864425868946288653	
+precise-zeta-s-neg-11-2-a-27-10-d40	enumeratio_n(lambda: (zeta((mpf(-11)/2), (mpf(27)/10))), 40)	-18.64995770408757075620977206825576216205	
+precise-zeta-s-neg-11-2-a-27-10-d80	enumeratio_n(lambda: (zeta((mpf(-11)/2), (mpf(27)/10))), 80)	-18.649957704087570756209772068255762162048432533343954084351458312014381355390016	
+precise-zeta-s-neg-5-2-a-3-10-d40	enumeratio_n(lambda: (zeta((mpf(-5)/2), (mpf(3)/10))), 40)	-0.009496380931514520017273835249675802227555	
+precise-zeta-s-neg-5-2-a-3-10-d80	enumeratio_n(lambda: (zeta((mpf(-5)/2), (mpf(3)/10))), 80)	-0.0094963809315145200172738352496758022275554165813133821317329331729049809545605060	
+precise-zeta-s-neg-1-2-a-1-20-d40	enumeratio_n(lambda: (zeta((mpf(-1)/2), (mpf(1)/20))), 40)	-0.02159444326026474333935468676939589192680	
+precise-zeta-s-neg-1-2-a-1-20-d80	enumeratio_n(lambda: (zeta((mpf(-1)/2), (mpf(1)/20))), 80)	-0.021594443260264743339354686769395891926797425874307039905670121968697451342879039	
+precise-zeta-s-1-2-a-5-4-d40	enumeratio_n(lambda: (zeta((mpf(1)/2), (mpf(5)/4))), 40)	-1.760036475504369044662425689839422774102	
+precise-zeta-s-1-2-a-5-4-d80	enumeratio_n(lambda: (zeta((mpf(1)/2), (mpf(5)/4))), 80)	-1.7600364755043690446624256898394227741021355631982299573323710625499100292004391	
 zeta-0-a-exact-at-a-3	zeta(0, 3)	-2.5	
 zeta-0-a-exact-at-a-5-over-2	zeta(0, (mpf(5)/2))	-2.0	
 zeta-neg-1-a-exact-at-a-3	zeta(-1, 3)	-3.08333333333333333333333333333	
@@ -174,29 +174,30 @@ n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5	(zeta(mpc(-0.5, 1), mpc(2, -0.5)))	(
 n-hurwitzzeta-neg-0p5-plus-i-neg-0p5	(zeta(mpc(-0.5, 1), -0.5))	(-10.3541255703876195123811711928 + 12.6883763809252597090705000207j)	
 n-hurwitzzeta-neg-0p5-plus-i-neg-1p5	(zeta(mpc(-0.5, 1), -1.5))	(0.825049555351030160086372374979 + 38.7318693646863540979116822452j)	
 normal-series-hurwitzzeta-2-x-x-positiveinfinity			
-n-hurwitzzeta-neg-27-2-over-5-1-digit	(zeta(-27, (mpf(2)/5)))	-788740.454876388864340981606357	disagree
+n-hurwitzzeta-neg-27-2-over-5-1-digit	enumeratio_n(lambda: (zeta(-27, (mpf(2)/5))), 1)	-8.e+5	
 n-hurwitzzeta-3-neg-2p5	(zeta(3, -2.5))	0.0541020258208637015018708342839	
 n-hurwitzzeta-2p5-neg-2p5	(zeta(2.5, -2.5))	(6.24711063456881148528999055737 - 6.12093450391897990393402083466j)	
 n-hurwitzzeta-3-neg-2p5-plus-i	(zeta(3, mpc(-2.5, 1)))	(0.0396299239699579376925107024838 - 0.201022992074744365363645325043j)	
 n-hurwitzzeta-2p5-plus-i-neg-2p5	(zeta(mpc(2.5, 1), -2.5))	(83.2046830063311727449542067317 - 106.551606331013947556301119543j)	
+n-hurwitzzeta-2-neg-0-999999999	(zeta(2, -0.999999999))	1000000056563865329.09852751187	disagree
 a-positive-integer-a-peels-off-the-first-terms	zeta(7, 5)	0.0000184948548452090985995617382284	
 complex-a	(zeta(2.3, mpc(8, 1)))	(0.0544700827321306866228092072147 - 0.00944851533647025008110366459698j)	
 listable-threads-over-a-list-of-orders	zeta([2, 3, 4], 0.5)	TypeError: cannot create mpf from [2, 3, 4]	error
 uncertainty-in-a			
 zeta-2-1-2-pi-2-2-the-s-2-instance-of-zeta-s-1-2	zeta(2, (mpf(1)/2))	4.93480220054467930941724549994	
 zeta-2-1-4-pi-2-8g-with-catalan-s-constant-g	zeta(2, (mpf(1)/4))	17.1973291545071107392713191193	
-to-30-significant-digits-not-yet-the-last-digit	(zeta(3, (mpf(1)/3)))	27.5610611997008037762278779774	
-far-left-of-the-strip-all-40-digits-agree-with	(zeta((mpf(-41)/2), (mpf(3)/10)))	136.361935791831144171775099936	
+to-30-significant-digits-not-yet-the-last-digit	enumeratio_n(lambda: (zeta(3, (mpf(1)/3))), 30)	27.5610611997008037762278779774	
+far-left-of-the-strip-all-40-digits-agree-with	enumeratio_n(lambda: (zeta((mpf(-41)/2), (mpf(3)/10))), 40)	136.3619357918311441717750999363988614286	
 left-of-the-strip-at-a-non-integer-a	(zeta(-20, 0.7))	-80.0909738762535840749199398913	
 left-of-the-strip-at-a-non-integer-a-and-s	(zeta(-40.5, 0.4))	7724997484091588.58607882278333	
 a-negative-a-frac-12-5-is-real-and-so-is-the	(zeta(5, (mpf(-1)/2)))	0.144760409444467716272330080168	
-n-hurwitzzeta-1-over-3-8-over-7-50	(zeta((mpf(1)/3), (mpf(8)/7)))		
+n-hurwitzzeta-1-over-3-8-over-7-50	enumeratio_n(lambda: (zeta((mpf(1)/3), (mpf(8)/7))), 50)	-1.1389367444490991746548674334535727810961919460755	
 hurwitzzeta-neg-1-list-list-1-over-2-1-list-1-1	[[zeta(-1, (mpf(1)/2)), zeta(-1, 1)], [zeta(-1, 1), zeta(-1, (mpf(1)/2))]]		
 functionexpand-hurwitzzeta-neg-2-a			
 functionexpand-hurwitzzeta-0-a			
 fullsimplify-matrixfunction-function-hurwitzzeta			
 series-hurwitzzeta-s-a-a-0-3			
-certified-digits-zeta-1-2-1-3	(zeta((mpf(1)/2), (mpf(1)/3)))	-0.118083327934221719094454170794	
+certified-digits-zeta-1-2-1-3	enumeratio_n(lambda: (zeta((mpf(1)/2), (mpf(1)/3))), 40)	-0.1180833279342217190944541707941027331459	
 zeta-0-a-frac-12-a-exact-and-symbolic-in-a			
 zeta-1-a-b-2-a-2-frac-1-12-6a-2-6a-1			
 pole-at-s-1-for-every-a	zeta(1, 3)	+inf	disagree

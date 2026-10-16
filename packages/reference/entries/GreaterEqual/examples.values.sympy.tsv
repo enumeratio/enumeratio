@@ -1,0 +1,11 @@
+id	in	out	verdict
+0-lt-eq-1	Le(0, 1)	True	
+pi-lt-eq-n-pi-1-digit	Le(pi, N(pi, 30))	False	
+4-over-3-lt-eq-3-over-2	Le(Rational(4, 3), Rational(3, 2))	True	
+pi-lt-eq-n-pi-20	Le(pi, N(pi, 30))	False	disagree
+sqrt-5-plus-2-times-sqrt-6-lt-eq-sqrt-2-plus	Le(sqrt((5 + (2 * sqrt(6)))), (sqrt(2) + sqrt(3)))	True	
+pi-times-1-plus-256-times-10-pow-neg-20-lt-eq-n	Le((pi * (1 + (256 * (S(10)**-20)))), N(pi, 30))	False	disagree
+x-lt-eq-x	Le(Symbol("x"), Symbol("x"))	x <= x	disagree
+pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	Le((S(pi)**E), (S(E)**pi))	True	
+refine-sqrt-x-pow-2-x-gt-eq-0			
+integrate-boole-1-lt-eq-x-pow-2-plus-y-pow-2-lt	integrate((Piecewise((1, And(Le(1, ((S(Symbol("x"))**2) + (S(Symbol("y"))**2))), Le(((S(Symbol("x"))**2) + (S(Symbol("y"))**2)), 2))), (0, True)) * (S(Symbol("x"))**2)), (Symbol("y"), -oo, oo), (Symbol("x"), -oo, oo))	Integral(Piecewise((oo*sign(x**2), (x**2 + y**2 >= 1) & (x**2 + y**2 <= 2)), (0, True)), (x, -oo, oo))	disagree

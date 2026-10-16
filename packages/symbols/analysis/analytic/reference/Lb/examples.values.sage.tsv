@@ -1,0 +1,11 @@
+id	in	out
+lb-8	log(8, 2)	3
+lb-1	log(1, 2)	0
+lb-1-024	log(1024, 2)	10
+a-machine-precision-argument-evaluates	log(1.4142, 2)	0.499986164421874
+lb-2-pow-10	log(((2)^10), 2)	10
+same-exact-negative-power-fold-as-log2-lb-frac	log((1/8), 2)	-3
+lb-0	log(0, 2)	-Infinity
+threads-element-wise-over-a-list	[log(1, 2), log(2, 2), log(4, 2), log(8, 2)]	[0, 1, 2, 3]
+same-as-log2-the-logarithm-of-complex-infinity	log(unsigned_infinity, 2)	+Infinity
+identical-to-log2	enumeratio_equal(log(64, 2), log(64, 2))	True

@@ -17,6 +17,7 @@ import {
   kernelOn,
 } from "../collections/src/families/epsil.ts";
 import { allFamilies } from "../collections/src/families/index.ts";
+import { definitions as scanDefinitions } from "../collections/src/families/scan-definitions.ts";
 import {
   Binomial,
   CompositionCount,
@@ -55,7 +56,20 @@ const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
 // How far each axis is scanned for the edge of the fast path.
 const SCAN = 90;
 
-const fastFamilies = allFamilies.filter(isEpsilFamily).filter((family) => family.fast !== undefined);
+/** Whether the family's fibers have no end: the terms of a sequence, held to Epsil in their own section below. */
+const unbounded = (family: EpsilFamily): boolean => {
+  try {
+    return family.fast?.count(Array<number>(family.paramCount).fill(3)) === Number.POSITIVE_INFINITY;
+  } catch {
+    return false;
+  }
+};
+
+const withFast = allFamilies.filter(isEpsilFamily).filter((family) => family.fast !== undefined);
+const fastFamilies = withFast.filter((family) => !unbounded(family));
+// The predicate scans have a TS kernel that scans without end, which the doubling below would never leave.
+const sequenceFamilies = withFast.filter(unbounded).filter((family) => !scanDefinitions.has(family.head));
+const scanFamilies = withFast.filter((family) => scanDefinitions.has(family.head));
 
 /** The fiber the family's fast kernel counts at `p`, when that is a safe integer. */
 function countOf(family: EpsilFamily, p: number[]): bigint | undefined {
@@ -85,8 +99,9 @@ function edgeAlong(
 }
 
 // Nested elements have no compiled type, so these families' definitions are interpreted, a few
-// hundred milliseconds an operation: the standard run takes small params and a few ranks of each,
-// and DEEP_TESTS the full grid. Their own tests (trees/tests, collections/tests) check more.
+// hundred milliseconds an operation (rank and membership never compile: no type for a nested element).
+// The standard run takes small params and a few ranks of each, and DEEP_TESTS a bounded sample a little
+// wider: the full grid is hours. Their own tests (trees/tests, collections/tests) check more.
 const INTERPRETED = new Set([
   "BinaryTrees",
   "FullKAryTrees",
@@ -94,7 +109,7 @@ const INTERPRETED = new Set([
   "IncreasingBinaryTrees",
   "StandardTableauPairs",
 ]);
-const interpreted = (family: EpsilFamily): boolean => !DEEP && INTERPRETED.has(family.head);
+const interpreted = (family: EpsilFamily): boolean => INTERPRETED.has(family.head);
 
 // Families whose fast path stops at a table limit, a size or two past what Epsil does quickly, not at
 // 2^53: the edge scan would find the limit, and Epsil takes seconds a call there (minutes, past it).
@@ -115,7 +130,15 @@ const grids = new Map<string, { grid: number[][]; above: number[][] }>();
 function paramGrid(family: EpsilFamily): { grid: number[][]; above: number[][] } {
   const cached = grids.get(family.head);
   if (cached !== undefined) return cached;
-  const small = DEEP ? [0, 1, 2, 3, 4, 5, 6, 8, 10, 13] : interpreted(family) ? [0, 1, 2] : [0, 1, 2, 3, 5, 8];
+  const small = interpreted(family)
+    ? DEEP
+      ? family.paramCount === 1
+        ? [0, 1, 2, 3, 4, 5]
+        : [0, 1, 2, 3]
+      : [0, 1, 2]
+    : DEEP
+      ? [0, 1, 2, 3, 4, 5, 6, 8, 10, 13]
+      : [0, 1, 2, 3, 5, 8];
   const walks: ((x: number) => number[])[] = [];
   if (family.paramCount === 1) walks.push((n) => [n]);
   else
@@ -129,12 +152,13 @@ function paramGrid(family: EpsilFamily): { grid: number[][]; above: number[][] }
     .map((at) => edgeAlong(family, at))
     .filter((edge) => edge !== undefined)
     .toSorted((a, b) => size(a.below) - size(b.below))
-    .slice(0, DEEP ? 4 : interpreted(family) ? 0 : 1);
+    .slice(0, DEEP ? (interpreted(family) ? 1 : 4) : interpreted(family) ? 0 : 1);
   const grid: number[][] =
     family.paramCount === 1 ? small.map((n) => [n]) : small.flatMap((a) => small.map((b) => [a, b]));
   const above: number[][] = [];
   for (const edge of edges) {
-    grid.push(edge.below);
+    // An interpreted family's edge is only for the fiber past 2^53: Epsil can't unrank or rank at its last one.
+    if (!interpreted(family)) grid.push(edge.below);
     if (edge.above !== undefined) above.push(edge.above);
   }
   const unique = (list: number[][]): number[][] => [...new Map(list.map((p) => [p.join(","), p])).values()];
@@ -150,13 +174,15 @@ function random(below: bigint): bigint {
   return (seed >> 11n) % below;
 }
 
-/** Ranks of a fiber of `total`: all when small, else both ends, the middle and pseudo-random ones. */
-function ranksOf(total: bigint, few = false): bigint[] {
-  if (few && total > 6n) return [...new Set([0n, total / 2n, total - 1n])];
-  if (total <= (DEEP ? 120n : 24n)) return Array.from({ length: Number(total) }, (_, i) => BigInt(i));
+/** Ranks of a fiber of `total`: all when small, else both ends, the middle and pseudo-random ones.
+ *  An interpreted family takes the standard run's ranks in DEEP, and three in the standard run. */
+function ranksOf(total: bigint, family: EpsilFamily): bigint[] {
+  const full = DEEP && !interpreted(family);
+  if (!DEEP && interpreted(family) && total > 6n) return [...new Set([0n, total / 2n, total - 1n])];
+  if (total <= (full ? 120n : 24n)) return Array.from({ length: Number(total) }, (_, i) => BigInt(i));
   const ranks = new Set<bigint>([0n, 1n, total - 2n, total - 1n, total / 2n]);
-  for (let i = 0; i < (DEEP ? 24 : 3); i++) ranks.add(random(total));
-  if (DEEP) {
+  for (let i = 0; i < (full ? 24 : 3); i++) ranks.add(random(total));
+  if (full) {
     for (const r of [2n, total - 3n, total / 3n]) ranks.add(r);
     for (let i = 1n; i < 12n; i++) ranks.add((i * (total - 1n)) / 12n);
   }
@@ -314,7 +340,7 @@ for (const family of fastFamilies) {
       expect([where, fast.count(p)]).toEqual([where, total]);
       if (typeof total !== "bigint" || total > MAX_SAFE) continue;
       const members: Element[] = [];
-      for (const r of ranksOf(total, interpreted(family))) {
+      for (const r of ranksOf(total, family)) {
         const element = fast.unrank(p, r);
         expect([where, r, element]).toEqual([where, r, epsil.unrank(p, r)]);
         expect([where, r, fast.rank(element, p)]).toEqual([where, r, r]);
@@ -323,7 +349,10 @@ for (const family of fastFamilies) {
         members.push(element);
       }
       for (const member of members.filter((_, i) => i % Math.ceil(members.length / 3) === 0)) {
-        for (const near of mutations(member).slice(0, DEEP ? 60 : interpreted(family) ? 2 : 14)) {
+        for (const near of mutations(member).slice(
+          0,
+          DEEP && !interpreted(family) ? 60 : !DEEP && interpreted(family) ? 2 : 14,
+        )) {
           const expected = epsil.valid(near, p);
           if (!expected) rejected++;
           expect([where, near, fast.valid(near, p)]).toEqual([where, near, expected]);
@@ -333,6 +362,122 @@ for (const family of fastFamilies) {
     }
     // The near misses must include some the family rejects, or membership went unchecked.
     expect(rejected).toBeGreaterThan(0);
+  });
+}
+
+// A sequence has no fiber to run out: its fast path answers the terms a double holds exactly, and declines
+// the first one past 2^53, which Epsil answers with an exact integer (a bigint where a number would round).
+/** Each sequence's params: PolygonalNumbers(k) for a few sides' worth. */
+const SEQUENCE_PARAMS: Record<string, number[][]> = { PolygonalNumbers: [[3], [5], [8], [30]] };
+const sequenceParams = (family: EpsilFamily): number[][] => SEQUENCE_PARAMS[family.head] ?? [[]];
+
+for (const family of sequenceFamilies) {
+  test(`${family.head}: the fast path agrees with Epsil, and stops at the last term a double holds`, () => {
+    const fast = kernelOn(ce, family);
+    const epsil = epsilKernelOn(ce, family);
+    for (const p of sequenceParams(family)) {
+      const where = labelled(family, p);
+      expect([where, fast.count(p)]).toEqual([where, Number.POSITIVE_INFINITY]);
+      expect([where, epsil.count(p)]).toEqual([where, Number.POSITIVE_INFINITY]);
+      // The first rank whose term the fast path gives as a bigint or declines (a constant sequence has none).
+      const holds = (r: number): boolean => {
+        try {
+          return typeof family.fast!.unrank(p, r) === "number";
+        } catch {
+          return false; // a term too large for the kernel at all
+        }
+      };
+      // Doubling from a few thousand ranks: a kernel that caches its terms builds them all up to the rank asked.
+      let [low, high] = [0, 4096];
+      while (holds(high) && high < 2 ** 52) [low, high] = [high, high * 2];
+      if (holds(high)) low = high;
+      else
+        while (low + 1 < high) {
+          const mid = Math.floor((low + high) / 2);
+          if (holds(mid)) low = mid;
+          else high = mid;
+        }
+      const ranks = new Set<number>();
+      for (let r = 0; r < 60; r++) ranks.add(r);
+      for (let r = Math.max(0, low - 3); r <= low + 3; r++) ranks.add(r);
+      for (const r of [1234, 98765, 2 ** 30 + 1]) if (r <= low && holds(r)) ranks.add(r);
+      const members: Element[] = [];
+      for (const r of [...ranks].toSorted((a, b) => a - b)) {
+        const element = fast.unrank(p, BigInt(r));
+        // The terms past the last a double holds are bigints the interpreter answers, each at some cost: the
+        // first few past it and every twentieth rank are compared (tests/sequence-epsil.test.ts goes farther).
+        if (typeof element === "bigint" && r > low + 6 && r % 30 !== 0) continue;
+        expect([where, r, element]).toEqual([where, r, epsil.unrank(p, BigInt(r))]);
+        expect([where, r, fast.rank(element, p)]).toEqual([where, r, epsil.rank(element, p)]);
+        expect([where, element, fast.valid(element, p)]).toEqual([where, element, true]);
+        members.push(element);
+      }
+      // Near misses: a number is a member of the sequence or it is not, and both read it the same.
+      let rejected = 0;
+      for (const member of members.filter((m) => typeof m === "number")) {
+        for (const near of [member - 2, member - 1, member + 1, member + 2]) {
+          const expected = epsil.valid(near, p);
+          if (!expected) rejected++;
+          expect([where, near, fast.valid(near, p)]).toEqual([where, near, expected]);
+          expect([where, near, fast.rank(near, p)]).toEqual([where, near, epsil.rank(near, p)]);
+        }
+      }
+      expect(rejected).toBeGreaterThan(0);
+      // Where the fast path declines (a term past a double, a rank past its reach), the answer is Epsil's own.
+      if (!holds(high)) {
+        const r = BigInt(high);
+        const answer = fast.unrank(p, r);
+        expect([where, answer]).toEqual([where, epsil.unrank(p, r)]);
+        // A term past a double is the exact bigint, never a rounded number.
+        if (typeof epsil.unrank(p, r) !== "number") expect(typeof answer).toBe("bigint");
+      }
+    }
+  });
+}
+
+// A predicate scan's definition is a fold over the integers up to a proven bound: the interpreter reaches ranks of
+// tens to hundreds, so the fast path (a sieve or a cache) is compared there, and answers past it where Epsil declines.
+const SCAN_PARAMS: Record<string, number[][]> = {
+  KAlmostPrimes: [[0], [1], [2], [3]],
+  RoughNumbers: [[0], [2], [3], [6]],
+  KFreeIntegers: [[1], [2], [3]],
+  SmoothNumbers: [[1], [2], [3]],
+};
+
+for (const family of scanFamilies) {
+  test(`${family.head}: the fast path agrees with Epsil as far as Epsil reaches, and answers past it`, () => {
+    const fast = kernelOn(ce, family);
+    const epsil = epsilKernelOn(ce, family);
+    for (const p of SCAN_PARAMS[family.head] ?? [[]]) {
+      const where = labelled(family, p);
+      expect([where, fast.count(p)]).toEqual([where, epsil.count(p)]);
+      if (epsil.count(p) !== Number.POSITIVE_INFINITY) continue;
+      const declines = (r: number): boolean => family.early!.unrank!(BigInt(r), p) === "decline";
+      let reach = 0;
+      while (reach < 3000 && !declines(reach + 1)) reach++;
+      const members: number[] = [];
+      // Every rank to a hundred, then a sample up to the last the definition reaches.
+      for (let r = 0; r <= reach; r += r < 100 ? 1 : 37) {
+        const element = fast.unrank(p, BigInt(r)) as number;
+        expect([where, r, element]).toEqual([where, r, epsil.unrank(p, BigInt(r))]);
+        members.push(element);
+      }
+      const reaches = (x: number): boolean => family.early!.rank!(x, p) !== "decline";
+      for (const member of members) {
+        for (const near of [member - 2, member - 1, member, member + 1, member + 2]) {
+          const expected = epsil.valid(near, p);
+          expect([where, near, fast.valid(near, p)]).toEqual([where, near, expected]);
+          // The definition declines the rank of a member past its reach; a non-member's is -1 anywhere.
+          if (!expected || reaches(near))
+            expect([where, near, fast.rank(near, p)]).toEqual([where, near, epsil.rank(near, p)]);
+        }
+      }
+      // One rank past the reach, Epsil alone declines and the fast path gives the next member.
+      if (reach < 3000) {
+        expect(() => epsil.unrank(p, BigInt(reach + 1)), where).toThrow(RangeError);
+        expect([where, (fast.unrank(p, BigInt(reach + 1)) as number) > members.at(-1)!]).toEqual([where, true]);
+      }
+    }
   });
 }
 
@@ -347,6 +492,10 @@ test("the fast path answers up to 2^53 members, and not a member more", () => {
 const QUICK_PAST_LIMIT = new Set([
   "SymmetricGroup",
   "KPermutations",
+  "Arrangements",
+  "EvenPermutations",
+  "LehmerCodes",
+  "SubexcedantSeqs",
   "SignedPermutations",
   "ColoredPermutations",
   "GrayCodeSubsets",
@@ -430,9 +579,14 @@ const BIGINT_COUNTS: [string, number[]][] = [
   ["SetPartitionsIntoKBlocks", [26, 5]],
   ["SetCompositions", [17]],
   ["Surjections", [23, 5]],
-  // Epsil takes seconds at these.
+  // The Mahonian count, at the first n past 2^53.
+  ["KInversionPermutations", [20, 95]],
+  // Epsil takes seconds at these, and about a minute and a half at the non-crossing supports. The Eulerian
+  // and Motzkin-by-peaks counts are out of Epsil's reach past 2^53 (many minutes at the first params):
+  // tests/exact-triangles.test.ts holds them to a second route instead.
   ...(DEEP
     ? ([
+        ["NonCrossingCycleSupportPermutations", [19]],
         ["TriangularCompositions", [86]],
         ["PrimeCompositions", [98]],
       ] as [string, number[]][])
@@ -449,6 +603,28 @@ for (const [head, p] of BIGINT_COUNTS) {
     expect(kernelOn(ce, family).count(p)).toBe(total);
   });
 }
+
+// StandardTableauPairs(18) is the one nested fiber with a fast count whose ranks pass 2^53 − 18!: a rank
+// r ≥ 2^53 − 18! must not wrap in doubles (r + 18! leaves the safe integers). The standard run samples
+// nested families at n ≤ 2 only, so the ends of this fiber and the powers of two inside it are checked here.
+test("StandardTableauPairs(18): unrank and rank agree with Epsil past 2^53 − 18!", () => {
+  const family = fastFamilies.find((f) => f.head === "StandardTableauPairs")!;
+  const fast = kernelOn(ce, family);
+  const epsil = epsilKernelOn(ce, family);
+  const p = [18];
+  const total = 6402373705728000n;
+  expect(fast.count(p)).toBe(total);
+  const wrap = 2n ** 53n - total;
+  const ranks = [0n, 1n, 2n ** 51n, 2n ** 51n + 1n, wrap - 1n, wrap, wrap + 1n, wrap + 2n, 2n ** 52n, 2n ** 52n + 1n]
+    .concat([total - 2n, total - 1n])
+    .filter((r) => r < total);
+  for (const r of ranks) {
+    const element = fast.unrank(p, r);
+    expect([r, element]).toEqual([r, epsil.unrank(p, r)]);
+    expect([r, fast.rank(element, p)]).toEqual([r, r]);
+    expect([r, epsil.rank(element, p)]).toEqual([r, r]);
+  }
+});
 
 // Vexillary's Epsil table is 2^n states, out of reach past n = 14 or so: its exact count, past 2^53 too, is
 // held to Gessel's Bessel determinant (Av(2143) is Wilf-equivalent to Av(1234)) instead.

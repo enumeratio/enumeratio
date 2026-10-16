@@ -34,8 +34,20 @@ import {
 import { between as edgeBiased } from "@enumeratio/plausible";
 import { isSettled } from "@enumeratio/entry";
 import { referenceEntries } from "../src/node.ts";
-import { agreesInNorm, associates, roundsTo, undecidedIdentity } from "./plausible-compare.ts";
+import {
+  agreesInNorm,
+  associates,
+  crateDeclines,
+  hasNonAnswer,
+  isStuckCall,
+  outsideCrateDomain,
+  overshootsPole,
+  roundsTo,
+  roundsToZero,
+  undecidedIdentity,
+} from "./plausible-compare.ts";
 import { cappedVerdicts } from "./oracle-verdict-capped.ts";
+import { hash, inLaneOrder, laneMinutes, verdictArguments } from "./plausible-lanes.ts";
 
 const entries = referenceEntries();
 const verdicts = cappedVerdicts();
@@ -50,18 +62,12 @@ const seed = option("seed") ?? new Date().toISOString().slice(0, 10);
 const perTemplate = Number(option("samples") ?? 3);
 const strict = args.includes("--strict");
 
-// One system's lane may spend this long before the samples not yet run are declined. The
-// Python job (setup and both drift rescans take ~10 of its 30 minutes) runs two lanes, so a
-// lane that stalls must not take the other's share.
-const LANE_MINUTES = Number(option("lane-minutes") ?? 8);
+// One system's lane may spend its budget (plausible-lanes.ts) before the samples not yet run are
+// declined: a lane that stalls must not take another's share of its job.
+const laneOverride = option("lane-minutes");
 
 // ── a seeded generator per template, so samples don't depend on iteration order ──
 
-const hash = (text: string): number => {
-  let h = 2166136261;
-  for (let i = 0; i < text.length; i++) h = Math.imul(h ^ text.charCodeAt(i), 16777619);
-  return h >>> 0;
-};
 const generator = (key: string): (() => number) => {
   let a = hash(`${seed}/${key}`);
   return () => {
@@ -116,6 +122,9 @@ const STRUCTURAL = new Set([
   "AdicNumerals",
 ]);
 
+// Heads whose second operand is how many digits to produce.
+const COUNTED = new Set(["AdicDigits", "AdicExpansion", "AdicSqrt"]);
+
 // A collection family's integer arguments are sizes, not values: resampling them near the
 // template's (up to ±1e6) builds enormous families. They're drawn from the family's own
 // declared params instead (https://github.com/enumeratio/enumeratio/wiki/Plausible §7), within a small work budget.
@@ -144,9 +153,26 @@ function familyParams(family: AnyFamily, ops: readonly MathJSON[], random: Rando
   return [...ops];
 }
 
+/** A call to `head` with its range bounds in order: a reversed `Interval` or `Limits(k, 3, 0)` is another question. */
+function orderBounds(head: string, ops: MathJSON[]): MathJSON {
+  const iterated = (head === "Tuple" || head === "Limits") && typeof ops[0] === "string";
+  const bounds = head === "Interval" ? ops : iterated ? ops.slice(1) : undefined;
+  if (bounds === undefined || bounds.length !== 2 || !bounds.every((bound) => typeof bound === "number"))
+    return [head, ...ops] as MathJSON;
+  const [lo, hi] = (bounds as number[]).toSorted((a, b) => a - b);
+  return [head, ...ops.slice(0, ops.length - 2), lo, hi] as MathJSON;
+}
+
 /** `expr` with some of its numeric literals resampled; at least one when it has any. */
 function mutate(expr: MathJSON, random: Random): MathJSON {
   let changed = false;
+  /** A digit count resampled to a positive one. */
+  const positive = (node: MathJSON): MathJSON => {
+    if (typeof node === "number") return Math.max(1, Math.abs(node));
+    if (Array.isArray(node) && node[0] === "List")
+      return [node[0], ...node.slice(1).map((n) => positive(n as MathJSON))] as MathJSON;
+    return node;
+  };
   const walk = (node: MathJSON): MathJSON => {
     if (typeof node === "number") {
       if (random() < 0.5) {
@@ -215,7 +241,13 @@ function mutate(expr: MathJSON, random: Random): MathJSON {
     }
     // The first operand of AdicNumeral is its base: keep it, resample the value.
     if (head === "AdicNumeral") return [head, ops[0] as MathJSON, ...ops.slice(1).map(walk)];
-    return [head, ...ops.map(walk)] as MathJSON;
+    // N's digit count is a count: zero or negative is no precision at all (the lanes reject it
+    // in their own words), so it is resampled among the positive ones.
+    if (head === "N" && ops.length === 2) return [head, walk(ops[0] as MathJSON), positive(walk(ops[1] as MathJSON))];
+    // The same for a count of digits: ours takes a non-positive one as the default 20.
+    if (COUNTED.has(head as string) && ops.length === 2)
+      return [head, walk(ops[0] as MathJSON), positive(walk(ops[1] as MathJSON))] as MathJSON;
+    return orderBounds(head as string, ops.map(walk));
   };
   const out = walk(expr);
   return changed ? out : walk(expr);
@@ -349,6 +381,16 @@ function autoKind(
   // Our own worker hit its time or memory cap on this sample (an extreme edge the mutator
   // drew, not the other system): the same "nothing to compare" shrug, from our side.
   if (ours === "Aborted") return "resource";
+  if (system === "rust") {
+    // A double can't land on an exact zero (cos(π/2), ln Γ(1)): only where ours' zero is exact.
+    if (result.error === undefined && roundsToZero(sample, ours, theirs)) return "precision";
+    // A pole the crate blows past rather than reaching, element by element, at the head's poles only.
+    if (result.error === undefined && overshootsPole(sample, ours, theirs)) return "undefined-form";
+    // The crate declines in its own words, on arguments outside what it takes (a real-only
+    // function, an unsigned or machine-word parameter); ours either answers or declines too.
+    if (result.error !== undefined && crateDeclines(theirs) && outsideCrateDomain(sample))
+      return hasNonAnswer(ours) || isStuckCall(ours) ? "undefined-form" : "domain";
+  }
   // `N(expr, d)`: the mapping drops the digit count and asks the other system for full
   // precision instead (a numeric-tolerance comparison is the better general witness — see
   // the N/2 mapping's own note), so a low `d` disagrees whenever rounding to `d` significant
@@ -464,6 +506,8 @@ interface Finding {
 const findings: Finding[] = [];
 /** Samples a lane declined (its kernel hit a cap or its time budget ran out), by template. */
 const declined = new Map<string, { timedOut: number; unrun: number; example: string }>();
+/** Each lane's sample budget in minutes, as run. */
+const budgets = new Map<System, number>();
 const lines: string[] = [
   `## Oracle Plausible — seed \`${seed}\``,
   "",
@@ -474,10 +518,15 @@ const lines: string[] = [
 ];
 
 for (const system of systems) {
-  const runnable = samples
-    .filter((sample) => expectedOf.has(sample.id))
-    .map((sample) => ({ sample, out: emit(sample.expr, system) }))
-    .filter((row) => row.out.ok);
+  const runnable = inLaneOrder(
+    samples
+      .filter((sample) => expectedOf.has(sample.id))
+      .map((sample) => ({ sample, out: emit(sample.expr, system) }))
+      .filter((row) => row.out.ok),
+    seed,
+    system,
+    (row) => row.sample.id,
+  );
   // A free symbol on a symbolic system is judged as an identity (does the difference
   // vanish?), as the scan does: two equal closed forms can be spelled differently.
   const symbolicMode: boolean[] = [];
@@ -496,11 +545,14 @@ for (const system of systems) {
     return agreement ?? plain;
   });
   process.stderr.write(`${system}: ${sources.length} samples — running…\n`);
-  const results = await runIn(system, sources, { deadline: Date.now() + LANE_MINUTES * 60_000 });
+  const budget = laneMinutes(system, laneOverride);
+  budgets.set(system, budget);
+  const results = await runIn(system, sources, { deadline: Date.now() + budget * 60_000 });
   let agree = 0;
   let inherited = 0;
   let automatic = 0;
   let found = 0;
+  let unrun = 0;
   const autos = new Map<string, number>();
   for (const [i, row] of runnable.entries()) {
     const result = results[i] as { value?: string; numeric?: string; error?: string };
@@ -511,17 +563,21 @@ for (const system of systems) {
         ? "error"
         : symbolicMode[i]
           ? interpretSymbolicAgreement(result.value ?? "")
-          : await verdicts.verdict(system, expected, result);
+          : await verdicts.verdict(...verdictArguments(system, row.sample.expr, expected, result));
     const slowCompare = judged === "timeout";
     const verdict: Verdict | "error" = slowCompare ? "error" : judged;
     const error = slowCompare ? "TimeoutError: comparison" : result.error;
     if (error?.startsWith("TimeoutError")) {
       const key = `${system} · ${row.sample.template.id}`;
       const entry = declined.get(key) ?? { timedOut: 0, unrun: 0, example: JSON.stringify(row.sample.expr) };
-      if (error.includes("lane budget")) entry.unrun++;
-      else entry.timedOut++;
       declined.set(key, entry);
-      // Declined, not agreement and not a finding.
+      // Declined, not agreement and not a finding. A sample the budget never reached was not sampled.
+      if (error.includes("lane budget")) {
+        entry.unrun++;
+        unrun++;
+        continue;
+      }
+      entry.timedOut++;
       autos.set("resource", (autos.get("resource") ?? 0) + 1);
       automatic++;
       continue;
@@ -569,7 +625,7 @@ for (const system of systems) {
     });
   }
   const autoText = [...autos].map(([kind, n]) => `${kind} ${n}`).join(", ") || "0";
-  lines.push(`| ${system} | ${runnable.length} | ${agree} | ${inherited} | ${autoText} | ${found} |`);
+  lines.push(`| ${system} | ${runnable.length - unrun} | ${agree} | ${inherited} | ${autoText} | ${found} |`);
   process.stderr.write(
     `${system}: agree ${agree}, inherited ${inherited}, automatic ${automatic}, findings ${found}\n`,
   );
@@ -580,7 +636,7 @@ if (declined.size > 0) {
   const total = (field: "timedOut" | "unrun") => [...declined.values()].reduce((n, d) => n + d[field], 0);
   lines.push("", "### Declined", "");
   lines.push(
-    `${total("timedOut")} samples timed out (kernel or comparison); ${total("unrun")} were not run (lane budget ${LANE_MINUTES} min).`,
+    `${total("timedOut")} samples timed out (kernel or comparison); ${total("unrun")} were not run (lane budget ${[...budgets].map(([system, minutes]) => `${system} ${minutes}`).join(", ")} min).`,
     "",
   );
   const slow = [...declined].filter(([, d]) => d.timedOut > 0).toSorted((a, b) => b[1].timedOut - a[1].timedOut);

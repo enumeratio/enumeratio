@@ -18,7 +18,7 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { DEFINED_NAMES } from "./defined-names-data.ts";
-import { emit, type MathJSON } from "./emit.ts";
+import { emit, type MathJSON, seriesCall } from "./emit.ts";
 import type { SymbolicSystem } from "./systems.ts";
 import type { Verdict } from "./compare.ts";
 
@@ -247,6 +247,44 @@ export function indefiniteVariables(expr: MathJSON, found: Set<string> = new Set
   return found;
 }
 
+/** The variables of the `Integrate` calls in `expr`, as SymPy takes them: an indefinite integral's (a bare
+ * variable, or `Limits(x, Nothing, Nothing)`), whose answer is an antiderivative, and a definite one's,
+ * bound inside the call and so never a point to sample. */
+export function integrationVariables(
+  expr: MathJSON,
+  found: { indefinite: Set<string>; definite: Set<string> } = { indefinite: new Set(), definite: new Set() },
+): { indefinite: Set<string>; definite: Set<string> } {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  if (head === "Integrate") {
+    for (const spec of operands.slice(1)) {
+      const limits = Array.isArray(spec) && ["Limits", "Tuple", "List"].includes(spec[0] as string);
+      const name = bareName(limits ? (spec[1] as MathJSON) : spec);
+      if (name === undefined) continue;
+      const open = !limits || (spec[2] === "Nothing" && spec[3] === "Nothing");
+      (open ? found.indefinite : found.definite).add(name);
+    }
+  }
+  for (const operand of operands) integrationVariables(operand, found);
+  return found;
+}
+
+/** The indefinite variables of each `Integrate` call in `expr` that has any, in the order the call names them. */
+export function indefiniteGroups(expr: MathJSON, found: string[][] = []): string[][] {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  if (head === "Integrate") {
+    const group = operands.slice(1).flatMap((spec) => {
+      const limits = Array.isArray(spec) && ["Limits", "Tuple", "List"].includes(spec[0] as string);
+      const name = bareName(limits ? (spec[1] as MathJSON) : spec);
+      return name !== undefined && (!limits || (spec[2] === "Nothing" && spec[3] === "Nothing")) ? [name] : [];
+    });
+    if (group.length > 0) found.push(group);
+  }
+  for (const operand of operands) indefiniteGroups(operand, found);
+  return found;
+}
+
 /** The expansion variables of `Series(f, x, x0, n)` (or `Series(f, [x, x0, n])`) and of
  * `SeriesCoefficient(f, [x, x0, n])`: bound inside the call, so never a point to sample there (`Series[f, {7/3, x0, n}]` is Series::ivar). */
 export function seriesVariables(expr: MathJSON, found: Set<string> = new Set()): Set<string> {
@@ -358,15 +396,20 @@ function trialSources(
       ? new Set([...derivativeVariables(expr), ...derivativeVariables(expected), ...indefiniteVariables(expr)])
       : new Set<string>();
   const held = new Set([...steps, ...series, ...varied]);
+  // SymPy's definite integral binds its variable inside the call, so it is no point to sample.
   const bound = new Set([
     ...boundVariables(expr),
     ...boundVariables(expected),
     ...(system === "wolfram" ? [] : derivativeVariables(expr)),
+    ...(system === "sympy" || system === "sage" ? integrationVariables(expr).definite : []),
   ]);
-  const subs = new Map([...all].filter(([name]) => !held.has(name) && !bound.has(name)));
+  // Sage's transforms take a variable, not a number, for the answer's variable: it is sampled after the call.
+  const deferred = system === "sage" ? positiveVariables(expr) : new Set<string>();
+  const subs = new Map([...all].filter(([name]) => !held.has(name) && !bound.has(name) && !deferred.has(name)));
   // A series is sampled as a polynomial, so the simplifier around it has nothing to do: on a
   // symbolic-coefficient series it only runs out the clock (`FullSimplify[Normal[Series[…]]]`).
-  const asked = series.size > 0 ? withoutSimplifiers(expr) : expr;
+  // SymPy's simplifier is not asked at a point either: it keeps the value, and can raise there where the value is fine.
+  const asked = series.size > 0 || system === "sympy" ? withoutSimplifiers(expr) : expr;
   const theirs = emit(substituteFreeSymbols(asked, subs), system);
   const ours = emit(substituteFreeSymbols(expected, subs), system);
   if (!theirs.ok || !ours.ok) return undefined;
@@ -377,9 +420,17 @@ function trialSources(
   const after = rules.map(
     ([name, value]) => `${(name as { source: string }).source} -> ${(value as { source: string }).source}`,
   );
+  const later = [...deferred]
+    .filter((name) => all.has(name))
+    .map((name) => [emit(name, system), emit(all.get(name)!, system)] as const);
+  if (later.some(([name, value]) => !name.ok || !value.ok)) return undefined;
+  const afterwards = (source: string): string =>
+    later.length === 0
+      ? source
+      : `SR(${source}).subs({${later.map(([name, value]) => `${(name as { source: string }).source}: ${(value as { source: string }).source}`).join(", ")}})`;
   return {
-    theirs: system === "wolfram" ? withoutConditions(theirs.source) : theirs.source,
-    ours: ours.source,
+    theirs: system === "wolfram" ? withoutConditions(theirs.source) : afterwards(theirs.source),
+    ours: afterwards(ours.source),
     after: after.length === 0 ? "{}" : `{${after.join(", ")}}`,
     stepped: [...all.keys()].some((name) => steps.has(name)),
     series: series.size > 0,
@@ -410,15 +461,20 @@ function solveAgreementSource(theirs: string, ours: string, cap: number): string
  * side (`Cos[x] + I Sin[x]` against `I Sin[x] + Cos[x]`) is not a disagreement. A reply of a
  * different shape (`True`, a bare value) is not decided here.
  */
-function propositionAgreementSource(theirs: string, ours: string, cap: number): string {
+export function propositionAgreementSource(theirs: string, ours: string, cap: number): string {
   return (
     `Module[{zero, agree}, ` +
-    `zero[e_] := AllTrue[Flatten[{Quiet[TimeConstrained[FullSimplify[e], ${cap}, $Aborted]]}], # === 0 &]; ` +
+    // An inexact difference is zero to a double's rounding of the values compared (`0.` is not `=== 0`);
+    // an exact one must be exactly zero.
+    `zero[e_, values_] := AllTrue[Flatten[{Quiet[TimeConstrained[FullSimplify[e], ${cap}, $Aborted]]}], ` +
+    `# === 0 || (InexactNumberQ[#] && Abs[#] <= 10^-12 Max[Abs[N[values]]]) &]; ` +
     `agree[t_And, o_And] /; Length[t] == Length[o] := And @@ MapThread[agree, {List @@ t, List @@ o}]; ` +
     `agree[t_Equal, o_Equal] /; Length[t] == 2 && Length[o] == 2 := ` +
-    `zero[t[[1]] - t[[2]] - (o[[1]] - o[[2]])] || zero[t[[1]] - t[[2]] + (o[[1]] - o[[2]])]; ` +
+    `zero[t[[1]] - t[[2]] - (o[[1]] - o[[2]]), {t[[1]], t[[2]], o[[1]], o[[2]]}] || ` +
+    `zero[t[[1]] - t[[2]] + (o[[1]] - o[[2]]), {t[[1]], t[[2]], o[[1]], o[[2]]}]; ` +
     `agree[t_, o_] /; MatchQ[t, _Less | _LessEqual | _Greater | _GreaterEqual] && Head[t] === Head[o] && ` +
-    `Length[t] == 2 && Length[o] == 2 := zero[t[[1]] - o[[1]]] && zero[t[[2]] - o[[2]]]; ` +
+    `Length[t] == 2 && Length[o] == 2 := ` +
+    `zero[t[[1]] - o[[1]], {t[[1]], o[[1]]}] && zero[t[[2]] - o[[2]], {t[[2]], o[[2]]}]; ` +
     // Any other pair of statements (an `Or`, `x > 0` against `0 < x`): equivalent when the kernel can show it.
     `agree[t_, o_] := Module[{v = Select[Union[Cases[{t, o}, _Symbol, {-1}]], Context[#] =!= "System\`" &], r}, ` +
     `r = Quiet[TimeConstrained[FullSimplify[Equivalent[t, o]], ${cap}, $Aborted]]; ` +
@@ -429,8 +485,6 @@ function propositionAgreementSource(theirs: string, ours: string, cap: number): 
     `agree[${theirs}, ${ours}]]`
   );
 }
-
-const ce = new ComputeEngine();
 
 /** Wrappers that ask the kernel to work on their argument; the call inside is what can be left alone. */
 const WRAPPERS = new Set(["N", "Simplify", "FullSimplify", "FunctionExpand", "Hold", "Evaluate", "Expand", "Factor"]);
@@ -452,13 +506,40 @@ const COMBINING = new Set([
   "Pair",
 ]);
 
-const canonicalText = (expr: MathJSON): string => {
+/** Raised when one side of a comparison cannot be put in canonical form and the other can: the two texts would be
+ * different kinds of thing, so the comparison is declined (an `inconclusive` verdict) rather than made. */
+export class Undecided extends Error {}
+
+/** The engine of the comparison in progress. Boxing `x^a` types `a` as a number for good, so each public
+ * comparison gets an engine of its own (about 10 ms) and nothing it learns reaches the next example. */
+let current: ComputeEngine | undefined;
+const engine = (): ComputeEngine => (current ??= new ComputeEngine());
+
+function isolated<T>(run: () => T): T {
+  if (current !== undefined) return run();
   try {
-    return JSON.stringify(ce.box(expr as Parameters<ComputeEngine["box"]>[0]).json);
+    return run();
+  } finally {
+    current = undefined;
+  }
+}
+
+const canonicalText = (expr: MathJSON): string | undefined => {
+  try {
+    return JSON.stringify(engine().box(expr as Parameters<ComputeEngine["box"]>[0]).json);
   } catch {
-    return JSON.stringify(expr);
+    return undefined;
   }
 };
+
+/** Whether `a` and `b` are one expression in canonical form. Both failing to box compares them as written; one
+ * failing is no comparison at all. */
+function sameCanonical(a: MathJSON, b: MathJSON): boolean {
+  const [x, y] = [canonicalText(a), canonicalText(b)];
+  if (x === undefined && y === undefined) return JSON.stringify(a) === JSON.stringify(b);
+  if (x === undefined || y === undefined) throw new Undecided();
+  return x === y;
+}
 
 /**
  * Whether `expected` still holds some part of the call `expr` asks (canonically, so `Times(1/t, f)`
@@ -469,6 +550,10 @@ const canonicalText = (expr: MathJSON): string => {
  * holds one entry is not agreement with a list that evaluates all of them.
  */
 export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
+  return isolated(() => leavesCallIn(expr, expected));
+}
+
+function leavesCallIn(expr: MathJSON, expected: MathJSON): boolean {
   let call = expr;
   while (Array.isArray(call) && WRAPPERS.has(call[0] as string)) call = call[1] as MathJSON;
   if (!Array.isArray(call) || typeof call[0] !== "string") return false;
@@ -505,11 +590,10 @@ export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
   }
   const head = call[0];
   const asked = call;
-  const askedText = canonicalText(asked);
   const visit = (e: MathJSON): boolean =>
     Array.isArray(e) &&
     ((e[0] === head &&
-      (canonicalText(e) === askedText ||
+      (sameCanonical(e, asked) ||
         (e.length === asked.length &&
           e.slice(1).every((x, i) => sameValue(x as MathJSON, asked[i + 1] as MathJSON))))) ||
       e.slice(1).some((x) => visit(x as MathJSON)));
@@ -561,8 +645,11 @@ const rewriteTargets = (expr: MathJSON): MathJSON[] | undefined => {
 
 /** Whether `node` is `expr`'s form, or one entry of it, written back unchanged. */
 export function echoedPart(expr: MathJSON, node: MathJSON): boolean {
-  const text = canonicalText(node);
-  return rewriteTargets(expr)?.some((target) => canonicalText(target) === text) === true;
+  return isolated(() => echoedPartIn(expr, node));
+}
+
+function echoedPartIn(expr: MathJSON, node: MathJSON): boolean {
+  return rewriteTargets(expr)?.some((target) => sameCanonical(target, node)) === true;
 }
 
 /**
@@ -572,6 +659,10 @@ export function echoedPart(expr: MathJSON, node: MathJSON): boolean {
  * form alone too.
  */
 export function echoesInput(expr: MathJSON, expected: MathJSON): boolean {
+  return isolated(() => echoesInputIn(expr, expected));
+}
+
+function echoesInputIn(expr: MathJSON, expected: MathJSON): boolean {
   return echoedPart(expr, expected) || (listEntries(expected)?.some((entry) => echoedPart(expr, entry)) ?? false);
 }
 
@@ -697,11 +788,11 @@ function orderFree(expr: MathJSON): MathJSON {
 
 /** Two arguments that are one expression written differently (`1/t * f` and `f/t`). */
 function sameValue(a: MathJSON, b: MathJSON): boolean {
-  if (canonicalText(a) === canonicalText(b)) return true;
+  if (sameCanonical(a, b)) return true;
   if (JSON.stringify(orderFree(a)) === JSON.stringify(orderFree(b))) return true;
   try {
-    const [x, y] = [a, b].map((e) => ce.box(e as Parameters<ComputeEngine["box"]>[0]));
-    return x!.isSame(y!) || ce.box(["Subtract", x!, y!]).simplify().is(0) || agreeAtPoints(a, b);
+    const [x, y] = [a, b].map((e) => engine().box(e as Parameters<ComputeEngine["box"]>[0]));
+    return x!.isSame(y!) || engine().box(["Subtract", x!, y!]).simplify().is(0) || agreeAtPoints(a, b);
   } catch {
     return false;
   }
@@ -720,14 +811,18 @@ function agreeAtPoints(a: MathJSON, b: MathJSON): boolean {
     ...indefiniteVariables(a),
     ...indefiniteVariables(b),
   ]);
-  const names = [...new Set([...ce.box(a as never).unknowns, ...ce.box(b as never).unknowns])].filter(
+  const names = [...new Set([...engine().box(a as never).unknowns, ...engine().box(b as never).unknowns])].filter(
     (name) => !bound.has(name),
   );
   const discrete = new Set([...discreteVariables(a), ...discreteVariables(b)]);
   const positive = new Set([...positiveVariables(a), ...positiveVariables(b)]);
   return Array.from({ length: NUMBER_OF_TRIALS }, (_, trial) => {
     const subs = trialSubstitution(names, trial, discrete, positive);
-    const [x, y] = [a, b].map((e) => ce.box(substituteFreeSymbols(e, subs) as never).N());
+    const [x, y] = [a, b].map((e) =>
+      engine()
+        .box(substituteFreeSymbols(e, subs) as never)
+        .N(),
+    );
     const close = (p: number, q: number) => Number.isFinite(p) && Number.isFinite(q) && Math.abs(p - q) < 1e-9;
     return close(x!.re, y!.re) && close(x!.im, y!.im);
   }).every(Boolean);
@@ -793,6 +888,10 @@ function applyFunction(fn: readonly MathJSON[], argument: MathJSON): MathJSON | 
 /** Whether two pure functions are one function written differently: the same arity, and bodies that
  * are one expression once the bound variables are renamed alike (`x |-> f(x)` and `f[#1] &`). */
 export function equivalentFunctions(a: MathJSON, b: MathJSON): boolean {
+  return isolated(() => equivalentFunctionsIn(a, b));
+}
+
+function equivalentFunctionsIn(a: MathJSON, b: MathJSON): boolean {
   if (!isFunction(a) || !isFunction(b)) return false;
   const [x, y] = [positional(a), positional(b)];
   return x !== undefined && y !== undefined && x.arity === y.arity && sameValue(x.body, y.body);
@@ -804,9 +903,13 @@ export function equivalentFunctions(a: MathJSON, b: MathJSON): boolean {
  * function, not two spellings of it. Anything else is left as it was.
  */
 export function alignFunctions(theirs: MathJSON, ours: MathJSON): MathJSON {
+  return isolated(() => alignFunctionsIn(theirs, ours));
+}
+
+function alignFunctionsIn(theirs: MathJSON, ours: MathJSON): MathJSON {
   if (equivalentFunctions(theirs, ours)) return ours;
   // One expression spelled two ways (`Sqrt(2)` and `Power(2, 1/2)`) is one canonical form.
-  if (Array.isArray(theirs) && canonicalText(theirs) === canonicalText(ours)) return ours;
+  if (Array.isArray(theirs) && sameCanonical(theirs, ours)) return ours;
   if (
     Array.isArray(theirs) &&
     Array.isArray(ours) &&
@@ -862,6 +965,69 @@ export function rootsAsPowers(expr: MathJSON): MathJSON {
 /** Wolfram source for `source` with every `ConditionalExpression[value, condition]` replaced by its value. */
 const withoutConditions = (source: string): string => `ReplaceAll[${source}, ConditionalExpression[e_, _] :> e]`;
 
+/** `BigO(x^m)`, `BigO((x - a)^m)` or, at infinity, `BigO(x^-m)` as `m`, the order it claims in the distance
+ * from the center (`1/x` at infinity); `undefined` for any other shape. */
+function bigOOrder(term: MathJSON, variable: string, infinite: boolean): MathJSON | undefined {
+  if (!Array.isArray(term) || term[0] !== "BigO" || term.length !== 2) return undefined;
+  const given = term[1] as MathJSON;
+  const power = Array.isArray(given) && given[0] === "Power" && given.length === 3;
+  const base = power ? (given[1] as MathJSON) : given;
+  const exponent: MathJSON = power ? (given[2] as MathJSON) : 1;
+  const ofVariable =
+    base === variable || (Array.isArray(base) && base[0] === "Add" && base.slice(1).includes(variable as never));
+  if (!ofVariable) return undefined;
+  if (!infinite) return exponent;
+  // At infinity the claim is a negative power of x, and its order is the positive one in 1/x.
+  if (typeof exponent === "number") return exponent < 0 ? -exponent : undefined;
+  return Array.isArray(exponent) && exponent[0] === "Rational" && Number(exponent[1]) < 0
+    ? ["Rational", -Number(exponent[1]), exponent[2] as MathJSON]
+    : undefined;
+}
+
+/**
+ * The SymPy check that its `series(f, x, x0, n + 1)` and our `Series(f, x, x0, n)` agree up to the order both
+ * claim: `enumeratio_series_agree` (run.ts) compares the coefficients of every power below the least of the
+ * requested order and the two O-terms (ours is split off here, its exponent passed on). `undefined` when the
+ * expansion is not one the helper reads (an expansion at -∞, an O-term of another shape).
+ */
+function seriesAgreementSource(
+  series: readonly MathJSON[],
+  expected: MathJSON,
+  system: "sympy" | "sage" = "sympy",
+): string | undefined {
+  const [, , variable, center, order] = series as [string, MathJSON, MathJSON, MathJSON, MathJSON];
+  const infinite = center === "PositiveInfinity" || center === "Infinity";
+  if (typeof variable !== "string" || (!infinite && /Infinity/.test(JSON.stringify(center)))) return undefined;
+  // Ours is a sum with its O-term in it, or the O-term alone.
+  const terms = Array.isArray(expected) && expected[0] === "Add" ? (expected.slice(1) as MathJSON[]) : [expected];
+  const remainders = terms.filter((term) => Array.isArray(term) && term[0] === "BigO");
+  if (remainders.length > 1) return undefined;
+  const claimed = remainders.length === 0 ? undefined : bigOOrder(remainders[0] as MathJSON, variable, infinite);
+  if (remainders.length === 1 && claimed === undefined) return undefined;
+  const rest = terms.filter((term) => !remainders.includes(term));
+  const polynomial: MathJSON = rest.length === 0 ? 0 : rest.length === 1 ? (rest[0] as MathJSON) : ["Add", ...rest];
+  const [theirs, ours, at, around, requested, claim] = [
+    // Sage's helper builds the series itself, to check it stands for the function.
+    emit(system === "sage" ? (series[1] as MathJSON) : (series as MathJSON), system),
+    emit(polynomial, system),
+    emit(variable, system),
+    emit(center, system),
+    emit(order, system),
+    claimed === undefined ? undefined : emit(claimed, system),
+  ];
+  if (![theirs, ours, at, around, requested, claim].every((part) => part === undefined || part.ok)) return undefined;
+  const source = (part: ReturnType<typeof emit> | undefined): string => (part?.ok ? part.source : "None");
+  // The same call approached from below, for a finite center: SymPy's default is from above, Wolfram's is two-sided.
+  const below =
+    system === "sympy" && !infinite && theirs!.ok && theirs!.source.endsWith(")")
+      ? `lambda: ${theirs!.source.slice(0, -1)}, dir="-")`
+      : "None";
+  return (
+    `enumeratio_series_agree(${source(theirs)}, ${source(ours)}, ${source(at)}, ${source(around)}, ` +
+    `${source(requested)} + 1, ${source(claim)}${system === "sympy" ? `, ${below}` : ""})`
+  );
+}
+
 /**
  * The kernel source for "does `expr` agree with `expected`", for an example whose emitted
  * form carries a free symbol. `undefined` when either side doesn't emit for `system`, OR when
@@ -883,6 +1049,22 @@ export function symbolicAgreementSource(
   /** Seconds the kernel may simplify a difference (`SYMBOLIC_SECONDS`). */
   symbolicSeconds: number = SYMBOLIC_SECONDS,
 ): string | undefined {
+  try {
+    return agreementSource(system, expr, expected, freeSymbols, symbolicSeconds);
+  } catch (error) {
+    // A comparison that could not be made is undecided, not agreed or disagreed.
+    if (error instanceof Undecided) return system === "wolfram" ? "Indeterminate" : "None";
+    throw error;
+  }
+}
+
+function agreementSource(
+  system: SymbolicSystem,
+  expr: MathJSON,
+  expected: MathJSON,
+  freeSymbols: readonly string[],
+  symbolicSeconds: number,
+): string | undefined {
   // Ours left the call unevaluated: the identity holds trivially, so the plain verdict decides.
   if (leavesCall(expr, expected) || echoesInput(expr, expected)) {
     // A Python-family kernel that holds the same call prints it as ours is written, spelled for it
@@ -896,6 +1078,12 @@ export function symbolicAgreementSource(
   // A series ours holds is no polynomial to check: the kernel evaluates ours too, so any difference
   // from its own `Normal` of it would be zero. Undecided, not agreed.
   if (system === "wolfram" && leavesCall(seriesOfNormal(expr), expected)) return "Indeterminate";
+  // SymPy's series is compared as coefficients up to the order both claim, not as a difference.
+  if (system === "sympy" || system === "sage") {
+    const series = seriesCall(expr);
+    if (series !== undefined)
+      return leavesCall(seriesOfNormal(expr), expected) ? "None" : seriesAgreementSource(series, expected, system);
+  }
   const solving = system === "wolfram" && Array.isArray(expr) && expr[0] === "Solve";
   // A declined `Solve` (ours stays the call) has no solutions to compare as sets.
   if (solving && Array.isArray(expected) && expected[0] === "Solve") return undefined;
@@ -958,6 +1146,21 @@ export function symbolicAgreementSource(
       `AllTrue[Flatten[{d}], # === 0 || (pureO[#] && #[[5]]/#[[6]] >= bound) &])), ` +
       `True, Module[{s = {${points.join(", ")}}}, ` +
       `s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], ${unsampled}]]]]`
+    );
+  }
+  // An indefinite integral's answers differ by a constant: the derivative of their difference vanishes (and the
+  // difference is the same at points of both signs: see `enumeratio_antiderivative_agree`). One iterated integral
+  // is differentiated in each of its variables in turn; separate integrals only when they share the one variable.
+  const groups = system === "sympy" || system === "sage" ? indefiniteGroups(expr) : [];
+  if (groups.length > 0) {
+    const shared = [...new Set(groups.flat())];
+    const variables = groups.length === 1 ? (groups[0] as string[]) : shared.length === 1 ? shared : undefined;
+    if (variables === undefined) return "None";
+    const names = variables.map((name) => emit(name, system));
+    if (names.some((name) => !name.ok)) return undefined;
+    return (
+      `enumeratio_antiderivative_agree(${theirs.source}, ${ours.source}, ` +
+      `[${names.map((name) => (name as { source: string }).source).join(", ")}])`
     );
   }
   const points = trials.map((t) => (t === undefined ? "None" : `(${t.theirs}, ${t.ours})`));

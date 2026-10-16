@@ -1,0 +1,9 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[StrahlerNumber, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	2			the binary tree $[[.,.],[[.,.],.]]$
+the-ordered-tree			[StrahlerNumber, [OrderedTree, [List, [List], [List, [List]], [List]]]]	2			the ordered tree $[[],[[]],[]]$
+findstat-st000396-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, 0]], "'StrahlerNumber'"]	1	1	FindStat St000396	FindStat's value for [.,.]
+findstat-st000396-2	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'StrahlerNumber'"]	1	1	FindStat St000396	FindStat's value for [.,[.,.]]
+findstat-st000396-3	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'StrahlerNumber'"]	1	1	FindStat St000396	FindStat's value for [[.,.],.]
+findstat-st000397-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'StrahlerNumber'"]	1	1	FindStat St000397	FindStat's value for [[]]
+findstat-st000397-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'StrahlerNumber'"]	1	1	FindStat St000397	FindStat's value for [[[]]]
+findstat-st000397-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'StrahlerNumber'"]	2	2	FindStat St000397	FindStat's value for [[],[]]

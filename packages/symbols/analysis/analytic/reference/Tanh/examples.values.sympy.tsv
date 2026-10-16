@@ -3,8 +3,8 @@ n-forces-the-numeric-result-that-plain	N(tanh(0), 30)	0
 n-tanh-1	N(tanh(1), 30)	0.761594155955764888119458282605	
 stays-symbolic-even-at-0-same-as-sinh-and-cosh	tanh(0)	0	
 a-float-argument-evaluates-directly-no-n-needed	tanh(2.2)	0.975743130031452	
-series-tanh-x-x-0-10			
-series-tanh-x-x-1-over-2-times-i-times-pi-3			
+series-tanh-x-x-0-10	series(tanh(Symbol("x")), Symbol("x"), 0, 10 + 1)	True	
+series-tanh-x-x-1-over-2-times-i-times-pi-3	series(tanh(Symbol("x")), Symbol("x"), ((0 + Rational(1, 2)*I) * pi), 3 + 1)	True	
 arbitrary-precision-via-n	N(tanh(Rational(11, 5)), 30)	0.975743130031451520414306668030	
 evaluates-at-a-complex-argument	tanh((2.5 + 1*I))	1.00554801189506 + 0.0123221382558284*I	
 interval-arithmetic-tanh-is-increasing-so-tanh-0	tanh(AccumBounds(0, log(2)))	tanh(AccumBounds(0, log(2)))	disagree
@@ -12,10 +12,10 @@ uncertainty-propagation-tanh-2-sqrt-3-pm-0-1
 the-horizontal-asymptote-at-infty	tanh(oo)	1	
 tanh-i-pi-4-i-tan-pi-4-i	tanh((I * (S(pi) / 4)))	I	
 oddness-pulls-the-sign-out-of-a-symbolic	tanh((-Symbol("x")))	True	
-tanh-artanh-x-x-for-every-x			
-tanh-artanh-2-2-past-the-real-domain			
+tanh-artanh-x-x-for-every-x	tanh(atanh(Symbol("x")))	True	
+tanh-artanh-2-2-past-the-real-domain	tanh(atanh(2))	2	
 derivative-sech-2-x	diff(tanh(Symbol("x")), Symbol("x"))	True	
-antiderivative-ln-cosh-x			
+antiderivative-ln-cosh-x	integrate(tanh(Symbol("x")), Symbol("x"))	True	
 tanh-has-no-limit-at-complex-infinity-undefined	tanh(zoo)	nan	
 to-30-significant-digits-every-one-correctly	N(tanh(1), 30)	0.761594155955764888119458282605	
 n-tanh-11-over-5-50	N(tanh(Rational(11, 5)), 30)	0.975743130031451520414306668030	

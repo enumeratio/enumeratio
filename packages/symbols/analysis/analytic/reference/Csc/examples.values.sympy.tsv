@@ -1,0 +1,40 @@
+id	in	out	verdict
+csc-pi-over-6	csc((S(pi) / 6))	2	
+csc-pi-over-4	csc((S(pi) / 4))	sqrt(2)	
+csc-pi-over-2	csc((S(pi) / 2))	1	
+csc-60-circ-frac-2-sqrt-3-3-exactly			
+a-machine-precision-argument-evaluates	csc(1.2)	1.07291637770990	
+a-huge-24-40-argument	N(csc((S(24)**40)), 30)	2.49948040351611424574540349574	
+a-huge-10-100-argument	N(csc((S(10)**100)), 30)	-2.68545681760634800202383438551	
+a-huge-3-200-argument	N(csc((S(3)**200)), 30)	-1.06526709477390217658231720513	
+a-huge-neg-7-60-argument	N(csc((-(S(7)**60))), 30)	2.73881358675581820616788336515	
+a-huge-10-80-plus-1-over-3-argument	N(csc((S(((S(10)**80) + 1)) / 3)), 30)	1.07969901001738877280717071554	disagree
+csc-5-under-n	N(csc(5), 30)	-1.04283521277140581978311985591	
+series-csc-x-x-0-10	series(csc(Symbol("x")), Symbol("x"), 0, 10 + 1)	True	
+series-csc-x-x-pi-5	series(csc(Symbol("x")), Symbol("x"), pi, 5 + 1)	True	
+n-of-an-exact-argument-gives-an-arbitrary	N(csc(Rational(6, 5)), 30)	1.07291637770989722870511692244	
+evaluates-at-a-complex-argument	csc((2.5 + 1*I))	0.530965577621174 + 0.541322906190002*I	
+threads-element-wise-over-a-matrix-with	[[csc((S(pi) / 3)), csc(pi)], [csc((S(pi) / 6)), csc((-(S(pi) / 2)))]]	[[2*sqrt(3)/3, zoo], [2, -1]]	
+csc-pi-12-sqrt-6-sqrt-2	csc((S(pi) / 12))	1/(-sqrt(2)/4 + sqrt(6)/4)	
+csc-pi-10-1-sqrt-5	csc((S(pi) / 10))	1/(-1/4 + sqrt(5)/4)	
+csc-pi-over-5	csc((S(pi) / 5))	1/sqrt(5/8 - sqrt(5)/8)	
+interval-arithmetic-the-image-of-pi-6-pi-3-is	csc(AccumBounds((S(pi) / 6), (S(pi) / 3)))	AccumBounds(2*sqrt(3)/3, 2)	
+uncertainty-propagation-csc-2-pm-0-01-approx-1			
+oddness-pulls-the-sign-out-of-a-symbolic	csc((-Symbol("x")))	True	
+derivative-csc-x-cot-x	diff(csc(Symbol("x")), Symbol("x"))	True	
+antiderivative-ln-csc-x-cot-x	integrate(csc(Symbol("x")), Symbol("x"))	True	
+n-csc-6-over-5-50	N(csc(Rational(6, 5)), 30)	1.07291637770989722870511692244	
+matrixfunction-function-csc-1-1-list-list-1-over			
+csc-positiveinfinity	csc(oo)	AccumBounds(-oo, oo)	disagree
+assuming-m-in-integers-refine-csc-pi-times-m			
+assuming-m-in-integers-fullsimplify-refine-csc			
+functionmeromorphic-csc-x-x			
+reciprocal-of-sin-csc-x-frac-1-sin-x	enumeratio_equal(csc((S(pi) / 6)), (S(1) / sin((S(pi) / 6))))	True	
+csc-1-over-8-times-pi	csc((Rational(1, 8) * pi))	1/sqrt(1/2 - sqrt(2)/4)	
+csc-3-over-10-times-pi	csc((Rational(3, 10) * pi))	1/(1/4 + sqrt(5)/4)	
+neg-2-times-neg-2-plus-2-times-csc-1-over-2-pow	((-2 * (-2 + (2 * (S(csc(Rational(1, 2)))**2))) * (S(csc(1))**2) * (S(csc(Rational(1, 2)))**4)) + (S(csc(Rational(1, 2)))**8))	(4 - 4*csc(1/2)**2)*csc(1/2)**4*csc(1)**2 + csc(1/2)**8	
+n-4-times-neg-1-plus-csc-1-over-2-pow-2-times	N((4 * (-1 + (S(csc(Rational(1, 2)))**2)) * (S(csc(1))**2)), 30)	18.9284625738935580106428544233	
+n-csc-1-over-2-plus-1-over-2-times-pi-pow-2	N((S(csc((Rational(1, 2) + (Rational(1, 2) * pi))))**2), 30)	1.29844641040952483688376649885	
+n-4-times-neg-1-plus-csc-2-pow-2-times-csc-4-pow	N((4 * (-1 + (S(csc(2))**2)) * (S(csc(4))**2)), 30)	1.46277035971197344609670179082	
+a-pole-sin-0-0	csc(0)	zoo	
+csc-complexinfinity-is-indeterminate-for-the	csc(zoo)	nan	disagree

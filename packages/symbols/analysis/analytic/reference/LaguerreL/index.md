@@ -36,6 +36,91 @@ bindings:
     form: wolfram / mpmath / sympy
     environment: external
     note: LaguerreL[n, x] and LaguerreL[n, a, x]; mpmath.laguerre(n, a, x); sympy.assoc_laguerre(n, a, x).
+  - origin: mapped
+    form: sympy
+    template: laguerre($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+  - origin: mapped
+    form: sympy
+    template: assoc_laguerre($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: SymPy's `assoc_laguerre(n, a, x)` is the generalized Laguerre polynomial; `laguerre(n, x)` is its a = 0 case.
+  - origin: mapped
+    form: mpmath
+    template: laguerre($1, 0, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: mpmath
+    template: laguerre($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: laguerre($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: sage
+    template: gen_laguerre($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), $1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball((n, a, x) -> _rising(a + 1, n) * rgamma(n + 1) * hypergeometric_1f1(-n, a + 1, x), $1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 seeAlso:
   - HermiteH
   - ChebyshevT

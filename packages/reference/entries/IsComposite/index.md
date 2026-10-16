@@ -14,4 +14,22 @@ signatures:
 names:
   wolfram: CompositeQ
 stub: engine
+bindings:
+  - origin: mapped
+    form: julia
+    template: (abs(ZZ($1)) > 1 && !is_prime(abs(ZZ($1))))
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: is_composite($1)
+    arity: 1
+    threadArgOnly: 1
+    note: Greater than 1 and not prime.
+    checked:
+      version: primal 0.3.3
+      on: 2026-10-16
 ---

@@ -1,0 +1,35 @@
+id	in	out	verdict
+stirlings1-5-2	stirling1(5, 2)	-50.0	
+stirlings1-4-2	stirling1(4, 2)	11.0	
+s-n-n-is-always-1	stirling1(3, 3)	1.0	
+s-n-0-is-0-for-n-0	stirling1(5, 0)	0.0	
+stirlings1-20-10	stirling1(20, 10)	381922055502195.0	
+threads-element-wise-over-a-list-as-wolfram-s	[stirling1(2, 2), stirling1(4, 2), stirling1(6, 2)]	[mpf('1.0'), mpf('11.0'), mpf('274.0')]	
+exact-for-large-n	stirling1(50, 2)	2.72461937259126476165171149419e+63	
+a-mid-sized-n-and-k-past-the-fast-paths	stirling1(40, 14)	1.64059178129421212927588114529e+42	
+the-number-of-permutations-of-5-elements-with	stirling1(5, 3)	35.0	
+abs-stirlings1-n-range-1-n			
+the-unsigned-values-in-a-row-sum-to-n			
+the-signed-row-sum-vanishes-for-n-ge-2			
+s-n-n-1-binom-n-2	almosteq(stirling1(6, 5), (-binomial(6, 2)), 1e-20)	True	
+the-generating-property-sum-k-s-n-k-x-k-x-x-1-x			
+n-stirlings1-100-11	(stirling1(100, 11))	-3.90376773476389796543585013048e+155	
+stirlings1-0-1	stirling1(0, 1)	0.0	
+stirlings1-1-0	stirling1(1, 0)	0.0	
+stirlings1-1-1	stirling1(1, 1)	1.0	
+stirlings1-1-2	stirling1(1, 2)	0.0	
+stirlings1-2-0	stirling1(2, 0)	0.0	
+stirlings1-2-1	stirling1(2, 1)	-1.0	
+stirlings1-2-2	stirling1(2, 2)	1.0	
+stirlings1-2-3	stirling1(2, 3)	0.0	
+stirlings1-3-0	stirling1(3, 0)	0.0	
+stirlings1-3-1	stirling1(3, 1)	2.0	
+stirlings1-3-2	stirling1(3, 2)	-3.0	
+stirlings1-3-4	stirling1(3, 4)	0.0	
+stirlings1-4-0	stirling1(4, 0)	0.0	
+stirlings1-4-1	stirling1(4, 1)	-6.0	
+stirlings1-4-3	stirling1(4, 3)	-6.0	
+the-empty-case-s-0-0-1-by-convention-distinct	stirling1(0, 0)	1.0	
+k-n-is-0	stirling1(5, 6)	0.0	
+a-negative-k-stays-symbolic	stirling1(4, -1)	ValueError: 	error
+s-n-1-1-n-1-n-1-so-s-10-1-9	stirling1(10, 1)	-362880.0	

@@ -9,11 +9,11 @@
 // Every kernel also runs under the process-group watchdog (bounded.ts), the ceiling for the
 // kernels with no per-item cap of their own (Lean).
 
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { type Bounds, memoryCapMb, runBounded } from "@enumeratio/utils/bounded";
+import { type Bounds, memoryCapMb, runBounded, withFile, wolframFileArgs } from "@enumeratio/utils/bounded";
+import { sageStatsPython } from "./sage-stats.ts";
 import type { System } from "./systems.ts";
 /** Sources per kernel process. */
 const BATCH = 40;
@@ -82,7 +82,20 @@ elif kernel.returncode != 0:
     print("<<%d>>!!KernelDied: exit %d" % (last + 1, kernel.returncode), flush=True)
 `;
 
-const failAll = (count: number, reason: string): Result[] => Array.from({ length: count }, () => ({ error: reason }));
+/** Items a kernel never reached; `runIn` resumes after the last answered one, so no bisect. */
+const noOutput = (count: number): Result[] => Array.from({ length: count }, () => ({ error: "no output" }));
+
+/** Errors that stand for a whole batch lost to the watchdog (memory or time), which a single
+ * item plausibly caused. A bad exit or a missing binary is systemic and is never tagged. */
+const BATCH_FAILURES = new WeakSet<object>();
+
+/** `count` results that all carry a batch-level failure; a watchdog kill is tagged for `runIn` to bisect. */
+export const failAll = (count: number, reason: string): Result[] =>
+  Array.from({ length: count }, () => {
+    const result = { error: reason };
+    if (/killed \((memory|timeout)/.test(reason)) BATCH_FAILURES.add(result);
+    return result;
+  });
 
 /** A directory beside this package (a Julia environment, the Lake project). */
 const local = (name: string): string => fileURLToPath(new URL(`../${name}`, import.meta.url));
@@ -104,18 +117,6 @@ async function transcript(
     return { reason: `${command}: ${why}` };
   } catch (error) {
     return { reason: `${command}: ${String(error).slice(0, 120)}` };
-  }
-}
-
-/** Write `program` to a throwaway file, hand its path to `run`, and clean up. */
-async function withFile<T>(name: string, program: string, run: (file: string) => Promise<T>) {
-  const dir = mkdtempSync(join(tmpdir(), "oracle-"));
-  const file = join(dir, name);
-  writeFileSync(file, program);
-  try {
-    return await run(file);
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
   }
 }
 
@@ -149,8 +150,8 @@ export function wolframBatchCode(
   itemSeconds: number = ITEM_SECONDS,
   preamble: string = "",
 ): string {
-  // wolframscript reads `-code` byte by byte (`∑` arrives as three Latin-1 characters), so a
-  // non-ASCII character goes in as Wolfram's own escape: `\:2211`, or `\|01f600` past the BMP.
+  // The program file is read as UTF-8, so this escape is optional; a non-ASCII character goes in
+  // as Wolfram's own escape (`\:2211`, or `\|01f600` past the BMP), keeping the program ASCII.
   const escaped = (source: string): string =>
     JSON.stringify(source).replace(/\P{ASCII}/gu, (ch) => {
       const code = ch.codePointAt(0) as number;
@@ -170,9 +171,14 @@ export function wolframBatchCode(
 const COMBINATORICA_PREAMBLE = 'Quiet[Needs["Combinatorica`"]]; ';
 
 async function runWolfram(sources: readonly string[], itemSeconds: number, preamble: string = ""): Promise<Result[]> {
-  const run = await transcript("wolframscript", ["-code", wolframBatchCode(sources, itemSeconds, preamble)], {
-    timeoutMs: Math.max(600_000, itemSeconds * 20_000),
-  });
+  // The program holds every source twice, so a batch of long ones passes Linux's 128 KiB limit
+  // on one argument (spawn E2BIG); the kernel reads it from a file instead.
+  const code = wolframBatchCode(sources, itemSeconds, preamble);
+  const run = await withFile("batch.wl", code, (file) =>
+    transcript("wolframscript", wolframFileArgs(file), {
+      timeoutMs: Math.max(600_000, itemSeconds * 20_000),
+    }),
+  );
   return "out" in run ? collectWolfram(run.out, sources.length) : failAll(sources.length, run.reason);
 }
 
@@ -223,28 +229,23 @@ for _enumeratio_i, _enumeratio_src in enumerate(_enumeratio_sources):
 
 /** SymPy / mpmath / Sage all evaluate Python, differing only in the preamble, binary and
  * evaluator. Sage's own preparser (which turns an integer division like `2/3` into an exact
- * `Rational`, not a float) only runs on the program `sage -c` is handed, not on a string
+ * `Rational`, not a float) only runs on the program Sage is handed (a .sage file), not on a string
  * passed to plain `eval()` at runtime — so a Sage source has to be `preparse`d first,
  * or every `/` an emit template writes silently becomes a float. */
 async function runPython(
   sources: readonly string[],
   binary: string,
   preamble: string,
-  args: readonly string[] = ["-c"],
+  file: string,
   evalExpr?: (src: string, ns: string) => string,
   valueOf?: string,
   itemSeconds: number = ITEM_SECONDS,
 ): Promise<Result[]> {
   const program = pythonBatchCode(sources, preamble, evalExpr, valueOf, itemSeconds);
-  const run = await transcript("python3", [
-    "-c",
-    SUPERVISOR,
-    String(MAX_BYTES),
-    String(stallSeconds(itemSeconds)),
-    binary,
-    ...args,
-    program,
-  ]);
+  // The program goes through a file: one argument tops out at 128 KiB on Linux (spawn E2BIG).
+  const run = await withFile(file, program, (path) =>
+    transcript("python3", ["-c", SUPERVISOR, String(MAX_BYTES), String(stallSeconds(itemSeconds)), binary, path]),
+  );
   if (!("out" in run)) return failAll(sources.length, run.reason);
   return valueOf ? collectWolfram(run.out, sources.length) : collect(run.out, sources.length);
 }
@@ -267,7 +268,7 @@ async function runJulia(
 println("<<0>>"); flush(stdout)
 for (i, src) in enumerate([${list}])
     try
-        println("<<", i, ">>", show_oracle(Core.eval(Main, Meta.parse(src))))
+        println("<<", i, ">>", oracle_eval(src))
     catch e
         println("<<", i, ">>!!", first(replace(sprint(showerror, e), '\\n' => ' '), 100))
     end
@@ -292,7 +293,8 @@ show_oracle(x::Rational) = string(Float64(x))
 show_oracle(x::QQFieldElem) = string(Float64(x))
 show_oracle(x::AbstractVector) = "[" * join(map(show_oracle, x), ", ") * "]"
 show_oracle(x::Complex) = "(" * string(real(x)) * (imag(x) < 0 ? "-" : "+") * string(abs(imag(x))) * "j)"
-${preamble === undefined ? "" : `include(${JSON.stringify(preamble)})`}`;
+${preamble === undefined ? "" : `include(${JSON.stringify(preamble)})`}
+@isdefined(oracle_eval) || (oracle_eval(src) = show_oracle(Core.eval(Main, Meta.parse(src))))`;
 
 /** Single-threaded, with the GC told to stay under three quarters of the cap. */
 export const juliaFlags = (project: string): string[] => [
@@ -350,7 +352,7 @@ const RUST_HEADER = ["#![allow(unused_parens, unused_imports)]", "use enumeratio
 async function runRust(sources: readonly string[]): Promise<Result[]> {
   const crate = local("rust");
   const header = [...RUST_HEADER, "fn main() {"];
-  const results: Result[] = failAll(sources.length, "no output");
+  const results: Result[] = noOutput(sources.length);
   const live = new Set(sources.map((_, i) => i));
   for (let attempt = 0; attempt < sources.length + 1 && live.size > 0; attempt++) {
     const order = [...live];
@@ -386,7 +388,7 @@ async function runRust(sources: readonly string[]): Promise<Result[]> {
 
 /** Pull `<<n>>value` lines out of a transcript, tolerating anything else the kernel prints. */
 function collect(output: string, count: number): Result[] {
-  const results: Result[] = failAll(count, "no output");
+  const results: Result[] = noOutput(count);
   // Split on bare CR too: Oscar's banner leaves one before the first item.
   for (const line of output.split(/\r\n|\r|\n/)) {
     const match = /^<<(\d+)>>(.*)$/.exec(line);
@@ -471,6 +473,12 @@ from sympy.functions.combinatorial.numbers import stirling
 from sympy.ntheory.digits import digits
 
 ${HELD_ALIKE}
+# How close a numeric identity must hold: 1e-20, loosened to the digits of the least precise float in it,
+# since two 15-digit literals (0.3 + 0.7) can't be told apart from 1 any closer than that.
+def _enumeratio_tolerance(*xs):
+    digits = [f._prec * 0.30103 for x in xs for f in sympify(x).atoms(Float)]
+    return 10.0 ** -min(20, min(digits) - 3) if digits else 1e-20
+
 def enumeratio_equal(a, b):
     try:
         d = a - b
@@ -478,7 +486,7 @@ def enumeratio_equal(a, b):
             return True
         # What simplify can't prove, 30 digits can still settle for a numeric identity.
         if d.is_number:
-            return bool(abs(N(d, 30)) < 1e-20)
+            return bool(abs(N(d, 30)) < _enumeratio_tolerance(a, b))
         return False
     except (TypeError, ValueError, AttributeError):
         return a == b
@@ -543,6 +551,134 @@ def enumeratio_symbolic_agree(a, b, trials):
             continue
         results.append(abs(delta) < 1e-9)
     return all(results) if results else None
+
+# Whether a coefficient (or the derivative of a difference) is zero: True or False when it is decided (by
+# simplify, or at fixed rational points for the symbols left in it), None when it can't be.
+def _enumeratio_vanishes(d):
+    d = sympify(d)
+    if simplify(d) == 0:
+        return True
+    if d.is_number:
+        return bool(abs(N(d, 30)) < 1e-20)
+    symbols = sorted(d.free_symbols, key=str)
+    seen = []
+    for shift in range(3):
+        at = {s: Rational(*[(7, 3), (-11, 5), (13, 4), (-17, 6), (19, 8)][(i + shift) % 5]) for i, s in enumerate(symbols)}
+        try:
+            seen.append(abs(complex(N(d.subs(at), 30))) < 1e-9)
+        except (TypeError, ValueError, ZeroDivisionError):
+            continue
+    return all(seen) if seen else None
+
+# series(f, x, x0, n) as {power of t: (exponent, coefficient)}, t the distance from x0 (1/x at infinity); None
+# when it is not a power series in t (a log is taken as a coefficient of its power, so Puiseux and log terms read).
+# Zero has no terms.
+def _enumeratio_power_series(expr, x, x0, t):
+    expr = expand(sympify(expr).subs(x, 1 / t if x0 == oo else x0 + t))
+    found = {}
+    if expr == 0:
+        return found
+    for term in Add.make_args(expr):
+        coefficient, power = term.as_independent(t, as_Add=False)
+        shape = power.subs(log(t), 1)
+        if shape == 1:
+            exponent = S.Zero
+        else:
+            base, exponent = shape.as_base_exp()
+            if base != t:
+                return None
+        found[power] = (exponent, found.get(power, (exponent, S.Zero))[1] + coefficient)
+    return found
+
+# Whether two such expansions have the same coefficient in every power below cut: one verdict per power
+# either has there (none when neither has a term below it).
+def _enumeratio_compare_series(a, b, cut):
+    verdicts = []
+    for key in set(a) | set(b):
+        exponent = (a.get(key) or b[key])[0]
+        if exponent < cut:
+            verdicts.append(_enumeratio_vanishes(a.get(key, (0, S.Zero))[1] - b.get(key, (0, S.Zero))[1]))
+    return verdicts
+
+# Whether SymPy's series (O-term and all) and our polynomial, whose own O-term claims ours_order (None when it has
+# none), agree in every power below the least of the requested order cap and the O-terms' orders: what both
+# claim. True when they do, False when a coefficient differs, None when the expansions aren't comparable or
+# nothing was compared (ours claiming no terms agrees with nothing).
+# Without an O-term on either side the cap alone bounds a fractional-power (Puiseux) series.
+# theirs_below is a thunk for the same series approached from below (None at infinity): SymPy's default is from
+# above, where Wolfram's Series is two-sided (series(sqrt(x**2), x, 0, 3) is x here and -x from below), so an
+# expansion that differs between the sides, or that SymPy can't take from below, is not comparable.
+def enumeratio_series_agree(theirs, ours, x, x0, cap, ours_order, theirs_below=None):
+    try:
+        x0 = sympify(x0)
+        if x0.is_infinite and x0 != oo:
+            return None
+        t = Dummy("t", positive=True)
+        orders = [sympify(cap)]
+        if ours_order is not None:
+            orders.append(sympify(ours_order))
+        expansions = [sympify(theirs)]
+        if theirs_below is not None and x0 != oo:
+            expansions.append(sympify(theirs_below()))
+        for expansion in expansions:
+            remainder = expansion.getO()
+            if remainder is not None:
+                orders.append(next(iter(_enumeratio_power_series(remainder.expr, x, x0, t).values()))[0])
+        cut = min(orders)
+        parts = [_enumeratio_power_series(expansion.removeO(), x, x0, t) for expansion in expansions]
+        b = _enumeratio_power_series(sympify(ours), x, x0, t)
+        if b is None or any(part is None for part in parts):
+            return None
+        if len(parts) > 1 and any(v is not True for v in _enumeratio_compare_series(parts[0], parts[1], cut)):
+            return None
+        verdicts = _enumeratio_compare_series(parts[0], b, cut)
+        if any(v is False for v in verdicts):
+            return False
+        return True if verdicts and all(v is True for v in verdicts) else None
+    except (TypeError, ValueError, AttributeError, NotImplementedError, StopIteration):
+        return None
+
+# Whether two antiderivatives of the same function agree: the derivative of their difference in each variable of
+# integration (one iterated integral's, differentiated in turn) vanishes, and the difference itself is the same
+# at real points of both signs. The derivative alone would call x**2/2 + sign(x), + Heaviside(x) or atan(x) against
+# -atan(1/x) the same antiderivative; a constant that depends on the side of a branch point or a jump is no
+# constant, so those are None (log(x) against log(-x) legitimately differ that way). The variable is real, as ours
+# is: Abs and sign differentiate. A variable that is in neither answer decides nothing.
+def enumeratio_antiderivative_agree(a, b, variables):
+    try:
+        a, b = sympify(a), sympify(b)
+        free = a.free_symbols | b.free_symbols
+        if not variables or any(v not in free for v in variables):
+            return None
+        d = a - b
+        for v in variables:
+            r = Dummy(v.name, real=True)
+            d = diff(d.subs(v, r), r)
+        decided = _enumeratio_vanishes(d)
+        if decided is not True:
+            return decided
+        points = [Rational(-13, 4), Rational(-7, 3), Rational(-1, 2), Rational(1, 2), Rational(7, 3), Rational(13, 4)]
+        others = sorted(free - set(variables), key=str)
+        values = []
+        signs = set()
+        for k in range(len(points)):
+            at = {v: points[(k + 2 * i) % len(points)] for i, v in enumerate(variables)}
+            at.update({s: Rational(*[(7, 3), (13, 4), (19, 8), (5, 7)][i % 4]) for i, s in enumerate(others)})
+            try:
+                value = complex(N((a - b).subs(at), 30))
+            except (TypeError, ValueError, ZeroDivisionError, OverflowError):
+                continue
+            if value == value and abs(value) != float("inf"):
+                values.append(value)
+                signs.add(at[variables[0]] > 0)
+        # Constant across both signs of the first variable, at two points or more: anything less is undecided.
+        if len(values) < 2 or len(signs) < 2:
+            return None
+        if any(abs(v - values[0]) > 1e-9 * (1 + abs(values[0])) for v in values):
+            return None
+        return True
+    except (TypeError, ValueError, AttributeError, NotImplementedError):
+        return None
 `;
 
 // How SymPy and mpmath print a value for the scan: an exact integer or rational as it is, any
@@ -913,24 +1049,150 @@ def _enumeratio_equal(a, b):
 def enumeratio_equal(a, b):
     return _enumeratio_equal(a, b)
 
-# Zeta[s, a] sums ((n + a)^2)^(-s/2) over n >= 0 and skips n + a = 0, where Sage's hurwitz_zeta
-# continues (n + a)^(-s) and meets a pole at a nonpositive integer. For a rational a <= 0 the
-# terms before n + a turns positive are added by hand and hurwitz_zeta takes the rest.
-def _enumeratio_zeta_pair(s, a):
-    if getattr(a, "parent", lambda: None)() in (ZZ, QQ) and a <= 0:
-        m = ceil(-a)
-        if m > 10000:
-            raise ValueError("too many terms before the sum turns positive")
-        b = a + m
-        head = sum(((n + a) ** 2) ** (-s / 2) for n in range(m))
-        # n + a = 0 is skipped, except that 0^0 is 1 at s = 0.
-        if b == 0:
-            return head + (1 if s == 0 else 0) + hurwitz_zeta(s, 1)
-        return head + hurwitz_zeta(s, b)
-    return hurwitz_zeta(s, a)
+# Whether d, an expression in some variables, is zero: the simplifier proves it, else it vanishes at the sample
+# points (True), or at one of them does not (False); None when no point could be evaluated. Sampled at 300 bits, a
+# value vanishes when it is within 2^-150 of the size of the parts it is the difference of (2^-200 where they are
+# zero), so a coefficient that is merely small is no zero. With real, the samples are real (the complex one would
+# differentiate Abs and sign off the line).
+def _enumeratio_vanishes(d, real=False, parts=()):
+    d = SR(d)
+    try:
+        if bool(d.simplify_full() == 0):
+            return True
+    except (TypeError, ValueError, ArithmeticError):
+        pass
+    names = d.variables()
+    C = ComplexField(300)
+    seen = []
+    for j in range(2 if real else 3):
+        point = {v: _enumeratio_sample(j, i) for i, v in enumerate(names)}
+        try:
+            value = abs(C(N(_enumeratio_at(d, point), prec=300)))
+            scale = max([abs(C(N(_enumeratio_at(SR(p), point), prec=300))) for p in parts] + [RealField(300)(0)])
+        except (ArithmeticError, ValueError, TypeError):
+            continue
+        if not (value < 2 ** 1000 and scale < 2 ** 1000):
+            continue
+        seen.append(value <= (scale * 2 ** -150 if scale > 0 else 2 ** -200))
+    return all(seen) if seen else None
 
-def enumeratio_zeta_pair(s, a):
-    return enumeratio_broadcast(_enumeratio_zeta_pair, s, a)
+# Whether two antiderivatives of the same function agree: the derivative of their difference in each variable of
+# integration vanishes, and the difference itself is the same at real points of both signs, so a constant that
+# depends on the side of a branch point or a jump is no constant (None), and so is a constancy not established at
+# two points or more of both signs. A variable that is in neither answer decides nothing.
+def enumeratio_antiderivative_agree(a, b, variables):
+    try:
+        a, b = SR(a), SR(b)
+        free = set(a.variables()) | set(b.variables())
+        if not variables or any(v not in free for v in variables):
+            return None
+        da, db = a, b
+        for v in variables:
+            da, db = diff(da, v), diff(db, v)
+        decided = _enumeratio_vanishes(da - db, True, (da, db))
+        if decided is not True:
+            return decided
+        points = [QQ(-13) / 4, QQ(-7) / 3, QQ(-1) / 2, QQ(1) / 2, QQ(7) / 3, QQ(13) / 4]
+        others = sorted(free - set(variables), key=str)
+        extras = [QQ(7) / 3, QQ(13) / 4, QQ(19) / 8, QQ(5) / 7]
+        values = []
+        signs = set()
+        for k in range(len(points)):
+            at = {v: points[(k + 2 * i) % len(points)] for i, v in enumerate(variables)}
+            at.update({s: extras[i % 4] for i, s in enumerate(others)})
+            try:
+                value = complex(CC(_enumeratio_at(a - b, at)))
+            except (ArithmeticError, ValueError, TypeError):
+                continue
+            if value == value and abs(value) != float("inf"):
+                values.append(value)
+                signs.add(at[variables[0]] > 0)
+        if len(values) < 2 or len(signs) < 2:
+            return None
+        if any(abs(v - values[0]) > 1e-9 * (1 + abs(values[0])) for v in values):
+            return None
+        return True
+    except (TypeError, ValueError, AttributeError):
+        return None
+
+# The terms of expr in t = x - x0, as {power: coefficient}, or None when it is no sum of powers of t.
+def _enumeratio_series_terms(expr, x, x0, t):
+    try:
+        e = SR(expr).subs({x: x0 + t}).expand()
+        return {QQ(p): c for c, p in e.coefficients(t, sparse=True)}
+    except (TypeError, ValueError, AttributeError, ArithmeticError):
+        return None
+
+# The exponent of the Order term Sage's series ends in, in t = x - x0, or None.
+def _enumeratio_series_order(series, x, x0, t):
+    try:
+        last = series.operands()[-1]
+        if not str(last).startswith("Order("):
+            return None
+        terms = _enumeratio_series_terms(last.operands()[0], x, x0, t)
+        return None if terms is None or len(terms) != 1 else next(iter(terms))
+    except (TypeError, ValueError, AttributeError, ArithmeticError, IndexError):
+        return None
+
+# Whether Sage's polynomial stands for f near x0: at x0 +- 2^-40 (the other variables at fixed rationals) f and the
+# polynomial differ by no more than 2^10 times the size of the polynomial and h^cut. Sage's series is silently wrong
+# off an analytic function (sqrt(x), x^(3/2) come back 1 + O(x^n)); False there, None where nothing could be evaluated.
+def _enumeratio_series_sound(f, polynomial, x, x0, cut):
+    extras = [QQ(7) / 3, QQ(13) / 4, QQ(19) / 8, QQ(5) / 7]
+    names = sorted((set(SR(f).variables()) | set(SR(polynomial).variables()) | set(SR(x0).variables())) - {x}, key=str)
+    bits = max(300, int(40 * cut) + 200)
+    C = ComplexField(bits)
+    checked = []
+    for h in (QQ(1) / 2 ** 40, -QQ(1) / 2 ** 40):
+        at = {s: extras[i % 4] for i, s in enumerate(names)}
+        try:
+            point = SR(x0).subs(at) + h
+            gap = abs(C(N(SR(f).subs(at).subs({x: point}), prec=bits)) - C(N(SR(polynomial).subs(at).subs({x: point}), prec=bits)))
+            size = 1 + abs(C(N(SR(polynomial).subs(at).subs({x: point}), prec=bits)))
+        except (ArithmeticError, ValueError, TypeError):
+            continue
+        if not (gap < 2 ** 1000):
+            continue
+        checked.append(gap <= 2 ** 10 * size * RealField(bits)(abs(h)) ** RealField(bits)(cut))
+    return all(checked) if checked else None
+
+# Whether Sage's series of f and our polynomial, whose own O-term claims ours_order (None when it has none), agree in
+# every power below the least of Sage's own O-term and ours: what both claim. True when they do, False when a
+# coefficient differs, None when the expansions aren't comparable or nothing was compared. Both must be sums of
+# integer powers, and Sage's polynomial must stand for f (_enumeratio_series_sound). Sage's series is two-sided.
+def enumeratio_series_agree(f, ours, x, x0, cap, ours_order):
+    x0 = SR(x0)
+    if x0.is_infinity():
+        return None
+    # Where Sage cannot expand at all, its own error is the row's answer.
+    series = SR(f).series(x == x0, cap)
+    try:
+        t = SR.var("_enumeratio_t")
+        claimed = _enumeratio_series_order(series, x, x0, t)
+        if claimed is None:
+            return None
+        cut = claimed if ours_order is None else min(claimed, QQ(ours_order))
+        polynomial = series.truncate()
+        a = _enumeratio_series_terms(polynomial, x, x0, t)
+        b = _enumeratio_series_terms(ours, x, x0, t)
+        if a is None or b is None or any(p.denominator() != 1 for p in set(a) | set(b)):
+            return None
+        if _enumeratio_series_sound(f, polynomial, x, x0, cut) is not True:
+            return None
+        compared = False
+        undecided = False
+        for p in sorted(set(a) | set(b)):
+            if p >= cut:
+                continue
+            decided = _enumeratio_vanishes(a.get(p, 0) - b.get(p, 0), False, (a.get(p, 0), b.get(p, 0)))
+            compared = True
+            if decided is False:
+                return False
+            if decided is None:
+                undecided = True
+        return True if compared and not undecided else None
+    except (TypeError, ValueError, AttributeError, NotImplementedError, ArithmeticError):
+        return None
 
 # A factorial passes an infinity through and threads over a list.
 def enumeratio_factorial(n):
@@ -984,16 +1246,46 @@ def _enumeratio_abs(x):
 def enumeratio_abs(x):
     return enumeratio_broadcast(_enumeratio_abs, x)
 
-# PrimeQ and EulerPhi take the magnitude of a negative integer: -7 is prime, phi(-10) = phi(10).
-def _enumeratio_magnitude(n):
-    n = enumeratio_gi(n)
-    return n if _enumeratio_is_gi(n) or n not in ZZ else abs(n)
+# The named statistics Sage computes with its own methods (sage-stats.ts), on the Sage object a carrier names.
+def _enumeratio_binary_tree(x):
+    return None if x == 0 else [_enumeratio_binary_tree(x[0]), _enumeratio_binary_tree(x[1])]
 
-def enumeratio_is_prime(n):
-    return enumeratio_broadcast(lambda v: is_prime(_enumeratio_magnitude(v)), n)
+def _enumeratio_carrier(carrier, x):
+    if carrier == "Permutation":
+        return Permutation(x)
+    if carrier == "IntegerPartition":
+        return Partition(x)
+    if carrier == "SetPartition":
+        return SetPartition(x)
+    if carrier == "DyckPath":
+        return DyckWord(x)
+    if carrier == "BinaryTree":
+        return BinaryTree(_enumeratio_binary_tree(x))
+    if carrier == "OrderedTree":
+        return OrderedTree(x)
+    raise ValueError("no Sage object for " + carrier)
 
-def enumeratio_euler_phi(n):
-    return enumeratio_broadcast(lambda v: euler_phi(_enumeratio_magnitude(v)), n)
+${sageStatsPython()}
+
+# Sage numbers the vertices of its catalog graphs from 0 (or labels them with tuples or strings); ours are numbered from 1,
+# in the order Sage sorts its own labels.
+def enumeratio_graph(G):
+    return G.relabel({v: i for i, v in enumerate(G.vertices(sort=True), 1)}, inplace=False)
+
+def enumeratio_eulerian(n, k):
+    from sage.combinat.combinat import eulerian_number
+    return eulerian_number(n, k)
+
+def enumeratio_q_factorial(n, q):
+    from sage.combinat.q_analogues import q_factorial
+    return q_factorial(n, q)
+
+def enumeratio_q_pochhammer(a, q, n):
+    from sage.combinat.q_analogues import q_pochhammer
+    return q_pochhammer(n, a, q)
+
+def enumeratio_stat(carrier, x, name):
+    return _enumeratio_stats[(carrier, name)](_enumeratio_carrier(carrier, x))
 
 enumeratio_ring = PolynomialRing(ZZ, "delta")
 enumeratio_delta = enumeratio_ring.gen()
@@ -1104,6 +1396,15 @@ def _enumeratio_idele_json(u):
 def _enumeratio_adele_json(a):
     return ["Adele", _enumeratio_adic_num(a.infinite_part()[0].center()), _enumeratio_profinite_json(a.finite_part())]
 
+# AdicNumeral(p, x): a profinite number x is known to the valuation of its modulus at p, so the p-adic
+# carries that absolute precision; any other argument is the rational itself.
+def enumeratio_adic_numeral(p, x):
+    if _enumeratio_is_adeles_object(x) and hasattr(x, "modulus"):
+        if x.modulus() != 0:
+            return Qp(p, 60)(QQ(x.value()), absprec=QQ(x.modulus()).valuation(p))
+        x = x.value()
+    return Qp(p, 60)(QQ(x))
+
 def _enumeratio_is_adeles_object(x):
     return getattr(type(x), "__module__", "").startswith("adeles.")
 
@@ -1142,6 +1443,9 @@ def enumeratio_profinite_decomposition(rows, d):
 def enumeratio_value(x):
     import json
     if _enumeratio_is_adeles_object(x):
+        # A profinite number of modulus 0 is its rational, which ours reads as a number.
+        if hasattr(x, "modulus") and not hasattr(x, "finite_part") and not hasattr(x, "has_exact_finite_part") and x.modulus() == 0:
+            return str(QQ(x.value()))
         return json.dumps(_enumeratio_adeles_json(x))
     if isinstance(x, list) and x and all(_enumeratio_is_element(e) for e in x):
         return "combinations:" + json.dumps([_enumeratio_terms(e) for e in x])
@@ -1172,6 +1476,9 @@ def enumeratio_value(x):
         z = CC(x)
         if z.imag() == 0:
             re = float(z.real())
+            # A held call that CC cannot evaluate (gamma(-oo)) is not a NaN: it stays as printed.
+            if re != re and str(x) not in named:
+                return str(x)
             if re != re or re in (float("inf"), float("-inf")):
                 return named.get(str(x), "PositiveInfinity" if re > 0 else "NegativeInfinity" if re < 0 else "NaN")
             return repr(re)
@@ -1204,7 +1511,12 @@ def _enumeratio_roots_bound(b, d, m):
 
 def enumeratio_power_mod_list(a, s, m):
     s = QQ(s)
-    b = Zmod(m)(a)**s.numerator()
+    base = Zmod(m)(a)
+    try:
+        b = base**s.numerator()
+    except ZeroDivisionError:
+        # x^d = a^-n with a not a unit: a^n * x^d = 1 has no solution.
+        return []
     if m > 1 and _enumeratio_roots_bound(b.lift(), s.denominator(), m) > ROOTS_LISTED:
         raise ValueError("more than %d roots to list" % ROOTS_LISTED)
     return sorted(int(x) for x in b.nth_root(s.denominator(), all=True))
@@ -1242,6 +1554,9 @@ def enumeratio_symbolic_agree(a, b, trials):
         if any(v is False for v in verdicts):
             return False
         return True if all(v is True for v in verdicts) else None
+    # A list is never a scalar: a shape mismatch is a disagreement, not an undecided pair.
+    if isinstance(a, list) != isinstance(b, list):
+        return False
     try:
         d = (a - b).simplify_full()
         if bool(d == 0):
@@ -1259,6 +1574,36 @@ def enumeratio_symbolic_agree(a, b, trials):
             continue
         results.append(abs(delta) < 1e-9)
     return all(results) if results else None
+`;
+
+/** mpmath at 30 digits, plus `enumeratio_n(thunk, d)`: N(x, d) evaluates the thunk at d + 20 digits and answers the
+ * value rounded to d, as text a scan compares digit for digit; and `enumeratio_hyperreg`, a regularized pFq
+ * (divided by the gamma of each lower parameter) by its limit where a lower parameter is a pole. */
+const MPMATH_PREAMBLE = `from mpmath import *
+mp.dps = 30
+${PY_VALUE}
+${PY_BROADCAST}
+def enumeratio_round(x, d):
+    if isinstance(x, list):
+        return [enumeratio_round(e, d) for e in x]
+    if isinstance(x, type(pi)):
+        x = +x
+    if isinstance(x, mpf) and isfinite(x):
+        return nstr(x, d, strip_zeros=False)
+    if isinstance(x, mpc) and isfinite(x.real) and isfinite(x.imag):
+        return "(" + nstr(x.real, d, strip_zeros=False) + ("-" if x.imag < 0 else "+") + nstr(abs(x.imag), d, strip_zeros=False) + "j)"
+    return x
+
+def enumeratio_n(thunk, d):
+    if not isinstance(d, (int, float)):
+        return thunk()
+    d = int(d)
+    with workdps(max(d, 15) + 20):
+        return enumeratio_round(thunk(), d)
+
+def enumeratio_hyperreg(a, b, z):
+    n = len(a)
+    return hypercomb(lambda *p: [([], [], [], list(p[n:-1]), list(p[:n]), list(p[n:-1]), p[-1])], list(a) + list(b) + [z])
 `;
 
 export interface Prelude {
@@ -1291,7 +1636,7 @@ export function preludeFor(system: System): Prelude {
     case "mpmath":
       return {
         binary: "python3",
-        preamble: `from mpmath import *\nmp.dps = 30\n${PY_VALUE}\n${PY_BROADCAST}`,
+        preamble: MPMATH_PREAMBLE,
         printer: "enumeratio_value",
       };
     case "sage":
@@ -1311,7 +1656,7 @@ export function preludeFor(system: System): Prelude {
     case "julia":
       return {
         binary: "julia",
-        preamble: juliaHeader("Nemo, Combinatorics"),
+        preamble: juliaHeader("Nemo, Combinatorics", join(local("julia"), "preamble.jl")),
         printer: "show_oracle",
         project: local("julia"),
       };
@@ -1332,6 +1677,48 @@ export interface RunOptions {
   readonly deadline?: number;
   /** Seconds one item may run before it counts as an error (default `ITEM_SECONDS`). */
   readonly itemSeconds?: number;
+  /** Runs one batch in place of the system's kernel; for tests. */
+  readonly batchRunner?: (sources: readonly string[]) => Promise<Result[]>;
+}
+
+/** Extra kernel runs one batch may spend bisecting a whole-batch failure: a full bisect of
+ * `BATCH` items with one poison item takes about 2 * log2(BATCH) = 12. Past the cap the
+ * remaining chunk is reported failed as a whole. */
+export const MAX_BISECT_RUNS = 24;
+
+/** Bisect runs one whole `runIn` lane may spend, so a systemic failure that looks like a
+ * watchdog kill can't cost `MAX_BISECT_RUNS` for every batch. */
+export const MAX_LANE_BISECT_RUNS = 60;
+
+const reasonOf = (r: Result | undefined): string | undefined => (r !== undefined && "error" in r ? r.error : undefined);
+
+/** Run a batch; if the watchdog killed the kernel before it printed anything, run its halves
+ * separately so only the chunk holding the culprit errors. A chunk of one is final. A head
+ * half that fails entirely for the parent's own reason points at a systemic cause, and a head
+ * that died partway leaves a tail `runIn` would discard: neither runs the tail. */
+async function runBisecting(
+  run: (sources: readonly string[]) => Promise<Result[]>,
+  sources: readonly string[],
+  budget: { runs: number; lane: { runs: number } },
+  deadline: number | undefined,
+): Promise<Result[]> {
+  const results = await run(sources);
+  const lost = sources.length > 1 && results.length > 0 && results.every((r) => BATCH_FAILURES.has(r));
+  if (!lost || budget.runs < 2 || budget.lane.runs < 2 || (deadline !== undefined && Date.now() > deadline)) {
+    return results;
+  }
+  budget.runs -= 2;
+  budget.lane.runs -= 2;
+  const mid = Math.ceil(sources.length / 2);
+  const head = await runBisecting(run, sources.slice(0, mid), budget, deadline);
+  const rest = sources.length - mid;
+  if (head.some((r) => reasonOf(r) === "no output")) return [...head, ...noOutput(rest)];
+  const parent = reasonOf(results[0]) as string;
+  if (head.length > 1 && head.every((r) => reasonOf(r) === parent)) {
+    return [...head, ...Array.from({ length: rest }, () => ({ error: parent }))];
+  }
+  const tail = await runBisecting(run, sources.slice(mid), budget, deadline);
+  return [...head, ...tail];
 }
 
 /** Seconds between progress lines on stderr, so a stalled lane is visible in a CI log. */
@@ -1339,6 +1726,7 @@ const PROGRESS_SECONDS = 30;
 
 export async function runIn(system: System, sources: readonly string[], options: RunOptions = {}): Promise<Result[]> {
   const results: Result[] = [];
+  const lane = { runs: MAX_LANE_BISECT_RUNS };
   let start = 0;
   const began = Date.now();
   let reported = began;
@@ -1348,7 +1736,14 @@ export async function runIn(system: System, sources: readonly string[], options:
       while (results.length < sources.length) results.push(spent);
       break;
     }
-    const batch = await runBatch(system, sources.slice(start, start + BATCH), options.itemSeconds ?? ITEM_SECONDS);
+    const itemSeconds = options.itemSeconds ?? ITEM_SECONDS;
+    const run = options.batchRunner ?? ((chunk: readonly string[]) => runBatch(system, chunk, itemSeconds));
+    const batch = await runBisecting(
+      run,
+      sources.slice(start, start + BATCH),
+      { runs: MAX_BISECT_RUNS, lane },
+      options.deadline,
+    );
     // A kernel that died mid-batch leaves "no output" after the item that killed it.
     const lost = batch.findIndex((r) => "error" in r && r.error === "no output");
     // Nothing came back at all: count the first item as the culprit and move past it.
@@ -1374,23 +1769,15 @@ function runBatch(system: System, sources: readonly string[], itemSeconds: numbe
         sources,
         "python3",
         `${SYMPY_IMPORT}\n${SYMPY_PREAMBLE}\n${PY_VALUE}\n${PY_BROADCAST}`,
-        ["-c"],
+        "batch.py",
         undefined,
         "enumeratio_value",
         itemSeconds,
       );
     case "mpmath":
-      return runPython(
-        sources,
-        "python3",
-        `from mpmath import *\nmp.dps = 30\n${PY_VALUE}\n${PY_BROADCAST}`,
-        ["-c"],
-        undefined,
-        "enumeratio_value",
-        itemSeconds,
-      );
+      return runPython(sources, "python3", MPMATH_PREAMBLE, "batch.py", undefined, "enumeratio_value", itemSeconds);
     case "sage":
-      // `sage -c` takes one program string, like python3 -c. The preparsed source is evaluated
+      // A `.sage` file is preparsed as `sage -c` was. The preparsed source is evaluated
       // with the per-item ns as its globals (copied from the module globals snapshotted right
       // after the preamble runs): SAGE_PREAMBLE's helpers are visible, including inside a
       // lambda, which `sage_eval(locals=...)` hides them from, and the batch loop's own
@@ -1399,7 +1786,7 @@ function runBatch(system: System, sources: readonly string[], itemSeconds: numbe
         sources,
         "sage",
         `from sage.misc.sage_eval import sage_eval\nfrom sage.repl.preparse import preparse\n${SAGE_PREAMBLE}\n${PY_BROADCAST}`,
-        ["-c"],
+        "batch.sage",
         (src, ns) => `eval(preparse(${src}), ${ns})`,
         "enumeratio_value",
         itemSeconds,
@@ -1407,7 +1794,7 @@ function runBatch(system: System, sources: readonly string[], itemSeconds: numbe
     case "oscar":
       return runJulia(sources, "oscar", "Oscar", join(local("oscar"), "preamble.jl"), itemSeconds);
     case "julia":
-      return runJulia(sources, "julia", "Nemo, Combinatorics", undefined, itemSeconds);
+      return runJulia(sources, "julia", "Nemo, Combinatorics", join(local("julia"), "preamble.jl"), itemSeconds);
     case "mathlib4":
       return runLean(sources);
     case "rust":

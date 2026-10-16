@@ -9,4 +9,12 @@ signatures:
 names:
   wolframIdentity: true
 stub: engine
+bindings:
+  - origin: mapped
+    form: sage
+    template: std($1)
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---

@@ -1,59 +1,59 @@
-id	in	out	verdict
-exp-0	exp(0)	1.0	
-stays-the-exact-constant-rather-than	exp(1)	2.71828182845904523536028747135	
-compute-engine-represents-exp-x-as-e-x-once-the			
-a-machine-precision-argument-evaluates	exp(3.4)	29.9641000473970106868160502504	
-series-exponentiale-pow-x-x-0-10			
-broadcasts-element-wise-giving-begin-pmatrix-1-e	[[exp(0), exp(1)], [exp(1), exp(0)]]	[[mpf('1.0'), mpf('2.71828182845904523536028747135281')], [mpf('2.71828182845904523536028747135281'), mpf('1.0')]]	
-arbitrary-precision-via-n	(exp((mpf(8)/5)))	4.95303242439511480365428635642	
-evaluates-at-a-complex-argument	exp(mpc(2.5, 1))	(6.58222957819277298437932116841 + 10.251215190529403439318317104j)	
-euler-s-identity-e-i-pi-1	exp((mpc(0,1) * pi))	(-1.0 + 1.69568553207377992879174029388e-31j)	
-exp-imaginaryunit-times-pi-over-2			
-a-special-imaginary-argument-folds-through-e-i			
-exp-ln-2	exp(log(2))	2.0	
-exp-ln-neg-1	exp(log(-1))	(-1.0 + 1.69568553207377992879174029388e-31j)	
-inverse-of-ln-symbolically			
-exp-ln-of-a-complex-argument-is-that-argument	exp(log(mpc(1, 2)))	(1.0 + 2.0j)	
-exp-negativeinfinity	exp(-inf)		
-exp-positiveinfinity	exp(inf)		
-element-wise-over-a-matrix-not-the-matrix			
-interval-arithmetic-exp-1-ln-2-e-1-2			
-uncertainty-propagation-e-2-pm-0-01-approx-7-389			
-around-0-still-fires-the-e-base-power-rule			
-its-own-derivative			
-its-own-antiderivative			
-taylor-series-about-0			
-n-decimalizes-a-combined-product	((exp(1) * exp(2)))	20.0855369231876677409285296546	
-agrees-numerically-at-a-complex-point	((exp(mpc(1.3, 0.7)) * exp(mpc(-0.4, 2.1))))	(-2.31749300051021497993976567217 + 0.823937896324175068051995907358j)	
-to-50-significant-digits-every-one-correctly	(exp(1))	2.71828182845904523536028747135	
-to-1-significant-digit	(exp(1))	2.71828182845904523536028747135	disagree
-matrixfunction-exp-list-list-1-1-over-2-times-i			
-functiondomain-exp-x-x			
-functionrange-exp-x-x-y			
-functionanalytic-exp-x-x			
-functionmonotonicity-exp-x-x			
-functioninjective-exp-x-x			
-functionsurjective-exp-x-x			
-functionsign-exp-x-x			
-functionsingularities-exp-x-x			
-functiondiscontinuities-exp-x-x			
-functionconvexity-exp-x-x			
-n-exponentiale-pow-8-over-5-50	(((e)**(mpf(8)/5)))		
-exponentiale-pow-9-over-2-times-i-times-pi	((e)**(mpc(0, (mpf(9)/2)) * pi))		
-exptotrig-exponentiale-pow-1-over-5-times-i			
-assuming-n-in-integers-refine-exp-2-times-pi			
-assuming-n-in-integers-refine-exp-2-times-pi-2			
-threads-element-wise-over-a-list	[exp(0), exp(1)]	[mpf('1.0'), mpf('2.71828182845904523536028747135281')]	
-inverse-of-ln-e-ln-x-x	almosteq(exp(log(5)), 5, 1e-20)	True	
-e-a-e-b-e-a-b	almosteq((exp(2) * exp(3)), exp(5), 1e-20)	True	
-e-as-the-limit-lim-x-to-infty-1-1-x-x			
-lim-x-to-0-frac-e-x-1-x-1			
-a-product-of-exponentials-should-combine-e-x-e-y			
-combines-past-two-factors			
-combines-past-extra-non-exponential-factors			
-e-x-e-x-cancels-to-1			
-euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig			
-exp-ln-of-a-negative-real-is-left-unevaluated	exp(log(-2))	(-2.0 + 3.39137106414755985758348058775e-31j)	
-a-lone-exp-factor-is-untouched			
-same-base-non-e-powers-are-left-alone			
-exp-complexinfinity-is-indeterminate-via			
+id	in	out
+exp-0	exp(0)	1.0
+stays-the-exact-constant-rather-than	exp(1)	2.71828182845904523536028747135
+compute-engine-represents-exp-x-as-e-x-once-the		
+a-machine-precision-argument-evaluates	exp(3.4)	29.9641000473970106868160502504
+series-exponentiale-pow-x-x-0-10		
+broadcasts-element-wise-giving-begin-pmatrix-1-e	[[exp(0), exp(1)], [exp(1), exp(0)]]	[[mpf('1.0'), mpf('2.71828182845904523536028747135281')], [mpf('2.71828182845904523536028747135281'), mpf('1.0')]]
+arbitrary-precision-via-n	(exp((mpf(8)/5)))	4.95303242439511480365428635642
+evaluates-at-a-complex-argument	exp(mpc(2.5, 1))	(6.58222957819277298437932116841 + 10.251215190529403439318317104j)
+euler-s-identity-e-i-pi-1	exp((mpc(0,1) * pi))	(-1.0 + 1.69568553207377992879174029388e-31j)
+exp-imaginaryunit-times-pi-over-2	exp((mpc(0,1) * (mpmathify(pi) / 2)))	(8.47842766036889964395870146939e-32 + 1.0j)
+a-special-imaginary-argument-folds-through-e-i	exp((mpc(0,1) * (mpmathify(pi) / 5)))	(0.809016994374947424102293417183 + 0.587785252292473129168705954639j)
+exp-ln-2	exp(log(2))	2.0
+exp-ln-neg-1	exp(log(-1))	(-1.0 + 1.69568553207377992879174029388e-31j)
+inverse-of-ln-symbolically		
+exp-ln-of-a-complex-argument-is-that-argument	exp(log(mpc(1, 2)))	(1.0 + 2.0j)
+exp-negativeinfinity	exp(-inf)	
+exp-positiveinfinity	exp(inf)	
+element-wise-over-a-matrix-not-the-matrix	[[exp(1), exp((mpc(0,1) * (mpmathify(pi) / 2)))], [exp(0), exp(1)]]	[[mpf('2.71828182845904523536028747135281'), mpc(real='8.47842766036889964395870146938683e-32', imag='1.0')], [mpf('1.0'), mpf('2.71828182845904523536028747135281')]]
+interval-arithmetic-exp-1-ln-2-e-1-2		
+uncertainty-propagation-e-2-pm-0-01-approx-7-389		
+around-0-still-fires-the-e-base-power-rule		
+its-own-derivative		
+its-own-antiderivative		
+taylor-series-about-0		
+n-decimalizes-a-combined-product	((exp(1) * exp(2)))	20.0855369231876677409285296546
+agrees-numerically-at-a-complex-point	((exp(mpc(1.3, 0.7)) * exp(mpc(-0.4, 2.1))))	(-2.31749300051021497993976567217 + 0.823937896324175068051995907358j)
+to-50-significant-digits-every-one-correctly	enumeratio_n(lambda: (exp(1)), 50)	2.7182818284590452353602874713526624977572470937000
+to-1-significant-digit	enumeratio_n(lambda: (exp(1)), 1)	3.
+matrixfunction-exp-list-list-1-1-over-2-times-i		
+functiondomain-exp-x-x		
+functionrange-exp-x-x-y		
+functionanalytic-exp-x-x		
+functionmonotonicity-exp-x-x		
+functioninjective-exp-x-x		
+functionsurjective-exp-x-x		
+functionsign-exp-x-x		
+functionsingularities-exp-x-x		
+functiondiscontinuities-exp-x-x		
+functionconvexity-exp-x-x		
+n-exponentiale-pow-8-over-5-50	enumeratio_n(lambda: (((e)**(mpf(8)/5))), 50)	4.9530324243951148036542863564239642564130311235566
+exponentiale-pow-9-over-2-times-i-times-pi	((e)**(mpc(0, (mpf(9)/2)) * pi))	
+exptotrig-exponentiale-pow-1-over-5-times-i		
+assuming-n-in-integers-refine-exp-2-times-pi		
+assuming-n-in-integers-refine-exp-2-times-pi-2		
+threads-element-wise-over-a-list	[exp(0), exp(1)]	[mpf('1.0'), mpf('2.71828182845904523536028747135281')]
+inverse-of-ln-e-ln-x-x	almosteq(exp(log(5)), 5, 1e-20)	True
+e-a-e-b-e-a-b	almosteq((exp(2) * exp(3)), exp(5), 1e-20)	True
+e-as-the-limit-lim-x-to-infty-1-1-x-x		
+lim-x-to-0-frac-e-x-1-x-1		
+a-product-of-exponentials-should-combine-e-x-e-y		
+combines-past-two-factors		
+combines-past-extra-non-exponential-factors		
+e-x-e-x-cancels-to-1		
+euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig		
+exp-ln-of-a-negative-real-is-left-unevaluated	exp(log(-2))	(-2.0 + 3.39137106414755985758348058775e-31j)
+a-lone-exp-factor-is-untouched		
+same-base-non-e-powers-are-left-alone		
+exp-complexinfinity-is-indeterminate-via		

@@ -1,7 +1,7 @@
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/families/numeric-closed-form.ts";
-import { entries as numericSets } from "../src/families/numeric-sets.ts";
+import { kernels as entries } from "../src/families/numeric-closed-form.ts";
+import { kernels as numericSets } from "../src/families/numeric-sets.ts";
 import { declareCollections } from "../src/library.ts";
 
 const byHead = new Map(entries.map((e) => [e.head, e]));
@@ -274,9 +274,7 @@ test("PolygonalNumbers(4) agrees with SquareNumbers (numeric-sets.ts)", () => {
 });
 
 // ─── engine-level: Take / Element through the declared CE collection handlers,
-// as in numeric-sets.test.ts. Kept to values well within the safe-integer decode range that
-// declare.ts's `intOf` caps membership checks to (see the file header in
-// numeric-closed-form.ts). Take/Element cases now live as examples (CubeNumbers,
+// as in numeric-sets.test.ts; past 2^53 see element-bigint.test.ts. Take/Element cases now live as examples (CubeNumbers,
 // TriangularNumbers, PowersOfTwo, FactorialNumbers, PolygonalNumbers, AllOnes). ─────────────
 const ce = bareEngine();
 declareCollections(ce);

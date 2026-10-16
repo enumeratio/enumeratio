@@ -54,6 +54,15 @@ bindings:
     template: (catalan $1)
     arity: 1
     threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: (binomial(2 * ($1), $1) / (($1) + 1))
+    arity: 1
+    threadArgOnly: 1
+    note: binomial(2n, n)/(n + 1), continued by the gamma function.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 catalog:
   - system: oeis
     identity: A000108

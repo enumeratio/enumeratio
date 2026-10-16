@@ -128,13 +128,38 @@ const moved: [string, string][] = [
   ...workspacePackages().map((p): [string, string] => [`/packages/${p.slug}`, docRoute(p.slug)]),
 ];
 
-// Collection families renamed to their plural keep the old symbol page's URL.
-const renamedSymbols: [string, string][] = ["PrimePartition", "TriangularComposition", "ZigzagComposition"].map(
-  (old) => [`/reference/symbol/${old}`, `/reference/symbol/${old}s`],
-);
+// Collection families renamed to their plural keep the old symbol page's URL, and the
+// moved-point statistics that became compositions of PermutationSupport lead to its page.
+const renamedSymbols: [string, string][] = [
+  ...["PrimePartition", "TriangularComposition", "ZigzagComposition"].map((old): [string, string] => [
+    `/reference/symbol/${old}`,
+    `/reference/symbol/${old}s`,
+  ]),
+  ...["PermutationLength", "PermutationMax", "PermutationMin"].map((old): [string, string] => [
+    `/reference/symbol/${old}`,
+    "/reference/symbol/PermutationSupport",
+  ]),
+];
+
+// Catalogue-only statistic and map names retired by BL-202 lead to the head that took the role.
+const retiredStubs: [string, string][] = Object.entries({
+  RealPart: "Re",
+  ImaginaryPart: "Imaginary",
+  MaxElement: "Max",
+  MinElement: "Min",
+  Cardinality: "Length",
+  ToRationalNumber: "FromContinuedFraction",
+  NumberOfEdges: "EdgeCount",
+  BigOmega: "PrimeOmega",
+  DivisorCount: "DivisorSigma",
+  LittleOmega: "PrimeNu",
+  ToCycleNotation: "CycleDecomposition",
+  BinaryWeight: "DigitCount",
+  SquareRoot: "SquarePartRoot",
+}).map(([old, head]) => [`/reference/symbol/${old}`, `/reference/symbol/${head}`]);
 
 function writeRedirects(outDir: string): void {
-  for (const [from, to] of [...moved, ...renamedSymbols]) {
+  for (const [from, to] of [...moved, ...renamedSymbols, ...retiredStubs]) {
     const file = resolve(outDir, from.endsWith("/") ? `.${from}index.html` : `.${from}.html`);
     mkdirSync(dirname(file), { recursive: true });
     writeFileSync(

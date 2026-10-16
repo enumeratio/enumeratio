@@ -33,6 +33,31 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: primeomega counts prime factors with multiplicity of an integer; a Gaussian integer is not one.
+  - origin: mapped
+    form: sage
+    template: sum(e for _, e in factor($1))
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_prime_omega($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: prime_omega($1)
+    arity: 1
+    threadArgOnly: 1
+    note: The number of primes in the factorization, with multiplicity.
+    checked:
+      version: primal 0.3.3
+      on: 2026-10-16
 ---
 
 - Counts every prime factor with multiplicity -- $\Omega(2^5)=5$, unlike [[PrimeNu]]'s 1.

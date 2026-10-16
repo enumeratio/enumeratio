@@ -1,0 +1,9 @@
+id	in	out	verdict
+c5-is-not-bipartite	(enumeratio_graph(graphs.CycleGraph(5))).is_bipartite()	False	
+c6-is-bipartite	(enumeratio_graph(graphs.CycleGraph(6))).is_bipartite()	True	
+cyclegraph-3	enumeratio_graph(graphs.CycleGraph(3))	Cycle graph	disagree
+map-function-vertexeccentricity-cyclegraph-5-1-1			
+isacyclicgraph-cyclegraph-5	(lambda g: g.is_directed_acyclic() if g.is_directed() else g.is_forest())(enumeratio_graph(graphs.CycleGraph(5)))	False	
+vertexdegree-cyclegraph-7	(enumeratio_graph(graphs.CycleGraph(7))).degree()	[2, 2, 2, 2, 2, 2, 2]	
+cyclegraph-4	enumeratio_graph(graphs.CycleGraph(4))	Cycle graph	disagree
+ispathgraph-cyclegraph-5			

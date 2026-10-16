@@ -1,18 +1,18 @@
-id	in
-power-2-complexinfinity-is-indeterminate-same	
-2-pow-100	power(n(2), n(100))
-neg-8-to-the-1-3-is-the-real-root	power(n(-8), rational(n(1), n(3)))
-real-cube-roots-of-a-list-of-negatives	power(list(vec![n(-8), n(-27)]), rational(n(1), n(3)))
-power-half-complexinfinity-is-indeterminate	
-power-x-complexinfinity-is-left-unevaluated	
-n-248-832-over-1-419-857-50	nf(rational(n(248832), n(1419857)))
-2-pow-list-1-2-3	power(n(2), list(vec![n(1), n(2), n(3)]))
-interval-1-over-3-2-pow-3	
-2-pow-list-list-1-over-2-neg-1-list-neg-5-over-3	power(n(2), list(vec![list(vec![rational(n(1), n(2)), n(-1)]), list(vec![rational(n(-5), n(3)), rational(n(1), n(2))])]))
-fullsimplify-functioncontinuous-list-x-pow-n-x	
-d-x-pow-n-x	
-root-neg-1-3	
-fullsimplify-matrixfunction-function-2-pow-1-1	
-n-2-pow-i	
-power-1-complexinfinity-is-indeterminate	
-power-e-complexinfinity-is-indeterminate-exp	
+id	in	out	verdict
+power-2-complexinfinity-is-indeterminate-same			
+2-pow-100	power(n(2), n(100))	1267650600228229401496703205376	
+neg-8-to-the-1-3-is-the-real-root	power(n(-8), rational(n(1), n(3)))	panic: non-finite result: NaN	error
+real-cube-roots-of-a-list-of-negatives	power(list(vec![n(-8), n(-27)]), rational(n(1), n(3)))	panic: threading: a list where the crate takes a scalar	error
+power-half-complexinfinity-is-indeterminate			
+power-x-complexinfinity-is-left-unevaluated			
+n-248-832-over-1-419-857-50	nf(rational(n(248832), n(1419857)))	0.17525145137855433	
+2-pow-list-1-2-3	power(n(2), list(vec![n(1), n(2), n(3)]))	panic: threading: a list where the crate takes a scalar	error
+interval-1-over-3-2-pow-3			
+2-pow-list-list-1-over-2-neg-1-list-neg-5-over-3	power(n(2), list(vec![list(vec![rational(n(1), n(2)), n(-1)]), list(vec![rational(n(-5), n(3)), rational(n(1), n(2))])]))	panic: threading: a list where the crate takes a scalar	error
+fullsimplify-functioncontinuous-list-x-pow-n-x			
+d-x-pow-n-x			
+root-neg-1-3			
+fullsimplify-matrixfunction-function-2-pow-1-1			
+n-2-pow-i			
+power-1-complexinfinity-is-indeterminate			
+power-e-complexinfinity-is-indeterminate-exp			

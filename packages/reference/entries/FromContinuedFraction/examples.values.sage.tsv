@@ -1,0 +1,8 @@
+id	in	out	verdict
+a-finite-expansion	continued_fraction([3, 7, 15, 1]).value()	355/113	
+symbolic-terms	continued_fraction([SR.var("a"), SR.var("b"), SR.var("c")]).value()	TypeError: unable to convert a to an integer	error
+periodic-tail	continued_fraction([1, [1]]).value()	TypeError: unable to coerce <class 'list'> to an integer	error
+a-one-term-list-is-an-integer	continued_fraction([5]).value()	5	
+terms-after-the-first-may-follow-a-negative-a0	continued_fraction([-3, 2, 5]).value()	-28/11	
+it-inverts-continuedfraction	continued_fraction(list(continued_fraction((47/17)))).value()	47/17	
+the-empty-list-stays-unevaluated	continued_fraction([]).value()	ValueError: continued fraction can not represent infinity	error

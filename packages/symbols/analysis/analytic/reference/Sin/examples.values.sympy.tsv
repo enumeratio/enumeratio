@@ -34,17 +34,17 @@ uncertainty-propagation-sin-2-pm-0-01-approx-0
 an-imaginary-argument-rewrites-to-sinh-sin-ix-i	sin((I * Symbol("x")))	True	
 oddness-pulls-the-sign-out-of-a-symbolic	sin((-Symbol("x")))	True	
 a-half-period-shift-reduces-sin-x-pi-sin-x	sin((Symbol("x") + pi))	True	
-sin-arcsin-x-x-for-every-x			
-sin-arcsin-2-2-past-the-real-domain			
-sin-arcsin-of-a-complex-argument			
-sin-arccos-x-sqrt-1-x-2			
-sin-arctan-x-frac-x-sqrt-1-x-2			
+sin-arcsin-x-x-for-every-x	sin(asin(Symbol("x")))	True	
+sin-arcsin-2-2-past-the-real-domain	sin(asin(2))	2	
+sin-arcsin-of-a-complex-argument	sin(asin((1 + 2*I)))	1 + 2*I	
+sin-arccos-x-sqrt-1-x-2	sin(acos(Symbol("x")))	True	
+sin-arctan-x-frac-x-sqrt-1-x-2	sin(atan(Symbol("x")))	True	
 derivative-frac-d-dx-sin-x-cos-x	diff(sin(Symbol("x")), Symbol("x"))	True	
 second-derivative	diff(sin(Symbol("x")), Symbol("x"), Symbol("x"))	True	
-antiderivative			
-area-under-one-arch-int-0-pi-sin-x-dx-2			
-int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers			
-taylor-series-about-0-only-odd-powers-appear			
+antiderivative	integrate(sin(Symbol("x")), Symbol("x"))	True	
+area-under-one-arch-int-0-pi-sin-x-dx-2	integrate(sin(Symbol("x")), (Symbol("x"), 0, pi))	2	
+int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers	integrate((S(sin(Symbol("x")))**3), Symbol("x"))	True	
+taylor-series-about-0-only-odd-powers-appear	series(sin(Symbol("x")), Symbol("x"), 0, 10 + 1)	True	
 the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1			
 to-30-significant-digits-every-one-correctly	N(sin(1), 30)	0.841470984807896506652502321630	
 a-huge-24-40-argument-reduces-exactly-mod-2-pi	N(sin((S(24)**40)), 30)	0.400083152719766047070941915848	
@@ -70,19 +70,19 @@ angle-addition-formula-via-trigexpand
 triple-angle-formula			
 power-reduction-sin-2-x-frac-1-cos-2x-2			
 euler-s-formula-sin-x-frac-e-ix-e-ix-2i			
-simplify-knows-the-pythagorean-identity			
-the-same-through-fullsimplify			
+simplify-knows-the-pythagorean-identity	simplify(((S(sin(Symbol("x")))**2) + (S(cos(Symbol("x")))**2)))	1	
+the-same-through-fullsimplify	simplify(((S(sin(Symbol("x")))**2) + (S(cos(Symbol("x")))**2)))	1	
 sin-3-over-10-times-pi	sin((Rational(3, 10) * pi))	1/4 + sqrt(5)/4	
-integrate-sin-t-pow-2-t-0-positiveinfinity			
-integrate-sin-t-pow-2-t-0-1-over-2-times-pi			
+integrate-sin-t-pow-2-t-0-positiveinfinity	integrate(sin((S(Symbol("t"))**2)), (Symbol("t"), 0, oo))	sqrt(2)*sqrt(pi)/4	
+integrate-sin-t-pow-2-t-0-1-over-2-times-pi	integrate((S(sin(Symbol("t")))**2), (Symbol("t"), 0, (Rational(1, 2) * pi)))	pi/4	
 neg-2-times-neg-2-times-sin-1-over-2-pow-4-plus	((-2 * ((-2 * (S(sin(Rational(1, 2)))**4)) + (2 * (S(sin(Rational(1, 2)))**2))) * (S(sin(1))**2)) + (S(sin(1))**4))	(-4*sin(1/2)**2 + 4*sin(1/2)**4)*sin(1)**2 + sin(1)**4	
 n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2	N((S((((0 + 1*I) * sin(Rational(1, 2))) + cos(Rational(1, 2))))**2), 30)	0.540302305868139717400936607443 + 0.84147098480789650665250232163*I	
-integrate-sin-t-pow-3-t-0-1-over-2-times-pi			
+integrate-sin-t-pow-3-t-0-1-over-2-times-pi	integrate((S(sin(Symbol("t")))**3), (Symbol("t"), 0, (Rational(1, 2) * pi)))	2/3	
 n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2	N((S((((0 + 1*I) * sin(Rational(1, 2))) + cos(Rational(1, 2))))**2), 30)	0.540302305868139717400936607443 + 0.84147098480789650665250232163*I	
 n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow	N((S((((0 + -1*I) * sin(Rational(1, 2))) + cos(Rational(1, 2))))**2), 30)	0.540302305868139717400936607443 - 0.84147098480789650665250232163*I	
-n-integrate-1-over-t-times-sin-t-t-0			
-n-integrate-1-over-sqrt-t-times-sin-t-t-0			
-n-integrate-1-over-t-times-sin-1-over-2-times-t			
+n-integrate-1-over-t-times-sin-t-t-0	N(integrate(((S(1) / Symbol("t")) * sin(Symbol("t"))), (Symbol("t"), 0, oo)), 30)	1.57079632679489661923132169164	
+n-integrate-1-over-sqrt-t-times-sin-t-t-0	N(integrate(((S(1) / sqrt(Symbol("t"))) * sin(Symbol("t"))), (Symbol("t"), 0, oo)), 30)	1.25331413731550025120788264241	
+n-integrate-1-over-t-times-sin-1-over-2-times-t	N(integrate(((S(1) / Symbol("t")) * sin((Rational(1, 2) * Symbol("t"))) * cos((Rational(1, 2) * Symbol("t")))), (Symbol("t"), 0, oo)), 30)	0.785398163397448309615660845820	
 n-sin-1-pow-2	N((S(sin(1))**2), 30)	0.708073418273571193498784114750	
 n-sin-1-over-2-plus-1-over-2-times-pi-pow-2	N((S(sin((Rational(1, 2) + (Rational(1, 2) * pi))))**2), 30)	0.770151152934069858700468303721	
 1-radian-isn-t-a-recognized-special-angle-so	sin(1)	sin(1)	

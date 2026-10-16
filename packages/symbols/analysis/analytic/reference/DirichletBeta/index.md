@@ -30,6 +30,23 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: DirichletBeta[s]; mpmath.dirichlet(s, [0, 1, 0, -1]).
+  - origin: mapped
+    form: mpmath
+    template: dirichlet($1, [0, 1, 0, -1])
+    arity: 1
+    threadArgOnly: 1
+    note: The Dirichlet L-function of the character mod 4.
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(s -> (polylog(s, onei(CC)) - polylog(s, -onei(CC))) / (2 * onei(CC)), $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 seeAlso:
   - DirichletEta
   - HurwitzZeta

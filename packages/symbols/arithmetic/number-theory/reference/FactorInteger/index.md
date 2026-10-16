@@ -45,6 +45,23 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: "factorrat is SymPy's factorint that also takes a rational, giving the denominator's primes negative exponents as ours does. SymPy has no factor for 1, writes the -1 of a negative integer after the primes and a negative rational's between the numerator's primes and the denominator's, and lists factors in the order it finds them, which for a large n is not always ascending. A Complex operand is not emitted: factorrat takes rationals only."
+  - origin: mapped
+    form: julia
+    template: enumeratio_factor_integer($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: factor_integer($1)
+    arity: 1
+    threadArgOnly: 1
+    note: Positive operands only.
+    checked:
+      version: primal 0.3.3
+      on: 2026-10-16
 ---
 
 - For $n=p_1^{k_1}\cdots p_m^{k_m}$, returns the pairs $\{p_1,k_1\},\ldots,\{p_m,k_m\}$ in increasing order of prime.

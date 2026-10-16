@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-ordered-tree			[NonRootInternalNodes, [OrderedTree, [List, [List], [List, [List]], [List]]]]	1			the ordered tree $[[],[[]],[]]$
+findstat-st000168-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'NonRootInternalNodes'"]	0	0	FindStat St000168	FindStat's value for [[]]
+findstat-st000168-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'NonRootInternalNodes'"]	1	1	FindStat St000168	FindStat's value for [[[]]]
+findstat-st000168-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'NonRootInternalNodes'"]	0	0	FindStat St000168	FindStat's value for [[],[]]

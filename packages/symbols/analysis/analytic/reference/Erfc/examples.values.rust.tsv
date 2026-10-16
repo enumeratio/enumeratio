@@ -1,0 +1,28 @@
+id	in	out
+erfc-0	erfc(n(0))	1.0
+erfc-infinity		
+erfc-negativeinfinity		
+a-floating-point-argument-evaluates-directly-to	erfc(x(0.5))	0.4795001222363462
+a-machine-precision-argument	erfc(x(1.5))	0.03389485352319637
+series-erfc-x-x-0-10		
+normal-series-erfc-x-x-positiveinfinity-5		
+threads-element-wise-over-a-list-as-wolfram-s	list(vec![erfc(n(0)), erfc(n(1))])	[1.0, 0.15729920705728503]
+complex-arguments-should-evaluate-as-they-do-for		
+listable-threads-over-its-limits-at-pm-infty		
+interval-arithmetic-erfc-is-decreasing-so-the		
+uncertainty-propagation		
+to-30-significant-digits-every-one-correctly	nf(erfc(n(2)))	0.004677734980852695
+n-erfc-3-over-2-50	nf(erfc(rational(n(3), n(2))))	0.03389485352319637
+functionexpand-matrixfunction-erfc-list-list-0-1		
+fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2		
+series-erfc-x-x-0-7		
+normal-series-erfc-x-x-positiveinfinity-1		
+erfc-z-2-erfc-z-here-at-z-1	equal((erfc(n(-1)) + erfc(n(1))), n(2))	true
+definition-erf-z-erfc-z-1-see-erf	equal((erf(n(2)) + erfc(n(2))), n(1))	true
+erfc-x-2-erfc-x-applied-symbolically		
+frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2		
+an-exact-integer-argument-is-left-unevaluated	erfc(n(1))	0.15729920705728503
+far-in-the-tail-erfc-keeps-full-relative	erfc(x(9.5))	3.769214485561073e-41
+whereas-1-erf-9-5-cancels-to-exactly-0-in	(n(1) - erf(x(9.5)))	0.0
+erfc-complexinfinity-is-indeterminate-inheriting		
+the-gaussian-tail-shrinks-fast-only-about-7	erfc(x(3.5))	7.430983723598458e-7

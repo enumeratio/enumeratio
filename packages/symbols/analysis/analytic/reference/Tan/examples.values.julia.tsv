@@ -1,0 +1,64 @@
+id	in	out	verdict
+tan-0	enumeratio_ball(tan, 0)	0.0	
+tan-pi-over-6	enumeratio_ball(tan, enumeratio_div(const_pi(RR), 6))	0.5773502691896257645091487805019574556476017512701268760186023264839776723029239	
+tan-pi-over-4	enumeratio_ball(tan, enumeratio_div(const_pi(RR), 4))	0.9999999999999999999999999999999999999999999999999999999999999999999999999999914	
+tan-pi-over-3	enumeratio_ball(tan, enumeratio_div(const_pi(RR), 3))	1.732050807568877293527446341505872366942805253810380628055806979451933016908746	
+tan-30-circ-frac-sqrt-3-3-exactly			
+a-machine-precision-argument-evaluates	enumeratio_ball(tan, enumeratio_decimal("1.2"))	2.572151622126318935409994236033363956529409306043389279225637262238807056761637	
+a-huge-24-40-argument	(enumeratio_ball(tan, enumeratio_pow(24, 40)))	0.4365437952872443580851134134605523429458591365638945445889860114230717300796418	
+a-huge-10-100-argument	(enumeratio_ball(tan, enumeratio_pow(10, 100)))	0.4012319619908143541857543436532949583238702611292440683194415381168718098221151	
+a-huge-3-200-argument	(enumeratio_ball(tan, enumeratio_pow(3, 200)))	2.723734341072774336434671200877841240182355005745125804085783850745152754652568052789664727841983009542042079661434388186539380225290238308836189186027980434721812857835325153184535837567152501808625832067521821785504329109071063108427715335959906922498944129415167023939763747991367861120002928724193593258589	
+a-huge-neg-7-60-argument	(enumeratio_ball(tan, (-(enumeratio_pow(7, 60)))))	-0.3921990897363293127484424468789976771684672604758619255200011282092497134249727	
+a-huge-10-80-plus-1-over-3-argument	(enumeratio_ball(tan, enumeratio_div((enumeratio_pow(10, 80) + 1), 3)))	5.777333408915218939564447506430106174650040337906806596264311552025757409997264696461666963437294172927796192616995267283085002228379110112601314052200884207291825371377233592431777520648646297757389688825248517156010836380482180207841270613869957279536557445759898323090228837603950049968739717109980325750061	
+tan-100-under-n	(enumeratio_ball(tan, 100))	-0.5872139151569290766778096356445878942587659868729195441266396836098940155500865	
+series-tan-x-x-0-10			
+series-tan-x-x-1-over-2-times-pi-5			
+n-of-an-exact-argument-gives-an-arbitrary	(enumeratio_ball(tan, (6 // 5)))	2.572151622126318935409994236033363956529409306043389279225637262238807056761637	
+evaluates-at-a-complex-argument	enumeratio_ball(tan, enumeratio_complex(enumeratio_decimal("2.5"), 1))	(-0.2370138309162705805227161580560461827751633486827882313875603282994485161201707+0.8964379171278617520509527357547975321269963255651842956000609117516477141171321j)	
+threads-element-wise-over-a-matrix	Any[Any[enumeratio_ball(tan, (5 * enumeratio_div(const_pi(RR), 6))), enumeratio_ball(tan, const_pi(RR))], Any[enumeratio_ball(tan, enumeratio_div(const_pi(RR), 3)), enumeratio_ball(tan, (-(const_pi(RR))))]]	[[-0.5773502691896257645091487805019574556476017512701268760186023264839776723029757, -1.0969174445541046139145422603599619039165680059943822112215328526453772139748e-77], [1.732050807568877293527446341505872366942805253810380628055806979451933016908746, 1.0969174445541046139145422603599619039165680059943822112215328526453772139748e-77]]	
+tan-pi-8-sqrt-2-1	enumeratio_ball(tan, enumeratio_div(const_pi(RR), 8))	0.414213562373095048801688724209698078569671875376948073176679737990732478462102	
+tan-pi-12-2-sqrt-3	enumeratio_ball(tan, enumeratio_div(const_pi(RR), 12))	0.2679491924311227064725536584941276330571947461896193719441930205480669830911938	
+tan-pi-5-sqrt-5-2-sqrt-5	enumeratio_ball(tan, enumeratio_div(const_pi(RR), 5))	0.7265425280053608858954667574806187496160923929652084627500663273457493918456659	
+tan-pi-10-sqrt-1-2-sqrt-5	enumeratio_ball(tan, enumeratio_div(const_pi(RR), 10))	0.3249196962329063261558714122151344649549034715214751003078047191366729009607365	
+tan-5-pi-12-2-sqrt-3	enumeratio_ball(tan, ((5 // 12) * const_pi(RR)))	3.732050807568877293527446341505872366942805253810380628055806979451933016908538	
+tan-3-over-4-times-pi	enumeratio_ball(tan, ((3 // 4) * const_pi(RR)))	-1.000000000000000000000000000000000000000000000000000000000000000000000000000035	
+interval-arithmetic-the-image-of-0-pi-3-is-0			
+uncertainty-propagation-tan-2-pm-0-02-approx-2			
+tan-ix-i-tanh-x			
+oddness-pulls-the-sign-out-of-a-symbolic			
+tan-arctan-x-x-for-every-x			
+tan-arctan-2-2-for-every-x	enumeratio_ball(tan, enumeratio_ball(atan, 2))	1.999999999999999999999999999999999999999999999999999999999999999999999999999914	
+tan-arcsin-x-frac-x-sqrt-1-x-2			
+derivative-sec-2-x			
+antiderivative-ln-sec-x			
+taylor-series-about-0			
+to-30-significant-digits-every-one-correctly	enumeratio_nshow(enumeratio_ball(tan, 1), 30)	1.55740772465490223050697480746e+00	
+n-tan-6-over-5-50	enumeratio_nshow(enumeratio_ball(tan, (6 // 5)), 50)	2.5721516221263189354099942360333639565294093060434e+00	
+functionrange-tan-x-x-y			
+functionperiod-tan-x-x			
+functionanalytic-tan-x-x			
+functionmeromorphic-tan-x-x			
+functionsurjective-tan-x-x			
+functionsingularities-tan-x-x			
+functiondiscontinuities-tan-x-x			
+matrixfunction-function-tan-1-1-list-list-5-over			
+tan-positiveinfinity	enumeratio_ball(tan, Inf)	non-finite argument	error
+assuming-m-in-integers-refine-tan-pi-times-m			
+assuming-m-in-integers-fullsimplify-refine-tan			
+threads-element-wise-over-a-list	Any[enumeratio_ball(tan, 0), enumeratio_ball(tan, enumeratio_div(const_pi(RR), 4))]	[0.0, 0.9999999999999999999999999999999999999999999999999999999999999999999999999999914]	
+tan-x-frac-sin-x-cos-x	enumeratio_equal(enumeratio_ball(tan, enumeratio_div(const_pi(RR), 4)), enumeratio_div(enumeratio_ball(sin, enumeratio_div(const_pi(RR), 4)), enumeratio_ball(cos, enumeratio_div(const_pi(RR), 4))))	true	
+odd-function-tan-x-tan-x	enumeratio_ball(tan, (-(enumeratio_div(const_pi(RR), 4))))	-0.9999999999999999999999999999999999999999999999999999999999999999999999999999914	
+period-pi-not-2-pi-adding-a-half-turn-doesn-t	enumeratio_ball(tan, (enumeratio_div(const_pi(RR), 4) + const_pi(RR)))	0.9999999999999999999999999999999999999999999999999999999999999999999999999999309	
+sin-x-cos-x-should-simplify-to-tan-x-simplify			
+rewritten-in-exponentials			
+tan-3-over-10-times-pi	enumeratio_ball(tan, ((3 // 10) * const_pi(RR)))	1.37638192047117353820720958191088767952589933600815866336567576561909519376713	
+tan-3-over-8-times-pi	enumeratio_ball(tan, ((3 // 8) * const_pi(RR)))	2.414213562373095048801688724209698078569671875376948073176679737990732478462016	
+n-1-minus-tan-1-over-2-pow-2-times-tan-1	(((1 + (-(enumeratio_pow(enumeratio_ball(tan, (1 // 2)), 2)))) * enumeratio_ball(tan, 1)))	1.092604979687581026510358931560570766595103440359582492328182771865815021036046	
+n-tan-1-over-2-plus-1-over-2-times-pi	(enumeratio_ball(tan, ((1 // 2) + ((1 // 2) * const_pi(RR)))))	-1.830487721712451919268019438968816623758107948016134004366415946785461224196374	
+n-1-minus-tan-2-pow-2-times-tan-4	(((1 + (-(enumeratio_pow(enumeratio_ball(tan, 2), 2)))) * enumeratio_ball(tan, 4)))	-4.370079726523037983286612204627365086864035492455326329125911739933547494418115	
+n-tan-2-plus-1-over-2-times-pi	(enumeratio_ball(tan, (2 + ((1 // 2) * const_pi(RR)))))	0.4576575543602857637502774104320472764284863292316743296413921626362922701562742	
+a-pole-cos-pi-2-0-so-the-ratio-blows-up	enumeratio_ball(tan, enumeratio_div(const_pi(RR), 2))	ball not finite	error
+same-rule-as-sin-and-cos-a-non-special-numeric	enumeratio_ball(tan, 1)	1.557407724654902230506974807458360173087250772381520038383946605698861397151715	
+a-pole-at-negative-pi-over-2-too	enumeratio_ball(tan, enumeratio_div(const_pi(RR), -2))	ball not finite	error
+a-pole-reached-through-periodicity-unreduced	enumeratio_ball(tan, (enumeratio_div(const_pi(RR), -2) + const_pi(RR)))	ball not finite	error
+tan-complexinfinity-is-indeterminate-poles-recur			

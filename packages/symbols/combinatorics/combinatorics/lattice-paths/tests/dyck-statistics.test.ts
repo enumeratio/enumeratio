@@ -3,6 +3,7 @@ import { expect, test } from "vite-plus/test";
 import { applyDefinition } from "../../src/statistics/declare.ts";
 import { DYCK_STATISTICS } from "../src/statistics.ts";
 import { bySignature } from "../../src/statistics/types.ts";
+import { DYCK_READINGS } from "./dyck-findstat-readings.ts";
 
 const ce = bareEngine();
 const index = bySignature(DYCK_STATISTICS);
@@ -66,35 +67,6 @@ const dinvOf = (a: number[]): number => {
     }
   return c;
 };
-/** H(0) .. H(n-1): the NE column ceiling read off the down steps, mountain height plus x. */
-function columnCeilings(w: number[]): number[] {
-  let h = 0;
-  const hs: number[] = [];
-  for (const s of w) {
-    if (s === 0) {
-      hs.push(h);
-      h -= 1;
-    } else h += 1;
-  }
-  return hs.map((height, x) => height + x);
-}
-/** The bounce statistic, walked directly off the column ceilings — independent of dyck.ts. */
-function bounceOf(w: number[]): number {
-  const n = w.length / 2;
-  const h = columnCeilings(w);
-  let k = 0;
-  let blockIndex = 0;
-  let total = 0;
-  for (let tick = 0; tick < n; tick++) {
-    if (k === n) continue;
-    const newK = h[k]!;
-    total += blockIndex * (newK - k);
-    k = newK;
-    blockIndex += 1;
-  }
-  return total;
-}
-
 /** Height at every vertex, the origin included. */
 const vertices = (w: number[]): number[] => [0, ...heights(w)];
 /** How often `pattern` (a 0/1 string) occurs in the word, overlaps included. */
@@ -138,15 +110,13 @@ const EXPECTED: Record<string, (w: number[]) => number> = {
     return k;
   },
   MajorIndex: (w) => w.slice(0, -1).reduce((a, s, k) => (s === 1 && w[k + 1] === 0 ? a + k + 1 : a), 0),
-  Area: (w) => heights(w).reduce((a, b) => a + b, 0),
   LongestAscent: (w) => longestRunOf(w, 1),
   LongestDescent: (w) => longestRunOf(w, 0),
   Coarea: (w) => {
     const n = w.length / 2;
-    return (n * (n + 1)) / 2 - heights(w).reduce((a, b) => a + b, 0);
+    return (n * (n - 1)) / 2 - areaSequence(w).reduce((a, b) => a + b, 0) + 0;
   },
   Dinv: (w) => dinvOf(areaSequence(w)),
-  Bounce: (w) => bounceOf(w),
 
   // FindStat statistics (their values are checked by find-findstat.ts --crawl). Each is read a
   // second way, by string, run or vertex height, not by the step positions the definitions use.
@@ -188,13 +158,18 @@ const EXPECTED: Record<string, (w: number[]) => number> = {
   FirstMaximalPeakPosition: (w) => (w.length === 0 ? 0 : vertices(w).indexOf(Math.max(...vertices(w)))),
   GlobalMaxima: (w) => vertices(w).filter((h) => h === Math.max(...vertices(w))).length,
   LargestAreaSequenceEntry: (w) => Math.max(0, ...areaSequence(w)),
+
+  // The FindStat statistics of dyck-findstat.test.ts, which runs them.
+  ...DYCK_READINGS,
 };
+/** The definitions this file runs; the others are run by dyck-findstat.test.ts. */
+const OWN = DYCK_STATISTICS.filter((definition) => !(definition.head in DYCK_READINGS));
 
 test("every Dyck definition has an independent reading", () => {
   for (const definition of DYCK_STATISTICS) expect(EXPECTED[definition.head], definition.head).toBeDefined();
 });
 
-for (const definition of DYCK_STATISTICS) {
+for (const definition of OWN) {
   test(`${definition.head} agrees over every Dyck path of semilength 0..5`, () => {
     const expected = EXPECTED[definition.head]!;
     for (const w of ALL) expect(evaluate(definition.head, w), `[${w.join(", ")}]`).toBe(expected(w));
@@ -206,7 +181,7 @@ test.skipIf(!process.env.DEEP_TESTS)(
   "every Dyck definition agrees over semilength 6..8",
   () => {
     for (const w of [6, 7, 8].flatMap(dyckWords))
-      for (const definition of DYCK_STATISTICS)
+      for (const definition of OWN)
         expect(evaluate(definition.head, w), `${definition.head} [${w.join(", ")}]`).toBe(
           EXPECTED[definition.head]!(w),
         );
@@ -231,11 +206,7 @@ function bivariatePolynomial(words: number[][], xOf: (w: number[]) => number, yO
 const sortedEntries = (m: Map<string, number>) => [...m.entries()].toSorted(([a], [b]) => (a < b ? -1 : 1));
 
 test("(Area, Dinv) and (Bounce, Area) share the same bivariate distribution for semilength 0..6", () => {
-  // The "area" the (area, dinv)/(bounce, area) theorem is about is the DIAGONAL reading —
-  // the sum of the area sequence — not this package's `Area` head, which sums the height
-  // profile against the AXIS (see `Area`'s own definition in dyck.ts). They agree on nothing
-  // in general; reusing `EXPECTED.Area` here would silently check the wrong invariant.
-  const diagonalAreaOf = (w: number[]) => areaSequence(w).reduce((a, b) => a + b, 0);
+  const diagonalAreaOf = EXPECTED.Area!;
   for (let n = 0; n <= 6; n++) {
     const words = dyckWords(n);
     const dinvOf = EXPECTED.Dinv!;
@@ -254,8 +225,8 @@ test("(Area, Dinv) and (Bounce, Area) share the same bivariate distribution for 
 // A handful of pinned values, independent of the generating-function check above.
 test("Dinv and Bounce golden values", () => {
   const cases: { word: number[]; dinv: number; bounce: number }[] = [
-    { word: [1, 1, 0, 0, 1, 0], dinv: 2, bounce: 1 }, // UUDDUD
-    { word: [1, 0, 1, 1, 0, 0], dinv: 1, bounce: 2 }, // UDUUDD
+    { word: [1, 1, 0, 0, 1, 0], dinv: 2, bounce: 2 }, // UUDDUD, FindStat St000005 gives 2
+    { word: [1, 0, 1, 1, 0, 0], dinv: 1, bounce: 1 }, // UDUUDD
     { word: [1, 1, 1, 0, 0, 0], dinv: 0, bounce: 0 }, // UUUDDD
     { word: [1, 0, 1, 0, 1, 0], dinv: 3, bounce: 3 }, // UDUDUD
     { word: [1, 1, 0, 0], dinv: 0, bounce: 0 }, // UUDD

@@ -22,6 +22,39 @@ references:
 names:
   dlmf: inverse error function
   wolfram: InverseErf
+bindings:
+  - origin: mapped
+    form: sympy
+    template: erfinv($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: erfinv($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: erfinv($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: erf_inv($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: statrs 0.18.0
+      on: 2026-10-16
 ---
 
 - Inverse of [[Erf]]: $\operatorname{erf}(\operatorname{erfinv}(x)) = x$.

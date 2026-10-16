@@ -230,7 +230,7 @@ const overhangWindows = (
 /** Every position `value` occurs at in `expr`, at every level and under any head, in
  *  Wolfram's order: a node, then its head (position `…0`), then its parts left to right. With
  *  `first`, stops at the first. `undefined` when a lazy collection runs past the iteration
- *  budget part-way, rather than answering from a shorter walk. */
+ *  budget part-way, or never ends, rather than answering from a shorter walk. */
 export const positionsOf = (expr: Expr, value: Expr, first = false): number[][] | undefined => {
   const found: number[][] = [];
   const walk = (node: Expr, path: readonly number[]): boolean => {
@@ -238,6 +238,8 @@ export const positionsOf = (expr: Expr, value: Expr, first = false): number[][] 
       found.push([...path]);
       if (first) return true;
     }
+    // An endless collection (a family's terms) has no walk to answer from.
+    if (node.isCollection && node.isFiniteCollection === false) throw new RangeError("collection with no end");
     if (symbolNameOf(node) !== undefined || stringAt(node) !== undefined || isNumber(node)) return false;
     if (symbolNameOf(value) === node.operator) {
       found.push([...path, 0]);

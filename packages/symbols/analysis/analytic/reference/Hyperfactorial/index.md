@@ -14,6 +14,22 @@ bindings:
     form: typescript
     environment: engine
     source: packages/symbols/analysis/analytic/src/hyperfactorial.ts
+  - origin: mapped
+    form: mpmath
+    template: hyperfac($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: julia
+    template: Combinatorics.hyperfactorial(big($1))
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 seeAlso:
   - BarnesG
 names:

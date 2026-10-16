@@ -1,0 +1,26 @@
+id	in	out	verdict
+ln-gamma-3-ln-2-ln-2	log_gamma(3)	log(2)	
+ln-gamma-1-0	log_gamma(1)	0	
+ln-gamma-2-5-ln-1-3293-to-the-engine-s-working	log_gamma(2.5)	0.284682870472919	
+ln-gamma-5-ln-4-ln-24-split-into-prime	log_gamma(5)	log(24)	
+log-gamma-neg-2-is-a-pole	log_gamma(-2)	+Infinity	
+log-gamma-neg-3-is-a-pole	log_gamma(-3)	+Infinity	
+n-log-gamma-5-over-2-to-40-digits	enumeratio_n(log_gamma((5/2)), 40)	0.284682870472919	
+n-loggamma-15-pow-300-past-a-double	enumeratio_n(log_gamma(((15)^300)))	TypeError: cannot evaluate symbolic expression numerically	error
+to-the-engine-s-working-precision	log_gamma(2.2)	0.0969474667906389	
+complex-arguments	log_gamma((2.5 + 3*I))	-1.47095461034884 + 2.82261563826080*I	
+threads-elementwise-over-an-array	[[log_gamma((1/2)), log_gamma(-1)], [log_gamma(0), log_gamma((1/2))]]	[[log_gamma(1/2), +Infinity], [+Infinity, log_gamma(1/2)]]	
+exact-negative-half-integers-ln-gamma-frac-32-ln	log_gamma((-3/2))	log_gamma(-3/2)	
+ln-gamma-infty-infty	log_gamma(oo)	log_gamma(+Infinity)	disagree
+huge-arguments-ln-gamma-10-300-approx-6-898	enumeratio_n(log_gamma(((10)^300)))	TypeError: cannot evaluate symbolic expression numerically	error
+interval-arithmetic-decreasing-here-so-the			
+uncertainty-propagation-with-psi-1-2-as-the			
+to-30-significant-digits-not-yet-the-last-digit	enumeratio_n(log_gamma((1/3)), 30)	0.985420646927767	
+negative-non-integer-correctly-rounded	enumeratio_n(log_gamma(-2.5))	-0.0562437164976741 - 9.42477796076938*I	
+log-gamma-neg-0-5-is-the-principal-continuation	log_gamma(-0.5)	1.26551212348465 - 3.14159265358979*I	
+ln-gamma-frac-12-frac-12-ln-pi-from-gamma-frac	log_gamma((1/2))	log_gamma(1/2)	
+a-pole-of-gamma	log_gamma(0)	+Infinity	
+on-the-negative-axis-gamma-frac-32-frac-43-sqrt	log_gamma(-1.5)	0.860047015376481 - 6.28318530717959*I	
+half-integers-past-frac-12-ln-gamma-frac-32-ln	log_gamma((3/2))	log_gamma(3/2)	
+off-the-positive-axis-this-is-the-continuation	log_gamma((-2.5 + 1.5*I))	-3.71751345119179 - 7.71306552583419*I	
+log-gamma-negativeinfinity-is-indeterminate	log_gamma(-oo)	log_gamma(-Infinity)	disagree

@@ -1,0 +1,5 @@
+id	in	out	verdict
+harary-4-7-edge-count-and-min-degree	(enumeratio_graph(graphs.HararyGraph(4, 7))).size()	14	
+harary-3-7-exact-edges			
+hararygraph-3-5	enumeratio_graph(graphs.HararyGraph(3, 5))	Harary graph 3, 5	disagree
+map-function-vertexeccentricity-hararygraph-4-6			

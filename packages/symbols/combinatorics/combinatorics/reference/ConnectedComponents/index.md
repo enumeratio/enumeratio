@@ -13,6 +13,14 @@ seeAlso:
   - Graph
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: "(lambda g: g.strongly_connected_components() if g.is_directed() else g.connected_components())($1)"
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Respects edge direction (kernel-verified): a directed edge only counts toward mutual reachability one way, so `Graph({1,2,3}, {1->2, 2->1, 2->3})` gives two components, `{1, 2}` (a 2-cycle) and `{3}` (reachable but never reached from), even though the graph is a single WEAKLY connected piece. An undirected edge counts both ways, so a purely undirected graph's components are its ordinary (weakly) connected pieces.

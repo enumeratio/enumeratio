@@ -3,6 +3,9 @@ multiplicativeorder-5-8	n_order(5, 8)	2
 multiplicativeorder-3-7	n_order(3, 7)	6	
 multiplicativeorder-5-7	n_order(5, 7)	6	
 2-3-8-equiv-1-pmod-7-and-no-smaller-power-works	n_order(2, 7)	3	
+order-mod-a-negative-modulus	n_order(5, -12)	ValueError: n should be an integer greater than 1	error
+order-of-a-negative-mod-a-negative-modulus	n_order(-4, -1)	ValueError: n should be an integer greater than 1	error
+order-of-0-mod-1	n_order(0, 1)	ValueError: n should be an integer greater than 1	error
 a-negative-base-5-equiv-2-pmod-7	n_order(-5, 7)	3	
 the-first-power-of-5-to-reach-3-or-11-equiv-4-5			
 a-10-001-digit-base-modulo-the-prime-7919	n_order((S(10)**10000), 7919)	3959	

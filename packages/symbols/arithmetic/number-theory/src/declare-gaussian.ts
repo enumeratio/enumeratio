@@ -575,6 +575,16 @@ function declareGaussianRationalGcdLcm(ce: Engine): void {
     },
     { compile: "builtin" },
   );
+
+  // Numerator/Denominator of a complex number with a fractional part: Wolfram puts it over the
+  // common denominator (3/7 + i/11 is (33 + 7i)/77). Native Numerator leaves it as it is and
+  // Denominator answers 1. A plain rational is native's own.
+  const fractionalComplex = (ops: readonly Expr[]): boolean => {
+    const json = ops[0]?.json;
+    return Array.isArray(json) && json[0] === "Complex" && (parse(ops[0]!)?.d ?? 1n) !== 1n;
+  };
+  wrapOperator(ce, ["Numerator", 1], fractionalComplex, () => (ops) => gaussianExpression(ce, parse(ops[0]!)!.n), 1);
+  wrapOperator(ce, ["Denominator", 1], fractionalComplex, () => (ops) => ce.number(parse(ops[0]!)!.d), 1);
 }
 
 /** `n/d` as a `Complex(Rational, Rational)`, for when `d` doesn't divide `n` evenly in ℤ[i]. */

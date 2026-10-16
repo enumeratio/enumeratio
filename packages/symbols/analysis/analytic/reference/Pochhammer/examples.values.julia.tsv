@@ -1,0 +1,25 @@
+id	in	out	verdict
+5-6-7	enumeratio_ball(_rising, 5, 3)	210.0	
+an-empty-product-is-1	enumeratio_ball(_rising, 2, 0)	1.0	
+1-5-equals-5	enumeratio_ball(_rising, 1, 5)	120.0	
+pochhammer-3-4	enumeratio_ball(_rising, 3, 4)	360.0	
+10-11-12-13-14-15	enumeratio_ball(_rising, 10, 6)	3.6036e6	
+at-pochhammer-3-2	(enumeratio_ball(_rising, 3, 2))	12.0	
+threads-element-wise-over-a-list-as-wolfram-s	Any[enumeratio_ball(_rising, 2, 2), enumeratio_ball(_rising, 3, 2), enumeratio_ball(_rising, 4, 2)]	[6.0, 12.0, 20.0]	
+a-symbolic-base-with-integer-order-expands-to			
+a-negative-order-expands-to-the-reciprocal			
+real-base-and-order-evaluate-as-frac-gamma-a-n	enumeratio_ball(_rising, enumeratio_decimal("2.4"), enumeratio_decimal("8.5"))	2.310224673240707780567029436240190000613689224459442683312768069754143520731825e6	
+a-zero-base-gives-0-for-any-positive-order	enumeratio_ball(_rising, 0, 1285)	0.0	
+a-rational-base-frac-12-cdot-frac-32-cdot-frac	enumeratio_ball(_rising, (1 // 2), 3)	1.875	
+a-rational-order-evaluates-through-gamma-exactly	enumeratio_ball(_rising, (3 // 2), (1 // 2))	1.128379167095512573896158903121545171688101258657997713688171443421284936882974	
+complex-base-and-order-evaluate-through-gamma	enumeratio_ball(_rising, enumeratio_complex(2, 5), enumeratio_complex(0, 8))	(2.138682291868096440643541966599677174737646170360190085624024698520793462736663e-6-1.421873771170997350724369672469117550239698971896541385509804429398294750822201e-5j)	
+dividing-by-k-counts-multisets-binom-n-k-1-k	enumeratio_div(enumeratio_ball(_rising, 5, 3), factorial(ZZ(3)))	35.0	
+1-n-n-since-the-rising-factorial-from-1-just	enumeratio_equal(enumeratio_ball(_rising, 1, 5), factorial(ZZ(5)))	true	
+negative-order-gives-the-reciprocal-a-n-frac-1-a	enumeratio_ball(_rising, 5, -2)	0.08333333333333333333333333333333333333333333333333333333333333333333333333333261	
+order-0-is-the-empty-product-a-0-1			
+a-1-a			
+the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see	enumeratio_equal(enumeratio_ball(_rising, 4, 3), enumeratio_div(enumeratio_ball(gamma, 7), enumeratio_ball(gamma, 4)))	true	
+rising-and-falling-factorials-x-underline-n-1-n	enumeratio_equal(enumeratio_ball((a, n) -> _rising(a - n + 1, n), 5, 3), (-1 * enumeratio_ball(_rising, -5, 3)))	true	
+if-a-is-a-non-positive-integer-with-a-n-the	enumeratio_ball(_rising, -3, 4)	0.0	
+pochhammer-0-negative-1-is-exact	enumeratio_ball(_rising, 0, -1)	ball not finite	error
+pochhammer-0-negative-2-is-exact	enumeratio_ball(_rising, 0, -2)	ball not finite	error

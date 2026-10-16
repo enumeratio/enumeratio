@@ -1,0 +1,24 @@
+id	in	out	verdict
+a-pole-of-gamma-shared-by-its-log-derivative	psi(0)	ValueError: psi_eval(): simple pole	error
+digamma-neg-1	psi(-1)	ValueError: psi_eval(): simple pole	error
+a-floating-point-argument-evaluates-directly-to	psi(0.5)	-1.96351002602142	
+a-machine-precision-argument	psi(100.5)	4.60517435258185	
+psi-5-h-4-gamma-frac-25-12-gamma	psi(5)	-euler_gamma + 25/12	
+threads-over-a-list-reducing-each-positive	[psi(1), psi(2), psi(3)]	[-euler_gamma, -euler_gamma + 1, -euler_gamma + 3/2]	
+complex-arguments-should-evaluate-as-psi-m-does	psi((2.5 + 3*I))	1.28127391906623 + 0.979805315344560*I	
+psi-infty-infty-growing-like-ln-z	psi(oo)	psi(+Infinity)	disagree
+gauss-s-digamma-theorem-psi-1-4-gamma-pi-2-3-ln	psi((1/4))	psi(1/4)	
+psi-1-3-gamma-frac-pi-2-sqrt-3-frac-32-ln-3	psi((1/3))	psi(1/3)	
+interval-arithmetic-psi-is-increasing-on-0-infty			
+to-30-significant-digits-every-one-correctly	enumeratio_n(psi((1/3)), 30)	-3.13203378002081	
+harmonic-numbers-via-digamma-psi-n-1-gamma-h-n	enumeratio_equal((psi(6) + euler_gamma), (1 + (1/2) + (1/3) + (1/4) + (1/5)))	True	
+psi-1-gamma	enumeratio_equal((psi(1) + euler_gamma), 0)	True	
+recurrence-psi-z-1-psi-z-1-z-here-at-z-1	enumeratio_equal(psi(2), (psi(1) + 1))	True	
+psi-1-2-gamma-2-ln-2	enumeratio_equal((psi((1/2)) + euler_gamma + (2 * log(2))), 0)	True	
+psi-x-is-the-trigamma-psi-1-x	diff(psi(SR.var("x")), SR.var("x"))	psi(1, x)	disagree
+reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot	(psi(0.7) - psi(0.3))	2.28250066850220	
+psi-1-gamma-2	psi(1)	-euler_gamma	
+psi-2-1-gamma-from-psi-n-1-psi-n-1-n	psi(2)	-euler_gamma + 1	
+psi-3-frac-3-2-gamma	psi(3)	-euler_gamma + 3/2	
+neg-digamma-2-over-3-plus-digamma-1-over-3	((-psi((2/3))) + psi((1/3)))	-psi(2/3) + psi(1/3)	
+between-the-poles-at-0-and-1-psi-is-still-finite	psi(-0.5)	0.0364899739785765	

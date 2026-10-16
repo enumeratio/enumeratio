@@ -103,7 +103,7 @@ export function valleys(p: number[]): number {
   return c;
 }
 
-/** Sum of the (1-based) ascent positions (the comajor index). */
+/** Sum of the (1-based) ascent positions. */
 export function minorIndex(p: number[]): number {
   let s = 0;
   for (let i = 0; i + 1 < p.length; i++) if (p[i] < p[i + 1]) s += i + 1;

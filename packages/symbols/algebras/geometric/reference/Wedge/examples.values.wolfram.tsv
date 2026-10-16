@@ -1,4 +1,4 @@
-id	in
-two-generators	Wedge[Subscript[e, 1], Subscript[e, 2]]
-the-wedge-is-anticommutative	Wedge[Subscript[e, 2], Subscript[e, 1]]
-three-generators	Wedge[Subscript[e, 1], Subscript[e, 2], Subscript[e, 3]]
+id	in	out	tex.in	tex.out	verdict
+two-generators	Wedge[Subscript[e, 1], Subscript[e, 2]]	Subscript[e, 1] ^ Subscript[e, 2]	e_1\wedge e_2	e_1\wedge e_2	inconclusive
+the-wedge-is-anticommutative	Wedge[Subscript[e, 2], Subscript[e, 1]]	Subscript[e, 2] ^ Subscript[e, 1]	e_2\wedge e_1	e_2\wedge e_1	inconclusive
+three-generators	Wedge[Subscript[e, 1], Subscript[e, 2], Subscript[e, 3]]	Subscript[e, 1] ^ Subscript[e, 2] ^ Subscript[e, 3]	e_1\wedge e_2\wedge e_3	e_1\wedge e_2\wedge e_3	inconclusive

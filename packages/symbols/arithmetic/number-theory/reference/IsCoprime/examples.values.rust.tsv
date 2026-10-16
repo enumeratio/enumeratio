@@ -1,0 +1,22 @@
+id	in	out
+iscoprime-4-9	is_coprime(n(4), n(9))	true
+both-are-divisible-by-3	is_coprime(n(6), n(9))	false
+several-arguments-every-pair-must-be-coprime		
+iscoprime-8-11	is_coprime(n(8), n(11))	true
+iscoprime-2-4	is_coprime(n(2), n(4))	false
+gaussian-integers-2-i-and-2-i-are-non-associate		
+listable	list(vec![is_coprime(n(3), n(4)), is_coprime(n(3), n(6))])	[true, false]
+iscoprime-2-3-neg-5-7		
+iscoprime-5-plus-i-1-minus-i		
+iscoprime-neg-1-plus-2-pow-100-neg-1-plus-3-pow	is_coprime((n(-1) + power(n(2), n(100))), (n(-1) + power(n(3), n(100))))	false
+iscoprime-list-1-2-3-4-5-6	list(vec![is_coprime(n(1), n(6)), is_coprime(n(2), n(6)), is_coprime(n(3), n(6)), is_coprime(n(4), n(6)), is_coprime(n(5), n(6))])	[true, false, false, false, true]
+iscoprime-2-3	is_coprime(n(2), n(3))	true
+iscoprime-5-6	is_coprime(n(5), n(6))	true
+iscoprime-5-3	is_coprime(n(5), n(3))	true
+iscoprime-8-9	is_coprime(n(8), n(9))	true
+iscoprime-6-11	is_coprime(n(6), n(11))	true
+iscoprime-5-12	is_coprime(n(5), n(12))	true
+iscoprime-a-b		
+iscoprime-nthprime-10-nthprime-15-nthprime-20		
+iscoprime-7-10	is_coprime(n(7), n(10))	true
+pairwise-not-collectively-gcd-6-10-15-1-yet-no		

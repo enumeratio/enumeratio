@@ -209,7 +209,7 @@ const ENTRY_LAW: JsonSchema = {
     "A combinatorial map's law, in the shorthand vocabulary -- see EntryLaw. `on` " +
     "disambiguates a law for one overload of a shared name (BinaryTree is two maps).",
   anyOf: [
-    { enum: ["involution", "idempotent"] },
+    { enum: ["involution", "idempotent", "surjection", "bijection"] },
     {
       type: "object",
       properties: { inverse: { type: "string" }, on: { type: "string" } },
@@ -232,6 +232,24 @@ const ENTRY_LAW: JsonSchema = {
         on: { type: "string" },
       },
       required: ["orderIsomorphism"],
+      additionalProperties: false,
+    },
+    {
+      type: "object",
+      properties: {
+        graded: {
+          type: "object",
+          properties: {
+            from: { type: "string" },
+            to: { type: "string" },
+            sizeOffset: { type: "integer" },
+          },
+          required: ["from", "to"],
+          additionalProperties: false,
+        },
+        on: { type: "string" },
+      },
+      required: ["graded"],
       additionalProperties: false,
     },
   ],
@@ -387,6 +405,7 @@ const SYSTEM_IMPLEMENTATION: JsonSchema = {
     note: { type: "string" },
     issue: { type: "integer" },
     tolerance: { type: "number" },
+    skip: { type: "boolean" },
     messages: { type: "array", items: { $ref: "#/$defs/EvaluationMessage" } },
     back: { $ref: "#/$defs/MathJSON" },
     backOut: { $ref: "#/$defs/MathJSON" },

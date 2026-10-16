@@ -1,0 +1,39 @@
+id	in	out	verdict
+n-forces-the-numeric-result-that-plain	nf(tanh(n(0)))	0.0	
+n-tanh-1	nf(tanh(n(1)))	0.7615941559557649	
+stays-symbolic-even-at-0-same-as-sinh-and-cosh	tanh(n(0))	0.0	
+a-float-argument-evaluates-directly-no-n-needed	tanh(x(2.2))	0.9757431300314515	
+series-tanh-x-x-0-10			
+series-tanh-x-x-1-over-2-times-i-times-pi-3			
+arbitrary-precision-via-n	nf(tanh(rational(n(11), n(5))))	0.9757431300314515	
+evaluates-at-a-complex-argument			
+interval-arithmetic-tanh-is-increasing-so-tanh-0			
+uncertainty-propagation-tanh-2-sqrt-3-pm-0-1			
+the-horizontal-asymptote-at-infty			
+tanh-i-pi-4-i-tan-pi-4-i			
+oddness-pulls-the-sign-out-of-a-symbolic			
+tanh-artanh-x-x-for-every-x			
+tanh-artanh-2-2-past-the-real-domain	tanh(atanh(n(2)))	panic: non-finite result: NaN	error
+derivative-sech-2-x			
+antiderivative-ln-cosh-x			
+tanh-has-no-limit-at-complex-infinity-undefined			
+to-30-significant-digits-every-one-correctly	nf(tanh(n(1)))	0.7615941559557649	
+n-tanh-11-over-5-50	nf(tanh(rational(n(11), n(5))))	0.9757431300314515	
+tanh-list-list-1-over-3-times-i-times-pi-neg-1			
+tanh-1-over-5-times-i-times-pi			
+tanh-1-over-24-times-i-times-pi			
+matrixfunction-function-tanh-1-1-list-list-1			
+functionmeromorphic-tanh-x-x			
+tanh-x-frac-sinh-x-cosh-x	equal(tanh(n(1)), (sinh(n(1)) / cosh(n(1))))	true	
+in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x			
+tanh-1-over-12-times-i-times-pi			
+tanh-1-over-10-times-i-times-pi			
+tanh-1-over-9-times-i-times-pi			
+tanh-1-over-8-times-i-times-pi			
+tanh-1-over-7-times-i-times-pi			
+tanh-1-over-6-times-i-times-pi			
+tanh-2-over-9-times-i-times-pi			
+n-1-plus-tanh-1-over-2-pow-2-times-tanh-1	nf(((n(1) + power(tanh(rational(n(1), n(2))), n(2))) * tanh(n(1))))	0.9242343145200195	
+n-tanh-1-over-2-plus-1-over-2-times-i-times-pi			
+n-1-plus-tanh-2-pow-2-times-tanh-4	nf(((n(1) + power(tanh(n(2)), n(2))) * tanh(n(4))))	1.9280551601516336	
+n-tanh-2-plus-1-over-2-times-i-times-pi			

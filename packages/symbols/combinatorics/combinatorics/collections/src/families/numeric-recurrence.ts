@@ -8,12 +8,14 @@
 // it lines up with the OEIS offset -- see the reference entries at the end of
 // packages/reference/src/entries/enumerable-families.ts for the definitive statement per
 // sequence; the comments here are the implementation-level version of the same facts.
-import type { Declared, NumberKernel } from "./types.ts";
+import type { EpsilFamily } from "./epsil.ts";
+import { withSequenceDefinitions } from "./sequence-definitions.ts";
+import { bigAware, type Declared, type NumberKernel } from "./types.ts";
+import { declineWork } from "./work.ts";
 
 // ---- shared: bigint decode + a bounded forward scan for membership/rank. ----
 
-/** Boxed elements arrive here as whatever `intOf` (types.ts, capped at Number.isSafeInteger)
- *  decoded, or as the raw bigint our own kernel-level tests pass directly. Either way, decode
+/** Boxed elements arrive here as a number or, past 2^53, a bigint (`scalarOf`, types.ts). Either way, decode
  *  once to a bigint so `contains`/`rank` never compare across mixed types. */
 function toBigInt(x: unknown): bigint | undefined {
   if (typeof x === "bigint") return x;
@@ -21,11 +23,20 @@ function toBigInt(x: unknown): bigint | undefined {
   return undefined;
 }
 
+/** The terms a scan for a value reads, and so a recurrence's cache grows to: the most that is a few megabytes
+ *  for the fastest growing (a Delannoy number gains about 2.5 bits a term). A value past the last is declined. */
+const SCAN_TERMS = 8000;
+
+/** A scan that ran out of terms before settling the value: unknown, never a verdict. */
+const declineScan = (head: string, value: bigint): never => {
+  throw new RangeError(`${head}: ${value} is past the terms scanned; its kernel is not bigint yet`);
+};
+
 /** Scans `nth(0), nth(1), ...` for `value`. Once past `monotoneFrom`, the sequence is assumed
  *  non-decreasing forever (true for every recurrence below past its initial transient), so the
  *  scan can stop the moment a term exceeds the target -- otherwise it just checks equality.
- *  `cap` is a last-resort guard against a value that never appears. */
-function scanMembership(nth: (k: number) => bigint, monotoneFrom = 0, cap = 20_000) {
+ *  `cap` bounds the terms scanned; a value still ahead of the last one is declined, not absent. */
+function scanMembership(head: string, nth: (k: number) => bigint, monotoneFrom = 0, cap = SCAN_TERMS) {
   return {
     contains(value: bigint): boolean {
       if (value < 0n) return false;
@@ -34,7 +45,7 @@ function scanMembership(nth: (k: number) => bigint, monotoneFrom = 0, cap = 20_0
         if (t === value) return true;
         if (i >= monotoneFrom && t > value) return false;
       }
-      return false;
+      return declineScan(head, value);
     },
     rankOf(value: bigint): number {
       if (value < 0n) return -1;
@@ -43,7 +54,7 @@ function scanMembership(nth: (k: number) => bigint, monotoneFrom = 0, cap = 20_0
         if (t === value) return i;
         if (i >= monotoneFrom && t > value) return -1;
       }
-      return -1;
+      return declineScan(head, value);
     },
   };
 }
@@ -110,15 +121,22 @@ function schroederNth(n: number): bigint {
 
 // ---- Bell (Aitken's triangle) and Fubini (needs a bigint Pascal's triangle). ----
 
-const bellRows: bigint[][] = [[1n]];
+/** The most terms Bell and Fubini build: their rows are a quadratic number of bigints (about a second). */
+const BELL_MAX = 1500;
+const FUBINI_MAX = 500;
+
+// Only the last row of the triangle is kept, and the term each row starts.
+const bellTerms: bigint[] = [1n];
+let bellRow: bigint[] = [1n];
 function bellNth(n: number): bigint {
-  while (bellRows.length <= n) {
-    const prev = bellRows[bellRows.length - 1];
-    const row: bigint[] = [prev[prev.length - 1]];
-    for (let j = 0; j < prev.length; j++) row.push(row[j] + prev[j]);
-    bellRows.push(row);
+  if (n > BELL_MAX) return declineWork(`BellNumbers: term ${n}`);
+  while (bellTerms.length <= n) {
+    const row: bigint[] = [bellRow[bellRow.length - 1]];
+    for (let j = 0; j < bellRow.length; j++) row.push(row[j] + bellRow[j]);
+    bellRow = row;
+    bellTerms.push(row[0]);
   }
-  return bellRows[n][0];
+  return bellTerms[n];
 }
 
 const pascalRows: bigint[][] = [[1n]];
@@ -136,6 +154,7 @@ function binomialBig(n: number, k: number): bigint {
 
 const fubiniTerms: bigint[] = [1n];
 function fubiniNth(n: number): bigint {
+  if (n > FUBINI_MAX) return declineWork(`FubiniNumbers: term ${n}`);
   while (fubiniTerms.length <= n) {
     const m = fubiniTerms.length;
     let sum = 0n;
@@ -149,8 +168,12 @@ function fubiniNth(n: number): bigint {
 // in kernels-combinatorics.ts, but that one is a plain-number kernel -- p(n) itself stays
 // small, but every family here is bigint on principle so At never has a float/bigint seam). ----
 
+/** Partition terms take about n^1.5 steps in all; this many is about a second. */
+const PARTITION_MAX = 50_000;
+
 const partitionTerms: bigint[] = [1n];
 function partitionNth(n: number): bigint {
+  if (n > PARTITION_MAX) return declineWork(`PartitionNumbers: term ${n}`);
   while (partitionTerms.length <= n) {
     const m = partitionTerms.length;
     let sum = 0n;
@@ -177,6 +200,7 @@ function fusc(n: number): bigint {
   if (n === 0) return 0n;
   const cached = fuscCache.get(n);
   if (cached !== undefined) return cached;
+  if (fuscCache.size >= 100_000) fuscCache.clear();
   let a = 0n;
   let b = 1n;
   for (const bit of n.toString(2)) {
@@ -219,7 +243,7 @@ const repeatsIn = (nth: (k: number) => bigint, monotoneFrom: number): boolean =>
 };
 
 function scalarEntry(head: string, nth: (k: number) => bigint, monotoneFrom: number): NumberKernel {
-  const scan = scanMembership(nth, monotoneFrom);
+  const scan = scanMembership(head, nth, monotoneFrom);
   return {
     declared: sequence(repeatsIn(nth, monotoneFrom)),
     head,
@@ -238,7 +262,9 @@ function scalarEntry(head: string, nth: (k: number) => bigint, monotoneFrom: num
   };
 }
 
-export const entries: NumberKernel[] = [
+/** The families as TS kernels: where a family has an Epsil definition (./sequence-definitions.ts), the
+ *  fast path of it and its independent reading in tests. */
+export const kernels: NumberKernel[] = bigAware([
   scalarEntry("FibonacciNumbers", (k) => fibonacci.nth(k), 0),
   scalarEntry("LucasNumbers", (k) => lucas.nth(k), 1),
   scalarEntry("JacobsthalNumbers", (k) => jacobsthal.nth(k), 0),
@@ -269,7 +295,8 @@ export const entries: NumberKernel[] = [
       const v = toBigInt(element);
       if (v === undefined || v < 0n) return -1;
       for (let i = 0; i <= 20_000; i++) if (fusc(i) === v) return i;
-      return -1;
+      // Every non-negative integer occurs, so one not met by the scan is out of its reach, not absent.
+      return declineScan("SternDiatomicSequence", v);
     },
   },
   {
@@ -290,4 +317,6 @@ export const entries: NumberKernel[] = [
       return -1;
     },
   },
-];
+]);
+
+export const entries: (NumberKernel | EpsilFamily)[] = withSequenceDefinitions(kernels);

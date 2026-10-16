@@ -46,6 +46,22 @@ bindings:
     form: wolfram / mpmath
     environment: external
     note: BarnesG[z] and mpmath.barnesg(z), same normalisation.
+  - origin: mapped
+    form: mpmath
+    template: barnesg($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(barnes_g, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 seeAlso:
   - LogBarnesG
   - Gamma

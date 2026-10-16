@@ -45,6 +45,26 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: SymPy's mod_inverse raises where no inverse exists, and for a negative modulus gives a result in (m, 0] as ours does. It reads a non-integer argument (a Gaussian integer) as an ordinary number rather than reducing it in the Gaussian integers.
+  - origin: mapped
+    form: julia
+    template: invmod(ZZ($1), ZZ($2))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: mod_inverse($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: num-bigint 0.4.8
+      on: 2026-10-16
 ---
 
 - Exists exactly when $\gcd(a, m)$ is a unit; the call is otherwise left unevaluated.

@@ -19,9 +19,13 @@ function impliedProperties(laws: MapLaws): string[] {
   for (const law of laws.laws ?? []) {
     if (law === "involution") implied.push("Involution", "Bijection");
     else if (law === "idempotent") implied.push("Idempotent");
+    else if (law === "surjection") implied.push("Surjection");
+    else if (law === "bijection") implied.push("Bijection");
     else implied.push("Bijection"); // `{ inverse }`: a map with an inverse is a bijection.
   }
   if (laws.orderIsomorphism !== undefined) implied.push("Bijection");
+  // FindStat's definition of "Graded map" isn't confirmed to allow a size offset: only offset 0 implies it.
+  if (laws.graded !== undefined && (laws.graded.sizeOffset ?? 0) === 0) implied.push("Graded map");
   return implied;
 }
 

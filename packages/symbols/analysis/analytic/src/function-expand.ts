@@ -2,6 +2,7 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 import { expandExpIntegralE } from "./exp-integral-e-expand.ts";
+import { expandAiryRotation, expandCompleteElliptic, expandEllipticKPrime } from "./special-values.ts";
 
 // FunctionExpand(expr) — rewrite special functions in terms of more elementary or
 // better-known ones. Most of the work here is a handful of named identities the backlog's
@@ -66,6 +67,13 @@ function expandHead(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
   }
   // E_n(z): Exp-polynomial, Erfc, ExpIntegralE(1, z) or Gamma forms by order.
   if (op === "ExpIntegralE" && ops.length === 2) return expandExpIntegralE(ce, ops[0]!, ops[1]!) ?? e;
+  // K and E at m = −1 and ½ in Γ(¼); K′ through E and K, expanded in turn.
+  const elliptic = expandCompleteElliptic(ce, op, ops);
+  if (elliptic !== undefined) return elliptic;
+  const kPrime = expandEllipticKPrime(ce, e);
+  if (kPrime !== undefined) return functionExpand(ce, kPrime);
+  // Ai and Bi at z·e^(±2πi/3): the rotation law.
+  if (ops.length === 1) return expandAiryRotation(ce, op, ops[0]!) ?? e;
   return e; // no identity known: leave the input alone (see the head's `details`)
 }
 

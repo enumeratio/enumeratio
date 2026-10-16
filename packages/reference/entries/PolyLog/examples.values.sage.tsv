@@ -72,13 +72,15 @@ polylog-rim-theta-2p4-s-0p5-z	enumeratio_n(polylog(0.5, (-0.7373937155412454 + 0
 polylog-rim-theta-2p4-s-1-z	enumeratio_n(polylog(1, (-0.7373937155412454 + 0.675463180551151*I)))	-0.622766653117113 + 0.370796326794897*I	
 polylog-rim-theta-2p4-s-1p5-z	enumeratio_n(polylog(1.5, (-0.7373937155412454 + 0.675463180551151*I)))	-0.659486088090073 + 0.440335525424700*I	
 order-one-half-at-1-is-zeta-one-half	enumeratio_n(polylog((1/2), 1))	-1.46035450880959	
-n-polylog-30-neg-4	enumeratio_n(polylog(30, -4))		
-n-polylog-250-neg-4-a-large-order-past-z-1	enumeratio_n(polylog(250, -4))		
-n-polylog-250-4-a-large-order-on-the-cut	enumeratio_n(polylog(250, 4))		
-n-polylog-2500000-4-a-huge-order-returns	enumeratio_n(polylog(2500000, 4))		
-n-polylog-40p5-2-plus-3i-a-large-complex-point	enumeratio_n(polylog(40.5, (2 + 3*I)))		
-normal-series-polylog-2-x-x-positiveinfinity-6			
-polylog-s-tiny-negative-rim	enumeratio_n(polylog(-1e-12, (-0.12884449429552464 + 0.9916648104524686*I)))		
+n-polylog-30-neg-4	enumeratio_n(polylog(30, -4))	-3.99999998509915	
+n-polylog-250-neg-4-a-large-order-past-z-1	enumeratio_n(polylog(250, -4))	-4.00000000000000	
+n-polylog-250-4-a-large-order-on-the-cut	enumeratio_n(polylog(250, 4))	4.00000000000000 - 5.09931929748799e-455*I	
+n-polylog-2500000-4-a-huge-order-returns	enumeratio_n(polylog(2500000, 4))	TimeoutError: over 60 s	error
+n-polylog-40p5-2-plus-3i-a-large-complex-point	enumeratio_n(polylog(40.5, (2 + 3*I)))	1.13521303023391e28 + 7.68457079507548e27*I	disagree
+normal-series-polylog-2-x-x-positiveinfinity-6	(SR(polylog(2, SR.var("x"))).series(SR.var("x") == oo, 6 + 1)).truncate()	None	inconclusive
+polylog-s-tiny-negative-rim	enumeratio_n(polylog(-1e-12, (-0.12884449429552464 + 0.9916648104524686*I)))	-0.499999997777011 + 0.439238679595038*I	disagree
+polylog-neg-2-at-the-pole-z-1	polylog(-2, (2/2))	0	inconclusive
+polylog-neg-2-over-a-list-holding-the-pole	[polylog(-2, (2/2)), polylog(-2, -6)]	[0, polylog(-2, -6)]	disagree
 threads-over-a-list-of-arguments	[polylog(2, 0.5), polylog(2, 0.25)]	[0.582240526465012, 0.267652639082733]	
 a-non-integer-order-past-z-1-is-left-unevaluated	polylog(2.5, 2)	2.78966033238278 - 1.36380370053935*I	
 complex-order-and-argument	polylog((0.2 + 1*I), (0.5 + -0.5*I))	0.0703265205505161 - 0.563293262539874*I	
@@ -98,13 +100,13 @@ image-order-0p5-over-neg-0p5-to-0p95
 image-order-neg-1p5-over-neg-0p3-to-0p3			
 image-order-neg-3-over-neg-0p5-to-0p2			
 image-order-5-over-neg-0p99-to-0p99			
-polylog-0-5	polylog(0, 5)		
-n-polylog-1-1-over-3-50	enumeratio_n(polylog(1, (1/3)), 50)		
-polylog-2-list-list-1-over-2-0-list-0-1-over-2	[[polylog(2, (1/2)), polylog(2, 0)], [polylog(2, 0), polylog(2, (1/2))]]		
-polylog-1-0	polylog(1, 0)		
-d-polylog-n-z-z	diff(polylog(SR.var("n"), SR.var("z")), SR.var("z"))		
+polylog-0-5	polylog(0, 5)	polylog(0, 5)	
+n-polylog-1-1-over-3-50	enumeratio_n(polylog(1, (1/3)), 50)	0.405465108108164	
+polylog-2-list-list-1-over-2-0-list-0-1-over-2	[[polylog(2, (1/2)), polylog(2, 0)], [polylog(2, 0), polylog(2, (1/2))]]	[[1/12*pi^2 - 1/2*log(2)^2, 0], [0, 1/12*pi^2 - 1/2*log(2)^2]]	
+polylog-1-0	polylog(1, 0)	0	
+d-polylog-n-z-z	diff(polylog(SR.var("n"), SR.var("z")), SR.var("z"))	True	
 matrixfunction-function-polylog-2-1-1-list-list			
-fullsimplify-series-polylog-n-x-x-x0-2			
+fullsimplify-series-polylog-n-x-x-x0-2	SR(polylog(SR.var("n"), SR.var("x"))).series(SR.var("x") == SR.var("x0"), 2 + 1)	None	inconclusive
 li-1-2-1-zeta-1-2-a-non-integer-order-from	polylog(0.5, 1)	NaN + NaN*I	inconclusive
 li-1-2-1-2-0-80612672-via-the-lerch-series	polylog(0.5, 0.5)	0.806126723042852	
 li-5-2-1-2-0-46229778-the-alternating-side-euler	polylog(2.5, -0.5)	-0.462297782190063	
@@ -114,13 +116,13 @@ li-1-z-ln-1-z-symbolically	polylog(1, SR.var("z"))	True
 li-1-z-z-1-z-2-negative-orders-are-rational	polylog(-1, SR.var("z"))	True	
 li-2-1-2-pi-2-12-ln-2-2-2	enumeratio_equal((polylog(2, 0.5) + (0.5 * ((log(2))^2))), (((pi)^2) / 12))	True	
 li-s-1-zeta-s-for-symbolic-s	polylog(SR.var("s"), 1)	True	
-frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative	diff(polylog(SR.var("n"), SR.var("x")), SR.var("x"))		
-polylog-3-exponentiale-pow-1-over-3-times-i	polylog(3, ((e)^((0 + (1/3)*I) * pi)))		
-polylog-3-exponentiale-pow-neg-1-over-3-times-i	polylog(3, ((e)^((0 + (-1/3)*I) * pi)))		
-polylog-3-exponentiale-pow-2-over-3-times-i	polylog(3, ((e)^((0 + (2/3)*I) * pi)))		
+frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative	diff(polylog(SR.var("n"), SR.var("x")), SR.var("x"))	True	
+polylog-3-exponentiale-pow-1-over-3-times-i	polylog(3, ((e)^((0 + (1/3)*I) * pi)))	polylog(3, 1/2*I*sqrt(3) + 1/2)	disagree
+polylog-3-exponentiale-pow-neg-1-over-3-times-i	polylog(3, ((e)^((0 + (-1/3)*I) * pi)))	polylog(3, -1/2*I*sqrt(3) + 1/2)	disagree
+polylog-3-exponentiale-pow-2-over-3-times-i	polylog(3, ((e)^((0 + (2/3)*I) * pi)))	polylog(3, 1/2*I*sqrt(3) - 1/2)	disagree
 functionexpand-polylog-2-exponentiale-pow-1-over			
-neg-polylog-2-neg-1-plus-polylog-2-1-over-2	((-polylog(2, -1)) + polylog(2, (1/2)))		
-neg-1-over-2-times-polylog-2-neg-1-over-3-plus	(((-1/2) * polylog(2, (-1/3))) + polylog(2, -1) + polylog(2, (1/3)))		
-neg-2-times-polylog-2-neg-1-over-2-plus-polylog	((-2 * (polylog(2, (-1/2)) + polylog(2, (1/2)))) + polylog(2, (1/4)))		
-polylog-2-neg-1-plus-polylog-2-0-plus-polylog-2	(polylog(2, -1) + polylog(2, 0) + polylog(2, (1/2)))		
+neg-polylog-2-neg-1-plus-polylog-2-1-over-2	((-polylog(2, -1)) + polylog(2, (1/2)))	1/6*pi^2 - 1/2*log(2)^2	
+neg-1-over-2-times-polylog-2-neg-1-over-3-plus	(((-1/2) * polylog(2, (-1/3))) + polylog(2, -1) + polylog(2, (1/3)))	-1/12*pi^2 + dilog(1/3) - 1/2*dilog(-1/3)	
+neg-2-times-polylog-2-neg-1-over-2-plus-polylog	((-2 * (polylog(2, (-1/2)) + polylog(2, (1/2)))) + polylog(2, (1/4)))	-1/6*pi^2 + log(2)^2 + dilog(1/4) - 2*dilog(-1/2)	
+polylog-2-neg-1-plus-polylog-2-0-plus-polylog-2	(polylog(2, -1) + polylog(2, 0) + polylog(2, (1/2)))	-1/2*log(2)^2	
 an-exact-argument-stays-symbolic-under-plain	polylog(2, (1/2))	1/12*pi^2 - 1/2*log(2)^2	

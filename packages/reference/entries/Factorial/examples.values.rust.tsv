@@ -3,7 +3,7 @@ id	in	out	verdict
 6-factorial	factorial(n(6))	720.0	
 the-empty-product-is-1-by-convention	factorial(n(0))	1.0	
 10-factorial	factorial(n(10))	3628800.0	
-threads-element-wise-over-a-list	factorial(list(vec![n(1), n(2), n(3), n(4)]))	panic: threading: a list where the crate takes a scalar	error
+threads-element-wise-over-a-list	list(vec![factorial(n(1)), factorial(n(2)), factorial(n(3)), factorial(n(4))])	[1.0, 2.0, 6.0, 24.0]	
 frac-n-n-1-simplifies-to-n-under-simplify-plain			
 real-arguments-evaluate-as-gamma-n-1	factorial(x(3.5))	panic: an integer, not 3.5	error
 negative-non-integers-are-defined-too-2-5-gamma	factorial(x(-2.5))	panic: an integer, not -2.5	error
@@ -17,6 +17,6 @@ n-gamma-n-1-see-gamma	equal(factorial(n(5)), gamma(n(6)))	true
 the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e			
 sum-k-factorial-pow-neg-4-times-k-plus-2			
 sum-k-factorial-pow-neg-4-times-k-plus-3			
-negative-integers-are-poles-of-the-gamma	factorial(n(-1))	panic: a non-negative integer	error
+negative-integers-are-poles-of-the-gamma	factorial(n(-1))	panic: a non-negative integer: the crate's parameter is unsigned	error
 factorials-grow-fast-20-already-exceeds-2-times	factorial(n(20))	2.43290200817664e18	
 30-has-33-digits-and-ends-in-seven-zeros	factorial(n(30))	2.6525285981219103e32	

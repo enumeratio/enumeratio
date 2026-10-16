@@ -11,6 +11,13 @@ signatures:
     library: enumeratio-combinatorics
     type: (any) -> infinity | integer
     overrides: compute-engine
+  - call: Length(finset)
+    description: the number of members of a [[Finset]], its cardinality.
+    library: enumeratio-combinatorics
+    type: (any) -> infinity | integer
+    overrides: compute-engine
+    on:
+      - Finset
 seeAlso:
   - Count
 names:
@@ -46,3 +53,4 @@ statOn:
 - An atom has no parts, so its length is 0 — it isn't a type error.
 - Any other expression's length is its number of top-level operands, e.g. the number of terms in a sum.
 - See [[Count]] to count occurrences of a specific value instead of every element.
+- A [[Finset]] is read as the subset it is, so its length is its number of members. compute-engine has no `Cardinality` head, so this is its cardinality.

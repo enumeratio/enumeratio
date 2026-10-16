@@ -1,0 +1,30 @@
+id	in	out	verdict
+arcsec-1	enumeratio_ball(_asec, 1)	0.0	
+arcsec-2	enumeratio_ball(_asec, 2)	1.04719755119659774615421446109316762806572313312503527365831486410260546876206	
+arcsec-sqrt-2-pi-4	enumeratio_ball(_asec, enumeratio_ball(sqrt, 2))	0.7853981633974483096156608458198757210492923498437764552437361480769541015715495	
+arcsec-neg-1	enumeratio_ball(_asec, -1)	3.141592653589793238462643383279502884197169399375105820974944592307816406286198	
+arcsec-2-2-pi-3	enumeratio_ball(_asec, -2)	2.094395102393195492308428922186335256131446266250070547316629728205210937524121	
+inside-1-1-the-value-is-purely-imaginary	enumeratio_ball(_asec, enumeratio_decimal("0.5"))	(0.0+1.316957896924816708625046347307968444026981971467516479768472256920460185416428j)	
+arcsec-positiveinfinity	enumeratio_ball(_asec, Inf)	non-finite argument	error
+a-pole-arcsec-0-is-complex-infinity	enumeratio_ball(_asec, 0)	ball not finite	error
+derivative-for-real-x-1			
+n-arcsec-5-50	enumeratio_nshow(enumeratio_ball(_asec, 5), 50)	1.3694384060045658277761961394221280318585466182853e+00	
+arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	Any[Any[enumeratio_ball(_asec, enumeratio_ball(sqrt, 2)), enumeratio_ball(_asec, (-(enumeratio_ball(sqrt, 2))))], Any[enumeratio_ball(_asec, 0), enumeratio_ball(_asec, (-(enumeratio_ball(sqrt, 2))))]]	ball not finite	error
+arcsec-2-over-3-times-sqrt-3	enumeratio_ball(_asec, ((2 // 3) * enumeratio_ball(sqrt, 3)))	0.5235987755982988730771072305465838140328615665625176368291574320513027343810215	
+arcsec-complexinfinity			
+matrixfunction-function-arcsec-1-1-list-list			
+arcsec-1-over-2	enumeratio_ball(_asec, (1 // 2))	(0.0+1.316957896924816708625046347307968444026981971467516479768472256920460185416428j)	
+arcsec-neg-1-over-2	enumeratio_ball(_asec, (-1 // 2))	(3.141592653589793238462643383279502884197169399375105820974944592307816406286198-1.316957896924816708625046347307968444026981971467516479768472256920460185416428j)	
+undoes-sec-sec-arcsec-x-x	enumeratio_equal(enumeratio_ball(_sec, enumeratio_ball(_asec, 2)), 2)	true	
+arcsec-neg-sqrt-2-plus-sqrt-6	enumeratio_ball(_asec, ((-(enumeratio_ball(sqrt, 2))) + enumeratio_ball(sqrt, 6)))	0.2617993877991494365385536152732919070164307832812588184145787160256513671904935	
+arcsec-neg-sqrt-6-plus-sqrt-2	enumeratio_ball(_asec, ((-(enumeratio_ball(sqrt, 6))) + enumeratio_ball(sqrt, 2)))	2.879793265790643801924089768006210977180738616093847002560365876282165039095687	
+arcsec-2-times-sqrt-1-over-2-plus-sqrt-2	enumeratio_ball(_asec, (2 * enumeratio_ball(sqrt, enumeratio_div(1, (2 + enumeratio_ball(sqrt, 2))))))	0.3926990816987241548078304229099378605246461749218882276218680740384770507857661	
+arcsec-neg-2-times-sqrt-1-over-2-plus-sqrt-2	enumeratio_ball(_asec, (-2 * enumeratio_ball(sqrt, enumeratio_div(1, (2 + enumeratio_ball(sqrt, 2))))))	2.748893571891069083654812960369565023672523224453217593353076518269339355500432	
+arcsec-neg-2-over-3-times-sqrt-3	enumeratio_ball(_asec, ((-2 // 3) * enumeratio_ball(sqrt, 3)))	2.617993877991494365385536152732919070164307832812588184145787160256513671905177	
+arcsec-neg-1-plus-sqrt-5	enumeratio_ball(_asec, (-1 + enumeratio_ball(sqrt, 5)))	0.6283185307179586476925286766559005768394338798750211641949889184615632812572154	
+arcsec-1-minus-sqrt-5	enumeratio_ball(_asec, (1 + (-(enumeratio_ball(sqrt, 5)))))	2.513274122871834590770114706623602307357735519500084656779955673846253125028965	
+arcsec-neg-sqrt-2	enumeratio_ball(_asec, (-(enumeratio_ball(sqrt, 2))))	2.356194490192344928846982537459627163147877049531329365731208444230862304714631	
+arcsec-sqrt-2-plus-neg-2-over-5-times-sqrt-5	enumeratio_ball(_asec, enumeratio_ball(sqrt, (2 + ((-2 // 5) * enumeratio_ball(sqrt, 5)))))	0.3141592653589793238462643383279502884197169399375105820974944592307816406286336	
+arcsec-neg-sqrt-2-plus-neg-2-over-5-times-sqrt-5	enumeratio_ball(_asec, (-(enumeratio_ball(sqrt, (2 + ((-2 // 5) * enumeratio_ball(sqrt, 5)))))))	2.827433388230813914616379044951552595777452459437595238877450133077034765657564	
+arcsec-sqrt-2-plus-2-over-5-times-sqrt-5	enumeratio_ball(_asec, enumeratio_ball(sqrt, (2 + ((2 // 5) * enumeratio_ball(sqrt, 5)))))	0.942477796076937971538793014983850865259150819812531746292483377692344921885849	
+arcsec-neg-sqrt-2-plus-2-over-5-times-sqrt-5	enumeratio_ball(_asec, (-(enumeratio_ball(sqrt, (2 + ((2 // 5) * enumeratio_ball(sqrt, 5)))))))	2.199114857512855266923850368295652018938018579562574074682461214615471484400332	

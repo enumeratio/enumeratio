@@ -1,0 +1,30 @@
+id	in	out	verdict
+arcsec-1	acos(n(1) / n(1))	0.0	
+arcsec-2	acos(n(1) / n(2))	1.0471975511965976	
+arcsec-sqrt-2-pi-4	acos(n(1) / sqrt(n(2)))	0.7853981633974484	
+arcsec-neg-1	acos(n(1) / n(-1))	3.141592653589793	
+arcsec-2-2-pi-3	acos(n(1) / n(-2))	2.0943951023931957	
+inside-1-1-the-value-is-purely-imaginary	acos(n(1) / x(0.5))	panic: non-finite result: NaN	error
+arcsec-positiveinfinity			
+a-pole-arcsec-0-is-complex-infinity	acos(n(1) / n(0))	panic: denominator == 0	error
+derivative-for-real-x-1			
+n-arcsec-5-50	nf(acos(n(1) / n(5)))	1.3694384060045657	
+arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	list(vec![list(vec![acos(n(1) / sqrt(n(2))), acos(n(1) / (-(sqrt(n(2)))))]), list(vec![acos(n(1) / n(0)), acos(n(1) / (-(sqrt(n(2)))))])])	panic: denominator == 0	error
+arcsec-2-over-3-times-sqrt-3	acos(n(1) / (rational(n(2), n(3)) * sqrt(n(3))))	0.5235987755982988	
+arcsec-complexinfinity			
+matrixfunction-function-arcsec-1-1-list-list			
+arcsec-1-over-2	acos(n(1) / rational(n(1), n(2)))	panic: non-finite result: NaN	error
+arcsec-neg-1-over-2	acos(n(1) / rational(n(-1), n(2)))	panic: non-finite result: NaN	error
+undoes-sec-sec-arcsec-x-x	equal((n(1) / cos(acos(n(1) / n(2)))), n(2))	true	
+arcsec-neg-sqrt-2-plus-sqrt-6	acos(n(1) / ((-(sqrt(n(2)))) + sqrt(n(6))))	0.26179938779914846	
+arcsec-neg-sqrt-6-plus-sqrt-2	acos(n(1) / ((-(sqrt(n(6)))) + sqrt(n(2))))	2.879793265790645	
+arcsec-2-times-sqrt-1-over-2-plus-sqrt-2	acos(n(1) / (n(2) * sqrt((n(1) / (n(2) + sqrt(n(2)))))))	0.3926990816987242	
+arcsec-neg-2-times-sqrt-1-over-2-plus-sqrt-2	acos(n(1) / (n(-2) * sqrt((n(1) / (n(2) + sqrt(n(2)))))))	2.748893571891069	
+arcsec-neg-2-over-3-times-sqrt-3	acos(n(1) / (rational(n(-2), n(3)) * sqrt(n(3))))	2.6179938779914944	
+arcsec-neg-1-plus-sqrt-5	acos(n(1) / (n(-1) + sqrt(n(5))))	0.6283185307179587	
+arcsec-1-minus-sqrt-5	acos(n(1) / (n(1) + (-(sqrt(n(5))))))	2.5132741228718345	
+arcsec-neg-sqrt-2	acos(n(1) / (-(sqrt(n(2)))))	2.356194490192345	
+arcsec-sqrt-2-plus-neg-2-over-5-times-sqrt-5	acos(n(1) / sqrt((n(2) + (rational(n(-2), n(5)) * sqrt(n(5))))))	0.3141592653589791	
+arcsec-neg-sqrt-2-plus-neg-2-over-5-times-sqrt-5	acos(n(1) / (-(sqrt((n(2) + (rational(n(-2), n(5)) * sqrt(n(5))))))))	2.8274333882308142	
+arcsec-sqrt-2-plus-2-over-5-times-sqrt-5	acos(n(1) / sqrt((n(2) + (rational(n(2), n(5)) * sqrt(n(5))))))	0.9424777960769379	
+arcsec-neg-sqrt-2-plus-2-over-5-times-sqrt-5	acos(n(1) / (-(sqrt((n(2) + (rational(n(2), n(5)) * sqrt(n(5))))))))	2.199114857512855	

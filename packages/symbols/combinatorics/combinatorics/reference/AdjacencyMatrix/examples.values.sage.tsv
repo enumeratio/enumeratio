@@ -1,0 +1,5 @@
+id	in	out
+adjacency-matrix-of-k4	[list(r) for r in (enumeratio_graph(graphs.CompleteGraph(4))).adjacency_matrix().rows()]	[[0, 1, 1, 1], [1, 0, 1, 1], [1, 1, 0, 1], [1, 1, 1, 0]]
+a-directed-edge-is-asymmetric	[list(r) for r in (DiGraph([[1, 2], [(1, 2)]], format="vertices_and_edges", loops=True, multiedges=True)).adjacency_matrix().rows()]	[[0, 1], [0, 0]]
+shape-adjacencymatrix-g		
+adjacencymatrix-graph-list-list	[list(r) for r in (Graph([[], []], format="vertices_and_edges", loops=True, multiedges=True)).adjacency_matrix().rows()]	[]

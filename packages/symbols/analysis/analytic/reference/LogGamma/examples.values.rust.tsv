@@ -1,0 +1,26 @@
+id	in	out	verdict
+ln-gamma-3-ln-2-ln-2	ln_gamma(n(3))	0.6931471805599485	
+ln-gamma-1-0	ln_gamma(n(1))	-4.440892098500626e-16	disagree
+ln-gamma-2-5-ln-1-3293-to-the-engine-s-working	ln_gamma(x(2.5))	0.2846828704729223	
+ln-gamma-5-ln-4-ln-24-split-into-prime	ln_gamma(n(5))	3.1780538303479497	
+log-gamma-neg-2-is-a-pole	ln_gamma(n(-2))	36.397144537438486	inconclusive
+log-gamma-neg-3-is-a-pole	ln_gamma(n(-3))	panic: non-finite result: NaN	error
+n-log-gamma-5-over-2-to-40-digits	nf(ln_gamma(rational(n(5), n(2))))	0.2846828704729223	
+n-loggamma-15-pow-300-past-a-double	nf(ln_gamma(power(n(15), n(300))))	panic: non-finite result: inf	error
+to-the-engine-s-working-precision	ln_gamma(x(2.2))	0.09694746679063737	
+complex-arguments			
+threads-elementwise-over-an-array	list(vec![list(vec![ln_gamma(rational(n(1), n(2))), ln_gamma(n(-1))]), list(vec![ln_gamma(n(0)), ln_gamma(rational(n(1), n(2)))])])	panic: non-finite result: NaN	error
+exact-negative-half-integers-ln-gamma-frac-32-ln	ln_gamma(rational(n(-3), n(2)))	0.8600470153764785	inconclusive
+ln-gamma-infty-infty			
+huge-arguments-ln-gamma-10-300-approx-6-898	nf(ln_gamma(power(n(10), n(300))))	6.897755278982137e302	
+interval-arithmetic-decreasing-here-so-the			
+uncertainty-propagation-with-psi-1-2-as-the			
+to-30-significant-digits-not-yet-the-last-digit	nf(ln_gamma(rational(n(1), n(3))))	0.9854206469277671	
+negative-non-integer-correctly-rounded	nf(ln_gamma(x(-2.5)))	panic: non-finite result: NaN	error
+log-gamma-neg-0-5-is-the-principal-continuation	ln_gamma(x(-0.5))	panic: non-finite result: NaN	error
+ln-gamma-frac-12-frac-12-ln-pi-from-gamma-frac	ln_gamma(rational(n(1), n(2)))	0.5723649429247	
+a-pole-of-gamma	ln_gamma(n(0))	panic: non-finite result: inf	error
+on-the-negative-axis-gamma-frac-32-frac-43-sqrt	ln_gamma(x(-1.5))	0.8600470153764785	inconclusive
+half-integers-past-frac-12-ln-gamma-frac-32-ln	ln_gamma(rational(n(3), n(2)))	-0.1207822376352432	
+off-the-positive-axis-this-is-the-continuation			
+log-gamma-negativeinfinity-is-indeterminate			

@@ -1,0 +1,9 @@
+id	in	out	verdict
+k4	(enumeratio_graph(graphs.CompleteGraph(4))).size()	6	
+completegraph-4	enumeratio_graph(graphs.CompleteGraph(4))	Complete graph	disagree
+completegraph-5	enumeratio_graph(graphs.CompleteGraph(5))	Complete graph	disagree
+map-function-vertexeccentricity-completegraph-5			
+completegraph-6	enumeratio_graph(graphs.CompleteGraph(6))	Complete graph	disagree
+list-completegraph-3-cyclegraph-3	[enumeratio_graph(graphs.CompleteGraph(3)), enumeratio_graph(graphs.CycleGraph(3))]	[Complete graph: Graph on 3 vertices, Cycle graph: Graph on 3 vertices]	disagree
+list-completegraph-4-wheelgraph-4	[enumeratio_graph(graphs.CompleteGraph(4)), enumeratio_graph(graphs.WheelGraph(4))]	[Complete graph: Graph on 4 vertices, Wheel graph: Graph on 4 vertices]	disagree
+list-completegraph-6-linegraph-stargraph-7	[enumeratio_graph(graphs.CompleteGraph(6)), (enumeratio_graph(graphs.StarGraph(7 - 1))).line_graph()]	[Complete graph: Graph on 6 vertices, Graph on 6 vertices]	disagree

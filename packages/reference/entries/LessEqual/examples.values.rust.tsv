@@ -1,0 +1,11 @@
+id	in	out	verdict
+2-over-17-lt-eq-1-over-5-lt-eq-1-over-10-times			
+n-pi-40-lt-eq-a-value-just-below-pi	less_equal(nf(x(std::f64::consts::PI)), (x(std::f64::consts::PI) * (n(1) + (n(-256) * power(n(5), n(-20))))))	false	disagree
+3-over-2-lt-eq-5-over-3	less_equal(rational(n(3), n(2)), rational(n(5), n(3)))	true	
+n-pi-20-lt-eq-pi	less_equal(nf(x(std::f64::consts::PI)), x(std::f64::consts::PI))	true	
+sqrt-2-plus-sqrt-3-lt-eq-sqrt-5-plus-2-times	less_equal((sqrt(n(2)) + sqrt(n(3))), sqrt((n(5) + (n(2) * sqrt(n(6))))))	false	disagree
+n-pi-20-lt-eq-pi-times-1-minus-256-times-10-pow	less_equal(nf(x(std::f64::consts::PI)), (x(std::f64::consts::PI) * (n(1) + (n(-256) * power(n(10), n(-20))))))	true	
+x-lt-eq-x			
+pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	less_equal(power(x(std::f64::consts::PI), x(std::f64::consts::E)), power(x(std::f64::consts::E), x(std::f64::consts::PI)))	true	
+refine-sqrt-x-pow-2-x-lt-eq-0			
+integrate-boole-1-lt-eq-x-pow-2-plus-y-pow-2-lt			

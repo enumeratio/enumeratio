@@ -1,0 +1,41 @@
+id	in	out	verdict
+n-sinh-0	(enumeratio_ball(sinh, 0))	0.0	
+n-sinh-1	(enumeratio_ball(sinh, 1))	1.175201193643801456882381850595600815155717981334095870229565413013307567304317	
+sinh-0	enumeratio_ball(sinh, 0)	0.0	
+a-float-argument-evaluates-directly-no-n-needed	enumeratio_ball(sinh, enumeratio_decimal("1.4"))	1.904301501451534055142123827697426309551638683721294791202832269014639408586749	
+series-sinh-x-x-0-10			
+arbitrary-precision-via-n	(enumeratio_ball(sinh, (7 // 5)))	1.904301501451534055142123827697426309551638683721294791202832269014639408586749	
+evaluates-at-a-complex-argument	enumeratio_ball(sinh, enumeratio_complex(enumeratio_decimal("2.5"), 1))	(3.268939432079548694877147094745168426495640652891081314226343239172039941734252+5.160143667579705194021429070688771175013275497544130641048944136855066628011879j)	
+sinh-i-pi-2-i-sin-pi-2-i	enumeratio_ball(sinh, (onei(CC) * enumeratio_div(const_pi(RR), 2)))	(0.0+0.9999999999999999999999999999999999999999999999999999999999999999999999999999914j)	
+element-wise-over-a-matrix-of-imaginary	Any[Any[enumeratio_ball(sinh, (onei(CC) * enumeratio_div((1 * const_pi(RR)), 3))), enumeratio_ball(sinh, (-((onei(CC) * enumeratio_div((1 * const_pi(RR)), 3)))))], Any[enumeratio_ball(sinh, 0), enumeratio_ball(sinh, (-((onei(CC) * enumeratio_div((1 * const_pi(RR)), 6)))))]]	[[(0.0+0.8660254037844386467637231707529361834714026269051903140279034897259665084543902j), (0.0-0.8660254037844386467637231707529361834714026269051903140279034897259665084543902j)], [0.0, (0.0-0.4999999999999999999999999999999999999999999999999999999999999999999999999999957j)]]	
+interval-arithmetic-sinh-is-increasing-so-sinh-0			
+uncertainty-propagation-sinh-2-sqrt-3-pm-0-1			
+sinh-positiveinfinity	enumeratio_ball(sinh, Inf)	non-finite argument	error
+sinh-ln-2-frac-2-1-2-2-frac-34	enumeratio_ball(sinh, enumeratio_ball(log, 2))	0.75	
+a-real-symbolic-argument-is-untouched			
+oddness-pulls-the-sign-out-of-a-symbolic			
+sinh-arsinh-x-x-for-every-x			
+sinh-arsinh-2-2-for-every-x	enumeratio_ball(sinh, enumeratio_ball(_asinh, 2))	1.999999999999999999999999999999999999999999999999999999999999999999999999999965	
+derivative-cosh-x			
+antiderivative			
+taylor-series-about-0			
+to-30-significant-digits-correctly-rounded	enumeratio_nshow(enumeratio_ball(sinh, 1), 30)	1.17520119364380145688238185060e+00	
+n-decimalizes-sinh-i-pi-2-not-just-the-exact	(enumeratio_ball(sinh, (onei(CC) * enumeratio_div(const_pi(RR), 2))))	(0.0+0.9999999999999999999999999999999999999999999999999999999999999999999999999999914j)	
+n-sinh-7-over-5-50	enumeratio_nshow(enumeratio_ball(sinh, (7 // 5)), 50)	1.9043015014515340551421238276974263095516386837213e+00	
+sinh-1-over-5-times-i-times-pi	enumeratio_ball(sinh, (enumeratio_complex(0, (1 // 5)) * const_pi(RR)))	(0.0+0.5877852522924731291687059546390727685976524376431459910722724807572784741623414j)	
+sinh-1-over-24-times-i-times-pi	enumeratio_ball(sinh, (enumeratio_complex(0, (1 // 24)) * const_pi(RR)))	(0.0+0.1305261922200515915484062278954890101937407048117322518906169483351328252298196j)	
+matrixfunction-function-sinh-1-1-list-list-1			
+odd-function-sinh-x-sinh-x	enumeratio_equal(enumeratio_ball(sinh, (-(1))), (-(enumeratio_ball(sinh, 1))))	true	
+definition-in-terms-of-exp-sinh-x-frac-e-x-e-x-2	enumeratio_equal(enumeratio_ball(sinh, 1), enumeratio_div((enumeratio_ball(exp, 1) - enumeratio_ball(exp, (-(1)))), 2))	true	
+the-definition-sinh-x-frac-e-x-e-x-2			
+sinh-1-over-12-times-i-times-pi	enumeratio_ball(sinh, (enumeratio_complex(0, (1 // 12)) * const_pi(RR)))	(0.0+0.2588190451025207623488988376240483283490689013199305138140032073150569747487949j)	
+sinh-1-over-10-times-i-times-pi	enumeratio_ball(sinh, (enumeratio_complex(0, (1 // 10)) * const_pi(RR)))	(0.0+0.3090169943749474241022934171828190588601545899028814310677243113526302314094462j)	
+sinh-1-over-9-times-i-times-pi	enumeratio_ball(sinh, (enumeratio_complex(0, (1 // 9)) * const_pi(RR)))	(0.0+0.3420201433256687330440996146822595807630833675141606284650484976847147637020717j)	
+sinh-1-over-8-times-i-times-pi	enumeratio_ball(sinh, (enumeratio_complex(0, (1 // 8)) * const_pi(RR)))	(0.0+0.382683432365089771728459984030398866761344562485627041433800635627546033960086j)	
+sinh-1-over-7-times-i-times-pi	enumeratio_ball(sinh, (enumeratio_complex(0, (1 // 7)) * const_pi(RR)))	(0.0+0.4338837391175581204757683328483587546099907277874598764445473035322032516531926j)	
+sinh-1-over-6-times-i-times-pi	enumeratio_ball(sinh, (enumeratio_complex(0, (1 // 6)) * const_pi(RR)))	(0.0+0.499999999999999999999999999999999999999999999999999999999999999999999999999987j)	
+sinh-2-over-9-times-i-times-pi	enumeratio_ball(sinh, (enumeratio_complex(0, (2 // 9)) * const_pi(RR)))	(0.0+0.6427876096865393263226434099072634329075598842056817903249772546711128362409431j)	
+neg-2-times-2-times-sinh-1-over-2-pow-2-plus-2	((-2 * ((2 * enumeratio_pow(enumeratio_ball(sinh, (1 // 2)), 2)) + (2 * enumeratio_pow(enumeratio_ball(sinh, (1 // 2)), 4))) * enumeratio_pow(enumeratio_ball(sinh, 1), 2)) + enumeratio_pow(enumeratio_ball(sinh, 1), 4))	8.636168555094444625386351862800399571116000364436281385023703470168591803162427e-77	
+n-sinh-1-over-2-plus-cosh-1-over-2-pow-2	(enumeratio_pow((enumeratio_ball(sinh, (1 // 2)) + enumeratio_ball(cosh, (1 // 2))), 2))	2.718281828459045235360287471352662497757247093699959574966967627724076630353451	
+n-neg-sinh-1-over-2-plus-cosh-1-over-2-pow-2	(enumeratio_pow(((-(enumeratio_ball(sinh, (1 // 2)))) + enumeratio_ball(cosh, (1 // 2))), 2))	0.3678794411714423215955237701614608674458111310317678345078368016974614957449025	
+n-sinh-1-pow-2	(enumeratio_pow(enumeratio_ball(sinh, 1), 2))	1.381097845541815729781106738886873054146986779115355801388821673794161792545115	

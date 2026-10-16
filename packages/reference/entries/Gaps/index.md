@@ -1,9 +1,0 @@
----
-name: Gaps
-domain: Combinatorics
-signature: Gaps(...)
-summary: Number of gaps
-statOn:
-  - Finset
-stub: carrier
----

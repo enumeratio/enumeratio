@@ -7,7 +7,7 @@
 import { type BoxedExpression, ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
 import { combineNotation, registerNotation } from "@enumeratio/boxes";
 import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics";
-import { declareCarrierElement, declareCarrierPlurals } from "@enumeratio/structures";
+import { declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures";
 import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
 import { displayLatexSyntax } from "@enumeratio/frontend/display";
 import { NOTATION_ENTRIES } from "./notation.ts";
@@ -236,6 +236,9 @@ export class Session {
     declareDistributions6(this.ce);
     declareProcesses(this.ce);
     declareMaps(this.ce, CONSTRUCTOR_FOR);
+    // The generic heads (`Midpoint`, `Floor`, ...) over what's declared so far, before graphics:
+    // that leaves `Point` undeclared so `Midpoint` of two of them still sees points.
+    declareStructures(this.ce);
     // The heads that draw stay inert, so a `Plot` or a `Slider` survives evaluation as
     // the picture (or the control) it names, for a host that can show one.
     declareGraphics(this.ce);

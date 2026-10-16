@@ -1,0 +1,17 @@
+id	in	out	verdict
+diracdelta-zero-unevaluated	DiracDelta(0)	DiracDelta(0)	disagree
+diracdelta-nonzero	DiracDelta(2)	0	
+diracdelta-negative	DiracDelta(-3)	0	
+diracdelta-1-over-2	DiracDelta(Rational(1, 2))	0	
+diracdelta-multivariate-one-nonzero			
+diracdelta-neg-1	DiracDelta(-1)	0	
+diracdelta-pi-8-1-over-3			
+fouriertransform-diracdelta-x-x-t			
+fouriertransform-diracdelta-neg-a-plus-x-x-t			
+integrate-diracdelta-p-pow-2-plus-q-pow-2-minus	integrate(DiracDelta(((S(Symbol("p"))**2) + (S(Symbol("q"))**2) + -1)), (Symbol("p"), -oo, oo), (Symbol("q"), -oo, oo))	Integral(1/Abs(sqrt(1 - q**2)), (q, -oo, oo))	inconclusive
+fouriertransform-diracdelta-y-y-x			
+diracdelta-1	DiracDelta(1)	0	
+diracdelta-0-times-diracdelta-3-over-2	(DiracDelta(0) * DiracDelta(Rational(3, 2)))	0	
+diracdelta-0-times-diracdelta-neg-1-over-6	(DiracDelta(0) * DiracDelta(Rational(-1, 6)))	0	
+laplacetransform-diracdelta-x-x-s			
+diracdelta-neg-1-minus-2-times-exponentiale	DiracDelta((-1 + (-2 * E) + (-(S(E)**2)) + (S(E)**(-(S(E)**(2 * E)))) + (S((1 + E))**2)))	0	inconclusive

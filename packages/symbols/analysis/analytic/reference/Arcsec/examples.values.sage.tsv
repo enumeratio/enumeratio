@@ -1,0 +1,30 @@
+id	in	out	verdict
+arcsec-1	arcsec(1)	0	
+arcsec-2	arcsec(2)	arcsec(2)	
+arcsec-sqrt-2-pi-4	arcsec(sqrt(2))	arcsec(sqrt(2))	
+arcsec-neg-1	arcsec(-1)	pi	
+arcsec-2-2-pi-3	arcsec(-2)	arcsec(-2)	
+inside-1-1-the-value-is-purely-imaginary	arcsec(0.5)	1.31695789692482*I	
+arcsec-positiveinfinity	arcsec(oo)	1/2*pi	
+a-pole-arcsec-0-is-complex-infinity	arcsec(0)	NaN	disagree
+derivative-for-real-x-1	diff(arcsec(SR.var("x")), SR.var("x"))	None	inconclusive
+n-arcsec-5-50	enumeratio_n(arcsec(5), 50)	1.36943840600457	
+arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	[[arcsec(sqrt(2)), arcsec((-sqrt(2)))], [arcsec(0), arcsec((-sqrt(2)))]]	[[arcsec(sqrt(2)), arcsec(-sqrt(2))], [NaN, arcsec(-sqrt(2))]]	disagree
+arcsec-2-over-3-times-sqrt-3	arcsec(((2/3) * sqrt(3)))	arcsec(2/3*sqrt(3))	
+arcsec-complexinfinity	arcsec(unsigned_infinity)	1/2*pi	
+matrixfunction-function-arcsec-1-1-list-list			
+arcsec-1-over-2	arcsec((1/2))	arcsec(1/2)	
+arcsec-neg-1-over-2	arcsec((-1/2))	arcsec(-1/2)	
+undoes-sec-sec-arcsec-x-x	enumeratio_equal(sec(arcsec(2)), 2)	True	
+arcsec-neg-sqrt-2-plus-sqrt-6	arcsec(((-sqrt(2)) + sqrt(6)))	arcsec(sqrt(6) - sqrt(2))	
+arcsec-neg-sqrt-6-plus-sqrt-2	arcsec(((-sqrt(6)) + sqrt(2)))	arcsec(-sqrt(6) + sqrt(2))	
+arcsec-2-times-sqrt-1-over-2-plus-sqrt-2	arcsec((2 * sqrt((1 / (2 + sqrt(2))))))	arcsec(2/sqrt(sqrt(2) + 2))	
+arcsec-neg-2-times-sqrt-1-over-2-plus-sqrt-2	arcsec((-2 * sqrt((1 / (2 + sqrt(2))))))	arcsec(-2/sqrt(sqrt(2) + 2))	
+arcsec-neg-2-over-3-times-sqrt-3	arcsec(((-2/3) * sqrt(3)))	arcsec(-2/3*sqrt(3))	
+arcsec-neg-1-plus-sqrt-5	arcsec((-1 + sqrt(5)))	arcsec(sqrt(5) - 1)	
+arcsec-1-minus-sqrt-5	arcsec((1 + (-sqrt(5))))	arcsec(-sqrt(5) + 1)	
+arcsec-neg-sqrt-2	arcsec((-sqrt(2)))	arcsec(-sqrt(2))	
+arcsec-sqrt-2-plus-neg-2-over-5-times-sqrt-5	arcsec(sqrt((2 + ((-2/5) * sqrt(5)))))	arcsec(sqrt(-2/5*sqrt(5) + 2))	
+arcsec-neg-sqrt-2-plus-neg-2-over-5-times-sqrt-5	arcsec((-sqrt((2 + ((-2/5) * sqrt(5))))))	arcsec(-sqrt(-2/5*sqrt(5) + 2))	
+arcsec-sqrt-2-plus-2-over-5-times-sqrt-5	arcsec(sqrt((2 + ((2/5) * sqrt(5)))))	arcsec(sqrt(2/5*sqrt(5) + 2))	
+arcsec-neg-sqrt-2-plus-2-over-5-times-sqrt-5	arcsec((-sqrt((2 + ((2/5) * sqrt(5))))))	arcsec(-sqrt(2/5*sqrt(5) + 2))	

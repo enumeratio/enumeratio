@@ -1,0 +1,10 @@
+id	in	out	verdict
+square-5	enumeratio_pow(5, 2)	25	
+same-result-for-x-and-x	enumeratio_pow(-5, 2)	25	
+square-2-over-3	enumeratio_pow((2 // 3), 2)	0.4444444444444444	
+canonicalizes-to-x-2			
+threads-element-wise-over-a-list	Any[enumeratio_pow(2, 2), enumeratio_pow(3, 2), enumeratio_pow(-4, 2)]	[4, 9, 16]	
+the-area-of-a-3-3-square-tile	enumeratio_pow(3, 2)	9	
+even-function-x-2-x-2	enumeratio_equal(enumeratio_pow(-5, 2), enumeratio_pow(5, 2))	true	
+1-i-2-2i-squaring-a-complex-number-needn-t-stay	enumeratio_equal(enumeratio_pow(enumeratio_complex(1, 1), 2), enumeratio_complex(0, 2))	true	
+infinity-squared-stays-infinite-rather-than	enumeratio_pow(Inf, 2)	non-finite argument	error

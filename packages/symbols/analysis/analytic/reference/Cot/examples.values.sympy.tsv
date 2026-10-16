@@ -1,0 +1,43 @@
+id	in	out	verdict
+cot-pi-over-6	cot((S(pi) / 6))	sqrt(3)	
+cot-pi-over-4	cot((S(pi) / 4))	1	
+cot-pi-over-3	cot((S(pi) / 3))	sqrt(3)/3	
+cot-60-circ-frac-sqrt-3-3-exactly			
+a-machine-precision-argument-evaluates	cot(1.2)	0.388779569368205	
+a-huge-24-40-argument	N(cot((S(24)**40)), 30)	2.29072091001088067842489372819	
+a-huge-10-100-argument	N(cot((S(10)**100)), 30)	2.49232387927982069486640543726	
+a-huge-3-200-argument	N(cot((S(3)**200)), 30)	0.367143001033697879173282719963	
+a-huge-neg-7-60-argument	N(cot((-(S(7)**60))), 30)	-2.54972544855289659474408289918	
+a-huge-10-80-plus-1-over-3-argument	N(cot((S(((S(10)**80) + 1)) / 3)), 30)	-0.407124001051926907359657544063	disagree
+cot-7-under-n	N(cot(7), 30)	1.14751542240513568505712783360	
+series-cot-x-x-0-10	series(cot(Symbol("x")), Symbol("x"), 0, 10 + 1)	True	
+series-cot-x-x-neg-pi-5	series(cot(Symbol("x")), Symbol("x"), (-pi), 5 + 1)	True	
+n-of-an-exact-argument-gives-an-arbitrary	N(cot(Rational(6, 5)), 30)	0.388779569368204911634191504972	
+evaluates-at-a-complex-argument	cot((2.5 + 1*I))	-0.275669121229899 - 1.04264064209442*I	
+threads-element-wise-over-a-matrix	[[cot((5 * (S(pi) / 6))), cot((S(pi) / 2))], [cot((3 * (S(pi) / 2))), cot((-(S(pi) / 6)))]]	[[-sqrt(3), 0], [0, -sqrt(3)]]	
+cot-pi-8-1-sqrt-2	cot((S(pi) / 8))	1 + sqrt(2)	
+cot-pi-12-2-sqrt-3	cot((S(pi) / 12))	sqrt(3) + 2	
+cot-pi-over-5	cot((S(pi) / 5))	sqrt(2*sqrt(5)/5 + 1)	
+an-interval-straddling-the-pole-at-0-maps-to-two	cot(AccumBounds((-(S(pi) / 4)), (S(pi) / 4)))	AccumBounds(-oo, oo)	disagree
+uncertainty-propagation-near-a-pole-grows-fast			
+oddness-pulls-the-sign-out-of-a-symbolic	cot((-Symbol("x")))	True	
+derivative-csc-2-x	diff(cot(Symbol("x")), Symbol("x"))	True	
+antiderivative-ln-sin-x	integrate(cot(Symbol("x")), Symbol("x"))	None	inconclusive
+n-cot-6-over-5-50	N(cot(Rational(6, 5)), 30)	0.388779569368204911634191504972	
+matrixfunction-function-cot-1-1-list-list-5-over			
+cot-positiveinfinity	cot(oo)	AccumBounds(-oo, oo)	disagree
+assuming-m-in-integers-refine-cot-pi-times-1			
+assuming-m-in-integers-fullsimplify-refine-cot			
+functionmeromorphic-cot-x-x			
+reciprocal-of-tan-cot-x-frac-1-tan-x	enumeratio_equal(cot((S(pi) / 4)), (S(1) / tan((S(pi) / 4))))	True	
+pythagorean-identity-1-cot-2-x-csc-2-x	enumeratio_equal((1 + (S(cot((S(pi) / 6)))**2)), (S(csc((S(pi) / 6)))**2))	True	
+cot-1-over-10-times-pi	cot((Rational(1, 10) * pi))	sqrt(2*sqrt(5) + 5)	
+cot-3-over-10-times-pi	cot((Rational(3, 10) * pi))	sqrt(5 - 2*sqrt(5))	
+cot-3-over-8-times-pi	cot((Rational(3, 8) * pi))	-1 + sqrt(2)	
+n-cot-1-times-cot-1-over-2	N((cot(1) * cot(Rational(1, 2))), 30)	1.17534264967002141077678675966	
+n-cot-1-over-2-plus-1-over-2-times-pi	N(cot((Rational(1, 2) + (Rational(1, 2) * pi))), 30)	-0.546302489843790513255179465780	
+n-cot-2-times-cot-4	N((cot(2) * cot(4)), 30)	-0.395274781468481040556123257740	
+n-cot-2-plus-1-over-2-times-pi	N(cot((2 + (Rational(1, 2) * pi))), 30)	2.18503986326151899164330610231	
+a-pole-sin-0-0	cot(0)	zoo	
+not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	cot((S(pi) / 2))	0	
+cot-complexinfinity-is-indeterminate-for-the	cot(zoo)	nan	disagree

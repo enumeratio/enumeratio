@@ -1,0 +1,21 @@
+id	in	out
+omega-12-3	enumeratio_liouville(12)	-1
+liouvillelambda-10	enumeratio_liouville(10)	1
+liouvillelambda-1	enumeratio_liouville(1)	1
+liouvillelambda-8	enumeratio_liouville(8)	-1
+liouvillelambda-9	enumeratio_liouville(9)	1
+listable		
+liouvillelambda-1-plus-10-pow-30	enumeratio_liouville((1 + enumeratio_pow(10, 30)))	-1
+liouvillelambda-list-1-2-3-4-5-6	Any[enumeratio_liouville(1), enumeratio_liouville(2), enumeratio_liouville(3), enumeratio_liouville(4), enumeratio_liouville(5), enumeratio_liouville(6)]	[1, -1, -1, 1, -1, 1]
+lambda-n-1-omega-n-see-primeomega	enumeratio_equal(enumeratio_liouville(360), enumeratio_pow(-1, enumeratio_prime_omega(360)))	true
+liouvillelambda-162-eq-liouvillelambda-6-times	enumeratio_equal(enumeratio_liouville(162), (enumeratio_liouville(6) * enumeratio_liouville(27)))	true
+liouvillelambda-60	enumeratio_liouville(60)	1
+liouvillelambda-30	enumeratio_liouville(30)	-1
+liouvillelambda-120	enumeratio_liouville(120)	-1
+liouvillelambda-25	enumeratio_liouville(25)	1
+liouvillelambda-2	enumeratio_liouville(2)	-1
+liouvillelambda-3	enumeratio_liouville(3)	-1
+liouvillelambda-4	enumeratio_liouville(4)	1
+liouvillelambda-6	enumeratio_liouville(6)	1
+divisorsum-64-function-liouvillelambda-1-1		
+divisorsum-7-function-liouvillelambda-1-1		

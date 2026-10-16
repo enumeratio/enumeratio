@@ -1,0 +1,17 @@
+id	in	out
+n-arcoth-2	(acoth(2))	0.549306144334054845697622618461
+series-arcoth-x-x-positiveinfinity-5		
+a-logarithmic-singularity-at-1	acoth(1)	+inf
+arcoth-positiveinfinity	acoth(inf)	0.0
+a-float-argument-evaluates-directly	acoth(3.5)	0.293893332451059504094865570309
+as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1		
+oddness-pulls-the-sign-out-of-a-symbolic		
+derivative-frac-1-1-x-2		
+n-arcoth-2-50	enumeratio_n(lambda: (acoth(2)), 50)	0.54930614433405484569762261846126285232374527891137
+arcoth-complexinfinity		
+arcoth-neg-1	acoth(-1)	-inf
+arcoth-list-list-i-neg-i-list-0-neg-i	[[acoth(mpc(0, 1)), acoth(mpc(0, -1))], [acoth(0), acoth(mpc(0, -1))]]	[[mpc(real='0.0', imag='-0.785398163397448309615660845819833'), mpc(real='0.0', imag='0.785398163397448309615660845819833')], [mpc(real='0.0', imag='1.57079632679489661923132169163967'), mpc(real='0.0', imag='0.785398163397448309615660845819833')]]
+matrixfunction-function-arcoth-1-1-list-list-i		
+arcoth-1-over-2	acoth((mpf(1)/2))	(0.549306144334054845697622618461 - 1.57079632679489661923132169164j)
+arcoth-neg-1-over-2	acoth((mpf(-1)/2))	(-0.549306144334054845697622618461 + 1.57079632679489661923132169164j)
+arcoth-0	acoth(0)	(0.0 + 1.57079632679489661923132169164j)

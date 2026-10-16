@@ -18,6 +18,48 @@ seeAlso:
 names:
   dlmf: cosecant function
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: csc($1)
+    arity: 1
+    threadArg: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+  - origin: mapped
+    form: mpmath
+    template: csc($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: csc($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(_csc, $1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
+  - origin: mapped
+    form: rust
+    template: (n(1) / sin($1))
+    arity: 1
+    threadArgOnly: 1
+    note: The reciprocal of sin.
+    checked:
+      version: rustc 1.98.1
+      on: 2026-10-16
 ---
 
 - $\csc(x) = \frac{1}{\sin(x)}$.

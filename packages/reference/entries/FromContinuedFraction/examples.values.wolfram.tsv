@@ -1,0 +1,8 @@
+id	in	out	tex.in	tex.out	verdict
+a-finite-expansion	FromContinuedFraction[List[3, 7, 15, 1]]	355/113	\text{FromContinuedFraction}[\{3,7,15,1\}]	\frac{355}{113}	
+symbolic-terms	FromContinuedFraction[List[a, b, c]]	(a + (1 + a*b)*c)/(1 + b*c)	\text{FromContinuedFraction}[\{a,b,c\}]	\frac{c (a b+1)+a}{b c+1}	
+periodic-tail	FromContinuedFraction[List[1, List[1]]]	(1 + Sqrt[5])/2	\text{FromContinuedFraction}[\{1,\{1\}\}]	\frac{1}{2} \left(1+\sqrt{5}\right)	
+a-one-term-list-is-an-integer	FromContinuedFraction[List[5]]	5	\text{FromContinuedFraction}[\{5\}]	5	
+terms-after-the-first-may-follow-a-negative-a0	FromContinuedFraction[List[-3, 2, 5]]	-28/11	\text{FromContinuedFraction}[\{-3,2,5\}]	-\frac{28}{11}	
+it-inverts-continuedfraction	FromContinuedFraction[ContinuedFraction[Rational[47, 17]]]	47/17	\text{FromContinuedFraction}\left[\text{ContinuedFraction}\left[\frac{47}{17}\right]\right]	\frac{47}{17}	
+the-empty-list-stays-unevaluated	FromContinuedFraction[List[]]	Infinity	\text{FromContinuedFraction}[\{\}]	\infty	disagree

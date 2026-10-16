@@ -3,6 +3,7 @@ id	in	out	tex.in	tex.out
 12-2-2-cdot-3-has-two-distinct-primes	PrimePowerQ[12]	False	\text{PrimePowerQ}[12]	\text{False}
 a-prime-is-its-own-first-power	PrimePowerQ[7]	True	\text{PrimePowerQ}[7]	\text{True}
 isprimepower-6	PrimePowerQ[6]	False	\text{PrimePowerQ}[6]	\text{False}
+isprime-of-a-negative-prime	PrimeQ[-5]			
 listable	PrimePowerQ[List[2, 4, 6, 9, 10, 16]]	{True, True, False, True, False, True}	\text{PrimePowerQ}[\{2,4,6,9,10,16\}]	\{\text{True},\text{True},\text{False},\text{True},\text{False},\text{True}\}
 large-integers	PrimePowerQ[Power[3, 40]]	True	\text{PrimePowerQ}\left[3^{40}\right]	\text{True}
 isprimepower-9	PrimePowerQ[9]	True	\text{PrimePowerQ}[9]	\text{True}

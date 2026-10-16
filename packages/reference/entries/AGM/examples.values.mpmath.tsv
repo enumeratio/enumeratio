@@ -1,0 +1,2 @@
+id	in	out
+agm-1-2	enumeratio_n(lambda: (agm(1, 2)), 20)	1.4567910310469068692

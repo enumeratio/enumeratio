@@ -1,9 +1,0 @@
----
-name: NonzeroEntries
-domain: Combinatorics
-signature: NonzeroEntries(...)
-summary: Nonzero entries
-statOn:
-  - PermutationInversion
-stub: carrier
----

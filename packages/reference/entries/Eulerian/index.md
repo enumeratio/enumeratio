@@ -23,6 +23,16 @@ bindings:
     form: combinatorica
     template: Eulerian[$1, $2]
     arity: 2
+  - origin: mapped
+    form: sage
+    template: enumeratio_eulerian($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Counts from $k = 0$: $A(n, 0) = 1$ is the identity, and $A(n, k) = 0$ for $k \ge n$ (except $A(0, 0) = 1$). Combinatorica's `Eulerian[n, k]` has the same convention; the Function Repository's `ResourceFunction["EulerianNumber"][n, k]` counts $k$ from $1$, so it equals `Eulerian(n, k - 1)`. Wolfram 15 has no core `Eulerian`.

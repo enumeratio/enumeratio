@@ -10,6 +10,7 @@ import {
   compare,
   compareCombination,
   compareCombinations,
+  compareMachine,
   comparePythonStructured,
   compareTrees,
   echoedPart,
@@ -27,12 +28,14 @@ import {
   type System,
   type Tree,
   type Verdict,
+  Undecided,
   valuesOnly,
 } from "@enumeratio/oracle";
 import { fromWolfram } from "@enumeratio/wolfram";
 import { measuredTolerance } from "../src/known.ts";
 
-const ce = new ComputeEngine();
+/** Boxing `x^a` types `a` as a number for good: each verdict starts on an engine of its own. */
+let ce = new ComputeEngine();
 
 /**
  * A leaf of the comparison: the number an expression has, else its symbolic text.
@@ -225,7 +228,18 @@ function iteratorsAsLimits(expr: MathJSON): MathJSON {
   ] as MathJSON;
 }
 
-export function verdictOf(
+export function verdictOf(...args: Parameters<typeof judge>): Verdict {
+  ce = new ComputeEngine();
+  try {
+    return judge(...args);
+  } catch (error) {
+    // A comparison that could not be made is undecided.
+    if (error instanceof Undecided) return "inconclusive";
+    throw error;
+  }
+}
+
+function judge(
   system: System,
   expected: MathJSON,
   result: Answer,
@@ -297,12 +311,32 @@ export function verdictOf(
   } else if (theirs.startsWith("combinations:")) {
     verdict = compareCombinations(expected, theirs);
   } else {
-    verdict = compare(show(expected, system === "sage" || system === "sympy"), theirs, tolerance);
+    // Rust's doubles are compared relative to their size, its integers and ratios exactly.
+    const machine =
+      system === "rust"
+        ? compareMachine(expected, theirs, tolerance ?? 1e-9, (expr) => {
+            const value = leaf(expr);
+            return typeof value === "number" ? value : undefined;
+          })
+        : undefined;
+    verdict = machine ?? compare(show(expected, system === "sage" || system === "sympy"), theirs, tolerance);
     // A text comparison that disagrees or can't decide (a complex against a real, say)
     // gets a second, structural look.
-    if (verdict !== "agree") {
+    if (verdict !== "agree" && machine === undefined) {
       const structured = comparePythonStructured(reduce(expected, leaf), theirs, tolerance);
       if (structured === "agree") verdict = structured;
+    }
+    // mpmath ran an `N(x, d)` at d + 20 and rounded to d (run.ts), and Julia writes the d digits of its ball out, so, as for Wolfram, the digits it shows
+    // must be ours to the last. The digits alone drop sign, point and exponent, so the value must not disagree.
+    if (
+      (system === "mpmath" || system === "julia") &&
+      asksForDigits &&
+      Array.isArray(call) &&
+      typeof call[2] === "number"
+    ) {
+      const same = sameDigits(expected, theirs);
+      if (same === false) verdict = "disagree";
+      else if (same === true && verdict !== "disagree") verdict = "agree";
     }
   }
   return verdict;

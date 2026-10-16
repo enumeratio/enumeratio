@@ -16,4 +16,7 @@ signatures:
     type: ((list<integer>) -> dyck_path) & ((binary_tree) -> dyck_path)
 laws:
   - inverse: BinaryTree
+  - graded:
+      from: BinaryTrees
+      to: DyckPaths
 ---

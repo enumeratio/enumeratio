@@ -11,6 +11,7 @@ import {
   and,
   atLeastValue,
   atMostValue,
+  bind,
   count,
   distance,
   equals,
@@ -44,7 +45,6 @@ import {
 } from "../../src/statistics/vocabulary.ts";
 
 const on = "Permutation";
-const INFINITY: MathJSON = { num: "+Infinity" };
 const stat = (head: string, summary: string, expr: Definition["expr"], note?: string, result?: string): Definition => ({
   head,
   on,
@@ -197,6 +197,209 @@ const piles = (ahead: MathJSON): MathJSON => {
   return fold(x, ["List"], ["Apply", ["Function", step, "k"], target]);
 };
 
+/** Peaks of the word `w` (interior positions only); needs at least three letters. */
+const peaksOfWord = (w: MathJSON): MathJSON =>
+  bind(
+    "w",
+    w,
+    count(
+      ["Range", 2, subtract(length("w"), 1)],
+      and(less(at(subtract("i", 1), "w"), at("i", "w")), greater(at("i", "w"), at(add("i", 1), "w"))),
+    ),
+  );
+/** The word 0 p(1) ... p(n) / p(1) ... p(n) 0: a zero stands in for the boundary. */
+const zeroThen: MathJSON = ["Join", ["List", 0], x];
+const thenZero: MathJSON = ["Join", x, ["List", 0]];
+
+/** Whether position k is NOT a descent: an ascent, or off the ends. */
+const noDescentAt = (k: MathJSON): MathJSON => [
+  "If",
+  and(atLeastValue(k, 1), atMostValue(k, subtract(length(), 1))),
+  less(at(k), at(add(k, 1))),
+  "True",
+];
+
+/** m! for m >= 0 (`Range(1, 0)` counts down, so 0 and 1 are stated). */
+const factorial = (m: MathJSON): MathJSON => ["If", less(m, 2), 1, ["Product", ["Range", 1, m]]];
+
+/** The position of the value v. */
+const positionOf = (v: MathJSON): MathJSON => sumOver(positions, ["If", equals(at("j"), v), "j", 0], "j");
+
+/** The sum of `body` over the pairs i < j with p(i) > p(j) and `also` true of them. */
+const sumOverInversions = (body: MathJSON, also: MathJSON = "True"): MathJSON =>
+  sumOver(adjacent, [
+    "Sum",
+    forEach(where(["Range", add("i", 1), length()], and(greater(here, at("j")), also), "j"), body, "j"),
+  ]);
+
+// FindStat's other permutation statistics, named after their descriptions.
+const FINDSTAT_PERMUTATION_STATISTICS: readonly Definition[] = [
+  // Peaks counted against a zero boundary.
+  word(
+    "LeftOuterPeaks",
+    "Peaks of the word 0 p(1) ... p(n): the interior peaks, plus one when p(1) > p(2).",
+    hasPair(peaksOfWord(zeroThen)),
+  ),
+  word(
+    "RightOuterPeaks",
+    "Peaks of the word p(1) ... p(n) 0: the interior peaks, plus one when p(n) > p(n-1).",
+    hasPair(peaksOfWord(thenZero)),
+  ),
+  word(
+    "OuterPeaks",
+    "Peaks of the word 0 p(1) ... p(n) 0: the interior peaks, plus one for each end that is a peak.",
+    nonEmpty(peaksOfWord(["Join", zeroThen, ["List", 0]])),
+  ),
+
+  // Descent and ascent variants.
+  word(
+    "DoubleAscents",
+    "Positions i with p(i) < p(i+1) < p(i+2).",
+    hasTriple(count(["Range", 1, subtract(length(), 2)], and(less(here, next), less(next, at(add("i", 2)))))),
+  ),
+  word(
+    "DoubleDescents",
+    "Positions i with p(i) > p(i+1) > p(i+2).",
+    hasTriple(count(["Range", 1, subtract(length(), 2)], and(greater(here, next), greater(next, at(add("i", 2)))))),
+  ),
+  word(
+    "IsolatedDescents",
+    "Descents i such that neither i-1 nor i+1 is a descent.",
+    hasPair(count(adjacent, and(fallsAfter, and(noDescentAt(subtract("i", 1)), noDescentAt(add("i", 1)))))),
+  ),
+  word("BigAscents", "Positions i with p(i+1) - p(i) > 1.", hasPair(count(adjacent, greater(subtract(next, here), 1)))),
+  word(
+    "BigDescents",
+    "Positions i with p(i) - p(i+1) > 1.",
+    hasPair(count(adjacent, greater(subtract(here, next), 1))),
+  ),
+  word(
+    "DescentTopSum",
+    "The sum of the descent tops: p(i) over the descents i.",
+    hasPair(["Sum", forEach(where(adjacent, fallsAfter), here)]),
+    "Also called the Genocchi descents.",
+  ),
+  word(
+    "DescentBottomSum",
+    "The sum of the descent bottoms: p(i+1) over the descents i.",
+    hasPair(["Sum", forEach(where(adjacent, fallsAfter), next)]),
+  ),
+  word(
+    "AscentTopSum",
+    "The sum of the ascent tops: p(i+1) over the ascents i.",
+    hasPair(["Sum", forEach(where(adjacent, risesAfter), next)]),
+  ),
+  word(
+    "AscentBottomSum",
+    "The sum of the ascent bottoms: p(i) over the ascents i.",
+    hasPair(["Sum", forEach(where(adjacent, risesAfter), here)]),
+  ),
+  word(
+    "ComajorIndex",
+    "The sum of n - i over the descents i.",
+    hasPair(["Sum", forEach(where(adjacent, fallsAfter), subtract(length(), "i"))]),
+    "The major index of the reversed complement of p; not MinorIndex, which sums the ascent positions themselves.",
+  ),
+
+  // Cycle type and displacement.
+  stat(
+    "NontrivialCycles",
+    "Cycles of size at least two: the cycles less the fixed points.",
+    nonEmpty(count(cycleLengths, greater("c", 1), "c")),
+  ),
+  stat("ShortestCycleLength", "The size of the smallest cycle.", nonEmpty(min(cycleLengths))),
+  stat(
+    "ConjugacyClassSize",
+    "The number of permutations of the same cycle type: n! over the product of the cycle sizes and the factorials of the multiplicities.",
+    nonEmpty(
+      [
+        "Divide",
+        factorial(length()),
+        [
+          "Multiply",
+          ["Product", cycleLengths],
+          [
+            "Product",
+            forEach(steps, bind("f", count(cycleLengths, equals("c", "m"), "c"), factorial("f"), "number"), "m"),
+          ],
+        ],
+      ],
+      1,
+    ),
+  ),
+  stat("WeakAntiexcedances", "Positions with p(i) <= i.", nonEmpty(count(positions, atMostValue(here, "i")))),
+
+  // Length-3 patterns.
+  word(
+    "OccurrencesOf321",
+    "Triples i < j < k with p(i) > p(j) > p(k).",
+    hasTriple(occurrencesOfPattern((i, j, k) => and(greater(at(i), at(j)), greater(at(j), at(k))))),
+  ),
+  word(
+    "OccurrencesOf312",
+    "Triples i < j < k with p(j) < p(k) < p(i).",
+    hasTriple(occurrencesOfPattern((i, j, k) => and(less(at(j), at(k)), less(at(k), at(i))))),
+  ),
+  word(
+    "OccurrencesOf231",
+    "Triples i < j < k with p(k) < p(i) < p(j).",
+    hasTriple(occurrencesOfPattern((i, j, k) => and(less(at(k), at(i)), less(at(i), at(j))))),
+  ),
+
+  // Records.
+  word(
+    "NonLeftToRightMaxima",
+    "Positions smaller than something before them.",
+    nonEmpty(count(positions, less(here, max(upToHere)))),
+  ),
+  word(
+    "ExclusiveLeftToRightMaxima",
+    "Left-to-right maxima that are not right-to-left minima.",
+    nonEmpty(count(positions, and(equals(here, max(upToHere)), greater(here, min(fromHere))))),
+  ),
+  word(
+    "ExclusiveRightToLeftMinima",
+    "Right-to-left minima that are not left-to-right maxima.",
+    nonEmpty(count(positions, and(equals(here, min(fromHere)), less(here, max(upToHere))))),
+  ),
+  word(
+    "NonRecords",
+    "Positions that are none of a left-to-right maximum or minimum, or a right-to-left maximum or minimum.",
+    nonEmpty(
+      count(
+        positions,
+        and(
+          and(less(here, max(upToHere)), greater(here, min(upToHere))),
+          and(less(here, max(fromHere)), greater(here, min(fromHere))),
+        ),
+      ),
+    ),
+  ),
+
+  // Inversion variants.
+  word(
+    "NonInversions",
+    "Pairs i < j with p(i) < p(j).",
+    hasPair(sumOver(positions, count(["Range", add("i", 1), length()], less(here, at("j")), "j"))),
+  ),
+  word("InversionSum", "The sum of j - i over the inversions i < j.", hasPair(sumOverInversions(subtract("j", "i")))),
+  word(
+    "EvenInversions",
+    "Inversions i < j with j - i even.",
+    hasPair(sumOverInversions(1, equals(["Mod", subtract("j", "i"), 2], 0))),
+  ),
+  word(
+    "OddInversions",
+    "Inversions i < j with j - i odd.",
+    hasPair(sumOverInversions(1, equals(["Mod", subtract("j", "i"), 2], 1))),
+  ),
+  stat(
+    "InverseMajorIndex",
+    "The major index of the inverse: the sum of the values v with v + 1 to the left of v.",
+    hasPair(sumOver(adjacent, ["If", greater(positionOf("i"), positionOf(add("i", 1))), "i", 0])),
+  ),
+];
+
 export const PERMUTATION_STATISTICS: readonly Definition[] = [
   word("Descents", "Positions i with p(i) > p(i+1).", hasPair(count(adjacent, fallsAfter))),
   word("Ascents", "Positions i with p(i) < p(i+1).", hasPair(count(adjacent, risesAfter))),
@@ -207,11 +410,7 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
     hasPair(["Sum", where(adjacent, fallsAfter)]),
     "The distinction from Descents is the entire content of the statistic.",
   ),
-  word(
-    "MinorIndex",
-    "The sum of the ascent positions (the comajor index).",
-    hasPair(["Sum", where(adjacent, risesAfter)]),
-  ),
+  word("MinorIndex", "The sum of the ascent positions.", hasPair(["Sum", where(adjacent, risesAfter)])),
 
   word("Inversions", "Pairs i < j with p(i) > p(j).", hasPair(inversions)),
   stat(
@@ -368,12 +567,8 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
     "Wolfram's PermutationOrder. The bare `Order` is Wolfram's canonical-ordering comparison `Order[a, b]`, so this head replaces it. The old name is recorded in `formerly` but does not resolve: `Order(p)` is now Wolfram's `Order`.",
   ),
 
-  // The moved points, as Wolfram reads them: positions where p(i) differs from i.
-  stat(
-    "PermutationLength",
-    "The number of points p moves.",
-    nonEmpty(count(positions, greater(distance(here, "i"), 0))),
-  ),
+  // The moved points, as Wolfram reads them: positions where p(i) differs from i. Their number,
+  // largest and smallest are Length, Max and Min of this, not heads of their own.
   stat(
     "PermutationSupport",
     "The points p moves, in increasing order.",
@@ -383,17 +578,6 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
     ),
     undefined,
     "list<integer>",
-  ),
-  stat(
-    "PermutationMax",
-    "The largest point p moves; 0 for the identity.",
-    nonEmpty(max(forEach(positions, ["If", greater(distance(here, "i"), 0), "i", 0]))),
-  ),
-  stat(
-    "PermutationMin",
-    "The smallest point p moves; infinity for the identity.",
-    // A numeric infinity: the compiled code has no symbol for it.
-    nonEmpty(min(forEach(positions, ["If", greater(distance(here, "i"), 0), "i", INFINITY])), INFINITY),
   ),
 
   word(
@@ -408,4 +592,5 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
     nonEmpty(["Count", piles(["Greater", "t", visiting])]),
     "The same fold with the comparison reversed — by Dilworth, the number of piles when the tops are kept decreasing.",
   ),
+  ...FINDSTAT_PERMUTATION_STATISTICS,
 ];

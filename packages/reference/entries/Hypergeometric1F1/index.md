@@ -6,9 +6,48 @@ summary: Kummer confluent hypergeometric function ₁F₁(a; b; z) = M(a, b, z).
 signatures:
   - call: Hypergeometric1F1(complex | infinity, complex | infinity, complex | infinity) -> number
     description: as compute-engine declares it
+  - call: Hypergeometric1F1(complex | infinity, complex | infinity, complex | infinity) -> number
+    description: Kummer confluent hypergeometric function ₁F₁(a; b; z) = M(a, b, z).
+    library: enumeratio-analytic
+    type: (complex | infinity, complex | infinity, complex | infinity) -> number
+    overrides: compute-engine
 stub: engine
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: hyp1f1($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: hypergeometric([$1], [$2], $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_ball(hypergeometric_1f1, $1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 Kummer's confluent hypergeometric function $M(a,b,z) = {}_1F_1(a;b;z) = \sum_{k\ge0} (a)_k/(b)_k \cdot z^k/k!$ (DLMF 13.2.2) is entire in $z$ for every $a, b$ — the confluence of [[Hypergeometric2F1]]'s regular singular points at $1$ and $\infty$ into one irregular singular point at $\infty$, taking $z \to z/b$ and $b \to \infty$ in ${}_2F_1(a,b;c;z/b)$. It solves Kummer's equation $z w'' + (b-z) w' - a w = 0$; $U(a,b,z)$ (see [[HypergeometricU]]) is the equation's other standard solution. It is compute-engine's own native head, declared for real and complex $z$.

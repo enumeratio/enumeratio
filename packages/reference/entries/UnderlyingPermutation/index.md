@@ -1,9 +1,0 @@
----
-name: UnderlyingPermutation
-domain: Combinatorics
-signature: UnderlyingPermutation(...)
-summary: Underlying permutation
-mapOn:
-  - DecoratedPermutation
-stub: carrier
----

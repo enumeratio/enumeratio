@@ -61,6 +61,35 @@ test("orderIsomorphism", () => {
   ]);
 });
 
+test("surjection and bijection", () => {
+  const ctx: LawContext = { name: "CycleType", from: "permutation", to: "integer_partition" };
+  const onto = [
+    "ForAll",
+    ["Element", "y", "integer_partition"],
+    ["Exists", ["Element", "x", "permutation"], ["Equal", ["CycleType", "x"], "y"]],
+  ];
+  expect(expandLaw("surjection", ctx).statement).toEqual(onto);
+  expect(expandLaw("bijection", ctx).statement).toEqual([
+    "And",
+    onto,
+    [
+      "ForAll",
+      ["And", ["Element", "x", "permutation"], ["Element", "y", "permutation"]],
+      ["Implies", ["Equal", ["CycleType", "x"], ["CycleType", "y"]], ["Equal", "x", "y"]],
+    ],
+  ]);
+});
+
+test("graded", () => {
+  const ctx: LawContext = { name: "CycleType", from: "permutation", to: "integer_partition" };
+  const law = { graded: { from: "Permutations", to: "IntegerPartitions" } } as const;
+  expect(expandLaw(law, ctx).statement).toEqual([
+    "ForAll",
+    ["And", ["Element", "n", "NonNegativeIntegers"], ["Element", "x", ["Permutations", "n"]]],
+    ["Element", ["CycleType", "x"], ["IntegerPartitions", ["Add", "n", 0]]],
+  ]);
+});
+
 test("every law's typed statement names its own from/to, not the law's target", () => {
   const ctx: LawContext = { name: "DyckPath", from: "binary_tree", to: "dyck_path" };
   expect(expandLaw({ inverse: "BinaryTree" }, ctx).typed).toEqual([

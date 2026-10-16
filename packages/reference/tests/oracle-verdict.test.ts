@@ -29,6 +29,32 @@ test("Wolfram's value agreeing is not enough for N(x, d): its displayed digits m
   expect(verdictOf("wolfram", 0.12, { ...tie, shown: "0.12" }, 0.05, true)).toBe("agree");
 });
 
+test("mpmath's N(x, d) digits must match, and the value must not disagree: sign and exponent are not digits", () => {
+  const call = ["N", "x", 4];
+  const answer = (value: string) => ({ value });
+  expect(verdictOf("mpmath", { num: "0.5000" }, answer("0.5000"), undefined, true, call)).toBe("agree");
+  expect(verdictOf("mpmath", { num: "0.5000" }, answer("5.000e-1"), undefined, true, call)).toBe("agree");
+  expect(verdictOf("mpmath", { num: "0.5000" }, answer("-0.5000"), undefined, true, call)).toBe("disagree");
+  expect(verdictOf("mpmath", { num: "0.5000" }, answer("5.000e-2"), undefined, true, call)).toBe("disagree");
+  // The last digit is the point: values within the tolerance still differ.
+  expect(verdictOf("mpmath", { num: "0.5000" }, answer("0.5001"), undefined, true, call)).toBe("disagree");
+});
+
+test("Julia's N(x, d) is judged digit for digit too: a 1e-9 agreement does not vouch for 50 digits", () => {
+  const call = ["N", "x", 50];
+  const ours = { num: "0.11111111111111111111111111111111111111111111111111" };
+  const answer = (value: string) => ({ value });
+  expect(
+    verdictOf("julia", ours, answer("1.1111111111111111111111111111111111111111111111111e-01"), undefined, true, call),
+  ).toBe("agree");
+  // Right to 16 digits, wrong after: the tolerant comparison alone would agree.
+  expect(
+    verdictOf("julia", ours, answer("1.1111111111111111999999999999999999999999999999999e-01"), undefined, true, call),
+  ).toBe("disagree");
+  // A tiny value agrees with anything under an absolute tolerance, but not on its digits.
+  expect(verdictOf("julia", { num: "1.5e-30" }, answer("2.5e-30"), undefined, true, ["N", "x", 2])).toBe("disagree");
+});
+
 test("a lone integer answer to N(x, d) is judged by the digits Wolfram displays", () => {
   const e = { value: "2.7182818284590452354`1.", numeric: "2.7182818284590452354`1.", shown: "3." };
   expect(verdictOf("wolfram", 3, e, undefined, true)).toBe("agree");
@@ -216,4 +242,36 @@ test('a Combinatorica template\'s Missing["NotCombinatorica"] is a decline, not 
   expect(verdictOf("combinatorica", ["List", 1, 2, 3], { value: "List[1, 2, 4]", numeric: "List[1, 2, 4]" })).toBe(
     "disagree",
   );
+});
+
+// Answers whose shape, not value, once made them read as unreadable: Wolfram's cached SparseArray
+// graph, escaped string literals, and lists nested more than one level of bare symbols.
+
+test("a Graph answer agrees by vertices and edges, whatever form Wolfram caches them in", () => {
+  const ours = [
+    "Graph",
+    ["List", 1, 2, 3],
+    ["List", ["UndirectedEdge", 1, 2], ["UndirectedEdge", 1, 3], ["UndirectedEdge", 2, 3]],
+  ];
+  const theirs = {
+    value:
+      'Graph[List[1, 2, 3], List[Null, SparseArray[Automatic, List[3, 3], 0, List[1, List[List[0, 2, 4, 6], List[List[2], List[3], List[1], List[3], List[1], List[2]]], Pattern]]], List[Rule[GraphLayout, "StarEmbedding"]]]',
+  };
+  expect(verdictOf("wolfram", ours as never, theirs)).toBe("agree");
+  const missingEdge = ["Graph", ["List", 1, 2, 3], ["List", ["UndirectedEdge", 1, 2], ["UndirectedEdge", 1, 3]]];
+  expect(verdictOf("wolfram", missingEdge as never, theirs)).toBe("disagree");
+});
+
+test("strings compare as characters: Wolfram's escapes are the characters ours holds", () => {
+  const theirs = { value: 'List["\\:03e8", "\\[CurlyKappa]", "\\|01f600"]' };
+  expect(verdictOf("wolfram", ["List", "'Ϩ'", "'ϰ'", "'\u{1f600}'"], theirs)).toBe("agree");
+  expect(verdictOf("wolfram", ["List", "'Ϩ'", "'ϱ'", "'\u{1f600}'"], theirs)).toBe("disagree");
+});
+
+test("nested lists of symbols compare structurally, not by a simplified difference", () => {
+  const theirs = { value: "List[x, List[a, x], List[b, List[a, x]]]" };
+  const ours = ["List", "x", ["List", "a", "x"], ["List", "b", ["List", "a", "x"]]];
+  expect(verdictOf("wolfram", ours as never, theirs)).toBe("agree");
+  const swapped = ["List", "x", ["List", "x", "a"], ["List", "b", ["List", "a", "x"]]];
+  expect(verdictOf("wolfram", swapped as never, theirs)).toBe("disagree");
 });

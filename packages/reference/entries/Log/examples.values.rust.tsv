@@ -1,0 +1,16 @@
+id	in	out	verdict
+default-base-is-10	log10(n(100))	2.0	
+same-result-written-with-an-explicit-base	(ln(n(100)) / ln(n(10)))	2.0	
+base-2-via-the-explicit-second-argument	(ln(n(8)) / ln(n(2)))	3.0	
+log-in-a-negative-base	(ln(x(2.5)) / ln(n(-1)))	panic: non-finite result: NaN	error
+log-3-1-5-at-machine-precision	(ln(x(1.5)) / ln(n(3)))	0.3690702464285425	
+log-9-3	(ln(n(9)) / ln(n(3)))	2.0	
+threads-over-a-list-of-values	list(vec![(ln(n(2)) / ln(n(2))), (ln(n(4)) / ln(n(2))), (ln(n(8)) / ln(n(2)))])	[1.0, 2.0, 3.0]	
+threads-over-a-list-of-bases	list(vec![(ln(x(2.5)) / ln(n(2))), (ln(x(2.5)) / ln(x(std::f64::consts::E))), (ln(x(2.5)) / ln(n(10)))])	[1.3219280948873624, 0.9162907318741551, 0.3979400086720376]	
+derivative-in-base-3-frac-1-x-ln-3			
+log-2-frac-18-3-an-exact-negative-power-of-the	(ln(rational(n(1), n(8))) / ln(n(2)))	-3.0	
+confirms-the-default-base-is-10	equal(log10(n(100)), (ln(n(100)) / ln(n(10))))	true	
+product-rule-log-b-xy-log-b-x-log-b-y	equal((ln((n(8) * n(4))) / ln(n(2))), ((ln(n(8)) / ln(n(2))) + (ln(n(4)) / ln(n(2)))))	true	
+power-rule-log-b-x-k-k-log-b-x	equal((ln(power(n(2), n(5))) / ln(n(2))), (n(5) * (ln(n(2)) / ln(n(2)))))	true	
+log-10-0-infty	log10(n(0))	panic: non-finite result: -inf	error
+a-negative-argument-stays-symbolic-with-the	log10(n(-5))	panic: non-finite result: NaN	error

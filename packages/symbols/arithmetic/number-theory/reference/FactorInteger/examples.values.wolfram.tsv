@@ -3,6 +3,7 @@ factorinteger-360	FactorInteger[360]	{{2, 3}, {3, 2}, {5, 1}}	\text{FactorIntege
 factorinteger-84	FactorInteger[84]	{{2, 2}, {3, 1}, {7, 1}}	\text{FactorInteger}[84]	\left( \begin{array}{cc}  2 & 2 \\  3 & 1 \\  7 & 1 \\ \end{array} \right)
 factorinteger-120	FactorInteger[120]	{{2, 3}, {3, 1}, {5, 1}}	\text{FactorInteger}[120]	\left( \begin{array}{cc}  2 & 3 \\  3 & 1 \\  5 & 1 \\ \end{array} \right)
 factorinteger-36	FactorInteger[36]	{{2, 2}, {3, 2}}	\text{FactorInteger}[36]	\left( \begin{array}{cc}  2 & 2 \\  3 & 2 \\ \end{array} \right)
+factorinteger-of-a-prime-to-the-0	FactorInteger[Power[100000000000000000039, 0]]	{{1, 1}}	\text{FactorInteger}\left[100000000000000000039^0\right]	\left( \begin{array}{cc}  1 & 1 \\ \end{array} \right)
 threads-element-wise-over-a-list-as-wolfram-s	FactorInteger[List[12, 18]]	{{{2, 2}, {3, 1}}, {{2, 1}, {3, 2}}}	\text{FactorInteger}[\{12,18\}]	\left( \begin{array}{cc}  \{2,2\} & \{3,1\} \\  \{2,1\} & \{3,2\} \\ \end{array} \right)
 5-i-1-2i-2-i	FactorInteger[5, Rule[GaussianIntegers, True]]	{{-I, 1}, {1 + 2*I, 1}, {2 + I, 1}}	\text{FactorInteger}[5,\text{GaussianIntegers}\to \text{True}]	\left( \begin{array}{cc}  -i & 1 \\  1+2 i & 1 \\  2+i & 1 \\ \end{array} \right)
 3-4i-2-i-2	FactorInteger[Complex[3, 4]]	{{2 + I, 2}}	\text{FactorInteger}[3+4 i]	\left( \begin{array}{cc}  2+i & 2 \\ \end{array} \right)

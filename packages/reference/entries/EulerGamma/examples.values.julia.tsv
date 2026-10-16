@@ -1,0 +1,2 @@
+id	in	out
+euler-gamma-to-20-digits	enumeratio_nshow(const_euler(RR), 20)	5.7721566490153286061e-01

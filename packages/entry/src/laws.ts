@@ -54,12 +54,40 @@ export function expandLaw(law: EntryLaw, ctx: LawContext): ExpandedLaw {
       typed,
       statement: ["ForAll", ["Element", "x", from], ["Equal", [name, [name, "x"]], [name, "x"]]],
     };
+  if (law === "surjection" || law === "bijection") {
+    const { to } = ctx;
+    const onto: MathJSON = [
+      "ForAll",
+      ["Element", "y", to],
+      ["Exists", ["Element", "x", from], ["Equal", [name, "x"], "y"]],
+    ];
+    if (law === "surjection") return { law, typed, statement: onto };
+    const oneToOne: MathJSON = [
+      "ForAll",
+      ["And", ["Element", "x", from], ["Element", "y", from]],
+      ["Implies", ["Equal", [name, "x"], [name, "y"]], ["Equal", "x", "y"]],
+    ];
+    return { law, typed, statement: ["And", onto, oneToOne] };
+  }
   if ("inverse" in law)
     return {
       law,
       typed,
       statement: ["ForAll", ["Element", "x", from], ["Equal", [law.inverse, [name, "x"]], "x"]],
     };
+  if ("graded" in law) {
+    // Each size-n member of `from` goes to `to` at size n + sizeOffset.
+    const { from: source, to: target, sizeOffset = 0 } = law.graded;
+    return {
+      law,
+      typed,
+      statement: [
+        "ForAll",
+        ["And", ["Element", "n", "NonNegativeIntegers"], ["Element", "x", [source, "n"]]],
+        ["Element", [name, "x"], [target, ["Add", "n", sizeOffset]]],
+      ],
+    };
+  }
   // orderIsomorphism: the k-th element of `from` at size n maps to the k-th of `to` at size
   // n + sizeOffset -- quantified over both the size and the rank within it, not one element.
   const { from: source, to: target, sizeOffset = 0 } = law.orderIsomorphism;

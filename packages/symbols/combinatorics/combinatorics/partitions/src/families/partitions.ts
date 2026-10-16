@@ -15,6 +15,7 @@
 // PartitionsInBox, all in ./core.ts) — each one's own record says so ("Catalogued as an alias
 // of ..." in its summary). No kernel here.
 import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
+import { modRank } from "../../../collections/src/families/kernels.ts";
 import {
   PartitionsMaxPartCount,
   PartitionsMaxPartUnrank,
@@ -54,7 +55,7 @@ export function partsInSet(inSet: (s: number) => boolean) {
   }
   function unrank(n: number, r: number): number[] {
     const total = count(n, n);
-    let rr = total ? ((r % total) + total) % total : 0;
+    let rr = total ? modRank(r, total) : 0;
     const out: number[] = [];
     let rem = n;
     let cap = n;
@@ -119,7 +120,7 @@ function largestPartCount(n: number, m: number): number {
 function largestPartUnrank(n: number, m: number, r: number): number[] {
   if (m === 0) return [];
   const total = largestPartCount(n, m);
-  const rr = total ? ((r % total) + total) % total : 0;
+  const rr = total ? modRank(r, total) : 0;
   return [m, ...PartitionsMaxPartUnrank(n - m, m, rr)];
 }
 function largestPartRank(parts: readonly number[], m: number): number {

@@ -1,0 +1,8 @@
+id	in	out	verdict
+ei-at-0	enumeratio_ball(exp_integral_ei, 0)	ball not finite	error
+ei-1	(enumeratio_ball(exp_integral_ei, 1))	1.8951178163559367554665209343316342690170605817327075916462284318825138345338	
+normal-series-expintegralei-x-x-positiveinfinity			
+n-expintegralei-2-50	enumeratio_nshow(enumeratio_ball(exp_integral_ei, 2), 50)	4.9542343560018901633795051302270352755180535624200e+00	
+expintegralei-list-positiveinfinity	Any[enumeratio_ball(exp_integral_ei, Inf), enumeratio_ball(exp_integral_ei, (-Inf)), enumeratio_ball(exp_integral_ei, (Inf * enumeratio_complex(0, 1))), enumeratio_ball(exp_integral_ei, (Inf * enumeratio_complex(0, -1)))]	non-finite argument	error
+expintegralei-complexinfinity			
+d-expintegralei-x-x			

@@ -14,6 +14,28 @@ bindings:
     form: typescript
     environment: engine
     source: packages/symbols/analysis/analytic/src/hypergeometric-pfq.ts
+  - origin: mapped
+    form: sympy
+    template: N(hyper($1, $2, $3))
+    arity: 3
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: SymPy's hyper stays held at numeric arguments until N, so the template evaluates it.
+  - origin: mapped
+    form: mpmath
+    template: hyper($1, $2, $3)
+    arity: 3
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: hypergeometric($1, $2, $3)
+    arity: 3
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 seeAlso:
   - Hypergeometric0F1
   - Hypergeometric2F1Regularized

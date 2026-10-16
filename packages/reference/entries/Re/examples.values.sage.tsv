@@ -1,0 +1,36 @@
+id	in	out	verdict
+re-of-3-plus-4i-is-3	real_part((3 + 4*I))	3	
+re-of-a-real-number-is-itself	real_part(5)	5	
+re-of-pi-is-pi-a-real-symbolic-constant	real_part(pi)	pi	
+real-2-plus-3i	real_part((2 + 3*I))	2	
+real-2-times-exponentiale-pow-1-over-3-times-i	real_part((2 * ((e)^((0 + (1/3)*I) * pi))))	1	
+real-3-over-2-plus-4-over-5-times-i	real_part(((3/2) + (4/5)*I))	3/2	
+n-real-exponentiale-plus-i-times-pi-25	enumeratio_n(real_part((e + ((0 + 1*I) * pi))), 25)	2.71828182845905	
+real-41-over-25-minus-2i	real_part(((41/25) + -2*I))	41/25	
+real-list-list-1-u-list-v-neg-i	[[real_part(1), real_part(SR.var("u"))], [real_part(SR.var("v")), real_part((0 + -1*I))]]	True	
+real-0	real_part(0)	0	
+real-positiveinfinity	real_part(oo)	+Infinity	
+real-positiveinfinity-times-i	real_part((oo * (0 + 1*I)))	0	inconclusive
+real-complexinfinity	real_part(unsigned_infinity)	RuntimeError: indeterminate expression: real part of unsigned_infinity.	error
+piecewiseexpand-re-imaginaryunit-times-x-neg-2			
+simplify-re-x-x-gt-0			
+a-gaussian-integer-is-a-complex-number	real_part(((2 + 1*I) * (1 + 3*I)))	-1	
+re-of-a-symbolic-value-stays-unevaluated	real_part(SR.var("x"))	True	
+real-1	real_part(1)	1	
+real-neg-1	real_part(-1)	-1	
+real-neg-i	real_part((0 + -1*I))	0	
+real-1-plus-i	real_part((1 + 1*I))	1	
+real-neg-1-plus-i	real_part((-1 + 1*I))	-1	
+real-neg-1-minus-i	real_part((-1 + -1*I))	-1	
+real-1-minus-i	real_part((1 + -1*I))	1	
+real-1-plus-sqrt-3-times-i	real_part((1 + (0 + sqrt(3)*I)))	1	
+real-neg-1-plus-sqrt-3-times-i	real_part((-1 + (0 + sqrt(3)*I)))	-1	
+list-real-x-times-exponentiale-pow-1-over-5	[real_part((SR.var("x") * ((e)^((0 + (1/5)*I) * pi)))), real_part(((2 * SR.var("x")) + (0 + 1*I)))]	[-1/4*sqrt(abs(-2*sqrt(5) + 10))*cos(1/2*arctan2(0, -2*sqrt(5) + 10))*imag_part(x) - 1/4*sqrt(abs(-2*sqrt(5) + 10))*real_part(x)*sin(1/2*arctan2(0, -2*sqrt(5) + 10)) + 1/4*sqrt(5)*real_part(x) + 1/4*real_part(x), 2*real_part(x)]	disagree
+real-neg-sqrt-3-minus-i	real_part(((-sqrt(3)) + (0 + -1*I)))	-sqrt(3)	
+real-neg-1-plus-neg-sqrt-3-times-i	real_part((-1 + (0 + (-sqrt(3))*I)))	-1	
+real-1-plus-neg-sqrt-3-times-i	real_part((1 + (0 + (-sqrt(3))*I)))	1	
+real-sqrt-3-minus-i	real_part((sqrt(3) + (0 + -1*I)))	sqrt(3)	
+real-2	real_part(2)	2	
+real-i	real_part((0 + 1*I))	0	
+real-sqrt-3-plus-i	real_part((sqrt(3) + (0 + 1*I)))	sqrt(3)	
+real-neg-sqrt-3-plus-i	real_part(((-sqrt(3)) + (0 + 1*I)))	-sqrt(3)	

@@ -1,0 +1,16 @@
+id	in	out
+fullsimplify-normal-series-ellipticpi-n-m-m		
+functionexpand-ellipticpi-list-list-neg-1-0-list		
+functionexpand-matrixfunction-function		
+n-ellipticpi-3-over-10-2-over-5-50		
+n-ellipticpi-3-over-10-2-2-over-5-50	enumeratio_n(elliptic_pi((3/10), 2, (2/5)), 50)	2.90692821589951
+simplify-integrate-ellipticpi-n-m-m		
+simplify-series-ellipticpi-n-m-m-0-3		
+simplify-series-ellipticpi-n-m-n-1-1		
+ellipticpi-0-0-1	elliptic_pi(0, 0, 1)	0
+ellipticpi-0-0-0	elliptic_pi(0, 0, 0)	0
+n-ellipticpi-1-over-2-i-times-arsinh-tan-1-over	enumeratio_n(elliptic_pi((1/2), ((0 + 1*I) * arcsinh(tan((1/2)))), (1/2)))	0.488330039028240*I
+n-neg-ellipticf-1-over-2-1-over-2-plus	enumeratio_n(((((-elliptic_f((1/2), (1/2))) + elliptic_pi(((1/2) * ((sin((1/2)))^2)), (1/2), (1/2))) * cot((1/2)) * sqrt((1 + ((-1/2) * ((sin((1/2)))^2))))) + (elliptic_f((1/2), (1/2)) * elliptic_e((1/2), (1/2)))))	0.258354379144597
+n-ellipticpi-1-over-2-i-times-arsinh-tan-1-ove-2	enumeratio_n(elliptic_pi((1/2), ((0 + 1*I) * arcsinh(tan((1/2)))), -1))	0.525899989634695*I
+n-neg-ellipticf-2-1-over-2-plus-ellipticpi-1	enumeratio_n(((((-elliptic_f(2, (1/2))) + elliptic_pi(((1/2) * ((sin((1/2)))^2)), 2, (1/2))) * cot((1/2)) * sqrt((1 + ((-1/2) * ((sin((1/2)))^2))))) + (elliptic_f((1/2), (1/2)) * elliptic_e(2, (1/2)))))	1.19119948439920
+n-ellipticpi-2-i-times-list-neg-1-1-times-10-pow		

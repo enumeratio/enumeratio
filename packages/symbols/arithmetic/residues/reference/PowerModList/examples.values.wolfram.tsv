@@ -2,6 +2,7 @@ id	in	out	tex.in	tex.out	verdict
 the-square-roots-of-3-modulo-11-5-2-25-and-6-2	PowerModList[3, Rational[1, 2], 11]	{5, 6}	\text{PowerModList}\left[3,\frac{1}{2},11\right]	\{5,6\}	
 the-cube-roots-of-unity-modulo-7-since-3-mid-6	PowerModList[1, Rational[1, 3], 7]	{1, 2, 4}	\text{PowerModList}\left[1,\frac{1}{3},7\right]	\{1,2,4\}	
 an-integer-exponent-is-an-ordinary-power-2-10	PowerModList[2, 10, 1000]	{24}	\text{PowerModList}[2,10,1000]	\{24\}	
+root-of-a-non-invertible-base	PowerModList[8, Rational[-1, 2], 12]	PowerModList[8, -1/2, 12]	\text{PowerModList}\left[8,-\frac{1}{2},12\right]	\text{PowerModList}\left[8,-\frac{1}{2},12\right]	disagree
 a-general-exponent-s-r-every-x-with-x-2-equiv-2	PowerModList[2, Rational[3, 2], 17]	{5, 12}	\text{PowerModList}\left[2,\frac{3}{2},17\right]	\{5,12\}	
 the-three-cube-roots-of-2-2-4-since-3-mid-30	PowerModList[2, Rational[2, 3], 31]	{16, 18, 28}	\text{PowerModList}\left[2,\frac{2}{3},31\right]	\{16,18,28\}	
 exponent-1-is-the-modular-inverse-3-cdot-5-15	PowerModList[3, -1, 7]	{5}	\text{PowerModList}[3,-1,7]	\{5\}	

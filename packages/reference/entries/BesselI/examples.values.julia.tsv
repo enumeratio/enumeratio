@@ -1,0 +1,4 @@
+id	in	out
+besseli-0-1	(enumeratio_ball(bessel_i, 0, 1))	1.266065877752008335598244625214717537607670311354962206808135331213575016122774
+normal-series-besseli-0-x-x-positiveinfinity-2		
+n-besseli-0-1-50	enumeratio_nshow(enumeratio_ball(bessel_i, 0, 1), 50)	1.2660658777520083355982446252147175376076703113550e+00

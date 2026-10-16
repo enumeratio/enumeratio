@@ -14,6 +14,38 @@ references:
     identity: Nth root
   - system: mathworld
     identity: nthRoot
+bindings:
+  - origin: mapped
+    form: mpmath
+    template: (-root(-($1), $2) if im($1) == 0 and re($1) < 0 and ($2) % 2 == 1 else root($1, $2))
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
+    note: An odd root of a negative real is the real one, as ours; mpmath's root is the principal root.
+  - origin: mapped
+    form: sage
+    template: real_nth_root($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
+  - origin: mapped
+    form: julia
+    template: enumeratio_root($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: Nemo 0.56.1
+      on: 2026-10-16
 ---
 
 - The nth root: $\mathrm{Root}(x, n) = x^{1/n}$. See [[Sqrt]] for the special case $n = 2$.

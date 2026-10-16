@@ -2,6 +2,7 @@ id	in	out	verdict
 stirling-5-2	stirling(5, 2)	15	
 stirling-6-3	stirling(6, 3)	90	
 stirling-20-10	stirling(20, 10)	5917584964655	
+stirling-0-3-against-a-sum-over-a-pole	enumeratio_equal(stirling(0, 3), (S(summation(((S(-2)**(3 - Symbol("j"))) * binomial(-9, Symbol("j")) * (S(Symbol("j"))**6)), (Symbol("j"), 0, 3))) / factorial(-2)))	False	disagree
 exact-for-large-n	stirling(50, 2)	562949953421311	
 threads-element-wise-over-a-list-as-wolfram-s	[stirling(2, 2), stirling(4, 2), stirling(6, 2)]	[1, 7, 31]	
 the-ways-to-split-10-distinct-items-among-3	stirling(10, 3)	9330	
@@ -13,7 +14,7 @@ row-sums-give-the-bell-numbers	enumeratio_equal(summation(stirling(4, Symbol("k"
 two-blocks-s-n-2-2-n-1-1	enumeratio_equal(stirling(10, 2), ((S(2)**9) - 1))	True	
 s-n-n-1-binom-n-2-one-block-is-a-pair	enumeratio_equal(stirling(6, 5), binomial(6, 2))	True	
 explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j	enumeratio_equal(stirling(6, 3), (S(summation(((S(-1)**(3 - Symbol("j"))) * binomial(3, Symbol("j")) * (S(Symbol("j"))**6)), (Symbol("j"), 0, 3))) / factorial(3)))	True	
-orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m			
+orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m	summation((stirling(4, Symbol("k"), kind=1, signed=True) * stirling(Symbol("k"), 2)), (Symbol("k"), 0, 4))	ValueError: k is not an integer	error
 n-stirling-120-10	N(stirling(120, 10), 30)	2.75564293332645612796076533812e+113	
 stirling-10-4	stirling(10, 4)	34105	
 stirling-1-0	stirling(1, 0)	0	

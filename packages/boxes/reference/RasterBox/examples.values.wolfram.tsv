@@ -1,2 +1,2 @@
-id	in
-inert	RasterBox[List[DataRange, List[List[0, 1], List[0, 1]]]]
+id	in	out	tex.in	tex.out
+inert	RasterBox[List[DataRange, List[List[0, 1], List[0, 1]]]]	RasterBox[{DataRange, {{0, 1}, {0, 1}}}]	\text{RasterBox}\left[\left\{\text{DataRange},\left( \begin{array}{cc}  0 & 1 \\  0 & 1 \\ \end{array} \right)\right\}\right]	\text{RasterBox}\left[\left\{\text{DataRange},\left( \begin{array}{cc}  0 & 1 \\  0 & 1 \\ \end{array} \right)\right\}\right]

@@ -1,0 +1,14 @@
+id	in	out	verdict
+argument-i	arg((0 + 1*I))	1/2*pi	
+argument-1-plus-i	arg((1 + 1*I))	1/4*pi	
+argument-neg-1	arg(-1)	pi	
+argument-of-a-list-holding-0	[arg(0), arg((-1/2))]	[0, pi]	
+n-argument-exponentiale-plus-i-times-pi-20	enumeratio_n(arg((e + ((0 + 1*I) * pi))), 20)	0.857511786355846	
+argument-neg-123	arg(-123)	pi	
+argument-123-minus-456i	arg((123 + -456*I))	-arctan(152/41)	
+argument-list-list-1-over-2-neg-1-list-neg-5	[[arg((1/2)), arg(-1)], [arg((-5/3)), arg((1/2))]]	[[0, pi], [pi, 0]]	
+fullsimplify-matrixfunction-argument-list-list-1			
+argument-0	arg(0)	0	
+argument-positiveinfinity	arg(oo)	arg(+Infinity)	
+argument-negativeinfinity	arg(-oo)	arg(-Infinity)	
+argument-positiveinfinity-times-i	arg((oo * (0 + 1*I)))	arg((I)*Infinity)	disagree

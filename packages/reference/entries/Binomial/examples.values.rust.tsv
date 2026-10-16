@@ -10,7 +10,7 @@ symbolic-n-binom-n-1-n
 binom-n-n-1-n-for-symbolic-n			
 binom-m-m-1-m-for-symbolic-m			
 n-binomial-7-over-3-1-over-5-1-digit	nf(binomial(rational(n(7), n(3)), rational(n(1), n(5))))	panic: an integer, not 7/3	error
-threads-element-wise-over-a-list-as-wolfram-s	binomial(list(vec![n(2), n(3), n(5), n(7), n(11)]), n(3))	panic: threading: a list where the crate takes a scalar	error
+threads-element-wise-over-a-list-as-wolfram-s	list(vec![binomial(n(2), n(3)), binomial(n(3), n(3)), binomial(n(5), n(3)), binomial(n(7), n(3)), binomial(n(11), n(3))])	[0, 1, 10, 35, 165]	
 half-integer-arguments-evaluate-exactly-through	binomial(rational(n(9), n(2)), rational(n(7), n(2)))	panic: an integer, not 9/2	error
 real-arguments-evaluate-through-the-gamma	binomial(x(8.5), x(-4.2))	panic: an integer, not 8.5	error
 a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0	binomial(x(0.5), n(3))	panic: an integer, not 0.5	error
@@ -21,7 +21,7 @@ binom-m-m-1-for-symbolic-m
 a-gaussian-integer-n-binom-1-i-5-frac-1-i-12			
 complex-n-and-k-evaluate-through-the-gamma			
 interval-arithmetic-in-k-binom-1-2-k-is			
-n-binomial-7-over-3-1-over-5-20	nf(binomial(rational(n(7), n(3)), rational(n(1), n(5))))		
+n-binomial-7-over-3-1-over-5-20	nf(binomial(rational(n(7), n(3)), rational(n(1), n(5))))	panic: an integer, not 7/3	error
 binomial-n-4			
 matrixfunction-function-binomial-1-2-1-list-list			
 the-number-of-distinct-5-card-hands-dealt-from-a	binomial(n(52), n(5))	2598960	
@@ -33,10 +33,10 @@ sum-of-squares-along-a-row-sum-k-binom-n-k-2
 vandermonde-s-identity-sum-k-binom-m-k-binom-n-r			
 the-alternating-row-sum-vanishes-sum-k-1-k-binom			
 the-factorial-form-binom-n-k-frac-n-k-n-k-see	equal(binomial(n(7), n(3)), (factorial(n(7)) / (factorial(n(3)) * factorial(n(4)))))	true	
-binomial-1-over-2-neg-1-over-2-plus-binomial-1	(binomial(rational(n(1), n(2)), rational(n(-1), n(2))) + binomial(rational(n(1), n(2)), rational(n(1), n(2))))		
+binomial-1-over-2-neg-1-over-2-plus-binomial-1	(binomial(rational(n(1), n(2)), rational(n(-1), n(2))) + binomial(rational(n(1), n(2)), rational(n(1), n(2))))	panic: an integer, not 1/2	error
 sum-binomial-2-k-pow-2-times-binomial-k-plus-2-k			
 sum-binomial-2-2k-plus-1-times-2-pow-k-k-0-floor			
-binomial-1-over-2-1-over-2-plus-binomial-1-over	(binomial(rational(n(1), n(2)), rational(n(1), n(2))) + binomial(rational(n(1), n(2)), rational(n(3), n(2))))		
+binomial-1-over-2-1-over-2-plus-binomial-1-over	(binomial(rational(n(1), n(2)), rational(n(1), n(2))) + binomial(rational(n(1), n(2)), rational(n(3), n(2))))	panic: an integer, not 1/2	error
 choosing-more-elements-than-available-k-n-gives	binomial(n(5), n(7))	0	
 a-negative-k-also-gives-0	binomial(n(5), n(-1))	1	disagree
 a-negative-n-uses-the-generalized-formula-binom	binomial(n(-5), n(2))	0	disagree

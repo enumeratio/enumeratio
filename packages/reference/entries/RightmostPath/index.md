@@ -1,9 +1,0 @@
----
-name: RightmostPath
-domain: Combinatorics
-signature: RightmostPath(...)
-summary: Rightmost path length
-statOn:
-  - OrderedTree
-stub: carrier
----

@@ -67,7 +67,8 @@ export const SYSTEMS: readonly SystemSpec[] = [
     name: "julia",
     label: "Julia (Nemo + Combinatorics.jl)",
     wired: true,
-    strength: "FLINT number theory and the classic combinatorial counts, light enough to install in CI",
+    strength:
+      "FLINT number theory and the classic combinatorial counts, plus Nemo's rigorous ball arithmetic for the special functions (a printed ball must be tight, so a midpoint is never a guess); light enough to install in CI",
   },
   {
     name: "mathlib4",
@@ -79,7 +80,8 @@ export const SYSTEMS: readonly SystemSpec[] = [
     name: "rust",
     label: "Rust (num, primal, statrs, adic)",
     wired: true,
-    strength: "the numeric and number-theory crates a Rust user would reach for, and the adic crate for p-adic numbers",
+    strength:
+      "exact integers and rationals (num), primes (primal) and p-adics (adic), compared exactly; statrs's special functions and std's elementary ones are doubles, compared to a relative tolerance and never to a digit count",
   },
 ];
 

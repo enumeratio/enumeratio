@@ -305,14 +305,23 @@ export interface ReferenceNames {
  * applies to only ONE of a shared name's overloads (`BinaryTree` is two maps, from
  * `binary_tree_parent_array` and from `dyck_path`, each with its own inverse) -- the same
  * convention `ReferenceSignature.on` uses; omitted, the law applies to every overload this
- * record's name has.
+ * record's name has. `surjection`/`bijection` and `graded` (each size-n member of `from` goes to
+ * `to` at size n + `sizeOffset`) are about the whole map, checked per size against `graded`'s
+ * collections rather than at one element. With `sizeOffset` 0 it is read as FindStat's "Graded
+ * map"; FindStat's own definition could not be fetched, so a nonzero offset is our extension.
  */
 export type EntryLaw =
   | "involution"
   | "idempotent"
+  | "surjection"
+  | "bijection"
   | { readonly inverse: string; readonly on?: string }
   | {
       readonly orderIsomorphism: { readonly from: string; readonly to: string; readonly sizeOffset?: number };
+      readonly on?: string;
+    }
+  | {
+      readonly graded: { readonly from: string; readonly to: string; readonly sizeOffset?: number };
       readonly on?: string;
     };
 
@@ -466,7 +475,7 @@ export interface EvaluationMessage {
  * | ----------------------------------------------- | --------------------- | ------- |
  * | `in`                                            | `UPDATE_FORMS=1`      | what our transpiler emits for it |
  * | `out`, `tex`, `verdict`                         | the scan's `--accept` | absent for an own form, or until scanned |
- * | `kind`, `note`, `issue`, `tolerance`             | hand                  | the classification of a non-`agree` verdict, carried forward by the scan while it holds |
+ * | `kind`, `note`, `issue`, `tolerance`, `skip`     | hand                 | the classification of a non-`agree` verdict, carried forward by the scan while it holds |
  * | `messages`                                      | the scan               | what the evaluation itself emitted running it |
  */
 export interface SystemImplementation {
@@ -485,6 +494,9 @@ export interface SystemImplementation {
   readonly issue?: number;
   /** Relative tolerance for a numeric comparison, where 1e-9 is too strict for this row. */
   readonly tolerance?: number;
+  /** The oracle scan leaves this example out of this system's lane: its answer is a picture or a
+   * control, or has no value to compare. A `note` says why; never a divergence, so no `kind`. */
+  readonly skip?: boolean;
   readonly messages?: readonly EvaluationMessage[];
   /** Our own forms only: what `in` reads back as, where the trip loses something -- through
    * `parseEpsil` uncanonicalised for FullForm, a notebook cell for InputForm, the markup reader

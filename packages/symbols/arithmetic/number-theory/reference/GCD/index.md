@@ -61,6 +61,15 @@ bindings:
     template: gcd($1, $2)
     arity: 2
     threadArg: 2
+    threadArgOnly:
+      - 1
+      - 2
+  - origin: mapped
+    form: sage
+    template: gcd([$*,])
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Also called the greatest common factor: the largest positive integer dividing every argument.

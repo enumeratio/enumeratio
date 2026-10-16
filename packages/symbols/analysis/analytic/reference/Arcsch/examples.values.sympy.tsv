@@ -1,0 +1,20 @@
+id	in	out	verdict
+n-arcsch-2	N(acsch(2), 30)	0.481211825059603447497758913424	
+a-pole-at-0	acsch(0)	zoo	
+arcsch-positiveinfinity	acsch(oo)	0	
+a-float-argument-evaluates-directly	acsch(1.5)	0.625145117250417	
+as-a-logarithm-arcsch-1-ln-1-sqrt-2			
+oddness-pulls-the-sign-out-of-a-symbolic	acsch((-Symbol("x")))	True	
+derivative-for-real-x-ne-0	diff(acsch(Symbol("x")), Symbol("x"))	None	inconclusive
+n-arcsch-5-50	N(acsch(5), 30)	0.198690110349241406474636915950	
+arcsch-complexinfinity	acsch(zoo)	0	
+arcsch-list-list-2i-0-list-i-neg-2-times-i	[[acsch((0 + 2*I)), acsch(0)], [acsch((0 + 1*I)), acsch((0 + -2*I))]]	[[-I*pi/6, zoo], [-I*pi/2, I*pi/6]]	
+matrixfunction-function-arcsch-1-1-list-list-2i			
+arcsch-neg-i-times-sqrt-2-plus-neg-2-over-5	acsch(((0 + -1*I) * sqrt((2 + (Rational(-2, 5) * sqrt(5))))))	2*I*pi/5	
+arcsch-2i-times-sqrt-1-over-2-plus-sqrt-2	acsch(((0 + 2*I) * sqrt((S(1) / (2 + sqrt(2))))))	-3*I*pi/8	
+arcsch-neg-2-times-i-times-sqrt-1-over-2-plus	acsch(((0 + -2*I) * sqrt((S(1) / (2 + sqrt(2))))))	3*I*pi/8	
+arcsch-neg-i-times-sqrt-2-plus-2-over-5-times	acsch(((0 + -1*I) * sqrt((2 + (Rational(2, 5) * sqrt(5))))))	I*pi/5	
+arcsch-i-times-neg-sqrt-2-plus-sqrt-6	acsch(((0 + 1*I) * ((-sqrt(2)) + sqrt(6))))	-5*I*pi/12	
+arcsch-i-times-neg-sqrt-6-plus-sqrt-2	acsch(((0 + 1*I) * ((-sqrt(6)) + sqrt(2))))	acsch(I*(-sqrt(6) + sqrt(2)))	
+arcsch-i-times-sqrt-2-plus-neg-2-over-5-times	acsch(((0 + 1*I) * sqrt((2 + (Rational(-2, 5) * sqrt(5))))))	-2*I*pi/5	
+arcsch-i-times-sqrt-2-plus-2-over-5-times-sqrt-5	acsch(((0 + 1*I) * sqrt((2 + (Rational(2, 5) * sqrt(5))))))	-I*pi/5	

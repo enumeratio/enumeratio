@@ -1,0 +1,24 @@
+id	in	out
+eulere-10	eulernum(10)	-50521.0
+eulere-8	eulernum(8)	1385.0
+listable-odd-indices-vanish	[eulernum(0), eulernum(1), eulernum(2), eulernum(3), eulernum(4)]	[mpf('1.0'), mpf('0.0'), mpf('-1.0'), mpf('0.0'), mpf('5.0')]
+the-euler-polynomial-e-2-x-x-2-x		
+e-4-x-x-4-2x-3-x		
+eulere-list-2-4-6	[eulernum(2), eulernum(4), eulernum(6)]	[mpf('-1.0'), mpf('5.0'), mpf('-61.0')]
+e-n-2-n-e-n-frac-12-and-e-3-0	eulerpoly(3, (mpf(1)/2))	0.0
+eulere-0	eulernum(0)	1.0
+eulere-1	eulernum(1)	0.0
+eulere-2	eulernum(2)	-1.0
+eulere-3	eulernum(3)	0.0
+eulere-4	eulernum(4)	5.0
+eulere-5	eulernum(5)	0.0
+eulere-6	eulernum(6)	-61.0
+eulere-7	eulernum(7)	0.0
+eulere-9	eulernum(9)	0.0
+eulere-1-0	eulerpoly(1, 0)	-0.5
+eulere-2-0	eulerpoly(2, 0)	0.0
+eulere-1-1	eulerpoly(1, 1)	0.5
+eulere-2-1	eulerpoly(2, 1)	0.0
+eulere-0-1	eulerpoly(0, 1)	1.0
+eulere-2-1-over-2-plus-eulere-2-3-over-2	(eulerpoly(2, (mpf(1)/2)) + eulerpoly(2, (mpf(3)/2)))	0.5
+eulere-2-2-plus-eulere-2-3	(eulerpoly(2, 2) + eulerpoly(2, 3))	8.0

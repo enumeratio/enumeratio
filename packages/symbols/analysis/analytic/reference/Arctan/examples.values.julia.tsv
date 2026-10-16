@@ -1,0 +1,48 @@
+id	in	out	verdict
+arctan-0	enumeratio_ball(atan, 0)	0.0	
+arctan-1	enumeratio_ball(atan, 1)	0.7853981633974483096156608458198757210492923498437764552437361480769541015715495	
+arctan-sqrt-3	enumeratio_ball(atan, enumeratio_ball(sqrt, 3))	1.04719755119659774615421446109316762806572313312503527365831486410260546876206	
+a-machine-precision-argument-evaluates	enumeratio_ball(atan, enumeratio_decimal("0.5"))	0.4636476090008061162142562314612144020285370542861202638109330887201978641657375	
+series-arctan-x-x-positiveinfinity-5			
+arbitrary-precision-via-n	(enumeratio_ball(atan, (1 // 2)))	0.4636476090008061162142562314612144020285370542861202638109330887201978641657375	
+evaluates-at-a-complex-argument	enumeratio_ball(atan, enumeratio_complex(enumeratio_decimal("2.5"), 1))	(1.233425855683120287703061204834844634561581572267196698927011443669253755227567+0.1236740604590267636663111766462580773313019402155665474484917818279051602475832j)	
+wolfram-s-two-argument-arctan-x-y-is-compute	enumeratio_atan2(-1, -1)	-2.356194490192344928846982537459627163147877049531329365731208444230862304714631	
+arctan2-takes-y-first-the-angle-of-the-point-0-5	enumeratio_atan2(2, enumeratio_decimal("0.5"))	1.325817663668032465059239210428475631184440601306368843360096381486553083555452	
+arctan-2-sqrt-3-5-pi-12	enumeratio_ball(atan, (2 + enumeratio_ball(sqrt, 3)))	1.308996938995747182692768076366459535082153916406294092072893580128256835952571	
+arctan-2-sqrt-3-pi-12	enumeratio_ball(atan, (2 - enumeratio_ball(sqrt, 3)))	0.2617993877991494365385536152732919070164307832812588184145787160256513671905194	
+arctan-sqrt-2-1-pi-8	enumeratio_ball(atan, (enumeratio_ball(sqrt, 2) - 1))	0.3926990816987241548078304229099378605246461749218882276218680740384770507857704	
+arctan-1-over-sqrt-3	enumeratio_ball(atan, enumeratio_div(1, enumeratio_ball(sqrt, 3)))	0.5235987755982988730771072305465838140328615665625176368291574320513027343810301	
+arctan-neg-1	enumeratio_ball(atan, -1)	-0.7853981633974483096156608458198757210492923498437764552437361480769541015715495	
+threads-element-wise-over-a-matrix	Any[Any[enumeratio_ball(atan, 0), enumeratio_ball(atan, 1)], Any[enumeratio_ball(atan, -1), enumeratio_ball(atan, enumeratio_ball(sqrt, 3))]]	[[0.0, 0.7853981633974483096156608458198757210492923498437764552437361480769541015715495], [-0.7853981633974483096156608458198757210492923498437764552437361480769541015715495, 1.04719755119659774615421446109316762806572313312503527365831486410260546876206]]	
+interval-arithmetic-arctan-1-3-frac-pi-4-arctan			
+oddness-pulls-the-sign-out-of-a-symbolic			
+derivative-frac-1-1-x-2			
+antiderivative			
+gregory-s-series-about-0			
+the-limit-at-infty			
+to-30-significant-digits-every-one-correctly	enumeratio_nshow(enumeratio_ball(atan, (1 // 2)), 30)	4.63647609000806116214256231461e-01	
+n-arctan-1-over-2-50	enumeratio_nshow(enumeratio_ball(atan, (1 // 2)), 50)	4.6364760900080611621425623146121440202853705428612e-01	
+arctan-list-list-1-sqrt-3-list-0-sqrt-3	Any[Any[enumeratio_ball(atan, 1), enumeratio_ball(atan, enumeratio_ball(sqrt, 3))], Any[enumeratio_ball(atan, 0), enumeratio_ball(atan, enumeratio_ball(sqrt, 3))]]	[[0.7853981633974483096156608458198757210492923498437764552437361480769541015715495, 1.04719755119659774615421446109316762806572313312503527365831486410260546876206], [0.0, 1.04719755119659774615421446109316762806572313312503527365831486410260546876206]]	
+tan-arctan-x-x	enumeratio_equal(enumeratio_ball(tan, enumeratio_ball(atan, 1)), 1)	true	
+as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2			
+arctan-neg-2-plus-sqrt-3	enumeratio_ball(atan, (-2 + enumeratio_ball(sqrt, 3)))	-0.2617993877991494365385536152732919070164307832812588184145787160256513671905194	
+arctan-neg-sqrt-1-plus-neg-2-over-5-times-sqrt-5	enumeratio_ball(atan, (-(enumeratio_ball(sqrt, (1 + ((-2 // 5) * enumeratio_ball(sqrt, 5)))))))	-0.3141592653589793238462643383279502884197169399375105820974944592307816406286466	
+arctan-1-minus-sqrt-2	enumeratio_ball(atan, (1 + (-(enumeratio_ball(sqrt, 2)))))	-0.3926990816987241548078304229099378605246461749218882276218680740384770507857704	
+arctan-neg-sqrt-3-over-3	enumeratio_ball(atan, (-(enumeratio_div(enumeratio_ball(sqrt, 3), 3))))	-0.5235987755982988730771072305465838140328615665625176368291574320513027343810301	
+arctan-sqrt-5-minus-2-times-sqrt-5	enumeratio_ball(atan, enumeratio_ball(sqrt, (5 + (-2 * enumeratio_ball(sqrt, 5)))))	0.6283185307179586476925286766559005768394338798750211641949889184615632812572586	
+arctan-neg-sqrt-5-minus-2-times-sqrt-5	enumeratio_ball(atan, (-(enumeratio_ball(sqrt, (5 + (-2 * enumeratio_ball(sqrt, 5)))))))	-0.6283185307179586476925286766559005768394338798750211641949889184615632812572586	
+arctan-neg-sqrt-1-plus-2-over-5-times-sqrt-5	enumeratio_ball(atan, (-(enumeratio_ball(sqrt, (1 + ((2 // 5) * enumeratio_ball(sqrt, 5)))))))	-0.942477796076937971538793014983850865259150819812531746292483377692344921885849	
+arctan-neg-sqrt-3	enumeratio_ball(atan, (-(enumeratio_ball(sqrt, 3))))	-1.04719755119659774615421446109316762806572313312503527365831486410260546876206	
+arctan-1-plus-sqrt-2	enumeratio_ball(atan, (1 + enumeratio_ball(sqrt, 2)))	1.178097245096172464423491268729813581573938524765664682865604222115431152357316	
+n-arctan-1-over-3-plus-arctan-1-over-2	((enumeratio_ball(atan, (1 // 3)) + enumeratio_ball(atan, (1 // 2))))	0.7853981633974483096156608458198757210492923498437764552437361480769541015715409	
+n-2-times-arctan-1-over-2-minus-arctan-1-over-7	(((2 * enumeratio_ball(atan, (1 // 2))) + (-(enumeratio_ball(atan, (1 // 7))))))	0.7853981633974483096156608458198757210492923498437764552437361480769541015715409	
+n-2-times-arctan-1-over-3-plus-arctan-1-over-7	(((2 * enumeratio_ball(atan, (1 // 3))) + enumeratio_ball(atan, (1 // 7))))	0.7853981633974483096156608458198757210492923498437764552437361480769541015715409	
+n-4-times-arctan-1-over-5-minus-arctan-1-over	(((4 * enumeratio_ball(atan, (1 // 5))) + (-(enumeratio_ball(atan, (1 // 239))))))	0.7853981633974483096156608458198757210492923498437764552437361480769541015715409	
+arctan-sqrt-1-plus-neg-2-over-5-times-sqrt-5	enumeratio_ball(atan, enumeratio_ball(sqrt, (1 + ((-2 // 5) * enumeratio_ball(sqrt, 5)))))	0.3141592653589793238462643383279502884197169399375105820974944592307816406286466	
+arctan-sqrt-1-plus-2-over-5-times-sqrt-5	enumeratio_ball(atan, enumeratio_ball(sqrt, (1 + ((2 // 5) * enumeratio_ball(sqrt, 5)))))	0.942477796076937971538793014983850865259150819812531746292483377692344921885849	
+compute-engine-s-arctan-takes-only-one-argument			
+arctan-complexinfinity-is-indeterminate-z-re-i			
+the-horizontal-asymptote-as-x-to-infty	enumeratio_ball(atan, Inf)	non-finite argument	error
+and-as-x-to-infty	enumeratio_ball(atan, (-Inf))	non-finite argument	error
+euler-s-machin-like-identity-arctan-frac-12			
+machin-s-formula-4-arctan-frac-15-arctan-frac-1			

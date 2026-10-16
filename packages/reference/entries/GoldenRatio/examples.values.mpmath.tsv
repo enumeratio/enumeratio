@@ -1,2 +1,2 @@
-id	in
-golden-ratio-to-20-digits	(phi)
+id	in	out
+golden-ratio-to-20-digits	enumeratio_n(lambda: (phi), 20)	1.6180339887498948482

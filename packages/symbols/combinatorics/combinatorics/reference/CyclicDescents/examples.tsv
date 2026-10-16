@@ -1,4 +1,7 @@
-id	section	role	expr	expected	caption
-the-one-line-word-312			[CyclicDescents, [Permutation, [List, 3, 1, 2]]]	1	the one-line word $312$
-the-one-line-word-312-as-a-plain-list			[CyclicDescents, [List, 3, 1, 2]]	1	the one-line word $312$, as a plain list
-the-one-line-word-2413			[CyclicDescents, [Permutation, [List, 2, 4, 1, 3]]]	2	the one-line word $2413$
+id	section	role	expr	expected	known	source	caption
+the-one-line-word-312			[CyclicDescents, [Permutation, [List, 3, 1, 2]]]	1			the one-line word $312$
+the-one-line-word-312-as-a-plain-list			[CyclicDescents, [List, 3, 1, 2]]	1			the one-line word $312$, as a plain list
+the-one-line-word-2413			[CyclicDescents, [Permutation, [List, 2, 4, 1, 3]]]	2			the one-line word $2413$
+findstat-st000619-1	Properties		[CombinatorialStat, [Permutation, [List, 1, 2]], "'CyclicDescents'"]	1	1	FindStat St000619	FindStat's value for [1,2]
+findstat-st000619-2	Properties		[CombinatorialStat, [Permutation, [List, 2, 1]], "'CyclicDescents'"]	1	1	FindStat St000619	FindStat's value for [2,1]
+findstat-st000619-3	Properties		[CombinatorialStat, [Permutation, [List, 1, 2, 3]], "'CyclicDescents'"]	1	1	FindStat St000619	FindStat's value for [1,2,3]

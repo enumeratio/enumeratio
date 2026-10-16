@@ -14,6 +14,21 @@ bindings:
     form: typescript
     environment: engine
     source: packages/symbols/analysis/analytic/src/meijer-g.ts
+  - origin: mapped
+    form: sympy
+    template: meijerg($1, $2, $3)
+    arity: 3
+    checked:
+      version: 1.14.0
+      on: 2026-10-14
+    note: Wolfram's {{a1..an}, {an+1..ap}}, {{b1..bm}, {bm+1..bq}} nesting is SymPy's own.
+  - origin: mapped
+    form: mpmath
+    template: meijerg($1, $2, $3)
+    arity: 3
+    checked:
+      version: 1.3.0
+      on: 2026-10-15
 seeAlso:
   - MeijerGReduce
   - HypergeometricPFQ
