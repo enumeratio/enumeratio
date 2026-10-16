@@ -3,6 +3,7 @@ import { expect, test } from "vite-plus/test";
 import { applyDefinition } from "../../src/statistics/declare.ts";
 import { DYCK_STATISTICS } from "../src/statistics.ts";
 import { bySignature } from "../../src/statistics/types.ts";
+import { DYCK_READINGS } from "./dyck-findstat-readings.ts";
 
 const ce = bareEngine();
 const index = bySignature(DYCK_STATISTICS);
@@ -188,13 +189,18 @@ const EXPECTED: Record<string, (w: number[]) => number> = {
   FirstMaximalPeakPosition: (w) => (w.length === 0 ? 0 : vertices(w).indexOf(Math.max(...vertices(w)))),
   GlobalMaxima: (w) => vertices(w).filter((h) => h === Math.max(...vertices(w))).length,
   LargestAreaSequenceEntry: (w) => Math.max(0, ...areaSequence(w)),
+
+  // The FindStat statistics of dyck-findstat.test.ts, which runs them.
+  ...DYCK_READINGS,
 };
+/** The definitions this file runs; the others are run by dyck-findstat.test.ts. */
+const OWN = DYCK_STATISTICS.filter((definition) => !(definition.head in DYCK_READINGS));
 
 test("every Dyck definition has an independent reading", () => {
   for (const definition of DYCK_STATISTICS) expect(EXPECTED[definition.head], definition.head).toBeDefined();
 });
 
-for (const definition of DYCK_STATISTICS) {
+for (const definition of OWN) {
   test(`${definition.head} agrees over every Dyck path of semilength 0..5`, () => {
     const expected = EXPECTED[definition.head]!;
     for (const w of ALL) expect(evaluate(definition.head, w), `[${w.join(", ")}]`).toBe(expected(w));
@@ -206,7 +212,7 @@ test.skipIf(!process.env.DEEP_TESTS)(
   "every Dyck definition agrees over semilength 6..8",
   () => {
     for (const w of [6, 7, 8].flatMap(dyckWords))
-      for (const definition of DYCK_STATISTICS)
+      for (const definition of OWN)
         expect(evaluate(definition.head, w), `${definition.head} [${w.join(", ")}]`).toBe(
           EXPECTED[definition.head]!(w),
         );
