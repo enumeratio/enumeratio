@@ -14,7 +14,7 @@ import {
   transpositionUnrank,
 } from "../../../collections/src/families/exact-triangles.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
-import { and, cell, equal, iff, lets, mul, rowTable } from "../../../collections/src/families/tables.ts";
+import { and, cell, distinctIn, equal, iff, lets, mul, rowTable } from "../../../collections/src/families/tables.ts";
 import {
   Factorial,
   IsPermutationOf,
@@ -109,13 +109,6 @@ const lexRank = (n: MathJSON, k: MathJSON, entry: (j: MathJSON) => MathJSON): Ma
     upTo(1, k),
   );
 
-/** Whether `entry(1..k)` are distinct values in 1..n. */
-const injective = (n: MathJSON, k: MathJSON, entry: (j: MathJSON) => MathJSON): MathJSON =>
-  all(
-    (j) => ["And", between(entry(j), 1, n), all((i) => ["NotEqual", entry(i), entry(j)], upTo(1, sub(j, 1)), "i")],
-    upTo(1, k),
-  );
-
 const element = (j: MathJSON): MathJSON => at("_x", j);
 const hasLength = (list: MathJSON, length: MathJSON, then: MathJSON): MathJSON => [
   "If",
@@ -142,7 +135,7 @@ export const symmetricGroup: EpsilFamily = {
     count: ["Factorial", "_n"],
     unrank: lexUnrank("_n", "_n", "_r"),
     rank: lexRank("_n", "_n", element),
-    valid: hasLength("_x", "_n", injective("_n", "_n", element)),
+    valid: hasLength("_x", "_n", distinctIn("_n", "_n", element)),
   },
 };
 
@@ -162,7 +155,7 @@ const kPermutations: EpsilFamily = {
     count: ["If", ["LessEqual", "_k", "_n"], falling("_n", "_k"), 0],
     unrank: lexUnrank("_n", "_k", "_r"),
     rank: lexRank("_n", "_k", element),
-    valid: hasLength("_x", "_k", injective("_n", "_k", element)),
+    valid: hasLength("_x", "_k", distinctIn("_n", "_k", element)),
   },
 };
 
@@ -208,7 +201,7 @@ const signedPermutations: EpsilFamily = {
       ],
       lexRank("_n", "_n", magnitude),
     ),
-    valid: hasLength("_x", "_n", injective("_n", "_n", magnitude)),
+    valid: hasLength("_x", "_n", distinctIn("_n", "_n", magnitude)),
   },
 };
 
@@ -256,7 +249,7 @@ const colouredPermutations: EpsilFamily = {
         "_n",
         hasLength(at("_x", 2), "_n", [
           "And",
-          injective("_n", "_n", image),
+          distinctIn("_n", "_n", image),
           all((j) => between(colour(j), 0, sub("_k", 1)), upTo(1, "_n")),
         ]),
       ),
@@ -423,6 +416,8 @@ const involutionDefinitions: EpsilFamily = permutationRestriction({
   paramCount: 1,
   params: ["_n"],
   tables: ["telephones", telephoneTable],
+  // Self-inverse directly: membership then reads no table, which past T(23) doesn't fit in doubles.
+  predicate: all((q) => ["Equal", at("_x", at("_x", q)), q], upTo(1, "_n"), "iv"),
   completions: [
     "If",
     all((q) => ["If", ["LessEqual", pre(q), "filled"], ["Equal", pre(pre(q)), q], "True"], filledSlots, "iq"),

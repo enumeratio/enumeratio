@@ -197,6 +197,32 @@ const radixProduct = (from: MathJSON): MathJSON =>
 /** Where the pair k goes: digit k of the rank. */
 const gap = (k: MathJSON): MathJSON => ["Mod", quotient("_r", radixProduct(add(k, 1))), sub(mul(2, k), 1)];
 
+/**
+ * Whether the entries, each in 1..n, are two copies of every value with only larger entries
+ * between a value's copies (no 2-1-2 pattern), in one pass with a stack of the values opened and
+ * not yet closed. A value opens above the top (the stack stays increasing) and closes only from
+ * the top. The state, a list filled in place, is [a violation seen (1), the stack's depth, how
+ * many copies of each value, the stack]; with 2n entries and no value thrice, each appears twice.
+ */
+const avoids212: MathJSON = (() => {
+  const [sv, j] = ["vs", "vj"];
+  const value = x(j);
+  const depth = at(sv, 2);
+  const copies = at(sv, add(2, value));
+  const top = iff(equal(depth, 0), 0, at(sv, add(2, "_n", depth)));
+  const set = (state: MathJSON, slot: MathJSON, to: MathJSON): MathJSON => ["ReplaceAt", state, slot, to];
+  const bad = set(sv, 1, 1);
+  const open = set(set(set(sv, add(2, value), 1), 2, add(depth, 1)), add(2, "_n", depth, 1), value);
+  const close = set(set(sv, add(2, value), 2), 2, sub(depth, 1));
+  const step = iff(
+    equal(copies, 0),
+    iff(less(top, value), open, bad),
+    iff(and(equal(copies, 1), equal(top, value)), close, bad),
+  );
+  const size = add(2, mul(2, "_n"));
+  return equal(at(fold(step, sv, j, ["Map", ["Function", 0, "vz"], upTo(1, size)], upTo(1, len)), 1), 0);
+})();
+
 export const stirlingPermutations: EpsilFamily = {
   head: "StirlingPermutations",
   carrier: "StirlingPermutation",
@@ -239,30 +265,13 @@ export const stirlingPermutations: EpsilFamily = {
       0,
       upTo(2, "_n"),
     ),
-    valid: and(
-      equal(len, mul(2, "_n")),
-      all((j) => between(x(j), 1, "_n"), upTo(1, len), "j"),
-      all(
-        (i) => equal(fold(add("vc", iff(equal(x("vj"), i), 1, 0)), "vc", "vj", 0, upTo(1, len)), 2),
-        upTo(1, "_n"),
-        "i",
+    valid: iff(
+      and(
+        equal(len, mul(2, "_n")),
+        all((j) => between(x(j), 1, "_n"), upTo(1, len), "j"),
       ),
-      // Between the two copies of a value, every entry is larger.
-      all(
-        (a) =>
-          all(
-            (b) =>
-              iff(
-                and(less(a, b), equal(x(a), x(b))),
-                all((c) => iff(and(less(a, c), less(c, b)), ["Greater", x(c), x(a)], "True"), upTo(1, len), "c"),
-                "True",
-              ),
-            upTo(1, len),
-            "b",
-          ),
-        upTo(1, len),
-        "a",
-      ),
+      avoids212,
+      "False",
     ),
   },
 };

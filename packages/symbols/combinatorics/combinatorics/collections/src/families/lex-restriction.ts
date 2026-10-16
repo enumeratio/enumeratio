@@ -9,7 +9,7 @@
 // with a value not used before it.
 
 import type { EpsilFamily } from "./epsil.ts";
-import { add, all, and, at, equal, fold, iff, less, lets, map, mul, sub, upTo } from "./tables.ts";
+import { add, at, distinctIn, equal, fold, iff, less, lets, map, mul, sub, upTo } from "./tables.ts";
 import type { FamilyShape } from "./types.ts";
 
 type MathJSON = unknown;
@@ -244,25 +244,11 @@ export function permutationRestriction(spec: PermutationRestriction): EpsilFamil
   const predicate =
     given ??
     equal(lets([["prefix", "_x", "list<integer>"], ["filled", n, "integer"], ...fullLists()], spec.completions), 1);
+  // A given predicate that never reads the table leaves membership free of it (and of its cost).
+  const readsTables =
+    given === undefined || (tables !== undefined && JSON.stringify(given).includes(JSON.stringify(tables[0])));
   // Membership needs a permutation of n before the predicate can read it.
-  const valid = iff(
-    equal(["Length", "_x"], n),
-    iff(
-      all(
-        (j) =>
-          and(
-            ["LessEqual", 1, element(j)],
-            ["LessEqual", element(j), n],
-            all((i) => ["NotEqual", element(i), element(j)], upTo(1, sub(j, 1)), `${j}_i`),
-          ),
-        upTo(1, n),
-        "lr_vj",
-      ),
-      predicate,
-      "False",
-    ),
-    "False",
-  );
+  const valid = iff(equal(["Length", "_x"], n), iff(distinctIn(n, n, element, "lr_d"), predicate, "False"), "False");
 
   return {
     ...shape,
@@ -273,7 +259,7 @@ export function permutationRestriction(spec: PermutationRestriction): EpsilFamil
       count: withTables(count),
       unrank: withTables(unrank),
       rank: withTables(rank),
-      valid: withTables(valid),
+      valid: readsTables ? withTables(valid) : valid,
       ...(tables === undefined ? {} : { tables: tables[1] }),
     },
   };
