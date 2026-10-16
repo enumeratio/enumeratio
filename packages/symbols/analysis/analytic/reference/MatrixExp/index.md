@@ -18,6 +18,14 @@ seeAlso:
   - Determinant
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: "[list(r) for r in matrix(SR, $1).exp().rows()]"
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - NOT [[Exp]] of a matrix, which broadcasts element-wise instead -- see that entry's divergence note.

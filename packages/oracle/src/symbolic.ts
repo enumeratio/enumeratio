@@ -401,7 +401,7 @@ function trialSources(
     ...boundVariables(expr),
     ...boundVariables(expected),
     ...(system === "wolfram" ? [] : derivativeVariables(expr)),
-    ...(system === "sympy" ? integrationVariables(expr).definite : []),
+    ...(system === "sympy" || system === "sage" ? integrationVariables(expr).definite : []),
   ]);
   const subs = new Map([...all].filter(([name]) => !held.has(name) && !bound.has(name)));
   // A series is sampled as a polynomial, so the simplifier around it has nothing to do: on a
@@ -933,7 +933,11 @@ function bigOOrder(term: MathJSON, variable: string, infinite: boolean): MathJSO
  * requested order and the two O-terms (ours is split off here, its exponent passed on). `undefined` when the
  * expansion is not one the helper reads (an expansion at -∞, an O-term of another shape).
  */
-function seriesAgreementSource(series: readonly MathJSON[], expected: MathJSON): string | undefined {
+function seriesAgreementSource(
+  series: readonly MathJSON[],
+  expected: MathJSON,
+  system: "sympy" | "sage" = "sympy",
+): string | undefined {
   const [, , variable, center, order] = series as [string, MathJSON, MathJSON, MathJSON, MathJSON];
   const infinite = center === "PositiveInfinity" || center === "Infinity";
   if (typeof variable !== "string" || (!infinite && /Infinity/.test(JSON.stringify(center)))) return undefined;
@@ -946,23 +950,23 @@ function seriesAgreementSource(series: readonly MathJSON[], expected: MathJSON):
   const rest = terms.filter((term) => !remainders.includes(term));
   const polynomial: MathJSON = rest.length === 0 ? 0 : rest.length === 1 ? (rest[0] as MathJSON) : ["Add", ...rest];
   const [theirs, ours, at, around, requested, claim] = [
-    emit(series as MathJSON, "sympy"),
-    emit(polynomial, "sympy"),
-    emit(variable, "sympy"),
-    emit(center, "sympy"),
-    emit(order, "sympy"),
-    claimed === undefined ? undefined : emit(claimed, "sympy"),
+    emit(series as MathJSON, system),
+    emit(polynomial, system),
+    emit(variable, system),
+    emit(center, system),
+    emit(order, system),
+    claimed === undefined ? undefined : emit(claimed, system),
   ];
   if (![theirs, ours, at, around, requested, claim].every((part) => part === undefined || part.ok)) return undefined;
   const source = (part: ReturnType<typeof emit> | undefined): string => (part?.ok ? part.source : "None");
   // The same call approached from below, for a finite center: SymPy's default is from above, Wolfram's is two-sided.
   const below =
-    !infinite && theirs!.ok && theirs!.source.endsWith(")")
+    system === "sympy" && !infinite && theirs!.ok && theirs!.source.endsWith(")")
       ? `lambda: ${theirs!.source.slice(0, -1)}, dir="-")`
       : "None";
   return (
     `enumeratio_series_agree(${source(theirs)}, ${source(ours)}, ${source(at)}, ${source(around)}, ` +
-    `${source(requested)} + 1, ${source(claim)}, ${below})`
+    `${source(requested)} + 1, ${source(claim)}${system === "sympy" ? `, ${below}` : ""})`
   );
 }
 
@@ -1001,10 +1005,10 @@ export function symbolicAgreementSource(
   // from its own `Normal` of it would be zero. Undecided, not agreed.
   if (system === "wolfram" && leavesCall(seriesOfNormal(expr), expected)) return "Indeterminate";
   // SymPy's series is compared as coefficients up to the order both claim, not as a difference.
-  if (system === "sympy") {
+  if (system === "sympy" || system === "sage") {
     const series = seriesCall(expr);
     if (series !== undefined)
-      return leavesCall(seriesOfNormal(expr), expected) ? "None" : seriesAgreementSource(series, expected);
+      return leavesCall(seriesOfNormal(expr), expected) ? "None" : seriesAgreementSource(series, expected, system);
   }
   const solving = system === "wolfram" && Array.isArray(expr) && expr[0] === "Solve";
   // A declined `Solve` (ours stays the call) has no solutions to compare as sets.
@@ -1073,7 +1077,7 @@ export function symbolicAgreementSource(
   // An indefinite integral's answers differ by a constant: the derivative of their difference vanishes (and the
   // difference is the same at points of both signs: see `enumeratio_antiderivative_agree`). One iterated integral
   // is differentiated in each of its variables in turn; separate integrals only when they share the one variable.
-  const groups = system === "sympy" ? indefiniteGroups(expr) : [];
+  const groups = system === "sympy" || system === "sage" ? indefiniteGroups(expr) : [];
   if (groups.length > 0) {
     const shared = [...new Set(groups.flat())];
     const variables = groups.length === 1 ? (groups[0] as string[]) : shared.length === 1 ? shared : undefined;

@@ -66,6 +66,16 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: bernoulli_polynomial($2, $1)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Defined by the generating function $\dfrac{t}{e^t-1} = \sum_{n=0}^{\infty} B_n \dfrac{t^n}{n!}$.

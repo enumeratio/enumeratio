@@ -44,6 +44,14 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: nextprime(n, i) is the i-th prime above n; i must be positive, where ours takes a negative step to the primes below.
+  - origin: mapped
+    form: sage
+    template: next_prime($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - NextPrime(n) is the $(m+1)$th prime, where $m$ is the count of primes $\le n$.

@@ -13,4 +13,12 @@ seeAlso:
   - EdgeCount
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: ($1).order()
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---

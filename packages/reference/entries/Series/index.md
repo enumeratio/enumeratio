@@ -23,6 +23,13 @@ bindings:
       version: 1.14.0
       on: 2026-10-14
     note: Our order n keeps the terms through (x - x0)^n, as Wolfram's; SymPy's n is the order of its O-term, one past that. The scan compares the two up to the order both claim.
+  - origin: mapped
+    form: sage
+    template: SR($1).series($2 == $3, $4 + 1)
+    arity: 4
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 attributes:
   - HoldAll
 ---

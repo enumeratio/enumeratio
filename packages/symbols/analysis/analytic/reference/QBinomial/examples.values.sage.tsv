@@ -1,0 +1,20 @@
+id	in	out	verdict
+frac-2-4-1-2-3-1-2-2-1-2-1-35	q_binomial(4, 2, 2)	35	
+qbinomial-4-2-2	enumeratio_n(q_binomial(4, 2, 2))	35.0000000000000	
+qbinomial-6-3-1	enumeratio_n(q_binomial(6, 3, 1))	20.0000000000000	
+qbinomial-5-2-3	enumeratio_n(q_binomial(5, 2, 3))	1210.00000000000	
+qbinomial-8-3-2	enumeratio_n(q_binomial(8, 3, 2))	97155.0000000000	
+series-qbinomial-1-over-2-1-x-x-0-2	SR(q_binomial((1/2), 1, SR.var("x"))).series(SR.var("x") == 0, 2 + 1)	TypeError: no conversion of this rational to integer	error
+normal-series-qbinomial-1-over-2-2-x-x	(SR(q_binomial((1/2), 2, SR.var("x"))).series(SR.var("x") == oo, 2 + 1)).truncate()	None	inconclusive
+series-qbinomial-1-over-2-2-q-q-0-3	SR(q_binomial((1/2), 2, SR.var("q"))).series(SR.var("q") == 0, 3 + 1)	TypeError: no conversion of this rational to integer	error
+series-qbinomial-minus-1-over-3-2-q-q-0-2	SR(q_binomial((-1/3), 2, SR.var("q"))).series(SR.var("q") == 0, 2 + 1)	TypeError: no conversion of this rational to integer	error
+series-qbinomial-1-over-3-2-over-3-q-q-0-0	SR(q_binomial((1/3), (2/3), SR.var("q"))).series(SR.var("q") == 0, 0 + 1)	TypeError: no conversion of this rational to integer	error
+a-polynomial-in-q-whose-coefficients-count	SR(q_binomial(4, 2, SR.var("q"))).expand()	True	
+n-qbinomial-15-over-17-5-1-50	enumeratio_n(q_binomial((15/17), 5, 1), 50)	TypeError: no conversion of this rational to integer	error
+n-qbinomial-23-over-47-5-minus-i-2	enumeratio_n(q_binomial((23/47), (5 + -1*I), 2))	TypeError: no conversion of this rational to integer	error
+fullsimplify-normal-series-qbinomial-n-x-q-x-0-2	(SR(q_binomial(SR.var("n"), SR.var("x"), SR.var("q"))).series(SR.var("x") == 0, 2 + 1)).truncate()	TypeError: unable to convert n to an integer	error
+fullsimplify-normal-series-qbinomial-n-x-q-x-x0	(SR(q_binomial(SR.var("n"), SR.var("x"), SR.var("q"))).series(SR.var("x") == SR.var("x0"), 2 + 1)).truncate()	TypeError: unable to convert n to an integer	error
+the-number-of-2-dimensional-subspaces-of-f-3-5	q_binomial(5, 2, 3)	1210	
+at-q-1-it-is-binomial-6-3	q_binomial(6, 3, 1)	20	
+series-qbinomial-5-5-over-2-q-q-0-4	SR(q_binomial(5, (5/2), SR.var("q"))).series(SR.var("q") == 0, 4 + 1)	TypeError: no conversion of this rational to integer	error
+series-qbinomial-0-3-over-2-q-q-0-3	SR(q_binomial(0, (3/2), SR.var("q"))).series(SR.var("q") == 0, 3 + 1)	TypeError: no conversion of this rational to integer	error

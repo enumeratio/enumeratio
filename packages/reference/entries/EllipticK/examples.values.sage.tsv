@@ -1,0 +1,12 @@
+id	in	out	verdict
+series-elliptick-x-x-0-5	SR(elliptic_kc(SR.var("x"))).series(SR.var("x") == 0, 5 + 1)	ValueError: power::eval(): division by zero	error
+normal-series-elliptick-x-x-positiveinfinity-2	(SR(elliptic_kc(SR.var("x"))).series(SR.var("x") == oo, 2 + 1)).truncate()	None	inconclusive
+n-elliptick-4-over-5-50	enumeratio_n(elliptic_kc((4/5)), 50)	2.25720532682085	
+list-elliptick-0-elliptick-1	[elliptic_kc(0), elliptic_kc(1)]	[1/2*pi, elliptic_kc(1)]	
+elliptick-positiveinfinity	elliptic_kc(oo)	elliptic_kc(+Infinity)	
+functionexpand-elliptick-list-list-neg-1-0-list			
+functionexpand-matrixfunction-elliptick-list			
+series-elliptick-m-m-0-3	SR(elliptic_kc(SR.var("m"))).series(SR.var("m") == 0, 3 + 1)	ValueError: power::eval(): division by zero	error
+elliptick-1-plus-sqrt-2-minus-sqrt-2-times-1	elliptic_kc((((1 + sqrt(2) + (-sqrt((2 * (1 + sqrt(2)))))))^4))	elliptic_kc((sqrt(2) - sqrt(2*sqrt(2) + 2) + 1)^4)	
+elliptick-1	elliptic_kc(1)	elliptic_kc(1)	
+n-elliptick-2-plus-neg-i-times-neg-1-minus-2pi	enumeratio_n(elliptic_kc((2 + ((0 + -1*I) * (-1 + (-2 * pi) + (-((e)^(-((pi)^4)))) + (-((pi)^2)) + (((1 + pi))^2))))))	1.31102877714606 + 1.31102877714606*I	disagree

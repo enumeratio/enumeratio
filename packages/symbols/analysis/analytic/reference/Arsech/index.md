@@ -32,6 +32,14 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: arcsech($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Differs from Wolfram: past its real domain a rational argument reduces to the exact principal value, on every inverse trigonometric and hyperbolic head alike ([[Arcsin]], [[Arccos]], [[Arcsec]], [[Arccsc]], [[Arcosh]], [[Artanh]], [[Arcoth]], [[Arsech]]); Wolfram leaves the exact call unevaluated and gives the same number from `N[...]`. Checked against mpmath and `wolframscript` on a grid of rationals to double precision. A float and `N(...)` already took the same branch. Compiled code is separate: the JavaScript target is real-valued (NaN past the domain), the WGSL target returns a complex pair, and Arcsin and Arccos decline to compile. For $x<0$, $\operatorname{arsech}(x) = \operatorname{arcosh}(1/x)$ (mpmath `asech(-2)` is $\tfrac{2\pi i}{3}$).

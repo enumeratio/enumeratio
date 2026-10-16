@@ -12,6 +12,14 @@ seeAlso:
   - IsSimpleGraph
 names:
   wolfram: LoopFreeGraphQ
+bindings:
+  - origin: mapped
+    form: sage
+    template: (not ($1).has_loops())
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Wolfram calls this `LoopFreeGraphQ`; this library uses the `Is…` spelling everywhere.

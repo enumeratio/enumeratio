@@ -1,0 +1,5 @@
+id	in	out	verdict
+vertices-of-a-path	list((Graph([(3, 1), (1, 2)], format="list_of_edges", loops=True, multiedges=True)).vertices(sort=False))	[1, 2, 3]	disagree
+declared-vertices-come-before-edge-endpoints	list((Graph([[5, 1], [(1, 2)]], format="vertices_and_edges", loops=True, multiedges=True)).vertices(sort=False))	[1, 2, 5]	disagree
+length-vertexlist-g	enumeratio_length(list((SR.var("g")).vertices(sort=False)))	AttributeError: 'sage.symbolic.expression.Expression' object has no attribute 'vertices'	error
+position-vertexlist-g-c			

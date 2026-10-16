@@ -1,43 +1,43 @@
-id	in	out
-extendedgcd-2-3		
-extendedgcd-12-18		
-extendedgcd-3-5		
-extendedgcd-6-4		
-any-number-of-arguments-folding-pairwise-6-times		
-gaussian-integers-by-euclid-with-the-rounded		
-negative-arguments-12-18-6		
-big-integers-the-coefficients-stay-minimal-x-b		
-three-arguments-4-cdot-4-6-cdot-4-9-1		
-listable-threads-over-a-list		
-gaussian-integer-and-a-plain-integer		
-one-argument-a-unit-the-identity-bezout-pair		
-one-argument-i-a-unit		
-a-zero-first-argument		
-a-zero-second-argument		
-two-coprime-gaussian-primes-above-5		
-a-gaussian-prime-and-a-real-prime-3-mod-4		
-an-associate-pair-by-i		
-an-associate-pair-by-1		
-two-unrelated-composites-of-norm-25		
-with-a-negative-real-prime		
-two-large-norm-gaussians		
-past-2-53-in-both-parts		
-a-real-split-prime-and-its-gaussian-factor		
-two-real-composites-plain-integer-case		
-with-a-negative-real-composite		
-the-larger-norm-argument-given-first		
-with-an-associate-times-1		
-with-an-associate-times-i		
-two-coprime-primes-above-13		
-recovering-a-shared-prime-above-13		
-with-a-real-prime-s-associate-by-the-unit-i		
-with-a-real-composite-5-squared		
-with-a-negative-associate		
-a-large-norm-gaussian-and-a-real-prime-19		
-the-modular-inverse-of-3-mod-11-is-4-since-3		
-confirms-the-coefficients-above-satisfy-2x-3y	((2 * -1) + (3 * 1))	1
-extendedgcd-6-21		
-bezout-coefficients-when-a-0-0-times-0-5-times-1		
-a-real-two-argument-case-stays-unevaluated		
-a-gaussian-third-argument-past-two-declines		
-a-real-argument-past-two-also-declines		
+id	in	out	verdict
+extendedgcd-2-3	xgcd(2, 3)	(1, -1, 1)	
+extendedgcd-12-18	xgcd(12, 18)	(6, -1, 1)	
+extendedgcd-3-5	xgcd(3, 5)	(1, 2, -1)	
+extendedgcd-6-4	xgcd(6, 4)	(2, 1, -1)	
+any-number-of-arguments-folding-pairwise-6-times			
+gaussian-integers-by-euclid-with-the-rounded	xgcd((7 + 2*I), (3 + -5*I))	(1, -2/53*I + 7/53, 0)	disagree
+negative-arguments-12-18-6	xgcd(-12, 18)	(6, 1, 1)	
+big-integers-the-coefficients-stay-minimal-x-b	xgcd(((2)^100), ((3)^50))	(1, 208475958620489751737959, -368122879029235364752383564167)	
+three-arguments-4-cdot-4-6-cdot-4-9-1			
+listable-threads-over-a-list	[xgcd(3, 5), xgcd(3, 15)]	[(1, 2, -1), (3, 1, 0)]	
+gaussian-integer-and-a-plain-integer	xgcd((3 + 1*I), 5)	(1, -1/10*I + 3/10, 0)	disagree
+one-argument-a-unit-the-identity-bezout-pair	xgcd((3 + 4*I), 1)	(1, -4/25*I + 3/25, 0)	disagree
+one-argument-i-a-unit	xgcd((3 + 4*I), (0 + 1*I))	(1, -4/25*I + 3/25, 0)	disagree
+a-zero-first-argument	xgcd(0, (-4 + 3*I))	(1, 0, -3/25*I - 4/25)	disagree
+a-zero-second-argument	xgcd((-4 + 3*I), 0)	(1, -3/25*I - 4/25, 0)	disagree
+two-coprime-gaussian-primes-above-5	xgcd((2 + 1*I), (2 + -1*I))	(1, -1/5*I + 2/5, 0)	disagree
+a-gaussian-prime-and-a-real-prime-3-mod-4	xgcd((2 + 1*I), 3)	(1, -1/5*I + 2/5, 0)	disagree
+an-associate-pair-by-i	xgcd((3 + 4*I), (-4 + 3*I))	(1, -4/25*I + 3/25, 0)	disagree
+an-associate-pair-by-1	xgcd((3 + 4*I), (-3 + -4*I))	(1, -4/25*I + 3/25, 0)	disagree
+two-unrelated-composites-of-norm-25	xgcd((3 + 4*I), (4 + 3*I))	(1, -4/25*I + 3/25, 0)	disagree
+with-a-negative-real-prime	xgcd((3 + 4*I), -7)	(1, -4/25*I + 3/25, 0)	disagree
+two-large-norm-gaussians	xgcd((123 + 456*I), (1000 + 1*I))	(1, -152/74355*I + 41/74355, 0)	disagree
+past-2-53-in-both-parts	xgcd((100000000000000000001 + 9007199254740993*I), (4 + 1*I))	(1, -9007199254740993/10000000081129638414806699710187514626050*I + 100000000000000000001/10000000081129638414806699710187514626050, 0)	disagree
+a-real-split-prime-and-its-gaussian-factor	xgcd(5, (2 + 1*I))	(1, 1/5, 0)	disagree
+two-real-composites-plain-integer-case	xgcd(4, 9)	(1, -2, 1)	
+with-a-negative-real-composite	xgcd(-15, (5 + 5*I))	(1, -1/15, 0)	disagree
+the-larger-norm-argument-given-first	xgcd((2 + 1*I), (123 + 456*I))	(1, -1/5*I + 2/5, 0)	disagree
+with-an-associate-times-1	xgcd((8 + 2*I), (-3 + -4*I))	(1, -1/34*I + 2/17, 0)	disagree
+with-an-associate-times-i	xgcd((8 + 2*I), (4 + -3*I))	(1, -1/34*I + 2/17, 0)	disagree
+two-coprime-primes-above-13	xgcd((3 + 2*I), (2 + 3*I))	(1, -2/13*I + 3/13, 0)	disagree
+recovering-a-shared-prime-above-13	xgcd((6 + 8*I), (3 + 2*I))	(1, -2/25*I + 3/50, 0)	disagree
+with-a-real-prime-s-associate-by-the-unit-i	xgcd((3 + 4*I), (0 + 7*I))	(1, -4/25*I + 3/25, 0)	disagree
+with-a-real-composite-5-squared	xgcd((3 + 4*I), 25)	(1, -4/25*I + 3/25, 0)	disagree
+with-a-negative-associate	xgcd((6 + 8*I), (-2 + -3*I))	(1, -2/25*I + 3/50, 0)	disagree
+a-large-norm-gaussian-and-a-real-prime-19	xgcd((123 + 456*I), 19)	(1, -152/74355*I + 41/74355, 0)	disagree
+the-modular-inverse-of-3-mod-11-is-4-since-3	xgcd(3, 11)	(1, 4, -1)	
+confirms-the-coefficients-above-satisfy-2x-3y	((2 * -1) + (3 * 1))	1	
+extendedgcd-6-21	xgcd(6, 21)	(3, -3, 1)	
+bezout-coefficients-when-a-0-0-times-0-5-times-1	xgcd(0, 5)	(5, 0, 1)	
+a-real-two-argument-case-stays-unevaluated	xgcd(2.5, 3)	(1.00000000000000, 0.400000000000000, 0.000000000000000)	disagree
+a-gaussian-third-argument-past-two-declines			
+a-real-argument-past-two-also-declines			

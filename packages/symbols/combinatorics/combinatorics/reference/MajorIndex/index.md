@@ -31,6 +31,13 @@ bindings:
     template: Index[$1]
     arity: 1
     note: "Combinatorica's Index is the major index: the sum of the descent positions, 1-based, as ours."
+  - origin: mapped
+    form: sage
+    template: enumeratio_stat("Permutation", $1, "MajorIndex")
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 signatures:
   - call: MajorIndex(p)
     description: the major index of a one-line permutation $p$

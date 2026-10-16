@@ -13,6 +13,15 @@ seeAlso:
   - IntegerPartitions
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: Partitions($1, max_slope=-1).cardinality()
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - By Euler's theorem, $q(n)$ also counts the partitions of $n$ into odd parts — see [[IntegerPartitions]].

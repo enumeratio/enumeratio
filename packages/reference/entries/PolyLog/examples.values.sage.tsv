@@ -77,7 +77,7 @@ n-polylog-250-neg-4-a-large-order-past-z-1	enumeratio_n(polylog(250, -4))	-4.000
 n-polylog-250-4-a-large-order-on-the-cut	enumeratio_n(polylog(250, 4))	4.00000000000000 - 5.09931929748799e-455*I	
 n-polylog-2500000-4-a-huge-order-returns	enumeratio_n(polylog(2500000, 4))	TimeoutError: over 60 s	error
 n-polylog-40p5-2-plus-3i-a-large-complex-point	enumeratio_n(polylog(40.5, (2 + 3*I)))	1.13521303023391e28 + 7.68457079507548e27*I	disagree
-normal-series-polylog-2-x-x-positiveinfinity-6			
+normal-series-polylog-2-x-x-positiveinfinity-6	(SR(polylog(2, SR.var("x"))).series(SR.var("x") == oo, 6 + 1)).truncate()	None	inconclusive
 polylog-s-tiny-negative-rim	enumeratio_n(polylog(-1e-12, (-0.12884449429552464 + 0.9916648104524686*I)))	-0.499999997777011 + 0.439238679595038*I	disagree
 polylog-neg-2-at-the-pole-z-1	polylog(-2, (2/2))	0	inconclusive
 polylog-neg-2-over-a-list-holding-the-pole	[polylog(-2, (2/2)), polylog(-2, -6)]	[0, polylog(-2, -6)]	disagree
@@ -106,7 +106,7 @@ polylog-2-list-list-1-over-2-0-list-0-1-over-2	[[polylog(2, (1/2)), polylog(2, 0
 polylog-1-0	polylog(1, 0)	0	
 d-polylog-n-z-z	diff(polylog(SR.var("n"), SR.var("z")), SR.var("z"))	True	
 matrixfunction-function-polylog-2-1-1-list-list			
-fullsimplify-series-polylog-n-x-x-x0-2			
+fullsimplify-series-polylog-n-x-x-x0-2	SR(polylog(SR.var("n"), SR.var("x"))).series(SR.var("x") == SR.var("x0"), 2 + 1)	False	disagree
 li-1-2-1-zeta-1-2-a-non-integer-order-from	polylog(0.5, 1)	NaN + NaN*I	inconclusive
 li-1-2-1-2-0-80612672-via-the-lerch-series	polylog(0.5, 0.5)	0.806126723042852	
 li-5-2-1-2-0-46229778-the-alternating-side-euler	polylog(2.5, -0.5)	-0.462297782190063	

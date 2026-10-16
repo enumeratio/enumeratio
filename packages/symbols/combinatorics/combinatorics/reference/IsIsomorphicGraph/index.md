@@ -12,6 +12,14 @@ seeAlso:
   - IsConnectedGraph
 names:
   wolfram: IsomorphicGraphQ
+bindings:
+  - origin: mapped
+    form: sage
+    template: ($1).is_isomorphic($2)
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Wolfram calls this `IsomorphicGraphQ`; this library uses the `Is…` spelling everywhere.

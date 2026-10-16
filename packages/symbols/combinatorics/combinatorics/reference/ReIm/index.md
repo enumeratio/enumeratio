@@ -21,6 +21,14 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: "[real_part($1), imag_part($1)]"
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Listable: ReIm({z1, z2}) is {ReIm(z1), ReIm(z2)}, not a single flattened pair.

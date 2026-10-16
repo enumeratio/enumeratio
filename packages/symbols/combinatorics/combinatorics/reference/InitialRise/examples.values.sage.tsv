@@ -1,0 +1,6 @@
+id	in	out
+the-step-word-uuddud	enumeratio_stat("DyckPath", [1, 1, 0, 0, 1, 0], "InitialRise")	2
+the-step-word-uduudd	enumeratio_stat("DyckPath", [1, 0, 1, 1, 0, 0], "InitialRise")	1
+findstat-st000025-1	enumeratio_stat("DyckPath", [1, 0], "InitialRise")	1
+findstat-st000025-2	enumeratio_stat("DyckPath", [1, 0, 1, 0], "InitialRise")	1
+findstat-st000025-3	enumeratio_stat("DyckPath", [1, 1, 0, 0], "InitialRise")	2

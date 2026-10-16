@@ -55,7 +55,7 @@ generatingfunction-n-mod-4-n-x
 list-a-b-c-list-1-plus-neg-1-plus-range-1-10-mod			
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	enumeratio_equal(enumeratio_mod(17, 5), enumeratio_mod((17 + (3 * 5)), 5))	True	
 a-negative-modulus-gives-a-result-in-n-0	enumeratio_mod(-5, -3)	-2	
-the-remainder-of-quotient			
+the-remainder-of-quotient	enumeratio_equal(enumeratio_mod((7 + 5*I), (2 + 1*I)), ((7 + 5*I) - ((2 + 1*I) * floor(((7 + 5*I)) / ((2 + 1*I))))))	ValueError: floor is not defined for complex quadratic number field	error
 5-mod-3-eq-2-mod-3	enumeratio_equal(enumeratio_mod(5, 3), enumeratio_mod(2, 3))	True	
 2-mod-3-eq-8-mod-3	enumeratio_equal(enumeratio_mod(2, 3), enumeratio_mod(8, 3))	True	
 0-mod-1	enumeratio_mod(0, 1)	0	
@@ -75,9 +75,9 @@ neg-27-over-10-mod-23-over-5	enumeratio_mod((-27/10), (23/5))	19/10
 15-mod-7	enumeratio_mod(15, 7)	1	
 pi-mod-exponentiale	enumeratio_mod(pi, e)	pi - e	
 2-pow-totient-3-mod-3	enumeratio_mod(((2)^euler_phi(3)), 3)	1	
-1-plus-neg-1-plus-nthprime-2-factorial-mod			
-2-minus-jacobisymbol-2-3-mod-3			
-1-plus-neg-1-plus-nthprime-3-factorial-mod			
+1-plus-neg-1-plus-nthprime-2-factorial-mod	enumeratio_mod((1 + enumeratio_factorial((-1 + nth_prime(2)))), nth_prime(2))	0	
+2-minus-jacobisymbol-2-3-mod-3	enumeratio_mod((2 + (-jacobi_symbol(2, 3))), 3)	0	
+1-plus-neg-1-plus-nthprime-3-factorial-mod	enumeratio_mod((1 + enumeratio_factorial((-1 + nth_prime(3)))), nth_prime(3))	0	
 2pi-mod-exponentiale	enumeratio_mod((2 * pi), e)	2*pi - 2*e	
 neg-pi-mod-2	enumeratio_mod((-pi), 2)	-pi + 4	
 division-by-a-0-modulus-yields-nan-rather-than	enumeratio_mod(5, 0)	ZeroDivisionError: Integer modulo by zero	error

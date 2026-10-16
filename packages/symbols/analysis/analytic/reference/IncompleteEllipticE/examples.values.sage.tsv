@@ -1,0 +1,16 @@
+id	in	out	verdict
+e-0-5-0-3	enumeratio_n(elliptic_e(0.5, 0.3))	0.493991144728968	
+e-1-2-0-7	enumeratio_n(elliptic_e(1.2, 0.7))	1.02845518609496	
+e-0-8-0-4	enumeratio_n(elliptic_e(-0.8, 0.4))	-0.768931915835262	
+e-2-5-0-3	enumeratio_n(elliptic_e(2.5, 0.3))	2.26150253216416	
+e-3-0-6	enumeratio_n(elliptic_e(-3, 0.6))	-2.45554666169723	
+e-0-3-0-4i-0-5	enumeratio_n(elliptic_e((0.3 + 0.4*I), 0.5))	0.309727411389329 + 0.396009178591328*I	
+e-1-0-5i-0-2	enumeratio_n(elliptic_e((1 + -0.5*I), 0.2))	0.985478555878126 - 0.461540338583528*I	
+e-0-6-0-57-0-23i	enumeratio_n(elliptic_e(0.6, (0.57 + 0.23*I)))	0.580444608802628 - 0.00817790391497763*I	
+e-1-1-0-1-0-9i	enumeratio_n(elliptic_e(1.1, (0.1 + 0.9*I)))	1.10058450834557 - 0.155806925733452*I	
+e-3-711592653589793-0-57-0-23i	enumeratio_n(elliptic_e(3.711592653589793, (0.57 + 0.23*I)))	3.20276744106921 - 0.246480254230982*I	
+e-3-711592653589793-0-23i-0-57-0-23i	enumeratio_n(elliptic_e((3.711592653589793 + 0.23*I), (0.57 + 0.23*I)))	3.21826385115494 - 0.0322662883214223*I	
+e-3-0-57-0-23i	enumeratio_n(elliptic_e(-3, (0.57 + 0.23*I)))	-2.50829187496878 + 0.239350137257398*I	
+e-4-5-0-1-0-9i	enumeratio_n(elliptic_e(4.5, (0.1 + 0.9*I)))	4.54228019885644 - 0.947522034236633*I	
+e-phi-arccsc-0-m-0	elliptic_e(arccsc(0), 0)	NaN	disagree
+e-phi-pi-plus-arccsc-0-m-0	elliptic_e((pi + arccsc(0)), 0)	NaN + pi	disagree

@@ -1,0 +1,49 @@
+id	in	out	verdict
+h-10-frac-7381-2520	harmonic_number(10)	7381/2520	
+h-0-0-the-empty-sum	harmonic_number(0)	0	
+h-5-1-sum-k-1-5-k-15-a-negative-order-is-still	harmonic_number(5, -1)	15	
+a-floating-point-argument-evaluates-via-psi-z-1	harmonic_number(2.5)	1.68037230554678	
+h-10-2-sum-k-1-10-k-2-exact	harmonic_number(10, 2)	1968329/1270080	
+h-1-the-first-term	harmonic_number(1)	1	
+h-10-3-exact-generalized-sum	harmonic_number(10, 3)	19164113947/16003008000	
+h-5-0-sum-k-1-5-1-5	harmonic_number(5, 0)	5	
+h-0-3-the-empty-sum-at-a-nonzero-order	harmonic_number(0, 3)	0	
+h-0-2-the-empty-sum-at-order-2	harmonic_number(0, 2)	0	
+no-sum-below-n-0-one-argument-form	harmonic_number(-1)	harmonic_number(-1)	disagree
+no-sum-below-n-0-two-argument-form	harmonic_number(-2, 3)	harmonic_number(-2, 3)	disagree
+symbolic-n-one-argument-form-stays-symbolic	harmonic_number(SR.var("n"))	True	
+n-harmonicnumber-0p5	enumeratio_n(harmonic_number(0.5))	0.613705638880109	
+n-harmonicnumber-complex-3-plus-2i	enumeratio_n(harmonic_number((3 + 2*I)))	1.97257641104474 + 0.516961128796076*I	
+n-harmonicnumber-1-over-2-order-2	enumeratio_n(harmonic_number((1/2), 2))	0.710131866303547	
+n-harmonicnumber-5-order-1-over-2	enumeratio_n(harmonic_number(5, (1/2)))	3.23167064587613	
+n-harmonicnumber-2p5-order-1-not-the-zeta-1-pole	enumeratio_n(harmonic_number(2.5, 1))	1.68037230554678	
+h-10-1-order-1-reduces-to-the-plain-h-10	harmonic_number(10, 1)	7381/2520	
+h-2-is-three-halves	harmonic_number(2)	3/2	
+h-neg0-5	harmonic_number(-0.5)	-1.38629436111989	
+h-neg2-5	harmonic_number(-2.5)	1.28037230554678	
+h-10-5	harmonic_number(10.5)	2.97545479443731	
+n-harmonicnumber-7-3-rational	enumeratio_n(harmonic_number((7/3)))	1.62375331345216	
+h-complex-neg1-5-plus-4i	harmonic_number((-1.5 + 4*I))	1.99164559645283 + 1.81695017291054*I	
+h-complex-0-2-minus-3i	harmonic_number((0.2 + -3*I))	1.69834790334516 - 1.33955200399877*I	
+h-2-5-order-2	harmonic_number(2.5, 2)	1/6*pi^2 - 0.330357756100235	
+h-0-5-order-3	harmonic_number(0.5, 3)	zeta(3) - 0.414398322117160	
+n-harmonicnumber-complex-3-plus-2i-order-2	enumeratio_n(harmonic_number((3 + 2*I), 2))	1.42958870352385 + 0.121819632987466*I	
+h-complex-neg1-5-plus-4i-order-3-2	harmonic_number((-1.5 + 4*I), (3/2))	zeta(3/2) - 0.606457527769898 + 0.778159485195300*I	
+non-integer-arguments-via-psi-z-1-gamma	harmonic_number(0.33)	0.441523646937364	
+the-generalized-form-off-the-integers-via-zeta-r	harmonic_number(0.8, 3)	zeta(3) - 0.261932854210817	
+complex-arguments	harmonic_number((1.5 + 2*I))	1.61704942307449 + 0.780197135729859*I	
+order-r-1-off-the-integers-is-plain-h-z-h-e-1	enumeratio_n(harmonic_number(e, 1))	1.75002138053654	
+listable-threads-over-a-list	[harmonic_number(2), harmonic_number(3), harmonic_number(5), harmonic_number(7), harmonic_number(11)]	[3/2, 11/6, 137/60, 363/140, 83711/27720]	
+threads-elementwise-over-an-array-of-orders-and	[[harmonic_number(2, (1/2)), harmonic_number(2, 2)], [harmonic_number(2, 2), harmonic_number(2, (1/2))]]	[[1/2*sqrt(2) + 1, 5/4], [5/4, 1/2*sqrt(2) + 1]]	
+interval-arithmetic-in-the-order			
+uncertainty-propagation-in-the-order			
+to-exactly-30-significant-digits-not-yet-31-come	enumeratio_n(harmonic_number((1/2)), 30)	0.613705638880109	
+order-1-gives-h-z-itself-not-the-zeta-1-pole	enumeratio_n(harmonic_number(2.5, 1))	1.68037230554678	
+at-an-integer-order-1-agrees-exactly-with-the	harmonic_number(10, 1)	7381/2520	
+no-sum-below-n-0	harmonic_number(-3)	harmonic_number(-3)	disagree
+h-1-2-2-2-ln-2-exact-at-rational-arguments-by	harmonic_number((1/2))	-2*log(2) + 2	
+h-1-4-4-frac-pi-2-3-ln-2	harmonic_number((1/4))	euler_gamma + psi(5/4)	
+symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays	harmonic_number(SR.var("n"), -1)	True	
+the-harmonic-series-diverges	harmonic_number(oo)	harmonic_number(+Infinity)	
+h-infty-r-zeta-r-for-r-1-the-basel-sum	harmonic_number(oo, 2)	harmonic_number(+Infinity, 2)	inconclusive
+a-non-integer-order-stays-symbolic-under-plain	harmonic_number(5, (1/2))	1/5*sqrt(5) + 1/3*sqrt(3) + 1/2*sqrt(2) + 3/2	inconclusive

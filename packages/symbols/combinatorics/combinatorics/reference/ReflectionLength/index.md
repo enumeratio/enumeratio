@@ -10,6 +10,14 @@ signatures:
     description: n minus the number of cycles — the minimum number of transpositions.
     library: enumeratio-combinatorics
     type: (permutation) -> number
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_stat("Permutation", $1, "ReflectionLength")
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

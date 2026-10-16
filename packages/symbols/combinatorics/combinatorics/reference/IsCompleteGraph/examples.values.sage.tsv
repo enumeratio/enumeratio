@@ -1,0 +1,4 @@
+id	in	out
+completegraph-n-is-complete	(lambda g: g.is_clique(directed_clique=True) if g.is_directed() else g.is_clique())(enumeratio_graph(graphs.CompleteGraph(5)))	True
+a-path-is-not-complete	(lambda g: g.is_clique(directed_clique=True) if g.is_directed() else g.is_clique())(Graph([[1, 2, 3], [(1, 2), (2, 3)]], format="vertices_and_edges", loops=True, multiedges=True))	False
+a-directed-2-cycle-is-complete	(lambda g: g.is_clique(directed_clique=True) if g.is_directed() else g.is_clique())(DiGraph([[1, 2], [(1, 2), (2, 1)]], format="vertices_and_edges", loops=True, multiedges=True))	True

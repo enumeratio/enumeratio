@@ -31,7 +31,7 @@ inverse-mod-a-real-prime-19	enumeratio_inverse_mod((2 + 1*I), 19)	15*I + 8
 no-inverse-mod-0	enumeratio_inverse_mod((2 + 1*I), 0)	ValueError: gens must have a nonzero element (zero ideal is not a fractional ideal)	error
 a-real-base-with-no-inverse-mod-a-shared-factor	enumeratio_inverse_mod(5, (5 + 5*I))	ZeroDivisionError: 5 is not invertible modulo Fractional ideal (5*I + 5)	error
 modularinverse-neg-5-7	enumeratio_inverse_mod(-5, 7)	4	
-modularinverse-10-pow-100-000-nextprime-1-000			
+modularinverse-10-pow-100-000-nextprime-1-000	enumeratio_inverse_mod(((10)^100000), next_prime(1000))	942	
 the-same-as-powermod-with-exponent-1	enumeratio_equal(enumeratio_inverse_mod(3, 7), enumeratio_power_mod(3, -1, 7))	True	
 a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	enumeratio_mod((12345 * enumeratio_inverse_mod(12345, (((2)^61) - 1))), (((2)^61) - 1))	1	
 list-modularinverse-2-5-modularinverse-7-5	[enumeratio_inverse_mod(2, 5), enumeratio_inverse_mod(7, 5)]	[3, 3]	

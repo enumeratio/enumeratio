@@ -1,0 +1,9 @@
+id	in	out
+row-4-of-the-triangle		
+row-5-of-the-triangle		
+11-permutations-of-4-have-1-descent	enumeratio_eulerian(4, 1)	11
+the-empty-permutation	enumeratio_eulerian(0, 0)	1
+too-many-descents	enumeratio_eulerian(3, 3)	0
+a-bigint-row-entry	enumeratio_eulerian(30, 10)	1269070526794311849099687878550
+the-symmetry-of-the-rows	enumeratio_equal(enumeratio_eulerian(12, 5), enumeratio_eulerian(12, 6))	True
+agrees-with-the-count-of-the-collection		

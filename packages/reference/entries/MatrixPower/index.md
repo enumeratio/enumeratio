@@ -13,4 +13,12 @@ seeAlso:
   - ModularMatrix
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: "[list(r) for r in (matrix($1)^$2).rows()]"
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---

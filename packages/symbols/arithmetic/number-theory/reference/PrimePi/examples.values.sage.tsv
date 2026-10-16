@@ -14,8 +14,8 @@ primepi-10-13	prime_pi(10000000000000)	346065536839
 primepi-1-plus-10-pow-17	prime_pi((1 + ((10)^17)))	2623557157654233	inconclusive
 nthprime-range-1-primepi-100			
 primepi-5-000	prime_pi(5000)	669	
-same-inverse-relation-viewed-from-primepi-s-side			
-primepi-nthprime-100			
+same-inverse-relation-viewed-from-primepi-s-side	enumeratio_equal(prime_pi(nth_prime(50)), 50)	True	
+primepi-nthprime-100	prime_pi(nth_prime(100))	100	
 primepi-1-000	prime_pi(1000)	168	
 primepi-3	prime_pi(3)	2	
 primepi-4	prime_pi(4)	2	

@@ -1,0 +1,6 @@
+id	in	out
+the-partition-4-2-1-of-7	enumeratio_stat("IntegerPartition", [4, 2, 1], "AddableCells")	4
+the-partition-3-3-1-of-7	enumeratio_stat("IntegerPartition", [3, 3, 1], "AddableCells")	3
+findstat-st000318-1	enumeratio_stat("IntegerPartition", [1], "AddableCells")	2
+findstat-st000318-2	enumeratio_stat("IntegerPartition", [2], "AddableCells")	2
+findstat-st000318-3	enumeratio_stat("IntegerPartition", [3], "AddableCells")	2

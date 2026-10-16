@@ -1,0 +1,2 @@
+id	in	out
+path-5-has-radius-2	(Graph([[1, 2, 3, 4, 5], [(1, 2), (2, 3), (3, 4), (4, 5)]], format="vertices_and_edges", loops=True, multiedges=True)).radius()	2

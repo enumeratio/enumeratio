@@ -1,0 +1,2 @@
+id	in	out
+line-graph-of-a-triangle-is-a-triangle	((enumeratio_graph(graphs.CompleteGraph(3))).line_graph()).size()	3

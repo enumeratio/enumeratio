@@ -1,0 +1,24 @@
+id	in	out	verdict
+a-floating-point-argument-evaluates-directly-to	enumeratio_n(jacobi_nc(0.3, 1.5))	1.04464532151676 - 9.03978829748038e-21*I	
+series-jacobinc-z-m-z-0-7	SR(jacobi_nc(SR.var("z"), SR.var("m"))).series(SR.var("z") == 0, 7 + 1)	True	
+series-jacobinc-z-m-m-0-1	SR(jacobi_nc(SR.var("z"), SR.var("m"))).series(SR.var("m") == 0, 1 + 1)	ValueError: power::eval(): division by zero	error
+m-less-than-0-via-the-imaginary-modulus	enumeratio_n(jacobi_nc(0.3, -2))	1.04968740489559	
+the-quarter-period-is-a-pole-even-when-m-is-0	jacobi_nc(elliptic_kc(0), 0)	Infinity	
+matrixfunction-function-jacobinc-neg-1-over-3			
+list-jacobinc-z-0-jacobinc-z-1	[jacobi_nc(SR.var("z"), 0), jacobi_nc(SR.var("z"), 1)]	True	
+n-jacobinc-2-1-over-3-50	enumeratio_n(jacobi_nc(2, (1/3)), 50)	-4.62153404848080	
+list-jacobinc-0-m-jacobinc-1-over-2-times	[jacobi_nc(0, SR.var("m")), jacobi_nc(((1/2) * elliptic_kc(SR.var("m"))), SR.var("m")), jacobi_nc(((0 + 1*I) * elliptic_kc(((-SR.var("m")) + 1))), SR.var("m"))]	[1, jacobi_nc(1/2*elliptic_kc(m), m), jacobi_nc(I*elliptic_kc(-m + 1), m)]	disagree
+list-jacobinc-elliptick-m-m-jacobinc-3-times	[jacobi_nc(elliptic_kc(SR.var("m")), SR.var("m")), jacobi_nc((3 * elliptic_kc(SR.var("m"))), SR.var("m")), jacobi_nc((((0 + 2*I) * elliptic_kc(((-SR.var("m")) + 1))) + elliptic_kc(SR.var("m"))), SR.var("m"))]	[jacobi_nc(elliptic_kc(m), m), jacobi_nc(3*elliptic_kc(m), m), jacobi_nc(elliptic_kc(m) + 2*I*elliptic_kc(-m + 1), m)]	disagree
+series-jacobinc-x-1-over-3-x-0-7	SR(jacobi_nc(SR.var("x"), (1/3))).series(SR.var("x") == 0, 7 + 1)	True	
+fullsimplify-series-jacobinc-1-m-m-0-3	SR(jacobi_nc(1, SR.var("m"))).series(SR.var("m") == 0, 3 + 1)	ValueError: power::eval(): division by zero	error
+d-jacobinc-u-m-m	diff(jacobi_nc(SR.var("u"), SR.var("m")), SR.var("m"))	1/2*((u + elliptic_e(arcsin(jacobi_sn(u, m)), m)/(m - 1))*jacobi_dn(u, m)*jacobi_sn(u, m)/m - jacobi_cn(u, m)*jacobi_sn(u, m)^2/(m - 1))/jacobi_cn(u, m)^2	disagree
+u-0-is-1-for-any-m	jacobi_nc(0, SR.var("m"))	1	
+jacobinc-0-0	jacobi_nc(0, 0)	1	
+jacobinc-1-over-2-times-pi-0	jacobi_nc(((1/2) * pi), 0)	Infinity	
+jacobinc-0-1	jacobi_nc(0, 1)	1	
+jacobinc-1-over-2-times-i-times-pi-1	jacobi_nc(((0 + (1/2)*I) * pi), 1)	0	
+n-jacobinc-sqrt-2-over-4-times-i-2	enumeratio_n(jacobi_nc((0 + (sqrt(2) / 4)*I), 2))	0.935622687124812 + 1.07035412633226e-131*I	
+n-jacobinc-1-over-2-times-1-plus-sqrt-2-over-2-1	enumeratio_n(jacobi_nc(((1/2) * (1 + (sqrt(2) / 2))), ((((1 + (-(sqrt(2) / 2))))^2) * (((1 + (sqrt(2) / 2)))^-2))))	1.51677688809494	
+n-jacobinc-sqrt-2-times-i-2	enumeratio_n(jacobi_nc((0 + sqrt(2)*I), 2))	-0.145153002614798 + 1.58658524418278e-132*I	
+n-jacobinc-2-times-1-plus-sqrt-2-over-2-1-minus	enumeratio_n(jacobi_nc((2 * (1 + (sqrt(2) / 2))), ((((1 + (-(sqrt(2) / 2))))^2) * (((1 + (sqrt(2) / 2)))^-2))))	-1.03183131028055	
+symbolic-arguments-are-left-unevaluated-rather	jacobi_nc(SR.var("u"), SR.var("m"))	True	

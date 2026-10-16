@@ -1,0 +1,24 @@
+id	in	out
+eulere-10	euler_number(10)	-50521
+eulere-8	euler_number(8)	1385
+listable-odd-indices-vanish	[euler_number(0), euler_number(1), euler_number(2), euler_number(3), euler_number(4)]	[1, 0, -1, 0, 5]
+the-euler-polynomial-e-2-x-x-2-x		
+e-4-x-x-4-2x-3-x		
+eulere-list-2-4-6	[euler_number(2), euler_number(4), euler_number(6)]	[-1, 5, -61]
+e-n-2-n-e-n-frac-12-and-e-3-0		
+eulere-0	euler_number(0)	1
+eulere-1	euler_number(1)	0
+eulere-2	euler_number(2)	-1
+eulere-3	euler_number(3)	0
+eulere-4	euler_number(4)	5
+eulere-5	euler_number(5)	0
+eulere-6	euler_number(6)	-61
+eulere-7	euler_number(7)	0
+eulere-9	euler_number(9)	0
+eulere-1-0		
+eulere-2-0		
+eulere-1-1		
+eulere-2-1		
+eulere-0-1		
+eulere-2-1-over-2-plus-eulere-2-3-over-2		
+eulere-2-2-plus-eulere-2-3		

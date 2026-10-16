@@ -13,6 +13,14 @@ seeAlso:
   - IsConnectedGraph
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_graph(graphs.HararyGraph($1, $2))
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - k even: the circulant CirculantGraph(n, {1, …, k/2}). k odd, n even: that circulant plus the n/2 diametrically-opposite edges. k odd, n odd: that circulant plus vertex 1 joined to BOTH floor(n/2)+1 and ceil(n/2)+1 (1 alone ends up with degree k + 1 -- the one vertex n*k being odd forces to take the remainder), plus i <-> i + ceil(n/2) (1-based) giving everyone else their kth edge.

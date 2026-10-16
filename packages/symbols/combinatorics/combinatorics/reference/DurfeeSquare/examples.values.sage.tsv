@@ -1,0 +1,6 @@
+id	in	out
+the-partition-4-2-1-of-7	enumeratio_stat("IntegerPartition", [4, 2, 1], "DurfeeSquare")	2
+the-partition-3-3-1-of-7	enumeratio_stat("IntegerPartition", [3, 3, 1], "DurfeeSquare")	2
+findstat-st000183-1	enumeratio_stat("IntegerPartition", [1], "DurfeeSquare")	1
+findstat-st000183-2	enumeratio_stat("IntegerPartition", [2], "DurfeeSquare")	1
+findstat-st000183-3	enumeratio_stat("IntegerPartition", [3], "DurfeeSquare")	1

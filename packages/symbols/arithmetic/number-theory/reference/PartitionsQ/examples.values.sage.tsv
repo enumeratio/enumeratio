@@ -1,0 +1,25 @@
+id	in	out	verdict
+the-partitions-of-10-into-distinct-parts	Partitions(10, max_slope=-1).cardinality()	10	
+the-empty-partition	Partitions(0, max_slope=-1).cardinality()	1	
+exact-for-large-n	Partitions(100, max_slope=-1).cardinality()	444793	
+threads-over-a-list	[Partitions(1, max_slope=-1).cardinality(), Partitions(2, max_slope=-1).cardinality(), Partitions(3, max_slope=-1).cardinality(), Partitions(4, max_slope=-1).cardinality(), Partitions(5, max_slope=-1).cardinality(), Partitions(6, max_slope=-1).cardinality(), Partitions(7, max_slope=-1).cardinality(), Partitions(8, max_slope=-1).cardinality()]	[1, 1, 2, 2, 3, 4, 5, 6]	
+partitionsq-list-2-4-6	[Partitions(2, max_slope=-1).cardinality(), Partitions(4, max_slope=-1).cardinality(), Partitions(6, max_slope=-1).cardinality()]	[1, 2, 4]	
+counts-the-distinctpartitions-family			
+euler-as-many-partitions-into-odd-parts-as-into			
+partitionsq-5	Partitions(5, max_slope=-1).cardinality()	3	
+partitionsq-1	Partitions(1, max_slope=-1).cardinality()	1	
+partitionsq-2	Partitions(2, max_slope=-1).cardinality()	1	
+partitionsq-3	Partitions(3, max_slope=-1).cardinality()	2	
+partitionsq-4	Partitions(4, max_slope=-1).cardinality()	2	
+partitionsq-6	Partitions(6, max_slope=-1).cardinality()	4	
+partitionsq-7	Partitions(7, max_slope=-1).cardinality()	5	
+partitionsq-8	Partitions(8, max_slope=-1).cardinality()	6	
+partitionsq-9	Partitions(9, max_slope=-1).cardinality()	8	
+partitionsq-11	Partitions(11, max_slope=-1).cardinality()	12	
+partitionsq-12	Partitions(12, max_slope=-1).cardinality()	15	
+partitionsq-13	Partitions(13, max_slope=-1).cardinality()	18	
+partitionsq-14	Partitions(14, max_slope=-1).cardinality()	22	
+partitionsq-15	Partitions(15, max_slope=-1).cardinality()	27	
+partitionsq-16	Partitions(16, max_slope=-1).cardinality()	32	
+partitionsq-17	Partitions(17, max_slope=-1).cardinality()	38	
+partitionsq-neg-expand-exponentiale-plus-1-pow-2	Partitions(((-SR((((e + 1))^2)).expand()) + 12 + (((1 + e))^2)), max_slope=-1).cardinality()	ValueError: n must be an integer or be equal to one of None, NN, NonNegativeIntegers()	error

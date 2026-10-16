@@ -19,4 +19,11 @@ bindings:
     form: oscar
     template: (let v = $1, m = sum(v) // length(v); sum((x - m)^2 for x in v) // (length(v) - 1) end)
     arity: 1
+  - origin: mapped
+    form: sage
+    template: variance($1)
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---

@@ -1,0 +1,26 @@
+id	in	out	verdict
+integerpart-2p4	(floor(2.4) if (2.4) >= 0 else ceil(2.4))	2	
+truncates-toward-0-unlike-floor	(floor(-2.4) if (-2.4) >= 0 else ceil(-2.4))	-2	
+integerpart-7-over-2	(floor((7/2)) if ((7/2)) >= 0 else ceil((7/2)))	3	
+integerpart-neg-7-over-2	(floor((-7/2)) if ((-7/2)) >= 0 else ceil((-7/2)))	-3	
+exact-numeric-arguments-stay-exact	(floor(pi) if (pi) >= 0 else ceil(pi))	3	
+threads-element-wise-over-a-list	[(floor(2.5) if (2.5) >= 0 else ceil(2.5)), (floor(-2.5) if (-2.5) >= 0 else ceil(-2.5))]	[2, -2]	
+complex-numbers-real-and-imaginary-parts	(floor((2.5 + 3.7*I)) if ((2.5 + 3.7*I)) >= 0 else ceil((2.5 + 3.7*I)))	floor(2.50000000000000 + 3.70000000000000*I)	disagree
+integerpart-neg-5-over-4	(floor((-5/4)) if ((-5/4)) >= 0 else ceil((-5/4)))	-1	
+integerpart-0	(floor(0) if (0) >= 0 else ceil(0))	0	
+piecewiseexpand-integerpart-x-0-lt-x-lt-4			
+integerpart-exponentiale-plus-pi	(floor((e + pi)) if ((e + pi)) >= 0 else ceil((e + pi)))	5	
+x-integerpart-x-fractionalpart-x	enumeratio_equal(((floor((-7/2)) if ((-7/2)) >= 0 else ceil((-7/2))) + (((-7/2)) - (floor((-7/2)) if ((-7/2)) >= 0 else ceil((-7/2))))), (-7/2))	True	
+piecewiseexpand-integerpart-x-pow-2-plus-sqrt-x			
+integerpart-1	(floor(1) if (1) >= 0 else ceil(1))	1	
+integerpart-neg-1	(floor(-1) if (-1) >= 0 else ceil(-1))	-1	
+integerpart-23-over-10	(floor((23/10)) if ((23/10)) >= 0 else ceil((23/10)))	2	
+integerpart-neg-3	(floor(-3) if (-3) >= 0 else ceil(-3))	-3	
+integerpart-neg-pi	(floor((-pi)) if ((-pi)) >= 0 else ceil((-pi)))	-3	
+integerpart-neg-27-over-10	(floor((-27/10)) if ((-27/10)) >= 0 else ceil((-27/10)))	-2	
+simplify-integerpart-x-plus-1-minus-integerpart			
+piecewiseexpand-integerpart-x-plus-1-times-3-pow			
+integerpart-i	(floor((0 + 1*I)) if ((0 + 1*I)) >= 0 else ceil((0 + 1*I)))	ValueError: floor is not defined for complex quadratic number field	error
+integerpart-neg-i	(floor((0 + -1*I)) if ((0 + -1*I)) >= 0 else ceil((0 + -1*I)))	ValueError: floor is not defined for complex quadratic number field	error
+integerpart-23-over-10-plus-neg-i-times	(floor(((23/10) + ((0 + -1*I) * e))) if (((23/10) + ((0 + -1*I) * e))) >= 0 else ceil(((23/10) + ((0 + -1*I) * e))))	ceil(-I*e + 23/10)	disagree
+integerpart-1-plus-2pi-minus-1-plus-pi-pow-2	(floor((1 + (2 * pi) + (-(((1 + pi))^2)) + ((pi)^2))) if ((1 + (2 * pi) + (-(((1 + pi))^2)) + ((pi)^2))) >= 0 else ceil((1 + (2 * pi) + (-(((1 + pi))^2)) + ((pi)^2))))	0	

@@ -1,4 +1,4 @@
 id	in	out
 of-a-product	diff((((SR.var("x"))^2) * sin(SR.var("x"))), SR.var("x"))	True
 second-derivative	diff(((SR.var("x"))^3), SR.var("x"), SR.var("x"))	True
-of-a-head-we-declare		
+of-a-head-we-declare	diff(log_gamma(SR.var("z")), SR.var("z"))	True

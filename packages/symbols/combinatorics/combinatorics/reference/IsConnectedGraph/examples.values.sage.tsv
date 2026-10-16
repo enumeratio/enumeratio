@@ -1,0 +1,5 @@
+id	in	out
+petersen-is-connected	(lambda g: g.is_strongly_connected() if g.is_directed() else g.is_connected())(enumeratio_graph(graphs.PetersenGraph()))	True
+two-disjoint-edges-are-not-connected	(lambda g: g.is_strongly_connected() if g.is_directed() else g.is_connected())(Graph([[1, 2, 3, 4], [(1, 2), (3, 4)]], format="vertices_and_edges", loops=True, multiedges=True))	False
+strongly-connected-needs-a-way-back	(lambda g: g.is_strongly_connected() if g.is_directed() else g.is_connected())(DiGraph([[1, 2, 3], [(1, 2), (2, 1), (2, 3)]], format="vertices_and_edges", loops=True, multiedges=True))	False
+a-directed-cycle-is-connected	(lambda g: g.is_strongly_connected() if g.is_directed() else g.is_connected())(DiGraph([[1, 2, 3], [(1, 2), (2, 3), (3, 1)]], format="vertices_and_edges", loops=True, multiedges=True))	True

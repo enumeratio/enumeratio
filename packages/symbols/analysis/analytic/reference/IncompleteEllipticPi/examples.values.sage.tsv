@@ -1,0 +1,21 @@
+id	in	out	verdict
+pi-n-0-m-0	elliptic_pi(0.5, 0, 0.3)	0.000000000000000	
+a-floating-point-argument-evaluates-directly-to	enumeratio_n(elliptic_pi(0.5, 0.4, 0.3))	0.414151736824477	
+pi-0-5-0-4-0-3	enumeratio_n(elliptic_pi(0.5, -0.4, 0.3))	-0.414151736824477	
+pi-0-5-1-9-0-3	enumeratio_n(elliptic_pi(0.5, 1.9, 0.3))	3.21651653701512	
+pi-2-0-4-0-3	enumeratio_n(elliptic_pi(2, 0.4, 0.3))	0.455004749092808	
+pi-0-5-3-5-0-3	enumeratio_n(elliptic_pi(0.5, 3.5, 0.3))	5.29105865396357	
+pi-0-2-2-0-5	enumeratio_n(elliptic_pi(0.2, 2, 0.5))	2.82042554092149	
+pi-0-5-0-4-0-7-0-2i	enumeratio_n(elliptic_pi(0.5, 0.4, (0.7 + 0.2*I)))	0.418772472659036 + 0.00239886665794028*I	
+pi-0-5-0-2i-0-4-0-3	enumeratio_n(elliptic_pi((0.5 + 0.2*I), 0.4, 0.3))	0.414060319808096 + 0.00460857594213830*I	
+pi-0-5-0-4-0-3i-0-6-0-1i	enumeratio_n(elliptic_pi(0.5, (0.4 + 0.3*I), (0.6 + 0.1*I)))	0.384711358107326 + 0.329996740971807*I	
+pi-0-2-2-0-5i-0-3	enumeratio_n(elliptic_pi(0.2, (2 + 0.5*I), 0.3))	2.61592830148849 + 0.701563176993067*I	
+pi-1-17-0-45i-10-59477796076938-0-45i-1-17-0-45i	enumeratio_n(elliptic_pi((1.17 + 0.45*I), (10.59477796076938 + 0.45*I), (1.17 + 0.45*I)))	-0.103480823340678 + 15.1133814653099*I	
+pi-1-17-0-45i-5-113185307179586-0-45i-1-17-0-45i	enumeratio_n(elliptic_pi((1.17 + 0.45*I), (-5.113185307179586 + 0.45*I), (1.17 + 0.45*I)))	0.640677318606680 - 8.27777819461497*I	
+a-complex-amplitude-phi-where-native-ellipticpi	enumeratio_n(elliptic_pi(0.2, (1.2 + 0.5*I), 0.3))	1.32141537611712 + 0.718665718875180*I	
+all-three-arguments-complex-matches-mpmath-s	enumeratio_n(elliptic_pi((1.17 + 0.45*I), (1.17 + 0.45*I), (1.17 + 0.45*I)))	0.343014061827737 + 1.07868566935500*I	
+characteristic-n-1	enumeratio_n(elliptic_pi(0.3, 1.1, 0.4))	1.32380081504749	
+n-0-reduces-to-the-incomplete-elliptic-integral	enumeratio_n(elliptic_pi(0, 0.4, 0.3))	0.403164991947139	
+symbolic-arguments-are-left-unevaluated-rather	elliptic_pi(SR.var("n"), SR.var("phi"), SR.var("m"))	True	
+n-0-phi-arccsc-0-m-0	elliptic_pi(0, arccsc(0), 0)	NaN	disagree
+n-0-phi-pi-plus-arccsc-0-m-0	elliptic_pi(0, (pi + arccsc(0)), 0)	NaN + pi	disagree

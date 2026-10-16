@@ -34,6 +34,14 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: sage
+    template: arccot($1)
+    arity: 1
+    threadArgOnly: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Stays symbolic even at values where the reciprocal circular functions fold exactly (e.g. $x = 1$) -- wrap in N(...) for a numeric result.

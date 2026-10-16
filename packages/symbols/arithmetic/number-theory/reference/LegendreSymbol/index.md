@@ -28,6 +28,16 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: SymPy's legendre_symbol raises unless the lower argument is an odd prime.
+  - origin: mapped
+    form: sage
+    template: legendre_symbol($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - 1 if $n$ is a nonzero quadratic residue mod $p$, $-1$ if it is a nonresidue, 0 if $p\mid n$.

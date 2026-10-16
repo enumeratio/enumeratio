@@ -1,0 +1,26 @@
+id	in	out
+log10-1-000	log(1000, 10)	3
+log10-1	log(1, 10)	0
+log10-100-000	log(100000, 10)	5
+log10-1-000-000	log(1000000, 10)	6
+n-for-a-decimal-value	enumeratio_n(log(2, 10))	0.301029995663981
+log-2	log(2, 10)	log(2)/log(10)
+series-log-x-plus-1-x-0-5	SR(log((SR.var("x") + 1), 10)).series(SR.var("x") == 0, 5 + 1)	True
+an-exact-negative-power-of-10-folds-too-log-10	log((1/100), 10)	-2
+a-symbolic-argument-becomes-compute-engine-s	log(SR.var("x"), 10)	True
+log10-5p5	log(5.5, 10)	0.740362689494244
+threads-element-wise-over-a-list	[log(1, 10), log(10, 10), log(100, 10), log(1000, 10)]	[0, 1, 2, 3]
+element-wise-over-a-matrix-including-the-exact	[[log(1, 10), log(100, 10)], [log(0, 10), log((1/100), 10)]]	[[0, 2], [-Infinity, -2]]
+as-with-ln-the-logarithm-of-complex-infinity-is	log(unsigned_infinity, 10)	+Infinity
+interval-arithmetic-log-10-frac-13-2-log-10-3		
+uncertainty-propagation-log-10-frac-1-101-pm-0		
+derivative-frac-1-x-ln-10	diff(log(SR.var("x"), 10), SR.var("x"))	True
+to-30-significant-digits-every-one-correctly	enumeratio_n(log(7, 10), 30)	0.845098040014257
+log-5	log(5, 10)	log(5)/log(10)
+n-log-45-100	enumeratio_n(log(45, 10), 100)	1.65321251377534
+n-log-4-plus-i	enumeratio_n(log((4 + 1*I), 10))	0.615224460689137 + 0.106392881580033*I
+fullsimplify-matrixfunction-log10-list-list-1		
+log-positiveinfinity	log(oo, 10)	+Infinity
+log-0	log(0, 10)	-Infinity
+a-float-argument-folds-even-for-a-fractional	log(0.001, 10)	-3.00000000000000
+same-as-compute-engine-s-default-base-log	enumeratio_equal(log(1000, 10), log(1000, 10))	True

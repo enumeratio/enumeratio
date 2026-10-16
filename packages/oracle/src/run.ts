@@ -13,6 +13,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { type Bounds, memoryCapMb, runBounded, withFile, wolframFileArgs } from "@enumeratio/utils/bounded";
+import { sageStatsPython } from "./sage-stats.ts";
 import type { System } from "./systems.ts";
 /** Sources per kernel process. */
 const BATCH = 40;
@@ -1042,6 +1043,99 @@ def _enumeratio_equal(a, b):
 def enumeratio_equal(a, b):
     return _enumeratio_equal(a, b)
 
+# Whether d, an expression in some variables, is zero: the simplifier proves it, else it vanishes at the sample
+# points (True), or at one of them does not (False); None when no point could be evaluated. With real, the
+# samples are real (the complex one would differentiate Abs and sign off the line).
+def _enumeratio_vanishes(d, real=False):
+    d = SR(d)
+    try:
+        if bool(d.simplify_full() == 0):
+            return True
+    except (TypeError, ValueError, ArithmeticError):
+        pass
+    names = d.variables()
+    seen = []
+    for j in range(2 if real else 3):
+        point = {v: _enumeratio_sample(j, i) for i, v in enumerate(names)}
+        try:
+            seen.append(abs(CC(_enumeratio_at(d, point))) <= 1e-9)
+        except (ArithmeticError, ValueError, TypeError):
+            continue
+    return all(seen) if seen else None
+
+# Whether two antiderivatives of the same function agree: the derivative of their difference in each variable of
+# integration vanishes, and the difference itself is the same at real points of both signs, so a constant that
+# depends on the side of a branch point or a jump is no constant (None). A variable that is in neither answer
+# decides nothing.
+def enumeratio_antiderivative_agree(a, b, variables):
+    try:
+        a, b = SR(a), SR(b)
+        free = set(a.variables()) | set(b.variables())
+        if not variables or any(v not in free for v in variables):
+            return None
+        d = a - b
+        for v in variables:
+            d = diff(d, v)
+        decided = _enumeratio_vanishes(d, True)
+        if decided is not True:
+            return decided
+        points = [QQ(-13) / 4, QQ(-7) / 3, QQ(-1) / 2, QQ(1) / 2, QQ(7) / 3, QQ(13) / 4]
+        others = sorted(free - set(variables), key=str)
+        extras = [QQ(7) / 3, QQ(13) / 4, QQ(19) / 8, QQ(5) / 7]
+        values = []
+        for k in range(len(points)):
+            at = {v: points[(k + 2 * i) % len(points)] for i, v in enumerate(variables)}
+            at.update({s: extras[i % 4] for i, s in enumerate(others)})
+            try:
+                value = complex(CC(_enumeratio_at(a - b, at)))
+            except (ArithmeticError, ValueError, TypeError):
+                continue
+            if value == value and abs(value) != float("inf"):
+                values.append(value)
+        if len(values) >= 2 and any(abs(v - values[0]) > 1e-9 * (1 + abs(values[0])) for v in values):
+            return None
+        return True
+    except (TypeError, ValueError, AttributeError):
+        return None
+
+# The terms of expr in t = x - x0, as {power: coefficient}, or None when it is no sum of powers of t.
+def _enumeratio_series_terms(expr, x, x0, t):
+    try:
+        e = SR(expr).subs({x: x0 + t}).expand()
+        return {QQ(p): c for c, p in e.coefficients(t, sparse=True)}
+    except (TypeError, ValueError, AttributeError, ArithmeticError):
+        return None
+
+# Whether Sage's series (its Order term cut off) and our polynomial, whose own O-term claims ours_order (None when it
+# has none), agree in every power below the least of the requested order cap and the O-term: what both claim. True
+# when they do, False when a coefficient differs, None when the expansions aren't comparable or nothing was
+# compared. Sage's series is two-sided, as Wolfram's.
+def enumeratio_series_agree(theirs, ours, x, x0, cap, ours_order):
+    try:
+        x0 = SR(x0)
+        if x0.is_infinity():
+            return None
+        t = SR.var("_enumeratio_t")
+        cut = QQ(cap) if ours_order is None else min(QQ(cap), QQ(ours_order))
+        a = _enumeratio_series_terms(SR(theirs).truncate(), x, x0, t)
+        b = _enumeratio_series_terms(ours, x, x0, t)
+        if a is None or b is None:
+            return None
+        compared = False
+        undecided = False
+        for p in sorted(set(a) | set(b)):
+            if p >= cut:
+                continue
+            decided = _enumeratio_vanishes(a.get(p, 0) - b.get(p, 0))
+            compared = True
+            if decided is False:
+                return False
+            if decided is None:
+                undecided = True
+        return True if compared and not undecided else None
+    except (TypeError, ValueError, AttributeError, NotImplementedError, ArithmeticError):
+        return None
+
 # A factorial passes an infinity through and threads over a list.
 def enumeratio_factorial(n):
     return enumeratio_broadcast(lambda v: v if str(v) == "+Infinity" else factorial(v), n)
@@ -1093,6 +1187,47 @@ def _enumeratio_abs(x):
 
 def enumeratio_abs(x):
     return enumeratio_broadcast(_enumeratio_abs, x)
+
+# The named statistics Sage computes with its own methods (sage-stats.ts), on the Sage object a carrier names.
+def _enumeratio_binary_tree(x):
+    return None if x == 0 else [_enumeratio_binary_tree(x[0]), _enumeratio_binary_tree(x[1])]
+
+def _enumeratio_carrier(carrier, x):
+    if carrier == "Permutation":
+        return Permutation(x)
+    if carrier == "IntegerPartition":
+        return Partition(x)
+    if carrier == "SetPartition":
+        return SetPartition(x)
+    if carrier == "DyckPath":
+        return DyckWord(x)
+    if carrier == "BinaryTree":
+        return BinaryTree(_enumeratio_binary_tree(x))
+    if carrier == "OrderedTree":
+        return OrderedTree(x)
+    raise ValueError("no Sage object for " + carrier)
+
+${sageStatsPython()}
+
+# Sage numbers the vertices of its catalog graphs from 0 (or labels them with tuples or strings); ours are numbered from 1,
+# in the order Sage sorts its own labels.
+def enumeratio_graph(G):
+    return G.relabel({v: i for i, v in enumerate(G.vertices(sort=True), 1)}, inplace=False)
+
+def enumeratio_eulerian(n, k):
+    from sage.combinat.combinat import eulerian_number
+    return eulerian_number(n, k)
+
+def enumeratio_q_factorial(n, q):
+    from sage.combinat.q_analogues import q_factorial
+    return q_factorial(n, q)
+
+def enumeratio_q_pochhammer(a, q, n):
+    from sage.combinat.q_analogues import q_pochhammer
+    return q_pochhammer(n, a, q)
+
+def enumeratio_stat(carrier, x, name):
+    return _enumeratio_stats[(carrier, name)](_enumeratio_carrier(carrier, x))
 
 enumeratio_ring = PolynomialRing(ZZ, "delta")
 enumeratio_delta = enumeratio_ring.gen()

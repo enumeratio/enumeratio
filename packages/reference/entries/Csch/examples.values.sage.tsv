@@ -1,0 +1,15 @@
+id	in	out	verdict
+series-csch-x-x-0-10	SR(csch(SR.var("x"))).series(SR.var("x") == 0, 10 + 1)	True	
+normal-series-csch-x-x-2i-times-pi-3	(SR(csch(SR.var("x"))).series(SR.var("x") == ((0 + 2*I) * pi), 3 + 1)).truncate()	True	
+n-csch-9-over-5-50	enumeratio_n(csch((9/5)), 50)	0.339884691415494	
+csch-list-list-1-over-3-times-i-times-pi-neg-1	[[csch(((0 + (1/3)*I) * pi)), csch(((0 + (-1/3)*I) * pi))], [csch(0), csch(((0 + (-1/6)*I) * pi))]]	[[-2/3*I*sqrt(3), 2/3*I*sqrt(3)], [Infinity, 2*I]]	
+csch-positiveinfinity	csch(oo)	0	
+csch-0	csch(0)	Infinity	
+d-csch-x-x	diff(csch(SR.var("x")), SR.var("x"))	True	
+matrixfunction-function-csch-1-1-list-list-1			
+integrate-csch-x-x-nothing-nothing	integrate(csch(SR.var("x")), SR.var("x"))	None	inconclusive
+functionmeromorphic-csch-x-x			
+neg-2-times-2-plus-2-times-csch-1-over-2-pow-2	((-2 * (2 + (2 * ((csch((1/2)))^2))) * ((csch(1))^2) * ((csch((1/2)))^4)) + ((csch((1/2)))^8))	csch(1/2)^8 - 4*(csch(1/2)^2 + 1)*csch(1)^2*csch(1/2)^4	
+n-4-times-1-plus-csch-1-over-2-pow-2-times-csch	enumeratio_n((4 * (1 + ((csch((1/2)))^2)) * ((csch(1))^2)))	13.5622378731439	
+n-csch-1-over-2-plus-1-over-2-times-i-times-pi	enumeratio_n(((csch(((1/2) + ((0 + (1/2)*I) * pi))))^2))	-0.786447732965927 - 1.24625893841347e-128*I	
+n-4-times-1-plus-csch-2-pow-2-times-csch-4-pow-2	enumeratio_n((4 * (1 + ((csch(2))^2)) * ((csch(4))^2)))	0.00577931861192864	

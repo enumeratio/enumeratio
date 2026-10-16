@@ -1,0 +1,6 @@
+id	in	out	verdict
+turan-6-3-is-k222	(enumeratio_graph(graphs.TuranGraph(6, 3))).size()	12	
+turangraph-5-3	enumeratio_graph(graphs.TuranGraph(5, 3))	Turan Graph with n: 5, r: 3	disagree
+list-turangraph-4-2-turangraph-6-3	[enumeratio_graph(graphs.TuranGraph(4, 2)), enumeratio_graph(graphs.TuranGraph(6, 3))]	[Turan Graph with n: 4, r: 2: Graph on 4 vertices, Turan Graph with n: 6, r: 3: Graph on 6 vertices]	disagree
+map-function-vertexeccentricity-turangraph-5-3-1			
+turangraph-7-2	enumeratio_graph(graphs.TuranGraph(7, 2))	Turan Graph with n: 7, r: 2	disagree

@@ -13,4 +13,12 @@ seeAlso:
   - CompleteGraph
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_graph(graphs.GridGraph($1))
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---

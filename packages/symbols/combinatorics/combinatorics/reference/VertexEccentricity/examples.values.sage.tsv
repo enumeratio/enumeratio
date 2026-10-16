@@ -1,0 +1,3 @@
+id	in	out
+petersen-is-2-eccentric-everywhere	(enumeratio_graph(graphs.PetersenGraph())).eccentricity(1)	2
+disconnected-vertex-is-infinite	(Graph([[1, 2, 3, 4], [(1, 2), (3, 4)]], format="vertices_and_edges", loops=True, multiedges=True)).eccentricity(1)	+Infinity

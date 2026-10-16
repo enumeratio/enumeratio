@@ -16,7 +16,7 @@ varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	euler_phi(81)	54
 totient-100	euler_phi(100)	40	
 totient-35	euler_phi(35)	24	
 divides-carmichaellambda-8-totient-8			
-list-totient-25-carmichaellambda-25			
+list-totient-25-carmichaellambda-25	[euler_phi(25), carmichael_lambda(25)]	[20, 20]	
 divisorsum-15-totient-eq-15			
 totient-1-023-eq-totient-3-times-totient-11	enumeratio_equal(euler_phi(1023), (euler_phi(3) * euler_phi(11) * euler_phi(31)))	True	
 totient-2	euler_phi(2)	1	

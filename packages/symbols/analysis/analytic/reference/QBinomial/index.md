@@ -19,6 +19,17 @@ bindings:
     form: wolfram
     environment: external
     note: QBinomial[n, k, q].
+  - origin: mapped
+    form: sage
+    template: q_binomial($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 seeAlso:
   - QPochhammer
   - QFactorial

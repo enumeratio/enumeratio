@@ -1,0 +1,48 @@
+id	in	out	verdict
+arctan-0	arctan(0)	0	
+arctan-1	arctan(1)	1/4*pi	
+arctan-sqrt-3	arctan(sqrt(3))	1/3*pi	
+a-machine-precision-argument-evaluates	arctan(0.5)	0.463647609000806	
+series-arctan-x-x-positiveinfinity-5	SR(arctan(SR.var("x"))).series(SR.var("x") == oo, 5 + 1)	RuntimeError: indeterminate expression: 0 * infinity encountered.	error
+arbitrary-precision-via-n	enumeratio_n(arctan((1/2)))	0.463647609000806	
+evaluates-at-a-complex-argument	arctan((2.5 + 1*I))	1.23342585568312 + 0.123674060459027*I	
+wolfram-s-two-argument-arctan-x-y-is-compute	atan2(-1, -1)	-3/4*pi	
+arctan2-takes-y-first-the-angle-of-the-point-0-5	atan2(2, 0.5)	1.32581766366803	
+arctan-2-sqrt-3-5-pi-12	arctan((2 + sqrt(3)))	arctan(sqrt(3) + 2)	
+arctan-2-sqrt-3-pi-12	arctan((2 - sqrt(3)))	arctan(-sqrt(3) + 2)	
+arctan-sqrt-2-1-pi-8	arctan((sqrt(2) - 1))	arctan(sqrt(2) - 1)	
+arctan-1-over-sqrt-3	arctan((1 / sqrt(3)))	1/6*pi	
+arctan-neg-1	arctan(-1)	-1/4*pi	
+threads-element-wise-over-a-matrix	[[arctan(0), arctan(1)], [arctan(-1), arctan(sqrt(3))]]	[[0, 1/4*pi], [-1/4*pi, 1/3*pi]]	
+interval-arithmetic-arctan-1-3-frac-pi-4-arctan			
+oddness-pulls-the-sign-out-of-a-symbolic	arctan((-SR.var("x")))	True	
+derivative-frac-1-1-x-2	diff(arctan(SR.var("x")), SR.var("x"))	True	
+antiderivative	integrate(arctan(SR.var("x")), SR.var("x"))	True	
+gregory-s-series-about-0	SR(arctan(SR.var("x"))).series(SR.var("x") == 0, 7 + 1)	True	
+the-limit-at-infty			
+to-30-significant-digits-every-one-correctly	enumeratio_n(arctan((1/2)), 30)	0.463647609000806	
+n-arctan-1-over-2-50	enumeratio_n(arctan((1/2)), 50)	0.463647609000806	
+arctan-list-list-1-sqrt-3-list-0-sqrt-3	[[arctan(1), arctan(sqrt(3))], [arctan(0), arctan(sqrt(3))]]	[[1/4*pi, 1/3*pi], [0, 1/3*pi]]	
+tan-arctan-x-x	enumeratio_equal(tan(arctan(1)), 1)	True	
+as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2	SR(arctan(SR.var("x"))).exponentialize()	True	
+arctan-neg-2-plus-sqrt-3	arctan((-2 + sqrt(3)))	arctan(sqrt(3) - 2)	
+arctan-neg-sqrt-1-plus-neg-2-over-5-times-sqrt-5	arctan((-sqrt((1 + ((-2/5) * sqrt(5))))))	arctan(-sqrt(-2/5*sqrt(5) + 1))	
+arctan-1-minus-sqrt-2	arctan((1 + (-sqrt(2))))	arctan(-sqrt(2) + 1)	
+arctan-neg-sqrt-3-over-3	arctan((-(sqrt(3) / 3)))	-1/6*pi	
+arctan-sqrt-5-minus-2-times-sqrt-5	arctan(sqrt((5 + (-2 * sqrt(5)))))	arctan(sqrt(-2*sqrt(5) + 5))	
+arctan-neg-sqrt-5-minus-2-times-sqrt-5	arctan((-sqrt((5 + (-2 * sqrt(5))))))	arctan(-sqrt(-2*sqrt(5) + 5))	
+arctan-neg-sqrt-1-plus-2-over-5-times-sqrt-5	arctan((-sqrt((1 + ((2/5) * sqrt(5))))))	-arctan(sqrt(2/5*sqrt(5) + 1))	
+arctan-neg-sqrt-3	arctan((-sqrt(3)))	-1/3*pi	
+arctan-1-plus-sqrt-2	arctan((1 + sqrt(2)))	arctan(sqrt(2) + 1)	
+n-arctan-1-over-3-plus-arctan-1-over-2	enumeratio_n((arctan((1/3)) + arctan((1/2))))	0.785398163397448	
+n-2-times-arctan-1-over-2-minus-arctan-1-over-7	enumeratio_n(((2 * arctan((1/2))) + (-arctan((1/7)))))	0.785398163397448	
+n-2-times-arctan-1-over-3-plus-arctan-1-over-7	enumeratio_n(((2 * arctan((1/3))) + arctan((1/7))))	0.785398163397448	
+n-4-times-arctan-1-over-5-minus-arctan-1-over	enumeratio_n(((4 * arctan((1/5))) + (-arctan((1/239)))))	0.785398163397448	
+arctan-sqrt-1-plus-neg-2-over-5-times-sqrt-5	arctan(sqrt((1 + ((-2/5) * sqrt(5)))))	arctan(sqrt(-2/5*sqrt(5) + 1))	
+arctan-sqrt-1-plus-2-over-5-times-sqrt-5	arctan(sqrt((1 + ((2/5) * sqrt(5)))))	arctan(sqrt(2/5*sqrt(5) + 1))	
+compute-engine-s-arctan-takes-only-one-argument			
+arctan-complexinfinity-is-indeterminate-z-re-i	arctan(unsigned_infinity)	RuntimeError: arctan_eval(): arctan(unsigned_infinity) encountered	error
+the-horizontal-asymptote-as-x-to-infty	arctan(oo)	1/2*pi	
+and-as-x-to-infty	arctan(-oo)	-1/2*pi	
+euler-s-machin-like-identity-arctan-frac-12	SR((arctan((1/2)) + arctan((1/3)))).simplify_full()	arctan(1/2) + arctan(1/3)	
+machin-s-formula-4-arctan-frac-15-arctan-frac-1	SR(((4 * arctan((1/5))) - arctan((1/239)))).simplify_full()	4*arctan(1/5) - arctan(1/239)	

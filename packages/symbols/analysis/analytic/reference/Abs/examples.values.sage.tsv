@@ -25,12 +25,12 @@ abs-positiveinfinity-times-i	enumeratio_abs((oo * (0 + 1*I)))	abs((I)*Infinity)	
 piecewiseexpand-abs-imaginaryunit-times-x-neg-2			
 complexexpand-abs-x			
 complexexpand-abs-x-plus-i-times-y			
-apply-derivative-abs-1-x			
+apply-derivative-abs-1-x	(diff(enumeratio_abs(SR.var("_d1")), SR.var("_d1"), 1)).subs({SR.var("_d1"): SR.var("x")})	True	
 the-gap-between-two-temperatures-70-and-95	enumeratio_abs((70 - 95))	25	
 the-distance-between-the-points-1-i-and-4-5i-of	enumeratio_abs(((1 + 1*I) - (4 + 5*I)))	5	
 even-function-x-x	enumeratio_equal(enumeratio_abs(-8), enumeratio_abs(8))	True	
 triangle-inequality-a-b-le-a-b			
-z-2-z-bar-z			
+z-2-z-bar-z	enumeratio_equal(((enumeratio_abs((3 + 4*I)))^2), ((3 + 4*I) * conjugate((3 + 4*I))))	True	
 multiplicative-ab-a-b	enumeratio_equal(enumeratio_abs(((1 + 2*I) * (3 + -1*I))), (enumeratio_abs((1 + 2*I)) * enumeratio_abs((3 + -1*I))))	True	
 abs-1	enumeratio_abs(1)	1	
 abs-neg-1	enumeratio_abs(-1)	1	

@@ -1,0 +1,38 @@
+id	in	out	verdict
+the-cubic	chebyshev_T(3, SR.var("x"))	True	
+the-quartic	chebyshev_T(4, SR.var("x"))	True	
+at-an-integer	chebyshev_T(5, 2)	362	
+at-a-real	chebyshev_T(5, 0.7)	-0.670880000000000	
+at-t0-0-7	enumeratio_n(chebyshev_T(0, 0.7))	1.00000000000000	
+at-t1-0-7	enumeratio_n(chebyshev_T(1, 0.7))	0.700000000000000	
+at-t2-0-7	enumeratio_n(chebyshev_T(2, 0.7))	-0.0200000000000001	
+at-t5-0-7	enumeratio_n(chebyshev_T(5, 0.7))	-0.670880000000000	
+at-t5-2	enumeratio_n(chebyshev_T(5, 2))	362.000000000000	
+at-t-5-0-7	enumeratio_n(chebyshev_T(-5, 0.7))	-0.670880000000000	
+at-t4-2-3i	enumeratio_n(chebyshev_T(4, (2 + 3*I)))	-911.000000000000 - 1056.00000000000*I	
+chebyshevt-2-3	chebyshev_T(2, 3)	17	
+chebyshevt-10-x	chebyshev_T(10, SR.var("x"))	True	
+series-chebyshevt-5-x-x-0-5	SR(chebyshev_T(5, SR.var("x"))).series(SR.var("x") == 0, 5 + 1)	True	
+at-a-rational	chebyshev_T(5, (1/3))	241/243	
+at-a-complex-argument	chebyshev_T(4, (2 + 3*I))	-1056*I - 911	
+a-symbolic-order-stays-unevaluated	chebyshev_T(SR.var("n"), SR.var("x"))	True	
+chebyshevt-2-5	chebyshev_T(2, 5)	49	
+chebyshevt-0-0	chebyshev_T(0, 0)	1	
+chebyshevt-0-positiveinfinity	chebyshev_T(0, oo)	A positive finite number	inconclusive
+chebyshevt-7-x	chebyshev_T(7, SR.var("x"))	True	
+chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x	enumeratio_equal(chebyshev_T(1, (-SR.var("x"))), (-chebyshev_T(1, SR.var("x"))))	True	
+chebyshevt-2-neg-x-eq-chebyshevt-2-x	enumeratio_equal(chebyshev_T(2, (-SR.var("x"))), chebyshev_T(2, SR.var("x")))	True	
+matrixfunction-function-chebyshevt-2-1-1-list			
+cos-n-theta	enumeratio_equal(chebyshev_T(6, (1/2)), cos((6 * (pi / 3))))	True	
+at-1	chebyshev_T(7, 1)	1	
+at-minus-1	chebyshev_T(7, -1)	-1	
+parity	enumeratio_equal(chebyshev_T(5, (-1/3)), (-chebyshev_T(5, (1/3))))	True	
+negative-order	chebyshev_T(-3, SR.var("x"))	True	
+pell-identity	(((chebyshev_T(4, 3))^2) - (8 * ((chebyshev_U(3, 3))^2)))	1	
+chebyshevt-0-1	chebyshev_T(0, 1)	1	
+chebyshevt-1-positiveinfinity	chebyshev_T(1, oo)	+Infinity	
+chebyshevt-1-negativeinfinity	chebyshev_T(1, -oo)	-Infinity	
+chebyshevt-2-positiveinfinity	chebyshev_T(2, oo)	+Infinity	
+chebyshevt-2-negativeinfinity	chebyshev_T(2, -oo)	+Infinity	
+sum-chebyshevt-k-1-over-2-times-chebyshevt-k-2-k	sum((chebyshev_T(SR.var("k"), (1/2)) * chebyshev_T(SR.var("k"), 2)), SR.var("k"), 0, 2)	-3/2	
+sum-chebyshevt-k-1-over-2-times-chebyshevt-k-2-2	sum((chebyshev_T(SR.var("k"), (1/2)) * chebyshev_T(SR.var("k"), 2)), SR.var("k"), 0, 3)	-55/2	

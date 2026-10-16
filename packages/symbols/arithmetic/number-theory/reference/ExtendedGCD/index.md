@@ -50,6 +50,16 @@ bindings:
       version: 1.14.0
       on: 2026-10-12
     note: SymPy's gcdex takes two arguments and has no n-ary form; folding it pairwise would test our fold against itself, so the three-argument call is left unmapped.
+  - origin: mapped
+    form: sage
+    template: xgcd($1, $2)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: "10.9"
+      on: 2026-10-16
 ---
 
 - Implements the extended Euclidean algorithm, the standard way to compute modular inverses. See [[PowerMod]].
