@@ -206,6 +206,31 @@ test("involutions (telephone numbers), past 2^53 and past the doubles' range too
   expect(involutionsByPairs(28) > MAX_SAFE && involutionsByPairs(27) <= MAX_SAFE).toBe(true);
 });
 
+/** The Mahonian numbers of n: the coefficients of the q-factorial Π (1 + q + … + qʲ), j < n. */
+function mahonianByQFactorial(n: number): bigint[] {
+  let poly = [1n];
+  for (let j = 1; j < n; j++) {
+    const next = Array<bigint>(poly.length + j).fill(0n);
+    for (let d = 0; d <= j; d++) poly.forEach((c, i) => (next[i + d] += c));
+    poly = next;
+  }
+  return poly;
+}
+
+test("permutations by inversions (Mahonian numbers), past 2^53 too", () => {
+  for (const [n, k] of [
+    [0, 0],
+    [5, 4],
+    [20, 95],
+    [20, 190],
+    [25, 100],
+    [40, 390],
+    [60, 885],
+  ])
+    expect([n, k, countOf("KInversionPermutations", [n, k])]).toEqual([n, k, mahonianByQFactorial(n)[k]]);
+  expect(mahonianByQFactorial(20)[95] > MAX_SAFE && mahonianByQFactorial(19)[85] <= MAX_SAFE).toBe(true);
+});
+
 test("Motzkin paths by peaks, past 2^53 too", () => {
   for (let n = 0; n <= 12; n++)
     for (let k = 0; k <= 7; k++)

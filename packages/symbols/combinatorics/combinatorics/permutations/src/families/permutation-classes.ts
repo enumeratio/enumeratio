@@ -5,7 +5,7 @@
 // to us, and the exact ones for Baxter and Smooth have list-valued or exponential state (wiki
 // Speculative-Restrictions).
 import { binomial } from "../../../collections/src/families/shared.ts";
-import { Factorial, IsPermutationOf, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
+import { Factorial, IsPermutationOf, modRank, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
 import {
   FibonacciWordCount,
   FibonacciWordRank,
@@ -84,7 +84,7 @@ function makeBruteForceClass(
     unrank: (n: number, r: number): number[] => {
       const l = list(n);
       const total = l.length;
-      const rr = total ? ((Math.trunc(r) % total) + total) % total : 0;
+      const rr = total ? modRank(Math.trunc(r), total) : 0;
       return l[rr];
     },
     rank: (perm: readonly number[]): number => {

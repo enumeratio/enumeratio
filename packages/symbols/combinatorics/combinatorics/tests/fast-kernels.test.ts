@@ -445,9 +445,14 @@ const BIGINT_COUNTS: [string, number[]][] = [
   ["SetPartitionsIntoKBlocks", [26, 5]],
   ["SetCompositions", [17]],
   ["Surjections", [23, 5]],
-  // Epsil takes seconds at these.
+  // The Mahonian count, at the first n past 2^53.
+  ["KInversionPermutations", [20, 95]],
+  // Epsil takes seconds at these, and about a minute and a half at the non-crossing supports. The Eulerian
+  // and Motzkin-by-peaks counts are out of Epsil's reach past 2^53 (many minutes at the first params):
+  // tests/exact-triangles.test.ts holds them to a second route instead.
   ...(DEEP
     ? ([
+        ["NonCrossingCycleSupportPermutations", [19]],
         ["TriangularCompositions", [86]],
         ["PrimeCompositions", [98]],
       ] as [string, number[]][])
@@ -464,6 +469,28 @@ for (const [head, p] of BIGINT_COUNTS) {
     expect(kernelOn(ce, family).count(p)).toBe(total);
   });
 }
+
+// StandardTableauPairs(18) is the one nested fiber with a fast count whose ranks pass 2^53 − 18!: a rank
+// r ≥ 2^53 − 18! must not wrap in doubles (r + 18! leaves the safe integers). The standard run samples
+// nested families at n ≤ 2 only, so the ends of this fiber and the powers of two inside it are checked here.
+test("StandardTableauPairs(18): unrank and rank agree with Epsil past 2^53 − 18!", () => {
+  const family = fastFamilies.find((f) => f.head === "StandardTableauPairs")!;
+  const fast = kernelOn(ce, family);
+  const epsil = epsilKernelOn(ce, family);
+  const p = [18];
+  const total = 6402373705728000n;
+  expect(fast.count(p)).toBe(total);
+  const wrap = 2n ** 53n - total;
+  const ranks = [0n, 1n, 2n ** 51n, 2n ** 51n + 1n, wrap - 1n, wrap, wrap + 1n, wrap + 2n, 2n ** 52n, 2n ** 52n + 1n]
+    .concat([total - 2n, total - 1n])
+    .filter((r) => r < total);
+  for (const r of ranks) {
+    const element = fast.unrank(p, r);
+    expect([r, element]).toEqual([r, epsil.unrank(p, r)]);
+    expect([r, fast.rank(element, p)]).toEqual([r, r]);
+    expect([r, epsil.rank(element, p)]).toEqual([r, r]);
+  }
+});
 
 // Vexillary's Epsil table is 2^n states, out of reach past n = 14 or so: its exact count, past 2^53 too, is
 // held to Gessel's Bessel determinant (Av(2143) is Wilf-equivalent to Av(1234)) instead.

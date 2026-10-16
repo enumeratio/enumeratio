@@ -16,6 +16,7 @@
 // SkewPartitions, SkewStandardTableaux and BoxedPlanePartitions are defined in Epsil
 // (../../../partitions/src/families/skew-partitions.ts, ./skew-standard-tableaux.ts, ./boxed-plane-partitions.ts).
 import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
+import { modRank } from "../../../collections/src/families/kernels.ts";
 import type { NumberKernel, Param } from "../../../collections/src/families/types.ts";
 import {
   PartitionsQ,
@@ -36,7 +37,7 @@ import {
 import { semistandardTableaux } from "./semistandard-tableaux.ts";
 import { shiftedStandardTableaux } from "./standard-tableaux.ts";
 
-const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
+const normRank = (r: number, total: number): number => (total > 0 ? modRank(Math.trunc(r), total) : 0);
 
 const axis = (name: string): Param => ({ name, role: "axis", min: 0 });
 

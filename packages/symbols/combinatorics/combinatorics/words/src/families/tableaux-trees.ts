@@ -10,9 +10,10 @@
 import { nonDecreasingParkingFunctions } from "./epsil.ts";
 import { parkingFunctions } from "./parking-functions.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { modRank } from "../../../collections/src/families/kernels.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 
-const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
+const normRank = (r: number, total: number): number => (total > 0 ? modRank(Math.trunc(r), total) : 0);
 
 // ─── ParkingFunctions(n): sequences (a_1..a_n), a_i in {1..n}, whose sorted form b satisfies
 // b_i<=i (every car parks). Count (n+1)^(n-1). unrank/rank via digit-DP: M[k] tracks, while
