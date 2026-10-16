@@ -6,22 +6,10 @@
 // collections per step 5 rule 4 -- so does most of paths-partitions.ts's lattice-path block for
 // the same reason (see lattice-paths/src/families/paths-partitions.ts).
 //
-// All three are walks defined in Epsil (./walks.ts). Their TS kernels in
-// collections/src/families/kernels-extra.ts stay as the independent reading the agreement tests
-// check against.
+// All three are walks defined in Epsil (./walks.ts). Their TS kernels live in
+// tests/readings/ as the independent reading the agreement tests check against; Motzkin and
+// Schröder keep an exact count past 2^53 (`fastCount`).
 import type { FastKernel } from "../../../collections/src/families/epsil.ts";
-import {
-  DyckPathCount,
-  DyckPathRank,
-  DyckPathUnrank,
-  IsDyckPath,
-  IsMotzkinPath,
-  IsSchroederPath,
-  MotzkinRank,
-  MotzkinUnrank,
-  SchroederRank,
-  SchroederUnrank,
-} from "../../../collections/src/families/kernels-extra.ts";
 import { motzkinExact, schroederExact } from "../../../collections/src/families/exact-recurrences.ts";
 import { equal, iff, less, lets, mul, quotient, sub } from "../../../collections/src/families/tables.ts";
 import { completionsOf, completionsTable, type Step, walkFamily } from "./walks.ts";
@@ -37,12 +25,12 @@ const tableWalk = (
   width: unknown,
   cap: unknown,
   steps: readonly Step[],
-  fast: FastKernel,
+  fastCount: FastKernel["count"],
 ) =>
   walkFamily({
     head,
     carrier,
-    fast,
+    fastCount,
     params: ["_n"],
     width,
     steps,
@@ -66,12 +54,6 @@ const ballot = (w: unknown, y: unknown): unknown =>
 export const dyckPaths = walkFamily({
   head: "DyckPaths",
   carrier: "DyckPath",
-  fast: {
-    count: ([n]) => DyckPathCount(n),
-    unrank: ([n], r) => DyckPathUnrank(n, r),
-    rank: (x) => DyckPathRank(x as number[]),
-    valid: (x, [n]) => IsDyckPath(x as number[], n),
-  },
   params: ["_n"],
   width: mul(2, "_n"),
   steps: [UP, { token: 0, rise: -1, width: 1 }],
@@ -85,12 +67,7 @@ const motzkinPaths = tableWalk(
   "_n",
   quotient("_n", 2),
   [UP, { token: 0, rise: 0, width: 1 }, DOWN],
-  {
-    count: ([n]) => motzkinExact(n),
-    unrank: ([n], r) => MotzkinUnrank(n, r),
-    rank: (x) => MotzkinRank(x as number[]),
-    valid: (x, [n]) => IsMotzkinPath(x as number[], n),
-  },
+  ([n]) => motzkinExact(n),
 );
 /** Large Schröder paths of width 2n: up (1), a level step two wide (2), down (−1). */
 const schroederPaths = tableWalk(
@@ -99,12 +76,7 @@ const schroederPaths = tableWalk(
   mul(2, "_n"),
   "_n",
   [UP, { token: 2, rise: 0, width: 2 }, DOWN],
-  {
-    count: ([n]) => schroederExact(n),
-    unrank: ([n], r) => SchroederUnrank(n, r),
-    rank: (x) => SchroederRank(x as number[]),
-    valid: (x, [n]) => IsSchroederPath(x as number[], n),
-  },
+  ([n]) => schroederExact(n),
 );
 
 export const entries = [dyckPaths, motzkinPaths, schroederPaths];

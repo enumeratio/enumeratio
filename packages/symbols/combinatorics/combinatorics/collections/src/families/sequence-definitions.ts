@@ -2,7 +2,8 @@
 // are their terms (kind "scalar"), as ./numeric-definitions.ts does for the closed-form ones: the linear
 // recurrences, the factorials and Catalan numbers (a term from the one before), Motzkin, Delannoy and
 // Schröder numbers (a sum), and the sequences of a number's binary digits. The TS kernels stay as the fast
-// paths while a term is a safe integer; past that the interpreter's exact integers answer (./epsil.ts).
+// paths while a term is a safe integer, bar the `UNWIRED` ones (./numeric-definitions.ts); past that the
+// interpreter's exact integers answer (./epsil.ts).
 //
 // Compiled code computes in doubles, so each definition keeps every intermediate value no greater than
 // the term it finds: sums of what is added to, a quotient taken before the product it scales, and
@@ -308,7 +309,8 @@ export const definitions: ReadonlyMap<string, EpsilFamily> = new Map(families.ma
 
 /** The TS kernels' reach on the fast path. The recurrence kernels cache every term up to the rank, and ran out
  *  of memory (measured: factorials by ~50000 ranks, the rest between 10^5 and 3·10^5), so these stop just short;
- *  the bit kernels scan up to the rank or element, which compiled Epsil answers in closed form past them. */
+ *  the bit kernels scan up to the rank or element, which compiled Epsil answers in closed form past them
+ *  (Evil and Odious, now unwired: tests/readings/numeric.ts keeps their reach). */
 const REACHES: Readonly<Record<string, FastReach>> = {
   ...Object.fromEntries(
     [
@@ -328,8 +330,6 @@ const REACHES: Readonly<Record<string, FastReach>> = {
   ),
   FactorialNumbers: { bigTerms: true, unrank: 30_000 },
   DoubleFactorialNumbers: { bigTerms: true, unrank: 30_000 },
-  EvilNumbers: { unrank: 100_000, rank: 200_000 },
-  OdiousNumbers: { unrank: 100_000, rank: 200_000 },
   SternDiatomicSequence: { rank: STERN_RANK_LIMIT },
 };
 

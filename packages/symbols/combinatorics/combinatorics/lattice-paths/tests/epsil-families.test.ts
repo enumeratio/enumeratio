@@ -7,11 +7,23 @@ import { bareEngine } from "@enumeratio/engine/testing";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, epsilKernelOn } from "../../collections/src/families/epsil.ts";
+import { CatalanNumber, DyckPathRank, DyckPathUnrank } from "../../collections/src/families/kernels-extra.ts";
+import { entriesBeforeDyckPaths as unrestrictedEntries } from "../../collections/src/families/core.ts";
+import { entries as coreEntries } from "../src/families/core.ts";
 import {
-  CatalanNumber,
+  DyckPathsByHeightCount,
+  DyckPathsByHeightRank,
+  DyckPathsByHeightUnrank,
+  entries as pathsEntries,
+  entriesBeforeDyckPathsByHeight as pathsBeforeEntries,
+  isDyckPathsByHeightOf,
+  isMotzkinPathsByPeaksOf,
+  MotzkinPathsByPeaksCount,
+  MotzkinPathsByPeaksRank,
+  MotzkinPathsByPeaksUnrank,
+} from "../src/families/paths-partitions.ts";
+import {
   DyckPathCount,
-  DyckPathRank,
-  DyckPathUnrank,
   IsDyckPath,
   IsLatticePathOf,
   IsMotzkinPath,
@@ -25,28 +37,16 @@ import {
   SchroederCount,
   SchroederRank,
   SchroederUnrank,
-} from "../../collections/src/families/kernels-extra.ts";
-import { entriesBeforeDyckPaths as unrestrictedEntries } from "../../collections/src/families/core.ts";
-import { entries as coreEntries } from "../src/families/core.ts";
+} from "../../tests/readings/kernels/collections-kernels-extra.ts";
 import {
   DelannoyPathCount,
   DelannoyPathRank,
   DelannoyPathUnrank,
-  DyckPathsByHeightCount,
-  DyckPathsByHeightRank,
-  DyckPathsByHeightUnrank,
-  entries as pathsEntries,
-  entriesBeforeDyckPathsByHeight as pathsBeforeEntries,
   isDelannoyPathOf,
-  isDyckPathsByHeightOf,
   isLukasiewiczPathOf,
   LukasiewiczPathRank,
   LukasiewiczPathUnrank,
-  isMotzkinPathsByPeaksOf,
-  MotzkinPathsByPeaksCount,
-  MotzkinPathsByPeaksRank,
-  MotzkinPathsByPeaksUnrank,
-} from "../src/families/paths-partitions.ts";
+} from "../../tests/readings/kernels/lattice-paths-paths-partitions.ts";
 
 const ce = bareEngine();
 

@@ -10,12 +10,6 @@
 // independent reading its agreement test checks it against.
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {
-  LabeledTreeCount,
-  LabeledTreeUnrank,
-  LabeledTreeRank,
-  IsLabeledTreeOf,
-} from "../../../collections/src/families/kernels-extra.ts";
-import {
   add,
   and,
   at,
@@ -29,22 +23,9 @@ import {
   sub,
   upTo,
 } from "../../../collections/src/families/tables.ts";
-import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import { degreesOfSequence, pruferDigits, removeLeaf, smallestLeaf, zeros } from "./peel.ts";
 
 type MathJSON = unknown;
-
-export const labeledTreesKernel: NumberKernel = {
-  head: "LabeledTrees",
-  paramCount: 1,
-  kind: "blocks",
-  carrier: "LabeledTree",
-  count: ([n]) => LabeledTreeCount(n),
-  unrank: ([n], r) => LabeledTreeUnrank(n, r),
-  valid: (e, [n]) => IsLabeledTreeOf(e as number[][], n),
-  rank: (e, [n]) => LabeledTreeRank(e as number[][], n),
-};
-
 const N = "_n";
 const edges = "_x";
 const end = (edge: MathJSON, side: 1 | 2): MathJSON => at(edge, side);
@@ -170,7 +151,6 @@ const labeledTrees: EpsilFamily = {
   carrier: "LabeledTree",
   params: ["_n"],
   elementType: "list<tuple<integer, integer>>",
-  fast: labeledTreesKernel,
   epsil: {
     count: iff(["LessEqual", N, 0], 0, iff(["LessEqual", N, 2], 1, ["Power", N, sub(N, 2)])),
     unrank,

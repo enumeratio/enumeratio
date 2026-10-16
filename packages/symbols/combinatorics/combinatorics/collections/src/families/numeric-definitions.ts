@@ -2,7 +2,7 @@
 // sequence (kind "scalar"), in the order of the sequence. A term is a closed form in its rank, and
 // the rank of a term is found by binary descent over the ranks, exact at any size. The TS kernels
 // (./numeric-closed-form.ts, ./numeric-sets.ts) stay as the fast paths while a term is a safe
-// integer; past that the interpreter's exact integers answer (./epsil.ts).
+// integer, bar the `UNWIRED` ones; past that the interpreter's exact integers answer (./epsil.ts).
 
 import type { EpsilFamily, FastKernel } from "./epsil.ts";
 import { add, equal, fold, iff, less, lets, mul, sub } from "./tables.ts";
@@ -173,8 +173,19 @@ export const fastOf = (kernel: NumberKernel, { bigTerms = false, unrank, rank }:
   ...(kernel.bigElements === true ? { bigElements: true as const } : {}),
 });
 
+/** Sequences whose TS kernel no longer runs ahead of the definition (BL-225): compiled Epsil is as quick to the
+ *  terms a double holds, and the kernel reaches no further (no bigint terms, no ranks Epsil declines). The
+ *  kernel stays in its `kernels` list as the independent reading tests/readings/numeric.ts holds the definition to. */
+export const UNWIRED: ReadonlySet<string> = new Set([
+  "SquareNumbers",
+  "AllOnes",
+  "ThueMorseNumbers",
+  "EvilNumbers",
+  "OdiousNumbers",
+]);
+
 /** The kernels, each replaced by its Epsil definition where there is one: that, with the kernel as
- *  its fast path and its Plausible declaration. */
+ *  its fast path (unless `UNWIRED`) and its Plausible declaration. */
 export const withDefinitions = (
   kernels: readonly (NumberKernel | EpsilFamily)[],
   catalogue: ReadonlyMap<string, EpsilFamily> = definitions,
@@ -187,6 +198,6 @@ export const withDefinitions = (
     return {
       ...definition,
       ...(declared === undefined ? {} : { declared }),
-      fast: fastOf(kernel, reach[kernel.head]),
+      ...(UNWIRED.has(kernel.head) ? {} : { fast: fastOf(kernel, reach[kernel.head]) }),
     };
   });

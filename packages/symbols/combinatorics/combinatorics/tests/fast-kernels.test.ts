@@ -2,6 +2,9 @@
 // while the fiber's count is a safe integer. The definitions are the meaning, so every fast
 // family is held to them here: over a sampled grid of params, the fast kernel and the kernel
 // built from Epsil alone agree on count, unrank, rank and valid (members and near misses).
+// Compiled Epsil made most of those paths unnecessary at runtime (BL-225): the readings of the
+// retired ones live in tests/readings and are put back as `fast` here, so they are held to the
+// definitions all the same.
 
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
@@ -35,20 +38,24 @@ import {
   InvolutionCount,
   InvolutionRank,
   InvolutionUnrank,
-  GrayCodeSubsetRank,
-  GrayCodeSubsetUnrank,
   KSubsetCount,
   KSubsetRank,
   KSubsetUnrank,
+} from "../collections/src/families/kernels-extra.ts";
+import { floorDiv, modRank, PermutationRank, PermutationUnrank } from "../collections/src/families/kernels.ts";
+import type { Element, NumberKernel } from "../collections/src/families/types.ts";
+import { PhylogeneticTreeUnrank } from "../trees/src/families/unlabeled-trees.ts";
+import { RETIRED_FAST, withRetiredFast } from "./readings/index.ts";
+import {
+  GrayCodeSubsetRank,
+  GrayCodeSubsetUnrank,
   SubsetCount,
   SubsetRank,
   SubsetUnrank,
   TupleRank,
   TupleUnrank,
-} from "../collections/src/families/kernels-extra.ts";
-import { floorDiv, ipow, modRank, PermutationRank, PermutationUnrank } from "../collections/src/families/kernels.ts";
-import type { Element, NumberKernel } from "../collections/src/families/types.ts";
-import { PhylogeneticTreeUnrank } from "../trees/src/families/unlabeled-trees.ts";
+} from "./readings/kernels/collections-kernels-extra.ts";
+import { ipow } from "./readings/kernels/collections-kernels.ts";
 
 const DEEP = process.env.DEEP_TESTS === "1";
 const ce = bareEngine();
@@ -65,7 +72,8 @@ const unbounded = (family: EpsilFamily): boolean => {
   }
 };
 
-const withFast = allFamilies.filter(isEpsilFamily).filter((family) => family.fast !== undefined);
+const families = allFamilies.filter(isEpsilFamily).map(withRetiredFast);
+const withFast = families.filter((family) => family.fast !== undefined);
 const fastFamilies = withFast.filter((family) => !unbounded(family));
 // The predicate scans have a TS kernel that scans without end, which the doubling below would never leave.
 const sequenceFamilies = withFast.filter(unbounded).filter((family) => !scanDefinitions.has(family.head));
@@ -234,8 +242,17 @@ test("a fast path is not part of the definitions' hash", () => {
   }
 });
 
+test("a retired reading is no runtime path: its family carries no fast kernel", () => {
+  const heads = new Set(allFamilies.filter(isEpsilFamily).map((family) => family.head));
+  for (const head of Object.keys(RETIRED_FAST)) expect([head, heads.has(head)]).toEqual([head, true]);
+  for (const family of allFamilies.filter(isEpsilFamily).filter((f) => RETIRED_FAST[f.head] !== undefined))
+    expect([family.head, family.fast]).toEqual([family.head, undefined]);
+});
+
 // A family may carry a fast count alone, leaving unrank, rank and membership to Epsil.
-const countFamilies = allFamilies.filter(isEpsilFamily).filter((family) => family.fastCount !== undefined);
+const countFamilies = allFamilies
+  .filter(isEpsilFamily)
+  .filter((family) => family.fastCount !== undefined && RETIRED_FAST[family.head] === undefined);
 
 test("some families carry a fast count alone, and a kernel says so", () => {
   expect(countFamilies.length).toBeGreaterThan(0);
@@ -734,7 +751,7 @@ const OTHER_ORDER: Record<string, { params: number[]; reading: Reading }> = {
 
 for (const [head, { params, reading }] of Object.entries(OTHER_ORDER)) {
   test(`${head}: its TS kernel lists the members in another order, so it carries no fast path`, () => {
-    const family = allFamilies.filter(isEpsilFamily).find((f) => f.head === head)!;
+    const family = families.find((f) => f.head === head)!;
     // A count or membership kernel may stand in front of Epsil, but not an order of its own.
     expect(family.fast?.unrank(params, 0)).toBeUndefined();
     expect(family.fast?.rank([], params)).toBeUndefined();

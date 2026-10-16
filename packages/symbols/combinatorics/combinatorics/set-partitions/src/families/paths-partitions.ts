@@ -10,31 +10,9 @@
 // first-appearance order). Count = BellB(n); SetPartitions ranks through this exact word and just
 // reshapes it into blocks, so both share one definition (./core.ts) — here the word itself IS the
 // element. It is defined in Epsil; the TS reading (RgsUnrank/RgsRank in
-// collections/src/families/kernels-combinatorics.ts, and the check below) stays as the
-// independent reading the agreement tests check against. ─────────────────────────────────────
+// collections/src/families/kernels-combinatorics.ts, and the check below) is the independent
+// reading tests/readings/ holds it to; the count stays exact past 2^53 (`fastCount`). ─────────
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import { bellExact } from "../../../collections/src/families/exact-recurrences.ts";
-import { RgsRank, RgsUnrank } from "../../../collections/src/families/kernels-combinatorics.ts";
 import { restrictedGrowthStrings } from "./core.ts";
-
-export function isRestrictedGrowthStringOf(e: unknown, n: number): boolean {
-  if (!Array.isArray(e) || e.length !== n) return false;
-  let mx = -1;
-  for (const v of e) {
-    if (typeof v !== "number" || !Number.isInteger(v) || v < 0 || v > mx + 1) return false;
-    if (v > mx) mx = v;
-  }
-  return true;
-}
-
-export const entries: EpsilFamily[] = [
-  {
-    ...restrictedGrowthStrings,
-    fast: {
-      count: ([n]) => bellExact(n),
-      unrank: ([n], r) => RgsUnrank(n, r),
-      rank: (x) => RgsRank(x as number[]),
-      valid: (x, [n]) => isRestrictedGrowthStringOf(x, n),
-    },
-  },
-];
+export const entries: EpsilFamily[] = [{ ...restrictedGrowthStrings, fastCount: ([n]) => bellExact(n) }];

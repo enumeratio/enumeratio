@@ -10,18 +10,20 @@ import { epsilKernelOn, type EpsilFamily, evaluateTables } from "../../collectio
 import {
   IsLabeledGraphByEdgesOf,
   IsLabeledGraphOf,
-  IsTournamentOf,
   LabeledGraphByEdgesCount,
   LabeledGraphByEdgesRank,
   LabeledGraphByEdgesUnrank,
+} from "../src/families/core.ts";
+import { labeledGraphs, labeledGraphsByEdges, tournaments } from "../src/families/epsil.ts";
+import {
+  IsTournamentOf,
   LabeledGraphCount,
   LabeledGraphRank,
   LabeledGraphUnrank,
   TournamentCount,
   TournamentRank,
   TournamentUnrank,
-} from "../src/families/core.ts";
-import { labeledGraphs, labeledGraphsByEdges, tournaments } from "../src/families/epsil.ts";
+} from "../../tests/readings/kernels/graphs-core.ts";
 
 const ce = new ComputeEngine();
 // Larger parameter points and the past-2^53 round trips run nightly.

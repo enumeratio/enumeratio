@@ -7,13 +7,6 @@ import { bareEngine } from "@enumeratio/engine/testing";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, kernelOn } from "../../collections/src/families/epsil.ts";
-import {
-  FibonacciWordCount,
-  FibonacciWordRank,
-  FibonacciWordUnrank,
-  IsFibonacciWord,
-} from "../../collections/src/families/kernels-extra.ts";
-import { stirlingCount, stirlingRank, stirlingUnrank, stirlingValid } from "../src/families/binary-word-families.ts";
 import { entries as binaryEntries } from "../src/families/binary-word-families.ts";
 import {
   IsNonDecreasingParkingFunctionOf,
@@ -22,17 +15,29 @@ import {
   NonDecreasingParkingFunctionUnrank,
   entries as tableauxEntries,
 } from "../src/families/tableaux-trees.ts";
+import { entries as wordEntries } from "../src/families/words.ts";
+import {
+  FibonacciWordCount,
+  FibonacciWordRank,
+  FibonacciWordUnrank,
+  IsFibonacciWord,
+} from "../../tests/readings/kernels/collections-kernels-extra.ts";
+import {
+  stirlingCount,
+  stirlingRank,
+  stirlingUnrank,
+  stirlingValid,
+} from "../../tests/readings/kernels/words-binary-word-families.ts";
 import {
   byWeightCount,
   byWeightRank,
   byWeightUnrank,
   byWeightValid,
-  entries as wordEntries,
   lucasCount,
   lucasStringsRank,
   lucasStringsUnrank,
   lucasStringsValid,
-} from "../src/families/words.ts";
+} from "../../tests/readings/kernels/words-words.ts";
 
 const ce = bareEngine();
 // The larger parameter points and the past-2^53 round trips (the interpreter takes minutes over
