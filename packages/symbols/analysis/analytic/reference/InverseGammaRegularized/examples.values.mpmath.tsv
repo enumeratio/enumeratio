@@ -1,0 +1,21 @@
+id	in	out
+q-1-z-e-z-so-the-inverse-at-1-2-is-ln-2	enumeratio_inverse_gamma_regularized(1, 0.5)	
+the-median-of-the-gamma-2-1-distribution	enumeratio_inverse_gamma_regularized(2, 0.5)	
+inversegammaregularized-2p5-0p3	enumeratio_inverse_gamma_regularized(2.5, 0.3)	
+qinv-5-0-1	enumeratio_inverse_gamma_regularized(5, 0.1)	
+qinv-0-5-0-9	enumeratio_inverse_gamma_regularized(0.5, 0.9)	
+fullsimplify-normal-series		
+tail-a-100-s-1e-100	enumeratio_inverse_gamma_regularized(100, 1e-100)	483.219530222561926587117207932
+tail-a-5-s-1e-300	enumeratio_inverse_gamma_regularized(5, 1e-300)	713.885978064944306022427373553
+tail-a-0p01-s-0p5	enumeratio_inverse_gamma_regularized(0.01, 0.5)	4.465535018910355121413329333e-31
+large-a-upper-tail	enumeratio_inverse_gamma_regularized(500, 1e-50)	911.575057328501472149556300113
+fullsimplify-matrixfunction-function		
+n-inversegammaregularized-2-33-over-100-50	enumeratio_n(lambda: (enumeratio_inverse_gamma_regularized(2, (mpf(33)/100))), 50)	
+series-inversegammaregularized-a-s-s-s0-1		
+q-a-0-1		
+q-a-infty-0		
+order-1-inverts-e-z		
+inversegammaregularized-1-0	enumeratio_inverse_gamma_regularized(1, 0)	+inf
+inversegammaregularized-2-0	enumeratio_inverse_gamma_regularized(2, 0)	
+inversegammaregularized-1-1	enumeratio_inverse_gamma_regularized(1, 1)	
+inversegammaregularized-2-1	enumeratio_inverse_gamma_regularized(2, 1)	0.0

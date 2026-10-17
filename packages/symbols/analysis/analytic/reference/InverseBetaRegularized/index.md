@@ -26,6 +26,17 @@ bindings:
     checked:
       version: statrs 0.18.0
       on: 2026-10-16
+  - origin: mapped
+    form: mpmath
+    template: enumeratio_inverse_beta_regularized($1, $2, $3)
+    arity: 3
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+    checked:
+      version: mpmath 1.3.0
+      on: 2026-10-17
 seeAlso:
   - BetaRegularized
   - InverseGammaRegularized
@@ -34,4 +45,4 @@ names:
 ---
 
 - $I_x(1, 1) = x$ is its own inverse, and $I_x(a, 1) = x^a$ inverts to $s^{1/a}$ — both exact, symbolic $s$ (and $a$) included.
-- Otherwise: a safeguarded Newton's method against `BetaRegularized(x, a, b)`, using the Beta density $x^{a-1}(1-x)^{b-1}/B(a,b)$ (in log space) as the derivative; checked against `wolframscript` to 20 digits.
+- Otherwise: a safeguarded Newton's method in $\ln x$ against `BetaRegularized(x, a, b)` (above $s = 1/2$, on the upper tail $I_y(b, a) = 1 - s$), using the Beta density $x^{a-1}(1-x)^{b-1}/B(a,b)$ (in log space) as the derivative; checked against `wolframscript` to 20 digits.

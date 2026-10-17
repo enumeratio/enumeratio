@@ -57,3 +57,43 @@ test("past a double's digits the root is the true one, however far below a doubl
     /^1\.683732939061499141338880230655\d*e-36$/,
   );
 });
+
+// Q(500, z) in compute-engine is the rounding of 1 − P there (−7e-43 at z = 911.6), so the tail is
+// solved on Q's continued fraction. Values are mpmath's.
+test("an upper-tail root keeps its digits where the forward Q has none", () => {
+  near(gamma(500, 1e-50).re, 911.5750573285015, 1e-14);
+  near(gamma(1000, 1e-100).re, 1830.8469620466365, 1e-14);
+  const exact = new ComputeEngine();
+  declareAnalytic(exact);
+  exact.precision = 40;
+  const num = String((exact.box(["InverseGammaRegularized", 100, 1e-100]).N().json as { num: string }).num);
+  expect(num).toMatch(/^483\.21953022256192661224358332\d*$/);
+});
+
+// An exact s a hair under 1 rounds to 1 (or its 1 − s to the wrong tail) as a double; the
+// complement comes from the exact value. Values are mpmath's, for s = 1 − 1e-20 and 1 − 3e-17.
+test("an exact s near 1 keeps its tail", () => {
+  const under = (n: number, d: string) => ["Subtract", 1, ["Rational", n, { num: d }]];
+  for (const [n, d, z, x] of [
+    [1, "100000000000000000000", 1.4142135624397617e-10, 0.9999998642791146],
+    [3, "100000000000000000", 7.745966712414834e-9, 0.9999980425652215],
+  ] as const) {
+    const s = under(n, d);
+    near(ce.box(["InverseGammaRegularized", 2, s] as never).N().re, z, 1e-14);
+    near(ce.box(["InverseBetaRegularized", s, 2, 3] as never).N().re, x, 1e-14);
+  }
+});
+
+// Past a double's digits the beta has no bignum solve, so it declines rather than answer a double.
+test("a beta root declines where it cannot give the digits asked", () => {
+  const exact = new ComputeEngine();
+  declareAnalytic(exact);
+  exact.precision = 40;
+  expect(exact.box(["InverseBetaRegularized", 0.3, 2.5, 1.5]).N().operator).toBe("InverseBetaRegularized");
+});
+
+// A target within 1e-14 of 1 is judged against the upper tail 1 − s, not against s itself.
+test("a beta root for s near 1 is the upper tail's", () => {
+  near(beta(0.99999999999999, 3, 1000).re, 0.03813328897427346, 1e-14);
+  near(beta(0.9999999999, 30, 3).re, 0.9999727776780752, 1e-14);
+});
