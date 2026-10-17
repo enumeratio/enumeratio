@@ -1,2 +1,2 @@
 id	section	role	expr	expected	caption
-inert	Basic		[PaneSelectorBox, [List, [KeyValuePair, "'1'", "'one'"], [KeyValuePair, "'2'", "'two'"]], [Dynamic, n]]	[PaneSelectorBox, [List, [Tuple, "'1'", "'one'"], [Tuple, "'2'", "'two'"]], [Dynamic, n]]	a box is inert: it evaluates to itself
+inert	Basic		[PaneSelectorBox, [List, [KeyValuePair, "'1'", "'one'"], [KeyValuePair, "'2'", "'two'"]], [Dynamic, n]]	[PaneSelectorBox, [List, [Tuple, "'1'", "'one'"], [Tuple, "'2'", "'two'"]], [Dynamic, n]]	a box is inert: it evaluates to itself, its rules read as pairs

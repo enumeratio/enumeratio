@@ -328,7 +328,8 @@ export function isBox(value: unknown): value is Box {
         Array.isArray(args[0]) &&
         args[0].every((r: unknown) => Array.isArray(r) && r.length === 2 && r.every(isBox)) &&
         Array.isArray(args[1]) &&
-        args[1][0] === "Dynamic"
+        args[1][0] === "Dynamic" &&
+        args[1].length === 2
       );
     case "TextBox":
     case "TemplateSlot":

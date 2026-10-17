@@ -81,4 +81,12 @@ test("TooltipBox and PaneSelectorBox are boxes and round-trip through MathJSON",
     expect(fromMathJson(toMathJson(box))).toEqual(box);
   }
   expect(isBox(["PaneSelectorBox", [["1"]], ["Dynamic", "n"]])).toBe(false);
+  // The selector is a one-operand Dynamic binding; a DynamicBox is no longer read.
+  expect(isBox(["PaneSelectorBox", [["1", "one"]], ["DynamicBox", "n"]])).toBe(false);
+  expect(isBox(["PaneSelectorBox", [["1", "one"]], ["Dynamic", "n", "m"]])).toBe(false);
+  const read = (rules: unknown, selector: unknown) => fromMathJson(["PaneSelectorBox", rules, selector] as never);
+  const rule = ["List", ["KeyValuePair", { str: "1" }, { str: "one" }]];
+  expect(() => read(rule, ["DynamicBox", "n"])).toThrow();
+  expect(() => read(["List", ["List", { str: "1" }]], ["Dynamic", "n"])).toThrow();
+  expect(() => read(["List", "bad"], ["Dynamic", "n"])).toThrow();
 });

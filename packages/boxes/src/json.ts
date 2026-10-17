@@ -159,7 +159,10 @@ export function fromMathJson(json: Json): Box {
         if (pane === undefined || rest.length > 0) return fail("PaneSelectorBox takes key -> pane rules", rule);
         return [fromMathJson(key!), fromMathJson(pane)];
       });
-    if (head === "PaneSelectorBox") return op;
+    if (head === "PaneSelectorBox")
+      return headOf(op) === "Dynamic" && opsOf(op).length === 1
+        ? op
+        : fail("PaneSelectorBox takes a Dynamic binding", op);
     if (head === "TextBox" || head === "TemplateSlot" || head === "TemplateExpression")
       return stringOf(op) ?? fail(`${head} takes a string`, op);
     if ((head === "TagBox" || head === "FormBox") && i === 1)
