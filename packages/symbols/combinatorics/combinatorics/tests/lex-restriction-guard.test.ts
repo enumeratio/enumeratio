@@ -153,22 +153,27 @@ test("Connected, Separable and Vexillary counts past doubles: exact where cheap,
   expect([past.answer, past.ms < BUDGET_MS]).toEqual([["Count", ["ConnectedPermutations", 5000]], true]);
 });
 
-test("SeparablePermutations(23), (24): a count a double holds, but a table it doesn't, declines at once and says so", () => {
+test("SeparablePermutations(23), (24) answer, and (25), past 2^53, declines at once and says so", () => {
   const kernel = warmKernel("SeparablePermutations", [6]);
-  // n = 22 still unranks and ranks; from 23 the compiled table leaves the safe integers a size before the count does.
-  const small = kernel.unrank([22], 7n);
-  expect(kernel.rank(small, [22])).toBe(7n);
+  // The compiled table holds to the last n whose count is a safe integer.
   for (const n of [23, 24]) {
     const p = [n];
     const total = kernel.count(p) as bigint;
     expect(total > 0n && total <= MAX_SAFE).toBe(true);
     const x = iota(n);
     expect(kernel.valid(x, p)).toBe(true);
-    for (const call of [() => kernel.unrank(p, 0n), () => kernel.rank(x, p)]) {
-      const start = performance.now();
-      expect(call).toThrow(/table doesn't fit in doubles, not bigint yet/);
-      expect(performance.now() - start).toBeLessThan(BUDGET_MS);
-    }
+    expect(kernel.unrank(p, 0n)).toEqual(x);
+    expect(kernel.rank(x, p)).toBe(0n);
+    const middle = kernel.unrank(p, total / 2n);
+    expect(kernel.rank(middle, p)).toBe(total / 2n);
+  }
+  const p = [25];
+  expect((kernel.count(p) as bigint) > MAX_SAFE).toBe(true);
+  const x = iota(25);
+  for (const call of [() => kernel.unrank(p, 0n), () => kernel.rank(x, p)]) {
+    const start = performance.now();
+    expect(call).toThrow(/not bigint yet/);
+    expect(performance.now() - start).toBeLessThan(BUDGET_MS);
   }
 });
 
