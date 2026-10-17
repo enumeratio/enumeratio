@@ -75,3 +75,23 @@ test("Accumulate on an actual list still folds", () => {
 test("FoldList(f, x0, list) stays unevaluated for a free list", () => {
   expect(run(["FoldList", "Add", 0, "v"])).toEqual(["FoldList", "Add", 0, "v"]);
 });
+
+// Wolfram orders the ends: a negative max counts down from 0, a reversed pair swaps.
+test("RandomInteger(-5) and RandomInteger({5, 1}) draw from the ordered range", () => {
+  const draws = (range: unknown) => {
+    ce.box(["SeedRandom", 11]).evaluate();
+    return (run(["RandomInteger", range as never, 60]) as unknown as unknown[]).slice(1) as number[];
+  };
+  const down = draws(-5);
+  expect(down.every((v) => v >= -5 && v <= 0)).toBe(true);
+  expect(new Set(down).size).toBe(6);
+  const swapped = draws(["List", 5, 1]);
+  expect(swapped.every((v) => v >= 1 && v <= 5)).toBe(true);
+  expect(new Set(swapped).size).toBe(5);
+});
+
+test("Precision of a machine number is MachinePrecision on every route", () => {
+  expect(run(["Precision", 1.5])).toBe("MachinePrecision");
+  expect(ce.box(["Precision", 1.5] as never).N().json).toBe("MachinePrecision");
+  expect(run(["Precision", { num: "3.14159265358979323846" }])).toBe(21);
+});

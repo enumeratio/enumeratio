@@ -1,5 +1,5 @@
 import { createEngine } from "@enumeratio/engine/testing";
-import { bigIntegerAt, operandsOf, type Json } from "@enumeratio/engine";
+import { bigIntegerAt, collectMessages, operandsOf, type Json } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { declareNumerals } from "@enumeratio/numerals";
 import { declareResidues } from "@enumeratio/residues";
@@ -159,4 +159,12 @@ test("a negative rational integer is not prime, as compute-engine rules; a Gauss
   expect(run(["IsComposite", -49])).toBe("False");
   // -7 is a unit multiple of 7, which stays prime in ℤ[i] (7 ≡ 3 mod 4).
   expect(run(["IsPrime", -7, ["KeyValuePair", "Over", "GaussianIntegers"]])).toBe("True");
+});
+
+// A float is not an exact number, integer-valued or not: Wolfram's FactorInteger::exact.
+test("FactorInteger of an inexact number stays unevaluated and says why", () => {
+  const { value, messages } = collectMessages(ce, () => run(["FactorInteger", { num: "12.0" }]));
+  expect(value).toEqual(["FactorInteger", { num: "12.0" }]);
+  expect(messages.map((m) => `${m.head}::${m.code}`)).toEqual(["FactorInteger::exact"]);
+  expect(ce.box(["FactorInteger", { num: "12.0" }] as never).N().operator).toBe("FactorInteger");
 });

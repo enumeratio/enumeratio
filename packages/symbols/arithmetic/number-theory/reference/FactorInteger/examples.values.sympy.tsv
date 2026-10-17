@@ -42,4 +42,5 @@ negative-numbers-carry-an-explicit-1-unit-factor	list(factorrat(S(-60)).items())
 1-is-a-unit-and-factors-as-itself	list(factorrat(S(-1)).items())	[(-1, 1)]	
 factorinteger-neg-12	list(factorrat(S(-12)).items())	[(2, 2), (3, 1), (-1, 1)]	disagree
 a-non-integer-real-stays-unevaluated	list(factorrat(S(2.5)).items())	AttributeError: 'Float' object has no attribute 'p'	error
+an-inexact-integer-stays-unevaluated	list(factorrat(S(12.0)).items())		
 the-hardy-ramanujan-taxicab-number-7-times-13	list(factorrat(S(1729)).items())	[(7, 1), (13, 1), (19, 1)]	

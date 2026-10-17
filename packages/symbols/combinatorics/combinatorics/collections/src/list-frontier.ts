@@ -186,11 +186,12 @@ export const rngFor =
  *  draws) trailing operand. */
 const rangeOf = (range: Expr | undefined): [number, number] | undefined => {
   if (range === undefined) return [0, 1];
+  // Wolfram orders the ends: `RandomInteger[-5]` draws from {-5, …, 0}, `RandomInteger[{5, 1}]` from {1, …, 5}.
   const max = integerAt(range);
-  if (max !== undefined) return [0, max];
+  if (max !== undefined) return [Math.min(0, max), Math.max(0, max)];
   if (range.operator === "List") {
     const [a, b] = operandsOf(range).map(integerAt);
-    if (a !== undefined && b !== undefined) return [a, b];
+    if (a !== undefined && b !== undefined) return [Math.min(a, b), Math.max(a, b)];
   }
   return undefined;
 };
@@ -243,9 +244,9 @@ const digitsOf = (ce: Engine, x: Expr): number => {
  *  `Infinity`). */
 const isExactNumber = (x: Expr): boolean => (x as Partial<{ isExact: boolean }>).isExact !== false;
 
-/** Wolfram's `MachinePrecision` is about 15.95 decimal digits (IEEE double); a digit count
- *  at or under 15 is treated as machine-precision here. */
-const MACHINE_PRECISION_DIGITS = 15;
+/** Wolfram reads a literal of up to 17 significant digits (a double's most) as machine precision,
+ *  `3.1415926535897932` included; an 18-digit one is arbitrary precision. */
+const MACHINE_PRECISION_DIGITS = 17;
 
 const declareNumericPredicates = (ce: Engine): void => {
   // NumericQ(expr): does expr denote a definite numeric quantity — a literal, or built from
@@ -273,14 +274,16 @@ const declareNumericPredicates = (ce: Engine): void => {
   });
 
   // Precision(expr): the number of significant decimal digits tracked — Infinity for an
-  // exact number (Wolfram's own convention: exact values carry infinite precision).
+  // exact number (Wolfram's own convention: exact values carry infinite precision), the symbol
+  // MachinePrecision for a machine number.
   ce.declare("Precision", {
-    signature: "(any) -> integer<1..> | signed_infinity",
+    signature: "(any) -> integer<1..> | signed_infinity | symbol",
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const x = ops[0];
       if (x === undefined || x.isNumber !== true) return undefined;
       if (isExactNumber(x)) return ce.symbol("PositiveInfinity");
-      return ce.number(digitsOf(ce, x));
+      const digits = digitsOf(ce, x);
+      return digits <= MACHINE_PRECISION_DIGITS ? ce.symbol("MachinePrecision") : ce.number(digits);
     },
   });
 };

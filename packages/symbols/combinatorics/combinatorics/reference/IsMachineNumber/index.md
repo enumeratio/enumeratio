@@ -16,4 +16,4 @@ names:
 ---
 
 - Wolfram spells this `MachineNumberQ`; renamed to the `Is…` convention used across compute-engine predicates.
-- Compute engine keeps no separate "machine" number representation — every inexact value is a decimal carrying as many digits as it was given — so this is approximated by digit count against Wolfram's ~15.95-digit `MachinePrecision`, documented as a divergence.
+- Compute engine keeps no separate "machine" number representation — every inexact value is a decimal carrying as many digits as it was given — so this is approximated by digit count: a literal of up to 17 digits, as Wolfram reads it, is a machine number.

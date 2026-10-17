@@ -182,7 +182,15 @@ const ANY_SLOT_HEADS = ["Multinomial"] as const;
 /** The head itself, inert: every operation on it goes through the resolvers below. Declared
  *  so `Around` is a binding like any other head, not just a name the resolvers recognise. */
 export function declareAround(ce: ComputeEngine): void {
-  ce.declare("Around", { signature: "(number, real?) -> number" });
+  ce.declare("Around", {
+    signature: "(number, real?) -> number",
+    // The uncertainty is a magnitude: `Around(1, -1)` is `Around(1, 1)`.
+    evaluate: (ops) => {
+      const [x, dx] = ops;
+      if (x === undefined || dx === undefined || dx.isNegative !== true) return undefined;
+      return ce.function("Around", [x, dx.neg()]);
+    },
+  });
 }
 
 /** This module's resolvers, one per head it extends — see the file header. */
