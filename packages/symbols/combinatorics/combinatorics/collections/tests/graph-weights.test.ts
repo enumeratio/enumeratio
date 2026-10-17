@@ -196,3 +196,23 @@ test("IsIsomorphicGraph, ConnectedComponents and VertexDegree ignore edge weight
   expect(run(["VertexDegree", heavy])).toEqual(run(["VertexDegree", light]));
   expect(run(["ConnectedComponents", heavy])).toEqual(run(["ConnectedComponents", light]));
 });
+
+test("WeightedAdjacencyMatrix keeps exact, float and symbolic weights as given", () => {
+  const g = weightedGraph([1, 2, 3], [U(1, 2), U(2, 3)], [0.5, ["Rational", 1, 2] as never]);
+  expect(run(["WeightedAdjacencyMatrix", g])).toEqual([
+    "List",
+    ["List", 0, 0.5, 0],
+    ["List", 0.5, 0, ["Rational", 1, 2]],
+    ["List", 0, ["Rational", 1, 2], 0],
+  ]);
+  // A float operand makes the summed entry a float.
+  const multi = weightedGraph([1, 2], [U(1, 2), U(1, 2)], [5, 0.25]);
+  expect(run(["WeightedAdjacencyMatrix", multi])).toEqual(["List", ["List", 0, 5.25], ["List", 5.25, 0]]);
+  const sym = weightedGraph([1, 2], [U(1, 2)], ["w" as never]);
+  expect(run(["WeightedAdjacencyMatrix", sym])).toEqual(["List", ["List", 0, "w"], ["List", "w", 0]]);
+});
+
+test("an undirected self-loop's weight lands on the diagonal once (as in Wolfram)", () => {
+  const g = weightedGraph([1, 2], [U(1, 1)], [3]);
+  expect(run(["WeightedAdjacencyMatrix", g])).toEqual(["List", ["List", 3, 0], ["List", 0, 0]]);
+});

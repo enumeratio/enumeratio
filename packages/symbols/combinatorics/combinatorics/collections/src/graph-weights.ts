@@ -150,7 +150,8 @@ export function weightedAdjacencyMatrixExpr(ce: Engine, g: GraphModel): Expr {
     const j = index.get(e.b)!;
     const w = e.weight ?? ce.number(1);
     rows[i]![j] = rows[i]![j]!.add(w);
-    if (!e.directed) rows[j]![i] = rows[j]![i]!.add(w);
+    // An undirected loop is one edge: its weight lands on the diagonal once.
+    if (!e.directed && i !== j) rows[j]![i] = rows[j]![i]!.add(w);
   }
   return listOf(
     ce,
