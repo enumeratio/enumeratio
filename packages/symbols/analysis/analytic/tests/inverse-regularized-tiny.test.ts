@@ -57,3 +57,21 @@ test("past a double's digits the root is the true one, however far below a doubl
     /^1\.683732939061499141338880230655\d*e-36$/,
   );
 });
+
+// Q(500, z) in compute-engine is the rounding of 1 − P there (−7e-43 at z = 911.6), so the tail is
+// solved on Q's continued fraction. Values are mpmath's.
+test("an upper-tail root keeps its digits where the forward Q has none", () => {
+  near(gamma(500, 1e-50).re, 911.5750573285015, 1e-14);
+  near(gamma(1000, 1e-100).re, 1830.8469620466365, 1e-14);
+  const exact = new ComputeEngine();
+  declareAnalytic(exact);
+  exact.precision = 40;
+  const num = String((exact.box(["InverseGammaRegularized", 100, 1e-100]).N().json as { num: string }).num);
+  expect(num).toMatch(/^483\.21953022256192661224358332\d*$/);
+});
+
+// A target within 1e-14 of 1 is judged against the upper tail 1 − s, not against s itself.
+test("a beta root for s near 1 is the upper tail's", () => {
+  near(beta(0.99999999999999, 3, 1000).re, 0.03813328897427346, 1e-14);
+  near(beta(0.9999999999, 30, 3).re, 0.9999727776780752, 1e-14);
+});

@@ -14,61 +14,135 @@ import { BigDecimal } from "@enumeratio/engine/unstable";
 import { inverseGamma } from "./hypergeometric-big.ts";
 
 // InverseGammaRegularized(a, s) and InverseBetaRegularized(s, a, b): neither has a closed
-// form in general, so both are solved numerically — a safeguarded Newton's method (falling
-// back to bisection whenever a step would leave the bracket) against compute-engine's own
-// native GammaRegularized / BetaRegularized as the forward function, whose accuracy was
-// checked directly (GammaRegularized(2.5, 3) and BetaRegularized(0.5, 2.5, 1.5) both matched
-// Wolfram to 20 digits). The derivative in each case is the corresponding density, evaluated
-// in log space (via `logGammaReal`) so it doesn't overflow/underflow away from the mode.
+// form in general, so both are solved numerically — a safeguarded Newton's method in ln x on
+// ln F (falling back to bisection whenever a step would leave the bracket) against
+// compute-engine's own native GammaRegularized / BetaRegularized as the forward function, whose
+// accuracy was checked directly (GammaRegularized(2.5, 3) and BetaRegularized(0.5, 2.5, 1.5) both
+// matched Wolfram to 20 digits). The derivative in each case is the corresponding density,
+// evaluated in log space (via `logGammaReal`) so it doesn't overflow/underflow away from the mode.
 
-/**
- * Solve f(x) = target for x in [lo, hi], where f is monotonically DEcreasing (both Q(a, z) in
- * z and I_x(a, b) in... no — I_x is increasing in x; `sign` flips the comparison). `fPrime`
- * gets the (unsigned) derivative magnitude; the bracket update infers direction from
- * `increasing`.
- */
-function safeguardedSolve(
-  f: (x: number) => number,
-  fPrime: (x: number) => number,
-  lo: number,
-  hi: number,
-  target: number,
-  increasing: boolean,
-  start = 0.5 * (lo + hi),
-): number | undefined {
-  // The residual is judged relative to the target; a root the solver cannot reach (a double
-  // underflows before f gets near the target) is declined, not answered with its last iterate.
-  const settled = (x: number): boolean => Math.abs(f(x) - target) <= RESIDUAL_TOLERANCE * target;
-  let x = start > lo && start < hi ? start : 0.5 * (lo + hi);
-  for (let i = 0; i < 100; i++) {
-    const fx = f(x) - target;
-    if (Math.abs(fx) < 1e-14 * target) return x;
-    if (increasing === fx < 0) lo = x;
-    else hi = x;
-    const d = fPrime(x);
-    let xn = d === 0 || !Number.isFinite(d) ? Number.NaN : x - fx / (increasing ? d : -d);
-    if (!(xn > lo && xn < hi)) xn = 0.5 * (lo + hi);
-    // Relative, not absolute: a root near 0 is only reached to its own scale.
-    if (Math.abs(xn - x) < 1e-15 * Math.abs(x)) return settled(xn) ? xn : undefined;
-    x = xn;
-  }
-  return settled(x) ? x : undefined;
+interface LogProblem {
+  /** The forward function F(x); NaN where it cannot be evaluated. */
+  f: (x: number) => number;
+  /** d ln F / d ln x at x, F(x) = fx. */
+  slope: (x: number, fx: number) => number;
+  increasing: boolean;
+  /** ln of the largest x searched: 0 for the beta's x ≤ 1, the double range for a gamma's z. */
+  maxLog: number;
 }
 
-/** Largest |f(x) - target| / target at which a root is accepted. The step floor stops a little
- *  short of the last digit, but a root the double cannot represent leaves a residual of the order
- *  of the target itself (InverseBetaRegularized(0.3, 2.5e-6, 1.5e-6)). */
+interface Solved {
+  /** The last iterate; a start for a finer solver when `settled` is false. */
+  x: number;
+  settled: boolean;
+}
+
+/** A double holds e^-745 (subnormal) up to e^709. */
+const MIN_LOG = -745;
+
+/** Newton steps in ln x. ln F is close to linear in ln x on both tails (ln P ≈ a·ln z, ln Q ≈ −z),
+ * so a few dozen are ample; past the cap the root is declined. */
+const LOG_STEPS = 60;
+
+/** Newton steps in x itself. ln x carries only |ln x|·ε of the root's digits, so the last steps
+ * run on x, where the step is already tiny and Newton is locally exact. */
+const POLISH_STEPS = 4;
+
+/** A step in ln x below this is a relative step in x below it: the polish takes over. */
+const LOG_STEP_TOLERANCE = 1e-9;
+
+/**
+ * Solve F(x) = target for x in (0, e^maxLog] by Newton's method on ln F − ln target as a function
+ * of ln x, bisecting in ln x whenever a step would leave the bracket. A root past the double range
+ * (or one the residual check does not vouch for) is `settled: false`. `scale` is the tail the
+ * residual is judged against.
+ */
+function solveInLog(problem: LogProblem, target: number, startLog: number, scale = target): Solved {
+  const { f, slope, increasing, maxLog } = problem;
+  // log1p keeps the residual when F is within an epsilon of a target near 1.
+  const residual = (fx: number): number => (fx > 0 ? Math.log1p((fx - target) / target) : -Infinity);
+  let lo = MIN_LOG;
+  let hi = maxLog;
+  let u = Math.min(Math.max(startLog, lo), hi);
+  let converged = false;
+  for (let i = 0; i < LOG_STEPS; i++) {
+    const fx = f(Math.exp(u));
+    if (Number.isNaN(fx)) break;
+    const h = residual(fx);
+    if (h === 0) {
+      converged = true;
+      break;
+    }
+    if (increasing === h < 0) lo = u;
+    else hi = u;
+    const d = slope(Math.exp(u), fx);
+    let un = d === 0 || !Number.isFinite(d) || !Number.isFinite(h) ? Number.NaN : u - h / d;
+    if (!(un > lo && un < hi)) un = 0.5 * (lo + hi);
+    const step = Math.abs(un - u);
+    u = un;
+    if (step < LOG_STEP_TOLERANCE) {
+      converged = true;
+      break;
+    }
+  }
+  let x = Math.exp(u);
+  if (!converged || x === 0) return { x, settled: false };
+  for (let i = 0; i < POLISH_STEPS; i++) {
+    const fx = f(x);
+    const d = slope(x, fx);
+    const xn = x * (1 - residual(fx) / d);
+    if (!(xn > 0 && xn <= Math.exp(maxLog)) || !Number.isFinite(xn)) break;
+    const done = Math.abs(xn - x) < 1e-15 * x;
+    x = xn;
+    if (done) break;
+  }
+  // The residual is judged relative to the smaller tail (`scale`): near a target of 1 the
+  // forward function's own rounding would pass any x. A root the solver cannot reach (a double
+  // underflows before f gets near the target) is declined, not answered with its last iterate.
+  return { x, settled: Math.abs(f(x) - target) <= RESIDUAL_TOLERANCE * scale };
+}
+
+/** Largest |F(x) − target| / scale at which a root is accepted, `scale` being the smaller of the
+ *  target and its complement. The polish stops a little short of the last digit, but a root the
+ *  double cannot represent leaves a residual of the order of the target itself
+ *  (InverseBetaRegularized(0.3, 2.5e-6, 1.5e-6)). */
 const RESIDUAL_TOLERANCE = 1e-10;
 
-const forwardGammaRegularized = (ce: ComputeEngine, a: number, z: number): number =>
-  ce.box(["GammaRegularized", a, z] as never).N().re;
+/** Q(a, z) for z ≥ a + 1 by its continued fraction (DLMF 8.9.2, evaluated by the modified Lentz
+ * method), which keeps its relative precision however small Q is: compute-engine's own
+ * GammaRegularized(500, 911.6) is −7e-43, the rounding of 1 − P. NaN if it does not converge. */
+function upperGammaRegularizedFraction(a: number, z: number): number {
+  const floor = 1e-300;
+  let b = z + 1 - a;
+  let c = 1 / floor;
+  let d = 1 / b;
+  let h = d;
+  for (let i = 1; i < 10_000; i++) {
+    const an = -i * (i - a);
+    b += 2;
+    d = an * d + b;
+    if (Math.abs(d) < floor) d = floor;
+    c = b + an / c;
+    if (Math.abs(c) < floor) c = floor;
+    d = 1 / d;
+    const delta = d * c;
+    h *= delta;
+    if (Math.abs(delta - 1) < 1e-16) return Math.exp(a * Math.log(z) - z - logGammaReal(a)) * h;
+  }
+  return Number.NaN;
+}
+
+/** Q(a, z): the continued fraction where it applies, else compute-engine's. */
+const forwardGammaRegularized = (ce: ComputeEngine, a: number, z: number): number => {
+  const fraction = z >= a + 1 ? upperGammaRegularizedFraction(a, z) : Number.NaN;
+  return Number.isNaN(fraction) ? ce.box(["GammaRegularized", a, z] as never).N().re : fraction;
+};
 
 const forwardBetaRegularized = (ce: ComputeEngine, x: number, a: number, b: number): number =>
   ce.box(["BetaRegularized", x, a, b] as never).N().re;
 
-// Tiny roots. The solver's tolerances are absolute, so a root near 0 (or near 1) can't be
-// reached by stepping in x, and the answer may be below the smallest double: I_x(2.5e-6, 1.5e-6)
-// = 0.3 has x ≈ e^-89257. There the forward function is its leading term,
+// Tiny roots. The answer may be below the smallest double, out of reach of any step in ln x:
+// I_x(2.5e-6, 1.5e-6) = 0.3 has x ≈ e^-89257. There the forward function is its leading term,
 //   I_x(a, b) = x^a/(a·B(a, b)) · (1 + O(max(1, |b−1|)·x)),   P(a, z) = z^a/Γ(a+1) · (1 + O(z)),
 // which inverts in log space: ln x = (ln p + ln Γ(a+1) + ln Γ(b) − ln Γ(a+b))/a. Once the
 // correction is negligible that is the answer; the beta's upper tail is the lower tail of the
@@ -145,60 +219,95 @@ function lowerGammaRegularized(a: number, z: number): number {
   return Number.NaN;
 }
 
-const gammaDensity =
-  (a: number) =>
-  (z: number): number =>
-    z <= 0 ? 0 : Math.exp((a - 1) * Math.log(z) - z - logGammaReal(a));
+/** d ln P/d ln z = z·P'(z)/P = e^(a·ln z − z − ln Γ(a) − ln P); Q's slope is its negative. */
+const gammaSlope =
+  (a: number, sign: 1 | -1) =>
+  (z: number, fz: number): number =>
+    sign * Math.exp(a * Math.log(z) - z - logGammaReal(a) - Math.log(fz));
+
+/** ln z for Q(a, z) = s from Q ≈ z^(a−1)·e^(−z)/Γ(a) (DLMF 8.11.2), i.e.
+ *  z = −ln(s·Γ(a)) + (a−1)·ln z, iterated from the larger of a and the exponential part. Only a
+ *  start: in the tail Newton in ln z takes over within a few steps
+ *  (InverseGammaRegularized(100, 1e-100) = 520.25, where the leading term P ≈ z^a/Γ(a+1) starts
+ *  at 37). */
+function gammaTailStartLog(a: number, s: number): number {
+  const exponent = -Math.log(s) - logGammaReal(a);
+  let z = Math.max(a, exponent);
+  for (let i = 0; i < 4; i++) {
+    const next = exponent + (a - 1) * Math.log(z);
+    if (!(next > 0)) break;
+    z = next;
+  }
+  return Math.log(z);
+}
 
 /** Solve Q(a, z) = s for z > 0, `q` being 1 − s (carried apart: s itself may have rounded to 1).
- * Q decreases from 1 (z=0) to 0 (z→∞); doubling search finds a
- * bracket, then `safeguardedSolve` refines against Q'(z) = −z^(a−1)·e^(−z)/Γ(a) (in log space).
+ * Q decreases from 1 (z=0) to 0 (z→∞); doubling search bounds the root, then `solveInLog`
+ * refines it against Q'(z) = −z^(a−1)·e^(−z)/Γ(a).
  * 1 − s is the tail when s is near 1; the lower tail P(a, z) = 1 − s is then solved instead, as
  * 1 − Q has lost its digits of z. P's own prefactor costs about a·ε, Q's 1 − s costs ε/(1 − s). */
-function inverseGammaRegularized(ce: ComputeEngine, a: number, s: number, q: number): number | undefined {
-  const start = Math.exp((Math.log(q) + logGammaReal(a + 1)) / a); // the leading term: a good start for a small root
+function inverseGammaRegularized(ce: ComputeEngine, a: number, s: number, q: number): Solved {
+  // P(a, z) = z^a/Γ(a+1) at small z: a good start for a root below 1, else the tail's.
+  const leadLog = (Math.log(q) + logGammaReal(a + 1)) / a;
+  const startLog = leadLog < 0 ? leadLog : s < 0.5 ? gammaTailStartLog(a, s) : leadLog;
   if (s > 0.5 && q * Math.max(1, a) < 0.5) {
-    let hi = start > 0 ? Math.min(1, start) : 1;
+    let hi = leadLog < 0 ? Math.min(1, Math.exp(leadLog)) : 1;
+    if (!(hi > 0)) hi = 1;
     while (lowerGammaRegularized(a, hi) < q) hi *= 2;
-    const z = safeguardedSolve(
-      (z) => lowerGammaRegularized(a, z),
-      gammaDensity(a),
-      0,
-      hi,
+    return solveInLog(
+      { f: (z) => lowerGammaRegularized(a, z), slope: gammaSlope(a, 1), increasing: true, maxLog: Math.log(hi) },
       q,
-      true, // P(a, z) increases in z
-      start,
+      startLog,
     );
-    if (z !== undefined) return z;
   }
   let hi = 1;
   while (forwardGammaRegularized(ce, a, hi) > s) hi *= 2;
-  return safeguardedSolve(
-    (z) => forwardGammaRegularized(ce, a, z),
-    gammaDensity(a),
-    0,
-    hi,
+  return solveInLog(
+    { f: (z) => forwardGammaRegularized(ce, a, z), slope: gammaSlope(a, -1), increasing: false, maxLog: Math.log(hi) },
     s,
-    false, // Q(a, z) decreases in z
-    start,
+    startLog,
+    Math.min(s, q),
   );
 }
 
-/** Solve I_x(a, b) = s for x in (0, 1). I_x increases from 0 to 1; the density
- * dI/dx = x^(a−1)·(1−x)^(b−1)/B(a,b), also in log space via logGammaReal. */
-function inverseBetaRegularized(ce: ComputeEngine, a: number, b: number, s: number): number | undefined {
+/** I_x(a, b) as a log problem: d ln I/d ln x = x·x^(a−1)·(1−x)^(b−1)/(B(a, b)·I). */
+function betaProblem(ce: ComputeEngine, a: number, b: number): LogProblem {
   const logBeta = logGammaReal(a) + logGammaReal(b) - logGammaReal(a + b);
-  const density = (x: number): number =>
-    x <= 0 || x >= 1 ? 0 : Math.exp((a - 1) * Math.log(x) + (b - 1) * Math.log(1 - x) - logBeta);
-  return safeguardedSolve(
-    (x) => forwardBetaRegularized(ce, x, a, b),
-    density,
-    0,
-    1,
-    s,
-    true, // I_x(a, b) increases in x
-    Math.exp(betaLogRoot(a, b, s)),
-  );
+  return {
+    f: (x) => forwardBetaRegularized(ce, x, a, b),
+    slope: (x, fx) => Math.exp(a * Math.log(x) + (b - 1) * Math.log1p(-x) - logBeta - Math.log(fx)),
+    increasing: true, // I_x(a, b) increases in x
+    maxLog: 0,
+  };
+}
+
+/** At or above this a root found as 1 − y keeps a double's digits (y rounds to 1 − x with an
+ *  absolute error of ε, so x keeps ε/x of them): a relative error of 1e-13 at worst. */
+const COMPLEMENT_PREFERRED = 1e-3;
+
+/** Below this a root found as 1 − y has lost the digits the residual check asks for (1e-10). */
+const COMPLEMENT_MIN = 1e-6;
+
+/** Below this a target s = 1 − q cannot tell roots apart to the residual check's 1e-10: s is a
+ *  double, spaced ε apart, and q is only ε/q of them (InverseBetaRegularized(1 − 1e-14, 3, 1000)
+ *  = 0.0381333 is the same double target as 0.0381321, which the direct solve cannot see). */
+const RESOLVABLE_TAIL = 1e-6;
+
+/** Solve I_x(a, b) = s for x in (0, 1). Above s = 1/2 the upper tail is the small one:
+ * I_x(a, b) = s is I_y(b, a) = 1 − s with y = 1 − x, judged against 1 − s. The direct solve is
+ * kept for a small root (where 1 − y has lost x's digits) when s resolves the tail. */
+function inverseBetaRegularized(ce: ComputeEngine, a: number, b: number, s: number): Solved {
+  const direct = (): Solved => solveInLog(betaProblem(ce, a, b), s, betaLogRoot(a, b, s), Math.min(s, 1 - s));
+  if (s <= 0.5) return direct();
+  const q = 1 - s; // exact above 1/2
+  const upper = solveInLog(betaProblem(ce, b, a), q, betaLogRoot(b, a, q));
+  const complement = { x: 1 - upper.x, settled: upper.settled };
+  if (complement.settled && complement.x >= COMPLEMENT_PREFERRED) return complement;
+  if (q >= RESOLVABLE_TAIL) {
+    const lower = direct();
+    if (lower.settled) return lower;
+  }
+  return { x: complement.x, settled: complement.settled && complement.x >= COMPLEMENT_MIN };
 }
 
 /**
@@ -229,6 +338,7 @@ function inverseGammaRegularizedBig(a: BigDecimal, s: BigDecimal, z0: number, di
       // dQ/dz = −(a/z)·prefix, so the step is z·(Q − s)/(a·prefix) up.
       const step = q.sub(s).mul(z).div(a.mul(prefix));
       z = z.add(step).toPrecision(working);
+      if (!z.isPositive()) return undefined; // a start the series cannot step from
       if (step.abs().lt(settled.mul(z.abs()))) return z.toPrecision(digits);
     }
     return undefined;
@@ -264,17 +374,17 @@ export function declareInverseGammaRegularized(ce: ComputeEngine): void {
         // No double start to fall back on once the root has left the doubles.
         if (!(Math.exp(logRoot) > NORMAL_MIN)) return undefined;
       }
-      const z0 = tiny
-        ? Math.exp(logRoot)
+      const solved: Solved = tiny
+        ? { x: Math.exp(logRoot), settled: true }
         : inverseGammaRegularized(ce, a.re, s.re, bigS === undefined ? 1 - s.re : Math.exp(logQ));
-      if (z0 === undefined) return undefined;
-      // The double solve is the start; past a double's digits the bignum series finishes it.
+      // The double solve is the start; past a double's digits the bignum series finishes it, from
+      // the last iterate even when the double solve could not vouch for it.
       if (wantsBig) {
-        if (big === undefined || bigS === undefined) return undefined;
-        const value = inverseGammaRegularizedBig(big, bigS, z0, ce.precision);
+        if (big === undefined || bigS === undefined || !(solved.x > 0) || !Number.isFinite(solved.x)) return undefined;
+        const value = inverseGammaRegularizedBig(big, bigS, solved.x, ce.precision);
         return value === undefined ? undefined : bigResult(ce, value);
       }
-      return ce.number(z0);
+      return solved.settled ? ce.number(solved.x) : undefined;
     },
   });
 }
@@ -301,8 +411,8 @@ export function declareInverseBetaRegularized(ce: ComputeEngine): void {
       if (s.re < 0 || s.re > 1) return undefined;
       const tail = betaTail(a.re, b.re, s.re);
       if (tail === undefined) {
-        const x = inverseBetaRegularized(ce, a.re, b.re, s.re);
-        return x === undefined ? undefined : ce.number(x);
+        const solved = inverseBetaRegularized(ce, a.re, b.re, s.re);
+        return solved.settled ? ce.number(solved.x) : undefined;
       }
       const root = Math.exp(tail.logRoot);
       if (exceedsDoublePrecision(ce, options.numericApproximation)) {
