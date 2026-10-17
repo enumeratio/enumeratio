@@ -7,7 +7,7 @@ signatures:
   - call: Ascents(p)
     description: the ascent count of a one-line permutation $p$
     library: enumeratio-combinatorics
-    type: (list | permutation) -> integer
+    type: (composition | list | permutation) -> integer | number
 seeAlso:
   - Descents
   - SymmetricGroup

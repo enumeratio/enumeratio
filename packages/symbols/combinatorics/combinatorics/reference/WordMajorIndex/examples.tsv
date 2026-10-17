@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-composition-2-1-3-1-1			[WordMajorIndex, [Composition, [List, 2, 1, 3, 1, 1]]]	4			the composition $[2,1,3,1,1]$
+findstat-st000769-1	Properties		[CombinatorialStat, [Composition, [List, 1]], "'WordMajorIndex'"]	0	0	FindStat St000769	FindStat's value for [1]
+findstat-st000769-2	Properties		[CombinatorialStat, [Composition, [List, 2]], "'WordMajorIndex'"]	0	0	FindStat St000769	FindStat's value for [2]
+findstat-st000769-3	Properties		[CombinatorialStat, [Composition, [List, 3]], "'WordMajorIndex'"]	0	0	FindStat St000769	FindStat's value for [3]

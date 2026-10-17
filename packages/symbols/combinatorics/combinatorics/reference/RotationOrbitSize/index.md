@@ -8,13 +8,18 @@ catalog:
     identity: St000163
     url: https://www.findstat.org/St000163
     on: SetPartition
+  - system: findstat
+    identity: St000820
+    url: https://www.findstat.org/St000820
+    on: Composition
 statOn:
+  - Composition
   - SetPartition
 signatures:
   - call: RotationOrbitSize(partition)
     description: The number of distinct partitions rotation i -> i + 1 (mod n) makes of this one.
     library: enumeratio-combinatorics
-    type: (set_partition) -> number
+    type: (composition | set_partition) -> number
 ---
 
 - Defined over `SetPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

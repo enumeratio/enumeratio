@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-composition-2-1-3-1-1			[FirstPart, [Composition, [List, 2, 1, 3, 1, 1]]]	2			the composition $[2,1,3,1,1]$
+findstat-st000382-1	Properties		[CombinatorialStat, [Composition, [List, 1]], "'FirstPart'"]	1	1	FindStat St000382	FindStat's value for [1]
+findstat-st000382-2	Properties		[CombinatorialStat, [Composition, [List, 2]], "'FirstPart'"]	2	2	FindStat St000382	FindStat's value for [2]
+findstat-st000382-3	Properties		[CombinatorialStat, [Composition, [List, 3]], "'FirstPart'"]	3	3	FindStat St000382	FindStat's value for [3]

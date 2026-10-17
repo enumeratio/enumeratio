@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-composition-2-1-3-1-1			[BargraphUpStepCount, [Composition, [List, 2, 1, 3, 1, 1]]]	4			the composition $[2,1,3,1,1]$
+findstat-st000808-1	Properties		[CombinatorialStat, [Composition, [List, 1]], "'BargraphUpStepCount'"]	1	1	FindStat St000808	FindStat's value for [1]
+findstat-st000808-2	Properties		[CombinatorialStat, [Composition, [List, 2]], "'BargraphUpStepCount'"]	2	2	FindStat St000808	FindStat's value for [2]
+findstat-st000808-3	Properties		[CombinatorialStat, [Composition, [List, 3]], "'BargraphUpStepCount'"]	3	3	FindStat St000808	FindStat's value for [3]

@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-composition-2-1-3-1-1			[LongestConstantRun, [Composition, [List, 2, 1, 3, 1, 1]]]	2			the composition $[2,1,3,1,1]$
+findstat-st000899-1	Properties		[CombinatorialStat, [Composition, [List, 1]], "'LongestConstantRun'"]	1	1	FindStat St000899	FindStat's value for [1]
+findstat-st000899-2	Properties		[CombinatorialStat, [Composition, [List, 2]], "'LongestConstantRun'"]	1	1	FindStat St000899	FindStat's value for [2]
+findstat-st000899-3	Properties		[CombinatorialStat, [Composition, [List, 3]], "'LongestConstantRun'"]	1	1	FindStat St000899	FindStat's value for [3]

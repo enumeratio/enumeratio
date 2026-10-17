@@ -8,6 +8,10 @@ catalog:
     identity: St001447
     url: https://www.findstat.org/St001447
     on: PlanePartition
+  - system: findstat
+    identity: St000381
+    url: https://www.findstat.org/St000381
+    on: Composition
 statOn:
   - Composition
   - CorePartition
@@ -18,7 +22,7 @@ signatures:
   - call: LargestPart(partition)
     description: The largest part.
     library: enumeratio-combinatorics
-    type: (integer_partition) -> number
+    type: (composition | integer_partition) -> number
 bindings:
   - origin: mapped
     form: sage
