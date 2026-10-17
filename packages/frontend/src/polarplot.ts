@@ -8,6 +8,7 @@ import {
   type Box,
   type BoxNode,
   graphics,
+  graphicsOf,
   isNode,
   line,
   type Options,
@@ -190,8 +191,10 @@ export function polarPlotBox(points: readonly PolarPoint[], opts: PolarPlotOptio
 }
 
 /** Whether `box` is a polar plot's `GraphicsBox`. */
-export const isPolarBox = (box: Box): box is BoxNode =>
-  isNode(box) && box[0] === "GraphicsBox" && optionsOfBox(box).PolarAxes !== undefined;
+export const isPolarBox = (box: Box): boolean => {
+  const drawing = graphicsOf(box)?.box;
+  return drawing !== undefined && optionsOfBox(drawing).PolarAxes !== undefined;
+};
 
 const numbers = (value: unknown): number[] | undefined =>
   Array.isArray(value) && value.every((v) => typeof v === "number") ? (value as number[]) : undefined;

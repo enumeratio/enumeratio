@@ -12,7 +12,6 @@ import {
   line,
   polygon,
   polyhedron,
-  row,
   style,
   tag,
   toMathJson,
@@ -23,7 +22,7 @@ import { toLatex, toMathML, toText } from "../src/render/index.ts";
 const figure: Box = graphics(
   [
     graphicsComplex(
-      row([
+      [
         style(tag(disk({ Radius: 0.12 }), "0,0"), { FaceForm: "#d97706" }),
         style(tag(disk({ Radius: 0.12, Center: [1, 0.5] }), "1,0"), { FaceForm: "#d97706" }),
         tag(inset("a", { Center: [0, 0], Size: 0.4, Opacity: 0.5, Role: "Caption" }), "0,0"),
@@ -65,7 +64,7 @@ const figure: Box = graphics(
           }),
           "3,0",
         ),
-      ]),
+      ],
       {
         Addresses: [
           [0, 0],

@@ -1,10 +1,10 @@
 ---
 name: GraphicsBox
 domain: Boxes
-signature: GraphicsBox(box, options)
+signature: GraphicsBox(primitives, options)
 summary: "A drawing: primitives in a frame's coordinates, with `ColorRules`, `ColorMixing`, `BoundaryStyle`, `Selection` and `ViewKind` as options."
 signatures:
-  - call: GraphicsBox(box, options)
+  - call: GraphicsBox(primitives, options)
     description: "A drawing: primitives in a frame's coordinates, with `ColorRules`, `ColorMixing`, `BoundaryStyle`, `Selection` and `ViewKind` as options."
     library: enumeratio-boxes
     type: (boxes | list, expression*) -> boxes

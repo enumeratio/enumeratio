@@ -13,7 +13,7 @@ import {
   type BoxNode,
   disk,
   graphics,
-  isNode,
+  graphicsOf,
   line,
   type Options,
   type OptionValue,
@@ -558,8 +558,10 @@ export function chartBox(kind: ChartKind, data: unknown, opts: ChartBoxOptions =
 // ── Drawing ──────────────────────────────────────────────────────────────────────────────
 
 /** Whether `box` is a chart's `GraphicsBox` (one `chartBox` made). */
-export const isChartBox = (box: Box): box is BoxNode =>
-  isNode(box) && box[0] === "GraphicsBox" && typeof optionsOfBox(box).ChartKind === "string";
+export const isChartBox = (box: Box): boolean => {
+  const drawing = graphicsOf(box)?.box;
+  return drawing !== undefined && typeof optionsOfBox(drawing).ChartKind === "string";
+};
 
 export interface ChartDrawing {
   /** The marks in a y-up pixel frame (`svg()` mirrors them back). */

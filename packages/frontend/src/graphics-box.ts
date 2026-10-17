@@ -22,7 +22,6 @@ import {
   polygon,
   polyhedron,
   raster,
-  row,
   style,
   tag,
 } from "@enumeratio/boxes";
@@ -114,7 +113,7 @@ function tilesContent(list: Extract<DisplayList, { kind: "tiles" }>, fill: numbe
       lookOf(look.color, look.edges),
     ),
   );
-  return graphicsComplex(row(items), {
+  return graphicsComplex(items, {
     Addresses: list.tiles.map((t) => [...t.address]),
     Places: list.tiles.map((t) => [...t.at]),
   });
@@ -139,7 +138,7 @@ function marksContent(list: Extract<DisplayList, { kind: "marks" }>): Box {
   }
   for (const { members, mark, edges } of list.links)
     items.push(style(tag(primitiveBox(mark), members.map(addressText).join(";")), { EdgeForm: edgeForm(edges) }));
-  return graphicsComplex(row(items), {
+  return graphicsComplex(items, {
     Addresses: list.marks.map((m) => [...m.address]),
     Places: list.marks.map((m) => [...m.at]),
   });
@@ -256,8 +255,7 @@ export function displayListOfBox(box: Box): Extract<DisplayList, { kind: "marks"
   const selected = new Set(
     Array.isArray(o.Selection) ? o.Selection.map((a) => (Array.isArray(a) ? a.join(",") : "")) : [],
   );
-  const content = complex[1] as Box;
-  const items = isNode(content) && content[0] === "RowBox" ? (content[1] as readonly Box[]) : [content];
+  const items = complex[1] as readonly Box[];
   const marks: MarkItem[] = [];
   const links: LinkItem[] = [];
   const captions = new Map<string, NonNullable<MarkItem["caption"]>>();

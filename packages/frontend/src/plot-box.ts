@@ -14,6 +14,7 @@ import {
   type BoxNode,
   graphics,
   inset,
+  graphicsOf,
   isNode,
   line,
   type Options,
@@ -456,8 +457,10 @@ const barLegendOf = (value: unknown): { colors: string[]; range: [number, number
 };
 
 /** Whether `box` is a plot's `GraphicsBox` (one `plotBox` made), as opposed to a figure's. */
-export const isPlotBox = (box: Box): box is BoxNode =>
-  isNode(box) && box[0] === "GraphicsBox" && optionsOfBox(box).ScalingFunctions !== undefined;
+export const isPlotBox = (box: Box): boolean => {
+  const drawing = graphicsOf(box)?.box;
+  return drawing !== undefined && optionsOfBox(drawing).ScalingFunctions !== undefined;
+};
 
 /** The items of a plot box, each with its role and look. */
 export function plotItems(box: BoxNode): { role: string; prim: BoxNode; look: Options }[] {

@@ -48,8 +48,7 @@ function marksOf(box: Box): Mark[] | undefined {
       const place = pointOf(Places[k]);
       if (Array.isArray(a) && place) places.set(a.join(","), place);
     });
-  const content = complex[1];
-  const items = isNode(content) && content[0] === "RowBox" ? content[1] : [content];
+  const items = complex[1];
   const out: Mark[] = [];
   for (const item of items) {
     let look: Options = {};

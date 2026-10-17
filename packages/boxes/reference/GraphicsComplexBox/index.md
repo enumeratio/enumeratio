@@ -1,13 +1,13 @@
 ---
 name: GraphicsComplexBox
 domain: Boxes
-signature: GraphicsComplexBox(box, options)
+signature: GraphicsComplexBox(primitives, options)
 summary: "Primitives that share places: `Addresses` and `Places` give each address's position, and a primitive tagged with an address sits there unless it names its own."
 signatures:
-  - call: GraphicsComplexBox(box, options)
+  - call: GraphicsComplexBox(primitives, options)
     description: "Primitives that share places: `Addresses` and `Places` give each address's position, and a primitive tagged with an address sits there unless it names its own."
     library: enumeratio-boxes
-    type: (boxes, expression*) -> boxes
+    type: (boxes | list, expression*) -> boxes
 seeAlso:
   - GraphicsBox
   - TagBox

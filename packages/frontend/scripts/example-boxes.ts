@@ -6,7 +6,7 @@
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
-import { type Box, type BoxNode, graphicsOf, makeBoxes, notationOf } from "@enumeratio/boxes";
+import { type Box, type BoxNode, graphics3dOf, graphicsOf, makeBoxes, notationOf } from "@enumeratio/boxes";
 import type { BoxShape, MathJSON } from "@enumeratio/entry";
 import { graphics3dOptionsOf, gridAxis, gridSide, sampleGrids, surfaceDomains } from "../src/graphics-3d-lowering.ts";
 import { surfaceBox } from "../src/graphics-3d-box.ts";
@@ -228,7 +228,7 @@ export function shapeOf(box: Box, asked: BoxShape): BoxShape {
   const marks: Record<string, number> = {};
   const roles: Record<string, number> = {};
   // An `InterpretationBox` around a drawing holds its expression; the shape is the drawing's.
-  const drawing = graphicsOf(box)?.box ?? box;
+  const drawing = graphicsOf(box)?.box ?? graphics3dOf(box)?.box ?? box;
   const walk = (node: unknown, role?: string): void => {
     if (!isNode(node)) return;
     // A figure's tags name an address (`0,1`, a link's `0,1;1,2`), a plot's name a role.
@@ -237,11 +237,15 @@ export function shapeOf(box: Box, asked: BoxShape): BoxShape {
     if (!CONTAINERS.has(node[0])) {
       marks[node[0]] = (marks[node[0]] ?? 0) + 1;
       if (role !== undefined) roles[role] = (roles[role] ?? 0) + 1;
-    } else if (node[0] === "RowBox" && Array.isArray(node[1])) for (const part of node[1]) walk(part, role);
+    } else if (
+      (node[0] === "RowBox" || node[0] === "GraphicsComplexBox" || node[0] === "GraphicsComplex3DBox") &&
+      Array.isArray(node[1])
+    )
+      for (const part of node[1]) walk(part, role);
     else walk(node[1]);
   };
-  if (drawing[0] === "GraphicsBox") for (const part of drawing[1] as readonly unknown[]) walk(part);
-  else if (drawing[0] === "Graphics3DBox") walk(drawing[1]);
+  if (drawing[0] === "GraphicsBox" || drawing[0] === "Graphics3DBox")
+    for (const part of drawing[1] as readonly unknown[]) walk(part);
   const shape: { -readonly [K in keyof BoxShape]: BoxShape[K] } = { head: drawing[0] };
   if (asked.marks !== undefined) shape.marks = marks;
   if (asked.roles !== undefined) shape.roles = roles;

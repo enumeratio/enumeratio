@@ -22,7 +22,6 @@ import {
   type OptionValue,
   point3d,
   polygon3d,
-  row,
 } from "@enumeratio/boxes";
 import { type Gradient, sampleGradient } from "./palettes.ts";
 import { categoryColors, type ColorOptions, gradientOf, plotPalette, rampColor } from "./plot-color.ts";
@@ -102,7 +101,7 @@ const emptyBox = (
   framing: "Fixed" | "Fit",
   defaults: { azimuth: number; elevation: number },
   description: string,
-): Box => graphics3d(row([]), { ...chrome(o, EMPTY_RANGE, framing, defaults, description), Axes: false });
+): Box => graphics3d([], { ...chrome(o, EMPTY_RANGE, framing, defaults, description), Axes: false });
 
 /** The finite extent of `values`, widened when every value is the same so a flat field has a usable ramp. */
 function extent(values: readonly number[]): Range {
@@ -206,7 +205,7 @@ export function surfaceBox(
         );
       }
     return graphicsComplex3d(
-      polygon3d({ Indices: quads, FaceColors: colors, EdgeWidth: 0.5, ...(grids.length > 1 && { Opacity: 0.85 }) }),
+      [polygon3d({ Indices: quads, FaceColors: colors, EdgeWidth: 0.5, ...(grids.length > 1 && { Opacity: 0.85 }) })],
       { Points: points },
     );
   });
@@ -218,7 +217,7 @@ export function surfaceBox(
     );
     options["PlotLegends"] = [steps, [label(Z.inv(zmax)), label(Z.inv(zmin))]];
   }
-  return graphics3d(row(complexes), options);
+  return graphics3d(complexes, options);
 }
 
 /** `ListPlot3D`'s options. */
@@ -278,10 +277,12 @@ export function meshBox(grid: Grid, o: MeshOptions = {}): Box {
     description,
   );
   return graphics3d(
-    graphicsComplex3d(
-      polygon3d({ Indices: quads, FaceColors: colors, EdgeWidth: 0.5, ...(o.wireframe && { Wireframe: true }) }),
-      { Points: points },
-    ),
+    [
+      graphicsComplex3d(
+        [polygon3d({ Indices: quads, FaceColors: colors, EdgeWidth: 0.5, ...(o.wireframe && { Wireframe: true }) })],
+        { Points: points },
+      ),
+    ],
     options,
   );
 }
@@ -312,12 +313,14 @@ export function scatterBox(points: readonly Triple[], o: ScatterOptions = {}): B
   const sz = unitScale(zr[0], zr[1]);
   const gradient = gradientOf(o);
   return graphics3d(
-    point3d({
-      Points: usable.map((p) => [...p]),
-      PointColors: usable.map((p) => heightShade(sz(p[2]), gradient)),
-      PointSize: o.size ?? 3.2,
-      DepthCue: Math.max(0, Math.min(1, o.depthCue ?? 0.45)),
-    }),
+    [
+      point3d({
+        Points: usable.map((p) => [...p]),
+        PointColors: usable.map((p) => heightShade(sz(p[2]), gradient)),
+        PointSize: o.size ?? 3.2,
+        DepthCue: Math.max(0, Math.min(1, o.depthCue ?? 0.45)),
+      }),
+    ],
     chrome(o, [xr, yr, zr], "Fit", defaults, description),
   );
 }
@@ -384,7 +387,7 @@ export function barChart3dBox(matrix: Grid, o: BarOptions = {}): Box {
     .forEach((text, j) =>
       items.push(inset(text, { Center: [1.06, (j + 0.5) * ch, zlo], Size: 9, Opacity: 0.7, Anchor: "Left" })),
     );
-  return graphics3d(row(items), {
+  return graphics3d(items, {
     ...chrome(
       o,
       [
@@ -461,15 +464,17 @@ export function curveBox(points: readonly Triple[], o: CurveOptions = {}): Box {
         quads.push([index(i, j), index(i + 1, j), index(i + 1, j + 1), index(i, j + 1)]);
     items.push(
       graphicsComplex3d(
-        polygon3d({
-          Indices: quads,
-          FaceForm: "currentColor",
-          Opacity: 0.045,
-          EdgeWidth: 0.3,
-          EdgeColor: "currentColor",
-          EdgeOpacity: 0.05,
-          Behind: true,
-        }),
+        [
+          polygon3d({
+            Indices: quads,
+            FaceForm: "currentColor",
+            Opacity: 0.045,
+            EdgeWidth: 0.3,
+            EdgeColor: "currentColor",
+            EdgeOpacity: 0.05,
+            Behind: true,
+          }),
+        ],
         { Points: points3 },
       ),
     );
@@ -496,12 +501,12 @@ export function curveBox(points: readonly Triple[], o: CurveOptions = {}): Box {
       }),
     );
   }
-  return graphics3d(row(items), { ...chrome(o, range, "Fixed", defaults, description), Axes: false });
+  return graphics3d(items, { ...chrome(o, range, "Fixed", defaults, description), Axes: false });
 }
 
 // ── A plot not yet sampled ───────────────────────────────────────────────────────────────
 
 /** A plot of an expression, not yet sampled: its expression and what samples it (`Producer`). */
 export function unsampledGraphics3dBox(head: string, expr: unknown): Box {
-  return graphics3d(interpretation(row([]), expr as never), { Producer: head });
+  return interpretation(graphics3d([], { Producer: head }), expr as never);
 }

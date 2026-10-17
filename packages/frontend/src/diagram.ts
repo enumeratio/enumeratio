@@ -15,6 +15,7 @@ import {
   disk,
   graphics,
   inset,
+  graphicsOf,
   isNode,
   line,
   type Options,
@@ -193,15 +194,16 @@ const edgesOf = (value: unknown): Edge[] =>
  * Whether `box` is a diagram's `GraphicsBox`: a frame (`PlotRange`) of tagged marks, with no
  * scaled axes (a plot's), no complex of addressed marks (a figure's) and no `ChartKind` (a chart's).
  */
-export function isDiagramBox(box: Box): box is BoxNode {
-  if (!isNode(box) || box[0] !== "GraphicsBox") return false;
-  const o = optionsOfBox(box);
-  const content = box[1] as Box;
+export function isDiagramBox(box: Box): boolean {
+  const drawing = graphicsOf(box)?.box;
+  if (drawing === undefined) return false;
+  const o = optionsOfBox(drawing);
+  const first = drawing[1][0];
   return (
     o.PlotRange !== undefined &&
     o.ScalingFunctions === undefined &&
     o.ChartKind === undefined &&
-    !(isNode(content) && content[0] === "GraphicsComplexBox")
+    !(isNode(first) && first[0] === "GraphicsComplexBox")
   );
 }
 
