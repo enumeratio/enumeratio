@@ -79,6 +79,7 @@ export { PARTITION_STATISTICS } from "../partitions/src/statistics.ts";
 export { DYCK_STATISTICS } from "../lattice-paths/src/statistics.ts";
 export { SET_PARTITION_STATISTICS } from "../set-partitions/src/statistics.ts";
 export { TREE_STATISTICS } from "../trees/src/statistics.ts";
+export { COMPOSITION_STATISTICS } from "../compositions/src/statistics.ts";
 export { CARDINALITIES, type Cardinality } from "../partitions/src/cardinalities.ts";
 export { NATIVE_TO_ENGINE, type NativeStatistic } from "../partitions/src/native-statistics.ts";
 export { findstat, type FindStatMatch } from "../findstat/src/findstat-data.ts";

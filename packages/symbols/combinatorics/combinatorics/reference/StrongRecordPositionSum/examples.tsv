@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-composition-2-1-3-1-1			[StrongRecordPositionSum, [Composition, [List, 2, 1, 3, 1, 1]]]	4			the composition $[2,1,3,1,1]$
+findstat-st000763-1	Properties		[CombinatorialStat, [Composition, [List, 1]], "'StrongRecordPositionSum'"]	1	1	FindStat St000763	FindStat's value for [1]
+findstat-st000763-2	Properties		[CombinatorialStat, [Composition, [List, 2]], "'StrongRecordPositionSum'"]	1	1	FindStat St000763	FindStat's value for [2]
+findstat-st000763-3	Properties		[CombinatorialStat, [Composition, [List, 3]], "'StrongRecordPositionSum'"]	1	1	FindStat St000763	FindStat's value for [3]

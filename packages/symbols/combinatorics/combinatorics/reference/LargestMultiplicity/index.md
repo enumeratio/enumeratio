@@ -8,13 +8,18 @@ catalog:
     identity: St001933
     url: https://www.findstat.org/St001933
     on: IntegerPartition
+  - system: findstat
+    identity: St000904
+    url: https://www.findstat.org/St000904
+    on: Composition
 statOn:
+  - Composition
   - IntegerPartition
 signatures:
   - call: LargestMultiplicity(partition)
     description: The largest multiplicity of a part.
     library: enumeratio-combinatorics
-    type: (integer_partition) -> number
+    type: (composition | integer_partition) -> number
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

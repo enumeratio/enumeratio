@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-composition-2-1-3-1-1			[PartsEqualToReversedPart, [Composition, [List, 2, 1, 3, 1, 1]]]	3			the composition $[2,1,3,1,1]$
+findstat-st001675-1	Properties		[CombinatorialStat, [Composition, [List, 1]], "'PartsEqualToReversedPart'"]	1	1	FindStat St001675	FindStat's value for [1]
+findstat-st001675-2	Properties		[CombinatorialStat, [Composition, [List, 2]], "'PartsEqualToReversedPart'"]	1	1	FindStat St001675	FindStat's value for [2]
+findstat-st001675-3	Properties		[CombinatorialStat, [Composition, [List, 3]], "'PartsEqualToReversedPart'"]	1	1	FindStat St001675	FindStat's value for [3]

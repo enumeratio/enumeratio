@@ -7,7 +7,7 @@ signatures:
   - call: Peaks(p)
     description: the peak count of a one-line permutation $p$
     library: enumeratio-combinatorics
-    type: (dyck_path | list | permutation) -> integer | number
+    type: (composition | dyck_path | list | permutation) -> integer | number
 seeAlso:
   - Valleys
   - Descents
@@ -17,8 +17,13 @@ catalog:
     identity: St000023
     url: https://www.findstat.org/St000023
     on: Permutation
+  - system: findstat
+    identity: St000768
+    url: https://www.findstat.org/St000768
+    on: Composition
 statOn:
   - ColoredMotzkinPath
+  - Composition
   - DelannoyPath
   - DyckPath
   - KDyckPath
