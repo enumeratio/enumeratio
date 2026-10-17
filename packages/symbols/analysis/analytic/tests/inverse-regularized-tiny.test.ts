@@ -1,3 +1,4 @@
+// unstable: a bare ComputeEngine with only the analytic declarations
 import { ComputeEngine } from "@enumeratio/engine/unstable";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
