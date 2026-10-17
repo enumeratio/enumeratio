@@ -19,3 +19,8 @@ test("Interval: a trig head declines rather than guess across a pole it straddle
   const result = ce.box(["Cot", ["Interval", ["Negate", ["Divide", "Pi", 4]], ["Divide", "Pi", 4]]]).evaluate();
   expect(result.operator).not.toBe("Interval");
 });
+
+test("Around takes the magnitude of its uncertainty", () => {
+  expect(ce.box(["Around", 1, -1]).evaluate().json).toEqual(["Around", 1, 1]);
+  expect(ce.box(["Around", 1, -1]).N().json).toEqual(["Around", 1, 1]);
+});

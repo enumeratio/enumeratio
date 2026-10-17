@@ -14,6 +14,7 @@ const ALLOWED: Record<string, string> = {
   Aborted: "a status tag, the value a cancelled evaluation reports",
   ConstGlaisher: "the Glaisher–Kinkelin constant",
   Khinchin: "Khinchin's constant",
+  MachinePrecision: "Wolfram's precision of a machine number, 53 log10(2); what Precision returns for a double",
   Quaternions: "the algebra of quaternions, a fixed algebra",
   H_doublestruck: "the quaternion algebra as Wolfram's ℍ",
   BicomplexNumbers: "a fixed hypercomplex algebra",
