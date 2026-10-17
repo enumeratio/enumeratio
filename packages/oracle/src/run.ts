@@ -1625,6 +1625,8 @@ def _enumeratio_root(g):
             break
         lo, hi = lo * 2, hi * 2
         glo, ghi = g(lo), g(hi)
+    if (glo < 0) == (ghi < 0):
+        raise ValueError("no root bracketed")
     for _ in range(int(mp.prec) + 200):
         mid = (lo + hi) / 2
         gm = g(mid)
@@ -1638,12 +1640,22 @@ def _enumeratio_root(g):
 
 def enumeratio_inverse_gamma_regularized(a, s):
     a, s = mpf(a), mpf(s)
+    if s == 0:
+        return inf
+    if s == 1:
+        return mpf(0)
+    if not 0 < s < 1:
+        raise ValueError("s outside [0, 1]")
     if s <= mpf(1) / 2:
         return exp(_enumeratio_root(lambda u: log(gammainc(a, exp(u), inf, regularized=True)) - log(s)))
     return exp(_enumeratio_root(lambda u: log(gammainc(a, 0, exp(u), regularized=True)) - log(1 - s)))
 
 def enumeratio_inverse_beta_regularized(s, a, b):
     s, a, b = mpf(s), mpf(a), mpf(b)
+    if s == 0 or s == 1:
+        return s
+    if not 0 < s < 1:
+        raise ValueError("s outside [0, 1]")
     if s <= mpf(1) / 2:
         return exp(-exp(_enumeratio_root(lambda t: log(betainc(a, b, 0, exp(-exp(t)), regularized=True)) - log(s))))
     return 1 - exp(-exp(_enumeratio_root(lambda t: log(betainc(b, a, 0, exp(-exp(t)), regularized=True)) - log(1 - s))))

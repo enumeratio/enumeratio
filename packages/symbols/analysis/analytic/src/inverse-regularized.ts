@@ -110,14 +110,16 @@ const RESIDUAL_TOLERANCE = 1e-10;
 
 /** Q(a, z) for z ≥ a + 1 by its continued fraction (DLMF 8.9.2, evaluated by the modified Lentz
  * method), which keeps its relative precision however small Q is: compute-engine's own
- * GammaRegularized(500, 911.6) is −7e-43, the rounding of 1 − P. NaN if it does not converge. */
+ * GammaRegularized(500, 911.6) is −7e-43, the rounding of 1 − P. NaN past the cap (the solve then
+ * declines). Convergence is three consecutive factors within a few ε of 1, not one lucky one. */
 function upperGammaRegularizedFraction(a: number, z: number): number {
   const floor = 1e-300;
   let b = z + 1 - a;
   let c = 1 / floor;
   let d = 1 / b;
   let h = d;
-  for (let i = 1; i < 10_000; i++) {
+  let settled = 0;
+  for (let i = 1; i < FRACTION_TERMS; i++) {
     const an = -i * (i - a);
     b += 2;
     d = an * d + b;
@@ -127,16 +129,19 @@ function upperGammaRegularizedFraction(a: number, z: number): number {
     d = 1 / d;
     const delta = d * c;
     h *= delta;
-    if (Math.abs(delta - 1) < 1e-16) return Math.exp(a * Math.log(z) - z - logGammaReal(a)) * h;
+    settled = Math.abs(delta - 1) < 4e-16 ? settled + 1 : 0;
+    if (settled === 3) return Math.exp(a * Math.log(z) - z - logGammaReal(a)) * h;
   }
   return Number.NaN;
 }
 
-/** Q(a, z): the continued fraction where it applies, else compute-engine's. */
-const forwardGammaRegularized = (ce: ComputeEngine, a: number, z: number): number => {
-  const fraction = z >= a + 1 ? upperGammaRegularizedFraction(a, z) : Number.NaN;
-  return Number.isNaN(fraction) ? ce.box(["GammaRegularized", a, z] as never).N().re : fraction;
-};
+/** Terms of the fraction before it declines: it needs about √a near z = a + 1. */
+const FRACTION_TERMS = 10_000;
+
+/** Q(a, z): the continued fraction where it applies (NaN if it does not converge), else
+ * compute-engine's, where Q ≥ ~0.4 and 1 − P keeps its digits. */
+const forwardGammaRegularized = (ce: ComputeEngine, a: number, z: number): number =>
+  z >= a + 1 ? upperGammaRegularizedFraction(a, z) : ce.box(["GammaRegularized", a, z] as never).N().re;
 
 const forwardBetaRegularized = (ce: ComputeEngine, x: number, a: number, b: number): number =>
   ce.box(["BetaRegularized", x, a, b] as never).N().re;
@@ -164,10 +169,10 @@ interface BetaTail {
 }
 
 /** The tail whose leading term is exact to a double for I_x(a, b) = p, if either is. */
-function betaTail(a: number, b: number, p: number): BetaTail | undefined {
+function betaTail(a: number, b: number, p: number, q: number): BetaTail | undefined {
   const lower = betaLogRoot(a, b, p);
   if (Math.exp(lower) * Math.max(1, Math.abs(b - 1)) < NEGLIGIBLE) return { upper: false, logRoot: lower };
-  const upper = betaLogRoot(b, a, 1 - p);
+  const upper = betaLogRoot(b, a, q);
   if (Math.exp(upper) * Math.max(1, Math.abs(a - 1)) < NEGLIGIBLE) return { upper: true, logRoot: upper };
   return undefined;
 }
@@ -241,6 +246,18 @@ function gammaTailStartLog(a: number, s: number): number {
   return Math.log(z);
 }
 
+/** Doublings of a bracket before the root is declared out of reach: 2^1100 is past a double. */
+const MAX_DOUBLINGS = 1100;
+
+/** q = 1 − s. A decimal a double holds (a literal like 0.99999999999999, or a double) is read as
+ * that double, as everywhere else. One finer than a double (a Rational or bignum s a hair under 1:
+ * 1 − 1e-20 rounds to 1, and 1 − 3e-17 gives q off by tens of percent) takes q from the exact
+ * value, which compute-engine subtracts exactly. */
+function complementOf(ce: ComputeEngine, s: BoxedExpression): number {
+  const exact = s.bignumRe;
+  if (exact === undefined || exact.sub(new BigDecimal(String(s.re))).isZero()) return 1 - s.re;
+  return ce.One.sub(s).re;
+}
 /** Solve Q(a, z) = s for z > 0, `q` being 1 − s (carried apart: s itself may have rounded to 1).
  * Q decreases from 1 (z=0) to 0 (z→∞); doubling search bounds the root, then `solveInLog`
  * refines it against Q'(z) = −z^(a−1)·e^(−z)/Γ(a).
@@ -253,7 +270,9 @@ function inverseGammaRegularized(ce: ComputeEngine, a: number, s: number, q: num
   if (s > 0.5 && q * Math.max(1, a) < 0.5) {
     let hi = leadLog < 0 ? Math.min(1, Math.exp(leadLog)) : 1;
     if (!(hi > 0)) hi = 1;
-    while (lowerGammaRegularized(a, hi) < q) hi *= 2;
+    let n = 0;
+    while (!(lowerGammaRegularized(a, hi) >= q) && n++ < MAX_DOUBLINGS) hi *= 2;
+    if (n > MAX_DOUBLINGS) return { x: hi, settled: false };
     return solveInLog(
       { f: (z) => lowerGammaRegularized(a, z), slope: gammaSlope(a, 1), increasing: true, maxLog: Math.log(hi) },
       q,
@@ -261,7 +280,9 @@ function inverseGammaRegularized(ce: ComputeEngine, a: number, s: number, q: num
     );
   }
   let hi = 1;
-  while (forwardGammaRegularized(ce, a, hi) > s) hi *= 2;
+  let n = 0;
+  while (forwardGammaRegularized(ce, a, hi) > s && n++ < MAX_DOUBLINGS) hi *= 2;
+  if (n > MAX_DOUBLINGS) return { x: hi, settled: false };
   return solveInLog(
     { f: (z) => forwardGammaRegularized(ce, a, z), slope: gammaSlope(a, -1), increasing: false, maxLog: Math.log(hi) },
     s,
@@ -296,10 +317,9 @@ const RESOLVABLE_TAIL = 1e-6;
 /** Solve I_x(a, b) = s for x in (0, 1). Above s = 1/2 the upper tail is the small one:
  * I_x(a, b) = s is I_y(b, a) = 1 − s with y = 1 − x, judged against 1 − s. The direct solve is
  * kept for a small root (where 1 − y has lost x's digits) when s resolves the tail. */
-function inverseBetaRegularized(ce: ComputeEngine, a: number, b: number, s: number): Solved {
-  const direct = (): Solved => solveInLog(betaProblem(ce, a, b), s, betaLogRoot(a, b, s), Math.min(s, 1 - s));
+function inverseBetaRegularized(ce: ComputeEngine, a: number, b: number, s: number, q: number): Solved {
+  const direct = (): Solved => solveInLog(betaProblem(ce, a, b), s, betaLogRoot(a, b, s), Math.min(s, q));
   if (s <= 0.5) return direct();
-  const q = 1 - s; // exact above 1/2
   const upper = solveInLog(betaProblem(ce, b, a), q, betaLogRoot(b, a, q));
   const complement = { x: 1 - upper.x, settled: upper.settled };
   if (complement.settled && complement.x >= COMPLEMENT_PREFERRED) return complement;
@@ -328,11 +348,13 @@ function inverseGammaRegularizedBig(a: BigDecimal, s: BigDecimal, z0: number, di
     for (let iter = 0; iter < 12; iter++) {
       let term = one;
       let sum = one;
-      for (let k = 1; k < 100_000; k++) {
+      let summed = false;
+      for (let k = 1; k < 100_000 && !summed; k++) {
         term = term.mul(z).div(a.add(k)).toPrecision(working);
         sum = sum.add(term);
-        if (term.lt(tol.mul(sum))) break;
+        summed = term.lt(tol.mul(sum));
       }
+      if (!summed) return undefined; // a truncated sum is not P
       const prefix = z.ln().mul(a).sub(z).exp().mul(invGamma).toPrecision(working);
       const q = one.sub(prefix.mul(sum));
       // dQ/dz = −(a/z)·prefix, so the step is z·(Q − s)/(a·prefix) up.
@@ -365,7 +387,9 @@ export function declareInverseGammaRegularized(ce: ComputeEngine): void {
       const wantsBig = exceedsDoublePrecision(ce, options.numericApproximation);
       const [big, bigS] = wantsBig ? [bigRealOperand(ce, a), bigRealOperand(ce, s)] : [undefined, undefined];
       // A root too small to step to is the leading term's, however far below a double it falls.
-      const logQ = bigS === undefined ? Math.log1p(-s.re) : new BigDecimal(1).sub(bigS).ln().toNumber();
+      const q = bigS === undefined ? complementOf(ce, s) : Number.NaN;
+      if (bigS === undefined && !(q > 0)) return undefined;
+      const logQ = bigS === undefined ? Math.log(q) : new BigDecimal(1).sub(bigS).ln().toNumber();
       const logRoot = (logQ + logGammaReal(a.re + 1)) / a.re;
       const tiny = Math.exp(logRoot) < NEGLIGIBLE;
       if (tiny && big !== undefined && bigS !== undefined) {
@@ -376,7 +400,7 @@ export function declareInverseGammaRegularized(ce: ComputeEngine): void {
       }
       const solved: Solved = tiny
         ? { x: Math.exp(logRoot), settled: true }
-        : inverseGammaRegularized(ce, a.re, s.re, bigS === undefined ? 1 - s.re : Math.exp(logQ));
+        : inverseGammaRegularized(ce, a.re, s.re, bigS === undefined ? q : Math.exp(logQ));
       // The double solve is the start; past a double's digits the bignum series finishes it, from
       // the last iterate even when the double solve could not vouch for it.
       if (wantsBig) {
@@ -395,8 +419,8 @@ export function declareInverseBetaRegularized(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const [s, a, b] = ops;
       if (s === undefined || a === undefined || b === undefined) return undefined;
-      if (s.re === 0 && s.im === 0) return ce.Zero;
-      if (s.re === 1 && s.im === 0) return ce.One;
+      if (s.is(0)) return ce.Zero;
+      if (s.is(1)) return ce.One;
       // I_x(1, 1) = x is its own inverse — symbolic s included.
       if (a.re === 1 && a.im === 0 && b.re === 1 && b.im === 0) {
         return wantsNumber(ops, options) ? s.N() : s.evaluate();
@@ -409,13 +433,18 @@ export function declareInverseBetaRegularized(ce: ComputeEngine): void {
       if (!wantsNumber(ops, options) || !isFiniteNum(s) || !isFiniteNum(a) || !isFiniteNum(b)) return undefined;
       if (a.im !== 0 || b.im !== 0 || s.im !== 0 || a.re <= 0 || b.re <= 0) return undefined;
       if (s.re < 0 || s.re > 1) return undefined;
-      const tail = betaTail(a.re, b.re, s.re);
+      const q = complementOf(ce, s);
+      if (!(q > 0)) return undefined;
+      const wantsBig = exceedsDoublePrecision(ce, options.numericApproximation);
+      const tail = betaTail(a.re, b.re, s.re, q);
       if (tail === undefined) {
-        const solved = inverseBetaRegularized(ce, a.re, b.re, s.re);
+        // There is no bignum solve: a double is not the answer to a precision beyond a double's.
+        if (wantsBig) return undefined;
+        const solved = inverseBetaRegularized(ce, a.re, b.re, s.re, q);
         return solved.settled ? ce.number(solved.x) : undefined;
       }
       const root = Math.exp(tail.logRoot);
-      if (exceedsDoublePrecision(ce, options.numericApproximation)) {
+      if (wantsBig) {
         const [bigA, bigB, bigS] = [bigRealOperand(ce, a), bigRealOperand(ce, b), bigRealOperand(ce, s)];
         if (bigA === undefined || bigB === undefined || bigS === undefined) return undefined;
         const one = new BigDecimal(1);
@@ -426,8 +455,8 @@ export function declareInverseBetaRegularized(ce: ComputeEngine): void {
           // 1 − y rounds to 1 once y is below the precision; skip building the exact difference.
           return bigResult(ce, bigRoot.lt(new BigDecimal(10).pow(-(ce.precision + 2))) ? one : one.sub(bigRoot));
         }
-        // A double answer is wrong once the root has left the doubles.
-        if (!(root > NORMAL_MIN)) return undefined;
+        // A double answer is not the answer at this precision.
+        return undefined;
       }
       return ce.number(tail.upper ? 1 - root : root);
     },

@@ -15,7 +15,7 @@ series-inversegammaregularized-a-s-s-s0-1
 q-a-0-1		
 q-a-infty-0		
 order-1-inverts-e-z		
-inversegammaregularized-1-0	enumeratio_inverse_gamma_regularized(1, 0)	
+inversegammaregularized-1-0	enumeratio_inverse_gamma_regularized(1, 0)	+inf
 inversegammaregularized-2-0	enumeratio_inverse_gamma_regularized(2, 0)	
 inversegammaregularized-1-1	enumeratio_inverse_gamma_regularized(1, 1)	
-inversegammaregularized-2-1	enumeratio_inverse_gamma_regularized(2, 1)	
+inversegammaregularized-2-1	enumeratio_inverse_gamma_regularized(2, 1)	0.0

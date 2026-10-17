@@ -9,5 +9,5 @@ tail-s-1e-8-a-0p5-b-0p5	enumeratio_inverse_beta_regularized(1e-8, 0.5, 0.5)	2.46
 upper-tail-s-near-1	enumeratio_inverse_beta_regularized(0.99999999999999, 3, 1000)	0.0381332889742734570623100322053
 i-x-1-1-x-is-its-own-inverse		
 i-x-a-1-x-a-inverts-to-s-1-a		
-inversebetaregularized-0-2-3	enumeratio_inverse_beta_regularized(0, 2, 3)	
-inversebetaregularized-1-2-3	enumeratio_inverse_beta_regularized(1, 2, 3)	
+inversebetaregularized-0-2-3	enumeratio_inverse_beta_regularized(0, 2, 3)	0.0
+inversebetaregularized-1-2-3	enumeratio_inverse_beta_regularized(1, 2, 3)	1.0

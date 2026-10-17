@@ -70,6 +70,28 @@ test("an upper-tail root keeps its digits where the forward Q has none", () => {
   expect(num).toMatch(/^483\.21953022256192661224358332\d*$/);
 });
 
+// An exact s a hair under 1 rounds to 1 (or its 1 − s to the wrong tail) as a double; the
+// complement comes from the exact value. Values are mpmath's, for s = 1 − 1e-20 and 1 − 3e-17.
+test("an exact s near 1 keeps its tail", () => {
+  const under = (n: number, d: string) => ["Subtract", 1, ["Rational", n, { num: d }]];
+  for (const [n, d, z, x] of [
+    [1, "100000000000000000000", 1.4142135624397617e-10, 0.9999998642791146],
+    [3, "100000000000000000", 7.745966712414834e-9, 0.9999980425652215],
+  ] as const) {
+    const s = under(n, d);
+    near(ce.box(["InverseGammaRegularized", 2, s] as never).N().re, z, 1e-14);
+    near(ce.box(["InverseBetaRegularized", s, 2, 3] as never).N().re, x, 1e-14);
+  }
+});
+
+// Past a double's digits the beta has no bignum solve, so it declines rather than answer a double.
+test("a beta root declines where it cannot give the digits asked", () => {
+  const exact = new ComputeEngine();
+  declareAnalytic(exact);
+  exact.precision = 40;
+  expect(exact.box(["InverseBetaRegularized", 0.3, 2.5, 1.5]).N().operator).toBe("InverseBetaRegularized");
+});
+
 // A target within 1e-14 of 1 is judged against the upper tail 1 − s, not against s itself.
 test("a beta root for s near 1 is the upper tail's", () => {
   near(beta(0.99999999999999, 3, 1000).re, 0.03813328897427346, 1e-14);
