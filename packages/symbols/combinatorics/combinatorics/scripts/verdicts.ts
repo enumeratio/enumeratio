@@ -11,7 +11,10 @@ import type { Verdicts } from "../src/statistics/generate-compiled.ts";
 // Imported by URL: a file outside the package in the program makes `vp pack` write its
 // declarations beside it.
 const { verdictCache } = (await import(new URL("../../../../manifest/scripts/stamp.ts", import.meta.url).href)) as {
-  verdictCache: (step: string, inputs: { dir: string; roots: string[] }) => Verdicts & { save(): void };
+  verdictCache: (
+    step: string,
+    inputs: { dir: string; roots: string[]; skip: (path: string) => boolean; omitDists: string[] },
+  ) => Verdicts & { save(): void };
 };
 
 const at = (path: string): string => fileURLToPath(new URL(`../${path}`, import.meta.url));
@@ -27,5 +30,13 @@ export const checkers = {
   families: ["scripts/family-checks.ts", "collections/src/families/epsil.ts", "collections/src/families/types.ts"],
 } as const;
 
+// Manifest's dist is built from every package's records, so any record edit would void every
+// verdict. The checks run on a bare engine and structures' interpreter, which read none of that
+// data; only manifest's code (src, minus what the build generates) reaches them, through boxes.
 export const verdictsFor = (step: string, roots: readonly string[]) =>
-  verdictCache(step, { dir: at(""), roots: roots.map(at) });
+  verdictCache(step, {
+    dir: at(""),
+    roots: [...roots.map(at), at("../../../manifest/src")],
+    skip: (path) => path.endsWith("/manifest/src/generated"),
+    omitDists: ["@enumeratio/manifest"],
+  });
