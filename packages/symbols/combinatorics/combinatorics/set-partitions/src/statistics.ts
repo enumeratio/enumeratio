@@ -173,7 +173,7 @@ const n: MathJSON = ["Length", ["Flatten", "_x"]];
 const blockOf = (e: MathJSON): MathJSON =>
   sumOver(["Range", 1, blockCount], ["If", ["Contains", at("q"), e], "q", 0], "q");
 const sameBlock = (a: MathJSON, b: MathJSON): MathJSON => equals(blockOf(a), blockOf(b));
-const differentBlocks = (a: MathJSON, b: MathJSON): MathJSON => ["Not", sameBlock(a, b)];
+const differentBlocks = (a: MathJSON, b: MathJSON): MathJSON => greater(["Abs", subtract(blockOf(a), blockOf(b))], 0);
 const isOpener = (e: MathJSON): MathJSON => ["Contains", firsts, e];
 const isCloser = (e: MathJSON): MathJSON => ["Contains", lasts, e];
 const isSingleton = (e: MathJSON): MathJSON => and(isOpener(e), isCloser(e));
@@ -231,12 +231,22 @@ const intertwiningNumber: MathJSON = pairsWhere((a, b) =>
   ),
 );
 
-/** Pairs (j, i) with j the least (`firsts`) or greatest (`lasts`) element of block k and i an
+/** Guard for a definition that pairs elements of different blocks — needs at least two. */
+const hasTwoBlocks = (body: MathJSON): MathJSON => ["If", less(blockCount, 2), 0, body];
+
+const openerOf = (k: MathJSON): MathJSON => ["At", at(k), 1];
+const closerOf = (k: MathJSON): MathJSON => ["Last", at(k)];
+
+/** Pairs (j, i) with j the opener or closer of block k and i an
  *  element of an earlier (`before`) or later block, counted where `compare(i, j)` holds. */
-const endpointPairs = (ends: MathJSON, before: boolean, compare: (i: MathJSON, j: MathJSON) => MathJSON): MathJSON =>
+const endpointPairs = (
+  ends: (block: MathJSON) => MathJSON,
+  before: boolean,
+  compare: (i: MathJSON, j: MathJSON) => MathJSON,
+): MathJSON =>
   sumOver(
     ["Range", 1, blockCount],
-    count(["Range", 1, n], and((before ? less : greater)(blockOf("i"), "k"), compare("i", at("k", ends))), "i"),
+    count(["Range", 1, n], and((before ? less : greater)(blockOf("i"), "k"), compare("i", ends("k"))), "i"),
     "k",
   );
 
@@ -436,11 +446,16 @@ const rotationOrbitSize: MathJSON = [
         ["Range", 1, n],
         count(
           ["Range", 1, n],
-          [
-            "NotEqual",
-            ["If", sameBlock("i", "j"), 1, 0],
-            ["If", sameBlock(rotated("i", "k"), rotated("j", "k")), 1, 0],
-          ],
+          greater(
+            [
+              "Abs",
+              subtract(
+                ["If", sameBlock("i", "j"), 1, 0],
+                ["If", sameBlock(rotated("i", "k"), rotated("j", "k")), 1, 0],
+              ),
+            ],
+            0,
+          ),
           "j",
         ),
         "i",
@@ -582,43 +597,43 @@ export const SET_PARTITION_STATISTICS: readonly Definition[] = [
   stat(
     "RightOpenerSmaller",
     "Pairs of an opener j and a larger element i of an earlier block.",
-    nonEmpty(endpointPairs(firsts, true, greater)),
+    hasTwoBlocks(endpointPairs(openerOf, true, greater)),
     "FindStat's ros (right, opener, smaller): an inversion of the set partition in Steingrímsson's sense.",
   ),
   stat(
     "RightOpenerBigger",
     "Pairs of an opener j and a smaller element i of an earlier block.",
-    nonEmpty(endpointPairs(firsts, true, less)),
+    hasTwoBlocks(endpointPairs(openerOf, true, less)),
     "FindStat's rob (right, opener, bigger).",
   ),
   stat(
     "LeftOpenerSmaller",
     "Pairs of an opener j and a larger element i of a later block.",
-    nonEmpty(endpointPairs(firsts, false, greater)),
+    hasTwoBlocks(endpointPairs(openerOf, false, greater)),
     "FindStat's los (left, opener, smaller), the dual major index.",
   ),
   stat(
     "RightCloserSmaller",
     "Pairs of a closer j and a larger element i of an earlier block.",
-    nonEmpty(endpointPairs(lasts, true, greater)),
+    hasTwoBlocks(endpointPairs(closerOf, true, greater)),
     "FindStat's rcs (right, closer, smaller).",
   ),
   stat(
     "RightCloserBigger",
     "Pairs of a closer j and a smaller element i of an earlier block.",
-    nonEmpty(endpointPairs(lasts, true, less)),
+    hasTwoBlocks(endpointPairs(closerOf, true, less)),
     "FindStat's rcb (right, closer, bigger).",
   ),
   stat(
     "LeftCloserSmaller",
     "Pairs of a closer j and a larger element i of a later block.",
-    nonEmpty(endpointPairs(lasts, false, greater)),
+    hasTwoBlocks(endpointPairs(closerOf, false, greater)),
     "FindStat's lcs (left, closer, smaller).",
   ),
   stat(
     "LeftCloserBigger",
     "Pairs of a closer j and a smaller element i of a later block.",
-    nonEmpty(endpointPairs(lasts, false, less)),
+    hasTwoBlocks(endpointPairs(closerOf, false, less)),
     "FindStat's lcb (left, closer, bigger).",
   ),
   stat(

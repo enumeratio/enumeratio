@@ -73,6 +73,7 @@ const occurrences = (
 
 const rotationOrbit = (p: SetPartition): number => {
   const n = size(p);
+  if (n === 0) return 0;
   const w = blockIndex(p);
   for (let k = 1; k <= n; k++) {
     const rotated = Array.from({ length: n }, (_, i) => w[(i + k) % n]!);
@@ -151,6 +152,7 @@ export const SET_PARTITION_READINGS: Readonly<Record<string, (p: SetPartition) =
     );
   },
   FirstBlockSecondElementOrSmallestCloser: (p) => {
+    if (p.length === 0) return 0;
     const firstBlock = p[0]!;
     if (firstBlock.length === 1) return 1;
     const closers = p.filter((b) => b.length > 1).map(last);
