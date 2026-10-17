@@ -39,6 +39,9 @@ n-zeta-2p5-plus-i-neg-2p5	enumeratio_n(hurwitz_zeta((2.5 + 1*I), -2.5))	83.20468
 zeta-3-133-at-a-negative-integer-a	hurwitz_zeta(3.133, -2)	hurwitz_zeta(3.13300000000000, -2)	inconclusive
 n-zeta-1-3-0-drops-the-zero-term	enumeratio_n(hurwitz_zeta((1/3), 0))	NoConvergence: zeta: too much cancellation	error
 n-zeta-i-0-to-ten-digits	enumeratio_n(hurwitz_zeta((0 + 1*I), (0 + 0*I)), 10)	1.00330022400000 - 0.418155449100000*I	disagree
+n-zeta-complex-2-plus-i-25-declines	enumeratio_n(zeta((2 + 1*I)), 25)	1.15035570325490 - 0.437530865919608*I	
+n-zeta-complex-1-plus-3i-25-declines	enumeratio_n(zeta((1 + 3*I)), 25)	0.628851733951826 - 0.107475760150586*I	
+n-zeta-complex-2-plus-i-16-declines	enumeratio_n(zeta((2 + 1*I)), 16)	1.15035570325490 - 0.437530865919608*I	
 on-the-critical-line-zeta-1-2-14i-0-02224-0	enumeratio_n(zeta((0.5 + 14*I)))	0.0222411426099936 - 0.103258123266450*I	
 two-argument-zeta-s-a-via-enumeratio-analytic	hurwitz_zeta(2, 1)	1/6*pi^2	
 zeta-2-2-zeta-2-1-pi-2-6-1	hurwitz_zeta(2, 2)	1/6*pi^2 - 1	

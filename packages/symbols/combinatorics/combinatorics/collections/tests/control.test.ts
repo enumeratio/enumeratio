@@ -52,6 +52,11 @@ test("Reap keeps the first slot when the body is Do, which gives Nothing", () =>
     ["List", ["List", 1, 2, 3]],
   ]);
 });
+test("a Reap that is an operand keeps its first slot, so the sown list is reachable", () => {
+  const reap = ["Reap", ["Do", ["Sow", "k"], ["List", "k", 3]]];
+  expect(run(["At", reap, 2, 1])).toEqual(["List", 1, 2, 3]);
+  expect(run(["Length", reap])).toEqual(2);
+});
 test("a Sow inside Add records once", () => {
   expect(run(["Reap", ["Add", ["Sow", 5], 1]])).toEqual(["List", 6, ["List", ["List", 5]]]);
 });
