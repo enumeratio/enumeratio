@@ -85,6 +85,7 @@ const CONSTANTS: Record<string, Partial<Record<System, string>>> = {
   PositiveInfinity: { wolfram: "Infinity", sympy: "oo", mpmath: "inf", sage: "oo", julia: "Inf" },
   NegativeInfinity: { wolfram: "-Infinity", sympy: "-oo", mpmath: "-inf", sage: "-oo", julia: "(-Inf)" },
   ConstGlaisher: { wolfram: "Glaisher", mpmath: "glaisher", sage: "glaisher", julia: "const_glaisher(RR)" },
+  MachinePrecision: { wolfram: "MachinePrecision" },
   Khinchin: { wolfram: "Khinchin", mpmath: "khinchin", sage: "khinchin", julia: "const_khinchin(RR)" },
   // Our carrier's plural type-space symbol, now DEFINED_NAMES-defined (declareCarriers'
   // default plural folding). Without an entry here it would fall into the DEFINED_NAMES

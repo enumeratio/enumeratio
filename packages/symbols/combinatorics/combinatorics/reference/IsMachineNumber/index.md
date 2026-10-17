@@ -5,7 +5,7 @@ signature: IsMachineNumber(expr)
 summary: Whether expr is an ordinary (not extended-precision) inexact number.
 signatures:
   - call: IsMachineNumber(expr)
-    description: $True$ for an inexact number carrying at most 15 significant decimal digits, $False$ otherwise (including every exact number).
+    description: $True$ for an inexact number carrying at most 17 significant decimal digits, $False$ otherwise (including every exact number).
     library: enumeratio-combinatorics
     type: (any) -> boolean
 seeAlso:

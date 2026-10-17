@@ -7,7 +7,7 @@ signatures:
   - call: Precision(expr)
     description: $PositiveInfinity$ for an exact number, `MachinePrecision` for a machine number, otherwise its significant decimal digit count.
     library: enumeratio-combinatorics
-    type: (any) -> integer<1..> | signed_infinity | real
+    type: (any) -> integer<1..> | real | signed_infinity
 seeAlso:
   - IsMachineNumber
   - IsNumeric

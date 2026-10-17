@@ -36,6 +36,7 @@ export const SYMBOLS: Record<string, string> = {
   MachineEpsilon: "$MachineEpsilon",
   GoldenRatio: "GoldenRatio",
   EulerGamma: "EulerGamma",
+  MachinePrecision: "MachinePrecision",
   CatalanConstant: "Catalan",
   True: "True",
   False: "False",
