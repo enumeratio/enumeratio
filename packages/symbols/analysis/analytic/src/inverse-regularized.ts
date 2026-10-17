@@ -98,9 +98,6 @@ function betaTail(a: number, b: number, p: number): BetaTail | undefined {
   return undefined;
 }
 
-/** ln of the root of z^a/Γ(a+1) = 1 − s. */
-const gammaLogRoot = (a: number, s: number): number => (Math.log1p(-s) + logGammaReal(a + 1)) / a;
-
 /** e^(ln q / a) at `digits` digits, `logRoot` (a double estimate) sizing the guard digits that
  * the exponent's magnitude eats; exact down to the true value however far below a double it is. */
 function bigLogRootExp(q: () => BigDecimal, a: BigDecimal, logRoot: number, digits: number): BigDecimal {
@@ -133,21 +130,57 @@ function gammaTailBig(a: BigDecimal, s: BigDecimal, logRoot: number, digits: num
   return bigLogRootExp(q, a, logRoot, digits);
 }
 
-/** Solve Q(a, z) = s for z > 0. Q decreases from 1 (z=0) to 0 (z→∞); doubling search finds a
- * bracket, then `safeguardedSolve` refines against Q'(z) = −z^(a−1)·e^(−z)/Γ(a) (in log space). */
-function inverseGammaRegularized(ce: ComputeEngine, a: number, s: number): number | undefined {
-  const logGammaA = logGammaReal(a);
+/** P(a, z) = z^a e^(−z) Σ z^k/Γ(a+k+1), summed directly: every term is positive, so unlike
+ * 1 − Q(a, z) it keeps its relative precision however small P is. NaN where the sum overflows. */
+function lowerGammaRegularized(a: number, z: number): number {
+  if (z <= 0) return 0;
+  let term = 1;
+  let sum = 1;
+  for (let k = 1; k < 100_000; k++) {
+    term *= z / (a + k);
+    sum += term;
+    if (term < 1e-17 * sum) return Math.exp(a * Math.log(z) - z - logGammaReal(a + 1)) * sum;
+    if (!Number.isFinite(sum)) break;
+  }
+  return Number.NaN;
+}
+
+const gammaDensity =
+  (a: number) =>
+  (z: number): number =>
+    z <= 0 ? 0 : Math.exp((a - 1) * Math.log(z) - z - logGammaReal(a));
+
+/** Solve Q(a, z) = s for z > 0, `q` being 1 − s (carried apart: s itself may have rounded to 1).
+ * Q decreases from 1 (z=0) to 0 (z→∞); doubling search finds a
+ * bracket, then `safeguardedSolve` refines against Q'(z) = −z^(a−1)·e^(−z)/Γ(a) (in log space).
+ * 1 − s is the tail when s is near 1; the lower tail P(a, z) = 1 − s is then solved instead, as
+ * 1 − Q has lost its digits of z. P's own prefactor costs about a·ε, Q's 1 − s costs ε/(1 − s). */
+function inverseGammaRegularized(ce: ComputeEngine, a: number, s: number, q: number): number | undefined {
+  const start = Math.exp((Math.log(q) + logGammaReal(a + 1)) / a); // the leading term: a good start for a small root
+  if (s > 0.5 && q * Math.max(1, a) < 0.5) {
+    let hi = start > 0 ? Math.min(1, start) : 1;
+    while (lowerGammaRegularized(a, hi) < q) hi *= 2;
+    const z = safeguardedSolve(
+      (z) => lowerGammaRegularized(a, z),
+      gammaDensity(a),
+      0,
+      hi,
+      q,
+      true, // P(a, z) increases in z
+      start,
+    );
+    if (z !== undefined) return z;
+  }
   let hi = 1;
   while (forwardGammaRegularized(ce, a, hi) > s) hi *= 2;
-  const density = (z: number): number => (z <= 0 ? 0 : Math.exp((a - 1) * Math.log(z) - z - logGammaA));
   return safeguardedSolve(
     (z) => forwardGammaRegularized(ce, a, z),
-    density,
+    gammaDensity(a),
     0,
     hi,
     s,
     false, // Q(a, z) decreases in z
-    Math.exp(gammaLogRoot(a, s)), // the leading term: a good start for a small root
+    start,
   );
 }
 
@@ -171,10 +204,12 @@ function inverseBetaRegularized(ce: ComputeEngine, a: number, b: number, s: numb
 /**
  * Newton's method on the bignum series for P(a, z) = z^a e^(−z) Σ z^k/Γ(a+k+1), from the double
  * answer: each step doubles the digits, so a few reach any precision asked. Q = 1 − P loses the
- * digits of 1/s, which the working precision covers. `undefined` if it does not settle.
+ * digits of 1/s (and of 1/(1 − s) near s = 1, where P is the small one), which the working
+ * precision covers. `undefined` if it does not settle.
  */
 function inverseGammaRegularizedBig(a: BigDecimal, s: BigDecimal, z0: number, digits: number): BigDecimal | undefined {
-  const working = digits + 15 + Math.max(0, Math.ceil(-s.ln().toNumber() * Math.LOG10E));
+  const tail = s.lt(0.5) ? s : new BigDecimal(1).sub(s);
+  const working = digits + 15 + Math.max(0, Math.ceil(-tail.ln().toNumber() * Math.LOG10E));
   return atDigits(working, () => {
     const one = new BigDecimal(1);
     const tol = new BigDecimal(10).pow(-(working + 2));
@@ -207,10 +242,11 @@ export function declareInverseGammaRegularized(ce: ComputeEngine): void {
       const [a, s] = ops;
       if (a === undefined || s === undefined) return undefined;
       // Q(a, 0) = 1 and Q(a, ∞) = 0 for ANY a — even a symbolic one.
-      if (s.re === 1 && s.im === 0) return ce.Zero;
-      if (s.re === 0 && s.im === 0) return ce.symbol("PositiveInfinity");
+      // (`is`, not `re`: a bignum s a hair under 1, or over 0, rounds to 1 or 0 as a double.)
+      if (s.is(1)) return ce.Zero;
+      if (s.is(0)) return ce.symbol("PositiveInfinity");
       // Q(1, z) = e^{−z} inverts exactly, symbolic s included.
-      if (a.re === 1 && a.im === 0) {
+      if (a.is(1)) {
         const expr = ce.function("Negate", [ce.function("Ln", [s])]);
         return wantsNumber(ops, options) ? expr.N() : expr.evaluate();
       }
@@ -219,7 +255,8 @@ export function declareInverseGammaRegularized(ce: ComputeEngine): void {
       const wantsBig = exceedsDoublePrecision(ce, options.numericApproximation);
       const [big, bigS] = wantsBig ? [bigRealOperand(ce, a), bigRealOperand(ce, s)] : [undefined, undefined];
       // A root too small to step to is the leading term's, however far below a double it falls.
-      const logRoot = gammaLogRoot(a.re, s.re);
+      const logQ = bigS === undefined ? Math.log1p(-s.re) : new BigDecimal(1).sub(bigS).ln().toNumber();
+      const logRoot = (logQ + logGammaReal(a.re + 1)) / a.re;
       const tiny = Math.exp(logRoot) < NEGLIGIBLE;
       if (tiny && big !== undefined && bigS !== undefined) {
         const root = gammaTailBig(big, bigS, logRoot, ce.precision);
@@ -227,7 +264,9 @@ export function declareInverseGammaRegularized(ce: ComputeEngine): void {
         // No double start to fall back on once the root has left the doubles.
         if (!(Math.exp(logRoot) > NORMAL_MIN)) return undefined;
       }
-      const z0 = tiny ? Math.exp(logRoot) : inverseGammaRegularized(ce, a.re, s.re);
+      const z0 = tiny
+        ? Math.exp(logRoot)
+        : inverseGammaRegularized(ce, a.re, s.re, bigS === undefined ? 1 - s.re : Math.exp(logQ));
       if (z0 === undefined) return undefined;
       // The double solve is the start; past a double's digits the bignum series finishes it.
       if (wantsBig) {

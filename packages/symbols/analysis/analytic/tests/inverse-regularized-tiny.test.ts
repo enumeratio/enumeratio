@@ -30,6 +30,16 @@ test("a tiny root keeps its own relative accuracy", () => {
   near(gamma(0.03, 0.6).re, 3.127618263958e-14, 1e-13); // solver, not the leading term
 });
 
+// s a hair under 1: Q = 1 − P has lost the digits of z, so P(a, z) = 1 − s is solved instead.
+// Values are mpmath's, solving gammainc(a, 0, z, regularized=True) = 1 − s for the double s.
+test("a root for s near 1 keeps its digits", () => {
+  near(gamma(1.5, 1 - 1e-8).re, 5.611665505323225e-6, 1e-14);
+  near(gamma(3, 1 - 1e-8).re, 0.003918704453152248, 1e-14);
+  near(gamma(10, 1 - 1e-8).re, 0.7696086534273731, 1e-14);
+  near(gamma(0.5, 1 - 1e-6).re, 7.853981634430288e-13, 1e-14);
+  near(gamma(0.25, 1 - 1e-3).re, 6.749697893115399e-13, 1e-14);
+});
+
 test("past a double's digits the root is the true one, however far below a double", () => {
   const exact = new ComputeEngine();
   declareAnalytic(exact);
@@ -39,4 +49,11 @@ test("past a double's digits the root is the true one, however far below a doubl
   expect(num(["InverseGammaRegularized", 1e-6, 0.5])).toMatch(/^5\.67093667677718270527848567603\d*e-301031$/);
   // 1 − y rounds to 1 at 40 digits
   expect(exact.box(["InverseBetaRegularized", 0.9, 1.5e-6, 2.5e-6]).N().re).toBe(1);
+  // s within 1e-30 of 1 (which no double holds): the series' subtraction needs the extra digits
+  expect(num(["InverseGammaRegularized", 10, { num: "0.999999999999999999999999999999" }])).toMatch(
+    /^0\.0045305942977519932066095081584329\d*$/,
+  );
+  expect(num(["InverseGammaRegularized", 0.7, { num: "0.9999999999999999999999999" }])).toMatch(
+    /^1\.683732939061499141338880230655\d*e-36$/,
+  );
 });
