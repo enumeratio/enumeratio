@@ -38,7 +38,7 @@ function filesUnder(root: string, skip: (path: string) => boolean): string[] {
 }
 
 /** The `dist` directories of the workspace packages `dir` depends on, transitively. */
-export function workspaceDists(dir: string): string[] {
+export function workspaceDists(dir: string, omit: readonly string[] = []): string[] {
   const seen = new Map<string, string>();
   const visit = (home: string): void => {
     const pkg = JSON.parse(readFileSync(join(home, "package.json"), "utf8")) as Record<string, Record<string, string>>;
@@ -53,12 +53,12 @@ export function workspaceDists(dir: string): string[] {
       } catch {
         continue; // not installed here (a dev-only dependency, say)
       }
-      seen.set(name, join(dep, "dist"));
+      seen.set(name, omit.includes(name) ? "" : join(dep, "dist"));
       visit(dep);
     }
   };
   visit(dir);
-  return [...seen.values()];
+  return [...seen.values()].filter((dist) => dist !== "");
 }
 
 function lockfileOf(dir: string): string {
@@ -82,16 +82,20 @@ export interface StepInputs {
   readonly roots?: readonly string[];
   /** Files the step writes, which must not count as its inputs. */
   readonly skip?: (path: string) => boolean;
+  /** Workspace packages (full names) whose dist is left out of the hash; the caller names in
+   *  `roots` what of them it reads. For a dist built from every package's records, which any
+   *  record edit changes. */
+  readonly omitDists?: readonly string[];
 }
 
 /** A hash of everything the step reads. */
-export function hashInputs({ dir, roots: own = [dir], skip = () => false }: StepInputs): string {
+export function hashInputs({ dir, roots: own = [dir], skip = () => false, omitDists = [] }: StepInputs): string {
   const hash = createHash("sha256");
   const add = (label: string, data: string | Buffer): void => {
     hash.update(`${label}\0${data.length}\0`);
     hash.update(data);
   };
-  const roots = [...own, ...workspaceDists(dir)];
+  const roots = [...own, ...workspaceDists(dir, omitDists)];
   for (const root of roots) {
     for (const file of filesUnder(root, skip)) add(relative(dir, file), readFileSync(file));
   }
