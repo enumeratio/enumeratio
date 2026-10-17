@@ -34,8 +34,9 @@ function safeguardedSolve(
   hi: number,
   target: number,
   increasing: boolean,
+  start = 0.5 * (lo + hi),
 ): number {
-  let x = 0.5 * (lo + hi);
+  let x = start > lo && start < hi ? start : 0.5 * (lo + hi);
   for (let i = 0; i < 100; i++) {
     const fx = f(x) - target;
     if (Math.abs(fx) < 1e-14 * (1 + Math.abs(target))) return x;
@@ -44,7 +45,8 @@ function safeguardedSolve(
     const d = fPrime(x);
     let xn = d === 0 || !Number.isFinite(d) ? Number.NaN : x - fx / (increasing ? d : -d);
     if (!(xn > lo && xn < hi)) xn = 0.5 * (lo + hi);
-    if (Math.abs(xn - x) < 1e-15 * (1 + Math.abs(x))) return xn;
+    // Relative, not absolute: a root near 0 is only reached to its own scale.
+    if (Math.abs(xn - x) < 1e-15 * Math.abs(x)) return xn;
     x = xn;
   }
   return x;
@@ -55,6 +57,73 @@ const forwardGammaRegularized = (ce: ComputeEngine, a: number, z: number): numbe
 
 const forwardBetaRegularized = (ce: ComputeEngine, x: number, a: number, b: number): number =>
   ce.box(["BetaRegularized", x, a, b] as never).N().re;
+
+// Tiny roots. The solver's tolerances are absolute, so a root near 0 (or near 1) can't be
+// reached by stepping in x, and the answer may be below the smallest double: I_x(2.5e-6, 1.5e-6)
+// = 0.3 has x ≈ e^-89257. There the forward function is its leading term,
+//   I_x(a, b) = x^a/(a·B(a, b)) · (1 + O(max(1, |b−1|)·x)),   P(a, z) = z^a/Γ(a+1) · (1 + O(z)),
+// which inverts in log space: ln x = (ln p + ln Γ(a+1) + ln Γ(b) − ln Γ(a+b))/a. Once the
+// correction is negligible that is the answer; the beta's upper tail is the lower tail of the
+// swapped one (x = 1 − y, with I_y(b, a) = 1 − p).
+
+/** Below this the leading term's relative error is under a double's epsilon. */
+const NEGLIGIBLE = 1e-17;
+
+const NORMAL_MIN = 2.2250738585072014e-308;
+
+/** ln of the root of x^a/(a·B(a, b)) = p. */
+const betaLogRoot = (a: number, b: number, p: number): number =>
+  (Math.log(p) + logGammaReal(a + 1) + logGammaReal(b) - logGammaReal(a + b)) / a;
+
+interface BetaTail {
+  upper: boolean;
+  /** ln of the root, of x (lower tail) or of y = 1 − x (upper tail). */
+  logRoot: number;
+}
+
+/** The tail whose leading term is exact to a double for I_x(a, b) = p, if either is. */
+function betaTail(a: number, b: number, p: number): BetaTail | undefined {
+  const lower = betaLogRoot(a, b, p);
+  if (Math.exp(lower) * Math.max(1, Math.abs(b - 1)) < NEGLIGIBLE) return { upper: false, logRoot: lower };
+  const upper = betaLogRoot(b, a, 1 - p);
+  if (Math.exp(upper) * Math.max(1, Math.abs(a - 1)) < NEGLIGIBLE) return { upper: true, logRoot: upper };
+  return undefined;
+}
+
+/** ln of the root of z^a/Γ(a+1) = 1 − s. */
+const gammaLogRoot = (a: number, s: number): number => (Math.log1p(-s) + logGammaReal(a + 1)) / a;
+
+/** e^(ln q / a) at `digits` digits, `logRoot` (a double estimate) sizing the guard digits that
+ * the exponent's magnitude eats; exact down to the true value however far below a double it is. */
+function bigLogRootExp(q: () => BigDecimal, a: BigDecimal, logRoot: number, digits: number): BigDecimal {
+  const working = digits + 10 + Math.ceil(Math.log10(Math.abs(logRoot) + 1));
+  return atDigits(working, () => q().ln().div(a).exp()).toPrecision(digits);
+}
+
+/** Bignum lower-tail root of I_x(a, b) = p, or undefined when the leading term is not exact to
+ * `digits` digits. `logRoot` is the double estimate. */
+function betaTailBig(
+  a: BigDecimal,
+  b: BigDecimal,
+  p: BigDecimal,
+  logRoot: number,
+  digits: number,
+): BigDecimal | undefined {
+  if (Math.exp(logRoot) * Math.max(1, Math.abs(b.toNumber() - 1)) >= 10 ** -(digits + 3)) return undefined;
+  const working = digits + 15;
+  // p·a·B(a, b) = p·Γ(a+1)·Γ(b)/Γ(a+b)
+  const q = () =>
+    p.mul(inverseGamma(a.add(b), working)).div(inverseGamma(a.add(1), working).mul(inverseGamma(b, working)));
+  return bigLogRootExp(q, a, logRoot, digits);
+}
+
+/** Bignum root of P(a, z) = 1 − s likewise. */
+function gammaTailBig(a: BigDecimal, s: BigDecimal, logRoot: number, digits: number): BigDecimal | undefined {
+  if (Math.exp(logRoot) >= 10 ** -(digits + 3)) return undefined;
+  const working = digits + 15;
+  const q = () => new BigDecimal(1).sub(s).div(inverseGamma(a.add(1), working));
+  return bigLogRootExp(q, a, logRoot, digits);
+}
 
 /** Solve Q(a, z) = s for z > 0. Q decreases from 1 (z=0) to 0 (z→∞); doubling search finds a
  * bracket, then `safeguardedSolve` refines against Q'(z) = −z^(a−1)·e^(−z)/Γ(a) (in log space). */
@@ -70,6 +139,7 @@ function inverseGammaRegularized(ce: ComputeEngine, a: number, s: number): numbe
     hi,
     s,
     false, // Q(a, z) decreases in z
+    Math.exp(gammaLogRoot(a, s)), // the leading term: a good start for a small root
   );
 }
 
@@ -86,6 +156,7 @@ function inverseBetaRegularized(ce: ComputeEngine, a: number, b: number, s: numb
     1,
     s,
     true, // I_x(a, b) increases in x
+    Math.exp(betaLogRoot(a, b, s)),
   );
 }
 
@@ -137,10 +208,20 @@ export function declareInverseGammaRegularized(ce: ComputeEngine): void {
       }
       if (!wantsNumber(ops, options) || !isFiniteNum(a) || !isFiniteNum(s)) return undefined;
       if (a.im !== 0 || s.im !== 0 || a.re <= 0 || s.re < 0 || s.re > 1) return undefined;
-      const z0 = inverseGammaRegularized(ce, a.re, s.re);
+      const wantsBig = exceedsDoublePrecision(ce, options.numericApproximation);
+      const [big, bigS] = wantsBig ? [bigRealOperand(ce, a), bigRealOperand(ce, s)] : [undefined, undefined];
+      // A root too small to step to is the leading term's, however far below a double it falls.
+      const logRoot = gammaLogRoot(a.re, s.re);
+      const tiny = Math.exp(logRoot) < NEGLIGIBLE;
+      if (tiny && big !== undefined && bigS !== undefined) {
+        const root = gammaTailBig(big, bigS, logRoot, ce.precision);
+        if (root !== undefined) return bigResult(ce, root);
+        // No double start to fall back on once the root has left the doubles.
+        if (!(Math.exp(logRoot) > NORMAL_MIN)) return undefined;
+      }
+      const z0 = tiny ? Math.exp(logRoot) : inverseGammaRegularized(ce, a.re, s.re);
       // The double solve is the start; past a double's digits the bignum series finishes it.
-      if (exceedsDoublePrecision(ce, options.numericApproximation)) {
-        const [big, bigS] = [bigRealOperand(ce, a), bigRealOperand(ce, s)];
+      if (wantsBig) {
         if (big === undefined || bigS === undefined) return undefined;
         const value = inverseGammaRegularizedBig(big, bigS, z0, ce.precision);
         return value === undefined ? undefined : bigResult(ce, value);
@@ -170,7 +251,24 @@ export function declareInverseBetaRegularized(ce: ComputeEngine): void {
       if (!wantsNumber(ops, options) || !isFiniteNum(s) || !isFiniteNum(a) || !isFiniteNum(b)) return undefined;
       if (a.im !== 0 || b.im !== 0 || s.im !== 0 || a.re <= 0 || b.re <= 0) return undefined;
       if (s.re < 0 || s.re > 1) return undefined;
-      return ce.number(inverseBetaRegularized(ce, a.re, b.re, s.re));
+      const tail = betaTail(a.re, b.re, s.re);
+      if (tail === undefined) return ce.number(inverseBetaRegularized(ce, a.re, b.re, s.re));
+      const root = Math.exp(tail.logRoot);
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) {
+        const [bigA, bigB, bigS] = [bigRealOperand(ce, a), bigRealOperand(ce, b), bigRealOperand(ce, s)];
+        if (bigA === undefined || bigB === undefined || bigS === undefined) return undefined;
+        const one = new BigDecimal(1);
+        const [tailA, tailB, tailP] = tail.upper ? [bigB, bigA, one.sub(bigS)] : [bigA, bigB, bigS];
+        const bigRoot = betaTailBig(tailA, tailB, tailP, tail.logRoot, ce.precision);
+        if (bigRoot !== undefined) {
+          if (!tail.upper) return bigResult(ce, bigRoot);
+          // 1 − y rounds to 1 once y is below the precision; skip building the exact difference.
+          return bigResult(ce, bigRoot.lt(new BigDecimal(10).pow(-(ce.precision + 2))) ? one : one.sub(bigRoot));
+        }
+        // A double answer is wrong once the root has left the doubles.
+        if (!(root > NORMAL_MIN)) return undefined;
+      }
+      return ce.number(tail.upper ? 1 - root : root);
     },
   });
 }
