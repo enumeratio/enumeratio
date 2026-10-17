@@ -20,7 +20,7 @@ string).
 - **Code** — source in another language, a _translation_ whose semantics may
   _diverge_ from compute-engine's. Each seeds an editable try-it cell and flags
   footguns:
-  Listed in the order the CLI's `-f` names them (`FORMS`, `packages/cli/src/engine.ts`):
+  Listed in the order the CLI's `-f` names them (`FORMS`):
 
   - [Wolfram FullForm](/reference/formats/output/wolfram) — Wolfram Language `Head[…]`.
   - [NumPy](/reference/formats/output/numpy) — Python/NumPy source.

@@ -35,6 +35,6 @@ names:
   wolframIdentity: true
 ---
 
-- Reuses the existing log-gamma continuation ([[LogGamma]], `packages/symbols/analysis/analytic/src/loggamma.ts`) rather than deriving one — $\vartheta$ is just its imaginary part on the $\operatorname{Re} = \tfrac14$ line, minus the linear term.
+- Reuses the existing log-gamma continuation ([[LogGamma]]) rather than deriving one — $\vartheta$ is just its imaginary part on the $\operatorname{Re} = \tfrac14$ line, minus the linear term.
 - Real $t$ only; a complex argument stays symbolic. $\vartheta(0) = 0$ exactly (no `N()` needed) since $\ln\Gamma(\tfrac14)$ is real.
 - Numeric otherwise: `N()`, or an inexact $t$, is required to reduce.
