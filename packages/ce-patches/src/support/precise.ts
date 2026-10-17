@@ -4,11 +4,12 @@ import { inexactComplex } from "./box.ts";
 /** Above this many digits a double is no longer the limiting factor — and neither should we be. */
 export const DOUBLE_DIGITS = 15;
 
-/** `N(expr, d)`'s own Ziv refinement loop calls `evaluate` twice, at `d + 20` then `d + 10`
- * (checked empirically: `N(x, 15)` calls in at precision 35 then 25, `N(x, 50)` at 70 then
- * 60) — and a decline on EITHER pass aborts the whole `N()` symbolic, so the binding
- * constraint is the higher of the two, `d + 20`. A plain `N(expr)` (no explicit digit
- * count) runs once, at the engine's own configured precision, well under that. */
+/** The analytic package's `N(expr, d)` (correctly-rounded.ts) reads `expr` at `d + 20` then
+ * `d + 10`, and a decline on EITHER reading declines the whole `N()`, so the binding constraint
+ * is the higher, `d + 20`. A bare engine's native `N(expr, d)` reads once at `max(21, d + 5)`
+ * and slips under this band for d up to 30; the override catches that case by the answer, since
+ * a double-only head's leaf has no more than a double's digits (`hasDoubleOnly`). A plain
+ * `N(expr)` (no explicit digit count) runs at the engine's configured precision, well under it. */
 const REQUESTED_DIGITS_GUARD = 20;
 
 /**

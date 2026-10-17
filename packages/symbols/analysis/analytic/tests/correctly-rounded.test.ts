@@ -43,11 +43,9 @@ test("the finest reading is kept beside the answer", () => {
   expect(finest?.json).toEqual({ num: "1.41421356237309504880168872421" });
 });
 
-test("a head that answers in doubles is rounded up to a double's digits, and left alone past them", () => {
+test("a head that answers in doubles is rounded up to a double's digits, and declines past them", () => {
   // compute-engine holds a complex number as two doubles, so complex ζ is a double reading.
   expect(n(["Zeta", ["Complex", 2, 1]], 10).json).toEqual(["Complex", 1.150355703, -0.4375308659]);
-  // Past them the pair is still a double reading, but the bignum kernel's, correctly rounded
-  // (compute-engine's own complex ζ is one ulp off at 1.1503557032549026).
-  const past = n(["Zeta", ["Complex", 2, 1]], 25).json;
-  expect(past).toEqual(["Complex", 1.1503557032549028, -0.4375308659196079]);
+  // Past them a double would pose as the digits asked for: the call declines, Zeta left unevaluated.
+  for (const digits of [16, 25, 30]) expect(n(["Zeta", ["Complex", 2, 1]], digits).operator).toBe("Zeta");
 });

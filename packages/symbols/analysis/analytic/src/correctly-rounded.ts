@@ -29,8 +29,8 @@ import { declareCompile } from "@enumeratio/engine";
 //
 // A head that ignores the working precision and answers with a double (15-17 digits, however
 // many were asked for) cannot be measured more finely, so the loop can't vouch for more digits
-// than a double carries. Up to 15 digits its double is rounded like any reading; past that its
-// call is left to compute-engine's `N`, unrounded, so the gap stays visible.
+// than a double carries. Up to 15 digits its double is rounded like any reading; past that the
+// call declines and `x` stays unevaluated, rather than a double standing in for the digits asked.
 //
 // Ties -- a value exactly halfway, only possible for a terminating decimal like `N(1/8, 2)` --
 // round to even (0.12), as compute-engine's own rounding, IEEE 754 and Wolfram's `Round` do.
@@ -186,9 +186,10 @@ export function declareCorrectlyRoundedN(ce: ComputeEngine): void {
     try {
       const d = ops.length === 2 ? ops[1]!.canonical.N().re : NaN;
       if (Number.isFinite(d) && d >= 1) {
-        const answer = correctlyRounded(ce, ops[0]!.canonical, Math.min(Math.trunc(d), MAX_DIGITS));
-        if (answer !== undefined) return answer;
-        ce.precision = precision;
+        const x = ops[0]!.canonical;
+        // A double-only head can't back the digits: decline with `x` unevaluated, never `native`'s
+        // padded double (it computes at d + 5, under `exceedsDoublePrecision`'s guard).
+        return correctlyRounded(ce, x, Math.min(Math.trunc(d), MAX_DIGITS)) ?? x;
       }
       return native?.(ops, options);
     } finally {
