@@ -1,13 +1,18 @@
 ---
-name: Perimeter
+name: PartsEqualToNextPart
 domain: Partition statistics
-signature: Perimeter(partition)
-summary: "The perimeter of the Young diagram: largest part plus number of parts."
+signature: PartsEqualToNextPart(partition)
+summary: "Parts whose next smaller part has the same size: the number of parts less the distinct parts."
+catalog:
+  - system: findstat
+    identity: St001091
+    url: https://www.findstat.org/St001091
+    on: IntegerPartition
 statOn:
   - IntegerPartition
 signatures:
-  - call: Perimeter(partition)
-    description: "The perimeter of the Young diagram: largest part plus number of parts."
+  - call: PartsEqualToNextPart(partition)
+    description: "Parts whose next smaller part has the same size: the number of parts less the distinct parts."
     library: enumeratio-combinatorics
     type: (integer_partition) -> number
 ---

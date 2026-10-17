@@ -68,6 +68,9 @@ function extremum(
   lone?: BoxedExpression,
 ): BoxedExpression | undefined {
   const head = side < 0 ? "Min" : "Max";
+  // A complex operand has no order to pick from (compute-engine leaves `Max(3/2, i)` as written,
+  // as Wolfram does): the product order is for rounding it, not for choosing between values.
+  if (values.length > 1 && values.some((v) => !isReal(v) && v.type.matches("complex"))) return undefined;
   const parts = coordinatesOf(ce, values);
   if (parts !== undefined) return componentwise(ce, head, values[0]!, parts);
   // A lone operand of a carrier that reads its own extremum is left to the head's own rows.

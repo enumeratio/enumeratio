@@ -8,13 +8,13 @@ threads-element-wise-over-a-list	PrimeQ[List[1, 2, 3, 4, 5, 6]]	{False, True, Tr
 isprime-5	PrimeQ[5]	True	\text{PrimeQ}[5]	\text{True}	
 isprime-7	PrimeQ[7]	True	\text{PrimeQ}[7]	\text{True}	
 threads-element-wise-over-a-short-list	PrimeQ[List[2, 3, 4]]	{True, True, False}	\text{PrimeQ}[\{2,3,4\}]	\{\text{True},\text{True},\text{False}\}	
-7-is-prime-its-associate-7-is-matching-wolfram-s	PrimeQ[-7]	True	\text{PrimeQ}[-7]	\text{True}	
+7-is-prime-its-associate-7-is-matching-wolfram-s	PrimeQ[-7]	True	\text{PrimeQ}[-7]	\text{True}	disagree
 a-gaussian-prime-its-norm-5-is-prime	PrimeQ[Complex[2, 1]]	True	\text{PrimeQ}[2+i]	\text{True}	
 5-2-i-2-i-splits-in-z-i	PrimeQ[5, Rule[GaussianIntegers, True]]	False	\text{PrimeQ}[5,\text{GaussianIntegers}\to \text{True}]	\text{False}	
 large-integers-10-3000-1-is-divisible-by-10-8-1	PrimeQ[Plus[Power[10, 3000], 1]]	False	\text{PrimeQ}\left[10^{3000}+1\right]	\text{False}	
 isprime-neg-1-is-false	PrimeQ[-1]	False	\text{PrimeQ}[-1]	\text{False}	
 isprime-neg-4-is-false	PrimeQ[-4]	False	\text{PrimeQ}[-4]	\text{False}	
-isprime-neg-2-is-true	PrimeQ[-2]	True	\text{PrimeQ}[-2]	\text{True}	
+isprime-neg-2-is-true	PrimeQ[-2]	True	\text{PrimeQ}[-2]	\text{True}	disagree
 a-unit-is-not-prime	PrimeQ[1]	False	\text{PrimeQ}[1]	\text{False}	
 i-a-unit-is-not-prime	PrimeQ[Complex[0, 1]]	False	\text{PrimeQ}[i]	\text{False}	
 0-is-not-prime	PrimeQ[0]	False	\text{PrimeQ}[0]	\text{False}	

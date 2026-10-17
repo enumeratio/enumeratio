@@ -13,7 +13,7 @@ import {
   widenSignature,
   wrapOperator,
 } from "@enumeratio/engine";
-import { factorInteger, gcd as bigGcd, isPrime } from "@enumeratio/residues";
+import { factorInteger, gcd as bigGcd } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import {
   divideExact,
@@ -292,11 +292,8 @@ export function declareGaussian(ce: Engine): void {
     "(number, any*) -> boolean",
     undefined,
     (z) => ce.symbol(isGaussianPrime(z) ? "True" : "False"),
-    // Wolfram's PrimeQ counts a prime's associates: PrimeQ[-7] is True. compute-engine's
-    // native IsPrime asks for a positive integer and answers False for any negative one —
-    // an undefined corner we override rather than diverge on, matching Wolfram. Positive n
-    // falls through (returns undefined) to the native handler, unchanged.
-    (n) => (n < 0n ? ce.symbol(isPrime(-n) ? "True" : "False") : undefined),
+    // compute-engine rules IsPrime(-7) False (ERROR-MODEL), so a rational integer is its native handler's.
+    undefined,
     (R, a) => {
       const kind = quadraticKind(R, a);
       return kind === undefined ? undefined : truth(kind === "prime");
