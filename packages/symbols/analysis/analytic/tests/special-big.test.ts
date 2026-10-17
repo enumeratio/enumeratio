@@ -113,9 +113,10 @@ test("a call the kernel declines is native's, as it was", () => {
     ["AiryAi", 150],
     ["ExpIntegralEi", -1000],
     ["BesselK", 300, 2],
-    ["BesselY", 0, -1],
   ])
     expect(at50(call), JSON.stringify(call)).toEqual(native.box(["N", call, 50] as never).evaluate().json);
+  // native answers this one with a double pair; past a double's digits that stays unevaluated
+  expect(at50(["BesselY", 0, -1])).toEqual(["BesselY", 0, -1]);
 });
 
 test("BesselK and BesselY of integer order", () => {
