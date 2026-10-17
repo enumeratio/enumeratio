@@ -3,7 +3,7 @@ moebiusmu-1	moebius_mu(1)	1
 moebiusmu-11	moebius_mu(11)	-1	
 12-22-3-is-not-squarefree	moebius_mu(12)	0	
 10-2-5-a-product-of-an-even-number-of-distinct	moebius_mu(10)	1	
-isprime-of-a-negative-beside-moebiusmu	Any[is_prime(ZZ(-2)), moebius_mu(11)]	[false, -1]	disagree
+isprime-of-a-negative-beside-moebiusmu	Any[is_prime(ZZ(-2)), moebius_mu(11)]	[false, -1]	
 threads-element-wise-over-a-list-as-wolfram-s	Any[moebius_mu(1), moebius_mu(2), moebius_mu(3), moebius_mu(4)]	[1, -1, -1, 0]	
 gaussian-integers-5-6i-is-a-gaussian-prime-norm	moebius_mu(enumeratio_complex(5, 6))	MethodError: no method matching moebius_mu(::ComplexFieldElem) The function `moebius_mu` exists, but	error
 listable-threads-over-a-list	Any[moebius_mu(4), moebius_mu(10), moebius_mu(17), moebius_mu(20)]	[0, 1, -1, 0]	

@@ -82,7 +82,7 @@ test("a control inside a tooltip, a pane selector or running text is declared to
     "RowBox",
     [
       ["TooltipBox", ["SliderBox", ["Dynamic", "a"], ["Tuple", 0, 5]], "tip"],
-      ["PaneSelectorBox", [["x", ["SliderBox", ["Dynamic", "b"], ["Tuple", 0, 5]]]], ["DynamicBox", "s"]],
+      ["PaneSelectorBox", [["x", ["SliderBox", ["Dynamic", "b"], ["Tuple", 0, 5]]]], ["Dynamic", "s"]],
       ["TextCell", ["TextData", ["see ", ["SliderBox", ["Dynamic", "c"], ["Tuple", 0, 5]]]], "Text"],
     ],
   ] as never);

@@ -475,7 +475,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     const qualified = head === "MemberCall" ? qualifiedName(operands) : undefined;
     // The generic walk below would hand `toWolfram` an already-printed operand.
     if (wl && head === "BigO" && operands.length === 1) return bigO(operands[0]!, walk);
-    if (qualified !== undefined && mappingFor(qualified, operands.length - 2, extra) !== undefined)
+    if (qualified !== undefined && mappingFor(qualified, operands.length - 2, extra, system) !== undefined)
       return walkCall(qualified, operands.slice(2));
     // A head of a library `extra` maps, with no mapping of its own here: unmapped, not a free
     // `MemberCall` the system would answer as written.
@@ -553,7 +553,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       ) {
         const [from, to] = bounds.length === 1 ? [1, bounds[0]] : bounds;
         const range = [iterator[1], from === "Nothing" ? 1 : from, to].map((part) => walk(part as MathJSON));
-        const summation = mappingFor(head, 2, extra)?.emit[system];
+        const summation = mappingFor(head, 2, extra, system)?.emit[system];
         if (summation !== undefined)
           return fill(summation, [
             walk(operands[0] as MathJSON),
@@ -634,7 +634,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         }
         return undefined;
       });
-      const integral = mappingFor(head, operands.length, extra)?.emit[system];
+      const integral = mappingFor(head, operands.length, extra, system)?.emit[system];
       if (integral !== undefined && iterators.every((iterator) => iterator !== undefined)) {
         // Sage integrates one variable at a time, the last iterator innermost.
         if (system === "sage")

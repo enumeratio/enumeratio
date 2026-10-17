@@ -21,14 +21,33 @@ test("a batch with a preamble runs it before anything else", () => {
 test("a mapping is chosen by signature, not by name alone", () => {
   // The whole reason this table is arity-keyed: one argument is Riemann, two is Hurwitz,
   // and the systems disagree about which name carries which.
-  expect(mappingFor("Zeta", 1)?.emit.wolfram).toBe("Zeta[$1]");
-  expect(mappingFor("Zeta", 2)?.emit.wolfram).toBe("Zeta[$1, $2]");
-  expect(mappingFor("Zeta", 2)?.emit.sage).toBe("hurwitz_zeta($1, $2)");
+  expect(mappingFor("Zeta", 1, [], "wolfram")?.emit.wolfram).toBe("Zeta[$1]");
+  expect(mappingFor("Zeta", 2, [], "wolfram")?.emit.wolfram).toBe("Zeta[$1, $2]");
+  expect(mappingFor("Zeta", 2, [], "sage")?.emit.sage).toBe("hurwitz_zeta($1, $2)");
   // SymPy and mpmath overload one name across both arities.
-  expect(mappingFor("Zeta", 1)?.emit.sympy).toBe("zeta($1)");
-  expect(mappingFor("Zeta", 2)?.emit.sympy).toBe("zeta($1, $2)");
+  expect(mappingFor("Zeta", 1, [], "sympy")?.emit.sympy).toBe("zeta($1)");
+  expect(mappingFor("Zeta", 2, [], "sympy")?.emit.sympy).toBe("zeta($1, $2)");
   // A row without an arity matches anything, and a specific row wins over it.
-  expect(mappingFor("Add", 3)?.emit.sympy).toBe("($*+)");
+  expect(mappingFor("Add", 3, [], "sympy")?.emit.sympy).toBe("($*+)");
+});
+
+// Rust's `Max`/`Min` are arity-2 rows; the other systems' are variadic. One system's arity-specific
+// row must not shadow another's general one.
+test.each(["Max", "Min"])("%s: an arity-specific row for one system shadows nothing for the others", (head) => {
+  for (const system of ["wolfram", "sympy", "sage", "julia"] as const)
+    for (const arity of [1, 2, 3, 5]) {
+      const mapping = mappingFor(head, arity, [], system);
+      expect(mapping?.arity, `${system}/${arity}`).toBeUndefined();
+      expect(mapping?.emit[system], `${system}/${arity}`).toContain("$*");
+    }
+  expect(mappingFor(head, 2, [], "rust")?.emit.rust).toMatch(/^(maximum|minimum)\(\$1, \$2\)$/);
+  // Rust has no variadic row to fall back to.
+  expect(mappingFor(head, 3, [], "rust")).toBeUndefined();
+  for (const system of ["sympy", "sage", "julia"] as const) {
+    expect(emit([head, 9, 2], system).ok, system).toBe(true);
+    expect(emit([head, 9, 2, 4], system).ok, system).toBe(true);
+  }
+  expect(emit([head, 9, 2], "rust").ok).toBe(true);
 });
 
 test("emitting fills positional and variadic templates", () => {

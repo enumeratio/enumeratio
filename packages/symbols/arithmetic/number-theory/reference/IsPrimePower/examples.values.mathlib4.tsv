@@ -1,23 +1,23 @@
-id	in
-8-2-3	
-12-2-2-cdot-3-has-two-distinct-primes	
-a-prime-is-its-own-first-power	
-isprimepower-6	
-isprime-of-a-negative-prime	(decide (Nat.Prime (-5)))
-listable	
-large-integers	
-isprimepower-9	
-isprimepower-list-1-2-3-4-5-6-7	
-filter-range-1-100-function-isprimepower-1	
-isprimepower-625	
-isprimepower-53	
-list-isprimepower-27-issquarefree-27	
-list-isprimepower-3-issquarefree-3	
-isprimepower-25	
-isprimepower-16-807	
-list-isprimepower-121-iscomposite-121-moebiusmu	
-list-isprimepower-11-isprime-11-moebiusmu-11	
-isprimepower-2-401	
-isprimepower-121	
-map-function-divisorsigma-1-1-lt-2-times-1-1	
-1-is-p-0-which-does-not-count	
+id	in	out	verdict
+8-2-3			
+12-2-2-cdot-3-has-two-distinct-primes			
+a-prime-is-its-own-first-power			
+isprimepower-6			
+isprime-of-a-negative-prime	(decide (Nat.Prime (-5)))	failed to synthesize instance of type class	error
+listable			
+large-integers			
+isprimepower-9			
+isprimepower-list-1-2-3-4-5-6-7			
+filter-range-1-100-function-isprimepower-1			
+isprimepower-625			
+isprimepower-53			
+list-isprimepower-27-issquarefree-27			
+list-isprimepower-3-issquarefree-3			
+isprimepower-25			
+isprimepower-16-807			
+list-isprimepower-121-iscomposite-121-moebiusmu			
+list-isprimepower-11-isprime-11-moebiusmu-11			
+isprimepower-2-401			
+isprimepower-121			
+map-function-divisorsigma-1-1-lt-2-times-1-1			
+1-is-p-0-which-does-not-count			

@@ -152,3 +152,11 @@ test("Over -> QuadraticOrder(D): primality in a non-maximal order, its elements 
   // The field's own discriminant is its ring of integers: -4 is ℤ[i].
   expect(run(["IsPrime", ["Complex", 1, 1], over(-4)])).toBe("True");
 });
+
+test("a negative rational integer is not prime, as compute-engine rules; a Gaussian prime still is", () => {
+  expect(run(["IsPrime", -7])).toBe("False");
+  expect(run(["IsPrime", 7])).toBe("True");
+  expect(run(["IsComposite", -49])).toBe("False");
+  // -7 is a unit multiple of 7, which stays prime in ℤ[i] (7 ≡ 3 mod 4).
+  expect(run(["IsPrime", -7, ["KeyValuePair", "Over", "GaussianIntegers"]])).toBe("True");
+});
