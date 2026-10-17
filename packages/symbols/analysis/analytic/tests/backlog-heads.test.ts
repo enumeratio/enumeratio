@@ -27,3 +27,8 @@ test("InverseGammaRegularized and InverseBetaRegularized decline outside their d
   expect(ce.box(["InverseGammaRegularized", -1, 0.5]).N().operator).toBe("InverseGammaRegularized");
   expect(ce.box(["InverseBetaRegularized", 1.5, 2, 3]).N().operator).toBe("InverseBetaRegularized");
 });
+
+// The root is about e^-89257, 0 as a double: decline rather than answer the solver's step floor.
+test("InverseBetaRegularized declines a root a double cannot represent", () => {
+  expect(ce.box(["InverseBetaRegularized", 0.3, 2.5e-6, 1.5e-6]).N().operator).toBe("InverseBetaRegularized");
+});
