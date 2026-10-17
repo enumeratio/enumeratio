@@ -736,6 +736,43 @@ test("DyckPathsByHeight: compiled Epsil's count, unrank and rank are exact or de
   expect(safe).toBeGreaterThan(100);
 });
 
+// The Schröder table the compiled definitions read once built S(k) from (6k − 3) S(k − 1), k + 1 times the
+// result, so compiled Epsil declined SeparablePermutations(23) and (24) with counts still under 2^53 (n = 24 is
+// the last safe one). Every cell now sums terms bounded by the count: compiled Epsil answers the whole safe
+// range, exactly as the fast kernel does, or declines.
+test("SeparablePermutations: compiled Epsil answers to the last n whose count is safe, exactly", () => {
+  const family = fastFamilies.find((f) => f.head === "SeparablePermutations")!;
+  const epsil = epsilKernelOn(ce, family);
+  let last = 0;
+  for (const n of [1, 2, 3, 6, 12, 18, 22, 23, 24, 25, 26]) {
+    const p = [n];
+    const total = family.fast!.count(p);
+    if (typeof total !== "bigint" || total > MAX_SAFE) {
+      expect(() => epsil.count(p)).toThrow(RangeError); // past 2^53: declined
+      continue;
+    }
+    last = n;
+    expect([p, epsil.count(p)]).toEqual([p, total]);
+    // The fast path has no unrank here: members are checked by its membership test, the rank round trip,
+    // and the lex order of the sampled ranks (the first is the identity, the last the reversal).
+    let before: number[] | undefined;
+    for (const r of [0n, 1n, total / 3n, total / 2n, total - 1n].filter(
+      (r, i, all) => r < total && all.indexOf(r) === i,
+    )) {
+      const element = epsil.unrank(p, r) as number[];
+      expect([p, r, family.fast!.valid(element, p)]).toEqual([p, r, true]);
+      expect([p, r, epsil.rank(element, p)]).toEqual([p, r, r]);
+      if (before !== undefined) {
+        const i = before.findIndex((x, j) => x !== element[j]);
+        expect([p, r, i >= 0 && before[i] < element[i]]).toEqual([p, r, true]);
+      }
+      before = element;
+    }
+    expect(before).toEqual(Array.from({ length: n }, (_, i) => n - i));
+  }
+  expect(last).toBe(24);
+});
+
 // Vexillary's Epsil table is 2^n states, out of reach past n = 14 or so: its exact count, past 2^53 too, is
 // held to Gessel's Bessel determinant (Av(2143) is Wilf-equivalent to Av(1234)) instead.
 test("VexillaryPermutations: the kernel's count past 2^53 is Gessel's", () => {
