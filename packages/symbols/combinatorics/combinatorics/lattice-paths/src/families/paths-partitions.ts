@@ -31,7 +31,7 @@ import {
 } from "../../../collections/src/families/tables.ts";
 import { dyckPathsByHeightExact } from "../../../collections/src/families/exact-recurrences.ts";
 import { lukasiewiczPaths } from "./lukasiewicz.ts";
-import { completionsOf, completionsSize, completionsTable, type Step, walkFamily } from "./walks.ts";
+import { type Step, walkFamily } from "./walks.ts";
 // ─── DelannoyPaths(n): lattice paths from (0,0) to (n,n) using East=(1,0), North=(0,1), and
 // Diagonal=(1,1) steps — encoded as a token sequence over {0=E,1=N,2=D}. f[i][j] = # completions
 // from (i,j) to (n,n). count(n) = f(0,0), the central Delannoy numbers. ────────────────────────
@@ -225,12 +225,42 @@ export function isMotzkinPathsByPeaksOf(e: unknown, n: number, k: number): boole
 }
 
 // ─── DyckPathsByHeight in Epsil (./walks.ts); the TS kernel above stays as the independent
-// reading the agreement tests check against. The walks never above h that reach it are those
-// never above h less those never above h − 1, so its completions are two tables of walks under
-// a ceiling, the walk's flag saying whether it has reached h yet. ─────────────────────────────
+// reading the agreement tests check against. The walk's flag says whether it has reached h, and
+// the table counts the completions from (w, y, flag) under the ceiling h, each cell a sum of
+// earlier cells. The walks that reach h are also those under h less those under h − 1, but both
+// terms pass 2^53 long before their difference does, and doubles cancel that to a wrong count.
+// A cell is exact in doubles while it is a safe integer, as every cell a path reads is once the
+// count is. ─────────────────────────────────────────────────────────────────────────────────────
 const UP: Step = { token: 1, rise: 1, width: 1 };
 const DOWN: Step = { token: 0, rise: -1, width: 1 };
-const below = completionsOf("_h");
+const heights = add("_h", 1);
+/** The column of height y with flag f: the heights, then again for a walk that has reached h. */
+const heightColumn = (y: MathJSON, f: MathJSON): MathJSON => add(y, mul(heights, f));
+const reachedCompletions = rowTable(
+  "hf",
+  add(mul(2, "_n"), 1),
+  mul(2, heights),
+  (c) => iff(equal(c, heights), 1, 0),
+  (prev, w, c) =>
+    lets(
+      [
+        ["hf_y", ["Mod", c, heights], "integer"],
+        ["hf_f", quotient(c, heights), "integer"],
+      ],
+      iff(
+        less(w, "hf_y"),
+        0,
+        add(
+          iff(
+            less("hf_y", "_h"),
+            prev(sub(w, 1), heightColumn(add("hf_y", 1), ["Max", "hf_f", iff(equal(add("hf_y", 1), "_h"), 1, 0)])),
+            0,
+          ),
+          iff(["GreaterEqual", "hf_y", 1], prev(sub(w, 1), heightColumn(sub("hf_y", 1), "hf_f")), 0),
+        ),
+      ),
+    ),
+);
 const dyckPathsByHeight = walkFamily({
   head: "DyckPathsByHeight",
   carrier: "DyckPath",
@@ -243,17 +273,9 @@ const dyckPathsByHeight = walkFamily({
   params: ["_n", "_h"],
   width: mul(2, "_n"),
   steps: [UP, DOWN],
-  // Two tables in one list: `below` (never above h), then `under` (never above h − 1).
-  tables: [
-    completionsTable("hb", [UP, DOWN], mul(2, "_n"), "_h"),
-    completionsTable("hu", [UP, DOWN], mul(2, "_n"), sub("_h", 1)),
-  ],
+  tables: [reachedCompletions],
   completions: (w, y, reached) =>
-    iff(
-      equal(reached, 1),
-      below(w, y),
-      sub(below(w, y), completionsOf(sub("_h", 1), completionsSize(mul(2, "_n"), "_h"))(w, y)),
-    ),
+    iff(["Greater", y, "_h"], 0, cell("_tables", mul(2, heights))(w, heightColumn(y, reached))),
   flag: {
     initial: iff(equal("_h", 0), 1, 0),
     after: (reached, y) => ["Max", reached, iff(equal(y, "_h"), 1, 0)],

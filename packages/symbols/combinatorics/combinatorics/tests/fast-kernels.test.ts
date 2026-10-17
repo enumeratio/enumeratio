@@ -705,6 +705,37 @@ test("StandardTableauPairs(18): unrank and rank agree with Epsil past 2^53 − 1
   }
 });
 
+// DyckPathsByHeight(46, 32) once counted 6935662439694336 through compiled Epsil (the true count is
+// 6935663070725453): the table cells pass 2^53 and doubles cancelled the walks under h less those under h − 1.
+// Compiled Epsil must give the exact count or decline, never another number, on every fiber near the edge.
+test("DyckPathsByHeight: compiled Epsil's count, unrank and rank are exact or decline near 2^53", () => {
+  const family = fastFamilies.find((f) => f.head === "DyckPathsByHeight")!;
+  const epsil = epsilKernelOn(ce, family);
+  expect(epsil.count([46, 32])).toBe(6935663070725453n);
+  let safe = 0;
+  for (let n = 28; n <= 50; n++) {
+    for (let h = 0; h <= n; h++) {
+      const p = [n, h];
+      const total = family.fast!.count(p);
+      if (typeof total !== "bigint" || total > MAX_SAFE) continue;
+      safe++;
+      let compiled: unknown;
+      try {
+        compiled = epsil.count(p);
+      } catch {
+        continue; // a decline
+      }
+      expect([p, compiled]).toEqual([p, total]);
+      for (const r of [0n, total / 3n, total - 1n].filter((r) => r >= 0n && r < total)) {
+        const element = family.fast!.unrank(p, Number(r));
+        expect([p, r, epsil.unrank(p, r)]).toEqual([p, r, element]);
+        expect([p, r, epsil.rank(element, p)]).toEqual([p, r, r]);
+      }
+    }
+  }
+  expect(safe).toBeGreaterThan(100);
+});
+
 // Vexillary's Epsil table is 2^n states, out of reach past n = 14 or so: its exact count, past 2^53 too, is
 // held to Gessel's Bessel determinant (Av(2143) is Wilf-equivalent to Av(1234)) instead.
 test("VexillaryPermutations: the kernel's count past 2^53 is Gessel's", () => {
