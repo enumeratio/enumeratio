@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { isNumber, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { lower, upper, DOUBLE_DIGITS } from "@enumeratio/ce-patches";
 import { enclosure } from "./certified.ts";
 import { declareCompile } from "@enumeratio/engine";
@@ -108,6 +108,15 @@ function hasDoubleOnly(ce: ComputeEngine, json: unknown, precision: number): boo
   return digits >= DOUBLE_DIGITS && digits < precision - FIRST_GUARD;
 }
 
+/** Is `x` a value we hold exactly or were handed -- a number literal, or an expression that
+ * folds to an exact number (`2^-50`, `1/2^40`)? Its 15-17 digit reading is then the value itself,
+ * not a double standing in for digits a kernel could not compute. */
+function isGivenValue(x: BoxedExpression): boolean {
+  if (isNumber(x)) return true;
+  const folded = x.evaluate();
+  return isNumber(folded) && (folded as Partial<{ isExact: boolean }>).isExact === true;
+}
+
 /** `x` to `d` digits proven by its enclosure, or `undefined` when `x` has none or it can't
  * decide them within the guard's doublings. */
 function certifiedRounding(ce: ComputeEngine, x: BoxedExpression, d: number): BoxedExpression | undefined {
@@ -158,7 +167,7 @@ function correctlyRounded(ce: ComputeEngine, x: BoxedExpression, d: number): Box
   // coarser one by rounding, rather than recomputing everything one precision up.
   let guard = FIRST_GUARD;
   let finest = reading(d + 2 * guard);
-  if (d > DOUBLE_DIGITS && hasDoubleOnly(ce, finest.json, d + 2 * guard)) return undefined;
+  if (d > DOUBLE_DIGITS && hasDoubleOnly(ce, finest.json, d + 2 * guard) && !isGivenValue(x)) return undefined;
   let answer = key(finest);
   let agreed = key(reading(d + guard)) === answer;
   for (let doubling = 0; !agreed && doubling < MAX_DOUBLINGS; doubling++) {
@@ -187,8 +196,8 @@ export function declareCorrectlyRoundedN(ce: ComputeEngine): void {
       const d = ops.length === 2 ? ops[1]!.canonical.N().re : NaN;
       if (Number.isFinite(d) && d >= 1) {
         const x = ops[0]!.canonical;
-        // A double-only head can't back the digits: decline with `x` unevaluated, never `native`'s
-        // padded double (it computes at d + 5, under `exceedsDoublePrecision`'s guard).
+        // A double-only head can't back the digits: decline with `x` unevaluated, never a double
+        // from `native` (it reads at d + 5, under `exceedsDoublePrecision`'s guard).
         return correctlyRounded(ce, x, Math.min(Math.trunc(d), MAX_DIGITS)) ?? x;
       }
       return native?.(ops, options);

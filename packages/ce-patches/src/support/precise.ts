@@ -6,10 +6,11 @@ export const DOUBLE_DIGITS = 15;
 
 /** The analytic package's `N(expr, d)` (correctly-rounded.ts) reads `expr` at `d + 20` then
  * `d + 10`, and a decline on EITHER reading declines the whole `N()`, so the binding constraint
- * is the higher, `d + 20`. A bare engine's native `N(expr, d)` reads once at `max(21, d + 5)`
- * and slips under this band for d up to 30; the override catches that case by the answer, since
- * a double-only head's leaf has no more than a double's digits (`hasDoubleOnly`). A plain
- * `N(expr)` (no explicit digit count) runs at the engine's configured precision, well under it. */
+ * is the higher, `d + 20`. Compute-engine's own `N(expr, d)` reads once at `max(21, d + 5)` and
+ * slips under this band for d up to 30, so the override also declines by the answer: a leaf of a
+ * double's digits that is no exact value is a double-only kernel's (`hasDoubleOnly`), also when
+ * the kernel boxes a complex result as a pair of doubles. A one-operand `N(expr)` runs at the
+ * engine's configured precision, well under it. */
 const REQUESTED_DIGITS_GUARD = 20;
 
 /**

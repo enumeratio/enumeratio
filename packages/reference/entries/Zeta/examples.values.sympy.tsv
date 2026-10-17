@@ -39,9 +39,9 @@ n-zeta-2p5-plus-i-neg-2p5	N(zeta((2.5 + 1*I), -2.5), 30)	83.20468300633118019504
 zeta-3-133-at-a-negative-integer-a	zeta(3.133, -2)	nan	inconclusive
 n-zeta-1-3-0-drops-the-zero-term	N(zeta(Rational(1, 3), 0), 30)	nan	inconclusive
 n-zeta-i-0-to-ten-digits	N(zeta((0 + 1*I), (0 + 0*I)), 30)	nan	disagree
-n-zeta-complex-2-plus-i-25-declines	N(zeta((2 + 1*I)), 30)		
-n-zeta-complex-1-plus-3i-25-declines	N(zeta((1 + 3*I)), 30)		
-n-zeta-complex-2-plus-i-16-declines	N(zeta((2 + 1*I)), 30)		
+n-zeta-complex-2-plus-i-25-declines	N(zeta((2 + 1*I)), 30)	1.15035570325490267174284993474 - 0.437530865919607881117527898593*I	
+n-zeta-complex-1-plus-3i-25-declines	N(zeta((1 + 3*I)), 30)	0.628851733951825534189926754329 - 0.107475760150586440431104101611*I	
+n-zeta-complex-2-plus-i-16-declines	N(zeta((2 + 1*I)), 30)	1.15035570325490267174284993474 - 0.437530865919607881117527898593*I	
 on-the-critical-line-zeta-1-2-14i-0-02224-0	N(zeta((0.5 + 14*I)), 30)	0.0222411426099935888300862529832 - 0.103258123266450063670873760202*I	
 two-argument-zeta-s-a-via-enumeratio-analytic	zeta(2, 1)	pi**2/6	
 zeta-2-2-zeta-2-1-pi-2-6-1	zeta(2, 2)	-1 + pi**2/6	
