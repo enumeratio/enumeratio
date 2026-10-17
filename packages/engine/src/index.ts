@@ -260,7 +260,16 @@ export function threadOverLists(ce: ComputeEngine, names: readonly string[]): vo
 export const mayBeInteger = (op: BoxedExpression): boolean => op.isInteger !== false;
 
 export { collectMessages, defineMessages, emit, formatArgument, type Message, messageLine } from "./messages.ts";
-export { addRandomArm, ensureRandom, registerSampler, type Sampler, sample, seedRandom, uniform01 } from "./random.ts";
+export {
+  addRandomArm,
+  ensureRandom,
+  randomBelow,
+  registerSampler,
+  type Sampler,
+  sample,
+  seedRandom,
+  uniform01,
+} from "./random.ts";
 export { setEngineDefaults } from "./defaults.ts";
 export { normalizeInputForm, toInputForm } from "./inputform.ts";
 export { registerModularKernel, type ModularArity, type ModularKernel } from "./modular.ts";

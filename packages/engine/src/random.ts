@@ -7,6 +7,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCompile } from "./extend.ts";
 import { operandsOf } from "./index.ts";
+import { defineMessages, emit } from "./messages.ts";
 
 const DEFAULT_SEED = 42;
 
@@ -55,17 +56,64 @@ export function registerSampler(ce: ComputeEngine, sampler: Sampler): void {
 
 interface Collection {
   readonly isFiniteCollection?: boolean;
+  readonly isEnumerable?: boolean;
   readonly count?: number;
   at?(index: number): BoxedExpression | undefined;
 }
 
-/** A finite collection with a count we can index uniformly. Past the safe-integer range the
- *  engine gives no count, so `Random` declines rather than draw non-uniformly. */
+/** Uniform in [0, n) for any bigint n: 32-bit chunks from the seeded stream, rejecting the
+ *  top sliver so every residue is equally likely (a plain modulo would not be). */
+export function randomBelow(ce: ComputeEngine, n: bigint): bigint {
+  if (n <= 1n) return 0n;
+  const chunks = Math.ceil(n.toString(2).length / 32);
+  const span = 1n << BigInt(chunks * 32);
+  const limit = span - (span % n);
+  for (;;) {
+    let r = 0n;
+    for (let i = 0; i < chunks; i++) r = (r << 32n) | BigInt(Math.floor(uniform01(ce) * 4294967296));
+    if (r < limit) return r % n;
+  }
+}
+
+/** The exact count past 2^53, which compute-engine's number-only `count` can't carry:
+ *  `Count` answers it as an integer where the family has a bigint kernel. */
+const bigCount = (domain: BoxedExpression, ce: ComputeEngine): bigint | undefined => {
+  const json = ce.box(["Count", domain.json] as never).evaluate().json as unknown;
+  const num = typeof json === "object" && json !== null && "num" in json ? String((json as { num: unknown }).num) : "";
+  // Large integers print as `<digits>e+<n>`.
+  const [, digits, exponent] = /^(\d+)(?:e\+(\d+))?$/.exec(num) ?? [];
+  return digits === undefined ? undefined : BigInt(digits) * 10n ** BigInt(exponent ?? 0);
+};
+
+type DigitsAt = (c: BoxedExpression, index: string) => BoxedExpression | undefined;
+
+/** A finite collection past 2^53 elements: a uniform bigint rank, unranked by the family's own
+ *  `at` (which takes the ordinal as digits). No bigint count or unrank means no draw at all. */
+const hugeSampler = (domain: BoxedExpression, ce: ComputeEngine): BoxedExpression | undefined => {
+  const def = ce.lookupDefinition(domain.operator);
+  const at =
+    def && "operator" in def
+      ? ((def.operator as { collection?: { at?: unknown } } | undefined)?.collection?.at as DigitsAt | undefined)
+      : undefined;
+  // A family that declines enumeration also declines `Count` into a walk of its elements.
+  if (at === undefined || (domain as unknown as Collection).isEnumerable === false) return undefined;
+  const total = bigCount(domain, ce);
+  if (total === undefined || total <= BigInt(Number.MAX_SAFE_INTEGER)) return undefined;
+  const drawn = at(domain, (randomBelow(ce, total) + 1n).toString());
+  if (drawn === undefined || drawn.operator === "Error" || drawn.json === "Missing") return undefined;
+  return drawn;
+};
+
+/** A finite collection we can index uniformly: by a double rank while the count is a safe
+ *  integer, by a bigint rank past it, and otherwise no draw at all (never a non-uniform one). */
 const collectionSampler: Sampler = (domain, ce) => {
   const c = domain as unknown as Collection;
-  if (c.isFiniteCollection !== true || c.count === undefined || c.count < 1 || c.at === undefined) return undefined;
-  if (!Number.isSafeInteger(c.count)) return undefined;
-  return c.at(1 + Math.floor(uniform01(ce) * c.count));
+  if (c.isFiniteCollection === false) return undefined;
+  if (c.count !== undefined && Number.isSafeInteger(c.count)) {
+    if (c.count < 1 || c.at === undefined) return undefined;
+    return c.at(1 + Math.floor(uniform01(ce) * c.count));
+  }
+  return c.isFiniteCollection === true ? hugeSampler(domain, ce) : undefined;
 };
 
 /** `Interval(a, b)` of reals: uniform on it. */
@@ -89,7 +137,17 @@ export function sample(ce: ComputeEngine, domain: BoxedExpression): BoxedExpress
     const drawn = sampler(domain, ce);
     if (drawn !== undefined) return drawn;
   }
+  explainDecline(ce, domain);
   return undefined;
+}
+
+/** Why `Random` left a collection unevaluated. */
+function explainDecline(ce: ComputeEngine, domain: BoxedExpression): void {
+  const c = domain as unknown as Collection;
+  if (c.isFiniteCollection === false) emit(ce, "Random", "infinite", [domain]);
+  else if (c.isFiniteCollection === true && c.count !== undefined && c.count < 1) emit(ce, "Random", "empty", [domain]);
+  else if (c.isFiniteCollection === true && (c.count === undefined || !Number.isSafeInteger(c.count)))
+    emit(ce, "Random", "unrank", [domain]);
 }
 
 /** `Random`'s signature, arm by arm; a package adds its own domains with `addRandomArm`. */
@@ -116,6 +174,11 @@ export function addRandomArm(ce: ComputeEngine, arm: string): void {
 export function ensureRandom(ce: ComputeEngine): void {
   if (samplers.has(ce)) return;
   samplers.set(ce, [collectionSampler, intervalSampler]);
+  defineMessages(ce, "Random", {
+    infinite: "Cannot draw uniformly from the infinite collection `1`.",
+    empty: "Cannot draw from the empty collection `1`.",
+    unrank: "`1` is too large to count or to address element by element, so no uniform draw is possible.",
+  });
   const operator = operatorOf(ce, "Random");
   if (operator === undefined) return;
   (operator as { signature: unknown }).signature = ce.type(ARMS.join(" & "));
