@@ -3,10 +3,10 @@ the-median-of-beta-2-3	inverse_beta_regularized(n(2), n(3), x(0.5))	0.3857275681
 inversebetaregularized-0p3-2p5-1p5	inverse_beta_regularized(x(2.5), x(1.5), x(0.3))	0.5094974124283432	
 i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2	inverse_beta_regularized(n(2), n(1), x(0.25))	0.49999999999999967	
 iinv-0-7-4-2	inverse_beta_regularized(n(4), n(2), x(0.7))	0.7819730842367751	
-inversebetaregularized-with-tiny-shapes	inverse_beta_regularized(x(0.0000025), x(0.0000015), x(0.3))	6.7625305977171135e-21	inconclusive
-tail-s-1e-100-a-2-b-3	inverse_beta_regularized(n(2), n(3), x(1e-100))		
-tail-s-1e-8-a-0p5-b-0p5	inverse_beta_regularized(x(0.5), x(0.5), x(1e-8))		
-upper-tail-s-near-1	inverse_beta_regularized(n(3), n(1000), x(0.99999999999999))		
+inversebetaregularized-with-tiny-shapes	inverse_beta_regularized(x(0.0000025), x(0.0000015), x(0.3))	6.7625305977171135e-21	disagree
+tail-s-1e-100-a-2-b-3	inverse_beta_regularized(n(2), n(3), x(1e-100))	7.27498749188935e-16	disagree
+tail-s-1e-8-a-0p5-b-0p5	inverse_beta_regularized(x(0.5), x(0.5), x(1e-8))	4.388329512360093e-17	disagree
+upper-tail-s-near-1	inverse_beta_regularized(n(3), n(1000), x(0.99999999999999))	0.038133288974273594	
 i-x-1-1-x-is-its-own-inverse			
 i-x-a-1-x-a-inverts-to-s-1-a			
 inversebetaregularized-0-2-3	inverse_beta_regularized(n(2), n(3), n(0))	0.0	
