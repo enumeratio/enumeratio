@@ -575,7 +575,7 @@ export function declareGraphs2(ce: Engine): void {
   });
 
   ce.declare("WeightedAdjacencyMatrix", {
-    signature: "(value) -> list<list<number>>",
+    signature: "(value) -> list<list<any>>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : weightedAdjacencyMatrixExpr(ce, g);
