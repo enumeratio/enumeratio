@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { makeBoxes } from "@enumeratio/boxes";
+import { graphicsOf, makeBoxes } from "@enumeratio/boxes";
 import { afterAll, expect, it } from "vite-plus/test";
 import { FIGURE_DEFAULTS, type FigureHead, figureLayerOf } from "../src/figure-frames.ts";
 import { FIGURE_NOTATION } from "../src/show-box.ts";
@@ -70,10 +70,10 @@ it("draws a lattice's tiles as SVG", () => {
 
 it("lowers Show and a value head to a GraphicsBox by rule, and leaves other heads alone", () => {
   const strands = ["Permutation", list(3, 1, 2)] as never;
-  expect(makeBoxes(strands, FIGURE_NOTATION)[0]).toBe("GraphicsBox");
-  expect(makeBoxes(["Show", ["StrandDiagram", strands]] as never, FIGURE_NOTATION)[0]).toBe("GraphicsBox");
-  expect(makeBoxes(["Permutation", list(1, 1)] as never, FIGURE_NOTATION)[0]).not.toBe("GraphicsBox");
-  expect(makeBoxes(["Add", "x", 1] as never, FIGURE_NOTATION)[0]).not.toBe("GraphicsBox");
+  expect(graphicsOf(makeBoxes(strands, FIGURE_NOTATION))).toBeDefined();
+  expect(graphicsOf(makeBoxes(["Show", ["StrandDiagram", strands]] as never, FIGURE_NOTATION))).toBeDefined();
+  expect(graphicsOf(makeBoxes(["Permutation", list(1, 1)] as never, FIGURE_NOTATION))).toBeUndefined();
+  expect(graphicsOf(makeBoxes(["Add", "x", 1] as never, FIGURE_NOTATION))).toBeUndefined();
 });
 
 afterAll(() => {

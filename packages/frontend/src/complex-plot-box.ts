@@ -7,7 +7,7 @@
 // The colors are the shader's, written out: hue is the argument on a gradient, brightness a
 // compressed log-magnitude, poles white and zeros black.
 
-import { type Box, graphics, interpretation, type OptionValue, raster, row, tag } from "@enumeratio/boxes";
+import { type Box, graphics, interpretation, type OptionValue, raster, tag } from "@enumeratio/boxes";
 import type { Complex, ComplexFunction } from "./complex-eval.ts";
 import type { ComplexPlotView } from "./complex-plot.ts";
 import { parseNumeric } from "./manipulate.ts";
@@ -108,12 +108,12 @@ function chrome(view: ComplexPlotView, title: string | undefined): Record<string
 export function unsampledComplexPlotBox(expr: unknown, options: ComplexPlotBoxOptions = {}): Box {
   const view = { ...DEFAULT_VIEW, ...definedOnly(options) };
   const frame = chrome(view, options.title);
-  return graphics(
-    interpretation(
-      row([tag(raster({ Producer: "ComplexPlot", DataRange: frame["PlotRange"]! }), "Raster")]),
-      expr as never,
-    ),
-    { ...frame, Producer: "ComplexPlot" },
+  return interpretation(
+    graphics([tag(raster({ Producer: "ComplexPlot", DataRange: frame["PlotRange"]! }), "Raster")], {
+      ...frame,
+      Producer: "ComplexPlot",
+    }),
+    expr as never,
   );
 }
 
@@ -143,7 +143,7 @@ export function complexPlotBox(f: ComplexFunction, options: ComplexPlotBoxOption
     }),
   );
   return graphics(
-    row([
+    [
       tag(
         raster({
           Colors: colors,
@@ -154,7 +154,7 @@ export function complexPlotBox(f: ComplexFunction, options: ComplexPlotBoxOption
         }),
         "Raster",
       ),
-    ]),
+    ],
     frame,
   );
 }

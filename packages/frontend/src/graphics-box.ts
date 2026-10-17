@@ -2,7 +2,7 @@
 // plain boxes any environment draws with no layer code. Each mark is `TagBox`ed with its address
 // ("1,0"), each link with its members ("1,0;2,1"); the marks' places ride on the
 // `GraphicsComplexBox`, and a mark's resolved look on a `StyleBox` as `FaceForm` and `EdgeForm`.
-// The box holds the `Show` it came from (an `InterpretationBox`), so an environment that can ask
+// An `InterpretationBox` around the drawing holds the `Show` it came from, so an environment that can ask
 // the layer for more (a pan, a new view) does; one that can't draws the list.
 
 import {
@@ -11,6 +11,7 @@ import {
   disk,
   graphics,
   graphicsComplex,
+  graphicsOf,
   inset,
   interpretation,
   isNode,
@@ -21,7 +22,6 @@ import {
   polygon,
   polyhedron,
   raster,
-  row,
   style,
   tag,
 } from "@enumeratio/boxes";
@@ -113,7 +113,7 @@ function tilesContent(list: Extract<DisplayList, { kind: "tiles" }>, fill: numbe
       lookOf(look.color, look.edges),
     ),
   );
-  return graphicsComplex(row(items), {
+  return graphicsComplex(items, {
     Addresses: list.tiles.map((t) => [...t.address]),
     Places: list.tiles.map((t) => [...t.at]),
   });
@@ -138,7 +138,7 @@ function marksContent(list: Extract<DisplayList, { kind: "marks" }>): Box {
   }
   for (const { members, mark, edges } of list.links)
     items.push(style(tag(primitiveBox(mark), members.map(addressText).join(";")), { EdgeForm: edgeForm(edges) }));
-  return graphicsComplex(row(items), {
+  return graphicsComplex(items, {
     Addresses: list.marks.map((m) => [...m.address]),
     Places: list.marks.map((m) => [...m.at]),
   });
@@ -162,7 +162,8 @@ export function graphicsBoxOf(list: DisplayList, meta: GraphicsMeta): Box {
     ...(meta.aspect && { AspectRatio: meta.aspect }),
     Complete: list.complete,
   };
-  return graphics(meta.held === undefined ? content : interpretation(content, meta.held as never), options);
+  const drawing = graphics([content], options);
+  return meta.held === undefined ? drawing : interpretation(drawing, meta.held as never);
 }
 
 // ── Reading a box back ───────────────────────────────────────────────────────────────────
@@ -226,17 +227,11 @@ const addressOf = (name: string): Address => {
   return [i ?? 0, j ?? 0];
 };
 
-/** The `GraphicsBox` inside any wrapping `InterpretationBox`, and the `Show` it is held with. */
-export function graphicsOf(box: Box): { box: BoxNode; held?: Json } | undefined {
-  if (!isNode(box) || box[0] !== "GraphicsBox") return undefined;
-  const content = box[1] as Box;
-  return isNode(content) && content[0] === "InterpretationBox" ? { box, held: content[2] as Json } : { box };
-}
+export { graphicsOf };
 
 /** The complex a `GraphicsBox` lists its marks in, whatever wraps it. */
 export function complexOf(box: Box): Extract<BoxNode, readonly ["GraphicsComplexBox", ...unknown[]]> | undefined {
-  const content = graphicsOf(box)?.box[1] as Box | undefined;
-  const inner = isNode(content) && content[0] === "InterpretationBox" ? (content[1] as Box) : content;
+  const inner = graphicsOf(box)?.box[1][0];
   return isNode(inner) && inner[0] === "GraphicsComplexBox" ? inner : undefined;
 }
 
@@ -260,8 +255,7 @@ export function displayListOfBox(box: Box): Extract<DisplayList, { kind: "marks"
   const selected = new Set(
     Array.isArray(o.Selection) ? o.Selection.map((a) => (Array.isArray(a) ? a.join(",") : "")) : [],
   );
-  const content = complex[1] as Box;
-  const items = isNode(content) && content[0] === "RowBox" ? (content[1] as readonly Box[]) : [content];
+  const items = complex[1] as readonly Box[];
   const marks: MarkItem[] = [];
   const links: LinkItem[] = [];
   const captions = new Map<string, NonNullable<MarkItem["caption"]>>();

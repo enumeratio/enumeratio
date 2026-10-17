@@ -5,7 +5,7 @@
 // compute-engine grid sampling, and `renderPlot` draws the box. `grid[j][i]` is z at the (i-th x,
 // j-th y) sample -- the same row-major convention as plot3d.ts's height grids.
 
-import { type Box, type BoxNode, graphics, line, type OptionValue, raster, row, style, tag } from "@enumeratio/boxes";
+import { type Box, type BoxNode, graphics, line, type OptionValue, raster, style, tag } from "@enumeratio/boxes";
 import { niceTicks } from "./plot.ts";
 import { renderPlot } from "./plot-box.ts";
 import { type ColorOptions, plotPalette, rampColor } from "./plot-color.ts";
@@ -222,7 +222,7 @@ export function contourPlotBox(
   const flat = grid.flat().filter(Number.isFinite);
   const ready = nx >= 2 && ny >= 2 && xs.length >= nx && ys.length >= ny && flat.length > 0;
   const options = fieldFrame(grid, xs, ys, opts, ready);
-  if (!ready) return graphics(row([]), options);
+  if (!ready) return graphics([], options);
 
   const zmin = Math.min(...flat);
   const zmax = Math.max(...flat);
@@ -286,7 +286,7 @@ export function contourPlotBox(
       );
     }
   }
-  return graphics(row(marks), options);
+  return graphics(marks, options);
 }
 
 /** `contourPlotBox` drawn: the SVG a page, a build or an export shows. */

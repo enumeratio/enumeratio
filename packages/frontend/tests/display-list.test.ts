@@ -1,4 +1,4 @@
-import { fromMathJson, isBox, toMathJson } from "@enumeratio/boxes";
+import { fromMathJson, graphicsOf, isBox, optionsOfBox, toMathJson } from "@enumeratio/boxes";
 import { expect, it } from "vite-plus/test";
 import { figureGraphicsBox } from "../src/show-box.ts";
 import { displayListOf, type DisplayList, type TileDrawOptions, type TileLayer } from "../src/tiles-canvas.ts";
@@ -93,8 +93,7 @@ it("lowers a frame to a GraphicsBox: marks tagged by address, links by members",
   expect(fromMathJson(toMathJson(box))).toEqual(box);
   const tags = JSON.stringify(box).match(/"TagBox",\[.*?\],"([^"]*)"/g) ?? [];
   expect(tags.length).toBeGreaterThan(6);
-  expect(box[0]).toBe("GraphicsBox");
-  const outer = (box as readonly unknown[])[2] as Record<string, unknown>;
+  const outer = optionsOfBox(graphicsOf(box)!.box);
   expect(outer.ViewKind).toBe("fixed");
   expect(outer.ColorMixing).toBe("First");
   expect(outer.Selection).toEqual([]);

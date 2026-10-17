@@ -5,7 +5,7 @@
 // deterministic (fixed sample grid, fixed-step RK4, no randomness), so SSR and the browser draw the
 // same picture. `renderPlot` draws the box.
 
-import { arrow, type Box, graphics, line, type OptionValue, row, style, tag } from "@enumeratio/boxes";
+import { arrow, type Box, graphics, line, type OptionValue, style, tag } from "@enumeratio/boxes";
 import { plotArea } from "./plot-box.ts";
 import { type ColorOptions, plotPalette, rampColor } from "./plot-color.ts";
 
@@ -194,7 +194,7 @@ export function vectorPlotBox(
     ...((opts.xLabel || opts.yLabel) && { AxesLabel: [opts.xLabel ?? null, opts.yLabel ?? null] }),
     ...(opts.title && { PlotLabel: opts.title }),
   };
-  if (!(x1 > x0) || !(y1 > y0) || plotW <= 0 || plotH <= 0) return graphics(row([]), options);
+  if (!(x1 > x0) || !(y1 > y0) || plotW <= 0 || plotH <= 0) return graphics([], options);
   options["PlotRange"] = [
     [x0, x1],
     [y0, y1],
@@ -274,5 +274,5 @@ export function vectorPlotBox(
       }
     }
   }
-  return graphics(row(marks), options);
+  return graphics(marks, options);
 }

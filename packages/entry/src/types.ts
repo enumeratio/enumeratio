@@ -126,15 +126,15 @@ export interface ReferenceExample {
  * listed keys (numbers to a relative 1e-9), `operands` the box's operands before its options.
  */
 export interface BoxShape {
-  /** The root box's head: `GraphicsBox`, `SliderBox`. */
+  /** The root box's head (a drawing's, through any `InterpretationBox`): `GraphicsBox`, `SliderBox`. */
   readonly head: string;
   /** Primitives in a drawing, by kind (`LineBox: 2`), counted through its styling and tags. */
   readonly marks?: Readonly<Record<string, number>>;
   /** A drawing's marks by the role their tag names (`Series`, `Bar`, `Vertex`). */
   readonly roles?: Readonly<Record<string, number>>;
-  /** Options of the root box (`Axes`, `ScalingFunctions`, `PlotRange`, …), compared as listed. */
+  /** Options of the root box, the drawing's when wrapped (`Axes`, `ScalingFunctions`, `PlotRange`, …), compared as listed. */
   readonly options?: Readonly<Record<string, unknown>>;
-  /** The box's operands, options excluded, as MathJSON: a control's binding and range. */
+  /** The box's operands (the drawing's when wrapped), options excluded, as MathJSON: a control's binding and range. */
   readonly operands?: readonly unknown[];
 }
 

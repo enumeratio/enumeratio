@@ -19,6 +19,12 @@ import { bindingVariable, displayText, entriesOf, entryLabel, entryValue } from 
 
 type Json = MathJsonExpression;
 
+const isDrawingHead = (head: string): boolean =>
+  head === "GraphicsBox" ||
+  head === "GraphicsComplexBox" ||
+  head === "Graphics3DBox" ||
+  head === "GraphicsComplex3DBox";
+
 const list = (items: readonly Json[]): Json => ["List", ...items] as Json;
 
 function optionToJson(value: OptionValue): Json {
@@ -35,7 +41,7 @@ export function toMathJson(box: Box): Json {
   const head = box[0];
   const args = box.slice(1, ARITY[head] + 1) as unknown[];
   const encoded: Json[] = args.map((arg, i) => {
-    if (head === "RowBox" || head === "TextData") return list((arg as Box[]).map(toMathJson));
+    if (head === "RowBox" || head === "TextData" || isDrawingHead(head)) return list((arg as Box[]).map(toMathJson));
     if (head === "GridBox") return list((arg as Box[][]).map((r) => list(r.map(toMathJson))));
     if (head === "PaneSelectorBox" && i === 0)
       return list((arg as Box[][]).map(([key, pane]) => ["KeyValuePair", toMathJson(key!), toMathJson(pane!)] as Json));
@@ -151,7 +157,7 @@ export function fromMathJson(json: Json): Box {
   const arity = ARITY[head];
   if (ops.length !== arity) fail(`${head} takes ${arity} argument(s)`, json);
   const args: unknown[] = ops.map((op, i) => {
-    if (head === "RowBox" || head === "TextData") return listItems(op).map(fromMathJson);
+    if (head === "RowBox" || head === "TextData" || isDrawingHead(head)) return listItems(op).map(fromMathJson);
     if (head === "GridBox") return listItems(op).map((r) => listItems(r).map(fromMathJson));
     if (head === "PaneSelectorBox" && i === 0)
       return listItems(op).map((rule) => {

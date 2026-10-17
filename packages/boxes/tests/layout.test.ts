@@ -82,7 +82,7 @@ test("math is a slot for the typesetter off cells, and drawn on them", () => {
 });
 
 test("a figure is a slot sized by the environment, whatever the layout around it", () => {
-  const figure: Box = ["GraphicsBox", ["RowBox", []]];
+  const figure: Box = ["GraphicsBox", []];
   const labeled = tag(grid([[figure, text("σ")]]), "Labeled");
   const list = layout(labeled, DEFAULT_STYLE, CELLS);
   const slot = list.items.find((i): i is Extract<Item, { kind: "slot" }> => i.kind === "slot")!;

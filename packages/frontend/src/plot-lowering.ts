@@ -6,7 +6,7 @@
 // expression it came from (an `InterpretationBox`) and `Producer -> head`, and an environment that
 // can sample asks for the marks (`plotBoxOfSamples`). Sampling stays with that environment.
 
-import { type Box, type BoxNode, graphics, interpretation, row } from "@enumeratio/boxes";
+import { type Box, graphics, graphicsOf, interpretation } from "@enumeratio/boxes";
 import { chartBox, type ChartBoxOptions, isChartKind, isNumber } from "./chart.ts";
 import { type ContourOptions, contourPlotBox } from "./contour.ts";
 import { type DensityOptions, densityPlotBox } from "./densityplot.ts";
@@ -188,7 +188,7 @@ export function plotDataSeries(settings: PlotSettings): PlotSeries[] | undefined
 
 /** A plot of an expression, not yet sampled: its expression and what samples it (`Producer`). */
 export function unsampledBox(head: string, expr: unknown): Box {
-  return graphics(interpretation(row([]), expr as never), { ViewKind: "fixed", Producer: head });
+  return interpretation(graphics([], { ViewKind: "fixed", Producer: head }), expr as never);
 }
 
 /** `[[θ, r], …]` (or a bare `[r, …]`, spread evenly over `t0..t1`) as polar points. */
@@ -205,9 +205,7 @@ export function polarPointsOf(data: unknown, t0: number, t1: number): PolarPoint
 
 /** Whether a `GraphicsBox` is a plot still to be sampled, and the expression it holds. */
 export function unsampledPlot(box: Box): unknown {
-  if (!Array.isArray(box) || box[0] !== "GraphicsBox") return undefined;
-  const content = (box as BoxNode)[1] as Box;
-  return Array.isArray(content) && content[0] === "InterpretationBox" ? (content as readonly unknown[])[2] : undefined;
+  return graphicsOf(box)?.held;
 }
 
 /** A sampled plot of an expression as a `GraphicsBox`: its settings and the series sampled for them. */
