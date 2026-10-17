@@ -32,6 +32,7 @@ n-exponentiale-pow-100-list-positiveinfinity-neg
 n-10-000-000-000-times-neg-exponentiale-pow-999			
 n-exponentiale-pow-sin-1-000	nf(power(x(std::f64::consts::E), sin(n(1000))))	2.286173685812171	
 n-exponentiale-pow-sin-1-000-47	nf(power(x(std::f64::consts::E), sin(n(1000))))	2.286173685812171	
+n-accuracy-goal-resolves-the-cancellation			
 an-exact-tie-rounds-to-the-even-digit-0-125	nf(rational(n(1), n(8)))	0.125	disagree
 and-0-375-to-0-38	nf(rational(n(3), n(8)))	0.375	disagree
 n-pi-1-digit	nf(x(std::f64::consts::PI))	3.141592653589793	disagree

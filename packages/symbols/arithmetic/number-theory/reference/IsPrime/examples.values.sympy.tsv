@@ -8,13 +8,13 @@ threads-element-wise-over-a-list	isprime([1, 2, 3, 4, 5, 6])	ValueError: [1, 2, 
 isprime-5	isprime(5)	True	
 isprime-7	isprime(7)	True	
 threads-element-wise-over-a-short-list	isprime([2, 3, 4])	ValueError: [2, 3, 4] is not an integer	error
-7-is-prime-its-associate-7-is-matching-wolfram-s	isprime(-7)	False	disagree
+7-is-prime-its-associate-7-is-matching-wolfram-s	isprime(-7)	False	
 a-gaussian-prime-its-norm-5-is-prime	isprime((2 + 1*I))	ValueError: 2 + I is not an integer	error
 5-2-i-2-i-splits-in-z-i			
 large-integers-10-3000-1-is-divisible-by-10-8-1	isprime(((S(10)**3000) + 1))	False	
 isprime-neg-1-is-false	isprime(-1)	False	
 isprime-neg-4-is-false	isprime(-4)	False	
-isprime-neg-2-is-true	isprime(-2)	False	disagree
+isprime-neg-2-is-true	isprime(-2)	False	
 a-unit-is-not-prime	isprime(1)	False	
 i-a-unit-is-not-prime	isprime((0 + 1*I))	ValueError: I is not an integer	error
 0-is-not-prime	isprime(0)	False	

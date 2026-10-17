@@ -40,9 +40,14 @@ describe("the generic heads", () => {
       ["Round", ["Complex", 2.5, 3.2]],
       ["Complex", 3, 3],
     ],
+    // ...but it picks no complex number over another: Min and Max leave a complex operand as written.
     [
       ["Min", ["Complex", 1, 2], ["Complex", 2, 1]],
-      ["Complex", 1, 1],
+      ["Min", ["Complex", 1, 2], ["Complex", 2, 1]],
+    ],
+    [
+      ["Max", ["Sqrt", -1], ["Rational", 3, 2]],
+      ["Max", ["Rational", 3, 2], ["Complex", 0, 1]],
     ],
     // A lazy collection is a pool, as it is natively.
     [["Max", ["Map", ["Function", ["Multiply", "_k", 2], "_k"], ["Range", 1, 3]]], 6],

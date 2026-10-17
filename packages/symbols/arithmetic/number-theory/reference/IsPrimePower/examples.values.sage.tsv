@@ -1,23 +1,23 @@
-id	in	out	verdict
-8-2-3	is_prime_power(8)	True	
-12-2-2-cdot-3-has-two-distinct-primes	is_prime_power(12)	False	
-a-prime-is-its-own-first-power	is_prime_power(7)	True	
-isprimepower-6	is_prime_power(6)	False	
-isprime-of-a-negative-prime	is_prime(-5)	False	disagree
-listable	[is_prime_power(2), is_prime_power(4), is_prime_power(6), is_prime_power(9), is_prime_power(10), is_prime_power(16)]	[True, True, False, True, False, True]	
-large-integers	is_prime_power(((3)^40))	True	
-isprimepower-9	is_prime_power(9)	True	
-isprimepower-list-1-2-3-4-5-6-7	[is_prime_power(1), is_prime_power(2), is_prime_power(3), is_prime_power(4), is_prime_power(5), is_prime_power(6), is_prime_power(7)]	[False, True, True, True, True, False, True]	
-filter-range-1-100-function-isprimepower-1			
-isprimepower-625	is_prime_power(625)	True	
-isprimepower-53	is_prime_power(53)	True	
-list-isprimepower-27-issquarefree-27	[is_prime_power(27), is_squarefree(27)]	[True, False]	
-list-isprimepower-3-issquarefree-3	[is_prime_power(3), is_squarefree(3)]	[True, True]	
-isprimepower-25	is_prime_power(25)	True	
-isprimepower-16-807	is_prime_power(16807)	True	
-list-isprimepower-121-iscomposite-121-moebiusmu			
-list-isprimepower-11-isprime-11-moebiusmu-11	[is_prime_power(11), is_prime(11), moebius(11)]	[True, True, -1]	
-isprimepower-2-401	is_prime_power(2401)	True	
-isprimepower-121	is_prime_power(121)	True	
-map-function-divisorsigma-1-1-lt-2-times-1-1			
-1-is-p-0-which-does-not-count	is_prime_power(1)	False	
+id	in	out
+8-2-3	is_prime_power(8)	True
+12-2-2-cdot-3-has-two-distinct-primes	is_prime_power(12)	False
+a-prime-is-its-own-first-power	is_prime_power(7)	True
+isprimepower-6	is_prime_power(6)	False
+isprime-of-a-negative-prime	is_prime(-5)	False
+listable	[is_prime_power(2), is_prime_power(4), is_prime_power(6), is_prime_power(9), is_prime_power(10), is_prime_power(16)]	[True, True, False, True, False, True]
+large-integers	is_prime_power(((3)^40))	True
+isprimepower-9	is_prime_power(9)	True
+isprimepower-list-1-2-3-4-5-6-7	[is_prime_power(1), is_prime_power(2), is_prime_power(3), is_prime_power(4), is_prime_power(5), is_prime_power(6), is_prime_power(7)]	[False, True, True, True, True, False, True]
+filter-range-1-100-function-isprimepower-1		
+isprimepower-625	is_prime_power(625)	True
+isprimepower-53	is_prime_power(53)	True
+list-isprimepower-27-issquarefree-27	[is_prime_power(27), is_squarefree(27)]	[True, False]
+list-isprimepower-3-issquarefree-3	[is_prime_power(3), is_squarefree(3)]	[True, True]
+isprimepower-25	is_prime_power(25)	True
+isprimepower-16-807	is_prime_power(16807)	True
+list-isprimepower-121-iscomposite-121-moebiusmu		
+list-isprimepower-11-isprime-11-moebiusmu-11	[is_prime_power(11), is_prime(11), moebius(11)]	[True, True, -1]
+isprimepower-2-401	is_prime_power(2401)	True
+isprimepower-121	is_prime_power(121)	True
+map-function-divisorsigma-1-1-lt-2-times-1-1		
+1-is-p-0-which-does-not-count	is_prime_power(1)	False

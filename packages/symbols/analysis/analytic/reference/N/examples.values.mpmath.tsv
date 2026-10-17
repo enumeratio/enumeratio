@@ -32,6 +32,7 @@ n-exponentiale-pow-100-list-positiveinfinity-neg	enumeratio_n(lambda: (((e)**100
 n-10-000-000-000-times-neg-exponentiale-pow-999	enumeratio_n(lambda: ((10000000000 * ((-((e)**(mpf(999999999999)/10000000000))) + ((e)**100)))), [inf, 20])	2.68811714168172959120817279258e+43	
 n-exponentiale-pow-sin-1-000	(((e)**sin(1000)))		
 n-exponentiale-pow-sin-1-000-47	enumeratio_n(lambda: (((e)**sin(1000))), 47)	2.2861736858121711022258908545330612218712785120	
+n-accuracy-goal-resolves-the-cancellation	enumeratio_n(lambda: ((1 + (-sqrt((1 + (-((e)**-1000))))))), [20, inf])		
 an-exact-tie-rounds-to-the-even-digit-0-125	enumeratio_n(lambda: ((mpf(1)/8)), 2)	0.13	disagree
 and-0-375-to-0-38	enumeratio_n(lambda: ((mpf(3)/8)), 2)	0.38	
 n-pi-1-digit	enumeratio_n(lambda: (pi), 1)	3.	
