@@ -1,10 +1,8 @@
 import { registerNotation } from "@enumeratio/boxes";
 import {
-  applyPatch,
   bigRealOperand,
   doublesForFloats,
   exceedsDoublePrecision,
-  factorIntegerInexact,
   inDoubles,
   inDoublesIfComplex,
 } from "@enumeratio/ce-patches";
@@ -51,7 +49,6 @@ import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 // normal form. Every head stays unevaluated — never approximate — when it cannot answer.
 
 export function declareNumberTheory(ce: Engine): void {
-  applyPatch(ce, factorIntegerInexact);
   registerNotation(ce, NUMBER_THEORY_NOTATION);
   // This package's own carriers — see carrier-data.ts for why they sit here rather than in
   // numerals, and why the ordering this runs at (after numerals, after modular) is

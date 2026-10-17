@@ -1,7 +1,6 @@
 import {
   bigIntegerAt,
   bigRationalAt,
-  defineMessages,
   mayBeInteger,
   operandsOf,
   symbolNameOf,
@@ -284,9 +283,6 @@ export function declareWidened(ce: Engine): void {
     },
     { compile: "builtin" },
   );
-
-  // `FactorInteger::exact`, said by ce-patches' factor-integer-inexact when it declines a float.
-  defineMessages(ce, "FactorInteger", { exact: "`1` is not an exact number." });
 
   // FactorInteger of a rational p/q: the prime factors of p, and of q with their exponents
   // negated, merged — a prime cannot appear in both once p/q is reduced. compute-engine's
