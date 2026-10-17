@@ -5,7 +5,9 @@
 //
 // Not adopted: St000728, St000729, St000730 (dimension, minimal and maximal arc length) agree
 // on every row but seven size-8 ones, where FindStat's stored values contradict its own Sage
-// code (negative arc lengths).
+// code (negative arc lengths). Nor St000577 (pairs a < b in different blocks with a the greatest
+// of its block), which agrees on every row but thirty size-8 ones, where FindStat's stored values
+// contradict its own code.
 //
 // `find-findstat.ts --crawl` already holds every match to all of its rows when it writes
 // `findstat-data.ts`; this re-checks them (or a pair given here) on their own and names the
