@@ -69,4 +69,4 @@ bindings:
 - A prime has no positive divisors other than 1 and itself; 1 itself is not prime.
 - Returns False unless n is provably prime -- there's no third "unknown" outcome.
 - Threads element-wise over a list argument.
-- A negative n is prime when its absolute value is, matching Wolfram's PrimeQ (which counts a prime's associates); compute-engine's native IsPrime returns False there instead.
+- A negative n is not prime: compute-engine rules `IsPrime(-7)` False, a prime being a natural number. Wolfram's PrimeQ counts a prime's associates and answers True.

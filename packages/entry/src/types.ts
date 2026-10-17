@@ -228,7 +228,8 @@ export interface ReferenceBinding {
   /** What evaluating it produces here, when that is not simply a number or expression. */
   readonly produces?: string;
   /** `mapped` only: the operand count this row applies to. Omitted matches any arity --
-   * @enumeratio/oracle's `mappingFor` prefers an arity-specific row over one with none. */
+   * @enumeratio/oracle's `mappingFor` prefers a system's arity-specific row over its row with none, and ignores
+   * rows that do not emit for that system. */
   readonly arity?: number;
   /** `mapped` only: the source template, `$n` for the n-th operand (`@enumeratio/oracle`'s
    * `Mapping.emit` entry for this row's `form`). */

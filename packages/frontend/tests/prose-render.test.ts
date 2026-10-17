@@ -6,7 +6,7 @@ import {
   button,
   form,
   paneSelector,
-  dynamic,
+  binding,
   row,
   slot,
   textCell,
@@ -123,7 +123,7 @@ test("a pane selector is its selector and its panes under their keys", () => {
           ["True", text("big")],
           ["False", text("small")],
         ],
-        dynamic(["Greater", "_n", 5] as never),
+        binding(["Greater", "_n", 5] as never),
       ),
     ),
   ).toBe(
@@ -132,7 +132,7 @@ test("a pane selector is its selector and its panes under their keys", () => {
 });
 
 test("a bare name as the selector reads that variable", () => {
-  const drawn = renderBox(paneSelector([["low", text("small")]], dynamic("level" as never)));
+  const drawn = renderBox(paneSelector([["low", text("small")]], binding("level" as never)));
   expect(drawn.attributes.selector).toBe("_level");
 });
 
