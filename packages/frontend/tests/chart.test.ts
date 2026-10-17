@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { type Box, type BoxNode, makeBoxes, optionsOfBox } from "@enumeratio/boxes";
+import { type Box, type BoxNode, graphicsOf, makeBoxes, optionsOfBox } from "@enumeratio/boxes";
 import { parseExpression } from "@enumeratio/formats/expression";
 import {
   arrayPlotBox,
@@ -298,10 +298,9 @@ test("a Chart of pairs is a plot of points, as its data's shape says", () => {
 test("an ArrayPlot of a table is a Show's layer, lowered as before", async () => {
   await loadLatticeModules({ head: "ArrayPlot", data: [] });
   const box = boxOf("ArrayPlot(MultiplicationTable(QuotientRing(Integers, 5)))");
-  expect(box[0]).toBe("GraphicsBox");
   expect(isChartBox(box)).toBe(false);
   // The table's producer, held as the Show it came from, not the cells of a matrix.
-  expect(optionsOfBox(node(box)).Producer).toBe("ArrayPlot");
+  expect(optionsOfBox(graphicsOf(box)!.box).Producer).toBe("ArrayPlot");
 });
 
 test("an element holds a plot or a chart in either spelling of its head, and an ArrayPlot only of a matrix", () => {

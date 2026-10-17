@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { type BoxNode, makeBoxes, optionsOfBox } from "@enumeratio/boxes";
+import { type BoxNode, graphicsOf, makeBoxes, optionsOfBox } from "@enumeratio/boxes";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { plainJson } from "../src/graphics-rules.ts";
 import { isPlotBox, plotItems, renderPlot } from "../src/plot-box.ts";
@@ -242,8 +242,8 @@ test("a stream plot is the same field with streamlines", () => {
 test("a field plot is a producer: its box holds the expression for an environment that can sample", () => {
   const { json } = parseExpression("VectorPlot((-y, x), (x, -2, 2), (y, -2, 2))");
   const box = makeBoxes(plainJson(json as never) as never, PLOT_NOTATION);
-  expect(box[0]).toBe("GraphicsBox");
-  expect(optionsOfBox(box as BoxNode).Producer).toBe("VectorPlot");
+  expect(box[0]).toBe("InterpretationBox");
+  expect(optionsOfBox(graphicsOf(box)!.box).Producer).toBe("VectorPlot");
   expect(unsampledPlot(box)).toBeDefined();
 });
 

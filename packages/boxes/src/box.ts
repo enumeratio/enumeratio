@@ -71,8 +71,8 @@ export type BoxNode =
   | readonly ["ErrorBox", Box]
   // Graphics (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives). A primitive's
   // geometry is its options, in the frame's coordinates; a mark is `TagBox`ed with its address,
-  // a link with its members.
-  | readonly ["GraphicsBox", Box, Options?]
+  // a link with its members. A `GraphicsBox` holds its primitives as a list, as Wolfram's does.
+  | readonly ["GraphicsBox", readonly Box[], Options?]
   | readonly ["GraphicsComplexBox", Box, Options?]
   | readonly ["DiskBox", Options?]
   | readonly ["LineBox", Options?]
@@ -236,8 +236,8 @@ export const tableView = (source: MathJsonExpression, options?: Options): Box =>
 export const tag = (box: Box, name: string): Box => ["TagBox", box, name];
 export const interpretation = (box: Box, expr: MathJsonExpression): Box => ["InterpretationBox", box, expr];
 export const error = (box: Box): Box => ["ErrorBox", box];
-export const graphics = (content: Box, options?: Options): Box =>
-  ["GraphicsBox", ...withOptions([content] as const, options)] as Box;
+export const graphics = (primitives: readonly Box[], options?: Options): Box =>
+  ["GraphicsBox", ...withOptions([primitives] as const, options)] as Box;
 export const graphicsComplex = (content: Box, options?: Options): Box =>
   ["GraphicsComplexBox", ...withOptions([content] as const, options)] as Box;
 export const disk = (options?: Options): Box => ["DiskBox", ...withOptions([] as const, options)] as Box;
@@ -321,6 +321,8 @@ export function isBox(value: unknown): value is Box {
     case "RowBox":
     case "TextData":
       return Array.isArray(args[0]) && args[0].every(isBox);
+    case "GraphicsBox":
+      return Array.isArray(args[0]) && args[0].every(isBox);
     case "GridBox":
       return Array.isArray(args[0]) && args[0].every((r: unknown) => Array.isArray(r) && r.every(isBox));
     case "PaneSelectorBox":
@@ -350,4 +352,15 @@ export function isBox(value: unknown): value is Box {
       }
       return args.every(isBox);
   }
+}
+
+/** The `GraphicsBox` inside any wrapping `InterpretationBox`, and the expression it is held with. */
+export function graphicsOf(
+  box: Box,
+): { box: Extract<BoxNode, readonly ["GraphicsBox", ...unknown[]]>; held?: MathJsonExpression } | undefined {
+  if (!isNode(box)) return undefined;
+  if (box[0] === "GraphicsBox") return { box };
+  if (box[0] !== "InterpretationBox") return undefined;
+  const inner = box[1];
+  return isNode(inner) && inner[0] === "GraphicsBox" ? { box: inner, held: box[2] } : undefined;
 }

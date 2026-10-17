@@ -20,7 +20,6 @@ import {
   optionsOfBox,
   point,
   rectangle,
-  row,
   style,
   tag,
 } from "@enumeratio/boxes";
@@ -131,7 +130,7 @@ function chartBoxOf(frame: Frame, marks: readonly Box[]): Box {
       LegendPosition: [...frame.legend.at],
     }),
   };
-  return graphics(row([...marks]), options);
+  return graphics([...marks], options);
 }
 
 const sizeOf = (opts: ChartOptions): [number, number] => [opts.width ?? WIDTH, opts.height ?? HEIGHT];

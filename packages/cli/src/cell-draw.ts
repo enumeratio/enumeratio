@@ -4,7 +4,7 @@
 // rectangles (a Young diagram) is ruled with box-drawing characters instead. Pure: boxes in,
 // text out. Selection and hover are the web's; the marks' own colors are kept where the terminal has color.
 
-import { type Box, type BoxNode, isNode, optionsOfBox, type Options } from "@enumeratio/boxes";
+import { type Box, type BoxNode, graphicsOf, isNode, optionsOfBox, type Options } from "@enumeratio/boxes";
 import { arrowhead, complexOf, isChartBox, isDiagramBox, isPlotBox, pinnedBox, plotItems } from "@enumeratio/frontend";
 
 type Point = readonly number[];
@@ -576,9 +576,12 @@ export function drawChartBox(box: BoxNode, options: CellOptions = {}): string {
 
 /** A figure's `GraphicsBox` on character cells; the reason it can't be drawn, as text, otherwise. */
 export function drawGraphicsBox(box: Box, options: CellOptions = {}): string {
-  if (isPlotBox(box)) return drawPlotBox(box, options);
-  if (isDiagramBox(box)) return drawDiagramBox(box, options);
-  if (isChartBox(box)) return drawChartBox(box, options);
+  const drawing = graphicsOf(box)?.box;
+  if (drawing !== undefined) {
+    if (isPlotBox(drawing)) return drawPlotBox(drawing, options);
+    if (isDiagramBox(drawing)) return drawDiagramBox(drawing, options);
+    if (isChartBox(drawing)) return drawChartBox(drawing, options);
+  }
   const [width, height] = [options.width ?? 60, options.height ?? 14];
   // A lattice holds a producer: pin it to the view the cells can resolve (a cell is 2 by 4 dots).
   const pinned = pinnedBox(box, { width: width * 2, height: height * 4, maxCells: PINNED_TILES });

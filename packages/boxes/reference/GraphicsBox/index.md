@@ -18,4 +18,4 @@ names:
 - The one box every environment draws a figure from: a canvas, a terminal and a native view read the same primitives, tagged by address. `Show` lowers to it.
 - Rules stay data; each drawer resolves them per mark.
 - Prints as `-Graphics-` in text, as Wolfram does.
-- Wolfram holds a figure's marks in a list, `GraphicsBox[{}]` when empty. A built box here holds them in a `RowBox` (`GraphicsBox[RowBox[{}]]`), so the example states Wolfram's form as inert data.
+- Holds its primitives in a list, as Wolfram does: `GraphicsBox[{}]` when empty. A figure or plot that remembers the expression it came from is wrapped whole in an `InterpretationBox`.

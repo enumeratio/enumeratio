@@ -7,6 +7,7 @@ import {
   type Box,
   DEFAULT_STYLE,
   type DisplayList,
+  graphicsOf,
   isControlLeaf,
   isNode,
   type Item,
@@ -28,7 +29,7 @@ export interface LayoutOptions extends CellOptions {
   readonly evaluate?: (json: Json) => string;
 }
 
-const isDrawing = (box: Box): boolean => isNode(box) && box[0] === "GraphicsBox";
+const isDrawing = (box: Box): boolean => graphicsOf(box) !== undefined;
 
 /**
  * A leaf's rows: a figure drawn, a control as its line (at the value its controls start from), a

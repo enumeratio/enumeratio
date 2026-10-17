@@ -21,7 +21,6 @@ import {
   type OptionValue,
   optionsOfBox,
   polygon,
-  row,
   style,
   tag,
 } from "@enumeratio/boxes";
@@ -155,7 +154,7 @@ export class Sketch {
   }
 
   box(): Box {
-    return graphics(row(this.#items), {
+    return graphics(this.#items, {
       ImageSize: [this.width, this.height],
       PlotRange: [
         [0, this.width],
