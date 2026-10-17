@@ -29,8 +29,15 @@ const imagesOf = (drawn: ReturnType<typeof run>): number[] => {
 const isPermutation = (xs: number[], n: number) =>
   xs.length === n && xs.toSorted((a, b) => a - b).every((x, i) => x === i + 1);
 
-test("randomBelow is uniform past 32 bits (chi-square over small residues of a huge range)", () => {
-  // A modulus that doesn't divide 2^32 would show modulo bias at this size if rejection were skipped.
+test("randomBelow rejects a chunk in the biased top sliver and draws again", () => {
+  // n = 2^31 + 1: chunks at or above 2^32 - (2^32 mod n) = 2^31 + 2 would over-weight low residues.
+  const chunks = [0xffffffff, 0x80000002, 5];
+  const stub = { _randomFrame: {}, _random: () => chunks.shift()! / 4294967296 };
+  expect(randomBelow(stub as never, 2n ** 31n + 1n)).toBe(5n);
+  expect(chunks).toEqual([]);
+});
+
+test("randomBelow is spread evenly over a huge range (chi-square on its coarse shape)", () => {
   const n = 3n * 2n ** 40n;
   const buckets = new Array<number>(6).fill(0);
   const draws = 6000;

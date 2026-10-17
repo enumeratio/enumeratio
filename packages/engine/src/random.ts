@@ -57,6 +57,7 @@ export function registerSampler(ce: ComputeEngine, sampler: Sampler): void {
 interface Collection {
   readonly isFiniteCollection?: boolean;
   readonly isEnumerable?: boolean;
+  readonly isCollection?: boolean;
   readonly count?: number;
   at?(index: number): BoxedExpression | undefined;
 }
@@ -78,11 +79,15 @@ export function randomBelow(ce: ComputeEngine, n: bigint): bigint {
 /** The exact count past 2^53, which compute-engine's number-only `count` can't carry:
  *  `Count` answers it as an integer where the family has a bigint kernel. */
 const bigCount = (domain: BoxedExpression, ce: ComputeEngine): bigint | undefined => {
-  const json = ce.box(["Count", domain.json] as never).evaluate().json as unknown;
-  const num = typeof json === "object" && json !== null && "num" in json ? String((json as { num: unknown }).num) : "";
-  // Large integers print as `<digits>e+<n>`.
-  const [, digits, exponent] = /^(\d+)(?:e\+(\d+))?$/.exec(num) ?? [];
-  return digits === undefined ? undefined : BigInt(digits) * 10n ** BigInt(exponent ?? 0);
+  const counted = ce.box(["Count", domain.json] as never).evaluate();
+  const number = counted as unknown as {
+    isNumberLiteral?: boolean;
+    bignumRe?: { isInteger(): boolean; toFixed(): string };
+  };
+  if (number.isNumberLiteral !== true) return undefined;
+  const big = number.bignumRe;
+  if (big !== undefined) return big.isInteger() ? BigInt(big.toFixed()) : undefined;
+  return Number.isSafeInteger(counted.re) ? BigInt(counted.re) : undefined;
 };
 
 type DigitsAt = (c: BoxedExpression, index: string) => BoxedExpression | undefined;
@@ -96,9 +101,13 @@ const hugeSampler = (domain: BoxedExpression, ce: ComputeEngine): BoxedExpressio
       ? ((def.operator as { collection?: { at?: unknown } } | undefined)?.collection?.at as DigitsAt | undefined)
       : undefined;
   // A family that declines enumeration also declines `Count` into a walk of its elements.
-  if (at === undefined || (domain as unknown as Collection).isEnumerable === false) return undefined;
-  const total = bigCount(domain, ce);
-  if (total === undefined || total <= BigInt(Number.MAX_SAFE_INTEGER)) return undefined;
+  const total =
+    at === undefined || (domain as unknown as Collection).isEnumerable === false ? undefined : bigCount(domain, ce);
+  if (at === undefined || total === undefined || total <= BigInt(Number.MAX_SAFE_INTEGER)) {
+    emit(ce, "Random", "unrank", [domain]);
+    return undefined;
+  }
+  // An element the family can't produce at a counted rank is its own decline, not a size problem.
   const drawn = at(domain, (randomBelow(ce, total) + 1n).toString());
   if (drawn === undefined || drawn.operator === "Error" || drawn.json === "Missing") return undefined;
   return drawn;
@@ -108,12 +117,12 @@ const hugeSampler = (domain: BoxedExpression, ce: ComputeEngine): BoxedExpressio
  *  integer, by a bigint rank past it, and otherwise no draw at all (never a non-uniform one). */
 const collectionSampler: Sampler = (domain, ce) => {
   const c = domain as unknown as Collection;
-  if (c.isFiniteCollection === false) return undefined;
+  if (c.isFiniteCollection !== true) return undefined;
   if (c.count !== undefined && Number.isSafeInteger(c.count)) {
     if (c.count < 1 || c.at === undefined) return undefined;
     return c.at(1 + Math.floor(uniform01(ce) * c.count));
   }
-  return c.isFiniteCollection === true ? hugeSampler(domain, ce) : undefined;
+  return hugeSampler(domain, ce);
 };
 
 /** `Interval(a, b)` of reals: uniform on it. */
@@ -141,13 +150,12 @@ export function sample(ce: ComputeEngine, domain: BoxedExpression): BoxedExpress
   return undefined;
 }
 
-/** Why `Random` left a collection unevaluated. */
+/** Why `Random` left a collection unevaluated (a huge one says so in `hugeSampler`). */
 function explainDecline(ce: ComputeEngine, domain: BoxedExpression): void {
   const c = domain as unknown as Collection;
+  if (c.isCollection !== true) return;
   if (c.isFiniteCollection === false) emit(ce, "Random", "infinite", [domain]);
   else if (c.isFiniteCollection === true && c.count !== undefined && c.count < 1) emit(ce, "Random", "empty", [domain]);
-  else if (c.isFiniteCollection === true && (c.count === undefined || !Number.isSafeInteger(c.count)))
-    emit(ce, "Random", "unrank", [domain]);
 }
 
 /** `Random`'s signature, arm by arm; a package adds its own domains with `addRandomArm`. */
