@@ -94,4 +94,15 @@ test("Precision of a machine number is MachinePrecision on every route", () => {
   expect(run(["Precision", 1.5])).toBe("MachinePrecision");
   expect(ce.box(["Precision", 1.5] as never).N().json).toBe("MachinePrecision");
   expect(run(["Precision", { num: "3.14159265358979323846" }])).toBe(21);
+  // A double computed at machine precision has no decimal breakdown to count: still a machine number.
+  const working = ce.precision;
+  ce.precision = "machine";
+  try {
+    expect(run(["Precision", ["Sin", { num: "1.0" }]])).toBe("MachinePrecision");
+    expect(run(["IsMachineNumber", ["Sin", { num: "1.0" }]])).toBe("True");
+  } finally {
+    ce.precision = working;
+  }
+  // MachinePrecision is Wolfram's constant: 53 Log10(2).
+  expect(ce.box(["N", ["Precision", 1.5]] as never).evaluate().re).toBeCloseTo(15.954589770191003, 12);
 });

@@ -167,4 +167,15 @@ test("FactorInteger of an inexact number stays unevaluated and says why", () => 
   expect(value).toEqual(["FactorInteger", { num: "12.0" }]);
   expect(messages.map((m) => `${m.head}::${m.code}`)).toEqual(["FactorInteger::exact"]);
   expect(ce.box(["FactorInteger", { num: "12.0" }] as never).N().operator).toBe("FactorInteger");
+  // Listable: the float element stays, its neighbors factor.
+  expect(run(["FactorInteger", ["List", { num: "12.0" }, 18]])).toEqual([
+    "List",
+    ["FactorInteger", { num: "12.0" }],
+    ["List", ["Tuple", 2, 1], ["Tuple", 3, 2]],
+  ]);
+  // A Gaussian integer written with floats is no more exact.
+  expect(run(["FactorInteger", ["Complex", { num: "3.0" }, 4]])).toEqual([
+    "FactorInteger",
+    ["Complex", { num: "3.0" }, { num: "4.0" }],
+  ]);
 });

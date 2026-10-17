@@ -2,7 +2,6 @@ import {
   bigIntegerAt,
   bigRationalAt,
   defineMessages,
-  emit,
   mayBeInteger,
   operandsOf,
   symbolNameOf,
@@ -286,19 +285,8 @@ export function declareWidened(ce: Engine): void {
     { compile: "builtin" },
   );
 
-  // FactorInteger of an inexact number (`12.0`, a float on every route) stays unevaluated and
-  // says why, as Wolfram does; native would factor an integer-valued float.
+  // `FactorInteger::exact`, said by ce-patches' factor-integer-inexact when it declines a float.
   defineMessages(ce, "FactorInteger", { exact: "`1` is not an exact number." });
-  wrapOperator(
-    ce,
-    ["FactorInteger", 1],
-    (ops) => ops[0]?.isNumber === true && (ops[0] as Partial<{ isExact: boolean }>).isExact === false,
-    () => (ops) => {
-      emit(ce, "FactorInteger", "exact", [ops[0]]);
-      return undefined;
-    },
-    { arity: 1, compile: "builtin" },
-  );
 
   // FactorInteger of a rational p/q: the prime factors of p, and of q with their exponents
   // negated, merged — a prime cannot appear in both once p/q is reduced. compute-engine's

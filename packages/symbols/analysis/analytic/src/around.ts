@@ -184,7 +184,7 @@ const ANY_SLOT_HEADS = ["Multinomial"] as const;
 export function declareAround(ce: ComputeEngine): void {
   ce.declare("Around", {
     signature: "(number, real?) -> number",
-    // The uncertainty is a magnitude: `Around(1, -1)` is `Around(1, 1)`.
+    // The uncertainty is a magnitude: `Around(1, -1)` is `Around(1, 1)`. One of unknown sign stays as written.
     evaluate: (ops) => {
       const [x, dx] = ops;
       if (x === undefined || dx === undefined || dx.isNegative !== true) return undefined;

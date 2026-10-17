@@ -225,18 +225,23 @@ const declareRandomInteger = (ce: Engine): void => {
 
 /** How many significant decimal digits a literal carries — the number of digits actually
  *  written (`2.5` → 2, an `N[…, 50]` result → 50), read from the decimal's own `toString`
- *  rather than any private field. Falls back to the engine's configured working precision
- *  when the numeric value carries no decimal breakdown (e.g. a machine float from
- *  elsewhere). */
-const digitsOf = (ce: Engine, x: Expr): number => {
+ *  rather than any private field. `undefined` when the numeric value carries no decimal
+ *  breakdown: a machine float computed elsewhere (`Sin(1.0)`). */
+const digitsOf = (x: Expr): number | undefined => {
   // `.numericValue` (and `.isExact` below) live on compute-engine's boxed-number
   // interface, not the general one — same cast other packages use (see e.g.
   // analytic/src/matrix-exp.ts).
   const numericValue = (x as Partial<{ numericValue: { decimal?: { toString(): string } } }>).numericValue;
   const decimal = numericValue?.decimal;
-  if (decimal === undefined) return ce.precision;
+  if (decimal === undefined) return undefined;
   const digits = decimal.toString().replace(/^-/, "").replace(".", "").replace(/^0+/, "");
   return digits.length || 1;
+};
+
+/** A number is machine precision when it has up to `MACHINE_PRECISION_DIGITS` digits, or none to count. */
+const isMachine = (x: Expr): boolean => {
+  const digits = digitsOf(x);
+  return digits === undefined || digits <= MACHINE_PRECISION_DIGITS;
 };
 
 /** Whether `x` is an exact number — `undefined` (a symbolic constant like `Pi`, with no
@@ -244,8 +249,9 @@ const digitsOf = (ce: Engine, x: Expr): number => {
  *  `Infinity`). */
 const isExactNumber = (x: Expr): boolean => (x as Partial<{ isExact: boolean }>).isExact !== false;
 
-/** Wolfram reads a literal of up to 17 significant digits (a double's most) as machine precision,
- *  `3.1415926535897932` included; an 18-digit one is arbitrary precision. */
+/** Wolfram reads a literal of up to 17 significant digits as machine precision, `3.1415926535897932`
+ *  included; an 18-digit one is arbitrary precision. 17 is a double's shortest round-trip, where
+ *  the `DOUBLE_DIGITS = 15` constants elsewhere count the digits it guarantees. */
 const MACHINE_PRECISION_DIGITS = 17;
 
 const declareNumericPredicates = (ce: Engine): void => {
@@ -269,21 +275,28 @@ const declareNumericPredicates = (ce: Engine): void => {
       const x = ops[0];
       if (x === undefined) return undefined;
       if (x.isNumber !== true || isExactNumber(x)) return ce.False;
-      return digitsOf(ce, x) <= MACHINE_PRECISION_DIGITS ? ce.True : ce.False;
+      return isMachine(x) ? ce.True : ce.False;
     },
+  });
+
+  // Wolfram's constant: a double's 53 bits, as decimal digits.
+  ce.declare("MachinePrecision", {
+    type: "real",
+    isConstant: true,
+    holdUntil: "N",
+    value: ce.number(53 * Math.log10(2)),
   });
 
   // Precision(expr): the number of significant decimal digits tracked — Infinity for an
   // exact number (Wolfram's own convention: exact values carry infinite precision), the symbol
   // MachinePrecision for a machine number.
   ce.declare("Precision", {
-    signature: "(any) -> integer<1..> | signed_infinity | symbol",
+    signature: "(any) -> integer<1..> | signed_infinity | real",
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const x = ops[0];
       if (x === undefined || x.isNumber !== true) return undefined;
       if (isExactNumber(x)) return ce.symbol("PositiveInfinity");
-      const digits = digitsOf(ce, x);
-      return digits <= MACHINE_PRECISION_DIGITS ? ce.symbol("MachinePrecision") : ce.number(digits);
+      return isMachine(x) ? ce.symbol("MachinePrecision") : ce.number(digitsOf(x)!);
     },
   });
 };

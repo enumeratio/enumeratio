@@ -1,6 +1,7 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { applyPatch, applyPatches, symbols as symbolsOf } from "./patch.ts";
 import { argumentDigits } from "./patches/argument-digits.ts";
+import { factorIntegerInexact } from "./patches/factor-integer-inexact.ts";
 import { integratePolynomialPowers } from "./patches/integrate-polynomial-powers.ts";
 import { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
 import { powerOfNumbersFoldsRoots } from "./patches/power-of-numbers-folds-roots.ts";
@@ -80,6 +81,7 @@ export { logGamma, logGammaReal, logGammaBig } from "./compute-engine/numerics/l
 export { solveDeclines, evaluateSolveDeclines } from "./patches/solve-declines.ts";
 export { solveDomains, evaluateSolveDomains } from "./patches/solve-domains.ts";
 export { integratePolynomialPowers, integrateExpandsPolynomials } from "./patches/integrate-polynomial-powers.ts";
+export { factorIntegerInexact } from "./patches/factor-integer-inexact.ts";
 export { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
 export { shapeOfUnknownElements, evaluateShapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
 export { dictionaryOf, entriesOf } from "./compute-engine/library/core.ts";
@@ -199,6 +201,7 @@ export function applyNativeHeadPatches(ce: ComputeEngine): void {
     integratePolynomialPowers,
     powerOfNumbersFoldsRoots,
     argumentDigits,
+    factorIntegerInexact,
   ])
     applyPatch(ce, patch);
 }
