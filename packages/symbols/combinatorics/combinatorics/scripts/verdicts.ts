@@ -27,7 +27,8 @@ export const checkers = {
   /** The statistics areas' shared `agrees`. */
   statistics: ["src/statistics/generate-compiled.ts"],
   /** The families' `disagreements`, and the Epsil it reads them through. */
-  families: ["scripts/family-checks.ts", "collections/src/families/epsil.ts", "collections/src/families/types.ts"],
+  // The whole families source: each family's `early` callbacks choose which ranks are sampled.
+  families: ["scripts/family-checks.ts", "collections/src/families"],
 } as const;
 
 // Manifest's dist is built from every package's records, so any record edit would void every
@@ -37,6 +38,7 @@ export const verdictsFor = (step: string, roots: readonly string[]) =>
   verdictCache(step, {
     dir: at(""),
     roots: [...roots.map(at), at("../../../manifest/src")],
-    skip: (path) => path.endsWith("/manifest/src/generated"),
+    // Generated outputs are what the steps write, not what the checks read.
+    skip: (path) => path.endsWith("/manifest/src/generated") || /\.generated\.(js|ts)$/.test(path),
     omitDists: ["@enumeratio/manifest"],
   });
