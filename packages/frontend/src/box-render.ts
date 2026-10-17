@@ -11,7 +11,16 @@
 // A math run is a leaf too: one `form-box` holding its TeX (`Rendering.tex`), which the host
 // typesets (`box-leaf.ts`); everything around a run is drawn here.
 
-import { type Box, type BoxNode, gridCells, isNode, optionsOfBox, type OptionValue, rowsOf } from "@enumeratio/boxes";
+import {
+  type Box,
+  type BoxNode,
+  bindingVariable,
+  gridCells,
+  isNode,
+  optionsOfBox,
+  type OptionValue,
+  rowsOf,
+} from "@enumeratio/boxes";
 import { LIST_CELLS, toText } from "@enumeratio/boxes/render";
 import { typesetLeaf } from "./box-leaf.ts";
 import { boxTag } from "./box-tags.ts";
@@ -177,8 +186,8 @@ export function renderBox(box: Box, holes: Holes = {}): Rendering {
       return element("TooltipBox", undefined, { "data-tip": toText(box[2]), tabindex: "0" }, children([box[1]]));
     case "PaneSelectorBox": {
       const selector = box[2];
-      const watched: Record<string, string> =
-        isNode(selector) && selector[0] === "DynamicBox" ? { selector: selectorText(epsil(selector[1])) } : {};
+      const variable = bindingVariable(selector);
+      const watched: Record<string, string> = variable === undefined ? {} : { selector: selectorText(epsil(variable)) };
       return element(
         "PaneSelectorBox",
         undefined,
