@@ -34,21 +34,29 @@ function safeguardedSolve(
   hi: number,
   target: number,
   increasing: boolean,
-): number {
+): number | undefined {
+  // The residual is judged relative to the target; a root the solver cannot reach (a double
+  // underflows before f gets near the target) is declined, not answered with its last iterate.
+  const settled = (x: number): boolean => Math.abs(f(x) - target) <= RESIDUAL_TOLERANCE * target;
   let x = 0.5 * (lo + hi);
   for (let i = 0; i < 100; i++) {
     const fx = f(x) - target;
-    if (Math.abs(fx) < 1e-14 * (1 + Math.abs(target))) return x;
+    if (Math.abs(fx) < 1e-14 * target) return x;
     if (increasing === fx < 0) lo = x;
     else hi = x;
     const d = fPrime(x);
     let xn = d === 0 || !Number.isFinite(d) ? Number.NaN : x - fx / (increasing ? d : -d);
     if (!(xn > lo && xn < hi)) xn = 0.5 * (lo + hi);
-    if (Math.abs(xn - x) < 1e-15 * (1 + Math.abs(x))) return xn;
+    if (Math.abs(xn - x) < 1e-15 * (1 + Math.abs(x))) return settled(xn) ? xn : undefined;
     x = xn;
   }
-  return x;
+  return settled(x) ? x : undefined;
 }
+
+/** Largest |f(x) - target| / target at which a root is accepted. The step floor stops a little
+ *  short of the last digit, but a root the double cannot represent leaves a residual of the order
+ *  of the target itself (InverseBetaRegularized(0.3, 2.5e-6, 1.5e-6)). */
+const RESIDUAL_TOLERANCE = 1e-10;
 
 const forwardGammaRegularized = (ce: ComputeEngine, a: number, z: number): number =>
   ce.box(["GammaRegularized", a, z] as never).N().re;
@@ -58,7 +66,7 @@ const forwardBetaRegularized = (ce: ComputeEngine, x: number, a: number, b: numb
 
 /** Solve Q(a, z) = s for z > 0. Q decreases from 1 (z=0) to 0 (z→∞); doubling search finds a
  * bracket, then `safeguardedSolve` refines against Q'(z) = −z^(a−1)·e^(−z)/Γ(a) (in log space). */
-function inverseGammaRegularized(ce: ComputeEngine, a: number, s: number): number {
+function inverseGammaRegularized(ce: ComputeEngine, a: number, s: number): number | undefined {
   const logGammaA = logGammaReal(a);
   let hi = 1;
   while (forwardGammaRegularized(ce, a, hi) > s) hi *= 2;
@@ -75,7 +83,7 @@ function inverseGammaRegularized(ce: ComputeEngine, a: number, s: number): numbe
 
 /** Solve I_x(a, b) = s for x in (0, 1). I_x increases from 0 to 1; the density
  * dI/dx = x^(a−1)·(1−x)^(b−1)/B(a,b), also in log space via logGammaReal. */
-function inverseBetaRegularized(ce: ComputeEngine, a: number, b: number, s: number): number {
+function inverseBetaRegularized(ce: ComputeEngine, a: number, b: number, s: number): number | undefined {
   const logBeta = logGammaReal(a) + logGammaReal(b) - logGammaReal(a + b);
   const density = (x: number): number =>
     x <= 0 || x >= 1 ? 0 : Math.exp((a - 1) * Math.log(x) + (b - 1) * Math.log(1 - x) - logBeta);
@@ -138,6 +146,7 @@ export function declareInverseGammaRegularized(ce: ComputeEngine): void {
       if (!wantsNumber(ops, options) || !isFiniteNum(a) || !isFiniteNum(s)) return undefined;
       if (a.im !== 0 || s.im !== 0 || a.re <= 0 || s.re < 0 || s.re > 1) return undefined;
       const z0 = inverseGammaRegularized(ce, a.re, s.re);
+      if (z0 === undefined) return undefined;
       // The double solve is the start; past a double's digits the bignum series finishes it.
       if (exceedsDoublePrecision(ce, options.numericApproximation)) {
         const [big, bigS] = [bigRealOperand(ce, a), bigRealOperand(ce, s)];
@@ -170,7 +179,8 @@ export function declareInverseBetaRegularized(ce: ComputeEngine): void {
       if (!wantsNumber(ops, options) || !isFiniteNum(s) || !isFiniteNum(a) || !isFiniteNum(b)) return undefined;
       if (a.im !== 0 || b.im !== 0 || s.im !== 0 || a.re <= 0 || b.re <= 0) return undefined;
       if (s.re < 0 || s.re > 1) return undefined;
-      return ce.number(inverseBetaRegularized(ce, a.re, b.re, s.re));
+      const x = inverseBetaRegularized(ce, a.re, b.re, s.re);
+      return x === undefined ? undefined : ce.number(x);
     },
   });
 }
