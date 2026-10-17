@@ -104,7 +104,7 @@ export const SET_PARTITION_READINGS: Readonly<Record<string, (p: SetPartition) =
   LeftCloserBigger: (p) => countOf(crossPairs(p, last, 1), (j, i) => i < j),
   BlockMajorIndex: (p) => sum(p.slice(0, -1).map((b, i) => (i + 1) * b.filter((e) => e > first(p[i + 1]!)).length)),
   FlattenedMajorIndex: (p) => majorIndex(p.flat()),
-  FlattenedMajorIndexVariant: (p) => {
+  HuangRhoadesMajorIndex: (p) => {
     const flat = p.flat();
     let cumulative = 0;
     let extra = 0;
@@ -114,7 +114,7 @@ export const SET_PARTITION_READINGS: Readonly<Record<string, (p: SetPartition) =
     });
     return majorIndex(flat) + extra;
   },
-  FirstAtomicBlocks: (p) => {
+  FirstAtomicComponentBlockCount: (p) => {
     const seen: number[] = [];
     for (let i = 0; i < p.length; i++) {
       seen.push(...p[i]!);
@@ -130,7 +130,7 @@ export const SET_PARTITION_READINGS: Readonly<Record<string, (p: SetPartition) =
     const arcDepths = sum(a.map(([l, r]) => a.filter(([x, y]) => x < l && r < y).length));
     return total - vertices + arcDepths;
   },
-  AscentTopsAfterSmaller: (p) => {
+  FlattenedAscentTopsAfterSmaller: (p) => {
     const flat = p.flat();
     return flat.filter((v, i) => {
       if (i + 1 >= flat.length || !(v < flat[i + 1]!)) return false;
@@ -151,50 +151,50 @@ export const SET_PARTITION_READINGS: Readonly<Record<string, (p: SetPartition) =
       ),
     );
   },
-  FirstBlockSecondElementOrSmallestCloser: (p) => {
+  FirstBlockSecondOrSmallestNonsingletonMaximum: (p) => {
     if (p.length === 0) return 0;
     const firstBlock = p[0]!;
     if (firstBlock.length === 1) return 1;
     const closers = p.filter((b) => b.length > 1).map(last);
     return Math.min(firstBlock[1]!, ...closers);
   },
-  MahonianExcedances: (p) => {
+  MahonianWordExcedances: (p) => {
     const w = wordByMaximum(p);
     const sorted = w.toSorted((a, b) => a - b);
     return w.filter((v, i) => sorted[i]! < v).length;
   },
-  MahonianDescents: (p) => {
+  MahonianWordDescents: (p) => {
     const w = wordByMaximum(p);
     return w.filter((v, i) => i + 1 < w.length && v > w[i + 1]!).length;
   },
-  MahonianInversions: (p) => {
+  MahonianWordInversions: (p) => {
     const w = wordByMaximum(p);
     return pairs(w).filter(([a, b]) => a > b).length;
   },
-  MahonianMajorIndex: (p) => majorIndex(wordByMaximum(p)),
-  ZIndex: (p) => {
+  MahonianWordMajorIndex: (p) => majorIndex(wordByMaximum(p)),
+  MahonianWordZIndex: (p) => {
     const w = wordByMaximum(p);
     const letters = [...new Set(w)];
     return sum(pairs(letters).map(([a, b]) => majorIndex(w.filter((v) => v === a || v === b))));
   },
-  PatternOccurrences12Over3: (p) => occurrences(p, [[1, 2], [3]]),
-  PatternOccurrences13Over2: (p) => occurrences(p, [[1, 3], [2]]),
-  PatternOccurrences1Over23: (p) => occurrences(p, [[1], [2, 3]]),
-  PatternOccurrences1Over2Over3: (p) => occurrences(p, [[1], [2], [3]]),
-  PatternOccurrences13Over24: (p) =>
+  OccurrencesOf12Over3: (p) => occurrences(p, [[1, 2], [3]]),
+  OccurrencesOf13Over2: (p) => occurrences(p, [[1, 3], [2]]),
+  OccurrencesOf1Over23: (p) => occurrences(p, [[1], [2, 3]]),
+  OccurrencesOf1Over2Over3: (p) => occurrences(p, [[1], [2], [3]]),
+  OccurrencesOf13Over24: (p) =>
     occurrences(p, [
       [1, 3],
       [2, 4],
     ]),
-  PatternOccurrences12Over34: (p) =>
+  OccurrencesOf12Over34: (p) =>
     occurrences(p, [
       [1, 2],
       [3, 4],
     ]),
-  DistinctBlockPairsSingletonThenMaximal: (p) => occurrences(p, [[1], [2]], [1], [1, 2]),
-  DistinctBlockPairsMinimalThenMaximal: (p) => occurrences(p, [[1], [2]], [1], [2]),
-  DistinctBlockPairsMaximalThenSingleton: (p) => occurrences(p, [[1], [2]], [2], [1, 2]),
-  DistinctBlockPairsMaximalThenMinimal: (p) => occurrences(p, [[1], [2]], [2], [1]),
-  DistinctBlockPairsFirstSingleton: (p) => occurrences(p, [[1], [2]], [1], [1]),
-  DistinctBlockPairsSecondMaximal: (p) => occurrences(p, [[1], [2]], [], [2]),
+  SingletonBeforeCloserPairs: (p) => occurrences(p, [[1], [2]], [1], [1, 2]),
+  OpenerBeforeCloserPairs: (p) => occurrences(p, [[1], [2]], [1], [2]),
+  CloserBeforeSingletonPairs: (p) => occurrences(p, [[1], [2]], [2], [1, 2]),
+  CloserBeforeOpenerPairs: (p) => occurrences(p, [[1], [2]], [2], [1]),
+  SingletonBeforeLargerPairs: (p) => occurrences(p, [[1], [2]], [1], [1]),
+  SmallerBeforeCloserPairs: (p) => occurrences(p, [[1], [2]], [], [2]),
 };

@@ -590,7 +590,7 @@ export const SET_PARTITION_STATISTICS: readonly Definition[] = [
     "IntertwiningNumber",
     "Pairs a < b in different blocks with no element of either block between them.",
     intertwiningNumber,
-    "The block intertwiners of Huang and Rhoades, counted over all pairs of blocks.",
+    "The block intertwiners of Ehrenborg and Readdy (Juggling and applications to q-analogues), counted over all pairs of blocks.",
   ),
   // Steingrímsson's statistics, by which end of block k (opener = least, closer = greatest) is
   // compared with the elements of the blocks before or after it.
@@ -647,13 +647,13 @@ export const SET_PARTITION_STATISTICS: readonly Definition[] = [
     majorIndexOf(flattened),
   ),
   stat(
-    "FlattenedMajorIndexVariant",
+    "HuangRhoadesMajorIndex",
     "The major index of the flattened permutation, plus for each block ending before the next begins the elements so far beyond each block's first.",
     flattenedMajorIndexVariant,
-    "Ehrenborg and Readdy's variant.",
+    "Huang and Rhoades' variant (Ordered set partitions and the 0-Hecke algebra, eq. 2.7).",
   ),
   stat(
-    "FirstAtomicBlocks",
+    "FirstAtomicComponentBlockCount",
     "The least l for which the first l blocks hold exactly 1 .. m.",
     nonEmpty(firstAtomicBlocks),
   ),
@@ -664,7 +664,7 @@ export const SET_PARTITION_STATISTICS: readonly Definition[] = [
     "An element's depth is the arcs strictly over it; an arc's, the arcs strictly over it.",
   ),
   stat(
-    "AscentTopsAfterSmaller",
+    "FlattenedAscentTopsAfterSmaller",
     "Ascent tops of the flattened word with every smaller element earlier.",
     ascentTopsAfterSmaller,
     "The binary logarithm of the number of set partitions with the same flattened word.",
@@ -675,76 +675,80 @@ export const SET_PARTITION_STATISTICS: readonly Definition[] = [
     interlacingNumber,
   ),
   stat(
-    "FirstBlockSecondElementOrSmallestCloser",
+    "FirstBlockSecondOrSmallestNonsingletonMaximum",
     "The smaller of the second element of the block holding 1 and the smallest closer; 1 when {1} is a block.",
     nonEmpty(firstBlockSecondElementOrSmallestCloser),
     "A closer is the greatest element of a non-singleton block.",
   ),
   // The Mahonian word numbers each element's block, the blocks ordered by greatest element.
-  stat("MahonianExcedances", "Excedances of the Mahonian word.", nonEmpty(mahonianExcedances)),
-  stat("MahonianDescents", "Descents of the Mahonian word.", mahonianDescents),
-  stat("MahonianInversions", "Inversions of the Mahonian word.", mahonianInversions),
-  stat("MahonianMajorIndex", "The major index of the Mahonian word.", mahonianMajorIndex),
-  stat("ZIndex", "The major indices of the Mahonian word restricted to each pair of letters, summed.", zIndex),
+  stat("MahonianWordExcedances", "Excedances of the Mahonian word.", nonEmpty(mahonianExcedances)),
+  stat("MahonianWordDescents", "Descents of the Mahonian word.", mahonianDescents),
+  stat("MahonianWordInversions", "Inversions of the Mahonian word.", mahonianInversions),
+  stat("MahonianWordMajorIndex", "The major index of the Mahonian word.", mahonianMajorIndex),
+  stat(
+    "MahonianWordZIndex",
+    "The major indices of the Mahonian word restricted to each pair of letters, summed.",
+    zIndex,
+  ),
   // Klazar occurrences of a pattern: "/" separates its blocks, so 13/2 is {{1,3},{2}}.
   stat(
-    "PatternOccurrences12Over3",
+    "OccurrencesOf12Over3",
     "Occurrences of the pattern 12/3: a < b in one block and c > b in another.",
     triplesWhere((a, b, c) => and(sameBlock(a, b), differentBlocks(a, c))),
   ),
   stat(
-    "PatternOccurrences13Over2",
+    "OccurrencesOf13Over2",
     "Occurrences of the pattern 13/2: a < c in one block with b between them in another.",
     triplesWhere((a, b, c) => and(sameBlock(a, c), differentBlocks(a, b))),
   ),
   stat(
-    "PatternOccurrences1Over23",
+    "OccurrencesOf1Over23",
     "Occurrences of the pattern 1/23: b < c in one block and a < b in another.",
     triplesWhere((a, b, c) => and(sameBlock(b, c), differentBlocks(a, b))),
   ),
   stat(
-    "PatternOccurrences1Over2Over3",
+    "OccurrencesOf1Over2Over3",
     "Occurrences of the pattern 1/2/3: a < b < c in three different blocks.",
     triplesWhere((a, b, c) => and(differentBlocks(a, b), and(differentBlocks(a, c), differentBlocks(b, c)))),
   ),
   stat(
-    "PatternOccurrences13Over24",
+    "OccurrencesOf13Over24",
     "Occurrences of the pattern 13/24: a < b < c < d with a, c in one block and b, d in another.",
     quadruplesWhere((a, b, c, d) => and(sameBlock(a, c), and(sameBlock(b, d), differentBlocks(a, b)))),
   ),
   stat(
-    "PatternOccurrences12Over34",
+    "OccurrencesOf12Over34",
     "Occurrences of the pattern 12/34: a < b < c < d with a, b in one block and c, d in another.",
     quadruplesWhere((a, b, c, d) => and(sameBlock(a, b), and(sameBlock(c, d), differentBlocks(a, c)))),
   ),
   // Pairs a < b in different blocks (DistinctBlockPairs), restricted at either end.
   stat(
-    "DistinctBlockPairsSingletonThenMaximal",
+    "SingletonBeforeCloserPairs",
     "Pairs a < b in different blocks with a a singleton block and b the greatest element of its block.",
     pairsWhere((a, b) => and(differentBlocks(a, b), and(isSingleton(a), isCloser(b)))),
   ),
   stat(
-    "DistinctBlockPairsMinimalThenMaximal",
+    "OpenerBeforeCloserPairs",
     "Pairs a < b in different blocks with a the least and b the greatest element of its block.",
     pairsWhere((a, b) => and(differentBlocks(a, b), and(isOpener(a), isCloser(b)))),
   ),
   stat(
-    "DistinctBlockPairsMaximalThenSingleton",
+    "CloserBeforeSingletonPairs",
     "Pairs a < b in different blocks with a the greatest element of its block and b a singleton block.",
     pairsWhere((a, b) => and(differentBlocks(a, b), and(isCloser(a), isSingleton(b)))),
   ),
   stat(
-    "DistinctBlockPairsMaximalThenMinimal",
+    "CloserBeforeOpenerPairs",
     "Pairs a < b in different blocks with a the greatest and b the least element of its block.",
     pairsWhere((a, b) => and(differentBlocks(a, b), and(isCloser(a), isOpener(b)))),
   ),
   stat(
-    "DistinctBlockPairsFirstSingleton",
+    "SingletonBeforeLargerPairs",
     "Pairs a < b in different blocks with a a singleton block.",
     pairsWhere((a, b) => and(differentBlocks(a, b), isSingleton(a))),
   ),
   stat(
-    "DistinctBlockPairsSecondMaximal",
+    "SmallerBeforeCloserPairs",
     "Pairs a < b in different blocks with b the greatest element of its block.",
     pairsWhere((a, b) => and(differentBlocks(a, b), isCloser(b))),
   ),
