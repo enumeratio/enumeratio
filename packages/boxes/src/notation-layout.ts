@@ -6,7 +6,7 @@
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import {
   type Box,
-  dynamic,
+  binding,
   grid,
   type Options,
   type OptionValue,
@@ -194,7 +194,7 @@ const PaneSelector: NotationRule = (args, write) => {
   if (bound === undefined) return undefined;
   return paneSelector(
     (entries as [string, Json][]).map(([key, pane]) => [key, cell(write, pane)] as const),
-    dynamic(bound),
+    binding(bound),
   );
 };
 

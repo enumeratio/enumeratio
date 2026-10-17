@@ -177,8 +177,10 @@ export function renderBox(box: Box, holes: Holes = {}): Rendering {
       return element("TooltipBox", undefined, { "data-tip": toText(box[2]), tabindex: "0" }, children([box[1]]));
     case "PaneSelectorBox": {
       const selector = box[2];
-      const watched: Record<string, string> =
-        isNode(selector) && selector[0] === "DynamicBox" ? { selector: selectorText(epsil(selector[1])) } : {};
+      // The whole binding expression is watched (`Dynamic(MemberQ(v, e))` too), not a toggle's variable.
+      const watched: Record<string, string> = {
+        selector: selectorText(epsil((selector as readonly unknown[])[1] as never)),
+      };
       return element(
         "PaneSelectorBox",
         undefined,

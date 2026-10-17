@@ -47,7 +47,7 @@ test("a Tooltip is a TooltipBox of the body and the tip", () => {
   expect(toText(boxes(["Tooltip", "x", str("the unknown")]))).toBe("x");
 });
 
-test("a PaneSelector is its panes keyed by value, over a DynamicBox of the selector", () => {
+test("a PaneSelector is its key -> pane rules, over the Dynamic binding of the selector", () => {
   const selected = boxes([
     "PaneSelector",
     list(["Rule", "True", str("big")], ["Rule", "False", str("small")]),
@@ -59,7 +59,7 @@ test("a PaneSelector is its panes keyed by value, over a DynamicBox of the selec
       ["True", ["TextBox", "big"]],
       ["False", ["TextBox", "small"]],
     ],
-    ["DynamicBox", [">", "n", 5]],
+    ["Dynamic", [">", "n", 5]],
   ]);
   // Static writers have no value to pick by: the first pane.
   expect(toText(selected)).toBe("big");
@@ -74,11 +74,19 @@ test("TooltipBox and PaneSelectorBox are boxes and round-trip through MathJSON",
         ["1", "one"],
         ["2", ["TextBox", "two"]],
       ],
-      ["DynamicBox", "n"],
+      ["Dynamic", "n"],
     ],
   ] as Box[]) {
     expect(isBox(box)).toBe(true);
     expect(fromMathJson(toMathJson(box))).toEqual(box);
   }
-  expect(isBox(["PaneSelectorBox", [["1"]], ["DynamicBox", "n"]])).toBe(false);
+  expect(isBox(["PaneSelectorBox", [["1"]], ["Dynamic", "n"]])).toBe(false);
+  // The selector is a one-operand Dynamic binding; a DynamicBox is no longer read.
+  expect(isBox(["PaneSelectorBox", [["1", "one"]], ["DynamicBox", "n"]])).toBe(false);
+  expect(isBox(["PaneSelectorBox", [["1", "one"]], ["Dynamic", "n", "m"]])).toBe(false);
+  const read = (rules: unknown, selector: unknown) => fromMathJson(["PaneSelectorBox", rules, selector] as never);
+  const rule = ["List", ["KeyValuePair", { str: "1" }, { str: "one" }]];
+  expect(() => read(rule, ["DynamicBox", "n"])).toThrow();
+  expect(() => read(["List", ["List", { str: "1" }]], ["Dynamic", "n"])).toThrow();
+  expect(() => read(["List", "bad"], ["Dynamic", "n"])).toThrow();
 });
