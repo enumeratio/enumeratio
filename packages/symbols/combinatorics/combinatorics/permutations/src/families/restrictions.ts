@@ -696,17 +696,21 @@ export const permutationsAvoiding3 = ["123", "132", "213", "231", "312", "321"].
 // s ≥ 2 values is ⊕ or ⊖ in half its sep(s) arrangements each. Any pattern inside a run is one
 // the prefix already avoids, since every occurrence in it ends at its last entry.
 const sep = (size: MathJSON): MathJSON => iff(equal(size, 0), 1, at("schroder", size));
-/** S(0..n − 1) by S(k) = ((6k − 3) S(k − 1) − (k − 2) S(k − 2)) / (k + 1), from S(0) = 1, S(1) = 2. */
+/** S(0..n − 1) by S(k) = S(k − 1) + Σ S(i) S(k − 1 − i), from S(0) = 1. Every term is bounded by S(k): the
+ *  closed form's product, (6k − 3) S(k − 1), is k + 1 times the result and passes 2^53 a few n early. */
 const schroderTable = fold(
   [
     "Append",
     "sq",
-    quotient(sub(mul(sub(mul(6, "sk"), 3), at("sq", "sk")), mul(sub("sk", 2), at("sq", sub("sk", 1)))), add("sk", 1)),
+    add(
+      at("sq", "sk"),
+      sum((i) => mul(at("sq", add(i, 1)), at("sq", sub("sk", i))), "si", 0, sub("sk", 1)),
+    ),
   ],
   "sq",
   "sk",
-  ["List", 1, 2],
-  upTo(2, sub(n, 1)),
+  ["List", 1],
+  upTo(1, sub(n, 1)),
 );
 /** A cell's column: start j (0 ≤ j < filled), window bottom lo, and ⊕ (1) or ⊖ (2). */
 const sepColumn = (j: MathJSON, lo: MathJSON, kind: MathJSON): MathJSON =>
