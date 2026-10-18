@@ -35,4 +35,4 @@ carrier: Permutation
 - A lazy indexed collection; the count is $F(2n-1)$ — $1, 1, 2, 5, 13, 34, …$, A001519. See [[Fibonacci]].
 - Tenner's characterisation: $\pi$ is Boolean when its principal Bruhat ideal $[e, \pi]$ is a Boolean lattice, equivalently when $\pi$ has a reduced word with no repeated generator, equivalently when $\pi$ avoids $321$ and $3412$.
 - Contains [[AdjacentTranspositionInvolutions]], the Boolean permutations whose generators pairwise commute.
-- Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding both patterns, so it is practical only for small $n$; the count is exact for every $n$.
+- Each element is the one-line word; $At$ unranks by completion counts in lexicographic order, so it reaches members of large $n$ without listing $n!$ permutations.
