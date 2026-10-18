@@ -11,9 +11,11 @@ import {
   type Engine,
   type Expr,
 } from "@enumeratio/engine";
+import { registerNotation } from "@enumeratio/boxes";
 import { declareCarriers } from "@enumeratio/structures";
 import { RESIDUES_CARRIERS } from "./carrier-data.ts";
 import { declareIntegerMod } from "./integer-mod.ts";
+import { RESIDUES_NOTATION } from "./notation.ts";
 import { declareResidueClass, residueClassOf } from "./residue-class-declare.ts";
 import { declareModExactConstant } from "./mod-exact-constant.ts";
 import { declareNumerator } from "./numerator-declare.ts";
@@ -68,6 +70,7 @@ export function declareResidues(ce: Engine): void {
   // This package's own carrier — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types,
   // constructor, plural type-space name and `Element` membership, all in one call.
   declareCarriers(ce, RESIDUES_CARRIERS);
+  registerNotation(ce, RESIDUES_NOTATION);
   declareTables(ce);
 
   const list = (xs: readonly bigint[]): Expr =>

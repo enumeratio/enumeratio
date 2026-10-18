@@ -27,3 +27,6 @@ coprime-moduli-have-no-common-ring	(Mod(3, 4) + Mod(5, 7))	TypeError: unsupporte
 2-mod-4-over-1-mod-6-has-no-inverse	(Mod(1, 6) / Mod(2, 4))	ZeroDivisionError: inverse of Mod(0, 2) does not exist	error
 integermod-and-residueclass-do-not-mix	(Mod(2, 4) + Mod(1, 6))	1	disagree
 residueclass-declines-the-same-mixed-sum	(Mod(2, 4) + Mod(1, 6))	1	disagree
+a-class-mod-1-is-zero	Mod(3, 1)	0	
+a-class-mod-1-meets-any-ring	(Mod(3, 1) + Mod(5, 7))	0	
+a-non-unit-divisor-says-why	(1 / Mod(2, 4))	ZeroDivisionError: inverse of Mod(2, 4) does not exist	error
