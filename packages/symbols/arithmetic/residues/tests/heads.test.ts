@@ -88,3 +88,17 @@ test("classes of two moduli stay as written; ChineseRemainder is the way across"
   ]);
   expect(ce.box(["MultiplicativeOrder", ["ResidueClass", 2, 7]]).evaluate().json).toBe(3);
 });
+
+test("a class mod 1 meets any other class in the zero ring, as in Sage", () => {
+  const run = (expr: unknown): unknown => ce.box(expr as never).evaluate().json;
+  expect(run(["Add", ["IntegerMod", 3, 1], ["IntegerMod", 5, 7]])).toEqual(["IntegerMod", 0, 1]);
+  expect(run(["Multiply", ["IntegerMod", 2, 4], ["IntegerMod", 3, 1]])).toEqual(["IntegerMod", 0, 1]);
+  expect(run(["Divide", ["IntegerMod", 3, 1], ["IntegerMod", 2, 4]])).toEqual(["IntegerMod", 0, 1]);
+  expect(run(["Equal", ["IntegerMod", 3, 1], ["IntegerMod", 5, 7]])).toBe("True");
+  // Without a mod 1 class, coprime moduli still decline.
+  expect(run(["Add", ["IntegerMod", 3, 4], ["IntegerMod", 5, 7]])).toEqual([
+    "Add",
+    ["IntegerMod", 3, 4],
+    ["IntegerMod", 5, 7],
+  ]);
+});

@@ -8,7 +8,8 @@ import { SUMMARIES } from "@enumeratio/manifest/package/residues";
 // different moduli combine in ℤ/gcd(m, n), where both reduce (Sage coerces to the common
 // quotient ring). Arithmetic is ResidueClass's, run on the operands reduced to that ring; the
 // answer is read back as an IntegerMod. Moduli with gcd 1 have no common ring but the trivial
-// one, which Sage rejects, so the call stays as written.
+// one, which Sage rejects, so the call stays as written -- unless a class is mod 1 itself, which
+// every ring reduces to: the sum is 0 mod 1.
 
 const isIntegerMod = (expr: Expr | undefined): boolean => expr?.operator === INTEGER_MOD;
 
@@ -47,7 +48,8 @@ export function declareIntegerMod(ce: Engine): void {
     }
     if (moduli.length === 0) return undefined;
     const g = moduli.reduce(gcd);
-    return g >= 2n || moduli.every((m) => m === moduli[0]) ? g : undefined;
+    // ℤ/1 is the zero ring: every class reduces to it, so it absorbs the rest, as in Sage.
+    return g >= 2n || moduli.includes(1n) || moduli.every((m) => m === moduli[0]) ? g : undefined;
   }
 
   /** `head` of the operands in the common ring, read back as an IntegerMod. */

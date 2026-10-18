@@ -128,6 +128,7 @@ const CALLS: unknown[] = [
   ["KauffmanBracket", ["Braid", 2, ["List", 1]]],
   ["SeifertGenus", ["TorusBraid", 3, 4]],
   ["BraidWrithe", ["Braid", 3, ["List", 1, -2, 1]]],
+  ["IntegerMod", 3, 7],
 ];
 
 test("every head with a notation has a call here", () => {
