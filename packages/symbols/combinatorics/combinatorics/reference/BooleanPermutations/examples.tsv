@@ -9,3 +9,5 @@ count-booleanpermutations-3-row		test	[Count, [BooleanPermutations, 3]]	5
 count-booleanpermutations-4-row		test	[Count, [BooleanPermutations, 4]]	13	
 count-booleanpermutations-5-row		test	[Count, [BooleanPermutations, 5]]	34	
 count-booleanpermutations-6-row		test	[Count, [BooleanPermutations, 6]]	89	
+count-booleanpermutations-30-large	Basic		[Count, [BooleanPermutations, 30]]	956722026041	$F(59)$: counted without listing the $30!$ permutations
+at-booleanpermutations-30	Basic		[At, [BooleanPermutations, 30], 1000000]	[Permutation, [List, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 19, 15, 17, 20, 21, 22, 23, 26, 18, 24, 27, 28, 29, 25, 30]]	The millionth Boolean permutation of 30, reached by completion counts
