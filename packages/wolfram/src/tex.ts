@@ -6,7 +6,7 @@
 //   \log(x)                    \ln(x)            (a bare \log is Wolfram's natural log)
 //   \sin^{-1}(x), \text{sech}^{-1}(x), …   \arcsin(x), \mathrm{arsech}(x), …
 //   \sin^2(x)                  \sin(x)^2
-//   \exp(a)                    e^{a}              (a number or a symbol)
+//   \exp(a)                    e^{a}
 //   \text{Plus}[x], N[x]       \operatorname{Add}(x), \operatorname{N}(x)   (compute-engine names)
 //   \{a, b\}                   \lbrack a, b\rbrack           (a list)
 //   \text{Union}[\{a, b\}]     \lbrace a, b\rbrace           (a set, as toWolfram writes one)
@@ -201,10 +201,8 @@ export function fromWolframTeX(tex: string, options: TeXOptions = {}): string {
   out = withGroup(out, `(${POWERED})\\s*\\^(${SCRIPT})`, (m, o, x, c) =>
     o.includes("[") ? undefined : `${m[1]}${o}${x}${c}^{${unbrace(m[2] as string)}}`,
   );
-  // notatio writes `e^{x}` for a number or a symbol, `\exp(…)` for anything longer.
-  out = withGroup(out, /\\exp(?![a-zA-Z])\s*/, (_, o, x) =>
-    o.endsWith("(") && /^\s*(?:-?\d+(?:\.\d+)?|[a-zA-Z]|\\[a-zA-Z]+)\s*$/.test(x) ? `e^{${x.trim()}}` : undefined,
-  );
+  // notatio writes every `Exp` as `e^{…}`; Wolfram writes a held one as `\exp(…)`.
+  out = withGroup(out, /\\exp(?![a-zA-Z])\s*/, (_, o, x) => (o.endsWith("(") ? `e^{${x.trim()}}` : undefined));
   // A set, as `toWolfram` writes one, before its list is taken for a list.
   out = withGroup(out, /\\text\{Union\}\s*/, (_, o, x) => {
     const inner = bracketed(x.trim(), 0);
