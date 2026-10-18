@@ -42,7 +42,7 @@ signatures:
   - call: MajorIndex(p)
     description: the major index of a one-line permutation $p$
     library: enumeratio-combinatorics
-    type: (dyck_path | list | permutation) -> integer | number
+    type: (composition | dyck_path | list | permutation) -> integer | number
 seeAlso:
   - Inversions
   - Descents
@@ -56,7 +56,12 @@ catalog:
     identity: St000330
     url: https://www.findstat.org/St000330
     on: StandardTableau
+  - system: findstat
+    identity: St000769
+    url: https://www.findstat.org/St000769
+    on: Composition
 statOn:
+  - Composition
   - DyckPath
   - Permutation
   - StandardTableau

@@ -2,7 +2,7 @@
 // driver in `../../src/statistics/generate-entries.ts`). `scripts/collect-entries.ts` writes them
 // into `../../reference/`; `tests/statistics-generated.test.ts` checks they're current.
 //
-// Nine heads are ALSO defined by another area (the partitions', permutations' or set
+// Ten heads are ALSO defined by another area (the partitions', permutations' or set
 // partitions'), which owns their records: `omitHeads` keeps this generator out of those folders.
 
 import { fileURLToPath } from "node:url";
@@ -29,6 +29,7 @@ export const generated: { standard: GeneratedEntries; curated: GeneratedEntries 
     "DistinctMultiplicities",
     "DistinctParts",
     "Inversions",
+    "MajorIndex",
     "LargestMultiplicity",
     "LargestPart",
     "LongestDecreasingSubsequence",

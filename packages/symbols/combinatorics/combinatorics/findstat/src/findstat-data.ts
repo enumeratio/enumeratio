@@ -1898,13 +1898,13 @@ export const findstat: readonly FindStatMatch[] = [
     values: 485,
   },
   {
-    head: "WordMajorIndex",
+    head: "MajorIndex",
     on: "Composition",
     findstat: ["St000769"],
     values: 972,
   },
   {
-    head: "WordWeakMajorIndex",
+    head: "WeakMajorIndex",
     on: "Composition",
     findstat: ["St001931"],
     values: 1023,
@@ -1922,7 +1922,7 @@ export const findstat: readonly FindStatMatch[] = [
     values: 127,
   },
   {
-    head: "DescentVariation",
+    head: "AscentVariation",
     on: "Composition",
     findstat: ["St000091"],
     values: 127,
@@ -1994,7 +1994,7 @@ export const findstat: readonly FindStatMatch[] = [
     values: 511,
   },
   {
-    head: "BargraphSemiperimeter",
+    head: "BargraphHalfPerimeter",
     on: "Composition",
     findstat: ["St000806"],
     values: 510,

@@ -138,12 +138,11 @@ export const COMPOSITION_READINGS: Record<string, Reading> = {
   Inversions: (c) => c.flatMap((a, i) => c.slice(i + 1).filter((b) => a > b)).length,
   // The descents of the composition are its running totals short of the whole.
   CompositionMajorIndex: (c) => sum(c.map((_, i) => sum(c.slice(0, i + 1))).slice(0, -1)),
-  WordMajorIndex: (c) => sum(pairs(c).flatMap(([a, b], i) => (a > b ? [i + 1] : []))),
-  WordWeakMajorIndex: (c) => sum(pairs(c).flatMap(([a, b], i) => (a >= b ? [i + 1] : []))),
+  MajorIndex: (c) => sum(pairs(c).flatMap(([a, b], i) => (a > b ? [i + 1] : []))),
+  WeakMajorIndex: (c) => sum(pairs(c).flatMap(([a, b], i) => (a >= b ? [i + 1] : []))),
   AbsoluteVariation: (c) => sum(pairs(c).map(([a, b]) => Math.abs(b - a))),
-  // The differences telescope.
-  Variation: (c) => (c.length === 0 ? 0 : c.at(-1)! - c[0]!),
-  DescentVariation: (c) => sum(pairs(c).map(([a, b]) => Math.max(b - a, 0))),
+  Variation: (c) => sum(pairs(c).map(([a, b]) => b - a)),
+  AscentVariation: (c) => sum(pairs(c).map(([a, b]) => Math.max(b - a, 0))),
   StrongRecordCount: (c) => records(c, true).length,
   WeakRecordCount: (c) => records(c, false).length,
   StrongRecordPositionSum: (c) => sum(records(c, true).map((i) => i + 1)),
@@ -156,7 +155,7 @@ export const COMPOSITION_READINGS: Record<string, Reading> = {
   LongestConstantRun: (c) => Math.max(0, ...runs(c)),
   ShortestConstantRun: (c) => (c.length === 0 ? 0 : Math.min(...runs(c))),
   BargraphPeakCount: (c) => bargraph(c).match(/UH*D/g)?.length ?? 0,
-  BargraphSemiperimeter: (c) =>
+  BargraphHalfPerimeter: (c) =>
     bargraph(c)
       .split("")
       .filter((step) => step !== "D").length,

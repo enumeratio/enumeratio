@@ -2,7 +2,7 @@
 name: Variation
 domain: Composition statistics
 signature: Variation(composition)
-summary: "The sum of c(i+1) - c(i): the last part less the first."
+summary: "The signed sum of c(i+1) - c(i): the last part less the first."
 catalog:
   - system: findstat
     identity: St000090

@@ -270,19 +270,23 @@ export const COMPOSITION_STATISTICS: readonly Definition[] = [
     "CompositionMajorIndex",
     "The sum of the descents of the composition: its partial sums, the total left out.",
     hasPair(sumOver(adjacent, sumOver(["Range", 1, "i"], at("j"), "j"))),
-    "Reads the composition as a descent set, as FindStat's St000008 does. `WordMajorIndex` reads it as a word.",
+    "Reads the composition as a descent set, as FindStat's St000008 does. `MajorIndex` reads it as a word.",
   ),
   stat(
-    "WordMajorIndex",
+    "MajorIndex",
     "The sum of the positions i with c(i) > c(i+1).",
     hasPair(["Sum", where(adjacent, fallsAfter)]),
     "MacMahon's major index of the composition regarded as a word.",
   ),
-  stat(
-    "WordWeakMajorIndex",
-    "The sum of the positions i with c(i) >= c(i+1).",
-    hasPair(["Sum", where(adjacent, atLeastValue(here, next))]),
-  ),
+  {
+    ...stat(
+      "WeakMajorIndex",
+      "The sum of the positions i with c(i) >= c(i+1).",
+      hasPair(["Sum", where(adjacent, atLeastValue(here, next))]),
+      "Reads the composition as a word, so it stands on a bare list too.",
+    ),
+    alsoOnList: true,
+  },
   stat(
     "AbsoluteVariation",
     "The sum of |c(i+1) - c(i)|.",
@@ -291,15 +295,15 @@ export const COMPOSITION_STATISTICS: readonly Definition[] = [
   ),
   stat(
     "Variation",
-    "The sum of c(i+1) - c(i): the last part less the first.",
+    "The signed sum of c(i+1) - c(i): the last part less the first.",
     hasPair(sumOver(adjacent, subtract(next, here))),
     "Archibald, Knopfmacher and Mansour, Variation statistics on compositions.",
   ),
   stat(
-    "DescentVariation",
+    "AscentVariation",
     "The sum of c(i+1) - c(i) over the positions where it is positive.",
     hasPair(sumOver(adjacent, rise)),
-    "Archibald, Knopfmacher and Mansour, Variation statistics on compositions. FindStat sums the rises, not the falls, under this name.",
+    "Archibald, Knopfmacher and Mansour, Variation statistics on compositions. FindStat titles it the descent variation; it sums the rises, which is equidistributed with the sum of the falls under reversal.",
   ),
   stat(
     "StrongRecordCount",
@@ -358,10 +362,10 @@ export const COMPOSITION_STATISTICS: readonly Definition[] = [
     "Deutsch and Elizalde, A bijection between bargraphs and Dyck paths.",
   ),
   stat(
-    "BargraphSemiperimeter",
+    "BargraphHalfPerimeter",
     "Up steps plus horizontal steps of the bargraph.",
     nonEmpty(add(add(k, at(1)), hasPair(sumOver(adjacent, rise)))),
-    "Deutsch and Elizalde, A bijection between bargraphs and Dyck paths.",
+    "Deutsch and Elizalde, A bijection between bargraphs and Dyck paths, and FindStat call it the semiperimeter.",
   ),
   stat(
     "BargraphUpStepCount",
@@ -408,7 +412,7 @@ export const COMPOSITION_STATISTICS: readonly Definition[] = [
     "StandardRibbonTableauCount",
     "Standard fillings of the ribbon whose rows have these lengths: the permutations of 1 .. n with these partial sums as their descents.",
     ribbonTableaux,
-    "The coarsening formula is in Stanley, Enumerative Combinatorics, volume 1 (section 14.4, as FindStat cites it).",
+    "Stanley, Enumerative Combinatorics, volume 1, section 1.4: Proposition 1.4.1 counts permutations whose descents lie in a set, and inclusion-exclusion over it gives this count. FindStat cites the formula as section 14.4.",
   ),
   stat("RibbonCornerCount", "Corners of the ribbon: its inner and outer corners together.", ribbonCorners),
 ];

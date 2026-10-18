@@ -1,5 +1,0 @@
-id	section	role	expr	expected	known	source	caption
-the-composition-2-1-3-1-1			[WordWeakMajorIndex, [Composition, [List, 2, 1, 3, 1, 1]]]	8			the composition $[2,1,3,1,1]$
-findstat-st001931-1	Properties		[CombinatorialStat, [Composition, [List, 1]], "'WordWeakMajorIndex'"]	0	0	FindStat St001931	FindStat's value for [1]
-findstat-st001931-2	Properties		[CombinatorialStat, [Composition, [List, 2]], "'WordWeakMajorIndex'"]	0	0	FindStat St001931	FindStat's value for [2]
-findstat-st001931-3	Properties		[CombinatorialStat, [Composition, [List, 3]], "'WordWeakMajorIndex'"]	0	0	FindStat St001931	FindStat's value for [3]
