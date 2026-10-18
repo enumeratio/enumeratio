@@ -103,5 +103,6 @@
   "[\"JonesPolynomial\",[\"Braid\",2,[\"List\",1,1,1]]]": "V_{{σ_1}^3}(t)",
   "[\"KauffmanBracket\",[\"Braid\",2,[\"List\",1]]]": "\\langle σ_1\\rangle",
   "[\"SeifertGenus\",[\"TorusBraid\",3,4]]": "g(T_{3,4})",
-  "[\"BraidWrithe\",[\"Braid\",3,[\"List\",1,-2,1]]]": "w(σ_1{σ_2}^{-1}σ_1)"
+  "[\"BraidWrithe\",[\"Braid\",3,[\"List\",1,-2,1]]]": "w(σ_1{σ_2}^{-1}σ_1)",
+  "[\"IntegerMod\",3,7]": "(3\\bmod7)"
 }
