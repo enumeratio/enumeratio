@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-composition-2-1-3-1-1			[RibbonCornerCount, [Composition, [List, 2, 1, 3, 1, 1]]]	5			the composition $[2,1,3,1,1]$
+findstat-st001486-1	Properties		[CombinatorialStat, [Composition, [List, 1]], "'RibbonCornerCount'"]	1	1	FindStat St001486	FindStat's value for [1]
+findstat-st001486-2	Properties		[CombinatorialStat, [Composition, [List, 2]], "'RibbonCornerCount'"]	2	2	FindStat St001486	FindStat's value for [2]
+findstat-st001486-3	Properties		[CombinatorialStat, [Composition, [List, 3]], "'RibbonCornerCount'"]	2	2	FindStat St001486	FindStat's value for [3]

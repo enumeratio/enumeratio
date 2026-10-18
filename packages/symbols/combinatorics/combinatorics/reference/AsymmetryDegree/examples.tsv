@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-composition-2-1-3-1-1			[AsymmetryDegree, [Composition, [List, 2, 1, 3, 1, 1]]]	1			the composition $[2,1,3,1,1]$
+findstat-st001673-1	Properties		[CombinatorialStat, [Composition, [List, 1]], "'AsymmetryDegree'"]	0	0	FindStat St001673	FindStat's value for [1]
+findstat-st001673-2	Properties		[CombinatorialStat, [Composition, [List, 2]], "'AsymmetryDegree'"]	0	0	FindStat St001673	FindStat's value for [2]
+findstat-st001673-3	Properties		[CombinatorialStat, [Composition, [List, 3]], "'AsymmetryDegree'"]	0	0	FindStat St001673	FindStat's value for [3]

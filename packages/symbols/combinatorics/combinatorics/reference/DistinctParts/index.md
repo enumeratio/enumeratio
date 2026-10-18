@@ -13,14 +13,19 @@ catalog:
     identity: St000159
     url: https://www.findstat.org/St000159
     on: IntegerPartition
+  - system: findstat
+    identity: St000903
+    url: https://www.findstat.org/St000903
+    on: Composition
 statOn:
+  - Composition
   - CorePartition
   - IntegerPartition
 signatures:
   - call: DistinctParts(partition)
     description: How many distinct part sizes occur.
     library: enumeratio-combinatorics
-    type: (integer_partition) -> number
+    type: (composition | integer_partition) -> number
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

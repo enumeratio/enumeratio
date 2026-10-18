@@ -35,7 +35,12 @@ test("every map combinatorics declares is catalogued", () => {
 });
 
 test("a stat is one name defined on several carriers", () => {
-  expect(STATS.find((s) => s.name === "MajorIndex")?.on).toEqual(["DyckPath", "Permutation", "StandardTableau"]);
+  expect(STATS.find((s) => s.name === "MajorIndex")?.on).toEqual([
+    "Composition",
+    "DyckPath",
+    "Permutation",
+    "StandardTableau",
+  ]);
 });
 
 test("every collection's carrier is itself a carrier we know", () => {

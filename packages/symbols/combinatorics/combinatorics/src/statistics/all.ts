@@ -8,6 +8,8 @@ import { PARTITION_STATISTICS } from "../../partitions/src/statistics.ts";
 import { PARTITIONS_FRONTIER } from "../../partitions/src/statistics.frontier.ts";
 import { SET_PARTITION_STATISTICS } from "../../set-partitions/src/statistics.ts";
 import { SET_PARTITIONS_FRONTIER } from "../../set-partitions/src/statistics.frontier.ts";
+import { COMPOSITION_STATISTICS } from "../../compositions/src/statistics.ts";
+import { COMPOSITIONS_FRONTIER } from "../../compositions/src/statistics.frontier.ts";
 import { TREE_STATISTICS } from "../../trees/src/statistics.ts";
 import { TREES_FRONTIER } from "../../trees/src/statistics.frontier.ts";
 import { PERMUTATION_STATISTICS } from "../../permutations/src/statistics.ts";
@@ -20,6 +22,7 @@ export const ALL_STATISTICS: readonly Definition[] = [
   ...DYCK_STATISTICS,
   ...SET_PARTITION_STATISTICS,
   ...TREE_STATISTICS,
+  ...COMPOSITION_STATISTICS,
 ];
 
 /** Every area's frontier, concatenated — the union `statistics-coverage.test.ts` (catalog)
@@ -30,4 +33,5 @@ export const ALL_FRONTIER: readonly FrontierEntry[] = [
   ...LATTICE_PATHS_FRONTIER,
   ...SET_PARTITIONS_FRONTIER,
   ...TREES_FRONTIER,
+  ...COMPOSITIONS_FRONTIER,
 ];
