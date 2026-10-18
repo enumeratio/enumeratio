@@ -50,7 +50,7 @@ test("a head's name, in compute-engine's spelling and notatio's", () => {
 
 test("one way only: the spellings Wolfram chooses by the shape of the held input", () => {
   expect(fromWolframTeX("\\exp (1)")).toBe("e^{1}");
-  expect(fromWolframTeX("\\exp (x+1)")).toBe("\\exp (x+1)");
+  expect(fromWolframTeX("\\exp (x+1)")).toBe("e^{x+1}");
   expect(fromWolframTeX("(4^{\\frac{1}{2}} \\bmod 7)")).toBe("(\\sqrt{4} \\bmod 7)");
   expect(fromWolframTeX("27^{\\frac{1}{3}}")).toBe("\\sqrt[3]{27}");
   expect(fromWolframTeX("(2^{-1} \\bmod 7)")).toBe("(\\frac{1}{2} \\bmod 7)");

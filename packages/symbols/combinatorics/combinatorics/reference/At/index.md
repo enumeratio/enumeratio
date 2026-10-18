@@ -32,8 +32,7 @@ names:
 
 - Negative indices count from the end: $At(c, -1)$ is the last element. See [[Last]].
 - Chaining reaches into nested collections, like indexing a matrix row then column.
-- An out-of-range index evaluates to $NaN$ rather than raising an error.
-- Index 0 is the collection's own head, matching Wolfram's Part[c, 0] — compute-engine gave $NaN$ before.
+- An out-of-range index evaluates to $NaN$ over a collection of numbers and to $Missing$ over any other, rather than raising an error (compute-engine's rule, which every collection here follows).- Index 0 is the collection's own head, matching Wolfram's Part[c, 0] — compute-engine gave $NaN$ before.
 - Positional element access, 1-based; negative indices count from the end.
 - Two index lists at the row and column positions extract a submatrix; a $Span$ takes a contiguous (optionally stepped or reversed) slice.
 - Works on the operands of any expression, not just a collection's — Wolfram's Part reaches into any head.
