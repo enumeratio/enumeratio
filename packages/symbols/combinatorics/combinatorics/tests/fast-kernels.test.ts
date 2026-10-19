@@ -119,6 +119,12 @@ const INTERPRETED = new Set([
 ]);
 const interpreted = (family: EpsilFamily): boolean => INTERPRETED.has(family.head);
 
+// Epsil takes about half a second an operation near this family's edge (n = 18: 40 seconds there alone), so
+// DEEP_TESTS gives it the standard run's ranks and near misses, at its wider params.
+const THIN_SAMPLE = new Set(["NonCrossingCycleSupportPermutations"]);
+/** Whether DEEP_TESTS takes the wide sample of ranks and near misses at each param. */
+const wide = (family: EpsilFamily): boolean => DEEP && !interpreted(family) && !THIN_SAMPLE.has(family.head);
+
 // Families whose fast path stops at a table limit, a size or two past what Epsil does quickly, not at
 // 2^53: the edge scan would find the limit, and Epsil takes seconds a call there (minutes, past it).
 const NO_EDGE = new Set([
@@ -185,7 +191,7 @@ function random(below: bigint): bigint {
 /** Ranks of a fiber of `total`: all when small, else both ends, the middle and pseudo-random ones.
  *  An interpreted family takes the standard run's ranks in DEEP, and three in the standard run. */
 function ranksOf(total: bigint, family: EpsilFamily): bigint[] {
-  const full = DEEP && !interpreted(family);
+  const full = wide(family);
   if (!DEEP && interpreted(family) && total > 6n) return [...new Set([0n, total / 2n, total - 1n])];
   if (total <= (full ? 120n : 24n)) return Array.from({ length: Number(total) }, (_, i) => BigInt(i));
   const ranks = new Set<bigint>([0n, 1n, total - 2n, total - 1n, total / 2n]);
@@ -428,10 +434,7 @@ for (const family of fastFamilies) {
         members.push(element);
       }
       for (const member of members.filter((_, i) => i % Math.ceil(members.length / 3) === 0)) {
-        for (const near of mutations(member).slice(
-          0,
-          DEEP && !interpreted(family) ? 60 : !DEEP && interpreted(family) ? 2 : 14,
-        )) {
+        for (const near of mutations(member).slice(0, wide(family) ? 60 : !DEEP && interpreted(family) ? 2 : 14)) {
           const expected = epsil.valid(near, p);
           if (!expected) rejected++;
           expect([where, near, fast.valid(near, p)]).toEqual([where, near, expected]);
@@ -660,12 +663,12 @@ const BIGINT_COUNTS: [string, number[]][] = [
   ["Surjections", [23, 5]],
   // The Mahonian count, at the first n past 2^53.
   ["KInversionPermutations", [20, 95]],
-  // Epsil takes seconds at these, and about a minute and a half at the non-crossing supports. The Eulerian
-  // and Motzkin-by-peaks counts are out of Epsil's reach past 2^53 (many minutes at the first params):
-  // tests/exact-triangles.test.ts holds them to a second route instead.
+  // Epsil takes seconds at these. The Eulerian and Motzkin-by-peaks counts are out of Epsil's reach past 2^53
+  // (many minutes at the first params), and so are the non-crossing supports' (over two minutes at n = 19, and the
+  // family declines past doubles, so the shipped answer there is its exact count's): tests/exact-triangles.test.ts
+  // holds those to a second route instead, at n = 19 and beyond.
   ...(DEEP
     ? ([
-        ["NonCrossingCycleSupportPermutations", [19]],
         ["TriangularCompositions", [86]],
         ["PrimeCompositions", [98]],
       ] as [string, number[]][])
