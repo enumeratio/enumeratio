@@ -1,4 +1,4 @@
 id	in	out
-sine-over-cosine	simplify((S(sin(Symbol("x"))) / cos(Symbol("x"))))	True
-hyperbolic-quotient	simplify((S(sinh(Symbol("x"))) / cosh(Symbol("x"))))	True
+sine-over-cosine	simplify((S(sin(Symbol("x"))) / cos(Symbol("x"))))	tan(x)
+hyperbolic-quotient	simplify((S(sinh(Symbol("x"))) / cosh(Symbol("x"))))	tanh(x)
 hyperbolic-identity	simplify(((S(cosh(Symbol("x")))**2) - (S(sinh(Symbol("x")))**2)))	1

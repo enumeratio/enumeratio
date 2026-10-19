@@ -4,7 +4,7 @@
 // the same sampling code. Cells take their color from the palette's gradient (`viridis` unless
 // told otherwise); `renderPlot` draws the box.
 
-import { type Box, type BoxNode, graphics, raster, row, tag } from "@enumeratio/boxes";
+import { type Box, type BoxNode, graphics, raster, tag } from "@enumeratio/boxes";
 import { fieldFrame } from "./contour.ts";
 import { renderPlot } from "./plot-box.ts";
 import { type ColorOptions, gradientOf } from "./plot-color.ts";
@@ -61,7 +61,7 @@ export function densityPlotBox(
   const flat = grid.flat().filter(Number.isFinite);
   const ready = nx >= 1 && ny >= 1 && xs.length >= nx && ys.length >= ny && flat.length > 0;
   const options = fieldFrame(grid, xs, ys, opts, ready);
-  if (!ready) return graphics(row([]), options);
+  if (!ready) return graphics([], options);
 
   const zmin = opts.zRange ? opts.zRange[0] : Math.min(...flat);
   const zmax = opts.zRange ? opts.zRange[1] : Math.max(...flat);
@@ -82,7 +82,7 @@ export function densityPlotBox(
   const [xlo, xhi] = [Math.min(...xs.slice(0, nx)), Math.max(...xs.slice(0, nx))];
   const [ylo, yhi] = [Math.min(...ys.slice(0, ny)), Math.max(...ys.slice(0, ny))];
   return graphics(
-    row([
+    [
       tag(
         raster({
           Colors: cells,
@@ -93,7 +93,7 @@ export function densityPlotBox(
         }),
         "Raster",
       ),
-    ]),
+    ],
     options,
   );
 }

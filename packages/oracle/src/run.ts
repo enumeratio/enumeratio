@@ -778,6 +778,19 @@ def enumeratio_primitive_root_list(n):
     return sorted(int(power_mod(g, k, n)) for k in range(1, phi + 1) if gcd(k, phi) == 1)
 
 ${HELD_ALIKE}
+# Sage's binomial wants m or x - m an integer; otherwise it is the Gamma ratio, as ours is.
+def enumeratio_binomial(x, m):
+    try:
+        return binomial(x, m)
+    except TypeError:
+        # A pole of Gamma(x + 1) over finite Gamma factors: a complex infinity, as ours.
+        try:
+            if ZZ(x + 1) <= 0:
+                return unsigned_infinity
+        except (TypeError, ValueError):
+            pass
+        return gamma(x + 1) / (gamma(m + 1) * gamma(x - m + 1))
+
 # A Gaussian integer a + bi (b != 0) written as a symbolic-ring number has no gcd, divisors or
 # factorization there; ZZ[I] does. Anything that is not an exact Gaussian integer comes back
 # unchanged.
@@ -1600,6 +1613,52 @@ def enumeratio_n(thunk, d):
     d = int(d)
     with workdps(max(d, 15) + 20):
         return enumeratio_round(thunk(), d)
+
+# Inverse regularized Gamma/Beta by bisection on a log scale, so a root far below or above 1 (or a
+# beta root within an epsilon of 1) keeps its relative digits: no start, no derivative, no cap that
+# declines. A beta root is x = exp(-exp(t)) for s <= 1/2, else 1 - y with I_y(b, a) = 1 - s.
+def _enumeratio_root(g):
+    lo, hi = mpf(-1), mpf(1)
+    glo, ghi = g(lo), g(hi)
+    for _ in range(80):
+        if (glo < 0) != (ghi < 0):
+            break
+        lo, hi = lo * 2, hi * 2
+        glo, ghi = g(lo), g(hi)
+    if (glo < 0) == (ghi < 0):
+        raise ValueError("no root bracketed")
+    for _ in range(int(mp.prec) + 200):
+        mid = (lo + hi) / 2
+        gm = g(mid)
+        if (gm < 0) == (glo < 0):
+            lo, glo = mid, gm
+        else:
+            hi = mid
+        if hi - lo < mpf(2) ** (8 - mp.prec) * max(1, abs(lo)):
+            break
+    return (lo + hi) / 2
+
+def enumeratio_inverse_gamma_regularized(a, s):
+    a, s = mpf(a), mpf(s)
+    if s == 0:
+        return inf
+    if s == 1:
+        return mpf(0)
+    if not 0 < s < 1:
+        raise ValueError("s outside [0, 1]")
+    if s <= mpf(1) / 2:
+        return exp(_enumeratio_root(lambda u: log(gammainc(a, exp(u), inf, regularized=True)) - log(s)))
+    return exp(_enumeratio_root(lambda u: log(gammainc(a, 0, exp(u), regularized=True)) - log(1 - s)))
+
+def enumeratio_inverse_beta_regularized(s, a, b):
+    s, a, b = mpf(s), mpf(a), mpf(b)
+    if s == 0 or s == 1:
+        return s
+    if not 0 < s < 1:
+        raise ValueError("s outside [0, 1]")
+    if s <= mpf(1) / 2:
+        return exp(-exp(_enumeratio_root(lambda t: log(betainc(a, b, 0, exp(-exp(t)), regularized=True)) - log(s))))
+    return 1 - exp(-exp(_enumeratio_root(lambda t: log(betainc(b, a, 0, exp(-exp(t)), regularized=True)) - log(1 - s))))
 
 def enumeratio_hyperreg(a, b, z):
     n = len(a)

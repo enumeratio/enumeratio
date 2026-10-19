@@ -3,5 +3,5 @@ besselk-0-1	enumeratio_n(bessel_K(0, 1))	0.421024438240708
 normal-series-besselk-0-x-x-positiveinfinity-4	(SR(bessel_K(0, SR.var("x"))).series(SR.var("x") == oo, 4 + 1)).truncate()	None	inconclusive
 n-besselk-0-4-50	enumeratio_n(bessel_K(0, 4), 50)	0.0111596760858530	
 list-besselk-0-0-besselk-1-0	[bessel_K(0, 0), bessel_K(1, 0)]	[+Infinity, Infinity]	
-d-besselk-n-x-x	diff(bessel_K(SR.var("n"), SR.var("x")), SR.var("x"))	True	
+d-besselk-n-x-x	diff(bessel_K(SR.var("n"), SR.var("x")), SR.var("x"))	-1/2*bessel_K(n + 1, x) - 1/2*bessel_K(n - 1, x)	
 normal-series-besselk-n-x-x-positiveinfinity-2	(SR(bessel_K(SR.var("n"), SR.var("x"))).series(SR.var("x") == oo, 2 + 1)).truncate()	None	inconclusive

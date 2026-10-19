@@ -7,7 +7,7 @@ signatures:
   - call: WeightedAdjacencyMatrix(g)
     description: entry $(i, j)$ is the weight of the edge from vertex $i$ to vertex $j$ (both directions, for an undirected edge) — 1, [[AdjacencyMatrix]]'s own default, when $g$ carries no EdgeWeight at all.
     library: enumeratio-combinatorics
-    type: (value) -> list<list<number>>
+    type: (value) -> list<list<any>>
 seeAlso:
   - AdjacencyMatrix
   - Graph

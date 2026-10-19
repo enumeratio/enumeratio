@@ -5,4 +5,4 @@ normal-series-expintegralei-x-x-positiveinfinity	(SR(exp_integral_ei(SR.var("x")
 n-expintegralei-2-50	enumeratio_n(exp_integral_ei(2), 50)	4.95423435600189	
 expintegralei-list-positiveinfinity	[exp_integral_ei(oo), exp_integral_ei(-oo), exp_integral_ei((oo * (0 + 1*I))), exp_integral_ei((oo * (0 + -1*I)))]	[Ei(+Infinity), Ei(-Infinity), Ei((I)*Infinity), Ei((-I)*Infinity)]	disagree
 expintegralei-complexinfinity	exp_integral_ei(unsigned_infinity)	Ei(Infinity)	disagree
-d-expintegralei-x-x	diff(exp_integral_ei(SR.var("x")), SR.var("x"))	True	
+d-expintegralei-x-x	diff(exp_integral_ei(SR.var("x")), SR.var("x"))	e^x/x	

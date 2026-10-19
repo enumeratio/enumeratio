@@ -1881,7 +1881,7 @@
           },
           "sage": {
             "sources": [
-              "[enumeratio_mod(binomial((2 * 9955), 9955), 1000000007), enumeratio_mod(binomial((2 * 9935), 9935), 1000000007), enumeratio_mod(binomial((2 * 10000), 10000), 1000000007), enumeratio_mod(binomial((2 * 9991), 9991), 1000000007)]"
+              "[enumeratio_mod(enumeratio_binomial((2 * 9955), 9955), 1000000007), enumeratio_mod(enumeratio_binomial((2 * 9935), 9935), 1000000007), enumeratio_mod(enumeratio_binomial((2 * 10000), 10000), 1000000007), enumeratio_mod(enumeratio_binomial((2 * 9991), 9991), 1000000007)]"
             ]
           },
           "oscar": {
@@ -1948,7 +1948,7 @@
           },
           "sage": {
             "sources": [
-              "[enumeratio_mod(binomial(99355, 29551), 1000000007), enumeratio_mod(binomial(99903, 29996), 1000000007), enumeratio_mod(binomial(99241, 29693), 1000000007), enumeratio_mod(binomial(99929, 29206), 1000000007)]"
+              "[enumeratio_mod(enumeratio_binomial(99355, 29551), 1000000007), enumeratio_mod(enumeratio_binomial(99903, 29996), 1000000007), enumeratio_mod(enumeratio_binomial(99241, 29693), 1000000007), enumeratio_mod(enumeratio_binomial(99929, 29206), 1000000007)]"
             ]
           },
           "oscar": {

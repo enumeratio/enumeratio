@@ -20,28 +20,6 @@ import {
   surjectionsExact,
 } from "../../../collections/src/families/exact-recurrences.ts";
 import {
-  BlocksToLabels,
-  BlocksToRgs,
-  IsSetPartitionOf,
-  LabelsToOrderedBlocks,
-  RgsRank,
-  RgsToBlocks,
-  RgsUnrank,
-  SetCompositionRank,
-  SetCompositionUnrank,
-  SetPartitionsIntoKBlocksRank,
-  SetPartitionsIntoKBlocksUnrank,
-} from "../../../collections/src/families/kernels-combinatorics.ts";
-import {
-  IsPerfectMatchingOf,
-  IsSurjectionOf,
-  PerfectMatchingCount,
-  PerfectMatchingRank,
-  PerfectMatchingUnrank,
-  SurjectionRank,
-  SurjectionUnrank,
-} from "../../../collections/src/families/kernels-extra.ts";
-import {
   add,
   all,
   and,
@@ -134,7 +112,7 @@ function setPartitions(
   params: readonly string[],
   cap: MathJSON,
   last: (open: string) => MathJSON,
-  fast: FastKernel | undefined,
+  fastCount: FastKernel["count"] | undefined,
   word = false,
 ): EpsilFamily {
   const T = cell("_tables", add(cap, 1));
@@ -172,7 +150,7 @@ function setPartitions(
     paramCount: params.length as 1 | 2,
     kind: word ? "ints" : "blocks",
     params,
-    ...(fast === undefined ? {} : { fast }),
+    ...(fastCount === undefined ? {} : { fastCount }),
     epsil: {
       count: T("_n", 0),
       tables: rgsTable(cap, last),
@@ -186,18 +164,20 @@ function setPartitions(
   };
 }
 
-const setPartitionsFamily = setPartitions("SetPartitions", ["_n"], "_n", () => 1, {
-  count: ([n]) => bellExact(n),
-  unrank: ([n], r) => RgsToBlocks(RgsUnrank(n, r)),
-  rank: (x, [n]) => RgsRank(BlocksToRgs(x as number[][], n)),
-  valid: (x, [n]) => IsSetPartitionOf(x as number[][], n),
-});
-const kBlocks = setPartitions("SetPartitionsIntoKBlocks", ["_n", "_k"], "_k", (open) => iff(equal(open, "_k"), 1, 0), {
-  count: ([n, k]) => stirlingSecondExact(n, k),
-  unrank: ([n, k], r) => RgsToBlocks(SetPartitionsIntoKBlocksUnrank(n, k, r)),
-  rank: (x, [n, k]) => SetPartitionsIntoKBlocksRank(BlocksToRgs(x as number[][], n), k),
-  valid: (x, [n, k]) => IsSetPartitionOf(x as number[][], n, k),
-});
+const setPartitionsFamily = setPartitions(
+  "SetPartitions",
+  ["_n"],
+  "_n",
+  () => 1,
+  ([n]) => bellExact(n),
+);
+const kBlocks = setPartitions(
+  "SetPartitionsIntoKBlocks",
+  ["_n", "_k"],
+  "_k",
+  (open) => iff(equal(open, "_k"), 1, 0),
+  ([n, k]) => stirlingSecondExact(n, k),
+);
 /** The words themselves: a set partition's RGS, Bell(n) of them, in the same lex order. */
 export const restrictedGrowthStrings = setPartitions("RestrictedGrowthStrings", ["_n"], "_n", () => 1, undefined, true);
 
@@ -294,12 +274,7 @@ const surjections: EpsilFamily = {
   paramCount: 2,
   kind: "ints",
   params: ["_n", "_k"],
-  fast: {
-    count: ([n, k]) => surjectionsExact(n, k),
-    unrank: ([n, k], r) => SurjectionUnrank(n, k, r),
-    rank: (x, [, k]) => SurjectionRank(x as number[], k),
-    valid: (x, [n, k]) => IsSurjectionOf(x as number[], n, k),
-  },
+  fastCount: ([n, k]) => surjectionsExact(n, k),
   epsil: {
     count: surjectionsOf.count,
     tables: surjectionsOf.table,
@@ -359,12 +334,7 @@ const setCompositions: EpsilFamily = {
   paramCount: 1,
   kind: "blocks",
   params: ["_n"],
-  fast: {
-    count: ([n]) => fubiniExact(n),
-    unrank: ([n], r) => LabelsToOrderedBlocks(SetCompositionUnrank(n, r)),
-    rank: (x, [n]) => SetCompositionRank(BlocksToLabels(x as number[][]), n),
-    valid: (x, [n]) => IsSetPartitionOf(x as number[][], n),
-  },
+  fastCount: ([n]) => fubiniExact(n),
   epsil: {
     // Fub(0, 0) = 1 is the empty composition; for n > 0 Fub(n, 0) = 0.
     count: fold(add("fa", Fub("_n", "fc")), "fa", "fc", 0, upTo(0, "_n")),
@@ -488,12 +458,6 @@ const perfectMatchings: EpsilFamily = {
   paramCount: 1,
   kind: "blocks",
   params: ["_n"],
-  fast: {
-    count: ([n]) => PerfectMatchingCount(n),
-    unrank: ([n], r) => PerfectMatchingUnrank(n, r),
-    rank: (x, [n]) => PerfectMatchingRank(x as number[][], n),
-    valid: (x, [n]) => IsPerfectMatchingOf(x, n),
-  },
   epsil: {
     count: iff(less("_n", 0), 0, oddProduct("_n", "pc")),
     unrank: lets(

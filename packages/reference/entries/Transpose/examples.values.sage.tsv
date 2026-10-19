@@ -1,5 +1,5 @@
 id	in	out	verdict
-transpose-list-list-a-x-list-b-y-list-c-z	[list(r) for r in matrix([[SR.var("a"), SR.var("x")], [SR.var("b"), SR.var("y")], [SR.var("c"), SR.var("z")]]).transpose().rows()]	True	
+transpose-list-list-a-x-list-b-y-list-c-z	[list(r) for r in matrix([[SR.var("a"), SR.var("x")], [SR.var("b"), SR.var("y")], [SR.var("c"), SR.var("z")]]).transpose().rows()]	[[a, b, c], [x, y, z]]	
 chop-dot-u-transpose-u			
 chop-dot-v-transpose-v			
 chop-dot-q-transpose-q			

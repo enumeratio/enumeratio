@@ -36,6 +36,7 @@ export const SYMBOLS: Record<string, string> = {
   MachineEpsilon: "$MachineEpsilon",
   GoldenRatio: "GoldenRatio",
   EulerGamma: "EulerGamma",
+  MachinePrecision: "MachinePrecision",
   CatalanConstant: "Catalan",
   True: "True",
   False: "False",
@@ -119,7 +120,6 @@ export const FOREIGN: Record<string, string> = {
   // expression itself.
   TemplateExpression: "a template hole holding an expression, evaluated when the template is applied",
   Area: "the area of a geometric region",
-  Perimeter: "the perimeter of a geometric region",
   Depth: "the number of indices needed to reach any part of an expression",
   Composition: "a composition of functions, Composition[f, g]",
   Word: "the token specification used by Read and Find",

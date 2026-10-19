@@ -39,6 +39,9 @@ n-zeta-2p5-plus-i-neg-2p5	(zeta(mpc(2.5, 1), -2.5))	(83.204683006331172744954206
 zeta-3-133-at-a-negative-integer-a	zeta(3.133, -2)	NoConvergence: zeta: too much cancellation	error
 n-zeta-1-3-0-drops-the-zero-term	(zeta((mpf(1)/3), 0))	NoConvergence: zeta: too much cancellation	error
 n-zeta-i-0-to-ten-digits	enumeratio_n(lambda: (zeta(mpc(0, 1), mpc(0, 0))), 10)	(1.003300224-0.4181554491j)	disagree
+n-zeta-complex-2-plus-i-25-declines	enumeratio_n(lambda: (zeta(mpc(2, 1))), 25)	(1.150355703254902671742850-0.4375308659196078811175279j)	
+n-zeta-complex-1-plus-3i-25-declines	enumeratio_n(lambda: (zeta(mpc(1, 3))), 25)	(0.6288517339518255341899268-0.1074757601505864404311041j)	
+n-zeta-complex-2-plus-i-16-declines	enumeratio_n(lambda: (zeta(mpc(2, 1))), 16)	(1.150355703254903-0.4375308659196079j)	
 on-the-critical-line-zeta-1-2-14i-0-02224-0	(zeta(mpc(0.5, 14)))	(0.022241142609993589246213199204 - 0.103258123266450057902363095553j)	
 two-argument-zeta-s-a-via-enumeratio-analytic	zeta(2, 1)	1.64493406684822643647241516665	
 zeta-2-2-zeta-2-1-pi-2-6-1	zeta(2, 2)	0.644934066848226436472415166646	

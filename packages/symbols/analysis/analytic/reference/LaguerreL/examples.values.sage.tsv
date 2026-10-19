@@ -1,18 +1,18 @@
 id	in	out
-the-linear	laguerre(1, SR.var("x"))	True
-the-quadratic	laguerre(2, SR.var("x"))	True
-the-cubic	laguerre(3, SR.var("x"))	True
+the-linear	laguerre(1, SR.var("x"))	-x + 1
+the-quadratic	laguerre(2, SR.var("x"))	1/2*x^2 - 2*x + 1
+the-cubic	laguerre(3, SR.var("x"))	-1/6*x^3 + 3/2*x^2 - 3*x + 1
 at-an-integer	laguerre(3, 2)	-1/3
 at-a-real	laguerre(4, 0.7)	-0.548662500000000
-the-generalized-linear	gen_laguerre(1, SR.var("a"), SR.var("x"))	True
-the-generalized-quadratic	gen_laguerre(2, SR.var("a"), SR.var("x"))	True
+the-generalized-linear	gen_laguerre(1, SR.var("a"), SR.var("x"))	a - x + 1
+the-generalized-quadratic	gen_laguerre(2, SR.var("a"), SR.var("x"))	1/2*(a + 2)*(a + 1) - (a + 2)*x + 1/2*x^2
 at-a-real-generalized	gen_laguerre(3, 0.5, 1.3)	-0.908666666666667
 at-a-complex-argument	laguerre(2, (2 + 3*I))	-11/2
 at-a-complex-parameter	gen_laguerre(2, (0.5 + 1*I), 0.7)	-0.130000000000000 + 1.30000000000000*I
-a-symbolic-order-stays-unevaluated	laguerre(SR.var("n"), SR.var("x"))	True
-the-derivative	diff(laguerre(SR.var("n"), SR.var("x")), SR.var("x"))	True
-the-derivative-generalized	diff(gen_laguerre(SR.var("n"), SR.var("a"), SR.var("x")), SR.var("x"))	True
+a-symbolic-order-stays-unevaluated	laguerre(SR.var("n"), SR.var("x"))	laguerre(n, x)
+the-derivative	diff(laguerre(SR.var("n"), SR.var("x")), SR.var("x"))	-gen_laguerre(n - 1, 1, x)
+the-derivative-generalized	diff(gen_laguerre(SR.var("n"), SR.var("a"), SR.var("x")), SR.var("x"))	-gen_laguerre(n - 1, a + 1, x)
 at-zero	laguerre(5, 0)	1
-at-zero-generalized	gen_laguerre(3, SR.var("a"), 0)	True
+at-zero-generalized	gen_laguerre(3, SR.var("a"), 0)	1/6*(a + 3)*(a + 2)*(a + 1)
 recurrence	((3 * laguerre(3, 3)) - (((5 - 3) * laguerre(2, 3)) - (2 * laguerre(1, 3))))	0
-at-t10-1-3	enumeratio_n(laguerre(10, 1.3))	0.545955765661482
+at-t10-1-3	enumeratio_n(laguerre(10, RealField(200)("1.3")))	0.545955765661482

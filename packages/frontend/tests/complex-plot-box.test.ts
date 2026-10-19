@@ -1,4 +1,4 @@
-import { type BoxNode, makeBoxes, optionsOfBox } from "@enumeratio/boxes";
+import { type BoxNode, graphics3dOf, graphicsOf, makeBoxes, optionsOfBox } from "@enumeratio/boxes";
 import { expect, test } from "vite-plus/test";
 import type { Complex } from "../src/complex-eval.ts";
 import { complexSurfaceBox, sampleComplexSurface } from "../src/complex-plot-3d.ts";
@@ -104,9 +104,10 @@ test("the view reads a bare pair or an Epsil list, and ignores what is no number
 test("a ComplexPlot lowers to a raster not yet filled, holding its expression", () => {
   const expr = ["ComplexPlot", ["Zeta", "z"], "z", ["KeyValuePair", "Extent", 40]] as never;
   const box = makeBoxes(expr, PLOT_NOTATION) as BoxNode;
-  expect(box[0]).toBe("GraphicsBox");
-  expect(optionsOfBox(box).Producer).toBe("ComplexPlot");
-  expect(optionsOfBox(box).PlotRange).toEqual([
+  expect(box[0]).toBe("InterpretationBox");
+  const drawing = graphicsOf(box)!.box;
+  expect(optionsOfBox(drawing).Producer).toBe("ComplexPlot");
+  expect(optionsOfBox(drawing).PlotRange).toEqual([
     [-20, 20],
     [-20, 20],
   ]);
@@ -119,7 +120,7 @@ test("settings name what the element reads", () => {
   expect(settings).toMatchObject({ value: "zeta(z)", var: "z", mask: "1" });
   expect(complexPlotOptionsOf(settings!).mask).toBe(1);
   expect(complexPlotSettingsOf(["Plot", "x"] as never)).toBeUndefined();
-  expect(unsampledComplexPlotBox("z")[0]).toBe("GraphicsBox");
+  expect(graphicsOf(unsampledComplexPlotBox("z"))).toBeDefined();
 });
 
 test("a complex surface is one polygon complex, each face colored by its hue", () => {
@@ -153,7 +154,7 @@ test("a ComplexPlot3D lowers to a surface not yet sampled, holding its expressio
     ["ComplexPlot3D", ["Divide", 1, ["Add", ["Power", "z", 2], 1]]] as never,
     PLOT_NOTATION,
   ) as BoxNode;
-  expect(box[0]).toBe("Graphics3DBox");
-  expect(optionsOfBox(box).Producer).toBe("ComplexPlot3D");
+  expect(box[0]).toBe("InterpretationBox");
+  expect(optionsOfBox(graphics3dOf(box)!.box).Producer).toBe("ComplexPlot3D");
   expect(JSON.stringify(box)).toContain('"Divide"');
 });

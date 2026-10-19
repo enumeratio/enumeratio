@@ -2,9 +2,9 @@ id	in	out
 five-six-seven	rf(5, 3)	210
 from-1-is-the-factorial	rf(1, 5)	120
 at-risingfactorial-2-5i	N(rf((2 + 5*I), (3 + 2*I)), 30)	20.6474078947724353858296344538 + 24.0473567102328041988547182391*I
-a-symbolic-base	rf(Symbol("a"), 3)	True
+a-symbolic-base	rf(Symbol("a"), 3)	a*(a + 1)*(a + 2)
 a-rational-base	rf(Rational(1, 2), 3)	15/8
-a-symbolic-order-is-pochhammer	rf(Symbol("a"), Symbol("n"))	True
+a-symbolic-order-is-pochhammer	rf(Symbol("a"), Symbol("n"))	RisingFactorial(a, n)
 complex-base-and-order	N(rf((2 + 5*I), (3 + 2*I)), 30)	20.6474078947724353858296344538 + 24.0473567102328041988547182391*I
 agrees-with-pochhammer	enumeratio_equal(rf(4, 3), rf(4, 3))	True
 negative-order	rf(5, -2)	1/12

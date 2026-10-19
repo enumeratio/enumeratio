@@ -6,11 +6,6 @@
 // Speculative-Restrictions).
 import { binomial } from "../../../collections/src/families/shared.ts";
 import { Factorial, IsPermutationOf, modRank, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
-import {
-  FibonacciWordCount,
-  FibonacciWordRank,
-  FibonacciWordUnrank,
-} from "../../../collections/src/families/kernels-extra.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {
   adjacentTranspositionInvolutions,
@@ -145,38 +140,6 @@ const baxterClass = makeBruteForceClass((p) => isBaxterPermutation(p), baxterCou
 // commute and would create a longer-range inversion) — a bijection with independent sets of the path
 // graph on {1,…,n−1}, i.e. exactly a FibonacciWord (kernels-extra.ts) of length n−1. Count F(n+1),
 // A000045.
-function booleanCount(n: number): number {
-  return n <= 1 ? 1 : FibonacciWordCount(n - 1);
-}
-function booleanWordToPermutation(word: readonly number[]): number[] {
-  const n = word.length + 1;
-  const perm = Array.from({ length: n }, (_, i) => i + 1);
-  for (let i = 0; i < word.length; i++) {
-    if (word[i] === 1) {
-      const t = perm[i];
-      perm[i] = perm[i + 1];
-      perm[i + 1] = t;
-    }
-  }
-  return perm;
-}
-function booleanUnrank(n: number, r: number): number[] {
-  if (n <= 1) return PermutationUnrank(n, 0);
-  return booleanWordToPermutation(FibonacciWordUnrank(n - 1, r));
-}
-function isBooleanPermutation(perm: readonly number[]): boolean {
-  const n = perm.length;
-  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) if (perm[i] > perm[j] && j !== i + 1) return false;
-  return true;
-}
-function booleanRank(perm: readonly number[]): number {
-  const n = perm.length;
-  if (n <= 1) return 0;
-  const word: number[] = [];
-  for (let i = 0; i < n - 1; i++) word.push(perm[i] > perm[i + 1] ? 1 : 0);
-  return FibonacciWordRank(word);
-}
-
 // ─── NonCrossingCycleSupportPermutations(n): cycles forming a non-crossing partition, by completion counts
 // (./restrictions.ts).
 
@@ -244,15 +207,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
     declared: baxterClass.declared,
     carrier: "Permutation",
   },
-  {
-    ...adjacentTranspositionInvolutions,
-    fast: {
-      count: ([n]) => booleanCount(n),
-      unrank: ([n], r) => booleanUnrank(n, r),
-      rank: (x) => booleanRank(x as number[]),
-      valid: (x, [n]) => IsPermutationOf(x as number[], n) && isBooleanPermutation(x as number[]),
-    },
-  },
+  adjacentTranspositionInvolutions,
   grassmannianPermutations,
   cograssmannianPermutations,
   nonCrossingCycleSupportPermutations,

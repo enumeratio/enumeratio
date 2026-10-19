@@ -8,6 +8,7 @@ import {
   type Box,
   type BoxNode,
   graphics,
+  graphicsOf,
   isNode,
   line,
   type Options,
@@ -15,7 +16,6 @@ import {
   optionsOfBox,
   point,
   polygon,
-  row,
   style,
   tag,
 } from "@enumeratio/boxes";
@@ -146,14 +146,14 @@ export function polarPlotBox(points: readonly PolarPoint[], opts: PolarPlotOptio
     PolarAxes: opts.axes !== false,
     ...(opts.title && { PlotLabel: opts.title }),
   };
-  if (finite.length === 0 && !opts.window) return graphics(row([]), options);
+  if (finite.length === 0 && !opts.window) return graphics([], options);
   const { center = [0, 0], half = rMax } = opts.window ?? {};
   options["PlotRange"] = [
     [center[0] - half, center[0] + half],
     [center[1] - half, center[1] + half],
   ];
   if (opts.window) options["Clipped"] = true;
-  if (finite.length === 0) return graphics(row([]), options);
+  if (finite.length === 0) return graphics([], options);
 
   const runs: PolarPoint[][] = [];
   let run: PolarPoint[] = [];
@@ -187,12 +187,14 @@ export function polarPlotBox(points: readonly PolarPoint[], opts: PolarPlotOptio
     }),
   );
   if (opts.markers) items.push(style(tag(point({ Points: finite.map(xy) }), "Series"), { FaceForm: ACCENT }));
-  return graphics(row(items), options);
+  return graphics(items, options);
 }
 
 /** Whether `box` is a polar plot's `GraphicsBox`. */
-export const isPolarBox = (box: Box): box is BoxNode =>
-  isNode(box) && box[0] === "GraphicsBox" && optionsOfBox(box).PolarAxes !== undefined;
+export const isPolarBox = (box: Box): boolean => {
+  const drawing = graphicsOf(box)?.box;
+  return drawing !== undefined && optionsOfBox(drawing).PolarAxes !== undefined;
+};
 
 const numbers = (value: unknown): number[] | undefined =>
   Array.isArray(value) && value.every((v) => typeof v === "number") ? (value as number[]) : undefined;
@@ -263,9 +265,7 @@ export function polarPlotBoxSvg(box: BoxNode): string {
         { color: FG, edges: [] },
       );
     }
-    const content = box[1] as Box;
-    const items = isNode(content) && content[0] === "RowBox" ? (content[1] as readonly Box[]) : [];
-    for (const it of items) {
+    for (const it of box[1] as readonly Box[]) {
       if (!isNode(it) || it[0] !== "StyleBox") continue;
       const look = it[2] as Options;
       const tagged = it[1] as Box;

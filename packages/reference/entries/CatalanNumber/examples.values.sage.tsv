@@ -16,9 +16,9 @@ an-interval-argument-should-give-an-enclosing
 the-5-ways-to-balance-3-pairs-of-parentheses	catalan_number(3)	5	
 the-14-triangulations-of-a-hexagon-and-the-14	catalan_number(4)	14	
 assuming-n-in-integers-n-gt-eq-0-fullsimplify			
-closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n	(binomial((2 * 5), 5) / (5 + 1))	42	
-the-closed-form-through-a-negative-n-in-binomial	(binomial((2 * -13), 5) / (4 + 1))	-142506/5	
-equivalently-c-n-binom-2n-n-binom-2n-n-1	(binomial(10, 5) - binomial(10, 6))	42	
+closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n	(enumeratio_binomial((2 * 5), 5) / (5 + 1))	42	
+the-closed-form-through-a-negative-n-in-binomial	(enumeratio_binomial((2 * -13), 5) / (4 + 1))	-142506/5	
+equivalently-c-n-binom-2n-n-binom-2n-n-1	(enumeratio_binomial(10, 5) - enumeratio_binomial(10, 6))	42	
 the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	(catalan_number(6) / catalan_number(5))	22/7	
 segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i			
 generatingfunction-catalannumber-n-n-x			
@@ -30,5 +30,5 @@ catalannumber-neg-6	catalan_number(-6)	0
 catalannumber-neg-4	catalan_number(-4)	0	
 catalannumber-neg-3	catalan_number(-3)	0	
 differencerootreduce-catalannumber-k-k			
-closed-form-difference-with-a-negative-binomial	(binomial(10, 5) - binomial(-1, -7))	252	disagree
+closed-form-difference-with-a-negative-binomial	(enumeratio_binomial(10, 5) - enumeratio_binomial(-1, -7))	252	disagree
 they-grow-fast-c-15-already-passes-nine-million	catalan_number(15)	9694845	

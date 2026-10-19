@@ -2,13 +2,9 @@ import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { kernelsOn } from "../../collections/src/families/epsil.ts";
 import { entries as families } from "../src/families/partitions.ts";
-import {
-  PartitionsInBoxCount,
-  PartitionsInBoxUnrank,
-  PartitionsMaxPartCount,
-  PartitionsMaxPartUnrank,
-} from "../../collections/src/families/kernels-extra.ts";
+import { PartitionsMaxPartCount, PartitionsMaxPartUnrank } from "../../collections/src/families/kernels-extra.ts";
 import { entries as coreFamilies } from "../src/families/core.ts";
+import { PartitionsInBoxCount, PartitionsInBoxUnrank } from "../../tests/readings/kernels/collections-kernels-extra.ts";
 
 const entries = kernelsOn(bareEngine(), families);
 const coreEntries = kernelsOn(bareEngine(), coreFamilies);

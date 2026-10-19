@@ -44,7 +44,7 @@ test("densityColor runs along the gradient, viridis by default", () => {
 
 /** The `Colors` of a density box's raster, and its options. */
 function rasterOf(box: BoxNode): { colors: string[][]; range: unknown } {
-  const tagged = ((box[1] as BoxNode)[1] as BoxNode[])[0] as BoxNode;
+  const tagged = (box[1] as BoxNode[])[0] as BoxNode;
   const o = optionsOfBox(tagged[1] as BoxNode);
   return { colors: o.Colors as string[][], range: o.DataRange };
 }

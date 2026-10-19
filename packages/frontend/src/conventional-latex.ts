@@ -196,6 +196,14 @@ export const withStringsWrapped = (expr: MathJsonExpression): MathJsonExpression
         ) as unknown as MathJsonExpression)
       : expr;
 
+/** `e^{2x}` for every argument, as Wolfram's TeXForm writes it; native `Exp` writes `e^x` for a
+ *  symbol but `\\exp(2x)` for a compound argument. */
+const exp: Entry = {
+  ...native("Exp"),
+  name: "Exp",
+  serialize: (serializer, expr) => serializer.serialize(["Power", "ExponentialE", operands(expr)[0] ?? null]),
+};
+
 /** Euler's constant as `\\gamma`, which it already parses from, not `\\operatorname{EulerGamma}`. */
 const eulerGamma: Entry = {
   ...native("EulerGamma"),
@@ -275,6 +283,7 @@ export const CONVENTIONAL_LATEX: readonly Entry[] = [
   square,
   escapedText,
   eulerGamma,
+  exp,
   signOut("Divide"),
   signOut("Rational"),
   negate,

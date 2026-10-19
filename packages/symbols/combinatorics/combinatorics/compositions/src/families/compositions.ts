@@ -4,8 +4,9 @@
 // instantiated per family; (2) families whose constraint isn't a per-part membership test
 // (Carlitz: adjacent parts differ; Zigzag: alternating parts), each with its own small DP.
 //
-// Each is defined in Epsil (./walks.ts); the builders and kernels below are its `fast` path, in
-// the same order, and the reading tests/fast-kernels.test.ts holds the definitions to.
+// Each is defined in Epsil (./walks.ts). The builders and kernels below are the independent reading
+// tests/readings/ holds the definitions to; the parts-in-a-set families keep an exact count past 2^53
+// (`fastCount`), and the part-count, Carlitz and zigzag ones their `fast` path.
 // PalindromicCompositions has none: its TS kernel sorts a list of about 2^(n/2) palindromes
 // per n, where the definition walks the halves directly.
 //
@@ -35,84 +36,13 @@ import {
   zigzagCompositions,
 } from "./walks.ts";
 
-const sum = (parts: readonly number[]): number => parts.reduce((a, b) => a + b, 0);
-const isPositiveIntArray = (e: unknown): e is number[] =>
+export const sum = (parts: readonly number[]): number => parts.reduce((a, b) => a + b, 0);
+export const isPositiveIntArray = (e: unknown): e is number[] =>
   Array.isArray(e) && e.every((v) => Number.isInteger(v) && v >= 1);
 
 // ─── generic builder: compositions with every part drawn from an allowed set S ⊆ {1,2,…} ──────
 // count(0) = 1 (empty composition); count(m) = Σ_{s∈S, s≤m} count(m−s). unrank/rank walk the
 // same recurrence in ascending part order, which is exactly lexicographic order on the sequence.
-function partsInSet(inSet: (s: number) => boolean) {
-  const countMemo = new Map<number, number>();
-  function count(m: number): number {
-    if (m === 0) return 1;
-    if (m < 0) return 0;
-    const cached = countMemo.get(m);
-    if (cached !== undefined) return cached;
-    let total = 0;
-    for (let s = 1; s <= m; s++) if (inSet(s)) total += count(m - s);
-    countMemo.set(m, total);
-    return total;
-  }
-  function unrank(m: number, r: number): number[] {
-    if (m === 0) return [];
-    let rr = r;
-    for (let s = 1; s <= m; s++) {
-      if (!inSet(s)) continue;
-      const c = count(m - s);
-      if (rr < c) return [s, ...unrank(m - s, rr)];
-      rr -= c;
-    }
-    throw new Error("partsInSet: rank out of range");
-  }
-  function rank(parts: readonly number[]): number {
-    let r = 0;
-    let m = sum(parts);
-    for (const s of parts) {
-      for (let t = 1; t < s; t++) if (inSet(t)) r += count(m - t);
-      m -= s;
-    }
-    return r;
-  }
-  function valid(parts: unknown, n: number): boolean {
-    if (!isPositiveIntArray(parts)) return false;
-    return sum(parts) === n && parts.every(inSet);
-  }
-  return { count, unrank, rank, valid };
-}
-
-const isOdd = (s: number) => s % 2 === 1;
-const isPowerOfTwo = (s: number) => (s & (s - 1)) === 0;
-const isTriangular = (s: number) => {
-  const r = Math.sqrt(8 * s + 1);
-  return Number.isInteger(r); // 8s+1 is always odd, so an integer root is automatically odd too
-};
-function isPrimeSmall(s: number): boolean {
-  if (s < 2) return false;
-  if (s % 2 === 0) return s === 2;
-  for (let d = 3; d * d <= s; d += 2) if (s % d === 0) return false;
-  return true;
-}
-
-const oddComp = partsInSet(isOdd);
-const properComp = partsInSet((s) => s >= 2);
-const dyadicComp = partsInSet(isPowerOfTwo);
-const fibComp = partsInSet((s) => s === 1 || s === 2);
-const triComp = partsInSet((s) => s >= 1 && s <= 3);
-const tetraComp = partsInSet((s) => s >= 1 && s <= 4);
-const triangularComp = partsInSet(isTriangular);
-const primeComp = partsInSet(isPrimeSmall);
-
-const partSizeBoundedCache = new Map<number, ReturnType<typeof partsInSet>>();
-function partSizeBounded(k: number) {
-  let b = partSizeBoundedCache.get(k);
-  if (!b) {
-    b = partsInSet((s) => s <= k);
-    partSizeBoundedCache.set(k, b);
-  }
-  return b;
-}
-
 // ─── PartCountBoundedCompositions(n, k): at most k parts. count(m, j) = compositions of m into at most
 // j parts = Σ_s count(m − s, j − 1), with count(0, ·) = 1 (the empty composition) and count(m > 0, 0) = 0.
 // unrank/rank walk the same recurrence in ascending first part: lexicographic order.
@@ -300,27 +230,11 @@ function isZigzag(parts: unknown, n: number): boolean {
   return true;
 }
 
-const inSet = (
-  family: EpsilFamily,
-  builder: ReturnType<typeof partsInSet>,
-  exact: (n: number) => bigint | undefined,
-): EpsilFamily => ({
+// The count alone, exact past 2^53 where the interpreter takes seconds and the builder's doubles are not.
+const inSet = (family: EpsilFamily, exact: (n: number) => bigint | undefined): EpsilFamily => ({
   ...family,
-  fast: {
-    // Exact past 2^53, where the builder's doubles are not.
-    count: ([n]) => exact(n),
-    unrank: ([n], r) => builder.unrank(n, r),
-    rank: (x) => builder.rank(x as number[]),
-    valid: (x, [n]) => builder.valid(x, n),
-  },
+  fastCount: ([n]) => exact(n),
 });
-
-const partSizeBoundedFast: FastKernel = {
-  count: ([n, k]) => partSizeBounded(k).count(n),
-  unrank: ([n, k], r) => partSizeBounded(k).unrank(n, r),
-  rank: (x, [, k]) => partSizeBounded(k).rank(x as number[]),
-  valid: (x, [n, k]) => partSizeBounded(k).valid(x, n),
-};
 const partCountBoundedFast: FastKernel = {
   count: ([n, k]) => partCountCount(n, k),
   unrank: ([n, k], r) => partCountUnrank(n, k, r),
@@ -342,15 +256,15 @@ const zigzagFast: FastKernel = {
 
 export const entries: EpsilFamily[] = [
   // ── parts drawn from an allowed set S ──
-  inSet(oddCompositions, oddComp, oddCompositionsExact),
-  inSet(properCompositions, properComp, properCompositionsExact),
-  inSet(dyadicCompositions, dyadicComp, dyadicCompositionsExact),
-  inSet(fibonacciCompositions, fibComp, (n) => windowSumsExact(n, 2)),
-  inSet(triCompositions, triComp, (n) => windowSumsExact(n, 3)),
-  inSet(tetraCompositions, tetraComp, (n) => windowSumsExact(n, 4)),
-  inSet(triangularCompositions, triangularComp, triangularCompositionsExact),
-  inSet(primeCompositions, primeComp, primeCompositionsExact),
-  { ...partSizeBoundedCompositions, fast: partSizeBoundedFast },
+  inSet(oddCompositions, oddCompositionsExact),
+  inSet(properCompositions, properCompositionsExact),
+  inSet(dyadicCompositions, dyadicCompositionsExact),
+  inSet(fibonacciCompositions, (n) => windowSumsExact(n, 2)),
+  inSet(triCompositions, (n) => windowSumsExact(n, 3)),
+  inSet(tetraCompositions, (n) => windowSumsExact(n, 4)),
+  inSet(triangularCompositions, triangularCompositionsExact),
+  inSet(primeCompositions, primeCompositionsExact),
+  partSizeBoundedCompositions,
   { ...partCountBoundedCompositions, fast: partCountBoundedFast },
 
   // ── constraints beyond per-part membership ──

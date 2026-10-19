@@ -396,6 +396,9 @@ importers:
       '@enumeratio/diagram':
         specifier: workspace:*
         version: link:../symbols/algebras/diagram
+      '@enumeratio/engine':
+        specifier: workspace:*
+        version: link:../engine
       '@enumeratio/evaluation':
         specifier: workspace:*
         version: link:../symbols/evaluation/evaluation
@@ -1775,6 +1778,9 @@ importers:
       '@enumeratio/diagram':
         specifier: workspace:*
         version: link:../packages/symbols/algebras/diagram
+      '@enumeratio/engine':
+        specifier: workspace:*
+        version: link:../packages/engine
       '@enumeratio/evaluation':
         specifier: workspace:*
         version: link:../packages/symbols/evaluation/evaluation

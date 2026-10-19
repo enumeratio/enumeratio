@@ -1,13 +1,13 @@
 ---
 name: GraphicsComplex3DBox
 domain: Boxes
-signature: GraphicsComplex3DBox(box, options)
+signature: GraphicsComplex3DBox(primitives, options)
 summary: "3-D primitives that share vertices: `Points` lists them, and a primitive names its own by `Indices`."
 signatures:
-  - call: GraphicsComplex3DBox(box, options)
+  - call: GraphicsComplex3DBox(primitives, options)
     description: "3-D primitives that share vertices: `Points` lists them, and a primitive names its own by `Indices`."
     library: enumeratio-boxes
-    type: (boxes, expression*) -> boxes
+    type: (boxes | list, expression*) -> boxes
 seeAlso:
   - Graphics3DBox
   - Polygon3DBox

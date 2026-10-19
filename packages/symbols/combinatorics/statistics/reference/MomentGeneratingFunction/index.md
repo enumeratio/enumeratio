@@ -18,4 +18,4 @@ names:
 ---
 
 - $M(t) = \varphi(t/i)$ in principle; this file writes each distribution's formula directly (the naive `i -> 1` substitution of [[CharacteristicFunction]]'s formula) rather than deriving one from the other, EXCEPT [[LogisticDistribution]], whose MGF is $e^{\mu t}B(1-\beta t, 1+\beta t)$ — a different (still elementary) closed form from its CF.
-- $M(0) = 1$ always; a numeric derivative of $M$ at $t=0$ reproduces [[Mean]] (checked in `tests/distributions-3.test.ts`, not repeated here).
+- $M(0) = 1$ always; a numeric derivative of $M$ at $t=0$ reproduces [[Mean]].

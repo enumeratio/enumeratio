@@ -143,21 +143,18 @@ export function dijkstraPath(model: GraphModel, source: string, target: string):
  *  same reason (no sparse-matrix head here to return instead). */
 export function weightedAdjacencyMatrixExpr(ce: Engine, g: GraphModel): Expr {
   const index = new Map(g.order.map((v, i) => [v, i]));
-  const rows = g.order.map(() => Array.from({ length: g.order.length }, () => 0));
+  // Weights stay exact (a rational weight is not rounded to a double).
+  const rows = g.order.map(() => Array.from({ length: g.order.length }, () => ce.number(0)));
   for (const e of g.edges) {
     const i = index.get(e.a)!;
     const j = index.get(e.b)!;
-    const w = numericWeight(e.weight);
-    rows[i]![j]! += w;
-    if (!e.directed) rows[j]![i]! += w;
+    const w = e.weight ?? ce.number(1);
+    rows[i]![j] = rows[i]![j]!.add(w);
+    // An undirected loop is one edge: its weight lands on the diagonal once.
+    if (!e.directed && i !== j) rows[j]![i] = rows[j]![i]!.add(w);
   }
   return listOf(
     ce,
-    rows.map((row) =>
-      listOf(
-        ce,
-        row.map((x) => ce.number(x)),
-      ),
-    ),
+    rows.map((row) => listOf(ce, row)),
   );
 }

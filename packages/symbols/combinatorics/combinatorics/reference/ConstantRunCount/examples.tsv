@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-composition-2-1-3-1-1			[ConstantRunCount, [Composition, [List, 2, 1, 3, 1, 1]]]	4			the composition $[2,1,3,1,1]$
+findstat-st000767-1	Properties		[CombinatorialStat, [Composition, [List, 1]], "'ConstantRunCount'"]	1	1	FindStat St000767	FindStat's value for [1]
+findstat-st000767-2	Properties		[CombinatorialStat, [Composition, [List, 2]], "'ConstantRunCount'"]	1	1	FindStat St000767	FindStat's value for [2]
+findstat-st000767-3	Properties		[CombinatorialStat, [Composition, [List, 3]], "'ConstantRunCount'"]	1	1	FindStat St000767	FindStat's value for [3]

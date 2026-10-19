@@ -24,27 +24,27 @@ large-rational-multiples-of-pi-are-reduced	sin((Rational(100, 3) * pi))	-sqrt(3)
 any-integer-multiple-of-pi-is-a-zero-of-sine	sin((1000001 * pi))	0	
 sin-negate-pi-is-also-zero	sin((-pi))	0	
 sin-4-pi-is-zero	sin((4 * pi))	0	
-a-full-turn-shift-of-a-symbolic-argument-doesn-t	sin((Symbol("x") + (2 * pi)))	True	
+a-full-turn-shift-of-a-symbolic-argument-doesn-t	sin((Symbol("x") + (2 * pi)))	sin(x)	
 sin-i-pi-2-i-sinh-pi-2-exactly	sin((I * (S(pi) / 2)))	I*sinh(pi/2)	
 n-decimalizes-sin-i-pi-2-not-just-the-exact-form	N(sin((I * (S(pi) / 2))), 30)	2.30129890230729487346304002343*I	
 interval-arithmetic-the-image-of-pi-6-pi-6-is	sin(AccumBounds((-(S(pi) / 6)), (S(pi) / 6)))	AccumBounds(-1/2, 1/2)	
 the-image-of-the-whole-real-line-is-1-1	sin(AccumBounds(-oo, oo))	AccumBounds(-1, 1)	
 wolfram-answers-sin-infty-with-the-range-of-its	sin(oo)	AccumBounds(-1, 1)	disagree
 uncertainty-propagation-sin-2-pm-0-01-approx-0			
-an-imaginary-argument-rewrites-to-sinh-sin-ix-i	sin((I * Symbol("x")))	True	
-oddness-pulls-the-sign-out-of-a-symbolic	sin((-Symbol("x")))	True	
-a-half-period-shift-reduces-sin-x-pi-sin-x	sin((Symbol("x") + pi))	True	
-sin-arcsin-x-x-for-every-x	sin(asin(Symbol("x")))	True	
+an-imaginary-argument-rewrites-to-sinh-sin-ix-i	sin((I * Symbol("x")))	I*sinh(x)	
+oddness-pulls-the-sign-out-of-a-symbolic	sin((-Symbol("x")))	-sin(x)	
+a-half-period-shift-reduces-sin-x-pi-sin-x	sin((Symbol("x") + pi))	-sin(x)	
+sin-arcsin-x-x-for-every-x	sin(asin(Symbol("x")))	x	
 sin-arcsin-2-2-past-the-real-domain	sin(asin(2))	2	
 sin-arcsin-of-a-complex-argument	sin(asin((1 + 2*I)))	1 + 2*I	
-sin-arccos-x-sqrt-1-x-2	sin(acos(Symbol("x")))	True	
-sin-arctan-x-frac-x-sqrt-1-x-2	sin(atan(Symbol("x")))	True	
-derivative-frac-d-dx-sin-x-cos-x	diff(sin(Symbol("x")), Symbol("x"))	True	
-second-derivative	diff(sin(Symbol("x")), Symbol("x"), Symbol("x"))	True	
-antiderivative	integrate(sin(Symbol("x")), Symbol("x"))	True	
+sin-arccos-x-sqrt-1-x-2	sin(acos(Symbol("x")))	sqrt(1 - x**2)	
+sin-arctan-x-frac-x-sqrt-1-x-2	sin(atan(Symbol("x")))	x/sqrt(x**2 + 1)	
+derivative-frac-d-dx-sin-x-cos-x	diff(sin(Symbol("x")), Symbol("x"))	cos(x)	
+second-derivative	diff(sin(Symbol("x")), Symbol("x"), Symbol("x"))	-sin(x)	
+antiderivative	integrate(sin(Symbol("x")), Symbol("x"))	-cos(x)	
 area-under-one-arch-int-0-pi-sin-x-dx-2	integrate(sin(Symbol("x")), (Symbol("x"), 0, pi))	2	
-int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers	integrate((S(sin(Symbol("x")))**3), Symbol("x"))	True	
-taylor-series-about-0-only-odd-powers-appear	series(sin(Symbol("x")), Symbol("x"), 0, 10 + 1)	True	
+int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers	integrate((S(sin(Symbol("x")))**3), Symbol("x"))	cos(x)**3/3 - cos(x)	
+taylor-series-about-0-only-odd-powers-appear	series(sin(Symbol("x")), Symbol("x"), 0, 10 + 1)	x - x**3/6 + x**5/120 - x**7/5040 + x**9/362880 + O(x**11)	
 the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1			
 to-30-significant-digits-every-one-correctly	N(sin(1), 30)	0.841470984807896506652502321630	
 a-huge-24-40-argument-reduces-exactly-mod-2-pi	N(sin((S(24)**40)), 30)	0.400083152719766047070941915848	
@@ -87,7 +87,7 @@ n-sin-1-pow-2	N((S(sin(1))**2), 30)	0.708073418273571193498784114750
 n-sin-1-over-2-plus-1-over-2-times-pi-pow-2	N((S(sin((Rational(1, 2) + (Rational(1, 2) * pi))))**2), 30)	0.770151152934069858700468303721	
 1-radian-isn-t-a-recognized-special-angle-so	sin(1)	sin(1)	
 sin-2-a-generic-argument-stays-symbolic	sin(2)	sin(2)	
-sin-x-plus-y-stays-symbolic	sin((Symbol("x") + Symbol("y")))	True	
+sin-x-plus-y-stays-symbolic	sin((Symbol("x") + Symbol("y")))	sin(x + y)	
 pi-15-has-a-radical-form-but-like-wolfram-s	sin((S(pi) / 15))	sqrt(3)*(1/4 - sqrt(5)/4)/2 + sqrt(sqrt(5)/8 + 5/8)/2	
 a-huge-exact-argument-is-reduced-modulo-2-pi	N(sin((S(10)**20)), 30)	-0.645251285265780844205811711313	
 an-even-huger-argument-11-38	N(sin((S(11)**38)), 30)	0.867534193184863032081750429728	

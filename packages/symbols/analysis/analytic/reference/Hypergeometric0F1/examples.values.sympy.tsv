@@ -6,11 +6,11 @@ complex-order-1-plus-i-at-0-5	N(N(hyper([], [(1 + 1*I)], 0.5)), 30)	1.2624841413
 order-2-at-a-complex-argument	N(N(hyper([], [2], (0.5 + 0.5*I))), 30)	1.24817563688592891857354061358 + 0.293401296264334088270686606847*I	
 negative-order-neg-0-5-at-0-3	N(hyper([], [-0.5], 0.3))	0.207633759462581	
 complex-order-and-argument	N(N(hyper([], [(-2.5 + 1.5*I)], (1.2 + -0.8*I))), 30)	0.632186477801754631578035059647 + 0.0225531925472149431810553465994*I	
-series-hypergeometric0f1-a-x-x-0-4	series(N(hyper([], [Symbol("a")], Symbol("x"))), Symbol("x"), 0, 4 + 1)	True	
+series-hypergeometric0f1-a-x-x-0-4	series(N(hyper([], [Symbol("a")], Symbol("x"))), Symbol("x"), 0, 4 + 1)	x/a + x**2/(2*a*(a + 1)) + x**3/(6*a*(a + 1)*(a + 2)) + x**4/(24*a*(a + 1)*(a + 2)*(a + 3)) + 1 + O(x**5)	
 fullsimplify-normal-series-hypergeometric0f1-a-x	simplify((series(N(hyper([], [Symbol("a")], Symbol("x"))), Symbol("x"), oo, 1 + 1)).removeO())	None	inconclusive
 n-hypergeometric0f1-1-neg-2-50	N(N(hyper([], [1], -2)), 30)	-0.196548095270468209383452062866	
 matrixfunction-function-hypergeometric0f1-1-over			
-series-hypergeometric0f1-a-x-x-0-3	series(N(hyper([], [Symbol("a")], Symbol("x"))), Symbol("x"), 0, 3 + 1)	True	
+series-hypergeometric0f1-a-x-x-0-3	series(N(hyper([], [Symbol("a")], Symbol("x"))), Symbol("x"), 0, 3 + 1)	x/a + x**2/(2*a*(a + 1)) + x**3/(6*a*(a + 1)*(a + 2)) + 1 + O(x**4)	
 n-neg-1-over-4-times-hypergeometric0f1-1-over-2	N(((Rational(-1, 4) * N(hyper([], [Rational(1, 2)], Rational(1, 2)))) + (Rational(1, 4) * N(hyper([], [Rational(-1, 2)], Rational(1, 2)))) + (Rational(1, 2) * N(hyper([], [Rational(3, 2)], Rational(1, 2))))), 30)	0	
 n-neg-1-over-4-times-hypergeometric0f1-1-over-3	N(((Rational(-1, 4) * (S(N(hyper([], [Rational(1, 2)], Rational(1, 2))))**2)) + (Rational(1, 2) * (S(N(hyper([], [Rational(3, 2)], Rational(1, 2))))**2))), 30)	-0.250000000000000111022302462516	
 n-2-times-hypergeometric0f1-3-over-2-2-plus-neg	N(((2 * N(hyper([], [Rational(3, 2)], 2))) + (Rational(-1, 4) * N(hyper([], [Rational(1, 2)], 2))) + (Rational(1, 4) * N(hyper([], [Rational(-1, 2)], 2)))), 30)	4.44089209850062616169452667236e-16	

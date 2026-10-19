@@ -44,10 +44,10 @@ bindings:
     note: Wolfram's (and compute-engine's) Binomial extends to negative n and k via the reflection identities in its docs (e.g. Binomial[5,-2] = 0, Binomial[-7,2] = 28, Binomial[-5,-7] = 15); the crates behind sage/oscar/julia/rust bottom out at unsigned or non-negative-only integer types and diverge there — a convention gap, not a bug on either side. Verified against wolframscript.
   - origin: mapped
     form: sage
-    template: binomial($1, $2)
+    template: enumeratio_binomial($1, $2)
     arity: 2
     threadArg: 1
-    note: Wolfram's (and compute-engine's) Binomial extends to negative n and k via the reflection identities in its docs (e.g. Binomial[5,-2] = 0, Binomial[-7,2] = 28, Binomial[-5,-7] = 15); the crates behind sage/oscar/julia/rust bottom out at unsigned or non-negative-only integer types and diverge there — a convention gap, not a bug on either side. Verified against wolframscript.
+    note: Sage's binomial needs m or x-m an integer; enumeratio_binomial falls back to the Gamma ratio otherwise (run.ts) and answers a complex infinity at a pole of Gamma(x+1), as ours does. A negative n with an integer k agrees (binomial(-5, 2) = 15); two negative integers give 0 where Wolfram and compute-engine take the limit (Binomial[-2,-2] = 1), a convention gap, not a bug on either side.
   - origin: mapped
     form: oscar
     template: binomial(ZZ($1), ZZ($2))

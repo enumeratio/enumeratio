@@ -1,4 +1,4 @@
-import { isBox, makeBoxes, optionsOfBox } from "@enumeratio/boxes";
+import { graphics3dOf, isBox, makeBoxes, optionsOfBox } from "@enumeratio/boxes";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { expect, test } from "vite-plus/test";
 import type { Triple } from "../src/plot3d.ts";
@@ -33,17 +33,17 @@ test("a surface is one complex: every vertex once, the quads as indices", () => 
   const box = surfaceBox([grid(5, 4, (x, y) => x + y)], indices(5), indices(4));
   expect(isBox(box)).toBe(true);
   expect(isGraphics3dBox(box)).toBe(true);
-  const complex = (box[1] as readonly unknown[])[1] as readonly unknown[][];
+  const complex = box[1] as readonly unknown[][];
   expect(complex[0]![0]).toBe("GraphicsComplex3DBox");
-  const [, polygon] = complex[0] as [
+  const [, [polygon], { Points }] = complex[0] as [
     string,
-    [string, { Indices: unknown[]; FaceColors: string[] }],
+    [[string, { Indices: unknown[]; FaceColors: string[] }]],
     { Points: unknown[] },
   ];
   expect(polygon[0]).toBe("Polygon3DBox");
   expect(polygon[1].Indices).toHaveLength(4 * 3);
   expect(polygon[1].FaceColors).toHaveLength(4 * 3);
-  expect((complex[0] as [string, unknown, { Points: unknown[] }])[2].Points).toHaveLength(20);
+  expect(Points).toHaveLength(20);
 });
 
 test("the chrome rides as options, and the box survives JSON", () => {
@@ -554,7 +554,7 @@ test("ListPlot3D and BarChart3D hold their data and lower whole", () => {
 test("a Plot3D of an expression is a producer: the box holds the expression it came from", () => {
   const box = lowered("Plot3D(x * y, (x, -1, 1), (y, -1, 1))");
   expect(isGraphics3dBox(box)).toBe(true);
-  expect(optionsOfBox(box as never)["Producer"]).toBe("Plot3D");
+  expect(optionsOfBox(graphics3dOf(box)!.box)["Producer"]).toBe("Plot3D");
   expect((unsampledGraphics3d(box) as unknown[])[0]).toBe("Plot3D");
 });
 
@@ -562,16 +562,18 @@ test("what a box holds never leaves its attribute: a description and colors come
   const box = [
     "Graphics3DBox",
     [
-      "Polygon3DBox",
-      {
-        Points: [
-          [0, 0, 0],
-          [1, 0, 0],
-          [0, 1, 1],
-        ],
-        FaceForm: 'red" onload="x',
-        EdgeColor: "red' onclick='x",
-      },
+      [
+        "Polygon3DBox",
+        {
+          Points: [
+            [0, 0, 0],
+            [1, 0, 0],
+            [0, 1, 1],
+          ],
+          FaceForm: 'red" onload="x',
+          EdgeColor: "red' onclick='x",
+        },
+      ],
     ],
     { Description: '" onmouseover="x', PlotLabel: "<b>" },
   ] as never;

@@ -5,8 +5,8 @@ import { bareEngine } from "@enumeratio/engine/testing";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { epsilKernelOn, evaluateTables } from "../../collections/src/families/epsil.ts";
-import { finePathsFast } from "../../collections/src/families/paths-partitions.ts";
 import { finePaths } from "../src/families/fine-paths.ts";
+import { finePathsFast } from "../../tests/readings/kernels/collections-paths-partitions.ts";
 
 const ce = bareEngine();
 const kernel = epsilKernelOn(ce, finePaths);

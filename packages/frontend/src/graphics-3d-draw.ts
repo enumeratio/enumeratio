@@ -5,7 +5,7 @@
 // in the box (`FaceColors`, `VertexColors`, `PointColors`), so nothing here knows a gradient. Pure: the
 // same box and view give byte-identical SVG, in Node and in the browser.
 
-import { type Box, type BoxNode, isNode, type Options, optionsOfBox } from "@enumeratio/boxes";
+import { type Box, type BoxNode, graphics3dOf, isNode, type Options, optionsOfBox } from "@enumeratio/boxes";
 import { label } from "./plot-box.ts";
 import type { Triple } from "./plot3d.ts";
 import { camera } from "./project3d.ts";
@@ -46,13 +46,11 @@ export interface Graphics3dView {
 }
 
 /** Whether `box` is a `Graphics3DBox`. */
-export const isGraphics3dBox = (box: Box): box is BoxNode => isNode(box) && box[0] === "Graphics3DBox";
+export const isGraphics3dBox = (box: Box): boolean => graphics3dOf(box) !== undefined;
 
 /** The expression an unsampled plot of `box` came from (its `InterpretationBox`), else undefined. */
 export function unsampledGraphics3d(box: Box): unknown {
-  if (!isGraphics3dBox(box)) return undefined;
-  const content = box[1] as Box;
-  return isNode(content) && content[0] === "InterpretationBox" ? (content as readonly unknown[])[2] : undefined;
+  return graphics3dOf(box)?.held;
 }
 
 const numbers = (value: unknown): number[] | undefined =>
@@ -64,7 +62,8 @@ const strings = (value: unknown): string[] =>
 
 /** The view a box starts at. */
 export function graphics3dHome(box: Box): Required<Pick<Graphics3dView, "azimuth" | "elevation" | "zoom">> {
-  const o = isGraphics3dBox(box) ? optionsOfBox(box) : {};
+  const drawing = graphics3dOf(box)?.box;
+  const o = drawing ? optionsOfBox(drawing) : {};
   return {
     azimuth: typeof o.Azimuth === "number" ? o.Azimuth : 45,
     elevation: typeof o.Elevation === "number" ? o.Elevation : 15,
@@ -81,14 +80,8 @@ interface Entry {
 function collect(box: Box, vertices: readonly Triple[] | undefined, out: Entry[]): void {
   if (!isNode(box)) return;
   switch (box[0]) {
-    case "RowBox":
-      for (const item of box[1]) collect(item, vertices, out);
-      return;
-    case "InterpretationBox":
-      collect(box[1], vertices, out);
-      return;
     case "GraphicsComplex3DBox":
-      collect(box[1], triples(optionsOfBox(box).Points), out);
+      for (const item of box[1]) collect(item, triples(optionsOfBox(box).Points), out);
       return;
     case "Polygon3DBox":
     case "Line3DBox":
@@ -370,7 +363,8 @@ function insetSvg(entry: Entry, at: (p: Triple) => Projected | undefined): strin
  * does not know draws as an empty frame, never an error.
  */
 export function graphics3dSvg(box: Box, view: Graphics3dView = {}): string {
-  const o: Options = isGraphics3dBox(box) ? optionsOfBox(box) : {};
+  const drawing = graphics3dOf(box)?.box;
+  const o: Options = drawing ? optionsOfBox(drawing) : {};
   const size = numbers(o.ImageSize);
   const [W, H] = [size?.[0] ?? 360, size?.[1] ?? 260];
   const home = graphics3dHome(box);
@@ -381,10 +375,10 @@ export function graphics3dSvg(box: Box, view: Graphics3dView = {}): string {
   ];
   const frame = (body: string): string =>
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(typeof o.Description === "string" ? o.Description : "3-D figure")}">${body}</svg>`;
-  if (!isGraphics3dBox(box)) return frame("");
+  if (!drawing) return frame("");
 
   const entries: Entry[] = [];
-  collect(box[1] as Box, undefined, entries);
+  for (const item of drawing[1]) collect(item, undefined, entries);
 
   const stated = Array.isArray(o.PlotRange) ? o.PlotRange.map(numbers) : [];
   const fallback = extentOf(entries);

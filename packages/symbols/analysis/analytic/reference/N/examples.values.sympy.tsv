@@ -8,23 +8,23 @@ n-gamma-33-over-10-50	N(gamma(Rational(33, 10)), 30)	2.6834373819557687935963273
 n-pi-50	N(pi, 30)	3.14159265358979323846264338328	
 n-khinchin-50			
 n-arcsin-3	N(asin(3), 30)	1.57079632679489661923132169164 - 1.76274717403908605046521864996*I	
-n-c	N(Symbol("c"), 30)	True	
-n-c-47	N(Symbol("c"), 30)	True	
-n-poly	N(Symbol("poly"), 30)	True	
-n-x-pow-3-over-2	N((S(Symbol("x"))**Rational(3, 2)), 30)	True	
-n-pi-pow-x	N((S(pi)**Symbol("x")), 30)	True	
-n-int	N(Symbol("int"), 30)	True	
-n-neg-2-times-pit-plus-pi-list-positiveinfinity	N(((-2 * Symbol("pit")) + pi), 30)	True	
-n-crt	N(Symbol("crt"), 30)	True	
-n-crt-47	N(Symbol("crt"), 30)	True	
+n-c	N(Symbol("c"), 30)	c	
+n-c-47	N(Symbol("c"), 30)	c	
+n-poly	N(Symbol("poly"), 30)	poly	
+n-x-pow-3-over-2	N((S(Symbol("x"))**Rational(3, 2)), 30)	x**1.5	
+n-pi-pow-x	N((S(pi)**Symbol("x")), 30)	3.14159265358979323846264338328**x	
+n-int	N(Symbol("int"), 30)	int	
+n-neg-2-times-pit-plus-pi-list-positiveinfinity	N(((-2 * Symbol("pit")) + pi), 30)	3.14159265358979323846264338328 - 2.0*pit	
+n-crt	N(Symbol("crt"), 30)	crt	
+n-crt-47	N(Symbol("crt"), 30)	crt	
 n-2-pow-1-000-000	N((S(2)**1000000), 30)	9.90065622929589825069792361630e+301029	
 n-pi-pow-10-list-positiveinfinity-5	N((S(pi)**10), 30)	93648.0474760830209737166901849	
 n-pi-pow-10-list-positiveinfinity-1	N((S(pi)**10), 30)	93648.0474760830209737166901849	disagree
-n-1-over-neg-x-plus-exponentiale-times-2x-plus	N(((S(1) / ((-Symbol("x")) + E)) * ((2 * Symbol("x")) + pi)), 30)	True	
+n-1-over-neg-x-plus-exponentiale-times-2x-plus	N(((S(1) / ((-Symbol("x")) + E)) * ((2 * Symbol("x")) + pi)), 30)	(2.0*x + 3.14159265358979323846264338328)/(2.71828182845904523536028747135 - x)	
 n-1-minus-sqrt-1-minus-exponentiale-pow-neg-1	N((1 + (-sqrt((1 + (-(S(E)**-1000)))))), 30)	0.e-165	
-n-k-25	N(Symbol("k"), 30)	True	
-n-exponentiale-pow-x-plus-pi	N((S(E)**(Symbol("x") + pi)), 30)	True	
-n-k	N(Symbol("k"), 30)	True	
+n-k-25	N(Symbol("k"), 30)	k	
+n-exponentiale-pow-x-plus-pi	N((S(E)**(Symbol("x") + pi)), 30)	exp(x + pi)	
+n-k	N(Symbol("k"), 30)	k	
 n-1-000-factorial	N(factorial(1000), 30)	4.02387260077093773543702433923e+2567	
 n-1-minus-goldenratio-plus-1-over-goldenratio-20	N((1 + (-GoldenRatio) + (S(1) / GoldenRatio)), 30)	0.e-165	
 n-1-minus-goldenratio-plus-1-over-goldenratio	N((1 + (-GoldenRatio) + (S(1) / GoldenRatio)), 30)	0.e-165	
@@ -32,6 +32,7 @@ n-exponentiale-pow-100-list-positiveinfinity-neg	N((S(E)**100), 30)	2.6881171418
 n-10-000-000-000-times-neg-exponentiale-pow-999	N((10000000000 * ((-(S(E)**Rational(999999999999, 10000000000))) + (S(E)**100))), 30)	2.68811714168172959132629897440e+43	
 n-exponentiale-pow-sin-1-000	N((S(E)**sin(1000)), 30)	2.28617368581217110222589085453	
 n-exponentiale-pow-sin-1-000-47	N((S(E)**sin(1000)), 30)	2.28617368581217110222589085453	
+n-accuracy-goal-resolves-the-cancellation	N((1 + (-sqrt((1 + (-(S(E)**-1000)))))), 30)		
 an-exact-tie-rounds-to-the-even-digit-0-125	N(Rational(1, 8), 30)	0.125000000000000000000000000000	disagree
 and-0-375-to-0-38	N(Rational(3, 8), 30)	0.375000000000000000000000000000	disagree
 n-pi-1-digit	N(pi, 30)	3.14159265358979323846264338328	disagree

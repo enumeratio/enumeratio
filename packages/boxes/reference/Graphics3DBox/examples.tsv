@@ -1,2 +1,2 @@
 id	section	role	expr	expected	caption
-inert	Basic		[Graphics3DBox, [RowBox, [List]]]	[Graphics3DBox, [RowBox, [List]]]	a box is inert: it evaluates to itself
+inert	Basic		[Graphics3DBox, [List]]	[Graphics3DBox, [List]]	a box is inert: it evaluates to itself

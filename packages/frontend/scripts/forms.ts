@@ -21,6 +21,7 @@ import {
   OWN_FORMS,
   type SystemImplementation,
 } from "@enumeratio/entry";
+import { setEngineDefaults } from "@enumeratio/engine";
 import { toFullForm } from "@enumeratio/formats/fullform";
 import { toInputForm } from "@enumeratio/formats/inputform";
 import { markupOf, readMarkupText, stripMetadata } from "@enumeratio/formats/markup";
@@ -42,6 +43,7 @@ const ce = new ComputeEngine({
     dictionary: mergeLatex(conventionalLatexDictionary(), PACKAGES.latex) as never[],
   }),
 });
+setEngineDefaults(ce);
 
 // TraditionalForm: every package's notation, as the engine that declares them all registers it.
 const NOTATION = notationOf(declaredEngine());

@@ -27,3 +27,6 @@ coprime-moduli-have-no-common-ring	(GF(4, symmetric=False)(3) + GF(7, symmetric=
 2-mod-4-over-1-mod-6-has-no-inverse	(GF(6, symmetric=False)(1) / GF(4, symmetric=False)(2))	NotInvertible: zero divisor	error
 integermod-and-residueclass-do-not-mix			
 residueclass-declines-the-same-mixed-sum			
+a-class-mod-1-is-zero	GF(1, symmetric=False)(3)	0 mod 1	
+a-class-mod-1-meets-any-ring	(GF(1, symmetric=False)(3) + GF(7, symmetric=False)(5))	0 mod 1	
+a-non-unit-divisor-says-why	(S(1) / GF(4, symmetric=False)(2))	1/2	inconclusive

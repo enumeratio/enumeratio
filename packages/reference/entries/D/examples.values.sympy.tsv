@@ -1,4 +1,4 @@
 id	in	out
-of-a-product	diff(((S(Symbol("x"))**2) * sin(Symbol("x"))), Symbol("x"))	True
-second-derivative	diff((S(Symbol("x"))**3), Symbol("x"), Symbol("x"))	True
-of-a-head-we-declare	diff(loggamma(Symbol("z")), Symbol("z"))	True
+of-a-product	diff(((S(Symbol("x"))**2) * sin(Symbol("x"))), Symbol("x"))	x**2*cos(x) + 2*x*sin(x)
+second-derivative	diff((S(Symbol("x"))**3), Symbol("x"), Symbol("x"))	6*x
+of-a-head-we-declare	diff(loggamma(Symbol("z")), Symbol("z"))	polygamma(0, z)

@@ -14,7 +14,7 @@ function marksOf(box: BoxNode): Record<string, number> {
     if (node[0] === "StyleBox" || node[0] === "TagBox") return walk(node[1]);
     out[node[0]] = (out[node[0]] ?? 0) + 1;
   };
-  walk(box[1]);
+  (box[1] as unknown[]).forEach(walk);
   return out;
 }
 
@@ -192,7 +192,7 @@ test("the box is lines in data coordinates, or one raster over the whole range",
 test("a line's segments are disjoint: the pen lifts between each pair of points", () => {
   const { grid, xs, ys } = rampGrid(3);
   const box = contourPlotBox(grid, xs, ys, { levels: [2] }) as BoxNode;
-  const line = ((box[1] as BoxNode)[1] as BoxNode[])[0] as BoxNode;
+  const line = (box[1] as BoxNode[])[0] as BoxNode;
   const mark = (line[1] as BoxNode)[1] as BoxNode;
   const o = optionsOfBox(mark);
   expect((o.Points as unknown[]).length).toBe(2 * (o.Breaks as unknown[]).length + 2);
@@ -206,7 +206,7 @@ test("filled bands are laid from the least y up, whichever way the axes run", ()
   ];
   const colors = (g: number[][], xs: number[], ys: number[]): unknown => {
     const box = contourPlotBox(g, xs, ys, { levels: [4], filled: true }) as BoxNode;
-    const raster = (((box[1] as BoxNode)[1] as BoxNode[])[0] as BoxNode)[1] as BoxNode;
+    const raster = ((box[1] as BoxNode[])[0] as BoxNode)[1] as BoxNode;
     return optionsOfBox(raster).Colors;
   };
   const up = colors(grid, [0, 1, 2], [0, 1, 2]) as string[][];

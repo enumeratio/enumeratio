@@ -1,7 +1,7 @@
 // Graph-area families defined in Epsil. The edges of K_n are numbered 1..C(n, 2) in lex order of
 // their pairs (u < v); a graph or orientation is then a number read off that index space. Their TS
-// kernels (core.ts) stay exported: the independent reading the agreement tests check these against,
-// and the `fast` path where wired.
+// kernels (tests/readings) are the independent reading the agreement tests check these against;
+// LabeledGraphsByEdges (core.ts) still has its as a `fast` path.
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {
   add,

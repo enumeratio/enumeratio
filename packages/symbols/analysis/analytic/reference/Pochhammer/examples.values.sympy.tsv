@@ -6,8 +6,8 @@ pochhammer-3-4	rf(3, 4)	360
 10-11-12-13-14-15	rf(10, 6)	3603600
 at-pochhammer-3-2	N(rf(3, 2), 30)	12.0000000000000000000000000000
 threads-element-wise-over-a-list-as-wolfram-s	[rf(2, 2), rf(3, 2), rf(4, 2)]	[6, 12, 20]
-a-symbolic-base-with-integer-order-expands-to	rf(Symbol("n"), 5)	True
-a-negative-order-expands-to-the-reciprocal	rf(Symbol("n"), -5)	True
+a-symbolic-base-with-integer-order-expands-to	rf(Symbol("n"), 5)	n*(n + 1)*(n + 2)*(n + 3)*(n + 4)
+a-negative-order-expands-to-the-reciprocal	rf(Symbol("n"), -5)	1/((n - 5)*(n - 4)*(n - 3)*(n - 2)*(n - 1))
 real-base-and-order-evaluate-as-frac-gamma-a-n	rf(2.4, 8.5)	2310224.67324071
 a-zero-base-gives-0-for-any-positive-order	rf(0, 1285)	0
 a-rational-base-frac-12-cdot-frac-32-cdot-frac	rf(Rational(1, 2), 3)	15/8
@@ -17,7 +17,7 @@ dividing-by-k-counts-multisets-binom-n-k-1-k	(S(rf(5, 3)) / factorial(3))	35
 1-n-n-since-the-rising-factorial-from-1-just	enumeratio_equal(rf(1, 5), factorial(5))	True
 negative-order-gives-the-reciprocal-a-n-frac-1-a	rf(5, -2)	1/12
 order-0-is-the-empty-product-a-0-1	rf(Symbol("a"), 0)	1
-a-1-a	rf(Symbol("a"), 1)	True
+a-1-a	rf(Symbol("a"), 1)	a
 the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see	enumeratio_equal(rf(4, 3), (S(gamma(7)) / gamma(4)))	True
 rising-and-falling-factorials-x-underline-n-1-n	enumeratio_equal(ff(5, 3), (-1 * rf(-5, 3)))	True
 if-a-is-a-non-positive-integer-with-a-n-the	rf(-3, 4)	0

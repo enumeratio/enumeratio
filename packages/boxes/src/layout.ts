@@ -11,6 +11,7 @@
 import {
   type Box,
   type BoxNode,
+  graphicsOf,
   isControlBoxHead,
   isNode,
   type Options,
@@ -369,6 +370,8 @@ class Layout {
       case "StyleBox":
         return this.lay(box[1], styled(style, box[2]));
       case "InterpretationBox":
+        // A drawing keeps the expression it is held with: the environment draws the whole.
+        return graphicsOf(box) === undefined ? this.lay(box[1], style) : this.slot(box);
       case "ErrorBox":
       case "ButtonBox":
       case "TextCell":

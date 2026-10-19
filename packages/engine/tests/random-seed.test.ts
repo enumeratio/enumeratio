@@ -100,3 +100,12 @@ describe.each([
     }
   });
 });
+
+// Primes is infinite and has no uniform draw: the call stays as written (bare compute-engine
+// answers an out-of-range error) and prints as the set, not as a call of it.
+test("Random over an infinite set stays unevaluated", () => {
+  const ce = wired();
+  const drawn = ce.box(["Random", "Primes"] as never).evaluate();
+  expect(drawn.json).toEqual(["Random", "Primes"]);
+  expect(drawn.latex).toBe("\\mathrm{Random}(\\mathbb{P})");
+});

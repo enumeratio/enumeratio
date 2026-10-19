@@ -4,7 +4,7 @@ erfinv-1	erfinv(1)	Infinity	disagree
 erfinv-neg-1	erfinv(-1)	erfinv(-1)	
 a-floating-point-argument-evaluates-directly-to	erfinv(0.5)	0.476936276204470	
 a-machine-precision-argument	erfinv(0.6)	0.595116081449995	
-series-erfinv-x-x-0-3	SR(erfinv(SR.var("x"))).series(SR.var("x") == 0, 3 + 1)	True	
+series-erfinv-x-x-0-3	SR(erfinv(SR.var("x"))).series(SR.var("x") == 0, 3 + 1)	(1/2*sqrt(pi))*x + (1/24*pi^(3/2))*x^3 + Order(x^4)	
 threads-element-wise-over-a-list-as-wolfram-s	[erfinv(0), erfinv(1)]	[0, Infinity]	disagree
 two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x			
 interval-arithmetic-the-inverse-is-increasing-so			
@@ -15,12 +15,12 @@ functionexpand-matrixfunction-erfinv-list-list-0
 erfinv-a-erf-a-z			
 functionexpand-erf-erfinv-s			
 erfinv-s-eq-erfinv-0-s			
-series-erfinv-x-x-0-8	SR(erfinv(SR.var("x"))).series(SR.var("x") == 0, 8 + 1)	True	
+series-erfinv-x-x-0-8	SR(erfinv(SR.var("x"))).series(SR.var("x") == 0, 8 + 1)	(1/2*sqrt(pi))*x + (1/24*pi^(3/2))*x^3 + (7/960*pi^(5/2))*x^5 + (127/80640*pi^(7/2))*x^7 + Order(x^9)	
 series-erfinv-z0-s-z0-0-2			
 the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	(sqrt(2) * erfinv(0.95))	1.38590382434968*sqrt(2)	
 inverse-of-erf-erf-erfinv-x-x-see-erf	enumeratio_equal(erf(erfinv(0.5)), 0.5)	True	
 odd-erfinv-x-erfinv-x-applied-symbolically	erfinv((-SR.var("x")))	None	inconclusive
-frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2	diff(erfinv(SR.var("x")), SR.var("x"))	True	
+frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2	diff(erfinv(SR.var("x")), SR.var("x"))	1/2*sqrt(pi)*e^(erfinv(x)^2)	
 isnumeric-erfinv-1-over-pi-1-over-2			
 erfinv-0-0			
 erfinv-0-1			

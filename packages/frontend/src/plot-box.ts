@@ -14,6 +14,7 @@ import {
   type BoxNode,
   graphics,
   inset,
+  graphicsOf,
   isNode,
   line,
   type Options,
@@ -21,7 +22,6 @@ import {
   optionsOfBox,
   point,
   polygon,
-  row,
   style,
   tag,
 } from "@enumeratio/boxes";
@@ -259,7 +259,7 @@ export function plotBox(input: readonly PlotPoint[] | readonly PlotSeries[], opt
     .filter((p) => Number.isFinite(X.fwd(p.x)))
     .map((p) => Y.fwd(p.y))
     .filter(Number.isFinite);
-  if (txs.length === 0 || tys.length === 0) return graphics(row([]), options);
+  if (txs.length === 0 || tys.length === 0) return graphics([], options);
 
   const [txmin, txmax] = opts.xRange
     ? [X.fwd(opts.xRange[0]), X.fwd(opts.xRange[1])]
@@ -399,12 +399,12 @@ export function plotBox(input: readonly PlotPoint[] | readonly PlotSeries[], opt
     if (named.length > 0) options["PlotLegends"] = named;
   }
   return graphics(
-    row([
+    [
       ...primitiveBoxes(opts.prolog ?? [], "Prolog"),
       ...fills,
       ...curves,
       ...primitiveBoxes(opts.epilog ?? [], "Epilog"),
-    ]),
+    ],
     options,
   );
 }
@@ -457,13 +457,14 @@ const barLegendOf = (value: unknown): { colors: string[]; range: [number, number
 };
 
 /** Whether `box` is a plot's `GraphicsBox` (one `plotBox` made), as opposed to a figure's. */
-export const isPlotBox = (box: Box): box is BoxNode =>
-  isNode(box) && box[0] === "GraphicsBox" && optionsOfBox(box).ScalingFunctions !== undefined;
+export const isPlotBox = (box: Box): boolean => {
+  const drawing = graphicsOf(box)?.box;
+  return drawing !== undefined && optionsOfBox(drawing).ScalingFunctions !== undefined;
+};
 
 /** The items of a plot box, each with its role and look. */
 export function plotItems(box: BoxNode): { role: string; prim: BoxNode; look: Options }[] {
-  const content = box[1] as Box;
-  const items = isNode(content) && content[0] === "RowBox" ? (content[1] as readonly Box[]) : [content];
+  const items = box[1] as readonly Box[];
   const out: { role: string; prim: BoxNode; look: Options }[] = [];
   for (const it of items) {
     let look: Options = {};

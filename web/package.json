@@ -23,6 +23,7 @@
     "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/components": "workspace:*",
     "@enumeratio/diagram": "workspace:*",
+    "@enumeratio/engine": "workspace:*",
     "@enumeratio/evaluation": "workspace:*",
     "@enumeratio/formats": "workspace:*",
     "@enumeratio/frontend": "workspace:*",

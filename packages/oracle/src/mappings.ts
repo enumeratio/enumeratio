@@ -32,12 +32,19 @@ export const THREADS_MANUALLY: readonly System[] = ["sympy", "mpmath", "sage", "
 export const MAPPINGS: readonly Mapping[] = MAPPINGS_DATA;
 
 /**
- * The mapping that applies to a head at a given arity, preferring the arity-specific one; `extra`
- * (a library's own, `mappingsFromBindings`) before the system's.
+ * The mapping `system` has for a head at a given arity: its own arity-specific row, else its own
+ * general (no-arity) row, else none. Another system's arity-specific row never counts (Rust's `Max/2`
+ * must not hide the variadic `Max` of sage, sympy and julia), so the rows are narrowed to ones that emit
+ * for `system` before an arity is preferred. `extra` (a library's own, `mappingsFromBindings`) goes first.
  */
-export function mappingFor(head: string, arity: number, extra: readonly Mapping[] = []): Mapping | undefined {
+export function mappingFor(
+  head: string,
+  arity: number,
+  extra: readonly Mapping[],
+  system: System,
+): Mapping | undefined {
   for (const table of [extra, MAPPINGS]) {
-    const rows = table.filter((mapping) => mapping.head === head);
+    const rows = table.filter((mapping) => mapping.head === head && mapping.emit[system] !== undefined);
     const found = rows.find((mapping) => mapping.arity === arity) ?? rows.find((m) => m.arity === undefined);
     if (found !== undefined) return found;
   }

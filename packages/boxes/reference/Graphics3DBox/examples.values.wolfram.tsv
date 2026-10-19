@@ -1,2 +1,2 @@
 id	in	out	tex.in	tex.out
-inert	Graphics3DBox[RowBox[List[]]]	Graphics3DBox[RowBox[{}]]	\text{Graphics3DBox}[\text{RowBox}[\{\}]]	\text{Graphics3DBox}[\text{RowBox}[\{\}]]
+inert	Graphics3DBox[List[]]	Graphics3DBox[{}]	\text{Graphics3DBox}[\{\}]	\text{Graphics3DBox}[\{\}]

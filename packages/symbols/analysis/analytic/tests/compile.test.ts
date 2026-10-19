@@ -31,9 +31,22 @@ test("the elementary and special functions analytic wraps keep their built-in lo
 });
 
 test("a head analytic widens compiles only up to its native operand count", () => {
-  expect(compiled("Gamma", 2)).toMatch(/gamma\(/);
   expect(compiled("Gamma", 3)).toBeUndefined();
   expect(compiled("Zeta", 2)).toBeUndefined();
+});
+
+// compute-engine's lowering of the incomplete gamma drops the second operand (compute-engine#447),
+// so a compiled call either declines or must match evaluate.
+test.each(["Gamma", "GammaRegularized"])("compiled two-operand %s declines or matches evaluate", (head) => {
+  const run = compileTyped(ce, [head, "x", "y"], { x: "real", y: "real" })?.run;
+  if (run === undefined) return;
+  for (const [x, y] of [
+    [2, 3],
+    [3, 0.5],
+  ] as const) {
+    const expected = ce.box([head, x, y]).N().re;
+    expect(run({ x, y }) as number, `${head}(${x}, ${y})`).toBeCloseTo(expected, 9);
+  }
 });
 
 test("a head whose value analytic changes on real operands fails closed", () => {

@@ -8,6 +8,6 @@ branch-3-at-a-complex-argument	enumeratio_n(lambert_w(3, (1 + 2*I)))	-2.10720750
 the-branch-point-1-e	lambert_w((-(1 / e)))	-1
 2e-2-w-e-w-at-w-2	lambert_w((2 * ((e)^2)))	lambert_w(2*e^2)
 ln-2-cdot-e-ln-2-frac-ln-2-2	lambert_w((-(log(2) / 2)))	lambert_w(-1/2*log(2))
-a-branch-other-than-0-or-1-checked-against-n	enumeratio_n(lambert_w(-3, -0.14))	-4.64527917427886 - 13.8127453252188*I
+a-branch-other-than-0-or-1-checked-against-n	enumeratio_n(lambert_w(-3, RealField(200)("-0.14")))	-4.64527917427886 - 13.8127453252188*I
 the-branch-k-1-written-in-compute-engine-s-z-k	enumeratio_n(lambert_w(1, 1))	-1.53391331979357 + 4.37518515306190*I
-the-real-branch-k-1-on-1-e-z-0	enumeratio_n(lambert_w(-1, -0.2))	-2.54264135777353
+the-real-branch-k-1-on-1-e-z-0	enumeratio_n(lambert_w(-1, RealField(200)("-0.2")))	-2.54264135777353

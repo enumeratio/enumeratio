@@ -1,10 +1,10 @@
 ---
 name: Graphics3DBox
 domain: Boxes
-signature: Graphics3DBox(box, options)
+signature: Graphics3DBox(primitives, options)
 summary: "A drawing in space: 3-D primitives in a frame's coordinates, looked at from a `ViewPoint`."
 signatures:
-  - call: Graphics3DBox(box, options)
+  - call: Graphics3DBox(primitives, options)
     description: "A drawing in space: 3-D primitives in a frame's coordinates, looked at from a `ViewPoint`."
     library: enumeratio-boxes
     type: (boxes | list, expression*) -> boxes
@@ -23,4 +23,4 @@ names:
 - `ViewPoint` is where the viewer stands, `{x, y, z}` from the center of the box; `Axes`, `PlotRange`, `ScalingFunctions`, `PlotLabel` and `BoxRatios` are Wolfram's options. An orthographic view: only the direction of `ViewPoint` counts.
 - Colors are resolved into the primitives (`FaceColors`, `VertexColors`), so a drawer needs no gradient table.
 - Prints as `-Graphics3D-` in text, as Wolfram does.
-- Wolfram holds the primitives in a list; a built box here holds them in a `RowBox` (or a single complex), so the example states the empty form as inert data.
+- Holds its primitives in a list, as Wolfram does. A plot that remembers the expression it came from is wrapped whole in an `InterpretationBox`.

@@ -107,6 +107,9 @@ const WRITTEN: unknown[][] = [
   ["Log10", "x"],
   ["Log2", "x"],
   ["Lb", "x"],
+  ["Exp", "x"],
+  ["Exp", ["Multiply", 2, "x"]],
+  ["Exp", ["Add", "x", 1]],
 ];
 
 for (const json of WRITTEN) {
@@ -114,6 +117,12 @@ for (const json of WRITTEN) {
     record(`written ${JSON.stringify(json)}`, ce.box(json as never, { form: "raw" }).latex);
   });
 }
+
+test("Exp of a compound argument writes as e^{…} and reads back the same", () => {
+  const written = ce.box(["Exp", ["Multiply", 2, "x"]] as never, { form: "raw" }).latex;
+  expect(written).toBe("\\exponentialE^{2x}");
+  expect(ce.parse(written).json).toEqual(ce.parse("\\exp(2x)").json);
+});
 
 test("\\mathrm{B} alone is still an upright B, and B(2, 3) is still a call to B", () => {
   expect(ce.parse("\\mathrm{B}").json).toEqual("B_upright");

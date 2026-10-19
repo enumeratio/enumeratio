@@ -2,7 +2,7 @@ id	in	out	verdict
 n-arsinh-1-100	enumeratio_n(arcsinh(1), 100)	0.881373587019543	
 arsinh-positiveinfinity	arcsinh(oo)	+Infinity	
 arsinh-0	arcsinh(0)	0	
-d-arsinh-x-x	diff(arcsinh(SR.var("x")), SR.var("x"))	True	
+d-arsinh-x-x	diff(arcsinh(SR.var("x")), SR.var("x"))	1/sqrt(x^2 + 1)	
 arsinh-list-list-i-sqrt-2-over-2-times-i-list-0	[[arcsinh((0 + 1*I)), arcsinh((0 + (sqrt(2) / 2)*I))], [arcsinh(0), arcsinh((0 + (-(sqrt(2) / 2))*I))]]	[[arcsinh(I), arcsinh(1/2*I*sqrt(2))], [0, arcsinh(-1/2*I*sqrt(2))]]	
 arsinh-1-over-2-times-i-times-sqrt-1-over-2	arcsinh(((0 + (1/2)*I) * sqrt(((1/2) * (5 + (-sqrt(5)))))))	arcsinh(1/2*I*sqrt(-1/2*sqrt(5) + 5/2))	
 arsinh-neg-1-over-2-times-i-times-sqrt-1-over-2	arcsinh(((0 + (-1/2)*I) * sqrt(((1/2) * (5 + (-sqrt(5)))))))	arcsinh(-1/2*I*sqrt(-1/2*sqrt(5) + 5/2))	

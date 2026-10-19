@@ -6,6 +6,7 @@
 
 import { type BoxedExpression, ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
 import { combineNotation, registerNotation } from "@enumeratio/boxes";
+import { setEngineDefaults } from "@enumeratio/engine";
 import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics";
 import { declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures";
 import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
@@ -216,6 +217,7 @@ export class Session {
     this.ce = new ComputeEngine({
       latexSyntax: displayLatexSyntax(LATEX_DICTIONARY, NOTATION.latex),
     });
+    setEngineDefaults(this.ce);
     registerNotation(this.ce, NOTATION.traditional);
     // Carriers, the families typed by them, the plural type-spaces and Element, and the maps
     // between carriers -- one call (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3).

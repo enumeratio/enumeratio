@@ -11,7 +11,7 @@ h-0-3-the-empty-sum-at-a-nonzero-order	harmonic_number(0, 3)	0
 h-0-2-the-empty-sum-at-order-2	harmonic_number(0, 2)	0	
 no-sum-below-n-0-one-argument-form	harmonic_number(-1)	harmonic_number(-1)	disagree
 no-sum-below-n-0-two-argument-form	harmonic_number(-2, 3)	harmonic_number(-2, 3)	disagree
-symbolic-n-one-argument-form-stays-symbolic	harmonic_number(SR.var("n"))	True	
+symbolic-n-one-argument-form-stays-symbolic	harmonic_number(SR.var("n"))	harmonic_number(n)	
 n-harmonicnumber-0p5	enumeratio_n(harmonic_number(0.5))	0.613705638880109	
 n-harmonicnumber-complex-3-plus-2i	enumeratio_n(harmonic_number((3 + 2*I)))	1.97257641104474 + 0.516961128796076*I	
 n-harmonicnumber-1-over-2-order-2	enumeratio_n(harmonic_number((1/2), 2))	0.710131866303547	
@@ -43,7 +43,7 @@ at-an-integer-order-1-agrees-exactly-with-the	harmonic_number(10, 1)	7381/2520
 no-sum-below-n-0	harmonic_number(-3)	harmonic_number(-3)	disagree
 h-1-2-2-2-ln-2-exact-at-rational-arguments-by	harmonic_number((1/2))	-2*log(2) + 2	
 h-1-4-4-frac-pi-2-3-ln-2	harmonic_number((1/4))	euler_gamma + psi(5/4)	
-symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays	harmonic_number(SR.var("n"), -1)	True	
+symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays	harmonic_number(SR.var("n"), -1)	harmonic_number(n, -1)	
 the-harmonic-series-diverges	harmonic_number(oo)	harmonic_number(+Infinity)	
 h-infty-r-zeta-r-for-r-1-the-basel-sum	harmonic_number(oo, 2)	harmonic_number(+Infinity, 2)	inconclusive
 a-non-integer-order-stays-symbolic-under-plain	harmonic_number(5, (1/2))	1/5*sqrt(5) + 1/3*sqrt(3) + 1/2*sqrt(2) + 3/2	inconclusive

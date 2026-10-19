@@ -96,7 +96,7 @@ export function nonCrossingCycleSupportExact(n: number): bigint {
   return total / BigInt(n);
 }
 
-const isPermutationOf = (x: unknown, n: number): x is number[] => {
+export const isPermutationOf = (x: unknown, n: number): x is number[] => {
   if (!Array.isArray(x) || x.length !== n) return false;
   const seen = new Uint8Array(n + 1);
   for (const v of x) {
@@ -173,11 +173,6 @@ export function telephoneExact(n: number): bigint {
   let current = 1n;
   for (let i = 2; i <= n; i++) [previous, current] = [current, current + BigInt(i - 1) * previous];
   return current;
-}
-
-/** The self-inverse permutations of n. */
-export function isInvolutionPermutation(x: unknown, [n]: number[]): boolean {
-  return isPermutationOf(x, n) && x.every((image, i) => x[image - 1] === i + 1);
 }
 
 /** The place of the transposition (i j), i < j, among the n(n − 1)/2 of them in lex order: i descending

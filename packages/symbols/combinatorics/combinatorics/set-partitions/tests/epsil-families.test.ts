@@ -9,20 +9,25 @@ import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, elementJson, epsilKernelOn } from "../../collections/src/families/epsil.ts";
 import {
   BellB,
+  IsSetPartitionOf,
+  RgsToBlocks,
+  RgsUnrank,
+  SetPartitionsIntoKBlocksUnrank,
+  StirlingS2,
+} from "../../collections/src/families/kernels-combinatorics.ts";
+import { entries, surjectionsEntries } from "../src/families/core.ts";
+import { entries as matchingEntries } from "../src/families/matchings.ts";
+import { entries as wordEntries } from "../src/families/paths-partitions.ts";
+import {
   BlocksToLabels,
   BlocksToRgs,
   Fubini,
-  IsSetPartitionOf,
   LabelsToOrderedBlocks,
   SetCompositionRank,
   SetCompositionUnrank,
   RgsRank,
-  RgsToBlocks,
-  RgsUnrank,
   SetPartitionsIntoKBlocksRank,
-  SetPartitionsIntoKBlocksUnrank,
-  StirlingS2,
-} from "../../collections/src/families/kernels-combinatorics.ts";
+} from "../../tests/readings/kernels/collections-kernels-combinatorics.ts";
 import {
   IsPerfectMatchingOf,
   IsSurjectionOf,
@@ -32,10 +37,9 @@ import {
   SurjectionCount,
   SurjectionRank,
   SurjectionUnrank,
-} from "../../collections/src/families/kernels-extra.ts";
-import { entries, surjectionsEntries } from "../src/families/core.ts";
-import { entries as matchingEntries, readings as matchingReadings } from "../src/families/matchings.ts";
-import { entries as wordEntries, isRestrictedGrowthStringOf } from "../src/families/paths-partitions.ts";
+} from "../../tests/readings/kernels/collections-kernels-extra.ts";
+import { readings as matchingReadings } from "../../tests/readings/kernels/set-partitions-matchings.ts";
+import { isRestrictedGrowthStringOf } from "../../tests/readings/kernels/set-partitions-paths-partitions.ts";
 
 const ce = bareEngine();
 

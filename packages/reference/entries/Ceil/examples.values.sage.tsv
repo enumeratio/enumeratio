@@ -6,8 +6,8 @@ integers-pass-through-unchanged	enumeratio_ceil(5)	5
 threads-element-wise-over-a-list	[enumeratio_ceil(1.2), enumeratio_ceil(-1.2), enumeratio_ceil(3.7)]	[2, -1, 4]	
 ceil-2p4	enumeratio_ceil(2.4)	3	
 ceil-2p6	enumeratio_ceil(2.6)	3	
-idempotent-lceil-lceil-x-rceil-rceil	enumeratio_ceil(enumeratio_ceil(SR.var("x")))	True	
-stays-symbolic	enumeratio_ceil(SR.var("x"))	True	
+idempotent-lceil-lceil-x-rceil-rceil	enumeratio_ceil(enumeratio_ceil(SR.var("x")))	ceil(ceil(x))	
+stays-symbolic	enumeratio_ceil(SR.var("x"))	ceil(x)	
 exact-radicals-are-decided-numerically	enumeratio_ceil(sqrt(50))	8	
 evaluates-at-an-exact-constant-lceil-pi-rceil-4	enumeratio_ceil(pi)	4	
 a-second-argument-rounds-up-to-a-multiple-of-it			

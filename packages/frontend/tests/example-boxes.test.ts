@@ -37,15 +37,19 @@ test("a role reaches every mark in a row, and an address names none", () => {
       ],
     },
   ];
-  const plot = ["GraphicsBox", ["TagBox", ["RowBox", [point, line]], "Series"], {}] as never;
+  const plot = [
+    "GraphicsBox",
+    [
+      ["TagBox", point, "Series"],
+      ["TagBox", line, "Series"],
+    ],
+    {},
+  ] as never;
   const figure = [
     "GraphicsBox",
     [
-      "RowBox",
-      [
-        ["TagBox", point, "0,1"],
-        ["TagBox", line, "0,1;1,2"],
-      ],
+      ["TagBox", point, "0,1"],
+      ["TagBox", line, "0,1;1,2"],
     ],
     {},
   ] as never;

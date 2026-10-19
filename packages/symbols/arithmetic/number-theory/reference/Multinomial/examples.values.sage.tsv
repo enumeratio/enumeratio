@@ -8,7 +8,7 @@ complex-arguments-evaluate-via-the-gamma	multinomial((1 + 1*I), 0.2, 4)	TypeErro
 an-around-argument-should-propagate-its			
 the-number-of-distinct-letter-arrangements-of	multinomial(1, 4, 4, 2)	34650	
 the-coefficient-of-a-2-b-3-c-in-a-b-c-6	multinomial(2, 3, 1)	60	
-with-two-arguments-it-reduces-to-binomial-binom	enumeratio_equal(multinomial(7, 3), binomial(10, 3))	True	
+with-two-arguments-it-reduces-to-binomial-binom	enumeratio_equal(multinomial(7, 3), enumeratio_binomial(10, 3))	True	
 orderless-permuting-the-arguments-doesn-t-change	enumeratio_equal(multinomial(1, 2, 3), multinomial(3, 1, 2))	True	
 the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3	enumeratio_equal(multinomial(3, 4, 5), (enumeratio_factorial(12) / (enumeratio_factorial(3) * enumeratio_factorial(4) * enumeratio_factorial(5))))	True	
 all-ones-parts-give-n-every-part-is-a-single	multinomial(1, 1, 1, 1)	24	

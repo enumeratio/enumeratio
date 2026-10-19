@@ -1,5 +1,5 @@
 import { declareCombinatorics } from "@enumeratio/combinatorics";
-import { isNode, makeBoxes, optionsOfBox } from "@enumeratio/boxes";
+import { makeBoxes, optionsOfBox } from "@enumeratio/boxes";
 import { expect, it } from "vite-plus/test";
 import { configureEngine } from "../src/engine.ts";
 import { displayListOfBox, graphicsOf } from "../src/graphics-box.ts";
@@ -24,10 +24,13 @@ configureEngine((ce) => declareCombinatorics(ce));
 const list = (...xs: unknown[]) => ["List", ...xs];
 const rule = (name: string, value: unknown) => ["Rule", name, value];
 
+/** The options of the drawing inside a box, whatever wraps it. */
+const drawnOptions = (box: Parameters<typeof graphicsOf>[0]) => optionsOfBox(graphicsOf(box)!.box);
+
 /** The lowering `makeBoxes` gives a `Show`, as a box. */
 function lower(show: unknown) {
   const box = makeBoxes(show as never, FIGURE_NOTATION);
-  if (!isNode(box) || box[0] !== "GraphicsBox") throw new Error(`not a GraphicsBox: ${JSON.stringify(show)}`);
+  if (graphicsOf(box) === undefined) throw new Error(`not a GraphicsBox: ${JSON.stringify(show)}`);
   return box;
 }
 
@@ -38,14 +41,14 @@ async function pinned(show: unknown) {
   const out = pinnedBox(box);
   if (typeof out === "string") throw new Error(out);
   const marks = displayListOfBox(out)?.marks ?? [];
-  return { box, marks, options: optionsOfBox(graphicsOf(out)!.box) };
+  return { box, marks, options: drawnOptions(out) };
 }
 
 it("holds a lattice as a producer, and pins it to a finite list", async () => {
   const show = ["Show", ["LatticeTiles", ["QuadraticIntegers", -5]]];
   await loadLatticeModules(specOf(show).tiles);
   const box = lower(show);
-  expect(optionsOfBox(box)).toMatchObject({ Producer: "LatticeTiles", ViewKind: "plane", Complete: false });
+  expect(drawnOptions(box)).toMatchObject({ Producer: "LatticeTiles", ViewKind: "plane", Complete: false });
   expect(displayListOfBox(box)?.marks).toEqual([]);
   expect(heldShow(box)).toEqual(show);
   expect(typeof producerOf(box)).toBe("object");
@@ -122,7 +125,7 @@ it("evaluates a figure's arguments with its head kept, then lowers it", async ()
   const direct = lower(["Show", ["CellDiagram", ["Subset", list(1, 3), 5]]]);
   expect(displayListOfBox(made)!.marks).toHaveLength(displayListOfBox(direct)!.marks.length);
   expect(displayListOfBox(made)!.marks.length).toBeGreaterThan(0);
-  expect(optionsOfBox(made).ViewKind).toBe("fixed");
+  expect(drawnOptions(made).ViewKind).toBe("fixed");
 });
 
 it("falls back to whole evaluation where the head cannot be kept", async () => {
@@ -132,13 +135,13 @@ it("falls back to whole evaluation where the head cannot be kept", async () => {
   const box = lower(shown);
   // Two levels of four strand ends.
   expect(displayListOfBox(box)!.marks).toHaveLength(8);
-  expect(optionsOfBox(box).ViewKind).toBe("fixed");
+  expect(drawnOptions(box).ViewKind).toBe("fixed");
 });
 
 it("lowers a polytope frame as seen from its ViewPoint", async () => {
   const show = ["Show", ["PolytopeFaces", ["Permutahedron", 4]]];
   const box = lower(show);
-  expect(optionsOfBox(box).ViewKind).toBe("camera");
+  expect(drawnOptions(box).ViewKind).toBe("camera");
   // The truncated octahedron: 24 vertices, 36 edges, 14 faces, the body.
   expect(displayListOfBox(box)!.marks).toHaveLength(75);
 });
@@ -146,7 +149,7 @@ it("lowers a polytope frame as seen from its ViewPoint", async () => {
 it("lowers a bare layer as the Show of it", async () => {
   await loadLatticeModules({ head: "LatticeTiles", data: "GaussianIntegers" });
   const box = makeBoxes(["LatticeTiles", "EisensteinIntegers"] as never, FIGURE_NOTATION);
-  expect(isNode(box) && box[0]).toBe("GraphicsBox");
+  expect(graphicsOf(box)).toBeDefined();
 });
 
 it("draws BraidClosure as the closed braid, without a Show", () => {

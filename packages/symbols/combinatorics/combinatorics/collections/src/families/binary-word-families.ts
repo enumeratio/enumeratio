@@ -10,7 +10,7 @@ import { modRank } from "./kernels.ts";
 import type { EpsilFamily } from "./epsil.ts";
 import type { NumberKernel } from "./types.ts";
 
-const normRank = (r: number, total: number): number => (total > 0 ? modRank(Math.trunc(r), total) : 0);
+export const normRank = (r: number, total: number): number => (total > 0 ? modRank(Math.trunc(r), total) : 0);
 
 function arraysEqual(a: number[], b: number[]): boolean {
   if (a.length !== b.length) return false;
@@ -52,66 +52,6 @@ function divisorsOf(n: number): number[] {
 // number of valid length-`len` completions given `state` (0/1/2) trailing 1s already placed;
 // unrank/rank walk positions left to right exactly like BinaryWordsByWeight's combinatorial-
 // number-system walk, using comp() as the block-size function (0 sorts before 1 at each spot). ────
-const triCompCache = new Map<string, number>();
-function triComp(len: number, state: 0 | 1 | 2): number {
-  if (len === 0) return 1;
-  const key = `${len},${state}`;
-  const cached = triCompCache.get(key);
-  if (cached !== undefined) return cached;
-  const withZero = triComp(len - 1, 0);
-  const withOne = state < 2 ? triComp(len - 1, (state + 1) as 0 | 1 | 2) : 0;
-  const total = withZero + withOne;
-  triCompCache.set(key, total);
-  return total;
-}
-function triCount(n: number): number {
-  return triComp(n, 0);
-}
-function triUnrank(n: number, r: number): number[] {
-  const total = triCount(n);
-  let rem = normRank(r, total);
-  let state: 0 | 1 | 2 = 0;
-  const bits: number[] = [];
-  for (let i = 0; i < n; i++) {
-    const remaining = n - i - 1;
-    const zeroBlock = triComp(remaining, 0);
-    if (rem < zeroBlock) {
-      bits.push(0);
-      state = 0;
-    } else {
-      rem -= zeroBlock;
-      bits.push(1);
-      state = (state + 1) as 0 | 1 | 2;
-    }
-  }
-  return bits;
-}
-function triRank(bits: number[], n: number): number {
-  let rem = 0;
-  let state: 0 | 1 | 2 = 0;
-  for (let i = 0; i < n; i++) {
-    const remaining = n - i - 1;
-    const zeroBlock = triComp(remaining, 0);
-    if (bits[i] === 1) {
-      rem += zeroBlock;
-      state = (state + 1) as 0 | 1 | 2;
-    } else {
-      state = 0;
-    }
-  }
-  return rem;
-}
-function triValid(bits: unknown, n: number): boolean {
-  if (!Array.isArray(bits) || bits.length !== n) return false;
-  let run = 0;
-  for (const b of bits) {
-    if (b !== 0 && b !== 1) return false;
-    run = b === 1 ? run + 1 : 0;
-    if (run >= 3) return false;
-  }
-  return true;
-}
-
 // ─── PrimitiveBinaryStrings(n): aperiodic binary words (no proper period) — A027375. Every
 // primitive word's set of n rotations is exactly the orbit of a length-n Lyndon word (rotations
 // of a Lyndon word are pairwise distinct precisely because it's aperiodic), so the primitive
@@ -209,12 +149,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
     head: "TriStrings",
     carrier: "BinaryWord",
     params: ["_n"],
-    fast: {
-      count: ([n]) => triStringsExact(n),
-      unrank: ([n], r) => triUnrank(n, r),
-      rank: (a, [n]) => triRank(a as number[], n),
-      valid: (a, [n]) => triValid(a, n),
-    },
+    fastCount: ([n]) => triStringsExact(n),
   }),
   // PrimitiveBinaryStrings(n): aperiodic binary words — A027375. Stays a TS kernel: its lex order
   // has no completion counts short of enumerating the Lyndon words and their rotations.

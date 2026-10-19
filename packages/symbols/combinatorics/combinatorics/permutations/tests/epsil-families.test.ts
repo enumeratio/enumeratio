@@ -8,31 +8,14 @@ import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, epsilKernelOn, kernelOn } from "../../collections/src/families/epsil.ts";
 import type { FamilyKernel } from "../../collections/src/families/types.ts";
+import { IsPermutationOf, PermutationRank, PermutationUnrank } from "../../collections/src/families/kernels.ts";
 import {
-  Inversions,
-  IsPermutationOf,
-  LehmerCode,
-  PermutationRank,
-  PermutationUnrank,
-} from "../../collections/src/families/kernels.ts";
-import {
-  ColoredPermutationCount,
-  ColoredPermutationRank,
-  ColoredPermutationUnrank,
-  IsColoredPermutationOf,
   IsCyclicPermutationOf,
   IsDerangementOf,
   IsInvolutionOf,
-  IsKPermutationOf,
-  IsSignedPermutationOf,
-  KPermutationCount,
-  KPermutationRank,
-  KPermutationUnrank,
-  SignedPermutationCount,
-  SignedPermutationRank,
-  SignedPermutationUnrank,
 } from "../../collections/src/families/kernels-extra.ts";
 import { arrangements, evenPermutations, lehmerCodes, subexcedantSeqs } from "../src/families/closed-forms.ts";
+import { withRetiredFast } from "../../tests/readings/index.ts";
 import { epsilEntries, kCyclePermutations } from "../src/families/core.ts";
 import { permutationsAsCycles } from "../src/families/cycles.ts";
 import { entries as permutationsEntries, PermutationsAsCyclesFamily } from "../src/families/permutations.ts";
@@ -50,6 +33,21 @@ import {
   separablePermutations,
   vexillaryPermutations,
 } from "../src/families/restrictions.ts";
+import { Inversions, LehmerCode } from "../../tests/readings/kernels/collections-kernels.ts";
+import {
+  ColoredPermutationCount,
+  ColoredPermutationRank,
+  ColoredPermutationUnrank,
+  IsColoredPermutationOf,
+  IsKPermutationOf,
+  IsSignedPermutationOf,
+  KPermutationCount,
+  KPermutationRank,
+  KPermutationUnrank,
+  SignedPermutationCount,
+  SignedPermutationRank,
+  SignedPermutationUnrank,
+} from "../../tests/readings/kernels/collections-kernels-extra.ts";
 
 const ce = bareEngine();
 
@@ -431,7 +429,10 @@ for (const [head, reading] of Object.entries(READINGS)) {
 
 // The families defined as closed forms keep their TS kernels as fast paths: the same listings, exhaustively.
 for (const head of ["EvenPermutations", "Arrangements", "LehmerCodes", "SubexcedantSeqs"]) {
-  const kernel = kernelOn(ce, permutationsEntries.find((family) => family.head === head) as EpsilFamily);
+  const kernel = kernelOn(
+    ce,
+    withRetiredFast(permutationsEntries.find((family) => family.head === head) as EpsilFamily),
+  );
   test(`${head}: the fast path agrees with its TS reading`, () => {
     expect(kernel.fast).toBe(true);
     for (const p of READINGS[head].params) agrees(kernel, READINGS[head], p);

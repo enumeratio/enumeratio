@@ -34,5 +34,5 @@ carrier: Permutation
 
 - A lazy indexed collection; the count is the Catalan number $C_n$ — $1, 1, 2, 5, 14, 42, …$, A000108.
 - $\ell_T$ is the reflection length, $n$ minus the number of cycles. Equivalently the cycles of $\pi$ are the blocks of a noncrossing partition of $\{1, …, n\}$, each block traversed in increasing cyclic order.
-- Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those below the long cycle, so it is practical only for small $n$; the count is exact for every $n$.
+- Each element is the one-line word; $At$ unranks by completion counts in lexicographic order, so it reaches members of large $n$ without listing $n!$ permutations.
 - Relaxing the cycle order — blocks noncrossing, each cycle in any cyclic order — is [[NonCrossingCycleSupportPermutations]] ($1, 2, 6, 23, 105, …$).

@@ -4,7 +4,7 @@ id	in	out	verdict
 the-empty-product-is-1-by-convention	factorial(0)	1	
 10-factorial	factorial(10)	3628800	
 threads-element-wise-over-a-list	factorial([1, 2, 3, 4])	AttributeError: 'list' object has no attribute 'is_Number'	error
-frac-n-n-1-simplifies-to-n-under-simplify-plain	simplify((S(factorial(Symbol("n"))) / factorial((Symbol("n") - 1))))	True	
+frac-n-n-1-simplifies-to-n-under-simplify-plain	simplify((S(factorial(Symbol("n"))) / factorial((Symbol("n") - 1))))	n	
 real-arguments-evaluate-as-gamma-n-1	factorial(3.5)	11.6317283965674	
 negative-non-integers-are-defined-too-2-5-gamma	factorial(-2.5)	2.36327180120735	
 complex-arguments-1-i-gamma-2-i	factorial((1 + 1*I))	factorial(1 + I)	

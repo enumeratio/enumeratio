@@ -13,8 +13,8 @@ arccos-neg-sqrt-2-over-2	arccos((-(sqrt(2) / 2)))	arccos(-1/2*sqrt(2))
 recognizes-cos-pi-5-frac-1-sqrt-5-4	arccos(((1 + sqrt(5)) / 4))	arccos(1/4*sqrt(5) + 1/4)	
 interval-arithmetic-decreasing-so-arccos-frac-13			
 uncertainty-propagation-arccos-0-9-pm-0-1-approx			
-derivative-frac-1-sqrt-1-x-2	diff(arccos(SR.var("x")), SR.var("x"))	True	
-antiderivative	integrate(arccos(SR.var("x")), SR.var("x"))	True	
+derivative-frac-1-sqrt-1-x-2	diff(arccos(SR.var("x")), SR.var("x"))	-1/sqrt(-x^2 + 1)	
+antiderivative	integrate(arccos(SR.var("x")), SR.var("x"))	x*arccos(x) - sqrt(-x^2 + 1)	
 not-simply-4-4-is-outside-the-principal-range-0	arccos(cos(4))	arccos(cos(4))	
 arccos-infinity-is-a-directed-infinity-along-the	arccos(oo)	RuntimeError: arccos_eval(): arccos(infinity) encountered	error
 arccos-infinity-is-the-opposite-directed	arccos(-oo)	RuntimeError: arccos_eval(): arccos(infinity) encountered	error
@@ -23,7 +23,7 @@ integrate-arccos-x-x-neg-1-1	integrate(arccos(SR.var("x")), SR.var("x"), -1, 1)	
 outside-1-1-reduces-to-the-exact-closed-form	arccos(2)	arccos(2)	
 arccos-neg-2	arccos(-2)	pi - arccos(2)	
 cos-arccos-x-x-on-the-principal-branch	enumeratio_equal(cos(arccos((1/2))), (1/2))	True	
-reflection-arccos-x-pi-arccos-x	arccos((-SR.var("x")))	True	
+reflection-arccos-x-pi-arccos-x	arccos((-SR.var("x")))	arccos(-x)	
 arccos-sqrt-2-over-4-times-neg-1-plus-sqrt-3	arccos(((sqrt(2) / 4) * (-1 + sqrt(3))))	arccos(1/4*sqrt(2)*(sqrt(3) - 1))	
 arccos-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	arccos(((-(sqrt(2) / 4)) * (-1 + sqrt(3))))	arccos(-1/4*sqrt(2)*(sqrt(3) - 1))	
 arccos-1-over-4-times-neg-1-plus-sqrt-5	arccos(((1/4) * (-1 + sqrt(5))))	arccos(1/4*sqrt(5) - 1/4)	

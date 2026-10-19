@@ -10,12 +10,6 @@
 // agreement test checks it against.
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {
-  RootedForestCount,
-  RootedForestUnrank,
-  RootedForestRank,
-  IsRootedForest,
-} from "../../../collections/src/families/kernels-extra.ts";
-import {
   add,
   all,
   and,
@@ -29,20 +23,7 @@ import {
   sub,
   upTo,
 } from "../../../collections/src/families/tables.ts";
-import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import { degreesOfSequence, pruferDigits, removeLeaf, smallestLeaf, zeros } from "./peel.ts";
-
-export const rootedForestsKernel: NumberKernel = {
-  head: "RootedForests",
-  paramCount: 1,
-  kind: "ints",
-  carrier: "RootedForest",
-  count: ([n]) => RootedForestCount(n),
-  unrank: ([n], r) => RootedForestUnrank(n, r),
-  valid: (a, [n]) => IsRootedForest(a, n),
-  rank: (a, [n]) => RootedForestRank(a as number[], n),
-};
-
 type MathJSON = unknown;
 
 const n = "_n";
@@ -113,7 +94,6 @@ const rootedForests: EpsilFamily = {
   kind: "ints",
   carrier: "RootedForest",
   params: ["_n"],
-  fast: rootedForestsKernel,
   epsil: {
     count: iff(["LessEqual", n, 0], 1, ["Power", N, sub(n, 1)]),
     unrank,

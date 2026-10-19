@@ -9,6 +9,7 @@ import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { epsilKernelOn, isEpsilFamily, kernelOn, liftFamily } from "../src/families/epsil.ts";
 import { entries as closedForm } from "../src/families/numeric-closed-form.ts";
+import { UNWIRED } from "../src/families/numeric-definitions.ts";
 import { entries as digits } from "../src/families/numeric-digits-primes.ts";
 import { entries as recurrences } from "../src/families/numeric-recurrence.ts";
 import { definitions } from "../src/families/sequence-definitions.ts";
@@ -150,12 +151,12 @@ function firstPlaces(terms: bigint[]): Map<bigint, number> {
   return places;
 }
 
-test("the sequences are Epsil definitions with their TS kernels as fast paths", () => {
+test("the sequences are Epsil definitions with their TS kernels as fast paths, bar the unwired ones", () => {
   expect(definitions.size).toBe(Object.keys(TERMS).length);
   for (const head of definitions.keys()) {
     const family = entry(head);
     expect(isEpsilFamily(family), head).toBe(true);
-    expect(kernelOn(ce, family).fast, head).toBe(true);
+    expect(kernelOn(ce, family).fast, head).toBe(UNWIRED.has(head) ? undefined : true);
     expect(epsil(head).fast, head).toBeUndefined();
   }
 });

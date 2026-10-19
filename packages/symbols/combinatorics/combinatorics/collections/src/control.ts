@@ -201,10 +201,11 @@ function declareSow(ce: Engine): void {
  *  only, documented per the task's "at least exact-tag matching"); a requested tag nothing
  *  was sown under comes back as `{}` in its position. */
 function declareReap(ce: Engine): void {
-  // A canonical List drops `Nothing` (our `Null`), so `Reap(Do(..))` would lose its first slot.
+  // Canonicalizing a List drops `Nothing` (our `Null`), so `Reap(Do(..))` would lose its first
+  // slot; `_fn` builds the List already canonical, which an operand of `At` or `Part` keeps.
   const reaped = (value: Expr, groups: Expr): Expr =>
     symbolNameOf(value) === "Nothing"
-      ? ce.function("List", [value, groups], { form: "raw" })
+      ? (ce as unknown as { _fn(head: string, ops: readonly Expr[]): Expr })._fn("List", [value, groups])
       : ce.box(["List", value, groups]);
   ce.declare("Reap", {
     signature: "(any, any?) -> any",

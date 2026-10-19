@@ -56,7 +56,7 @@ import {
   wildcardOf,
   zoomed,
 } from "@enumeratio/frontend/core";
-import { isNode, makeBoxes } from "@enumeratio/boxes";
+import { graphicsOf, makeBoxes } from "@enumeratio/boxes";
 import { emitControl } from "./define.ts";
 import { scopeOf } from "./scope.ts";
 import { type FramePlacement, figureFrame, isVertical, placementOf } from "./figure-frame.ts";
@@ -448,7 +448,7 @@ export class GraphicsBoxElement extends LitElement {
     if (await this.#followExample(spec)) return;
     // The one lowering: what a terminal or an SVG draws is what this draws.
     const box = makeBoxes(shown as never, FIGURE_NOTATION);
-    if (!isNode(box) || box[0] !== "GraphicsBox") {
+    if (graphicsOf(box) === undefined) {
       const why = showBox(shown);
       this._status = typeof why === "string" ? why : "Not a Show(…) expression.";
       return;

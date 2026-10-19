@@ -6,6 +6,7 @@ import { expect, test } from "vite-plus/test";
 import { applyDefinition } from "../../src/statistics/declare.ts";
 import { SET_PARTITION_STATISTICS } from "../src/statistics.ts";
 import { bySignature } from "../../src/statistics/types.ts";
+import { SET_PARTITION_READINGS } from "./set-partition-findstat-readings.ts";
 
 export const ce = bareEngine();
 export const index = bySignature(SET_PARTITION_STATISTICS);
@@ -116,6 +117,7 @@ export const EXPECTED: Record<string, (b: number[][]) => number> = {
   Crossings: (b) => countArcPairs(b, "crossing"),
   Nestings: (b) => countArcPairs(b, "nesting"),
   CrossingNestingTotal: (b) => countArcPairs(b, "crossing") + countArcPairs(b, "nesting"),
+  ...SET_PARTITION_READINGS,
 };
 
 /** Generate `${head} agrees over every set partition of 1..6` for each of `heads`, against

@@ -7,12 +7,18 @@ references:
   - system: wikipedia
     identity: Longest increasing subsequence
 statOn:
+  - Composition
   - Permutation
 signatures:
   - call: LongestDecreasingSubsequence(p)
     description: The length of a longest decreasing subsequence.
     library: enumeratio-combinatorics
-    type: (list<integer> | permutation) -> number
+    type: (composition | list<integer> | permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000760
+    url: https://www.findstat.org/St000760
+    on: Composition
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

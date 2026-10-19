@@ -4,6 +4,9 @@ inversebetaregularized-0p3-2p5-1p5	InverseBetaRegularized[0.3, 2.5, 1.5]	0.50949
 i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2	InverseBetaRegularized[0.25, 2, 1]	0.5000000000000001	I_{0.25}^{-1}(2,1)	0.5	
 iinv-0-7-4-2	InverseBetaRegularized[0.7, 4, 2]	0.7819730842367751	I_{0.7}^{-1}(4,2)	0.781973	
 inversebetaregularized-with-tiny-shapes	InverseBetaRegularized[0.3, 0.0000025, 0.0000015]				
+tail-s-1e-100-a-2-b-3	InverseBetaRegularized[1*^-100, 2, 3]				
+tail-s-1e-8-a-0p5-b-0p5	InverseBetaRegularized[1*^-8, 0.5, 0.5]				
+upper-tail-s-near-1	InverseBetaRegularized[0.99999999999999, 3, 1000]				
 i-x-1-1-x-is-its-own-inverse	InverseBetaRegularized[s, 1, 1]	InverseBetaRegularized[s, 1, 1]	I_s^{-1}(1,1)	I_s^{-1}(1,1)	inconclusive
 i-x-a-1-x-a-inverts-to-s-1-a	InverseBetaRegularized[s, a, 1]	InverseBetaRegularized[s, a, 1]	I_s^{-1}(a,1)	I_s^{-1}(a,1)	inconclusive
 inversebetaregularized-0-2-3	InverseBetaRegularized[0, 2, 3]	0	I_0^{-1}(2,3)	0	
