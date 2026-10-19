@@ -250,10 +250,10 @@
     "rendering": {
       "tag": "graphics-3d-box",
       "attributes": {
-        "value": "Graphics3D(Line(KnotCurve(TorusKnot(2, 3))), closed -> True, Torus -> (2, 1))"
+        "value": "Graphics3D(Line(KnotCurve(TorusKnot(2, 3))), Closed -> True, Torus -> (2, 1))"
       }
     },
-    "markup": "<graphics-3d-box value=\"Graphics3D(Line(KnotCurve(TorusKnot(2, 3))), closed -> True, Torus -> (2, 1))\"></graphics-3d-box>"
+    "markup": "<graphics-3d-box value=\"Graphics3D(Line(KnotCurve(TorusKnot(2, 3))), Closed -> True, Torus -> (2, 1))\"></graphics-3d-box>"
   },
   "GraphPlot([[1, 2], [2, 3]])": {
     "rendering": {
@@ -983,10 +983,10 @@
     "rendering": {
       "tag": "graphics-box",
       "attributes": {
-        "value": "Plot(sin(x), (x, 0, 10), ColorFunction -> \"Magma\", reverse -> True)"
+        "value": "Plot(sin(x), (x, 0, 10), ColorFunction -> \"Magma\", Reverse -> True)"
       }
     },
-    "markup": "<graphics-box value=\"Plot(sin(x), (x, 0, 10), ColorFunction -> &quot;Magma&quot;, reverse -> True)\"></graphics-box>"
+    "markup": "<graphics-box value=\"Plot(sin(x), (x, 0, 10), ColorFunction -> &quot;Magma&quot;, Reverse -> True)\"></graphics-box>"
   },
   "Plot([Sin(x), Cos(x)], (x, 0, 10), Discrete -> \"set1\")": {
     "rendering": {
@@ -1054,7 +1054,7 @@
         {
           "tag": "graphics-box",
           "attributes": {
-            "value": "Show(\n      LatticeTiles(QuadraticIntegers(_d), ColorRules -> [isPrime -> Teal]),\n      Selection -> _s,\n    )",
+            "value": "Show(\n      LatticeTiles(QuadraticIntegers(_d), ColorRules -> [IsPrime -> Teal]),\n      Selection -> _s,\n    )",
             "style": "display:block;min-height:480px"
           }
         },
@@ -1079,7 +1079,7 @@
         }
       ]
     },
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\" variables=\"[_d -> -5, _s -> []]\"><graphics-box value=\"Show(\n      LatticeTiles(QuadraticIntegers(_d), ColorRules -> [isPrime -> Teal]),\n      Selection -> _s,\n    )\" style=\"display:block;min-height:480px\"></graphics-box><span data-head=\"StringTemplate\"><span>d = </span><template-slot name=\"d\"></template-slot></span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\" variables=\"[_d -> -5, _s -> []]\"><graphics-box value=\"Show(\n      LatticeTiles(QuadraticIntegers(_d), ColorRules -> [IsPrime -> Teal]),\n      Selection -> _s,\n    )\" style=\"display:block;min-height:480px\"></graphics-box><span data-head=\"StringTemplate\"><span>d = </span><template-slot name=\"d\"></template-slot></span></grid-box>"
   },
   "TestResultObject(KeyValuePair(\"Outcome\", \"Success\"), KeyValuePair(\"Input\", 1 + 1), KeyValuePair(\"ActualOutput\", 2), KeyValuePair(\"AbsoluteTimeUsed\", 0))": {
     "rendering": {
