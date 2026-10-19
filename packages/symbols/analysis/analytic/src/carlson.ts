@@ -92,14 +92,15 @@ export function carlsonRF(x0: Cx, y0: Cx, z0: Cx): Cx {
 
 /**
  * RC(x,y) = ½∫₀^∞ dt / [(t+y)√(t+x)] — the degenerate case RF(x,y,y), a rational/log/
- * trig "elementary" elliptic integral. For real y < 0 < x this routes through the Cauchy
- * principal value (DLMF 19.2.19): RC(x,y) = √(x/(x−y))·RC(x−y, −y), which lands the
- * recursive call on a positive second argument where the direct definition applies.
+ * trig "elementary" elliptic integral. For real y < 0 the pole t = −y lies on the path, and
+ * the value is the Cauchy principal value (DLMF 19.2.19; the mean of the limits from either
+ * side of y), for any x: RC(x,y) = √(x/(x−y))·RC(x−y, −y), which lands the recursive call
+ * on a positive second argument where the direct definition applies. Wolfram and mpmath
+ * agree. x = y keeps the direct definition, where the identity divides by zero.
  */
 export function carlsonRC(x: Cx, y: Cx): Cx {
-  if (y.im === 0 && y.re < 0 && x.im === 0 && x.re > 0) {
-    const shifted = carlsonRF(cx(x.re - y.re), cx(-y.re), cx(-y.re));
-    return mul(cpow(cx(x.re / (x.re - y.re)), cx(0.5)), shifted);
+  if (y.im === 0 && y.re < 0 && !(x.re === y.re && x.im === 0)) {
+    return mul(csqrt(div(x, sub(x, y))), carlsonRC(sub(x, y), cx(-y.re)));
   }
   return carlsonRF(x, y, y);
 }
