@@ -2,7 +2,7 @@ id	section	role	expr	expected	caption
 additive-energy-1-5	Basic		[AdditiveEnergy, [List, 1, 2, 3, 4, 5]]	85	the quadruples of $\{1,\dots,5\}$ with $a_1+b_1=a_2+b_2$
 additive-energy-two-sets	Basic		[AdditiveEnergy, [List, 1, 2, 3], [List, 1, 2]]	10	$A=\{1,2,3\}$ and $B=\{1,2\}$ have sums $2,3,3,4,4,5$, so $1+4+4+1$
 additive-energy-singleton	Scope		[AdditiveEnergy, [List, 7]]	1	one member gives one quadruple
-additive-energy-empty	Scope		[AdditiveEnergy, [List, ]]	0	no members, no quadruples
+additive-energy-empty	Scope		[AdditiveEnergy, [List]]	0	no members, no quadruples
 additive-energy-set	Scope		[AdditiveEnergy, [Set, 1, 2, 3]]	19	a $Set$ is read the same way as a list
 additive-energy-duplicates	Scope		[AdditiveEnergy, [List, 1, 1, 2, 3]]	19	repeats are ignored: the members are $\{1,2,3\}$
 additive-energy-rationals	Scope		[AdditiveEnergy, [List, [Rational, 1, 2], 1, [Rational, 3, 2]]]	19	exact rationals count too; this is $\{1,2,3\}$ scaled by $\tfrac12$

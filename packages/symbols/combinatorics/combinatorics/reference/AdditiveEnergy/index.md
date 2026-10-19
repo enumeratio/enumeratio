@@ -2,14 +2,14 @@
 name: AdditiveEnergy
 domain: Collections
 signature: AdditiveEnergy(A, B)
-summary: 'The number of quadruples $(a_1,a_2,b_1,b_2)\in A\times A\times B\times B$ with $a_1+b_1=a_2+b_2$.'
+summary: The number of quadruples $(a_1,a_2,b_1,b_2)\in A\times A\times B\times B$ with $a_1+b_1=a_2+b_2$.
 signatures:
   - call: AdditiveEnergy(A, B)
     description: '$E(A,B)=\#\{(a_1,a_2,b_1,b_2): a_1+b_1=a_2+b_2\}$, the pairs of pairs with equal sums.'
     library: enumeratio-combinatorics
     type: (collection, collection?) -> integer
   - call: AdditiveEnergy(A)
-    description: '$E(A,A)$.'
+    description: $E(A,A)$.
     library: enumeratio-combinatorics
     type: (collection, collection?) -> integer
 seeAlso:
@@ -20,7 +20,7 @@ catalog:
   - system: mathlib4
     identity: Finset.addEnergy
     url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Additive/Energy.html#Finset.addEnergy
-    note: "Finset.addEnergy s t; mathlib takes any additive Finset, ours exact rationals"
+    note: Finset.addEnergy s t; mathlib takes any additive Finset, ours exact rationals
 ---
 
 - Defined in Epsil as $\sum_x r(x)^2$, where $r(x)$ is the number of pairs $(a,b)\in A\times B$ with $a+b=x$: two pairs with the same sum are one quadruple, so tallying the $|A||B|$ sums is enough and the $|A|^2|B|^2$ quadruples are never tested.

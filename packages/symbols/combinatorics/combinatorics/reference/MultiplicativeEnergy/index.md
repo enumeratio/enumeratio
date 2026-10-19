@@ -2,14 +2,14 @@
 name: MultiplicativeEnergy
 domain: Collections
 signature: MultiplicativeEnergy(A, B)
-summary: 'The number of quadruples $(a_1,a_2,b_1,b_2)\in A\times A\times B\times B$ with $a_1b_1=a_2b_2$.'
+summary: The number of quadruples $(a_1,a_2,b_1,b_2)\in A\times A\times B\times B$ with $a_1b_1=a_2b_2$.
 signatures:
   - call: MultiplicativeEnergy(A, B)
     description: '$E^\times(A,B)=\#\{(a_1,a_2,b_1,b_2): a_1b_1=a_2b_2\}$, the pairs of pairs with equal products.'
     library: enumeratio-combinatorics
     type: (collection, collection?) -> integer
   - call: MultiplicativeEnergy(A)
-    description: '$E^\times(A,A)$.'
+    description: $E^\times(A,A)$.
     library: enumeratio-combinatorics
     type: (collection, collection?) -> integer
 seeAlso:
@@ -20,7 +20,7 @@ catalog:
   - system: mathlib4
     identity: Finset.mulEnergy
     url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Additive/Energy.html#Finset.mulEnergy
-    note: "Finset.mulEnergy s t; mathlib takes any multiplicative Finset, ours exact rationals"
+    note: Finset.mulEnergy s t; mathlib takes any multiplicative Finset, ours exact rationals
 ---
 
 - Defined in Epsil as $\sum_x r(x)^2$, where $r(x)$ is the number of pairs $(a,b)\in A\times B$ with $ab=x$: [[AdditiveEnergy]] with products for sums.

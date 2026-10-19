@@ -2,7 +2,7 @@ id	section	role	expr	expected	caption
 multiplicative-energy-1-5	Basic		[MultiplicativeEnergy, [List, 1, 2, 3, 4, 5]]	49	the quadruples of $\{1,\dots,5\}$ with $a_1b_1=a_2b_2$
 multiplicative-energy-two-sets	Basic		[MultiplicativeEnergy, [List, 1, 3, 9], [List, 1, 3]]	10	powers of 3 multiply as their exponents add: $\{0,1,2\}$ and $\{0,1\}$
 multiplicative-energy-singleton	Scope		[MultiplicativeEnergy, [List, 0]]	1	one member gives one quadruple, zero included
-multiplicative-energy-empty	Scope		[MultiplicativeEnergy, [List, ]]	0	no members, no quadruples
+multiplicative-energy-empty	Scope		[MultiplicativeEnergy, [List]]	0	no members, no quadruples
 multiplicative-energy-rationals	Scope		[MultiplicativeEnergy, [List, [Rational, 1, 2], 1, 2]]	19	exact rationals count too: $\{2^{-1},2^0,2^1\}$
 multiplicative-energy-zero	Properties		[MultiplicativeEnergy, [List, 0, 1, 2, 3]]	64	zero multiplies every member to $0$: those $7$ pairs agree with each other, $7^2$ quadruples, and the other nine pairs add $15$
 multiplicative-energy-progression	Properties		[MultiplicativeEnergy, [List, 1, 2, 4, 8, 16]]	85	a geometric progression has the additive energy of $\{0,\dots,4\}$, $(2\cdot 5^3+5)/3$
