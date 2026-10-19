@@ -41,13 +41,22 @@ function wordOfContour(path: string, heights: string): MathJSON {
   const children = (node: string): MathJSON => {
     const base = height(node);
     const state = "wc_s";
-    const step = iff(
-      equal(at(state, 1), 0),
-      state,
+    // The fold's state is untyped; read through a typed name its indexed reads stay lists.
+    const typed = "wc_a";
+    const step = lets(
+      [[typed, state, "list<integer>"]],
       iff(
-        less(height("wc_u"), base),
-        ["List", 0, at(state, 2)],
-        ["List", 1, add(at(state, 2), iff(and(equal(at(path, "wc_u"), 1), equal(height("wc_u"), add(base, 1))), 1, 0))],
+        equal(at(typed, 1), 0),
+        typed,
+        iff(
+          less(height("wc_u"), base),
+          ["List", 0, at(typed, 2)],
+          [
+            "List",
+            1,
+            add(at(typed, 2), iff(and(equal(at(path, "wc_u"), 1), equal(height("wc_u"), add(base, 1))), 1, 0)),
+          ],
+        ),
       ),
     );
     return at(fold(step, state, "wc_u", ["List", 1, 0], upTo(add(node, 1), length(path))), 2);

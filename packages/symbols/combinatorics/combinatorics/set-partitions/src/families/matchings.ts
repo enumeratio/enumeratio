@@ -153,21 +153,23 @@ const earlierInBlock: MathJSON = map(
 const tailRankStep = (mode: TailMode): MathJSON =>
   lets(
     [
+      // The fold's state is untyped, so Join of it would not spread; typed, it does.
+      ["ru", "rs", "list<integer>"],
       ["rp", at("pr", "ri"), "integer"],
-      ["ra", sub(["Length", "rs"], 1), "integer"],
+      ["ra", sub(["Length", "ru"], 1), "integer"],
       ["rt", sub(add("_n", 1), "ri"), "integer"],
-      ["rl", ["Drop", "rs", 1], "list<integer>"],
+      ["rl", ["Drop", "ru", 1], "list<integer>"],
       ["rj", add(1, ["Count", ["Filter", "rl", ["Function", less("rv", "rp"), "rv"]]]), "integer"],
     ],
     iff(
       equal("rp", 0),
-      ["Join", "rs", ["List", "ri"]],
+      ["Join", "ru", ["List", "ri"]],
       [
         "Join",
         [
           "List",
           add(
-            at("rs", 1),
+            at("ru", 1),
             F(sub("rt", 1), add("ra", 1)),
             fold(add("rw", extendWeight(mode, "rt", "ra", "rk")), "rw", "rk", 0, upTo(1, sub("rj", 1))),
           ),

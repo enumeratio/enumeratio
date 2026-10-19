@@ -11,8 +11,8 @@ gaussian-integers-1-1-i-1-2i-3-i-over-divisors	DivisorSigma[1, Complex[3, 1]]	2 
 gaussianintegers-true-squares-of-1-1-i-2-3-3-3i	DivisorSigma[2, 6, Rule[GaussianIntegers, True]]	-30 + 20*I	\sigma _2(6)	-30+20 i	disagree
 listable-in-n	DivisorSigma[2, List[1, 2, 3, 4, 5]]	{1, 5, 10, 21, 26}	\sigma _2(\{1,2,3,4,5\})	\{1,5,10,21,26\}	
 symbolic-k-expands-over-the-divisors	DivisorSigma[k, 30]	((-1 + 2^(2*k))*(-1 + 3^(2*k))*(-1 + 5^(2*k)))/((-1 + 2^k)*(-1 + 3^k)*(-1 + 5^k))	\sigma _k(30)	\frac{\left(2^{2 k}-1\right) \left(3^{2 k}-1\right) \left(5^{2 k}-1\right)}{\left(2^k-1\right) \left(3^k-1\right) \left(5^k-1\right)}	
-negative-n-stays-unevaluated	DivisorSigma[1, -12]	28	\sigma _1(-12)	28	disagree
-k-0-of-a-negative-n-stays-unevaluated	DivisorSigma[0, -12]	6	\sigma _0(-12)	6	disagree
+negative-n-stays-unevaluated	DivisorSigma[1, -12]	28	\sigma _1(-12)	28	agree
+k-0-of-a-negative-n-stays-unevaluated	DivisorSigma[0, -12]	6	\sigma _0(-12)	6	agree
 6-is-a-perfect-number-sigma-1-6-2-times-6	DivisorSigma[1, 6]	12	\sigma _1(6)	12	
 28-is-the-next-perfect-number-sigma-1-28-2-times	DivisorSigma[1, 28]	56	\sigma _1(28)	56	
 filter-range-1-30-function-divisorsigma-1-1-eq-2	Select[Range[1, 30], Function[(DivisorSigma[1, Slot[1]] == Times[2, Slot[1]])]]	{6, 28}	\text{Select}[\text{Range}[1,30],\sigma _1(\text{$\#$1})=2 \text{$\#$1}\&]	\{6,28\}	

@@ -259,6 +259,9 @@ const OVERRIDDEN = [
   "FactorInteger",
   "Factorial2",
   "Fibonacci",
+  // Our Filter/Map/Fold widen the signature (`list-heads.ts`), which hides compute-engine's rule that
+  // an eager source is evaluated before the lazy view reads it.
+  "Filter",
   "First",
   "FixedPoint",
   "Flatten",
