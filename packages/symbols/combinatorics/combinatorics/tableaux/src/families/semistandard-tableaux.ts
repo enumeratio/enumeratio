@@ -335,7 +335,7 @@ export const semistandardTableaux: EpsilFamily = (() => {
                     "list<integer>",
                   ],
                 ],
-                // CE #ISSUE: a Fold's result is typed `broadcastable<tuple<integer>>`; read through a `list` its `At` is a scalar.
+                // CE #454: a Fold's result is typed `broadcastable<tuple<integer>>`; read through a `list` its `At` is a scalar.
                 lets([["ss_found", rowSearchRank, "list"]], add("ss_acc", at("ss_found", 1))),
               ),
             ),

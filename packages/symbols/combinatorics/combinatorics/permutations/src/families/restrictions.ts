@@ -936,7 +936,7 @@ const ncCodes = tabulate(
           ["List", "nca", 0, "nca"],
           upTo(1, n),
         ),
-        // CE #ISSUE: a Fold's result is typed `broadcastable<tuple<integer>>`, which a `list<integer>` parameter refuses.
+        // CE #454: a Fold's result is typed `broadcastable<tuple<integer>>`, which a `list<integer>` parameter refuses.
         "list",
       ],
     ],
