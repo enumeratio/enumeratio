@@ -138,9 +138,16 @@ export function operationTypes(family: EpsilFamily, operation: Operation): Recor
   return types;
 }
 
-/** The hash generated code is keyed by: every definition, `tables` included, and the params they name. */
-export const familyHash = (family: EpsilFamily): string =>
-  definitionHash({ params: family.params, epsil: family.epsil });
+const familyHashes = new WeakMap<EpsilFamily, string>();
+
+/** The hash generated code is keyed by: every definition, `tables` included, and the params they name.
+ *  Cached per family: every engine's kernel asks, and a session builds many. */
+export const familyHash = (family: EpsilFamily): string => {
+  let hash = familyHashes.get(family);
+  if (hash === undefined)
+    familyHashes.set(family, (hash = definitionHash({ params: family.params, epsil: family.epsil })));
+  return hash;
+};
 
 const isInteger = (value: unknown): value is number => Number.isSafeInteger(value);
 const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
