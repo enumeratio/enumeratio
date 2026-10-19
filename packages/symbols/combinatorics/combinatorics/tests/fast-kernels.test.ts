@@ -119,7 +119,7 @@ const INTERPRETED = new Set([
 ]);
 const interpreted = (family: EpsilFamily): boolean => INTERPRETED.has(family.head);
 
-// Epsil takes about half a second an operation near this family's edge (n = 18: 40 seconds there alone), so
+// Epsil takes a few tenths of a second an operation near this family's edge (n = 18: some 25 seconds there alone), so
 // DEEP_TESTS gives it the standard run's ranks and near misses, at its wider params.
 const THIN_SAMPLE = new Set(["NonCrossingCycleSupportPermutations"]);
 /** Whether DEEP_TESTS takes the wide sample of ranks and near misses at each param. */
@@ -664,7 +664,7 @@ const BIGINT_COUNTS: [string, number[]][] = [
   // The Mahonian count, at the first n past 2^53.
   ["KInversionPermutations", [20, 95]],
   // Epsil takes seconds at these. The Eulerian and Motzkin-by-peaks counts are out of Epsil's reach past 2^53
-  // (many minutes at the first params), and so are the non-crossing supports' (over two minutes at n = 19, and the
+  // (many minutes at the first params), and so are the non-crossing supports' (about a minute at n = 19, and the
   // family declines past doubles, so the shipped answer there is its exact count's): tests/exact-triangles.test.ts
   // holds those to a second route instead, at n = 19 and beyond.
   ...(DEEP

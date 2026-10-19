@@ -29,6 +29,9 @@ export interface PartWalk extends Omit<FamilyShape, "kind"> {
   readonly limit?: (c: MathJSON) => MathJSON;
   /** Whether part p, within the limit and the sum left, may come at context c (default: always). */
   readonly allows?: (c: MathJSON, p: MathJSON) => MathJSON;
+  /** Whether part p is in the family's set of parts, whatever the context, in place of `allows`. The test
+   *  is run once per part, not once per cell, and the members ride on the end of the table. Smallest first only. */
+  readonly parts?: (p: MathJSON) => MathJSON;
   /** The context after part p at context c (default: the same one). */
   readonly next?: (c: MathJSON, p: MathJSON) => MathJSON;
   /** The table's cell at sum m ≥ 1 and context c, where a recurrence is cheaper than the sum over
@@ -47,51 +50,113 @@ const list = (...xs: MathJSON[]): MathJSON => ["List", ...xs];
 
 /** The family's definitions, from its context and the parts it allows. */
 export function partWalk(spec: PartWalk): EpsilFamily {
-  const { total, order, width = 1, start = 0, ends, limit, allows, next, recurrence, ...shape } = spec;
+  const { total, order, width = 1, start = 0, ends, limit, allows: given, parts, next, recurrence, ...shape } = spec;
+  const allows = parts === undefined ? given : (_c: MathJSON, p: MathJSON): MathJSON => parts(p);
   const room = (m: MathJSON, c: MathJSON): MathJSON => (limit === undefined ? m : ["Min", m, limit(c)]);
   const ok = (c: MathJSON, p: MathJSON): MathJSON => (allows === undefined ? "True" : allows(c, p));
   const after = (c: MathJSON, p: MathJSON): MathJSON => (next === undefined ? c : next(c, p));
   const stops = (c: MathJSON): MathJSON => (ends === undefined ? 1 : iff(ends(c), 1, 0));
   const T = cell("_tables", width);
 
+  // A set of parts is tested once per part (1 … total); its members, ascending and counted, ride on the
+  // end of the table, where the operations that read it find them. The table's cells and every search
+  // then try the members alone, not every size up to the sum left.
+  const set = "pw_set";
+  const offset = mul(add(total, 1), width);
+  const members: MathJSON = at("_tables", add(offset, 1));
+  const member = (j: MathJSON): MathJSON => at("_tables", add(offset, 1, j));
+  if (parts !== undefined && order !== "smallest first") throw new Error("a set of parts is read smallest first");
+
   // T(m, c): the ways to place parts adding up to m from context c. Row 0 is whether to stop.
-  const tables = rowTable("pw", add(total, 1), width, stops, (prev, m, c, here) =>
-    recurrence !== undefined
-      ? recurrence(prev, here, m, c)
-      : fold(
-          add("pw_a", iff(ok(c, "pw_p"), prev(sub(m, "pw_p"), after(c, "pw_p")), 0)),
-          "pw_a",
-          "pw_p",
-          0,
-          upTo(1, room(m, c)),
-        ),
-  );
+  const cells = rowTable("pw", add(total, 1), width, stops, (prev, m, c, here) => {
+    if (recurrence !== undefined) return recurrence(prev, here, m, c);
+    if (parts === undefined)
+      return fold(
+        add("pw_a", iff(ok(c, "pw_p"), prev(sub(m, "pw_p"), after(c, "pw_p")), 0)),
+        "pw_a",
+        "pw_p",
+        0,
+        upTo(1, room(m, c)),
+      );
+    const part = at(set, "pw_j");
+    return fold(
+      add("pw_a", iff(["LessEqual", part, room(m, c)], prev(sub(m, part), after(c, part)), 0)),
+      "pw_a",
+      "pw_j",
+      0,
+      upTo(1, ["Length", set]),
+    );
+  });
+  const tables =
+    parts === undefined
+      ? cells
+      : lets(
+          [
+            [
+              set,
+              fold(
+                iff(parts("pw_x"), ["Join", "pw_l", ["List", "pw_x"]], "pw_l"),
+                "pw_l",
+                "pw_x",
+                ["List"],
+                upTo(1, total),
+              ),
+              "list<integer>",
+            ],
+          ],
+          ["Join", cells, ["List", ["Length", set]], set],
+        );
 
   /** The parts that sort before `p` at (m, c): those tried first, within the room. */
   const before = (m: MathJSON, c: MathJSON, p: MathJSON): MathJSON =>
     order === "smallest first" ? upTo(1, sub(p, 1)) : upTo(add(p, 1), room(m, c));
   const skipped = (m: MathJSON, c: MathJSON, p: MathJSON): MathJSON =>
-    fold(add("pw_s", iff(ok(c, "pw_q"), T(sub(m, "pw_q"), after(c, "pw_q")), 0)), "pw_s", "pw_q", 0, before(m, c, p));
+    parts === undefined
+      ? fold(
+          add("pw_s", iff(ok(c, "pw_q"), T(sub(m, "pw_q"), after(c, "pw_q")), 0)),
+          "pw_s",
+          "pw_q",
+          0,
+          before(m, c, p),
+        )
+      : fold(
+          add("pw_s", iff(less(member("pw_j"), p), T(sub(m, member("pw_j")), after(c, member("pw_j"))), 0)),
+          "pw_s",
+          "pw_j",
+          0,
+          upTo(1, members),
+        );
 
   // Unrank: the state is [sum left, context, rank left, the parts so far…]. Each part is the
   // first, in order, whose completions pass the rank left; the search carries [rank left, part].
   const candidates =
-    order === "smallest first" ? upTo(1, room("pw_m", "pw_c")) : ["Range", room("pw_m", "pw_c"), 1, -1];
+    parts !== undefined
+      ? upTo(1, members)
+      : order === "smallest first"
+        ? upTo(1, room("pw_m", "pw_c"))
+        : ["Range", room("pw_m", "pw_c"), 1, -1];
+  // The candidate part, and whether it may come: a member of the set that fits, or an allowed size.
+  const candidate = parts === undefined ? "pw_p" : member("pw_j");
+  const fits = parts === undefined ? ok("pw_c", "pw_p") : ["LessEqual", candidate, room("pw_m", "pw_c")];
   const choice = fold(
     iff(
       ["NotEqual", at("pw_pick", 2), 0],
       "pw_pick",
       iff(
-        ok("pw_c", "pw_p"),
+        fits,
         lets(
-          [["pw_k", T(sub("pw_m", "pw_p"), after("pw_c", "pw_p")), integer]],
-          iff(less(at("pw_pick", 1), "pw_k"), list(at("pw_pick", 1), "pw_p"), list(sub(at("pw_pick", 1), "pw_k"), 0)),
+          [["pw_k", T(sub("pw_m", candidate), after("pw_c", candidate)), integer]],
+          iff(
+            less(at("pw_pick", 1), "pw_k"),
+            list(at("pw_pick", 1), candidate),
+            list(sub(at("pw_pick", 1), "pw_k"), 0),
+          ),
         ),
         "pw_pick",
       ),
     ),
     "pw_pick",
-    "pw_p",
+    parts === undefined ? "pw_p" : "pw_j",
     list("pw_r", 0),
     candidates,
   );

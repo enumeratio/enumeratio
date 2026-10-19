@@ -29,8 +29,8 @@ const n = "_n";
 const k = "_k";
 const cap = add(n, 1);
 
-/** Compositions of n whose every part passes `allows`. */
-const inSet = (head: string, allows: (p: MathJSON) => MathJSON): EpsilFamily =>
+/** Compositions of n whose every part passes `allows`; a test that searches (`tabulated`) is run once per part. */
+const inSet = (head: string, allows: (p: MathJSON) => MathJSON, tabulated = false): EpsilFamily =>
   partWalk({
     head,
     carrier: "Composition",
@@ -38,17 +38,17 @@ const inSet = (head: string, allows: (p: MathJSON) => MathJSON): EpsilFamily =>
     params: [n],
     total: n,
     order: "smallest first",
-    allows: (_c, p) => allows(p),
+    ...(tabulated ? { parts: allows } : { allows: (_c, p) => allows(p) }),
   });
 
 export const oddCompositions = inSet("OddCompositions", partSets.odd);
 export const properCompositions = inSet("ProperCompositions", (p) => ["GreaterEqual", p, 2]);
-export const dyadicCompositions = inSet("DyadicCompositions", partSets.powerOfTwo);
+export const dyadicCompositions = inSet("DyadicCompositions", partSets.powerOfTwo, true);
 export const fibonacciCompositions = inSet("FibonacciCompositions", (p) => ["LessEqual", p, 2]);
 export const triCompositions = inSet("TriCompositions", (p) => ["LessEqual", p, 3]);
 export const tetraCompositions = inSet("TetraCompositions", (p) => ["LessEqual", p, 4]);
-export const triangularCompositions = inSet("TriangularCompositions", partSets.triangular);
-export const primeCompositions = inSet("PrimeCompositions", partSets.prime);
+export const triangularCompositions = inSet("TriangularCompositions", partSets.triangular, true);
+export const primeCompositions = inSet("PrimeCompositions", partSets.prime, true);
 
 /** The walk's family, declining past 2^53: its table is wider than a hundred entries (n at 100,
  *  3n at 34), which the interpreter's exact integers can't finish. Unknown there, as the TS kernels left it. */
