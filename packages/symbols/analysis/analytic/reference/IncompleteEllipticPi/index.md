@@ -55,4 +55,5 @@ bindings:
 - $\varphi = \pi/2$ is the complete integral: $\Pi(n;\pi/2,m) = $ [[EllipticPi]]$(n,m)$.
 - Built from Carlson's symmetric $R_F$/$R_J$ (DLMF 19.25.14) rather than delegating to compute-engine's native three-argument EllipticPi, which returns NaN for some complex φ inside its own stated domain.
 - Quasi-periodic: $\Pi(n;\varphi+k\pi,m) = 2k\,\Pi(n,m) + \Pi(n;\varphi,m)$ for integer k, so any φ reduces to $[-\pi/2,\pi/2]$ before the Carlson evaluation.
+- For $n > 1$ the integrand has a pole at $\sin^2\theta = 1/n$; once $\varphi$ is past it the integral is the Cauchy principal value, which is real, as in Wolfram. mpmath, SymPy and Sage continue analytically instead and add an imaginary part.
 - Numeric only — a symbolic or exact argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly, same as [[EllipticE]] and [[EllipticF]].

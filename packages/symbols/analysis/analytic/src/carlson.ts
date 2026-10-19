@@ -238,7 +238,8 @@ export function carlsonRJ(x0: Cx, y0: Cx, z0: Cx, p0: Cx): Cx {
  * RG(x,y,z) = (1/4π)∫₀^{2π}∫₀^π √(x sin²θcos²φ + y sin²θsin²φ + z cos²θ) sinθ dθ dφ — the
  * fully symmetric one whose integral defines the surface area of an ellipsoid with
  * semi-axes √x, √y, √z. Reduced through RF and RD (DLMF 19.21.10):
- *   2·RG(x,y,z) = z·RF(x,y,z) − (x−z)(y−z)·RD(x,y,z)/3 + √(xy/z),   z ≠ 0.
+ *   2·RG(x,y,z) = z·RF(x,y,z) − (x−z)(y−z)·RD(x,y,z)/3 + √x·√y/√z,   z ≠ 0
+ * (the roots taken separately: √(xy/z) differs from it by a sign when the arguments' phases carry past π).
  * RG is symmetric, so any nonzero argument can play "z" here; picking the
  * largest-magnitude one keeps the divisions well away from cancellation — PROVIDED the
  * other two aren't both zero, where the reduction breaks down: RF(0,0,z) diverges (two
@@ -260,7 +261,7 @@ export function carlsonRG(x: Cx, y: Cx, z: Cx): Cx {
   const [a, b] = args.filter((_, i) => i !== pick);
   const term1 = mul(c, carlsonRF(a, b, c));
   const term2 = scale(mul(sub(a, c), mul(sub(b, c), carlsonRD(a, b, c))), -1 / 3);
-  const sqrtTerm = csqrt(div(mul(a, b), c));
+  const sqrtTerm = div(mul(csqrt(a), csqrt(b)), csqrt(c));
   return scale(add(add(term1, term2), sqrtTerm), 0.5);
 }
 
