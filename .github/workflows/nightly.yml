@@ -31,27 +31,39 @@ concurrency:
 
 jobs:
   # Test suites' long sweeps, gated on DEEP_TESTS so the PR gate stays fast. A package whose tests read
-  # DEEP_TESTS gets a filter here.
-  deep-tests:
-    name: deep test sweeps
+  # DEEP_TESTS gets a filter here. Three jobs, about half an hour each (one job ran 89 minutes against a
+  # 90-minute cap): rebalance by moving a step between them when one drifts.
+  deep-tests-kernels:
+    name: deep test sweeps (kernels)
     if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 60
     env:
       DEEP_TESTS: "1"
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - run: pnpm -r --filter @enumeratio/analytic run test
-      # Statistics compiled from their Epsil against the hand-written kernels; the timing table
-      # goes to the job summary.
-      - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/statistics-compiled.test.ts
       # Hand-written kernels against the interpreter, and each family's Epsil counts past 2^53.
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/fast-kernels.test.ts
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/lattice-orders.test.ts
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run words/tests/epsil-families trees/tests/epsil-families graphs/tests/epsil-families collections/tests/epsil-families permutations/tests/epsil-families permutations/tests/permutation-classes
       # Every member of the larger families, and the sizes the standard run skips (about six minutes together).
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run trees/tests/unlabeled-tree-classes trees/tests/nested-families collections/tests/increasing-binary-trees compositions/tests/epsil-families partitions/tests/epsil-families tableaux/tests/boxed-plane-partitions tableaux/tests/rsk-pairs tableaux/tests/skew-standard-tableaux words/tests/parking-functions
+
+  deep-tests-statistics:
+    name: deep test sweeps (statistics)
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      DEEP_TESTS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      # Statistics compiled from their Epsil against the hand-written kernels; the timing table
+      # goes to the job summary.
+      - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/statistics-compiled.test.ts
       # Dyck-path statistics over the longer paths.
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run lattice-paths/tests/dyck-statistics
       # Integer-partition statistics over the larger partitions.
@@ -68,6 +80,17 @@ jobs:
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run permutations/tests/permutation-statistics
       # The numeric sequences and predicate scans defined in Epsil, against references in bigints and sieves, farther out.
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run collections/tests/numeric-epsil.test.ts collections/tests/sequence-epsil.test.ts collections/tests/scan-epsil.test.ts
+
+  deep-tests-reference:
+    name: deep test sweeps (compiled, reference and number theory)
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      DEEP_TESTS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
       # Compiled families against the interpreter on the fibers the build skips.
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/compiled-families.test.ts
       # Compiled maps against the interpreter, over the larger sample.
