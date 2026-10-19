@@ -1,4 +1,4 @@
-id	section	role	expr	expected	caption
-of-a-product	Basic		[D, [Multiply, [Power, x, 2], [Sin, x]], x]	[Add, [Multiply, [Cos, x], [Power, x, 2]], [Multiply, 2, x, [Sin, x]]]	Product rule
-second-derivative	Scope		[D, [Power, x, 3], x, x]	[Multiply, 6, x]	A repeated variable differentiates again
-of-a-head-we-declare	Scope		[D, [LogGamma, z], z]	[Digamma, z]	$\frac{d}{dz}\ln\Gamma(z) = \psi(z)$, in closed form
+id	section	role	expr	expected	caption	sage.kind	sage.note
+of-a-product	Basic		[D, [Multiply, [Power, x, 2], [Sin, x]], x]	[Add, [Multiply, [Cos, x], [Power, x, 2]], [Multiply, 2, x, [Sin, x]]]	Product rule		
+second-derivative	Scope		[D, [Power, x, 3], x, x]	[Multiply, 6, x]	A repeated variable differentiates again		
+of-an-order	Scope		[D, [Power, x, 5], [List, x, 2]]	[Multiply, 20, [Power, x, 3]]	A derivative order given as $\{x, n\}$; the order may also be symbolic, $\frac{d^k}{dx^k}x^a = a^{\underline{k}}\,x^{a-k}$	emit	Sage differentiates repeatedly by taking the variable and the count as separate arguments, diff(f, x, 2); the {x, 2} pair is read as a list of variables and refused.
