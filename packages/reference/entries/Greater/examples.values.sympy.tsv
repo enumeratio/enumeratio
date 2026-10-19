@@ -1,5 +1,6 @@
 id	in	out	verdict
 0-lt-1	Lt(0, 1)	True	
+2-plus-0-times-0-pow-neg-16-lt-1	Lt((2 + (0 * (S(0)**-16))), 1)	TypeError: Invalid NaN comparison	error
 4-over-3-lt-3-over-2	Lt(Rational(4, 3), Rational(3, 2))	True	
 1-minus-128-times-10-pow-neg-16-lt-1	Lt((1 + (-128 * (S(10)**-16))), 1)	True	
 1-minus-256-times-10-pow-neg-16-lt-1	Lt((1 + (-256 * (S(10)**-16))), 1)	True	

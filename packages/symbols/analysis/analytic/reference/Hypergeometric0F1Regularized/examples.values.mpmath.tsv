@@ -14,6 +14,7 @@ order-0-at-a-complex-argument	(enumeratio_hyperreg([], [0], mpc(0.3, 0.4)))	(0.2
 order-neg-1-at-a-complex-argument	(enumeratio_hyperreg([], [-1], mpc(-0.5, 0.2)))	(0.0942716660897040239460286191909 - 0.0780249194320378419910193183447j)	
 series-hypergeometric0f1regularized-2-x-x-0-6			
 fullsimplify-normal-series			
+n-hypergeometric0f1regularized-4-0-50	enumeratio_n(lambda: (enumeratio_hyperreg([], [-4], 0)), 50)	ValueError: 	error
 n-hypergeometric0f1regularized-0-neg-48-50	enumeratio_n(lambda: (enumeratio_hyperreg([], [0], -48)), 50)	-0.75356407978144308380327864211537660841009027837078	
 n-hypergeometric0f1regularized-4-0-25	enumeratio_n(lambda: (enumeratio_hyperreg([], [4], 0)), 25)	0.1666666666666666666666667	
 matrixfunction-function			

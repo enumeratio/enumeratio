@@ -3,6 +3,7 @@ default-base-is-10	log(100, 10)	2.0
 same-result-written-with-an-explicit-base	log(100, 10)	2.0	
 base-2-via-the-explicit-second-argument	log(8, 2)	3.0	
 log-in-a-negative-base	log(2.5, -1)	(0.0 - 0.291664398574124554079874563503j)	disagree
+log-of-1-threads-over-a-list-of-bases	[log(1, -10), log(1, e), log(1, 27)]	[mpc(real='0.0', imag='0.0'), mpf('0.0'), mpf('0.0')]	inconclusive
 log-3-1-5-at-machine-precision	log(1.5, 3)	0.369070246428542562900472885657	
 log-9-3	log(9, 3)	2.0	
 threads-over-a-list-of-values	[log(2, 2), log(4, 2), log(8, 2)]	[mpf('1.0'), mpf('2.0'), mpf('3.0')]	

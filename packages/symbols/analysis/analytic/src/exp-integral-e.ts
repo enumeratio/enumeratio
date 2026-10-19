@@ -68,6 +68,32 @@ function expIntegralEBig(ce: ComputeEngine, n: number, z: BigDecimal, digits: nu
   });
 }
 
+/** From this order up the continued fraction below is used; the Gamma route's z^(n−1) over/underflows. */
+const CONTINUED_FRACTION_ORDER = 20;
+
+/**
+ * E_n(x) for real n ≥ 1 and x > 0 by the continued fraction (modified Lentz,
+ * E_n(x) = e^(−x)/(x + n − 1·n/(x + n + 2 − 2(n+1)/(x + n + 4 − …))): it converges quickly once n is
+ * large and never forms z^(n−1).
+ */
+function expIntegralEContinued(n: number, x: number): number | undefined {
+  const tiny = 1e-300;
+  let b = x + n;
+  let c = 1 / tiny;
+  let d = 1 / b;
+  let h = d;
+  for (let i = 1; i < 10_000; i++) {
+    const a = -i * (n - 1 + i);
+    b += 2;
+    d = 1 / (a * d + b);
+    c = b + a / c;
+    const delta = c * d;
+    h *= delta;
+    if (Math.abs(delta - 1) < 1e-15) return h * Math.exp(-x);
+  }
+  return undefined;
+}
+
 export function declareExpIntegralE(ce: ComputeEngine): void {
   ce.declare("ExpIntegralE", {
     signature: "(number, number) -> number",
@@ -97,6 +123,11 @@ export function declareExpIntegralE(ce: ComputeEngine): void {
         if (big === undefined || n.im !== 0) return undefined;
         const value = expIntegralEBig(ce, n.re, big, ce.precision);
         return value === undefined ? undefined : bigResult(ce, value);
+      }
+
+      if (n.im === 0 && z.im === 0 && z.re > 0 && n.re >= CONTINUED_FRACTION_ORDER) {
+        const value = expIntegralEContinued(n.re, z.re);
+        if (value !== undefined) return ce.number(value);
       }
 
       const expr = ce.function("Multiply", [

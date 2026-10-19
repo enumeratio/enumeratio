@@ -8,6 +8,7 @@ gamma-1-0-0728158-under-n	enumeratio_n(stieltjes(1))	-0.0728158454836767
 gamma-2-0-00969036-under-n	enumeratio_n(stieltjes(2))	-0.00969036319287232	
 n-stieltjesgamma-1-50	enumeratio_n(stieltjes(1), 50)	-0.0728158454836767	
 n-stieltjesgamma-2-1-over-2-50			
+complex-a-at-n-0			
 complex-a			
 listable-in-the-order-n-threads-over-a-list			
 interval-arithmetic-in-a			

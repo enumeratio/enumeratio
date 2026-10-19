@@ -13,6 +13,7 @@ chebyshevu-2-3	ChebyshevU[2, 3]	35	U_2(3)	35
 chebyshevu-10-x	ChebyshevU[10, x]	-1 + 60*x^2 - 560*x^4 + 1792*x^6 - 2304*x^8 + 1024*x^10	U_{10}(x)	1024 x^{10}-2304 x^8+1792 x^6-560 x^4+60 x^2-1	
 series-chebyshevu-5-x-x-0-5	Series[ChebyshevU[5, x], List[x, 0, 5]]	SeriesData[x, 0, {6, 0, -32, 0, 32}, 1, 6, 1]	\text{Series}[U_5(x),\{x,0,5\}]	6 x-32 x^3+32 x^5+O\left(x^6\right)	
 u-of-a-negative-order-at-a-rational	ChebyshevU[-7, Rational[1, 2]]	0	U_{-7}\left(\frac{1}{2}\right)	0	
+at-an-exact-zero	ChebyshevU[5, -0.5]				
 at-a-rational	ChebyshevU[3, Rational[1, 2]]	-1	U_3\left(\frac{1}{2}\right)	-1	
 at-a-complex-argument	ChebyshevU[4, Complex[2, 3]]	-1843 - 2064*I	U_4(2+3 i)	-1843-2064 i	
 a-symbolic-order-stays-unevaluated	ChebyshevU[n, x]	ChebyshevU[n, x]	U_n(x)	U_n(x)	

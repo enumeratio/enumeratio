@@ -377,6 +377,8 @@ export function declareInverseGammaRegularized(ce: ComputeEngine): void {
       // (`is`, not `re`: a bignum s a hair under 1, or over 0, rounds to 1 or 0 as a double.)
       if (s.is(1)) return ce.Zero;
       if (s.is(0)) return ce.symbol("PositiveInfinity");
+      // Q(a, z) is a probability: a real s outside [0, 1] has no inverse.
+      if (isFiniteNum(s) && s.im === 0 && (s.re < 0 || s.re > 1)) return undefined;
       // Q(1, z) = e^{−z} inverts exactly, symbolic s included.
       if (a.is(1)) {
         const expr = ce.function("Negate", [ce.function("Ln", [s])]);
@@ -421,6 +423,8 @@ export function declareInverseBetaRegularized(ce: ComputeEngine): void {
       if (s === undefined || a === undefined || b === undefined) return undefined;
       if (s.is(0)) return ce.Zero;
       if (s.is(1)) return ce.One;
+      // A probability: a real s outside [0, 1] has no inverse, whatever the closed forms below say.
+      if (isFiniteNum(s) && s.im === 0 && (s.re < 0 || s.re > 1)) return undefined;
       // I_x(1, 1) = x is its own inverse — symbolic s included.
       if (a.re === 1 && a.im === 0 && b.re === 1 && b.im === 0) {
         return wantsNumber(ops, options) ? s.N() : s.evaluate();

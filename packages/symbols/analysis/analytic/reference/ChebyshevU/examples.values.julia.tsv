@@ -13,6 +13,7 @@ chebyshevu-2-3	enumeratio_chebyshev_u(2, 3)	35.0
 chebyshevu-10-x			
 series-chebyshevu-5-x-x-0-5			
 u-of-a-negative-order-at-a-rational	enumeratio_chebyshev_u(-7, (1 // 2))	DomainError with -7: Index must be non-negative	error
+at-an-exact-zero	enumeratio_chebyshev_u(5, enumeratio_decimal("-0.5"))		
 at-a-rational	enumeratio_chebyshev_u(3, (1 // 2))	-1.0	
 at-a-complex-argument	enumeratio_chebyshev_u(4, enumeratio_complex(2, 3))	complex argument	error
 a-symbolic-order-stays-unevaluated			

@@ -7,6 +7,7 @@ inversebetaregularized-with-tiny-shapes	inverse_beta_regularized(x(0.0000025), x
 tail-s-1e-100-a-2-b-3	inverse_beta_regularized(n(2), n(3), x(1e-100))		
 tail-s-1e-8-a-0p5-b-0p5	inverse_beta_regularized(x(0.5), x(0.5), x(1e-8))		
 upper-tail-s-near-1	inverse_beta_regularized(n(3), n(1000), x(0.99999999999999))		
+a-probability-above-1-has-no-inverse	inverse_beta_regularized(n(2), n(1), x(2.536))		
 i-x-1-1-x-is-its-own-inverse			
 i-x-a-1-x-a-inverts-to-s-1-a			
 inversebetaregularized-0-2-3	inverse_beta_regularized(n(2), n(3), n(0))	0.0	
