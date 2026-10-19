@@ -34,8 +34,8 @@ import {
 import { fromWolfram } from "@enumeratio/wolfram";
 import { measuredTolerance } from "../src/known.ts";
 
-/** Boxing `x^a` types `a` as a number for good: each verdict starts on an engine of its own. */
-let ce = new ComputeEngine();
+/** Boxing `x^a` types `a` as a number for good: each verdict boxes in a scope of its own. */
+const ce = new ComputeEngine();
 
 /**
  * A leaf of the comparison: the number an expression has, else its symbolic text.
@@ -229,13 +229,15 @@ function iteratorsAsLimits(expr: MathJSON): MathJSON {
 }
 
 export function verdictOf(...args: Parameters<typeof judge>): Verdict {
-  ce = new ComputeEngine();
+  ce.pushScope();
   try {
     return judge(...args);
   } catch (error) {
     // A comparison that could not be made is undecided.
     if (error instanceof Undecided) return "inconclusive";
     throw error;
+  } finally {
+    ce.popScope();
   }
 }
 
