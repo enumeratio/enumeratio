@@ -1,6 +1,7 @@
 id	in	out	verdict
 series-csch-x-x-0-10			
 normal-series-csch-x-x-2i-times-pi-3			
+series-csch-x-x-0-1			
 n-csch-9-over-5-50	enumeratio_n(lambda: (csch((mpf(9)/5))), 50)	0.33988469141549370714075814946653211798477613243671	
 csch-list-list-1-over-3-times-i-times-pi-neg-1	[[csch((mpc(0, (mpf(1)/3)) * pi)), csch((mpc(0, (mpf(-1)/3)) * pi))], [csch(0), csch((mpc(0, (mpf(-1)/6)) * pi))]]	ZeroDivisionError: 	error
 csch-positiveinfinity	csch(inf)	0.0	

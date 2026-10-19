@@ -6,6 +6,8 @@ order-1-5-at-3-2	ExpIntegralE[1.5, 3.2]	0.009156991428870985		E_{1.5}(3.2)	0.009
 series-expintegrale-n-x-x-0-4	Series[ExpIntegralE[n, x], List[x, 0, 4]]	x^(-1 + n)*Gamma[1 - n] + SeriesData[x, 0, {(-1 + n)^(-1), (2 - n)^(-1), 1/(2*(-3 + n)), (24 - 6*n)^(-1), 1/(24*(-5 + n))}, 0, 5, 1]		\text{Series}[E_n(x),\{x,0,4\}]	\left(\frac{1}{n-1}+\frac{x}{2-n}+\frac{x^2}{2 (n-3)}+\frac{x^3}{24-6 n}+\frac{x^4}{24 (n-5)}+O\left(x^5\right)\right)+x^{n-1} \Gamma (1-n)	inconclusive
 series-expintegrale-1-x-x-0-4	Series[ExpIntegralE[1, x], List[x, 0, 4]]	SeriesData[x, 0, {-EulerGamma - Log[x], 1, -1/4, 1/18, -1/96}, 0, 5, 1]		\text{Series}[E_1(x),\{x,0,4\}]	(-\log (x)-\gamma )+x-\frac{x^2}{4}+\frac{x^3}{18}-\frac{x^4}{96}+O\left(x^5\right)	disagree
 normal-series-expintegrale-n-x-x	Normal[Series[ExpIntegralE[n, x], List[x, Infinity, 4]]]	(-((n*(1 + n)*(2 + n))/x^4) + (n*(1 + n))/x^3 - n/x^2 + x^(-1))/E^x		\text{Normal}[\text{Series}[E_n(x),\{x,\infty ,4\}]]	e^{-x} \left(-\frac{(n+1) (n+2) n}{x^4}+\frac{(n+1) n}{x^3}-\frac{n}{x^2}+\frac{1}{x}\right)	inconclusive
+large-integer-order-500000	ExpIntegralE[500000, 2.5]					
+large-order-beside-an-underflowing-power	N[ExpIntegralE[170, 100]]					
 non-integer-order	ExpIntegralE[0.5, 2.5]	0.02841429970928976		E_{0.5}(2.5)	0.0284143	
 exact-arguments-under-n	N[ExpIntegralE[1, 1]]	0.21938393439552026		N[E_1(1)]	0.219384	
 n-expintegrale-1-plus-i-2-plus-3i	N[ExpIntegralE[Complex[1, 1], Complex[2, 3]]]	-0.018943830508374043 + 0.020443770102830158*I		N[E_{1+i}(2+3 i)]	-0.0189438+0.0204438 i	

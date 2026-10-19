@@ -1,5 +1,6 @@
 id	in	out
 0-lt-1	less(n(0), n(1))	true
+2-plus-0-times-0-pow-neg-16-lt-1	less((n(2) + (n(0) * power(n(0), n(-16)))), n(1))	
 4-over-3-lt-3-over-2	less(rational(n(4), n(3)), rational(n(3), n(2)))	true
 1-minus-128-times-10-pow-neg-16-lt-1	less((n(1) + (n(-128) * power(n(10), n(-16)))), n(1))	true
 1-minus-256-times-10-pow-neg-16-lt-1	less((n(1) + (n(-256) * power(n(10), n(-16)))), n(1))	true

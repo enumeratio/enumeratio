@@ -8,6 +8,7 @@ gamma-1-0-0728158-under-n	(stieltjes(1))	-0.0728158454836767248605863758749
 gamma-2-0-00969036-under-n	(stieltjes(2))	-0.00969036319287231848453038603521	
 n-stieltjesgamma-1-50	enumeratio_n(lambda: (stieltjes(1)), 50)	-0.072815845483676724860586375874901319137736338334338	
 n-stieltjesgamma-2-1-over-2-50	enumeratio_n(lambda: (stieltjes(2, (mpf(1)/2))), 50)	0.96886447522029071142171106232378065418259804476042	
+complex-a-at-n-0	(stieltjes(0, mpc(1, 1)))	(-0.0702930804353431260444085244507 - 1.0616786732420778382798683821j)	disagree
 complex-a	(stieltjes(2, mpc(1, 1)))	TimeoutError: over 30s	error
 listable-in-the-order-n-threads-over-a-list	[stieltjes(1, 0.5), stieltjes(2, 0.5), stieltjes(3, 0.5)]	[mpf('-1.35345968080494151770868716917802'), mpf('0.968864475220290711421711062323782'), mpf('-0.667424273711380739555989196796919')]	
 interval-arithmetic-in-a			

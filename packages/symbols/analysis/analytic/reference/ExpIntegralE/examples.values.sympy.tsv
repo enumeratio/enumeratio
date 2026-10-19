@@ -6,6 +6,8 @@ order-1-5-at-3-2	expint(1.5, 3.2)	0.00915699142887098
 series-expintegrale-n-x-x-0-4	series(expint(Symbol("n"), Symbol("x")), Symbol("x"), 0, 4 + 1)	expint(n, 0) - x*expint(n - 1, 0) + x**2*expint(n - 2, 0)/2 - x**3*expint(n - 3, 0)/6 + x**4*expint(n - 4, 0)/24 + O(x**5)	
 series-expintegrale-1-x-x-0-4	series(expint(1, Symbol("x")), Symbol("x"), 0, 4 + 1)	-EulerGamma - log(x) + x - x**2/4 + x**3/18 - x**4/96 + O(x**5)	disagree
 normal-series-expintegrale-n-x-x	(series(expint(Symbol("n"), Symbol("x")), Symbol("x"), oo, 4 + 1)).removeO()	None	inconclusive
+large-integer-order-500000	expint(500000, 2.5)	expint(500000, 2.5)	
+large-order-beside-an-underflowing-power	N(expint(170, 100), 30)	1.38101745796526953112757681242e-46	
 non-integer-order	expint(0.5, 2.5)	0.0284142997092898	
 exact-arguments-under-n	N(expint(1, 1), 30)	0.219383934395520273677163775460	
 n-expintegrale-1-plus-i-2-plus-3i	N(expint((1 + 1*I), (2 + 3*I)), 30)	-0.018943830508373643317172566324 + 0.0204437701028299705566242401978*I	

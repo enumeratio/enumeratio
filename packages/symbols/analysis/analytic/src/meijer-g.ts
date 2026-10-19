@@ -52,6 +52,9 @@ function meijerGSeries(a: readonly Cx[], b: readonly Cx[], m: number, n: number,
   const p = a.length;
   const q = b.length;
   if (m < 1 || p > q) return undefined;
+  // p = q: the pFq's lower list is one short, so it converges only inside the unit disc
+  // (past it the sum diverges; the continuation through 1/z is not implemented).
+  if (p === q && Math.hypot(z.re, z.im) >= 1) return undefined;
   for (let h = 0; h < m; h++) {
     for (let j = 0; j < m; j++) {
       if (h === j) continue;

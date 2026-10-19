@@ -13,6 +13,7 @@ chebyshevu-2-3	chebyshev_U(2, 3)	35
 chebyshevu-10-x	chebyshev_U(10, SR.var("x"))	1024*x^10 - 2304*x^8 + 1792*x^6 - 560*x^4 + 60*x^2 - 1	
 series-chebyshevu-5-x-x-0-5	SR(chebyshev_U(5, SR.var("x"))).series(SR.var("x") == 0, 5 + 1)	6*x + (-32)*x^3 + 32*x^5 + Order(x^6)	
 u-of-a-negative-order-at-a-rational	chebyshev_U(-7, (1/2))	0	
+at-an-exact-zero	chebyshev_U(5, -0.5)		
 at-a-rational	chebyshev_U(3, (1/2))	-1	
 at-a-complex-argument	chebyshev_U(4, (2 + 3*I))	-2064*I - 1843	
 a-symbolic-order-stays-unevaluated	chebyshev_U(SR.var("n"), SR.var("x"))	chebyshev_U(n, x)	

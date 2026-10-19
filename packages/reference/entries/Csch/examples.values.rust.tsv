@@ -1,6 +1,7 @@
 id	in	out	verdict
 series-csch-x-x-0-10			
 normal-series-csch-x-x-2i-times-pi-3			
+series-csch-x-x-0-1			
 n-csch-9-over-5-50	nf((n(1) / sinh(rational(n(9), n(5)))))	0.3398846914154937	
 csch-list-list-1-over-3-times-i-times-pi-neg-1			
 csch-positiveinfinity			

@@ -6,6 +6,8 @@ order-1-5-at-3-2	expint(1.5, 3.2)	0.00915699142887097717382179161068
 series-expintegrale-n-x-x-0-4			
 series-expintegrale-1-x-x-0-4			
 normal-series-expintegrale-n-x-x			
+large-integer-order-500000	expint(500000, 2.5)	0.00000016416950473764168400835514658	
+large-order-beside-an-underflowing-power	(expint(170, 100))	1.38101901432972544318795475577e-46	
 non-integer-order	expint(0.5, 2.5)	0.0284142997092897564015523723376	
 exact-arguments-under-n	(expint(1, 1))	0.21938393439552027367716377546	
 n-expintegrale-1-plus-i-2-plus-3i	(expint(mpc(1, 1), mpc(2, 3)))	(-0.018943830508373643317172566324 + 0.0204437701028299705566242401978j)	
