@@ -162,7 +162,7 @@ so a page reads the same on GitHub and on the site.
   a test can go upstream with its code.
 - **Long sweeps run nightly; the standard run stays fast.** A test that samples or enumerates
   takes a small budget by default and its full one under `DEEP_TESTS=1`, which `nightly.yml`'s
-  `deep-tests` job sets (give the package a filter there). Keep the important cases in the
+  `deep-tests-*` jobs set (give the package a filter in one of them). Keep the important cases in the
   standard run as fixed examples, not left to the sample. Don't just raise a timeout.
 
 ## Generated from our own sources

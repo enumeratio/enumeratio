@@ -992,16 +992,27 @@ const ncChains = (i: MathJSON): MathJSON =>
     add(sub(n, i), 1),
     add(n, 1),
     (c) => iff(and(equal(c, 1), ["Not", ncCycle(i)]), 1, 0),
+    // Row t chains t + 1 values, so no more than t + 1 paths (a column past that is 0), and a row u
+    // has none past u + 1: the sum starts where `prev` can first be nonzero.
     (prev, t, c) =>
-      lets(
-        [
-          ["ndv", add(i, t), "integer"],
-          ["ndm", sub(c, iff(equal(ncLow("ndv"), "ndv"), 1, 0)), "integer"],
-        ],
-        iff(
-          ["Or", ncCycle("ndv"), less("ndm", 0)],
-          0,
-          sum((u) => mul(prev(u, "ndm"), ncGet(add(i, u, 1), sub("ndv", 1))), "ndu", 0, sub(t, 1)),
+      iff(
+        ["Greater", c, add(t, 1)],
+        0,
+        lets(
+          [
+            ["ndv", add(i, t), "integer"],
+            ["ndm", sub(c, iff(equal(ncLow("ndv"), "ndv"), 1, 0)), "integer"],
+          ],
+          iff(
+            ["Or", ncCycle("ndv"), less("ndm", 0)],
+            0,
+            sum(
+              (u) => mul(prev(u, "ndm"), ncGet(add(i, u, 1), sub("ndv", 1))),
+              "ndu",
+              ["Max", 0, sub("ndm", 1)],
+              sub(t, 1),
+            ),
+          ),
         ),
       ),
   );
@@ -1031,7 +1042,27 @@ const ncRows = fold(
   lets(
     [
       ["nci", sub(n, "nck2"), "integer"],
-      ["ncd", ncChains("nci"), "list<integer>"],
+      // A cycle's least value has a block of its own: no chains to count.
+      ["ncd", iff(ncCycle("nci"), ["List"], ncChains("nci")), "list<integer>"],
+      // W(t): the chains to value i + t, M paths closing into (M − 1)! cycles each; the same for every j.
+      [
+        "ncw",
+        iff(
+          ncCycle("nci"),
+          ["List"],
+          tabulate(
+            sum((m) => mul(at("ncd", add(mul("nct", add(n, 1)), m, 1)), ["Factorial", sub(m, 1)]), "ncm", 1, [
+              "Min",
+              n,
+              add("nct", 1),
+            ]),
+            "nct",
+            0,
+            sub(n, "nci"),
+          ),
+        ),
+        "list<integer>",
+      ],
     ],
     [
       "Join",
@@ -1043,16 +1074,7 @@ const ncRows = fold(
           iff(
             ncCycle("nci"),
             ncCycleBlock("nci", "ncj"),
-            sum(
-              (t) =>
-                mul(
-                  ncGet(add("nci", t, 1), "ncj"),
-                  sum((m) => mul(at("ncd", add(mul(t, add(n, 1)), m, 1)), ["Factorial", sub(m, 1)]), "ncm", 1, n),
-                ),
-              "nct",
-              0,
-              sub("ncj", "nci"),
-            ),
+            sum((t) => mul(ncGet(add("nci", t, 1), "ncj"), at("ncw", add(t, 1))), "nct", 0, sub("ncj", "nci")),
           ),
         ),
         "ncj",

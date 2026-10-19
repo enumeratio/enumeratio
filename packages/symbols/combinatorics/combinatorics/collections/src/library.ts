@@ -1,4 +1,5 @@
 import type { Engine } from "@enumeratio/engine";
+import { declareAdditiveEnergy } from "./additive-energy.ts";
 import { declareArithHeads } from "./arith-heads.ts";
 import { declareControl } from "./control.ts";
 import { declareExpressionOps } from "./expression-ops.ts";
@@ -45,6 +46,7 @@ import { declareSuccessor } from "./successor.ts";
 export function declareCollections(ce: Engine): void {
   declareFamilies(ce, collectionsEntries);
   declareSuccessor(ce);
+  declareAdditiveEnergy(ce);
   declareCallForms(ce);
   declareListOps(ce);
   declareListHeads(ce);

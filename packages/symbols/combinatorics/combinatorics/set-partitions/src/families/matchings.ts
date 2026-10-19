@@ -263,17 +263,19 @@ const pairsClosing = (partnerOf: (up: MathJSON) => MathJSON): MathJSON =>
 
 /** The down point closing up point u (a stack matching): the first later point back at the height before u. */
 const stackPartner = (u: MathJSON): MathJSON =>
-  fold(
-    iff(and(equal("mq", 0), equal(at("mh", "mi"), sub(at("mh", u), 1))), "mi", "mq"),
-    "mq",
-    "mi",
-    0,
-    upTo(add(u, 1), mul(2, "_n")),
+  lets(
+    [["mt", sub(height(u), 1), "integer"]],
+    fold(iff(and(equal("mq", 0), equal(height("mi"), "mt")), "mi", "mq"), "mq", "mi", 0, upTo(add(u, 1), mul(2, "_n"))),
   );
-/** The heights after each step. */
-const heights: MathJSON = map(
-  sub(mul(2, fold(add("hs", at("ms", "hj")), "hs", "hj", 0, upTo(1, "hp"))), "hp"),
-  "hp",
+/** The height after step i of `ms`, from `mh`. */
+const height = (i: MathJSON): MathJSON => at("mh", add(i, 1));
+/** The heights before the first step and after each step, a running sum (a mapped list would be
+ *  recomputed at every read). */
+const heights: MathJSON = fold(
+  ["Join", "hl", ["List", add(at("hl", ["Length", "hl"]), sub(mul(2, at("ms", "hj")), 1))]],
+  "hl",
+  "hj",
+  ["List", 0],
   allPoints,
 );
 const matchingsFrom = (head: string, mode: "stack" | "queue", bad: MathJSON): EpsilFamily => ({

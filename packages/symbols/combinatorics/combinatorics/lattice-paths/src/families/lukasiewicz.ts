@@ -2,7 +2,7 @@
 // trees on n edges, in the order of the trees' Dyck paths (the depth-first contour, up before
 // down), so unrank and rank are the DyckPaths ones around a conversion between a word and its
 // contour. A word is not a walk in that order: which of two words comes first depends on the
-// open ancestors, so the walks framework doesn't take it. Both conversions are O(n²) folds.
+// open ancestors, so the walks framework doesn't take it. The word of a contour is one pass; the contour of a word an O(n²) fold.
 
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {
@@ -19,6 +19,7 @@ import {
   sub,
   upTo,
 } from "../../../collections/src/families/tables.ts";
+import { put } from "../../../collections/src/families/nested.ts";
 import { dyckPaths } from "./core.ts";
 
 type MathJSON = unknown;
@@ -33,36 +34,46 @@ const downTo = (from: MathJSON, to: MathJSON): MathJSON => ["Range", from, to, -
 const tabulate = (body: MathJSON, x: string, from: MathJSON, to: MathJSON): MathJSON => map(body, x, upTo(from, to));
 
 /** The contour (a 1 up, 0 down list `path`) as a word: a node is the start (the root) or an up
- *  step, and has as many children as there are up steps one higher before its subtree ends,
- *  that is before the height drops below its own. `heights` holds the height before each step
- *  and after the last, so the height after step t is `heights[t + 1]`. */
-function wordOfContour(path: string, heights: string): MathJSON {
-  const height = (t: MathJSON): MathJSON => at(heights, add(t, 1));
-  const children = (node: string): MathJSON => {
-    const base = height(node);
-    const state = "wc_s";
-    // The fold's state is untyped; read through a typed name its indexed reads stay lists.
-    const typed = "wc_a";
-    const step = lets(
-      [[typed, state, "list<integer>"]],
-      iff(
-        equal(at(typed, 1), 0),
-        typed,
-        iff(
-          less(height("wc_u"), base),
-          ["List", 0, at(typed, 2)],
-          [
-            "List",
-            1,
-            add(at(typed, 2), iff(and(equal(at(path, "wc_u"), 1), equal(height("wc_u"), add(base, 1))), 1, 0)),
-          ],
+ *  step, and has as many children as the up steps that leave it. One pass, an open node at each
+ *  height: an up step gives the node below it a child and opens a new node (numbered in preorder),
+ *  a down step closes the node it leaves and writes its children less one at its number.
+ *  State: [height, nodes opened, children so far by height, the open node's number by height,
+ *  the word (entry i + 1 the node numbered i)]. */
+function wordOfContour(path: string): MathJSON {
+  const rows = add("_n", 1);
+  const state = "wc_s";
+  const s = "wc_t";
+  const [height, opened] = [at(s, 1), at(s, 2)];
+  const childrenAt = (d: MathJSON): MathJSON => add(3, d);
+  const numberAt = (d: MathJSON): MathJSON => add(3, rows, d);
+  const wordAt = (node: MathJSON): MathJSON => add(3, mul(2, rows), node);
+  const up = put(
+    s,
+    [1, add(height, 1)],
+    [2, add(opened, 1)],
+    [childrenAt(height), add(at(s, childrenAt(height)), 1)],
+    [childrenAt(add(height, 1)), 0],
+    [numberAt(add(height, 1)), add(opened, 1)],
+  );
+  const down = put(s, [1, sub(height, 1)], [wordAt(at(s, numberAt(height))), sub(at(s, childrenAt(height)), 1)]);
+  const done = "wc_f";
+  return lets(
+    [
+      [
+        done,
+        fold(
+          lets([[s, state, "list<integer>"]], iff(equal("wc_u", 1), up, down)),
+          state,
+          "wc_u",
+          ["Join", ["List", 0, 0], map(0, "wc_z", upTo(1, mul(3, rows)))],
+          path,
         ),
-      ),
-    );
-    return at(fold(step, state, "wc_u", ["List", 1, 0], upTo(add(node, 1), length(path))), 2);
-  };
-  const isNode = ["Or", equal("wc_t", 0), equal(at(path, ["Max", "wc_t", 1]), 1)];
-  return map(sub(children("wc_t"), 1), "wc_t", ["Filter", upTo(0, length(path)), ["Function", isNode, "wc_t"]]);
+        "list<integer>",
+      ],
+    ],
+    // The root is still open at the end: its children are the first height's.
+    ["Join", ["List", sub(at(done, 3), 1)], ["Drop", done, add(3, mul(2, rows))]],
+  );
 }
 
 /** The contour of the word `_x`. Node i has depth d_i, the number of j < i whose subtree holds it:
@@ -116,23 +127,7 @@ export const lukasiewiczPaths: EpsilFamily = {
   params: ["_n"],
   epsil: {
     count: dyckPaths.epsil.count,
-    unrank: lets(
-      [
-        ["lu_p", dyckPaths.epsil.unrank, "list<integer>"],
-        [
-          "lu_h",
-          fold(
-            ["Join", "lu_g", ["List", add(last("lu_g"), sub(mul(2, "lu_v"), 1))]],
-            "lu_g",
-            "lu_v",
-            ["List", 0],
-            "lu_p",
-          ),
-          "list<integer>",
-        ],
-      ],
-      wordOfContour("lu_p", "lu_h"),
-    ),
+    unrank: lets([["lu_p", dyckPaths.epsil.unrank, "list<integer>"]], wordOfContour("lu_p")),
     rank: lets([["lr_x", contourOfWord("_n"), "list<integer>"]], rename(dyckPaths.epsil.rank, "_x", "lr_x")),
     valid: validWord("_n"),
   },

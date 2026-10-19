@@ -510,17 +510,22 @@ const COMBINING = new Set([
  * different kinds of thing, so the comparison is declined (an `inconclusive` verdict) rather than made. */
 export class Undecided extends Error {}
 
-/** The engine of the comparison in progress. Boxing `x^a` types `a` as a number for good, so each public
- * comparison gets an engine of its own (about 10 ms) and nothing it learns reaches the next example. */
-let current: ComputeEngine | undefined;
-const engine = (): ComputeEngine => (current ??= new ComputeEngine());
+/** One engine for every comparison, each in a scope of its own: boxing `x^a` types `a` as a number for good, so
+ * nothing a comparison learns may reach the next example. A fresh engine per comparison cost about 10 ms each. */
+let shared: ComputeEngine | undefined;
+let inComparison = false;
+const engine = (): ComputeEngine => (shared ??= new ComputeEngine());
 
 function isolated<T>(run: () => T): T {
-  if (current !== undefined) return run();
+  if (inComparison) return run();
+  const ce = engine();
+  inComparison = true;
+  ce.pushScope();
   try {
     return run();
   } finally {
-    current = undefined;
+    ce.popScope();
+    inComparison = false;
   }
 }
 

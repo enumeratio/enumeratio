@@ -462,6 +462,7 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  */
 const NOVEL = [
   "AdditionTable",
+  "AdditiveEnergy",
   "Adele",
   "AdicDigits",
   "AdicExpansion",
@@ -745,6 +746,7 @@ const NOVEL = [
   "MultiZetaValue",
   "MulticomplexAlgebra",
   "MultiplicationTable",
+  "MultiplicativeEnergy",
   "MultiplicityOfLargestPart",
   "Multisets",
   "NSymAlgebra",
