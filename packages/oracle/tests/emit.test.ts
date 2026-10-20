@@ -224,6 +224,17 @@ test("inside an mpmath N(x, d) past a double's digits every decimal is read from
   expect(emit(["Sin", 0.1], "mpmath")).toEqual({ ok: true, source: "sin(0.1)" });
 });
 
+test("an mpmath comparison around a nested N(x, d) past a double's digits runs at that precision", () => {
+  expect(emit(["LessEqual", "Pi", ["N", "Pi", 40]], "mpmath")).toEqual({
+    ok: true,
+    source: "enumeratio_at(lambda: ((pi <= enumeratio_nround(lambda: (pi), 40))), 40)",
+  });
+  expect(emit(["LessEqual", "Pi", ["N", "Pi", 15]], "mpmath")).toEqual({
+    ok: true,
+    source: "(pi <= enumeratio_nround(lambda: (pi), 15))",
+  });
+});
+
 test("a nested N(x, d) keeps its digits for mpmath, SymPy and Rust; the answer's own N does not change", () => {
   const row = ["LessEqual", ["N", "Pi", 7], "Pi"] as const;
   expect(emit(row, "mpmath")).toEqual({ ok: true, source: "(enumeratio_nround(lambda: (pi), 7) <= pi)" });

@@ -1616,6 +1616,11 @@ def enumeratio_n(thunk, d):
     with workdps(max(d, 15) + 20):
         return enumeratio_round(thunk(), d)
 
+# The whole expression at the precision of its widest nested N(x, d), so a bare constant beside it is not a double.
+def enumeratio_at(thunk, d):
+    with workdps(int(d) + 25):
+        return thunk()
+
 # N(x, d) below another call: the number rounded to d significant digits, not its text.
 def enumeratio_nround(thunk, d):
     d = int(d)
