@@ -11,8 +11,8 @@ gaussian-integers-1-1-i-1-2i-3-i-over-divisors	sigma((3 + 1*I), 1)	TypeError: Un
 gaussianintegers-true-squares-of-1-1-i-2-3-3-3i			
 listable-in-n	[sigma(1, 2), sigma(2, 2), sigma(3, 2), sigma(4, 2), sigma(5, 2)]	[1, 5, 10, 21, 26]	
 symbolic-k-expands-over-the-divisors	sigma(30, SR.var("k"))	TypeError: unable to convert k to an integer	error
-negative-n-stays-unevaluated	sigma(-12, 1)	28	inconclusive
-k-0-of-a-negative-n-stays-unevaluated	sigma(-12, 0)	6	inconclusive
+negative-n-stays-unevaluated	sigma(-12, 1)	28	
+k-0-of-a-negative-n-stays-unevaluated	sigma(-12, 0)	6	
 6-is-a-perfect-number-sigma-1-6-2-times-6	sigma(6, 1)	12	
 28-is-the-next-perfect-number-sigma-1-28-2-times	sigma(28, 1)	56	
 filter-range-1-30-function-divisorsigma-1-1-eq-2			
