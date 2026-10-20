@@ -295,6 +295,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
   const answers = new Set<MathJSON>([expr]);
   // Whether the walk is inside the operand of an mpmath N(x, d) answer with d past a double's digits.
   let exact = false;
+  // The largest d past a double's digits of a nested mpmath N(x, d): the whole expression runs at that precision.
+  let nestedDigits = 0;
   // Bits for the decimals inside a Sage N(x[, d]) operand: ours reads them as decimals, not as the nearest double.
   let decimalBits = 0;
   const walk = (node: MathJSON): string => {
@@ -428,7 +430,10 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       // N(x, d) answers in text (run.ts), which can't be an operand: below the answer it is a number rounded to d digits.
       if (nested) {
         const wasExactNested = exact;
-        if (digits > 15) exact = true;
+        if (digits > 15) {
+          exact = true;
+          nestedDigits = Math.max(nestedDigits, digits);
+        }
         try {
           return `enumeratio_nround(lambda: (${walk(operands[0] as MathJSON)}), ${digits})`;
         } finally {
@@ -917,7 +922,9 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     return "0";
   };
 
-  const source = walk(expr);
+  let source = walk(expr);
+  // A bare constant beside a nested N (pi <= N(pi, 40)) would otherwise be read at the caller's 53 bits.
+  if (system === "mpmath" && nestedDigits > 0) source = `enumeratio_at(lambda: (${source}), ${nestedDigits})`;
   if (missing.length > 0) return { ok: false, missing };
   if (system === "combinatorica" && !fromCombinatorica) return { ok: false, missing: [] };
   return {
