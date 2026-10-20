@@ -1,6 +1,7 @@
 id	in	out	tex.in	tex.out	verdict
 0-lt-1	Less[0, 1]	True	0<1	\text{True}	
 2-plus-0-times-0-pow-neg-16-lt-1	Less[Plus[2, Times[0, Power[0, -16]]], 1]				
+neg-2-minus-0-pow-0-lt-1	Less[Plus[-2, Times[-1, Power[0, 0]]], 1]	Indeterminate < 1	-2-0^0<1	\text{Indeterminate}<1	disagree
 4-over-3-lt-3-over-2	Less[Rational[4, 3], Rational[3, 2]]	True	\frac{4}{3}<\frac{3}{2}	\text{True}	
 1-minus-128-times-10-pow-neg-16-lt-1	Less[Plus[1, Times[-128, Power[10, -16]]], 1]	True	1-\frac{128}{10^{16}}<1	\text{True}	
 1-minus-256-times-10-pow-neg-16-lt-1	Less[Plus[1, Times[-256, Power[10, -16]]], 1]	True	1-\frac{256}{10^{16}}<1	\text{True}	

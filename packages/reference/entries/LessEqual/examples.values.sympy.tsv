@@ -1,6 +1,7 @@
 id	in	out	verdict
 2-over-17-lt-eq-1-over-5-lt-eq-1-over-10-times	And(Le(Rational(2, 17), Rational(1, 5)), Le(Rational(1, 5), (Rational(1, 10) * pi)))	True	
 n-pi-40-lt-eq-a-value-just-below-pi	Le(N(pi, 40), (pi * (1 + (-256 * (S(5)**-20)))))	False	disagree
+n-pi-7-lt-eq-pi	Le(N(pi, 7), pi)	True	disagree
 3-over-2-lt-eq-5-over-3	Le(Rational(3, 2), Rational(5, 3))	True	
 n-pi-20-lt-eq-pi	Le(N(pi, 20), pi)	True	
 sqrt-2-plus-sqrt-3-lt-eq-sqrt-5-plus-2-times	Le((sqrt(2) + sqrt(3)), sqrt((5 + (2 * sqrt(6)))))	True	

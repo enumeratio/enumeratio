@@ -3,6 +3,7 @@ extendedgcd-2-3	collect(gcdx(ZZ(2), ZZ(3)))	[1, -1, 1]
 extendedgcd-12-18	collect(gcdx(ZZ(12), ZZ(18)))	[6, -1, 1]	
 extendedgcd-3-5	collect(gcdx(ZZ(3), ZZ(5)))	[1, 2, -1]	
 extendedgcd-6-4	collect(gcdx(ZZ(6), ZZ(4)))	[2, 1, -1]	
+extendedgcd-0-0	collect(gcdx(ZZ(0), ZZ(0)))		
 any-number-of-arguments-folding-pairwise-6-times			
 gaussian-integers-by-euclid-with-the-rounded	collect(gcdx(ZZ(enumeratio_complex(7, 2)), ZZ(enumeratio_complex(3, -5))))	MethodError: no method matching (::ZZRing)(::ComplexFieldElem) The object of type `ZZRing` exists, b	error
 negative-arguments-12-18-6	collect(gcdx(ZZ(-12), ZZ(18)))	[6, 1, 1]	

@@ -4,6 +4,7 @@ modularinverse-2-11	mod_inverse(n(2), n(11))	6
 modularinverse-3-5	mod_inverse(n(3), n(5))	2	
 inverse-mod-1-of-a-negative-integer	mod_inverse(n(-3), n(1))	1	disagree
 inverse-of-0-mod-1	mod_inverse(n(0), n(1))	0	
+inverse-of-0-mod-neg-1	mod_inverse(n(0), n(-1))	-1	disagree
 a-negative-argument-3-cdot-2-6-equiv-1	mod_inverse(n(-3), n(7))	2	
 a-21-digit-modulus	mod_inverse(n(3), (power(n(10), n(20)) + n(1)))	33333333333333333334	
 listable-threads-over-a-list	list(vec![mod_inverse(n(2), n(11)), mod_inverse(n(3), n(11)), mod_inverse(n(4), n(11))])	[6, 4, 3]	
