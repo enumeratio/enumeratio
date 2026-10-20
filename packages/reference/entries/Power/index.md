@@ -10,7 +10,7 @@ signatures:
     description: "Exponentiation: raise a base to a power."
     library: enumeratio-analytic
     type: (complex | infinity, complex | signed_infinity) -> number
-    overrides: enumeratio-evaluation
+    overrides: compute-engine
     on:
       - Around
       - CenteredInterval

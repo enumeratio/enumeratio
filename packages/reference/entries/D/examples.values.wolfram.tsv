@@ -1,4 +1,4 @@
 id	in	out	tex.in	tex.out
 of-a-product	D[Times[Power[x, 2], Sin[x]], x]	x^2*Cos[x] + 2*x*Sin[x]	\frac{\partial \left(x^2 \sin (x)\right)}{\partial x}	x^2 \cos (x)+2 x \sin (x)
 second-derivative	D[Power[x, 3], x, x]	6*x	\frac{\partial ^2x^3}{\partial x\, \partial x}	6 x
-of-a-head-we-declare	D[LogGamma[z], z]	PolyGamma[0, z]	\frac{\partial \text{log$\Gamma $}(z)}{\partial z}	\psi ^{(0)}(z)
+of-an-order	D[Power[x, 5], List[x, 2]]	20*x^3	\frac{\partial ^2x^5}{\partial x^2}	20 x^3

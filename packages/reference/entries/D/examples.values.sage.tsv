@@ -1,4 +1,4 @@
-id	in	out
-of-a-product	diff((((SR.var("x"))^2) * sin(SR.var("x"))), SR.var("x"))	x^2*cos(x) + 2*x*sin(x)
-second-derivative	diff(((SR.var("x"))^3), SR.var("x"), SR.var("x"))	6*x
-of-a-head-we-declare	diff(log_gamma(SR.var("z")), SR.var("z"))	psi(z)
+id	in	out	verdict
+of-a-product	diff((((SR.var("x"))^2) * sin(SR.var("x"))), SR.var("x"))	x^2*cos(x) + 2*x*sin(x)	
+second-derivative	diff(((SR.var("x"))^3), SR.var("x"), SR.var("x"))	6*x	
+of-an-order	diff(((SR.var("x"))^5), [SR.var("x"), 2])	TypeError: argument symb must be a symbol	error

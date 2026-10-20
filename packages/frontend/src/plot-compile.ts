@@ -4,6 +4,7 @@
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
+import { selfContainedCode } from "@enumeratio/engine/compiled";
 import { zetaWGSL } from "@enumeratio/analytic/shader";
 
 /** What to compile a plot's expression to. */
@@ -80,8 +81,9 @@ function compileItem(e: BoxedExpression, spec: PlotCompileSpec, unknowns: readon
     return item;
   }
   try {
-    const r = new JavaScriptTarget().compile(e) as { success?: boolean; code?: string };
-    if (r?.success && typeof r.code === "string") item.code = r.code;
+    const r = new JavaScriptTarget().compile(e) as { success?: boolean; code?: string; preamble?: string };
+    const code = r?.success ? selfContainedCode(r) : undefined;
+    if (code !== undefined) item.code = code;
   } catch {
     // not compilable: the page samples `json` itself
   }

@@ -78,7 +78,7 @@ export function declareEvaluation(ce: ComputeEngine): void {
       const anyFn = (AbortSignal as unknown as { any?: (s: AbortSignal[]) => AbortSignal }).any;
       const signal = anyFn !== undefined ? anyFn(signals) : timeoutSignal;
       try {
-        return await held.canonical.evaluateAsync({ signal });
+        return await held.canonical.evaluateAsync({ ...options, signal });
       } catch (e) {
         // Only OUR timeout converts to failexpr; a caller's own signal firing propagates.
         const timedOut = timeoutSignal.aborted || isTimeout(e);

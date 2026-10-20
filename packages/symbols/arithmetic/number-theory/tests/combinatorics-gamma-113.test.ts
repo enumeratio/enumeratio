@@ -93,7 +93,7 @@ test("Multinomial through Gamma reduces to Binomial's Gamma form at two real par
 // except the Pochhammer case below, which this package's engine answers differently from
 // the full reference engine.)
 test("Pochhammer at a rational order routes through Gamma via evaluate, not N", () => {
-  // (3/2)_(1/2) = Gamma(2)/Gamma(3/2), left as the Gamma ratio here -- this file
+  // (3/2)_(1/2) = Gamma(2)/Gamma(3/2) = 1/Gamma(3/2), left as the Gamma ratio here -- this file
   // declares only @enumeratio/number-theory, and the ratio's further exact reduction to
   // 2/sqrt(pi) is @enumeratio/analytic's Gamma simplification (see the full reference
   // engine's equivalent example, which pins that exact form end to end). The point this
@@ -101,7 +101,7 @@ test("Pochhammer at a rational order routes through Gamma via evaluate, not N", 
   // exact wherever the engine CAN simplify it further, instead of a decimal.
   expect(json(["Pochhammer", ["Rational", 3, 2], ["Rational", 1, 2]])).toEqual([
     "Divide",
-    ["Gamma", 2],
+    1,
     ["Gamma", ["Rational", 3, 2]],
   ]);
 });

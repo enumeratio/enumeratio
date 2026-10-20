@@ -139,7 +139,7 @@ for (const [label, expr, variable, at, point] of DERIVATIVES) {
 }
 
 test("LogGamma' is the digamma function, exactly", () => {
-  expect(box(["D", ["LogGamma", "z"], "z"]).evaluate().json).toEqual(box(["PolyGamma", 0, "z"]).evaluate().json);
+  expect(box(["D", ["LogGamma", "z"], "z"]).evaluate().json).toEqual(box(["Digamma", "z"]).evaluate().json);
 });
 
 test("H_n' = 2n H_{n-1} at a symbolic order", () => {
