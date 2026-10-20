@@ -8,7 +8,24 @@
 // Shared by the partition and composition families that are completion counts of this shape.
 
 import type { EpsilFamily } from "./epsil.ts";
-import { add, all, and, at, cell, equal, fold, iff, less, lets, mul, quotient, rowTable, sub, upTo } from "./tables.ts";
+import {
+  add,
+  all,
+  and,
+  at,
+  cell,
+  equal,
+  fold,
+  iff,
+  less,
+  lets,
+  map,
+  mul,
+  quotient,
+  rowTable,
+  sub,
+  upTo,
+} from "./tables.ts";
 import type { FamilyShape } from "./types.ts";
 
 type MathJSON = unknown;
@@ -59,12 +76,14 @@ export function partWalk(spec: PartWalk): EpsilFamily {
   const T = cell("_tables", width);
 
   // A set of parts is tested once per part (1 … total); its members, ascending and counted, ride on the
-  // end of the table, where the operations that read it find them. The table's cells and every search
-  // then try the members alone, not every size up to the sum left.
+  // end of the table, where the operations that read it find them, followed by how many members are at
+  // most x for x = 0 … total. The table's cells and every search then try the members alone, not every
+  // size up to the sum left.
   const set = "pw_set";
   const offset = mul(add(total, 1), width);
   const members: MathJSON = at("_tables", add(offset, 1));
   const member = (j: MathJSON): MathJSON => at("_tables", add(offset, 1, j));
+  const membersUpTo = (x: MathJSON): MathJSON => at("_tables", add(offset, 2, members, x));
   if (parts !== undefined && order !== "smallest first") throw new Error("a set of parts is read smallest first");
 
   // T(m, c): the ways to place parts adding up to m from context c. Row 0 is whether to stop.
@@ -104,7 +123,23 @@ export function partWalk(spec: PartWalk): EpsilFamily {
               "list<integer>",
             ],
           ],
-          ["Join", cells, ["List", ["Length", set]], set],
+          [
+            "Join",
+            cells,
+            ["List", ["Length", set]],
+            set,
+            map(
+              fold(
+                add("pw_c", iff(["LessEqual", at(set, "pw_j"), "pw_y"], 1, 0)),
+                "pw_c",
+                "pw_j",
+                0,
+                upTo(1, ["Length", set]),
+              ),
+              "pw_y",
+              upTo(0, total),
+            ),
+          ],
         );
 
   /** The parts that sort before `p` at (m, c): those tried first, within the room. */
@@ -180,7 +215,7 @@ export function partWalk(spec: PartWalk): EpsilFamily {
       ),
     ),
   );
-  const unrank = ["Drop", fold(unrankStep, "pw_u", "pw_i", list(total, start, "_r"), upTo(1, total)), 3];
+  const unrankGeneral = ["Drop", fold(unrankStep, "pw_u", "pw_i", list(total, start, "_r"), upTo(1, total)), 3];
 
   // Rank: the state is [rank so far, sum left, context]; each part adds up the runs that start
   // with a part that sorts before it.
@@ -192,7 +227,78 @@ export function partWalk(spec: PartWalk): EpsilFamily {
     ],
     list(add("pw_r", skipped("pw_m", "pw_c", "pw_x")), sub("pw_m", "pw_x"), after("pw_c", "pw_x")),
   );
-  const rank = at(fold(rankStep, "pw_a", "pw_x", list(0, total, start), "_x"), 1);
+  const rankGeneral = at(fold(rankStep, "pw_a", "pw_x", list(0, total, start), "_x"), 1);
+
+  // A set of parts needs no context, and a list grown or rewritten a step at a time costs the interpreter
+  // (exact integers, past 2^53) far more than the step: the state stays four numbers and the parts pile up
+  // as the digits of one integer. Binding the table once saves the interpreter boxing it again at every read.
+  const readOnce = (body: MathJSON): MathJSON => {
+    const swap = (node: MathJSON): MathJSON =>
+      node === "_tables" ? "pw_tab" : Array.isArray(node) ? node.map(swap) : node;
+    return lets([["pw_tab", "_tables", "list<integer>"]], swap(body));
+  };
+  const radix = add(members, 1);
+  const base = add(total, 1);
+  // The part is the first member whose completions pass the rank left. The search carries the rank left,
+  // then, once a member is found, −1 − (rank left there · radix + the member's index).
+  const found = (code: MathJSON): MathJSON => sub(-1, code);
+  // The completions of a run that starts with member j, from sum m.
+  const completions = T(sub("pw_m", member("pw_j")), 0);
+  const scan = fold(
+    iff(
+      less("pw_a", 0),
+      "pw_a",
+      iff(less("pw_a", completions), found(add(mul("pw_a", radix), "pw_j")), sub("pw_a", completions)),
+    ),
+    "pw_a",
+    "pw_j",
+    "pw_r",
+    upTo(1, membersUpTo("pw_m")),
+  );
+  // The state is [sum left, rank left, parts so far, those parts as digits in base total + 1].
+  const setStep = iff(
+    equal(at("pw_u", 1), 0),
+    "pw_u",
+    lets(
+      [
+        ["pw_m", at("pw_u", 1)],
+        ["pw_r", at("pw_u", 2)],
+        ["pw_code", scan],
+        ["pw_p", member(["Mod", found("pw_code"), radix])],
+      ],
+      list(
+        sub("pw_m", "pw_p"),
+        quotient(found("pw_code"), radix),
+        add(at("pw_u", 3), 1),
+        add(mul(at("pw_u", 4), base), "pw_p"),
+      ),
+    ),
+  );
+  const unrankSet = lets(
+    [["pw_end", fold(setStep, "pw_u", "pw_i", list(total, "_r", 0, 0), upTo(1, total)), "list<integer>"]],
+    map(
+      ["Mod", quotient(at("pw_end", 4), ["Power", base, sub(at("pw_end", 3), "pw_d")]), base],
+      "pw_d",
+      upTo(1, at("pw_end", 3)),
+    ),
+  );
+  // Rank: the members before x are the first (members up to x) − 1, and all of them fit.
+  const rankSetStep = lets(
+    [["pw_m", at("pw_a", 2)]],
+    list(
+      add(
+        at("pw_a", 1),
+        fold(add("pw_s", T(sub("pw_m", member("pw_j")), 0)), "pw_s", "pw_j", 0, upTo(1, sub(membersUpTo("pw_x"), 1))),
+      ),
+      sub("pw_m", "pw_x"),
+    ),
+  );
+  const rankSet = at(fold(rankSetStep, "pw_a", "pw_x", list(0, total), "_x"), 1);
+  // Digits past 2^53 are the interpreter's alone (compiled code holds doubles), so a fiber that small keeps
+  // the list state, which compiled code walks cheaply.
+  const unrank =
+    parts === undefined ? unrankGeneral : iff(less(T(total, start), 2 ** 53), unrankGeneral, readOnce(unrankSet));
+  const rank = parts === undefined ? rankGeneral : readOnce(rankSet);
 
   // Valid: the state is [every part so far fits, sum left, context]; a run is a member when it
   // fits, uses up the sum and may stop where it is.
