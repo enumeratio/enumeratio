@@ -11,4 +11,4 @@ fullsimplify-matrixfunction-argument-list-list-1
 argument-0	arg(0)	nan	inconclusive
 argument-positiveinfinity	arg(oo)	0	
 argument-negativeinfinity	arg(-oo)	pi	
-argument-positiveinfinity-times-i	arg((oo * (0 + 1*I)))		
+argument-positiveinfinity-times-i	arg((oo * (0 + 1*I)))	pi/2	inconclusive
