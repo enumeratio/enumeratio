@@ -5,6 +5,7 @@ a-list-number-by-number	enumeratio_n(lambda: ([pi, e, sqrt(2)]), 5)	['3.1416', '
 n-1-over-7	((mpf(1)/7))		
 n-1-over-7-50	enumeratio_n(lambda: ((mpf(1)/7)), 50)	0.14285714285714285714285714285714285714285714285714	
 n-gamma-33-over-10-50	enumeratio_n(lambda: (gamma((mpf(33)/10))), 50)	2.6834373819557687935963273147667112586281870043548	
+n-9-minus-sqrt-1-minus-exponentiale-pow-1990	enumeratio_n(lambda: ((9 + (-sqrt((1 + (-((e)**1990))))))), 2)	(9.0-1.3e+432j)	
 n-pi-50	enumeratio_n(lambda: (pi), 50)	3.1415926535897932384626433832795028841971693993751	
 n-khinchin-50	enumeratio_n(lambda: (khinchin), 50)	2.6854520010653064453097148354817956938203822939945	
 n-arcsin-3	(asin(3))	(1.57079632679489661923132169164 - 1.76274717403908605046521864996j)	

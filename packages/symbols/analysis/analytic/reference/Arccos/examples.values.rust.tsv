@@ -5,6 +5,7 @@ arccos-0	acos(n(0))	1.5707963267948966
 the-top-of-the-principal-range	acos(n(-1))	3.141592653589793	
 a-machine-precision-argument-evaluates	acos(x(0.4))	1.1592794807274085	
 outside-1-1-the-value-is-purely-imaginary	acos(x(1.5))	panic: non-finite result: NaN	error
+arccos-cos-8-is-8-minus-2-pi	acos(cos(n(8)))	1.7168146928204135	
 arbitrary-precision-via-n	nf(acos(rational(n(1), n(3))))	1.2309594173407747	
 evaluates-at-a-complex-argument			
 threads-element-wise-over-a-matrix	list(vec![list(vec![acos(n(1)), acos((n(1) / sqrt(n(2))))]), list(vec![acos(n(0)), acos((n(1) / sqrt(n(2))))])])	[[0.0, 0.7853981633974484], [1.5707963267948966, 0.7853981633974484]]	

@@ -5,6 +5,7 @@ a-list-number-by-number	enumeratio_n([pi, e, sqrt(2)], 5)	[3.14160000000000, 2.7
 n-1-over-7	enumeratio_n((1/7))	0.142857142857143
 n-1-over-7-50	enumeratio_n((1/7), 50)	0.142857142857143
 n-gamma-33-over-10-50	enumeratio_n(gamma((33/10)), 50)	2.68343738195577
+n-9-minus-sqrt-1-minus-exponentiale-pow-1990	enumeratio_n((9 + (-sqrt((1 + (-((e)^1990)))))), 2)	
 n-pi-50	enumeratio_n(pi, 50)	3.14159265358979
 n-khinchin-50	enumeratio_n(khinchin, 50)	2.68545200106531
 n-arcsin-3	enumeratio_n(arcsin(3))	1.57079632679490 - 1.76274717403909*I

@@ -5,6 +5,7 @@ erfinv-neg-1	erf_inv(n(-1))	panic: non-finite result: -inf	error
 a-floating-point-argument-evaluates-directly-to	erf_inv(x(0.5))	0.4769362762044699	
 a-machine-precision-argument	erf_inv(x(0.6))	0.5951160814499948	
 series-erfinv-x-x-0-3			
+erf-of-erfinv-outside-1-1	equal(erf(erf_inv(x(-1.687))), x(0.5))	panic: non-finite result: -inf	error
 threads-element-wise-over-a-list-as-wolfram-s	list(vec![erf_inv(n(0)), erf_inv(n(1))])	panic: non-finite result: inf	error
 two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x			
 interval-arithmetic-the-inverse-is-increasing-so			

@@ -8,6 +8,7 @@ series-expintegrale-1-x-x-0-4	SR(exp_integral_e(1, SR.var("x"))).series(SR.var("
 normal-series-expintegrale-n-x-x	(SR(exp_integral_e(SR.var("n"), SR.var("x"))).series(SR.var("x") == oo, 4 + 1)).truncate()	None	inconclusive
 large-integer-order-500000	exp_integral_e(500000, 2.5)		
 large-order-beside-an-underflowing-power	enumeratio_n(exp_integral_e(170, 100))		
+large-order-at-a-negative-argument	enumeratio_n(exp_integral_e(170, -100))		
 non-integer-order	exp_integral_e(0.5, 2.5)	0.0284142997092898	
 exact-arguments-under-n	enumeratio_n(exp_integral_e(1, 1))	0.219383934395520	
 n-expintegrale-1-plus-i-2-plus-3i	enumeratio_n(exp_integral_e((1 + 1*I), (2 + 3*I)))	-0.0189438305083736 + 0.0204437701028300*I	

@@ -5,6 +5,7 @@ a-list-number-by-number	nf(list(vec![x(std::f64::consts::PI), x(std::f64::consts
 n-1-over-7	nf(rational(n(1), n(7)))	0.14285714285714285	
 n-1-over-7-50	nf(rational(n(1), n(7)))	0.14285714285714285	
 n-gamma-33-over-10-50	nf(gamma(rational(n(33), n(10))))	2.6834373819557666	
+n-9-minus-sqrt-1-minus-exponentiale-pow-1990	nf((n(9) + (-(sqrt((n(1) + (-(power(x(std::f64::consts::E), n(1990))))))))))	panic: non-finite result: inf	error
 n-pi-50	nf(x(std::f64::consts::PI))	3.141592653589793	
 n-khinchin-50			
 n-arcsin-3	nf(asin(n(3)))	panic: non-finite result: NaN	error

@@ -197,10 +197,10 @@ function declareArccosCosReduction(ce: ComputeEngine): void {
       const pi = Math.PI;
       if (value < -pi || value > 3 * pi) return undefined;
       if (value >= 0 && value <= pi) return finish(y, options);
-      if (value > pi && value <= 3 * pi) {
-        const twoPi = ce.function("Multiply", [2, "Pi"]);
-        return finish(ce.function("Subtract", [twoPi, y]), options);
-      }
+      const twoPi = ce.function("Multiply", [2, "Pi"]);
+      if (value > pi && value <= 2 * pi) return finish(ce.function("Subtract", [twoPi, y]), options);
+      // (2*pi, 3*pi]: the wave climbs again, y - 2*pi.
+      if (value > 2 * pi) return finish(ce.function("Subtract", [y, twoPi]), options);
       // value in [-pi, 0): cos(y) = cos(-y), and -y is in (0, pi].
       return finish(ce.function("Negate", [y]), options);
     },

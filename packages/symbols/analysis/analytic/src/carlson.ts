@@ -199,6 +199,83 @@ export function carlsonRJ(x0: Cx, y0: Cx, z0: Cx, p0: Cx): Cx {
     }
   }
 
+  const direct = rjDuplication(x0, y0, z0, p0);
+  if (!branchRisk(x0, y0, z0, p0)) return direct;
+  // The duplication takes √p_m on the principal branch, which near the cut can be the wrong
+  // side (RJ(1-i, 2, 4, -17+0.01i) answers a non-limit). Past Re < 0 it is checked against
+  // the integral itself, as mpmath does (an initial integral, then the duplication on
+  // arguments shifted into the right half-plane); where the two agree the duplication's
+  // value stands.
+  const onCut = p0.im === 0 && p0.re < 0;
+  const integral = onCut
+    ? // A pole on the path: the Cauchy principal value is the mean of the two sides, the
+      // second by conjugation.
+      scale(add(rjByIntegral(x0, y0, z0, p0), conj(rjByIntegral(conj(x0), conj(y0), conj(z0), p0))), 0.5)
+    : rjByIntegral(x0, y0, z0, p0);
+  if (!onCut && abs(sub(integral, direct)) <= 1e-9 * abs(integral)) return direct;
+  return integral;
+}
+
+/** Are any of x, y, z, p past Re < 0 with the others not all real (the all-real cases have their own forms)? */
+function branchRisk(x: Cx, y: Cx, z: Cx, p: Cx): boolean {
+  return [x, y, z, p].some((v) => v.re < 0) && [x, y, z, p].some((v) => v.im !== 0);
+}
+
+const conj = (v: Cx): Cx => cx(v.re, -v.im);
+
+// Gauss-Kronrod 7-15 nodes and weights.
+const GK_NODES = [
+  0.9914553711208126, 0.9491079123427585, 0.8648644233597691, 0.7415311855993945, 0.5860872354676911,
+  0.4058451513773972, 0.20778495500789848, 0,
+];
+const GK_WEIGHTS = [
+  0.022935322010529224, 0.06309209262997856, 0.10479001032225019, 0.14065325971552592, 0.1690047266392679,
+  0.19035057806478542, 0.20443294007529889, 0.20948214108472782,
+];
+const G_WEIGHTS = [0.1294849661688697, 0.27970539148927664, 0.3818300505051189, 0.4179591836734694];
+
+/** ∫ f over the straight segment a → b, adaptive Gauss-Kronrod 7-15. */
+function segmentIntegral(f: (t: Cx) => Cx, a: Cx, b: Cx, tol: number, depth = 0): Cx {
+  const half = scale(sub(b, a), 0.5);
+  const mid = scale(add(a, b), 0.5);
+  let kronrod = cx(0);
+  let gauss = cx(0);
+  for (let i = 0; i < 8; i++) {
+    const pair = i === 7 ? [cx(0)] : [cx(GK_NODES[i]!), cx(-GK_NODES[i]!)];
+    for (const node of pair) {
+      const v = f(add(mid, mul(half, node)));
+      kronrod = add(kronrod, scale(v, GK_WEIGHTS[i]!));
+      if (i % 2 === 1) gauss = add(gauss, scale(v, G_WEIGHTS[(i - 1) / 2]!));
+    }
+  }
+  const k = mul(kronrod, half);
+  const g = mul(gauss, half);
+  if (depth >= 40 || abs(sub(k, g)) <= tol) return k;
+  return add(segmentIntegral(f, a, mid, tol / 2, depth + 1), segmentIntegral(f, mid, b, tol / 2, depth + 1));
+}
+
+/**
+ * RJ for arguments past Re < 0, as mpmath does it: ∫₀ᴺ along a path that keeps clear of the
+ * branch points (above them, or below when every argument is), then the duplication on the
+ * arguments shifted by N into the right half-plane, where the principal roots are the
+ * integrand's continuous ones.
+ */
+function rjByIntegral(x: Cx, y: Cx, z: Cx, p: Cx): Cx {
+  const all = [x, y, z, p];
+  let margin: number;
+  if (all.every((t) => t.im >= 0 || t.re > 0)) margin = 1;
+  else if (all.every((t) => t.im < 0 || t.re > 0)) margin = -1;
+  else margin = Math.min(1, ...all.filter((t) => !(t.im >= 0 || t.re > 0)).map((t) => Math.abs(t.im) * 0.5));
+  const shift = cx(Math.ceil(-Math.min(...all.map((t) => t.re))) + 1, margin);
+  const f = (t: Cx): Cx => div(cx(1), mul(mul(mul(csqrt(add(t, x)), csqrt(add(t, y))), csqrt(add(t, z))), add(t, p)));
+  // t = N·s² along the ray, which takes the 1/√t endpoint singularity of a zero argument out.
+  const g = (s: Cx): Cx => mul(mul(f(mul(shift, mul(s, s))), mul(shift, s)), cx(2));
+  const initial = scale(segmentIntegral(g, cx(0), cx(1), 1e-14), 1.5);
+  return add(initial, rjDuplication(add(x, shift), add(y, shift), add(z, shift), add(p, shift)));
+}
+
+/** The duplication sum of `carlsonRJ`, valid where the principal roots are the continuous ones. */
+function rjDuplication(x0: Cx, y0: Cx, z0: Cx, p0: Cx): Cx {
   let x = x0;
   let y = y0;
   let z = z0;

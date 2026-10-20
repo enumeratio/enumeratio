@@ -9,6 +9,7 @@ gamma-2-0-00969036-under-n	N(stieltjes(2), 30)	-0.009690363192872318484530386035
 n-stieltjesgamma-1-50	N(stieltjes(1), 30)	-0.0728158454836767248605863758749	
 n-stieltjesgamma-2-1-over-2-50	N(stieltjes(2, Rational(1, 2)), 30)	0.968864475220290711421711062324	
 complex-a-at-n-0	N(stieltjes(0, (1 + 1*I)), 30)	-0.0702930804353431260444085244507 - 1.0616786732420778382798683821*I	disagree
+gamma-0-at-a-negative-half-integer	stieltjes(0, Rational(-1, 2))	stieltjes(0, -1/2)	inconclusive
 complex-a	N(stieltjes(2, (1 + 1*I)), 30)	TimeoutError: over 30s	error
 listable-in-the-order-n-threads-over-a-list	[stieltjes(1, 0.5), stieltjes(2, 0.5), stieltjes(3, 0.5)]	[stieltjes(1, 0.5), stieltjes(2, 0.5), stieltjes(3, 0.5)]	
 interval-arithmetic-in-a	stieltjes(2, AccumBounds(2.34, 2.35))	stieltjes(2, AccumBounds(2.34, 2.35))	disagree
