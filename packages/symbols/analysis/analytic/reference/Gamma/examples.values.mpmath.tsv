@@ -18,13 +18,13 @@ gamma-2-5-0-complex-1-5-plus-i	gammainc(2.5, 0, mpc(1.5, 1))	(0.4145242178550383
 gamma-complex-2-plus-i-0-1-5	gammainc(mpc(2, 1), 0, 1.5)	(0.364066025570145231434188843382 - 0.0865814812845660083355140381366j)	
 gamma-three-complex-arguments	gammainc(mpc(2, 1), mpc(0.5, -1), mpc(1.5, 1))	(0.657722093626211188788489441555 + 1.14243381081316455905888767564j)	
 gamma-0-1-4-all-integers	(gammainc(0, 1, 4))	0.215604581985671367198288915328	
-gamma-neg1-5-neg1-0-001	gammainc(-1.5, -1, 0.001)	(-21018.5738953223404922400734504 + 1.53615900116560618057644537775j)	disagree
+gamma-neg1-5-neg1-0-001	gammainc(-1.5, -1, 0.001)	(-21018.5738953223404922400734504 + 1.53615900116560618057644537775j)	
 threads-over-a-list-and-reduces-each-integer	[gamma(1), gamma(2), gamma(3), gamma(4), gamma(5)]	[mpf('1.0'), mpf('1.0'), mpf('2.0'), mpf('6.0'), mpf('24.0')]	
 gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer	gamma((mpf(5)/2))	1.32934038817913702047362561251	
 complex-arguments-evaluate-directly	gamma(mpc(2.3, 1))	(0.719140936537281734129165979401 + 0.540614467909849141745661620038j)	
 half-integers-have-closed-forms-gamma-7-2-frac	gamma((mpf(7)/2))	3.32335097044784255118406403126	
 including-negative-half-integers-gamma-3-2-frac	gamma((mpf(-3)/2))	2.36327180120735470306422331112	
-gamma-infty-infty	gamma(inf)		
+gamma-infty-infty	gamma(inf)	+inf	
 values-far-past-the-double-range-gamma-200-5	gamma(200.5)	5.57316894480137913364320296291e+373	
 two-arguments-the-upper-incomplete-gamma-gamma-5	gammainc(2.5, 1.5)	0.930519442786792390867241359293	
 an-integer-order-reduces-to-a-closed-form-gamma			
@@ -51,8 +51,8 @@ gamma-0-z-e-1-z-the-exponential-integral-e-1-3-2	gammainc(0, 1.5)	0.100019582406
 gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc			
 gamma-x-gamma-x-psi-x-so-the-logarithmic			
 1-over-gamma-1-over-2	(mpmathify(1) / gamma((mpf(1)/2)))	0.564189583547756286948079451561	
-gamma-1-over-2-pow-2	((gamma((mpf(1)/2)))**2)		
-gamma-neg-1-over-2-times-gamma-1-over-2	(gamma((mpf(-1)/2)) * gamma((mpf(1)/2)))		
+gamma-1-over-2-pow-2	((gamma((mpf(1)/2)))**2)	3.14159265358979323846264338328	
+gamma-neg-1-over-2-times-gamma-1-over-2	(gamma((mpf(-1)/2)) * gamma((mpf(1)/2)))	-6.28318530717958647692528676656	
 product-gamma-1-over-2-times-2k-plus-1-over-2-k			
 squaring-the-reflection-formula-at-z-1-2	almosteq(((gamma((mpf(1)/2)))**2), pi, 1e-20)	True	
 gamma-i-2-pi-sinh-pi-0-27203	(((fabs(gamma(mpc(0,1))))**2))	0.272029054982133162950236583672	

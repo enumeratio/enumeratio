@@ -41,4 +41,4 @@ findstat-st000037-2
 findstat-st000037-3			
 nan-propagates-rather-than-being-treated-as-0	sign(nan)	nan	
 sign-complexinfinity-is-indeterminate-no	sign(zoo)	sign(zoo)	disagree
-unit-circle-check-on-a-float-argument	enumeratio_equal(Abs(sign((-0.07244062047889377 + -0.9973727269705307*I))), 1)	False	disagree
+unit-circle-check-on-a-float-argument	enumeratio_equal(Abs(sign((-0.07244062047889377 + -0.9973727269705307*I))), 1)	True	
