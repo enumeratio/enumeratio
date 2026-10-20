@@ -27,17 +27,23 @@ names:
   wolfram: LogGamma
 bindings:
   - origin: mapped
+    form: wolfram
+    template: Log[Gamma[$1]]
+    arity: 1
+    threadArg: 1
+    note: The principal logarithm of Gamma, not LogGamma, which is the continuation.
+  - origin: mapped
     form: sympy
-    template: loggamma($1)
+    template: log(gamma($1))
     arity: 1
     threadArg: 1
     checked:
       version: 1.14.0
       on: 2026-10-14
-    note: SymPy's loggamma is the principal continuation, as Wolfram's LogGamma is, so the real log-magnitude GammaLn takes at a negative real differs from it.
+    note: The principal logarithm of Gamma, not SymPy's loggamma (the continuation, which is LogGamma here). At a negative real where Gamma is negative it adds pi i to the real log-magnitude GammaLn takes.
   - origin: mapped
     form: mpmath
-    template: loggamma($1)
+    template: log(gamma($1))
     arity: 1
     threadArgOnly: 1
     checked:
@@ -45,7 +51,7 @@ bindings:
       on: 2026-10-15
   - origin: mapped
     form: sage
-    template: log_gamma($1)
+    template: log(gamma($1))
     arity: 1
     threadArgOnly: 1
     checked:
@@ -53,7 +59,7 @@ bindings:
       on: 2026-10-16
   - origin: mapped
     form: julia
-    template: enumeratio_ball(lgamma, $1)
+    template: enumeratio_ball(z -> log(gamma(z)), $1)
     arity: 1
     threadArgOnly: 1
     checked:

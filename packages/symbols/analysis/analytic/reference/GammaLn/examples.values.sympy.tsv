@@ -1,24 +1,24 @@
 id	in	out	verdict
-a-pole-of-gamma-in-log-form	loggamma(0)	oo	
-a-floating-point-argument-evaluates-directly-to	loggamma(2.5)	0.284682870472919	
-ln-gamma-100-5-where-gamma-100-5-itself-is-about	loggamma(100.5)	361.435540467778	
-n-gammaln-of-a-negative-rational	N(loggamma(Rational(-1, 3)), 30)	1.40176256381563326007110805429 - 3.14159265358979323846264338328*I	inconclusive
-a-complex-argument-whose-continuation-passes-pi	loggamma((-0.5422826240167642 + -0.8401961412012631*I))	-0.392749987923667 + 3.14239217312636*I	disagree
-gammaln-at-a-pole-against-ln-gamma-at-another	enumeratio_equal(loggamma(-17), log(gamma(-2)))	False	disagree
-gammaln-101-against-ln-200	enumeratio_equal(loggamma(101), log(factorial(200)))	False	
-at-a-pole-of-gamma-compute-engine-gives-the-real	loggamma(-1)	oo	
-complex-arguments-here-the-principal-ln-gamma-z	loggamma((2.5 + 3*I))	-1.47095461034884 + 2.8226156382608*I	
-a-huge-inexact-argument-should-still-evaluate	loggamma(Float("1.0e1000"))	2.30158509299405e+1003	
-threads-over-a-list-and-the-integer-points	[loggamma(1), loggamma(2), loggamma(3)]	[0, 0, log(2)]	
+a-pole-of-gamma-in-log-form	log(gamma(0))	zoo	disagree
+a-floating-point-argument-evaluates-directly-to	log(gamma(2.5))	0.284682870472919	
+ln-gamma-100-5-where-gamma-100-5-itself-is-about	log(gamma(100.5))	361.435540467778	
+n-gammaln-of-a-negative-rational	N(log(gamma(Rational(-1, 3))), 30)	1.40176256381563326007110805429 + 3.14159265358979323846264338328*I	inconclusive
+a-complex-argument-whose-continuation-passes-pi	log(gamma((-0.5422826240167642 + -0.8401961412012631*I)))	-0.392749987923666 - 3.14079313405323*I	
+gammaln-at-a-pole-against-ln-gamma-at-another	enumeratio_equal(log(gamma(-17)), log(gamma(-2)))	True	
+gammaln-101-against-ln-200	enumeratio_equal(log(gamma(101)), log(factorial(200)))	False	
+at-a-pole-of-gamma-compute-engine-gives-the-real	log(gamma(-1))	zoo	disagree
+complex-arguments-here-the-principal-ln-gamma-z	log(gamma((2.5 + 3*I)))	-1.47095461034884 + 2.8226156382608*I	
+a-huge-inexact-argument-should-still-evaluate	log(gamma(Float("1.0e1000")))	2.30158509299405e+1003	
+threads-over-a-list-and-the-integer-points	[log(gamma(1)), log(gamma(2)), log(gamma(3))]	[0, 0, log(2)]	
 uncertainty-propagation-through-ln-gamma-with			
-to-30-significant-digits-not-yet-the-last-digit	N(loggamma(Rational(1, 3)), 30)	0.985420646927767069187174036978	
-gammaln-neg-0-5-is-the-real-log-magnitude	loggamma(-0.5)	1.26551212348465 - 3.14159265358979*I	inconclusive
-used-to-get-ln-n-for-large-n-without-overflowing	enumeratio_equal(loggamma(11), log(factorial(10)))	True	
-defined-as-ln-gamma-z-here-at-z-5	enumeratio_equal(loggamma(5), log(gamma(5)))	True	
-gammaln-1-ln-gamma-1-ln-1-0	enumeratio_equal(loggamma(1), 0)	True	
-inherits-gamma-s-recurrence-gammaln-z-1-gammaln	enumeratio_equal(loggamma(6), (loggamma(5) + log(5)))	True	
-gammaln-1-2-frac-12-ln-pi-from-gamma-1-2-sqrt-pi	enumeratio_equal(loggamma(Rational(1, 2)), (Rational(1, 2) * log(pi)))	True	
-an-exact-positive-integer-now-reduces-too	loggamma(5)	log(24)	
-the-derivative-of-ln-gamma-is-the-digamma	diff(loggamma(Symbol("x")), Symbol("x"))	polygamma(0, x)	
-off-the-positive-axis-gammaln-is-the-principal	loggamma(-1.5)	0.860047015376481 - 6.28318530717959*I	inconclusive
-gammaln-101-is-exactly-ln-100-letting-us-reason	enumeratio_equal(loggamma(101), log(factorial(100)))	True	
+to-30-significant-digits-not-yet-the-last-digit	N(log(gamma(Rational(1, 3))), 30)	0.985420646927767069187174036978	
+gammaln-neg-0-5-is-the-real-log-magnitude	log(gamma(-0.5))	1.26551212348465 + I*pi	inconclusive
+used-to-get-ln-n-for-large-n-without-overflowing	enumeratio_equal(log(gamma(11)), log(factorial(10)))	True	
+defined-as-ln-gamma-z-here-at-z-5	enumeratio_equal(log(gamma(5)), log(gamma(5)))	True	
+gammaln-1-ln-gamma-1-ln-1-0	enumeratio_equal(log(gamma(1)), 0)	True	
+inherits-gamma-s-recurrence-gammaln-z-1-gammaln	enumeratio_equal(log(gamma(6)), (log(gamma(5)) + log(5)))	True	
+gammaln-1-2-frac-12-ln-pi-from-gamma-1-2-sqrt-pi	enumeratio_equal(log(gamma(Rational(1, 2))), (Rational(1, 2) * log(pi)))	True	
+an-exact-positive-integer-now-reduces-too	log(gamma(5))	log(24)	
+the-derivative-of-ln-gamma-is-the-digamma	diff(log(gamma(Symbol("x"))), Symbol("x"))	polygamma(0, x)	
+off-the-positive-axis-gammaln-is-the-principal	log(gamma(-1.5))	0.860047015376481	
+gammaln-101-is-exactly-ln-100-letting-us-reason	enumeratio_equal(log(gamma(101)), log(factorial(100)))	True	

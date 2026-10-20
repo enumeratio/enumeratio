@@ -869,3 +869,21 @@ test("Sage: a query that reads vertex numbers is unmapped over a graph Sage numb
   expect(emit(["EdgeCount", turan], "sage").ok).toBe(true);
   expect(emit(["VertexDegree", ["CycleGraph", 5], 1], "sage").ok).toBe(true);
 });
+
+// GammaLn is the principal log of Gamma; LogGamma is the continuous one. They differ by 2πi
+// multiples off the positive axis, so the lanes' loggamma belongs to LogGamma alone.
+test("GammaLn compares against log(gamma(z)), LogGamma against the continuation", () => {
+  const source = (head: string, system: Parameters<typeof emit>[1]) => {
+    const out = emit([head, 2.5], system);
+    return out.ok ? out.source : undefined;
+  };
+  expect(source("GammaLn", "wolfram")).toBe("Log[Gamma[2.5]]");
+  expect(source("LogGamma", "wolfram")).toBe("LogGamma[2.5]");
+  expect(source("GammaLn", "mpmath")).toMatch(/^log\(gamma\(/);
+  expect(source("LogGamma", "mpmath")).toMatch(/^loggamma\(/);
+  expect(source("GammaLn", "sympy")).toMatch(/^log\(gamma\(/);
+  expect(source("LogGamma", "sympy")).toMatch(/^loggamma\(/);
+  expect(source("GammaLn", "sage")).toMatch(/^log\(gamma\(/);
+  expect(source("GammaLn", "julia")).toContain("log(gamma(z))");
+  expect(source("LogGamma", "julia")).toContain("lgamma");
+});
