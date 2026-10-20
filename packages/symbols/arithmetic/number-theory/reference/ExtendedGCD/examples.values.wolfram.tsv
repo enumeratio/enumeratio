@@ -3,6 +3,7 @@ extendedgcd-2-3	ExtendedGCD[2, 3]	{1, {-1, 1}}	\text{ExtendedGCD}[2,3]	\{1,\{-1,
 extendedgcd-12-18	ExtendedGCD[12, 18]	{6, {-1, 1}}	\text{ExtendedGCD}[12,18]	\{6,\{-1,1\}\}	disagree
 extendedgcd-3-5	ExtendedGCD[3, 5]	{1, {2, -1}}	\text{ExtendedGCD}[3,5]	\{1,\{2,-1\}\}	disagree
 extendedgcd-6-4	ExtendedGCD[6, 4]	{2, {1, -1}}	\text{ExtendedGCD}[6,4]	\{2,\{1,-1\}\}	disagree
+extendedgcd-0-0	ExtendedGCD[0, 0]	{0, {0, 0}}	\text{ExtendedGCD}[0,0]	\{0,\{0,0\}\}	disagree
 any-number-of-arguments-folding-pairwise-6-times	ExtendedGCD[6, 15, 30]	{3, {-2, 1, 0}}	\text{ExtendedGCD}[6,15,30]	\{3,\{-2,1,0\}\}	disagree
 gaussian-integers-by-euclid-with-the-rounded	ExtendedGCD[Complex[7, 2], Complex[3, -5]]	{1, {-1 - 2*I, -2 + 2*I}}	\text{ExtendedGCD}[7+2 i,3-5 i]	\{1,\{-1-2 i,-2+2 i\}\}	disagree
 negative-arguments-12-18-6	ExtendedGCD[-12, 18]	{6, {1, 1}}	\text{ExtendedGCD}[-12,18]	\{6,\{1,1\}\}	disagree

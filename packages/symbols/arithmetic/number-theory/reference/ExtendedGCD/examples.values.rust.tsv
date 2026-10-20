@@ -3,6 +3,7 @@ extendedgcd-2-3	extended_gcd(n(2), n(3))	[1, -1, 1]
 extendedgcd-12-18	extended_gcd(n(12), n(18))	[6, -1, 1]	
 extendedgcd-3-5	extended_gcd(n(3), n(5))	[1, 2, -1]	
 extendedgcd-6-4	extended_gcd(n(6), n(4))	[2, 1, -1]	
+extendedgcd-0-0	extended_gcd(n(0), n(0))	[0, 1, 0]	disagree
 any-number-of-arguments-folding-pairwise-6-times			
 gaussian-integers-by-euclid-with-the-rounded			
 negative-arguments-12-18-6	extended_gcd(n(-12), n(18))	[6, 1, 1]	

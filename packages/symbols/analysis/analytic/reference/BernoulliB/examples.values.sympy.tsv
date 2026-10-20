@@ -5,6 +5,7 @@ bernoullib-2	bernoulli(2)	1/6
 bernoullib-4	bernoulli(4)	-1/30	
 bernoullib-12	bernoulli(12)	-691/2730	
 bernoullib-10	bernoulli(10)	5/66	
+b-1-sign-in-a-sum-over-k-1-to-2	(summation(((S(1) / Symbol("k")) * (S(-2) / ((-Symbol("k")) + 11)) * bernoulli(Symbol("k")) * bernoulli(((-Symbol("k")) + 3))), (Symbol("k"), 1, 2)) + (-summation(((S(1) / Symbol("k")) * (S(1) / ((-Symbol("k")) + 3)) * binomial(3, Symbol("k")) * bernoulli(Symbol("k")) * bernoulli(((-Symbol("k")) + 3))), (Symbol("k"), 1, 2))))	-149/540	disagree
 exact-rationals-at-any-index	bernoulli(60)	-1215233140483755572040304994079820246041491/56786730	
 listable-b-n-threads-over-a-list-of-indices	[bernoulli(2), bernoulli(4), bernoulli(6)]	[1/6, -1/30, 1/42]	
 the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac	bernoulli(4, Symbol("x"))	x**4 - 2*x**3 + x**2 - 1/30	
