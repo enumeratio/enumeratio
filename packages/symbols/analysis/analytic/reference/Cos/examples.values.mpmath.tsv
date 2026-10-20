@@ -13,6 +13,7 @@ a-huge-neg-7-60-argument	(cos((-((7)**60))))
 a-huge-10-80-plus-1-over-3-argument	(cos((mpmathify((((10)**80) + 1)) / 3)))	0.983031209695365265516134198423	disagree
 cos-2-5	cos(2.5)		
 series-cos-x-x-0-10			
+cos-arccos-0	cos(acos(0))	8.47842766036889964395870146939e-32	
 n-of-an-exact-argument-gives-an-arbitrary	(cos((mpf(6)/5)))	0.362357754476673577638373355623	
 evaluates-at-a-complex-argument	cos(mpc(2.5, 1))	(-1.23622919885634208168318950526 - 0.703325178113534826107487014147j)	
 threads-element-wise-over-a-matrix	[[cos((5 * (mpmathify(pi) / 6))), cos(0)], [cos((3 * (mpmathify(pi) / 2))), cos((-(mpmathify(pi) / 2)))]]	[[mpf('-0.866025403784438646763723170752721'), mpf('1.0')], [mpf('-2.54352829811066989318761044081585e-31'), mpf('8.47842766036889964395870146938683e-32')]]	

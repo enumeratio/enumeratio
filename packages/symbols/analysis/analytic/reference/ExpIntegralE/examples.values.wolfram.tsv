@@ -8,6 +8,7 @@ series-expintegrale-1-x-x-0-4	Series[ExpIntegralE[1, x], List[x, 0, 4]]	SeriesDa
 normal-series-expintegrale-n-x-x	Normal[Series[ExpIntegralE[n, x], List[x, Infinity, 4]]]	(-((n*(1 + n)*(2 + n))/x^4) + (n*(1 + n))/x^3 - n/x^2 + x^(-1))/E^x		\text{Normal}[\text{Series}[E_n(x),\{x,\infty ,4\}]]	e^{-x} \left(-\frac{(n+1) (n+2) n}{x^4}+\frac{(n+1) n}{x^3}-\frac{n}{x^2}+\frac{1}{x}\right)	inconclusive
 large-integer-order-500000	ExpIntegralE[500000, 2.5]					
 large-order-beside-an-underflowing-power	N[ExpIntegralE[170, 100]]					
+large-order-at-a-negative-argument	N[ExpIntegralE[170, -100]]	1.2360641479174505*^33 - 7.358966048241095*^33*I		N[E_{170}(-100)]	1.23606\times 10^{33}-7.35897\times 10^{33} i	disagree
 non-integer-order	ExpIntegralE[0.5, 2.5]	0.02841429970928976		E_{0.5}(2.5)	0.0284143	
 exact-arguments-under-n	N[ExpIntegralE[1, 1]]	0.21938393439552026		N[E_1(1)]	0.219384	
 n-expintegrale-1-plus-i-2-plus-3i	N[ExpIntegralE[Complex[1, 1], Complex[2, 3]]]	-0.018943830508374043 + 0.020443770102830158*I		N[E_{1+i}(2+3 i)]	-0.0189438+0.0204438 i	

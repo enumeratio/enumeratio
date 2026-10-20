@@ -13,6 +13,7 @@ a-huge-neg-7-60-argument	nf(cos((-(power(n(7), n(60))))))	-0.9993044805340108	di
 a-huge-10-80-plus-1-over-3-argument	nf(cos(((power(n(10), n(80)) + n(1)) / n(3))))	0.8667688785282804	disagree
 cos-2-5	cos(x(2.5))	-0.8011436155469337	
 series-cos-x-x-0-10			
+cos-arccos-0	cos(acos(n(0)))	6.123233995736766e-17	disagree
 n-of-an-exact-argument-gives-an-arbitrary	nf(cos(rational(n(6), n(5))))	0.3623577544766736	
 evaluates-at-a-complex-argument			
 threads-element-wise-over-a-matrix	list(vec![list(vec![cos((n(5) * (x(std::f64::consts::PI) / n(6)))), cos(n(0))]), list(vec![cos((n(3) * (x(std::f64::consts::PI) / n(2)))), cos((-((x(std::f64::consts::PI) / n(2)))))])])	[[-0.8660254037844385, 1.0], [-1.8369701987210297e-16, 6.123233995736766e-17]]	disagree

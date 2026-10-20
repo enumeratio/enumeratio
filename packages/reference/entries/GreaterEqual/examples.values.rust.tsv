@@ -1,11 +1,11 @@
-id	in	out	verdict
-0-lt-eq-1	less_equal(n(0), n(1))	true	
-pi-lt-eq-n-pi-1-digit	less_equal(x(std::f64::consts::PI), nf(x(std::f64::consts::PI)))	true	disagree
-4-over-3-lt-eq-3-over-2	less_equal(rational(n(4), n(3)), rational(n(3), n(2)))	true	
-pi-lt-eq-n-pi-20	less_equal(x(std::f64::consts::PI), nf(x(std::f64::consts::PI)))	true	
-sqrt-5-plus-2-times-sqrt-6-lt-eq-sqrt-2-plus	less_equal(sqrt((n(5) + (n(2) * sqrt(n(6))))), (sqrt(n(2)) + sqrt(n(3))))	true	
-pi-times-1-plus-256-times-10-pow-neg-20-lt-eq-n	less_equal((x(std::f64::consts::PI) * (n(1) + (n(256) * power(n(10), n(-20))))), nf(x(std::f64::consts::PI)))	true	
-x-lt-eq-x			
-pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	less_equal(power(x(std::f64::consts::PI), x(std::f64::consts::E)), power(x(std::f64::consts::E), x(std::f64::consts::PI)))	true	
-refine-sqrt-x-pow-2-x-gt-eq-0			
-integrate-boole-1-lt-eq-x-pow-2-plus-y-pow-2-lt			
+id	in	out
+0-lt-eq-1	less_equal(n(0), n(1))	true
+pi-lt-eq-n-pi-1-digit	less_equal(x(std::f64::consts::PI), nfd(x(std::f64::consts::PI), 1))	false
+4-over-3-lt-eq-3-over-2	less_equal(rational(n(4), n(3)), rational(n(3), n(2)))	true
+pi-lt-eq-n-pi-20	less_equal(x(std::f64::consts::PI), nfd(x(std::f64::consts::PI), 20))	true
+sqrt-5-plus-2-times-sqrt-6-lt-eq-sqrt-2-plus	less_equal(sqrt((n(5) + (n(2) * sqrt(n(6))))), (sqrt(n(2)) + sqrt(n(3))))	true
+pi-times-1-plus-256-times-10-pow-neg-20-lt-eq-n	less_equal((x(std::f64::consts::PI) * (n(1) + (n(256) * power(n(10), n(-20))))), nfd(x(std::f64::consts::PI), 20))	true
+x-lt-eq-x		
+pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	less_equal(power(x(std::f64::consts::PI), x(std::f64::consts::E)), power(x(std::f64::consts::E), x(std::f64::consts::PI)))	true
+refine-sqrt-x-pow-2-x-gt-eq-0		
+integrate-boole-1-lt-eq-x-pow-2-plus-y-pow-2-lt		

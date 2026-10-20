@@ -13,6 +13,7 @@ a-huge-neg-7-60-argument	(cos((-((big(7)^60)))))	-0.9309598363622474747028740555
 a-huge-10-80-plus-1-over-3-argument	(cos((((big(10)^80) + 1) // 3)))	
 cos-2-5	cos(2.5)	-0.8011436155469337
 series-cos-x-x-0-10		
+cos-arccos-0		
 n-of-an-exact-argument-gives-an-arbitrary	(cos((6 // 5)))	0.3623577544766736
 evaluates-at-a-complex-argument	cos(complex(2.5, 1))	(-1.236229198856342-0.7033251781135347j)
 threads-element-wise-over-a-matrix		

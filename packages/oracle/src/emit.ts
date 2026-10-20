@@ -416,9 +416,25 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     // Below the answer, Julia's N(x, d) is the rounded number, not the digits written out.
     if (system === "julia" && head === "N" && operands.length === 2 && !answers.has(node))
       return `enumeratio_n(${walk(operands[0] as MathJSON)}, ${walk(operands[1] as MathJSON)})`;
+    if ((system === "sympy" || system === "rust") && head === "List" && answers.has(node))
+      for (const entry of operands) answers.add(entry as MathJSON);
+    // Below the answer, N(x, d) is the number rounded to d significant digits, so a comparison around it sees them.
+    const digits = head === "N" && operands.length === 2 && !answers.has(node) ? operands[1] : undefined;
+    const nested = typeof digits === "number";
+    if (nested && system === "sympy") return `N(${walk(operands[0] as MathJSON)}, ${digits})`;
+    if (nested && system === "rust") return `nfd(${walk(operands[0] as MathJSON)}, ${digits})`;
     if (system === "mpmath") {
       if (head === "List" && answers.has(node)) for (const entry of operands) answers.add(entry as MathJSON);
-      // N(x, d) answers in text (run.ts), which can't be an operand: below the answer it is plain N(x).
+      // N(x, d) answers in text (run.ts), which can't be an operand: below the answer it is a number rounded to d digits.
+      if (nested) {
+        const wasExactNested = exact;
+        if (digits > 15) exact = true;
+        try {
+          return `enumeratio_nround(lambda: (${walk(operands[0] as MathJSON)}), ${digits})`;
+        } finally {
+          exact = wasExactNested;
+        }
+      }
       if (head === "N" && operands.length === 2 && !answers.has(node)) return walk(operands[0] as MathJSON);
     }
     const iterated = (head === "Sum" || head === "Product") && operands.length > 1 ? operands.slice(1) : [];

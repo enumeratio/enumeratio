@@ -5,6 +5,7 @@ erfinv-neg-1	InverseErf[-1]	-Infinity		\text{erf}^{-1}(-1)	-\infty
 a-floating-point-argument-evaluates-directly-to	InverseErf[0.5]	0.47693627620446993		\text{erf}^{-1}(0.5)	0.476936	
 a-machine-precision-argument	InverseErf[0.6]	0.5951160814499948		\text{erf}^{-1}(0.6)	0.595116	
 series-erfinv-x-x-0-3	Series[InverseErf[x], List[x, 0, 3]]	SeriesData[x, 0, {Sqrt[Pi]/2, 0, Pi^(3/2)/24}, 1, 4, 1]		\text{Series}\left[\text{erf}^{-1}(x),\{x,0,3\}\right]	\frac{\sqrt{\pi } x}{2}+\frac{1}{24} \pi ^{3/2} x^3+O\left(x^4\right)	
+erf-of-erfinv-outside-1-1	(Erf[InverseErf[-1.687]] == 0.5)	False		\text{erf}\left(\text{erf}^{-1}(-1.687)\right)=0.5	\text{False}	
 threads-element-wise-over-a-list-as-wolfram-s	InverseErf[List[0, 1]]	{0, Infinity}		\text{erf}^{-1}(\{0,1\})	\{0,\infty \}	
 two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x	InverseErf[0.4, 0.2]	0.6317759030550062		\text{erf}^{-1}(0.4,0.2)	0.631776	
 interval-arithmetic-the-inverse-is-increasing-so	InverseErf[Interval[List[0.5, 0.6]]]	Interval[{0.4233192432438954, 0.6449989321408794}]		\text{erf}^{-1}(\text{Interval}[\{0.5,0.6\}])	\text{Interval}[\{0.423319,0.644999\}]	disagree

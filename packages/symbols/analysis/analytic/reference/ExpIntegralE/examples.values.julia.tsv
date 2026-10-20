@@ -8,6 +8,7 @@ series-expintegrale-1-x-x-0-4
 normal-series-expintegrale-n-x-x			
 large-integer-order-500000	enumeratio_ball(exp_integral_e, 500000, enumeratio_decimal("2.5"))		
 large-order-beside-an-underflowing-power	(enumeratio_ball(exp_integral_e, 170, 100))		
+large-order-at-a-negative-argument	(enumeratio_ball(exp_integral_e, 170, -100))		
 non-integer-order	enumeratio_ball(exp_integral_e, enumeratio_decimal("0.5"), enumeratio_decimal("2.5"))	0.02841429970928975640155237233760435122547330618474943152164962888926105836630459	
 exact-arguments-under-n	(enumeratio_ball(exp_integral_e, 1, 1))	0.2193839343955202736771637754601216490310472934069082075779786130735686985591382	
 n-expintegrale-1-plus-i-2-plus-3i	(enumeratio_ball(exp_integral_e, enumeratio_complex(1, 1), enumeratio_complex(2, 3)))	(-0.0189438305083736433171725663239807108975094615206496337216358923155058769117861+0.02044377010282997055662424019782260103776558408295793538098728599254250842104073j)	

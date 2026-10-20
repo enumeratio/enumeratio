@@ -3,6 +3,9 @@ a-pole-of-gamma-in-log-form	enumeratio_ball(lgamma, 0)	ball not finite	error
 a-floating-point-argument-evaluates-directly-to	enumeratio_ball(lgamma, enumeratio_decimal("2.5"))	0.2846828704729191596324946696827019243201376955598947292501458503867759342216237	
 ln-gamma-100-5-where-gamma-100-5-itself-is-about	enumeratio_ball(lgamma, enumeratio_decimal("100.5"))	361.4355404677776215552519127025207628587788352472218475369797166562779489074488	
 n-gammaln-of-a-negative-rational	enumeratio_nshow(enumeratio_ball(lgamma, (-1 // 3)), 30)	(1.40176256381563326007110805429e+00-3.14159265358979323846264338328e+00j)	inconclusive
+a-complex-argument-whose-continuation-passes-pi	enumeratio_ball(lgamma, enumeratio_complex(enumeratio_decimal("-0.5422826240167642"), enumeratio_decimal("-0.8401961412012631")))		
+gammaln-at-a-pole-against-ln-gamma-at-another	enumeratio_equal(enumeratio_ball(lgamma, -17), enumeratio_ball(log, enumeratio_ball(gamma, -2)))		
+gammaln-101-against-ln-200	enumeratio_equal(enumeratio_ball(lgamma, 101), enumeratio_ball(log, factorial(ZZ(200))))		
 at-a-pole-of-gamma-compute-engine-gives-the-real	enumeratio_ball(lgamma, -1)	ball not finite	error
 complex-arguments-here-the-principal-ln-gamma-z	enumeratio_ball(lgamma, enumeratio_complex(enumeratio_decimal("2.5"), 3))	(-1.470954610348841691305499294978075015070396211602911682450843211402321071049176+2.822615638260799450025265547318710370045752147369647387508885915510258700151739j)	
 a-huge-inexact-argument-should-still-evaluate	enumeratio_ball(lgamma, enumeratio_decimal("1.0e1000"))	2.301585092994045684017991454684364207601101488628772976033327900967572609677321e1003	
