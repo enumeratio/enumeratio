@@ -5,7 +5,7 @@ import { declareAnalytic } from "../src/declare.ts";
 const ce = new ComputeEngine();
 declareAnalytic(ce);
 
-// compute-engine's model (cortex-js/compute-engine#401): Sin/Cos of an infinity is a type
+// compute-engine's model (cortex-js/compute-engine#396): Sin/Cos of an infinity is a type
 // error at boxing, not a value, and we follow it.
 test("Sin/Cos of an infinity is a boxing type error", () => {
   for (const head of ["Sin", "Cos"]) {
