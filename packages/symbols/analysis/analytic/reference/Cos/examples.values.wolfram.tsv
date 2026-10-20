@@ -13,6 +13,7 @@ a-huge-neg-7-60-argument	N[Cos[Minus[Power[7, 60]]]]	-0.9993044805340108		N\left
 a-huge-10-80-plus-1-over-3-argument	N[Cos[Divide[Plus[Power[10, 80], 1], 3]]]	0.8667688785282804		N\left[\cos \left(\frac{10^{80}+1}{3}\right)\right]	0.866769	disagree
 cos-2-5	Cos[2.5]	-0.8011436155469337		\cos (2.5)	-0.801144	
 series-cos-x-x-0-10	Series[Cos[x], List[x, 0, 10]]	SeriesData[x, 0, {1, 0, -1/2, 0, 1/24, 0, -1/720, 0, 1/40320, 0, -1/3628800}, 0, 11, 1]		\text{Series}[\cos (x),\{x,0,10\}]	1-\frac{x^2}{2}+\frac{x^4}{24}-\frac{x^6}{720}+\frac{x^8}{40320}-\frac{x^{10}}{3628800}+O\left(x^{11}\right)	
+cos-arccos-0	Cos[ArcCos[0]]	0		\cos \left(\cos ^{-1}(0)\right)	0	
 n-of-an-exact-argument-gives-an-arbitrary	N[Cos[Rational[6, 5]]]	0.3623577544766736		N\left[\cos \left(\frac{6}{5}\right)\right]	0.362358	
 evaluates-at-a-complex-argument	Cos[Complex[2.5, 1]]	-1.236229198856342 - 0.7033251781135347*I		\cos (2.5\, +i)	-1.23623-0.703325 i	
 threads-element-wise-over-a-matrix	Cos[List[List[Times[5, Divide[Pi, 6]], 0], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 2]]]]]	{{-1/2*Sqrt[3], 1}, {0, 0}}		\cos \left(\left( \begin{array}{cc}  5 \frac{\pi }{6} & 0 \\  3 \frac{\pi }{2} & -\frac{\pi }{2} \\ \end{array} \right)\right)	\left( \begin{array}{cc}  -\frac{\sqrt{3}}{2} & 1 \\  0 & 0 \\ \end{array} \right)	

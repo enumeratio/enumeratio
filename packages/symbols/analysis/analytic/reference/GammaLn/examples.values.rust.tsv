@@ -3,6 +3,9 @@ a-pole-of-gamma-in-log-form	ln_gamma(n(0))	panic: non-finite result: inf	error
 a-floating-point-argument-evaluates-directly-to	ln_gamma(x(2.5))	0.2846828704729223	
 ln-gamma-100-5-where-gamma-100-5-itself-is-about	ln_gamma(x(100.5))	361.4355404677776	
 n-gammaln-of-a-negative-rational	nf(ln_gamma(rational(n(-1), n(3))))	panic: non-finite result: NaN	error
+a-complex-argument-whose-continuation-passes-pi			
+gammaln-at-a-pole-against-ln-gamma-at-another	equal(ln_gamma(n(-17)), ln(gamma(n(-2))))	false	disagree
+gammaln-101-against-ln-200	equal(ln_gamma(n(101)), ln(factorial(n(200))))	panic: non-finite result: inf	error
 at-a-pole-of-gamma-compute-engine-gives-the-real	ln_gamma(n(-1))	panic: non-finite result: NaN	error
 complex-arguments-here-the-principal-ln-gamma-z			
 a-huge-inexact-argument-should-still-evaluate			

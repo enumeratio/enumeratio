@@ -5,6 +5,7 @@ arccos-0	acos(0)	1.57079632679489661923132169164
 the-top-of-the-principal-range	acos(-1)	3.14159265358979323846264338328	
 a-machine-precision-argument-evaluates	acos(0.4)	1.15927948072740857561953118151	
 outside-1-1-the-value-is-purely-imaginary	acos(1.5)	(0.0 + 0.962423650119206894995517826849j)	
+arccos-cos-8-is-8-minus-2-pi	acos(cos(8))	1.71681469282041352307471323344	
 arbitrary-precision-via-n	(acos((mpf(1)/3)))	1.23095941734077468213492917825	
 evaluates-at-a-complex-argument	acos(mpc(2.5, 1))	(0.40617281650551155656839899253 - 1.65869329885643274976739341981j)	
 threads-element-wise-over-a-matrix	[[acos(1), acos((mpmathify(1) / sqrt(2)))], [acos(0), acos((mpmathify(1) / sqrt(2)))]]	[[mpf('0.0'), mpf('0.785398163397448309615660845819932')], [mpf('1.57079632679489661923132169163967'), mpf('0.785398163397448309615660845819932')]]	

@@ -8,6 +8,7 @@ series-expintegrale-1-x-x-0-4
 normal-series-expintegrale-n-x-x			
 large-integer-order-500000	exp_integral_e(n(500000), x(2.5))		
 large-order-beside-an-underflowing-power	nf(exp_integral_e(n(170), n(100)))		
+large-order-at-a-negative-argument	nf(exp_integral_e(n(170), n(-100)))	panic: no value: x < 0, or no convergence	error
 non-integer-order	exp_integral_e(x(0.5), x(2.5))	panic: an integer, not 0.5	error
 exact-arguments-under-n	nf(exp_integral_e(n(1), n(1)))	0.21938393439552029	
 n-expintegrale-1-plus-i-2-plus-3i			

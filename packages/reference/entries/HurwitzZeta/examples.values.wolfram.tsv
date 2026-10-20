@@ -180,6 +180,7 @@ n-hurwitzzeta-2p5-neg-2p5	N[HurwitzZeta[2.5, -2.5]]	6.24711063456881 - 6.1209345
 n-hurwitzzeta-3-neg-2p5-plus-i	N[HurwitzZeta[3, Complex[-2.5, 1]]]	0.03962992396995794 - 0.20102299207474436*I		N[\zeta (3,-2.5+i)]	0.0396299\, -0.201023 i	
 n-hurwitzzeta-2p5-plus-i-neg-2p5	N[HurwitzZeta[Complex[2.5, 1], -2.5]]	83.20468300633124 - 106.55160633101393*I		N[\zeta (2.5\, +i,-2.5)]	83.2047\, -106.552 i	
 n-hurwitzzeta-2-neg-0-999999999	N[HurwitzZeta[2, -0.999999999]]	9.999998345192786*^17		N[\zeta (2,-1.)]	1.\times 10^{18}	disagree
+n-hurwitzzeta-neg-81-2-neg-2-5-d2	N[HurwitzZeta[Rational[-81, 2], Rational[-2, 5]], 2]	0``-52.794138101570354 + 7.6459182243361795406010071279787085901113141034245152519202875123784266686490405`52.*^-17*I	0. + 0.00000000000000007645918224336179540601007127978708590111314103424515 I	N\left[\zeta \left(-\frac{81}{2},-\frac{2}{5}\right),2\right]	\text{0$\grave{ }\grave{ }$-52.794138101570354}+\text{7.6459182243361795406010071279787085901113141034245152519202875123784266686490405$\grave{ }$52.*${}^{\wedge}$-17} i	disagree
 a-positive-integer-a-peels-off-the-first-terms	HurwitzZeta[7, 5]	HurwitzZeta[7, 5]		\zeta (7,5)	\zeta (7,5)	
 complex-a	N[HurwitzZeta[2.3, Complex[8, 1]]]	0.054470082732130685 - 0.009448515336470249*I		N[\zeta (2.3,8+i)]	0.0544701\, -0.00944852 i	
 listable-threads-over-a-list-of-orders	HurwitzZeta[List[2, 3, 4], 0.5]	{4.934802200544678, 8.41439832211716, 16.234848505667077}		\zeta (\{2,3,4\},0.5)	\{4.9348,8.4144,16.2348\}	
