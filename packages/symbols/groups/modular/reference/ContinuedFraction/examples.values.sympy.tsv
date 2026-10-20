@@ -16,7 +16,7 @@ a-cube-root-algebraic-degree-3-not-periodic-so-a	[t for _, t in zip(range(10), c
 symbolic-terms-build-the-nested-fraction-left			
 25-terms-past-the-double-precision-wall	[t for _, t in zip(range(25), continued_fraction_iterator(GoldenRatio))]	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]	
 continuedfraction-n-pi	list(continued_fraction(N(pi, 30)))	ValueError: expecting a rational or quadratic irrational, not 3.14159265358979323846264338328	error
-continuedfraction-n-pi-20	list(continued_fraction(N(pi, 30)))	ValueError: expecting a rational or quadratic irrational, not 3.14159265358979323846264338328	error
+continuedfraction-n-pi-20	list(continued_fraction(N(pi, 20)))	ValueError: expecting a rational or quadratic irrational, not 3.14159265358979323846264338328	error
 n-root-product-continuedfraction-pi-1-000-1-000			
 continuedfraction-sqrt-exponentiale-25	[t for _, t in zip(range(25), continued_fraction_iterator(sqrt(E)))]	[1, 1, 1, 1, 5, 1, 1, 9, 1, 1, 13, 1, 1, 17, 1, 1, 21, 1, 1, 25, 1, 1, 29, 1, 1]	
 continuedfraction-exponentiale-pow-sqrt-163	[t for _, t in zip(range(10), continued_fraction_iterator((S(E)**(sqrt(163) * pi))))]	[262537412640768743, 1, 1333462407511, 1, 8, 1, 1, 5, 1, 4]	
