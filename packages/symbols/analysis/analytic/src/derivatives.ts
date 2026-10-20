@@ -8,7 +8,7 @@ import { powerOrderDerivative } from "./power-orders.ts";
 // Symbolic derivatives for the analytic heads.
 //
 // compute-engine's own derivative table is a private constant, so a head we declare is
-// undifferentiable by default: `D(LogGamma(z), z)` stops at the inert `Derivative(LogGamma, 1)`.
+// undifferentiable by default: `D(BarnesG(z), z)` stops at the inert `Derivative(BarnesG, 1)`.
 // The supported way in is the `Derivative` operator itself — hand it a function literal for
 // our heads and compute-engine's chain and product rules carry from there.
 //
@@ -53,7 +53,7 @@ const DERIVATIVES: Readonly<Record<string, Readonly<Record<Orders, Partial>>>> =
   Zeta: { "0,1": shiftInS("Zeta", []) },
   LerchPhi: { "0,0,1": shiftInS("LerchPhi", ["z"]) },
 
-  LogGamma: { "1": { params: ["z"], body: ["PolyGamma", 0, "z"] } },
+  LogGamma: { "1": { params: ["z"], body: ["Digamma", "z"] } },
   // H_z = ψ(z+1) + γ, so H_z′ = ψ′(z+1).
   HarmonicNumber: { "1": { params: ["z"], body: ["PolyGamma", 1, ["Add", "z", 1]] } },
   LogBarnesG: { "1": { params: ["z"], body: LOG_BARNES_G_PRIME } },

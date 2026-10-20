@@ -225,9 +225,6 @@ const OVERRIDDEN = [
   "ChineseRemainder",
   "Chop",
   "Clamp",
-  // Hypercomplex widens its argument to `value`, so Conjugate(Transpose(m)) of an unevaluated
-  // Transpose holds, where a bare engine rejects it as an incompatible type.
-  "Conjugate",
   "ContinuedFraction",
   "Cos",
   "Cosh",

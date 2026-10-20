@@ -35,17 +35,17 @@ test("a head analytic widens compiles only up to its native operand count", () =
   expect(compiled("Zeta", 2)).toBeUndefined();
 });
 
-// compute-engine's lowering of the incomplete gamma drops the second operand (compute-engine#447),
-// so a compiled call either declines or must match evaluate.
-test.each(["Gamma", "GammaRegularized"])("compiled two-operand %s declines or matches evaluate", (head) => {
+// compute-engine 0.156 fixed the two-operand lowering (compute-engine#447); it must match evaluate.
+test.each(["Gamma", "GammaRegularized"])("compiled two-operand %s matches evaluate", (head) => {
   const run = compileTyped(ce, [head, "x", "y"], { x: "real", y: "real" })?.run;
-  if (run === undefined) return;
+  expect(run, head).toBeDefined();
   for (const [x, y] of [
     [2, 3],
     [3, 0.5],
+    ...(head === "Gamma" ? ([[-1.5, 0.001]] as const) : []), // the #911 row; compiled GammaRegularized gives NaN at a negative non-integer order
   ] as const) {
     const expected = ce.box([head, x, y]).N().re;
-    expect(run({ x, y }) as number, `${head}(${x}, ${y})`).toBeCloseTo(expected, 9);
+    expect(run!({ x, y }) as number, `${head}(${x}, ${y})`).toBeCloseTo(expected, 9);
   }
 });
 
