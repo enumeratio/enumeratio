@@ -224,6 +224,17 @@ test("inside an mpmath N(x, d) past a double's digits every decimal is read from
   expect(emit(["Sin", 0.1], "mpmath")).toEqual({ ok: true, source: "sin(0.1)" });
 });
 
+test("a nested N(x, d) keeps its digits for mpmath, SymPy and Rust; the answer's own N does not change", () => {
+  const row = ["LessEqual", ["N", "Pi", 7], "Pi"] as const;
+  expect(emit(row, "mpmath")).toEqual({ ok: true, source: "(enumeratio_nround(lambda: (pi), 7) <= pi)" });
+  expect(emit(row, "sympy")).toEqual({ ok: true, source: "Le(N(pi, 7), pi)" });
+  expect(emit(row, "rust")).toEqual({
+    ok: true,
+    source: "less_equal(nfd(x(std::f64::consts::PI), 7), x(std::f64::consts::PI))",
+  });
+  expect(emit(["N", "Pi", 7], "sympy")).toEqual({ ok: true, source: "N(pi, 30)" });
+});
+
 test("Julia reads a constant as a ball, a list as Any, and a decimal past a double from its text", () => {
   expect(emit(["Sin", ["Divide", "Pi", 6]], "julia")).toEqual({
     ok: true,

@@ -1,10 +1,10 @@
 id	in	out	verdict
 2-over-17-lt-eq-1-over-5-lt-eq-1-over-10-times	And(Le(Rational(2, 17), Rational(1, 5)), Le(Rational(1, 5), (Rational(1, 10) * pi)))	True	
-n-pi-40-lt-eq-a-value-just-below-pi	Le(N(pi, 30), (pi * (1 + (-256 * (S(5)**-20)))))	False	disagree
+n-pi-40-lt-eq-a-value-just-below-pi	Le(N(pi, 40), (pi * (1 + (-256 * (S(5)**-20)))))	False	disagree
 3-over-2-lt-eq-5-over-3	Le(Rational(3, 2), Rational(5, 3))	True	
-n-pi-20-lt-eq-pi	Le(N(pi, 30), pi)	True	
+n-pi-20-lt-eq-pi	Le(N(pi, 20), pi)	True	
 sqrt-2-plus-sqrt-3-lt-eq-sqrt-5-plus-2-times	Le((sqrt(2) + sqrt(3)), sqrt((5 + (2 * sqrt(6)))))	True	
-n-pi-20-lt-eq-pi-times-1-minus-256-times-10-pow	Le(N(pi, 30), (pi * (1 + (-256 * (S(10)**-20)))))	False	disagree
+n-pi-20-lt-eq-pi-times-1-minus-256-times-10-pow	Le(N(pi, 20), (pi * (1 + (-256 * (S(10)**-20)))))	False	disagree
 x-lt-eq-x	Le(Symbol("x"), Symbol("x"))	x <= x	disagree
 pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	Le((S(pi)**E), (S(E)**pi))	True	
 refine-sqrt-x-pow-2-x-lt-eq-0			

@@ -1,10 +1,10 @@
 id	in	out	verdict
 0-lt-eq-1	(0 <= 1)	True	
-pi-lt-eq-n-pi-1-digit	(pi <= pi)	True	disagree
+pi-lt-eq-n-pi-1-digit	(pi <= enumeratio_nround(lambda: (pi), 1))	False	
 4-over-3-lt-eq-3-over-2	((mpf(4)/3) <= (mpf(3)/2))	True	
-pi-lt-eq-n-pi-20	(pi <= pi)	True	
+pi-lt-eq-n-pi-20	(pi <= enumeratio_nround(lambda: (pi), 20))	True	
 sqrt-5-plus-2-times-sqrt-6-lt-eq-sqrt-2-plus	(sqrt((5 + (2 * sqrt(6)))) <= (sqrt(2) + sqrt(3)))	False	disagree
-pi-times-1-plus-256-times-10-pow-neg-20-lt-eq-n	((pi * (1 + (256 * ((10)**-20)))) <= pi)	True	
+pi-times-1-plus-256-times-10-pow-neg-20-lt-eq-n	((pi * (1 + (256 * ((10)**-20)))) <= enumeratio_nround(lambda: (pi), 20))	True	
 x-lt-eq-x			
 pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	(((pi)**e) <= ((e)**pi))	True	
 refine-sqrt-x-pow-2-x-gt-eq-0			

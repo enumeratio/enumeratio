@@ -1616,6 +1616,25 @@ def enumeratio_n(thunk, d):
     with workdps(max(d, 15) + 20):
         return enumeratio_round(thunk(), d)
 
+# N(x, d) below another call: the number rounded to d significant digits, not its text.
+def enumeratio_nround(thunk, d):
+    d = int(d)
+    with workdps(max(d, 15) + 20):
+        v = thunk()
+    return _enumeratio_nround(v, d)
+
+def _enumeratio_nround(v, d):
+    if isinstance(v, list):
+        return [_enumeratio_nround(e, d) for e in v]
+    if isinstance(v, type(pi)):
+        v = +v
+    with workdps(max(d, 15) + 5):
+        if isinstance(v, mpf) and isfinite(v):
+            return mpf(nstr(v, d, strip_zeros=False))
+        if isinstance(v, mpc) and isfinite(v.real) and isfinite(v.imag):
+            return mpc(nstr(v.real, d, strip_zeros=False), nstr(v.imag, d, strip_zeros=False))
+    return v
+
 # Inverse regularized Gamma/Beta by bisection on a log scale, so a root far below or above 1 (or a
 # beta root within an epsilon of 1) keeps its relative digits: no start, no derivative, no cap that
 # declines. A beta root is x = exp(-exp(t)) for s <= 1/2, else 1 - y with I_y(b, a) = 1 - s.

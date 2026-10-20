@@ -76,6 +76,17 @@ pub fn nf(v: V) -> V {
     }
 }
 
+/// `N(x, d)` below another call: the float rounded to `d` significant digits.
+pub fn nfd(v: V, d: i64) -> V {
+    match v {
+        List(items) => List(items.into_iter().map(|e| nfd(e, d)).collect()),
+        other => {
+            let text = format!("{:.*e}", (d.max(1) - 1) as usize, other.f64());
+            flt(text.parse().expect("a float"))
+        }
+    }
+}
+
 // ── conversions the adapters use ──────────────────────────────────────────────
 
 impl V {
