@@ -1620,14 +1620,18 @@ def enumeratio_n(thunk, d):
 def enumeratio_nround(thunk, d):
     d = int(d)
     with workdps(max(d, 15) + 20):
-        v = thunk()
+        v = _enumeratio_force(thunk())
     return _enumeratio_nround(v, d)
+
+# A bare constant (pi, e) is lazy: evaluate it at the working precision, not the caller's 53 bits.
+def _enumeratio_force(v):
+    if isinstance(v, list):
+        return [_enumeratio_force(e) for e in v]
+    return +v if isinstance(v, type(pi)) else v
 
 def _enumeratio_nround(v, d):
     if isinstance(v, list):
         return [_enumeratio_nround(e, d) for e in v]
-    if isinstance(v, type(pi)):
-        v = +v
     with workdps(max(d, 15) + 5):
         if isinstance(v, mpf) and isfinite(v):
             return mpf(nstr(v, d, strip_zeros=False))
