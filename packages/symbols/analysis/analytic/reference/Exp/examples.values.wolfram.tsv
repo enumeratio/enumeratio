@@ -43,6 +43,7 @@ exponentiale-pow-9-over-2-times-i-times-pi	Power[E, Times[Complex[0, Rational[9,
 exptotrig-exponentiale-pow-1-over-5-times-i	ExpToTrig[Power[E, Times[Complex[0, Rational[1, 5]], Pi]]]	1/4 + Sqrt[5]/4 + I*Sqrt[5/8 - Sqrt[5]/8]		\text{ExpToTrig}\left[e^{(\text{Rational}[1,5] i) \pi }\right]	\frac{1}{4}+\frac{\sqrt{5}}{4}+i \sqrt{\frac{5}{8}-\frac{\sqrt{5}}{8}}	
 assuming-n-in-integers-refine-exp-2-times-pi	Assuming[Element[n, Integers], FullSimplify[Refine[Exp[Times[2, Pi, I, n]]]]]	1		\text{Assuming}[n\in \mathbb{Z},\text{FullSimplify}[\text{Refine}[\exp (2 \pi  i n)]]]	1	disagree
 assuming-n-in-integers-refine-exp-2-times-pi-2	Assuming[Element[n, Integers], FullSimplify[Refine[Exp[Times[2, Pi, I, Plus[n, Times[1, Power[2, -1]]]]]]]]	-1		\text{Assuming}\left[n\in \mathbb{Z},\text{FullSimplify}\left[\text{Refine}\left[\exp \left(2 \pi  i \left(n+\frac{1}{2}\right)\right)\right]\right]\right]	-1	disagree
+exp-ln-0	Exp[Log[0]]	0		\exp (\log (0))	0	
 threads-element-wise-over-a-list	Exp[List[0, 1]]	{1, E}		\exp (\{0,1\})	\{1,e\}	
 inverse-of-ln-e-ln-x-x	(Exp[Log[5]] == 5)	True		\exp (\log (5))=5	\text{True}	
 e-a-e-b-e-a-b	(Times[Exp[2], Exp[3]] == Exp[5])	True		\exp (2) \exp (3)=\exp (5)	\text{True}	

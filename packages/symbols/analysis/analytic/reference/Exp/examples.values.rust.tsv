@@ -43,6 +43,7 @@ exponentiale-pow-9-over-2-times-i-times-pi
 exptotrig-exponentiale-pow-1-over-5-times-i			
 assuming-n-in-integers-refine-exp-2-times-pi			
 assuming-n-in-integers-refine-exp-2-times-pi-2			
+exp-ln-0	exp(ln(n(0)))	panic: non-finite result: -inf	error
 threads-element-wise-over-a-list	list(vec![exp(n(0)), exp(n(1))])	[1.0, 2.718281828459045]	
 inverse-of-ln-e-ln-x-x	equal(exp(ln(n(5))), n(5))	true	
 e-a-e-b-e-a-b	equal((exp(n(2)) * exp(n(3))), exp(n(5)))	true	

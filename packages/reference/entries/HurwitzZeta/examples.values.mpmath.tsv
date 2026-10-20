@@ -181,6 +181,7 @@ n-hurwitzzeta-3-neg-2p5-plus-i	(zeta(3, mpc(-2.5, 1)))	(0.0396299239699579376925
 n-hurwitzzeta-2p5-plus-i-neg-2p5	(zeta(mpc(2.5, 1), -2.5))	(83.2046830063311727449542067317 - 106.551606331013947556301119543j)	
 n-hurwitzzeta-2-neg-0-999999999	(zeta(2, -0.999999999))	1000000056563865329.09852751187	disagree
 n-hurwitzzeta-neg-81-2-neg-2-5-d2	enumeratio_n(lambda: (zeta((mpf(-81)/2), (mpf(-2)/5))), 2)	(1.2e+15+7.6e-17j)	inconclusive
+listable-threads-with-a-pole-among-the-orders	zeta([1, 3, 4], 0.5)	TypeError: cannot create mpf from [1, 3, 4]	error
 a-positive-integer-a-peels-off-the-first-terms	zeta(7, 5)	0.0000184948548452090985995617382284	
 complex-a	(zeta(2.3, mpc(8, 1)))	(0.0544700827321306866228092072147 - 0.00944851533647025008110366459698j)	
 listable-threads-over-a-list-of-orders	zeta([2, 3, 4], 0.5)	TypeError: cannot create mpf from [2, 3, 4]	error
