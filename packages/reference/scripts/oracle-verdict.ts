@@ -313,18 +313,22 @@ function judge(
   } else if (theirs.startsWith("combinations:")) {
     verdict = compareCombinations(expected, theirs);
   } else {
+    // An `N(x, d)` ours declines (x held) is not agreement with the d digits the system computed: read by
+    // value, our `N` would turn the held call into those digits at double precision. It reads as its text.
+    const held = asksForDigits && call !== undefined && leavesCall(call, expected);
     // Rust's doubles are compared relative to their size, its integers and ratios exactly.
     const machine =
-      system === "rust"
+      system === "rust" && !held
         ? compareMachine(expected, theirs, tolerance ?? 1e-9, (expr) => {
             const value = leaf(expr);
             return typeof value === "number" ? value : undefined;
           })
         : undefined;
-    verdict = machine ?? compare(show(expected, system === "sage" || system === "sympy"), theirs, tolerance);
+    const ours = held ? symbolic(expected) : show(expected, system === "sage" || system === "sympy");
+    verdict = machine ?? compare(ours, theirs, tolerance);
     // A text comparison that disagrees or can't decide (a complex against a real, say)
     // gets a second, structural look.
-    if (verdict !== "agree" && machine === undefined) {
+    if (verdict !== "agree" && machine === undefined && !held) {
       const structured = comparePythonStructured(reduce(expected, leaf), theirs, tolerance);
       if (structured === "agree") verdict = structured;
     }

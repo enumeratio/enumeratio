@@ -221,7 +221,9 @@ for _enumeratio_i, _enumeratio_src in enumerate(_enumeratio_sources):
     try:
         ${print}
     except BaseException as exc:
-        print("<<%d>>!!%s" % (_enumeratio_i + 1, type(exc).__name__ + ": " + str(exc)[:100]), flush=True)
+        # An allocation that fails raises a bare MemoryError; say what the supervisor says when it kills for memory.
+        why = str(exc)[:100] or ("over ${MAX_BYTES / 2 ** 20} MiB" if isinstance(exc, MemoryError) else "")
+        print("<<%d>>!!%s" % (_enumeratio_i + 1, type(exc).__name__ + ": " + why), flush=True)
     finally:
         signal.alarm(0)
 `;

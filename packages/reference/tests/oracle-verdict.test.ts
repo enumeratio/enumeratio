@@ -170,6 +170,23 @@ test("a call ours holds never agrees with the value Wolfram computed from it", (
   ).toBe("agree");
 });
 
+// The Python-family lanes read ours by value too: our `N` would turn the held call into the number they computed.
+test("a call ours holds never agrees with the number a Python-family system computed from it", () => {
+  const call = ["N", ["Zeta", ["Complex", 2, 1]], 25];
+  const held = ["Zeta", ["Complex", 2, 1]];
+  const answer = { value: "(1.150355703254902671742850-0.4375308659196078811175279j)" };
+  for (const system of ["mpmath", "sympy", "julia", "rust"] as const)
+    expect(verdictOf(system, held as never, answer, undefined, true, call as never)).toBe("disagree");
+  // The same number, computed rather than held, agrees.
+  expect(
+    verdictOf("mpmath", { num: "1.150355703254903" }, { value: "1.150355703254903" }, undefined, true, [
+      "N",
+      "Pi",
+      16,
+    ] as never),
+  ).toBe("agree");
+});
+
 // A form transformer that hands its input back agrees by value with whatever the kernel rewrites it to,
 // which hides the missing rewrite: only the kernel handing the input back too is agreement.
 test("a form transformer that returns its input agrees only when Wolfram does too", () => {

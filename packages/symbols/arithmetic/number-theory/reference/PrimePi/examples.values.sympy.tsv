@@ -11,7 +11,7 @@ listable-threads-over-a-list	[primepi(3), primepi(5), primepi(17), primepi(25)]	
 primepi-10-11	primepi(100000000000)	4118054813	
 primepi-10-12	primepi(1000000000000)	37607912018	
 primepi-10-13	primepi(10000000000000)	TimeoutError: over 30s	error
-primepi-1-plus-10-pow-17	primepi((1 + (S(10)**17)))		
+primepi-1-plus-10-pow-17	primepi((1 + (S(10)**17)))	MemoryError: over 1024 MiB	error
 nthprime-range-1-primepi-100			
 primepi-5-000	primepi(5000)	669	
 same-inverse-relation-viewed-from-primepi-s-side	enumeratio_equal(primepi(prime(50)), 50)	True	
