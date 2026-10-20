@@ -380,6 +380,9 @@ n-lerchphi-s-0-is-1-over-1-minus-z-at-900000i	(lerchphi(mpc(0, 900000), 0, -6.67
 n-lerchphi-past-the-unit-disk-imaginary-s-and-a	(lerchphi(mpc(1, 2), mpc(0, 1), mpc(0, -2)))	(-224.432514456845492260578640648 + 76.132401746566745688797638503j)	disagree
 n-lerchphi-tiny-negative-z-negative-integer-s	(lerchphi(-1e-12, -3, 2))	(8.00000001613234351056022152776 + 0.00000000322578036537494088486979692845j)	inconclusive
 n-lerchphi-4-neg-1-neg-2-polynomial-s	(lerchphi(4, -1, -2))	ValueError: Lerch transcendent complex infinity	error
+lerchphi-neg-3-neg-2-1-over-2	lerchphi(-3, -2, (mpf(1)/2))	-0.03125	
+n-lerchphi-neg-2-neg-3-5-over-2	(lerchphi(-2, -3, (mpf(5)/2)))	1.6712962962962962962962962963	
+n-lerchphi-neg-9000-neg-1e-12-neg-3	(lerchphi(-9000, -1e-12, -3))	ValueError: Lerch transcendent complex infinity	error
 past-the-unit-disk-by-the-integral	(lerchphi(mpc(1, 2), mpc(3, -1), mpc(4, 2)))	(0.00202500995700990860053946871764 + 0.00332789753681355880743808908022j)	
 inexact-arguments-should-evaluate-numerically	lerchphi(0.5, 2, 3.5)	0.119386226869820471298079898276	
 s-0-far-outside-the-unit-disk-1-1-49-5	lerchphi(49.5, 0, 2)	-0.0206185567010309278350515463918	

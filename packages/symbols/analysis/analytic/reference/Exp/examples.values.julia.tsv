@@ -43,6 +43,7 @@ exponentiale-pow-9-over-2-times-i-times-pi	enumeratio_pow(const_e(RR), (enumerat
 exptotrig-exponentiale-pow-1-over-5-times-i			
 assuming-n-in-integers-refine-exp-2-times-pi			
 assuming-n-in-integers-refine-exp-2-times-pi-2			
+exp-ln-0	enumeratio_ball(exp, enumeratio_ball(log, 0))	ball not finite	error
 threads-element-wise-over-a-list	Any[enumeratio_ball(exp, 0), enumeratio_ball(exp, 1)]	[1.0, 2.71828182845904523536028747135266249775724709369995957496696762772407663035352]	
 inverse-of-ln-e-ln-x-x	enumeratio_equal(enumeratio_ball(exp, enumeratio_ball(log, 5)), 5)	true	
 e-a-e-b-e-a-b	enumeratio_equal((enumeratio_ball(exp, 2) * enumeratio_ball(exp, 3)), enumeratio_ball(exp, 5))	true	

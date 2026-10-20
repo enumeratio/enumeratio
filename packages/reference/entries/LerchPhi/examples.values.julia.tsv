@@ -380,6 +380,9 @@ n-lerchphi-s-0-is-1-over-1-minus-z-at-900000i	(enumeratio_lerch(enumeratio_compl
 n-lerchphi-past-the-unit-disk-imaginary-s-and-a	(enumeratio_lerch(enumeratio_complex(1, 2), enumeratio_complex(0, 1), enumeratio_complex(0, -2)))	no continuation past |z| = 1 for this a	error
 n-lerchphi-tiny-negative-z-negative-integer-s	(enumeratio_lerch(enumeratio_decimal("-1e-12"), -3, 2))	7.999999999973000000000063999999999875000000000215999999999657000000000511999751	
 n-lerchphi-4-neg-1-neg-2-polynomial-s	(enumeratio_lerch(4, -1, -2))	no continuation past |z| = 1 for this a	error
+lerchphi-neg-3-neg-2-1-over-2	enumeratio_lerch(-3, -2, (1 // 2))	no continuation past |z| = 1 for this a	error
+n-lerchphi-neg-2-neg-3-5-over-2	(enumeratio_lerch(-2, -3, (5 // 2)))	no continuation past |z| = 1 for this a	error
+n-lerchphi-neg-9000-neg-1e-12-neg-3	(enumeratio_lerch(-9000, enumeratio_decimal("-1e-12"), -3))	no continuation past |z| = 1 for this a	error
 past-the-unit-disk-by-the-integral	(enumeratio_lerch(enumeratio_complex(1, 2), enumeratio_complex(3, -1), enumeratio_complex(4, 2)))	no continuation past |z| = 1 for this a	error
 inexact-arguments-should-evaluate-numerically	enumeratio_lerch(enumeratio_decimal("0.5"), 2, enumeratio_decimal("3.5"))	0.1193862268698204712980798982764281749791059113403357230043368071122407436524049	
 s-0-far-outside-the-unit-disk-1-1-49-5	enumeratio_lerch(enumeratio_decimal("49.5"), 0, 2)	-0.02061855670103092783505154639175257731958762886597938144329896907216494845360818	
