@@ -1,9 +1,9 @@
 id	in	out	verdict
-the-median-of-beta-2-3	enumeratio_inverse_beta_regularized(0.5, 2, 3)		
-inversebetaregularized-0p3-2p5-1p5	enumeratio_inverse_beta_regularized(0.3, 2.5, 1.5)		
-i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2	enumeratio_inverse_beta_regularized(0.25, 2, 1)		
-iinv-0-7-4-2	enumeratio_inverse_beta_regularized(0.7, 4, 2)		
-inversebetaregularized-with-tiny-shapes	enumeratio_inverse_beta_regularized(0.3, 0.0000025, 0.0000015)		
+the-median-of-beta-2-3	enumeratio_inverse_beta_regularized(0.5, 2, 3)	0.385727568132389548275502751159	
+inversebetaregularized-0p3-2p5-1p5	enumeratio_inverse_beta_regularized(0.3, 2.5, 1.5)	0.50949741242834130384658572496	
+i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2	enumeratio_inverse_beta_regularized(0.25, 2, 1)	0.5	
+iinv-0-7-4-2	enumeratio_inverse_beta_regularized(0.7, 4, 2)	0.781973084236775293167913056398	
+inversebetaregularized-with-tiny-shapes	enumeratio_inverse_beta_regularized(0.3, 0.0000025, 0.0000015)	9.88088184053211511365877512355e-38765	
 tail-s-1e-100-a-2-b-3	enumeratio_inverse_beta_regularized(1e-100, 2, 3)	4.08248290463863020447043473229e-51	
 tail-s-1e-8-a-0p5-b-0p5	enumeratio_inverse_beta_regularized(1e-8, 0.5, 0.5)	2.46740110027233955502171565318e-16	
 upper-tail-s-near-1	enumeratio_inverse_beta_regularized(0.99999999999999, 3, 1000)	0.0381332889742734570623100322053	
