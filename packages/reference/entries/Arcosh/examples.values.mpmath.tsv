@@ -1,5 +1,5 @@
 id	in	out	verdict
-arcosh-of-a-pure-imaginary-argument	acosh((mpmathify(sqrt(-13)) / 3))	(1.01715720868413157234505740731 + 1.57079632679489661923132169164j)	disagree
+arcosh-of-a-pure-imaginary-argument	acosh((mpmathify(sqrt(-13)) / 3))	(1.01715720868413157234505740731 + 1.57079632679489661923132169164j)	
 arcosh-infinity-is-infinity-not-infinity-the	acosh(-inf)	(+inf + 3.14159265358979323846264338328j)	disagree
 n-arcosh-5-50	enumeratio_n(lambda: (acosh(5)), 50)	2.2924316695611776878007873113480154316218682400157	
 arcosh-list-list-1-sqrt-2-over-2-list-0-neg-sqrt	[[acosh(1), acosh((mpmathify(sqrt(2)) / 2))], [acosh(0), acosh((-(mpmathify(sqrt(2)) / 2)))]]	[[mpf('0.0'), mpc(real='0.0', imag='0.785398163397448309615660845819833')], [mpc(real='0.0', imag='1.57079632679489661923132169163967'), mpc(real='0.0', imag='2.3561944901923449288469825374595')]]	

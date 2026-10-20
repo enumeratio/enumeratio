@@ -153,22 +153,20 @@ export function declareAnalytic(ce: ComputeEngine): void {
   // GammaRegularized's is required — so that widening changes the arity and nothing else,
   // type errors included. Both thread over a list, as Wolfram's Listable heads do (natively
   // only Gamma does).
-  for (const [head, secondRequired, compiledOperands] of [
-    // The built-in Gamma lowering drops its second operand (compute-engine#447), so only the
-    // one-operand call compiles; lift to 2 with the compute-engine bump that carries the fix.
-    ["Gamma", false, 1],
-    ["GammaRegularized", true, 2],
+  for (const [head, secondRequired] of [
+    ["Gamma", false],
+    ["GammaRegularized", true],
   ] as const) {
     const z = "complex | infinity";
     widenSignature(ce, head, `(${z}, (${z})${secondRequired ? "" : "?"}, (${z})?) -> number`);
     threadOverLists(ce, [head]);
-    // compile builtin up to `compiledOperands` operands: a third operand, or a complex or exact one native declines: a real call of up to two is native's
+    // compile builtin up to two operands: a third operand, or a complex or exact one native declines: a real call of up to two is native's
     wrapOperator(
       ce,
       [head, 2, 1],
       () => true,
       (native) => (ops, options) => evaluateIncompleteGamma(ce, head, native, ops, options),
-      { compile: { upTo: compiledOperands } },
+      { compile: { upTo: 2 } },
     );
   }
 
