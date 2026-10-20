@@ -5,6 +5,7 @@ bernoullib-2	bernoulli(Int(2))	0.16666666666666666
 bernoullib-4	bernoulli(Int(4))	-0.03333333333333333	
 bernoullib-12	bernoulli(Int(12))	-0.2531135531135531	
 bernoullib-10	bernoulli(Int(10))	0.07575757575757576	
+b-1-sign-in-a-sum-over-k-1-to-2			
 exact-rationals-at-any-index	bernoulli(Int(60))	-2.1399949257225335e34	
 listable-b-n-threads-over-a-list-of-indices	Any[bernoulli(Int(2)), bernoulli(Int(4)), bernoulli(Int(6))]	[0.16666666666666666, -0.03333333333333333, 0.023809523809523808]	
 the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac			
