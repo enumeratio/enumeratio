@@ -118,7 +118,7 @@ pr132-elementary	IsOdd(Pi) => False
 pr132-elementary	Arccot(-1) => 3*Pi/4
 pr131-incomplete-generalized	Gamma(2, 1) => 2/ExponentialE
 pr129-special-functions	N(LambertW(-0.2, -1)) ~> -2.5426413577735265
-pr129-special-functions	ExpIntegralE(2, 1.5) ~> 0.0731007865384809
+pr129-special-functions	ExpIntegralE(2, 1.5) ~> 0.07310078653848085
 pr129-special-functions	KleinInvariantJ(ImaginaryUnit) => 1
 pr127-real-elementary	RealSign(Sqrt(2) - 2) => -1
 pr127-real-elementary	UnitStep(0) => 1
