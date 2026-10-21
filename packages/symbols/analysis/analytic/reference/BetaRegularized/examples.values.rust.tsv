@@ -5,6 +5,7 @@ a-floating-point-x-evaluates-directly-to-a	beta_regularized(n(2), n(3), x(0.5))	
 i-x-1-1-x-the-uniform-distribution-s-own-cdf	beta_regularized(n(1), n(1), x(0.5))	0.49999999999999956	
 non-integer-parameters	beta_regularized(x(2.5), x(3.5), x(0.4))	0.48690419152611486	
 i-1-2-2-3-11-16-exactly	beta_regularized(n(2), n(3), rational(n(1), n(2)))	0.6874999999999998	
+i-0-5-1-0-a-zero-b-has-the-limit-0	beta_regularized(n(1), n(0), x(0.5))	panic: statrs: BNotGreaterThanZero	error
 threads-element-wise-over-a-list-as-wolfram-s	list(vec![beta_regularized(n(1), n(1), x(0.5)), beta_regularized(n(2), n(1), x(0.5))])	[0.49999999999999956, 0.25000000000000094]	
 x-outside-0-1-by-continuation-real-here-as-b-5	beta_regularized(x(0.5), n(5), n(2))	panic: statrs: XOutOfRange	error
 four-arguments-the-generalized-i-z-1-a-b-i-z-0-a			

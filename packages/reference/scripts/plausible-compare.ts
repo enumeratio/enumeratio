@@ -151,7 +151,7 @@ export function roundsToZero(sample: MathJSON, ours: MathJSON, theirs: string): 
   const call = innerCall(sample);
   const other = parts(theirs);
   return (
-    ours === 0 &&
+    numeric(ours) === 0 &&
     call !== undefined &&
     call.length === 2 &&
     exactZeroAt(call[0] as string, call[1] as MathJSON) &&
@@ -168,12 +168,19 @@ export function hasNonAnswer(ours: MathJSON): boolean {
   return isNonAnswer(ours) || (Array.isArray(ours) && ours.some((part) => hasNonAnswer(part as MathJSON)));
 }
 
-/** Whether a call of `head` on `arg` sits at a pole. */
-function poleAt(head: string, arg: MathJSON): boolean {
+/** Whether a call of `head` on `arg` sits at a pole, and a crate's finite `answer` there is a blow-up: the
+ * pole's distance 1/(|answer| n!) from a double's rounding, with the pole's sign. At Γ(-n) the answer is
+ * anywhere from 1e7 to 1e16 as n grows, so the floor is on the distance, not the size. */
+function blowsUpAt(head: string, arg: MathJSON, answer: number): boolean {
   if (head === "Gamma") {
     const v = numeric(arg);
-    return v !== undefined && Number.isInteger(v) && v <= 0;
+    if (v === undefined || !Number.isInteger(v) || v > 0) return false;
+    const n = -v;
+    let factorial = 1;
+    for (let k = 2; k <= n && factorial < Infinity; k++) factorial *= k;
+    return Math.sign(answer) === (n % 2 === 0 ? 1 : -1) && Math.abs(answer) * factorial >= 1e10;
   }
+  if (Math.abs(answer) < 1e15) return false;
   const m = piMultiple(arg);
   if (m === undefined) return false;
   if (head === "Tan" || head === "Sec") return m[1] === 2 && Math.abs(m[0]) % 2 === 1;
@@ -183,7 +190,7 @@ function poleAt(head: string, arg: MathJSON): boolean {
 
 /** Whether a crate's huge finite double stands where ours says a pole, and only there: a sample of
  * one pole-having head, element by element, where each non-answer of ours is at a pole of the head
- * and the crate answers 1e15 or more, and every other element agrees (or is an exact zero beside rounding noise). */
+ * and the crate answers a blow-up there (`blowsUpAt`), and every other element agrees (or is an exact zero beside rounding noise). */
 export function overshootsPole(sample: MathJSON, ours: MathJSON, theirs: string): boolean {
   const call = innerCall(sample);
   if (call === undefined || call.length !== 2 || !["Gamma", "Sec", "Csc", "Tan", "Cot"].includes(call[0] as string))
@@ -206,7 +213,7 @@ export function overshootsPole(sample: MathJSON, ours: MathJSON, theirs: string)
     if (typeof other !== "number") return false;
     if (isNonAnswer(mine)) {
       atPole = true;
-      return Math.abs(other) >= 1e15 && poleAt(head, arg);
+      return blowsUpAt(head, arg, other);
     }
     const x = numeric(mine);
     const y = other;
@@ -215,6 +222,14 @@ export function overshootsPole(sample: MathJSON, ours: MathJSON, theirs: string)
     return Math.abs(x - y) <= 1e-9 * Math.max(Math.abs(x), Math.abs(y));
   };
   return walk(call[1] as MathJSON, ours, printed) && atPole;
+}
+
+/** Whether the sample has a call of `head` with a negative literal argument. */
+export function hasNegativeArgument(sample: MathJSON, head: string): boolean {
+  if (!Array.isArray(sample) || typeof sample[0] !== "string") return false;
+  const [name, ...ops] = sample as readonly MathJSON[];
+  if (name === head && ops.some((op) => (numeric(op) ?? 0) < 0)) return true;
+  return ops.some((op) => hasNegativeArgument(op, head));
 }
 
 const WORD = 2 ** 64;

@@ -384,6 +384,7 @@ lerchphi-neg-3-neg-2-1-over-2	lerchphi(-3, -2, Rational(1, 2))	lerchphi(-3, -2, 
 n-lerchphi-neg-2-neg-3-5-over-2	N(lerchphi(-2, -3, Rational(5, 2)), 30)	1.67129629629629629629629629630	
 n-lerchphi-neg-9000-neg-1e-12-neg-3	N(lerchphi(-9000, -1e-12, -3), 30)	ValueError: Lerch transcendent complex infinity	error
 n-lerchphi-neg-900000-neg-1e-12-neg-3	N(lerchphi(-900000, -1e-12, -3), 30)	ValueError: Lerch transcendent complex infinity	error
+n-lerchphi-6-2-neg-1-over-2-on-the-branch-cut	N(lerchphi(6, 2, Rational(-1, 2)), 30)	24.0965553627918734614516042102 - 13.7881248176961221906505268094*I	
 past-the-unit-disk-by-the-integral	N(lerchphi((1 + 2*I), (3 + -1*I), (4 + 2*I)), 30)	0.00202500995700990860053946871764 + 0.00332789753681355880743808908022*I	
 inexact-arguments-should-evaluate-numerically	lerchphi(0.5, 2, 3.5)	lerchphi(0.5, 2, 3.5)	
 s-0-far-outside-the-unit-disk-1-1-49-5	lerchphi(49.5, 0, 2)	lerchphi(49.5, 0, 2)	

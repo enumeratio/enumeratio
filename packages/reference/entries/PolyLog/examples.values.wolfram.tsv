@@ -81,6 +81,7 @@ normal-series-polylog-2-x-x-positiveinfinity-6	Normal[Series[PolyLog[2, x], List
 polylog-s-tiny-negative-rim	N[PolyLog[-1*^-12, Complex[-0.12884449429552464, 0.9916648104524686]]]	-0.49999999999712363 + 0.4392388922766449*I		N\left[\text{Li}_{-\frac{1}{1000000000000}}(-0.128844+0.991665 i)\right]	-0.5+0.439239 i	
 polylog-neg-2-at-the-pole-z-1	PolyLog[-2, Rational[2, 2]]	ComplexInfinity		\text{Li}_{-2}\left(\frac{2}{2}\right)	\text{ComplexInfinity}	
 polylog-neg-2-over-a-list-holding-the-pole	PolyLog[-2, List[Rational[2, 2], -6]]	{ComplexInfinity, 30/343}		\text{Li}_{-2}\left(\left\{\frac{2}{2},-6\right\}\right)	\left\{\text{ComplexInfinity},\frac{30}{343}\right\}	
+n-polylog-neg-4p038-1	N[PolyLog[-4.038, 1]]	ComplexInfinity		N[\text{Li}_{-4.038}(1)]	\text{ComplexInfinity}	disagree
 threads-over-a-list-of-arguments	PolyLog[2, List[0.5, 0.25]]	{0.5822405264650127, 0.2676526390827326}		\text{Li}_2(\{0.5,0.25\})	\{0.582241,0.267653\}	
 a-non-integer-order-past-z-1-is-left-unevaluated	PolyLog[2.5, 2]	2.789660332381895 - 1.3638037005377295*I		\text{Li}_{2.5}(2)	2.78966\, -1.3638 i	
 complex-order-and-argument	PolyLog[Complex[0.2, 1], Complex[0.5, -0.5]]	0.07032652055051612 - 0.5632932625398744*I		\text{Li}_{0.2\, +i}(0.5\, -0.5 i)	0.0703265\, -0.563293 i	

@@ -8,6 +8,7 @@ mod-7-3	(7 % 3)	1
 1-plus-4-mod-3	(1 + (4 % 3))	2	
 integermod-keeps-the-modulus	GF(5, symmetric=False)(17)	2 mod 5	
 gaussian-mod-a-gaussian-unit-multiple	((1000 + -1*I) % (1 + -1*I))	TypeError: Invalid comparison of non-real (1 - I)**2*(-500*I - 250*(1 - I)**2)/2	error
+a-complex-argument-is-left-alone	(sqrt(-1) % 3)	Mod(I, 3)	disagree
 a-third-argument-offsets-the-range-the-result			
 with-offset-1-the-residues-run-1-2-3-rather-than			
 rationals-are-reduced-exactly	(Rational(5, 2) % 2)	1/2	
