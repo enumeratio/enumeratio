@@ -346,7 +346,7 @@ jobs:
         run: |
           sudo tee /usr/local/bin/sage >/dev/null <<'SH'
           #!/bin/sh
-          exec docker run --rm -i --memory="${ORACLE_MEMORY_MB:-4096}m" -v "$PWD:$PWD" -v "${TMPDIR:-/tmp}:${TMPDIR:-/tmp}" -w "$PWD" --entrypoint sageenumeratio-sage "$@"
+          exec docker run --rm -i --memory="${ORACLE_MEMORY_MB:-4096}m" -v "$PWD:$PWD" -v "${TMPDIR:-/tmp}:${TMPDIR:-/tmp}" -w "$PWD" --entrypoint sage enumeratio-sage "$@"
           SH
           sudo chmod +x /usr/local/bin/sage
           sage --version
@@ -397,7 +397,7 @@ jobs:
         run: |
           sudo tee /usr/local/bin/wolframscript >/dev/null <<'SH'
           #!/bin/sh
-          exec docker run --rm -i --network host -e WOLFRAMSCRIPT_ENTITLEMENTID --memory="${ORACLE_MEMORY_MB:-4096}m" -v "$PWD:$PWD" -v "${TMPDIR:-/tmp}:${TMPDIR:-/tmp}" -w "$PWD" --entrypoint wolframscriptwolframresearch/wolframengine "$@"
+          exec docker run --rm -i --network host -e WOLFRAMSCRIPT_ENTITLEMENTID --memory="${ORACLE_MEMORY_MB:-4096}m" -v "$PWD:$PWD" -v "${TMPDIR:-/tmp}:${TMPDIR:-/tmp}" -w "$PWD" --entrypoint wolframscript wolframresearch/wolframengine "$@"
           SH
           sudo chmod +x /usr/local/bin/wolframscript
           wolframscript -code '$Version'
