@@ -261,8 +261,7 @@ export const gelfandTsetlin: EpsilFamily = {
             "gr_flat",
             lets(
               [["gr_target", take(drop("gr_flat", offset(level)), "gt_m"), "list<integer>"]],
-              // CE #454: a Fold's result is typed `broadcastable<tuple<integer>>`; read through a `list` its `At` is a scalar.
-              lets([["gr_found", search("gr_target"), "list"]], add("gr_acc", at("gr_found", 1))),
+              add("gr_acc", at(search("gr_target"), 1)),
             ),
           ),
           "gr_acc",
