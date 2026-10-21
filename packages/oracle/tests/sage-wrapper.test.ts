@@ -7,5 +7,9 @@ test("each docker kernel wrapper in the nightly workflow mounts the temp dir", (
   const workflow = readFileSync(new URL("../../../.github/workflows/nightly.yml", import.meta.url), "utf8");
   const wrappers = workflow.split("\n").filter((line) => line.includes("docker run") && line.includes("--entrypoint"));
   expect(wrappers.length).toBeGreaterThanOrEqual(2);
-  for (const wrapper of wrappers) expect(wrapper).toContain('-v "${TMPDIR:-/tmp}:${TMPDIR:-/tmp}"');
+  for (const wrapper of wrappers) {
+    expect(wrapper).toContain('-v "${TMPDIR:-/tmp}:${TMPDIR:-/tmp}"');
+    // `--entrypoint <command> <image> "$@"`: a run-together command and image is a docker usage error.
+    expect(wrapper).toMatch(/--entrypoint \S+ \S+ "\$@"/);
+  }
 });
