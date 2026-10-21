@@ -33,6 +33,7 @@ export interface HeadPatch {
   addSignature?: string;
   collection?: OperatorDefinition["collection"];
   broadcastable?: boolean;
+  broadcastExemptions?: OperatorDefinition["broadcastExemptions"];
   canonical?: OperatorDefinition["canonical"];
   /** How the head compiles, for a patch that replaces `evaluate` or `canonical`: see `CompileStance`. */
   compile?: CompileStance;

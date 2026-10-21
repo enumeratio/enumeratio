@@ -2,7 +2,6 @@ import {
   bigIntegerAt,
   bigRationalAt,
   extendHead,
-  nativeCanonical,
   operandsOf,
   optionsOf,
   symbolNameOf,
@@ -274,29 +273,9 @@ function ringOf(over: Json | undefined): bigint | "ordinary" | undefined {
 export function declareNumerator(ce: Engine): void {
   for (const head of ["Numerator", "Denominator"] as const) {
     // The option rides as a trailing rule, a Tuple the head would otherwise thread over (hence the
-    // `tuples` exemption, set on the definition directly, as the option heads in number-theory do).
-    //
-    // Workaround for compute-engine: Numerator's and Denominator's `canonical` step returns the
-    // first operand's own part when it is a Divide or Rational and drops every other operand, so
-    // `Numerator(a/b, Over -> R)` canonicalizes to `a` before anything sees the option. A call with
-    // an option is rebuilt here instead (through `ce._fn`, which is private API). This replaces the
-    // definition's `canonical`, so a package extending it after residues must capture ours.
+    // `tuples` exemption, kept beside the native `surplus-operands`). Canonicalization already keeps it.
     widenSignature(ce, head, "(number, any*) -> number");
-    const operator = (
-      ce.lookupDefinition(head) as { operator?: { broadcastExemptions: readonly string[] } } | undefined
-    )?.operator;
-    if (operator !== undefined && !operator.broadcastExemptions.includes("tuples"))
-      operator.broadcastExemptions = [...operator.broadcastExemptions, "tuples"];
-    const canonical = nativeCanonical(ce, head);
-    extendHead(ce, head, {
-      canonical: (ops, options) =>
-        ops.length > 1
-          ? ce._fn(
-              head,
-              ops.map((op) => op.canonical),
-            )
-          : (canonical?.(ops, options) ?? null),
-    });
+    extendHead(ce, head, { broadcastExemptions: ["surplus-operands", "tuples"] });
     wrapOperator(
       ce,
       [head],
