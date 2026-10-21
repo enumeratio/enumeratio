@@ -3,7 +3,9 @@ default-base-is-10	Log[10, 100]	2	\log _{10}(100)	2
 same-result-written-with-an-explicit-base	Log[10, 100]	2	\log _{10}(100)	2	
 base-2-via-the-explicit-second-argument	Log[2, 8]	3	\log _2(8)	3	
 log-in-a-negative-base	Log[-1, 2.5]	0. - 0.2916643985741246*I	\log _{-1}(2.5)	0.\, -0.291664 i	disagree
-log-of-1-threads-over-a-list-of-bases	Log[List[-10, E, 27], 1]				
+log-of-1-threads-over-a-list-of-bases	Log[List[-10, E, 27], 1]	{0, 0, 0}	\log _{\{-10,e,27\}}(1)	\{0,0,0\}	
+log-neg-2p5-over-list-neg-10-e-10	Log[List[-10, E, 10], -2.5]	{0.7896015422346911 + 0.28706268065977864*I, 0.9162907318741551 + 3.141592653589793*I, 0.3979400086720376 + 1.3643763538418412*I}	\log _{\{-10,e,10\}}(-2.5)	\{0.789602\, +0.287063 i,0.916291\, +3.14159 i,0.39794\, +1.36438 i\}	disagree
+log-2p5-neg-10	Log[-10, 2.5]	0.13906581622046693 - 0.1897381112789202*I	\log _{-10}(2.5)	0.139066\, -0.189738 i	disagree
 log-3-1-5-at-machine-precision	Log[3, 1.5]	0.3690702464285425	\log _3(1.5)	0.36907	
 log-9-3	Log[3, 9]	2	\log _3(9)	2	
 threads-over-a-list-of-values	Log[2, List[2, 4, 8]]	{1, 2, 3}	\log _2(\{2,4,8\})	\{1,2,3\}	

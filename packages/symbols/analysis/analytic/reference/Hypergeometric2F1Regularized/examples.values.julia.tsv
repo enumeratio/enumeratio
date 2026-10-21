@@ -7,6 +7,7 @@ a-complex-argument-at-c-2	(enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeom
 a-complex-argument-at-a-nonpositive-integer-c	(enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), 1, 1, -1, enumeratio_complex(enumeratio_decimal("0.2"), enumeratio_decimal("-0.1"))))	ball not finite	error
 simplify-normal-series			
 normal-series-hypergeometric2f1regularized-1			
+n-hypergeometric2f1regularized-1-1-neg-1-0	(enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), 1, 1, -1, 0))	0.0	
 n-hypergeometric2f1regularized-1-over-3-1-3-neg	enumeratio_nshow(enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), (1 // 3), 1, 3, -7), 50)	3.5510204081632653061224489795918367346938775510204e-01	
 n-hypergeometric2f1regularized-1-over-3-1-0-neg	enumeratio_nshow(enumeratio_ball((a, b, c, z) -> rgamma(c) * hypergeometric_2f1(a, b, c, z), (1 // 3), 1, 0, -7), 25)	ball not finite	error
 matrixfunction-function			

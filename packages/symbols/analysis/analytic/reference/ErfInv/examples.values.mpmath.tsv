@@ -6,6 +6,7 @@ a-floating-point-argument-evaluates-directly-to	erfinv(0.5)	0.476936276204469873
 a-machine-precision-argument	erfinv(0.6)	0.595116081449994821978121467041	
 series-erfinv-x-x-0-3			
 erf-of-erfinv-outside-1-1	almosteq(erf(erfinv(-1.687)), 0.5, 1e-20)	ValueError: erfinv(x) is defined only for -1 <= x <= 1	error
+sqrt-0-times-erfinv-neg-2p7	(sqrt(0) * erfinv(-2.7))	ValueError: erfinv(x) is defined only for -1 <= x <= 1	error
 threads-element-wise-over-a-list-as-wolfram-s	[erfinv(0), erfinv(1)]	[mpf('0.0'), mpf('+inf')]	
 two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x			
 interval-arithmetic-the-inverse-is-increasing-so			

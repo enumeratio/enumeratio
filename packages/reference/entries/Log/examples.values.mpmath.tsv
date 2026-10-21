@@ -4,6 +4,8 @@ same-result-written-with-an-explicit-base	log(100, 10)	2.0
 base-2-via-the-explicit-second-argument	log(8, 2)	3.0	
 log-in-a-negative-base	log(2.5, -1)	(0.0 - 0.291664398574124554079874563503j)	disagree
 log-of-1-threads-over-a-list-of-bases	[log(1, -10), log(1, e), log(1, 27)]	[mpc(real='0.0', imag='0.0'), mpf('0.0'), mpf('0.0')]	
+log-neg-2p5-over-list-neg-10-e-10	[log(-2.5, -10), log(-2.5, e), log(-2.5, 10)]	[mpc(real='0.789601542234691235398786638408826', imag='0.287062680659778623359617251523845'), mpc(real='0.916290731874155065183527211767942', imag='3.14159265358979323846264338327933'), mpc(real='0.397940008672037609572522210551038', imag='1.36437635384184134748578362543143')]	disagree
+log-2p5-neg-10	log(2.5, -10)	(0.13906581622046689199084763772 - 0.18973811127892021616796580303j)	disagree
 log-3-1-5-at-machine-precision	log(1.5, 3)	0.369070246428542562900472885657	
 log-9-3	log(9, 3)	2.0	
 threads-over-a-list-of-values	[log(2, 2), log(4, 2), log(8, 2)]	[mpf('1.0'), mpf('2.0'), mpf('3.0')]	

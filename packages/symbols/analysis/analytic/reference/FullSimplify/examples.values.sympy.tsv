@@ -1,6 +1,8 @@
 id	in	out	verdict
 the-pythagorean-identity	simplify(((S(sin(Symbol("x")))**2) + (S(cos(Symbol("x")))**2)))	1	
 recognizes-the-definition-of-sinh	simplify((S((exp(Symbol("x")) - exp((-Symbol("x"))))) / 2))	sinh(x)	
+fullsimplify-neg-2i-e-pow-i-plus-1-minus-i	simplify((((0 + -2*I) * (S(E)**((0 + 1*I) * Symbol("x")))) + ((1 + -1*I) * (S(E)**((0 + 2*I) * Symbol("x"))))))	((1 - I)*exp(I*x) - 2*I)*exp(I*x)	disagree
+fullsimplify-0-5767-plus-0-817i-e-pow-i	simplify((((0.5766570160518448 + 0.8169863437280835*I) * (S(E)**((0 + 1*I) * Symbol("x")))) + ((-0.6873478080684932 + -0.7263284317328063*I) * (S(E)**((-1 + -2*I) * Symbol("x"))))))	((0.576657016051845 + 0.816986343728084*I)*exp(x*(1 + 3*I)) - 0.687347808068493 - 0.726328431732806*I)*exp(-x*(1 + 2*I))	disagree
 folds-the-double-angle-product	simplify((2 * sin(Symbol("x")) * cos(Symbol("x"))))	sin(2*x)	
 the-functional-equation-of-gamma	simplify((S(gamma((Symbol("x") + 1))) / gamma(Symbol("x"))))	x	
 denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3	simplify(((sqrt(2) + sqrt(3)) - sqrt((5 + (2 * sqrt(6))))))	0	

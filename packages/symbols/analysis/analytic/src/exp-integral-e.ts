@@ -7,6 +7,7 @@ import {
   type EvalOptions,
   exceedsDoublePrecision,
   isFiniteNum,
+  asDouble,
   wantsNumber,
 } from "@enumeratio/ce-patches";
 import { BigDecimal } from "@enumeratio/engine/unstable";
@@ -24,29 +25,38 @@ import { BigDecimal } from "@enumeratio/engine/unstable";
 const MAX_BIG_Z = 100;
 const GUARD = 15;
 
-/** γ to `digits` digits, from the engine's own constant. */
-function eulerGammaAt(ce: ComputeEngine, digits: number): BigDecimal | undefined {
+/** The named constant (γ, π) to `digits` digits, from the engine's own. */
+function constantAt(ce: ComputeEngine, name: "EulerGamma" | "Pi", digits: number): BigDecimal | undefined {
   const saved = ce.precision;
   ce.precision = digits;
   try {
-    return ce.box("EulerGamma").N().bignumRe;
+    return ce.box(name).N().bignumRe;
   } finally {
     ce.precision = saved;
   }
 }
 
 /**
- * E_n(z) for integer n ≥ 1 and real z > 0 on the convergent series (DLMF 8.19.8)
+ * E_n(z) for integer n ≥ 1 and real z ≠ 0, |z| ≤ 100, on the convergent series (DLMF 8.19.8)
  *   E_n(z) = (−z)^(n−1)/(n−1)! · (ψ(n) − ln z) − Σ_{k≠n−1} (−z)^k / ((k−n+1)·k!),
- * with ψ(n) = −γ + H_(n−1). Its terms reach about e^z before they cancel, so the working
- * digits grow with z.
+ * with ψ(n) = −γ + H_(n−1). For z > 0 its terms reach about e^z before they cancel, so the
+ * working digits grow with z; for z < 0 they are all one sign, and ln z carries the −iπ of
+ * the principal branch, so the imaginary part is −π·(−z)^(n−1)/(n−1)!.
  */
-function expIntegralEBig(ce: ComputeEngine, n: number, z: BigDecimal, digits: number): BigDecimal | undefined {
-  if (!Number.isInteger(n) || n < 1 || !z.isPositive() || z.gt(MAX_BIG_Z)) return undefined;
+function expIntegralEBig(
+  ce: ComputeEngine,
+  n: number,
+  z: BigDecimal,
+  digits: number,
+): { readonly re: BigDecimal; readonly im: BigDecimal } | undefined {
+  const negative = !z.isPositive();
+  if (!Number.isInteger(n) || n < 1 || z.isZero() || z.abs().gt(MAX_BIG_Z)) return undefined;
   // The terms reach about e^z and the answer is about e^(−z): 2z·log10(e) digits cancel.
-  const working = digits + GUARD + Math.ceil(2 * z.toNumber() * Math.LOG10E);
-  const gamma = eulerGammaAt(ce, working);
-  if (gamma === undefined) return undefined;
+  const working =
+    digits + GUARD + (negative ? Math.ceil(Math.log10(n + 1)) : Math.ceil(2 * z.toNumber() * Math.LOG10E));
+  const gamma = constantAt(ce, "EulerGamma", working);
+  const pi = negative ? constantAt(ce, "Pi", working) : new BigDecimal(0);
+  if (gamma === undefined || pi === undefined) return undefined;
   return atDigits(working, () => {
     const tol = new BigDecimal(10).pow(-(working + 2));
     let term = new BigDecimal(1); // (−z)^k / k!
@@ -55,7 +65,7 @@ function expIntegralEBig(ce: ComputeEngine, n: number, z: BigDecimal, digits: nu
     for (let k = 0; k < 100_000; k++) {
       if (k === n - 1) pivot = term;
       else rest = rest.add(term.div(k - n + 1)).toPrecision(working);
-      if (k > n && k > z.toNumber() && term.abs().lt(tol)) break;
+      if (k > n && k > Math.abs(z.toNumber()) && term.abs().lt(tol)) break;
       term = term
         .mul(z.neg())
         .div(k + 1)
@@ -64,7 +74,10 @@ function expIntegralEBig(ce: ComputeEngine, n: number, z: BigDecimal, digits: nu
     let harmonic = new BigDecimal(0);
     for (let k = 1; k < n; k++) harmonic = harmonic.add(new BigDecimal(1).div(k));
     const psi = harmonic.sub(gamma);
-    return pivot.mul(psi.sub(z.ln())).sub(rest).toPrecision(digits);
+    return {
+      re: pivot.mul(psi.sub(z.abs().ln())).sub(rest).toPrecision(digits),
+      im: pivot.mul(pi).neg().toPrecision(digits),
+    };
   });
 }
 
@@ -121,8 +134,15 @@ export function declareExpIntegralE(ce: ComputeEngine): void {
       if (exceedsDoublePrecision(ce, options.numericApproximation)) {
         const big = bigRealOperand(ce, z);
         if (big === undefined || n.im !== 0) return undefined;
-        const value = expIntegralEBig(ce, n.re, big, ce.precision);
-        return value === undefined ? undefined : bigResult(ce, value);
+        const value = big.isPositive() ? expIntegralEBig(ce, n.re, big, ce.precision) : undefined;
+        return value === undefined ? undefined : bigResult(ce, value.re);
+      }
+
+      // A negative real z at high order: the Gamma route below underflows (z^(n−1)·Γ(1−n, z)
+      // is 0 where E_n is about e^|z|), so a double is read off the series instead.
+      if (n.im === 0 && z.im === 0 && z.re < 0 && Number.isInteger(n.re) && n.re >= CONTINUED_FRACTION_ORDER) {
+        const value = expIntegralEBig(ce, n.re, new BigDecimal(z.re), 20);
+        if (value !== undefined) return asDouble(ce, ce.number(ce.complex(value.re.toNumber(), value.im.toNumber())));
       }
 
       if (n.im === 0 && z.im === 0 && z.re > 0 && n.re >= CONTINUED_FRACTION_ORDER) {

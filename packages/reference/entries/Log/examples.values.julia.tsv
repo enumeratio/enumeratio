@@ -3,7 +3,9 @@ default-base-is-10	enumeratio_ball(_log10, 100)	2.0
 same-result-written-with-an-explicit-base	enumeratio_ball(_log_base, 100, 10)	2.0	
 base-2-via-the-explicit-second-argument	enumeratio_ball(_log_base, 8, 2)	3.0	
 log-in-a-negative-base	enumeratio_ball(_log_base, enumeratio_decimal("2.5"), -1)	(0.0-0.2916643985741245540798745635032592945861135746039784061731555397255584269095506j)	disagree
-log-of-1-threads-over-a-list-of-bases	Any[enumeratio_ball(_log_base, 1, -10), enumeratio_ball(_log_base, 1, const_e(RR)), enumeratio_ball(_log_base, 1, 27)]		
+log-of-1-threads-over-a-list-of-bases	Any[enumeratio_ball(_log_base, 1, -10), enumeratio_ball(_log_base, 1, const_e(RR)), enumeratio_ball(_log_base, 1, 27)]	[0.0, 0.0, 0.0]	
+log-neg-2p5-over-list-neg-10-e-10	Any[enumeratio_ball(_log_base, enumeratio_decimal("-2.5"), -10), enumeratio_ball(_log_base, enumeratio_decimal("-2.5"), const_e(RR)), enumeratio_ball(_log_base, enumeratio_decimal("-2.5"), 10)]	[(0.7896015422346912353987866384088137921951779778070812369721626684993796867814854+0.2870626806597786233596172515238419690175923131040191082839935519325102815613379j), (0.9162907318741550651835272117680110714501012199082624677919678819807853657379671+3.141592653589793238462643383279502884197169399375105820974944592307816406286233j), (0.3979400086720376095725222105510139464636202370757829173791450777457836214511523+1.364376353841841347485783625431355770210127483723925399900854731995922817360266j)]	disagree
+log-2p5-neg-10	enumeratio_ball(_log_base, enumeratio_decimal("2.5"), -10)	(0.1390658162204668919908476377197619383678540649011280405599313197202869199437866-0.1897381112789202161679658030303817647577928684837837910584478481772954180332669j)	disagree
 log-3-1-5-at-machine-precision	enumeratio_ball(_log_base, enumeratio_decimal("1.5"), 3)	0.3690702464285425629004728856572391457004143598681195721293450561613147986190809	
 log-9-3	enumeratio_ball(_log_base, 9, 3)	2.0	
 threads-over-a-list-of-values	Any[enumeratio_ball(_log_base, 2, 2), enumeratio_ball(_log_base, 4, 2), enumeratio_ball(_log_base, 8, 2)]	[1.0, 2.0, 3.0]	

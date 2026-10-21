@@ -60,7 +60,7 @@ bindings:
     note: SymPy's `assoc_laguerre(n, a, x)` is the generalized Laguerre polynomial; `laguerre(n, x)` is its a = 0 case.
   - origin: mapped
     form: mpmath
-    template: laguerre($1, 0, $2)
+    template: enumeratio_laguerre($1, 0, $2)
     arity: 2
     threadArgOnly:
       - 1
@@ -70,7 +70,7 @@ bindings:
       on: 2026-10-15
   - origin: mapped
     form: mpmath
-    template: laguerre($1, $2, $3)
+    template: enumeratio_laguerre($1, $2, $3)
     arity: 3
     threadArgOnly:
       - 1

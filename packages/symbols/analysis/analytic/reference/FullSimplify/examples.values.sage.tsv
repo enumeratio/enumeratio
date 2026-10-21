@@ -1,14 +1,16 @@
-id	in	out
-the-pythagorean-identity	SR((((sin(SR.var("x")))^2) + ((cos(SR.var("x")))^2))).simplify_full()	1
-recognizes-the-definition-of-sinh	SR(((exp(SR.var("x")) - exp((-SR.var("x")))) / 2)).simplify_full()	1/2*(e^(2*x) - 1)*e^(-x)
-folds-the-double-angle-product	SR((2 * sin(SR.var("x")) * cos(SR.var("x")))).simplify_full()	2*cos(x)*sin(x)
-the-functional-equation-of-gamma	SR((gamma((SR.var("x") + 1)) / gamma(SR.var("x")))).simplify_full()	x
-denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3	SR(((sqrt(2) + sqrt(3)) - sqrt((5 + (2 * sqrt(6)))))).simplify_full()	sqrt(3) + sqrt(2) - sqrt(2*sqrt(6) + 5)
-the-hyperbolic-pythagorean-identity	SR((((cosh(SR.var("x")))^2) - ((sinh(SR.var("x")))^2))).simplify_full()	1
-fullsimplify-x-pow-10-minus-1-times-x-pow-10	SR(((((SR.var("x"))^10) + -1) * (((SR.var("x"))^10) + 1))).simplify_full()	x^20 - 1
-fullsimplify-neg-4-times-arctan-1-over-239-plus	SR(((-4 * arctan((1/239))) + (16 * arctan((1/5))))).simplify_full()	16*arctan(1/5) - 4*arctan(1/239)
-fullsimplify-4-times-sin-x-times-cos-x-plus-4	SR(((4 * sin(SR.var("x")) * cos(SR.var("x"))) + (4 * ((sin(SR.var("x")))^2) * ((cos(SR.var("x")))^2)) + 1)).simplify_full()	4*cos(x)^2*sin(x)^2 + 4*cos(x)*sin(x) + 1
-fullsimplify-1-minus-i-times-exponentiale-pow-i	SR((((1 + -1*I) * ((e)^((0 + 1*I) * SR.var("x")))) + ((1 + 1*I) * ((e)^((0 + -1*I) * SR.var("x")))))).simplify_full()	2*cos(x) + 2*sin(x)
-assuming-re-x-gt-0-fullsimplify-exponentiale-pow		
-a-bare-exp-is-left-alone	SR(exp(SR.var("x"))).simplify_full()	e^x
-assuming-real-x-gt-0-fullsimplify-exponentiale		
+id	in	out	verdict
+the-pythagorean-identity	SR((((sin(SR.var("x")))^2) + ((cos(SR.var("x")))^2))).simplify_full()	1	
+recognizes-the-definition-of-sinh	SR(((exp(SR.var("x")) - exp((-SR.var("x")))) / 2)).simplify_full()	1/2*(e^(2*x) - 1)*e^(-x)	
+fullsimplify-neg-2i-e-pow-i-plus-1-minus-i	SR((((0 + -2*I) * ((e)^((0 + 1*I) * SR.var("x")))) + ((1 + -1*I) * ((e)^((0 + 2*I) * SR.var("x")))))).simplify_full()	-(I - 1)*e^(2*I*x) - 2*I*e^(I*x)	disagree
+fullsimplify-0-5767-plus-0-817i-e-pow-i	SR((((0.5766570160518448 + 0.8169863437280835*I) * ((e)^((0 + 1*I) * SR.var("x")))) + ((-0.6873478080684932 + -0.7263284317328063*I) * ((e)^((-1 + -2*I) * SR.var("x")))))).simplify_full()	((0.5766570160518448 + 0.8169863437280834*I)*e^((3*I + 1)*x) - 0.6873478080684933 - 0.7263284317328063*I)*e^(-(2*I + 1)*x)	disagree
+folds-the-double-angle-product	SR((2 * sin(SR.var("x")) * cos(SR.var("x")))).simplify_full()	2*cos(x)*sin(x)	
+the-functional-equation-of-gamma	SR((gamma((SR.var("x") + 1)) / gamma(SR.var("x")))).simplify_full()	x	
+denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3	SR(((sqrt(2) + sqrt(3)) - sqrt((5 + (2 * sqrt(6)))))).simplify_full()	sqrt(3) + sqrt(2) - sqrt(2*sqrt(6) + 5)	
+the-hyperbolic-pythagorean-identity	SR((((cosh(SR.var("x")))^2) - ((sinh(SR.var("x")))^2))).simplify_full()	1	
+fullsimplify-x-pow-10-minus-1-times-x-pow-10	SR(((((SR.var("x"))^10) + -1) * (((SR.var("x"))^10) + 1))).simplify_full()	x^20 - 1	
+fullsimplify-neg-4-times-arctan-1-over-239-plus	SR(((-4 * arctan((1/239))) + (16 * arctan((1/5))))).simplify_full()	16*arctan(1/5) - 4*arctan(1/239)	
+fullsimplify-4-times-sin-x-times-cos-x-plus-4	SR(((4 * sin(SR.var("x")) * cos(SR.var("x"))) + (4 * ((sin(SR.var("x")))^2) * ((cos(SR.var("x")))^2)) + 1)).simplify_full()	4*cos(x)^2*sin(x)^2 + 4*cos(x)*sin(x) + 1	
+fullsimplify-1-minus-i-times-exponentiale-pow-i	SR((((1 + -1*I) * ((e)^((0 + 1*I) * SR.var("x")))) + ((1 + 1*I) * ((e)^((0 + -1*I) * SR.var("x")))))).simplify_full()	2*cos(x) + 2*sin(x)	
+assuming-re-x-gt-0-fullsimplify-exponentiale-pow			
+a-bare-exp-is-left-alone	SR(exp(SR.var("x"))).simplify_full()	e^x	
+assuming-real-x-gt-0-fullsimplify-exponentiale			

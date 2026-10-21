@@ -7,6 +7,7 @@ at-a-real	enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), 4, enumera
 the-generalized-linear		
 the-generalized-quadratic		
 at-a-real-generalized	enumeratio_ball((n, a, x) -> _rising(a + 1, n) * rgamma(n + 1) * hypergeometric_1f1(-n, a + 1, x), 3, enumeratio_decimal("0.5"), enumeratio_decimal("1.3"))	-0.9086666666666666666666666666666666666666666666666666666666666666666666666666651
+recurrence-at-order-14	((3 * enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), 3, 3)) - (((5 - 1) * enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), 14, 6)) - (2 * enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), 1, 1))))	-0.9061509918652775795632938490081347224204367061509918652775795632938490081346946
 at-a-complex-argument	enumeratio_ball((n, x) -> hypergeometric_1f1(-n, CC(1), x), 2, enumeratio_complex(2, 3))	-5.5
 at-a-complex-parameter	enumeratio_ball((n, a, x) -> _rising(a + 1, n) * rgamma(n + 1) * hypergeometric_1f1(-n, a + 1, x), 2, enumeratio_complex(enumeratio_decimal("0.5"), 1), enumeratio_decimal("0.7"))	(-0.1299999999999999999999999999999999999999999999999999999999999999999999999999725+1.299999999999999999999999999999999999999999999999999999999999999999999999999993j)
 a-symbolic-order-stays-unevaluated		
