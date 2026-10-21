@@ -3,6 +3,7 @@ import {
   agreesInNorm,
   associates,
   crateDeclines,
+  hasNegativeArgument,
   hasNonAnswer,
   isStuckCall,
   outsideCrateDomain,
@@ -86,6 +87,8 @@ test("a double beside an exact zero is rounding only where the zero is exact", (
   expect(roundsToZero(["Cos", ["Multiply", ["Rational", 1, 2], "Pi"]], 0, "6.123233995736766e-17")).toBe(true);
   expect(roundsToZero(["Tan", ["Divide", "Pi", -1]], 0, "1.2246467991473532e-16")).toBe(true);
   expect(roundsToZero(["LogGamma", ["Rational", 3, 3]], 0, "-4.440892098500626e-16")).toBe(true);
+  // Ours' zero may be a bignum.
+  expect(roundsToZero(["N", ["LogGamma", ["Power", -1, 300]]], { num: "0.0" }, "-4.440892098500626e-16")).toBe(true);
   // Ours flushing a small value to zero is not rounding.
   expect(roundsToZero(["Erf", 1e-13], 0, "1.1283791670955126e-13")).toBe(false);
   expect(roundsToZero(["Cos", 1], 0, "1e-17")).toBe(false);
@@ -95,6 +98,13 @@ test("a double beside an exact zero is rounding only where the zero is exact", (
 test("a pole the crate overshoots is judged element by element, at the head's poles", () => {
   const gamma = ["Gamma", ["List", 2, -1]];
   expect(overshootsPole(gamma, ["List", 1, "ComplexInfinity"], "[1.0, -2.5653050788007548e16]")).toBe(true);
+  // Past -1 the crate's blow-up shrinks with n!, but stays within rounding of the pole, with its sign.
+  const far = ["Gamma", ["List", 1, -4, -11, 4]];
+  const farOurs = ["List", 1, "ComplexInfinity", "ComplexInfinity", 6];
+  const farTheirs = "[0.9999999999999996, 267219279041744.06, -16062515.931684932, 5.999999999999988]";
+  expect(overshootsPole(far, farOurs, farTheirs)).toBe(true);
+  // The wrong sign for the pole.
+  expect(overshootsPole(far, farOurs, farTheirs.replace("-16062515", "16062515"))).toBe(false);
   // Not a pole of Gamma: ours would be wrong to say so.
   expect(overshootsPole(["Gamma", ["List", 2, 25]], ["List", 1, "ComplexInfinity"], "[1.0, 6.2e23]")).toBe(false);
   // Another element disagrees.
@@ -114,4 +124,11 @@ test("ours' non-answers and calls left on numbers", () => {
   expect(isStuckCall(["ErfInv", 1.01])).toBe(true);
   expect(isStuckCall(["Complex", 1, 2])).toBe(false);
   expect(isStuckCall(["Add", ["Multiply", 2, "Pi"], ["Ln", 3]])).toBe(false);
+});
+
+test("a Binomial with a negative literal argument is found beneath other calls", () => {
+  expect(hasNegativeArgument(["Divide", ["Binomial", ["Multiply", 0, -5], -9], ["Add", -5, -1]], "Binomial")).toBe(
+    true,
+  );
+  expect(hasNegativeArgument(["Divide", ["Binomial", 10, 5], 6], "Binomial")).toBe(false);
 });

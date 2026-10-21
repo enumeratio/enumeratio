@@ -40,6 +40,7 @@ import {
   crateDeclines,
   hasNonAnswer,
   isStuckCall,
+  hasNegativeArgument,
   outsideCrateDomain,
   overshootsPole,
   roundsTo,
@@ -375,17 +376,28 @@ function autoKind(
   // Julia's array literal promotes a Bool beside an Int, so `[false, -1]` prints `[0, -1]`.
   if (result.error === undefined && boolsAsInts(ours, theirs)) return "convention";
   // A double can't hold the exact huge argument that ours reduces exactly.
-  if (system === "rust" && result.error === undefined && callsTrig(sample) && hasHugeInteger(sample))
+  // A power past a double's range (10^400) overflows it, which the crate reports as non-finite.
+  if (
+    system === "rust" &&
+    (result.error === undefined || crateDeclines(theirs)) &&
+    callsTrig(sample) &&
+    hasHugeInteger(sample)
+  )
     return "precision";
   if (result.error !== undefined && RESOURCE.test(theirs)) return "resource";
   // Our own worker hit its time or memory cap on this sample (an extreme edge the mutator
   // drew, not the other system): the same "nothing to compare" shrug, from our side.
   if (ours === "Aborted") return "resource";
+  // The Julia mapping takes |n| for IsComposite, as Wolfram's CompositeQ does; ours needs n > 1.
+  if (system === "julia" && result.error === undefined && hasNegativeArgument(sample, "IsComposite"))
+    return "convention";
   if (system === "rust") {
     // A double can't land on an exact zero (cos(π/2), ln Γ(1)): only where ours' zero is exact.
     if (result.error === undefined && roundsToZero(sample, ours, theirs)) return "precision";
     // A pole the crate blows past rather than reaching, element by element, at the head's poles only.
     if (result.error === undefined && overshootsPole(sample, ours, theirs)) return "undefined-form";
+    // The crate's unsigned Binomial answers for a negative argument where ours extends it.
+    if (result.error === undefined && hasNegativeArgument(sample, "Binomial")) return "domain";
     // The crate declines in its own words, on arguments outside what it takes (a real-only
     // function, an unsigned or machine-word parameter); ours either answers or declines too.
     if (result.error !== undefined && crateDeclines(theirs) && outsideCrateDomain(sample))

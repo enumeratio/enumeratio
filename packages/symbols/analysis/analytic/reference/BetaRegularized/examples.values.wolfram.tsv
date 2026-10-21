@@ -5,6 +5,7 @@ a-floating-point-x-evaluates-directly-to-a	BetaRegularized[0.5, 2, 3]	0.68750000
 i-x-1-1-x-the-uniform-distribution-s-own-cdf	BetaRegularized[0.5, 1, 1]	0.5		I_{0.5}(1,1)	0.5	
 non-integer-parameters	BetaRegularized[0.4, 2.5, 3.5]	0.48690419152611747		I_{0.4}(2.5,3.5)	0.486904	
 i-1-2-2-3-11-16-exactly	BetaRegularized[Rational[1, 2], 2, 3]	11/16		I_{\frac{1}{2}}(2,3)	\frac{11}{16}	
+i-0-5-1-0-a-zero-b-has-the-limit-0	BetaRegularized[0.5, 1, 0]	0.		I_{0.5}(1,0)	0.	
 threads-element-wise-over-a-list-as-wolfram-s	BetaRegularized[0.5, List[1, 2], 1]	{0.5, 0.25}		I_{0.5}(\{1,2\},1)	\{0.5,0.25\}	
 x-outside-0-1-by-continuation-real-here-as-b-5	BetaRegularized[2, 0.5, 5]	1.1821941497962591		I_2(0.5,5)	1.18219	
 four-arguments-the-generalized-i-z-1-a-b-i-z-0-a	BetaRegularized[0.2, 0.5, 2, 3]	0.5067000000000004		I_{(0.2,0.5)}(2,3)	0.5067	

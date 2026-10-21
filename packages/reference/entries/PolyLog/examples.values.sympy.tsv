@@ -81,6 +81,7 @@ normal-series-polylog-2-x-x-positiveinfinity-6	(series(polylog(2, Symbol("x")), 
 polylog-s-tiny-negative-rim	N(polylog(-1e-12, (-0.12884449429552464 + 0.9916648104524686*I)), 30)	-0.500000000000052069459854919842 + 0.439238893322547396813604336785*I	disagree
 polylog-neg-2-at-the-pole-z-1	polylog(-2, Rational(2, 2))	0	inconclusive
 polylog-neg-2-over-a-list-holding-the-pole	[polylog(-2, Rational(2, 2)), polylog(-2, -6)]	[0, polylog(-2, -6)]	disagree
+n-polylog-neg-4p038-1	N(polylog(-4.038, 1), 30)	-0.000299145282473099987773784702583	
 threads-over-a-list-of-arguments	[polylog(2, 0.5), polylog(2, 0.25)]	[polylog(2, 0.5), polylog(2, 0.25)]	
 a-non-integer-order-past-z-1-is-left-unevaluated	polylog(2.5, 2)	polylog(2.5, 2)	
 complex-order-and-argument	polylog((0.2 + 1*I), (0.5 + -0.5*I))	0.0703265205505161 - 0.563293262539874*I	
