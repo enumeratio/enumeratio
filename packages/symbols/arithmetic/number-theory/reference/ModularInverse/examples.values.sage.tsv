@@ -4,7 +4,7 @@ modularinverse-2-11	enumeratio_inverse_mod(2, 11)	6
 modularinverse-3-5	enumeratio_inverse_mod(3, 5)	2	
 inverse-mod-1-of-a-negative-integer	enumeratio_inverse_mod(-3, 1)	0	
 inverse-of-0-mod-1	enumeratio_inverse_mod(0, 1)	0	
-inverse-of-0-mod-neg-1	enumeratio_inverse_mod(0, -1)		
+inverse-of-0-mod-neg-1	enumeratio_inverse_mod(0, -1)	0	
 a-negative-argument-3-cdot-2-6-equiv-1	enumeratio_inverse_mod(-3, 7)	2	
 a-21-digit-modulus	enumeratio_inverse_mod(3, (((10)^20) + 1))	33333333333333333334	
 listable-threads-over-a-list	enumeratio_inverse_mod([2, 3, 4], 11)	[6, 4, 3]	

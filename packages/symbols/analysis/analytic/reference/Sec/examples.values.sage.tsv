@@ -23,7 +23,7 @@ interval-arithmetic-the-image-of-pi-6-pi-3-is
 uncertainty-propagation-sec-2-pm-0-01-approx-2			
 evenness-drops-the-sign-of-a-symbolic-argument	sec((-SR.var("x")))	sec(-x)	
 derivative-sec-x-tan-x	diff(sec(SR.var("x")), SR.var("x"))	sec(x)*tan(x)	
-antiderivative-ln-sec-x-tan-x	integrate(sec(SR.var("x")), SR.var("x"))	None	inconclusive
+antiderivative-ln-sec-x-tan-x	integrate(sec(SR.var("x")), SR.var("x"))	log(sec(x) + tan(x))	inconclusive
 n-sec-6-over-5-50	enumeratio_n(sec((6/5)), 50)	2.75970360133241	
 matrixfunction-function-sec-1-1-list-list-5-over			
 sec-positiveinfinity	sec(oo)	RuntimeError: cos_eval(): cos(infinity) encountered	error

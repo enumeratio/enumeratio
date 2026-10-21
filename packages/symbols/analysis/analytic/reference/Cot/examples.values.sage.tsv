@@ -22,7 +22,7 @@ an-interval-straddling-the-pole-at-0-maps-to-two
 uncertainty-propagation-near-a-pole-grows-fast			
 oddness-pulls-the-sign-out-of-a-symbolic	cot((-SR.var("x")))	cot(-x)	
 derivative-csc-2-x	diff(cot(SR.var("x")), SR.var("x"))	-cot(x)^2 - 1	
-antiderivative-ln-sin-x	integrate(cot(SR.var("x")), SR.var("x"))	None	inconclusive
+antiderivative-ln-sin-x	integrate(cot(SR.var("x")), SR.var("x"))	log(sin(x))	inconclusive
 n-cot-6-over-5-50	enumeratio_n(cot((6/5)), 50)	0.388779569368205	
 matrixfunction-function-cot-1-1-list-list-5-over			
 cot-positiveinfinity	cot(oo)	RuntimeError: tan_eval(): tan(infinity) encountered	error

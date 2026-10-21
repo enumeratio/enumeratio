@@ -5,7 +5,7 @@ erfinv-neg-1	erfinv(-1)	erfinv(-1)
 a-floating-point-argument-evaluates-directly-to	erfinv(0.5)	0.476936276204470	
 a-machine-precision-argument	erfinv(0.6)	0.595116081449995	
 series-erfinv-x-x-0-3	SR(erfinv(SR.var("x"))).series(SR.var("x") == 0, 3 + 1)	(1/2*sqrt(pi))*x + (1/24*pi^(3/2))*x^3 + Order(x^4)	
-erf-of-erfinv-outside-1-1	enumeratio_equal(erf(erfinv(-1.687)), 0.5)		
+erf-of-erfinv-outside-1-1	enumeratio_equal(erf(erfinv(-1.687)), 0.5)	ValueError: no sample point could be evaluated	error
 threads-element-wise-over-a-list-as-wolfram-s	[erfinv(0), erfinv(1)]	[0, Infinity]	disagree
 two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x			
 interval-arithmetic-the-inverse-is-increasing-so			

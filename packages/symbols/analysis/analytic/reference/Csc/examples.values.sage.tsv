@@ -22,7 +22,7 @@ interval-arithmetic-the-image-of-pi-6-pi-3-is
 uncertainty-propagation-csc-2-pm-0-01-approx-1			
 oddness-pulls-the-sign-out-of-a-symbolic	csc((-SR.var("x")))	csc(-x)	
 derivative-csc-x-cot-x	diff(csc(SR.var("x")), SR.var("x"))	-cot(x)*csc(x)	
-antiderivative-ln-csc-x-cot-x	integrate(csc(SR.var("x")), SR.var("x"))	None	inconclusive
+antiderivative-ln-csc-x-cot-x	integrate(csc(SR.var("x")), SR.var("x"))	-log(cot(x) + csc(x))	inconclusive
 n-csc-6-over-5-50	enumeratio_n(csc((6/5)), 50)	1.07291637770990	
 matrixfunction-function-csc-1-1-list-list-1-over			
 csc-positiveinfinity	csc(oo)	RuntimeError: sin_eval(): sin(infinity) encountered	error
