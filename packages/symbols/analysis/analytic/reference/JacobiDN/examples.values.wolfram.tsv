@@ -25,6 +25,7 @@ dn-0-3-0-2i-0-7	N[JacobiDN[Complex[0.3, 0.2], -0.7]]	1.0186736897365127 + 0.0408
 dn-0-5-0-3i-3-2	N[JacobiDN[Complex[0.5, -0.3], -3]]	1.2662359548295512 - 0.4402873180138982*I		N[\text{dn}(0.5\, -0.3 i|-3)]	1.26624\, -0.440287 i	
 series-jacobidn-z-m-z-0-6	Series[JacobiDN[z, m], List[z, 0, 6]]	SeriesData[z, 0, {1, 0, -1/2*m, 0, (m*(4 + m))/24, 0, -1/720*(m*(16 + 44*m + m^2))}, 0, 7, 1]		\text{Series}[\text{dn}(z|m),\{z,0,6\}]	1-\frac{m z^2}{2}+\frac{1}{24} m (m+4) z^4-\frac{1}{720} \left(m \left(m^2+44 m+16\right)\right) z^6+O\left(z^7\right)	
 series-jacobidn-z-m-m-0-2	Series[JacobiDN[z, m], List[m, 0, 2]]	SeriesData[m, 0, {1, -1/2*Sin[z]^2, -1/32*(Sin[z]*(-8*z*Cos[z] + 5*Sin[z] + Sin[3*z]))}, 0, 3, 1]		\text{Series}[\text{dn}(z|m),\{m,0,2\}]	1-\frac{1}{2} m \sin ^2(z)-\frac{1}{32} m^2 (\sin (z) (5 \sin (z)+\sin (3 z)-8 z \cos (z)))+O\left(m^3\right)	
+n-jacobidn-0-2-8i-400000	N[JacobiDN[Complex[0.2, 8], 400000]]	-3.5901604119533252 - 3.8346626636271783*I		N[\text{dn}(0.2\, +8 i|400000)]	-3.59016-3.83466 i	
 m-greater-than-1-via-the-reciprocal-modulus	N[JacobiDN[0.3, 1.5]]	0.9351619177552997		N[\text{dn}(0.3|1.5)]	0.935162	
 m-less-than-0-via-the-imaginary-modulus	N[JacobiDN[0.3, -2]]	1.0885129466062726		N[\text{dn}(0.3|-2)]	1.08851	
 a-complex-argument-u	N[JacobiDN[Complex[0.3, 0.4], 0.5]]	1.0122620822128683 - 0.06284968502478049*I		N[\text{dn}(0.3\, +0.4 i|0.5)]	1.01226\, -0.0628497 i	

@@ -6,6 +6,7 @@ n-gammaln-of-a-negative-rational	nf(ln_gamma(rational(n(-1), n(3))))	panic: non-
 a-complex-argument-whose-continuation-passes-pi			
 gammaln-at-a-pole-against-ln-gamma-at-another	equal(ln_gamma(n(-17)), ln(gamma(n(-2))))	false	disagree
 gammaln-101-against-ln-200	equal(ln_gamma(n(101)), ln(factorial(n(200))))	panic: non-finite result: inf	error
+gammaln-0p5-minus-11-i			
 at-a-pole-of-gamma-compute-engine-gives-the-real	ln_gamma(n(-1))	panic: non-finite result: NaN	error
 complex-arguments-here-the-principal-ln-gamma-z			
 a-huge-inexact-argument-should-still-evaluate			

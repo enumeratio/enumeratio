@@ -3,7 +3,9 @@ default-base-is-10	log10(n(100))	2.0
 same-result-written-with-an-explicit-base	(ln(n(100)) / ln(n(10)))	2.0	
 base-2-via-the-explicit-second-argument	(ln(n(8)) / ln(n(2)))	3.0	
 log-in-a-negative-base	(ln(x(2.5)) / ln(n(-1)))	panic: non-finite result: NaN	error
-log-of-1-threads-over-a-list-of-bases	list(vec![(ln(n(1)) / ln(n(-10))), (ln(n(1)) / ln(x(std::f64::consts::E))), (ln(n(1)) / ln(n(27)))])		
+log-of-1-threads-over-a-list-of-bases	list(vec![(ln(n(1)) / ln(n(-10))), (ln(n(1)) / ln(x(std::f64::consts::E))), (ln(n(1)) / ln(n(27)))])	panic: non-finite result: NaN	error
+log-neg-2p5-over-list-neg-10-e-10	list(vec![(ln(x(-2.5)) / ln(n(-10))), (ln(x(-2.5)) / ln(x(std::f64::consts::E))), (ln(x(-2.5)) / ln(n(10)))])	panic: non-finite result: NaN	error
+log-2p5-neg-10	(ln(x(2.5)) / ln(n(-10)))	panic: non-finite result: NaN	error
 log-3-1-5-at-machine-precision	(ln(x(1.5)) / ln(n(3)))	0.3690702464285425	
 log-9-3	(ln(n(9)) / ln(n(3)))	2.0	
 threads-over-a-list-of-values	list(vec![(ln(n(2)) / ln(n(2))), (ln(n(4)) / ln(n(2))), (ln(n(8)) / ln(n(2)))])	[1.0, 2.0, 3.0]	

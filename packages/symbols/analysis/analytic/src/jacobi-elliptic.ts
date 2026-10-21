@@ -80,12 +80,12 @@ interface SCDN<T> {
  * Stegun 16.4). `m = 0`/`m = 1` are exact (no AGM needed — the recursion degenerates at
  * m = 0 and never converges at m = 1). Precise for real u (verified against mpmath); do
  * not call with complex u — see `agmAmplitude` below for that case. */
-function agmAmplitudeReal(u: Cx, m: number): Cx {
+function agmAmplitudeReal(u: Cx, m: number, mc: number = 1 - m): Cx {
   if (m === 0) return u; // am(u,0) = u
   if (m === 1) return casin(ctanh(u)); // am(u,1) = gd(u) = asin(tanh(u)), bounded so principal asin is exact
 
   let a = 1;
-  let b = Math.sqrt(1 - m);
+  let b = Math.sqrt(mc);
   let c = Math.sqrt(m);
   const seqA: number[] = [a];
   const seqC: number[] = [c];
@@ -120,24 +120,27 @@ function agmAmplitudeReal(u: Cx, m: number): Cx {
  */
 function agmAmplitude(u: Cx, m: number): Cx {
   if (u.im === 0) return agmAmplitudeReal(u, m);
-  const { S, C } = sncndnCore(u, m);
+  const { S, C } = sncndnCore(u, m, 1 - m);
   const iS = cx(-S.im, S.re); // i·sn
   return mul(cx(0, -1), clog(add(C, iS)));
 }
 
-/** {sn, cn, dn} for real m ∈ [0, 1], u possibly complex. Real u: sn/cn from the AGM
+/** {sn, cn, dn} for real m ∈ [0, 1], u possibly complex. `mc` is 1 − m, passed in because
+ * a transformed parameter (m > 1, m < 0) knows it more accurately than `1 − m` can: the
+ * rounding of that subtraction, amplified over a large Im(u)'s many periods, was the error.
+ * Real u: sn/cn from the AGM
  * amplitude, dn from the exact identity dn² = 1 − m·sn² (real & nonnegative there, no
  * branch ambiguity). Complex u: `sncndnComplexU`'s real addition formulas — see the file
  * header for why this replaced carrying the AGM recursion itself in complex arithmetic.
  */
-function sncndnCore(u: Cx, m: number): SCDN<Cx> {
-  if (u.im !== 0) return sncndnComplexU(u, m);
+function sncndnCore(u: Cx, m: number, mc: number): SCDN<Cx> {
+  if (u.im !== 0) return sncndnComplexU(u, m, mc);
   if (m === 1) {
     const t = ctanh(u);
     const s = csech(u);
     return { S: t, C: s, D: s, N: cx(1) };
   }
-  const phi = agmAmplitudeReal(u, m);
+  const phi = agmAmplitudeReal(u, m, mc);
   const S = csin(phi);
   const C = ccos(phi);
   const D = m === 0 ? cx(1) : csqrt(sub(cx(1), scale(mul(S, S), m)));
@@ -158,12 +161,11 @@ function sncndnCore(u: Cx, m: number): SCDN<Cx> {
  * across all four quadrants of u and large |Im u| (tests/jacobi-elliptic.test.ts). δ → 0
  * at u → i·K'(m) (sn's pole) falls out of the algebra on its own — no separate case.
  */
-function sncndnComplexU(u: Cx, m: number): SCDN<Cx> {
+function sncndnComplexU(u: Cx, m: number, mc: number): SCDN<Cx> {
   const x = u.re;
   const y = u.im;
-  const m1 = 1 - m;
-  const r1 = sncndnCore(cx(x, 0), m);
-  const r2 = sncndnCore(cx(y, 0), m1);
+  const r1 = sncndnCore(cx(x, 0), m, mc);
+  const r2 = sncndnCore(cx(y, 0), mc, m);
   const s = r1.S.re;
   const c = r1.C.re;
   const d = r1.D.re;
@@ -190,17 +192,17 @@ function sncndnComplexU(u: Cx, m: number): SCDN<Cx> {
 export function sncndn(u: Cx, m: Cx): SCDN<Cx> | undefined {
   if (m.im !== 0) return undefined; // declined — see file header
   const mr = m.re;
-  if (mr >= 0 && mr <= 1) return sncndnCore(u, mr);
+  if (mr >= 0 && mr <= 1) return sncndnCore(u, mr, 1 - mr);
   if (mr > 1) {
     const m1 = 1 / mr;
     const sqm = Math.sqrt(mr);
-    const sub1 = sncndnCore(scale(u, sqm), m1);
+    const sub1 = sncndnCore(scale(u, sqm), m1, (mr - 1) / mr);
     return { S: scale(sub1.S, 1 / sqm), C: sub1.D, D: sub1.C, N: cx(1) };
   }
   // mr < 0
   const m1 = mr / (mr - 1);
   const mu = Math.sqrt(1 - mr);
-  const sub1 = sncndnCore(scale(u, mu), m1);
+  const sub1 = sncndnCore(scale(u, mu), m1, 1 / (1 - mr));
   return { S: scale(div(sub1.S, sub1.D), 1 / mu), C: div(sub1.C, sub1.D), D: div(cx(1), sub1.D), N: cx(1) };
 }
 

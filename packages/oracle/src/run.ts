@@ -1690,9 +1690,25 @@ def enumeratio_inverse_beta_regularized(s, a, b):
         return exp(-exp(_enumeratio_root(lambda t: log(betainc(a, b, 0, exp(-exp(t)), regularized=True)) - log(s))))
     return 1 - exp(-exp(_enumeratio_root(lambda t: log(betainc(b, a, 0, exp(-exp(t)), regularized=True)) - log(1 - s))))
 
+# hypercomb cannot certify an exact zero, which z = 0 gives at a nonpositive-integer lower parameter
+# (1 / Gamma vanishes there); at z = 0 the series is its first term, 1 / (Gamma(b1) ... Gamma(bq)).
 def enumeratio_hyperreg(a, b, z):
     n = len(a)
+    if mpmathify(z) == 0:
+        return fprod(rgamma(x) for x in b)
     return hypercomb(lambda *p: [([], [], [], list(p[n:-1]), list(p[:n]), list(p[n:-1]), p[-1])], list(a) + list(b) + [z])
+
+# mpmath's laguerre fails the same way where the polynomial is exactly zero (L_1(1)): its explicit sum, at extra digits.
+def enumeratio_laguerre(n, a, x):
+    try:
+        return laguerre(n, a, x)
+    except ValueError:
+        if n != int(n) or n < 0:
+            raise
+        n = int(n)
+        with workdps(mp.dps + 3 * n + 20):
+            total = fsum(binomial(n + a, n - k) * (-mpmathify(x)) ** k / factorial(k) for k in range(n + 1))
+        return +total
 `;
 
 export interface Prelude {
