@@ -1,2 +1,2 @@
 id	section	role	expr	expected	caption
-avogadro-constant	Basic		AvogadroConstant	[Quantity, 6.02214076e+23, [Power, mol, -1]]	Exact by the SI definition, with its unit
+avogadro-constant	Basic		AvogadroConstant	[Quantity, 6.02214076e+23, [Divide, 1, mol]]	Exact by the SI definition, with its unit

@@ -11,7 +11,7 @@ signatures:
   - call: Floor(x)
     description: 'The greatest integer less than or equal to x: $\lfloor x \rfloor$.'
     library: enumeratio-analytic
-    type: "(x: real | signed_infinity, step: real?) -> real | signed_infinity"
+    type: "(x: real | signed_infinity | ~oo, step: real?) -> real | signed_infinity | ~oo"
     overrides: compute-engine
   - call: Floor(x)
     description: in a floor ring (Mathlib's), the greatest integer at or below x; in a floor order, the greatest tick at or below x; in a product order, coordinate by coordinate, so a complex number's real and imaginary parts are floored separately.

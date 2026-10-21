@@ -25,7 +25,7 @@ function evaluateIntegerPart(ce: ComputeEngine, x: BoxedExpression | undefined):
   }
   const approx = isFiniteNum(x) ? x : x.N();
   if (!isFiniteNum(approx)) return undefined; // no numeric handle — stay symbolic
-  if (approx.im !== 0) return ce.number(ce.complex(Math.trunc(approx.re), Math.trunc(approx.im)));
+  if (approx.im !== 0) return ce.number({ re: Math.trunc(approx.re), im: Math.trunc(approx.im) });
   return ce.number(Math.trunc(approx.re));
 }
 

@@ -20,7 +20,7 @@ mangoldtlambda-4	Properties		[MangoldtLambda, 4]	[Ln, 2]	[Ln, 2]	Wolfram Mathema
 mangoldtlambda-10	Properties		[MangoldtLambda, 10]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda	Two distinct primes give $0$	
 mangoldtlambda-11	Properties		[MangoldtLambda, 11]	[Ln, 11]	[Ln, 11]	Wolfram MathematicalFunctionData, MangoldtLambda	Prime, so $\ln 11$	
 mangoldtlambda-12	Properties		[MangoldtLambda, 12]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda	$12=2^2\cdot3$ is not a prime power	
-simplify-sum-mangoldtlambda-n-n-20	Properties		[Simplify, [Sum, [MangoldtLambda, n], [Tuple, n, 20]]]	[Add, [Multiply, 2, [Ln, 3]], [Multiply, 4, [Ln, 2]], [Ln, 1616615]]			$\sum_{n\le20}\Lambda(n)=\ln\operatorname{lcm}(1..20)$	
+simplify-sum-mangoldtlambda-n-n-20	Properties		[Simplify, [Sum, [MangoldtLambda, n], [Tuple, n, 20]]]	[Ln, 232792560]			$\sum_{n\le20}\Lambda(n)=\ln\operatorname{lcm}(1..20)$	
 mangoldtlambda-13	Properties		[MangoldtLambda, 13]	[Ln, 13]	[Ln, 13]	Wolfram MathematicalFunctionData, MangoldtLambda	Prime, so $\ln 13$	
 mangoldtlambda-14	Properties		[MangoldtLambda, 14]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda	A semiprime gives $0$	
 mangoldtlambda-15	Properties		[MangoldtLambda, 15]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda	Product of two primes: $0$	

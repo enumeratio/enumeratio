@@ -38,7 +38,7 @@ test("fungrim:d12aa0 — A000142 is the factorials", () => {
 
 test("fungrim:b6111c — A027641/A027642 are BernoulliB's numerator/denominator", () => {
   for (const n of [0, 1, 2, 3, 4, 5, 6, 12]) {
-    const b = ce.box(["BernoulliB", n]).N();
+    const b = ce.box(["BernoulliB", n]).evaluate();
     expect(sloaneA("A027641", n)).toBe(b.numerator.re);
     expect(sloaneA("A027642", n)).toBe(b.denominator.re);
   }

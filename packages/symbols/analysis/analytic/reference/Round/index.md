@@ -11,7 +11,7 @@ signatures:
   - call: Round(x, a?)
     description: Rounds x to the nearest integer, or to the nearest multiple of a.
     library: enumeratio-analytic
-    type: "(x: real | signed_infinity, step: real?) -> real | signed_infinity"
+    type: "(x: real | signed_infinity | ~oo, step: real?) -> real | signed_infinity | ~oo"
     overrides: compute-engine
   - call: Round(x, a?)
     description: with midpoints between ticks, the nearest tick, a tie going to the even tick when the ticks have a parity, else up; in a floor ring without them, Mathlib's `round` (ties up). In a product order, coordinate by coordinate, so a complex number's parts are rounded separately.
