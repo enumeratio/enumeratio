@@ -1,0 +1,21 @@
+id	section	role	expr	expected	caption
+of-a-permutation	Basic		[OrderOfElement, [Permutation, [List, 3, 1, 2]]]	3	the one-line word $312$ is a 3-cycle
+of-a-unit-mod-7	Basic		[OrderOfElement, [ResidueClass, 3, 7]]	6	$3$ generates $(\mathbb{Z}/7)^\times$
+of-minus-one	Basic		[OrderOfElement, -1]	2	in the multiplicative group of the complex numbers
+of-the-imaginary-unit	Basic		[OrderOfElement, [Complex, 0, 1]]	4	$i^4 = 1$
+lcm-of-the-cycle-lengths	Scope		[OrderOfElement, [Permutation, [List, 2, 1, 4, 5, 3]]]	6	a 2-cycle and a 3-cycle: $\operatorname{lcm}(2,3)$
+the-identity-permutation	Scope		[OrderOfElement, [Permutation, [List, 1, 2, 3, 4]]]	1	only the identity has order 1
+of-a-unit-mod-8	Scope		[OrderOfElement, [ResidueClass, 5, 8]]	2	$5^2 = 25 \equiv 1 \pmod 8$
+the-identity-residue	Scope		[OrderOfElement, [ResidueClass, 1, 9]]	1	the class of 1 has order 1
+of-a-negative-unit-in-z-mod-m	Scope		[OrderOfElement, [ResidueClass, -1, 11]]	2	$-1 \equiv 10 \pmod{11}$
+of-minus-the-imaginary-unit	Scope		[OrderOfElement, [Complex, 0, -1]]	4	$(-i)^4 = 1$
+of-one	Scope		[OrderOfElement, 1]	1	the identity
+infinite-order	Properties		[OrderOfElement, 2]	PositiveInfinity	no power of $2$ is $1$
+a-rational-of-infinite-order	Properties		[OrderOfElement, [Rational, 1, 2]]	PositiveInfinity	$(1/2)^n$ never reaches 1
+a-gaussian-rational-on-the-unit-circle	Properties		[OrderOfElement, [Complex, [Rational, 3, 5], [Rational, 4, 5]]]	PositiveInfinity	$(3+4i)/5$ has modulus 1 but is no root of unity
+order-matches-permutationorder	Properties		[Equal, [OrderOfElement, [Permutation, [List, 2, 4, 1, 3]]], [PermutationOrder, [Permutation, [List, 2, 4, 1, 3]]]]	True	the same value as [[PermutationOrder]]
+order-matches-multiplicativeorder	Properties		[Equal, [OrderOfElement, [ResidueClass, 10, 21]], [MultiplicativeOrder, 10, 21]]	True	the same value as [[MultiplicativeOrder]]
+a-non-unit-has-no-order	Possible issues		[OrderOfElement, [ResidueClass, 10, 22]]	[OrderOfElement, [ResidueClass, 10, 22]]	$\gcd(10, 22) = 2$, so no power of $10$ is $1$ mod $22$
+a-matrix-declines	Possible issues		[OrderOfElement, [List, [List, 0, -1], [List, 1, 0]]]	[OrderOfElement, [List, [List, 0, -1], [List, 1, 0]]]	this matrix has order 4, but a matrix is left unevaluated
+an-inexact-number-declines	Possible issues		[OrderOfElement, 0.5]	[OrderOfElement, 0.5]	a float is not known to be exactly a root of unity
+an-unknown-stays-unevaluated	Possible issues		[OrderOfElement, x]	[OrderOfElement, x]	nothing is known about x

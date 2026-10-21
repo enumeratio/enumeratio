@@ -770,6 +770,7 @@ const NOVEL = [
   "OddPartitions",
   "OddParts",
   "OddSubsets",
+  "OrderOfElement",
   "Ostrowski",
   "OstrowskiNumerals",
   "OverlappingBlockPairs",

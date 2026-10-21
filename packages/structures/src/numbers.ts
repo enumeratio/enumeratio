@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, stringAt } from "@enumeratio/engine";
+import { bigRationalAt, operandsOf, stringAt } from "@enumeratio/engine";
 import { conform } from "./conform.ts";
 
 // compute-engine's own types, conforming. A real number is the model everything else
@@ -13,7 +13,18 @@ export function conformNumbers(ce: ComputeEngine): void {
   const call = (head: string, ...args: BoxedExpression[]) => ce.function(head, args).evaluate();
   const half = (a: BoxedExpression, b: BoxedExpression) => call("Divide", call("Add", a, b), ce.number(2));
 
+  // Units of ℚ and ℤ[i]: only roots of unity have finite order, and an exact rational (or
+  // Gaussian rational) is one only if it is ±1 (or ±i). Anything inexact or symbolic declines.
+  const orderOf = (re: BoxedExpression, im?: BoxedExpression): BoxedExpression | undefined => {
+    const [a, b] = [bigRationalAt(re), im === undefined ? ([0n, 1n] as const) : bigRationalAt(im)];
+    if (a === undefined || b === undefined) return undefined;
+    const unit = (n: readonly [bigint, bigint]) => n[1] === 1n && (n[0] === 1n || n[0] === -1n);
+    if (b[0] === 0n) return ce.number(a[0] === 1n && a[1] === 1n ? 1 : unit(a) ? 2 : Infinity);
+    return ce.number(a[0] === 0n && unit(b) ? 4 : Infinity);
+  };
+
   conform(ce, "real", {
+    Monoid: { OrderOfElement: (x) => orderOf(x) },
     PartialOrder: { Compare: (a, b) => ce.number(sign(call("Subtract", a, b).N().re)) },
     LinearOrder: {},
     Lattice: { GreatestLowerBound: (a, b) => call("Min", a, b), LeastUpperBound: (a, b) => call("Max", a, b) },
@@ -43,6 +54,7 @@ export function conformNumbers(ce: ComputeEngine): void {
   // Floor(2.5 + 3.7i) is 2 + 3i, Wolfram's componentwise answer.
   const parts = (z: BoxedExpression) => [call("Re", z), call("Im", z)];
   conform(ce, "complex", {
+    Monoid: { OrderOfElement: (z) => orderOf(call("Re", z), call("Im", z)) },
     PartialOrder: {
       Compare: (a, b) => {
         const [c, d] = parts(a).map((p, i) => sign(call("Subtract", p, parts(b)[i]!).N().re));
@@ -72,5 +84,10 @@ export function conformNumbers(ce: ComputeEngine): void {
       xs.map((x, i) => call("Midpoint", x, ys[i]!)),
     );
   };
-  conform(ce, "list<any>", { AffineMidpoint: { Midpoint: componentwise } });
+  conform(ce, "list<any>", {
+    AffineMidpoint: { Midpoint: componentwise },
+    // A matrix's order is found by repeated multiplication, which only ever proves a finite one:
+    // it declines rather than guess "infinite", and stays as written instead of a type error.
+    Monoid: { OrderOfElement: () => undefined },
+  });
 }

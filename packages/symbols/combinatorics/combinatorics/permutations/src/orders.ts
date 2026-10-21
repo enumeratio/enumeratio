@@ -71,6 +71,13 @@ export function declarePermutationOrders(ce: Engine): void {
     ]);
 
   conform(ce, "permutation", {
+    // The order in the symmetric group: the lcm of the cycle lengths.
+    Monoid: {
+      OrderOfElement: (p) => {
+        const order = ce.function("PermutationOrder", [p]).evaluate();
+        return order.operator === "PermutationOrder" ? undefined : order;
+      },
+    },
     PartialOrder: {
       Compare: (a, b) => {
         if (wordOf(a) === undefined || wordOf(b) === undefined) return undefined;
