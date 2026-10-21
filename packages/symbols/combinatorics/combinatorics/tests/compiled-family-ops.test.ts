@@ -1,18 +1,21 @@
 // The kernel swallows what compiled code throws and answers from the interpreter, so a broken
 // compiled op (a ReferenceError from a skipped preamble, say) would show only as slowness. This
-// drives every Epsil family's compiled operations over small fibers and fails on a programming
-// error. Expected declines (a RangeError, a deliberate throw) are allowed.
+// drives every Epsil family's compiled operations over small fibers and fails on any throw that
+// isn't a RangeError decline.
 
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { COMPILED_FAMILIES } from "../collections/src/families/compiled-families.generated.js";
-import { allFamilies, type EpsilFamily, isEpsilFamily, kernelOn } from "../collections/src/families/index.ts";
+import {
+  allFamilies,
+  type EpsilFamily,
+  isCompiledBug,
+  isEpsilFamily,
+  kernelOn,
+} from "../collections/src/families/index.ts";
 
 type Generated = Record<string, unknown>;
 const entries = COMPILED_FAMILIES as unknown as Record<string, Generated>;
-
-const programmingError = (error: unknown): boolean =>
-  error instanceof ReferenceError || error instanceof SyntaxError || error instanceof TypeError;
 
 /** Params each in 0..6 and summing to at most 6, smallest first. */
 function sampleParams(count: number): number[][] {
@@ -73,7 +76,7 @@ test("compiled family operations raise no programming errors", () => {
     const kernel = kernelOn(ce, family, generated, {
       fast: false, // the fast paths would answer first
       onCompiledError: (operation, error) => {
-        if (programmingError(error)) problems.add(`${family.head}.${operation}: ${String(error)}`);
+        if (isCompiledBug(error)) problems.add(`${family.head}.${operation}: ${String(error)}`);
       },
     });
     const ops = operationsOf(family.head);
