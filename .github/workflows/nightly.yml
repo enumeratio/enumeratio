@@ -328,7 +328,8 @@ jobs:
 
   # Sage, weekly, from the official image plus Hertogh's adeles package (.github/sage/Dockerfile): the oracle scan,
   # then the adeles and adic goldens re-collected and compared. `sage` on PATH is a docker wrapper whose --memory
-  # is the real ceiling here (the watchdog only sees the docker client).
+  # is the real ceiling here (the watchdog only sees the docker client). The batch program is a file in the temp dir
+  # (run.ts), so the wrapper mounts that too: without it Sage never finds the file and every item errors.
   sage-oracle:
     name: reference ⟷ Sage
     if: github.event.schedule == '17 3 * * 3' || inputs.weekly
@@ -345,7 +346,7 @@ jobs:
         run: |
           sudo tee /usr/local/bin/sage >/dev/null <<'SH'
           #!/bin/sh
-          exec docker run --rm -i --memory="${ORACLE_MEMORY_MB:-4096}m" -v "$PWD:$PWD" -w "$PWD" --entrypoint sage enumeratio-sage "$@"
+          exec docker run --rm -i --memory="${ORACLE_MEMORY_MB:-4096}m" -v "$PWD:$PWD" -v "${TMPDIR:-/tmp}:${TMPDIR:-/tmp}" -w "$PWD" --entrypoint sageenumeratio-sage "$@"
           SH
           sudo chmod +x /usr/local/bin/sage
           sage --version
@@ -396,7 +397,7 @@ jobs:
         run: |
           sudo tee /usr/local/bin/wolframscript >/dev/null <<'SH'
           #!/bin/sh
-          exec docker run --rm -i --network host -e WOLFRAMSCRIPT_ENTITLEMENTID --memory="${ORACLE_MEMORY_MB:-4096}m" -v "$PWD:$PWD" -w "$PWD" --entrypoint wolframscript wolframresearch/wolframengine "$@"
+          exec docker run --rm -i --network host -e WOLFRAMSCRIPT_ENTITLEMENTID --memory="${ORACLE_MEMORY_MB:-4096}m" -v "$PWD:$PWD" -v "${TMPDIR:-/tmp}:${TMPDIR:-/tmp}" -w "$PWD" --entrypoint wolframscriptwolframresearch/wolframengine "$@"
           SH
           sudo chmod +x /usr/local/bin/wolframscript
           wolframscript -code '$Version'
