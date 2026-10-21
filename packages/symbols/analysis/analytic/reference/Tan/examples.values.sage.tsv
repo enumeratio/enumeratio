@@ -30,7 +30,7 @@ tan-arctan-x-x-for-every-x	tan(arctan(SR.var("x")))	x
 tan-arctan-2-2-for-every-x	tan(arctan(2))	2	
 tan-arcsin-x-frac-x-sqrt-1-x-2	tan(arcsin(SR.var("x")))	x/sqrt(-x^2 + 1)	
 derivative-sec-2-x	diff(tan(SR.var("x")), SR.var("x"))	tan(x)^2 + 1	
-antiderivative-ln-sec-x	integrate(tan(SR.var("x")), SR.var("x"))	None	inconclusive
+antiderivative-ln-sec-x	integrate(tan(SR.var("x")), SR.var("x"))	log(sec(x))	inconclusive
 taylor-series-about-0	SR(tan(SR.var("x"))).series(SR.var("x") == 0, 7 + 1)	1*x + 1/3*x^3 + 2/15*x^5 + 17/315*x^7 + Order(x^8)	
 to-30-significant-digits-every-one-correctly	enumeratio_n(tan(1), 30)	1.55740772465490	
 n-tan-6-over-5-50	enumeratio_n(tan((6/5)), 50)	2.57215162212632	

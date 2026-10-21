@@ -3,7 +3,7 @@ extendedgcd-2-3	xgcd(2, 3)	(1, -1, 1)
 extendedgcd-12-18	xgcd(12, 18)	(6, -1, 1)	
 extendedgcd-3-5	xgcd(3, 5)	(1, 2, -1)	
 extendedgcd-6-4	xgcd(6, 4)	(2, 1, -1)	
-extendedgcd-0-0	xgcd(0, 0)		
+extendedgcd-0-0	xgcd(0, 0)	(0, 0, 0)	
 any-number-of-arguments-folding-pairwise-6-times			
 gaussian-integers-by-euclid-with-the-rounded	xgcd((7 + 2*I), (3 + -5*I))	(1, -2/53*I + 7/53, 0)	disagree
 negative-arguments-12-18-6	xgcd(-12, 18)	(6, 1, 1)	
