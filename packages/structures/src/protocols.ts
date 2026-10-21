@@ -48,6 +48,9 @@ export const PROTOCOLS = [
   // the midpoint between two of them.
   { name: "MidpointOrder", refines: ["FloorOrder", "AffineMidpoint"], members: {} },
   { name: "TickParity", refines: ["FloorOrder"], members: { IsEvenTick: "(Self) -> boolean" } },
+  // The order of an element: the least n >= 1 with x^n the identity, `Infinity` when there is
+  // none. Mathlib's `orderOf`, defined for any monoid (it answers 0 for infinite order).
+  { name: "Monoid", refines: [], members: { OrderOfElement: "(Self) -> any" }, mathlib: "Monoid" },
   // A marker: the ring operations are compute-engine's own `Add`, `Multiply`, `Negate`, 0 and 1.
   { name: "Ring", refines: [], members: {}, mathlib: "Ring" },
   {
