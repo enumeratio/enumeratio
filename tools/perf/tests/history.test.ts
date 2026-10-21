@@ -89,6 +89,8 @@ test("detectDrift flags a test past both the ratio and absolute thresholds", () 
       ratio: 5,
       absDiffMs: 400,
       priorRuns: 5,
+      basis: "cross-runner",
+      runnerFactor: 1,
     },
   ]);
 });
@@ -165,4 +167,46 @@ test("slowestFiles picks the top N by wall time across all packages", () => {
     { package: "@e/a", file: "y.test.ts", durationMs: 200 },
     { package: "@e/b", file: "z.test.ts", durationMs: 150 },
   ]);
+});
+
+// A run of twelve tests (so the run-wide factor is trusted), with per-test overrides.
+function suite(machine: string | undefined, ms: number, overrides: Record<string, number> = {}): RunRecord {
+  const tests = Array.from({ length: 12 }, (_, i) => ({
+    file: "f.test.ts",
+    name: `t${i}`,
+    durationMs: overrides[`t${i}`] ?? ms,
+  }));
+  return {
+    sha: "s",
+    date: "d",
+    ...(machine === undefined ? {} : { machine }),
+    packages: { "@e/p": { wallMs: 0, files: {}, tests } },
+  };
+}
+const runs = (n: number, make: (i: number) => RunRecord): History => ({
+  runs: Array.from({ length: n }, (_, i) => make(i)),
+});
+
+test("a bimodal runner is judged against its own history, not flagged for its slow mode", () => {
+  const prior = runs(8, (i) => suite("gamma", i % 2 === 0 ? 1000 : 2500));
+  expect(detectDrift(suite("gamma", 2500), prior)).toEqual([]);
+});
+
+test("a real step on one test on the same runner is flagged", () => {
+  const prior = runs(6, () => suite("gamma", 1000));
+  const flags = detectDrift(suite("gamma", 1000, { t3: 4000 }), prior);
+  expect(flags.map((f) => [f.test, f.basis])).toEqual([["t3", "same-runner"]]);
+});
+
+test("a uniformly slower run is the runner, but a test past that slowdown still shows", () => {
+  const prior = runs(6, () => suite("gamma", 1000));
+  expect(detectDrift(suite("gamma", 2000), prior)).toEqual([]);
+  expect(detectDrift(suite("gamma", 2000, { t5: 7000 }), prior).map((f) => f.test)).toEqual(["t5"]);
+});
+
+test("too few same-runner runs falls back to every runner, normalized; unfingerprinted history counts there", () => {
+  const prior = runs(8, (i) => suite(i < 2 ? "gamma" : i < 5 ? "other" : undefined, 1000));
+  expect(detectDrift(suite("gamma", 1500), prior)).toEqual([]);
+  const flags = detectDrift(suite("gamma", 1500, { t0: 6000 }), prior);
+  expect(flags.map((f) => [f.test, f.basis])).toEqual([["t0", "cross-runner"]]);
 });

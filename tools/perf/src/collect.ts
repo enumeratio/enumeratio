@@ -13,7 +13,8 @@
 
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { createHash } from "node:crypto";
+import { arch, cpus, tmpdir, type as osType } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { appendRun, detectDrift, slowestFiles, type History, type PackageRun, type RunRecord } from "./history.ts";
@@ -49,6 +50,13 @@ function parseArgs(argv: string[]): Args {
     date: get("--date") ?? new Date().toISOString(),
     dryRun: argv.includes("--dry-run"),
   };
+}
+
+/** Same ingredients as the bench's machine fingerprint (CPU, cores, arch, OS, runner image sans version). */
+function machineFingerprint(env: NodeJS.ProcessEnv = process.env): string {
+  const runner = env["GITHUB_ACTIONS"] === "true" ? (env["ImageOS"] ?? env["RUNNER_OS"] ?? "github") : "local";
+  const key = [cpus()[0]?.model.trim() ?? "unknown", cpus().length, arch(), osType(), runner].join("|");
+  return `sha256:${createHash("sha256").update(key).digest("hex").slice(0, 16)}`;
 }
 
 function gitShaOrUnknown(): string {
@@ -128,7 +136,7 @@ async function main(): Promise<void> {
     packages[target.name] = toPackageRun(report, target.dir);
   }
 
-  const run: RunRecord = { sha: args.sha, date: args.date, packages };
+  const run: RunRecord = { sha: args.sha, date: args.date, machine: machineFingerprint(), packages };
   const drift = detectDrift(run, priorHistory);
   const slowest = slowestFiles(run, 3);
 
@@ -149,7 +157,7 @@ async function main(): Promise<void> {
       console.log(
         `  ${flag.package} ${flag.file} :: ${flag.test} — ${flag.currentMs.toFixed(1)}ms vs median ` +
           `${flag.medianMs.toFixed(1)}ms (×${flag.ratio.toFixed(2)}, +${flag.absDiffMs.toFixed(1)}ms, ` +
-          `${flag.priorRuns} prior runs)`,
+          `${flag.priorRuns} prior runs, ${flag.basis}, runner ×${flag.runnerFactor.toFixed(2)})`,
       );
     }
   }
