@@ -190,8 +190,13 @@ const smooth = (n: MathJSON): MathJSON => {
 /** The n-th prime is below n(ln n + ln ln n) for n ≥ 6 (Rosser and Schoenfeld, "Approximate formulas for
  *  some functions of prime numbers", Illinois J. Math. 6 (1962), (3.13)); the first five are at most 11.
  *  The one added covers a double's rounding of the product. */
-const primeBound = (n: MathJSON): MathJSON =>
-  iff(less(n, 6), 11, add(floor(mul(n, add(["Ln", n], ["Ln", ["Ln", n]]))), 1));
+const primeBound = (n: MathJSON): MathJSON => {
+  const bound = (m: MathJSON): MathJSON =>
+    iff(less(m, 6), 11, add(floor(mul(m, add(["Ln", m], ["Ln", ["Ln", m]]))), 1));
+  // compute-engine 0.157 declines to compile a Floor whose operand combines a variable with an exact
+  // constant (`n + 1`); a bound over a bare variable compiles.
+  return typeof n === "string" ? bound(n) : lets([["pb_n", n, "integer"]], bound("pb_n"));
+};
 
 /** `primeBound` for the reach tests below. */
 const primeBoundOf = (n: number): number => (n < 6 ? 11 : Math.floor(n * (Math.log(n) + Math.log(Math.log(n)))) + 1);

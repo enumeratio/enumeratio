@@ -12,6 +12,7 @@ import { symbolInfo } from "@enumeratio/manifest";
 import {
   allCarrierNames,
   carrierTypeForName,
+  fill,
   operationOf,
   registerCarrier,
   registerOperation,
@@ -51,10 +52,15 @@ export function interpretDefinition(ce: Engine, definition: Definition, subject:
   // the global `_x` for every later definition, whose `Length(_x)` then never reduces.
   ce.pushScope();
   try {
-    return ce
+    const direct = ce
       .box(definition.expr as BoxInput)
       .subs({ [SUBJECT]: subject })
       .evaluate();
+    // A literal empty list under `At` types as `missing` and the definition fails to type-check;
+    // filled in as JSON before boxing (structures' `fill`) it reads as it should. Tried second:
+    // a definition that maps over the subject (trees) only reduces with the literal.
+    if (!JSON.stringify(direct.json).includes('"Error"')) return direct;
+    return ce.box(fill(definition.expr, subject.json, SUBJECT) as BoxInput).evaluate();
   } finally {
     ce.popScope();
   }

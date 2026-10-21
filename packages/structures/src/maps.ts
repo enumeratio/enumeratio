@@ -124,9 +124,18 @@ function materialise(ce: ComputeEngine, value: BoxedExpression): BoxedExpression
   return ce.function(concrete ? value.operator : "List", forced).evaluate();
 }
 
+/** An empty list whose elements have no type, so `At` on it types as unknown.
+ *
+ *  A literal empty `List` types `At` as `missing`, and a comparison of that is `missing` too, so
+ *  a predicate over it fails to type-check where it should read as False. `Flatten` of an empty
+ *  `Take` is the same empty list, minus that (and, unlike the bare `Take`, evaluates to a `List`). */
+const EMPTY_LIST = ["Flatten", ["Take", ["List", ["EmptyListElement"]], 0]] as const;
+
+const isEmptyList = (value: unknown): boolean => Array.isArray(value) && value.length === 1 && value[0] === "List";
+
 /** Replace `_raw` (or another placeholder) with the argument's contents, before boxing. */
-function fill(node: unknown, contents: unknown, placeholder = "_raw"): unknown {
-  if (node === placeholder) return contents;
+export function fill(node: unknown, contents: unknown, placeholder = "_raw"): unknown {
+  if (node === placeholder) return isEmptyList(contents) ? EMPTY_LIST : contents;
   return Array.isArray(node) ? node.map((operand) => fill(operand, contents, placeholder)) : node;
 }
 

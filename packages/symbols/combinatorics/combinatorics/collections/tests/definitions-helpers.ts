@@ -2,6 +2,7 @@
 // reference-vs-implementation differential, and the permutation generator each shard's loop
 // runs over.
 import type { Engine } from "@enumeratio/engine";
+import { fill } from "@enumeratio/structures";
 import { bareEngine } from "@enumeratio/engine/testing";
 import { declareStats } from "../src/stats.ts";
 import { DEFINITIONS, PRIMITIVE } from "../src/definitions.ts";
@@ -21,7 +22,4 @@ export function permutations(n: number): number[][] {
 }
 
 export const evaluate = (expr: unknown, p: number[]): number =>
-  ce
-    .box(expr as Parameters<Engine["box"]>[0])
-    .subs({ _p: ce.box(["List", ...p]) })
-    .evaluate().re;
+  ce.box(fill(expr, ["List", ...p], "_p") as Parameters<Engine["box"]>[0]).evaluate().re;

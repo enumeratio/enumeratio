@@ -75,8 +75,8 @@ const ALIASES: Readonly<Record<string, Alias>> = {
   A000041: (ce, n) => ce.box(["NPartition", n]),
   A000110: (ce, n) => ce.box(["BellNumber", n]),
   A000142: (ce, n) => ce.box(["Factorial", n]),
-  A027641: (ce, n) => ce.box(["BernoulliB", n]).N().numerator,
-  A027642: (ce, n) => ce.box(["BernoulliB", n]).N().denominator,
+  A027641: (ce, n) => ce.box(["Numerator", ["BernoulliB", n]]),
+  A027642: (ce, n) => ce.box(["Denominator", ["BernoulliB", n]]),
   A000793: (ce, n) => ce.number(landauFunction(n)),
 };
 

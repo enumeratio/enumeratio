@@ -108,40 +108,8 @@ function solveInLog(problem: LogProblem, target: number, startLog: number, scale
  *  (InverseBetaRegularized(0.3, 2.5e-6, 1.5e-6)). */
 const RESIDUAL_TOLERANCE = 1e-10;
 
-/** Q(a, z) for z ≥ a + 1 by its continued fraction (DLMF 8.9.2, evaluated by the modified Lentz
- * method), which keeps its relative precision however small Q is: compute-engine's own
- * GammaRegularized(500, 911.6) is −7e-43, the rounding of 1 − P. NaN past the cap (the solve then
- * declines). Convergence is three consecutive factors within a few ε of 1, not one lucky one. */
-function upperGammaRegularizedFraction(a: number, z: number): number {
-  const floor = 1e-300;
-  let b = z + 1 - a;
-  let c = 1 / floor;
-  let d = 1 / b;
-  let h = d;
-  let settled = 0;
-  for (let i = 1; i < FRACTION_TERMS; i++) {
-    const an = -i * (i - a);
-    b += 2;
-    d = an * d + b;
-    if (Math.abs(d) < floor) d = floor;
-    c = b + an / c;
-    if (Math.abs(c) < floor) c = floor;
-    d = 1 / d;
-    const delta = d * c;
-    h *= delta;
-    settled = Math.abs(delta - 1) < 4e-16 ? settled + 1 : 0;
-    if (settled === 3) return Math.exp(a * Math.log(z) - z - logGammaReal(a)) * h;
-  }
-  return Number.NaN;
-}
-
-/** Terms of the fraction before it declines: it needs about √a near z = a + 1. */
-const FRACTION_TERMS = 10_000;
-
-/** Q(a, z): the continued fraction where it applies (NaN if it does not converge), else
- * compute-engine's, where Q ≥ ~0.4 and 1 − P keeps its digits. */
 const forwardGammaRegularized = (ce: ComputeEngine, a: number, z: number): number =>
-  z >= a + 1 ? upperGammaRegularizedFraction(a, z) : ce.box(["GammaRegularized", a, z] as never).N().re;
+  ce.box(["GammaRegularized", a, z] as never).N().re;
 
 const forwardBetaRegularized = (ce: ComputeEngine, x: number, a: number, b: number): number =>
   ce.box(["BetaRegularized", x, a, b] as never).N().re;
