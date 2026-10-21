@@ -102,12 +102,12 @@ jobs:
             let drift = []
             try { drift = JSON.parse(fs.readFileSync('tools/perf/.data/drift-report.json', 'utf8')) } catch {}
             const rows = drift.slice(0, 30).map(d =>
-              `| ${d.package} | ${d.file} | ${d.test} | ${d.currentMs.toFixed(1)} | ${d.medianMs.toFixed(1)} | ×${d.ratio.toFixed(2)} | ${d.priorRuns} |`
+              `| ${d.package} | ${d.file} | ${d.test} | ${d.currentMs.toFixed(1)} | ${d.medianMs.toFixed(1)} | ×${d.ratio.toFixed(2)} | ${d.priorRuns} (${d.basis}) |`
             ).join('\n')
             const body = [
-              `A nightly perf run found ${drift.length} test(s) drifted past their trailing median (≥1.5× and ≥200ms). Run: ${runUrl}`,
+              `A nightly perf run found ${drift.length} test(s) drifted past their trailing median (≥1.5× and ≥200ms) on the same runner fingerprint, or across all runners when fewer than 3 runs share it, after dividing out the run's own median slowdown. Run: ${runUrl}`,
               ``,
-              `| package | file | test | current (ms) | median (ms) | ratio | prior runs |`,
+              `| package | file | test | current (ms) | median (ms) | ratio (runner-normalized) | prior runs |`,
               `|---|---|---|---|---|---|---|`,
               rows,
               ``,

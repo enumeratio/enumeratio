@@ -84,12 +84,12 @@ jobs:
             const drift = JSON.parse(fs.readFileSync('drift.json', 'utf8'))
             const ms = (ns) => (ns / 1e6).toFixed(2)
             const rows = drift.slice(0, 30).map(d =>
-              `| [${d.name}](https://enumeratio.dev/reference/symbol/${d.name.replace('/', '#example/')}) | ${ms(d.medianNs)} | ${ms(d.trailingNs)} | ×${d.ratio.toFixed(2)} | ${d.priorRuns} |`
+              `| [${d.name}](https://enumeratio.dev/reference/symbol/${d.name.replace('/', '#example/')}) | ${ms(d.medianNs)} | ${ms(d.trailingNs)} | ×${d.ratio.toFixed(2)} | ${d.priorRuns} (${d.basis}) |`
             ).join('\n')
             const body = [
-              `The nightly bench found ${drift.length} case(s) on our side past their trailing median (≥1.5× and ≥1 ms). Run: ${runUrl}. CPU profiles of them are in the run's \`bench-profiles-${context.runId}\` artifact.`,
+              `The nightly bench found ${drift.length} case(s) on our side past their trailing median (≥1.5× and ≥1 ms) on the same runner fingerprint, or across all runners when fewer than 3 runs share it, after dividing out the run's own median slowdown. Run: ${runUrl}. CPU profiles of them are in the run's \`bench-profiles-${context.runId}\` artifact.`,
               ``,
-              `| case | median (ms) | trailing (ms) | ratio | prior runs |`,
+              `| case | median (ms) | trailing (ms) | ratio (runner-normalized) | prior runs |`,
               `|---|---|---|---|---|`,
               rows,
               ``,

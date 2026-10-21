@@ -36,6 +36,11 @@ current duration to the **trailing median** of its prior durations, and flags it
 - current ≥ 1.5× the median, **and**
 - current ≥ median + 200ms
 
+The median is taken over earlier runs on the same machine fingerprint (recorded as `machine` on
+each run) once there are 3 of them, else over all runs (5 needed). Either way the run's own median
+slowdown over all tests, when above 1, is divided out of the expected duration: a run where
+everything is 1.4x slower is a slow runner, not a regression.
+
 Hosted runners vary roughly 2x run to run, so a ratio or an absolute jump alone is noise — the
 same reasoning `plausible.yml` uses. Both thresholds are the second and third parameters to
 `detectDrift`'s `options` argument if they ever need tuning.
