@@ -90,6 +90,23 @@ test("every control box has an intent, and boxes round-trip through MathJSON", (
   expect(toText(box)).toBe("-Checkbox-");
 });
 
+test("Checkbox, InputField and Locator leave the domain out unless one is given, as Wolfram's boxes do", () => {
+  expect(makeBoxes(json(["Checkbox", "on"]))).toEqual(["CheckboxBox", ["Dynamic", "on"]]);
+  const values = makeBoxes(json(["Checkbox", "on", ["Tuple", 0, 1]]));
+  expect(values).toEqual(["CheckboxBox", ["Dynamic", "on"], ["Tuple", 0, 1]]);
+  expect(makeBoxes(json(["InputField", "s", "String"]))).toEqual(["InputFieldBox", ["Dynamic", "s"], "String"]);
+  // The options follow the binding, not the domain.
+  const field = makeBoxes(json(["InputField", "s", ["KeyValuePair", "FieldSize", 12]]));
+  expect(field).toEqual(["InputFieldBox", ["Dynamic", "s"], { FieldSize: 12 }]);
+  expect(controlOperands(field)).toEqual(["s"]);
+  for (const box of [field, values, makeBoxes(json(["Locator", "p"]))]) {
+    expect(isBox(box)).toBe(true);
+    expect(fromMathJson(toMathJson(box))).toEqual(box);
+  }
+  // Records written with the old `Automatic` placeholder still read.
+  expect(controlOperands(fromMathJson(json(["CheckboxBox", ["Dynamic", "on"], "Automatic"])))).toEqual(["on"]);
+});
+
 test("a record written with a DynamicBox binding or without a shown box still reads (the binding stays as written)", () => {
   const legacy = fromMathJson(json(["SetterBox", ["DynamicBox", "c"], ["List", ["Labeled", 1, { str: "one" }]]]));
   expect(legacy).toEqual([

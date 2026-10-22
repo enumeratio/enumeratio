@@ -19,7 +19,7 @@ jobs:
   # fans the two back in under the required check name.
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40 # a cold dist-cache build (~20 min) precedes the checks
     steps:
       - uses: actions/checkout@v4
         with:
@@ -42,7 +42,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.site == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40 # a cold dist-cache build (~20 min) precedes the web build
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
