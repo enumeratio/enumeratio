@@ -44,7 +44,15 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-12
-    note: "factorrat is SymPy's factorint that also takes a rational, giving the denominator's primes negative exponents as ours does. SymPy has no factor for 1, writes the -1 of a negative integer after the primes and a negative rational's between the numerator's primes and the denominator's, and lists factors in the order it finds them, which for a large n is not always ascending. A Complex operand is not emitted: factorrat takes rationals only."
+    note: "factorrat is SymPy's factorint that also takes a rational, giving the denominator's primes negative exponents as ours does. SymPy has no factor for 1, writes the -1 of a negative integer after the primes and a negative rational's between the numerator's primes and the denominator's, and lists factors in the order it finds them, which for a large n is not always ascending. A Complex operand is not emitted: factorrat takes rationals only, and SymPy has no factorization in Z[i] to ask for."
+  - origin: mapped
+    form: sympy
+    counterpart: false
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-21
+    note: "The `Over -> GaussianIntegers` and `QuadraticIntegers(d)` forms have no SymPy counterpart: `factorint` and `factorrat` are over Z and Q, `GaussianIntegerRing` has a gcd but no prime factorization, and `factor(n, gaussian=True)` factors polynomials, leaving an integer as it is. Composing one from `factorint` of the norm and a gcd would test our algorithm against a restatement of itself."
   - origin: mapped
     form: julia
     template: enumeratio_factor_integer($1)

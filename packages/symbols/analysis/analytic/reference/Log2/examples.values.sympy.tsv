@@ -18,7 +18,7 @@ derivative-frac-1-x-ln-2	diff(log(Symbol("x"), 2), Symbol("x"))	1/(x*log(2))
 to-30-significant-digits-every-one-correctly	N(log(3, 2), 30)	1.58496250072115618145373894395	
 n-log-45-2-100	N(log(45, 2), 30)	5.49185309632967471077779731738	
 n-log-2-plus-i-2	N(log((2 + 1*I), 2), 30)	1.16096404744368117393515971474 + 0.668902106225488098175609731001*I	
-fullsimplify-matrixfunction-log2-list-list-2-1			
+fullsimplify-matrixfunction-log2-list-list-2-1	Matrix([[2, 1], [0, Rational(1, 2)]]).analytic_func(log(Symbol("_mf"), 2), Symbol("_mf")).applyfunc(simplify).tolist()	[[1, 4/3], [0, -1]]	
 log-positiveinfinity-2	log(oo, 2)	oo	
 a-float-argument-folds-even-for-a-fractional	log(0.5, 2)	-0.693147180559945/log(2)	
 same-as-log-z-2	enumeratio_equal(log(8, 2), log(8, 2))	True	

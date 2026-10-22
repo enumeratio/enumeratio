@@ -23,7 +23,7 @@ fibonacci-1-neg-x-eq-fibonacci-1-x	enumeratio_equal(fibonacci(1, (-Symbol("x")))
 fibonacci-list-1-2-3-4-5	[fibonacci(1), fibonacci(2), fibonacci(3), fibonacci(4), fibonacci(5)]	[1, 1, 2, 3, 5]	
 generatingfunction-fibonacci-n-n-x			
 fibonacci-1-conjugate-z-eq-conjugate-fibonacci-1	enumeratio_equal(fibonacci(1, conjugate(Symbol("z"))), conjugate(fibonacci(1, Symbol("z"))))	True	
-matrixfunction-function-fibonacci-3-1-1-list			
+matrixfunction-function-fibonacci-3-1-1-list	Matrix([[-1, 0], [0, 5]]).analytic_func(fibonacci(3, Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[2, 0], [0, 26]]	
 consecutive-ratios-f-n-1-f-n-converge-to-the	(S(fibonacci(20)) / fibonacci(19))	6765/4181	
 sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	summation(fibonacci(Symbol("k")), (Symbol("k"), 1, 10))	143	
 the-doubling-identity-f-2n-f-n-l-n-see-lucasl	enumeratio_equal(fibonacci(20), (fibonacci(10) * lucas(10)))	True	

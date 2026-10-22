@@ -24,7 +24,7 @@ oddness-pulls-the-sign-out-of-a-symbolic	cot((-Symbol("x")))	-cot(x)
 derivative-csc-2-x	diff(cot(Symbol("x")), Symbol("x"))	-cot(x)**2 - 1	
 antiderivative-ln-sin-x	integrate(cot(Symbol("x")), Symbol("x"))	None	inconclusive
 n-cot-6-over-5-50	N(cot(Rational(6, 5)), 30)	0.388779569368204911634191504972	
-matrixfunction-function-cot-1-1-list-list-5-over			
+matrixfunction-function-cot-1-1-list-list-5-over	Matrix([[(Rational(5, 6) * pi), (Rational(1, 2) * pi)], [(Rational(3, 2) * pi), (Rational(-1, 6) * pi)]]).analytic_func(cot(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[sqrt(3)/3, 0], [0, sqrt(3)/3]]	
 cot-positiveinfinity	cot(oo)	AccumBounds(-oo, oo)	disagree
 assuming-m-in-integers-refine-cot-pi-times-1			
 assuming-m-in-integers-fullsimplify-refine-cot			

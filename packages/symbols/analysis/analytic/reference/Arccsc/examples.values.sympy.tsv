@@ -12,7 +12,7 @@ arccsc-list-list-sqrt-2-neg-sqrt-2-list-0-neg	[[acsc(sqrt(2)), acsc((-sqrt(2)))]
 list-arccsc-neg-sqrt-2-arccsc-neg-2-over-3-times	[acsc((-sqrt(2))), acsc((Rational(-2, 3) * sqrt(3))), acsc((Rational(2, 3) * sqrt(3))), acsc(sqrt(2))]	[-pi/4, -pi/3, pi/3, pi/4]	
 arccsc-complexinfinity	acsc(zoo)	0	
 arccsc-list-1-neg-1-0	[acsc(1), acsc(-1), acsc(0)]	[pi/2, -pi/2, zoo]	
-matrixfunction-function-arccsc-1-1-list-list			
+matrixfunction-function-arccsc-1-1-list-list	Matrix([[sqrt(2), (-sqrt(2))], [0, (-sqrt(2))]]).analytic_func(acsc(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[pi/4, -pi/4], [0, -pi/4]]	
 arccsc-1-over-2	acsc(Rational(1, 2))	acsc(1/2)	
 arccsc-neg-1-over-2	acsc(Rational(-1, 2))	-acsc(1/2)	
 undoes-csc-csc-arccsc-x-x	enumeratio_equal(csc(acsc(2)), 2)	True	
