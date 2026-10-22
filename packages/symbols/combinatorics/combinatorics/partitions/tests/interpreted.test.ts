@@ -15,6 +15,7 @@ const INTERPRETED = [
   "DistinctOddSubsetSums",
   "HookLengthOfLastDiagonalCell",
   "HookLengthSquareSum",
+  "MinimalSubpartitionSizeDifference",
   "SymmetricDiagonalHooks",
 ];
 
