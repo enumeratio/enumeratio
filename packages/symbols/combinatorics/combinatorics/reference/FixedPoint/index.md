@@ -7,7 +7,7 @@ signatures:
   - call: FixedPoint(f, x)
     description: iterates $f$ starting from $x$ until two successive values are equal.
     library: enumeratio-combinatorics
-    type: (any, any?) -> any
+    type: (any, any?) -> unknown
     overrides: compute-engine
 seeAlso:
   - Nest
