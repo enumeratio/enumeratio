@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[BoundaryNodes, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	3			the binary tree $[[.,.],[[.,.],.]]$
+findstat-st000203-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, 0]], "'BoundaryNodes'"]	1	1	FindStat St000203	FindStat's value for [.,.]
+findstat-st000203-2	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'BoundaryNodes'"]	2	2	FindStat St000203	FindStat's value for [.,[.,.]]
+findstat-st000203-3	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'BoundaryNodes'"]	2	2	FindStat St000203	FindStat's value for [[.,.],.]

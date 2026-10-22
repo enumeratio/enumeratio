@@ -1,2 +1,2 @@
 id	in	out	tex.in	tex.out
-inert	LocatorBox[Dynamic[p], enumeratio`Automatic]	LocatorBox[Dynamic[p], enumeratio`Automatic]	\text{LocatorBox}[p,\text{enumeratio$\grave{ }$Automatic}]	\text{LocatorBox}[p,\text{enumeratio$\grave{ }$Automatic}]
+inert	LocatorBox[Dynamic[p]]	LocatorBox[Dynamic[p]]	\text{LocatorBox}[p]	\text{LocatorBox}[p]

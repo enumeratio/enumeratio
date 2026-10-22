@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-ordered-tree			[BoundaryLengthBeyondTrunk, [OrderedTree, [List, [List], [List, [List]], [List]]]]	2			the ordered tree $[[],[[]],[]]$
+findstat-st000975-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'BoundaryLengthBeyondTrunk'"]	1	1	FindStat St000975	FindStat's value for [[]]
+findstat-st000975-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'BoundaryLengthBeyondTrunk'"]	2	2	FindStat St000975	FindStat's value for [[[]]]
+findstat-st000975-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'BoundaryLengthBeyondTrunk'"]	2	2	FindStat St000975	FindStat's value for [[],[]]

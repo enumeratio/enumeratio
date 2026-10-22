@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-ordered-tree			[TwoProtectedNodeCount, [OrderedTree, [List, [List], [List, [List]], [List]]]]	0			the ordered tree $[[],[[]],[]]$
+findstat-st000523-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'TwoProtectedNodeCount'"]	0	0	FindStat St000523	FindStat's value for [[]]
+findstat-st000523-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'TwoProtectedNodeCount'"]	1	1	FindStat St000523	FindStat's value for [[[]]]
+findstat-st000523-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'TwoProtectedNodeCount'"]	0	0	FindStat St000523	FindStat's value for [[],[]]
