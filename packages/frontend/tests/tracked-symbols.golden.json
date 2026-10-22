@@ -15,7 +15,7 @@
     "affected": [2]
   },
   "two cells assigning the same name is an error on both, no order for either": {
-    "order": [3],
+    "order": [],
     "diagnostics": [
       {
         "cellId": 1,
@@ -24,9 +24,40 @@
       {
         "cellId": 2,
         "message": "`a` is defined in more than one cell (also cell 1)"
+      },
+      {
+        "cellId": 3,
+        "message": "reads `a`: `a` is defined in more than one cell"
       }
     ],
     "affected": [1]
+  },
+  "a duplicate blocks its readers transitively; an unrelated cell still runs": {
+    "order": [5],
+    "diagnostics": [
+      {
+        "cellId": 1,
+        "message": "`a` is defined in more than one cell (also cell 2)"
+      },
+      {
+        "cellId": 2,
+        "message": "`a` is defined in more than one cell (also cell 1)"
+      },
+      {
+        "cellId": 3,
+        "message": "reads `a`: `a` is defined in more than one cell"
+      },
+      {
+        "cellId": 4,
+        "message": "reads `b`: `a` is defined in more than one cell"
+      }
+    ],
+    "affected": [5]
+  },
+  "renaming one duplicate lets everything schedule again": {
+    "order": [1, 2, 3, 4],
+    "diagnostics": [],
+    "affected": [2]
   },
   "a cycle is an error on every member": {
     "order": [],
