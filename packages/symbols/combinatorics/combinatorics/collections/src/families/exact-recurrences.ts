@@ -44,6 +44,10 @@ function windowSums(steps: number, width: number): bigint {
 export const windowSumsExact = (n: number, width: number): bigint | undefined =>
   ok(n) ? windowSums(n, width) : undefined;
 
+/** Compositions of n into parts of size at most k: the k-nacci count, with no part at all (so none for n > 0) at k = 0. */
+export const partSizeBoundedExact = (n: number, k: number): bigint | undefined =>
+  !ok(n) || !natural(k) ? undefined : k === 0 ? (n === 0 ? 1n : 0n) : windowSums(n, Math.min(k, n));
+
 /** F(n), F(0) = 0 and F(1) = 1. */
 export function fibonacciExact(n: number): bigint | undefined {
   if (!ok(n)) return undefined;

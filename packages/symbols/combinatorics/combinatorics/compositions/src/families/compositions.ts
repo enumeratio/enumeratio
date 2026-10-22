@@ -23,6 +23,7 @@ import {
 import {
   dyadicCompositionsExact,
   oddCompositionsExact,
+  partSizeBoundedExact,
   primeCompositionsExact,
   properCompositionsExact,
   triangularCompositionsExact,
@@ -287,7 +288,7 @@ export const entries: EpsilFamily[] = [
   inSet(tetraCompositions, (n) => windowSumsExact(n, 4)),
   inSet(triangularCompositions, triangularCompositionsExact),
   inSet(primeCompositions, primeCompositionsExact),
-  partSizeBoundedCompositions,
+  { ...partSizeBoundedCompositions, fastCount: ([n, k]) => partSizeBoundedExact(n, k) },
   { ...partCountBoundedCompositions, fast: partCountBoundedFast },
 
   // ── constraints beyond per-part membership ──
