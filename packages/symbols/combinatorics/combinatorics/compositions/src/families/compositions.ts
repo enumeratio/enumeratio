@@ -13,8 +13,10 @@
 // n = 0 always has exactly one (empty) composition, matching IntegerCompositions(0) in ./core.ts.
 import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
 import {
+  binomialPastDoubles,
   carlitzExact,
   orExact,
+  PASSES_2_53,
   partCountBoundedExact,
   zigzagCompositionsExact,
 } from "../../../collections/src/families/exact-classes.ts";
@@ -242,19 +244,34 @@ const inSet = (family: EpsilFamily, exact: (n: number) => bigint | undefined): E
   fastCount: ([n]) => exact(n),
 });
 const partCountBoundedFast: FastKernel = {
-  count: ([n, k]) => orExact(partCountCount(n, k), () => partCountBoundedExact(n, k)),
+  count: ([n, k]) =>
+    orExact(
+      binomialPastDoubles(n - 1, Math.min(k, n) - 1),
+      () => partCountCount(n, k),
+      () => partCountBoundedExact(n, k),
+    ),
   unrank: ([n, k], r) => partCountUnrank(n, k, r),
   rank: (x, [, k]) => partCountRank(x as number[], k),
   valid: (x, [n, k]) => isPositiveIntArray(x) && sum(x) === n && x.length <= k,
 };
 const carlitzFast: FastKernel = {
-  count: ([n]) => orExact(carlitzCount(n, 0), () => carlitzExact(n)),
+  count: ([n]) =>
+    orExact(
+      n >= PASSES_2_53.carlitzCompositions,
+      () => carlitzCount(n, 0),
+      () => carlitzExact(n),
+    ),
   unrank: ([n], r) => carlitzUnrank(n, 0, r),
   rank: (x) => carlitzRank(x as number[]),
   valid: (x, [n]) => isCarlitz(x, n),
 };
 const zigzagFast: FastKernel = {
-  count: ([n]) => orExact(zigzagCount(n), () => zigzagCompositionsExact(n)),
+  count: ([n]) =>
+    orExact(
+      n >= PASSES_2_53.zigzagCompositions,
+      () => zigzagCount(n),
+      () => zigzagCompositionsExact(n),
+    ),
   unrank: ([n], r) => zigzagUnrank(n, r),
   rank: (x) => zigzagRank(x as number[]),
   valid: (x, [n]) => isZigzag(x, n),
