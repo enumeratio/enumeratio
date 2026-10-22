@@ -25,4 +25,4 @@ rounds-half-to-even	round(2.5)	2
 minus-2-5-rounds-to-minus-2	round(-2.5)	-2	
 round-5-over-2-exact-rational-tie	round(Rational(5, 2))	2	
 an-exact-half-rounds-to-even	round(Rational(1, 2))	0	
-round-complexinfinity-is-complexinfinity-the	round(zoo)	zoo	disagree
+round-complexinfinity-is-complexinfinity-the	round(zoo)	zoo	
