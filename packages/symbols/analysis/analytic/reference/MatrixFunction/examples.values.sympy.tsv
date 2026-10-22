@@ -1,0 +1,13 @@
+id	in	out	verdict
+the-principal-square-root-of-a-diagonal-matrix	Matrix([[4, 0], [0, 9]]).analytic_func(sqrt(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[2, 0], [0, 3]]	
+on-a-diagonal-matrix-f-acts-on-the-diagonal	Matrix([[Symbol("a"), 0], [0, Symbol("b")]]).analytic_func(Function("f")(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[f(a), 0], [0, f(b)]]	disagree
+matrixfunction-cos-list-list-0-0-list-0-0	Matrix([[0, 0], [0, 0]]).analytic_func(cos(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[1, 0], [0, 1]]	
+matrixfunction-sin-list-list-a-0-list-0-b	Matrix([[Symbol("a"), 0], [0, Symbol("b")]]).analytic_func(sin(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[sin(a), 0], [0, sin(b)]]	
+matrixfunction-ln-diagonalmatrix-list-a-b-c			
+simplify-matrixfunction-sqrt-list-list-5-times	Matrix([[(5 * pi * (S(18)**-1)), (2 * pi * (S(9)**-1))], [(4 * pi * (S(9)**-1)), (pi * (S(18)**-1))]]).analytic_func(sqrt(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[sqrt(pi)*(6*sqrt(2) + sqrt(6)*I)/18, sqrt(pi)*(3*sqrt(2) - sqrt(6)*I)/18], [sqrt(pi)*(3*sqrt(2) - sqrt(6)*I)/9, sqrt(pi)*(sqrt(2)/6 + sqrt(6)*I/9)]]	
+simplify-matrixfunction-f-list-list-1-2-list-0-1	Matrix([[1, 2], [0, 1]]).analytic_func(Function("f")(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[f(1), 2*Subs(Derivative(f(_mf), _mf), _mf, 1)], [0, f(1)]]	disagree
+simplify-matrixfunction-f-list-list-0-a-list-b-0	Matrix([[0, Symbol("a")], [Symbol("b"), 0]]).analytic_func(Function("f")(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[f(-sqrt(a*b))/2 + f(sqrt(a*b))/2, a*(-f(-sqrt(a*b)) + f(sqrt(a*b)))/(2*sqrt(a*b))], [b*(-f(-sqrt(a*b)) + f(sqrt(a*b)))/(2*sqrt(a*b)), f(-sqrt(a*b))/2 + f(sqrt(a*b))/2]]	disagree
+with-exp-it-is-matrixexp	Matrix([[0, 0], [0, 0]]).analytic_func(exp(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[1, 0], [0, 1]]	
+a-polynomial-f-agrees-with-the-matrix-power	Matrix([[1, 1], [0, 1]]).analytic_func((S(Symbol("_mf"))**2), Symbol("_mf")).applyfunc(simplify).tolist()	[[1, 2], [0, 1]]	
+simplify-matrixfunction-function-1-list-list-1-2	Matrix([[1, 2], [3, 4]]).analytic_func(1, Symbol("_mf")).applyfunc(simplify).tolist()	ValueError: _mf must be a parameter of 1.	error
+matrixfunction-function-1-over-1-1-list-list-1-1			

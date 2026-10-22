@@ -1,0 +1,8 @@
+id	in	out	verdict
+a-finite-expansion	continued_fraction_reduce([3, 7, 15, 1])	355/113	
+symbolic-terms	continued_fraction_reduce([Symbol("a"), Symbol("b"), Symbol("c")])	(a + c*(a*b + 1))/(b*c + 1)	
+periodic-tail	continued_fraction_reduce([1, [1]])	(1 + sqrt(5))/2	
+a-one-term-list-is-an-integer	continued_fraction_reduce([5])	5	
+terms-after-the-first-may-follow-a-negative-a0	continued_fraction_reduce([-3, 2, 5])	-28/11	
+it-inverts-continuedfraction	continued_fraction_reduce(list(continued_fraction(Rational(47, 17))))	47/17	
+the-empty-list-stays-unevaluated	continued_fraction_reduce([])	0	inconclusive

@@ -20,6 +20,14 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: sympy
+    template: continued_fraction_reduce($1)
+    arity: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-21
+    note: A periodic tail `[a0, [period]]` is SymPy's own nested-list form. The empty list is 0 there, where ours stays unevaluated and Wolfram answers Infinity.
+  - origin: mapped
     form: sage
     template: continued_fraction($1).value()
     arity: 1

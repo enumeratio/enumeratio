@@ -631,6 +631,44 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         }
       }
     }
+    // The mapped MatrixFunction already simplifies each entry, and `simplify` does not take a list.
+    if (
+      system === "sympy" &&
+      (head === "Simplify" || head === "FullSimplify") &&
+      operands.length === 1 &&
+      isCall(operands[0] as MathJSON) &&
+      (operands[0] as readonly MathJSON[])[0] === "MatrixFunction"
+    )
+      return walk(operands[0] as MathJSON);
+    // SymPy's `Matrix.analytic_func(f(x), x)` takes f as an expression of one variable: a head's name, a
+    // Function's body, or an undefined name as an unknown function of it.
+    if (system === "sympy" && head === "MatrixFunction" && operands.length === 2) {
+      const template = mappingFor(head, 2, extra, system)?.emit[system];
+      const [f, matrix] = operands as [MathJSON, MathJSON];
+      const variable = "_mf";
+      const slot = (node: MathJSON, name: string): MathJSON =>
+        node === name
+          ? variable
+          : isCall(node)
+            ? (node.map((part, i) => (i === 0 ? part : slot(part, name))) as MathJSON)
+            : node;
+      let body: MathJSON | undefined;
+      if (typeof f === "string") body = DEFINED_NAMES.has(f) || f.startsWith("_") ? [f, variable] : undefined;
+      else if (isCall(f) && f[0] === "Function") {
+        const inner = f[1] as MathJSON;
+        const unwrapped = isCall(inner) && inner[0] === "Block" ? (inner[1] as MathJSON) : inner;
+        body = slot(unwrapped, typeof f[2] === "string" ? f[2] : "_1");
+      }
+      if (template !== undefined && (body !== undefined || typeof f === "string")) {
+        bound.add(variable);
+        try {
+          const source = body === undefined ? `Function(${JSON.stringify(f)})(${walk(variable)})` : walk(body);
+          return fill(template, [source, walk(matrix)]);
+        } finally {
+          bound.delete(variable);
+        }
+      }
+    }
     // SymPy's `integrate(f, (x, a, b))`: a bare variable (or `Limits(x, Nothing, Nothing)`) is an indefinite
     // integral. Our first limit is the outermost, as Wolfram's; SymPy's first is the innermost.
     if ((system === "sympy" || system === "sage") && head === "Integrate" && operands.length >= 2) {
