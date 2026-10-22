@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-partition-4-2-1-of-7			[SecondAlladiWeight, [IntegerPartition, [List, 4, 2, 1]]]	0			the partition $4 + 2 + 1$ of $7$
+the-partition-3-3-1-of-7			[SecondAlladiWeight, [IntegerPartition, [List, 3, 3, 1]]]	0			the partition $3 + 3 + 1$ of $7$
+findstat-st000478-1	Properties		[CombinatorialStat, [IntegerPartition, [List, 2]], "'SecondAlladiWeight'"]	1	1	FindStat St000478	FindStat's value for [2]
+findstat-st000478-2	Properties		[CombinatorialStat, [IntegerPartition, [List, 3]], "'SecondAlladiWeight'"]	2	2	FindStat St000478	FindStat's value for [3]
+findstat-st000478-3	Properties		[CombinatorialStat, [IntegerPartition, [List, 4]], "'SecondAlladiWeight'"]	2	2	FindStat St000478	FindStat's value for [4]
