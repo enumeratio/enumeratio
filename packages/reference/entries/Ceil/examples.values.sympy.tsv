@@ -38,6 +38,6 @@ ceil-neg-27-over-10	ceiling(Rational(-27, 10))	-2
 ceil-negativeinfinity	ceiling(-oo)	-oo	
 ceil-23-over-10-plus-neg-i-times-exponentiale	ceiling((Rational(23, 10) + ((0 + -1*I) * E)))	3 - 2*I	
 ceil-i	ceiling((0 + 1*I))	I	
-a-zero-divisor-inside-ceil	ceiling((S(16) / 0))	zoo	disagree
+a-zero-divisor-inside-ceil	ceiling((S(16) / 0))	zoo	
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	ceiling(-3.7)	-3	
 nan-propagates-rather-than-erroring	ceiling(nan)	nan	

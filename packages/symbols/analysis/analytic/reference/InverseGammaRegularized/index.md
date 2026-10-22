@@ -25,6 +25,14 @@ bindings:
     checked:
       version: mpmath 1.3.0
       on: 2026-10-17
+  - origin: mapped
+    form: sympy
+    counterpart: false
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-21
+    note: SymPy has no inverse of the regularized incomplete gamma (no `gammaincinv`); `lowergamma`, `uppergamma` and `gammainc` exist but nothing solves for the argument.
 seeAlso:
   - GammaRegularized
   - Gamma

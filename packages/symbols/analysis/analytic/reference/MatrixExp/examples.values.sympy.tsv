@@ -1,0 +1,22 @@
+id	in	out	verdict
+the-2-2-closed-form-exact-not-decimalized	Matrix([[0, 1], [1, 0]]).exp().tolist()	[[exp(-1)/2 + E/2, -exp(-1)/2 + E/2], [-exp(-1)/2 + E/2, exp(-1)/2 + E/2]]	
+the-exponential-of-the-zero-matrix-is-the	Matrix([[0, 0], [0, 0]]).exp().tolist()	[[1, 0], [0, 1]]	
+a-diagonal-matrix-exponentiates-entry-by-entry	Matrix([[1, 0], [0, 2]]).exp().tolist()	[[E, 0], [0, exp(2)]]	
+a-generic-2-2-matrix-no-special-structure	N(Matrix([[1, 2], [3, 4]]).exp().tolist(), 30)	AttributeError: 'list' object has no attribute 'evalf'	error
+an-upper-triangular-3-3-matrix-numeric-path	N(Matrix([[1, 2, 0], [0, 3, 4], [0, 0, 5]]).exp().tolist(), 30)	AttributeError: 'list' object has no attribute 'evalf'	error
+a-nilpotent-4-4-generator-numeric-path	N(Matrix([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 0, 0, 0]]).exp().tolist(), 30)	AttributeError: 'list' object has no attribute 'evalf'	error
+a-nilpotent-matrix-i-a-since-a-2-0	Matrix([[0, 1], [0, 0]]).exp().tolist()	[[1, 1], [0, 1]]	
+a-diagonal-matrix-exp-of-each-diagonal-entry	Matrix([[1, 0, 0], [0, 2, 0], [0, 0, 3]]).exp().tolist()	[[E, 0, 0], [0, exp(2), 0], [0, 0, exp(3)]]	
+a-3-3-matrix-with-no-diagonal-nilpotent-or-2-2	N(Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 10]]).exp().tolist(), 30)	TimeoutError: over 30s	error
+a-jordan-block-e-i-n-e-i-n	Matrix([[1, 1], [0, 1]]).exp().tolist()	[[E, E], [0, E]]	
+applied-to-a-vector-e-a-v-computed-as-e-a-via	list(Matrix([[0, 1], [0, 0]]).exp() * Matrix([1, 1]))	[2, 1]	
+a-3-times-3-nilpotent-generator-the-exponential	Matrix([[0, 1, 0], [0, 0, 1], [0, 0, 0]]).exp().tolist()	[[1, 1, 1/2], [0, 1, 1], [0, 0, 1]]	
+a-jordan-block-repeated-eigenvalue-2-e-2-i-n-not	Matrix([[2, 1], [0, 2]]).exp().tolist()	[[exp(2), exp(2)], [0, exp(2)]]	
+matrixexp-list-list-a-b-list-0-c	Matrix([[Symbol("a"), Symbol("b")], [0, Symbol("c")]]).exp().tolist()	[[exp(a), b*exp(a)/(a - c) - b*exp(c)/(a - c)], [0, exp(c)]]	
+matrixexp-diagonalmatrix-list-a-b-c			
+matrixexp-identitymatrix-3			
+a-skew-symmetric-generator-gives-a-rotation	Matrix([[0, 1], [-1, 0]]).exp().tolist()	[[cos(1), sin(1)], [-sin(1), cos(1)]]	
+matrixexp-a-eq-matrixfunction-exp-a	enumeratio_equal(Matrix(Symbol("a")).exp().tolist(), Matrix(Symbol("a")).analytic_func(exp(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist())	TypeError: 	error
+rejects-a-non-square-argument	Matrix([[1, 2, 3], [4, 5, 6]]).exp().tolist()	NonSquareMatrixError: Exponentiation is valid only for square matrices	error
+a-generic-matrix-with-no-closed-form-stays	Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 10]]).exp().tolist()	TimeoutError: over 30s	error
+euler-s-identity-for-matrices-rotation-by-pi-is	Matrix([[0, (-pi)], [pi, 0]]).exp().tolist()	[[-1, 0], [0, -1]]	

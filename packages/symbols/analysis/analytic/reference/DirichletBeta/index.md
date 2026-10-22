@@ -47,6 +47,16 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: (polylog($1, I) - polylog($1, -I)) / (2*I)
+    arity: 1
+    threadArgOnly:
+      - 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-21
+    note: SymPy has no Dirichlet beta; this is its polylog definition β(s) = (Li_s(i) − Li_s(−i)) / 2i.
 seeAlso:
   - DirichletEta
   - HurwitzZeta

@@ -21,6 +21,14 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: inverse_laplace_transform($1, $2, $3)
+    arity: 3
+    checked:
+      version: 1.14.0
+      on: 2026-10-21
+    note: SymPy multiplies a causal answer by `Heaviside(t)`, which ours leaves off (the transform is read for t > 0).
 seeAlso:
   - LaplaceTransform
   - InverseFourierTransform

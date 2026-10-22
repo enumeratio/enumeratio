@@ -16,6 +16,14 @@ bindings:
     template: Assuming[$1, FullSimplify[$2]]
     arity: 2
     note: Wolfram's own Assuming only affects functions that consult $Assumptions (Simplify, FullSimplify, Refine) — a bare Abs(x) inside it stays symbolic, unlike compute-engine's own eager assumption-aware evaluate(). Wrapping the body in FullSimplify is what makes the oracle check the same claim we do.
+  - origin: mapped
+    form: sympy
+    counterpart: false
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-21
+    note: SymPy's `assuming(...)` is a Python context manager that only `ask` and `refine` consult, and a symbol's own assumptions live on the Symbol; no expression form scopes a list of conditions over an arbitrary body, as Assuming does.
 attributes:
   - HoldAll
 ---
