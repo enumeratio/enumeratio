@@ -8,6 +8,7 @@
 import { modRank } from "../../../collections/src/families/kernels.ts";
 import { binaryPalindromes, binaryStrings, grayCodes, words } from "../../../collections/src/families/closed-forms.ts";
 import { necklaceCountExact } from "../../../collections/src/families/exact-counts.ts";
+import { lyndonWordCountExact } from "../../../collections/src/families/exact-classes.ts";
 import { binaryWordsByWeight, fibStrings, lucasStrings } from "./epsil.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
@@ -307,6 +308,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
           2,
         ),
     ),
+    exactCount: ([n]) => lyndonWordCountExact(n, 2),
     declared: wordClass("BinaryWord", 2),
     carrier: "BinaryWord",
   },
@@ -333,6 +335,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
       (a, [n, k]) => lyndonWordsValid(a, n, k),
       (a, [n, k]) => lyndonWordsRank(a, n, k),
     ),
+    exactCount: ([n, k]) => lyndonWordCountExact(n, k),
     declared: wordClass("Word"),
   },
 ];

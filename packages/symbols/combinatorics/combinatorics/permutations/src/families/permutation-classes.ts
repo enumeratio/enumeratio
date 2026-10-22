@@ -7,6 +7,7 @@
 import { binomial } from "../../../collections/src/families/shared.ts";
 import { Factorial, IsPermutationOf, modRank, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { baxterExact } from "../../../collections/src/families/exact-classes.ts";
 import {
   adjacentTranspositionInvolutions,
   booleanPermutations,
@@ -204,6 +205,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
       (a, [n]) => baxterClass.valid(a, n),
       (a) => baxterClass.rank(a),
     ),
+    exactCount: ([n]) => baxterExact(n),
     declared: baxterClass.declared,
     carrier: "Permutation",
   },

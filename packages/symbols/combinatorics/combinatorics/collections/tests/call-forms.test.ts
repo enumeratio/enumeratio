@@ -307,7 +307,8 @@ test("Count past 2^53 is exact for any area's family, and holds where a plain-nu
   const count = (expr: unknown) => ce.box(["Count", expr] as never).evaluate();
   // The 30th Bell number.
   expect(count(["SetPartitions", 30]).json).toEqual({ num: "846749014511809332450147" });
-  expect(count(["IntegerPartitions", 400]).operator).toBe("Count");
+  // p(400): past 2^53, exact through the fast count (the interpreter declines there).
+  expect(count(["IntegerPartitions", 400]).json).toEqual({ num: "6727090051741041926" });
 });
 
 // A partition is its parts, never increasing: every way of asking, an unsorted list is not one.
@@ -331,12 +332,12 @@ test("Element of an unsorted list is False for every partition form", () => {
 });
 
 // Past 2^53 a count is unknown, but membership and a small rank are not.
-test("a family that declines past 2^53 still answers membership and small ranks", () => {
+test("a family whose interpreter declines past 2^53 still answers membership and small ranks", () => {
   const list = (...xs: number[]) => ["List", ...xs];
   const ones = list(...Array.from({ length: 400 }, () => 1));
   const run = (e: unknown) => ce.box(e as never).evaluate();
-  // p(400) is past 2^53: no count, but membership, and the first element, answer.
-  expect(run(["Count", ["PartitionsMaxPart", 400, 400]]).operator).toBe("Count");
+  // p(400) is past 2^53: the count is exact, and membership and the first element answer.
+  expect(run(["Count", ["PartitionsMaxPart", 400, 400]]).json).toEqual({ num: "6727090051741041926" });
   expect(run(["Element", ones, ["PartitionsMaxPart", 400, 400]]).json).toBe("True");
   expect(run(["Element", list(1, 399), ["PartitionsMaxPart", 400, 400]]).json).toBe("False");
   expect(() => run(["At", ["PartitionsMaxPart", 400, 400], 1])).not.toThrow();

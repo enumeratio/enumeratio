@@ -440,7 +440,9 @@ export function kernelOn(
       const raw = quickTotal(p);
       // A fast count that is a double past 2^53, for a family that declines there: no need to run its table.
       const doubled = typeof raw === "number" && Number.isFinite(raw) && !Number.isSafeInteger(raw);
-      if (declinePastDoubles === "count" && (doubled || early?.pastDoubles?.(p) === true)) return decline(p);
+      // An exact bigint from the fast count is no decline, whatever the interpreter could reach.
+      if (declinePastDoubles === "count" && typeof raw !== "bigint" && (doubled || early?.pastDoubles?.(p) === true))
+        return decline(p);
       const fromQuick = typeof raw === "bigint" ? raw : Number.isSafeInteger(raw) ? BigInt(raw as number) : undefined;
       const fast = (raw === Number.POSITIVE_INFINITY ? raw : fromQuick) ?? run("count", p, {});
       if (typeof fast === "bigint") total = fast;

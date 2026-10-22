@@ -23,6 +23,7 @@ import {
   DistinctPartitionUnrank,
   DistinctPartitionRank,
 } from "../../../collections/src/families/kernels-extra.ts";
+import { planePartitionsExact } from "../../../collections/src/families/exact-classes.ts";
 import { shiftedStandardTableauxExact } from "../../../collections/src/families/exact-recurrences.ts";
 import { alternatingSignMatrices } from "./alternating-sign-matrices.ts";
 import { boxedPlanePartitions } from "./boxed-plane-partitions.ts";
@@ -237,6 +238,7 @@ export const planePartitionsEntries: (NumberKernel | EpsilFamily)[] = [
     paramCount: 1,
     kind: "blocks",
     count: ([n]) => PlanePartitionsCount(n),
+    exactCount: ([n]) => planePartitionsExact(n),
     unrank: ([n], r) => PlanePartitionsUnrank(n, r),
     valid: (e, [n]) => IsPlanePartitionOf(e, n),
     rank: (e, [n]) => PlanePartitionsRank(e as number[][], n),
