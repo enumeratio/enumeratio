@@ -42,12 +42,14 @@ const countOf = (xs: [number, number][], test: (j: number, i: number) => boolean
   xs.filter(([j, i]) => test(j, i)).length;
 
 /** Occurrences of a set-partition pattern: subsets of the elements whose restriction has the
- *  pattern's shape, with the given pattern positions required to be openers or closers. */
+ *  pattern's shape, with the given pattern positions required to be openers or closers and the
+ *  given pairs of positions to be consecutive elements of one block. */
 const occurrences = (
   p: SetPartition,
   pattern: readonly (readonly number[])[],
   openers: readonly number[] = [],
   closers: readonly number[] = [],
+  consecutive: readonly (readonly [number, number])[] = [],
 ): number => {
   const n = size(p);
   const of = blockIndex(p);
@@ -55,13 +57,19 @@ const occurrences = (
   const shape = blockIndex(pattern);
   const isOpener = (e: number): boolean => first(p[of[e - 1]!]!) === e;
   const isCloser = (e: number): boolean => last(p[of[e - 1]!]!) === e;
+  const isArc = (x: number, y: number): boolean => p.some((b) => b.some((v, i) => v === x && b[i + 1] === y));
   let total = 0;
   const choose = (chosen: number[], from: number): void => {
     if (chosen.length === k) {
       const same = chosen.every((a, i) =>
         chosen.every((b, j) => (of[a - 1] === of[b - 1]) === (shape[i] === shape[j])),
       );
-      if (same && openers.every((i) => isOpener(chosen[i - 1]!)) && closers.every((i) => isCloser(chosen[i - 1]!)))
+      if (
+        same &&
+        openers.every((i) => isOpener(chosen[i - 1]!)) &&
+        closers.every((i) => isCloser(chosen[i - 1]!)) &&
+        consecutive.every(([i, j]) => isArc(chosen[i - 1]!, chosen[j - 1]!))
+      )
         total++;
       return;
     }
@@ -197,4 +205,39 @@ export const SET_PARTITION_READINGS: Readonly<Record<string, (p: SetPartition) =
   CloserBeforeOpenerPairs: (p) => occurrences(p, [[1], [2]], [2], [1]),
   SingletonBeforeLargerPairs: (p) => occurrences(p, [[1], [2]], [1], [1]),
   SmallerBeforeCloserPairs: (p) => occurrences(p, [[1], [2]], [], [2]),
+  OccurrencesOf1Over2Over3Openers2Closers3: (p) => occurrences(p, [[1], [2], [3]], [2], [3]),
+  OccurrencesOf13Over2Openers1Closers2: (p) => occurrences(p, [[1, 3], [2]], [1], [2]),
+  OccurrencesOf13Over2Openers1Closers3Arc13: (p) => occurrences(p, [[1, 3], [2]], [1], [3], [[1, 3]]),
+  OccurrencesOf1Over2Over3Openers1Closers3: (p) => occurrences(p, [[1], [2], [3]], [1], [3]),
+  OccurrencesOf13Over2Closers2Arc13: (p) => occurrences(p, [[1, 3], [2]], [], [2], [[1, 3]]),
+  OccurrencesOf1Over23Openers2: (p) => occurrences(p, [[1], [2, 3]], [2], []),
+  OccurrencesOf1Over2Over3Openers1: (p) => occurrences(p, [[1], [2], [3]], [1], []),
+  OccurrencesOf1Over2Over3Openers13Closers2: (p) => occurrences(p, [[1], [2], [3]], [1, 3], [2]),
+  OccurrencesOf1Over23Closers1Arc23: (p) => occurrences(p, [[1], [2, 3]], [], [1], [[2, 3]]),
+  OccurrencesOf1Over23Openers2Closers1Arc23: (p) => occurrences(p, [[1], [2, 3]], [2], [1], [[2, 3]]),
+  OccurrencesOf1Over2Over3Closers2: (p) => occurrences(p, [[1], [2], [3]], [], [2]),
+  OccurrencesOf1Over2Over3Closers1: (p) => occurrences(p, [[1], [2], [3]], [], [1]),
+  OccurrencesOf1Over2Over3Openers12: (p) => occurrences(p, [[1], [2], [3]], [1, 2], []),
+  OccurrencesOf13Over2Openers12Arc13: (p) => occurrences(p, [[1, 3], [2]], [1, 2], [], [[1, 3]]),
+  OccurrencesOf1Over23Openers1: (p) => occurrences(p, [[1], [2, 3]], [1], []),
+  OccurrencesOf1Over2Over3Openers3Closers1: (p) => occurrences(p, [[1], [2], [3]], [3], [1]),
+  OccurrencesOf1Over23Openers2Arc23: (p) => occurrences(p, [[1], [2, 3]], [2], [], [[2, 3]]),
+  OccurrencesOf1Over23Openers12Closers3Arc23: (p) => occurrences(p, [[1], [2, 3]], [1, 2], [3], [[2, 3]]),
+  OccurrencesOf1Over23Arc23: (p) => occurrences(p, [[1], [2, 3]], [], [], [[2, 3]]),
+  OccurrencesOf13Over2Openers1Arc13: (p) => occurrences(p, [[1, 3], [2]], [1], [], [[1, 3]]),
+  OccurrencesOf1Over23Openers12Arc23: (p) => occurrences(p, [[1], [2, 3]], [1, 2], [], [[2, 3]]),
+  OccurrencesOf13Over2Openers1: (p) => occurrences(p, [[1, 3], [2]], [1], []),
+  OccurrencesOf1Over2Over3Openers23: (p) => occurrences(p, [[1], [2], [3]], [2, 3], []),
+  OccurrencesOf1Over2Over3Openers3Closers2: (p) => occurrences(p, [[1], [2], [3]], [3], [2]),
+  OccurrencesOf1Over23Closers3Arc23: (p) => occurrences(p, [[1], [2, 3]], [], [3], [[2, 3]]),
+  OccurrencesOf1Over23Closers13Arc23: (p) => occurrences(p, [[1], [2, 3]], [], [1, 3], [[2, 3]]),
+  OccurrencesOf1Over23Openers2Closers3Arc23: (p) => occurrences(p, [[1], [2, 3]], [2], [3], [[2, 3]]),
+  OccurrencesOf1Over2Over3Openers12Closers3: (p) => occurrences(p, [[1], [2], [3]], [1, 2], [3]),
+  OccurrencesOf1Over23Openers12: (p) => occurrences(p, [[1], [2, 3]], [1, 2], []),
+  OccurrencesOf13Over2Closers2: (p) => occurrences(p, [[1, 3], [2]], [], [2]),
+  OccurrencesOf1Over23Closers1: (p) => occurrences(p, [[1], [2, 3]], [], [1]),
+  OccurrencesOf1Over23Openers1Arc23: (p) => occurrences(p, [[1], [2, 3]], [1], [], [[2, 3]]),
+  OccurrencesOf13Over2Openers2Closers3Arc13: (p) => occurrences(p, [[1, 3], [2]], [2], [3], [[1, 3]]),
+  OccurrencesOf1Over23Openers1Closers3Arc23: (p) => occurrences(p, [[1], [2, 3]], [1], [3], [[2, 3]]),
+  OccurrencesOf1Over2Over3Closers13: (p) => occurrences(p, [[1], [2], [3]], [], [1, 3]),
 };
