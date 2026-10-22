@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-step-word-uuddud			[WeaklyAboveLatticePathCount, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	14			the step word $UUDDUD$
+the-step-word-uduudd			[WeaklyAboveLatticePathCount, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]	16			the step word $UDUUDD$
+findstat-st001361-1	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0]], "'WeaklyAboveLatticePathCount'"]	2	2	FindStat St001361	FindStat's value for [1,0]
+findstat-st001361-2	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0]], "'WeaklyAboveLatticePathCount'"]	6	6	FindStat St001361	FindStat's value for [1,0,1,0]
+findstat-st001361-3	Properties		[CombinatorialStat, [DyckPath, [List, 1, 1, 0, 0]], "'WeaklyAboveLatticePathCount'"]	4	4	FindStat St001361	FindStat's value for [1,1,0,0]

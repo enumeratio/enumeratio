@@ -9,6 +9,8 @@ import {
   add,
   and,
   atLeast,
+  atLeastValue,
+  atMostValue,
   bind,
   carried,
   fold,
@@ -285,6 +287,191 @@ const bounceWalk = (field: number): MathJSON =>
 const bounceValue: MathJSON = atLeast(2, bounceWalk(3));
 /** The number of cells of the staircase below the diagonal, binomial(n, 2). */
 const triangle: MathJSON = ["Divide", ["Multiply", semilength, subtract(semilength, 1)], 2];
+
+// ── helpers for FindStat's second Dyck-path batch ─────────────────────────────────────────
+
+/** m!, with 0! = 1, from the core's `Product` and `Range`. */
+const factorialOf = (m: MathJSON): MathJSON => ["If", equals(m, 0), 1, ["Product", ["Range", 1, m]]];
+/** Ups through each peak, left to right: how high the peak's shadow reaches. */
+const peakUps: MathJSON = forEach(peakPositions, upsUpTo("i"));
+/** Downs before each peak, left to right: where the peak's shadow starts. */
+const peakDowns: MathJSON = forEach(peakPositions, subtract("i", upsUpTo("i")));
+/**
+ * Boxes between the path and the diagonal (squares wholly above it), counted when `test` accepts
+ * the number of peaks whose shadow covers the box. A peak's shadow is the boxes right of it and
+ * below it. Column k (the k-th down step) rises to `ups before it`, so its boxes are rows k up to
+ * that height less one.
+ */
+const boxesBelowPeaks = (test: (coveringPeaks: MathJSON) => MathJSON): MathJSON =>
+  hasPair(
+    bind(
+      "pu",
+      peakUps,
+      bind(
+        "pd",
+        peakDowns,
+        bind(
+          "downs",
+          where(positions, isDown("i")),
+          sumOver(
+            upTo(semilength),
+            [
+              "If",
+              less(subtract(at("k", "downs"), "k"), add("k", 1)),
+              0,
+              count(
+                ["Range", "k", subtract(subtract(at("k", "downs"), "k"), 1)],
+                test(count(upTo(["Length", "pu"]), and(less(at("q", "pd"), "k"), greater(at("q", "pu"), "c")), "q")),
+                "c",
+              ),
+            ],
+            "k",
+          ),
+        ),
+      ),
+    ),
+  );
+
+/**
+ * Dyck paths whose area sequence stays on one side of this path's. The area sequence starts at 0
+ * and rises by at most 1, so one pass along this path's own sequence suffices: the carried list
+ * holds, at entry v+1, how many prefixes end at value v. A next value w may follow any v >= w-1,
+ * and `keeps` decides whether w respects this path's entry.
+ */
+const areaSequenceBounded = (keeps: (next: MathJSON, bound: MathJSON) => MathJSON): MathJSON => [
+  "If",
+  less(semilength, 2),
+  1,
+  bind("s", areaSequence, [
+    "Sum",
+    fold(
+      forEach(["Range", 2, semilength], at("i", "s")),
+      forEach(upTo(semilength), ["If", equals("w", 1), 1, 0], "w"),
+      forEach(
+        upTo(semilength),
+        [
+          "If",
+          keeps(subtract("w", 1), visiting),
+          ["Sum", forEach(["Range", ["Max", ["List", subtract("w", 1), 1]], semilength], at("u", "a"), "u")],
+          0,
+        ],
+        "w",
+      ),
+    ),
+  ]),
+];
+
+/**
+ * Walks of the same length, up or down a step at a time, that stay weakly above this path. The
+ * carried list holds, at entry d+1, how many prefixes sit d above the path. Against an up step a
+ * walk's up step keeps d and its down step lowers it; against a down step its up step raises d
+ * and its down step keeps it; below zero is dropped.
+ */
+const pathsWeaklyAbove: MathJSON = bind(
+  "m",
+  add(length(), 1),
+  [
+    "Sum",
+    [
+      "Fold",
+      // The carried list is typed, so the compiled sum stays an integer rather than a complex number.
+      [
+        "Function",
+        forEach(
+          upTo("m"),
+          [
+            "If",
+            equals(visiting, 1),
+            add(at("w", "a"), ["If", less("w", "m"), at(add("w", 1), "a"), 0]),
+            add(at("w", "a"), ["If", greater("w", 1), at(subtract("w", 1), "a"), 0]),
+          ],
+          "w",
+        ),
+        ["Typed", "a", "'list<integer>'"],
+        "b",
+      ],
+      forEach(upTo("m"), ["If", equals("w", 1), 1, 0], "w"),
+      x,
+    ],
+  ],
+  "integer",
+);
+
+/** The bounce path's climbs weigh binomial(climb, 2) each: its area, as `Area` counts it. */
+const bounceAreaStep: MathJSON = [
+  "If",
+  equals(carried(1), semilength),
+  ["List", carried(1), carried(2), carried(3)],
+  [
+    "List",
+    at(add(carried(1), 1), "ceilings"),
+    add(carried(2), 1),
+    add(carried(3), [
+      "Divide",
+      [
+        "Multiply",
+        subtract(at(add(carried(1), 1), "ceilings"), carried(1)),
+        subtract(subtract(at(add(carried(1), 1), "ceilings"), carried(1)), 1),
+      ],
+      2,
+    ]),
+  ],
+];
+const bouncePathArea: MathJSON = bind("ceilings", bounceCeilings, [
+  "At",
+  fold(upTo(semilength), ["List", 0, 0, 0], bounceAreaStep),
+  3,
+]);
+
+// The Delest-Viennot parallelogram polyomino of a Dyck path. Past the first up and the last down
+// step, the steps pair up (2t, 2t+1); each pair is one step of each of the polyomino's two
+// bounding paths: up-up is (north, east), down-down is (east, north), up-down is (east, east) and
+// down-up is (north, north). One path is the odd steps then a final east step, the other an east
+// step then the even steps reversed in kind (north for a down step). Column j is as tall as the
+// two paths' j-th east steps are apart.
+const polyominoNorthFirst: MathJSON = [
+  "Join",
+  forEach(upTo(semilength), step(subtract(["Multiply", 2, "i"], 1))),
+  ["List", 0],
+];
+const polyominoEastFirst: MathJSON = [
+  "Join",
+  ["List", 0],
+  forEach(upTo(semilength), subtract(1, step(["Multiply", 2, "i"]))),
+];
+/** Positions of the east steps of a path of `semilength + 1` steps. */
+const eastSteps = (path: MathJSON): MathJSON => where(upTo(add(semilength, 1)), equals(at("i", path), 0));
+/** Column heights, left to right, with the two paths bound as `north` and `east`. */
+const withColumnHeights = (body: MathJSON): MathJSON =>
+  bind(
+    "north",
+    polyominoNorthFirst,
+    bind(
+      "east",
+      polyominoEastFirst,
+      bind(
+        "northEasts",
+        eastSteps("north"),
+        bind(
+          "eastEasts",
+          eastSteps("east"),
+          bind(
+            "columns",
+            forEach(upTo(["Length", "northEasts"]), subtract(at("j", "northEasts"), at("j", "eastEasts")), "j"),
+            body,
+          ),
+        ),
+      ),
+    ),
+  );
+/** Maximal runs of east steps in a path of `semilength + 1` steps. */
+const eastRuns = (path: MathJSON): MathJSON =>
+  sumOver(upTo(add(semilength, 1)), [
+    "If",
+    equals(at("i", path), 0),
+    ["If", equals("i", 1), 1, ["If", equals(at(subtract("i", 1), path), 1), 1, 0]],
+    0,
+  ]);
 
 export const DYCK_STATISTICS: readonly Definition[] = [
   stat("Height", "The greatest height the path reaches.", nonEmpty(["Max", profile])),
@@ -758,5 +945,236 @@ export const DYCK_STATISTICS: readonly Definition[] = [
       ),
     ),
     'FindStat\'s "degree of symmetry".',
+  ),
+  // ── FindStat's second batch: counts, boxes under peaks, polyominoes ───────────────────────
+
+  stat(
+    "ParkingFunctionCount",
+    "The parking functions supported by the path: semilength factorial over the product of the factorials of the rise lengths.",
+    atLeast(2, ["Divide", factorialOf(semilength), ["Product", forEach(riseLengths, factorialOf("r"), "r")]], 1),
+    "A parking function is a path with the cars of each column labeled; the labels must increase up each rise, which leaves n!/(r_1! r_2! ...) of them.",
+  ),
+  stat(
+    "ValleyPositionSum",
+    "The sum of the positions of the valleys: a down step followed by an up step.",
+    hasPair(["Sum", valleyPositions]),
+    "FindStat St000027, \"the major index of a Dyck path\"; the repo's `MajorIndex` on a Dyck path sums the peaks' positions instead.",
+  ),
+  stat(
+    "InteractionDifference",
+    "The pyramid weight less the upper interactions: lower interactions less upper interactions.",
+    subtract(interactions(1), interactions(0)),
+  ),
+  stat(
+    "NonFinalConstantRunsOfLengthAtLeastTwo",
+    "Maximal runs of equal steps, at least two long, that are followed by a step of the other kind: the occurrences of two up steps then a down step, or two down steps then an up step.",
+    add(occurrencesOf(1, 1, 0), occurrencesOf(0, 0, 1)),
+  ),
+  stat(
+    "LongTunnels",
+    "The longest sequences of consecutive tunnels: the semilength less the valleys.",
+    hasPair(subtract(semilength, count(upTo(subtract(length(), 1)), and(isDown("i"), isUp(nextIndex))))),
+    "Tunnels meet end to start exactly at valleys, and each valley joins one pair, so merging them leaves one long tunnel per tunnel not joined.",
+  ),
+  stat(
+    "HalfMacMahonEqualIndex",
+    "Half the sum of the positions of double rises and double falls.",
+    hasPair(["Divide", ["Add", ["Sum", repeatsAt(1)], ["Sum", repeatsAt(0)]], 2]),
+    "Half of `MacMahonEqualIndex`, which is even on a Dyck path.",
+  ),
+  stat(
+    "BoxesBelowOnePeak",
+    "The boxes between the path and the diagonal that lie right of and below exactly one peak.",
+    boxesBelowPeaks((peaks) => equals(peaks, 1)),
+  ),
+  stat(
+    "BoxesBelowAtLeastTwoPeaks",
+    "The boxes between the path and the diagonal that lie right of and below at least two peaks.",
+    boxesBelowPeaks((peaks) => ["GreaterEqual", peaks, 2]),
+  ),
+  stat(
+    "DoubleStepVisiblePoints",
+    "Points below the path, at the parity of the path's height there, from which the north-east diagonal meets a double fall and the north-west diagonal meets a double rise.",
+    hasPair(
+      bind(
+        "vp",
+        vertexProfile,
+        bind(
+          "doubleRises",
+          forEach(repeatsAt(1), add("i", heightAfter("i"))),
+          bind(
+            "doubleFalls",
+            forEach(repeatsAt(0), subtract("i", heightAfter("i"))),
+            sumOver(
+              ["Range", 0, length()],
+              bind(
+                "h",
+                at(add("v", 1), "vp"),
+                [
+                  "If",
+                  less("h", 2),
+                  0,
+                  count(
+                    ["Range", 1, "h"],
+                    and(
+                      atMostValue(["Multiply", 2, "m"], "h"),
+                      and(
+                        greater(
+                          count("doubleRises", equals("s", add("v", subtract("h", ["Multiply", 2, "m"]))), "s"),
+                          0,
+                        ),
+                        greater(
+                          count("doubleFalls", equals("s", subtract("v", subtract("h", ["Multiply", 2, "m"]))), "s"),
+                          0,
+                        ),
+                      ),
+                    ),
+                    "m",
+                  ),
+                ],
+                "number",
+              ),
+              "v",
+            ),
+          ),
+        ),
+      ),
+    ),
+    "A point (v, j) has j = h - 2m under the path's vertex v of height h. Its north-east diagonal meets the path at a double fall (v, h') with v - j = v' - h'; its north-west diagonal at a double rise with v + j = v' + h'.",
+  ),
+  stat(
+    "AreaAboveBouncePath",
+    "The boxes between the path and its bounce path: the area less the area of the bounce path.",
+    atLeast(2, subtract(areaValue, bouncePathArea)),
+    "The bounce path is U^b1 D^b1 U^b2 D^b2 ... for the climbs b of the bounce walk, so its area is the sum of binomial(b, 2).",
+  ),
+  stat(
+    "WeaklyBelowDyckPathCount",
+    "The Dyck paths of the same semilength weakly below this path, itself included.",
+    areaSequenceBounded((next, bound) => atMostValue(next, bound)),
+    "Weakly below: each entry of the area sequence is at most this path's.",
+  ),
+  stat(
+    "ProperlyBelowDyckPathCount",
+    "The Dyck paths of the same semilength weakly below this path, itself excluded.",
+    subtract(
+      areaSequenceBounded((next, bound) => atMostValue(next, bound)),
+      1,
+    ),
+  ),
+  stat(
+    "WeaklyAboveDyckPathCount",
+    "The Dyck paths of the same semilength weakly above this path, itself included.",
+    areaSequenceBounded((next, bound) => atLeastValue(next, bound)),
+  ),
+  stat(
+    "ProperlyAboveDyckPathCount",
+    "The Dyck paths of the same semilength weakly above this path, itself excluded.",
+    subtract(
+      areaSequenceBounded((next, bound) => atLeastValue(next, bound)),
+      1,
+    ),
+  ),
+  stat(
+    "WeaklyAboveLatticePathCount",
+    "The up-and-down paths of the same length, ending anywhere, that stay weakly above this path.",
+    nonEmpty(pathsWeaklyAbove, 1),
+    "The paths need not return to the axis: `2^n` for the highest path, the central binomial coefficient for the zigzag.",
+  ),
+
+  stat(
+    "NorthStepOrderingCount",
+    "The total orderings of the up steps such that the up steps after the k-th down step are never among the first k in the order.",
+    atLeast(
+      4,
+      bind("us", forEach(upTo(semilength), subtract(at("k", where(positions, isDown("i"))), "k"), "k"), [
+        "Product",
+        forEach(
+          ["Range", 1, subtract(semilength, 1)],
+          [
+            "Divide",
+            subtract(at("k", "us"), subtract("k", 1)),
+            bind(
+              "t",
+              ["If", equals("k", 1), at(1, "us"), subtract(at("k", "us"), at(subtract("k", 1), "us"))],
+              factorialOf("t"),
+              "integer",
+            ),
+          ],
+          "k",
+        ),
+      ]),
+      1,
+    ),
+    "The coefficient of z_1^a_1 ... z_n^a_n in the product of (z_1 + ... + z_k), by Stanley's product formula: each factor is the height before a down step over the factorial of the up steps since the last one.",
+  ),
+  stat(
+    "ThreeCatalanPathCount",
+    "The paths from the origin to (n, n, n) with x >= y >= z whose first two coordinates trace this Dyck path and whose last two coordinates trace it as well.",
+    atLeast(
+      4,
+      bind(
+        "ups",
+        where(positions, isUp("i")),
+        bind("downs", where(positions, isDown("i")), [
+          "Product",
+          forEach(
+            ["Range", 1, subtract(semilength, 1)],
+            bind(
+              "r",
+              subtract(subtract(at(add("k", 1), "ups"), at("k", "ups")), 1),
+              bind(
+                "s",
+                subtract(subtract(at(add("k", 1), "downs"), at("k", "downs")), 1),
+                ["Divide", factorialOf(add("r", "s")), ["Multiply", factorialOf("r"), factorialOf("s")]],
+                "integer",
+              ),
+              "integer",
+            ),
+            "k",
+          ),
+        ]),
+      ),
+      1,
+    ),
+    "With r the downs between consecutive up steps and s the ups between consecutive down steps, the product over consecutive pairs of binomial(r + s, r).",
+  ),
+
+  stat(
+    "ParallelogramPolyominoArea",
+    "The cells of the parallelogram polyomino the path corresponds to under the Delest-Viennot bijection.",
+    nonEmpty(withColumnHeights(["Sum", "columns"])),
+  ),
+  stat(
+    "ParallelogramPolyominoNormalizedArea",
+    "The area of the parallelogram polyomino less the semilength: the cells beyond the smallest polyomino.",
+    nonEmpty(withColumnHeights(subtract(["Sum", "columns"], semilength))),
+  ),
+  stat(
+    "ParallelogramPolyominoMinimalColumnHeight",
+    "The height of the shortest column of the parallelogram polyomino.",
+    nonEmpty(withColumnHeights(["Min", "columns"])),
+  ),
+  stat(
+    "ParallelogramPolyominoMaximalColumnHeight",
+    "The height of the tallest column of the parallelogram polyomino.",
+    nonEmpty(withColumnHeights(["Max", "columns"])),
+  ),
+  stat(
+    "ParallelogramPolyominoInnerCorners",
+    "The inner corners of the parallelogram polyomino: the turns from east to north on its two bounding paths, not counting the corners every polyomino has.",
+    nonEmpty(
+      bind(
+        "north",
+        polyominoNorthFirst,
+        bind("east", polyominoEastFirst, subtract(add(eastRuns("north"), eastRuns("east")), 2)),
+      ),
+    ),
+  ),
+  stat(
+    "ParallelogramPolyominoUpperInnerCorners",
+    "The inner corners of the polyomino's upper path: its turns from east to north, not counting the first.",
+    nonEmpty(bind("east", polyominoEastFirst, subtract(eastRuns("east"), 1))),
+    "The upper path of FindStat's polyomino is the one that opens with an east step here, up to reflecting the polyomino in the diagonal.",
   ),
 ];

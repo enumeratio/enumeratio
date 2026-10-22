@@ -57,5 +57,5 @@ test.skipIf(!process.env.DEEP_TESTS)(
       for (const [head, expected] of Object.entries(DYCK_READINGS))
         expect(evaluate(head, w), `${head} [${w.join(", ")}]`).toBe(expected(w));
   },
-  900_000,
+  1_800_000,
 );
