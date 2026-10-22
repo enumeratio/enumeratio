@@ -182,3 +182,49 @@ test("exact integers read from the engine's digit forms", () => {
   expect(bigintOf(720)).toBe(720n);
   expect(bigintOf({ num: "1.5" })).toBeUndefined();
 });
+
+test("rows on both sides of 2^53 match direct At on Permutations(25)", async () => {
+  const source = open(["Permutations", 25]);
+  const edge = BigInt(Number.MAX_SAFE_INTEGER);
+  const batch = await source.rows([edge - 1n, edge + 4n], [0, 1]);
+  expect(batch.start).toBe(edge - 1n);
+  expect(batch.rows).toHaveLength(5);
+  // A number cannot name an index past 2^53, so the far side is checked against the family's own
+  // digit-taking `At`; the near side against `At` by number.
+  const family = ce.box(["SymmetricGroup", 25] as never);
+  const def = ce.lookupDefinition("SymmetricGroup") as unknown as {
+    operator: { collection: { at: (c: unknown, i: string) => { json: unknown } } };
+  };
+  const digitsOf = (s: string): string => (s.match(/\d+/g) ?? []).join(",");
+  const rows = batch.rows.map((r) => digitsOf(textOf(r[0])));
+  for (const [i, row] of rows.entries()) {
+    const index = edge - 1n + BigInt(i);
+    const direct =
+      index <= edge
+        ? ce.box(["At", ["Permutations", 25], Number(index)] as never).evaluate()
+        : def.operator.collection.at(family, index.toString());
+    expect(row).toBe(digitsOf(JSON.stringify(direct.json)));
+  }
+  // Distinct, and in lex order across the boundary.
+  expect(new Set(rows).size).toBe(5);
+  const key = (s: string): number[] => s.split(",").map(Number);
+  const lexLess = (a: string, b: string): boolean =>
+    key(a).find((x, i) => x !== key(b)[i])! < key(b).find((x, i) => x !== key(a)[i])!;
+  for (let i = 1; i < rows.length; i++) expect(lexLess(rows[i - 1]!, rows[i]!)).toBe(true);
+});
+
+test("a family with no bigint unrank says where paging stops", async () => {
+  const source = open(["Subsets", 60]);
+  const edge = BigInt(Number.MAX_SAFE_INTEGER);
+  const batch = await source.rows([edge, edge + 3n], [0, 1]);
+  expect(batch.rows).toHaveLength(1);
+  expect(batch.declined).toContain("paging stops at row");
+});
+
+test("a static page opens on a row past 2^53 by bigint", async () => {
+  const source = open(["SymmetricGroup", 25]);
+  const from = BigInt(Number.MAX_SAFE_INTEGER) + 2n;
+  const page = toText(await staticTable(source, { scrollPosition: from, maxItems: 2 }));
+  expect(page).toContain(String(from));
+  expect(page).toContain(String(from + 1n));
+});
