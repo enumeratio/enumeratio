@@ -10,6 +10,10 @@ import type { CompileHandler } from "./facade.ts";
 /** The compute-engine version whose shadow rules this file was checked against. */
 export const CHECKED_COMPUTE_ENGINE = "0.159.0";
 
+/** A canonical call of `name` on already-canonical operands, bypassing the head's own `canonical` handler. */
+export const canonicalCall = (ce: ComputeEngine, name: string, ops: readonly unknown[]): unknown =>
+  (ce as unknown as { _fn(h: string, o: readonly unknown[]): unknown })._fn(name, ops);
+
 /** The fields of a definition that, replaced, make an extension a shadow of the library head. */
 export const SHADOWING_FIELDS = [
   "evaluate",
