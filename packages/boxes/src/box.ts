@@ -71,9 +71,9 @@ export type BoxNode =
   | readonly ["ErrorBox", Box]
   // Graphics (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives). A primitive's
   // geometry is its options, in the frame's coordinates; a mark is `TagBox`ed with its address,
-  // a link with its members. A `GraphicsBox` and a `GraphicsComplexBox` hold their primitives as a list, as Wolfram's do.
+  // a link with its members. A `GraphicsBox` holds its primitives as a list; a `GraphicsComplexBox` holds its coordinates, then its primitives, as Wolfram's do.
   | readonly ["GraphicsBox", readonly Box[], Options?]
-  | readonly ["GraphicsComplexBox", readonly Box[], Options?]
+  | readonly ["GraphicsComplexBox", readonly OptionValue[], readonly Box[], Options?]
   | readonly ["DiskBox", Options?]
   | readonly ["LineBox", Options?]
   | readonly ["PointBox", Options?]
@@ -88,9 +88,9 @@ export type BoxNode =
   | readonly ["RasterBox", Options?]
   // Space (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives, slice 7): the same contract in three
   // dimensions. A primitive's geometry is its options; inside a `GraphicsComplex3DBox` a `Polygon3DBox`
-  // or `Line3DBox` names its vertices by `Indices` into the complex's `Points`.
+  // or `Line3DBox` names its vertices by `Indices` into the complex's coordinates (its first operand).
   | readonly ["Graphics3DBox", readonly Box[], Options?]
-  | readonly ["GraphicsComplex3DBox", readonly Box[], Options?]
+  | readonly ["GraphicsComplex3DBox", readonly OptionValue[], readonly Box[], Options?]
   | readonly ["Polygon3DBox", Options?]
   | readonly ["Line3DBox", Options?]
   | readonly ["Point3DBox", Options?]
@@ -141,7 +141,7 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   InterpretationBox: 2,
   ErrorBox: 1,
   GraphicsBox: 1,
-  GraphicsComplexBox: 1,
+  GraphicsComplexBox: 2,
   DiskBox: 0,
   LineBox: 0,
   PointBox: 0,
@@ -152,7 +152,7 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   InsetBox: 1,
   RasterBox: 0,
   Graphics3DBox: 1,
-  GraphicsComplex3DBox: 1,
+  GraphicsComplex3DBox: 2,
   Polygon3DBox: 0,
   Line3DBox: 0,
   Point3DBox: 0,
@@ -238,8 +238,11 @@ export const interpretation = (box: Box, expr: MathJsonExpression): Box => ["Int
 export const error = (box: Box): Box => ["ErrorBox", box];
 export const graphics = (primitives: readonly Box[], options?: Options): Box =>
   ["GraphicsBox", ...withOptions([primitives] as const, options)] as Box;
-export const graphicsComplex = (primitives: readonly Box[], options?: Options): Box =>
-  ["GraphicsComplexBox", ...withOptions([primitives] as const, options)] as Box;
+export const graphicsComplex = (
+  coordinates: readonly OptionValue[],
+  primitives: readonly Box[],
+  options?: Options,
+): Box => ["GraphicsComplexBox", ...withOptions([coordinates, primitives] as const, options)] as Box;
 export const disk = (options?: Options): Box => ["DiskBox", ...withOptions([] as const, options)] as Box;
 export const line = (options?: Options): Box => ["LineBox", ...withOptions([] as const, options)] as Box;
 export const point = (options?: Options): Box => ["PointBox", ...withOptions([] as const, options)] as Box;
@@ -250,8 +253,11 @@ export const polyhedron = (options?: Options): Box => ["PolyhedronBox", ...withO
 export const raster = (options?: Options): Box => ["RasterBox", ...withOptions([] as const, options)] as Box;
 export const graphics3d = (primitives: readonly Box[], options?: Options): Box =>
   ["Graphics3DBox", ...withOptions([primitives] as const, options)] as Box;
-export const graphicsComplex3d = (primitives: readonly Box[], options?: Options): Box =>
-  ["GraphicsComplex3DBox", ...withOptions([primitives] as const, options)] as Box;
+export const graphicsComplex3d = (
+  coordinates: readonly OptionValue[],
+  primitives: readonly Box[],
+  options?: Options,
+): Box => ["GraphicsComplex3DBox", ...withOptions([coordinates, primitives] as const, options)] as Box;
 export const polygon3d = (options?: Options): Box => ["Polygon3DBox", ...withOptions([] as const, options)] as Box;
 export const line3d = (options?: Options): Box => ["Line3DBox", ...withOptions([] as const, options)] as Box;
 export const point3d = (options?: Options): Box => ["Point3DBox", ...withOptions([] as const, options)] as Box;
@@ -322,10 +328,11 @@ export function isBox(value: unknown): value is Box {
     case "TextData":
       return Array.isArray(args[0]) && args[0].every(isBox);
     case "GraphicsBox":
-    case "GraphicsComplexBox":
     case "Graphics3DBox":
-    case "GraphicsComplex3DBox":
       return Array.isArray(args[0]) && args[0].every(isBox);
+    case "GraphicsComplexBox":
+    case "GraphicsComplex3DBox":
+      return Array.isArray(args[0]) && Array.isArray(args[1]) && args[1].every(isBox);
     case "GridBox":
       return Array.isArray(args[0]) && args[0].every((r: unknown) => Array.isArray(r) && r.every(isBox));
     case "PaneSelectorBox":

@@ -1,2 +1,2 @@
 id	in	out	tex.in	tex.out
-inert	GraphicsComplexBox[List[]]	GraphicsComplexBox[{}]	\text{GraphicsComplexBox}[\{\}]	\text{GraphicsComplexBox}[\{\}]
+inert	GraphicsComplexBox[List[], List[]]	GraphicsComplexBox[{}, {}]	\text{GraphicsComplexBox}[\{\},\{\}]	\text{GraphicsComplexBox}[\{\},\{\}]

@@ -23,6 +23,10 @@ const figure: Box = graphics(
   [
     graphicsComplex(
       [
+        [0, 0],
+        [1, 0.5],
+      ],
+      [
         style(tag(disk({ Radius: 0.12 }), "0,0"), { FaceForm: "#d97706" }),
         style(tag(disk({ Radius: 0.12, Center: [1, 0.5] }), "1,0"), { FaceForm: "#d97706" }),
         tag(inset("a", { Center: [0, 0], Size: 0.4, Opacity: 0.5, Role: "Caption" }), "0,0"),
@@ -69,10 +73,6 @@ const figure: Box = graphics(
         Addresses: [
           [0, 0],
           [1, 0],
-        ],
-        Places: [
-          [0, 0],
-          [1, 0.5],
         ],
       },
     ),
