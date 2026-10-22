@@ -550,6 +550,7 @@ const NOVEL = [
   "CyclicPermutations",
   "DedekindSum",
   "DelannoyPaths",
+  "DeleteFromTableau",
   "Denert",
   "Depth",
   "Derangements",
