@@ -30,10 +30,13 @@ concurrency:
 jobs:
   plausible:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25 # margin for a cold dist cache; the build below is already narrowed
     steps:
       - uses: actions/checkout@v4
+      # The sampler reads only combinatorics (and what it reads); a full build timed out here.
       - uses: ./.github/actions/setup
+        with:
+          packages: "@enumeratio/combinatorics"
 
       - id: run
         continue-on-error: true
