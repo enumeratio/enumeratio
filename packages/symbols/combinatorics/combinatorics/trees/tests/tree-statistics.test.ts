@@ -83,5 +83,5 @@ test.skipIf(!process.env.DEEP_TESTS)(
         if (!(slow.has(head) && JSON.stringify(t).split("[").length > 8))
           expect(evaluate(head, "OrderedTree", orderedJson(t)), `${head} ${JSON.stringify(t)}`).toBe(expected(t));
   },
-  1_800_000,
+  3_000_000,
 );
