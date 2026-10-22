@@ -105,7 +105,8 @@ jobs:
   # A handful of suites (statistics, combinatorics) are CPU-bound and saturate a 4-vCPU
   # runner on their own, so splitting them across separate runners buys real wall-clock time —
   # unlike unordered-but-single-runner, which just makes them contend for the same 4 cores.
-  # Rebalance by moving a package between the shards in tools/ci/affected.ts (SHARDS).
+  # Rebalance by moving a package between the shards in tools/ci/affected.ts (SHARDS), or split one
+  # package's files across runners with SPLIT there (vitest --shard).
   test_shard:
     name: tests (${{ matrix.shard }})
     needs: changes
@@ -115,7 +116,7 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.changes.outputs.matrix) }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40 # `rest` pays a cold dist-cache build (~20 min) before its tests
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
@@ -123,10 +124,12 @@ jobs:
           packages: ${{ matrix.pkgs }}
       - env:
           PKGS: ${{ matrix.pkgs }}
+          ARGS: ${{ matrix.args }}
         run: |
           filters=()
           for p in $PKGS; do filters+=(--filter "$p"); done
-          pnpm -r "${filters[@]}" run test
+          # ARGS (a vitest --shard, when the shard is split) is intentionally word-split
+          pnpm -r "${filters[@]}" run test $ARGS
 
   # Branch protection names the required check `tests`, but that name has to stay off the matrix
   # job above (each shard would collide on it). This fans back in and fails if any shard did;

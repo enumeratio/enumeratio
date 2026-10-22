@@ -22,6 +22,9 @@ export const SHARDS: Record<string, string[]> = {
   combinatorics: ["@enumeratio/combinatorics"],
 };
 
+/** A shard's package split by vitest file shard (`--shard=i/n`), for a shard one runner can't finish in time. */
+export const SPLIT: Record<string, number> = { combinatorics: 2 };
+
 /** Root-level files no package reads. */
 const INERT = /^(?:[^/]+\.md|LICENSE|\.vscode\/|\.vite-hooks\/|\.claude\/|\.scratch\/)/;
 
@@ -112,7 +115,16 @@ if (import.meta.main) {
     // The shards that have something to run, as a job matrix.
     const matrix = Object.entries(byShard)
       .filter(([, names]) => names.length > 0)
-      .map(([shard, names]) => ({ shard, pkgs: names.join(" ") }));
+      .flatMap(([shard, names]) => {
+        const pkgs = names.join(" ");
+        const n = SPLIT[shard] ?? 1;
+        if (n === 1) return [{ shard, pkgs, args: "" }];
+        return Array.from({ length: n }, (_, i) => ({
+          shard: `${shard} ${i + 1}/${n}`,
+          pkgs,
+          args: `--shard=${i + 1}/${n}`,
+        }));
+      });
     const lines = [`full=${sel.full}`, `site=${sel.site}`, `matrix=${JSON.stringify(matrix)}`];
     appendFileSync(out, `${lines.join("\n")}\n`);
   }
