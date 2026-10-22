@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-one-line-word-312			[TotalDisplacement, [Permutation, [List, 3, 1, 2]]]	4			the one-line word $312$
+the-one-line-word-2413			[TotalDisplacement, [Permutation, [List, 2, 4, 1, 3]]]	6			the one-line word $2413$
+findstat-st000830-1	Properties		[CombinatorialStat, [Permutation, [List, 1, 2]], "'TotalDisplacement'"]	0	0	FindStat St000830	FindStat's value for [1,2]
+findstat-st000830-2	Properties		[CombinatorialStat, [Permutation, [List, 2, 1]], "'TotalDisplacement'"]	2	2	FindStat St000830	FindStat's value for [2,1]
+findstat-st000830-3	Properties		[CombinatorialStat, [Permutation, [List, 1, 2, 3]], "'TotalDisplacement'"]	0	0	FindStat St000830	FindStat's value for [1,2,3]
