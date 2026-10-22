@@ -1,0 +1,17 @@
+{
+  "id": "2026-10-22T10-04Z-3ffdd8f",
+  "sha": "3ffdd8f6112089735a69e1ac349861de096cc95a",
+  "date": "2026-10-22T10:04:58.581Z",
+  "trigger": "nightly",
+  "url": "https://github.com/enumeratio/enumeratio/actions/runs/39760074081",
+  "job": "nightly",
+  "suite": "standard",
+  "systems": [
+    "julia",
+    "mpmath",
+    "rust",
+    "sympy",
+    "ts"
+  ],
+  "machine": "sha256:1e46169e56009535"
+}
