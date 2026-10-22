@@ -124,12 +124,12 @@ export const FINDSTAT_READINGS: Record<string, (p: number[]) => number> = {
   },
   VeryBigAscents: (p) => indices(p).filter((i) => i + 1 < p.length && p[i + 1]! - p[i]! > 2).length,
   VeryBigDescents: (p) => indices(p).filter((i) => i + 1 < p.length && p[i]! - p[i + 1]! > 2).length,
-  SmallExceedances: (p) => range(1, p.length).filter((i) => p[i - 1] === i + 1).length,
-  TwoExcedences: (p) => range(1, p.length).filter((i) => p[i - 1] === i + 2).length,
-  BigExceedances: (p) => range(1, p.length).filter((i) => p[i - 1]! - i > 1).length,
-  DoubleExceedences: (p) => range(1, p.length).filter((i) => i < p[i - 1]! && p[i - 1]! < p[p[i - 1]! - 1]!).length,
+  SmallExcedances: (p) => range(1, p.length).filter((i) => p[i - 1] === i + 1).length,
+  TwoExcedances: (p) => range(1, p.length).filter((i) => p[i - 1] === i + 2).length,
+  BigExcedances: (p) => range(1, p.length).filter((i) => p[i - 1]! - i > 1).length,
+  DoubleExcedances: (p) => range(1, p.length).filter((i) => i < p[i - 1]! && p[i - 1]! < p[p[i - 1]! - 1]!).length,
   DoubleDeficiencies: (p) => range(1, p.length).filter((i) => i > p[i - 1]! && p[i - 1]! > p[p[i - 1]! - 1]!).length,
-  NestedExceedences: (p) => pairs(p).filter(([a, b]) => a + 1 < b + 1 && b + 1 < p[b]! && p[b]! < p[a]!).length,
+  NestedExcedances: (p) => pairs(p).filter(([a, b]) => a + 1 < b + 1 && b + 1 < p[b]! && p[b]! < p[a]!).length,
   PureExcedances: (p) =>
     range(1, p.length).filter((i) => p[i - 1]! > i && !before(p, i).some((v) => i <= v && v < p[i - 1]!)).length,
   GlobalAscents: (p) =>

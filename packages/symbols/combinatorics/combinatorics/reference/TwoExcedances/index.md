@@ -1,11 +1,11 @@
 ---
-name: NestedExceedences
+name: TwoExcedances
 domain: Permutation statistics
-signature: NestedExceedences(p)
-summary: Pairs i < j with i < j < p(j) < p(i).
+signature: TwoExcedances(p)
+summary: Positions with p(i) = i + 2.
 signatures:
-  - call: NestedExceedences(p)
-    description: Pairs i < j with i < j < p(j) < p(i).
+  - call: TwoExcedances(p)
+    description: Positions with p(i) = i + 2.
     library: enumeratio-combinatorics
     type: (permutation) -> number
 ---

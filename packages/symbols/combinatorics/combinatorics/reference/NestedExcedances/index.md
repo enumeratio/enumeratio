@@ -1,11 +1,11 @@
 ---
-name: SmallExceedances
+name: NestedExcedances
 domain: Permutation statistics
-signature: SmallExceedances(p)
-summary: Positions with p(i) = i + 1.
+signature: NestedExcedances(p)
+summary: Pairs i < j with i < j < p(j) < p(i).
 signatures:
-  - call: SmallExceedances(p)
-    description: Positions with p(i) = i + 1.
+  - call: NestedExcedances(p)
+    description: Pairs i < j with i < j < p(j) < p(i).
     library: enumeratio-combinatorics
     type: (permutation) -> number
 ---

@@ -1,11 +1,11 @@
 ---
-name: TwoExcedences
+name: SmallExcedances
 domain: Permutation statistics
-signature: TwoExcedences(p)
-summary: Positions with p(i) = i + 2.
+signature: SmallExcedances(p)
+summary: Positions with p(i) = i + 1.
 signatures:
-  - call: TwoExcedences(p)
-    description: Positions with p(i) = i + 2.
+  - call: SmallExcedances(p)
+    description: Positions with p(i) = i + 1.
     library: enumeratio-combinatorics
     type: (permutation) -> number
 ---

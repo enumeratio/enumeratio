@@ -481,11 +481,11 @@ const FINDSTAT_PERMUTATION_STATISTICS_2: readonly Definition[] = [
   ),
 
   // Exceedances of a fixed size, and chains of them.
-  stat("SmallExceedances", "Positions with p(i) = i + 1.", nonEmpty(count(positions, equals(here, add("i", 1))))),
-  stat("TwoExcedences", "Positions with p(i) = i + 2.", nonEmpty(count(positions, equals(here, add("i", 2))))),
-  stat("BigExceedances", "Positions with p(i) - i > 1.", nonEmpty(count(positions, greater(subtract(here, "i"), 1)))),
+  stat("SmallExcedances", "Positions with p(i) = i + 1.", nonEmpty(count(positions, equals(here, add("i", 1))))),
+  stat("TwoExcedances", "Positions with p(i) = i + 2.", nonEmpty(count(positions, equals(here, add("i", 2))))),
+  stat("BigExcedances", "Positions with p(i) - i > 1.", nonEmpty(count(positions, greater(subtract(here, "i"), 1)))),
   stat(
-    "DoubleExceedences",
+    "DoubleExcedances",
     "Positions with i < p(i) < p(p(i)).",
     nonEmpty(count(positions, and(greater(here, "i"), less(here, at(here))))),
   ),
@@ -495,7 +495,7 @@ const FINDSTAT_PERMUTATION_STATISTICS_2: readonly Definition[] = [
     nonEmpty(count(positions, and(less(here, "i"), greater(here, at(here))))),
   ),
   stat(
-    "NestedExceedences",
+    "NestedExcedances",
     "Pairs i < j with i < j < p(j) < p(i).",
     hasPair(sumOverPairs(and(less("j", at("j")), less(at("j"), here)), 1)),
   ),

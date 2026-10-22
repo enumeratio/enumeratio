@@ -1,11 +1,11 @@
 ---
-name: BigExceedances
+name: DoubleExcedances
 domain: Permutation statistics
-signature: BigExceedances(p)
-summary: Positions with p(i) - i > 1.
+signature: DoubleExcedances(p)
+summary: Positions with i < p(i) < p(p(i)).
 signatures:
-  - call: BigExceedances(p)
-    description: Positions with p(i) - i > 1.
+  - call: DoubleExcedances(p)
+    description: Positions with i < p(i) < p(p(i)).
     library: enumeratio-combinatorics
     type: (permutation) -> number
 ---

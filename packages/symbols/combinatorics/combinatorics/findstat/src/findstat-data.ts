@@ -434,25 +434,25 @@ export const findstat: readonly FindStatMatch[] = [
     values: 1200,
   },
   {
-    head: "SmallExceedances",
+    head: "SmallExcedances",
     on: "Permutation",
     findstat: ["St000237"],
     values: 2708,
   },
   {
-    head: "TwoExcedences",
+    head: "TwoExcedances",
     on: "Permutation",
     findstat: ["St000648"],
     values: 3028,
   },
   {
-    head: "BigExceedances",
+    head: "BigExcedances",
     on: "Permutation",
     findstat: ["St000711"],
     values: 1200,
   },
   {
-    head: "DoubleExceedences",
+    head: "DoubleExcedances",
     on: "Permutation",
     findstat: ["St000731"],
     values: 3028,
@@ -464,7 +464,7 @@ export const findstat: readonly FindStatMatch[] = [
     values: 1200,
   },
   {
-    head: "NestedExceedences",
+    head: "NestedExcedances",
     on: "Permutation",
     findstat: ["St001513"],
     values: 1200,
