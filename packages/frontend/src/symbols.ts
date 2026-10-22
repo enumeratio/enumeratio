@@ -709,9 +709,9 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       value: epsil([
         "Show",
         ["PolytopeFaces", [head, ...ops]],
-        ["KeyValuePair", "Selection", ["List"]],
-        ["KeyValuePair", "SphericalRegion", "True"],
-        ["KeyValuePair", "ImageSize", ["List", "Automatic", 320]],
+        ["Rule", "Selection", ["List"]],
+        ["Rule", "SphericalRegion", "True"],
+        ["Rule", "ImageSize", ["List", "Automatic", 320]],
       ] as Json),
       style: "display:block;min-height:320px",
     }),
@@ -728,8 +728,8 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
         value: epsil([
           "Show",
           ["StrandDiagram", ["Braid", ...ops]],
-          ["KeyValuePair", "Selection", ["List"]],
-          ["KeyValuePair", "ImageSize", ["List", "Automatic", height]],
+          ["Rule", "Selection", ["List"]],
+          ["Rule", "ImageSize", ["List", "Automatic", height]],
         ] as Json),
         style: `display:block;min-height:${height}px`,
       };
@@ -745,7 +745,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       value: epsil([
         "Show",
         [frame, [head, ...ops]],
-        ["KeyValuePair", "ImageSize", ["List", "Automatic", FRAME_HEIGHT[frame]]],
+        ["Rule", "ImageSize", ["List", "Automatic", FRAME_HEIGHT[frame]]],
       ] as Json),
       style: `display:block;min-height:${FRAME_HEIGHT[frame]}px`,
     }),
@@ -1160,7 +1160,7 @@ function render(expr: Json, inScope: boolean): Rendering | undefined {
   const held = symbol.holdsOptions
     ? Object.entries(options)
         .filter(([k]) => k !== "Variables")
-        .map(([k, v]) => ["KeyValuePair", k, v] as MathJsonExpression)
+        .map(([k, v]) => ["Rule", k, v] as MathJsonExpression)
     : [];
   const attributes = { ...symbol.fixed, ...symbol.attributes([...ops, ...held]), ...lowered.attributes };
   const children = [
@@ -1271,7 +1271,9 @@ export function staticLayoutBoxes(expr: Json, evaluated: boolean, written?: Box)
 
 /** `ImageSize -> [w, h]`'s h among `Show`'s held options, else the element's default height. */
 function showHeight(ops: readonly Json[]): number {
-  const size = ops.find((op) => headOf(op) === "KeyValuePair" && symOf(opsOf(op)[0]) === "ImageSize");
+  const size = ops.find(
+    (op) => (headOf(op) === "Rule" || headOf(op) === "KeyValuePair") && symOf(opsOf(op)[0]) === "ImageSize",
+  );
   const h = numOf(tupleOf(opsOf(size)[1])?.[1]);
   return h !== undefined && h > 0 ? h : SHOW_HEIGHT;
 }

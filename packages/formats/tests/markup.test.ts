@@ -11,7 +11,7 @@ test("an element is its head over its children, a text run its atoms", () => {
       <Sin><Multiply>k x</Multiply></Sin>
       <Tuple>x 0 10</Tuple>
     </Plot>`).json,
-  ).toEqual(["Plot", ["Sin", ["Multiply", "k", "x"]], ["Tuple", "x", 0, 10], ["KeyValuePair", "PlotRange", "All"]]);
+  ).toEqual(["Plot", ["Sin", ["Multiply", "k", "x"]], ["Tuple", "x", 0, 10], ["Rule", "PlotRange", "All"]]);
 });
 
 // `<` can't sit in htm's (or JSX's) text, even in a string: it is written `\u003c`.
@@ -40,8 +40,8 @@ test("slots are trailing pairs; a bare one is True; Epsil where one token won't 
   expect(read('<Plot Axes PlotRange="(-1, 1)">x</Plot>').json).toEqual([
     "Plot",
     "x",
-    ["KeyValuePair", "Axes", "True"],
-    ["KeyValuePair", "PlotRange", ["Tuple", -1, 1]],
+    ["Rule", "Axes", "True"],
+    ["Rule", "PlotRange", ["Tuple", -1, 1]],
   ]);
 });
 
@@ -50,12 +50,12 @@ test("a slot naming a parameter takes its place, the children filling the rest",
   const placed = (text: string) => readMarkupText(text, { parseText: parseExpression, paramsOf });
   expect(placed('<PolyLog s="2">z</PolyLog>')).toEqual({ json: ["PolyLog", 2, "z"], errors: [] });
   expect(placed('<PolyLog z="x" s="2" />').json).toEqual(["PolyLog", 2, "x"]);
-  expect(placed('<F b="2" Opt="1">x</F>').json).toEqual(["F", "x", 2, ["KeyValuePair", "Opt", 1]]);
+  expect(placed('<F b="2" Opt="1">x</F>').json).toEqual(["F", "x", 2, ["Rule", "Opt", 1]]);
   expect(placed('<F a="1" b="2" />').json).toEqual(["F", 1, 2]);
   expect(placed('<bob.Scaled factor="5">3</bob.Scaled>').json).toEqual(["MemberCall", "bob", "'Scaled'", 3, 5]);
   // Without a parameter named, or without `paramsOf`, a slot is a trailing pair.
-  expect(placed('<PolyLog Opt="1">2 z</PolyLog>').json).toEqual(["PolyLog", 2, "z", ["KeyValuePair", "Opt", 1]]);
-  expect(read('<PolyLog s="2">z</PolyLog>').json).toEqual(["PolyLog", "z", ["KeyValuePair", "s", 2]]);
+  expect(placed('<PolyLog Opt="1">2 z</PolyLog>').json).toEqual(["PolyLog", 2, "z", ["Rule", "Opt", 1]]);
+  expect(read('<PolyLog s="2">z</PolyLog>').json).toEqual(["PolyLog", "z", ["Rule", "s", 2]]);
   expect(placed('<F c="3">x</F>').errors).toEqual(["markup: <F> gives c but not b"]);
   expect(placed('<F a="1">x y z</F>').errors).toEqual(["markup: <F> has more arguments than its parameters (a, b, c)"]);
 });
@@ -66,15 +66,15 @@ test("a child named for an option its parent declares is that option", () => {
   expect(opt('<Show><Disk/><PlotLabel>"Primes"</PlotLabel><Axes/></Show>')).toEqual([
     "Show",
     "Disk",
-    ["KeyValuePair", "PlotLabel", "'Primes'"],
-    ["KeyValuePair", "Axes", "True"],
+    ["Rule", "PlotLabel", "'Primes'"],
+    ["Rule", "Axes", "True"],
   ]);
   expect(
     opt("<LatticeTiles>R<ColorRules><Rule>IsPrime Teal</Rule><Rule>IsUnit White</Rule></ColorRules></LatticeTiles>"),
   ).toEqual([
     "LatticeTiles",
     "R",
-    ["KeyValuePair", "ColorRules", ["List", ["Rule", "IsPrime", "Teal"], ["Rule", "IsUnit", "White"]]],
+    ["Rule", "ColorRules", ["List", ["Rule", "IsPrime", "Teal"], ["Rule", "IsUnit", "White"]]],
   ]);
   // Undeclared, it is an argument like any other element.
   expect(opt("<Plot><PlotLabel>x</PlotLabel></Plot>")).toEqual(["Plot", ["PlotLabel", "x"]]);
@@ -122,10 +122,10 @@ const ROUND_TRIPS: unknown[] = [
   ["Random"],
   ["Apply", ["List", "f", "g"], "x"],
   ["List", "'it\\'s \"quoted\" <b>{x} & `y`\n'", "a😀b→c", "x'", { num: "1.(3)" }, -0, 1e21],
-  ["Plot", ["Sin", "x"], ["Tuple", "x", 0, 10], ["KeyValuePair", "PlotRange", "All"], ["KeyValuePair", "Axes", "True"]],
-  ["Graph", ["List", 1, 2], ["KeyValuePair", "EdgeWeight", ["List", 1, 1]]],
-  ["F", ["KeyValuePair", "A", 1], "x"],
-  ["F", ["KeyValuePair", "A", 1], ["KeyValuePair", "A", 2]],
+  ["Plot", ["Sin", "x"], ["Tuple", "x", 0, 10], ["Rule", "PlotRange", "All"], ["Rule", "Axes", "True"]],
+  ["Graph", ["List", 1, 2], ["Rule", "EdgeWeight", ["List", 1, 1]]],
+  ["F", ["Rule", "A", 1], "x"],
+  ["F", ["Rule", "A", 1], ["Rule", "A", 2]],
   ["MemberCall", ["Field", "a", "'b'"], "'C'", "x"],
   ["MemberCall", "Stats", "'Mean'"],
   ["ToExpression", "'x'"],
@@ -144,7 +144,7 @@ test.each(ROUND_TRIPS.map((e) => [JSON.stringify(e), e]))("round trip: %s", (_, 
 });
 
 test("the printer's spelling", () => {
-  expect(markupOf(["Plot", ["Sin", "x"], ["Tuple", "x", 0, 10], ["KeyValuePair", "PlotRange", "All"]])).toBe(
+  expect(markupOf(["Plot", ["Sin", "x"], ["Tuple", "x", 0, 10], ["Rule", "PlotRange", "All"]])).toBe(
     '<Plot PlotRange="All"><Sin>x</Sin> <Tuple>x 0 10</Tuple></Plot>',
   );
   expect(markupOf(["Random"])).toBe("<Apply>Random</Apply>");

@@ -127,6 +127,11 @@ function rewrite(node: unknown): MathJsonExpression {
     case "Add":
       return foldSubtraction(ops);
 
+    // `serializeEpsil` writes `Rule(a, b)` as a call; the pair is what Epsil spells `a -> b`.
+    // A rule holding a pair stays a call: `a -> b -> c` doesn't read back.
+    case "Rule":
+      return ops.some((op) => headOf(op) === "KeyValuePair") ? [head, ...ops] : ["KeyValuePair", ...ops];
+
     // `-1 * x` is how a canonical tree spells a negation.
     case "Multiply": {
       const [first, ...rest] = ops;

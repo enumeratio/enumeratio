@@ -212,7 +212,7 @@ export class TemplateSlot extends LitElement {
     const { serializeExpression } = await import("@enumeratio/formats/expression");
     const scope = this.#scope;
     if (!scope) return "";
-    const rules = scope.declarations.map((d) => ["KeyValuePair", `_${d.name}`, scope.values.get(d.name) ?? "Nothing"]);
+    const rules = scope.declarations.map((d) => ["Rule", `_${d.name}`, scope.values.get(d.name) ?? "Nothing"]);
     return serializeExpression(["List", ...rules] as never)
       .replace(/\s+/g, " ")
       .replace(/\[ /g, "[")

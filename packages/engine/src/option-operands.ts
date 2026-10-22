@@ -5,8 +5,9 @@ import { isOptionList, ruleOf } from "./options.ts";
 import { nativeCanonical } from "./probe.ts";
 
 /**
- * Make `head` take its trailing options as `Rule`s. compute-engine canonicalises Epsil's
- * `name -> value` (a `KeyValuePair`) to a `Tuple`, which a broadcastable head threads over
+ * Make `head` take its trailing options as `Rule`s. `parseExpression` already reads a call's
+ * `name -> value` as a `Rule`; this covers MathJSON written directly with the `KeyValuePair`
+ * compute-engine canonicalises to a `Tuple`, which a broadcastable head threads over
  * (`Numerator(x, Over -> R)` fans out across `Over` and `R`); a `Rule` is an opaque
  * expression, so the option reaches the head whole with no `tuples` exemption. Only the
  * trailing run of rules is rewritten, as `optionsOf` reads them: an earlier pair is data.
