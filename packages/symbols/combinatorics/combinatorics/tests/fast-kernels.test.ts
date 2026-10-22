@@ -377,9 +377,49 @@ function semistandardByShapes([n, k]: number[]): bigint {
   return total;
 }
 
+const choose = (n: number, k: number): bigint => {
+  let result = 1n;
+  for (let i = 1; i <= k; i++) result = (result * BigInt(n - k + i)) / BigInt(i);
+  return result;
+};
+
+/** Multisets of rooted trees, total n nodes, each at most `most` nodes, from the counts `rooted` of one tree: the
+ *  coefficient of x^n in Π_{k ≤ most} (1 − x^k)^−rooted[k]. */
+function forests(n: number, most: number, rooted: readonly bigint[]): bigint {
+  let series = [1n, ...Array<bigint>(n).fill(0n)];
+  for (let k = 1; k <= Math.min(most, n); k++) {
+    const next = Array<bigint>(n + 1).fill(0n);
+    for (let j = 0; j * k <= n; j++) {
+      const ways = j === 0 ? 1n : choose(Number(rooted[k]) + j - 1, j);
+      for (let t = 0; t + j * k <= n; t++) next[t + j * k] += ways * series[t];
+    }
+    series = next;
+  }
+  return series[n];
+}
+
+/** Rooted trees by the Euler transform: a(m) is the forests of m − 1 nodes of smaller trees. */
+function rootedTrees(top: number): bigint[] {
+  const a = [0n, 1n];
+  for (let m = 2; m <= top; m++) a.push(forests(m - 1, m - 1, a));
+  return a;
+}
+
+/** Free trees by their centroid: a forest of subtrees under half, plus for even n the pairs joined by an edge. */
+function freeTrees(n: number): bigint {
+  if (n === 1) return 1n;
+  const rooted = rootedTrees(n);
+  const half = Math.floor(n / 2);
+  return n % 2 === 1
+    ? forests(n - 1, half, rooted)
+    : forests(n - 1, half - 1, rooted) + (rooted[half] * (rooted[half] + 1n)) / 2n;
+}
+
 /** Families whose Epsil count declines past 2^53, each with a count computed another way. */
 const INDEPENDENT_COUNTS: Record<string, (p: number[]) => bigint> = {
   SemistandardTableaux: semistandardByShapes,
+  RootedUnlabeledTrees: ([n]) => (n < 1 ? 0n : rootedTrees(n)[n]),
+  UnlabeledFreeTrees: ([n]) => (n < 1 ? 0n : freeTrees(n)),
 };
 
 for (const family of countFamilies) {

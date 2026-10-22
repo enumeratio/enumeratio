@@ -30,7 +30,15 @@ import {
   sub,
   upTo,
 } from "../../../collections/src/families/tables.ts";
-import { IsSkewPartitionOf, PAST_DOUBLES, skewShapeCount, skewShapeRank, skewShapeUnrank } from "./skew-shapes.ts";
+import { orExact } from "../../../collections/src/families/exact-classes.ts";
+import {
+  IsSkewPartitionOf,
+  PAST_DOUBLES,
+  skewShapeCount,
+  skewShapeCountExact,
+  skewShapeRank,
+  skewShapeUnrank,
+} from "./skew-shapes.ts";
 
 type MathJSON = unknown;
 
@@ -409,7 +417,7 @@ export const skewPartitions: EpsilFamily = {
   params: [n],
   elementType: "tuple<list<integer>, list<integer>>",
   // The table is about n⁵/25 steps, and exact integers of it are out of the interpreter's reach: past
-  // 2^53 the count declines, before any table is built.
+  // 2^53 the interpreter declines, before any table is built; the fast count answers exactly to size 40.
   declinePastDoubles: "count",
   early: { pastDoubles: ([size]) => size >= PAST_DOUBLES },
   epsil: {
@@ -465,7 +473,7 @@ export const skewPartitions: EpsilFamily = {
 };
 
 const fast: FastKernel = {
-  count: ([size]) => skewShapeCount(size),
+  count: ([size]) => orExact(skewShapeCount(size), () => skewShapeCountExact(size)),
   unrank: ([size], r) => skewShapeUnrank(size, r),
   rank: (x, [size]) => {
     const [lam, mu] = x as number[][];

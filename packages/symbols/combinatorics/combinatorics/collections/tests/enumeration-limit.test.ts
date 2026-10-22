@@ -59,8 +59,8 @@ test("Take and RandomChoice leave a huge family unevaluated", () => {
   ]);
 });
 
-test("a count past 2^53 in a plain-number kernel is unknown, not an internal error", () => {
-  expect(run(["Count", ["PlanePartitions", 100]]).json).toEqual(["Count", ["PlanePartitions", 100]]);
+test("a count past 2^53 in a plain-number kernel with an exact count is exact", () => {
+  expect(run(["Count", ["PlanePartitions", 100]]).json).toEqual({ num: "59206066030052023" });
 });
 
 test("PlanePartitions walks a table by shape: At answers at the edge, n = 46, and past it refuses at once", () => {

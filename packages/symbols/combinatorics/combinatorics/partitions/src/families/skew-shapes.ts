@@ -48,12 +48,33 @@ function tablesOf(n: number): Float64Array {
 export function skewShapeCount(n: number): number {
   if (n < 0) return 0;
   if (n === 0) return 1;
-  // Past n = 33 the count passes 2^53, and the table is not worth building.
+  // Past n = 33 the count passes 2^53: a double is no count, so the exact one is read apart (`skewShapeCountExact`).
   if (n >= PAST_DOUBLES) return 2 ** 60;
   const table = tablesOf(n);
   let total = 0;
   for (let b = 1; b <= n; b++)
     for (let a = 1; a <= b; a++) total += table[(n - (b - a + 1)) * n * n + (a - 1) * n + b - 1];
+  return total;
+}
+
+/** The same count in bigints, from the same table: exact where the doubles are not (n up to the table's limit). */
+export function skewShapeCountExact(n: number): bigint | undefined {
+  if (!Number.isSafeInteger(n) || n < 0 || n > TABLE_LIMIT) return undefined;
+  if (n === 0) return 1n;
+  const w = n * n;
+  const table = new Array<bigint>((n + 1) * w).fill(0n);
+  for (let b = 1; b <= n; b++) table[b - 1] = 1n;
+  for (let c = 1; c <= n; c++)
+    for (let b = 1; b <= n; b++)
+      for (let a = 1; a <= b; a++) {
+        let sum = 0n;
+        for (let b2 = Math.max(a - 1, 1); b2 <= b; b2++)
+          for (let a2 = Math.max(1, b2 - c + 1); a2 <= Math.min(a, b2); a2++)
+            sum += table[(c - (b2 - a2 + 1)) * w + (a2 - 1) * n + b2 - 1];
+        table[c * w + (a - 1) * n + b - 1] = sum;
+      }
+  let total = 0n;
+  for (let b = 1; b <= n; b++) for (let a = 1; a <= b; a++) total += table[(n - (b - a + 1)) * w + (a - 1) * n + b - 1];
   return total;
 }
 

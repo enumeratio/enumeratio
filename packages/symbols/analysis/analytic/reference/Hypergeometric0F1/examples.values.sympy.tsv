@@ -9,7 +9,7 @@ complex-order-and-argument	N(N(hyper([], [(-2.5 + 1.5*I)], (1.2 + -0.8*I))), 30)
 series-hypergeometric0f1-a-x-x-0-4	series(N(hyper([], [Symbol("a")], Symbol("x"))), Symbol("x"), 0, 4 + 1)	x/a + x**2/(2*a*(a + 1)) + x**3/(6*a*(a + 1)*(a + 2)) + x**4/(24*a*(a + 1)*(a + 2)*(a + 3)) + 1 + O(x**5)	
 fullsimplify-normal-series-hypergeometric0f1-a-x	simplify((series(N(hyper([], [Symbol("a")], Symbol("x"))), Symbol("x"), oo, 1 + 1)).removeO())	None	inconclusive
 n-hypergeometric0f1-1-neg-2-50	N(N(hyper([], [1], -2)), 30)	-0.196548095270468209383452062866	
-matrixfunction-function-hypergeometric0f1-1-over			
+matrixfunction-function-hypergeometric0f1-1-over	Matrix([[1, 0], [0, 1]]).analytic_func(N(hyper([], [Rational(1, 2)], Symbol("_mf"))), Symbol("_mf")).applyfunc(simplify).tolist()	[[cosh(2), 0], [0, cosh(2)]]	disagree
 series-hypergeometric0f1-a-x-x-0-3	series(N(hyper([], [Symbol("a")], Symbol("x"))), Symbol("x"), 0, 3 + 1)	x/a + x**2/(2*a*(a + 1)) + x**3/(6*a*(a + 1)*(a + 2)) + 1 + O(x**4)	
 n-neg-1-over-4-times-hypergeometric0f1-1-over-2	N(((Rational(-1, 4) * N(hyper([], [Rational(1, 2)], Rational(1, 2)))) + (Rational(1, 4) * N(hyper([], [Rational(-1, 2)], Rational(1, 2)))) + (Rational(1, 2) * N(hyper([], [Rational(3, 2)], Rational(1, 2))))), 30)	0	
 n-neg-1-over-4-times-hypergeometric0f1-1-over-3	N(((Rational(-1, 4) * (S(N(hyper([], [Rational(1, 2)], Rational(1, 2))))**2)) + (Rational(1, 2) * (S(N(hyper([], [Rational(3, 2)], Rational(1, 2))))**2))), 30)	-0.250000000000000111022302462516	

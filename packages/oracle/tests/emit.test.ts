@@ -898,3 +898,18 @@ test("GammaLn compares against log(gamma(z)), LogGamma against the continuation"
   expect(source("GammaLn", "julia")).toContain("log(gamma(z))");
   expect(source("LogGamma", "julia")).toContain("lgamma");
 });
+
+test("SymPy's MatrixFunction takes f as an expression of a dummy variable, and Simplify goes round it", () => {
+  const sympy = (expr: unknown) => {
+    const out = emit(expr as never, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  const m = ["List", ["List", 4, 0], ["List", 0, 9]];
+  const call =
+    'Matrix([[4, 0], [0, 9]]).analytic_func(sqrt(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()';
+  expect(sympy(["MatrixFunction", "Sqrt", m])).toBe(call);
+  expect(sympy(["MatrixFunction", ["Function", ["Block", ["Sqrt", "_1"]], "_1"], m])).toBe(call);
+  expect(sympy(["Simplify", ["MatrixFunction", "Sqrt", m]])).toBe(call);
+  // An undefined name is an unknown function of the variable.
+  expect(sympy(["MatrixFunction", "f", m])).toContain('Function("f")(Symbol("_mf"))');
+});

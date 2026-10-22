@@ -10,6 +10,7 @@
 // declared anywhere yet, so there's nothing to wire for them.
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import { floorDiv, modRank } from "../../../collections/src/families/kernels.ts";
+import { rootedUnlabeledTreesExact, unlabeledFreeTreesExact } from "../../../collections/src/families/exact-classes.ts";
 import { fussCatalanExact } from "../../../collections/src/families/exact-counts.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import {
@@ -173,8 +174,8 @@ const phylogeneticTrees: EpsilFamily = {
 };
 
 export const entries: (NumberKernel | EpsilFamily)[] = [
-  rootedUnlabeledTrees,
-  unlabeledFreeTrees,
+  { ...rootedUnlabeledTrees, fastCount: ([n]) => rootedUnlabeledTreesExact(n) },
+  { ...unlabeledFreeTrees, fastCount: ([n]) => unlabeledFreeTreesExact(n) },
   phylogeneticTrees,
   { ...nonCrossingTrees, fastCount: ([n]) => fussCatalanExact(n, 3) },
 ];

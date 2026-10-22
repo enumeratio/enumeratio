@@ -57,7 +57,7 @@ functioninjective-sin-x-x
 functionsurjective-sin-x-x			
 functionsingularities-sin-x-x			
 functiondiscontinuities-sin-x-x			
-matrixfunction-function-sin-1-1-list-list-5-over			
+matrixfunction-function-sin-1-1-list-list-5-over	Matrix([[(Rational(5, 6) * pi), 0], [(Rational(3, 2) * pi), (Rational(-1, 2) * pi)]]).analytic_func(sin(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[1/2, 0], [27/16, -1]]	
 assuming-m-in-integers-refine-sin-pi-times-m			
 assuming-m-in-integers-fullsimplify-sin-pi-times			
 threads-element-wise-over-a-list	[sin(0), sin((S(pi) / 2)), sin(pi)]	[0, 1, 0]	

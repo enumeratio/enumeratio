@@ -9,7 +9,7 @@ derivative-for-real-x-ne-0	diff(acsch(Symbol("x")), Symbol("x"))	None	inconclusi
 n-arcsch-5-50	N(acsch(5), 30)	0.198690110349241406474636915950	
 arcsch-complexinfinity	acsch(zoo)	0	
 arcsch-list-list-2i-0-list-i-neg-2-times-i	[[acsch((0 + 2*I)), acsch(0)], [acsch((0 + 1*I)), acsch((0 + -2*I))]]	[[-I*pi/6, zoo], [-I*pi/2, I*pi/6]]	
-matrixfunction-function-arcsch-1-1-list-list-2i			
+matrixfunction-function-arcsch-1-1-list-list-2i	Matrix([[(0 + 2*I), 0], [(0 + 1*I), (0 + -2*I)]]).analytic_func(acsch(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[-I*pi/6, 0], [-I*pi/12, I*pi/6]]	
 arcsch-neg-i-times-sqrt-2-plus-neg-2-over-5	acsch(((0 + -1*I) * sqrt((2 + (Rational(-2, 5) * sqrt(5))))))	2*I*pi/5	
 arcsch-2i-times-sqrt-1-over-2-plus-sqrt-2	acsch(((0 + 2*I) * sqrt((S(1) / (2 + sqrt(2))))))	-3*I*pi/8	
 arcsch-neg-2-times-i-times-sqrt-1-over-2-plus	acsch(((0 + -2*I) * sqrt((S(1) / (2 + sqrt(2))))))	3*I*pi/8	

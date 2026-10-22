@@ -160,12 +160,12 @@ test("TriangularPartitions count = A007294", () => {
   ]);
 });
 
-// Past 2^53 the count is unknown, as it was for the plain-number kernels; a small rank, a rank a
-// double holds and membership are not.
+// Past 2^53 the count is exact (the fast count in bigints); unrank and rank still decline past a
+// double, but a small rank, a rank a double holds and membership answer.
 test("past 2^53 a partition family answers membership, a small rank and its rank", () => {
   const kernel = kernelsOn(bareEngine(), coreFamilies).find((k) => k.head === "PartitionsMaxPart")!;
   const p = [400, 400];
-  expect(() => kernel.count(p)).toThrow(/past 2\^53/);
+  expect(kernel.count(p)).toBe(6727090051741041926n);
   expect(
     kernel.valid(
       Array.from({ length: 400 }, () => 1),

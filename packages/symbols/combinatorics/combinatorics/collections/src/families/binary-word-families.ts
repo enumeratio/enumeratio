@@ -5,6 +5,7 @@
 // module (only its `entries` export is public). Pure rank/unrank kernels over plain JS
 // numbers/arrays, same contract as every other family (types.ts).
 import { triStrings } from "./closed-forms.ts";
+import { primitiveWordsExact } from "./exact-classes.ts";
 import { triStringsExact } from "./exact-recurrences.ts";
 import { modRank } from "./kernels.ts";
 import type { EpsilFamily } from "./epsil.ts";
@@ -162,6 +163,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
       (a, [n]) => primitiveValid(a, n),
       (a, [n]) => primitiveRank(a, n),
     ),
+    exactCount: ([n]) => primitiveWordsExact(n, 2),
     carrier: "BinaryWord",
   },
 ];
