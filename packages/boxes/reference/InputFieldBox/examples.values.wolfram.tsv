@@ -1,2 +1,2 @@
 id	in	out	tex.in	tex.out
-inert	InputFieldBox[Dynamic[x], enumeratio`Automatic]	InputFieldBox[Dynamic[x], enumeratio`Automatic]	\text{InputFieldBox}[x,\text{enumeratio$\grave{ }$Automatic}]	\text{InputFieldBox}[x,\text{enumeratio$\grave{ }$Automatic}]
+inert	InputFieldBox[Dynamic[x]]	InputFieldBox[Dynamic[x]]	\text{InputFieldBox}[x]	\text{InputFieldBox}[x]

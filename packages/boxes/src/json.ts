@@ -6,6 +6,8 @@
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import {
   ARITY,
+  argCount,
+  OPTIONAL_DOMAIN_HEADS,
   type Box,
   type BoxNode,
   isBox,
@@ -36,7 +38,7 @@ function optionToJson(value: OptionValue): Json {
 export function toMathJson(box: Box): Json {
   if (typeof box === "string") return { str: box };
   const head = box[0];
-  const args = box.slice(1, ARITY[head] + 1) as unknown[];
+  const args = box.slice(1, argCount(box) + 1) as unknown[];
   const encoded: Json[] = args.map((arg, i) => {
     if (head === "RowBox" || head === "TextData" || isDrawingHead(head)) return list((arg as Box[]).map(toMathJson));
     if (isComplexHead(head)) return i === 0 ? optionToJson(arg as OptionValue) : list((arg as Box[]).map(toMathJson));
@@ -153,7 +155,9 @@ export function fromMathJson(json: Json): Box {
   if ((head === "SetterBox" || head === "TogglerBox") && ops.length === 2) ops.push(toMathJson(legacyShown(head, ops)));
   const raw = Object.fromEntries(all.slice(split).map((op) => ruleOf(op)!));
   const arity = ARITY[head];
-  if (ops.length !== arity) fail(`${head} takes ${arity} argument(s)`, json);
+  const optional = (OPTIONAL_DOMAIN_HEADS as readonly string[]).includes(head);
+  if (ops.length !== arity && !(optional && ops.length === arity + 1))
+    fail(`${head} takes ${optional ? `${arity} or ${arity + 1}` : arity} argument(s)`, json);
   const args: unknown[] = ops.map((op, i) => {
     if (head === "RowBox" || head === "TextData" || isDrawingHead(head)) return listItems(op).map(fromMathJson);
     if (isComplexHead(head)) return i === 0 ? listItems(op).map(optionFromJson) : listItems(op).map(fromMathJson);
