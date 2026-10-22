@@ -242,9 +242,23 @@ export interface KernelOptions {
   /** `false` ignores the family's `fast` path, so the kernel runs its Epsil definitions alone. */
   readonly fast?: boolean;
   /** Called with whatever compiled code throws, before the kernel falls back to the interpreter, which
-   *  answers as if it hadn't. A ReferenceError, SyntaxError or TypeError here is a bug in the generated
-   *  code; tests/compiled-family-ops.test.ts fails on one. */
+   *  answers as if it hadn't. Anything but a RangeError (`isCompiledBug`) is a bug in the generated
+   *  code, and warns once per op outside production; tests/compiled-family-ops.test.ts fails on one. */
   readonly onCompiledError?: (operation: Operation, error: unknown) => void;
+}
+
+/** Compiled code declines with a RangeError (past the safe integers, a rank outside the fiber, a blown
+ *  stack); anything else it throws is a bug in the generated code. */
+export const isCompiledBug = (error: unknown): boolean => !(error instanceof RangeError);
+
+const warned = new Set<string>();
+/** Dev and test only (production falls back quietly): warn once per op that generated code is broken. */
+function warnCompiledBug(head: string, operation: Operation, error: unknown): void {
+  if (typeof process === "undefined" || process.env?.NODE_ENV === "production") return;
+  const key = `${head}.${operation}`;
+  if (warned.has(key)) return;
+  warned.add(key);
+  console.warn(`compiled ${key} threw, falling back to the interpreter: ${String(error)}`);
 }
 
 /** A map holding at most `size` entries, dropping the least recently read or written. */
@@ -321,13 +335,17 @@ export function kernelOn(
     }
     return runs.get(operation)!;
   };
+  const reportCompiled = (operation: Operation, error: unknown): void => {
+    options.onCompiledError?.(operation, error);
+    if (isCompiledBug(error)) warnCompiledBug(family.head, operation, error);
+  };
   const attempt = (operation: Operation, vars: Record<string, unknown>): unknown => {
     const code = compiled(operation);
     if (code === null) return undefined;
     try {
       return code(vars);
     } catch (error) {
-      options.onCompiledError?.(operation, error);
+      reportCompiled(operation, error);
       return undefined;
     }
   };
@@ -375,7 +393,7 @@ export function kernelOn(
         // params, so it isn't kept.
         if (error instanceof RangeError && error.message.includes("beyond the safe integer range")) value = "overflow";
         else if (error instanceof RangeError && error.message.includes("call stack")) return undefined;
-        else options.onCompiledError?.("tables", error);
+        else reportCompiled("tables", error);
       }
       table = Array.isArray(value) && value.every(Number.isInteger) ? (value as number[]) : null;
       if (
