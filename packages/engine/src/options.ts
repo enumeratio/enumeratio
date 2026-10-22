@@ -38,7 +38,7 @@ export function optionName(node: unknown): string | undefined {
 /** `name -> value`, as a `KeyValuePair` or the `Tuple` it canonicalises to. */
 export function ruleOf(node: Json): { name: string; value: Json } | undefined {
   const head = headOf(node);
-  if (head !== "KeyValuePair" && head !== "Tuple") return undefined;
+  if (head !== "KeyValuePair" && head !== "Rule" && head !== "Tuple") return undefined;
   const [key, value] = opsOf(node);
   if (key === undefined || value === undefined || opsOf(node).length !== 2) return undefined;
   // A tuple is a rule only if its first entry names something: `(x, 0, 10)` is an

@@ -5,6 +5,7 @@ import {
   integerAt,
   mayBeInteger,
   operandsOf,
+  ruleOf,
   symbolNameOf,
   type Engine,
   type Expr,
@@ -398,9 +399,8 @@ export function declareAdeles(ce: Engine): void {
   sequence("LucasL", P.lucas);
 
   // Natively `(number)`: the gate keeps the native handler to what its signature took, and the
-  // `Over -> R` option residues reads (a Tuple, as a rule canonicalizes) rides along.
-  const isNumber = (op: Expr): boolean =>
-    op.type.matches("number") || (op.operator === "Tuple" && symbolNameOf(operandsOf(op)[0]) === "Over");
+  // `Over -> R` option residues reads (a Rule, see `takeOptionsAsRules`) rides along.
+  const isNumber = (op: Expr): boolean => op.type.matches("number") || ruleOf(op.json)?.name === "Over";
   defineOverload(ce, "Numerator", {
     package: "adeles",
     signature: "(value) -> value",

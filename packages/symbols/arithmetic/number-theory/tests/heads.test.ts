@@ -143,11 +143,7 @@ test("Over -> QuadraticOrder(D): primality in a non-maximal order, its elements 
   const half = run(["IsPrime", ["Multiply", ["Rational", 1, 2], ["Add", 1, ["Sqrt", -3]]], over(-12)]);
   expect(Array.isArray(half) && half[0]).toBe("IsPrime");
   // No unique factorization in an order of conductor > 1.
-  expect(run(["FactorInteger", 4, over(-12)])).toEqual([
-    "FactorInteger",
-    4,
-    ["Tuple", "Over", ["QuadraticOrder", -12]],
-  ]);
+  expect(run(["FactorInteger", 4, over(-12)])).toEqual(["FactorInteger", 4, ["Rule", "Over", ["QuadraticOrder", -12]]]);
   expect(run(["IsPrime", 7, over(32)])).toBe("False");
   // The field's own discriminant is its ring of integers: -4 is ℤ[i].
   expect(run(["IsPrime", ["Complex", 1, 1], over(-4)])).toBe("True");

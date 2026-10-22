@@ -5,6 +5,7 @@ import {
   operandsOf,
   optionsOf,
   symbolNameOf,
+  takeOptionsAsRules,
   widenSignature,
   wrapOperator,
   type Engine,
@@ -272,10 +273,11 @@ function ringOf(over: Json | undefined): bigint | "ordinary" | undefined {
 
 export function declareNumerator(ce: Engine): void {
   for (const head of ["Numerator", "Denominator"] as const) {
-    // The option rides as a trailing rule, a Tuple the head would otherwise thread over (hence the
-    // `tuples` exemption, kept beside the native `surplus-operands`). Canonicalization already keeps it.
+    // The option rides as a trailing rule; as a `Rule` (not the Tuple a `->` canonicalises to) the
+    // generic broadcast leaves it whole.
     widenSignature(ce, head, "(number, any*) -> number");
-    extendHead(ce, head, { broadcastExemptions: ["surplus-operands", "tuples"] });
+    takeOptionsAsRules(ce, head);
+    extendHead(ce, head, { broadcastExemptions: ["surplus-operands"] });
     wrapOperator(
       ce,
       [head],

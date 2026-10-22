@@ -216,6 +216,7 @@ export { onlyForIntegers, refusing } from "./compile-guards.ts";
 export { type CompileStance, declareCompile, type HeadPatch, isExtension } from "./extend.ts";
 export { isNativeHead, nativeCanonical, nativeEvaluate, withAssumptions } from "./probe.ts";
 export { extendHead };
+export { takeOptionsAsRules } from "./option-operands.ts";
 
 export { isOptionList, optionName, optionsOf, ruleOf, type Split, withOptions } from "./options.ts";
 export { checkpoint, DeadlineExceededError, withDeadline } from "./deadline.ts";

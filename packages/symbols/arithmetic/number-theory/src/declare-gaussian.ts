@@ -10,6 +10,7 @@ import {
   operandsOf,
   optionName,
   optionsOf,
+  takeOptionsAsRules,
   widenSignature,
   wrapOperator,
 } from "@enumeratio/engine";
@@ -246,14 +247,8 @@ export function declareGaussian(ce: Engine): void {
   ): void => {
     widenSignature(ce, head, signature, native);
     if (quadratic) widenSignature(ce, head, signature.replace(/^\(number/, "(quadratic_integer"));
-    const definition = ce.lookupDefinition(head);
-    const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-    if (operator === undefined) return;
-    // A rule canonicalises to a Tuple, which a broadcastable head would thread over.
-    const flags = operator as { broadcastExemptions: readonly string[] };
-    if (!flags.broadcastExemptions.includes("tuples")) {
-      flags.broadcastExemptions = [...flags.broadcastExemptions, "tuples"];
-    }
+    // A `->` canonicalises to a Tuple a broadcastable head would thread over; a Rule it leaves whole.
+    takeOptionsAsRules(ce, head);
     const fallback = nativeEvaluate(ce, head);
     const evaluate: NativeEvaluate = (ops, options) => {
       const option = overOption(head, ops);
@@ -446,16 +441,10 @@ export function declareGaussian(ce: Engine): void {
   // option, so it needs its own wiring rather than `optionHead`'s single-positional one.
   // Widened first so a Complex n, or a trailing option tuple, reach `evaluate` at all.
   widenSignature(ce, "DivisorSigma", "(number, number, any*) -> number");
-  const nativeDivisorSigma = ce.lookupDefinition("DivisorSigma");
-  const divisorSigmaOperator =
-    nativeDivisorSigma !== undefined && "operator" in nativeDivisorSigma ? nativeDivisorSigma.operator : undefined;
-  if (divisorSigmaOperator !== undefined) {
-    // declare.ts marks DivisorSigma broadcastable, for the list-in-n case; without this a
-    // rule canonicalising to a Tuple (the Over option) gets threaded over too.
-    const flags = divisorSigmaOperator as { broadcastExemptions: readonly string[] };
-    if (!flags.broadcastExemptions.includes("tuples")) {
-      flags.broadcastExemptions = [...flags.broadcastExemptions, "tuples"];
-    }
+  if (ce.lookupDefinition("DivisorSigma") !== undefined) {
+    // declare.ts marks DivisorSigma broadcastable, for the list-in-n case; as a Tuple the Over
+    // option would be threaded over too, as a Rule it is left whole.
+    takeOptionsAsRules(ce, "DivisorSigma");
     const fallback = nativeEvaluate(ce, "DivisorSigma");
     extendHead(ce, "DivisorSigma", {
       evaluate: (ops, options) => {
