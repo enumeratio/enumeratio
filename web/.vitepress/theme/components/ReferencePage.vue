@@ -20,6 +20,8 @@ const props = defineProps<{
   overloads?: readonly Overload[];
   /** The statistics and maps of a carrier, or of a collection's carrier. */
   fields?: CarrierFieldsData;
+  /** The Epsil behind a statistic or family, printed as InputForm (data/definitions.ts). */
+  definitions?: readonly { label: string; source: string }[];
 }>();
 
 interface Overload {
@@ -415,6 +417,17 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       </ul>
     </details>
 
+    <section v-if="definitions?.length" id="definition" class="ref-definition">
+      <h2>Definition</h2>
+      <p class="ref-definition-note">Epsil, as the implementation runs it.</p>
+      <template v-for="d in definitions" :key="d.label">
+        <p class="ref-definition-label">
+          <code>{{ d.label }}</code>
+        </p>
+        <pre><code>{{ d.source }}</code></pre>
+      </template>
+    </section>
+
     <CarrierFields v-if="fields" :fields="fields" />
 
     <section v-if="entry.enumerate" id="enumeration">
@@ -697,6 +710,7 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
    space for the fixed nav bar, and a brief flash when landed on via hash. */
 #signatures,
 #details,
+#definition,
 #enumeration,
 #implementation,
 .ref-example {
@@ -720,6 +734,20 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
 .ref-body :deep(ul) {
   margin: 0.5rem 0 0;
   padding-left: 1.1rem;
+}
+.ref-definition-note,
+.ref-definition-label {
+  margin: 0.4rem 0 0;
+  color: var(--vp-c-text-2);
+  font-size: 0.85rem;
+}
+.ref-definition pre {
+  margin: 0.25rem 0 0.75rem;
+  padding: 0.6rem 0.8rem;
+  overflow-x: auto;
+  background: var(--vp-c-bg-soft);
+  border-radius: 6px;
+  font-size: 0.85rem;
 }
 .ref-stub {
   color: var(--vp-c-text-2);
