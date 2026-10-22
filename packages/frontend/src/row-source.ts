@@ -13,6 +13,7 @@ import {
   type Box,
   type ColumnSpec,
   type IndexRange,
+  describeBig,
   pinnedPage,
   type RowBatch,
   type RowCount,
@@ -87,6 +88,12 @@ const WALK_WINDOW = 8192;
 /** Memoized cells kept before the memo starts over. */
 const CELL_MEMO = 50_000;
 const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
+
+/** A family's unrank by a bigint index, which it takes as digits. */
+interface DigitsUnrank {
+  readonly coll: BoxedExpression;
+  readonly at: (c: BoxedExpression, index: string) => BoxedExpression | undefined;
+}
 
 const yieldNow = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 0));
 
@@ -294,15 +301,36 @@ export class CollectionRows implements RowSource {
     const coll = this.#coll;
     if (index <= MAX_SAFE)
       return coll.at(Number(index)) ?? this.#ce.box(["At", coll.json, Number(index)] as BoxInput).evaluate();
-    // One past 2^53 goes to the collection's `at` as digits, which a number cannot carry.
-    const operator = coll.operator;
-    const def = this.#ce.lookupDefinition(operator);
-    const handlers =
-      def && "operator" in def
-        ? (def.operator as { collection?: { at?: unknown } } | undefined)?.collection
-        : undefined;
-    const at = handlers?.at as ((c: BoxedExpression, i: string) => BoxedExpression | undefined) | undefined;
-    return at?.(coll, index.toString());
+    // One past 2^53 goes to the family's `at` as digits, which a number cannot carry.
+    for (const { coll: target, at } of this.#digitsAt()) {
+      const got = at(target, index.toString());
+      if (got !== undefined && got.operator !== "Error" && got.json !== "Missing") return got;
+    }
+    return undefined;
+  }
+
+  #digits: DigitsUnrank[] | undefined;
+
+  /** The family's bigint unranks to try: its own, then its rewrite's (`Permutations(n)` is `SymmetricGroup(n)`). */
+  #digitsAt(): DigitsUnrank[] {
+    if (this.#digits === undefined) {
+      const handler = (c: BoxedExpression): DigitsUnrank["at"] | undefined => {
+        const def = this.#ce.lookupDefinition(c.operator);
+        const collection =
+          def && "operator" in def
+            ? (def.operator as { collection?: { at?: unknown } } | undefined)?.collection
+            : undefined;
+        return collection?.at as DigitsUnrank["at"] | undefined;
+      };
+      const found: DigitsUnrank[] = [];
+      const own = handler(this.#coll);
+      if (own !== undefined) found.push({ coll: this.#coll, at: own });
+      const rewritten = this.#coll.evaluate();
+      const via = rewritten.operator === this.#coll.operator ? undefined : handler(rewritten);
+      if (via !== undefined) found.push({ coll: rewritten, at: via });
+      this.#digits = found;
+    }
+    return this.#digits;
   }
 
   /**
@@ -626,11 +654,12 @@ export class CollectionRows implements RowSource {
     last: number,
     keyOf: (position: bigint) => bigint | undefined,
     signal: AbortSignal | undefined,
-    declined: string | undefined,
+    declinedBy: string | undefined,
   ): Promise<RowBatch> {
     const rows: Box[][] = [];
     let ended = false;
     let stalled: RowBatch["stalled"];
+    let declined = declinedBy;
     for (let k = from < 1n ? 1n : from; k < to; k++) {
       const index = keyOf(k);
       if (index === undefined) {
@@ -642,6 +671,10 @@ export class CollectionRows implements RowSource {
       if (elt === undefined) {
         ended = this.random ? true : this.#walkEnd !== undefined;
         if (!ended) stalled = { scanned: this.#walked };
+        // A counted row no unrank reaches: paging stops here, and the header says why.
+        if (this.random && index > MAX_SAFE && !this.#filtered && this.#countCovers(index)) {
+          declined = `paging stops at row ${describeBig(MAX_SAFE)}: this family has no bigint unrank`;
+        }
         break;
       }
       rows.push(this.#cellsOf(index, elt, first, last));
@@ -660,6 +693,11 @@ export class CollectionRows implements RowSource {
     };
   }
 
+  #countCovers(index: bigint): boolean {
+    const count = this.count();
+    return count.kind === "exact" ? index <= count.n : count.kind === "infinite";
+  }
+
   /** The source index of view position `position`, when it is one the view has. */
   indexOf(position: bigint): bigint | undefined {
     if (this.#sorting) return this.#best[Number(position - 1n)]?.index;
@@ -671,8 +709,8 @@ export class CollectionRows implements RowSource {
 // --- the static page -----------------------------------------------------------------------
 
 export interface PinnedOptions {
-  /** The first row (1-based). */
-  readonly scrollPosition?: number;
+  /** The first row (1-based); a bigint reaches rows past 2^53. */
+  readonly scrollPosition?: number | bigint;
   /** How many rows. */
   readonly maxItems?: number;
 }
@@ -682,7 +720,8 @@ export interface PinnedOptions {
  * row for the rest, as the plain `GridBox` a print, a pipe or an SSR page can draw.
  */
 export async function staticTable(source: CollectionRows, options: PinnedOptions = {}): Promise<Box> {
-  const from = BigInt(Math.max(1, options.scrollPosition ?? 1));
+  const asked = BigInt(options.scrollPosition ?? 1);
+  const from = asked < 1n ? 1n : asked;
   const to = from + BigInt(Math.max(1, options.maxItems ?? 20));
   // A glyph column is a picture; a static page draws the element's own text.
   const skip = source.columns[0]?.label === "" ? 1 : 0;

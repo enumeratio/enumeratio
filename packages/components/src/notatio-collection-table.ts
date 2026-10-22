@@ -262,7 +262,7 @@ export class NotatioCollectionTable extends LitElement {
       this.scrollPosition !== ""
         ? this.scrollPosition
         : this.page > 1
-          ? String((this.page - 1) * Math.max(1, this.pageSize) + 1)
+          ? String(BigInt(Math.floor(this.page) - 1) * BigInt(Math.max(1, Math.floor(this.pageSize))) + 1n)
           : "";
     if (source !== "") log("render", source);
     return html`<div class="nct">

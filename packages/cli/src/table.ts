@@ -9,7 +9,7 @@ import { type Box, grid, isNode, type RowSource, tag, text } from "@enumeratio/b
 import { toText } from "@enumeratio/boxes/render";
 import { optionsOf } from "@enumeratio/formats";
 import { headOf, numOf, opsOf, rowSourceSpec, splitColumns, strOf, symOf } from "@enumeratio/frontend";
-import { type CollectionRows, openRowSource, staticTable } from "@enumeratio/frontend/row-source";
+import { bigintOf, type CollectionRows, openRowSource, staticTable } from "@enumeratio/frontend/row-source";
 import { drawBoxes } from "./cell-layout.ts";
 
 type Json = MathJsonExpression;
@@ -18,7 +18,7 @@ type Spec = NonNullable<ReturnType<typeof rowSourceSpec>>;
 /** A table opened for the terminal: its rows, and the page a static environment pinned. */
 export interface Table {
   readonly source: CollectionRows;
-  readonly scrollPosition?: number;
+  readonly scrollPosition?: bigint;
   readonly maxItems?: number;
 }
 
@@ -59,7 +59,10 @@ export function openTable(ce: ComputeEngine, json: Json): { table: Table } | { e
   const opened = openRowSource(ce, spec);
   if (!opened.ok) return { error: opened.error };
   const { options } = optionsOf(json as never);
-  const [scrollPosition, maxItems] = [numOf(options.ScrollPosition), numOf(options.MaxItems)];
+  const [scrollPosition, maxItems] = [
+    bigintOf(options.ScrollPosition) ?? bigintOf(strOf(options.ScrollPosition)),
+    numOf(options.MaxItems),
+  ];
   return {
     table: {
       source: opened.source,

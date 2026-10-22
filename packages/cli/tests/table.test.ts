@@ -76,6 +76,15 @@ it("hands a table to a host that draws tables, and prints plain text elsewhere",
   expect(runCommand(["show", "--json", CASES.infinite!], undefined, {}, { tables: true }).table).toBeUndefined();
 });
 
+it("opens a pinned page on a ScrollPosition past 2^53 exactly", async () => {
+  const from = BigInt(Number.MAX_SAFE_INTEGER) + 2n;
+  const text = await staticText(
+    opened(`CollectionTable(SymmetricGroup(25), ScrollPosition -> ${from}, MaxItems -> 2)`),
+  );
+  expect(text).toContain(String(from));
+  expect(text).toContain(String(from + 1n));
+});
+
 afterAll(() => {
   if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });
