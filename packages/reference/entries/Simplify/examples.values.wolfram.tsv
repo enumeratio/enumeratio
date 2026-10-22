@@ -2,7 +2,3 @@ id	in	out	tex.in	tex.out
 sine-over-cosine	Simplify[Divide[Sin[x], Cos[x]]]	Tan[x]	\text{Simplify}\left[\frac{\sin (x)}{\cos (x)}\right]	\tan (x)
 hyperbolic-quotient	Simplify[Divide[Sinh[x], Cosh[x]]]	Tanh[x]	\text{Simplify}\left[\frac{\sinh (x)}{\cosh (x)}\right]	\tanh (x)
 hyperbolic-identity	Simplify[Subtract[Power[Cosh[x], 2], Power[Sinh[x], 2]]]	1	\text{Simplify}\left[\cosh ^2(x)-\sinh ^2(x)\right]	1
-simplify-folds-a-mixed-sum				
-simplify-folds-a-mixed-product				
-simplify-folds-the-classes-beside-a-symbol				
-simplify-leaves-coprime-moduli				
