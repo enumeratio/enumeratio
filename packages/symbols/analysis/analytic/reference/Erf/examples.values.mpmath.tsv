@@ -1,24 +1,25 @@
-id	in	out
-erf-0	erf(0)	0.0
-erf-infinity		
-erf-negativeinfinity	erf(-inf)	-1.0
-erf-complexinfinity		
-a-floating-point-argument-evaluates-directly-to	erf(0.5)	0.520499877813046537682746653892
-a-machine-precision-argument	erf(0.95)	0.82089080727327792158555713553
-threads-element-wise-over-a-list-as-wolfram-s	[erf(0), erf(1)]	[mpf('0.0'), mpf('0.842700792949714869341220635082581')]
-complex-arguments-evaluate-directly	erf(mpc(1.5, -1))	(1.07839920749893345033933270406 + 0.0279637112386558494484658962059j)
-two-arguments-the-generalized-erf-z-0-z-1-erf-z	(erf(1.5) - erf(0.5))	0.445605268662264189384229607754
-which-with-exact-arguments-is-the-difference-erf	(erf(2) - erf(1))	0.152621472069237864820848621285
-interval-arithmetic-erf-is-increasing-so-the		
-uncertainty-propagation-with-slope-frac-2-sqrt		
-to-40-significant-digits-every-one-correctly	enumeratio_n(lambda: (erf(1)), 40)	0.8427007929497148693412206350826092592961
-erf-1-sqrt-2-approx-0-6827-the-68-in-the	erf(0.7071067811865476)	0.682689492137085930251776562638
-the-standard-normal-cdf-phi-x-frac-12-1-erf-x	(0.5 * (1 + erf((mpmathify(1.96) / sqrt(2)))))	0.975002104851779563787176307604
-odd-function-erf-z-erf-z-here-at-z-2	almosteq((erf(2) + erf(-2)), 0, 1e-20)	True
-complementary-with-erfc-erf-z-erfc-z-1-see-erfc	almosteq((erf(2) + erfc(2)), 1, 1e-20)	True
-oddness-applied-symbolically-erf-x-erf-x		
-erf-erfinv-x-x-symbolically-see-erfinv		
-on-the-imaginary-axis-erf-i-i-erfi-1	erf(mpc(0,1))	(0.0 + 1.65042575879754287602533772956j)
-frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the		
-an-exact-integer-argument-is-left-unevaluated	erf(1)	0.842700792949714869341220635083
-by-z-3-5-erf-is-already-within-10-6-of-its-limit	erf(3.5)	0.999999256901627658587254476316
+id	in	out	verdict
+erf-0	erf(0)	0.0	
+erf-infinity			
+erf-negativeinfinity	erf(-inf)	-1.0	
+erf-complexinfinity			
+a-floating-point-argument-evaluates-directly-to	erf(0.5)	0.520499877813046537682746653892	
+a-machine-precision-argument	erf(0.95)	0.82089080727327792158555713553	
+threads-element-wise-over-a-list-as-wolfram-s	[erf(0), erf(1)]	[mpf('0.0'), mpf('0.842700792949714869341220635082581')]	
+complex-arguments-evaluate-directly	erf(mpc(1.5, -1))	(1.07839920749893345033933270406 + 0.0279637112386558494484658962059j)	
+two-arguments-the-generalized-erf-z-0-z-1-erf-z	(erf(1.5) - erf(0.5))	0.445605268662264189384229607754	
+which-with-exact-arguments-is-the-difference-erf	(erf(2) - erf(1))	0.152621472069237864820848621285	
+interval-arithmetic-erf-is-increasing-so-the			
+uncertainty-propagation-with-slope-frac-2-sqrt			
+to-40-significant-digits-every-one-correctly	enumeratio_n(lambda: (erf(1)), 40)	0.8427007929497148693412206350826092592961	
+erf-1-sqrt-2-approx-0-6827-the-68-in-the	erf(0.7071067811865476)	0.682689492137085930251776562638	
+the-standard-normal-cdf-phi-x-frac-12-1-erf-x	(0.5 * (1 + erf((mpmathify(1.96) / sqrt(2)))))	0.975002104851779563787176307604	
+odd-function-erf-z-erf-z-here-at-z-2	almosteq((erf(2) + erf(-2)), 0, 1e-20)	True	
+complementary-with-erfc-erf-z-erfc-z-1-see-erfc	almosteq((erf(2) + erfc(2)), 1, 1e-20)	True	
+oddness-applied-symbolically-erf-x-erf-x			
+erf-erfinv-x-x-symbolically-see-erfinv			
+on-the-imaginary-axis-erf-i-i-erfi-1	erf(mpc(0,1))	(0.0 + 1.65042575879754287602533772956j)	
+frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the			
+an-exact-integer-argument-is-left-unevaluated	erf(1)	0.842700792949714869341220635083	
+n-of-a-complex-argument-past-a-double-declines	enumeratio_n(lambda: (erf(mpc(1, 1))), 25)	(1.316151281697947644880271+0.1904534692378346862841089j)	disagree
+by-z-3-5-erf-is-already-within-10-6-of-its-limit	erf(3.5)	0.999999256901627658587254476316	

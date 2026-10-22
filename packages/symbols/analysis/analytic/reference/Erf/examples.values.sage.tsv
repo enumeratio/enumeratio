@@ -21,4 +21,5 @@ erf-erfinv-x-x-symbolically-see-erfinv	erf(erfinv(SR.var("x")))	None	inconclusiv
 on-the-imaginary-axis-erf-i-i-erfi-1	erf(I)	erf(I)	
 frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the	diff(erf(SR.var("x")), SR.var("x"))	2*e^(-x^2)/sqrt(pi)	
 an-exact-integer-argument-is-left-unevaluated	erf(1)	erf(1)	
+n-of-a-complex-argument-past-a-double-declines	enumeratio_n(erf((1 + 1*I)), 25)	1.31615128169795 + 0.190453469237835*I	disagree
 by-z-3-5-erf-is-already-within-10-6-of-its-limit	erf(3.5)	0.999999256901628	

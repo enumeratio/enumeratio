@@ -21,4 +21,5 @@ erf-erfinv-x-x-symbolically-see-erfinv
 on-the-imaginary-axis-erf-i-i-erfi-1	enumeratio_ball(erf, onei(CC))	(0.0+1.650425758797542876025337729561362443895679874874022877600257996316111304925634j)	
 frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the			
 an-exact-integer-argument-is-left-unevaluated	enumeratio_ball(erf, 1)	0.8427007929497148693412206350826092592960669979663029084599378978347172540960087	
+n-of-a-complex-argument-past-a-double-declines	enumeratio_nshow(enumeratio_ball(erf, enumeratio_complex(1, 1)), 25)	(1.316151281697947644880271e+00+1.904534692378346862841089e-01j)	disagree
 by-z-3-5-erf-is-already-within-10-6-of-its-limit	enumeratio_ball(erf, enumeratio_decimal("3.5"))	0.9999992569016276585872544763162439043642793399078272025374088904300564999604088	

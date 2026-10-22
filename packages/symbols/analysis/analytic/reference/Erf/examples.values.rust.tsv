@@ -21,4 +21,5 @@ erf-erfinv-x-x-symbolically-see-erfinv
 on-the-imaginary-axis-erf-i-i-erfi-1		
 frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the		
 an-exact-integer-argument-is-left-unevaluated	erf(n(1))	0.8427007929427149
+n-of-a-complex-argument-past-a-double-declines		
 by-z-3-5-erf-is-already-within-10-6-of-its-limit	erf(x(3.5))	0.9999992569016276
