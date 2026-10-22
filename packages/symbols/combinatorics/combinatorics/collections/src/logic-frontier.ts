@@ -196,6 +196,61 @@ function toClauses(expr: Expr, splitOp: "And" | "Or", joinOp: "And" | "Or"): Exp
   return [[expr]];
 }
 
+/** Past this many clauses the pairwise merge below is skipped (it is quadratic per pass). */
+const REDUCE_CLAUSE_LIMIT = 256;
+
+/** Cheap, equivalence-preserving clause reduction, to a fixpoint: merge two clauses that
+ *  differ only in one atom's polarity (`a∧b ∨ a∧¬b` = `a`; dually for CNF), then drop any
+ *  clause that contains another (absorption). Unit `x` and `¬x` merge to the empty clause,
+ *  which is how a tautology/contradiction spread across clauses is caught. */
+function reduceClauses(
+  input: readonly (readonly Literal[])[],
+  clauseKey: (c: readonly Literal[]) => string,
+): (readonly Literal[])[] {
+  let clauses = [...new Map(input.map((c) => [clauseKey(c), c])).values()];
+  const absorb = (cs: (readonly Literal[])[]) => {
+    const keys = cs.map((c) => new Set(c.map(literalSortKey)));
+    return cs.filter(
+      (_, i) =>
+        !cs.some(
+          (d, j) =>
+            j !== i &&
+            (d.length < cs[i]!.length || (d.length === cs[i]!.length && j < i)) &&
+            d.every((l) => keys[i]!.has(literalSortKey(l))),
+        ),
+    );
+  };
+  clauses = absorb(clauses);
+  for (let changed = true; changed && clauses.length <= REDUCE_CLAUSE_LIMIT;) {
+    changed = false;
+    const seen = new Set(clauses.map(clauseKey));
+    const added: (readonly Literal[])[] = [];
+    for (let i = 0; i < clauses.length; i++)
+      for (let j = i + 1; j < clauses.length; j++) {
+        const a = clauses[i]!;
+        const b = clauses[j]!;
+        if (a.length !== b.length) continue;
+        const bKeys = new Set(b.map(literalSortKey));
+        const onlyA = a.filter((l) => !bKeys.has(literalSortKey(l)));
+        if (onlyA.length !== 1) continue;
+        const aKeys = new Set(a.map(literalSortKey));
+        const onlyB = b.filter((l) => !aKeys.has(literalSortKey(l)));
+        if (onlyB.length !== 1 || onlyB[0]!.atomKey !== onlyA[0]!.atomKey) continue;
+        const merged = a.filter((l) => l !== onlyA[0]);
+        const k = clauseKey(merged);
+        if (!seen.has(k)) {
+          seen.add(k);
+          added.push(merged);
+        }
+      }
+    if (added.length > 0) {
+      clauses = absorb([...clauses, ...added]);
+      changed = true;
+    }
+  }
+  return clauses;
+}
+
 /** Build the final `outerOp`-of-`innerOp` expression from a set of literal clauses:
  *  drop any clause with a complementary pair (a DNF term that's always false, or a CNF
  *  clause that's always true — either way it drops out of its parent connective), dedupe
@@ -210,7 +265,11 @@ function buildNormalForm(
 ): Expr {
   const clauses = rawClauses.map((c) => dedupeLiterals(c.map(toLiteral))).filter((c) => !hasComplementaryPair(c));
   const clauseKey = (c: readonly Literal[]) => c.map(literalSortKey).join(",");
-  const uniqueClauses = [...new Map(clauses.map((c) => [clauseKey(c), c])).values()];
+  const reduced = reduceClauses(clauses, clauseKey);
+  // An empty clause is the neutral element of its own connective, so it makes the whole
+  // outer connective its absorbing value: a DNF with an empty term is True, a CNF False.
+  if (reduced.some((c) => c.length === 0)) return ce.symbol(emptyValue === "False" ? "True" : "False");
+  const uniqueClauses = [...new Map(reduced.map((c) => [clauseKey(c), c])).values()];
   uniqueClauses.sort((a, b) => clauseKey(a).localeCompare(clauseKey(b)));
   if (uniqueClauses.length === 0) return ce.symbol(emptyValue);
   const clauseExprs = uniqueClauses.map((literals) => {

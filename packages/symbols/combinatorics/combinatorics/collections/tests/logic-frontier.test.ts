@@ -100,6 +100,14 @@ const FIXTURES: readonly unknown[] = [
   ["Or", "p", ["Not", "p"]],
   ["Equivalent", ["Implies", "p", "q"], ["Or", ["Not", "p"], "q"]],
   ["And", "p", "q", "r", "s", "t", "u"],
+  ["Implies", "b", "b"],
+  ["Equivalent", "b", "b"],
+  ["Xor", "b", "b"],
+  ["And", "b", ["Not", "b"]],
+  ["Or", ["And", "a", "b"], ["And", "a", ["Not", "b"]]],
+  ["And", ["Or", "a", "b"], ["Or", "a", ["Not", "b"]]],
+  ["Or", ["And", "a", "b"], "a", ["And", ["Not", "a"], "c"]],
+  ["Equivalent", ["Equivalent", "a", "b"], ["Equivalent", "b", "a"]],
 ];
 
 // ─── truth-table equivalence: DNF / CNF / NNF all agree with the original ─────────────────
@@ -121,6 +129,23 @@ test("LogicalExpand agrees with BooleanConvert's default (DNF) form", () => {
   for (const fixture of FIXTURES) {
     expect(runJson(["LogicalExpand", fixture])).toEqual(convert(fixture, "DNF").json);
   }
+});
+
+// ─── tautologies and contradictions fold across clauses (BL-234) ──────────────────────────
+
+test("a tautology or contradiction spread across clauses folds to True/False", () => {
+  const T = (e: unknown, form: string) => convert(e, form).json;
+  for (const form of ["DNF", "CNF", "NNF"]) {
+    if (form !== "NNF") {
+      expect(T(["Implies", "b", "b"], form)).toBe("True");
+      expect(T(["Equivalent", "b", "b"], form)).toBe("True");
+      expect(T(["Xor", "b", "b"], form)).toBe("False");
+    }
+    expect(T(["And", "b", ["Not", "b"]], form === "NNF" ? "DNF" : form)).toBe("False");
+  }
+  expect(T(["Or", ["And", "a", "b"], ["And", "a", ["Not", "b"]]], "DNF")).toBe("a");
+  expect(T(["And", ["Or", "a", "b"], ["Or", "a", ["Not", "b"]]], "CNF")).toBe("a");
+  expect(T(["Or", ["And", "a", "b"], "a"], "DNF")).toBe("a");
 });
 
 // ─── shape assertions: DNF is an Or of Ands, CNF an And of Ors ────────────────────────────

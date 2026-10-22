@@ -7,4 +7,10 @@ a-tautological-clause-drops-out-of-cnf	BooleanConvert[Or[p, Not[p]], "CNF"]	True
 an-unimplemented-form-stays-unevaluated	BooleanConvert[p, "ESOP"]	p	\text{BooleanConvert}[p,\text{ESOP}]	p	disagree
 booleanconvert-f	BooleanConvert[f]	f	\text{BooleanConvert}[f]	f	
 booleanconvert-f-cnf	BooleanConvert[f, "CNF"]	f	\text{BooleanConvert}[f,\text{CNF}]	f	
+a-tautology-across-clauses-folds-to-true	BooleanConvert[Implies[b, b]]	True	\text{BooleanConvert}[b\Rightarrow b]	\text{True}	
+equivalent-with-itself-folds-to-true	BooleanConvert[Equivalent[b, b]]	True	\text{BooleanConvert}[b\unicode{29e6}b]	\text{True}	
+a-contradiction-folds-to-false	BooleanConvert[And[b, Not[b]]]	False	\text{BooleanConvert}[b\land \neg b]	\text{False}	
+xor-with-itself-folds-to-false	BooleanConvert[Xor[b, b]]	False	\text{BooleanConvert}[b\veebar b]	\text{False}	
+clauses-differing-in-one-literal-merge-in-dnf	BooleanConvert[Or[And[a, b], And[a, Not[b]]]]	a	\text{BooleanConvert}[(a\land b)\lor (a\land \neg b)]	a	
+clauses-differing-in-one-literal-merge-in-cnf	BooleanConvert[And[Or[a, b], Or[a, Not[b]]], "CNF"]	a	\text{BooleanConvert}[(a\lor b)\land (a\lor \neg b),\text{CNF}]	a	
 booleanconvert-xor-a-b-c-d	BooleanConvert[Xor[a, b, c, d]]	(a && b && c &&  !d) || (a && b &&  !c && d) || (a &&  !b && c && d) || (a &&  !b &&  !c &&  !d) || ( !a && b && c && d) || ( !a && b &&  !c &&  !d) || ( !a &&  !b && c &&  !d) || ( !a &&  !b &&  !c && d)	\text{BooleanConvert}[a\veebar b\veebar c\veebar d]	(a\land b\land c\land \neg d)\lor (a\land b\land \neg c\land d)\lor (a\land \neg b\land c\land d)\lor (a\land \neg b\land \neg c\land \neg d)\lor (\neg a\land b\land c\land d)\lor (\neg a\land b\land \neg c\land \neg d)\lor (\neg a\land \neg b\land c\land \neg d)\lor (\neg a\land \neg b\land \neg c\land d)	
