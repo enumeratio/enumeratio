@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[VertexHeightSum, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	7			the binary tree $[[.,.],[[.,.],.]]$
+findstat-st000569-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'VertexHeightSum'"]	3	3	FindStat St000569	FindStat's value for [.,[.,.]]
+findstat-st000569-2	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'VertexHeightSum'"]	3	3	FindStat St000569	FindStat's value for [[.,.],.]
+findstat-st000569-3	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, [List, 0, 0]]]], "'VertexHeightSum'"]	6	6	FindStat St000569	FindStat's value for [.,[.,[.,.]]]
