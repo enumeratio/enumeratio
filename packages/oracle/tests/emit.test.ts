@@ -913,3 +913,14 @@ test("SymPy's MatrixFunction takes f as an expression of a dummy variable, and S
   // An undefined name is an unknown function of the variable.
   expect(sympy(["MatrixFunction", "f", m])).toContain('Function("f")(Symbol("_mf"))');
 });
+
+test("SymPy's Inverse is the permutation inverse, and nothing else", () => {
+  const sympy = (expr: unknown) => {
+    const out = emit(expr as never, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  expect(sympy(["Inverse", ["Permutation", ["List", 2, 3, 1]]])).toContain(
+    "Permutation([_j - 1 for _j in [2, 3, 1]]) ** -1",
+  );
+  expect(sympy(["Inverse", ["List", ["List", 1, 1], ["List", 1, 2]]])).toBeUndefined();
+});

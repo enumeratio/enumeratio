@@ -557,6 +557,14 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         return toWolfram([head, ...operands] as Parameters<typeof toWolfram>[0]);
       }
     }
+    // The SymPy mapping is the permutation inverse; any other `Inverse` (a matrix, a word) is not that.
+    if (system === "sympy" && head === "Inverse" && operands.length === 1) {
+      const inner = operands[0] as MathJSON;
+      if (!(isCall(inner) && inner[0] === "Permutation")) {
+        missing.push("Inverse/1");
+        return "0";
+      }
+    }
     // SymPy's `summation(f, (k, a, b))`: the iterator is a tuple, from 1 when its start is `Nothing` or left out.
     // Sage's `sum(f, k, a, b)` and `product(f, k, a, b)` take the iterator's parts as arguments, k a symbol.
     if (
