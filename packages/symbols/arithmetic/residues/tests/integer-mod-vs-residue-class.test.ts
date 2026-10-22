@@ -37,13 +37,26 @@ test("simplify(): ResidueClass is folded and protected, IntegerMod is neither", 
   const sum = (H: string): unknown => ["Add", "x", [H, 2, 4], [H, 1, 4]];
   expect(simp(sum("ResidueClass"))).toEqual(["Add", "x", ["ResidueClass", 3, 4]]);
   expect(simp(sum("IntegerMod"))).toEqual(["Add", "x", ["IntegerMod", 2, 4], ["IntegerMod", 1, 4]]);
-  // A non-unit over itself is not 1: ResidueClass keeps it, IntegerMod is cancelled like a number.
+  // A non-unit over itself is not 1: ResidueClass keeps it.
   expect(simp(["Divide", ["ResidueClass", 2, 4], ["ResidueClass", 2, 4]])).toEqual([
     "Divide",
     ["ResidueClass", 2, 4],
     ["ResidueClass", 2, 4],
   ]);
-  expect(simp(["Divide", ["IntegerMod", 2, 4], ["IntegerMod", 2, 4]])).toBe(1);
+});
+
+// BL-241: CE's number rules don't see IntegerMod as a residue class; fixed with CE's residue-class type.
+test.fails("simplify(): IntegerMod non-unit over itself is not 1", () => {
+  expect(simp(["Divide", ["IntegerMod", 2, 4], ["IntegerMod", 2, 4]])).toEqual([
+    "Divide",
+    ["IntegerMod", 2, 4],
+    ["IntegerMod", 2, 4],
+  ]);
+});
+
+// BL-241: same cause; evaluate() already says True.
+test.fails("simplify(): Equal(c, c) is True for an IntegerMod", () => {
+  expect(simp(["Equal", ["IntegerMod", 2, 7], ["IntegerMod", 2, 7]])).toBe("True");
 });
 
 test("Simplify(...) folds IntegerMod only through our wrapper, not .simplify()", () => {
