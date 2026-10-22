@@ -473,7 +473,12 @@ export const skewPartitions: EpsilFamily = {
 };
 
 const fast: FastKernel = {
-  count: ([size]) => orExact(skewShapeCount(size), () => skewShapeCountExact(size)),
+  count: ([size]) =>
+    orExact(
+      size >= PAST_DOUBLES,
+      () => skewShapeCount(size),
+      () => skewShapeCountExact(size),
+    ),
   unrank: ([size], r) => skewShapeUnrank(size, r),
   rank: (x, [size]) => {
     const [lam, mu] = x as number[][];
