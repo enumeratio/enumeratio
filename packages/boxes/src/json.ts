@@ -44,7 +44,7 @@ export function toMathJson(box: Box): Json {
     if (head === "RowBox" || head === "TextData" || isDrawingHead(head)) return list((arg as Box[]).map(toMathJson));
     if (head === "GridBox") return list((arg as Box[][]).map((r) => list(r.map(toMathJson))));
     if (head === "PaneSelectorBox" && i === 0)
-      return list((arg as Box[][]).map(([key, pane]) => ["KeyValuePair", toMathJson(key!), toMathJson(pane!)] as Json));
+      return list((arg as Box[][]).map(([key, pane]) => ["Rule", toMathJson(key!), toMathJson(pane!)] as Json));
     if (head === "PaneSelectorBox") return arg as Json;
     if (head === "TextBox" || head === "TemplateSlot" || head === "TemplateExpression") return { str: arg as string };
     // A tag that is no symbol's name (an address, "1,0") is a string.
@@ -56,7 +56,7 @@ export function toMathJson(box: Box): Json {
     return toMathJson(arg as Box);
   });
   const rules = Object.entries(optionsOfBox(box as BoxNode)).map(
-    ([name, value]) => ["KeyValuePair", name, optionToJson(value)] as Json,
+    ([name, value]) => ["Rule", name, optionToJson(value)] as Json,
   );
   return [head, ...encoded, ...rules] as Json;
 }
@@ -108,13 +108,13 @@ function optionFromJson(node: Json): OptionValue {
 }
 
 /**
- * `Name -> value` as a rule: a `KeyValuePair`, or the `Tuple` compute-engine canonicalises
+ * `Name -> value` as a rule: a `Rule`, a `KeyValuePair`, or the `Tuple` compute-engine canonicalises
  * a symbol-keyed pair to (an option name is capitalised, which keeps `(x, 1)` a tuple).
  */
 function ruleOf(node: Json): [string, Json] | undefined {
   const head = headOf(node);
   const ops = opsOf(node);
-  if ((head !== "KeyValuePair" && head !== "Tuple") || ops.length !== 2) return undefined;
+  if ((head !== "Rule" && head !== "KeyValuePair" && head !== "Tuple") || ops.length !== 2) return undefined;
   const name = symbolOf(ops[0]) ?? stringOf(ops[0]);
   return name !== undefined && /^[A-Z]/.test(name) ? [name, ops[1]] : undefined;
 }

@@ -1,2 +1,2 @@
 id	section	role	expr	expected	caption
-inert	Basic		[PopupMenuBox, [Dynamic, c], [List, [KeyValuePair, a, "'a'"], [KeyValuePair, b, "'b'"], [KeyValuePair, c, "'c'"]]]	[PopupMenuBox, [Dynamic, c], [List, [Tuple, a, "'a'"], [Tuple, b, "'b'"], [Tuple, c, "'c'"]]]	a box is inert: it evaluates to itself
+inert	Basic		[PopupMenuBox, [Dynamic, c], [List, [Rule, a, "'a'"], [Rule, b, "'b'"], [Rule, c, "'c'"]]]	[PopupMenuBox, [Dynamic, c], [List, [Rule, a, "'a'"], [Rule, b, "'b'"], [Rule, c, "'c'"]]]	a box is inert: it evaluates to itself

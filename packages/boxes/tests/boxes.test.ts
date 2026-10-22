@@ -92,7 +92,7 @@ test("MathJSON encoding is what Epsil would write", () => {
     "FractionBox",
     { str: "n" },
     { str: "k" },
-    ["KeyValuePair", "FractionLine", "False"],
+    ["Rule", "FractionLine", "False"],
   ]);
   expect(toMathJson(row(["a", "+", "b"]))).toEqual(["RowBox", ["List", { str: "a" }, { str: "+" }, { str: "b" }]]);
 });

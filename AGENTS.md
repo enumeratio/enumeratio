@@ -67,6 +67,8 @@ so a page reads the same on GitHub and on the site.
 - On the web every box primitive is its own tag, the box head in kebab case (`RowBox` -> `row-box`,
   `Graphics3DBox` -> `graphics-3d-box`); `packages/frontend/src/box-tags.ts` is the one map. `notatio-`
   stays for the notebook and app shell. A tag someone else defined is logged and left; CSS keys on the tags.
+- Options are `Rule` (`Over -> R`); `parseExpression` normalizes a `->` in a call's arguments to `Rule`, and
+  `KeyValuePair` stays the dictionary entry.
 - Package names have not all caught up; do not rename them in passing — see the wiki's
   [Component-Naming](https://github.com/enumeratio/enumeratio/wiki/Component-Naming) for how renames wait.
 

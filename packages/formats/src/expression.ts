@@ -149,6 +149,23 @@ function resolveRuleKeys(json: MathJsonExpression, src: string, ce: ComputeEngin
 }
 
 /**
+ * Read a `->` in a call's arguments as `Rule`. Epsil parses `a -> b` to `KeyValuePair`, the
+ * dictionary-entry constructor, which compute-engine canonicalises to a `Tuple` that broadcast
+ * threads over; an option is a `Rule`. A pair directly inside a `Dictionary` (`{a -> 1}`) or `Association` is
+ * data and stays, as does a bare top-level pair.
+ */
+export function rulesInCalls(json: MathJsonExpression): void {
+  const visit = (node: unknown, inCall: boolean): void => {
+    const fn = Array.isArray(node) ? node : (node as { fn?: unknown[] })?.fn;
+    if (!Array.isArray(fn)) return;
+    const head = fn[0];
+    if (inCall && head === "KeyValuePair") fn[0] = "Rule";
+    for (const child of fn.slice(1)) visit(child, head !== "Dictionary" && head !== "Association");
+  };
+  visit(json, false);
+}
+
+/**
  * Parse one Epsil expression. Returns the MathJSON, its slot wildcards, and any
  * diagnostics — an Epsil parse error, or a statement/effect head. Never throws.
  */
@@ -157,6 +174,7 @@ export function parseExpression(src: string, options?: ParseExpressionOptions): 
   resolveLibraryNames(json, src, options?.ce ?? libraryEngine());
   resolveRuleKeys(json, src, options?.ce ?? libraryEngine());
   exactDecimals(json, src);
+  rulesInCalls(json);
   const found: ExpressionDiagnostic[] = diagnostics
     .filter((d) => d.severity === "error")
     .map((d) => ({ message: diagText(d.message), ...(d.range ? { range: [d.range[0], d.range[1]] } : {}) }));
@@ -178,6 +196,19 @@ export function parseExpression(src: string, options?: ParseExpressionOptions): 
   return { json, wildcards: collectWildcards(json), errors: found.map((d) => d.message), diagnostics: found };
 }
 
+/** `json` with each `Rule` as the `KeyValuePair` Epsil spells `->`, the inverse of `rulesInCalls`. */
+export function ruleAsPair(json: MathJsonExpression): MathJsonExpression {
+  if (Array.isArray(json)) {
+    const [head, ...ops] = json.map((n) => ruleAsPair(n as MathJsonExpression));
+    // `a -> b -> c` doesn't read back, so a rule holding a pair keeps its call form.
+    const pair = head === "Rule" && !ops.some((op) => ["KeyValuePair", "Rule"].includes(headOf(op) ?? ""));
+    return [pair ? "KeyValuePair" : head, ...ops] as MathJsonExpression;
+  }
+  const fn = (json as { fn?: unknown[] } | null)?.fn;
+  if (Array.isArray(fn)) return { ...(json as object), fn: ruleAsPair(fn as never) } as MathJsonExpression;
+  return json;
+}
+
 /**
  * Serialize MathJSON back to Epsil text. `libraryNames: "mathjson"` keeps a library name as it is
  * declared (`NonNegativeIntegers`), for text a reader will see and retype; the default is Epsil's
@@ -187,5 +218,5 @@ export function serializeExpression(
   json: MathJsonExpression,
   options?: { libraryNames?: "epsil" | "mathjson" },
 ): string {
-  return serializeEpsil(json, options);
+  return serializeEpsil(ruleAsPair(json), options);
 }

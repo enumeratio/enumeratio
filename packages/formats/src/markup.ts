@@ -3,7 +3,7 @@
 // about the shape of the markup, never about which head it is:
 //
 //   <Plot PlotRange="All"><Sin>x</Sin><Tuple>x 0 10</Tuple></Plot>
-//     = ["Plot", ["Sin", "x"], ["Tuple", "x", 0, 10], ["KeyValuePair", "PlotRange", "All"]]
+//     = ["Plot", ["Sin", "x"], ["Tuple", "x", 0, 10], ["Rule", "PlotRange", "All"]]
 //
 // - an element is an application, its tag the head (`Stats.Mean` a member call);
 // - element children and text tokens are the positional arguments, in order; a text run is
@@ -229,7 +229,7 @@ function placed(
     errors.push(`markup: <${tag}> has more arguments than its parameters (${params.join(", ")})`);
     return undefined;
   }
-  return [...out, ...slots.filter(([name]) => !named.has(name)).map(([name, v]) => ["KeyValuePair", name, v])];
+  return [...out, ...slots.filter(([name]) => !named.has(name)).map(([name, v]) => ["Rule", name, v])];
 }
 
 function read(node: MarkupNode, options: ReadOptions, errors: string[]): Json {
@@ -252,7 +252,7 @@ function read(node: MarkupNode, options: ReadOptions, errors: string[]): Json {
       if (v !== undefined) named.push([name, v]);
     } else errors.push(`markup: <${tag}> has "${name}", which isn't a slot name`);
   }
-  const slots: Json[] = named.map(([name, v]) => ["KeyValuePair", name, v]);
+  const slots: Json[] = named.map(([name, v]) => ["Rule", name, v]);
 
   if (tag === "StringTemplate" && value === undefined) {
     const text = node.children
@@ -273,7 +273,7 @@ function read(node: MarkupNode, options: ReadOptions, errors: string[]): Json {
       const values = Array.isArray(v) ? v.slice(1) : [];
       const value = values.length === 0 ? "True" : values.length === 1 ? values[0] : ["List", ...values];
       named.push([child.tag, value]);
-      slots.push(["KeyValuePair", child.tag, value]);
+      slots.push(["Rule", child.tag, value]);
     } else {
       const arg = read(child, options, errors);
       if (arg !== undefined) args.push(arg);
@@ -310,10 +310,10 @@ function read(node: MarkupNode, options: ReadOptions, errors: string[]): Json {
 export function stripMetadata(expr: Json): Json {
   if (Array.isArray(expr)) {
     const [head, ...ops] = expr.map(stripMetadata);
-    // A trailing option pair prints as an attribute, which reads back as a `KeyValuePair`.
+    // A trailing option pair prints as an attribute, which reads back as a `Rule`.
     for (let i = ops.length - 1; i >= 0 && slotOf(ops[i]!) !== undefined; i--) {
       const [, key, value] = ops[i] as Json[];
-      ops[i] = ["KeyValuePair", key, value] as Json;
+      ops[i] = ["Rule", key, value] as Json;
     }
     if (head === "Apply" && isSymbol(ops[0])) return [ops[0], ...ops.slice(1)];
     return isSymbol(head) ? [head, ...ops] : ["Apply", head, ...ops];
@@ -367,10 +367,11 @@ function dottedName(receiver: Json, member: Json): string | undefined {
   return undefined;
 }
 
-/** A trailing `KeyValuePair(Name, atom)` as a slot attribute, or undefined. compute-engine
- *  canonicalises that pair to a `Tuple`, so a capitalised-name pair of either head is an option. */
+/** A trailing `Rule(Name, atom)` as a slot attribute, or undefined. A capitalised-name
+ *  `KeyValuePair` or `Tuple` (what compute-engine canonicalises a pair to) reads as an option too. */
 function slotOf(arg: Json): [string, string] | undefined {
-  if (!Array.isArray(arg) || (arg[0] !== "KeyValuePair" && arg[0] !== "Tuple") || arg.length !== 3) return undefined;
+  if (!Array.isArray(arg) || (arg[0] !== "Rule" && arg[0] !== "KeyValuePair" && arg[0] !== "Tuple") || arg.length !== 3)
+    return undefined;
   const [, key, value] = arg;
   if (typeof key !== "string" || !/^[A-Z]/.test(key) || !PLAIN_SYMBOL.test(key) || key === "ToExpression")
     return undefined;

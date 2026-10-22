@@ -14,7 +14,7 @@ import { makeBoxes } from "@enumeratio/boxes";
 import { toText } from "@enumeratio/boxes/render";
 import { fromAsciiMath, toAsciiMath } from "./asciimath.ts";
 import { fromMathML, type MathMLOptions, toMathML } from "./mathml.ts";
-import { parseExpression } from "./expression.ts";
+import { parseExpression, ruleAsPair, rulesInCalls } from "./expression.ts";
 import { portableTeX } from "./tex.ts";
 import { type FormatOptions, type ImageValue, registerFileFormat } from "./registry.ts";
 
@@ -37,13 +37,14 @@ const diagText = (m: unknown): string => (Array.isArray(m) ? m.join(" ") : typeo
 // Epsil is compute-engine's own surface syntax (parens, `$…$` LaTeX islands).
 // Output serializes via `serializeEpsil`; `$…$` islands parse via the engine's
 // LaTeX parser, so a decoder needs `opts.ce`.
-const epsilEncode = (v: unknown): string => serializeEpsil(asExpr(v).json);
+const epsilEncode = (v: unknown): string => serializeEpsil(ruleAsPair(asExpr(v).json));
 const epsilDecode = (d: string | Uint8Array, o?: FormatOptions): unknown => {
   const ce = o?.ce;
   const options = ce ? { parseLatex: (tex: string) => ce.parse(tex)?.json } : undefined;
   const [expr, diagnostics] = parseEpsil(text(d), undefined, options);
   const errors = diagnostics.filter((x) => x.severity === "error");
   if (errors.length) throw new Error(`Epsil: ${errors.map((e) => diagText(e.message)).join("; ")}`);
+  rulesInCalls(expr);
   return expr;
 };
 

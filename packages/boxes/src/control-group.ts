@@ -114,8 +114,7 @@ const entryLabelJson = (entry: Json): Json => {
 };
 
 /** A `value -> label` rule, as Wolfram lists a menu's, a picker's and a toggler's entries. */
-export const entryRule = (entry: Json): Json =>
-  ["KeyValuePair", entryValue(entry), entryLabelJson(entry)] as unknown as Json;
+export const entryRule = (entry: Json): Json => ["Rule", entryValue(entry), entryLabelJson(entry)] as unknown as Json;
 
 /** An entry rebuilt from a value and the label shown for it: the value alone when the label is its own text. */
 export function entryOfLabeled(value: Json, label: Json | string): Json {

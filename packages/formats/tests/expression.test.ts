@@ -33,11 +33,23 @@ test("a rule's key reads back as the name Epsil spelled, as any other symbol doe
   const { json } = parseExpression("[isPrime -> Teal, Inert && !isPrime -> Gold, x -> 1, PlotRange -> All]");
   expect(stripMetadata(json)).toEqual([
     "List",
-    ["KeyValuePair", "IsPrime", "Teal"],
-    ["KeyValuePair", ["And", "Inert", ["Not", "IsPrime"]], "Gold"],
-    ["KeyValuePair", "x", 1],
-    ["KeyValuePair", "PlotRange", "All"],
+    ["Rule", "IsPrime", "Teal"],
+    ["Rule", ["And", "Inert", ["Not", "IsPrime"]], "Gold"],
+    ["Rule", "x", 1],
+    ["Rule", "PlotRange", "All"],
   ]);
+});
+
+test("a -> in a call's arguments is a Rule; a dictionary entry or a bare pair stays a KeyValuePair", () => {
+  const shape = (src: string) => stripMetadata(parseExpression(src).json);
+  expect(shape("f(x, a -> 1)")).toEqual(["f", "x", ["Rule", "a", 1]]);
+  expect(shape('f(x, "a" -> 1)')).toEqual(["f", "x", ["Rule", "'a'", 1]]);
+  expect(shape("f(x, [a -> 1, b -> 2])")).toEqual(["f", "x", ["List", ["Rule", "a", 1], ["Rule", "b", 2]]]);
+  expect(shape("{a -> 1}")).toEqual(["Dictionary", ["KeyValuePair", "'a'", 1]]);
+  expect(shape('{"a" -> 1}')).toEqual(["Dictionary", ["KeyValuePair", "'a'", 1]]);
+  expect(shape("Dictionary(a -> 1)")).toEqual(["Dictionary", ["KeyValuePair", "a", 1]]);
+  expect(shape("f(x, {a -> 1})")).toEqual(["f", "x", ["Dictionary", ["KeyValuePair", "'a'", 1]]]);
+  expect(shape("a -> 1")).toEqual(["KeyValuePair", "a", 1]);
 });
 
 test("statements and effects are rejected", () => {
