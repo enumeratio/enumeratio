@@ -1,0 +1,8 @@
+id	section	role	expr	expected	caption	combinatorica.kind	combinatorica.note
+the-last-row	Basic		[DeleteFromTableau, [List, [List, 1, 2, 5], [List, 3, 4], [List, 6]], 3]	[List, [List, 1, 4, 5], [List, 3, 6]]	the lone 6 leaves and bumps the 4 up out of row 2, which bumps the 2 out of row 1		
+a-middle-row	Basic		[DeleteFromTableau, [List, [List, 1, 2, 5], [List, 3, 4], [List, 6]], 2]	[List, [List, 1, 4, 5], [List, 3], [List, 6]]	the 4 ends row 2 and takes the place of the 2 above it		
+the-first-row	Basic		[DeleteFromTableau, [List, [List, 1, 2, 5], [List, 3, 4], [List, 6]], 1]	[List, [List, 1, 2], [List, 3, 4], [List, 6]]	row 1 ends in a corner, so nothing bumps up		
+not-standard-after	Basic		[DeleteFromTableau, [List, [List, 1, 3], [List, 2]], 2]	[List, [List, 2, 3]]	the 1 drops out of row 1, so the result holds 2 and 3 only		
+a-column	Basic		[DeleteFromTableau, [List, [List, 1, 5], [List, 3, 6], [List, 4]], 3]	[List, [List, 3, 5], [List, 4, 6]]	the 4 bumps the 3, which bumps the 1		
+the-single-cell	Basic		[DeleteFromTableau, [List, [List, 1]], 1]	[List]	deleting the only cell leaves the empty tableau		
+repeated-entries	Basic		[DeleteFromTableau, [List, [List, 1, 1, 2], [List, 2]], 2]	[List, [List, 1, 2, 2]]	a semistandard tableau: the 2 takes the place of the last 1	convention	Combinatorica swaps with the last entry no larger than the one moving up, so an equal entry is chosen and nothing moves; reverse bumping takes the largest entry strictly smaller, as here, and Combinatorica agrees on every tableau of distinct entries.
