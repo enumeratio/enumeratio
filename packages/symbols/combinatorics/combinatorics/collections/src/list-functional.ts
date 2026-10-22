@@ -72,17 +72,44 @@ const FIXED_POINT_MAX_ITERATIONS = 10_000;
  * fixed point produce — comes back `true` no matter which is actually larger. `BigDecimal`'s
  * own `.cmp` has no such fuzz.
  */
-function withinWorkingPrecision(ce: Engine, next: Expr, current: Expr): boolean {
+function withinWorkingPrecision(next: Expr, current: Expr, digits: number | string): boolean {
+  if (typeof digits !== "number") return false;
   const nextBig = next.bignumRe;
   const currentBig = current.bignumRe;
   if (nextBig === undefined || currentBig === undefined) return false;
   if (!nextBig.isFinite() || !currentBig.isFinite()) return false;
   const delta = nextBig.sub(currentBig).abs();
-  const tolerance = nextBig.abs().mul(10 ** -(ce.precision - 1));
+  // `digits` carries the guard digits; an exact iterate (a rational) stops at the engine's own.
+  const stop = isInexact(next) ? digits : digits - FIXED_POINT_GUARD_DIGITS;
+  const tolerance = nextBig.abs().mul(10 ** -(stop - 1));
   return delta.cmp(tolerance) <= 0;
 }
 
+const isInexact = (x: Expr): boolean => (x as unknown as { isExact?: boolean }).isExact === false;
+
+/** Digits an inexact iteration carries past the engine's precision. The last step's error is a
+ *  few times the stopping gap, so without them the last digit or two of the answer are wrong;
+ *  rounding back from this many leaves every printed digit right. */
+const FIXED_POINT_GUARD_DIGITS = 10;
+
 function fixedPointValue(ce: Engine, fn: Expr, x: Expr): Expr {
+  const digits = ce.precision;
+  if (typeof digits !== "number") return iterateToFixedPoint(ce, fn, x, digits);
+  ce.precision = digits + FIXED_POINT_GUARD_DIGITS;
+  let answer: Expr;
+  try {
+    answer = iterateToFixedPoint(ce, fn, x, digits + FIXED_POINT_GUARD_DIGITS);
+  } finally {
+    ce.precision = digits;
+  }
+  const big = answer.bignumRe;
+  // An exact or non-real answer needs no rounding; an inexact real is cut to the engine's digits.
+  return big === undefined || !isInexact(answer) || answer.im !== 0 || !big.isFinite()
+    ? answer
+    : ce.box({ num: big.toPrecision(digits).toString() } as never);
+}
+
+function iterateToFixedPoint(ce: Engine, fn: Expr, x: Expr, digits: number | string): Expr {
   let current = x;
   for (let i = 0; i < FIXED_POINT_MAX_ITERATIONS; i++) {
     const next = callFn(ce, fn, [current]);
@@ -91,7 +118,7 @@ function fixedPointValue(ce: Engine, fn: Expr, x: Expr): Expr {
     // (an integer sequence that has truly settled) and otherwise essentially never fires
     // for an inexact one (see `withinWorkingPrecision`, right below).
     if (next.isSame(current)) return next;
-    if (withinWorkingPrecision(ce, next, current)) return next;
+    if (withinWorkingPrecision(next, current, digits)) return next;
     current = next;
   }
   return current;
