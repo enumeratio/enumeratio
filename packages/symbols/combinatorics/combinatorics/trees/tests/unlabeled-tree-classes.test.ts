@@ -331,7 +331,7 @@ test("Element answers at sizes past the count, as far as a table is worth buildi
       lengths[0] === lengths[2] ? "True" : "False",
     );
     expect(element(list(...chains(n - 1)), [name, n])).toBe("False");
-    expect(run(["Count", [name, n]])).toEqual(["Count", [name, n]]);
+    expect(run(["Count", [name, n]])).toEqual({ num: String(freeCount(rootedCounts(80), n)) });
   }
   // Too long to try: neither True nor False, and cheaply so.
   const t0 = performance.now();
@@ -393,9 +393,9 @@ test("At and Count on the engine give the generator's trees and counts", () => {
   freeTrees(6).forEach((tree, i) => expect(depthsAt(["UnlabeledFreeTrees", 6], i + 1)).toEqual(tree));
   expect(run(["Count", ["RootedUnlabeledTrees", 30]])).toBe(354426847597);
   expect(run(["Count", ["UnlabeledFreeTrees", 43]])).toBe(Number(freeCount(rootedCounts(70), 43)));
-  // Past 2^53 the count is unknown, not rounded.
-  expect(run(["Count", ["RootedUnlabeledTrees", 40]])).toEqual(["Count", ["RootedUnlabeledTrees", 40]]);
-  expect(run(["Count", ["UnlabeledFreeTrees", 44]])).toEqual(["Count", ["UnlabeledFreeTrees", 44]]);
+  // Past 2^53 the count is exact, from the fast count (the interpreter declines there).
+  expect(run(["Count", ["RootedUnlabeledTrees", 40]])).toEqual({ num: "11703780079612453" });
+  expect(run(["Count", ["UnlabeledFreeTrees", 44]])).toEqual({ num: "21835027912963086" });
 });
 
 test("a call walks a step a node and answers; iterating the whole family is gated by its count", () => {

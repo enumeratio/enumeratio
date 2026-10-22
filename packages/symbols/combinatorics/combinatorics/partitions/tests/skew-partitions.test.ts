@@ -171,7 +171,7 @@ function counts(upTo: number): bigint[] {
   return out;
 }
 
-test("a count a double holds is exact, up to 2^53; past it the count declines", () => {
+test("a count a double holds is exact, up to 2^53; past it the interpreter declines and the fast count is exact", () => {
   const expected = counts(36);
   const MAX = BigInt(Number.MAX_SAFE_INTEGER);
   for (let n = 10; n <= 36; n++) {
@@ -182,7 +182,7 @@ test("a count a double holds is exact, up to 2^53; past it the count declines", 
     } else {
       expect(expected[n]).toBeGreaterThan(MAX);
       expect(() => epsil.count([n])).toThrow(RangeError);
-      expect(() => fast.count([n])).toThrow(RangeError);
+      expect([n, fast.count([n])]).toEqual([n, expected[n]]);
       expect(() => epsil.unrank([n], 0n)).toThrow(RangeError);
     }
   }
@@ -228,9 +228,11 @@ test("through the engine: an element comes out, Element asks membership, and a c
   expect(run(["Count", ["SkewPartitions", 12]]).json).toBe(254777);
   // A walk answers far past what could be enumerated, up to the last size with a count.
   for (const n of [25, 33]) expect(Array.isArray(run(["At", ["SkewPartitions", n], 12345678]).json)).toBe(true);
-  // Past that, the count is unknown, and a call is refused for its steps, before any table is built.
-  expect(run(["Count", ["SkewPartitions", 34]]).json).toEqual(["Count", ["SkewPartitions", 34]]);
+  // Past that the count is exact to the table limit (independent walk in Python), and a call is refused
+  // for its steps, before any table is built.
+  expect(run(["Count", ["SkewPartitions", 34]]).json).toEqual({ num: "20179113525513748" });
   const refused = run(["At", ["SkewPartitions", 40], 1]);
   expect(refused.texts.join(" ")).toContain("SkewPartitions(40) would take about 5,120,000 steps");
-  expect(refused.json).toBe("Missing");
+  // The count is known now, so the refusal leaves the call unevaluated rather than Missing.
+  expect(refused.json).toEqual(["At", ["SkewPartitions", 40], 1]);
 });

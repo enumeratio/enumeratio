@@ -6,7 +6,8 @@
 //
 // The walk's table is n² cells of n terms each: fine while a count is a double, but partition
 // counts reach 2^53 only around n = 300, where the interpreter's exact integers would take
-// minutes. So past 2^53 every operation declines (unknown), as the TS kernels did.
+// minutes. So past 2^53 unrank, rank and the interpreter decline (unknown); the count stays exact
+// through the `fast` count (exact-classes.ts).
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import { partSets, partWalk, type PartWalk } from "../../../collections/src/families/part-walk.ts";
 import { add, equal, iff, mul, quotient, sub } from "../../../collections/src/families/tables.ts";
