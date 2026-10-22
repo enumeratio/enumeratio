@@ -204,10 +204,9 @@ export function surfaceBox(
             ),
         );
       }
-    return graphicsComplex3d(
-      [polygon3d({ Indices: quads, FaceColors: colors, EdgeWidth: 0.5, ...(grids.length > 1 && { Opacity: 0.85 }) })],
-      { Points: points },
-    );
+    return graphicsComplex3d(points, [
+      polygon3d({ Indices: quads, FaceColors: colors, EdgeWidth: 0.5, ...(grids.length > 1 && { Opacity: 0.85 }) }),
+    ]);
   });
 
   const options = chrome(o, range, "Fixed", { azimuth: 45, elevation: 15 }, description);
@@ -278,10 +277,9 @@ export function meshBox(grid: Grid, o: MeshOptions = {}): Box {
   );
   return graphics3d(
     [
-      graphicsComplex3d(
-        [polygon3d({ Indices: quads, FaceColors: colors, EdgeWidth: 0.5, ...(o.wireframe && { Wireframe: true }) })],
-        { Points: points },
-      ),
+      graphicsComplex3d(points, [
+        polygon3d({ Indices: quads, FaceColors: colors, EdgeWidth: 0.5, ...(o.wireframe && { Wireframe: true }) }),
+      ]),
     ],
     options,
   );
@@ -463,20 +461,17 @@ export function curveBox(points: readonly Triple[], o: CurveOptions = {}): Box {
       for (let j = 0; j < TORUS_AROUND; j++)
         quads.push([index(i, j), index(i + 1, j), index(i + 1, j + 1), index(i, j + 1)]);
     items.push(
-      graphicsComplex3d(
-        [
-          polygon3d({
-            Indices: quads,
-            FaceForm: "currentColor",
-            Opacity: 0.045,
-            EdgeWidth: 0.3,
-            EdgeColor: "currentColor",
-            EdgeOpacity: 0.05,
-            Behind: true,
-          }),
-        ],
-        { Points: points3 },
-      ),
+      graphicsComplex3d(points3, [
+        polygon3d({
+          Indices: quads,
+          FaceForm: "currentColor",
+          Opacity: 0.045,
+          EdgeWidth: 0.3,
+          EdgeColor: "currentColor",
+          EdgeOpacity: 0.05,
+          Behind: true,
+        }),
+      ]),
     );
   }
   items.push(

@@ -1,7 +1,7 @@
 // A figure's display list as a `GraphicsBox` (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives):
 // plain boxes any environment draws with no layer code. Each mark is `TagBox`ed with its address
-// ("1,0"), each link with its members ("1,0;2,1"); the marks' places ride on the
-// `GraphicsComplexBox`, and a mark's resolved look on a `StyleBox` as `FaceForm` and `EdgeForm`.
+// ("1,0"), each link with its members ("1,0;2,1"); the marks' places are the
+// `GraphicsComplexBox`'s coordinates, and a mark's resolved look on a `StyleBox` as `FaceForm` and `EdgeForm`.
 // An `InterpretationBox` around the drawing holds the `Show` it came from, so an environment that can ask
 // the layer for more (a pan, a new view) does; one that can't draws the list.
 
@@ -113,10 +113,11 @@ function tilesContent(list: Extract<DisplayList, { kind: "tiles" }>, fill: numbe
       lookOf(look.color, look.edges),
     ),
   );
-  return graphicsComplex(items, {
-    Addresses: list.tiles.map((t) => [...t.address]),
-    Places: list.tiles.map((t) => [...t.at]),
-  });
+  return graphicsComplex(
+    list.tiles.map((t) => [...t.at]),
+    items,
+    { Addresses: list.tiles.map((t) => [...t.address]) },
+  );
 }
 
 function marksContent(list: Extract<DisplayList, { kind: "marks" }>): Box {
@@ -138,10 +139,11 @@ function marksContent(list: Extract<DisplayList, { kind: "marks" }>): Box {
   }
   for (const { members, mark, edges } of list.links)
     items.push(style(tag(primitiveBox(mark), members.map(addressText).join(";")), { EdgeForm: edgeForm(edges) }));
-  return graphicsComplex(items, {
-    Addresses: list.marks.map((m) => [...m.address]),
-    Places: list.marks.map((m) => [...m.at]),
-  });
+  return graphicsComplex(
+    list.marks.map((m) => [...m.at]),
+    items,
+    { Addresses: list.marks.map((m) => [...m.address]) },
+  );
 }
 
 /**
@@ -245,7 +247,8 @@ export function displayListOfBox(box: Box): Extract<DisplayList, { kind: "marks"
   const graphicsBox = graphicsOf(box)?.box;
   if (!complex || !graphicsBox) return undefined;
   const o = optionsOfBox(graphicsBox);
-  const { Places, Addresses } = optionsOfBox(complex);
+  const Places = complex[1];
+  const { Addresses } = optionsOfBox(complex);
   const places = new Map<string, number[]>();
   if (Array.isArray(Addresses) && Array.isArray(Places))
     Addresses.forEach((a, k) => {
@@ -255,7 +258,7 @@ export function displayListOfBox(box: Box): Extract<DisplayList, { kind: "marks"
   const selected = new Set(
     Array.isArray(o.Selection) ? o.Selection.map((a) => (Array.isArray(a) ? a.join(",") : "")) : [],
   );
-  const items = complex[1] as readonly Box[];
+  const items = complex[2] as readonly Box[];
   const marks: MarkItem[] = [];
   const links: LinkItem[] = [];
   const captions = new Map<string, NonNullable<MarkItem["caption"]>>();

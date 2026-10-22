@@ -35,10 +35,10 @@ test("a surface is one complex: every vertex once, the quads as indices", () => 
   expect(isGraphics3dBox(box)).toBe(true);
   const complex = box[1] as readonly unknown[][];
   expect(complex[0]![0]).toBe("GraphicsComplex3DBox");
-  const [, [polygon], { Points }] = complex[0] as [
+  const [, Points, [polygon]] = complex[0] as [
     string,
+    unknown[],
     [[string, { Indices: unknown[]; FaceColors: string[] }]],
-    { Points: unknown[] },
   ];
   expect(polygon[0]).toBe("Polygon3DBox");
   expect(polygon[1].Indices).toHaveLength(4 * 3);
