@@ -7,7 +7,7 @@ signatures:
   - call: GroupOrder(group)
     description: the number of elements of `group`
     library: enumeratio-groupalgebra
-    type: (expression<AlternatingGroup> | expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct> | expression<PermutationGroup> | expression<SymmetricGroup> | indexed_collection<list<integer>>) -> integer
+    type: (expression<AlternatingGroup> | expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct> | expression<PermutationGroup> | expression<SymmetricGroup> | indexed_collection) -> integer
 seeAlso:
   - GroupElements
   - PermutationGroup
