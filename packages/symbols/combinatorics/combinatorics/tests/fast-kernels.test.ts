@@ -691,6 +691,7 @@ const BIGINT_COUNTS: [string, number[]][] = [
   ["FibonacciWords", [77]],
   ["FibonacciCompositions", [78]],
   ["TriCompositions", [62]],
+  ["PartSizeBoundedCompositions", [56, 5]],
   ["TetraCompositions", [57]],
   ["TriStrings", [61]],
   ["OddCompositions", [79]],

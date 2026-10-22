@@ -59,6 +59,11 @@
       [Tuple, ScrollPosition, "'15511210043330985984000000'"],
       [Tuple, Readonly, True],
     ]
+- id: permutations-25-across-2-53
+  caption: Permutations(25), scrolled to the 2⁵³ boundary
+  category: Beyond 2⁵³
+  notes: Row 9,007,199,254,740,991 is the last a double can name. The rows on either side are addressed by bigint index, so scrolling or paging carries on past it, unranked by the family's own digit-taking `At`.
+  expr: [CollectionTable, [Permutations, 25], [Tuple, ScrollPosition, "'9007199254740989'"], [Tuple, Readonly, True]]
 - id: non-negative-integers-endless
   caption: NonNegativeIntegers, scrolling without end
   category: Beyond 2⁵³

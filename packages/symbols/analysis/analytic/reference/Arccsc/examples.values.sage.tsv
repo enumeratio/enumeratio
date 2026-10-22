@@ -6,7 +6,7 @@ an-odd-function	arccsc(-2)	arccsc(-2)
 inside-1-1-the-value-is-complex	arccsc(0.5)	1.57079632679490 - 1.31695789692482*I	
 arccsc-positiveinfinity	arccsc(oo)	0	
 a-pole-arccsc-0-is-complex-infinity	arccsc(0)	NaN	disagree
-derivative-for-real-x-1	diff(arccsc(SR.var("x")), SR.var("x"))	None	inconclusive
+derivative-for-real-x-1	diff(arccsc(SR.var("x")), SR.var("x"))	-1/(sqrt(x^2 - 1)*x)	inconclusive
 n-arccsc-5-50	enumeratio_n(arccsc(5), 50)	0.201357920790331	
 arccsc-list-list-sqrt-2-neg-sqrt-2-list-0-neg	[[arccsc(sqrt(2)), arccsc((-sqrt(2)))], [arccsc(0), arccsc((-sqrt(2)))]]	[[arccsc(sqrt(2)), arccsc(-sqrt(2))], [NaN, arccsc(-sqrt(2))]]	disagree
 list-arccsc-neg-sqrt-2-arccsc-neg-2-over-3-times	[arccsc((-sqrt(2))), arccsc(((-2/3) * sqrt(3))), arccsc(((2/3) * sqrt(3))), arccsc(sqrt(2))]	[arccsc(-sqrt(2)), arccsc(-2/3*sqrt(3)), arccsc(2/3*sqrt(3)), arccsc(sqrt(2))]	

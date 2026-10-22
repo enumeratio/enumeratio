@@ -8,6 +8,7 @@ import {
   primeCompositionsExact,
   properCompositionsExact,
   triangularCompositionsExact,
+  partSizeBoundedExact,
   windowSumsExact,
 } from "../../collections/src/families/exact-recurrences.ts";
 import {
@@ -67,5 +68,9 @@ export const readings: Record<string, FastKernel> = {
   TetraCompositions: inSet(tetraComp, (n) => windowSumsExact(n, 4)),
   TriangularCompositions: inSet(triangularComp, triangularCompositionsExact),
   PrimeCompositions: inSet(primeComp, primeCompositionsExact),
-  PartSizeBoundedCompositions: partSizeBoundedFast,
+  // The count exact past 2^53, as the family ships it; the rest is the independent builder.
+  PartSizeBoundedCompositions: {
+    ...partSizeBoundedFast,
+    count: (p) => partSizeBoundedExact(p[0], p[1]) ?? partSizeBoundedFast.count(p),
+  },
 };

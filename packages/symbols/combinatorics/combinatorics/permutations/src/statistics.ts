@@ -19,6 +19,7 @@ import {
   fromHere,
   greater,
   hasPair,
+  atLeast,
   hasTriple,
   here,
   interior,
@@ -27,9 +28,11 @@ import {
   max,
   min,
   next,
+  or,
   nonEmpty,
   positions,
   previous,
+  slice,
   risesAfter,
   sumOver,
   upToHere,
@@ -400,6 +403,202 @@ const FINDSTAT_PERMUTATION_STATISTICS: readonly Definition[] = [
   ),
 ];
 
+/** `body` summed over the pairs i < j with `also` true of them (as `sumOverInversions`, for any pair). */
+const sumOverPairs = (also: MathJSON, body: MathJSON): MathJSON =>
+  sumOver(adjacent, ["Sum", forEach(where(["Range", add("i", 1), length()], also, "j"), body, "j")]);
+
+/**
+ * Occurrences of a classical pattern of length 4: quadruples i < j < k < l whose values stand in
+ * the order `pattern` gives. The pattern's positions, sorted by value, become a chain of `<`.
+ */
+const occurrencesOfLength4Pattern = (pattern: readonly number[]): MathJSON => {
+  const names = ["i", "j", "k", "l"];
+  const byValue = [0, 1, 2, 3].toSorted((a, b) => pattern[a]! - pattern[b]!);
+  const chain = byValue
+    .slice(1)
+    .map((position, rank) => less(at(names[byValue[rank]!]!), at(names[position]!)))
+    .reduce((all, step) => and(all, step));
+  const n = length();
+  return atLeast(
+    4,
+    sumOver(
+      ["Range", 1, subtract(n, 3)],
+      sumOver(
+        ["Range", add("i", 1), subtract(n, 2)],
+        sumOver(["Range", add("j", 1), subtract(n, 1)], count(["Range", add("k", 1), n], chain, "l"), "k"),
+        "j",
+      ),
+    ),
+  );
+};
+
+/** Whether i is a recoil: i + 1 stands to the left of i. */
+const isRecoilAt: MathJSON = greater(positionOf("i"), positionOf(add("i", 1)));
+/** Big ascents of the word 0 p(1) ... p(n): rises of more than 1, the first entry against 0. */
+const bigAscentsFromZero: MathJSON = bind(
+  "w",
+  zeroThen,
+  count(["Range", 1, length("w")], greater(subtract(at(add("i", 1), "w"), at("i", "w")), 1)),
+);
+
+// The second batch of FindStat's permutation statistics.
+const FINDSTAT_PERMUTATION_STATISTICS_2: readonly Definition[] = [
+  // Ends, rises and falls of a fixed size.
+  stat("FirstEntry", "The first entry p(1).", nonEmpty(at(1))),
+  stat("LastEntry", "The last entry p(n).", nonEmpty(at(length()))),
+  word(
+    "Successions",
+    "Positions i with p(i+1) = p(i) + 1.",
+    hasPair(count(adjacent, equals(next, add(here, 1)))),
+    "Also called small ascents or 1-rises.",
+  ),
+  word(
+    "Adjacencies",
+    "Positions i with p(i+1) = p(i) - 1.",
+    hasPair(count(adjacent, equals(next, subtract(here, 1)))),
+    "Also called small descents.",
+  ),
+  word("TwoRises", "Positions i with p(i+1) = p(i) + 2.", hasPair(count(adjacent, equals(next, add(here, 2))))),
+  word(
+    "MaximalRiseSize",
+    "The largest p(i+1) - p(i), or 0 when p has no rise.",
+    hasPair(["Max", ["Join", ["List", 0], forEach(adjacent, subtract(next, here))]]),
+  ),
+  word(
+    "BigAscentsAfterPrependingZero",
+    "Positions of the word 0 p(1) ... p(n) that rise by more than 1, the first entry counted against 0.",
+    nonEmpty(bigAscentsFromZero),
+  ),
+  word(
+    "VeryBigAscents",
+    "Positions i with p(i+1) - p(i) > 2.",
+    hasPair(count(adjacent, greater(subtract(next, here), 2))),
+  ),
+  word(
+    "VeryBigDescents",
+    "Positions i with p(i) - p(i+1) > 2.",
+    hasPair(count(adjacent, greater(subtract(here, next), 2))),
+  ),
+
+  // Exceedances of a fixed size, and chains of them.
+  stat("SmallExcedances", "Positions with p(i) = i + 1.", nonEmpty(count(positions, equals(here, add("i", 1))))),
+  stat("TwoExcedances", "Positions with p(i) = i + 2.", nonEmpty(count(positions, equals(here, add("i", 2))))),
+  stat("BigExcedances", "Positions with p(i) - i > 1.", nonEmpty(count(positions, greater(subtract(here, "i"), 1)))),
+  stat(
+    "DoubleExcedances",
+    "Positions with i < p(i) < p(p(i)).",
+    nonEmpty(count(positions, and(greater(here, "i"), less(here, at(here))))),
+  ),
+  stat(
+    "DoubleDeficiencies",
+    "Positions with i > p(i) > p(p(i)).",
+    nonEmpty(count(positions, and(less(here, "i"), greater(here, at(here))))),
+  ),
+  stat(
+    "NestedExcedances",
+    "Pairs i < j with i < j < p(j) < p(i).",
+    hasPair(sumOverPairs(and(less("j", at("j")), less(at("j"), here)), 1)),
+  ),
+  stat(
+    "PureExcedances",
+    "Excedances i < p(i) with no j < i where i <= p(j) < p(i).",
+    nonEmpty(
+      count(
+        positions,
+        and(
+          greater(here, "i"),
+          equals(count(["Range", 1, "i"], and(atLeastValue(at("j"), "i"), less(at("j"), here)), "j"), 0),
+        ),
+      ),
+    ),
+  ),
+
+  // Splitting the permutation into blocks.
+  word(
+    "GlobalAscents",
+    "Positions i < n with p(j) < p(k) whenever j <= i < k.",
+    hasPair(count(adjacent, atMostValue(max(upToHere), "i"))),
+    "Read through the pigeonhole principle: the largest of the first i entries is at most i.",
+  ),
+  word(
+    "GlobalDescents",
+    "Positions i < n with p(j) > p(k) whenever j <= i < k.",
+    hasPair(count(adjacent, greater(min(upToHere), max(slice(add("i", 1), length()))))),
+  ),
+  stat(
+    "DecompositionNumber",
+    "The k with {p(1), ..., p(k)} = {1, ..., k}: the blocks of p as a direct sum.",
+    nonEmpty(count(positions, equals(max(upToHere), "i"))),
+    "One more than GlobalAscents; also called the block number.",
+  ),
+
+  // Cycles, distances and sums.
+  stat(
+    "CyclesOfLengthAtLeastThree",
+    "Cycles of size at least three.",
+    nonEmpty(count(cycleLengths, atLeastValue("c", 3), "c")),
+  ),
+  word(
+    "InversionsOfDistanceAtMostTwo",
+    "Inversions i < j with j - i <= 2.",
+    hasPair(sumOverInversions(1, atMostValue(subtract("j", "i"), 2))),
+  ),
+  word(
+    "NonInversionSum",
+    "The sum of j - i over the non-inversions i < j.",
+    hasPair(sumOverPairs(less(here, at("j")), subtract("j", "i"))),
+  ),
+  stat("TotalDisplacement", "The sum of |p(i) - i|.", nonEmpty(sumOver(positions, distance(here, "i")))),
+  word(
+    "DescentDifferenceSum",
+    "The sum of p(i) - p(i+1) over the descents i.",
+    hasPair(["Sum", forEach(where(adjacent, fallsAfter), subtract(here, next))]),
+    "Also called the drop of a permutation.",
+  ),
+  word(
+    "ShiftedMajorIndex",
+    "The sum of the positions i with p(i) - p(i+1) >= 2.",
+    hasPair(["Sum", where(adjacent, greater(subtract(here, next), 1))]),
+  ),
+  stat(
+    "Recoils",
+    "Values i with i + 1 to the left of i: the descents of the inverse.",
+    hasPair(count(adjacent, isRecoilAt)),
+  ),
+  stat(
+    "DescentsOrRecoils",
+    "Indices i < n that are a descent of p or a recoil.",
+    hasPair(count(adjacent, or(fallsAfter, isRecoilAt))),
+  ),
+  word(
+    "LeftToRightMaximaPositionSum",
+    "The sum of the positions of the left-to-right maxima.",
+    nonEmpty(["Sum", where(positions, equals(here, max(upToHere)))]),
+  ),
+  word(
+    "ArithmeticProgressionsOfLengthTwo",
+    "Triples i < j < k with p(k) - p(j) = p(j) - p(i).",
+    // Bounded ranges: an equality, unlike an order, holds between two missing entries.
+    hasTriple(
+      sumOver(
+        ["Range", 1, subtract(length(), 2)],
+        sumOver(
+          ["Range", add("i", 1), subtract(length(), 1)],
+          count(["Range", add("j", 1), length()], equals(subtract(at("k"), at("j")), subtract(at("j"), here)), "k"),
+          "j",
+        ),
+      ),
+    ),
+  ),
+
+  // Length-4 patterns.
+  word("OccurrencesOf1324", "Quadruples i < j < k < l ordered as 1324.", occurrencesOfLength4Pattern([1, 3, 2, 4])),
+  word("OccurrencesOf2143", "Quadruples i < j < k < l ordered as 2143.", occurrencesOfLength4Pattern([2, 1, 4, 3])),
+  word("OccurrencesOf4231", "Quadruples i < j < k < l ordered as 4231.", occurrencesOfLength4Pattern([4, 2, 3, 1])),
+  word("OccurrencesOf2413", "Quadruples i < j < k < l ordered as 2413.", occurrencesOfLength4Pattern([2, 4, 1, 3])),
+  word("OccurrencesOf1432", "Quadruples i < j < k < l ordered as 1432.", occurrencesOfLength4Pattern([1, 4, 3, 2])),
+];
+
 export const PERMUTATION_STATISTICS: readonly Definition[] = [
   word("Descents", "Positions i with p(i) > p(i+1).", hasPair(count(adjacent, fallsAfter))),
   word("Ascents", "Positions i with p(i) < p(i+1).", hasPair(count(adjacent, risesAfter))),
@@ -600,4 +799,5 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
     "The same fold with the comparison reversed — by Dilworth, the number of piles when the tops are kept decreasing.",
   ),
   ...FINDSTAT_PERMUTATION_STATISTICS,
+  ...FINDSTAT_PERMUTATION_STATISTICS_2,
 ];
