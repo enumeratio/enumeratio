@@ -2,3 +2,7 @@ id	in	out
 sine-over-cosine	SR((sin(SR.var("x")) / cos(SR.var("x")))).simplify_full()	sin(x)/cos(x)
 hyperbolic-quotient	SR((sinh(SR.var("x")) / cosh(SR.var("x")))).simplify_full()	sinh(x)/cosh(x)
 hyperbolic-identity	SR((((cosh(SR.var("x")))^2) - ((sinh(SR.var("x")))^2))).simplify_full()	1
+simplify-folds-a-mixed-sum	SR((Mod(2, 4) + Mod(1, 6))).simplify_full()	TypeError: positive characteristic not allowed in symbolic computations
+simplify-folds-a-mixed-product	SR((Mod(2, 4) * Mod(1, 6))).simplify_full()	TypeError: positive characteristic not allowed in symbolic computations
+simplify-folds-the-classes-beside-a-symbol	SR((SR.var("x") + Mod(2, 4) + Mod(1, 4))).simplify_full()	TypeError: unsupported operand parent(s) for +: 'Symbolic Ring' and 'Ring of integers modulo 4'
+simplify-leaves-coprime-moduli	SR((Mod(3, 4) + Mod(5, 7))).simplify_full()	TypeError: unsupported operand parent(s) for +: 'Ring of integers modulo 4' and 'Ring of integers modulo 7'
