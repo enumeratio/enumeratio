@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-ordered-tree			[InequivalentIncreasingTreeCount, [OrderedTree, [List, [List], [List, [List]], [List]]]]	6			the ordered tree $[[],[[]],[]]$
+findstat-st000416-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'InequivalentIncreasingTreeCount'"]	1	1	FindStat St000416	FindStat's value for [[]]
+findstat-st000416-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'InequivalentIncreasingTreeCount'"]	1	1	FindStat St000416	FindStat's value for [[[]]]
+findstat-st000416-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'InequivalentIncreasingTreeCount'"]	1	1	FindStat St000416	FindStat's value for [[],[]]
