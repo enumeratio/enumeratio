@@ -1,14 +1,14 @@
-id	in	out	tex.in	tex.out	verdict
-implies-becomes-or-not	LogicalExpand[Implies[p, b]]	b ||  !p	\text{LogicalExpand}[p\Rightarrow b]	b\lor \neg p	
-logicalexpand-p-factorial-q-r	LogicalExpand[And[p, Not[Or[q, r]]]]	p &&  !q &&  !r	\text{LogicalExpand}[p\land \neg (q\lor r)]	p\land \neg q\land \neg r	
-distributes-and-over-or	LogicalExpand[And[p, Or[b, r]]]	(b && p) || (p && r)	\text{LogicalExpand}[p\land (b\lor r)]	(b\land p)\lor (p\land r)	
-xor-eliminated-into-dnf	LogicalExpand[Xor[p, b]]	(b &&  !p) || (p &&  !b)	\text{LogicalExpand}[p\veebar b]	(b\land \neg p)\lor (p\land \neg b)	
-a-contradictory-term-drops-out	LogicalExpand[And[p, Not[p]]]	False	\text{LogicalExpand}[p\land \neg p]	\text{False}	
-logicalexpand-a-factorial-a	LogicalExpand[Or[a, Not[a]]]	True	\text{LogicalExpand}[a\lor \neg a]	\text{True}	disagree
-logicalexpand-a-factorial-a-2	LogicalExpand[And[a, Not[a]]]	False	\text{LogicalExpand}[a\land \neg a]	\text{False}	
-logicalexpand-x-eq-a-y-eq-b-x-eq-a-y-eq-b	LogicalExpand[Or[And[(x == a), (y == b)], (x == a), (y == b)]]	x == a || y == b	\text{LogicalExpand}[(x=a\land y=b)\lor x=a\lor y=b]	x=a\lor y=b	
-logicalexpand-a-b-factorial-c-d-k	LogicalExpand[And[Or[a, b], Not[Or[c, d, k]]]]	(a &&  !c &&  !d &&  !k) || (b &&  !c &&  !d &&  !k)	\text{LogicalExpand}[(a\lor b)\land \neg (c\lor d\lor k)]	(a\land \neg c\land \neg d\land \neg k)\lor (b\land \neg c\land \neg d\land \neg k)	
-logicalexpand-xor-p-q-r	LogicalExpand[Xor[p, q, r]]	(p && q && r) || (p &&  !q &&  !r) || (q &&  !p &&  !r) || (r &&  !p &&  !q)	\text{LogicalExpand}[p\veebar q\veebar r]	(p\land q\land r)\lor (p\land \neg q\land \neg r)\lor (q\land \neg p\land \neg r)\lor (r\land \neg p\land \neg q)	
-logicalexpand-t	LogicalExpand[t]	t	\text{LogicalExpand}[t]	t	
-logicalexpand-factorial-a-b	LogicalExpand[Not[Or[a, b]]]	!a &&  !b	\text{LogicalExpand}[\neg (a\lor b)]	\neg a\land \neg b	
-logicalexpand-factorial-a-b-2	LogicalExpand[Not[And[a, b]]]	!a ||  !b	\text{LogicalExpand}[\neg (a\land b)]	\neg a\lor \neg b	
+id	in	out	tex.in	tex.out
+implies-becomes-or-not	LogicalExpand[Implies[p, b]]	b ||  !p	\text{LogicalExpand}[p\Rightarrow b]	b\lor \neg p
+logicalexpand-p-factorial-q-r	LogicalExpand[And[p, Not[Or[q, r]]]]	p &&  !q &&  !r	\text{LogicalExpand}[p\land \neg (q\lor r)]	p\land \neg q\land \neg r
+distributes-and-over-or	LogicalExpand[And[p, Or[b, r]]]	(b && p) || (p && r)	\text{LogicalExpand}[p\land (b\lor r)]	(b\land p)\lor (p\land r)
+xor-eliminated-into-dnf	LogicalExpand[Xor[p, b]]	(b &&  !p) || (p &&  !b)	\text{LogicalExpand}[p\veebar b]	(b\land \neg p)\lor (p\land \neg b)
+a-contradictory-term-drops-out	LogicalExpand[And[p, Not[p]]]	False	\text{LogicalExpand}[p\land \neg p]	\text{False}
+logicalexpand-a-factorial-a	LogicalExpand[Or[a, Not[a]]]	True	\text{LogicalExpand}[a\lor \neg a]	\text{True}
+logicalexpand-a-factorial-a-2	LogicalExpand[And[a, Not[a]]]	False	\text{LogicalExpand}[a\land \neg a]	\text{False}
+logicalexpand-x-eq-a-y-eq-b-x-eq-a-y-eq-b	LogicalExpand[Or[And[(x == a), (y == b)], (x == a), (y == b)]]	x == a || y == b	\text{LogicalExpand}[(x=a\land y=b)\lor x=a\lor y=b]	x=a\lor y=b
+logicalexpand-a-b-factorial-c-d-k	LogicalExpand[And[Or[a, b], Not[Or[c, d, k]]]]	(a &&  !c &&  !d &&  !k) || (b &&  !c &&  !d &&  !k)	\text{LogicalExpand}[(a\lor b)\land \neg (c\lor d\lor k)]	(a\land \neg c\land \neg d\land \neg k)\lor (b\land \neg c\land \neg d\land \neg k)
+logicalexpand-xor-p-q-r	LogicalExpand[Xor[p, q, r]]	(p && q && r) || (p &&  !q &&  !r) || (q &&  !p &&  !r) || (r &&  !p &&  !q)	\text{LogicalExpand}[p\veebar q\veebar r]	(p\land q\land r)\lor (p\land \neg q\land \neg r)\lor (q\land \neg p\land \neg r)\lor (r\land \neg p\land \neg q)
+logicalexpand-t	LogicalExpand[t]	t	\text{LogicalExpand}[t]	t
+logicalexpand-factorial-a-b	LogicalExpand[Not[Or[a, b]]]	!a &&  !b	\text{LogicalExpand}[\neg (a\lor b)]	\neg a\land \neg b
+logicalexpand-factorial-a-b-2	LogicalExpand[Not[And[a, b]]]	!a ||  !b	\text{LogicalExpand}[\neg (a\land b)]	\neg a\lor \neg b
