@@ -12,6 +12,7 @@ import type { NotationData } from "@enumeratio/manifest";
 import { recordsRoot, referenceData } from "@enumeratio/reference/node";
 import { expect, test } from "vite-plus/test";
 import { DECLARATIONS, NOTATION, NOTATION_ENTRIES } from "../src/engine.ts";
+import { roundTripJson } from "./round-trip.ts";
 
 type Entry = Partial<LatexDictionaryEntry>;
 
@@ -133,7 +134,7 @@ test("StandardForm round trip: each head with a LaTeX entry writes what reads ba
       scoped(ce, () => {
         const before = ce.box(example.expr as never);
         const after = ce.parse(before.latex);
-        if (text(quotient(after.json)) !== text(quotient(before.json)))
+        if (text(quotient(roundTripJson(after))) !== text(quotient(roundTripJson(before))))
           failures.push(`${h.head} example/${example.id}: ${before.latex} reads as ${text(after.json)}`);
       });
   expect(failures).toEqual([]);
