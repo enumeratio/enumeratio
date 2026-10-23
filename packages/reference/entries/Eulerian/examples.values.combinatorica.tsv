@@ -1,6 +1,6 @@
 id	in	out	tex.in	tex.out
-row-4-of-the-triangle				
-row-5-of-the-triangle				
+row-4-of-the-triangle	Map[Function[k, Eulerian[4, k]], Range[0, 3, 1]]	{1, 11, 11, 1}	(k\unicode{f4a1}\text{Eulerian}(4,k))\text{/@}\text{Range}[0,3,1]	\{1,11,11,1\}
+row-5-of-the-triangle	Map[Function[k, Eulerian[5, k]], Range[0, 4, 1]]	{1, 26, 66, 26, 1}	(k\unicode{f4a1}\text{Eulerian}(5,k))\text{/@}\text{Range}[0,4,1]	\{1,26,66,26,1\}
 11-permutations-of-4-have-1-descent	Eulerian[4, 1]	11	\text{Eulerian}(4,1)	11
 the-empty-permutation	Eulerian[0, 0]	1	\text{Eulerian}(0,0)	1
 too-many-descents	Eulerian[3, 3]	0	\text{Eulerian}(3,3)	0

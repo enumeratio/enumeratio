@@ -10,7 +10,9 @@ test("combinatorica emits only through its head map, as Wolfram source", () => {
   expect(emit(["Eulerian", 4, 1], "combinatorica")).toEqual({ ok: true, source: "Eulerian[4, 1]" });
   // A head with no row there belongs to the wolfram lane, not a second answer from the same kernel.
   expect(emit(["Add", 1, 2], "combinatorica")).toEqual({ ok: false, missing: [] });
-  expect(emit(["Eulerian", "n", 1], "combinatorica").ok).toBe(false);
+  // A free symbol goes through verbatim, as in the wolfram lane; one compute-engine reserves (`_a`, a defined name) does not.
+  expect(emit(["Eulerian", "n", 1], "combinatorica")).toMatchObject({ ok: true, source: "Eulerian[n, 1]" });
+  expect(emit(["Eulerian", "_a", 1], "combinatorica").ok).toBe(false);
 });
 
 test("a batch with a preamble runs it before anything else", () => {

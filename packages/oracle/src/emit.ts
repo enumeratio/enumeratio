@@ -354,11 +354,6 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         // unchanged), SymPy and Sage as an explicit symbolic value, since neither
         // auto-declares a bare name the way Wolfram does. A numeric-only lane has nothing to
         // do with a name, so it stays missing.
-        // Combinatorica answers values, not identities: a free symbol is unmapped there.
-        if (system === "combinatorica") {
-          missing.push(`symbol:${node}`);
-          return node;
-        }
         free.add(node);
         if (wl) return wolframFree(node);
         if (system === "sympy") return `Symbol(${JSON.stringify(node)})`;
@@ -959,7 +954,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     // it: an unevaluated symbolic function application, not an error. A pattern-variable-
     // shaped name (`_a`) is excluded for the same reason a bare one is (emit.ts's string
     // branch, above) — this codebase's own convention, not a math name.
-    if (system === "wolfram" && !DEFINED_NAMES.has(head) && !(head in CONSTANTS) && !/^_[A-Za-z]/.test(head)) {
+    if (wl && !DEFINED_NAMES.has(head) && !(head in CONSTANTS) && !/^_[A-Za-z]/.test(head)) {
       if (isWolframOwnName(head)) return `${toWolfram(head)}[${operands.map(walk).join(", ")}]`;
       free.add(head);
       return `${wolframFree(head)}[${operands.map(walk).join(", ")}]`;

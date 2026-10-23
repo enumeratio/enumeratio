@@ -8,11 +8,11 @@ threads-element-wise-over-a-list-as-wolfram-s	Function[{n, k}, (-1)^(n - k) Stir
 exact-for-large-n	Function[{n, k}, (-1)^(n - k) StirlingFirst[n, k], Listable][50, 2]	2724619372591264761651711494187624530726005154239846809600000000	(-1)^{50-2} \text{StirlingFirst}(50,2)	2724619372591264761651711494187624530726005154239846809600000000	
 a-mid-sized-n-and-k-past-the-fast-paths	Function[{n, k}, (-1)^(n - k) StirlingFirst[n, k], Listable][40, 14]	1640591781294212129275881145293779479141760	(-1)^{40-14} \text{StirlingFirst}(40,14)	1640591781294212129275881145293779479141760	
 the-number-of-permutations-of-5-elements-with	Function[{n, k}, (-1)^(n - k) StirlingFirst[n, k], Listable][5, 3]	35	(-1)^{5-3} \text{StirlingFirst}(5,3)	35	
-abs-stirlings1-n-range-1-n					
+abs-stirlings1-n-range-1-n	Abs[Function[{n, k}, (-1)^(n - k) StirlingFirst[n, k], Listable][n, Range[1, n]]]	Abs[StirlingFirst[n, Range[1, n]]]/E^(Pi*Im[n - Range[1, n]])	\left| \text{Function}\left[\{n,k\},(-1)^{n-k} \text{StirlingFirst}(n,k),\text{Listable}\right][n,\text{Range}[1,n]]\right|	e^{-\pi  \Im(n-\text{Range}[1,n])} | \text{StirlingFirst}(n,\text{Range}[1,n])|	disagree
 the-unsigned-values-in-a-row-sum-to-n	Equal[Sum[Abs[Function[{n, k}, (-1)^(n - k) StirlingFirst[n, k], Listable][4, k]], List[k, 0, 4]], Factorial[4]]	True	\sum _{k=0}^4 \left| (-1)^{4-k} \text{StirlingFirst}(4,k)\right| =4!	\text{True}	
 the-signed-row-sum-vanishes-for-n-ge-2	Sum[Function[{n, k}, (-1)^(n - k) StirlingFirst[n, k], Listable][6, k], List[k, 0, 6]]	0	\sum _{k=0}^6 (-1)^{6-k} \text{StirlingFirst}(6,k)	0	
 s-n-n-1-binom-n-2	Equal[Function[{n, k}, (-1)^(n - k) StirlingFirst[n, k], Listable][6, 5], Minus[Binomial[6, 2]]]	True	(-1)^{6-5} \text{StirlingFirst}(6,5)=-\binom{6}{2}	\text{True}	
-the-generating-property-sum-k-s-n-k-x-k-x-x-1-x					
+the-generating-property-sum-k-s-n-k-x-k-x-x-1-x	Equal[Sum[Times[Function[{n, k}, (-1)^(n - k) StirlingFirst[n, k], Listable][4, k], Power[x, k]], List[k, 0, 4]], Expand[Times[x, Subtract[x, 1], Subtract[x, 2], Subtract[x, 3]]]]	True	\sum _{k=0}^4 \text{Function}\left[\{n,k\},(-1)^{n-k} \text{StirlingFirst}(n,k),\text{Listable}\right][4,k] x^k=\text{Expand}[x (x-1) (x-2) (x-3)]	\text{True}	
 n-stirlings1-100-11	N[Function[{n, k}, (-1)^(n - k) StirlingFirst[n, k], Listable][100, 11]]	-3.903767734763898*^155	N\left[(-1)^{100-11} \text{StirlingFirst}(100,11)\right]	-3.90377\times 10^{155}	
 stirlings1-0-1	Function[{n, k}, (-1)^(n - k) StirlingFirst[n, k], Listable][0, 1]	0	(-1)^{0-1} \text{StirlingFirst}(0,1)	0	
 stirlings1-1-0	Function[{n, k}, (-1)^(n - k) StirlingFirst[n, k], Listable][1, 0]	0	(-1)^{1+0} \text{StirlingFirst}(1,0)	0	
