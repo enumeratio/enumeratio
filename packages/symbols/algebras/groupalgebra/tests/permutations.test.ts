@@ -37,6 +37,11 @@ test("PermutationCycles on an already-Cycles value is the identity", () => {
   same(["PermutationCycles", C([1, 3, 5], [2, 4, 6])], C([1, 3, 5], [2, 4, 6]));
 });
 
+test("Cycles: each cycle starts at its smallest point, cycles ordered by it, as Wolfram's", () => {
+  same(C([3, 2, 5, 1], [7, 4], [6]), C([1, 3, 2, 5], [4, 7]));
+  same(["InversePermutation", C([3, 2, 5, 1], [4, 7])], C([1, 5, 2, 3], [4, 7]));
+});
+
 test("InversePermutation: one-line and cycle notation", () => {
   same(["InversePermutation", L(2, 5, 3, 6, 1, 8, 7, 9, 4, 10)], L(5, 1, 3, 9, 2, 4, 7, 6, 8, 10));
   same(["InversePermutation", C([1, 2, 5], [4, 6, 8, 9])], C([1, 5, 2], [4, 9, 8, 6]));

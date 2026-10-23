@@ -4,10 +4,12 @@
 
 /** Python, `String.raw` so its backslashes and `${` reach Sage untouched. */
 export const SAGE_GROUPS = String.raw`
-# Our Cycles value: the cycles as written, fixed points dropped.
+# Our Cycles value: fixed points dropped, each cycle from its smallest point, cycles by first point.
 class _EnumeratioCycles:
     def __init__(self, cycles):
-        self.cycles = [[int(p) for p in c] for c in cycles if len(c) > 1]
+        cs = [[int(p) for p in c] for c in cycles if len(c) > 1]
+        cs = [c[c.index(min(c)):] + c[:c.index(min(c))] for c in cs]
+        self.cycles = sorted(cs, key=lambda c: c[0])
 
     def __str__(self):
         return _enumeratio_cycles_json(self.cycles)
