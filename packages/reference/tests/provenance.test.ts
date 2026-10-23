@@ -1282,6 +1282,16 @@ const NOVEL = [
   "StandardImmaculateTableauCount",
   "StandardRibbonTableauCount",
   "RibbonCornerCount",
+  "TransposeComposition",
+  "TouchComposition",
+  "RiseComposition",
+  "ZetaMap",
+  "LalanneKreweras",
+  "TransposeTableau",
+  "DescentWord",
+  "DescentTopWord",
+  "DescentBottomWord",
+  "LongCycleConjugation",
 ];
 
 // What formats holds inert that is Wolfram's own (`Plot`, `Slider`, `Cell`): known elsewhere because

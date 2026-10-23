@@ -30,6 +30,23 @@ export const forEach = (over: MathJSON, body: MathJSON, variable = "i"): MathJSO
 
 export const size: MathJSON = ["Count", "_raw"];
 
+/** The word read backwards: entry i is entry n + 1 - i. */
+export const reversedWord: MathJSON = forEach(positions, at(["Subtract", ["Add", ["Length", "_raw"], 1], "i"]));
+
+/** A list sorted largest-first, by reading the sorted list back to front. */
+export const descending = (list: MathJSON): MathJSON => [
+  "Map",
+  ["Function", ["At", ["Sort", list], ["Subtract", ["Add", ["Length", list], 1], "i"]], "i"],
+  ["Range", 1, ["Length", list], 1],
+];
+
+/** The word rotated one place left (first entry last), and right (last entry first). */
+export const rotatedLeft: MathJSON = forEach(positions, at(["Add", ["Mod", "i", ["Length", "_raw"]], 1]));
+export const rotatedRight: MathJSON = forEach(
+  positions,
+  at(["Add", ["Mod", ["Add", ["Subtract", "i", 2], ["Length", "_raw"]], ["Length", "_raw"]], 1]),
+);
+
 /** `body` with `name` bound to `value` — a `let`, as a lambda applied to its argument. A
  *  list value needs its `type`, e.g. `"list<integer>"`: an untyped lambda applied to a list
  *  maps over it, so `Max(cw)` would run once per element; and compiled `Max` of a

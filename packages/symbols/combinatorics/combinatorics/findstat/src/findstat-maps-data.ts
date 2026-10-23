@@ -30,6 +30,30 @@ export interface FindStatMapMatch {
 
 export const findstatMaps: readonly FindStatMapMatch[] = [
   {
+    name: "DescentWord",
+    from: "Permutation",
+    to: "BinaryWord",
+    findstat: [{ id: "Mp00109", rows: 1200, compared: 873, skipped: 0 }],
+  },
+  {
+    name: "DescentTopWord",
+    from: "Permutation",
+    to: "BinaryWord",
+    findstat: [{ id: "Mp00130", rows: 1200, compared: 873, skipped: 0 }],
+  },
+  {
+    name: "DescentBottomWord",
+    from: "Permutation",
+    to: "BinaryWord",
+    findstat: [{ id: "Mp00131", rows: 1200, compared: 873, skipped: 0 }],
+  },
+  {
+    name: "LongCycleConjugation",
+    from: "Permutation",
+    to: "Permutation",
+    findstat: [{ id: "Mp00265", rows: 1200, compared: 873, skipped: 0 }],
+  },
+  {
     name: "Reverse",
     from: "Permutation",
     to: "Permutation",
@@ -108,6 +132,42 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     findstat: [{ id: "Mp00012", rows: 1200, compared: 196, skipped: 0 }],
   },
   {
+    name: "ReverseComplement",
+    from: "DyckPath",
+    to: "DyckPath",
+    findstat: [{ id: "Mp00028", rows: 1200, compared: 196, skipped: 0 }],
+  },
+  {
+    name: "BinaryWord",
+    from: "DyckPath",
+    to: "BinaryWord",
+    findstat: [{ id: "Mp00093", rows: 1200, compared: 196, skipped: 0 }],
+  },
+  {
+    name: "TouchComposition",
+    from: "DyckPath",
+    to: "Composition",
+    findstat: [{ id: "Mp00100", rows: 1200, compared: 196, skipped: 0 }],
+  },
+  {
+    name: "RiseComposition",
+    from: "DyckPath",
+    to: "Composition",
+    findstat: [{ id: "Mp00102", rows: 1200, compared: 196, skipped: 0 }],
+  },
+  {
+    name: "LalanneKreweras",
+    from: "DyckPath",
+    to: "DyckPath",
+    findstat: [{ id: "Mp00120", rows: 1200, compared: 196, skipped: 0 }],
+  },
+  {
+    name: "ZetaMap",
+    from: "DyckPath",
+    to: "DyckPath",
+    findstat: [{ id: "Mp00030", rows: 1200, compared: 196, skipped: 0 }],
+  },
+  {
     name: "BinaryTree",
     from: "DyckPath",
     to: "BinaryTree",
@@ -118,5 +178,89 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     from: "IntegerPartition",
     to: "IntegerPartition",
     findstat: [{ id: "Mp00044", rows: 1200, compared: 29, skipped: 0 }],
+  },
+  {
+    name: "Complement",
+    from: "SetPartition",
+    to: "SetPartition",
+    findstat: [{ id: "Mp00112", rows: 1200, compared: 278, skipped: 0 }],
+  },
+  {
+    name: "IntegerPartition",
+    from: "SetPartition",
+    to: "IntegerPartition",
+    findstat: [{ id: "Mp00079", rows: 1200, compared: 278, skipped: 0 }],
+  },
+  {
+    name: "IntegerPartition",
+    from: "StandardTableau",
+    to: "IntegerPartition",
+    findstat: [{ id: "Mp00083", rows: 1200, compared: 119, skipped: 0 }],
+  },
+  {
+    name: "TransposeTableau",
+    from: "StandardTableau",
+    to: "StandardTableau",
+    findstat: [{ id: "Mp00084", rows: 1200, compared: 119, skipped: 0 }],
+  },
+  {
+    name: "Reverse",
+    from: "Composition",
+    to: "Composition",
+    findstat: [{ id: "Mp00038", rows: 1200, compared: 63, skipped: 0 }],
+  },
+  {
+    name: "Complement",
+    from: "Composition",
+    to: "Composition",
+    findstat: [{ id: "Mp00039", rows: 1200, compared: 63, skipped: 0 }],
+  },
+  {
+    name: "TransposeComposition",
+    from: "Composition",
+    to: "Composition",
+    findstat: [{ id: "Mp00041", rows: 1200, compared: 63, skipped: 0 }],
+  },
+  {
+    name: "CyclicShift",
+    from: "Composition",
+    to: "Composition",
+    findstat: [{ id: "Mp00173", rows: 1200, compared: 63, skipped: 0 }],
+  },
+  {
+    name: "InverseCyclicShift",
+    from: "Composition",
+    to: "Composition",
+    findstat: [{ id: "Mp00172", rows: 1200, compared: 63, skipped: 0 }],
+  },
+  {
+    name: "IntegerPartition",
+    from: "Composition",
+    to: "IntegerPartition",
+    findstat: [{ id: "Mp00040", rows: 1200, compared: 63, skipped: 0 }],
+  },
+  {
+    name: "Reverse",
+    from: "BinaryWord",
+    to: "BinaryWord",
+    findstat: [{ id: "Mp00104", rows: 1200, compared: 126, skipped: 0 }],
+  },
+  {
+    name: "Complement",
+    from: "BinaryWord",
+    to: "BinaryWord",
+    findstat: [{ id: "Mp00105", rows: 1200, compared: 126, skipped: 0 }],
+  },
+  {
+    name: "CyclicShift",
+    from: "BinaryWord",
+    to: "BinaryWord",
+    findstat: [{ id: "Mp00135", rows: 1200, compared: 126, skipped: 0 }],
+  },
+  {
+    name: "InverseCyclicShift",
+    from: "BinaryWord",
+    to: "BinaryWord",
+    findstat: [{ id: "Mp00136", rows: 1200, compared: 126, skipped: 0 }],
   },
 ];

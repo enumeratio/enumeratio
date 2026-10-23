@@ -3,6 +3,11 @@ name: CyclePartition
 domain: Combinatorial maps
 signature: CyclePartition(Permutation)
 summary: The orbits, as a set partition of the positions.
+catalog:
+  - system: findstat
+    identity: Mp00151
+    url: https://www.findstat.org/Mp00151
+    on: Permutation
 mapOn:
   - Permutation
 signatures:
