@@ -8,6 +8,13 @@ signatures:
     description: The number of nodes on neither the left spine nor the right spine.
     library: enumeratio-combinatorics
     type: (binary_tree) -> number
+catalog:
+  - system: findstat
+    identity: St000204
+    url: https://www.findstat.org/St000204
+    on: BinaryTree
+statOn:
+  - BinaryTree
 ---
 
 - Defined over `BinaryTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

@@ -8,6 +8,13 @@ signatures:
     description: Positions i < n with p(j) < p(k) whenever j <= i < k.
     library: enumeratio-combinatorics
     type: (list<integer> | permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000234
+    url: https://www.findstat.org/St000234
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

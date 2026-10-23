@@ -8,6 +8,10 @@ catalog:
     identity: St000012
     url: https://www.findstat.org/St000012
     on: DyckPath
+  - system: findstat
+    identity: St001295
+    url: https://www.findstat.org/St001295
+    on: DyckPath
 statOn:
   - DelannoyPath
   - DyckPath

@@ -8,6 +8,13 @@ signatures:
     description: Positions with i < p(i) < p(p(i)).
     library: enumeratio-combinatorics
     type: (permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000731
+    url: https://www.findstat.org/St000731
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

@@ -8,6 +8,13 @@ signatures:
     description: The edges on the leftmost path or the rightmost path from the root, less the trunk they share.
     library: enumeratio-combinatorics
     type: (ordered_tree) -> number
+catalog:
+  - system: findstat
+    identity: St000975
+    url: https://www.findstat.org/St000975
+    on: OrderedTree
+statOn:
+  - OrderedTree
 ---
 
 - Defined over `OrderedTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

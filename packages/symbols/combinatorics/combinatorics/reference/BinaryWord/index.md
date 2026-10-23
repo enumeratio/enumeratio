@@ -12,6 +12,11 @@ signatures:
 laws:
   - inverse: Finset
     on: finset
+catalog:
+  - system: findstat
+    identity: Mp00093
+    url: https://www.findstat.org/Mp00093
+    on: DyckPath
 ---
 
 - A [[BinaryWords]] element.

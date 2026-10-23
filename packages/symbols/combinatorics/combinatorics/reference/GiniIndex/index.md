@@ -8,6 +8,13 @@ signatures:
     description: The size plus 1 choose 2, less the sum over the columns of the column length plus 1 choose 2.
     library: enumeratio-combinatorics
     type: (integer_partition) -> number
+catalog:
+  - system: findstat
+    identity: St001541
+    url: https://www.findstat.org/St001541
+    on: IntegerPartition
+statOn:
+  - IntegerPartition
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

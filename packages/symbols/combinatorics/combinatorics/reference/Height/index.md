@@ -12,6 +12,10 @@ catalog:
     identity: St000166
     url: https://www.findstat.org/St000166
     on: OrderedTree
+  - system: findstat
+    identity: St000013
+    url: https://www.findstat.org/St000013
+    on: DyckPath
 statOn:
   - BinaryTree
   - ColoredMotzkinPath

@@ -8,6 +8,13 @@ signatures:
     description: The last entry p(n).
     library: enumeratio-combinatorics
     type: (permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000740
+    url: https://www.findstat.org/St000740
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

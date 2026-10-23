@@ -21,6 +21,14 @@ catalog:
     identity: St000768
     url: https://www.findstat.org/St000768
     on: Composition
+  - system: findstat
+    identity: St000015
+    url: https://www.findstat.org/St000015
+    on: DyckPath
+  - system: findstat
+    identity: St001068
+    url: https://www.findstat.org/St001068
+    on: DyckPath
 statOn:
   - ColoredMotzkinPath
   - Composition

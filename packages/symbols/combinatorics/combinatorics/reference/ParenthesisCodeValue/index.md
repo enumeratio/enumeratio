@@ -8,6 +8,13 @@ signatures:
     description: "The value, read in binary, of the tree's parenthesis word: each node is ( left ) right, with ( as 1 and ) as 0."
     library: enumeratio-combinatorics
     type: (binary_tree) -> number
+catalog:
+  - system: findstat
+    identity: St000198
+    url: https://www.findstat.org/St000198
+    on: BinaryTree
+statOn:
+  - BinaryTree
 ---
 
 - Defined over `BinaryTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

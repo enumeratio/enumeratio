@@ -8,6 +8,13 @@ signatures:
     description: Positions with p(i) = i + 2.
     library: enumeratio-combinatorics
     type: (permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000648
+    url: https://www.findstat.org/St000648
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

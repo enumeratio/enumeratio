@@ -8,6 +8,13 @@ signatures:
     description: Indices i < n that are a descent of p or a recoil.
     library: enumeratio-combinatorics
     type: (permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000831
+    url: https://www.findstat.org/St000831
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

@@ -8,6 +8,13 @@ signatures:
     description: Positions i with p(i) - p(i+1) > 2.
     library: enumeratio-combinatorics
     type: (list<integer> | permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000872
+    url: https://www.findstat.org/St000872
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

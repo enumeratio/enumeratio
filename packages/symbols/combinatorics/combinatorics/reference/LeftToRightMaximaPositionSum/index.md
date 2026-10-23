@@ -8,6 +8,13 @@ signatures:
     description: The sum of the positions of the left-to-right maxima.
     library: enumeratio-combinatorics
     type: (list<integer> | permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000756
+    url: https://www.findstat.org/St000756
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

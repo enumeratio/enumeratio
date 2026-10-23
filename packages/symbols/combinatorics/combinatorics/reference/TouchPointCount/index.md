@@ -18,6 +18,13 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+catalog:
+  - system: findstat
+    identity: St000011
+    url: https://www.findstat.org/St000011
+    on: DyckPath
+statOn:
+  - DyckPath
 ---
 
 - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

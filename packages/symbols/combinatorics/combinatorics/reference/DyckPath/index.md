@@ -27,4 +27,13 @@ laws:
       from: OrderedTrees
       to: DyckPaths
     on: ordered_tree
+catalog:
+  - system: findstat
+    identity: Mp00012
+    url: https://www.findstat.org/Mp00012
+    on: BinaryTree
+  - system: findstat
+    identity: Mp00051
+    url: https://www.findstat.org/Mp00051
+    on: OrderedTree
 ---

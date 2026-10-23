@@ -8,6 +8,13 @@ signatures:
     description: Half the last part (rounded up if odd), times the product over consecutive parts of half the gap less 1 for each even one of the two.
     library: enumeratio-combinatorics
     type: (integer_partition) -> number
+catalog:
+  - system: findstat
+    identity: St000478
+    url: https://www.findstat.org/St000478
+    on: IntegerPartition
+statOn:
+  - IntegerPartition
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

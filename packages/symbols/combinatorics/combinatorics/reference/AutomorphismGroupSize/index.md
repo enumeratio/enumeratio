@@ -8,6 +8,13 @@ signatures:
     description: "The number of ways to permute identical children, at every vertex at once: the product, over the vertices, of the factorials of how many times each child tree occurs."
     library: enumeratio-combinatorics
     type: (ordered_tree) -> number
+catalog:
+  - system: findstat
+    identity: St000417
+    url: https://www.findstat.org/St000417
+    on: OrderedTree
+statOn:
+  - OrderedTree
 ---
 
 - Defined over `OrderedTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

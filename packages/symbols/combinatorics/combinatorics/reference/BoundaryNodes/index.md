@@ -8,6 +8,13 @@ signatures:
     description: The number of nodes on the left spine or the right spine, the root counted once.
     library: enumeratio-combinatorics
     type: (binary_tree) -> number
+catalog:
+  - system: findstat
+    identity: St000203
+    url: https://www.findstat.org/St000203
+    on: BinaryTree
+statOn:
+  - BinaryTree
 ---
 
 - Defined over `BinaryTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

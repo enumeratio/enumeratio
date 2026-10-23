@@ -74,6 +74,11 @@ bindings:
       on: 2026-10-16
 statOn:
   - Permutation
+catalog:
+  - system: findstat
+    identity: St000037
+    url: https://www.findstat.org/St000037
+    on: Permutation
 ---
 
 - $\operatorname{sign}(x) = -1, 0, 1$ for $x < 0$, $x = 0$, $x > 0$ respectively.

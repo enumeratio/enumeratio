@@ -8,6 +8,13 @@ signatures:
     description: "The k with {p(1), ..., p(k)} = {1, ..., k}: the blocks of p as a direct sum."
     library: enumeratio-combinatorics
     type: (permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000056
+    url: https://www.findstat.org/St000056
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

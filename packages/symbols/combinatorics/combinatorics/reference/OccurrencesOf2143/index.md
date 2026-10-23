@@ -8,6 +8,13 @@ signatures:
     description: Quadruples i < j < k < l ordered as 2143.
     library: enumeratio-combinatorics
     type: (list<integer> | permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000407
+    url: https://www.findstat.org/St000407
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

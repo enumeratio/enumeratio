@@ -8,6 +8,13 @@ signatures:
     description: The number of prunings, each deleting every maximal hanging branch (a path of single-child vertices to a leaf), that reduce the tree to a single vertex.
     library: enumeratio-combinatorics
     type: (ordered_tree) -> number
+catalog:
+  - system: findstat
+    identity: St000679
+    url: https://www.findstat.org/St000679
+    on: OrderedTree
+statOn:
+  - OrderedTree
 ---
 
 - Defined over `OrderedTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
