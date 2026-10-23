@@ -1,5 +1,5 @@
 // A map's hand-written kernel is a fast path for its Epsil, which stays the meaning: each kernel gives the
-// Epsil's answer, over every small element of its carrier and a spread of larger ones.
+// Epsil's answer, over every small element of its carrier (the standard run) and larger ones (the deep run).
 
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
@@ -24,16 +24,16 @@ const SPREAD_7 = [
   [2, 7, 1, 5, 3, 6, 4],
 ];
 
+// The standard run covers sizes 1-4; `DEEP_TESTS=1` (the nightly sweep) takes sizes 5-7.
+const deep = process.env.DEEP_TESTS === "1";
+
 for (const map of MAPS.filter((m) => m.kernel !== undefined)) {
   // CactusEvacuation's Epsil is three RSK passes: sparser samples.
   const cactus = map.name === "CactusEvacuation";
+  const subjects = deep
+    ? [...permutations(5).filter((_, i) => !cactus || i % 7 === 0), ...SPREAD_6, ...(cactus ? [] : SPREAD_7)]
+    : [1, 2, 3, 4].flatMap((n) => permutations(n));
   test(`${map.name}'s kernel gives the Epsil's answers`, { timeout: 300_000 }, () => {
-    const subjects = [
-      ...[1, 2, 3, 4].flatMap((n) => permutations(n)),
-      ...permutations(5).filter((_, i) => !cactus || i % 7 === 0),
-      ...SPREAD_6,
-      ...(cactus ? [] : SPREAD_7),
-    ];
     for (const subject of subjects) {
       const kernel = map.kernel!(subject as never);
       expect(list(kernel as unknown[]), JSON.stringify(subject)).toEqual(evaluateDefinition(ce, map, list(subject)));
