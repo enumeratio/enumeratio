@@ -23,7 +23,7 @@ import {
 } from "../../src/map-helpers.ts";
 import { bstParents } from "../../trees/src/bst.ts";
 import { fromPermutationTree } from "../../trees/src/increasing-binary-tree.ts";
-import { cactusEvacuationBody } from "../../tableaux/src/promotion.ts";
+import { cactusEvacuationBody, cactusEvacuationKernel } from "../../tableaux/src/promotion.ts";
 import {
   insertionReadingWord,
   insertionRows,
@@ -791,6 +791,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     from: "permutation",
     to: "permutation",
     body: cactusEvacuationBody,
+    kernel: cactusEvacuationKernel,
     summary: "The permutation with the same insertion tableau and the evacuation of the recording tableau.",
     note: "FindStat's Mp00126, an involution: RSK, evacuate the recording tableau, RSK backwards.",
   },

@@ -25,17 +25,27 @@
 // `--carrier` (repeatable) regenerates just that carrier's rows and keeps the rest of the file,
 // for when the other carriers are too slow to sweep again. Rows are written in `ALL_STATISTICS`
 // order either way.
+//
+// `--heads A,B@Carrier` rematches just those statistics and carries every other row over from the
+// committed file (writing it, unlike `--only`); `--rename Old=New@Carrier` (repeatable) renames a
+// committed row in place first. Either way the file is what a full run writes.
 
 import { readdirSync, readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { writeFormatted } from "@enumeratio/entry/node";
-import { ALL_STATISTICS, applyDefinition, type FindStatMatch, findstat as existing } from "@enumeratio/combinatorics";
+import { ALL_STATISTICS, applyDefinition } from "@enumeratio/combinatorics";
+import {
+  type FindStatMatch,
+  findstat as existing,
+} from "../../symbols/combinatorics/combinatorics/findstat/src/findstat-data.ts";
+import { assemble, parseHeads, parseRename, renamed, selected } from "./findstat-incremental.ts";
 
 const API = "https://www.findstat.org/api/StatisticsDatabase/";
 const flag = (name: string): string[] => process.argv.flatMap((arg, i) => (arg === name ? [process.argv[i + 1]!] : []));
 const only = flag("--only")[0];
 const crawlDir = flag("--crawl")[0];
 const onlyCarriers = new Set(flag("--carrier"));
+const heads = parseHeads(flag("--heads"));
 
 // ── enumeration, per carrier, in FindStat's own spelling ─────────────────────────────────
 
@@ -314,18 +324,19 @@ function findInCrawl(
 }
 
 const ce = new ComputeEngine();
-const matches: FindStatMatch[] = [];
-for (const definition of ALL_STATISTICS) {
-  const signature = `${definition.head}@${definition.on}`;
-  if (only && signature !== only) continue;
-  const carrier = CARRIERS[definition.on];
-  if (!carrier) continue;
-  if (onlyCarriers.size && !onlyCarriers.has(definition.on)) {
-    // Not regenerated: the file's row carries over.
-    const kept = existing.find((m) => m.head === definition.head && m.on === definition.on);
-    if (kept) matches.push(kept);
-    continue;
-  }
+const signatureOf = (d: (typeof ALL_STATISTICS)[number]): string => `${d.head}@${d.on}`;
+const universe = ALL_STATISTICS.filter((d) => CARRIERS[d.on]);
+/** Whether this run rematches `d`; the rest keep the committed row. */
+const rematch = (d: (typeof ALL_STATISTICS)[number]): boolean =>
+  (!only || signatureOf(d) === only) &&
+  (!onlyCarriers.size || onlyCarriers.has(d.on)) &&
+  (!heads.size || selected(heads, d.head, d.on));
+
+const fresh = new Map<string, FindStatMatch | undefined>();
+for (const definition of universe) {
+  if (!rematch(definition)) continue;
+  const signature = signatureOf(definition);
+  const carrier = CARRIERS[definition.on]!;
   const sizes = CUBIC.has(definition.head) ? carrier.small : carrier.sizes;
   const rows: string[] = [];
   for (const n of sizes) {
@@ -348,15 +359,16 @@ for (const definition of ALL_STATISTICS) {
     ? findInCrawl(carrier, definition, rows, ce)
     : { ids: await find(carrier.domain, rows.join("\n")), values: rows.length };
   process.stdout.write(`${signature}: ${found.join(" ") || "—"} (${values} values)\n`);
-  if (found.length) {
-    matches.push({
-      head: definition.head,
-      on: definition.on,
-      findstat: found,
-      values,
-    });
-  }
+  if (found.length) fresh.set(signature, { head: definition.head, on: definition.on, findstat: found, values });
 }
+
+const previous = renamed(
+  existing as FindStatMatch[],
+  (row) => ({ head: row.head, carrier: row.on }),
+  (row, to) => ({ ...row, head: to }),
+  flag("--rename").map(parseRename),
+);
+const matches = assemble(universe, signatureOf, previous, rematch, (d) => fresh.get(signatureOf(d)));
 
 if (!only) {
   await writeFormatted(
