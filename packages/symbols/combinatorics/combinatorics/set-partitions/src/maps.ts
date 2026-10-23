@@ -32,6 +32,24 @@ const nextInBlock = (i: MathJSON): MathJSON => {
 const rename = (expr: MathJSON, from: string, to: string): MathJSON =>
   expr === from ? to : Array.isArray(expr) ? (expr as readonly MathJSON[]).map((x) => rename(x, from, to)) : expr;
 
+/** The set partition with each element v replaced by `image`(v): every block sorted again, and the blocks
+ *  put back in order of their least elements. */
+const relabeled = (image: MathJSON): MathJSON =>
+  bind(
+    "moved",
+    forEach(
+      ["Range", 1, ["Length", "_raw"], 1],
+      ["Sort", forEach(["Range", 1, ["Length", at("i")], 1], bind("v", at("j", at("i")), image), "j")],
+      "i",
+    ),
+    [
+      "Map",
+      ["Function", ["At", "moved", ["IndexWhere", "moved", ["Function", ["Equal", ["At", "b", 1], "m"], "b"]]], "m"],
+      ["Sort", ["Map", ["Function", ["At", "b", 1], "b"], "moved"]],
+    ],
+    "list<list<integer>>",
+  );
+
 export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
   {
     name: "Complement",
@@ -73,6 +91,32 @@ export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
     body: descending(forEach(["Range", 1, ["Length", "_raw"], 1], ["Length", at("i")])),
     summary: "The partition of n a set partition's block sizes form, largest first.",
     note: "Lossy: which elements share a block is forgotten, so it is not a constructor overload.",
+  },
+  {
+    name: "BlockSizeComposition",
+    from: "set_partition",
+    to: "composition",
+    body: forEach(["Range", 1, ["Length", "_raw"], 1], ["Length", at("i")]),
+    summary: "The block sizes of a set partition, its blocks taken in order of their least elements.",
+    note: "FindStat's Mp00128. Lossy: which elements share a block is forgotten, so it is not a constructor overload.",
+  },
+  {
+    name: "IncreasingRotation",
+    from: "set_partition",
+    to: "set_partition",
+    // Add 1 to every element but the largest, which becomes 1.
+    body: relabeled(["Add", ["Mod", "v", ["Length", ["Flatten", "_raw"]]], 1]),
+    summary: "Every element raised by one, cyclically: the largest becomes 1.",
+    note: 'FindStat\'s Mp00091 ("rotate increasing"). The inverse is DecreasingRotation, and its n-th power is the identity.',
+  },
+  {
+    name: "DecreasingRotation",
+    from: "set_partition",
+    to: "set_partition",
+    // Subtract 1 from every element but 1, which becomes the largest.
+    body: relabeled(["If", ["Greater", "v", 1], ["Subtract", "v", 1], ["Length", ["Flatten", "_raw"]]]),
+    summary: "Every element lowered by one, cyclically: 1 becomes the largest.",
+    note: 'FindStat\'s Mp00176 ("rotate decreasing"). The inverse is IncreasingRotation.',
   },
   {
     name: "BinaryWord",

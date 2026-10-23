@@ -46,6 +46,24 @@ const compositionOfCutWord = (word: MathJSON): MathJSON =>
     ),
   );
 
+/** The positions where a new run of equal letters starts: the first, and each that differs from its predecessor. */
+const runStarts: MathJSON = [
+  "Fold",
+  [
+    "Function",
+    [
+      "If",
+      ["Or", ["Equal", "p", 1], ["Not", ["Equal", at("p"), at(["Max", ["Subtract", "p", 1], 1])]]],
+      ["Join", "acc", ["List", "p"]],
+      "acc",
+    ],
+    "acc",
+    "p",
+  ],
+  ["List"],
+  positions,
+];
+
 export const WORDS_MAPS: readonly CombinatorialMap[] = [
   {
     name: "Reverse",
@@ -94,5 +112,48 @@ export const WORDS_MAPS: readonly CombinatorialMap[] = [
     extra: [["Filter", ["Range", 1, ["Length", "_raw"], 1], ["Function", ["Equal", ["At", "_raw", "i"], 1], "i"]]],
     summary: "The subset of 1..m a binary word of length m marks: the positions holding 1.",
     note: "The inverse of BinaryWord(finset). Mapped over BinaryWords(m), it lists the subsets of 1..m in their characteristic words' order.",
+  },
+  {
+    name: "RunComposition",
+    from: "binary_word",
+    to: "composition",
+    body: [
+      "If",
+      ["Equal", ["Length", "_raw"], 0],
+      ["List"],
+      bind(
+        "starts",
+        runStarts,
+        bind(
+          "bounds",
+          ["Join", "starts", ["List", ["Add", ["Length", "_raw"], 1]]],
+          forEach(
+            ["Range", 1, ["Length", "starts"], 1],
+            ["Subtract", at(["Add", "q", 1], "bounds"), at("q", "bounds")],
+            "q",
+          ),
+          "list<integer>",
+        ),
+        "list<integer>",
+      ),
+    ],
+    summary: "The lengths of the maximal runs of equal letters, left to right.",
+    note: "FindStat's Mp00097, the delta morphism. Lossy: it forgets the first letter, so each composition has two words.",
+  },
+  {
+    name: "Twist",
+    from: "binary_word",
+    to: "binary_word",
+    body: forEach(positions, ["If", ["Equal", "i", 1], ["Subtract", 1, at("i")], at("i")]),
+    summary: "The first letter swapped for the other.",
+    note: "FindStat's Mp00200, an involution.",
+  },
+  {
+    name: "AlternatingComplement",
+    from: "binary_word",
+    to: "binary_word",
+    body: forEach(positions, ["If", ["Equal", ["Mod", "i", 2], 0], ["Subtract", 1, at("i")], at("i")]),
+    summary: "Every second letter swapped for the other, starting with the second.",
+    note: 'FindStat\'s Mp00158, "alternating inverse", an involution.',
   },
 ];

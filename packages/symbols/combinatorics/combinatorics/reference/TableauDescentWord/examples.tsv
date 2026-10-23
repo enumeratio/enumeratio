@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-standard-tableau-with-rows-13-and-2			[TableauDescentWord, [StandardTableau, [List, [List, 1, 3], [List, 2]]]]	[BinaryWord, [List, 1, 0]]	the standard tableau with rows $13$ and $2$
