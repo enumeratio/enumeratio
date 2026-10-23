@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+an-ordered-tree-with-four-edges			[Rotation, [OrderedTree, [List, [List, [List], [List]], [List]]]]	[OrderedTree, [List, [List], [List, [List], [List]]]]	an ordered tree with four edges

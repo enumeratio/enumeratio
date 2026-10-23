@@ -74,3 +74,73 @@ export const blocksOf = (word: MathJSON, base: number): MathJSON => [
     ["Range", base, ["Max", word], 1],
   ],
 ];
+
+/** The word `_raw` with its weakly increasing runs (cut where an entry is above the next) reordered by `runKey`
+ *  of each run's first and last position, ties keeping their order: the runs' keys are sorted along with their
+ *  indices, and the runs read off in that order. */
+export const sortedRuns = (runKey: (first: MathJSON, last: MathJSON) => MathJSON): MathJSON => [
+  "If",
+  ["Equal", ["Length", "_raw"], 0],
+  ["List"],
+  bind(
+    "rs_starts",
+    [
+      "Fold",
+      [
+        "Function",
+        [
+          "If",
+          ["Or", ["Equal", "p", 1], ["Greater", at(["Max", ["Subtract", "p", 1], 1]), at("p")]],
+          ["Join", "acc", ["List", "p"]],
+          "acc",
+        ],
+        "acc",
+        "p",
+      ],
+      ["List"],
+      positions,
+    ],
+    bind(
+      "rs_count",
+      ["Length", "rs_starts"],
+      bind(
+        "rs_end",
+        forEach(
+          ["Range", 1, "rs_count", 1],
+          ["If", ["Equal", "k", "rs_count"], ["Length", "_raw"], ["Subtract", at(["Add", "k", 1], "rs_starts"), 1]],
+          "k",
+        ),
+        bind(
+          "rs_order",
+          forEach(
+            [
+              "Sort",
+              forEach(
+                ["Range", 1, "rs_count", 1],
+                ["Add", ["Multiply", runKey(at("k", "rs_starts"), at("k", "rs_end")), ["Add", "rs_count", 1]], "k"],
+                "k",
+              ),
+            ],
+            ["Mod", "c", ["Add", "rs_count", 1]],
+            "c",
+          ),
+          [
+            "Fold",
+            [
+              "Function",
+              ["Join", "acc", forEach(["Range", at("o", "rs_starts"), at("o", "rs_end"), 1], at("p"), "p")],
+              "acc",
+              "o",
+            ],
+            ["List"],
+            "rs_order",
+          ],
+          "list<integer>",
+        ),
+        "list<integer>",
+      ),
+      "integer",
+    ),
+    "list<integer>",
+  ),
+];

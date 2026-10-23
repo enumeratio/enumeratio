@@ -12,6 +12,7 @@ import {
   reversedWord,
   rotatedLeft,
   rotatedRight,
+  sortedRuns,
 } from "../../src/map-helpers.ts";
 
 /** The composition of m + 1 a cut word of length m describes: the parts between the cuts. */
@@ -155,5 +156,34 @@ export const WORDS_MAPS: readonly CombinatorialMap[] = [
     body: forEach(positions, ["If", ["Equal", ["Mod", "i", 2], 0], ["Subtract", 1, at("i")], at("i")]),
     summary: "Every second letter swapped for the other, starting with the second.",
     note: 'FindStat\'s Mp00158, "alternating inverse", an involution.',
+  },
+  {
+    name: "RunSort",
+    from: "binary_word",
+    to: "binary_word",
+    // A run is 0^a 1^b. Lexicographically, a run without ones sorts before any run with ones (it is a prefix of, or
+    // differs from it by an earlier 0), and shorter before longer; runs with ones sort by more zeros first, then
+    // fewer ones.
+    body: sortedRuns((first, last) =>
+      bind(
+        "zeros",
+        ["Count", ["Filter", ["Range", first, last, 1], ["Function", ["Equal", at("q"), 0], "q"]]],
+        [
+          "If",
+          ["Equal", "zeros", ["Add", ["Subtract", last, first], 1]],
+          "zeros",
+          [
+            "Add",
+            ["Length", "_raw"],
+            1,
+            ["Multiply", ["Subtract", ["Length", "_raw"], "zeros"], ["Add", ["Length", "_raw"], 1]],
+            ["Subtract", ["Add", ["Subtract", last, first], 1], "zeros"],
+          ],
+        ],
+        "integer",
+      ),
+    ),
+    summary: "The word with its weakly increasing runs sorted lexicographically.",
+    note: "FindStat's Mp00224. Lossy: the runs' order is forgotten. The runs are the maximal stretches 0...01...1.",
   },
 ];

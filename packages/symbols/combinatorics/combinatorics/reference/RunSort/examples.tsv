@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+the-one-line-word-231			[RunSort, [Permutation, [List, 2, 3, 1]]]	[Permutation, [List, 1, 2, 3]]	the one-line word $231$
+the-binary-word-01100			[RunSort, [BinaryWord, [List, 0, 1, 1, 0, 0]]]	[BinaryWord, [List, 0, 0, 0, 1, 1]]	the binary word $01100$

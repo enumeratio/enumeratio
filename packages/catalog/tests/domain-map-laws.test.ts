@@ -32,6 +32,8 @@ declareMaps(ce, constructorFor);
 const allEntries = allKernels(ce);
 
 const SAMPLES = 24;
+/** Maps whose Epsil takes seconds at size 6 (three RSK passes) draw fewer elements. */
+const SLOW: Readonly<Record<string, number>> = { CactusEvacuation: 6 };
 const MAX_SIZE = 6;
 const BUDGET = 5_000n;
 
@@ -68,7 +70,7 @@ for (const map of MAPS.filter((m) => m.body !== undefined || m.composedOf !== un
       const rng = streamFor("laws", map.name);
       const failures: LawFailure[] = [];
       let checked = 0;
-      for (let i = 0; i < SAMPLES; i++) {
+      for (let i = 0; i < (SLOW[map.name] ?? SAMPLES); i++) {
         const family = families[Math.floor(rng() * families.length)] as FamilyKernel;
         const instance = sampleable(family);
         if ("untestable" in instance) continue;

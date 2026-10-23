@@ -19,9 +19,11 @@ import {
   type MathJSON,
   positions,
   size,
+  sortedRuns,
 } from "../../src/map-helpers.ts";
 import { bstParents } from "../../trees/src/bst.ts";
 import { fromPermutationTree } from "../../trees/src/increasing-binary-tree.ts";
+import { cactusEvacuationBody } from "../../tableaux/src/promotion.ts";
 import {
   insertionReadingWord,
   insertionRows,
@@ -29,6 +31,7 @@ import {
   recordingRows,
   rskRows,
 } from "../../tableaux/src/tableau.ts";
+import { foataInversionsToMajorBody, foataMajorToInversionsBody } from "./foata-bijection.ts";
 import { lehmerCode, majorCode, permutationOfLehmerCode, permutationOfMajorCode } from "./codes.ts";
 import {
   cycleDecompositionBody,
@@ -764,6 +767,41 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     ],
     summary: "The Dyck path whose rises climb to each left-to-right maximum and whose falls run to the next one.",
     note: "FindStat's Mp00127. Restricted to the 321-avoiding permutations it is a bijection with the Dyck paths.",
+  },
+  {
+    name: "FoataMajorToInversions",
+    from: "permutation",
+    to: "permutation",
+    body: foataMajorToInversionsBody,
+    summary:
+      "Foata's bijection: each letter is put on the end of the image so far, which is cut into blocks, and every block is rotated one place right.",
+    note: "FindStat's Mp00067, Sage's foata_bijection. It sends the major index to the number of inversions; the inverse is FoataInversionsToMajor. Not the cycle-based Foata, which is FindStat's first fundamental transformation.",
+  },
+  {
+    name: "FoataInversionsToMajor",
+    from: "permutation",
+    to: "permutation",
+    body: foataInversionsToMajorBody,
+    summary:
+      "The inverse of Foata's major-to-inversions bijection: peel off the last letter, rotate the blocks of the rest back.",
+    note: "FindStat's Mp00175, Sage's foata_bijection_inverse. It sends the number of inversions to the major index.",
+  },
+  {
+    name: "CactusEvacuation",
+    from: "permutation",
+    to: "permutation",
+    body: cactusEvacuationBody,
+    summary: "The permutation with the same insertion tableau and the evacuation of the recording tableau.",
+    note: "FindStat's Mp00126, an involution: RSK, evacuate the recording tableau, RSK backwards.",
+  },
+  {
+    name: "RunSort",
+    from: "permutation",
+    to: "permutation",
+    // The runs start with different entries, so lexicographic order is the order of their first entries.
+    body: sortedRuns((first) => at(first)),
+    summary: "The permutation with its increasing runs sorted lexicographically.",
+    note: "FindStat's Mp00223. Lossy: the runs' order is forgotten.",
   },
 ];
 

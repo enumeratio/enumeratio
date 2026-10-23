@@ -10,6 +10,9 @@ import {
   type CombinatorialMap,
   type MathJSON,
   positions,
+  reversedWord,
+  rotatedLeft,
+  rotatedRight,
   size,
 } from "../../src/map-helpers.ts";
 
@@ -183,5 +186,49 @@ export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
     ),
     summary: "Each position linked to the next in its block, or to itself when last.",
     note: "The statistics frontier calls this the arc representation: within each block, consecutive elements (b1,b2), (b2,b3), .... Encoding it as an endofunction rather than a bare list of pairs keeps it a typed carrier — Crossings, Nestings and CrossingNestingTotal (@enumeratio/statistics) read the arcs off this without needing a carrier of their own.",
+  },
+  {
+    name: "Reverse",
+    from: "set_composition",
+    to: "set_composition",
+    body: reversedWord,
+    summary: "The blocks in the opposite order.",
+    note: "FindStat's Mp00288.",
+  },
+  {
+    name: "Complement",
+    from: "set_composition",
+    to: "set_composition",
+    body: bind(
+      "elements",
+      ["Length", ["Flatten", "_raw"]],
+      forEach(
+        positions,
+        [
+          "Sort",
+          forEach(["Range", 1, ["Length", at("i")], 1], ["Subtract", ["Add", "elements", 1], at("j", at("i"))], "j"),
+        ],
+        "i",
+      ),
+      "integer",
+    ),
+    summary: "Each element i replaced by n + 1 - i, the blocks staying in their order.",
+    note: "FindStat's Mp00289.",
+  },
+  {
+    name: "CyclicShift",
+    from: "set_composition",
+    to: "set_composition",
+    body: rotatedLeft,
+    summary: "The first block moved to the end.",
+    note: "FindStat's Mp00292.",
+  },
+  {
+    name: "InverseCyclicShift",
+    from: "set_composition",
+    to: "set_composition",
+    body: rotatedRight,
+    summary: "The last block moved to the front.",
+    note: "FindStat's Mp00291.",
   },
 ];

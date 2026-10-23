@@ -30,6 +30,10 @@ const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
     contents: ["List", ["List", 0, 0], ["List", 0, ["List", 0, 0]]],
     caption: "a four-node tree",
   },
+  ordered_tree: {
+    contents: ["List", ["List", ["List"], ["List"]], ["List"]],
+    caption: "an ordered tree with four edges",
+  },
   binary_tree_parent_array: { contents: ["List", 2, 0, 2, 3], caption: "the parent array $2023$" },
   dyck_path: { contents: ["List", 1, 1, 0, 0, 1, 0], caption: "the Dyck path $UUDDUD$" },
   set_partition: {

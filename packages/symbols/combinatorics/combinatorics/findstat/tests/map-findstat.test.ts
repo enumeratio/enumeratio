@@ -64,12 +64,31 @@ const tableaux = (n: number): number[][][] => {
   ]);
 };
 
+/** Set compositions of 1..n: each set partition with its blocks in every order. */
+const setCompositions = (n: number): number[][][] => {
+  const orders = (rest: number[][]): number[][][] =>
+    rest.length === 0
+      ? [[]]
+      : rest.flatMap((block, k) => orders(rest.filter((_, j) => j !== k)).map((tail) => [block, ...tail]));
+  return setPartitions(n).flatMap(orders);
+};
+
 /** Binary trees with n nodes, as FindStat writes them. */
 const binaryTrees = (n: number): string[] =>
   n === 0
     ? ["."]
     : range(0, n - 1).flatMap((k) =>
         binaryTrees(k).flatMap((left) => binaryTrees(n - 1 - k).map((right) => `[${left},${right}]`)),
+      );
+
+/** Ordered trees with n edges, as FindStat writes them: the root's first subtree has k edges, the rest n - 1 - k. */
+const orderedTrees = (n: number): string[] =>
+  n === 0
+    ? ["[]"]
+    : range(0, n - 1).flatMap((k) =>
+        orderedTrees(k).flatMap((first) =>
+          orderedTrees(n - 1 - k).map((rest) => `[${first}${rest === "[]" ? "" : `,${rest.slice(1, -1)}`}]`),
+        ),
       );
 
 const through = <T>(max: number, from: number, make: (n: number) => T[]): T[] => range(from, max).flatMap(make);
@@ -80,7 +99,9 @@ const OBJECTS: Readonly<Record<string, string[]>> = {
   DyckPath: through(4, 1, dyckWords).map((w) => JSON.stringify(w)),
   SetPartition: through(5, 1, setPartitions).map((p) => `{${p.map((block) => `{${block.join(",")}}`).join(",")}}`),
   StandardTableau: through(5, 1, tableaux).map((t) => JSON.stringify(t)),
+  SetComposition: through(4, 1, setCompositions).map((p) => `[${p.map((block) => `{${block.join(",")}}`).join(",")}]`),
   BinaryTree: through(5, 1, binaryTrees),
+  OrderedTree: through(5, 1, orderedTrees),
 };
 
 /** Our map for a reading's `Head@Carrier` key. */
@@ -166,6 +187,30 @@ const IDS: Readonly<Record<string, string>> = {
   "ReadingWord@StandardTableau": "Mp00081",
   "PeakComposition@StandardTableau": "Mp00294",
   "ValleyComposition@StandardTableau": "Mp00295",
+  "OrderedTree@BinaryTree": "Mp00010",
+  "RightBranchOrderedTree@BinaryTree": "Mp00015",
+  "BinaryTree@OrderedTree": "Mp00049",
+  "RightBranchBinaryTree@OrderedTree": "Mp00050",
+  "Mirror@OrderedTree": "Mp00048",
+  "Rotation@OrderedTree": "Mp00246",
+  "DyckPath@OrderedTree": "Mp00051",
+  "OrderedTree@DyckPath": "Mp00026",
+  "DeBruijnMorselt@OrderedTree": "Mp00328",
+  "FoataMajorToInversions@Permutation": "Mp00067",
+  "FoataInversionsToMajor@Permutation": "Mp00175",
+  "Reverse@SetComposition": "Mp00288",
+  "Complement@SetComposition": "Mp00289",
+  "CyclicShift@SetComposition": "Mp00292",
+  "InverseCyclicShift@SetComposition": "Mp00291",
+  "RunSort@Permutation": "Mp00223",
+  "RunSort@BinaryWord": "Mp00224",
+  "Evacuation@StandardTableau": "Mp00085",
+  "TableauPromotion@StandardTableau": "Mp00155",
+  "InverseTableauPromotion@StandardTableau": "Mp00153",
+  "Promotion@DyckPath": "Mp00142",
+  "InversePromotion@DyckPath": "Mp00143",
+  "PeaksToValleys@DyckPath": "Mp00222",
+  "CactusEvacuation@Permutation": "Mp00126",
 };
 
 test("every reading names the FindStat map it is", () => {

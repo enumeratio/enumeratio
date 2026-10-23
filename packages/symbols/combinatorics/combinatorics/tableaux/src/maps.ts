@@ -3,6 +3,7 @@
 
 import { at, bind, forEach, type CombinatorialMap, type MathJSON } from "../../src/map-helpers.ts";
 import { inverseRsk } from "./families/rsk-pairs.ts";
+import { evacuationRows, inversePromotionRows, promotionRows } from "./promotion.ts";
 
 /** The rows of one tableau of the pair: a pair's contents are two `StandardTableau(rows)`, and
  *  `At` doesn't see through the constructor, but a lambda argument does. */
@@ -154,5 +155,35 @@ export const TABLEAUX_MAPS: readonly CombinatorialMap[] = [
     guard: tableauGuard,
     summary: "The composition cut at the valleys: entries i that are ascents after a descent.",
     note: "FindStat's Mp00295.",
+  },
+  {
+    name: "Evacuation",
+    from: "standard_tableau",
+    to: "standard_tableau",
+    body: bind("ev_t", "_raw", evacuationRows("ev_t"), "list<list<integer>>"),
+    guard: tableauGuard,
+    summary:
+      "Schützenberger's evacuation (involution): remove the entry 1, slide the rest in, and give the cell that empties the largest label, until nothing is left.",
+    note: "FindStat's Mp00085. Computed as the insertion tableau of the reading word reversed and complemented; the same shape, and an involution.",
+  },
+  {
+    name: "TableauPromotion",
+    from: "standard_tableau",
+    to: "standard_tableau",
+    body: bind("pm_t", "_raw", promotionRows("pm_t"), "list<list<integer>>"),
+    guard: tableauGuard,
+    summary:
+      "Promotion: replace the largest entry by a hole, slide it to the corner at the origin, and add one to every entry.",
+    note: "FindStat's Mp00155, the inverse of InverseTableauPromotion. The hole is walked through the rows entry by entry, as jeu de taquin does.",
+  },
+  {
+    name: "InverseTableauPromotion",
+    from: "standard_tableau",
+    to: "standard_tableau",
+    body: bind("pm_t", "_raw", inversePromotionRows("pm_t"), "list<list<integer>>"),
+    guard: tableauGuard,
+    summary:
+      "Inverse promotion: replace the entry 1 by n + 1, slide it out to the rim, and subtract one from every entry.",
+    note: "FindStat's Mp00153, the inverse of TableauPromotion. The hole is walked through the rows entry by entry, as jeu de taquin does.",
   },
 ];

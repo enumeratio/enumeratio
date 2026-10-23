@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+an-ordered-tree-with-four-edges			[RightBranchBinaryTree, [OrderedTree, [List, [List, [List], [List]], [List]]]]	[BinaryTree, [List, [List, 0, [List, 0, 0]], [List, 0, 0]]]	an ordered tree with four edges
