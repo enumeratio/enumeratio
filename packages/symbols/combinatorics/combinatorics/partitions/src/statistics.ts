@@ -683,6 +683,11 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     nonEmpty(["Multiply", ["Product", x], multiplicityFactorials], 1),
   ),
   stat(
+    "ConjugacyClassSize",
+    "The number of permutations of the same cycle type: n! over the product of the cycle sizes and the factorials of the multiplicities.",
+    nonEmpty(["Divide", factorialOf(total), ["Multiply", ["Product", x], multiplicityFactorials]], 1),
+  ),
+  stat(
     "SetPartitionsWithBlockSizesCount",
     "The number of set partitions whose block sizes are the parts: the size factorial over the product of the factorials of the parts and of the multiplicities.",
     nonEmpty(

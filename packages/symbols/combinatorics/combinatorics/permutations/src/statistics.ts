@@ -620,7 +620,7 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
 
   stat("FixedPoints", "Positions with p(i) = i.", nonEmpty(count(positions, equals(here, "i")))),
   stat("Excedances", "Positions with p(i) > i.", nonEmpty(count(positions, greater(here, "i")))),
-  stat("WeakExceedances", "Positions with p(i) >= i.", nonEmpty(count(positions, atLeastValue(here, "i")))),
+  stat("WeakExcedances", "Positions with p(i) >= i.", nonEmpty(count(positions, atLeastValue(here, "i")))),
   stat("Antiexcedances", "Positions with p(i) < i.", nonEmpty(count(positions, less(here, "i")))),
 
   stat(

@@ -62,7 +62,7 @@ export const findstat: readonly FindStatMatch[] = [
     values: 873,
   },
   {
-    head: "WeakExceedances",
+    head: "WeakExcedances",
     on: "Permutation",
     findstat: ["St000213"],
     values: 873,
@@ -1146,6 +1146,12 @@ export const findstat: readonly FindStatMatch[] = [
     on: "IntegerPartition",
     findstat: ["St000184"],
     values: 139,
+  },
+  {
+    head: "ConjugacyClassSize",
+    on: "IntegerPartition",
+    findstat: ["St000182"],
+    values: 272,
   },
   {
     head: "SetPartitionsWithBlockSizesCount",

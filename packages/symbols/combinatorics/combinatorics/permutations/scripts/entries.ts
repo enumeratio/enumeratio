@@ -30,6 +30,7 @@ const SAMPLES: readonly Sample[] = [
 const CURATED_HEADS = [
   "PermutationSupport",
   "Successions",
+  "ConjugacyClassSize",
   "Antiexcedances",
   "Ascents",
   "CycleCount",

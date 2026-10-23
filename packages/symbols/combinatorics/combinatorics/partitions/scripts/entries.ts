@@ -1,7 +1,8 @@
 // Partition statistics' generated reference entries (step 6b: one generator per area,
 // generic driver in `../../src/statistics/generate-entries.ts`). `scripts/collect-entries.ts`
 // writes them into `../../reference/`; `tests/statistics-generated.test.ts` checks they're
-// current. No head here collides with an existing hand-written record.
+// current. `ConjugacyClassSize` is also defined on `Permutation`, where its record is curated, so
+// `omitHeads` keeps this generator out of that folder.
 
 import { fileURLToPath } from "node:url";
 import type { GeneratedEntries } from "@enumeratio/entry/node";
@@ -24,4 +25,5 @@ export const generated: { standard: GeneratedEntries; curated: GeneratedEntries 
   frontier: PARTITIONS_FRONTIER,
   samples: SAMPLES,
   declareArea: declarePartitions,
+  omitHeads: ["ConjugacyClassSize"],
 });

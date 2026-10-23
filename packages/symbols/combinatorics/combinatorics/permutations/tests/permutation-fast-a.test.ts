@@ -13,6 +13,6 @@ checkAgainstEngine([
   "Sign",
   "FixedPoints",
   "Excedances",
-  "WeakExceedances",
+  "WeakExcedances",
   "Antiexcedances",
 ]);
