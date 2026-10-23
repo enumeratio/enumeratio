@@ -131,6 +131,7 @@ const IDS: Readonly<Record<string, string>> = {
   "DescentTopWord@Permutation": "Mp00130",
   "DescentBottomWord@Permutation": "Mp00131",
   "LongCycleConjugation@Permutation": "Mp00265",
+  "KrewerasComplement@Permutation": "Mp00088",
 };
 
 test("every reading names the FindStat map it is", () => {

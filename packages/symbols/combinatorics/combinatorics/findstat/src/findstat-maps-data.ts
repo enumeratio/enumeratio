@@ -54,6 +54,12 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     findstat: [{ id: "Mp00265", rows: 1200, compared: 873, skipped: 0 }],
   },
   {
+    name: "KrewerasComplement",
+    from: "Permutation",
+    to: "Permutation",
+    findstat: [{ id: "Mp00088", rows: 1200, compared: 873, skipped: 0 }],
+  },
+  {
     name: "Reverse",
     from: "Permutation",
     to: "Permutation",

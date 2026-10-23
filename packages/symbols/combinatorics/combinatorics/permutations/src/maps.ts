@@ -223,27 +223,12 @@ const descentComposition: MathJSON = (() => {
   ];
 })();
 
-/** The long cycle c = (1 2 ... n), read at position i: i + 1, wrapping n back to 1 — the same
- *  `Mod` shape `CyclicShift` rotates the WORD by; here it is applied to the position instead
- *  to give c itself. */
-const longCycleAt = (i: MathJSON): MathJSON => ["Add", ["Mod", i, ["Length", "_raw"]], 1];
+/** The long cycle c = (1 2 ... n), read at position x: x + 1, wrapping n back to 1. */
+const longCycleAt = (x: MathJSON): MathJSON => ["Add", ["Mod", x, ["Length", "_raw"]], 1];
 
-/** K(w) at position i is w^{-1}(c(i)) — and `IndexOf` on the word already IS w^{-1} applied
- *  to its argument (the same reading `Inverse` uses), so no separate inversion or
- *  multiplication step is needed. */
-const krewerasBody: MathJSON = forEach(positions, ["IndexOf", "_raw", longCycleAt("i")]);
-
-/**
- * w sits below c in absolute order — equivalently, its cycles form a non-crossing partition —
- * iff the reflection lengths of w and K(w) split c's exactly: `cyc(w) + cyc(K(w)) = n + 1`.
- * Each side is wrapped back into a `Permutation` because `CycleCount` is declared over the
- * carrier, not the raw word.
- */
-const krewerasGuard: MathJSON = [
-  "Equal",
-  ["Add", ["CycleCount", ["Permutation", "_raw"]], ["CycleCount", ["Permutation", "_image"]]],
-  ["Add", size, 1],
-];
+/** FindStat's Mp00088, π ↦ π⁻¹c with Sage's left-to-right product: position i holds c(π⁻¹(i)).
+ *  `IndexOf` on the word already IS π⁻¹ applied to its argument (the same reading `Inverse` uses). */
+const krewerasBody: MathJSON = forEach(positions, longCycleAt(["IndexOf", "_raw", "i"]));
 
 /** The position of value v in the word: where v sits. */
 const where = (v: MathJSON): MathJSON => ["IndexOf", "_raw", v];
@@ -595,9 +580,8 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     from: "permutation",
     to: "permutation",
     body: krewerasBody,
-    guard: krewerasGuard,
-    summary: "w⁻¹c, for w below the long cycle c = (1 2 ... n) in absolute order.",
-    note: "Only defined on the non-crossing permutations (the embedding of NC(n) in S_n by absolute order beneath c) — everywhere else this declines rather than answering for a word it was never defined on. K∘K is conjugation by c, and K is a bijection of NC(n) onto itself.",
+    summary: "π⁻¹c with the long cycle c = (1 2 ... n), FindStat's order: position i holds c(π⁻¹(i)).",
+    note: "Total, a bijection of S_n; it restricts to the classical Kreweras complement of the non-crossing permutations (those below c in absolute order), mapping NC(n) onto itself. K∘K is conjugation by c.",
   },
   {
     name: "ConjugateAfterCycleType",

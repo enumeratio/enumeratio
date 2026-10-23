@@ -2,7 +2,7 @@
 name: KrewerasComplement
 domain: Combinatorial maps
 signature: KrewerasComplement(Permutation)
-summary: w⁻¹c, for w below the long cycle c = (1 2 ... n) in absolute order.
+summary: "π⁻¹c with the long cycle c = (1 2 ... n), FindStat's order: position i holds c(π⁻¹(i))."
 references:
   - system: wikipedia
     identity: Noncrossing partition
@@ -15,10 +15,16 @@ mapOn:
   - Permutation
 signatures:
   - call: KrewerasComplement(Permutation)
-    description: w⁻¹c, for w below the long cycle c = (1 2 ... n) in absolute order.
+    description: "w⁻¹c with the long cycle c = (1 2 ... n), FindStat's order: position i holds c(w⁻¹(i))."
     library: enumeratio-combinatorics
     type: (permutation) -> permutation
+laws:
+  - bijection
+  - graded:
+      from: Permutations
+      to: Permutations
+    on: permutation
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
-- Only defined on the non-crossing permutations (the embedding of NC(n) in S_n by absolute order beneath c) — everywhere else this declines rather than answering for a word it was never defined on. K∘K is conjugation by c, and K is a bijection of NC(n) onto itself.
+- Total, a bijection of S_n; it restricts to the classical Kreweras complement of the non-crossing permutations (those below c in absolute order), mapping NC(n) onto itself. K∘K is conjugation by c.
