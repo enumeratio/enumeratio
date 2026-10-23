@@ -18,6 +18,13 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+catalog:
+  - system: findstat
+    identity: St000218
+    url: https://www.findstat.org/St000218
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

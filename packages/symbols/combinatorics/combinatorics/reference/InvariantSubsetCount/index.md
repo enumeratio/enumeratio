@@ -8,6 +8,13 @@ signatures:
     description: "Subsets of the points left invariant by a permutation with these cycle lengths: each cycle is in or out, 2 to the number of cycles."
     library: enumeratio-combinatorics
     type: (integer_partition) -> number
+catalog:
+  - system: findstat
+    identity: St000511
+    url: https://www.findstat.org/St000511
+    on: IntegerPartition
+statOn:
+  - IntegerPartition
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

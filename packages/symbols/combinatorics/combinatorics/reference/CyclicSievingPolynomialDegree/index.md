@@ -8,6 +8,13 @@ signatures:
     description: "(1 - 1/largest part) times the least common multiple of the parts: the degree of the cyclic sieving polynomial of a permutation with these cycle lengths."
     library: enumeratio-combinatorics
     type: (integer_partition) -> number
+catalog:
+  - system: findstat
+    identity: St001918
+    url: https://www.findstat.org/St001918
+    on: IntegerPartition
+statOn:
+  - IntegerPartition
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

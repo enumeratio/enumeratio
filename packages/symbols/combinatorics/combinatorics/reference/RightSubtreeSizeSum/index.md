@@ -8,6 +8,13 @@ signatures:
     description: The sum, over the nodes, of the number of nodes in the right subtree.
     library: enumeratio-combinatorics
     type: (binary_tree) -> number
+catalog:
+  - system: findstat
+    identity: St000161
+    url: https://www.findstat.org/St000161
+    on: BinaryTree
+statOn:
+  - BinaryTree
 ---
 
 - Defined over `BinaryTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

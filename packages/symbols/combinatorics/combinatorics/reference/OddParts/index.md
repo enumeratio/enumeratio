@@ -10,6 +10,11 @@ signatures:
     description: Parts that are odd.
     library: enumeratio-combinatorics
     type: (integer_partition) -> number
+catalog:
+  - system: findstat
+    identity: St000148
+    url: https://www.findstat.org/St000148
+    on: IntegerPartition
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

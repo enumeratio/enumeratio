@@ -35,6 +35,15 @@ laws:
       from: OrderedTrees
       to: BinaryTrees
     on: ordered_tree
+catalog:
+  - system: findstat
+    identity: Mp00034
+    url: https://www.findstat.org/Mp00034
+    on: DyckPath
+  - system: findstat
+    identity: Mp00049
+    url: https://www.findstat.org/Mp00049
+    on: OrderedTree
 ---
 
 - `BinaryTree([[0, 0], 0])` is a root whose left child is a single node. The empty tree is `BinaryTree(0)`.

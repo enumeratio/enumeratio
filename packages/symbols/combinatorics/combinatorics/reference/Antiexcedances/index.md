@@ -12,6 +12,13 @@ seeAlso:
   - Excedances
   - Descents
   - SymmetricGroup
+catalog:
+  - system: findstat
+    identity: St000703
+    url: https://www.findstat.org/St000703
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Equidistributed with [[Excedances]] over $S_n$: inverting a permutation swaps its excedance and antiexcedance counts

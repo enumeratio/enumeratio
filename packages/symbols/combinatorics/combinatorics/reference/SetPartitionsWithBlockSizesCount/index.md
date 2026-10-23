@@ -8,6 +8,13 @@ signatures:
     description: "The number of set partitions whose block sizes are the parts: the size factorial over the product of the factorials of the parts and of the multiplicities."
     library: enumeratio-combinatorics
     type: (integer_partition) -> number
+catalog:
+  - system: findstat
+    identity: St000049
+    url: https://www.findstat.org/St000049
+    on: IntegerPartition
+statOn:
+  - IntegerPartition
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

@@ -8,6 +8,13 @@ signatures:
     description: Occurrences of the pattern 1/23 with 1 and 2 the least elements of their blocks, 3 the greatest element of its block and 2 and 3 consecutive in one block.
     library: enumeratio-combinatorics
     type: (set_partition) -> number
+catalog:
+  - system: findstat
+    identity: St000598
+    url: https://www.findstat.org/St000598
+    on: SetPartition
+statOn:
+  - SetPartition
 ---
 
 - Defined over `SetPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

@@ -8,6 +8,13 @@ signatures:
     description: The number of nodes other than the root with two children.
     library: enumeratio-combinatorics
     type: (binary_tree) -> number
+catalog:
+  - system: findstat
+    identity: St000252
+    url: https://www.findstat.org/St000252
+    on: BinaryTree
+statOn:
+  - BinaryTree
 ---
 
 - Defined over `BinaryTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

@@ -8,6 +8,13 @@ signatures:
     description: "Values i with i + 1 to the left of i: the descents of the inverse."
     library: enumeratio-combinatorics
     type: (permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000354
+    url: https://www.findstat.org/St000354
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

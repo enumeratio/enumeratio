@@ -10,6 +10,11 @@ signatures:
     description: Descents of p read cyclically, counting position n when p(n) > p(1).
     library: enumeratio-combinatorics
     type: (list<integer> | permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000619
+    url: https://www.findstat.org/St000619
+    on: Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

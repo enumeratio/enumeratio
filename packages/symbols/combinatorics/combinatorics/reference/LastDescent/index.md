@@ -10,6 +10,11 @@ signatures:
     description: The largest descent position, or 0 when p is increasing.
     library: enumeratio-combinatorics
     type: (list<integer> | permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000653
+    url: https://www.findstat.org/St000653
+    on: Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

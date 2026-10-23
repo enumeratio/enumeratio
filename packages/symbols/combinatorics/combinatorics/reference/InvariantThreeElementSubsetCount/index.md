@@ -8,6 +8,13 @@ signatures:
     description: "Invariant 3-element subsets: three fixed points, a fixed point and a 2-cycle, or a 3-cycle."
     library: enumeratio-combinatorics
     type: (integer_partition) -> number
+catalog:
+  - system: findstat
+    identity: St000512
+    url: https://www.findstat.org/St000512
+    on: IntegerPartition
+statOn:
+  - IntegerPartition
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

@@ -8,6 +8,13 @@ signatures:
     description: Distinct odd part sizes smaller than the largest even part.
     library: enumeratio-combinatorics
     type: (integer_partition) -> number
+catalog:
+  - system: findstat
+    identity: St001588
+    url: https://www.findstat.org/St001588
+    on: IntegerPartition
+statOn:
+  - IntegerPartition
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

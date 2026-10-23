@@ -8,6 +8,13 @@ signatures:
     description: The number of nodes from which taking the right, then the right child stays inside the tree.
     library: enumeratio-combinatorics
     type: (binary_tree) -> number
+catalog:
+  - system: findstat
+    identity: St000118
+    url: https://www.findstat.org/St000118
+    on: BinaryTree
+statOn:
+  - BinaryTree
 ---
 
 - Defined over `BinaryTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

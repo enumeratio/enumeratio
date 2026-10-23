@@ -21,6 +21,10 @@ catalog:
     identity: St000353
     url: https://www.findstat.org/St000353
     on: Permutation
+  - system: findstat
+    identity: St001169
+    url: https://www.findstat.org/St001169
+    on: DyckPath
 statOn:
   - DyckPath
   - Permutation

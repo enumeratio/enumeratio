@@ -10,6 +10,11 @@ signatures:
     description: The longest run of consecutive up steps.
     library: enumeratio-combinatorics
     type: (dyck_path) -> number
+catalog:
+  - system: findstat
+    identity: St000444
+    url: https://www.findstat.org/St000444
+    on: DyckPath
 ---
 
 - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

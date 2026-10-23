@@ -8,6 +8,13 @@ signatures:
     description: "The number of hooks in the decomposition of the tree into hooks: a node with the chains of left children and of right children below it, the subtrees hanging off those chains decomposed in turn."
     library: enumeratio-combinatorics
     type: (binary_tree) -> number
+catalog:
+  - system: findstat
+    identity: St000568
+    url: https://www.findstat.org/St000568
+    on: BinaryTree
+statOn:
+  - BinaryTree
 ---
 
 - Defined over `BinaryTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

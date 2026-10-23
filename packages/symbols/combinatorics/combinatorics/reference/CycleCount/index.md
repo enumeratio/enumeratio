@@ -28,6 +28,13 @@ seeAlso:
   - FixedPoints
   - StirlingS1
   - SymmetricGroup
+catalog:
+  - system: findstat
+    identity: St000031
+    url: https://www.findstat.org/St000031
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Permutations of $\{1, \dots, n\}$ with $k$ cycles are counted by the unsigned Stirling number of the first kind $\left[{n\atop k}\right]$ (see [[StirlingS1]])

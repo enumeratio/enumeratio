@@ -12,6 +12,10 @@ catalog:
     identity: St000381
     url: https://www.findstat.org/St000381
     on: Composition
+  - system: findstat
+    identity: St000147
+    url: https://www.findstat.org/St000147
+    on: IntegerPartition
 statOn:
   - Composition
   - CorePartition

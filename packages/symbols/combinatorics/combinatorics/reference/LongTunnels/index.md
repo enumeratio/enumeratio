@@ -8,6 +8,18 @@ catalog:
     identity: St000443
     url: https://www.findstat.org/St000443
     on: DyckPath
+  - system: findstat
+    identity: St001007
+    url: https://www.findstat.org/St001007
+    on: DyckPath
+  - system: findstat
+    identity: St001187
+    url: https://www.findstat.org/St001187
+    on: DyckPath
+  - system: findstat
+    identity: St001224
+    url: https://www.findstat.org/St001224
+    on: DyckPath
 statOn:
   - DyckPath
 signatures:

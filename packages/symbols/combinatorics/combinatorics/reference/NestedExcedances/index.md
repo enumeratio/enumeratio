@@ -8,6 +8,13 @@ signatures:
     description: Pairs i < j with i < j < p(j) < p(i).
     library: enumeratio-combinatorics
     type: (permutation) -> number
+catalog:
+  - system: findstat
+    identity: St001513
+    url: https://www.findstat.org/St001513
+    on: Permutation
+statOn:
+  - Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

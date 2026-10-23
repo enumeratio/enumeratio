@@ -8,6 +8,13 @@ signatures:
     description: "The most vertices on a path from the root: the height plus one."
     library: enumeratio-combinatorics
     type: (ordered_tree) -> number
+catalog:
+  - system: findstat
+    identity: St000094
+    url: https://www.findstat.org/St000094
+    on: OrderedTree
+statOn:
+  - OrderedTree
 ---
 
 - Defined over `OrderedTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
