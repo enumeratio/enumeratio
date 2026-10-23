@@ -120,6 +120,14 @@ export const MAP_READINGS: Readonly<Record<string, Reading>> = {
     w.forEach((value, k) => (image[up(k + 1) - 1] = up(value)));
     return list(image);
   },
+  // π⁻¹c, Sage's left-to-right product: π⁻¹ first, then the long cycle c(x) = x + 1 (n back to 1).
+  "KrewerasComplement@Permutation": (p) => {
+    const w = ints(p);
+    const n = w.length;
+    const inverse = new Array<number>(n);
+    w.forEach((value, k) => (inverse[value - 1] = k + 1));
+    return list(inverse.map((v) => (v % n) + 1));
+  },
 
   "ReverseComplement@DyckPath": (d) =>
     list(

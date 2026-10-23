@@ -1,2 +1,3 @@
 id	section	role	expr	expected	caption
 the-one-line-word-231			[KrewerasComplement, [Permutation, [List, 2, 3, 1]]]	[Permutation, [List, 1, 2, 3]]	the one-line word $231$
+the-crossing-word-3412			[KrewerasComplement, [Permutation, [List, 3, 4, 1, 2]]]	[Permutation, [List, 4, 1, 2, 3]]	the crossing word $3412$, which the classical complement does not cover
