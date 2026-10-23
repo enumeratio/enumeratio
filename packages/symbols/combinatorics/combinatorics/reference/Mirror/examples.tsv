@@ -1,2 +1,3 @@
 id	section	role	expr	expected	caption
 a-four-node-tree			[Mirror, [BinaryTree, [List, [List, 0, 0], [List, 0, [List, 0, 0]]]]]	[BinaryTree, [List, [List, [List, 0, 0], 0], [List, 0, 0]]]	a four-node tree
+an-ordered-tree-with-four-edges			[Mirror, [OrderedTree, [List, [List, [List], [List]], [List]]]]	[OrderedTree, [List, [List], [List, [List], [List]]]]	an ordered tree with four edges

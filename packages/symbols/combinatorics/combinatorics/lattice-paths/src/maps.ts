@@ -4,6 +4,8 @@
 // map's area is decided by its SOURCE carrier, not the module its body happens to share.
 
 import { at, bind, forEach, type CombinatorialMap, type MathJSON, positions } from "../../src/map-helpers.ts";
+import { buildFromDyck } from "../../collections/src/families/nested.ts";
+import { inversePromotionRows, promotionRows } from "../../tableaux/src/promotion.ts";
 import { dyckPathOf, mirrorOf, treeOfDyckPathBody, treeOfDyckPathGuard } from "../../trees/src/binary-tree.ts";
 
 /** The positions 1 .. 2n of `_raw` that hold `letter` (1 up, 0 down) and satisfy `also`. */
@@ -45,6 +47,108 @@ const areaSequence: MathJSON = bind(
   forEach(["Range", 1, ["Length", "ups"], 1], ["Subtract", ["Subtract", ["Multiply", 2, "i"], 1], at("i", "ups")]),
   "list<integer>",
 );
+
+/** The height of `_raw` before step p: ups so far less downs so far. */
+const heightBefore = (p: MathJSON): MathJSON => [
+  "Subtract",
+  ["Multiply", 2, upsThrough(["Subtract", p, 1])],
+  ["Subtract", p, 1],
+];
+
+/** The positions of `_raw` whose step is `letter`, as a list built whole. */
+const positionsOf = (letter: number): MathJSON => [
+  "Fold",
+  ["Function", ["If", ["Equal", at("p"), letter], ["Join", "acc", ["List", "p"]], "acc"], "acc", "p"],
+  ["List"],
+  positions,
+];
+
+/** The two-row standard tableau of a Dyck path: the positions of its up steps, then those of its down steps. */
+const twoRowTableau: MathJSON = ["List", positionsOf(1), positionsOf(0)];
+
+/** The Dyck path whose up steps are the entries of the first row of the tableau `table`. */
+const pathOfTwoRowTableau = (table: string): MathJSON =>
+  forEach(positions, ["If", ["Element", "p", at(1, table)], 1, 0], "p");
+
+/** Mp00222, as Sage builds it: the peaks above height 1 as (position before the up step, height before it), between
+ *  sentinels; between each pair of consecutive ones, the ups and downs that carry a valley across. */
+const peaksToValleysBody: MathJSON = [
+  "If",
+  ["Equal", ["Length", "_raw"], 0],
+  ["List"],
+  bind(
+    "ptv_peaks",
+    [
+      "Fold",
+      [
+        "Function",
+        [
+          "If",
+          ["And", ["Equal", at("p"), 1], ["Equal", at(["Add", "p", 1]), 0], ["Greater", heightBefore("p"), 0]],
+          ["Join", "acc", ["List", "p"]],
+          "acc",
+        ],
+        "acc",
+        "p",
+      ],
+      ["List"],
+      ["Range", 1, ["Subtract", ["Length", "_raw"], 1], 1],
+    ],
+    bind(
+      "ptv_at",
+      [
+        "Join",
+        ["List", -2],
+        forEach(["Range", 1, ["Length", "ptv_peaks"], 1], ["Subtract", at("k", "ptv_peaks"), 1], "k"),
+        ["List", ["Length", "_raw"]],
+      ],
+      bind(
+        "ptv_height",
+        [
+          "Join",
+          ["List", 0],
+          forEach(["Range", 1, ["Length", "ptv_peaks"], 1], heightBefore(at("k", "ptv_peaks")), "k"),
+          ["List", 0],
+        ],
+        bind(
+          "ptv_word",
+          [
+            "Fold",
+            [
+              "Function",
+              bind(
+                "ptv_gap",
+                ["Subtract", ["Subtract", at(["Add", "q", 1], "ptv_at"), at("q", "ptv_at")], 2],
+                bind(
+                  "ptv_rise",
+                  ["Subtract", at(["Add", "q", 1], "ptv_height"), at("q", "ptv_height")],
+                  [
+                    "Join",
+                    "acc",
+                    forEach(["Range", 1, ["Floor", ["Divide", ["Add", "ptv_gap", "ptv_rise"], 2]], 1], 1, "z"),
+                    forEach(["Range", 1, ["Floor", ["Divide", ["Subtract", "ptv_gap", "ptv_rise"], 2]], 1], 0, "z"),
+                    ["List", 0, 1],
+                  ],
+                  "integer",
+                ),
+                "integer",
+              ),
+              "acc",
+              "q",
+            ],
+            ["List"],
+            ["Range", 1, ["Subtract", ["Length", "ptv_at"], 1], 1],
+          ],
+          forEach(["Range", 1, ["Subtract", ["Length", "ptv_word"], 2], 1], at("k", "ptv_word"), "k"),
+          "list<integer>",
+        ),
+        "list<integer>",
+      ),
+      "list<integer>",
+    ),
+    "list<integer>",
+  ),
+];
 
 /** The indices 1 .. n, none when n is 0: the stated step keeps the range from counting down. */
 const upTo = (n: MathJSON): MathJSON => ["Range", 1, n, 1];
@@ -427,5 +531,65 @@ export const LATTICE_PATHS_MAPS: readonly CombinatorialMap[] = [
     summary:
       "The path wrapped in one more up step first and down step last: a path that touches the diagonal only at its ends.",
     note: "FindStat's Mp00199. Injective, one semilength up; the paths it reaches are those with a single return.",
+  },
+  {
+    name: "OrderedTree",
+    convert: true,
+    from: "dyck_path",
+    to: "ordered_tree",
+    body: bind("op", "_raw", buildFromDyck("op", ["Length", "_raw"]) as MathJSON, "list<integer>"),
+    guard: dyckGuard,
+    summary:
+      "A Dyck path as the ordered tree whose depth-first contour it is: an up step opens a child, a down step closes it.",
+    note: "FindStat's Mp00026. The inverse of DyckPath(OrderedTree).",
+    findstat: ["Mp00026"],
+  },
+  {
+    name: "Promotion",
+    from: "dyck_path",
+    to: "dyck_path",
+    body: [
+      "If",
+      ["Equal", ["Length", "_raw"], 0],
+      ["List"],
+      bind(
+        "pm_tab",
+        twoRowTableau,
+        bind("pm_image", promotionRows("pm_tab"), pathOfTwoRowTableau("pm_image"), "list<list<integer>>"),
+        "list<list<integer>>",
+      ),
+    ],
+    guard: dyckGuard,
+    summary: "Promotion of the Dyck path's two-row standard tableau, read back as a path.",
+    note: "FindStat's Mp00142; the inverse is InversePromotion.",
+  },
+  {
+    name: "InversePromotion",
+    from: "dyck_path",
+    to: "dyck_path",
+    body: [
+      "If",
+      ["Equal", ["Length", "_raw"], 0],
+      ["List"],
+      bind(
+        "pm_tab",
+        twoRowTableau,
+        bind("pm_image", inversePromotionRows("pm_tab"), pathOfTwoRowTableau("pm_image"), "list<list<integer>>"),
+        "list<list<integer>>",
+      ),
+    ],
+    guard: dyckGuard,
+    summary: "Inverse promotion of the Dyck path's two-row standard tableau, read back as a path.",
+    note: "FindStat's Mp00143; the inverse is Promotion.",
+  },
+  {
+    name: "PeaksToValleys",
+    from: "dyck_path",
+    to: "dyck_path",
+    body: peaksToValleysBody,
+    guard: dyckGuard,
+    summary:
+      "The path with a valley wherever the original has a peak of height at least 2, each valley two lower than its peak.",
+    note: "FindStat's Mp00222, the inverse of rowmotion on Dyck paths as order ideals of the triangular poset.",
   },
 ];

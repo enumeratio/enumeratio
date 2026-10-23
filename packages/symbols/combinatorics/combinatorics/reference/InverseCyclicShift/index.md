@@ -12,15 +12,20 @@ catalog:
     identity: Mp00172
     url: https://www.findstat.org/Mp00172
     on: Composition
+  - system: findstat
+    identity: Mp00291
+    url: https://www.findstat.org/Mp00291
+    on: SetComposition
 mapOn:
   - BinaryWord
   - Composition
   - Permutation
+  - SetComposition
 signatures:
   - call: InverseCyclicShift(Permutation)
     description: Rotate the word one place to the right.
     library: enumeratio-combinatorics
-    type: ((binary_word) -> binary_word) & ((composition) -> composition)
+    type: ((binary_word) -> binary_word) & ((composition) -> composition) & ((set_composition) -> set_composition)
 laws:
   - inverse: CyclicShift
   - graded:
@@ -35,8 +40,14 @@ laws:
       from: IntegerCompositions
       to: IntegerCompositions
     on: composition
+  - graded:
+      from: SetCompositions
+      to: SetCompositions
+    on: set_composition
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+- Also takes a `SetComposition`, returning a `SetComposition`: The last block moved to the front.
+- FindStat's Mp00291.
 - Also takes a `Composition`, returning a `Composition`: Rotate the parts one place to the right: the last part moves to the front.
 - Also takes a `BinaryWord`, returning a `BinaryWord`: Rotate the word one place to the right: the last letter moves to the front.

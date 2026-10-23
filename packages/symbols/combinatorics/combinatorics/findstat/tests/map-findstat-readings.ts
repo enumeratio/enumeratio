@@ -151,6 +151,224 @@ const maximaStretches = (w: readonly number[]): number[][] => {
   return out;
 };
 
+/** Mp00067, as FindStat describes it: put each new letter on the end of the image so far, put a line after every
+ *  letter it is at least (when it is at least the last letter) or below (when it is below), and rotate each block right. */
+const foataBijection = (w: readonly number[]): number[] => {
+  let image = w.slice(0, 1);
+  for (const x of w.slice(1)) {
+    const last = image.at(-1)!;
+    const lines = image.map((v) => (x >= last ? x >= v : x < v));
+    const word = [...image, x];
+    const blocks: number[][] = [[]];
+    word.forEach((letter, k) => {
+      blocks.at(-1)!.push(letter);
+      if (k >= image.length || lines[k]) blocks.push([]);
+    });
+    image = blocks.filter((block) => block.length > 0).flatMap((block) => [block.at(-1)!, ...block.slice(0, -1)]);
+  }
+  return image;
+};
+const byFoata = new Map<number, Map<string, number[]>>();
+/** Mp00175: the permutation whose Foata image this is, found by trying them all. */
+const inverseFoataBijection = (image: readonly number[]): number[] => {
+  const n = image.length;
+  if (!byFoata.has(n)) byFoata.set(n, new Map(permutationsOf(n).map((w) => [foataBijection(w).join(","), w])));
+  return byFoata.get(n)!.get(image.join(","))!;
+};
+
+/** Jeu de taquin on tableaux as arrays of rows. A hole slides outward (`forward`) by swapping with the smaller of
+ *  its right and lower neighbours, or inward by swapping with the larger of its left and upper ones; the cell it ends in
+ *  is returned. */
+type Cell = [row: number, column: number];
+const slide = (table: number[][], from: Cell, forward: boolean): Cell => {
+  let [r, c] = from;
+  for (;;) {
+    const options: Cell[] = forward
+      ? [
+          [r, c + 1],
+          [r + 1, c],
+        ]
+      : [
+          [r, c - 1],
+          [r - 1, c],
+        ];
+    const inside = options.filter(([i, j]) => table[i]?.[j] !== undefined);
+    if (inside.length === 0) return [r, c];
+    const [i, j] = inside.reduce((a, b) => (forward === table[a[0]]![a[1]]! < table[b[0]]![b[1]]! ? a : b));
+    table[r]![c] = table[i]![j]!;
+    [r, c] = [i, j];
+  }
+};
+const cellOf = (table: readonly (readonly number[])[], value: number): Cell => {
+  const r = table.findIndex((row) => row.includes(value));
+  return [r, table[r]!.indexOf(value)];
+};
+/** Sage's promotion (Mp00155): the largest entry becomes a hole that slides to the origin, and every entry goes up by one. */
+const promotionOf = (t: readonly (readonly number[])[]): number[][] => {
+  const table = t.map((row) => [...row]);
+  const n = sum(table.map((row) => row.length));
+  const [r, c] = cellOf(table, n);
+  table[r]![c] = 0;
+  const [i, j] = slide(table, [r, c], false);
+  table[i]![j] = 0;
+  return table.map((row) => row.map((x) => x + 1));
+};
+/** Sage's inverse promotion (Mp00153): the entry 1 becomes a hole that slides out, and every entry goes down by one. */
+const inversePromotionOf = (t: readonly (readonly number[])[]): number[][] => {
+  const table = t.map((row) => [...row]);
+  const n = sum(table.map((row) => row.length));
+  const [i, j] = slide(table, [0, 0], true);
+  table[i]![j] = n + 1;
+  return table.map((row) => row.map((x) => x - 1));
+};
+/** Schützenberger's involution (Mp00085): take out the smallest entry, slide the rest in, and write the next largest
+ *  label in the cell that empties. */
+const evacuationOf = (t: readonly (readonly number[])[]): number[][] => {
+  const table = t.map((row) => [...row]);
+  const result = t.map((row) => row.map(() => 0));
+  for (let label = sum(table.map((row) => row.length)); label >= 1; label--) {
+    const [r, c] = slide(table, [0, 0], true);
+    result[r]![c] = label;
+    table[r]!.pop();
+    if (table[r]!.length === 0) table.pop();
+    for (const row of table) row.forEach((x, k) => (row[k] = x - 1));
+  }
+  return result;
+};
+/** Row insertion of `word`, recording where each cell appears; and its inverse, bumping back out. */
+const rskPair = (word: readonly number[]): [number[][], number[][]] => {
+  const p: number[][] = [];
+  const q: number[][] = [];
+  word.forEach((letter, k) => {
+    let x = letter;
+    for (let r = 0; ; r++) {
+      const row = (p[r] ??= []);
+      const at = row.findIndex((y) => y > x);
+      if (at === -1) {
+        row.push(x);
+        (q[r] ??= []).push(k + 1);
+        break;
+      }
+      [x, row[at]] = [row[at]!, x];
+    }
+  });
+  return [p, q];
+};
+const inverseRskPair = (pTable: readonly (readonly number[])[], qTable: readonly (readonly number[])[]): number[] => {
+  const p = pTable.map((row) => [...row]);
+  const q = qTable.map((row) => [...row]);
+  const word: number[] = [];
+  for (let k = sum(q.map((row) => row.length)); k >= 1; k--) {
+    const r = q.findIndex((row) => row.at(-1) === k);
+    q[r]!.pop();
+    let x = p[r]!.pop()!;
+    for (let above = r - 1; above >= 0; above--) {
+      const at = p[above]!.findLastIndex((y) => y < x);
+      [x, p[above]![at]] = [p[above]![at]!, x];
+    }
+    word.unshift(x);
+    if (p[r]!.length === 0) {
+      p.pop();
+      q.pop();
+    }
+  }
+  return word;
+};
+/** Mp00222, as Sage writes it. */
+const peaksToValleys = (d: readonly number[]): number[] => {
+  let h = 0;
+  const peaks: [number, number][] = [[-2, 0]];
+  for (let i = 0; i < d.length - 1; i++) {
+    if (d[i] === 1) {
+      if (d[i + 1] === 0 && h > 0) peaks.push([i, h]);
+      h++;
+    } else h--;
+  }
+  peaks.push([d.length, 0]);
+  const out: number[] = [];
+  for (let k = 0; k + 1 < peaks.length; k++) {
+    const [i0, h0] = peaks[k]!;
+    const [i1, h1] = peaks[k + 1]!;
+    const a = Math.floor((i1 - i0 - 2 + h1 - h0) / 2);
+    const b = Math.floor((i1 - i0 - 2 - (h1 - h0)) / 2);
+    out.push(...Array<number>(a).fill(1), ...Array<number>(b).fill(0), 0, 1);
+  }
+  return out.slice(0, -2);
+};
+/** The two-row tableau of a Dyck word (up steps in the first row), promoted by `step`, as a word again. */
+const throughTwoRows = (d: readonly number[], step: (t: number[][]) => number[][]): number[] => {
+  const table = [range(1, d.length).filter((p) => d[p - 1] === 1), range(1, d.length).filter((p) => d[p - 1] === 0)];
+  const first = new Set(step(table)[0]);
+  return range(1, d.length).map((p) => (first.has(p) ? 1 : 0));
+};
+
+/** Sage's runsort (Mp00223, Mp00224): the weakly increasing runs, sorted as Python sorts lists of numbers. */
+const runSort = (w: readonly number[]): number[] => {
+  const runs: number[][] = [];
+  let run: number[] = [];
+  w.forEach((letter, k) => {
+    if (k > 0 && w[k - 1]! > letter) {
+      runs.push(run);
+      run = [];
+    }
+    run.push(letter);
+  });
+  if (run.length > 0) runs.push(run);
+  const compare = (a: readonly number[], b: readonly number[]): number => {
+    for (let k = 0; k < Math.min(a.length, b.length); k++) if (a[k] !== b[k]) return a[k]! - b[k]!;
+    return a.length - b.length;
+  };
+  return runs.toSorted(compare).flat();
+};
+
+/** `[{1,3},{2}]`: the blocks of an ordered set partition, in order. */
+const orderedBlocks = (text: string): number[][] =>
+  (JSON.parse(text.replace(/\{/g, "[").replace(/\}/g, "]")) as number[][]).map((block) =>
+    block.toSorted((a, b) => a - b),
+  );
+const orderedBlocksText = (items: readonly (readonly number[])[]): string =>
+  `[${items.map((block) => `{${block.join(",")}}`).join(",")}]`;
+
+/** An ordered tree as FindStat writes it: a vertex is the list of its children. */
+type Plane = readonly Plane[];
+const planeText = (t: Plane): string => `[${t.map(planeText).join(",")}]`;
+/** Sage's to_ordered_tree_left_branch: down the left spine, each node's converted right subtree becomes a child,
+ *  the deepest node's first. */
+const orderedLeftBranch = (t: Tree): Plane => {
+  const children: Plane[] = [];
+  for (let node = t; node !== null; node = node[0]) children.unshift(orderedLeftBranch(node[1]));
+  return children;
+};
+/** Sage's to_ordered_tree_right_branch: down the right spine, each node's converted left subtree is a child. */
+const orderedRightBranch = (t: Tree): Plane => {
+  const children: Plane[] = [];
+  for (let node = t; node !== null; node = node[1]) children.push(orderedRightBranch(node[0]));
+  return children;
+};
+/** Sage's to_binary_tree_left_branch: the children from first to last, each a node whose left child is the one before. */
+const binaryLeftBranch = (t: Plane): Tree => {
+  let tree: Tree = null;
+  for (const child of t) tree = [tree, binaryLeftBranch(child)];
+  return tree;
+};
+/** Sage's to_binary_tree_right_branch: the children from last to first, each a node whose right child is the one after. */
+const binaryRightBranch = (t: Plane): Tree => {
+  let tree: Tree = null;
+  for (const child of t.toReversed()) tree = [binaryRightBranch(child), tree];
+  return tree;
+};
+const mirrorPlane = (t: Plane): Plane => t.map(mirrorPlane).toReversed();
+/** Mp00246, as Sage writes it: the branch decomposition down the first-child spine, rebuilt bottom to top. */
+const rotatePlane = (t: Plane): Plane => {
+  const branches: (readonly Plane[])[] = [];
+  for (let s: Plane = t; s.length > 0; s = s[0]!) branches.push(s.slice(1));
+  let r: Plane = [];
+  for (const branch of branches) r = [...branch, r];
+  return r;
+};
+/** The Dyck word of a plane tree's depth-first contour. */
+const contour = (t: Plane): number[] => t.flatMap((child) => [1, ...contour(child), 0]);
+
 export const MAP_READINGS: Readonly<Record<string, Reading>> = {
   // Binary words are strings of 0s and 1s.
   "Reverse@BinaryWord": (w) => w.split("").toReversed().join(""),
@@ -428,6 +646,58 @@ export const MAP_READINGS: Readonly<Record<string, Reading>> = {
     list(tableauComposition(rows(t), (descent, i) => descent(i) && !descent(i - 1))),
   "ValleyComposition@StandardTableau": (t) =>
     list(tableauComposition(rows(t), (descent, i) => descent(i - 1) && !descent(i))),
+
+  // A binary tree [L, R] and an ordered tree with one more vertex: the left or the right spine becomes the children.
+  "OrderedTree@BinaryTree": (t) => planeText(orderedLeftBranch(parseTree(t))),
+  "RightBranchOrderedTree@BinaryTree": (t) => planeText(orderedRightBranch(parseTree(t))),
+  "BinaryTree@OrderedTree": (t) => treeText(binaryLeftBranch(JSON.parse(t) as Plane)),
+  "RightBranchBinaryTree@OrderedTree": (t) => treeText(binaryRightBranch(JSON.parse(t) as Plane)),
+  "Mirror@OrderedTree": (t) => planeText(mirrorPlane(JSON.parse(t) as Plane)),
+  "Rotation@OrderedTree": (t) => planeText(rotatePlane(JSON.parse(t) as Plane)),
+  "DyckPath@OrderedTree": (t) => list(contour(JSON.parse(t) as Plane)),
+  "OrderedTree@DyckPath": (d) => {
+    const stack: Plane[][] = [[]];
+    for (const step of ints(d)) {
+      if (step === 1) stack.push([]);
+      else {
+        const done = stack.pop()!;
+        stack.at(-1)!.push(done);
+      }
+    }
+    return planeText(stack[0]!);
+  },
+  // Mp00328 is the right-branch bijection followed by the left-branch one back.
+  "DeBruijnMorselt@OrderedTree": (t) => planeText(orderedLeftBranch(binaryRightBranch(JSON.parse(t) as Plane))),
+
+  "Reverse@SetComposition": (p) => orderedBlocksText(orderedBlocks(p).toReversed()),
+  "Complement@SetComposition": (p) => {
+    const parts = orderedBlocks(p);
+    const n = sum(parts.map((block) => block.length));
+    return orderedBlocksText(parts.map((block) => block.map((x) => n + 1 - x).toSorted((a, b) => a - b)));
+  },
+  "CyclicShift@SetComposition": (p) => {
+    const parts = orderedBlocks(p);
+    return orderedBlocksText([...parts.slice(1), ...parts.slice(0, 1)]);
+  },
+  "InverseCyclicShift@SetComposition": (p) => {
+    const parts = orderedBlocks(p);
+    return orderedBlocksText([...parts.slice(-1), ...parts.slice(0, -1)]);
+  },
+  "RunSort@Permutation": (p) => list(runSort(ints(p))),
+  "RunSort@BinaryWord": (w) => runSort(w.split("").map(Number)).join(""),
+  "Evacuation@StandardTableau": (t) => rowsText(evacuationOf(rows(t))),
+  "TableauPromotion@StandardTableau": (t) => rowsText(promotionOf(rows(t))),
+  "InverseTableauPromotion@StandardTableau": (t) => rowsText(inversePromotionOf(rows(t))),
+  "Promotion@DyckPath": (d) => list(throughTwoRows(ints(d), promotionOf)),
+  "InversePromotion@DyckPath": (d) => list(throughTwoRows(ints(d), inversePromotionOf)),
+  "PeaksToValleys@DyckPath": (d) => list(peaksToValleys(ints(d))),
+  // RSK, evacuate the recording tableau, and RSK backwards.
+  "CactusEvacuation@Permutation": (p) => {
+    const [insertion, recording] = rskPair(ints(p));
+    return list(inverseRskPair(insertion, evacuationOf(recording)));
+  },
+  "FoataMajorToInversions@Permutation": (p) => list(foataBijection(ints(p))),
+  "FoataInversionsToMajor@Permutation": (p) => list(inverseFoataBijection(ints(p))),
 };
 
 /** The composition of n cut at the entries i in 2 .. n - 1 for which `pick` holds, given whether entry i is a descent. */

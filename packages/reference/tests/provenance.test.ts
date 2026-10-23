@@ -1320,6 +1320,20 @@ const NOVEL = [
   "ReadingWord",
   "PeakComposition",
   "ValleyComposition",
+  "RightBranchOrderedTree",
+  "RightBranchBinaryTree",
+  "Rotation",
+  "DeBruijnMorselt",
+  "FoataMajorToInversions",
+  "FoataInversionsToMajor",
+  "Evacuation",
+  "CactusEvacuation",
+  "Promotion",
+  "InversePromotion",
+  "TableauPromotion",
+  "InverseTableauPromotion",
+  "PeaksToValleys",
+  "RunSort",
 ];
 
 // What formats holds inert that is Wolfram's own (`Plot`, `Slider`, `Cell`): known elsewhere because

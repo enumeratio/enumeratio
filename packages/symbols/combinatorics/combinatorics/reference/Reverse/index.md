@@ -18,16 +18,21 @@ catalog:
     identity: Mp00104
     url: https://www.findstat.org/Mp00104
     on: BinaryWord
+  - system: findstat
+    identity: Mp00288
+    url: https://www.findstat.org/Mp00288
+    on: SetComposition
 mapOn:
   - BinaryWord
   - Composition
   - Permutation
+  - SetComposition
   - SetPartition
 signatures:
   - call: Reverse(Permutation)
     description: The word read backwards.
     library: enumeratio-combinatorics
-    type: ((binary_word) -> binary_word) & ((composition) -> composition) & ((permutation) -> permutation)
+    type: ((binary_word) -> binary_word) & ((composition) -> composition) & ((permutation) -> permutation) & ((set_composition) -> set_composition)
     overrides: compute-engine
 laws:
   - involution
@@ -43,8 +48,14 @@ laws:
       from: IntegerCompositions
       to: IntegerCompositions
     on: composition
+  - graded:
+      from: SetCompositions
+      to: SetCompositions
+    on: set_composition
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+- Also takes a `SetComposition`, returning a `SetComposition`: The blocks in the opposite order.
+- FindStat's Mp00288.
 - Also takes a `Composition`, returning a `Composition`: The parts read backwards.
 - Also takes a `BinaryWord`, returning a `BinaryWord`: The word read backwards.

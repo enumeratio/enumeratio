@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-dyck-path-uuddud			[Promotion, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	[DyckPath, [List, 1, 1, 1, 0, 0, 0]]	the Dyck path $UUDDUD$

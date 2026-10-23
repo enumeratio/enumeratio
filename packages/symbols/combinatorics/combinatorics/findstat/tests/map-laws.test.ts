@@ -39,7 +39,9 @@ test("no stated law of ours contradicts FindStat's MapProperties for the matched
     if (laws === undefined) continue;
     for (const { id } of match.findstat) {
       expect(items[id], `${id} is in the committed slice`).toBeDefined();
-      const properties = items[id]?.properties ?? [];
+      const listed = items[id]?.properties ?? [];
+      // An involution is a bijection, whether or not FindStat's list says both.
+      const properties = listed.includes("Involution") ? [...listed, "Bijection"] : listed;
       for (const property of impliedProperties(laws))
         if (!properties.includes(property)) contradictions.push(`${match.name} (${id}): ${property}`);
     }
