@@ -22,7 +22,7 @@ test("??Name adds every overload, parameters, packages and FindStat ids", () => 
 });
 
 test("?Pattern* lists the heads it matches; an unknown name says so", () => {
-  expect(repl.eval("?Zeta*").text).toBe("  Zeta");
+  expect(repl.eval("?Zeta*").text).toBe("  Zeta  ZetaMap");
   expect(repl.eval("?Fooble").text).toContain("nothing is known");
   // Not an input line: nothing is numbered.
   expect(repl.lineNo).toBe(1);

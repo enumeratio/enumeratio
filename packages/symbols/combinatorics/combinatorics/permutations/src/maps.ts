@@ -245,7 +245,76 @@ const krewerasGuard: MathJSON = [
   ["Add", size, 1],
 ];
 
+/** The position of value v in the word: where v sits. */
+const where = (v: MathJSON): MathJSON => ["IndexOf", "_raw", v];
+
 export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
+  {
+    name: "DescentWord",
+    from: "permutation",
+    to: "binary_word",
+    body: forEach(
+      ["Range", 1, ["Subtract", ["Length", "_raw"], 1], 1],
+      ["If", ["Greater", at("i"), at(["Add", "i", 1])], 1, 0],
+    ),
+    guard: ["Greater", ["Length", "_raw"], 0],
+    summary: "Letter i is 1 when the word falls between positions i and i + 1: the descent set as a binary word.",
+    note: "One letter shorter than the permutation, so the empty permutation has no descent word.",
+  },
+  {
+    name: "DescentTopWord",
+    from: "permutation",
+    to: "binary_word",
+    // Value v is a descent top when it is followed by something smaller. Value 1 never is, so the word starts at 2.
+    body: forEach(
+      ["Range", 2, ["Length", "_raw"], 1],
+      [
+        "If",
+        [
+          "And",
+          ["Less", where("v"), ["Length", "_raw"]],
+          ["Greater", "v", at(["Min", ["Add", where("v"), 1], ["Length", "_raw"]])],
+        ],
+        1,
+        0,
+      ],
+      "v",
+    ),
+    guard: ["Greater", ["Length", "_raw"], 0],
+    summary: "Letter v - 1 is 1 when value v is a descent top: some smaller value immediately follows it.",
+    note: "Value 1 is never a descent top, so the first letter stands for 2.",
+  },
+  {
+    name: "DescentBottomWord",
+    from: "permutation",
+    to: "binary_word",
+    // Value v is a descent bottom when it is preceded by something larger. Value n never is, so the word stops at n - 1.
+    body: forEach(
+      ["Range", 1, ["Subtract", ["Length", "_raw"], 1], 1],
+      ["If", ["And", ["Greater", where("v"), 1], ["Greater", at(["Max", ["Subtract", where("v"), 1], 1]), "v"]], 1, 0],
+      "v",
+    ),
+    guard: ["Greater", ["Length", "_raw"], 0],
+    summary: "Letter v is 1 when value v is a descent bottom: some larger value immediately precedes it.",
+    note: "Value n is never a descent bottom, so the last letter stands for n - 1.",
+  },
+  {
+    name: "LongCycleConjugation",
+    from: "permutation",
+    to: "permutation",
+    // c⁻¹πc adds 1 (mod n) to every entry of every cycle: the image sends i + 1 to π(i) + 1.
+    body: forEach(positions, [
+      "Add",
+      [
+        "Mod",
+        at(["Add", ["Mod", ["Add", ["Subtract", "i", 2], ["Length", "_raw"]], ["Length", "_raw"]], 1]),
+        ["Length", "_raw"],
+      ],
+      1,
+    ]),
+    summary: "Conjugation by the long cycle (1 2 ... n): each cycle's entries shifted up by one, cyclically.",
+    note: "Reflects the permutation's cycle diagram around the circle one step; it fixes the cycle type, and its n-th power is the identity.",
+  },
   {
     name: "Reverse",
     from: "permutation",

@@ -75,7 +75,7 @@ test("a package's namespace describes the global head it declares", async () => 
 
 test("a glob describes every head it matches", async () => {
   const found = await describe("Zeta*");
-  expect(found.map((d) => d.name)).toEqual(["Zeta"]);
+  expect(found.map((d) => d.name)).toEqual(["Zeta", "ZetaMap"]);
   expect((await describe("*Zeta")).map((d) => d.name)).toContain("HurwitzZeta");
   expect((await describe("ada.S*", { registry: ada })).map((d) => d.name)).toEqual(["ada.Scaled"]);
 });

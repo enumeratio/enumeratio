@@ -19,11 +19,17 @@ signatures:
   - call: ReverseComplement(Permutation)
     description: Reverse, then complement.
     library: enumeratio-combinatorics
-    type: (permutation) -> permutation
+    type: (dyck_path) -> dyck_path
 laws:
   - involution
+  - graded:
+      from: DyckPaths
+      to: DyckPaths
+    on: dyck_path
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
 - Defined as a COMPOSITION, applied right to left: [[Complement]] after [[Reverse]]. Each step goes through its own declared head, so every intermediate value is a properly constructed carrier.
 - A thin alias over Compose(Complement, Reverse). The catalog has the name, so we keep it — but the name is not what makes it work, and nothing stops a reader writing the composition directly.
+- Also takes a `DyckPath`, returning a `DyckPath`: The path read backwards, with ups and downs swapped: its mirror image across the vertical.
+- FindStat's "reverse" for Dyck paths: reading the steps backwards alone would leave the word's ups and downs unbalanced, so each step is also swapped.

@@ -6,6 +6,11 @@ summary: The insertion tableau of the RSK correspondence.
 references:
   - system: wikipedia
     identity: Robinson–Schensted correspondence
+catalog:
+  - system: findstat
+    identity: Mp00059
+    url: https://www.findstat.org/Mp00059
+    on: Permutation
 mapOn:
   - Permutation
 signatures:

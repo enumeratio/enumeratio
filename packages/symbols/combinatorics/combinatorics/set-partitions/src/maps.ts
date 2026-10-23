@@ -5,6 +5,7 @@ import {
   at,
   bind,
   blocksOf,
+  descending,
   forEach,
   type CombinatorialMap,
   type MathJSON,
@@ -32,6 +33,47 @@ const rename = (expr: MathJSON, from: string, to: string): MathJSON =>
   expr === from ? to : Array.isArray(expr) ? (expr as readonly MathJSON[]).map((x) => rename(x, from, to)) : expr;
 
 export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
+  {
+    name: "Complement",
+    from: "set_partition",
+    to: "set_partition",
+    // Each element i becomes n + 1 - i. A block read from its end is ascending again, and the blocks are
+    // re-sorted (by least element) since the relabeling reverses their order.
+    body: bind(
+      "flipped",
+      forEach(
+        ["Range", 1, ["Length", "_raw"], 1],
+        forEach(
+          ["Range", 1, ["Length", at("i")], 1],
+          [
+            "Subtract",
+            ["Add", ["Length", ["Flatten", "_raw"]], 1],
+            at(["Subtract", ["Add", ["Length", at("i")], 1], "j"], at("i")),
+          ],
+          "j",
+        ),
+      ),
+      [
+        "Map",
+        [
+          "Function",
+          ["At", "flipped", ["IndexWhere", "flipped", ["Function", ["Equal", ["At", "b", 1], "m"], "b"]]],
+          "m",
+        ],
+        ["Sort", ["Map", ["Function", ["At", "b", 1], "b"], "flipped"]],
+      ],
+      "list<list<integer>>",
+    ),
+    summary: "Each element i replaced by n + 1 - i: the set partition seen from the other end.",
+  },
+  {
+    name: "BlockSizePartition",
+    from: "set_partition",
+    to: "integer_partition",
+    body: descending(forEach(["Range", 1, ["Length", "_raw"], 1], ["Length", at("i")])),
+    summary: "The partition of n a set partition's block sizes form, largest first.",
+    note: "Lossy: which elements share a block is forgotten, so it is not a constructor overload.",
+  },
   {
     name: "BinaryWord",
     convert: true,

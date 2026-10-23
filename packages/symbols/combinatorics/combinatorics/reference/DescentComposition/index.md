@@ -3,6 +3,11 @@ name: DescentComposition
 domain: Combinatorial maps
 signature: DescentComposition(Permutation)
 summary: The composition of n cut at the descent positions.
+catalog:
+  - system: findstat
+    identity: Mp00071
+    url: https://www.findstat.org/Mp00071
+    on: Permutation
 mapOn:
   - Permutation
   - StandardTableau

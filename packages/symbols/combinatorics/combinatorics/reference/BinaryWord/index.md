@@ -8,9 +8,10 @@ signatures:
   - call: BinaryWord(list)
     description: The singular-inhabitant constructor for a word over $\{0, 1\}$.
     library: enumeratio-combinatorics
-    type: ((list<integer>) -> binary_word) & ((finset) -> binary_word)
+    type: ((list<integer>) -> binary_word) & ((dyck_path) -> binary_word) & ((finset) -> binary_word)
 laws:
   - inverse: Finset
+    on: finset
 ---
 
 - A [[BinaryWords]] element.

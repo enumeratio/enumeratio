@@ -9,6 +9,11 @@ seeAlso:
 references:
   - system: wikipedia
     identity: Binary search tree
+catalog:
+  - system: findstat
+    identity: Mp00072
+    url: https://www.findstat.org/Mp00072
+    on: Permutation
 mapOn:
   - Permutation
 signatures:
