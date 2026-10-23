@@ -29,6 +29,7 @@ import {
   recordingRows,
   rskRows,
 } from "../../tableaux/src/tableau.ts";
+import { lehmerCode, majorCode, permutationOfLehmerCode, permutationOfMajorCode } from "./codes.ts";
 import {
   cycleDecompositionBody,
   permutationOfCycleDecompositionBody,
@@ -607,6 +608,162 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     summary:
       "Foata's fundamental bijection: cycles rotated to their max, ordered by increasing max, parentheses erased.",
     note: "The first fundamental transformation — it sends a permutation with k cycles to one with k left-to-right maxima. (The catalog's title also names maj → inv, which is the SECOND fundamental transformation's property; this map is the first.)",
+  },
+  {
+    name: "InverseFoata",
+    from: "permutation",
+    to: "permutation",
+    // Entry v is where v goes in its cycle: on to the next entry of the word, or back to the cycle's
+    // first entry (the running maximum) when the next entry starts a new left-to-right maximum.
+    body: forEach(
+      positions,
+      bind(
+        "p",
+        where("i"),
+        bind(
+          "top",
+          ["Max", forEach(["Range", 1, "p", 1], at("k"), "k")],
+          [
+            "If",
+            ["Or", ["Equal", "p", size], ["Greater", at(["Min", ["Add", "p", 1], size]), "top"]],
+            "top",
+            at(["Add", "p", 1]),
+          ],
+        ),
+      ),
+    ),
+    summary:
+      "The permutation whose cycles are the stretches of the word between successive left-to-right maxima, each read as a cycle.",
+    note: "FindStat's Mp00086, the inverse of Foata: a word's left-to-right maxima open its cycles.",
+  },
+  {
+    name: "InverseKrewerasComplement",
+    from: "permutation",
+    to: "permutation",
+    body: forEach(positions, where(longCycleAt("i"))),
+    summary: "cπ⁻¹ with the long cycle c = (1 2 ... n), FindStat's order: position i holds π⁻¹(c(i)).",
+    note: "FindStat's Mp00089; the inverse of KrewerasComplement.",
+  },
+  {
+    name: "LehmerCodeToMajorCode",
+    from: "permutation",
+    to: "permutation",
+    body: permutationOfMajorCode(lehmerCode),
+    summary: "The permutation whose major code is this permutation's Lehmer code.",
+    note: "FindStat's Mp00062. It carries the inversion count to the major index; the inverse is MajorCodeToLehmerCode.",
+  },
+  {
+    name: "MajorCodeToLehmerCode",
+    from: "permutation",
+    to: "permutation",
+    body: permutationOfLehmerCode(majorCode),
+    summary: "The permutation whose Lehmer code is this permutation's major code.",
+    note: "FindStat's Mp00073. It carries the major index to the inversion count; the inverse is LehmerCodeToMajorCode.",
+  },
+  {
+    name: "LehmerCodeRotation",
+    from: "permutation",
+    to: "permutation",
+    // Entry i of a Lehmer code runs 0 .. n - i, so adding one wraps at n - i + 1.
+    body: bind(
+      "lehmer",
+      lehmerCode,
+      permutationOfLehmerCode(
+        forEach(positions, ["Mod", ["Add", at("i", "lehmer"), 1], ["Subtract", ["Add", size, 1], "i"]]),
+      ),
+      "list<integer>",
+    ),
+    summary: "The permutation whose Lehmer code is this one's with every entry one larger, cyclically.",
+    note: "FindStat's Mp00149. Entry i wraps from n - i back to 0.",
+  },
+  {
+    name: "ConnectivityWord",
+    from: "permutation",
+    to: "binary_word",
+    // The first i entries lie below the rest exactly when they are 1 .. i.
+    body: forEach(
+      ["Range", 1, ["Subtract", size, 1], 1],
+      ["If", ["Equal", ["Max", forEach(["Range", 1, "i", 1], at("k"), "k")], "i"], 1, 0],
+    ),
+    guard: ["Greater", size, 0],
+    summary:
+      "Letter i is 1 when the first i entries are all smaller than the rest: the connectivity set as a binary word.",
+    note: "FindStat's Mp00114. One letter shorter than the permutation; the word is all 0 exactly when the permutation is connected.",
+  },
+  {
+    name: "LeftToRightMaximaDyckPath",
+    from: "permutation",
+    to: "dyck_path",
+    // Each left-to-right maximum at position q opens a rise up to its value and a fall as long as its reign.
+    body: [
+      "If",
+      ["Equal", size, 0],
+      ["List"],
+      bind(
+        "maxima",
+        [
+          "Fold",
+          [
+            "Function",
+            [
+              "If",
+              ["Equal", at("q"), ["Max", forEach(["Range", 1, "q", 1], at("k"), "k")]],
+              ["Join", "acc", ["List", "q"]],
+              "acc",
+            ],
+            "acc",
+            "q",
+          ],
+          ["List"],
+          positions,
+        ],
+        [
+          "Flatten",
+          forEach(
+            ["Range", 1, ["Length", "maxima"], 1],
+            forEach(
+              [
+                "Range",
+                1,
+                [
+                  "Add",
+                  [
+                    "Subtract",
+                    at(at("j", "maxima")),
+                    ["If", ["Equal", "j", 1], 0, at(at(["Subtract", "j", 1], "maxima"))],
+                  ],
+                  [
+                    "Subtract",
+                    ["If", ["Equal", "j", ["Length", "maxima"]], ["Add", size, 1], at(["Add", "j", 1], "maxima")],
+                    at("j", "maxima"),
+                  ],
+                ],
+                1,
+              ],
+              [
+                "If",
+                [
+                  "LessEqual",
+                  "t",
+                  [
+                    "Subtract",
+                    at(at("j", "maxima")),
+                    ["If", ["Equal", "j", 1], 0, at(at(["Subtract", "j", 1], "maxima"))],
+                  ],
+                ],
+                1,
+                0,
+              ],
+              "t",
+            ),
+            "j",
+          ),
+        ],
+        "list<integer>",
+      ),
+    ],
+    summary: "The Dyck path whose rises climb to each left-to-right maximum and whose falls run to the next one.",
+    note: "FindStat's Mp00127. Restricted to the 321-avoiding permutations it is a bijection with the Dyck paths.",
   },
 ];
 

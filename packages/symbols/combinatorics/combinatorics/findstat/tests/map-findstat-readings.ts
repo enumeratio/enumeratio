@@ -53,6 +53,104 @@ const areaSequence = (word: readonly number[]): number[] => {
   return out;
 };
 
+/** A binary tree as FindStat writes it: `.` is empty, `[L,R]` a node. */
+type Tree = null | readonly [Tree, Tree];
+const parseTree = (text: string): Tree => {
+  let at = 0;
+  const tree = (): Tree => {
+    if (text[at] === ".") {
+      at++;
+      return null;
+    }
+    at++; // [
+    const l = tree();
+    at++; // ,
+    const r = tree();
+    at++; // ]
+    return [l, r];
+  };
+  return tree();
+};
+const treeText = (t: Tree): string => (t === null ? "." : `[${treeText(t[0])},${treeText(t[1])}]`);
+/** Mp00018: a tree's left border is the chain of nodes down the left spine; reverse the right subtrees along it. */
+const leftBorderSymmetry = (t: Tree): Tree => {
+  const rights: Tree[] = [];
+  for (let node = t; node !== null; node = node[0]) rights.push(node[1]);
+  // The deepest node of the new chain holds the first right subtree; the top node, the last.
+  const build = (rest: readonly Tree[]): Tree =>
+    rest.length === 0 ? null : [build(rest.slice(1)), leftBorderSymmetry(rest[0]!)];
+  return build(rights.toReversed());
+};
+
+/** A permutation's Lehmer code: entry i counts the later entries below entry i. */
+const lehmer = (w: readonly number[]): number[] => w.map((x, i) => w.slice(i + 1).filter((y) => y < x).length);
+/** The permutation with Lehmer code `code`. */
+const fromLehmer = (code: readonly number[]): number[] => {
+  const free = range(1, code.length);
+  return code.map((c) => free.splice(c, 1)[0]!);
+};
+const major = (w: readonly number[]): number =>
+  sum(w.flatMap((x, k) => (k + 1 < w.length && x > w[k + 1]! ? [k + 1] : [])));
+/** Mp00062's major code: entry i is maj(w without values below i) - maj(w without values below i + 1). */
+const majorCode = (w: readonly number[]): number[] =>
+  w.map((_, k) => major(w.filter((x) => x >= k + 1)) - major(w.filter((x) => x >= k + 2)));
+const permutationsOf = (n: number): number[][] =>
+  n === 0
+    ? [[]]
+    : permutationsOf(n - 1).flatMap((rest) =>
+        range(0, rest.length).map((i) => [...rest.slice(0, i), n, ...rest.slice(i)]),
+      );
+const byMajorCode = new Map<number, Map<string, number[]>>();
+/** The permutation of its size with major code `code`, found by trying them all. */
+const fromMajorCode = (code: readonly number[]): number[] => {
+  const n = code.length;
+  if (!byMajorCode.has(n)) byMajorCode.set(n, new Map(permutationsOf(n).map((w) => [majorCode(w).join(","), w])));
+  return byMajorCode.get(n)!.get(code.join(","))!;
+};
+
+const dyckWords = (n: number): number[][] =>
+  n === 0
+    ? [[]]
+    : range(0, n - 1).flatMap((k) =>
+        dyckWords(k).flatMap((inside) => dyckWords(n - 1 - k).map((after) => [1, ...inside, 0, ...after])),
+      );
+const byZeta = new Map<number, Map<string, number[]>>();
+/** Mp00032: the Dyck path whose zeta image is `image`, found by trying them all. */
+const inverseZeta = (image: readonly number[]): number[] => {
+  const n = image.length / 2;
+  if (!byZeta.has(n))
+    byZeta.set(n, new Map(dyckWords(n).map((d) => [ints(MAP_READINGS["ZetaMap@DyckPath"]!(list(d))).join(","), d])));
+  return byZeta.get(n)!.get(image.join(","))!;
+};
+/** Mp00101: 1 D1 0 D2 with D1 shortest becomes 1 D2' 0 D1'. */
+const decompositionReverse = (word: readonly number[]): number[] => {
+  if (word.length === 0) return [];
+  let height = 0;
+  let close = 0;
+  for (const [k, step] of word.entries()) {
+    height += step === 1 ? 1 : -1;
+    if (height === 0) {
+      close = k;
+      break;
+    }
+  }
+  return [1, ...decompositionReverse(word.slice(close + 1)), 0, ...decompositionReverse(word.slice(1, close))];
+};
+
+/** Mp00086 and the other word-to-cycles readings: the stretches between successive left-to-right maxima. */
+const maximaStretches = (w: readonly number[]): number[][] => {
+  const out: number[][] = [];
+  let top = 0;
+  for (const x of w) {
+    if (x > top) {
+      out.push([]);
+      top = x;
+    }
+    out[out.length - 1]!.push(x);
+  }
+  return out;
+};
+
 export const MAP_READINGS: Readonly<Record<string, Reading>> = {
   // Binary words are strings of 0s and 1s.
   "Reverse@BinaryWord": (w) => w.split("").toReversed().join(""),
@@ -201,6 +299,148 @@ export const MAP_READINGS: Readonly<Record<string, Reading>> = {
       }
     return list(image);
   },
+  // Mp00032 is the inverse of the zeta map: the path whose zeta image this is.
+  "InverseZetaMap@DyckPath": (d) => list(inverseZeta(ints(d))),
+  // Sage's decomposition: the first return cuts the path as 1 D1 0 D2.
+  "DecompositionReverse@DyckPath": (d) => list(decompositionReverse(ints(d))),
+  "PrimeDyckPath@DyckPath": (d) => list([1, ...ints(d), 0]),
+  // Walk the lattice path: from (n, n) west to the vertical step of the path that ends at that height, south to
+  // the diagonal, and on; the bounce path climbs to each stop in turn and returns to the diagonal.
+  "BouncePath@DyckPath": (d) => {
+    const word = ints(d);
+    const n = word.length / 2;
+    const verticals: [column: number, from: number][] = [];
+    let x = 0;
+    let y = 0;
+    for (const step of word) {
+      if (step === 1) verticals.push([x, y++]);
+      else x++;
+    }
+    const stops = [n];
+    for (let stop = n; stop > 0;) {
+      stop = verticals.find(([, from]) => from + 1 === stop)![0];
+      stops.push(stop);
+    }
+    const ascending = stops.toReversed();
+    return list(
+      ascending.slice(1).flatMap((stop, k) => {
+        const gap = stop - ascending[k]!;
+        return [...Array<number>(gap).fill(1), ...Array<number>(gap).fill(0)];
+      }),
+    );
+  },
+
+  "Mirror@BinaryTree": (t) => {
+    const mirror = (x: Tree): Tree => (x === null ? null : [mirror(x[1]), mirror(x[0])]);
+    return treeText(mirror(parseTree(t)));
+  },
+  // Sage: a root with no right child has nothing to pull up, so it swaps its children instead.
+  "LeftRotation@BinaryTree": (t) => {
+    const tree = parseTree(t);
+    if (tree === null) return ".";
+    const [a, right] = tree;
+    return treeText(right === null ? [right, a] : [[a, right[0]], right[1]]);
+  },
+  "RightRotation@BinaryTree": (t) => {
+    const tree = parseTree(t);
+    if (tree === null) return ".";
+    const [left, c] = tree;
+    return treeText(left === null ? [c, left] : [left[0], [left[1], c]]);
+  },
+  "LeftBorderSymmetry@BinaryTree": (t) => treeText(leftBorderSymmetry(parseTree(t))),
+
+  // The cycles are the stretches between left-to-right maxima; each entry goes to the next in its cycle.
+  "InverseFoata@Permutation": (p) => {
+    const image: number[] = [];
+    for (const cycle of maximaStretches(ints(p)))
+      cycle.forEach((x, k) => (image[x - 1] = cycle[(k + 1) % cycle.length]!));
+    return list(image);
+  },
+  // c π⁻¹ in Sage's left-to-right product: c first, then π⁻¹.
+  "InverseKrewerasComplement@Permutation": (p) => {
+    const w = ints(p);
+    const n = w.length;
+    const inverse = new Array<number>(n);
+    w.forEach((value, k) => (inverse[value - 1] = k + 1));
+    return list(range(1, n).map((i) => inverse[i % n]!));
+  },
+  "LehmerCodeToMajorCode@Permutation": (p) => list(fromMajorCode(lehmer(ints(p)))),
+  "MajorCodeToLehmerCode@Permutation": (p) => list(fromLehmer(majorCode(ints(p)))),
+  "LehmerCodeRotation@Permutation": (p) => {
+    const code = lehmer(ints(p));
+    return list(fromLehmer(code.map((c, i) => (c + 1) % (code.length - i))));
+  },
+  // The connectivity set: i with every one of the first i entries below every later one.
+  "ConnectivityWord@Permutation": (p) => {
+    const w = ints(p);
+    return range(1, w.length - 1)
+      .map((i) => (w.slice(0, i).every((a) => w.slice(i).every((b) => a < b)) ? "1" : "0"))
+      .join("");
+  },
+  // Sage's construction: the left-to-right maxima as points (position, value), each bridged by a rise and a fall.
+  "LeftToRightMaximaDyckPath@Permutation": (p) => {
+    const w = ints(p);
+    const points: [number, number][] = [[0, 0]];
+    w.forEach((value, k) => {
+      if (value > points.at(-1)![1]) points.push([k, value]);
+    });
+    points.push([w.length, w.length]);
+    const word: number[] = [];
+    for (let k = 0; k + 2 < points.length; k++) {
+      word.push(...Array<number>(points[k + 1]![1] - points[k]![1]).fill(1));
+      word.push(...Array<number>(points[k + 2]![0] - points[k + 1]![0]).fill(0));
+    }
+    return list(word);
+  },
+
+  "RunComposition@BinaryWord": (w) => list((w.match(/0+|1+/g) ?? []).map((run) => run.length)),
+  "Twist@BinaryWord": (w) => (w === "" ? "" : (w[0] === "0" ? "1" : "0") + w.slice(1)),
+  "AlternatingComplement@BinaryWord": (w) =>
+    w
+      .split("")
+      .map((letter, k) => (k % 2 === 1 ? (letter === "0" ? "1" : "0") : letter))
+      .join(""),
+
+  // Sage: add 1 to every entry but the largest, which becomes 1.
+  "IncreasingRotation@SetPartition": (p) => {
+    const parts = blocks(p);
+    const n = sum(parts.map((block) => block.length));
+    return blocksText(blocks(blocksText(parts.map((block) => block.map((x) => (x % n) + 1)))));
+  },
+  "DecreasingRotation@SetPartition": (p) => {
+    const parts = blocks(p);
+    const n = sum(parts.map((block) => block.length));
+    return blocksText(blocks(blocksText(parts.map((block) => block.map((x) => (x > 1 ? x - 1 : n))))));
+  },
+  "BlockSizeComposition@SetPartition": (p) => list(blocks(p).map((block) => block.length)),
+
+  "TableauDescentWord@StandardTableau": (t) => {
+    const table = rows(t);
+    const rowOf = (v: number): number => table.findIndex((row) => row.includes(v));
+    const n = sum(table.map((row) => row.length));
+    return range(1, n - 1)
+      .map((i) => (rowOf(i + 1) > rowOf(i) ? "1" : "0"))
+      .join("");
+  },
+  // Bottom row first, each row left to right.
+  "ReadingWord@StandardTableau": (t) => list(rows(t).toReversed().flat()),
+  "PeakComposition@StandardTableau": (t) =>
+    list(tableauComposition(rows(t), (descent, i) => descent(i) && !descent(i - 1))),
+  "ValleyComposition@StandardTableau": (t) =>
+    list(tableauComposition(rows(t), (descent, i) => descent(i - 1) && !descent(i))),
 };
+
+/** The composition of n cut at the entries i in 2 .. n - 1 for which `pick` holds, given whether entry i is a descent. */
+function tableauComposition(
+  table: readonly (readonly number[])[],
+  pick: (descent: (i: number) => boolean, i: number) => boolean,
+): number[] {
+  const rowOf = (v: number): number => table.findIndex((row) => row.includes(v));
+  const n = sum(table.map((row) => row.length));
+  const descent = (i: number): boolean => rowOf(i + 1) > rowOf(i);
+  const cuts = range(2, n - 1).filter((i) => pick(descent, i));
+  const bounds = [0, ...cuts, n];
+  return bounds.slice(1).map((bound, k) => bound - bounds[k]!);
+}
 
 export { descending, ints, list, range, rows, rowsText, sum };

@@ -64,6 +64,14 @@ const tableaux = (n: number): number[][][] => {
   ]);
 };
 
+/** Binary trees with n nodes, as FindStat writes them. */
+const binaryTrees = (n: number): string[] =>
+  n === 0
+    ? ["."]
+    : range(0, n - 1).flatMap((k) =>
+        binaryTrees(k).flatMap((left) => binaryTrees(n - 1 - k).map((right) => `[${left},${right}]`)),
+      );
+
 const through = <T>(max: number, from: number, make: (n: number) => T[]): T[] => range(from, max).flatMap(make);
 const OBJECTS: Readonly<Record<string, string[]>> = {
   Permutation: through(4, 1, permutations).map((p) => JSON.stringify(p).replaceAll(" ", "")),
@@ -72,6 +80,7 @@ const OBJECTS: Readonly<Record<string, string[]>> = {
   DyckPath: through(4, 1, dyckWords).map((w) => JSON.stringify(w)),
   SetPartition: through(5, 1, setPartitions).map((p) => `{${p.map((block) => `{${block.join(",")}}`).join(",")}}`),
   StandardTableau: through(5, 1, tableaux).map((t) => JSON.stringify(t)),
+  BinaryTree: through(5, 1, binaryTrees),
 };
 
 /** Our map for a reading's `Head@Carrier` key. */
@@ -132,6 +141,31 @@ const IDS: Readonly<Record<string, string>> = {
   "DescentBottomWord@Permutation": "Mp00131",
   "LongCycleConjugation@Permutation": "Mp00265",
   "KrewerasComplement@Permutation": "Mp00088",
+  "Mirror@BinaryTree": "Mp00016",
+  "LeftRotation@BinaryTree": "Mp00009",
+  "RightRotation@BinaryTree": "Mp00019",
+  "LeftBorderSymmetry@BinaryTree": "Mp00018",
+  "InverseZetaMap@DyckPath": "Mp00032",
+  "BouncePath@DyckPath": "Mp00099",
+  "DecompositionReverse@DyckPath": "Mp00101",
+  "PrimeDyckPath@DyckPath": "Mp00199",
+  "InverseFoata@Permutation": "Mp00086",
+  "InverseKrewerasComplement@Permutation": "Mp00089",
+  "LehmerCodeToMajorCode@Permutation": "Mp00062",
+  "MajorCodeToLehmerCode@Permutation": "Mp00073",
+  "LehmerCodeRotation@Permutation": "Mp00149",
+  "ConnectivityWord@Permutation": "Mp00114",
+  "LeftToRightMaximaDyckPath@Permutation": "Mp00127",
+  "RunComposition@BinaryWord": "Mp00097",
+  "Twist@BinaryWord": "Mp00200",
+  "AlternatingComplement@BinaryWord": "Mp00158",
+  "IncreasingRotation@SetPartition": "Mp00091",
+  "DecreasingRotation@SetPartition": "Mp00176",
+  "BlockSizeComposition@SetPartition": "Mp00128",
+  "TableauDescentWord@StandardTableau": "Mp00134",
+  "ReadingWord@StandardTableau": "Mp00081",
+  "PeakComposition@StandardTableau": "Mp00294",
+  "ValleyComposition@StandardTableau": "Mp00295",
 };
 
 test("every reading names the FindStat map it is", () => {

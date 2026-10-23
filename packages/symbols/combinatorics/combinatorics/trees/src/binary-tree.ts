@@ -11,12 +11,29 @@ type MathJSON = unknown;
 const left = (tree: MathJSON): MathJSON => ["At", tree, 1];
 const right = (tree: MathJSON): MathJSON => ["At", tree, 2];
 
-/** Mp00012: [L, R] as U φ(L) D φ(R). */
-export const dyckPathBody: MathJSON = recurse(
-  ["If", isLeaf("t"), ["List"], ["Join", ["List", 1], self(left("t")), ["List", 0], self(right("t"))]],
-  ["t"],
+/** Mp00016: every node's subtrees swapped. */
+export const mirrorOf = (tree: MathJSON): MathJSON =>
+  recurse(["If", isLeaf("t"), 0, ["List", self(right("t")), self(left("t"))]], ["t"], tree);
+export const mirrorBody: MathJSON = mirrorOf("_raw");
+
+/** Mp00018: the right subtrees along the left border, in reverse order, each recursively the same.
+ *  Walking down the border, each right subtree R is wrapped as [built so far, φ(R)], so the first
+ *  (top) one ends deepest. */
+export const leftBorderSymmetryBody: MathJSON = recurse(
+  ["If", isLeaf("t"), "acc", self(left("t"), ["List", "acc", self(right("t"), 0)])],
+  ["t", "acc"],
   "_raw",
+  0,
 );
+
+/** Mp00012: [L, R] as U φ(L) D φ(R). */
+export const dyckPathOf = (tree: MathJSON): MathJSON =>
+  recurse(
+    ["If", isLeaf("t"), ["List"], ["Join", ["List", 1], self(left("t")), ["List", 0], self(right("t"))]],
+    ["t"],
+    tree,
+  );
+export const dyckPathBody: MathJSON = dyckPathOf("_raw");
 
 /** Where the Dyck word `_raw`, read from position `from`, first returns to height 0, or 0. */
 const firstReturn = (from: MathJSON, to: MathJSON): MathJSON => [
