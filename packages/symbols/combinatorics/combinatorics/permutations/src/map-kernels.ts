@@ -8,6 +8,12 @@ const onPermutation =
   (word: readonly number[]): T | undefined =>
     isPermutationWord(word) ? kernel(word) : undefined;
 
+/** `kernel` on a list of integers (a word over any alphabet); anything else declines. */
+const onWord =
+  <T>(kernel: (word: readonly number[]) => T) =>
+  (word: readonly number[]): T | undefined =>
+    Array.isArray(word) && word.every(Number.isInteger) ? kernel(word) : undefined;
+
 /** The cycles of the permutation `word` (position i goes to word[i-1]), each starting at its own maximum,
  *  ordered by increasing maximum. */
 function cyclesFromMax(word: readonly number[]): number[][] {
@@ -48,7 +54,7 @@ export const inverseFoataKernel = onPermutation((word) => {
 });
 
 /** Mp00067: each letter goes on the end of the image so far, which is cut into blocks, each rotated right. */
-export const foataMajorToInversionsKernel = onPermutation((word) => {
+const foataMajorToInversionsOf = (word: readonly number[]): number[] => {
   if (word.length === 0) return [];
   let image = [word[0]!];
   for (const x of word.slice(1)) {
@@ -65,10 +71,13 @@ export const foataMajorToInversionsKernel = onPermutation((word) => {
     image = next;
   }
   return image;
-});
+};
+export const foataMajorToInversionsKernel = onPermutation(foataMajorToInversionsOf);
+/** The same on a word with repeated letters: an equal letter counts as the smaller, as its standardization does. */
+export const foataMajorToInversionsWordKernel = onWord(foataMajorToInversionsOf);
 
 /** Mp00175: peel the last letter off, rotate the blocks of the rest back left, and go on with what is left. */
-export const foataInversionsToMajorKernel = onPermutation((word) => {
+const foataInversionsToMajorOf = (word: readonly number[]): number[] => {
   let rest = [...word];
   const tail: number[] = [];
   while (rest.length > 1) {
@@ -87,4 +96,6 @@ export const foataInversionsToMajorKernel = onPermutation((word) => {
     rest = next;
   }
   return [...rest, ...tail];
-});
+};
+export const foataInversionsToMajorKernel = onPermutation(foataInversionsToMajorOf);
+export const foataInversionsToMajorWordKernel = onWord(foataInversionsToMajorOf);

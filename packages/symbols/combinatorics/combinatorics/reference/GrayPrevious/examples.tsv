@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-binary-word-01100			[GrayPrevious, [BinaryWord, [List, 0, 1, 1, 0, 0]]]	[BinaryWord, [List, 0, 1, 0, 0, 0]]	the binary word $01100$

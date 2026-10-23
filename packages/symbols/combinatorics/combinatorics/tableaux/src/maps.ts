@@ -4,6 +4,7 @@
 import { at, bind, forEach, type CombinatorialMap, type MathJSON } from "../../src/map-helpers.ts";
 import { inverseRsk } from "./families/rsk-pairs.ts";
 import { evacuationRows, inversePromotionRows, promotionRows } from "./promotion.ts";
+import { afterInserting } from "./tableau.ts";
 
 /** The rows of one tableau of the pair: a pair's contents are two `StandardTableau(rows)`, and
  *  `At` doesn't see through the constructor, but a lambda argument does. */
@@ -185,5 +186,33 @@ export const TABLEAUX_MAPS: readonly CombinatorialMap[] = [
     summary:
       "Inverse promotion: replace the entry 1 by n + 1, slide it out to the rim, and subtract one from every entry.",
     note: "FindStat's Mp00153, the inverse of TableauPromotion. The hole is walked through the rows entry by entry, as jeu de taquin does.",
+  },
+  {
+    name: "Catabolism",
+    from: "standard_tableau",
+    to: "standard_tableau",
+    // Column-inserting the removed row's entries, largest first, into what is left is row-inserting the row followed by
+    // the reading word of what is left (a letter put in front of a word's tableau is column-inserted into it).
+    body: [
+      "If",
+      ["Equal", cells, 0],
+      ["List"],
+      bind(
+        "cb_word",
+        [
+          "Flatten",
+          forEach(
+            ["Range", 1, ["Length", "_raw"], 1],
+            at(["If", ["Equal", "r", 1], 1, ["Subtract", ["Add", ["Length", "_raw"], 2], "r"]]),
+            "r",
+          ),
+        ],
+        ["Fold", ["Function", afterInserting("a", "b"), "a", "b"], ["List"], "cb_word"],
+        "list<integer>",
+      ),
+    ],
+    guard: tableauGuard,
+    summary: "Remove the first row and column-insert its entries back into the rest, largest first.",
+    note: "FindStat's Mp00106. Not injective: a row and a column of the same size both give the row.",
   },
 ];

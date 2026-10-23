@@ -12,8 +12,14 @@ import {
   reversedWord,
   rotatedLeft,
   rotatedRight,
+  runLengths,
   sortedRuns,
 } from "../../src/map-helpers.ts";
+import { foataInversionsToMajorBody, foataMajorToInversionsBody } from "../../permutations/src/foata-bijection.ts";
+import {
+  foataInversionsToMajorWordKernel,
+  foataMajorToInversionsWordKernel,
+} from "../../permutations/src/map-kernels.ts";
 
 /** The composition of m + 1 a cut word of length m describes: the parts between the cuts. */
 const compositionOfCutWord = (word: MathJSON): MathJSON =>
@@ -47,23 +53,222 @@ const compositionOfCutWord = (word: MathJSON): MathJSON =>
     ),
   );
 
-/** The positions where a new run of equal letters starts: the first, and each that differs from its predecessor. */
-const runStarts: MathJSON = [
-  "Fold",
-  [
-    "Function",
+const n: MathJSON = ["Length", "_raw"];
+const upTo = (m: MathJSON): MathJSON => ["Range", 1, m, 1];
+/** `m` copies of `x`. */
+const fill = (x: MathJSON, m: MathJSON): MathJSON => forEach(upTo(m), x, "z");
+/** The number of ones. */
+const ones: MathJSON = ["Count", ["Filter", "_raw", ["Function", ["Equal", "x", 1], "x"]]];
+/** The first position holding a 1, when there is one. */
+const firstOne: MathJSON = ["First", ["Filter", positions, ["Function", ["Equal", at("p"), 1], "p"]]];
+/** The word with letter k flipped. */
+const flippedAt = (k: MathJSON): MathJSON =>
+  forEach(positions, ["If", ["Equal", "i", k], ["Subtract", 1, at("i")], at("i")]);
+
+/** Mp00272: with an even number of ones flip the first letter; otherwise flip the letter after the first one,
+ *  unless that one is last, which gives the zero word. */
+const grayNextBody: MathJSON = [
+  "If",
+  ["Equal", n, 0],
+  ["List"],
+  bind(
+    "ones",
+    ones,
     [
       "If",
-      ["Or", ["Equal", "p", 1], ["Not", ["Equal", at("p"), at(["Max", ["Subtract", "p", 1], 1])]]],
-      ["Join", "acc", ["List", "p"]],
-      "acc",
+      ["Equal", ["Mod", "ones", 2], 0],
+      flippedAt(1),
+      bind("first", firstOne, ["If", ["Equal", "first", n], fill(0, n), flippedAt(["Add", "first", 1])], "integer"),
     ],
-    "acc",
-    "p",
-  ],
-  ["List"],
-  positions,
+    "integer",
+  ),
 ];
+
+/** Mp00273: with an odd number of ones flip the first letter; the zero word gets its last letter flipped;
+ *  otherwise flip the letter after the first one. */
+const grayPreviousBody: MathJSON = [
+  "If",
+  ["Equal", n, 0],
+  ["List"],
+  bind(
+    "ones",
+    ones,
+    [
+      "If",
+      ["Equal", ["Mod", "ones", 2], 1],
+      flippedAt(1),
+      ["If", ["Equal", "ones", 0], flippedAt(n), flippedAt(["Add", firstOne, 1])],
+    ],
+    "integer",
+  ),
+];
+
+/** Whether position q starts a valley 01, and whether it ends one. */
+const startsValley = (q: MathJSON): MathJSON => [
+  "And",
+  ["Less", q, n],
+  ["Equal", at(q), 0],
+  ["Equal", at(["Min", ["Add", q, 1], n]), 1],
+];
+const endsValley = (q: MathJSON): MathJSON => [
+  "And",
+  ["Greater", q, 1],
+  ["Equal", at(["Max", ["Subtract", q, 1], 1]), 0],
+  ["Equal", at(q), 1],
+];
+
+/** Mp00234: each valley 01 becomes a peak 10, and a trailing 0 becomes 1. */
+const valleysToPeaksBody: MathJSON = forEach(positions, [
+  "If",
+  startsValley("i"),
+  1,
+  ["If", endsValley("i"), 0, ["If", ["And", ["Equal", "i", n], ["Equal", at("i"), 0]], 1, at("i")]],
+]);
+
+/** Mp00278: cut at every valley 01 (they never overlap), reverse the stretches between, and put 10 where each valley
+ *  was. Every piece keeps its place, so a position outside a valley takes the letter mirrored across its stretch. */
+const rowmotionBody: MathJSON = forEach(positions, [
+  "If",
+  startsValley("i"),
+  1,
+  [
+    "If",
+    endsValley("i"),
+    0,
+    bind(
+      "stretch_start",
+      [
+        "Add",
+        1,
+        ["Max", ["Join", ["List", 0], ["Filter", upTo(["Subtract", "i", 1]), ["Function", endsValley("q"), "q"]]]],
+      ],
+      bind(
+        "stretch_end",
+        [
+          "Subtract",
+          [
+            "Min",
+            ["Join", ["Filter", ["Range", "i", n, 1], ["Function", startsValley("q"), "q"]], ["List", ["Add", n, 1]]],
+          ],
+          1,
+        ],
+        at(["Subtract", ["Add", "stretch_start", "stretch_end"], "i"]),
+        "integer",
+      ),
+      "integer",
+    ),
+  ],
+]);
+
+/** Counted ones before position `p`: those after the last valley's one, and not themselves the one of a valley. */
+const pendingBefore = (p: MathJSON): MathJSON => [
+  "Count",
+  [
+    "Filter",
+    [
+      "Range",
+      [
+        "Add",
+        ["Max", ["Join", ["List", 0], ["Filter", upTo(["Subtract", p, 1]), ["Function", startsValley("q"), "q"]]]],
+        1,
+      ],
+      ["Subtract", p, 1],
+      1,
+    ],
+    [
+      "Function",
+      ["And", ["Equal", at("r"), 1], ["Or", ["Equal", "r", 1], ["Equal", at(["Max", ["Subtract", "r", 1], 1]), 1]]],
+      "r",
+    ],
+  ],
+];
+
+/** Mp00280: each zero that starts a valley, or ends the word, emits a one for every pending one and one more; a valley
+ *  also emits its zero. Other zeros emit themselves; ones are held back, and flushed as zeros at the end. */
+const pathRowmotionBody: MathJSON = bind(
+  "emitted",
+  [
+    "Flatten",
+    forEach(positions, [
+      "If",
+      ["Equal", at("i"), 1],
+      ["List"],
+      [
+        "If",
+        ["Equal", "i", n],
+        fill(1, ["Add", pendingBefore("i"), 1]),
+        ["If", startsValley("i"), ["Join", fill(1, ["Add", pendingBefore("i"), 1]), ["List", 0]], ["List", 0]],
+      ],
+    ]),
+  ],
+  ["Join", "emitted", fill(0, ["Subtract", n, ["Length", "emitted"]])],
+  "list<integer>",
+);
+
+/** Mp00268, with the zeros' positions z_1 < z_2 < ... and b_k the ones between z_{k-1} and z_k: the stretches
+ *  1^b_1, 0^b_2 01, 1^b_3, ... then the letter the next stretch would be, to the length n; read backwards. */
+const zerosToFlagZerosBody: MathJSON = bind(
+  "zeros",
+  ["Filter", positions, ["Function", ["Equal", at("p"), 0], "p"]],
+  bind(
+    "stretches",
+    [
+      "Flatten",
+      forEach(
+        upTo(["Length", "zeros"]),
+        bind(
+          "gap",
+          [
+            "Subtract",
+            ["Subtract", at("k", "zeros"), ["If", ["Equal", "k", 1], 0, at(["Max", ["Subtract", "k", 1], 1], "zeros")]],
+            1,
+          ],
+          ["If", ["Equal", ["Mod", "k", 2], 1], fill(1, "gap"), ["Join", fill(0, ["Add", "gap", 1]), ["List", 1]]],
+          "integer",
+        ),
+        "k",
+      ),
+    ],
+    bind(
+      "word",
+      [
+        "Join",
+        "stretches",
+        fill(["If", ["Equal", ["Mod", ["Length", "zeros"], 2], 0], 1, 0], ["Subtract", n, ["Length", "stretches"]]),
+      ],
+      forEach(positions, at(["Subtract", ["Add", n, 1], "i"], "word")),
+      "list<integer>",
+    ),
+    "list<integer>",
+  ),
+  "list<integer>",
+);
+
+/** Mp00269, the inverse: a 0 at position p exactly when the letter before p, counting from the right end, differs from
+ *  the one after it, the word ending in a 1 that is not there. */
+const flagZerosToZerosBody: MathJSON = forEach(positions, [
+  "If",
+  ["Equal", ["If", ["Equal", "i", 1], 1, at(["Subtract", ["Add", n, 2], "i"])], at(["Subtract", ["Add", n, 1], "i"])],
+  1,
+  0,
+]);
+
+/** Mp00178: with a 1 put in front, each 1 opens a part, of 1 plus the zeros after it. */
+const codeCompositionBody: MathJSON = bind(
+  "starts",
+  [
+    "Join",
+    ["List", 1],
+    ["Map", ["Function", ["Add", "p", 1], "p"], ["Filter", positions, ["Function", ["Equal", at("p"), 1], "p"]]],
+  ],
+  bind(
+    "bounds",
+    ["Join", "starts", ["List", ["Add", n, 2]]],
+    forEach(upTo(["Length", "starts"]), ["Subtract", at(["Add", "q", 1], "bounds"), at("q", "bounds")], "q"),
+    "list<integer>",
+  ),
+  "list<integer>",
+);
 
 export const WORDS_MAPS: readonly CombinatorialMap[] = [
   {
@@ -118,26 +323,7 @@ export const WORDS_MAPS: readonly CombinatorialMap[] = [
     name: "RunComposition",
     from: "binary_word",
     to: "composition",
-    body: [
-      "If",
-      ["Equal", ["Length", "_raw"], 0],
-      ["List"],
-      bind(
-        "starts",
-        runStarts,
-        bind(
-          "bounds",
-          ["Join", "starts", ["List", ["Add", ["Length", "_raw"], 1]]],
-          forEach(
-            ["Range", 1, ["Length", "starts"], 1],
-            ["Subtract", at(["Add", "q", 1], "bounds"), at("q", "bounds")],
-            "q",
-          ),
-          "list<integer>",
-        ),
-        "list<integer>",
-      ),
-    ],
+    body: runLengths,
     summary: "The lengths of the maximal runs of equal letters, left to right.",
     note: "FindStat's Mp00097, the delta morphism. Lossy: it forgets the first letter, so each composition has two words.",
   },
@@ -185,5 +371,93 @@ export const WORDS_MAPS: readonly CombinatorialMap[] = [
     ),
     summary: "The word with its weakly increasing runs sorted lexicographically.",
     note: "FindStat's Mp00224. Lossy: the runs' order is forgotten. The runs are the maximal stretches 0...01...1.",
+  },
+  {
+    name: "GrayNext",
+    from: "binary_word",
+    to: "binary_word",
+    body: grayNextBody,
+    summary:
+      "The next word in the Gray code: flip the first letter when the ones are even in number, else the letter after the first one.",
+    note: "FindStat's Mp00272, a bijection. The last word of the code, with its only one last, goes to the zero word.",
+  },
+  {
+    name: "GrayPrevious",
+    from: "binary_word",
+    to: "binary_word",
+    body: grayPreviousBody,
+    summary:
+      "The previous word in the Gray code: flip the first letter when the ones are odd in number, else the letter after the first one.",
+    note: "FindStat's Mp00273, the inverse of GrayNext. The zero word gets its last letter flipped.",
+  },
+  {
+    name: "ValleysToPeaks",
+    from: "binary_word",
+    to: "binary_word",
+    body: valleysToPeaksBody,
+    summary: "Every valley 01 swapped for a peak 10, and a trailing 0 made a 1.",
+    note: "FindStat's Mp00234. Lossy: 01 and 10 both give 10.",
+  },
+  {
+    name: "Rowmotion",
+    from: "binary_word",
+    to: "binary_word",
+    body: rowmotionBody,
+    summary:
+      "Rowmotion of the word as an order ideal of a product of two chains: the stretches between valleys reversed, each valley written 10.",
+    note: "FindStat's Mp00278. A bijection that keeps the number of ones; its order is the length of the word.",
+  },
+  {
+    name: "PathRowmotion",
+    from: "binary_word",
+    to: "binary_word",
+    body: pathRowmotionBody,
+    summary:
+      "Rowmotion of the word as a lattice path: the path whose peaks are the original's valleys with an up step appended.",
+    note: "FindStat's Mp00280, a bijection. Not Rowmotion: that reads the word as an order ideal.",
+  },
+  {
+    name: "ZerosToFlagZeros",
+    from: "binary_word",
+    to: "binary_word",
+    body: zerosToFlagZerosBody,
+    summary: "The word whose reverse complement, prepended, has as many occurrences of 10 as this has zeros.",
+    note: "FindStat's Mp00268, the inverse of FlagZerosToZeros.",
+  },
+  {
+    name: "FlagZerosToZeros",
+    from: "binary_word",
+    to: "binary_word",
+    body: flagZerosToZerosBody,
+    summary: "The word with as many zeros as this one, prepended with its reverse complement, has occurrences of 10.",
+    note: "FindStat's Mp00269, the inverse of ZerosToFlagZeros.",
+  },
+  {
+    name: "FoataMajorToInversions",
+    from: "binary_word",
+    to: "binary_word",
+    body: foataMajorToInversionsBody,
+    kernel: foataMajorToInversionsWordKernel,
+    summary:
+      "Foata's bijection on words: each letter is put on the end of the image so far, which is cut into blocks, and every block is rotated one place right.",
+    note: "FindStat's Mp00096. With repeated letters an equal letter counts as the smaller, so it is the permutation map through standardization; it sends the major index to the number of inversions.",
+  },
+  {
+    name: "FoataInversionsToMajor",
+    from: "binary_word",
+    to: "binary_word",
+    body: foataInversionsToMajorBody,
+    kernel: foataInversionsToMajorWordKernel,
+    summary: "The inverse of Foata's bijection on words: peel off the last letter, rotate the blocks of the rest back.",
+    note: "FindStat's Mp00316.",
+  },
+  {
+    name: "CodeComposition",
+    from: "binary_word",
+    to: "composition",
+    body: codeCompositionBody,
+    summary:
+      "The composition whose code is the word with a 1 put in front: each 1 opens a part, of 1 plus the zeros after it.",
+    note: "FindStat's Mp00178, Sage's from_code. An injection one size up (the empty composition has no preimage); the inverse of CodeWord on the words that start with 1. Not Composition, whose word marks the cuts.",
   },
 ];
