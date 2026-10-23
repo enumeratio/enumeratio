@@ -2,7 +2,7 @@
 name: KrewerasComplement
 domain: Combinatorial maps
 signature: KrewerasComplement(Permutation)
-summary: "w⁻¹c with the long cycle c = (1 2 ... n), FindStat's order: position i holds c(w⁻¹(i))."
+summary: "π⁻¹c with the long cycle c = (1 2 ... n), FindStat's order: position i holds c(π⁻¹(i))."
 references:
   - system: wikipedia
     identity: Noncrossing partition
@@ -27,5 +27,4 @@ laws:
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
-- Total, and a bijection of S_n. On the non-crossing permutations (those below c in absolute order) it is the classical Kreweras complement and maps NC(n) onto itself. K∘K is conjugation by c.
-- Composition follows FindStat's Mp00088 (Sage's left-to-right product): π⁻¹ first, then c.
+- Total, a bijection of S_n; it restricts to the classical Kreweras complement of the non-crossing permutations (those below c in absolute order), mapping NC(n) onto itself. K∘K is conjugation by c.
