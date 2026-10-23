@@ -18,6 +18,12 @@ seeAlso:
   - KBracelets
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: combinatorica
+    template: With[{g = $1}, If[MatchQ[g, {{__Integer}..}], Module[{v = $2}, ReplaceAll[CycleIndex[g, x], Thread[Array[x, Length[v]] -> v]]], Missing["NotCombinatorica"]]]
+    arity: 2
+    note: Combinatorica's groups are lists of permutations, which core `CycleIndexPolynomial` does not take; its `CycleIndex` is in `x[i]`, renamed to the variable list here. Covered for the groups Combinatorica builds (a list of one-line permutations), not a `PermutationGroup` of Cycles, which its `GroupElements` rejects.
 ---
 
 - The groups act as Wolfram's do: [[CyclicGroup]] and [[DihedralGroup]] on the $n$ vertices of an $n$-gon (rotations, and with the reflections), [[SymmetricGroup]] and [[AlternatingGroup]] on $n$ points, a [[PermutationGroup]] on the points it moves. $D_1$ swaps two points and $D_2$ is the Klein four-group on four points
