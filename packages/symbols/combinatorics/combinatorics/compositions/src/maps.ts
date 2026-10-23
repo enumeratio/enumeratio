@@ -119,13 +119,12 @@ export const COMPOSITIONS_MAPS: readonly CombinatorialMap[] = [
     summary: "Rotate the parts one place to the right: the last part moves to the front.",
   },
   {
-    name: "IntegerPartition",
-    convert: true,
+    name: "SortedPartition",
     from: "composition",
     to: "integer_partition",
     body: descending("_raw"),
     summary: "The partition a composition's parts form, sorted largest first.",
-    findstat: ["Mp00040"],
+    note: "Lossy: the order of the parts is forgotten, so it is not a constructor overload.",
   },
   {
     name: "CutWord",

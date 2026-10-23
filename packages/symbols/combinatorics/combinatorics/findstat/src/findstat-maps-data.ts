@@ -186,13 +186,13 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     findstat: [{ id: "Mp00112", rows: 1200, compared: 278, skipped: 0 }],
   },
   {
-    name: "IntegerPartition",
+    name: "BlockSizePartition",
     from: "SetPartition",
     to: "IntegerPartition",
     findstat: [{ id: "Mp00079", rows: 1200, compared: 278, skipped: 0 }],
   },
   {
-    name: "IntegerPartition",
+    name: "TableauShape",
     from: "StandardTableau",
     to: "IntegerPartition",
     findstat: [{ id: "Mp00083", rows: 1200, compared: 119, skipped: 0 }],
@@ -234,7 +234,7 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     findstat: [{ id: "Mp00172", rows: 1200, compared: 63, skipped: 0 }],
   },
   {
-    name: "IntegerPartition",
+    name: "SortedPartition",
     from: "Composition",
     to: "IntegerPartition",
     findstat: [{ id: "Mp00040", rows: 1200, compared: 63, skipped: 0 }],

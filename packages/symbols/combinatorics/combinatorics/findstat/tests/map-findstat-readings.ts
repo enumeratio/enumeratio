@@ -70,7 +70,7 @@ export const MAP_READINGS: Readonly<Record<string, Reading>> = {
   "TransposeComposition@Composition": (c) => list(complementComposition(ints(c).toReversed())),
   "CyclicShift@Composition": (c) => list([...ints(c).slice(1), ...ints(c).slice(0, 1)]),
   "InverseCyclicShift@Composition": (c) => list([...ints(c).slice(-1), ...ints(c).slice(0, -1)]),
-  "IntegerPartition@Composition": (c) => list(descending(ints(c))),
+  "SortedPartition@Composition": (c) => list(descending(ints(c))),
 
   // Replace i by n + 1 - i, as FindStat's sage code does.
   "Complement@SetPartition": (p) => {
@@ -78,8 +78,8 @@ export const MAP_READINGS: Readonly<Record<string, Reading>> = {
     const n = sum(parts.map((block) => block.length));
     return blocksText(blocks(blocksText(parts.map((block) => block.map((x) => n + 1 - x)))));
   },
-  "IntegerPartition@SetPartition": (p) => list(descending(blocks(p).map((block) => block.length))),
-  "IntegerPartition@StandardTableau": (t) => list(rows(t).map((row) => row.length)),
+  "BlockSizePartition@SetPartition": (p) => list(descending(blocks(p).map((block) => block.length))),
+  "TableauShape@StandardTableau": (t) => list(rows(t).map((row) => row.length)),
   "TransposeTableau@StandardTableau": (t) => {
     const table = rows(t);
     return rowsText(

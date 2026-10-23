@@ -14,5 +14,5 @@ signatures:
   - call: IntegerPartition(list)
     description: The singular-inhabitant constructor for an integer partition, as its parts.
     library: enumeratio-combinatorics
-    type: ((list<integer>) -> integer_partition) & ((set_partition) -> integer_partition) & ((standard_tableau) -> integer_partition) & ((composition) -> integer_partition)
+    type: (list<integer>) -> integer_partition
 ---

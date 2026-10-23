@@ -10,13 +10,12 @@ const rowsOf = (side: number): MathJSON => ["Apply", ["Function", ["At", "tb", 1
 
 export const TABLEAUX_MAPS: readonly CombinatorialMap[] = [
   {
-    name: "IntegerPartition",
-    convert: true,
+    name: "TableauShape",
     from: "standard_tableau",
     to: "integer_partition",
     body: forEach(["Range", 1, ["Length", "_raw"], 1], ["Length", at("i")]),
     summary: "The shape of a standard tableau: its row lengths.",
-    findstat: ["Mp00083"],
+    note: "Lossy: the entries are forgotten, so it is not a constructor overload.",
   },
   {
     name: "TransposeTableau",

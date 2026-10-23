@@ -1292,6 +1292,9 @@ const NOVEL = [
   "DescentTopWord",
   "DescentBottomWord",
   "LongCycleConjugation",
+  "SortedPartition",
+  "BlockSizePartition",
+  "TableauShape",
 ];
 
 // What formats holds inert that is Wolfram's own (`Plot`, `Slider`, `Cell`): known elsewhere because

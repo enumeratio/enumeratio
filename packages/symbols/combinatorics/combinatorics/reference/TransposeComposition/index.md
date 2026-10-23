@@ -13,17 +13,17 @@ catalog:
     on: Composition
 mapOn:
   - Composition
+signatures:
+  - call: TransposeComposition(Composition)
+    description: "The conjugate composition: its ribbon shape transposed, the complement of the reverse."
+    library: enumeratio-combinatorics
+    type: (composition) -> composition
 laws:
   - involution
   - graded:
       from: IntegerCompositions
       to: IntegerCompositions
     on: composition
-signatures:
-  - call: TransposeComposition(Composition)
-    description: "The conjugate composition: its ribbon shape transposed, the complement of the reverse."
-    library: enumeratio-combinatorics
-    type: (composition) -> composition
 ---
 
 - Takes a `Composition` and returns a `Composition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

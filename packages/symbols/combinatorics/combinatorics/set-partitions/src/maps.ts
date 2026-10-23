@@ -67,13 +67,12 @@ export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
     summary: "Each element i replaced by n + 1 - i: the set partition seen from the other end.",
   },
   {
-    name: "IntegerPartition",
-    convert: true,
+    name: "BlockSizePartition",
     from: "set_partition",
     to: "integer_partition",
     body: descending(forEach(["Range", 1, ["Length", "_raw"], 1], ["Length", at("i")])),
     summary: "The partition of n a set partition's block sizes form, largest first.",
-    findstat: ["Mp00079"],
+    note: "Lossy: which elements share a block is forgotten, so it is not a constructor overload.",
   },
   {
     name: "BinaryWord",
