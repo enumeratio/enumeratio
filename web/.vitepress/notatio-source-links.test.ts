@@ -36,3 +36,12 @@ test("code spans and epsil fences are linked, other code is left alone", async (
   expect(html.match(/class="source-link"/g)).toHaveLength(1);
   expect(html.match(/try it/g)).toHaveLength(1);
 });
+
+test("head is the first documented call; the source round-trips through the query", () => {
+  expect(href("Frobnicate(Binomial(5, 2))")).toContain("/reference/symbol/Binomial?");
+  const source = "Plot(Sin(x), (x, 0, 10))";
+  const out = href(source)!;
+  expect(out.endsWith("#live")).toBe(true);
+  const query = out.slice(out.indexOf("?") + 1, out.lastIndexOf("#"));
+  expect(new URLSearchParams(query).get("epsil")).toBe(source);
+});
