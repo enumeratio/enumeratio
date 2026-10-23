@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-composition-2-1-3			[TransposeComposition, [Composition, [List, 2, 1, 3]]]	[Composition, [List, 1, 1, 3, 1]]	the composition $2 + 1 + 3$

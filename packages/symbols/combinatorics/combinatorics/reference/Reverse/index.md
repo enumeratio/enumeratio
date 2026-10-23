@@ -14,6 +14,10 @@ catalog:
     identity: Mp00064
     url: https://www.findstat.org/Mp00064
     on: Permutation
+  - system: findstat
+    identity: Mp00104
+    url: https://www.findstat.org/Mp00104
+    on: BinaryWord
 mapOn:
   - BinaryWord
   - Composition
@@ -23,7 +27,7 @@ signatures:
   - call: Reverse(Permutation)
     description: The word read backwards.
     library: enumeratio-combinatorics
-    type: (permutation) -> permutation
+    type: ((binary_word) -> binary_word) & ((composition) -> composition) & ((permutation) -> permutation)
     overrides: compute-engine
 laws:
   - involution
@@ -31,6 +35,16 @@ laws:
       from: Permutations
       to: Permutations
     on: permutation
+  - graded:
+      from: BinaryWords
+      to: BinaryWords
+    on: binary_word
+  - graded:
+      from: IntegerCompositions
+      to: IntegerCompositions
+    on: composition
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+- Also takes a `Composition`, returning a `Composition`: The parts read backwards.
+- Also takes a `BinaryWord`, returning a `BinaryWord`: The word read backwards.

@@ -12,15 +12,24 @@ catalog:
     identity: Mp00069
     url: https://www.findstat.org/Mp00069
     on: Permutation
+  - system: findstat
+    identity: Mp00105
+    url: https://www.findstat.org/Mp00105
+    on: BinaryWord
+  - system: findstat
+    identity: Mp00112
+    url: https://www.findstat.org/Mp00112
+    on: SetPartition
 mapOn:
   - BinaryWord
   - Composition
   - Permutation
+  - SetPartition
 signatures:
   - call: Complement(Permutation)
     description: Each entry replaced by n + 1 minus itself.
     library: enumeratio-combinatorics
-    type: (permutation) -> permutation
+    type: ((binary_word) -> binary_word) & ((composition) -> composition) & ((permutation) -> permutation) & ((set_partition) -> set_partition)
     overrides: compute-engine
 laws:
   - involution
@@ -28,6 +37,22 @@ laws:
       from: Permutations
       to: Permutations
     on: permutation
+  - graded:
+      from: BinaryWords
+      to: BinaryWords
+    on: binary_word
+  - graded:
+      from: IntegerCompositions
+      to: IntegerCompositions
+    on: composition
+  - graded:
+      from: SetPartitions
+      to: SetPartitions
+    on: set_partition
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+- Also takes a `SetPartition`, returning a `SetPartition`: Each element i replaced by n + 1 - i: the set partition seen from the other end.
+- Also takes a `Composition`, returning a `Composition`: The composition cut exactly where this one is not: its cut set complemented.
+- Reverse then complement is TransposeComposition, and reversing commutes with complementing.
+- Also takes a `BinaryWord`, returning a `BinaryWord`: Each letter swapped for the other: 0 for 1 and 1 for 0.

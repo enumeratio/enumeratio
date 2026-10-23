@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-one-line-word-231			[DescentBottomWord, [Permutation, [List, 2, 3, 1]]]	[BinaryWord, [List, 1, 0]]	the one-line word $231$

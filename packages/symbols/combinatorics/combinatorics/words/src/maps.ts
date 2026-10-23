@@ -2,7 +2,17 @@
 // CutWord (from `composition`), lives in `../../compositions/src/maps.ts` instead — a map's
 // area is decided by its SOURCE carrier.
 
-import { bind, forEach, type CombinatorialMap, type MathJSON } from "../../src/map-helpers.ts";
+import {
+  at,
+  bind,
+  forEach,
+  type CombinatorialMap,
+  type MathJSON,
+  positions,
+  reversedWord,
+  rotatedLeft,
+  rotatedRight,
+} from "../../src/map-helpers.ts";
 
 /** The composition of m + 1 a cut word of length m describes: the parts between the cuts. */
 const compositionOfCutWord = (word: MathJSON): MathJSON =>
@@ -37,6 +47,34 @@ const compositionOfCutWord = (word: MathJSON): MathJSON =>
   );
 
 export const WORDS_MAPS: readonly CombinatorialMap[] = [
+  {
+    name: "Reverse",
+    from: "binary_word",
+    to: "binary_word",
+    body: reversedWord,
+    summary: "The word read backwards.",
+  },
+  {
+    name: "Complement",
+    from: "binary_word",
+    to: "binary_word",
+    body: forEach(positions, ["Subtract", 1, at("i")]),
+    summary: "Each letter swapped for the other: 0 for 1 and 1 for 0.",
+  },
+  {
+    name: "CyclicShift",
+    from: "binary_word",
+    to: "binary_word",
+    body: rotatedLeft,
+    summary: "Rotate the word one place to the left: the first letter moves to the end.",
+  },
+  {
+    name: "InverseCyclicShift",
+    from: "binary_word",
+    to: "binary_word",
+    body: rotatedRight,
+    summary: "Rotate the word one place to the right: the last letter moves to the front.",
+  },
   {
     name: "Composition",
     convert: true,

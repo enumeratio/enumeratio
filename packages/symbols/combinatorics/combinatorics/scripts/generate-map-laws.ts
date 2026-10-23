@@ -20,6 +20,7 @@ import { LATTICE_PATHS_MAPS } from "../lattice-paths/src/maps.ts";
 import { PARTITIONS_MAPS } from "../partitions/src/maps.ts";
 import { PERMUTATIONS_MAPS } from "../permutations/src/maps.ts";
 import { SET_PARTITIONS_MAPS } from "../set-partitions/src/maps.ts";
+import { TABLEAUX_MAPS } from "../tableaux/src/maps.ts";
 import { TREES_MAPS } from "../trees/src/maps.ts";
 import { WORDS_MAPS } from "../words/src/maps.ts";
 
@@ -29,6 +30,7 @@ const MAPS = [
   ...LATTICE_PATHS_MAPS,
   ...PARTITIONS_MAPS,
   ...SET_PARTITIONS_MAPS,
+  ...TABLEAUX_MAPS,
   ...COMPOSITIONS_MAPS,
   ...WORDS_MAPS,
 ];
