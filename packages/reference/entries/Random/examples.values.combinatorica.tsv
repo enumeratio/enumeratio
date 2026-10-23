@@ -1,4 +1,4 @@
-id	in
-a-permutation-of-4-seeded	
-a-count-draws-that-many	Length[Last[List[SeedRandom[1], RandomChoice[Partitions[10], 3]]]]
-randominteger-is-random-over-a-range	
+id	in	out	tex.in	tex.out
+a-permutation-of-4-seeded				
+a-count-draws-that-many	Length[Last[List[SeedRandom[1], RandomChoice[Partitions[10], 3]]]]	3	\text{Length}[\text{Last}[\{\text{SeedRandom}[1],\text{RandomChoice}[\text{Partitions}(10),3]\}]]	3
+randominteger-is-random-over-a-range				
