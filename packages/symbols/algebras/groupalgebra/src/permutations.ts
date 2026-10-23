@@ -85,8 +85,18 @@ export function cyclesAreValid(cycles: readonly Cycle[]): boolean {
   return true;
 }
 
-/** Drop singleton (fixed-point) cycles — `Cycles`'s own canonical form. */
-export const dropFixedCycles = (cycles: readonly Cycle[]): Cycle[] => cycles.filter((cycle) => cycle.length > 1);
+/**
+ * `Cycles`'s canonical form, Wolfram's: singleton (fixed-point) cycles dropped, each cycle
+ * rotated to start at its smallest point, cycles ordered by first point.
+ */
+export const canonicalCycles = (cycles: readonly Cycle[]): Cycle[] =>
+  cycles
+    .filter((cycle) => cycle.length > 1)
+    .map((cycle) => {
+      const start = cycle.indexOf(Math.min(...cycle));
+      return [...cycle.slice(start), ...cycle.slice(0, start)];
+    })
+    .toSorted((a, b) => a[0]! - b[0]!);
 
 /** The inverse permutation: reverse the mapping. */
 export function invertPermutation(sigma: readonly number[]): number[] {
