@@ -7,7 +7,7 @@ import { evaluateDefinition, MAPS } from "../src/maps.ts";
 import { permutations } from "./maps-helpers.ts";
 
 const ce = bareEngine();
-const list = (word: readonly number[]): unknown => ["List", ...word];
+const list = (value: readonly unknown[]): unknown => ["List", ...value.map((x) => (Array.isArray(x) ? list(x) : x))];
 
 // Epsil at size 6 takes a good fraction of a second: a few spread elements there, everything below.
 const SPREAD_6 = [
@@ -17,21 +17,36 @@ const SPREAD_6 = [
   [2, 4, 6, 1, 3, 5],
 ];
 
+const SPREAD_7 = [
+  [1, 2, 3, 4, 5, 6, 7],
+  [7, 6, 5, 4, 3, 2, 1],
+  [4, 1, 6, 3, 7, 2, 5],
+  [2, 7, 1, 5, 3, 6, 4],
+];
+
 for (const map of MAPS.filter((m) => m.kernel !== undefined)) {
-  test(`${map.name}'s kernel gives the Epsil's answers`, () => {
+  // CactusEvacuation's Epsil is three RSK passes: sparser samples.
+  const cactus = map.name === "CactusEvacuation";
+  test(`${map.name}'s kernel gives the Epsil's answers`, { timeout: 300_000 }, () => {
     const subjects = [
       ...[1, 2, 3, 4].flatMap((n) => permutations(n)),
-      ...permutations(5).filter((_, i) => i % 7 === 0),
+      ...permutations(5).filter((_, i) => !cactus || i % 7 === 0),
       ...SPREAD_6,
+      ...(cactus ? [] : SPREAD_7),
     ];
     for (const subject of subjects) {
       const kernel = map.kernel!(subject as never);
-      expect(["List", ...(kernel as number[])], JSON.stringify(subject)).toEqual(
-        evaluateDefinition(ce, map, list(subject)),
-      );
+      expect(list(kernel as unknown[]), JSON.stringify(subject)).toEqual(evaluateDefinition(ce, map, list(subject)));
     }
   });
 }
+
+test("every kernel declines what is not a permutation", () => {
+  for (const map of MAPS.filter((m) => m.kernel !== undefined)) {
+    expect(map.kernel!([1, 1, 2] as never), map.name).toBeUndefined();
+    expect(map.kernel!([2, 3, 4] as never), map.name).toBeUndefined();
+  }
+});
 
 test("CactusEvacuation's kernel declines what is not a permutation", async () => {
   const { cactusEvacuationKernel } = await import("../tableaux/src/promotion.ts");
