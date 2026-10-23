@@ -761,6 +761,7 @@ const NOVEL = [
   "OddPartitions",
   "OddParts",
   "OddSubsets",
+  "OrbitInventory",
   "OrderOfElement",
   "Ostrowski",
   "OstrowskiNumerals",
