@@ -1,0 +1,6 @@
+id	in	out
+grouporder-cyclicgroup-10	enumeratio_order(enumeratio_cyclic(10))	10
+groupelements-cyclicgroup-10	enumeratio_group_elements(enumeratio_cyclic(10))	combinations:[{"GroupBasis(0)": 1}, {"GroupBasis(1)": 1}, {"GroupBasis(2)": 1}, {"GroupBasis(3)": 1}, {"GroupBasis(4)": 1}, {"GroupBasis(5)": 1}, {"GroupBasis(6)": 1}, {"GroupBasis(7)": 1}, {"GroupBasis(8)": 1}, {"GroupBasis(9)": 1}]
+groupelements-cyclicgroup-1	enumeratio_group_elements(enumeratio_cyclic(1))	combinations:[{"GroupBasis(0)": 1}]
+groupelements-cyclicgroup-2	enumeratio_group_elements(enumeratio_cyclic(2))	combinations:[{"GroupBasis(0)": 1}, {"GroupBasis(1)": 1}]
+groupelements-cyclicgroup-3	enumeratio_group_elements(enumeratio_cyclic(3))	combinations:[{"GroupBasis(0)": 1}, {"GroupBasis(1)": 1}, {"GroupBasis(2)": 1}]

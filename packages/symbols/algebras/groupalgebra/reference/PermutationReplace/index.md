@@ -21,6 +21,11 @@ seeAlso:
   - InversePermutation
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_permutation_replace($1, $2)
+    arity: 2
 ---
 
 - [[Permute]] moves items by POSITION; `PermutationReplace` renames them by VALUE — `Permute(List(a, b, c), perm)` and `PermutationReplace(List(1, 2, 3), perm)` answer different questions

@@ -27,6 +27,16 @@ bindings:
     template: Module[{v = $2}, OrbitInventory[ReplaceAll[$1, Thread[v -> Array[x, Length[v]]]], x, $3]]
     arity: 3
     note: our cycle index is in the variables listed, Combinatorica's in `x[i]`, so the template renames them first.
+  - origin: mapped
+    form: sage
+    template: enumeratio_orbit_inventory($1, $2, $3)
+    arity: 3
+    note: Sage has no `OrbitInventory`; its `cycle_index()` with each `x_i` replaced by the power sum of the weights (or the number of colors) is the definition.
+  - origin: mapped
+    form: wolfram
+    template: Module[{v = $2, w = $3}, Expand[ReplaceAll[$1, Thread[v -> Table[If[ListQ[w], Total[w^i], w], {i, Length[v]}]]]]]
+    arity: 3
+    note: Wolfram has no `OrbitInventory` (it is Combinatorica's); this is Pólya's substitution of the power sums of the weights, or of the number of colors, into the cycle index. `ReplaceAll` with a rule list is simultaneous, as ours is.
 ---
 
 - Combinatorica's name and argument order, `OrbitInventory[ci, x, w]`, with the one difference that the second argument is the list of variables the cycle index is written in (what [[CycleIndexPolynomial]] was given), since ours has no indexed variable $x[i]$

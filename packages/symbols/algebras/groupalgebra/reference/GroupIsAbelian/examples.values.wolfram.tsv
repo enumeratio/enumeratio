@@ -1,0 +1,3 @@
+id	in	out	tex.in	tex.out
+a-cyclic-group	With[{g = GroupGenerators[CyclicGroup[6]]}, And @@ Flatten[Outer[PermutationProduct[#1, #2] === PermutationProduct[#2, #1] &, g, g]]]	True	\text{With}[\{g=\text{GroupGenerators}[\text{CyclicGroup}[6]]\},\text{And}\text{@@}\text{Flatten}[\text{Outer}[\text{$\#$1}\unicode{f3de}\text{$\#$2}\text{===}\text{$\#$2}\unicode{f3de}\text{$\#$1}\&,g,g]]]	\text{True}
+a-dihedral-group	With[{g = GroupGenerators[DihedralGroup[3]]}, And @@ Flatten[Outer[PermutationProduct[#1, #2] === PermutationProduct[#2, #1] &, g, g]]]	False	\text{With}[\{g=\text{GroupGenerators}[\text{DihedralGroup}[3]]\},\text{And}\text{@@}\text{Flatten}[\text{Outer}[\text{$\#$1}\unicode{f3de}\text{$\#$2}\text{===}\text{$\#$2}\unicode{f3de}\text{$\#$1}\&,g,g]]]	\text{False}

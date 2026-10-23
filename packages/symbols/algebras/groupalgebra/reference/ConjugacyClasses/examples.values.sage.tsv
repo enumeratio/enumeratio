@@ -1,0 +1,5 @@
+id	in	out
+abelian-one-class-per-element	enumeratio_centre_dimension(enumeratio_cyclic(6))	6
+d-3-cong-s-3	enumeratio_centre_dimension(enumeratio_dihedral(3))	3
+direct-products-work-too	enumeratio_order(enumeratio_direct(enumeratio_cyclic(2), enumeratio_cyclic(3)))	6
+4-6-2	enumeratio_centre_dimension(enumeratio_dihedral(4))	5

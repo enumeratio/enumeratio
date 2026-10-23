@@ -1,0 +1,3 @@
+id	in	out
+dihedral-group-of-the-square	enumeratio_centre_dimension(enumeratio_dihedral(4))	5
+abelian-groups-are-their-own-centre	enumeratio_centre_dimension(enumeratio_cyclic(5))	5

@@ -1,0 +1,2 @@
+id	in	out
+2-5-7-equiv-1-mod-6	enumeratio_group_product(enumeratio_cyclic(6), enumeratio_basis("2"), enumeratio_basis("5"))	combination:{"GroupBasis(1)": 1}
