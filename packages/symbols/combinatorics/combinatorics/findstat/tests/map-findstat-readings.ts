@@ -369,6 +369,220 @@ const rotatePlane = (t: Plane): Plane => {
 /** The Dyck word of a plane tree's depth-first contour. */
 const contour = (t: Plane): number[] => t.flatMap((child) => [1, ...contour(child), 0]);
 
+/** A binary word's text `0110` as letters, and back. */
+const letters = (text: string): number[] => (text === "" ? [] : text.split("").map(Number));
+const wordText = (items: readonly number[]): string => items.join("");
+
+/** Mp00272, as Sage writes it. */
+const grayNext = (w: number[]): number[] => {
+  if (w.length === 0) return w;
+  const out = [...w];
+  if (sum(w) % 2 === 0) {
+    out[0] = 1 - out[0]!;
+    return out;
+  }
+  const i = out.indexOf(1);
+  if (i + 1 === out.length) return out.map(() => 0);
+  out[i + 1] = 1 - out[i + 1]!;
+  return out;
+};
+
+/** Mp00273, as Sage writes it. */
+const grayPrevious = (w: number[]): number[] => {
+  if (w.length === 0) return w;
+  const out = [...w];
+  if (sum(w) % 2 === 1) {
+    out[0] = 1 - out[0]!;
+    return out;
+  }
+  const i = out.indexOf(1);
+  if (i < 0) {
+    out[out.length - 1] = 1;
+    return out;
+  }
+  out[i + 1] = 1 - out[i + 1]!;
+  return out;
+};
+
+/** Mp00234: each valley 01 becomes a peak 10, and a trailing 0 a 1. */
+const valleysToPeaks = (w: number[]): number[] => {
+  const out = [...w];
+  for (let i = 0; i + 1 < w.length; i++) if (w[i] === 0 && w[i + 1] === 1) [out[i], out[i + 1]] = [1, 0];
+  if (w[w.length - 1] === 0) out[w.length - 1] = 1;
+  return out;
+};
+
+/** Mp00278, as Sage writes it: factors between valleys are reversed and each valley becomes 10. */
+const rowmotion = (w: number[]): number[] => {
+  if (w.length <= 1) return w;
+  const out: number[] = [];
+  let factor: number[] = [];
+  let i = 0;
+  while (i < w.length) {
+    if (i + 1 < w.length && !w[i] && w[i + 1]) {
+      out.push(...factor.toReversed());
+      factor = [];
+      out.push(1, 0);
+      i += 2;
+    } else {
+      factor.push(w[i]!);
+      i++;
+    }
+  }
+  out.push(...factor.toReversed());
+  return out;
+};
+
+/** Mp00280, as Sage writes it. */
+const pathRowmotion = (w: number[]): number[] => {
+  const n = w.length;
+  const out: number[] = [];
+  let a = 0;
+  let i = 0;
+  while (i < n) {
+    if (w[i]) {
+      a++;
+      i++;
+    } else if (i + 1 === n) {
+      out.push(...Array.from({ length: a + 1 }, () => 1));
+      i += 2;
+      a = 0;
+    } else if (w[i + 1]) {
+      out.push(...Array.from({ length: a + 1 }, () => 1), 0);
+      i += 2;
+      a = 0;
+    } else {
+      out.push(0);
+      i++;
+    }
+  }
+  out.push(...Array.from({ length: a }, () => 0));
+  return out;
+};
+
+/** Mp00268, as Sage writes it. */
+const zerosToFlagZeros = (w: number[]): number[] => {
+  const n = w.length;
+  const zeroAt = [-1, ...range(0, n - 1).filter((k) => w[k] === 0)];
+  const gaps = range(1, zeroAt.length - 1).map((k) => zeroAt[k]! - zeroAt[k - 1]! - 1);
+  const out: number[] = [];
+  let letter = 1;
+  for (const b of gaps) {
+    out.push(...Array.from({ length: b }, () => letter));
+    if (letter === 0) out.push(0, 1);
+    letter = 1 - letter;
+  }
+  out.push(...Array.from({ length: n - out.length }, () => letter));
+  return out.toReversed();
+};
+
+/** Mp00269, as Sage writes it. */
+const flagZerosToZeros = (w: number[]): number[] => {
+  const zeros: number[] = [];
+  let letter = 1;
+  let z = 0;
+  for (const e of w.toReversed()) {
+    if (e === letter) z++;
+    else {
+      zeros.push(z);
+      z = 0;
+      letter = 1 - letter;
+    }
+  }
+  const out = w.map(() => 1);
+  let last = -1;
+  for (const gap of zeros) {
+    last = gap + last + 1;
+    out[last] = 0;
+  }
+  return out;
+};
+
+/** The distinct rearrangements of a word's letters. */
+const rearrangements = (w: readonly number[]): number[][] => {
+  if (w.length === 0) return [[]];
+  return [...new Set(w)].flatMap((x) => {
+    const rest = [...w];
+    rest.splice(rest.indexOf(x), 1);
+    return rearrangements(rest).map((tail) => [x, ...tail]);
+  });
+};
+/** The word whose Foata image is `image`, found by trying every rearrangement of its letters. */
+const inverseFoataWord = (image: readonly number[]): number[] =>
+  rearrangements(image).find((w) => foataBijection(w).join(",") === image.join(","))!;
+
+/** The heights of a Dyck word after each prefix, the empty one first. */
+const heightsOf = (d: readonly number[]): number[] => {
+  const out = [0];
+  for (const step of d) out.push(out.at(-1)! + (step === 1 ? 1 : -1));
+  return out;
+};
+
+/** Mp00103, as Sage writes it: the area sequence moves left, entries drop by two (to at least 0) and a 0 closes it. */
+const peeling = (d: readonly number[]): number[] => {
+  const area = areaSequence(d);
+  const peeled = area.slice(1).map((a) => Math.max(a - 2, 0));
+  peeled.push(0);
+  // The Dyck word with this area sequence: each entry is the height before its up step.
+  const word: number[] = [];
+  let height = 0;
+  for (const a of peeled) {
+    while (height > a) {
+      word.push(0);
+      height--;
+    }
+    word.push(1);
+    height++;
+  }
+  return [...word, ...Array.from({ length: height }, () => 0)];
+};
+
+/** Mp00330, as Sage writes it. */
+const rotateClockwise = (d: readonly number[]): number[] => {
+  if (d.length === 0) return [];
+  const heights = heightsOf(d);
+  const k = d.indexOf(0);
+  const out = [...d];
+  const inserts = range(1, k - 1).map((i) => range(k, heights.length - 1).find((j) => heights[j]! < i)!);
+  for (const j of inserts) out.splice(j, 0, 1);
+  return [1, ...out.slice(k + 1), 0];
+};
+
+/** Mp00331, as Sage writes it. */
+const rotateCounterclockwise = (d: readonly number[]): number[] => {
+  const heights = heightsOf(d);
+  const returns = heights.filter((h) => h === 0).length - 1;
+  const zeros = heights.flatMap((h, j) => (h === 0 ? [j] : []));
+  const out = [...d];
+  for (const j of zeros.slice(0, -1).toReversed()) out.splice(j, 1);
+  return [...Array.from({ length: returns }, () => 1), 0, ...out].slice(0, -1);
+};
+
+/** Mp00106, as the description has it: take the first row off, then column-insert its entries, largest first. A tableau
+ *  is held as columns, each increasing; inserting k into a column bumps the least entry above k into the next column. */
+const catabolism = (table: readonly (readonly number[])[]): number[][] => {
+  const [first, ...rest] = table;
+  const columns: number[][] = range(0, Math.max(0, ...rest.map((row) => row.length)) - 1).map((c) =>
+    rest.filter((row) => row.length > c).map((row) => row[c]!),
+  );
+  for (const k of first!.toReversed()) {
+    let carried = k;
+    for (let c = 0; ; c++) {
+      const column = (columns[c] ??= []);
+      const bumped = column.find((entry) => entry > carried);
+      if (bumped === undefined) {
+        column.push(carried);
+        break;
+      }
+      column[column.indexOf(bumped)] = carried;
+      carried = bumped;
+    }
+  }
+  return range(0, Math.max(...columns.map((column) => column.length)) - 1).map((r) =>
+    columns.filter((column) => column.length > r).map((column) => column[r]!),
+  );
+};
+
 export const MAP_READINGS: Readonly<Record<string, Reading>> = {
   // Binary words are strings of 0s and 1s.
   "Reverse@BinaryWord": (w) => w.split("").toReversed().join(""),
@@ -698,6 +912,48 @@ export const MAP_READINGS: Readonly<Record<string, Reading>> = {
   },
   "FoataMajorToInversions@Permutation": (p) => list(foataBijection(ints(p))),
   "FoataInversionsToMajor@Permutation": (p) => list(inverseFoataBijection(ints(p))),
+  "GrayNext@BinaryWord": (w) => wordText(grayNext(letters(w))),
+  "GrayPrevious@BinaryWord": (w) => wordText(grayPrevious(letters(w))),
+  "ValleysToPeaks@BinaryWord": (w) => wordText(valleysToPeaks(letters(w))),
+  "Rowmotion@BinaryWord": (w) => wordText(rowmotion(letters(w))),
+  "PathRowmotion@BinaryWord": (w) => wordText(pathRowmotion(letters(w))),
+  "ZerosToFlagZeros@BinaryWord": (w) => wordText(zerosToFlagZeros(letters(w))),
+  "FlagZerosToZeros@BinaryWord": (w) => wordText(flagZerosToZeros(letters(w))),
+  "FoataMajorToInversions@BinaryWord": (w) => wordText(foataBijection(letters(w))),
+  "FoataInversionsToMajor@BinaryWord": (w) => wordText(inverseFoataWord(letters(w))),
+  "FoataMajorToInversions@Composition": (c) => list(foataBijection(ints(c))),
+  "FoataInversionsToMajor@Composition": (c) => list(inverseFoataWord(ints(c))),
+  "CodeWord@Composition": (c) => wordText(ints(c).flatMap((part) => [1, ...range(2, part).map(() => 0)])),
+  "CodeComposition@BinaryWord": (w) => {
+    const parts: number[] = [];
+    for (const letter of [1, ...letters(w)]) {
+      if (letter === 1) parts.push(1);
+      else parts[parts.length - 1]!++;
+    }
+    return list(parts);
+  },
+  "DeltaMorphism@Composition": (c) => {
+    const runs: number[] = [];
+    ints(c).forEach((part, k) => {
+      if (k > 0 && part === ints(c)[k - 1]) runs[runs.length - 1]!++;
+      else runs.push(1);
+    });
+    return list(runs);
+  },
+  "Peeling@DyckPath": (d) => list(peeling(ints(d))),
+  "ClockwiseTriangulationRotation@DyckPath": (d) => list(rotateClockwise(ints(d))),
+  "CounterclockwiseTriangulationRotation@DyckPath": (d) => list(rotateCounterclockwise(ints(d))),
+  "Catabolism@StandardTableau": (t) => rowsText(catabolism(rows(t))),
+  "RemoveFirstPart@IntegerPartition": (p) => list(ints(p).slice(1)),
+  // Remove the first column (one cell from each part, the number of parts long) and write it as a row of its own.
+  "BulgarianSolitaire@IntegerPartition": (p) =>
+    list(descending([...ints(p).map((part) => part - 1), ints(p).length].filter((part) => part > 0))),
+  "OddPartsWord@IntegerPartition": (p) => wordText(ints(p).map((part) => part % 2)),
+  "BlockSizeComposition@SetComposition": (p) => list(orderedBlocks(p).map((block) => block.length)),
+  "UnderlyingSetPartition@SetComposition": (p) => blocksText(orderedBlocks(p).toSorted((a, b) => a[0]! - b[0]!)),
+  "BlockConcatenation@SetComposition": (p) => list(orderedBlocks(p).flat()),
+  "CompositionBouncePath@Composition": (c) =>
+    list(ints(c).flatMap((part) => [...range(1, part).map(() => 1), ...range(1, part).map(() => 0)])),
 };
 
 /** The composition of n cut at the entries i in 2 .. n - 1 for which `pick` holds, given whether entry i is a descent. */

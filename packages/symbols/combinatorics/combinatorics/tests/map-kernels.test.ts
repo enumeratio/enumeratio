@@ -27,13 +27,33 @@ const SPREAD_7 = [
 // The standard run covers sizes 1-4; `DEEP_TESTS=1` (the nightly sweep) takes sizes 5-7.
 const deep = process.env.DEEP_TESTS === "1";
 
+/** Every binary word of length at most n. */
+const binaryWords = (n: number): number[][] =>
+  Array.from({ length: n + 1 }, (_, length) =>
+    Array.from({ length: 2 ** length }, (_, k) => Array.from({ length }, (_, b) => (k >> b) & 1)),
+  ).flat();
+/** Every composition of size 1 through n. */
+const compositionsThrough = (n: number): number[][] => {
+  const of = (m: number): number[][] =>
+    m === 0
+      ? [[]]
+      : Array.from({ length: m }, (_, k) => k + 1).flatMap((first) => of(m - first).map((rest) => [first, ...rest]));
+  return Array.from({ length: n }, (_, k) => of(k + 1)).flat();
+};
+
 for (const map of MAPS.filter((m) => m.kernel !== undefined)) {
   // CactusEvacuation's Epsil is three RSK passes: sparser samples.
   const cactus = map.name === "CactusEvacuation";
-  const subjects = deep
-    ? [...permutations(5).filter((_, i) => !cactus || i % 7 === 0), ...SPREAD_6, ...(cactus ? [] : SPREAD_7)]
-    : [1, 2, 3, 4].flatMap((n) => permutations(n));
-  test(`${map.name}'s kernel gives the Epsil's answers`, { timeout: 300_000 }, () => {
+  // The word kernels are held to every small word or composition; the permutation ones to permutations.
+  const subjects =
+    map.from === "binary_word"
+      ? binaryWords(deep ? 8 : 5)
+      : map.from === "composition"
+        ? compositionsThrough(deep ? 8 : 5)
+        : deep
+          ? [...permutations(5).filter((_, i) => !cactus || i % 7 === 0), ...SPREAD_6, ...(cactus ? [] : SPREAD_7)]
+          : [1, 2, 3, 4].flatMap((n) => permutations(n));
+  test(`${map.name}'s kernel on ${map.from} gives the Epsil's answers`, { timeout: 300_000 }, () => {
     for (const subject of subjects) {
       const kernel = map.kernel!(subject as never);
       expect(list(kernel as unknown[]), JSON.stringify(subject)).toEqual(evaluateDefinition(ce, map, list(subject)));
@@ -41,10 +61,17 @@ for (const map of MAPS.filter((m) => m.kernel !== undefined)) {
   });
 }
 
-test("every kernel declines what is not a permutation", () => {
-  for (const map of MAPS.filter((m) => m.kernel !== undefined)) {
+test("every permutation kernel declines what is not a permutation", () => {
+  for (const map of MAPS.filter((m) => m.kernel !== undefined && m.from === "permutation")) {
     expect(map.kernel!([1, 1, 2] as never), map.name).toBeUndefined();
     expect(map.kernel!([2, 3, 4] as never), map.name).toBeUndefined();
+  }
+});
+
+test("every word kernel declines what is not a list of integers", () => {
+  for (const map of MAPS.filter((m) => m.kernel !== undefined && m.from !== "permutation")) {
+    expect(map.kernel!(["a", 1] as never), map.name).toBeUndefined();
+    expect(map.kernel!([] as never), map.name).toEqual([]);
   }
 });
 

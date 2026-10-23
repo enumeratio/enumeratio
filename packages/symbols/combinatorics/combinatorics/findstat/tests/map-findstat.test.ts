@@ -91,6 +91,14 @@ const orderedTrees = (n: number): string[] =>
         ),
       );
 
+/** Integer partitions of n, parts largest first. */
+const integerPartitions = (n: number, most = n): number[][] =>
+  n === 0
+    ? [[]]
+    : range(1, Math.min(n, most))
+        .toReversed()
+        .flatMap((part) => integerPartitions(n - part, part).map((rest) => [part, ...rest]));
+
 const through = <T>(max: number, from: number, make: (n: number) => T[]): T[] => range(from, max).flatMap(make);
 const OBJECTS: Readonly<Record<string, string[]>> = {
   Permutation: through(4, 1, permutations).map((p) => JSON.stringify(p).replaceAll(" ", "")),
@@ -102,6 +110,7 @@ const OBJECTS: Readonly<Record<string, string[]>> = {
   SetComposition: through(4, 1, setCompositions).map((p) => `[${p.map((block) => `{${block.join(",")}}`).join(",")}]`),
   BinaryTree: through(5, 1, binaryTrees),
   OrderedTree: through(5, 1, orderedTrees),
+  IntegerPartition: through(6, 1, integerPartitions).map((p) => JSON.stringify(p)),
 };
 
 /** Our map for a reading's `Head@Carrier` key. */
@@ -116,7 +125,7 @@ const normalize = (text: string): string => text.replace(/\s+/g, "");
 
 for (const [key, reading] of Object.entries(MAP_READINGS)) {
   const { head, from, to } = mapFor(key);
-  test(`${key}: the declared map agrees with its independent reading`, () => {
+  test(`${key}: the declared map agrees with its independent reading`, { timeout: 120_000 }, () => {
     const objects = OBJECTS[from];
     expect(objects, `objects of ${from}`).toBeDefined();
     for (const object of objects!) {
@@ -211,6 +220,31 @@ const IDS: Readonly<Record<string, string>> = {
   "InversePromotion@DyckPath": "Mp00143",
   "PeaksToValleys@DyckPath": "Mp00222",
   "CactusEvacuation@Permutation": "Mp00126",
+  "GrayNext@BinaryWord": "Mp00272",
+  "GrayPrevious@BinaryWord": "Mp00273",
+  "ValleysToPeaks@BinaryWord": "Mp00234",
+  "Rowmotion@BinaryWord": "Mp00278",
+  "PathRowmotion@BinaryWord": "Mp00280",
+  "ZerosToFlagZeros@BinaryWord": "Mp00268",
+  "FlagZerosToZeros@BinaryWord": "Mp00269",
+  "FoataMajorToInversions@BinaryWord": "Mp00096",
+  "FoataInversionsToMajor@BinaryWord": "Mp00316",
+  "FoataMajorToInversions@Composition": "Mp00314",
+  "FoataInversionsToMajor@Composition": "Mp00315",
+  "CodeWord@Composition": "Mp00094",
+  "CodeComposition@BinaryWord": "Mp00178",
+  "DeltaMorphism@Composition": "Mp00133",
+  "CompositionBouncePath@Composition": "Mp00231",
+  "Peeling@DyckPath": "Mp00103",
+  "ClockwiseTriangulationRotation@DyckPath": "Mp00330",
+  "CounterclockwiseTriangulationRotation@DyckPath": "Mp00331",
+  "Catabolism@StandardTableau": "Mp00106",
+  "RemoveFirstPart@IntegerPartition": "Mp00202",
+  "BulgarianSolitaire@IntegerPartition": "Mp00308",
+  "OddPartsWord@IntegerPartition": "Mp00317",
+  "BlockSizeComposition@SetComposition": "Mp00287",
+  "UnderlyingSetPartition@SetComposition": "Mp00285",
+  "BlockConcatenation@SetComposition": "Mp00286",
 };
 
 test("every reading names the FindStat map it is", () => {

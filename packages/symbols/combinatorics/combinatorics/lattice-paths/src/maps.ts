@@ -289,6 +289,130 @@ const bounceBody: MathJSON = [
   ),
 ];
 
+/** Mp00103: the area sequence with its first entry dropped and every entry lowered by two (not below 0), a final 0
+ *  closing it, read back as a path: each entry a_i is an up step, then a_i + 1 - a_(i+1) down steps. */
+const peelingBody: MathJSON = [
+  "If",
+  ["Equal", ["Length", "_raw"], 0],
+  ["List"],
+  bind(
+    "area",
+    areaSequence,
+    bind(
+      "peeled",
+      forEach(upTo(["Length", "area"]), [
+        "If",
+        ["Equal", "i", ["Length", "area"]],
+        0,
+        ["Max", 0, ["Subtract", at(["Min", ["Add", "i", 1], ["Length", "area"]], "area"), 2]],
+      ]),
+      [
+        "Flatten",
+        forEach(
+          upTo(["Length", "peeled"]),
+          forEach(
+            upTo([
+              "Subtract",
+              ["Add", at("i", "peeled"), 2],
+              [
+                "If",
+                ["Equal", "i", ["Length", "peeled"]],
+                0,
+                at(["Min", ["Add", "i", 1], ["Length", "peeled"]], "peeled"),
+              ],
+            ]),
+            ["If", ["Equal", "k", 1], 1, 0],
+            "k",
+          ),
+        ),
+      ],
+      "list<integer>",
+    ),
+    "list<integer>",
+  ),
+];
+
+/** The height of `_raw` after j steps. */
+const heightAfter = (j: MathJSON): MathJSON => ["Subtract", ["Multiply", 2, upsThrough(j)], j];
+
+/** Mp00331: put 1s for the returns, then a 0, then the path without the up steps that open each primitive piece
+ *  (the steps leaving the axis), less its last step. */
+const counterclockwiseBody: MathJSON = [
+  "If",
+  ["Equal", ["Length", "_raw"], 0],
+  ["List"],
+  bind(
+    "returns",
+    ["Count", ["Filter", ["Range", 1, ["Length", "_raw"], 1], ["Function", ["Equal", heightAfter("t"), 0], "t"]]],
+    bind(
+      "kept",
+      [
+        "Filter",
+        ["Range", 1, ["Length", "_raw"], 1],
+        ["Function", ["Not", ["Equal", heightAfter(["Subtract", "p", 1]), 0]], "p"],
+      ],
+      [
+        "Flatten",
+        [
+          "List",
+          forEach(upTo("returns"), 1, "z"),
+          ["List", 0],
+          forEach(upTo(["Subtract", ["Length", "kept"], 1]), at(at("q", "kept")), "q"),
+        ],
+      ],
+      "list<integer>",
+    ),
+    "integer",
+  ),
+];
+
+/** Mp00330: drop the first run of k ups and the down step after it, and put one up step in at the first time the path
+ *  reaches each of the levels k - 2 down to 0 (its record lows), a leading up step in front and a down step behind. */
+const clockwiseBody: MathJSON = [
+  "If",
+  ["Equal", ["Length", "_raw"], 0],
+  ["List"],
+  bind(
+    "ups",
+    ["Subtract", ["First", stepsWhere(0)], 1],
+    [
+      "Flatten",
+      [
+        "List",
+        ["List", 1],
+        [
+          "Flatten",
+          forEach(
+            ["Range", ["Add", "ups", 1], ["Length", "_raw"], 1],
+            [
+              "Join",
+              [
+                "If",
+                [
+                  "And",
+                  ["Greater", "j", "ups"],
+                  ["LessEqual", heightAfter("j"), ["Subtract", "ups", 2]],
+                  [
+                    "Less",
+                    heightAfter("j"),
+                    ["Min", forEach(["Range", "ups", ["Subtract", "j", 1], 1], heightAfter("t"), "t")],
+                  ],
+                ],
+                ["List", 1],
+                ["List"],
+              ],
+              ["If", ["Less", "j", ["Length", "_raw"]], ["List", at(["Add", "j", 1])], ["List"]],
+            ],
+            "j",
+          ),
+        ],
+        ["List", 0],
+      ],
+    ],
+    "integer",
+  ),
+];
+
 export const LATTICE_PATHS_MAPS: readonly CombinatorialMap[] = [
   {
     name: "ReverseComplement",
@@ -591,5 +715,32 @@ export const LATTICE_PATHS_MAPS: readonly CombinatorialMap[] = [
     summary:
       "The path with a valley wherever the original has a peak of height at least 2, each valley two lower than its peak.",
     note: "FindStat's Mp00222, the inverse of rowmotion on Dyck paths as order ideals of the triangular poset.",
+  },
+  {
+    name: "Peeling",
+    from: "dyck_path",
+    to: "dyck_path",
+    body: peelingBody,
+    guard: dyckGuard,
+    summary: "The path whose area sequence is this one's with its first entry dropped and the rest lowered by two.",
+    note: "FindStat's Mp00103, the peeling map. Lossy: it is not injective, and a path of semilength n goes to one of the same semilength.",
+  },
+  {
+    name: "ClockwiseTriangulationRotation",
+    from: "dyck_path",
+    to: "dyck_path",
+    body: clockwiseBody,
+    guard: dyckGuard,
+    summary: "Rotate the triangulation of the (n + 2)-gon the path stands for one step clockwise.",
+    note: "FindStat's Mp00330, the inverse of CounterclockwiseTriangulationRotation. A path is the pre-order walk of the binary tree of the triangulation's faces.",
+  },
+  {
+    name: "CounterclockwiseTriangulationRotation",
+    from: "dyck_path",
+    to: "dyck_path",
+    body: counterclockwiseBody,
+    guard: dyckGuard,
+    summary: "Rotate the triangulation of the (n + 2)-gon the path stands for one step counterclockwise.",
+    note: "FindStat's Mp00331, the inverse of ClockwiseTriangulationRotation.",
   },
 ];

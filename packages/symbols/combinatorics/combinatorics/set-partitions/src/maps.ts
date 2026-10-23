@@ -231,4 +231,28 @@ export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
     summary: "The last block moved to the front.",
     note: "FindStat's Mp00291.",
   },
+  {
+    name: "BlockSizeComposition",
+    from: "set_composition",
+    to: "composition",
+    body: forEach(["Range", 1, ["Length", "_raw"], 1], ["Length", at("i")]),
+    summary: "The block sizes of a set composition, its blocks taken in order.",
+    note: "FindStat's Mp00287. Lossy: which elements share a block is forgotten.",
+  },
+  {
+    name: "UnderlyingSetPartition",
+    from: "set_composition",
+    to: "set_partition",
+    body: relabeled("v"),
+    summary: "The set partition with the same blocks, the order of the blocks forgotten.",
+    note: "FindStat's Mp00285. Lossy: each set partition has as many orderings as it has blocks, factorially.",
+  },
+  {
+    name: "BlockConcatenation",
+    from: "set_composition",
+    to: "permutation",
+    body: ["Flatten", forEach(["Range", 1, ["Length", "_raw"], 1], ["Sort", at("i")])],
+    summary: "The permutation that lists the blocks in order, each sorted increasingly.",
+    note: "FindStat's Mp00286. Lossy: where one block ends and the next starts is forgotten.",
+  },
 ];

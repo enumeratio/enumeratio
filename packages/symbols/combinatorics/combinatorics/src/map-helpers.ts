@@ -148,3 +148,43 @@ export const sortedRuns = (runKey: (first: MathJSON, last: MathJSON) => MathJSON
     "list<integer>",
   ),
 ];
+
+/** The lengths of the maximal runs of equal entries of `_raw`, left to right. */
+export const runLengths: MathJSON = (() => {
+  const starts: MathJSON = [
+    "Fold",
+    [
+      "Function",
+      [
+        "If",
+        ["Or", ["Equal", "p", 1], ["Not", ["Equal", at("p"), at(["Max", ["Subtract", "p", 1], 1])]]],
+        ["Join", "acc", ["List", "p"]],
+        "acc",
+      ],
+      "acc",
+      "p",
+    ],
+    ["List"],
+    positions,
+  ];
+  return [
+    "If",
+    ["Equal", ["Length", "_raw"], 0],
+    ["List"],
+    bind(
+      "starts",
+      starts,
+      bind(
+        "bounds",
+        ["Join", "starts", ["List", ["Add", ["Length", "_raw"], 1]]],
+        forEach(
+          ["Range", 1, ["Length", "starts"], 1],
+          ["Subtract", at(["Add", "q", 1], "bounds"), at("q", "bounds")],
+          "q",
+        ),
+        "list<integer>",
+      ),
+      "list<integer>",
+    ),
+  ];
+})();

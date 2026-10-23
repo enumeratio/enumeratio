@@ -12,7 +12,13 @@ import {
   reversedWord,
   rotatedLeft,
   rotatedRight,
+  runLengths,
 } from "../../src/map-helpers.ts";
+import { foataInversionsToMajorBody, foataMajorToInversionsBody } from "../../permutations/src/foata-bijection.ts";
+import {
+  foataInversionsToMajorWordKernel,
+  foataMajorToInversionsWordKernel,
+} from "../../permutations/src/map-kernels.ts";
 
 /** A composition's partial sums, folded into a list. */
 const partialSums = (parts: MathJSON): MathJSON => [
@@ -135,5 +141,64 @@ export const COMPOSITIONS_MAPS: readonly CombinatorialMap[] = [
     guard: ["Greater", ["Length", "_raw"], 0],
     summary: "A composition of n as the binary word of length n - 1 marking where it is cut.",
     note: "Not order-preserving: IntegerCompositions lists compositions lex on their parts, while BinaryWords(n - 1) through Composition(word) gives them in their cut words' order.",
+  },
+  {
+    name: "CodeWord",
+    from: "composition",
+    to: "binary_word",
+    // Each part i is a one then i - 1 zeros.
+    body: [
+      "Flatten",
+      forEach(
+        ["Range", 1, ["Length", "_raw"], 1],
+        ["Join", ["List", 1], forEach(["Range", 1, ["Subtract", at("i"), 1], 1], 0, "z")],
+      ),
+    ],
+    summary: "The word that writes each part i as a one followed by i - 1 zeros.",
+    note: "FindStat's Mp00094, Sage's to_code. An injection; its image is the words that start with a 1. Not CutWord, which marks the cuts and is one letter shorter than the size.",
+  },
+  {
+    name: "DeltaMorphism",
+    from: "composition",
+    to: "composition",
+    body: runLengths,
+    summary: "The lengths of the maximal runs of equal parts, left to right.",
+    note: "FindStat's Mp00133. Lossy: the parts' values are forgotten. RunComposition is the same on a binary word.",
+  },
+  {
+    name: "FoataMajorToInversions",
+    from: "composition",
+    to: "composition",
+    body: foataMajorToInversionsBody,
+    kernel: foataMajorToInversionsWordKernel,
+    summary:
+      "Foata's bijection on the word of parts: each part is put on the end of the image so far, which is cut into blocks, and every block is rotated one place right.",
+    note: "FindStat's Mp00314. An equal part counts as the smaller; it sends the major index to the number of inversions.",
+  },
+  {
+    name: "FoataInversionsToMajor",
+    from: "composition",
+    to: "composition",
+    body: foataInversionsToMajorBody,
+    kernel: foataInversionsToMajorWordKernel,
+    summary:
+      "The inverse of Foata's bijection on compositions: peel off the last part, rotate the blocks of the rest back.",
+    note: "FindStat's Mp00315.",
+  },
+  {
+    name: "CompositionBouncePath",
+    from: "composition",
+    to: "dyck_path",
+    // Each part a is a run of a ups then a downs.
+    body: [
+      "Flatten",
+      forEach(
+        ["Range", 1, ["Length", "_raw"], 1],
+        forEach(["Range", 1, ["Multiply", 2, at("i")], 1], ["If", ["LessEqual", "k", at("i")], 1, 0], "k"),
+      ),
+    ],
+    summary:
+      "The Dyck path that bounces off the diagonal once for each part: a run of that many ups, then as many downs.",
+    note: "FindStat's Mp00231. An injection; the paths it reaches are those made of runs of as many downs as ups.",
   },
 ];
