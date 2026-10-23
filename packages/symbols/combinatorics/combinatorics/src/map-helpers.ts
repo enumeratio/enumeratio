@@ -15,6 +15,10 @@ export type MathJSON = string | number | boolean | readonly MathJSON[] | { reado
 export interface CombinatorialMap extends MapDeclaration {
   /** FindStat map ids, for a map whose record doesn't state them (a conversion has none). */
   readonly findstat?: readonly string[];
+  /** An optional hand-written fast path over the plain-JS contents (`toJs`/`fromJs`), for a map whose
+   *  nested Epsil can't compile. `undefined` declines to the Epsil, which stays the meaning: tests/
+   *  map-kernels.test.ts holds the two to the same answers. */
+  readonly kernel?: (raw: never) => unknown;
 }
 
 // Every Range here states its step: compute-engine counts DOWN when the end is below the start,

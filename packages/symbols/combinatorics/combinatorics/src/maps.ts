@@ -75,6 +75,7 @@ export function declareMaps(
             to: shapeOf.get(map.to),
             interpret: (contents) => evaluateDefinition(ce, map, contents),
             generated: COMPILED_MAPS[`${map.name}@${map.from}`],
+            kernel: map.kernel,
           }),
     // FindStat's map ids (`Mp00066`), as the map's record states them.
     findstatFor: (map, from) => [
