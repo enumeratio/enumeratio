@@ -41,6 +41,7 @@ import {
   symmetricIndex,
 } from "./cycle-index.ts";
 import { GROUPALGEBRA_NOTATION } from "./notation.ts";
+import { declareOrbitInventory } from "./orbit-inventory.ts";
 
 const gcdBig = (a: bigint, b: bigint): bigint => (b === 0n ? a : gcdBig(b, a % b));
 
@@ -759,6 +760,8 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
       return ce.function("Add", terms);
     },
   });
+
+  declareOrbitInventory(ce);
 
   declareAlgebra(ce, {
     type: "group_algebra",
