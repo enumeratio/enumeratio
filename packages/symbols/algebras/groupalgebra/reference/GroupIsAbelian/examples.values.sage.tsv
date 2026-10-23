@@ -1,0 +1,3 @@
+id	in	out
+a-cyclic-group	enumeratio_is_abelian(enumeratio_cyclic(6))	True
+a-dihedral-group	enumeratio_is_abelian(enumeratio_dihedral(3))	False

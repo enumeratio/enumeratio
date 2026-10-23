@@ -22,6 +22,10 @@ bindings:
     form: oscar
     template: order(($1).G)
     arity: 1
+  - origin: mapped
+    form: sage
+    template: enumeratio_order($1)
+    arity: 1
 ---
 
 - For a `PermutationGroup`, the order comes from a breadth-first closure over its generators, not a stored table

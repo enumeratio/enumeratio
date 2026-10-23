@@ -18,6 +18,11 @@ seeAlso:
   - InversePermutation
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_permutation_cycles($1)
+    arity: 1
 ---
 
 - Cycles come out ordered by, and each starting at, its smallest point

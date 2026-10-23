@@ -8,6 +8,17 @@ bindings:
     form: oscar
     template: enumeratio_is_central($1, $2)
     arity: 2
+  - origin: mapped
+    form: sage
+    template: enumeratio_is_central($1, $2)
+    arity: 2
+  - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: Centrality of an element of our group algebra, written in its own labels (`GroupBasis`, `ClassSum`); Wolfram has no group algebra.
+    checked:
+      version: 15.0.0
+      on: 2026-10-23
 stub: carrier
 signatures:
   - call: IsCentral(...)

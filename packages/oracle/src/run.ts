@@ -13,6 +13,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { type Bounds, memoryCapMb, runBounded, withFile, wolframFileArgs } from "@enumeratio/utils/bounded";
+import { SAGE_GROUPS } from "./sage-groups.ts";
 import { sageStatsPython } from "./sage-stats.ts";
 import type { System } from "./systems.ts";
 /** Sources per kernel process. */
@@ -1282,6 +1283,8 @@ def _enumeratio_carrier(carrier, x):
     raise ValueError("no Sage object for " + carrier)
 
 ${sageStatsPython()}
+
+${SAGE_GROUPS}
 
 # Sage numbers the vertices of its catalog graphs from 0 (or labels them with tuples or strings); ours are numbered from 1,
 # in the order Sage sorts its own labels.

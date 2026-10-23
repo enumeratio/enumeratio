@@ -18,6 +18,15 @@ seeAlso:
   - PermutationReplace
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_permutation_list($1)
+    arity: 1
+  - origin: mapped
+    form: sage
+    template: enumeratio_permutation_list($1, $2)
+    arity: 2
 ---
 
 - Only takes [[Cycles]] — a one-line word is already this head's own answer, so there is nothing to convert

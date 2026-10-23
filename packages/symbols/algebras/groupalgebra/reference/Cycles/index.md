@@ -32,6 +32,11 @@ catalog:
     on: Permutation
 statOn:
   - Permutation
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_cycles($1)
+    arity: 1
 ---
 
 - Fixed points (singleton cycles) are dropped on construction — $\mathrm{Cycles}(\{\{1\},\{2,3\}\})$ and $\mathrm{Cycles}(\{\{2,3\}\})$ are the same value

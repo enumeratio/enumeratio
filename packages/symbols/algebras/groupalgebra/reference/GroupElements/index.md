@@ -18,6 +18,16 @@ seeAlso:
   - GroupGenerators
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_group_elements($1)
+    arity: 1
+    note: Sage lists a group in its own order; the elements are sorted by one-line word, as Wolfram's `GroupElements` and ours order them.
+  - origin: mapped
+    form: sage
+    template: enumeratio_group_elements($1, $2)
+    arity: 2
 ---
 
 - A `PermutationGroup`'s or `AlternatingGroup`'s elements print as [[Cycles]], not as [[GroupBasis]] labels — its elements are permutations, not abstract group-algebra basis vectors

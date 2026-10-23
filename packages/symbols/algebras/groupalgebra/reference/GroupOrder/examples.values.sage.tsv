@@ -1,0 +1,7 @@
+id	in	out
+a-dihedral-group	enumeratio_order(enumeratio_dihedral(100))	200
+grouporder-permutationgroup-list-cycles-list	enumeratio_order(enumeratio_permutation_group([enumeratio_cycles([[2, 10], [4, 11], [5, 7], [8, 9]]), enumeratio_cycles([[1, 4, 3, 8], [2, 5, 6, 7]])]))	2880
+a-permutation-group	enumeratio_order(enumeratio_permutation_group([enumeratio_cycles([[1, 9, 6], [3, 7]])]))	6
+the-symmetric-group	enumeratio_order(SymmetricGroup(4))	24
+grouporder-permutationgroup-list	enumeratio_order(enumeratio_permutation_group([]))	1
+grouporder-permutationgroup-list-cycles-list-2	enumeratio_order(enumeratio_permutation_group([enumeratio_cycles([])]))	1

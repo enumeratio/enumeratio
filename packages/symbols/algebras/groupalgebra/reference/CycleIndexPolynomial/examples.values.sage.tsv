@@ -1,0 +1,10 @@
+id	in	out
+cycleindexpolynomial-cyclicgroup-4	enumeratio_cycle_index(enumeratio_cyclic(4), [SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")])	1/4*a^4 + 1/4*b^2 + 1/2*d
+cycleindexpolynomial-symmetricgroup-3	enumeratio_cycle_index(SymmetricGroup(3), [SR.var("a"), SR.var("b"), SR.var("c")])	1/6*a^3 + 1/2*a*b + 1/3*c
+cycleindexpolynomial-dihedralgroup-4	enumeratio_cycle_index(enumeratio_dihedral(4), [SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")])	1/8*a^4 + 1/4*a^2*b + 3/8*b^2 + 1/4*d
+cycleindexpolynomial-alternatinggroup-4	enumeratio_cycle_index(AlternatingGroup(4), [SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")])	1/12*a^4 + 1/4*b^2 + 2/3*a*c
+cycleindexpolynomial-permutationgroup	enumeratio_cycle_index(enumeratio_permutation_group([enumeratio_cycles([[1, 2]])]), [SR.var("a"), SR.var("b")])	1/2*a^2 + 1/2*b
+cycleindexpolynomial-dihedralgroup-2	enumeratio_cycle_index(enumeratio_dihedral(2), [SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")])	1/4*a^4 + 1/2*a^2*b + 1/4*b^2
+cycleindexpolynomial-polya-necklaces		
+cycleindexpolynomial-polya-bracelets		
+cycleindexpolynomial-numeric-variables	enumeratio_cycle_index(enumeratio_cyclic(4), [3, 3, 3, 3])	24

@@ -17,6 +17,11 @@ seeAlso:
   - Permute
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: AlternatingGroup($1)
+    arity: 1
 ---
 
 - `GroupOrder(AlternatingGroup(n))` is $n!/2$ without materialising all $n!/2$ permutations — $A_1$ and $A_2$ are both trivial, order 1

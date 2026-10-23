@@ -1,0 +1,13 @@
+id	in	out
+the-order-of-s-5-is-5	enumeratio_order(SymmetricGroup(5))	120
+4		
+the-identity		
+s-10-10	enumeratio_order(SymmetricGroup(10))	3628800
+the-one-line-words-are-compute-engine-s		
+inversions-are-mahonian		
+major-index-is-equidistributed		
+descents-are-eulerian		
+excedances-are-eulerian-too		
+cycles-are-stirling-numbers-of-the-first-kind		
+fixed-points-are-the-rencontres-numbers		
+half-are-even		

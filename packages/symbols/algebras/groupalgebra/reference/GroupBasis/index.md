@@ -25,6 +25,17 @@ bindings:
     form: oscar
     template: EnumeratioBasis($1)
     arity: 1
+  - origin: mapped
+    form: sage
+    template: enumeratio_basis($1)
+    arity: 1
+  - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: A basis element is a label of our group algebra's own elements; Wolfram has no group algebra.
+    checked:
+      version: 15.0.0
+      on: 2026-10-23
 ---
 
 - Groups: `CyclicGroup(n)` with elements $0 \dots n-1$, `DihedralGroup(n)` with elements `k` for $r^k$ and `s k` for $s r^k$, and `GroupDirectProduct(g, h)`

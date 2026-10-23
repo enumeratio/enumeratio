@@ -25,6 +25,18 @@ bindings:
     template: enumeratio_class_sum($1, $2)
     arity: 2
     note: Classes are numbered in our order, by each class's smallest element; Oscar's conjugacy_classes order differs, so the helper re-sorts.
+  - origin: mapped
+    form: sage
+    template: enumeratio_class_sum($1, $2)
+    arity: 2
+    note: Classes are numbered in our order, by each class's smallest element, as for Oscar.
+  - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: A class sum is an element of our group algebra over our own element labels (`GroupBasis`); Wolfram has no group algebra and no conjugacy classes, so there is nothing to sum.
+    checked:
+      version: 15.0.0
+      on: 2026-10-23
 ---
 
 - A single non-central element is not central, but the class sum containing it always is — that is the point
