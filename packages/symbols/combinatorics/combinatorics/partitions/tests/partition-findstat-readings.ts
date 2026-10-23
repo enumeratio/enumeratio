@@ -167,6 +167,8 @@ export const PARTITION_READINGS: Record<string, (l: Partition) => number> = {
     product(
       [...new Set(l)].map((j) => j ** l.filter((p) => p === j).length * factorial(l.filter((p) => p === j).length)),
     ),
+  // n! over z, the size of the conjugacy class of the cycle type.
+  ConjugacyClassSize: (l) => factorial(sum(l)) / PARTITION_READINGS.CentralizerSize!(l),
   SetPartitionsWithBlockSizesCount: (l) => orderedBlocks(l) / product(multiplicities(l).map(factorial)),
   // FindStat's formula: the multinomial (n + 1 - k; m_1, ..., m_n) over n + 1.
   KrewerasNumber: (l) => {

@@ -139,7 +139,7 @@ export const EXPECTED: Record<string, (p: number[]) => number | number[]> = {
   Sign: (p) => ((EXPECTED.Inversions(p) as number) % 2 === 0 ? 1 : -1),
   FixedPoints: (p) => positionsWhere(p, (i) => p[i - 1] === i).length,
   Excedances: (p) => positionsWhere(p, (i) => p[i - 1] > i).length,
-  WeakExceedances: (p) => positionsWhere(p, (i) => p[i - 1] >= i).length,
+  WeakExcedances: (p) => positionsWhere(p, (i) => p[i - 1] >= i).length,
   Antiexcedances: (p) => positionsWhere(p, (i) => p[i - 1] < i).length,
   Peaks: (p) => positionsWhere(p, (i) => i > 1 && i < p.length && p[i - 2] < p[i - 1] && p[i - 1] > p[i]).length,
   Valleys: (p) => positionsWhere(p, (i) => i > 1 && i < p.length && p[i - 2] > p[i - 1] && p[i - 1] < p[i]).length,

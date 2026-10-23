@@ -929,7 +929,7 @@ const NOVEL = [
   "Variable",
   "VexillaryPermutations",
   "WeakCompositions",
-  "WeakExceedances",
+  "WeakExcedances",
   "WithCoordinates",
   "WordSymbol",
   "Words",

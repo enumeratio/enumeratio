@@ -1,7 +1,7 @@
 ---
-name: WeakExceedances
+name: WeakExcedances
 domain: Permutation statistics
-signature: WeakExceedances(p)
+signature: WeakExcedances(p)
 summary: Positions with p(i) >= i.
 catalog:
   - system: findstat
@@ -12,14 +12,14 @@ statOn:
   - DecoratedPermutation
   - Permutation
 signatures:
-  - call: WeakExceedances(p)
+  - call: WeakExcedances(p)
     description: Positions with p(i) >= i.
     library: enumeratio-combinatorics
     type: (permutation) -> number
 bindings:
   - origin: mapped
     form: sage
-    template: enumeratio_stat("Permutation", $1, "WeakExceedances")
+    template: enumeratio_stat("Permutation", $1, "WeakExcedances")
     arity: 1
     checked:
       version: "10.9"

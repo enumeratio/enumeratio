@@ -102,7 +102,7 @@ jobs:
           if [ -n "$BASE" ]; then node tools/ci/affected.ts --base "$BASE" --github-output
           else node tools/ci/affected.ts --full --github-output; fi
 
-  # A handful of suites (statistics, combinatorics) are CPU-bound and saturate a 4-vCPU
+  # A handful of suites (statistics, combinatorics, reference) are CPU-bound and saturate a 4-vCPU
   # runner on their own, so splitting them across separate runners buys real wall-clock time —
   # unlike unordered-but-single-runner, which just makes them contend for the same 4 cores.
   # Rebalance by moving a package between the shards in tools/ci/affected.ts (SHARDS), or split one
@@ -116,7 +116,7 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.changes.outputs.matrix) }}
     runs-on: ubuntu-latest
-    timeout-minutes: 40 # `rest` pays a cold dist-cache build (~20 min) before its tests
+    timeout-minutes: 40 # a shard pays a cold dist-cache build (~20 min, reference's included) before its tests
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup

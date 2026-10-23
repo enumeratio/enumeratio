@@ -20,6 +20,8 @@ const EVERYTHING = ["@enumeratio/engine", "@enumeratio/ce-patches"];
 export const SHARDS: Record<string, string[]> = {
   statistics: ["@enumeratio/statistics"],
   combinatorics: ["@enumeratio/combinatorics"],
+  // Its own runner: sharing `rest` pushed a cold build plus the reference tests past the timeout.
+  reference: ["@enumeratio/reference"],
 };
 
 /** A shard's package split by vitest file shard (`--shard=i/n`), for a shard one runner can't finish in time. */
