@@ -18,3 +18,4 @@ ln-around-2-0p01	Log[Around[2, 0.01]]	Around[0.6931471805599453, 0.005]	\log (2\
 around-21-pow-21-19-pow-19	Around[Power[21, 21], Power[19, 19]]	Around[5.842587018385982*^27, 1.9784196556603136*^24]			disagree
 around-10-1-pow-2	Power[Around[10, 1], 2]	Around[100., 20.]	(10\pm 1)^2	100\pm 20	
 a-negative-uncertainty-is-its-magnitude	Around[1, -1]	Around[1., 1.]	\text{Around}[1,-1]	1.0\pm 1.0	
+a-negative-uncertainty-keeps-the-value	Around[3, -0.5]	Around[3., 0.5]	\text{Around}[3,-0.5]	3.0\pm 0.5	

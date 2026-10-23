@@ -6,3 +6,4 @@ precision-inexact-literal	Precision[2.5]	MachinePrecision	\text{Precision}[2.5]	
 precision-extended	Precision[3.141592653589793]	MachinePrecision	\text{Precision}[3.14159]	\text{MachinePrecision}	
 precision-5-times-x-pow-2-plus-3	Precision[Plus[Times[5, Power[x, 2]], 3]]	Infinity	\text{Precision}\left[5 x^2+3\right]	\infty	
 precision-beyond-a-double	Precision[3.14159265358979323846]	20.49714987269413	\text{Precision}[3.1415926535897932385]	20.4971	disagree
+precision-of-a-short-decimal-is-machine	Precision[1.5]	MachinePrecision	\text{Precision}[1.5]	\text{MachinePrecision}	
