@@ -8,7 +8,7 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { CompileHandler } from "./facade.ts";
 
 /** The compute-engine version whose shadow rules this file was checked against. */
-export const CHECKED_COMPUTE_ENGINE = "0.161.0";
+export const CHECKED_COMPUTE_ENGINE = "0.164.0";
 
 /** A canonical call of `name` on already-canonical operands, bypassing the head's own `canonical` handler. */
 export const canonicalCall = (ce: ComputeEngine, name: string, ops: readonly unknown[]): unknown =>
