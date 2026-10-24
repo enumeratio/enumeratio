@@ -67,9 +67,14 @@ export const permutationOfCycleDecompositionBody: MathJSON = [
  *  image has to be a permutation before it is decomposed. */
 export const permutationOfCycleDecompositionGuard: MathJSON = [
   "If",
-  ["Equal", ["Sort", "_image"], ["Range", 1, ["Length", "_image"], 1]],
-  ["Equal", decomposition("_image"), "_raw"],
-  "False",
+  ["Equal", ["Length", "_image"], 0],
+  "True",
+  [
+    "If",
+    ["Equal", ["Sort", "_image"], ["Range", 1, ["Length", "_image"], 1]],
+    ["Equal", decomposition("_image"), "_raw"],
+    "False",
+  ],
 ];
 
 /** The canonical decomposition of the permutation of 1..`_n` that the disjoint cycles `_raw`
