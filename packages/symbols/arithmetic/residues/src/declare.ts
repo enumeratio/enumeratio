@@ -13,7 +13,7 @@ import {
   type Expr,
 } from "@enumeratio/engine";
 import { registerNotation } from "@enumeratio/boxes";
-import { declareCarriers, ensureProtocols } from "@enumeratio/structures";
+import { conform, declareCarriers, ensureProtocols } from "@enumeratio/structures";
 import { RESIDUES_CARRIERS } from "./carrier-data.ts";
 import { declareIntegerMod } from "./integer-mod.ts";
 import { INTEGER_MOD, RESIDUE_CLASS } from "./names.ts";
@@ -146,9 +146,18 @@ export function declareResidues(ce: Engine): void {
     return log === undefined ? undefined : ce.number(log);
   });
 
-  // OrderOfElement of a unit of ℤ/m is its multiplicative order; a class has no type of its own
-  // (it is `value`), so it is an overload rather than a protocol conformance. A non-unit declines.
+  // OrderOfElement of a unit of ℤ/m is its multiplicative order; a non-unit declines. A
+  // `ResidueClass` is typed `residue`, which has to conform for the generic head to admit it;
+  // the overload below also covers `IntegerMod`, which is still `value`.
   ensureProtocols(ce);
+  conform(ce, "residue", {
+    Monoid: {
+      OrderOfElement: (x) => {
+        const order = ce.function("MultiplicativeOrder", [x]).evaluate();
+        return order.operator === "MultiplicativeOrder" ? undefined : order;
+      },
+    },
+  });
   defineOverload(ce, "OrderOfElement", {
     package: "residues",
     on: [RESIDUE_CLASS, INTEGER_MOD],

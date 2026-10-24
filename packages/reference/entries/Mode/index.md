@@ -9,7 +9,7 @@ signatures:
   - call: Mode(collection)
     description: The most frequently occurring element of the collection.
     library: enumeratio-combinatorics
-    type: ((collection<any> | number)+) -> nan | real | signed_infinity
+    type: ((collection<nothing | number> | number)+) -> nan | real | signed_infinity
     overrides: compute-engine
 seeAlso:
   - Mean

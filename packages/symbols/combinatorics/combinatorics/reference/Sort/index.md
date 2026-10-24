@@ -11,7 +11,7 @@ signatures:
   - call: Sort(expr)
     description: the operands of any expression, sorted in place — not just a collection's.
     library: enumeratio-combinatorics
-    type: "((T, order: (((character) any -> unknown) | ((character, character) any -> boolean | number))?) -> T where T: string) & ((indexed_collection<T>, order: (((T) any -> unknown) | ((any, any) any -> boolean | number))?) -> list<T> where T)"
+    type: "((T, order: (((character) any -> unknown) | ((character, character) any -> boolean | number))?) -> T where T: string) & ((indexed_collection<T>, order: (((T) any -> unknown) | ((any, any) any -> boolean | number))?) -> list<T> where T: any)"
     overrides: compute-engine
 seeAlso:
   - Ordering

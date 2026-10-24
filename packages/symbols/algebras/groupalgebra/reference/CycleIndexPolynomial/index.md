@@ -7,7 +7,7 @@ signatures:
   - call: CycleIndexPolynomial(group, {x1, x2, ...})
     description: the cycle index of `group` in the variables `x1, x2, ...`, `x_i` marking the cycles of length $i$
     library: enumeratio-groupalgebra
-    type: (expression<AlternatingGroup> | expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct> | expression<PermutationGroup> | expression<SymmetricGroup> | indexed_collection<list<integer>>, list) -> number
+    type: (expression<AlternatingGroup> | expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct> | expression<PermutationGroup> | expression<SymmetricGroup> | indexed_collection, list) -> number
 seeAlso:
   - GroupOrder
   - GroupElements

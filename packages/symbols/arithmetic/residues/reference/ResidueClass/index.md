@@ -11,7 +11,7 @@ signatures:
   - call: ResidueClass(ResidueClass(k, m), n)
     description: the same class read in $\mathbb{Z}/n\mathbb{Z}$, for $n \mid m$
     library: enumeratio-residues
-    type: (any, any) -> value
+    type: (any, any) -> residue
     overrides: compute-engine
 seeAlso:
   - IntegerMod

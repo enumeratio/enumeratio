@@ -192,7 +192,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   const groupLike = "expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct>";
   /** Every carrier `GroupOrder` answers, including the lazy families with no Cayley table --
    *  collections' permutation families, which type as the collection they are. */
-  const anyGroupLike = `${groupLike} | expression<SymmetricGroup> | expression<PermutationGroup> | expression<AlternatingGroup> | indexed_collection<list<integer>>`;
+  const anyGroupLike = `${groupLike} | expression<SymmetricGroup> | expression<PermutationGroup> | expression<AlternatingGroup> | indexed_collection`;
 
   ce.declare("CyclicGroup", { signature: "(integer) -> expression<CyclicGroup>" });
   ce.declare("DihedralGroup", { signature: "(integer) -> expression<DihedralGroup>" });

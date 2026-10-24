@@ -9,12 +9,12 @@ signatures:
   - call: Mean(matrix)
     description: the column-wise mean, one value per column.
     library: enumeratio-combinatorics
-    type: ((collection<any> | distribution | number)+) -> number
+    type: ((collection<nothing | number> | distribution | list<list<any>> | number)*) -> list | number
     overrides: compute-engine
   - call: Mean(collection)
     description: The arithmetic average of the elements of the collection.
     library: enumeratio-statistics
-    type: ((collection<any> | distribution | number)+) -> number
+    type: ((collection<nothing | number> | distribution | list<list<any>> | number)*) -> list | number
     overrides: enumeratio-combinatorics
 seeAlso:
   - Median

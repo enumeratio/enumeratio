@@ -9,7 +9,7 @@ signatures:
   - call: Sqrt(x)
     description: 'The principal square root of x: $\sqrt{x}$.'
     library: enumeratio-analytic
-    type: (complex | infinity) -> complex | infinity
+    type: (complex | infinity | residue) -> complex | infinity
     overrides: compute-engine
     on:
       - Around

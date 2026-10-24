@@ -7,7 +7,7 @@ signatures:
   - call: Norm(z)
     description: the determinant of the multiplication-by-$z$ map
     library: enumeratio-hypercomplex
-    type: (list<number> | list<tuple> | number | tuple, (+oo | real | string)?) -> +oo | nan | real
+    type: (list<tuple> | number | tensor | tuple, (+oo | real | string)?) -> +oo | nan | real
     overrides: compute-engine
 seeAlso:
   - Conjugate

@@ -9,7 +9,7 @@ signatures:
   - call: Divide(complex | infinity, (complex | infinity)+) -> number
     description: Quotient of a numerator and one or more denominators.
     library: enumeratio-analytic
-    type: (complex | infinity, (complex | infinity)+) -> number
+    type: (complex | infinity | residue, (complex | infinity | residue)+) -> number
     overrides: compute-engine
     on:
       - Around
@@ -18,14 +18,14 @@ signatures:
   - call: Divide(complex | infinity, (complex | infinity)+) -> number
     description: Quotient of a numerator and one or more denominators.
     library: enumeratio-hypercomplex
-    type: (complex | infinity, (complex | infinity)+) -> number
+    type: (complex | infinity | residue, (complex | infinity | residue)+) -> number
     overrides: enumeratio-analytic
     symbols:
       - ^(?:i|j|epsilon|e|f|theta|epsilonSymbol|varepsilon|thetaSymbol|vartheta)_\d+$
   - call: Divide(complex | infinity, (complex | infinity)+) -> number
     description: Quotient of a numerator and one or more denominators.
     library: enumeratio-residues
-    type: (complex | infinity, (complex | infinity)+) -> number
+    type: (complex | infinity | residue, (complex | infinity | residue)+) -> number
     overrides: enumeratio-hypercomplex
     on:
       - IntegerMod
@@ -33,14 +33,14 @@ signatures:
   - call: Divide(complex | infinity, (complex | infinity)+) -> number
     description: Quotient of a numerator and one or more denominators.
     library: enumeratio-numerals
-    type: (complex | infinity, (complex | infinity)+) -> number
+    type: (complex | infinity | residue, (complex | infinity | residue)+) -> number
     overrides: enumeratio-residues
     on:
       - AdicNumeral
   - call: Divide(complex | infinity, (complex | infinity)+) -> number
     description: Quotient of a numerator and one or more denominators.
     library: enumeratio-adeles
-    type: (complex | infinity, (complex | infinity)+) -> number
+    type: (complex | infinity | residue, (complex | infinity | residue)+) -> number
     overrides: enumeratio-numerals
     on:
       - Adele

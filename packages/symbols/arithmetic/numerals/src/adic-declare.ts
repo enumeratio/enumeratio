@@ -105,7 +105,20 @@ export function declareAdic(ce: Engine): void {
 
   defineOverload(ce, "Add", { package: "numerals", on: [ADIC], evaluate: fold(adic.add) });
   defineOverload(ce, "Multiply", { package: "numerals", on: [ADIC], evaluate: fold(adic.multiply) });
-  defineOverload(ce, "Divide", { package: "numerals", on: [ADIC], arity: 2, evaluate: fold(adic.divide) });
+  const divide = fold(adic.divide);
+  defineOverload(ce, "Divide", {
+    package: "numerals",
+    on: [ADIC],
+    arity: 2,
+    evaluate: (ops) => {
+      // A nonzero adic value over 0 is ComplexInfinity; compute-engine now leaves x/0 alone
+      // unless it knows x is not zero, which it cannot tell for a carrier.
+      const [top, bottom] = ops;
+      const value = top === undefined ? undefined : adicOf(top);
+      if (value !== undefined && value.num !== 0n && bottom?.is(0) === true) return ce.ComplexInfinity;
+      return divide(ops);
+    },
+  });
   defineOverload(ce, "Negate", {
     package: "numerals",
     on: [ADIC],

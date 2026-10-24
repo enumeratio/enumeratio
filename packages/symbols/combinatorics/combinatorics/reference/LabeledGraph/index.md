@@ -11,5 +11,5 @@ signatures:
   - call: LabeledGraph(...)
     description: As a single-graded labeled_graph
     library: enumeratio-combinatorics
-    type: (tuple<integer, list<integer>>) -> labeled_graph
+    type: (tuple<integer, list<list<integer>>>) -> labeled_graph
 ---
