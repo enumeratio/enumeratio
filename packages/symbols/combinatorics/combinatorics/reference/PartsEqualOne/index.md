@@ -11,6 +11,11 @@ signatures:
     description: Parts equal to 1.
     library: enumeratio-combinatorics
     type: (integer_partition) -> number
+catalog:
+  - system: findstat
+    identity: St000475
+    url: https://www.findstat.org/St000475
+    on: IntegerPartition
 ---
 
 - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

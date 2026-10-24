@@ -30,6 +30,10 @@ const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
     contents: ["List", ["List", 0, 0], ["List", 0, ["List", 0, 0]]],
     caption: "a four-node tree",
   },
+  ordered_tree: {
+    contents: ["List", ["List", ["List"], ["List"]], ["List"]],
+    caption: "an ordered tree with four edges",
+  },
   binary_tree_parent_array: { contents: ["List", 2, 0, 2, 3], caption: "the parent array $2023$" },
   dyck_path: { contents: ["List", 1, 1, 0, 0, 1, 0], caption: "the Dyck path $UUDDUD$" },
   set_partition: {
@@ -52,6 +56,10 @@ const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
     caption: "the pair of tableaux $13/2$ and $12/3$",
   },
   binary_word: { contents: ["List", 0, 1, 1, 0, 0], caption: "the binary word $01100$" },
+  standard_tableau: {
+    contents: ["List", ["List", 1, 3], ["List", 2]],
+    caption: "the standard tableau with rows $13$ and $2$",
+  },
 };
 
 const constructorFor = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
@@ -82,25 +90,39 @@ function exampleFor(map: CombinatorialMap): { expr: unknown; expected: unknown; 
   return [{ expr, expected: result.json, caption: sample.caption }];
 }
 
-const entryFor = (map: CombinatorialMap): ReferenceEntry => {
-  const details = [
-    `Takes a \`${carrier(map.from)}\` and returns a \`${carrier(map.to)}\` — a typed map, so a wrong carrier is a type error rather than a wrong answer.`,
-    ...(map.composedOf === undefined
+/** One record per head, however many carriers it is a map over (`Reverse` is one per carrier): the
+ *  first overload gives the signature and summary, and each further one adds a detail and an example. */
+const entryFor = (overloads: readonly CombinatorialMap[]): ReferenceEntry => {
+  const [map] = overloads as [CombinatorialMap, ...CombinatorialMap[]];
+  const details = overloads.flatMap((overload, index) => [
+    index === 0
+      ? `Takes a \`${carrier(overload.from)}\` and returns a \`${carrier(overload.to)}\` — a typed map, so a wrong carrier is a type error rather than a wrong answer.`
+      : `Also takes a \`${carrier(overload.from)}\`, returning a \`${carrier(overload.to)}\`: ${overload.summary}`,
+    ...(overload.composedOf === undefined
       ? []
       : [
-          `Defined as a COMPOSITION, applied right to left: ${map.composedOf.map((step) => `[[${step}]]`).join(" after ")}. Each step goes through its own declared head, so every intermediate value is a properly constructed carrier.`,
+          `Defined as a COMPOSITION, applied right to left: ${overload.composedOf.map((step) => `[[${step}]]`).join(" after ")}. Each step goes through its own declared head, so every intermediate value is a properly constructed carrier.`,
         ]),
-    ...(map.note === undefined ? [] : [map.note]),
-  ];
+    ...(overload.note === undefined ? [] : [overload.note]),
+  ]);
+  const composedOf = [...new Set(overloads.flatMap((overload) => overload.composedOf ?? []))];
   return {
     name: map.name,
     domain: "Combinatorial maps",
     signature: `${map.name}(${carrier(map.from)})`,
     summary: map.summary,
     details,
-    examples: withIds(exampleFor(map)),
-    ...(map.composedOf === undefined ? {} : { seeAlso: [...map.composedOf] }),
+    examples: withIds(overloads.flatMap(exampleFor)),
+    ...(composedOf.length === 0 ? {} : { seeAlso: composedOf }),
   };
+};
+
+/** The non-conversion maps, grouped by head, in declaration order. */
+const mapsByName = (): CombinatorialMap[][] => {
+  const groups = new Map<string, CombinatorialMap[]>();
+  for (const map of MAPS.filter((m) => m.convert !== true))
+    groups.set(map.name, [...(groups.get(map.name) ?? []), map]);
+  return [...groups.values()];
 };
 
 const frontierEntryFor = (map: (typeof UNDEFINED_MAPS)[number]): ReferenceEntry => {
@@ -136,7 +158,7 @@ const frontierEntryFor = (map: (typeof UNDEFINED_MAPS)[number]): ReferenceEntry 
  * aspirational: the head has no definition, so the example records what it would answer and
  * the test asserts the gap is still open. */
 export const generated: GeneratedEntries = {
-  entries: [...MAPS.filter((m) => m.convert !== true).map(entryFor), ...UNDEFINED_MAPS.map(frontierEntryFor)],
+  entries: [...mapsByName().map(entryFor), ...UNDEFINED_MAPS.map(frontierEntryFor)],
   owned: new Set([...MAPS.filter((m) => m.convert !== true), ...UNDEFINED_MAPS].map((m) => m.name)),
   // Anything else on a record (`formerly`, `references`, `names`) is curated by hand.
   fields: new Set(["name", "domain", "signature", "summary", "details", "examples", "seeAlso"]),

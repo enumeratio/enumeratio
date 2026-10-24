@@ -4,6 +4,7 @@ import { declareCarriers } from "@enumeratio/structures";
 import { declareFamilies } from "../../collections/src/families/declare.ts";
 import { liftFamily } from "../../collections/src/families/epsil.ts";
 import { TABLEAUX_CARRIERS } from "./carrier-data.ts";
+import { declareDeleteFromTableau } from "./delete-from-tableau.ts";
 import {
   standardTableauPairsEntries,
   standardTableauxEntries,
@@ -15,6 +16,7 @@ import {
 
 export function declareTableaux(ce: Engine): void {
   declareCarriers(ce, TABLEAUX_CARRIERS, { plurals: false });
+  declareDeleteFromTableau(ce);
   declareFamilies(
     ce,
     [

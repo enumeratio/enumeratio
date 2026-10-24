@@ -62,20 +62,20 @@ MultivariatePolynomialError MutableDenseMatrix MutableDenseNDimArray MutableMatr
 MutableSparseMatrix MutableSparseNDimArray N NDimArray Nand Naturals Naturals0 Ne
 NonSquareMatrixError Nor Not NotAlgebraic NotInvertible NotReversible Number NumberSymbol O
 OmegaPower OneMatrix OperationNotSupported OptionError Options Or Order Ordinal POSform Parabola
-Permanent PermutationMatrix Piecewise Plane Point Point2D Point3D PoleError PolificationFailed
-Poly Polygon PolynomialDivisionFailed PolynomialError PolynomialRing Pow PowerSet
-PrecisionExhausted Predicate Product ProductSet PurePoly PythonFiniteField PythonIntegerRing
-PythonRational Q QQ QQ_I QQ_gmpy QQ_python Quaternion RR Range Rational RationalField Rationals
-Ray Ray2D Ray3D RealField RealNumber Reals RefinementFailed RegularPolygon Rel Rem
-RisingFactorial RootOf RootSum S SOPform Segment Segment2D Segment3D SeqAdd SeqFormula SeqMul
-SeqPer Set ShapeError Shi Si Sieve SineTransform SingularityFunction SparseMatrix
-SparseNDimArray StrPrinter StrictGreaterThan StrictLessThan Subs Sum Symbol SymmetricDifference
-SympifyError TableForm Trace Transpose Triangle TribonacciConstant Tuple Unequality
-UnevaluatedExpr UnificationFailed Union UnivariatePolynomialError UniversalSet Wild WildFunction
-Xor Ynm Ynm_c ZZ ZZ_I ZZ_gmpy ZZ_python ZeroMatrix Znm abundance acos acosh acot acoth acsc
-acsch adjoint airyai airyaiprime airybi airybiprime algebras all_roots andre apart apart_list
-appellf1 apply_finite_diff approximants are_similar arg arity asec asech asin asinh ask
-assemble_partfrac_list assoc_laguerre assoc_legendre assuming assumptions atan atan2 atanh
+Permanent Permutation PermutationMatrix Piecewise Plane Point Point2D Point3D PoleError
+PolificationFailed Poly Polygon PolynomialDivisionFailed PolynomialError PolynomialRing Pow
+PowerSet PrecisionExhausted Predicate Product ProductSet PurePoly PythonFiniteField
+PythonIntegerRing PythonRational Q QQ QQ_I QQ_gmpy QQ_python Quaternion RR Range Rational
+RationalField Rationals Ray Ray2D Ray3D RealField RealNumber Reals RefinementFailed
+RegularPolygon Rel Rem RisingFactorial RootOf RootSum S SOPform Segment Segment2D Segment3D
+SeqAdd SeqFormula SeqMul SeqPer Set ShapeError Shi Si Sieve SineTransform SingularityFunction
+SparseMatrix SparseNDimArray StrPrinter StrictGreaterThan StrictLessThan Subs Sum Symbol
+SymmetricDifference SympifyError TableForm Trace Transpose Triangle TribonacciConstant Tuple
+Unequality UnevaluatedExpr UnificationFailed Union UnivariatePolynomialError UniversalSet Wild
+WildFunction Xor Ynm Ynm_c ZZ ZZ_I ZZ_gmpy ZZ_python ZeroMatrix Znm abundance acos acosh acot
+acoth acsc acsch adjoint airyai airyaiprime airybi airybiprime algebras all_roots andre apart
+apart_list appellf1 apply_finite_diff approximants are_similar arg arity asec asech asin asinh
+ask assemble_partfrac_list assoc_laguerre assoc_legendre assuming assumptions atan atan2 atanh
 banded bell bernoulli besseli besselj besselk besselsimp bessely beta betainc
 betainc_regularized binomial binomial_coefficients binomial_coefficients_list block_collapse
 blockcut bool_map bottom_up bspline_basis bspline_basis_set cacheit calculus cancel capture

@@ -24,7 +24,7 @@ oddness-pulls-the-sign-out-of-a-symbolic	csc((-Symbol("x")))	-csc(x)
 derivative-csc-x-cot-x	diff(csc(Symbol("x")), Symbol("x"))	-cot(x)*csc(x)	
 antiderivative-ln-csc-x-cot-x	integrate(csc(Symbol("x")), Symbol("x"))	log(cos(x) - 1)/2 - log(cos(x) + 1)/2	
 n-csc-6-over-5-50	N(csc(Rational(6, 5)), 30)	1.07291637770989722870511692244	
-matrixfunction-function-csc-1-1-list-list-1-over			
+matrixfunction-function-csc-1-1-list-list-1-over	Matrix([[(Rational(1, 3) * pi), pi], [(Rational(1, 6) * pi), (Rational(-1, 2) * pi)]]).analytic_func(csc(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[6/7 - 2*sqrt(3)/21, 6/7 + 4*sqrt(3)/7], [1/7 + 2*sqrt(3)/21, 1/7 - 4*sqrt(3)/7]]	
 csc-positiveinfinity	csc(oo)	AccumBounds(-oo, oo)	disagree
 assuming-m-in-integers-refine-csc-pi-times-m			
 assuming-m-in-integers-fullsimplify-refine-csc			

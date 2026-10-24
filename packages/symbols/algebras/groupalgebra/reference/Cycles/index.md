@@ -32,9 +32,14 @@ catalog:
     on: Permutation
 statOn:
   - Permutation
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_cycles($1)
+    arity: 1
 ---
 
 - Fixed points (singleton cycles) are dropped on construction — $\mathrm{Cycles}(\{\{1\},\{2,3\}\})$ and $\mathrm{Cycles}(\{\{2,3\}\})$ are the same value
-- The cycles and their internal order are kept exactly as given otherwise — nothing is sorted or rotated to a canonical start
+- Otherwise each cycle is rotated to start at its smallest point and the cycles are ordered by that first point, as Wolfram does — $\mathrm{Cycles}(\{\{3,2,5,1\},\{7,4\}\})$ is $\mathrm{Cycles}(\{\{1,3,2,5\},\{4,7\}\})$
 - [[PermutationCycles]] builds one from a one-line word; [[Permute]] applies one to a list; [[InversePermutation]] reverses one
 - Written from a [[CycleDecomposition]], it drops that value's fixed points. `CycleDecomposition(cycles, n)` is the way back, given the size

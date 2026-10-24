@@ -22,7 +22,7 @@ chebyshevt-0-positiveinfinity	chebyshevt(0, oo)	1
 chebyshevt-7-x	chebyshevt(7, Symbol("x"))	64*x**7 - 112*x**5 + 56*x**3 - 7*x
 chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x	enumeratio_equal(chebyshevt(1, (-Symbol("x"))), (-chebyshevt(1, Symbol("x"))))	True
 chebyshevt-2-neg-x-eq-chebyshevt-2-x	enumeratio_equal(chebyshevt(2, (-Symbol("x"))), chebyshevt(2, Symbol("x")))	True
-matrixfunction-function-chebyshevt-2-1-1-list		
+matrixfunction-function-chebyshevt-2-1-1-list	Matrix([[1, 2], [3, 4]]).analytic_func(chebyshevt(2, Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[13, 20], [30, 43]]
 cos-n-theta	enumeratio_equal(chebyshevt(6, Rational(1, 2)), cos((6 * (S(pi) / 3))))	True
 at-1	chebyshevt(7, 1)	1
 at-minus-1	chebyshevt(7, -1)	-1

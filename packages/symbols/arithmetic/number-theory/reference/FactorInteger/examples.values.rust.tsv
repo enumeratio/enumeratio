@@ -43,4 +43,6 @@ negative-numbers-carry-an-explicit-1-unit-factor	factor_integer(n(-60))	panic: a
 factorinteger-neg-12	factor_integer(n(-12))	panic: a non-negative integer: the crate's parameter is unsigned	error
 a-non-integer-real-stays-unevaluated	factor_integer(x(2.5))	panic: an integer, not 2.5	error
 an-integer-valued-float-factors	factor_integer(x(12.0))	panic: an integer, not 12.0	error
+a-negative-integer-valued-float-keeps-its-unit	factor_integer(x(-12.0))	panic: an integer, not -12.0	error
+a-non-integer-float-stays-unevaluated	factor_integer(x(12.5))	panic: an integer, not 12.5	error
 the-hardy-ramanujan-taxicab-number-7-times-13	factor_integer(n(1729))	[[7, 1], [13, 1], [19, 1]]	

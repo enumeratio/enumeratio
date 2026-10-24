@@ -6,6 +6,8 @@
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import {
   ARITY,
+  argCount,
+  OPTIONAL_DOMAIN_HEADS,
   type Box,
   type BoxNode,
   isBox,
@@ -19,11 +21,8 @@ import { bindingVariable, displayText, entriesOf, entryLabel, entryValue } from 
 
 type Json = MathJsonExpression;
 
-const isDrawingHead = (head: string): boolean =>
-  head === "GraphicsBox" ||
-  head === "GraphicsComplexBox" ||
-  head === "Graphics3DBox" ||
-  head === "GraphicsComplex3DBox";
+const isDrawingHead = (head: string): boolean => head === "GraphicsBox" || head === "Graphics3DBox";
+const isComplexHead = (head: string): boolean => head === "GraphicsComplexBox" || head === "GraphicsComplex3DBox";
 
 const list = (items: readonly Json[]): Json => ["List", ...items] as Json;
 
@@ -39,12 +38,13 @@ function optionToJson(value: OptionValue): Json {
 export function toMathJson(box: Box): Json {
   if (typeof box === "string") return { str: box };
   const head = box[0];
-  const args = box.slice(1, ARITY[head] + 1) as unknown[];
+  const args = box.slice(1, argCount(box) + 1) as unknown[];
   const encoded: Json[] = args.map((arg, i) => {
     if (head === "RowBox" || head === "TextData" || isDrawingHead(head)) return list((arg as Box[]).map(toMathJson));
+    if (isComplexHead(head)) return i === 0 ? optionToJson(arg as OptionValue) : list((arg as Box[]).map(toMathJson));
     if (head === "GridBox") return list((arg as Box[][]).map((r) => list(r.map(toMathJson))));
     if (head === "PaneSelectorBox" && i === 0)
-      return list((arg as Box[][]).map(([key, pane]) => ["KeyValuePair", toMathJson(key!), toMathJson(pane!)] as Json));
+      return list((arg as Box[][]).map(([key, pane]) => ["Rule", toMathJson(key!), toMathJson(pane!)] as Json));
     if (head === "PaneSelectorBox") return arg as Json;
     if (head === "TextBox" || head === "TemplateSlot" || head === "TemplateExpression") return { str: arg as string };
     // A tag that is no symbol's name (an address, "1,0") is a string.
@@ -56,7 +56,7 @@ export function toMathJson(box: Box): Json {
     return toMathJson(arg as Box);
   });
   const rules = Object.entries(optionsOfBox(box as BoxNode)).map(
-    ([name, value]) => ["KeyValuePair", name, optionToJson(value)] as Json,
+    ([name, value]) => ["Rule", name, optionToJson(value)] as Json,
   );
   return [head, ...encoded, ...rules] as Json;
 }
@@ -108,13 +108,13 @@ function optionFromJson(node: Json): OptionValue {
 }
 
 /**
- * `Name -> value` as a rule: a `KeyValuePair`, or the `Tuple` compute-engine canonicalises
+ * `Name -> value` as a rule: a `Rule`, a `KeyValuePair`, or the `Tuple` compute-engine canonicalises
  * a symbol-keyed pair to (an option name is capitalised, which keeps `(x, 1)` a tuple).
  */
 function ruleOf(node: Json): [string, Json] | undefined {
   const head = headOf(node);
   const ops = opsOf(node);
-  if ((head !== "KeyValuePair" && head !== "Tuple") || ops.length !== 2) return undefined;
+  if ((head !== "Rule" && head !== "KeyValuePair" && head !== "Tuple") || ops.length !== 2) return undefined;
   const name = symbolOf(ops[0]) ?? stringOf(ops[0]);
   return name !== undefined && /^[A-Z]/.test(name) ? [name, ops[1]] : undefined;
 }
@@ -155,9 +155,12 @@ export function fromMathJson(json: Json): Box {
   if ((head === "SetterBox" || head === "TogglerBox") && ops.length === 2) ops.push(toMathJson(legacyShown(head, ops)));
   const raw = Object.fromEntries(all.slice(split).map((op) => ruleOf(op)!));
   const arity = ARITY[head];
-  if (ops.length !== arity) fail(`${head} takes ${arity} argument(s)`, json);
+  const optional = (OPTIONAL_DOMAIN_HEADS as readonly string[]).includes(head);
+  if (ops.length !== arity && !(optional && ops.length === arity + 1))
+    fail(`${head} takes ${optional ? `${arity} or ${arity + 1}` : arity} argument(s)`, json);
   const args: unknown[] = ops.map((op, i) => {
     if (head === "RowBox" || head === "TextData" || isDrawingHead(head)) return listItems(op).map(fromMathJson);
+    if (isComplexHead(head)) return i === 0 ? listItems(op).map(optionFromJson) : listItems(op).map(fromMathJson);
     if (head === "GridBox") return listItems(op).map((r) => listItems(r).map(fromMathJson));
     if (head === "PaneSelectorBox" && i === 0)
       return listItems(op).map((rule) => {

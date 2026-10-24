@@ -27,6 +27,7 @@ const idOf = (el: Element): number => {
 /** The `<notatio-out>` a `<notatio-cell>` (light DOM) renders for its Out row, if any. */
 interface RevalidatableOut extends Element {
   revalidate?: () => Promise<void>;
+  block?: (reason: string | undefined) => void;
 }
 const outOf = (cell: Element): RevalidatableOut | null => cell.querySelector("notatio-out");
 
@@ -90,6 +91,8 @@ export class ReactiveModule {
   readonly #json = new Map<number, MathJsonExpression | undefined>();
   readonly #elements = new Map<number, Element>();
   readonly #known = new Set<Element>();
+  /** Cells the last schedule rejected, so a cell that stops being rejected is re-run. */
+  #rejected = new Set<number>();
 
   constructor(tracked: TrackedSymbols) {
     this.tracked = tracked;
@@ -129,8 +132,20 @@ export class ReactiveModule {
     this.#elements.set(id, el);
     this.#json.set(id, json);
     this.#cells.set(id, cellBindings(this.#engine, id, notatioSource, json));
+    const before = this.#rejected;
     const sched = this.#applyDiagnostics();
-    void this.#run(affected([...this.#cells.values()], sched, id, this.tracked), sched);
+    // A cell no longer rejected (its duplicate was removed or renamed) has stale or
+    // blocked output, and so do its readers: re-run it along with what `id` touches.
+    const cells = [...this.#cells.values()];
+    const dirty = new Set(affected(cells, sched, id, this.tracked));
+    for (const other of before) {
+      if (this.#rejected.has(other)) continue;
+      for (const d of affected(cells, sched, other, this.tracked)) dirty.add(d);
+    }
+    void this.#run(
+      [...sched.order.filter((d) => dirty.has(d)), ...(dirty.has(id) && !sched.order.includes(id) ? [id] : [])],
+      sched,
+    );
   }
 
   #update(el: Element, source: string): number {
@@ -150,8 +165,11 @@ export class ReactiveModule {
   #applyDiagnostics(): Schedule {
     const sched = schedule([...this.#cells.values()]);
     const errored = new Map(sched.diagnostics.map((d) => [d.cellId, d.message]));
+    this.#rejected = new Set(errored.keys());
     for (const [id, el] of this.#elements) {
       const message = errored.get(id);
+      // A rejected cell shows the error alone -- never the value from before it was rejected.
+      outOf(el)?.block?.(message);
       el.toggleAttribute("data-reactive-error", message !== undefined);
       if (message !== undefined) el.setAttribute("title", message);
       else el.removeAttribute("title");
@@ -178,6 +196,11 @@ export class ReactiveModule {
   async #run(ids: readonly number[], sched: Schedule): Promise<void> {
     if (!this.#engine || !this.#transcript) return;
     const bad = new Set(sched.diagnostics.map((d) => d.cellId));
+    // An Out that rendered after `#applyDiagnostics` ran missed its block; repeat it.
+    for (const d of sched.diagnostics) {
+      const el = this.#elements.get(d.cellId);
+      if (el) outOf(el)?.block?.(d.message);
+    }
     if (this.#host?.evaluatorKind !== "Worker") {
       for (const id of ids) {
         if (bad.has(id)) continue; // a duplicate/cycle/ordinal cell has nothing safe to run
@@ -208,6 +231,7 @@ export class ReactiveModule {
     for (const id of ids) {
       if (bad.has(id)) continue;
       const out = this.#elements.get(id) && outOf(this.#elements.get(id)!);
+      out?.block?.(undefined);
       if (out?.revalidate) await out.revalidate();
     }
   }

@@ -15,6 +15,10 @@ export type MathJSON = string | number | boolean | readonly MathJSON[] | { reado
 export interface CombinatorialMap extends MapDeclaration {
   /** FindStat map ids, for a map whose record doesn't state them (a conversion has none). */
   readonly findstat?: readonly string[];
+  /** An optional hand-written fast path over the plain-JS contents (`toJs`/`fromJs`), for a map whose
+   *  nested Epsil can't compile. `undefined` declines to the Epsil, which stays the meaning: tests/
+   *  map-kernels.test.ts holds the two to the same answers. */
+  readonly kernel?: (raw: never) => unknown;
 }
 
 // Every Range here states its step: compute-engine counts DOWN when the end is below the start,
@@ -29,6 +33,23 @@ export const forEach = (over: MathJSON, body: MathJSON, variable = "i"): MathJSO
 ];
 
 export const size: MathJSON = ["Count", "_raw"];
+
+/** The word read backwards: entry i is entry n + 1 - i. */
+export const reversedWord: MathJSON = forEach(positions, at(["Subtract", ["Add", ["Length", "_raw"], 1], "i"]));
+
+/** A list sorted largest-first, by reading the sorted list back to front. */
+export const descending = (list: MathJSON): MathJSON => [
+  "Map",
+  ["Function", ["At", ["Sort", list], ["Subtract", ["Add", ["Length", list], 1], "i"]], "i"],
+  ["Range", 1, ["Length", list], 1],
+];
+
+/** The word rotated one place left (first entry last), and right (last entry first). */
+export const rotatedLeft: MathJSON = forEach(positions, at(["Add", ["Mod", "i", ["Length", "_raw"]], 1]));
+export const rotatedRight: MathJSON = forEach(
+  positions,
+  at(["Add", ["Mod", ["Add", ["Subtract", "i", 2], ["Length", "_raw"]], ["Length", "_raw"]], 1]),
+);
 
 /** `body` with `name` bound to `value` — a `let`, as a lambda applied to its argument. A
  *  list value needs its `type`, e.g. `"list<integer>"`: an untyped lambda applied to a list
@@ -57,3 +78,113 @@ export const blocksOf = (word: MathJSON, base: number): MathJSON => [
     ["Range", base, ["Max", word], 1],
   ],
 ];
+
+/** The word `_raw` with its weakly increasing runs (cut where an entry is above the next) reordered by `runKey`
+ *  of each run's first and last position, ties keeping their order: the runs' keys are sorted along with their
+ *  indices, and the runs read off in that order. */
+export const sortedRuns = (runKey: (first: MathJSON, last: MathJSON) => MathJSON): MathJSON => [
+  "If",
+  ["Equal", ["Length", "_raw"], 0],
+  ["List"],
+  bind(
+    "rs_starts",
+    [
+      "Fold",
+      [
+        "Function",
+        [
+          "If",
+          ["Or", ["Equal", "p", 1], ["Greater", at(["Max", ["Subtract", "p", 1], 1]), at("p")]],
+          ["Join", "acc", ["List", "p"]],
+          "acc",
+        ],
+        "acc",
+        "p",
+      ],
+      ["List"],
+      positions,
+    ],
+    bind(
+      "rs_count",
+      ["Length", "rs_starts"],
+      bind(
+        "rs_end",
+        forEach(
+          ["Range", 1, "rs_count", 1],
+          ["If", ["Equal", "k", "rs_count"], ["Length", "_raw"], ["Subtract", at(["Add", "k", 1], "rs_starts"), 1]],
+          "k",
+        ),
+        bind(
+          "rs_order",
+          forEach(
+            [
+              "Sort",
+              forEach(
+                ["Range", 1, "rs_count", 1],
+                ["Add", ["Multiply", runKey(at("k", "rs_starts"), at("k", "rs_end")), ["Add", "rs_count", 1]], "k"],
+                "k",
+              ),
+            ],
+            ["Mod", "c", ["Add", "rs_count", 1]],
+            "c",
+          ),
+          [
+            "Fold",
+            [
+              "Function",
+              ["Join", "acc", forEach(["Range", at("o", "rs_starts"), at("o", "rs_end"), 1], at("p"), "p")],
+              "acc",
+              "o",
+            ],
+            ["List"],
+            "rs_order",
+          ],
+          "list<integer>",
+        ),
+        "list<integer>",
+      ),
+      "integer",
+    ),
+    "list<integer>",
+  ),
+];
+
+/** The lengths of the maximal runs of equal entries of `_raw`, left to right. */
+export const runLengths: MathJSON = (() => {
+  const starts: MathJSON = [
+    "Fold",
+    [
+      "Function",
+      [
+        "If",
+        ["Or", ["Equal", "p", 1], ["Not", ["Equal", at("p"), at(["Max", ["Subtract", "p", 1], 1])]]],
+        ["Join", "acc", ["List", "p"]],
+        "acc",
+      ],
+      "acc",
+      "p",
+    ],
+    ["List"],
+    positions,
+  ];
+  return [
+    "If",
+    ["Equal", ["Length", "_raw"], 0],
+    ["List"],
+    bind(
+      "starts",
+      starts,
+      bind(
+        "bounds",
+        ["Join", "starts", ["List", ["Add", ["Length", "_raw"], 1]]],
+        forEach(
+          ["Range", 1, ["Length", "starts"], 1],
+          ["Subtract", at(["Add", "q", 1], "bounds"), at("q", "bounds")],
+          "q",
+        ),
+        "list<integer>",
+      ),
+      "list<integer>",
+    ),
+  ];
+})();

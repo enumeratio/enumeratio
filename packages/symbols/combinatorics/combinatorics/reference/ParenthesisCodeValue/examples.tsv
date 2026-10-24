@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[ParenthesisCodeValue, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	204			the binary tree $[[.,.],[[.,.],.]]$
+findstat-st000198-1	Properties		[CombinatorialStat, [BinaryTree, 0], "'ParenthesisCodeValue'"]	0	0	FindStat St000198	FindStat's value for .
+findstat-st000198-2	Properties		[CombinatorialStat, [BinaryTree, [List, 0, 0]], "'ParenthesisCodeValue'"]	2	2	FindStat St000198	FindStat's value for [.,.]
+findstat-st000198-3	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'ParenthesisCodeValue'"]	10	10	FindStat St000198	FindStat's value for [.,[.,.]]

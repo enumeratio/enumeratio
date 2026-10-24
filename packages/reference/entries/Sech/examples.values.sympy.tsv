@@ -5,7 +5,7 @@ sech-list-list-1-over-3-times-i-times-pi-neg-1	[[sech(((0 + Rational(1, 3)*I) * 
 sech-positiveinfinity	sech(oo)	0
 sech-0	sech(0)	1
 d-sech-x-x	diff(sech(Symbol("x")), Symbol("x"))	-tanh(x)*sech(x)
-matrixfunction-function-sech-1-1-list-list-1		
+matrixfunction-function-sech-1-1-list-list-1	Matrix([[((0 + Rational(1, 3)*I) * pi), ((0 + Rational(-1, 3)*I) * pi)], [0, ((0 + Rational(-1, 6)*I) * pi)]]).analytic_func(sech(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[2, -4/3 + 4*sqrt(3)/9], [0, 2*sqrt(3)/3]]
 functionmeromorphic-sech-x-x		
 n-2-minus-sech-1-over-2-pow-2-times-sech-1	N(((2 + (-(S(sech(Rational(1, 2)))**2))) * sech(1)), 30)	0.786447732965927410149698934344
 n-2-times-sech-1-times-sech-1-over-2-pow-2-plus	N(((2 * sech(1) * (S(sech(Rational(1, 2)))**2)) + (((-2 * (S(sech(Rational(1, 2)))**2)) + (S(sech(Rational(1, 2)))**4)) * (S(sech(1))**2)) + (-(S(sech(Rational(1, 2)))**4))), 30)	-0.e-165

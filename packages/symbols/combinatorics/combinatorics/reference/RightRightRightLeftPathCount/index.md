@@ -1,0 +1,22 @@
+---
+name: RightRightRightLeftPathCount
+domain: Tree statistics
+signature: RightRightRightLeftPathCount(tree)
+summary: The number of nodes from which taking the right, then the right, then the right, then the left child stays inside the tree.
+signatures:
+  - call: RightRightRightLeftPathCount(tree)
+    description: The number of nodes from which taking the right, then the right, then the right, then the left child stays inside the tree.
+    library: enumeratio-combinatorics
+    type: (binary_tree) -> number
+catalog:
+  - system: findstat
+    identity: St000127
+    url: https://www.findstat.org/St000127
+    on: BinaryTree
+statOn:
+  - BinaryTree
+---
+
+- Defined over `BinaryTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Takes a `BinaryTree` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
+- A contiguous pattern of nodes along one path, the subtrees off it anything.

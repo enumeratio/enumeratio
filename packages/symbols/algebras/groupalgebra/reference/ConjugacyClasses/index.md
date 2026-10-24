@@ -19,6 +19,14 @@ references:
     identity: Conjugacy class
   - system: mathworld
     identity: ConjugacyClass
+bindings:
+  - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: Wolfram has no conjugacy classes of a permutation group; `GroupOrbits` under the conjugation action would build them, but ours are lists of our own element labels (`GroupBasis`), which Wolfram does not have.
+    checked:
+      version: 15.0.0
+      on: 2026-10-23
 ---
 
 - An abelian group has one class per element, so $\dim Z(k[G]) = |G|$

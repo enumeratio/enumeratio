@@ -1,2 +1,2 @@
 id	section	role	expr	expected	caption	boxes
-entries	Basic		[PopupMenu, c, [List, a, b, c]]	[PopupMenu, c, [List, a, b, c]]	A menu of entries	{head: PopupMenuBox, operands: [[Dynamic, c], [List, [KeyValuePair, a, {str: a}], [KeyValuePair, b, {str: b}], [KeyValuePair, c, {str: c}]]]}
+entries	Basic		[PopupMenu, c, [List, a, b, c]]	[PopupMenu, c, [List, a, b, c]]	A menu of entries	{head: PopupMenuBox, operands: [[Dynamic, c], [List, [Rule, a, {str: a}], [Rule, b, {str: b}], [Rule, c, {str: c}]]]}

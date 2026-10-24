@@ -8,12 +8,14 @@ import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import {
   baxterExact,
+  binomialPastDoubles,
   carlitzExact,
   distinctPartitionsExact,
   integerPartitionsExact,
   lyndonWordCountExact,
   partCountBoundedExact,
   partitionsExact,
+  PASSES_2_53,
   planePartitionsExact,
   primitiveWordsExact,
   rootedUnlabeledTreesExact,
@@ -54,6 +56,9 @@ const PAST_2_53: [string, number[], string][] = [
   ["UnlabeledFreeTrees", [44], "21835027912963086"],
   ["UnlabeledFreeTrees", [45], "60978390985918906"],
   ["PartCountBoundedCompositions", [60, 30], "288230376151711744"],
+  ["PartSizeBoundedCompositions", [56, 5], "14816957550408632"],
+  ["PartSizeBoundedCompositions", [100, 10], "606147434557459526483161067501"],
+  ["PartSizeBoundedCompositions", [150, 40], "713623846316958381073424191750049706408935424"],
   ["CarlitzCompositions", [68], "15487089640109098"],
   ["CarlitzCompositions", [150], "1330453510383609127975205887202870700"],
   ["ZigzagCompositions", [82], "10368923174163758"],
@@ -99,4 +104,35 @@ test("Count below 2^53 is still the plain number", () => {
   expect(count("BaxterPermutations", [10])).toBe(326240);
   expect(count("LyndonWords", [20])).toBe(52377);
   expect(count("PlanePartitions", [30])).toBe(5668963);
+});
+
+// The double kernel is skipped from each threshold on (BL-212): it is the first n whose count, and the next, pass 2^53.
+const isPrime = (p: number): boolean =>
+  p > 1 && Array.from({ length: Math.sqrt(p) - 1 }, (_, i) => i + 2).every((d) => p % d);
+const isSquare = (p: number): boolean => Number.isInteger(Math.sqrt(p));
+const isTriangular = (p: number): boolean => Number.isInteger(Math.sqrt(8 * p + 1));
+const THRESHOLDS: [keyof typeof PASSES_2_53, (n: number) => bigint | undefined][] = [
+  ["integerPartitions", integerPartitionsExact],
+  ["distinctPartitions", distinctPartitionsExact],
+  ["oddPartitions", (n) => partitionsExact(n, n, (p) => p % 2 === 1)],
+  ["primePartitions", (n) => partitionsExact(n, n, isPrime)],
+  ["triangularPartitions", (n) => partitionsExact(n, n, isTriangular)],
+  ["squarePartitions", (n) => partitionsExact(n, n, isSquare)],
+  ["carlitzCompositions", carlitzExact],
+  ["zigzagCompositions", zigzagCompositionsExact],
+];
+
+test.each(THRESHOLDS)("the %s threshold is where the count first passes 2^53", (key, exact) => {
+  const limit = 2n ** 53n;
+  const from = PASSES_2_53[key];
+  expect(exact(from - 1)! <= limit).toBe(true);
+  expect(exact(from)! > limit).toBe(true);
+  expect(exact(from + 1)! > limit).toBe(true);
+});
+
+test("the binomial bound holds only where C(n, r) passes 2^54", () => {
+  expect(binomialPastDoubles(60, 30)).toBe(true);
+  expect(binomialPastDoubles(56, 28)).toBe(false); // 7.6e15, below 2^53
+  expect(binomialPastDoubles(57, 28)).toBe(false); // 1.5e16: past 2^53 but under the 2^54 margin
+  expect(binomialPastDoubles(-1, -1)).toBe(false);
 });

@@ -29,6 +29,17 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: sympy
+    template: hyper([], [$1], $2) / gamma($1)
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-21
+    note: SymPy has no regularized hypergeometric, so this divides by Γ(b); at a pole of Γ(b) (b a non-positive integer) the quotient is not the limit that ours is.
 seeAlso:
   - Hypergeometric0F1
   - BesselJ

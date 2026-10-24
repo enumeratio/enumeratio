@@ -8,10 +8,47 @@ import { EXACT_BITS_LIMIT, EXACT_TOP_LIMIT } from "./exact-counts.ts";
 
 const natural = (x: number): boolean => Number.isSafeInteger(x) && x >= 0;
 
-/** A count a double kernel gave as it is where it is a safe integer (so exact), else the exact one;
- *  past the bound of the exact one, the rounded double, which reads as past 2^53. */
-export const orExact = (rough: number, exact: () => bigint | undefined): number | bigint =>
-  Number.isSafeInteger(rough) || Number.isNaN(rough) || !Number.isFinite(rough) ? rough : (exact() ?? rough);
+/** What a double kernel not worth running stands for: past 2^53, so no count (as the kernel's own rounded result reads). */
+export const PAST_DOUBLES_COUNT = 2 ** 60;
+
+/** A count that a double kernel gives where it is a safe integer (so exact), else the exact one. Where a
+ *  bound says the count passes 2^53 (`past`) the double kernel is not run at all: the exact one, or
+ *  `PAST_DOUBLES_COUNT` where that declines too. Past the bound of the exact one, the rounded double,
+ *  which reads as past 2^53. */
+export const orExact = (past: boolean, rough: () => number, exact: () => bigint | undefined): number | bigint => {
+  if (past) return exact() ?? PAST_DOUBLES_COUNT;
+  const count = rough();
+  return Number.isSafeInteger(count) || Number.isNaN(count) || !Number.isFinite(count) ? count : (exact() ?? count);
+};
+
+/** The least n from which each count passes 2^53 and stays past it (found with the exact counters;
+ *  tests/exact-classes.test.ts pins each to them). A count is past 2^53 for any n at or above it; erring low only costs time. */
+export const PASSES_2_53 = {
+  integerPartitions: 300,
+  distinctPartitions: 567,
+  oddPartitions: 567,
+  primePartitions: 917,
+  triangularPartitions: 1863,
+  squarePartitions: 3266,
+  carlitzCompositions: 68,
+  zigzagCompositions: 82,
+} as const;
+
+/** C(n, r) > 2^53, conservatively: the partial products C(n − r + i, i) only grow, so stop at 2^54. */
+export function binomialPastDoubles(n: number, r: number): boolean {
+  r = Math.min(r, n - r);
+  if (!(r >= 0)) return false;
+  let c = 1;
+  for (let i = 1; i <= r; i++) {
+    c = (c * (n - r + i)) / i;
+    if (c > 2 ** 54) return true;
+  }
+  return false;
+}
+
+/** Partitions of m into parts of at most k, P(m, ≤ k), grow with both, and P(m, ≤ k) ≥ p(min(m, k)):
+ *  past 2^53 once both reach where p(n) does. */
+export const partitionsPastDoubles = (m: number, k: number): boolean => Math.min(m, k) >= PASSES_2_53.integerPartitions;
 
 /** The longest side of a table of bigints kept whole (about 0.3 s). */
 const TABLE_SIDE = 2_000;

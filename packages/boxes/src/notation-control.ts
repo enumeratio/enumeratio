@@ -12,7 +12,9 @@ import {
   control,
   dynamic,
   dynamicModule,
+  argCount,
   isControlBoxHead,
+  OPTIONAL_DOMAIN_HEADS,
   type Options,
   type OptionValue,
   SHOWN_CONTROL_HEADS,
@@ -63,11 +65,16 @@ function split(args: readonly Json[]): { ops: Json[]; options: Options } {
 const domainOf = (rest: readonly Json[]): Json =>
   rest.length === 0 ? "Automatic" : rest.length === 1 ? rest[0]! : (["Sequence", ...rest] as Json);
 
+/** The domain a head boxes: where nothing follows the variable, `Automatic`, or none at all on a head Wolfram leaves it off. */
+const boxedDomainOf = (head: ControlBoxHead, rest: readonly Json[]): Json | undefined =>
+  rest.length === 0 && (OPTIONAL_DOMAIN_HEADS as readonly string[]).includes(head) ? undefined : domainOf(rest);
+
 /** The heads whose entries are a `value -> label` rule list. */
 const RULE_LIST_HEADS: ReadonlySet<string> = new Set(["PopupMenuBox", "ListPickerBox", "TogglerBox"]);
 
 /** A control's domain as Wolfram boxes it: entries written out become a rule list; anything else rides as written. */
-function boxedDomain(head: ControlBoxHead, domain: Json): Json {
+function boxedDomain(head: ControlBoxHead, domain: Json | undefined): Json | undefined {
+  if (domain === undefined) return undefined;
   const entries = RULE_LIST_HEADS.has(head) ? entriesOf(domain) : undefined;
   return entries === undefined ? domain : (["List", ...entries.map(entryRule)] as unknown as Json);
 }
@@ -77,7 +84,8 @@ const nameOf = (variable: Json): Json => (headOf(variable) === "Tuple" ? opsOf(v
 
 /** The domain a control was written with, read back from its box: entries, not rules, and the setter's value with its label. */
 function writtenDomain(box: Extract<Box, readonly [ControlBoxHead, ...unknown[]]>): Json {
-  const domain = box[2] as Json;
+  const domain = (argCount(box) > 1 ? box[2] : undefined) as Json | undefined;
+  if (domain === undefined) return "Automatic";
   if (RULE_LIST_HEADS.has(box[0])) return entriesOfRules(domain) ?? domain;
   if (box[0] === "SetterBox") {
     const values = entriesOf(domain);
@@ -112,7 +120,7 @@ const controlRule =
     return control(
       head,
       binding(ops[0]!),
-      boxedDomain(head, domain ?? domainOf(ops.slice(1))),
+      boxedDomain(head, domain ?? boxedDomainOf(head, ops.slice(1))),
       { ...fixed, ...options },
       shown,
     );

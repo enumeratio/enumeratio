@@ -20,6 +20,11 @@ seeAlso:
   - CyclicGroup
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_permutation_group($1)
+    arity: 1
 ---
 
 - An empty generator list is the trivial group, order 1

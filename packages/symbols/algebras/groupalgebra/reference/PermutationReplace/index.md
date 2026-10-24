@@ -21,9 +21,14 @@ seeAlso:
   - InversePermutation
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_permutation_replace($1, $2)
+    arity: 2
 ---
 
 - [[Permute]] moves items by POSITION; `PermutationReplace` renames them by VALUE — `Permute(List(a, b, c), perm)` and `PermutationReplace(List(1, 2, 3), perm)` answer different questions
 - `perm` in either notation — [[Cycles]] or a one-line word
 - A point beyond `perm`'s own support is fixed and passes through unchanged
-- A conjugated [[Cycles]] prints in ITS canonical form — smallest point first, singletons dropped, cycles ordered by that first point — not whatever rotation the per-point relabelling produced; this is the same presentation [[PermutationCycles]] and `GroupElements` use
+- A conjugated [[Cycles]] prints in ITS canonical form — smallest point first, singletons dropped, cycles ordered by that first point — the presentation every [[Cycles]] value has

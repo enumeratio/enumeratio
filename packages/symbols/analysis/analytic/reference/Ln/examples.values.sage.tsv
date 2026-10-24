@@ -30,7 +30,7 @@ an-integer-power-negative-argument	log(-2)	I*pi + log(2)
 n-of-a-negative-integer-argument	enumeratio_n(log(-2), 10)	0.693147180600000 + 3.14159265400000*I	
 ln-neg-6	log(-6)	I*pi + log(6)	
 n-of-a-negative-rational-argument	enumeratio_n(log((-1/2)))	-0.693147180559945 + 3.14159265358979*I	
-ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	log(-oo)	+Infinity	disagree
+ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	log(-oo)	+Infinity	
 n-ln-5-over-2-50	enumeratio_n(log((5/2)), 50)	0.916290731874155	
 functiondomain-ln-x-x			
 functionrange-ln-x-x-y			

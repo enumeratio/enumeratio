@@ -2,7 +2,23 @@
 // Composition (from `binary_word`), lives in `../../words/src/maps.ts` instead — a map's area
 // is decided by its SOURCE carrier.
 
-import { bind, forEach, type CombinatorialMap, type MathJSON } from "../../src/map-helpers.ts";
+import {
+  at,
+  bind,
+  descending,
+  forEach,
+  type CombinatorialMap,
+  type MathJSON,
+  reversedWord,
+  rotatedLeft,
+  rotatedRight,
+  runLengths,
+} from "../../src/map-helpers.ts";
+import { foataInversionsToMajorBody, foataMajorToInversionsBody } from "../../permutations/src/foata-bijection.ts";
+import {
+  foataInversionsToMajorWordKernel,
+  foataMajorToInversionsWordKernel,
+} from "../../permutations/src/map-kernels.ts";
 
 /** A composition's partial sums, folded into a list. */
 const partialSums = (parts: MathJSON): MathJSON => [
@@ -42,7 +58,80 @@ const cutWordOf = (parts: MathJSON): MathJSON =>
     ),
   ]);
 
+/** The composition whose cuts are exactly the positions 1 .. n - 1 `parts` leaves uncut. Below
+ *  size 2 there is no position to flip, so the composition is its own complement. */
+const complementOf = (parts: MathJSON): MathJSON =>
+  bind("cn", sizeOf(parts), [
+    "If",
+    ["Less", "cn", 2],
+    parts,
+    bind(
+      "bounds",
+      [
+        "Join",
+        ["List", 0],
+        [
+          "Filter",
+          ["Range", 1, ["Subtract", "cn", 1], 1],
+          ["Function", ["Not", ["Element", "k", partialSums(parts)]], "k"],
+        ],
+        ["List", "cn"],
+      ],
+      forEach(
+        ["Range", 1, ["Subtract", ["Length", "bounds"], 1], 1],
+        ["Subtract", at(["Add", "q", 1], "bounds"), at("q", "bounds")],
+        "q",
+      ),
+      "list<integer>",
+    ),
+  ]);
+
 export const COMPOSITIONS_MAPS: readonly CombinatorialMap[] = [
+  {
+    name: "Reverse",
+    from: "composition",
+    to: "composition",
+    body: reversedWord,
+    summary: "The parts read backwards.",
+  },
+  {
+    name: "Complement",
+    from: "composition",
+    to: "composition",
+    body: complementOf("_raw"),
+    summary: "The composition cut exactly where this one is not: its cut set complemented.",
+    note: "Reverse then complement is TransposeComposition, and reversing commutes with complementing.",
+  },
+  {
+    name: "TransposeComposition",
+    from: "composition",
+    to: "composition",
+    composedOf: ["Complement", "Reverse"],
+    summary: "The conjugate composition: its ribbon shape transposed, the complement of the reverse.",
+    note: "FindStat's \"conjugate\" on compositions, named for TransposePartition and TransposeTableau: Conjugate is already the complex conjugate. hopf's ConjugateComposition is the same operation on a plain list of parts.",
+  },
+  {
+    name: "CyclicShift",
+    from: "composition",
+    to: "composition",
+    body: rotatedLeft,
+    summary: "Rotate the parts one place to the left: the first part moves to the end.",
+  },
+  {
+    name: "InverseCyclicShift",
+    from: "composition",
+    to: "composition",
+    body: rotatedRight,
+    summary: "Rotate the parts one place to the right: the last part moves to the front.",
+  },
+  {
+    name: "SortedPartition",
+    from: "composition",
+    to: "integer_partition",
+    body: descending("_raw"),
+    summary: "The partition a composition's parts form, sorted largest first.",
+    note: "Lossy: the order of the parts is forgotten, so it is not a constructor overload.",
+  },
   {
     name: "CutWord",
     from: "composition",
@@ -52,5 +141,64 @@ export const COMPOSITIONS_MAPS: readonly CombinatorialMap[] = [
     guard: ["Greater", ["Length", "_raw"], 0],
     summary: "A composition of n as the binary word of length n - 1 marking where it is cut.",
     note: "Not order-preserving: IntegerCompositions lists compositions lex on their parts, while BinaryWords(n - 1) through Composition(word) gives them in their cut words' order.",
+  },
+  {
+    name: "CodeWord",
+    from: "composition",
+    to: "binary_word",
+    // Each part i is a one then i - 1 zeros.
+    body: [
+      "Flatten",
+      forEach(
+        ["Range", 1, ["Length", "_raw"], 1],
+        ["Join", ["List", 1], forEach(["Range", 1, ["Subtract", at("i"), 1], 1], 0, "z")],
+      ),
+    ],
+    summary: "The word that writes each part i as a one followed by i - 1 zeros.",
+    note: "FindStat's Mp00094, Sage's to_code. An injection; its image is the words that start with a 1. Not CutWord, which marks the cuts and is one letter shorter than the size.",
+  },
+  {
+    name: "DeltaMorphism",
+    from: "composition",
+    to: "composition",
+    body: runLengths,
+    summary: "The lengths of the maximal runs of equal parts, left to right.",
+    note: "FindStat's Mp00133. Lossy: the parts' values are forgotten. RunComposition is the same on a binary word.",
+  },
+  {
+    name: "FoataMajorToInversions",
+    from: "composition",
+    to: "composition",
+    body: foataMajorToInversionsBody,
+    kernel: foataMajorToInversionsWordKernel,
+    summary:
+      "Foata's bijection on the word of parts: each part is put on the end of the image so far, which is cut into blocks, and every block is rotated one place right.",
+    note: "FindStat's Mp00314. An equal part counts as the smaller; it sends the major index to the number of inversions.",
+  },
+  {
+    name: "FoataInversionsToMajor",
+    from: "composition",
+    to: "composition",
+    body: foataInversionsToMajorBody,
+    kernel: foataInversionsToMajorWordKernel,
+    summary:
+      "The inverse of Foata's bijection on compositions: peel off the last part, rotate the blocks of the rest back.",
+    note: "FindStat's Mp00315.",
+  },
+  {
+    name: "CompositionBouncePath",
+    from: "composition",
+    to: "dyck_path",
+    // Each part a is a run of a ups then a downs.
+    body: [
+      "Flatten",
+      forEach(
+        ["Range", 1, ["Length", "_raw"], 1],
+        forEach(["Range", 1, ["Multiply", 2, at("i")], 1], ["If", ["LessEqual", "k", at("i")], 1, 0], "k"),
+      ),
+    ],
+    summary:
+      "The Dyck path that bounces off the diagonal once for each part: a run of that many ups, then as many downs.",
+    note: "FindStat's Mp00231. An injection; the paths it reaches are those made of runs of as many downs as ups.",
   },
 ];

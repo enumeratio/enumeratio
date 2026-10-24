@@ -1,0 +1,2 @@
+id	in
+subsets	CollectionTable[Subsets[If[ListQ[2], 2, Range[2]]]]

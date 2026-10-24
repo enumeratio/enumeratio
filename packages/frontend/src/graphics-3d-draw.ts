@@ -81,7 +81,7 @@ function collect(box: Box, vertices: readonly Triple[] | undefined, out: Entry[]
   if (!isNode(box)) return;
   switch (box[0]) {
     case "GraphicsComplex3DBox":
-      for (const item of box[1]) collect(item, triples(optionsOfBox(box).Points), out);
+      for (const item of box[2]) collect(item, triples(box[1]), out);
       return;
     case "Polygon3DBox":
     case "Line3DBox":

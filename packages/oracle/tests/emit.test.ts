@@ -10,7 +10,9 @@ test("combinatorica emits only through its head map, as Wolfram source", () => {
   expect(emit(["Eulerian", 4, 1], "combinatorica")).toEqual({ ok: true, source: "Eulerian[4, 1]" });
   // A head with no row there belongs to the wolfram lane, not a second answer from the same kernel.
   expect(emit(["Add", 1, 2], "combinatorica")).toEqual({ ok: false, missing: [] });
-  expect(emit(["Eulerian", "n", 1], "combinatorica").ok).toBe(false);
+  // A free symbol goes through verbatim, as in the wolfram lane; one compute-engine reserves (`_a`, a defined name) does not.
+  expect(emit(["Eulerian", "n", 1], "combinatorica")).toMatchObject({ ok: true, source: "Eulerian[n, 1]" });
+  expect(emit(["Eulerian", "_a", 1], "combinatorica").ok).toBe(false);
 });
 
 test("a batch with a preamble runs it before anything else", () => {
@@ -897,4 +899,30 @@ test("GammaLn compares against log(gamma(z)), LogGamma against the continuation"
   expect(source("GammaLn", "sage")).toMatch(/^log\(gamma\(/);
   expect(source("GammaLn", "julia")).toContain("log(gamma(z))");
   expect(source("LogGamma", "julia")).toContain("lgamma");
+});
+
+test("SymPy's MatrixFunction takes f as an expression of a dummy variable, and Simplify goes round it", () => {
+  const sympy = (expr: unknown) => {
+    const out = emit(expr as never, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  const m = ["List", ["List", 4, 0], ["List", 0, 9]];
+  const call =
+    'Matrix([[4, 0], [0, 9]]).analytic_func(sqrt(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()';
+  expect(sympy(["MatrixFunction", "Sqrt", m])).toBe(call);
+  expect(sympy(["MatrixFunction", ["Function", ["Block", ["Sqrt", "_1"]], "_1"], m])).toBe(call);
+  expect(sympy(["Simplify", ["MatrixFunction", "Sqrt", m]])).toBe(call);
+  // An undefined name is an unknown function of the variable.
+  expect(sympy(["MatrixFunction", "f", m])).toContain('Function("f")(Symbol("_mf"))');
+});
+
+test("SymPy's Inverse is the permutation inverse, and nothing else", () => {
+  const sympy = (expr: unknown) => {
+    const out = emit(expr as never, "sympy");
+    return out.ok ? out.source : undefined;
+  };
+  expect(sympy(["Inverse", ["Permutation", ["List", 2, 3, 1]]])).toContain(
+    "Permutation([_j - 1 for _j in [2, 3, 1]]) ** -1",
+  );
+  expect(sympy(["Inverse", ["List", ["List", 1, 1], ["List", 1, 2]]])).toBeUndefined();
 });

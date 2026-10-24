@@ -11,6 +11,11 @@ signatures:
     description: Peaks at height 1 — an up step from the axis immediately followed by a down step.
     library: enumeratio-combinatorics
     type: (dyck_path) -> number
+catalog:
+  - system: findstat
+    identity: St000674
+    url: https://www.findstat.org/St000674
+    on: DyckPath
 ---
 
 - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

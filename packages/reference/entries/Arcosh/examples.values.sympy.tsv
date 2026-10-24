@@ -1,6 +1,6 @@
 id	in	out	verdict
 arcosh-of-a-pure-imaginary-argument	acosh((S(sqrt(-13)) / 3))	acosh(sqrt(13)*I/3)	
-arcosh-infinity-is-infinity-not-infinity-the	acosh(-oo)	oo	disagree
+arcosh-infinity-is-infinity-not-infinity-the	acosh(-oo)	oo	
 n-arcosh-5-50	N(acosh(5), 30)	2.29243166956117768780078731135	
 arcosh-list-list-1-sqrt-2-over-2-list-0-neg-sqrt	[[acosh(1), acosh((S(sqrt(2)) / 2))], [acosh(0), acosh((-(S(sqrt(2)) / 2)))]]	[[0, I*pi/4], [I*pi/2, 3*I*pi/4]]	
 arcosh-positiveinfinity	acosh(oo)	oo	

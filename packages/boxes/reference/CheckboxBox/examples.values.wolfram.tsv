@@ -1,2 +1,2 @@
 id	in	out	tex.in	tex.out
-inert	CheckboxBox[Dynamic[on], enumeratio`Automatic]	CheckboxBox[Dynamic[on], enumeratio`Automatic]	\text{CheckboxBox}[\text{on},\text{enumeratio$\grave{ }$Automatic}]	\text{CheckboxBox}[\text{on},\text{enumeratio$\grave{ }$Automatic}]
+inert	CheckboxBox[Dynamic[on]]	CheckboxBox[Dynamic[on]]	\text{CheckboxBox}[\text{on}]	\text{CheckboxBox}[\text{on}]

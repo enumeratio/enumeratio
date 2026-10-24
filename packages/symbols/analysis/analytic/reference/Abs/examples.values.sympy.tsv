@@ -19,7 +19,7 @@ an-interval-straddling-0-maps-to-0-the-larger	abs(AccumBounds(-3, 2))	AccumBound
 decides-the-sign-of-an-exact-numeric-expression	Abs((sqrt(2) - 2))	2 - sqrt(2)	
 a-complex-radicand-inside-the-subtraction	Abs((sqrt(-10) - 2))	sqrt(14)	
 n-abs-pi-plus-i-times-catalan-25			
-fullsimplify-matrixfunction-abs-list-list-1-over			
+fullsimplify-matrixfunction-abs-list-list-1-over	Matrix([[Rational(1, 2), -1], [Rational(-5, 3), Rational(1, 2)]]).analytic_func(Abs(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[sqrt(15)/3, -sqrt(15)/10], [-sqrt(15)/6, sqrt(15)/3]]	
 abs-positiveinfinity	Abs(oo)	oo	
 abs-positiveinfinity-times-i	Abs((oo * (0 + 1*I)))	oo	
 piecewiseexpand-abs-imaginaryunit-times-x-neg-2			

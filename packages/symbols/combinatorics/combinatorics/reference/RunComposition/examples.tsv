@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-binary-word-01100			[RunComposition, [BinaryWord, [List, 0, 1, 1, 0, 0]]]	[Composition, [List, 1, 2, 2]]	the binary word $01100$

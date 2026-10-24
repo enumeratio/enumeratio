@@ -1,0 +1,13 @@
+id	in	out	verdict
+order-is-n-factorial-over-two	enumeratio_order(AlternatingGroup(5))	60	
+generators-odd-n	enumeratio_group_generators(AlternatingGroup(5))	[["Cycles", ["List", ["List", 1, 2, 3, 4, 5]]], ["Cycles", ["List", ["List", 3, 4, 5]]]]	disagree
+generators-even-n	enumeratio_group_generators(AlternatingGroup(4))	[["Cycles", ["List", ["List", 1, 2, 3]]], ["Cycles", ["List", ["List", 2, 3, 4]]]]	
+generators-collapse-at-three	enumeratio_group_generators(AlternatingGroup(3))	[["Cycles", ["List", ["List", 1, 2, 3]]]]	
+elements-of-a3	enumeratio_group_elements(AlternatingGroup(3))	[["Cycles", ["List"]], ["Cycles", ["List", ["List", 1, 2, 3]]], ["Cycles", ["List", ["List", 1, 3, 2]]]]	
+grouporder-alternatinggroup-10	enumeratio_order(AlternatingGroup(10))	1814400	
+groupgenerators-alternatinggroup-10	enumeratio_group_generators(AlternatingGroup(10))	[["Cycles", ["List", ["List", 1, 2, 3, 4, 5, 6, 7, 8, 9]]], ["Cycles", ["List", ["List", 8, 9, 10]]]]	disagree
+groupelements-alternatinggroup-4	enumeratio_group_elements(AlternatingGroup(4))	[["Cycles", ["List"]], ["Cycles", ["List", ["List", 2, 3, 4]]], ["Cycles", ["List", ["List", 2, 4, 3]]], ["Cycles", ["List", ["List", 1, 2], ["List", 3, 4]]], ["Cycles", ["List", ["List", 1, 2, 3]]], ["Cycles", ["List", ["List", 1, 2, 4]]], ["Cycles", ["List", ["List", 1, 3, 2]]], ["Cycles", ["List", ["List", 1, 3, 4]]], ["Cycles", ["List", ["List", 1, 3], ["List", 2, 4]]], ["Cycles", ["List", ["List", 1, 4, 2]]], ["Cycles", ["List", ["List", 1, 4, 3]]], ["Cycles", ["List", ["List", 1, 4], ["List", 2, 3]]]]	
+trivial-for-n-equals-one	enumeratio_order(AlternatingGroup(1))	1	
+trivial-for-n-equals-two	enumeratio_order(AlternatingGroup(2))	1	
+groupelements-alternatinggroup-1	enumeratio_group_elements(AlternatingGroup(1))	[["Cycles", ["List"]]]	
+groupelements-alternatinggroup-2	enumeratio_group_elements(AlternatingGroup(2))	[["Cycles", ["List"]]]	

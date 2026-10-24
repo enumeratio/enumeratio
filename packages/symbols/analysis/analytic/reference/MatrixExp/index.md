@@ -26,6 +26,21 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: Matrix($1).exp().tolist()
+    arity: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-21
+  - origin: mapped
+    form: sympy
+    template: list(Matrix($1).exp() * Matrix($2))
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-21
+    note: Applied to a vector, e^A v, flattened as ours is.
 ---
 
 - NOT [[Exp]] of a matrix, which broadcasts element-wise instead -- see that entry's divergence note.

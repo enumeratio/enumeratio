@@ -43,4 +43,6 @@ negative-numbers-carry-an-explicit-1-unit-factor	enumeratio_factor_integer(-60)	
 factorinteger-neg-12	enumeratio_factor_integer(-12)	[(-1, 1), (2, 2), (3, 1)]	
 a-non-integer-real-stays-unevaluated	enumeratio_factor_integer(2.5)	[(2.50000000000000, 1)]	disagree
 an-integer-valued-float-factors	enumeratio_factor_integer(12.0)		
+a-negative-integer-valued-float-keeps-its-unit	enumeratio_factor_integer(-12.0)	[(-12.0000000000000, 1)]	disagree
+a-non-integer-float-stays-unevaluated	enumeratio_factor_integer(12.5)	[(12.5000000000000, 1)]	disagree
 the-hardy-ramanujan-taxicab-number-7-times-13	enumeratio_factor_integer(1729)	[(7, 1), (13, 1), (19, 1)]	

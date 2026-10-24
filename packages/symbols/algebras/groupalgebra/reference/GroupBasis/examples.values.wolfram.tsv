@@ -1,0 +1,5 @@
+id	in	out	tex.in	tex.out
+2-5-7-equiv-1				
+d-4-8				
+s-2-1				
+so-k-d-4-is-not-commutative-either	With[{g = GroupGenerators[DihedralGroup[4]]}, And @@ Flatten[Outer[PermutationProduct[#1, #2] === PermutationProduct[#2, #1] &, g, g]]]	False	\text{With}[\{g=\text{GroupGenerators}[\text{DihedralGroup}[4]]\},\text{And}\text{@@}\text{Flatten}[\text{Outer}[\text{$\#$1}\unicode{f3de}\text{$\#$2}\text{===}\text{$\#$2}\unicode{f3de}\text{$\#$1}\&,g,g]]]	\text{False}

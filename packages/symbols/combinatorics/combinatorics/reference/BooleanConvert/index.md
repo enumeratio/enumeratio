@@ -26,3 +26,4 @@ attributes:
 - Other Wolfram forms ("ESOP", "AC", "BF", …) are left unevaluated rather than approximated.
 - Shares LogicalExpand's elimination of Implies/Equivalent/Xor/Nand/Nor and its deterministic sort/dedup of every And/Or's operands.
 - A CNF clause with both a literal and its negation (a tautology) is dropped; an all-dropped result is True.
+- Clauses that differ only in one literal's polarity merge and absorbed clauses drop, so `Implies(b, b)` is True and `b ∧ ¬b` is False, as in Wolfram. This is not a full minimizer.

@@ -14,3 +14,8 @@ count-partsizeboundedcompositions-3-3-row		test	[Count, [PartSizeBoundedComposit
 count-partsizeboundedcompositions-4-3-row		test	[Count, [PartSizeBoundedCompositions, 4, 3]]	7	
 count-partsizeboundedcompositions-5-3-row		test	[Count, [PartSizeBoundedCompositions, 5, 3]]	13	
 count-partsizeboundedcompositions-6-3-row		test	[Count, [PartSizeBoundedCompositions, 6, 3]]	24	
+count-past-2-53-parts-of-size-at-most-5	Scope		[Count, [PartSizeBoundedCompositions, 56, 5]]	{num: "14816957550408632"}	The first $n$ past $2^{53}$ for parts of size at most $5$: the count is the pentanacci-style recurrence, exact as a big integer
+count-100-parts-of-size-at-most-10	Scope		[Count, [PartSizeBoundedCompositions, 100, 10]]	{num: "606147434557459526483161067501"}	Far past $2^{53}$ the count stays exact: the coefficient of $x^{100}$ in $1/(1 - x - \cdots - x^{10})$
+count-150-parts-of-size-at-most-40-row	Scope	test	[Count, [PartSizeBoundedCompositions, 150, 40]]	{num: "713623846316958381073424191750049706408935424"}	
+count-5-parts-of-size-at-most-0-row	Scope	test	[Count, [PartSizeBoundedCompositions, 5, 0]]	0	No part fits, so no composition of a positive $n$
+count-0-parts-of-size-at-most-0-row	Scope	test	[Count, [PartSizeBoundedCompositions, 0, 0]]	1	The empty composition

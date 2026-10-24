@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-ordered-tree			[AutomorphismGroupSize, [OrderedTree, [List, [List], [List, [List]], [List]]]]	2			the ordered tree $[[],[[]],[]]$
+findstat-st000417-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'AutomorphismGroupSize'"]	1	1	FindStat St000417	FindStat's value for [[]]
+findstat-st000417-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'AutomorphismGroupSize'"]	1	1	FindStat St000417	FindStat's value for [[[]]]
+findstat-st000417-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'AutomorphismGroupSize'"]	2	2	FindStat St000417	FindStat's value for [[],[]]

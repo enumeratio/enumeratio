@@ -21,4 +21,5 @@ erf-erfinv-x-x-symbolically-see-erfinv	Erf[InverseErf[x]]	x		\text{erf}\left(\te
 on-the-imaginary-axis-erf-i-i-erfi-1	Erf[I]	I*Erfi[1]		\text{erf}(i)	i \text{erfi}(1)	
 frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the	D[Erf[x], x]	2/(E^x^2*Sqrt[Pi])		\frac{\partial \text{erf}(x)}{\partial x}	\frac{2 e^{-x^2}}{\sqrt{\pi }}	
 an-exact-integer-argument-is-left-unevaluated	Erf[1]	Erf[1]		\text{erf}(1)	\text{erf}(1)	
+n-of-a-complex-argument-past-a-double-declines	N[Erf[Complex[1, 1]], 25]	1.31615128169794764488027108022801147074`25.146014995938238 + 0.19045346923783468628410886198671887487`24.30649807293918*I	1.3161512816979476448802711 + 0.1904534692378346862841089 I	N[\text{erf}(1+i),25]	1.3161512816979476448802711+0.1904534692378346862841089 i	disagree
 by-z-3-5-erf-is-already-within-10-6-of-its-limit	Erf[3.5]	0.9999992569016276		\text{erf}(3.5)	0.999999	

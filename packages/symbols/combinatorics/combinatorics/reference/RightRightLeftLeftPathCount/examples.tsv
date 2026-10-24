@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[RightRightLeftLeftPathCount, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	0			the binary tree $[[.,.],[[.,.],.]]$
+findstat-st000129-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, 0]], "'RightRightLeftLeftPathCount'"]	0	0	FindStat St000129	FindStat's value for [.,.]
+findstat-st000129-2	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'RightRightLeftLeftPathCount'"]	0	0	FindStat St000129	FindStat's value for [.,[.,.]]
+findstat-st000129-3	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'RightRightLeftLeftPathCount'"]	0	0	FindStat St000129	FindStat's value for [[.,.],.]

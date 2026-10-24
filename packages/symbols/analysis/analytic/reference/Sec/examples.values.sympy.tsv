@@ -25,7 +25,7 @@ evenness-drops-the-sign-of-a-symbolic-argument	sec((-Symbol("x")))	sec(x)
 derivative-sec-x-tan-x	diff(sec(Symbol("x")), Symbol("x"))	tan(x)*sec(x)	
 antiderivative-ln-sec-x-tan-x	integrate(sec(Symbol("x")), Symbol("x"))	-log(sin(x) - 1)/2 + log(sin(x) + 1)/2	
 n-sec-6-over-5-50	N(sec(Rational(6, 5)), 30)	2.75970360133240645688343293924	
-matrixfunction-function-sec-1-1-list-list-5-over			
+matrixfunction-function-sec-1-1-list-list-5-over	Matrix([[(Rational(5, 6) * pi), 0], [(Rational(1, 6) * pi), (Rational(-1, 4) * pi)]]).analytic_func(sec(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[-2*sqrt(3)/3, 0], [-2*sqrt(2)/13 - 4*sqrt(3)/39, sqrt(2)]]	
 sec-positiveinfinity	sec(oo)	AccumBounds(-oo, oo)	disagree
 assuming-m-in-integers-refine-sec-pi-times-1			
 assuming-m-in-integers-fullsimplify-refine-sec			

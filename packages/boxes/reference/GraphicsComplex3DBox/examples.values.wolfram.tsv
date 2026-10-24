@@ -1,2 +1,2 @@
 id	in	out	tex.in	tex.out
-inert	GraphicsComplex3DBox[RowBox[List[]], List[Points, List[]]]	GraphicsComplex3DBox[RowBox[{}], {Points, {}}]	\text{GraphicsComplex3DBox}[\text{RowBox}[\{\}],\{\text{Points},\{\}\}]	\text{GraphicsComplex3DBox}[\text{RowBox}[\{\}],\{\text{Points},\{\}\}]
+inert	GraphicsComplex3DBox[List[], List[]]	GraphicsComplex3DBox[{}, {}]	\text{GraphicsComplex3DBox}[\{\},\{\}]	\text{GraphicsComplex3DBox}[\{\},\{\}]

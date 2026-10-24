@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-binary-tree			[NonBoundaryNodes, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	1			the binary tree $[[.,.],[[.,.],.]]$
+findstat-st000204-1	Properties		[CombinatorialStat, [BinaryTree, [List, 0, 0]], "'NonBoundaryNodes'"]	0	0	FindStat St000204	FindStat's value for [.,.]
+findstat-st000204-2	Properties		[CombinatorialStat, [BinaryTree, [List, 0, [List, 0, 0]]], "'NonBoundaryNodes'"]	0	0	FindStat St000204	FindStat's value for [.,[.,.]]
+findstat-st000204-3	Properties		[CombinatorialStat, [BinaryTree, [List, [List, 0, 0], 0]], "'NonBoundaryNodes'"]	0	0	FindStat St000204	FindStat's value for [[.,.],.]

@@ -237,11 +237,10 @@ export function shapeOf(box: Box, asked: BoxShape): BoxShape {
     if (!CONTAINERS.has(node[0])) {
       marks[node[0]] = (marks[node[0]] ?? 0) + 1;
       if (role !== undefined) roles[role] = (roles[role] ?? 0) + 1;
-    } else if (
-      (node[0] === "RowBox" || node[0] === "GraphicsComplexBox" || node[0] === "GraphicsComplex3DBox") &&
-      Array.isArray(node[1])
-    )
-      for (const part of node[1]) walk(part, role);
+    } else if (node[0] === "GraphicsComplexBox" || node[0] === "GraphicsComplex3DBox") {
+      // Operand 1 is the coordinates; the primitives are operand 2.
+      if (Array.isArray(node[2])) for (const part of node[2]) walk(part, role);
+    } else if (node[0] === "RowBox" && Array.isArray(node[1])) for (const part of node[1]) walk(part, role);
     else walk(node[1]);
   };
   if (drawing[0] === "GraphicsBox" || drawing[0] === "Graphics3DBox")

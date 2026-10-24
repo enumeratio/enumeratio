@@ -93,6 +93,18 @@ const CASES: readonly Case[] = [
     changed: 1,
   },
   {
+    name: "a duplicate blocks its readers transitively; an unrelated cell still runs",
+    sources: ["a := 1", "a := 2", "b := a + 1", "b * 2", "c := 3"],
+    tracked: "All",
+    changed: 5,
+  },
+  {
+    name: "renaming one duplicate lets everything schedule again",
+    sources: ["a := 1", "z := 2", "b := a + 1", "b * 2"],
+    tracked: "All",
+    changed: 2,
+  },
+  {
     name: "a cycle is an error on every member",
     sources: ["a := b + 1", "b := a + 1"],
     tracked: "All",

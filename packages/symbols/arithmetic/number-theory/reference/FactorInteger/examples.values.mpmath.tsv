@@ -43,4 +43,6 @@ negative-numbers-carry-an-explicit-1-unit-factor
 factorinteger-neg-12		
 a-non-integer-real-stays-unevaluated		
 an-integer-valued-float-factors		
+a-negative-integer-valued-float-keeps-its-unit		
+a-non-integer-float-stays-unevaluated		
 the-hardy-ramanujan-taxicab-number-7-times-13		

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-standard-tableau-with-rows-13-and-2			[Catabolism, [StandardTableau, [List, [List, 1, 3], [List, 2]]]]	[StandardTableau, [List, [List, 1, 2], [List, 3]]]	the standard tableau with rows $13$ and $2$

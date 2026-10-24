@@ -23,7 +23,7 @@ import {
   type Cycle,
   cyclesAreValid,
   cyclesToPermutation,
-  dropFixedCycles,
+  canonicalCycles,
   factorial,
   identityPermutation,
   invertPermutation,
@@ -41,6 +41,7 @@ import {
   symmetricIndex,
 } from "./cycle-index.ts";
 import { GROUPALGEBRA_NOTATION } from "./notation.ts";
+import { declareOrbitInventory } from "./orbit-inventory.ts";
 
 const gcdBig = (a: bigint, b: bigint): bigint => (b === 0n ? a : gcdBig(b, a % b));
 
@@ -142,7 +143,7 @@ const cyclesExpression = (ce: ComputeEngine, cycles: readonly Cycle[]): BoxedExp
   ce.function("Cycles", [
     ce.function(
       "List",
-      cycles.map((cycle) =>
+      canonicalCycles(cycles).map((cycle) =>
         ce.function(
           "List",
           cycle.map((x) => ce.number(x)),
@@ -388,15 +389,15 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   // ── permutations: Cycles, PermutationCycles, InversePermutation, Permute, PermutationGroup ──
 
   /** `Cycles(List(cycle, …))` — a carrier for a permutation in disjoint-cycle notation.
-   *  Canonicalises by dropping fixed points (singleton cycles), same as Wolfram's own. */
+   *  Canonicalizes as Wolfram's does: no fixed points, each cycle from its smallest point, cycles by first point. */
   ce.declare("Cycles", {
     signature: "(list<list<integer>>) -> expression<Cycles>",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const cycles = ops[0] === undefined ? undefined : cycleListOf(ops[0]);
       if (cycles === undefined || !cyclesAreValid(cycles)) return undefined;
-      const trimmed = dropFixedCycles(cycles);
-      if (trimmed.length === cycles.length) return undefined; // already canonical
-      return cyclesExpression(ce, trimmed);
+      const canonical = canonicalCycles(cycles);
+      if (JSON.stringify(canonical) === JSON.stringify(cycles)) return undefined; // already canonical
+      return cyclesExpression(ce, canonical);
     },
   });
 
@@ -468,8 +469,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
       if (input.operator === "Cycles") {
         const cycles = cyclesOf(input);
         if (cycles === undefined || !cyclesAreValid(cycles)) return undefined;
-        // Reverse the traversal but keep each cycle's own starting point, matching
-        // Wolfram: (i1 i2 … ik)⁻¹ is written (i1 ik … i2), not the bare array reversal.
+        // (i1 i2 … ik)⁻¹ is (i1 ik … i2); cyclesExpression restarts each at its smallest point.
         return cyclesExpression(
           ce,
           cycles.map((cycle) => [cycle[0]!, ...cycle.slice(1).toReversed()]),
@@ -759,6 +759,8 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
       return ce.function("Add", terms);
     },
   });
+
+  declareOrbitInventory(ce);
 
   declareAlgebra(ce, {
     type: "group_algebra",

@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-step-word-uuddud			[DoubleStepVisiblePoints, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	1			the step word $UUDDUD$
+the-step-word-uduudd			[DoubleStepVisiblePoints, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]	1			the step word $UDUUDD$
+findstat-st000683-1	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0]], "'DoubleStepVisiblePoints'"]	0	0	FindStat St000683	FindStat's value for [1,0,1,0]
+findstat-st000683-2	Properties		[CombinatorialStat, [DyckPath, [List, 1, 1, 0, 0]], "'DoubleStepVisiblePoints'"]	1	1	FindStat St000683	FindStat's value for [1,1,0,0]
+findstat-st000683-3	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0, 1, 0]], "'DoubleStepVisiblePoints'"]	0	0	FindStat St000683	FindStat's value for [1,0,1,0,1,0]

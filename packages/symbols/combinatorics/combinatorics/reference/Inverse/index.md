@@ -43,6 +43,14 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: "[_i + 1 for _i in (Permutation([_j - 1 for _j in $1]) ** -1).array_form]"
+    arity: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-21
+    note: The permutation inverse (`Permutation.__invert__`), 1-based in and out; not a matrix inverse.
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

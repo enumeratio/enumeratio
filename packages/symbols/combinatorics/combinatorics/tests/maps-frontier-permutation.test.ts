@@ -22,8 +22,7 @@ const constructorFor = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]))
 
 const ce = bareEngine();
 declareCombinatoricsCarriers(ce);
-// KrewerasComplement's guard reads CycleCount, so statistics has to be declared before
-// maps — the same order map.test.ts uses.
+// Statistics are declared before maps — the same order map.test.ts uses.
 declareStatistics(ce, ALL_STATISTICS, { domainTypes });
 declareMaps(ce, constructorFor);
 
@@ -159,9 +158,9 @@ test("distinct Knuth class representatives over S_n count standard Young tableau
 
 /** c = (1 2 ... n), applied to a position. */
 const longCycleRef = (i: number, n: number): number => (i % n) + 1;
-/** K(w) = w^{-1} c, read off directly: position i holds w^{-1}(c(i)), and w^{-1}(x) is x's
- *  position in the one-line word. */
-const krewerasRef = (p: readonly number[]): number[] => p.map((_, i) => p.indexOf(longCycleRef(i + 1, p.length)) + 1);
+/** K(w) = w^{-1} c in FindStat's order (Sage, left to right): position i holds c(w^{-1}(i)),
+ *  and w^{-1}(x) is x's position in the one-line word. */
+const krewerasRef = (p: readonly number[]): number[] => p.map((_, i) => longCycleRef(p.indexOf(i + 1) + 1, p.length));
 
 /** w's cycles, as sets of 1-indexed points. */
 function cyclesOf(p: readonly number[]): number[][] {
@@ -210,16 +209,9 @@ const isNonCrossing = (p: readonly number[]): boolean => {
   return true;
 };
 
-test("KrewerasComplement agrees with w⁻¹c on the non-crossing permutations, up to n = 4", () => {
+test("KrewerasComplement agrees with w⁻¹c on every permutation, up to n = 4", () => {
   for (const p of ALL4) {
-    const evaluated = ce.box(["KrewerasComplement", perm(...p)] as never).evaluate();
-    if (isNonCrossing(p)) {
-      expect(contents(["KrewerasComplement", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...krewerasRef(p)]);
-    } else {
-      // Declines: the call stays headed by `KrewerasComplement` rather than being answered
-      // wrong — the way an unmatched `Filter` predicate is never materialised at all.
-      expect(evaluated.operator, `[${p.join(", ")}] declines`).toBe("KrewerasComplement");
-    }
+    expect(contents(["KrewerasComplement", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...krewerasRef(p)]);
   }
 });
 
@@ -230,7 +222,7 @@ test("non-crossing permutations over S_n are counted by Catalan(n)", () => {
   }
 });
 
-test("K∘K is conjugation by the long cycle, and K is a bijection of NC(n)", () => {
+test("K∘K is conjugation by the long cycle, and K is a bijection of S_n that preserves NC(n)", () => {
   for (let n = 1; n <= 6; n++) {
     const nc = permutations(n).filter(isNonCrossing);
     const cOf = (i: number) => longCycleRef(i, n);
@@ -240,11 +232,14 @@ test("K∘K is conjugation by the long cycle, and K is a bijection of NC(n)", ()
       const k = krewerasRef(w);
       expect(isNonCrossing(k), `K(w) stays in NC(n) [n=${n}] [${w.join(", ")}]`).toBe(true);
       const kk = krewerasRef(k);
-      const conjugated = w.map((_, i) => cInvOf(w[cOf(i + 1) - 1]!));
-      expect(kk, `K(K(w)) = c⁻¹wc [n=${n}] [${w.join(", ")}]`).toEqual(conjugated);
+      const conjugated = w.map((_, i) => cOf(w[cInvOf(i + 1) - 1]!));
+      expect(kk, `K(K(w)) = cwc⁻¹ [n=${n}] [${w.join(", ")}]`).toEqual(conjugated);
       images.add(JSON.stringify(k));
     }
     expect(images.size, `K is injective on NC(${n})`).toBe(nc.length);
+    expect(new Set(permutations(n).map((w) => JSON.stringify(krewerasRef(w)))).size, `K is a bijection of S_${n}`).toBe(
+      permutations(n).length,
+    );
   }
 });
 

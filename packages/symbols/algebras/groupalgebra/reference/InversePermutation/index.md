@@ -14,6 +14,11 @@ seeAlso:
   - Permute
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_inverse_permutation($1)
+    arity: 1
 ---
 
 - For a one-line word, $\sigma^{-1}(\sigma(i)) = i$ for every $i$

@@ -6,6 +6,11 @@ summary: "The common shape of the RSK tableaux: the row lengths, as a partition 
 references:
   - system: wikipedia
     identity: Robinson–Schensted correspondence
+catalog:
+  - system: findstat
+    identity: Mp00060
+    url: https://www.findstat.org/Mp00060
+    on: Permutation
 mapOn:
   - Permutation
 signatures:

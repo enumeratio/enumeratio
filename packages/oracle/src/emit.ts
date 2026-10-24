@@ -354,11 +354,6 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         // unchanged), SymPy and Sage as an explicit symbolic value, since neither
         // auto-declares a bare name the way Wolfram does. A numeric-only lane has nothing to
         // do with a name, so it stays missing.
-        // Combinatorica answers values, not identities: a free symbol is unmapped there.
-        if (system === "combinatorica") {
-          missing.push(`symbol:${node}`);
-          return node;
-        }
         free.add(node);
         if (wl) return wolframFree(node);
         if (system === "sympy") return `Symbol(${JSON.stringify(node)})`;
@@ -557,6 +552,14 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         return toWolfram([head, ...operands] as Parameters<typeof toWolfram>[0]);
       }
     }
+    // The SymPy mapping is the permutation inverse; any other `Inverse` (a matrix, a word) is not that.
+    if (system === "sympy" && head === "Inverse" && operands.length === 1) {
+      const inner = operands[0] as MathJSON;
+      if (!(isCall(inner) && inner[0] === "Permutation")) {
+        missing.push("Inverse/1");
+        return "0";
+      }
+    }
     // SymPy's `summation(f, (k, a, b))`: the iterator is a tuple, from 1 when its start is `Nothing` or left out.
     // Sage's `sum(f, k, a, b)` and `product(f, k, a, b)` take the iterator's parts as arguments, k a symbol.
     if (
@@ -628,6 +631,44 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
             bound.delete(name);
             realDummies.delete(name);
           }
+        }
+      }
+    }
+    // The mapped MatrixFunction already simplifies each entry, and `simplify` does not take a list.
+    if (
+      system === "sympy" &&
+      (head === "Simplify" || head === "FullSimplify") &&
+      operands.length === 1 &&
+      isCall(operands[0] as MathJSON) &&
+      (operands[0] as readonly MathJSON[])[0] === "MatrixFunction"
+    )
+      return walk(operands[0] as MathJSON);
+    // SymPy's `Matrix.analytic_func(f(x), x)` takes f as an expression of one variable: a head's name, a
+    // Function's body, or an undefined name as an unknown function of it.
+    if (system === "sympy" && head === "MatrixFunction" && operands.length === 2) {
+      const template = mappingFor(head, 2, extra, system)?.emit[system];
+      const [f, matrix] = operands as [MathJSON, MathJSON];
+      const variable = "_mf";
+      const slot = (node: MathJSON, name: string): MathJSON =>
+        node === name
+          ? variable
+          : isCall(node)
+            ? (node.map((part, i) => (i === 0 ? part : slot(part, name))) as MathJSON)
+            : node;
+      let body: MathJSON | undefined;
+      if (typeof f === "string") body = DEFINED_NAMES.has(f) || f.startsWith("_") ? [f, variable] : undefined;
+      else if (isCall(f) && f[0] === "Function") {
+        const inner = f[1] as MathJSON;
+        const unwrapped = isCall(inner) && inner[0] === "Block" ? (inner[1] as MathJSON) : inner;
+        body = slot(unwrapped, typeof f[2] === "string" ? f[2] : "_1");
+      }
+      if (template !== undefined && (body !== undefined || typeof f === "string")) {
+        bound.add(variable);
+        try {
+          const source = body === undefined ? `Function(${JSON.stringify(f)})(${walk(variable)})` : walk(body);
+          return fill(template, [source, walk(matrix)]);
+        } finally {
+          bound.delete(variable);
         }
       }
     }
@@ -913,7 +954,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     // it: an unevaluated symbolic function application, not an error. A pattern-variable-
     // shaped name (`_a`) is excluded for the same reason a bare one is (emit.ts's string
     // branch, above) — this codebase's own convention, not a math name.
-    if (system === "wolfram" && !DEFINED_NAMES.has(head) && !(head in CONSTANTS) && !/^_[A-Za-z]/.test(head)) {
+    if (wl && !DEFINED_NAMES.has(head) && !(head in CONSTANTS) && !/^_[A-Za-z]/.test(head)) {
       if (isWolframOwnName(head)) return `${toWolfram(head)}[${operands.map(walk).join(", ")}]`;
       free.add(head);
       return `${wolframFree(head)}[${operands.map(walk).join(", ")}]`;

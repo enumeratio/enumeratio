@@ -1,0 +1,25 @@
+id	in	out	verdict
+one-over-s-squared	inverse_laplace_transform((S(Symbol("s"))**-2), Symbol("s"), Symbol("t"))	t*Heaviside(t)	
+one-over-s-minus-a	inverse_laplace_transform((S((Symbol("s") + (-Symbol("a"))))**-1), Symbol("s"), Symbol("t"))	exp(a*t)*Heaviside(t)	
+s-over-s-squared-plus-a-squared	inverse_laplace_transform((S(Symbol("s")) / ((S(Symbol("s"))**2) + (S(Symbol("a"))**2))), Symbol("s"), Symbol("t"))	cos(a*t)*Heaviside(t)	
+inverselaplacetransform-1-over-s-plus-1-s-t	inverse_laplace_transform((S(1) / (Symbol("s") + 1)), Symbol("s"), Symbol("t"))	exp(-t)*Heaviside(t)	
+inverselaplacetransform-ln-1-over-b-plus-s-times	inverse_laplace_transform(log(((S(1) / (Symbol("b") + Symbol("s"))) * (Symbol("a") + Symbol("s")))), Symbol("s"), Symbol("t"))	InverseLaplaceTransform(log((a + s)/(b + s)), s, t, _None)	inconclusive
+inverselaplacetransform-a-times-1-over-a-pow-2	inverse_laplace_transform((Symbol("a") * (S(1) / ((S(Symbol("a"))**2) + (S(Symbol("s"))**2)))), Symbol("s"), Symbol("t"))	a*sin(t*sqrt(a**2))*Heaviside(t)/sqrt(a**2)	
+inverselaplacetransform-s-times-1-over-a-pow-2	inverse_laplace_transform((Symbol("s") * (S(1) / ((S(Symbol("a"))**2) + (S(Symbol("s"))**2)))), Symbol("s"), Symbol("t"))	cos(a*t)*Heaviside(t)	
+fullsimplify-inverselaplacetransform-a-times-1	simplify(inverse_laplace_transform((Symbol("a") * (S(1) / ((-(S(Symbol("a"))**2)) + (S(Symbol("s"))**2)))), Symbol("s"), Symbol("t")))	sinh(a*t)*Heaviside(t)	
+fullsimplify-inverselaplacetransform-s-times-1	simplify(inverse_laplace_transform((Symbol("s") * (S(1) / ((-(S(Symbol("a"))**2)) + (S(Symbol("s"))**2)))), Symbol("s"), Symbol("t")))	cosh(a*t)*Heaviside(t)	
+inverselaplacetransform-s-times-a-pow-2-plus-s	inverse_laplace_transform((Symbol("s") * (S(((S(Symbol("a"))**2) + (S(Symbol("s"))**2)))**-2)), Symbol("s"), Symbol("t"))	ValueError: 	error
+inverselaplacetransform-s-times-1-over-a-pow-2-2	inverse_laplace_transform((Symbol("s") * (S(1) / (((S(Symbol("a"))**2) + (S(Symbol("s"))**2)) * ((S(Symbol("b"))**2) + (S(Symbol("s"))**2))))), Symbol("s"), Symbol("t"))	-cos(a*t)*Heaviside(t)/(a**2 - b**2) + cos(b*t)*Heaviside(t)/(a**2 - b**2)	
+fullsimplify-inverselaplacetransform-1-over-neg	simplify(inverse_laplace_transform(((S(1) / (((-(S(Symbol("a"))**2)) + (S(Symbol("s"))**2)) * ((-(S(Symbol("b"))**2)) + (S(Symbol("s"))**2)))) * (S(Symbol("s"))**2)), Symbol("s"), Symbol("t")))	(-a*exp(b*t) + b*exp(a*t) + (a*exp(a*t) - b*exp(b*t))*exp(t*(a + b)))*exp(-t*(a + b))*Heaviside(t)/(2*(a**2 - b**2))	
+inverselaplacetransform-1-over-s-minus-2-times	inverse_laplace_transform(((S(1) / ((Symbol("s") + -2) * sqrt(Symbol("s")))) * (S(E)**(-5 * Symbol("s")))), Symbol("s"), Symbol("t"))	sqrt(2)*exp(2*t - 10)*Heaviside(t - 5)*erf(sqrt(2)*sqrt(t - 5))/2	disagree
+inverselaplacetransform-1-over-a-plus-s-times	inverse_laplace_transform(((S(1) / (Symbol("a") + Symbol("s"))) * sqrt((Symbol("b") + Symbol("s")))), Symbol("s"), Symbol("t"))	(sqrt(-a + b)*exp(-a*t)*erf(sqrt(t)*sqrt(-a + b)) + exp(-b*t)/(sqrt(pi)*sqrt(t)))*Heaviside(t)	
+inverselaplacetransform-1-over-s-minus-1-times	inverse_laplace_transform(((S(1) / (Symbol("s") + -1)) * log(Symbol("s"))), Symbol("s"), Symbol("t"))	InverseLaplaceTransform(log(s)/(s - 1), s, t, _None)	disagree
+inverselaplacetransform-ln-1-over-s-pow-2-plus-2	inverse_laplace_transform(log(((S(1) / ((S(Symbol("s"))**2) + 2)) * ((S(Symbol("s"))**2) + 1))), Symbol("s"), Symbol("t"))	InverseLaplaceTransform(log((s**2 + 1)/(s**2 + 2)), s, t, _None)	inconclusive
+inverselaplacetransform-1-over-root-s-3-times-ln			
+inverselaplacetransform-1-over-s-times-ln-s-pow	inverse_laplace_transform(((S(1) / Symbol("s")) * (S(log(Symbol("s")))**2)), Symbol("s"), Symbol("t"))	2*(t*log(t)**2/2 + EulerGamma*t*log(t) - pi**2*t/12 + EulerGamma**2*t/2)*Heaviside(t)/t	
+inverselaplacetransform-1-over-root-s-3-times			
+inverselaplacetransform-1-over-sqrt-s-times-erf	inverse_laplace_transform(((S(1) / sqrt(Symbol("s"))) * erf(sqrt((2 * Symbol("s"))))), Symbol("s"), Symbol("t"))	InverseLaplaceTransform(erf(sqrt(2)*sqrt(s))/sqrt(s), s, t, _None)	disagree
+inverselaplacetransform-elliptick-a-pow-2-times			
+inverselaplacetransform-s-times-neg-elliptice-a			
+inverselaplacetransform-1-over-sqrt-s-plus-1-s-t	inverse_laplace_transform((S(1) / sqrt((Symbol("s") + 1))), Symbol("s"), Symbol("t"))	exp(-t)*Heaviside(t)/(sqrt(pi)*sqrt(t))	
+inverselaplacetransform-besselk-4-sqrt-s-times-s			

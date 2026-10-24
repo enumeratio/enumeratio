@@ -19,9 +19,11 @@ import {
   type MathJSON,
   positions,
   size,
+  sortedRuns,
 } from "../../src/map-helpers.ts";
 import { bstParents } from "../../trees/src/bst.ts";
 import { fromPermutationTree } from "../../trees/src/increasing-binary-tree.ts";
+import { cactusEvacuationBody, cactusEvacuationKernel } from "../../tableaux/src/promotion.ts";
 import {
   insertionReadingWord,
   insertionRows,
@@ -29,6 +31,16 @@ import {
   recordingRows,
   rskRows,
 } from "../../tableaux/src/tableau.ts";
+import { rskInsertionKernel, rskRecordingKernel, rskShapeKernel } from "../../tableaux/src/rsk-kernels.ts";
+import {
+  cycleTypeKernel,
+  foataInversionsToMajorKernel,
+  foataKernel,
+  foataMajorToInversionsKernel,
+  inverseFoataKernel,
+} from "./map-kernels.ts";
+import { foataInversionsToMajorBody, foataMajorToInversionsBody } from "./foata-bijection.ts";
+import { lehmerCode, majorCode, permutationOfLehmerCode, permutationOfMajorCode } from "./codes.ts";
 import {
   cycleDecompositionBody,
   permutationOfCycleDecompositionBody,
@@ -223,29 +235,83 @@ const descentComposition: MathJSON = (() => {
   ];
 })();
 
-/** The long cycle c = (1 2 ... n), read at position i: i + 1, wrapping n back to 1 — the same
- *  `Mod` shape `CyclicShift` rotates the WORD by; here it is applied to the position instead
- *  to give c itself. */
-const longCycleAt = (i: MathJSON): MathJSON => ["Add", ["Mod", i, ["Length", "_raw"]], 1];
+/** The long cycle c = (1 2 ... n), read at position x: x + 1, wrapping n back to 1. */
+const longCycleAt = (x: MathJSON): MathJSON => ["Add", ["Mod", x, ["Length", "_raw"]], 1];
 
-/** K(w) at position i is w^{-1}(c(i)) — and `IndexOf` on the word already IS w^{-1} applied
- *  to its argument (the same reading `Inverse` uses), so no separate inversion or
- *  multiplication step is needed. */
-const krewerasBody: MathJSON = forEach(positions, ["IndexOf", "_raw", longCycleAt("i")]);
+/** FindStat's Mp00088, π ↦ π⁻¹c with Sage's left-to-right product: position i holds c(π⁻¹(i)).
+ *  `IndexOf` on the word already IS π⁻¹ applied to its argument (the same reading `Inverse` uses). */
+const krewerasBody: MathJSON = forEach(positions, longCycleAt(["IndexOf", "_raw", "i"]));
 
-/**
- * w sits below c in absolute order — equivalently, its cycles form a non-crossing partition —
- * iff the reflection lengths of w and K(w) split c's exactly: `cyc(w) + cyc(K(w)) = n + 1`.
- * Each side is wrapped back into a `Permutation` because `CycleCount` is declared over the
- * carrier, not the raw word.
- */
-const krewerasGuard: MathJSON = [
-  "Equal",
-  ["Add", ["CycleCount", ["Permutation", "_raw"]], ["CycleCount", ["Permutation", "_image"]]],
-  ["Add", size, 1],
-];
+/** The position of value v in the word: where v sits. */
+const where = (v: MathJSON): MathJSON => ["IndexOf", "_raw", v];
 
 export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
+  {
+    name: "DescentWord",
+    from: "permutation",
+    to: "binary_word",
+    body: forEach(
+      ["Range", 1, ["Subtract", ["Length", "_raw"], 1], 1],
+      ["If", ["Greater", at("i"), at(["Add", "i", 1])], 1, 0],
+    ),
+    guard: ["Greater", ["Length", "_raw"], 0],
+    summary: "Letter i is 1 when the word falls between positions i and i + 1: the descent set as a binary word.",
+    note: "One letter shorter than the permutation, so the empty permutation has no descent word.",
+  },
+  {
+    name: "DescentTopWord",
+    from: "permutation",
+    to: "binary_word",
+    // Value v is a descent top when it is followed by something smaller. Value 1 never is, so the word starts at 2.
+    body: forEach(
+      ["Range", 2, ["Length", "_raw"], 1],
+      [
+        "If",
+        [
+          "And",
+          ["Less", where("v"), ["Length", "_raw"]],
+          ["Greater", "v", at(["Min", ["Add", where("v"), 1], ["Length", "_raw"]])],
+        ],
+        1,
+        0,
+      ],
+      "v",
+    ),
+    guard: ["Greater", ["Length", "_raw"], 0],
+    summary: "Letter v - 1 is 1 when value v is a descent top: some smaller value immediately follows it.",
+    note: "Value 1 is never a descent top, so the first letter stands for 2.",
+  },
+  {
+    name: "DescentBottomWord",
+    from: "permutation",
+    to: "binary_word",
+    // Value v is a descent bottom when it is preceded by something larger. Value n never is, so the word stops at n - 1.
+    body: forEach(
+      ["Range", 1, ["Subtract", ["Length", "_raw"], 1], 1],
+      ["If", ["And", ["Greater", where("v"), 1], ["Greater", at(["Max", ["Subtract", where("v"), 1], 1]), "v"]], 1, 0],
+      "v",
+    ),
+    guard: ["Greater", ["Length", "_raw"], 0],
+    summary: "Letter v is 1 when value v is a descent bottom: some larger value immediately precedes it.",
+    note: "Value n is never a descent bottom, so the last letter stands for n - 1.",
+  },
+  {
+    name: "LongCycleConjugation",
+    from: "permutation",
+    to: "permutation",
+    // c⁻¹πc adds 1 (mod n) to every entry of every cycle: the image sends i + 1 to π(i) + 1.
+    body: forEach(positions, [
+      "Add",
+      [
+        "Mod",
+        at(["Add", ["Mod", ["Add", ["Subtract", "i", 2], ["Length", "_raw"]], ["Length", "_raw"]], 1]),
+        ["Length", "_raw"],
+      ],
+      1,
+    ]),
+    summary: "Conjugation by the long cycle (1 2 ... n): each cycle's entries shifted up by one, cyclically.",
+    note: "Reflects the permutation's cycle diagram around the circle one step; it fixes the cycle type, and its n-th power is the identity.",
+  },
   {
     name: "Reverse",
     from: "permutation",
@@ -307,6 +373,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     // of that name over permutations, and a head can only mean one thing. Reading the sorted
     // list back to front by index says the same and shadows nothing.
     body: descending(cycleLengths),
+    kernel: cycleTypeKernel,
     summary: "The multiset of cycle lengths, as a partition.",
     note: "The first map here that CROSSES carriers — permutation in, integer partition out — which is the case the types exist for.",
   },
@@ -368,6 +435,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     from: "permutation",
     to: "standard_tableau",
     body: insertionRows,
+    kernel: rskInsertionKernel,
     summary: "The insertion tableau of the RSK correspondence.",
     note: "Row insertion with bumping, as a fold over the word whose accumulator is the growing tableau, emitted as its rows. See tableau.ts for the indexing rule that makes it evaluate at all.",
   },
@@ -376,6 +444,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     from: "permutation",
     to: "integer_partition",
     body: insertionShape,
+    kernel: rskShapeKernel,
     summary: "The common shape of the RSK tableaux: the row lengths, as a partition of n.",
     note: "By Schensted, its first part is the longest increasing subsequence and its first COLUMN is the longest decreasing one — two statistics readable off this map.",
   },
@@ -384,6 +453,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     from: "permutation",
     to: "standard_tableau",
     body: recordingRows,
+    kernel: rskRecordingKernel,
     summary: "The recording tableau of the RSK correspondence, as its rows.",
     note: "Records WHERE each insertion landed. The insertion logic is untouched — comparing row lengths before and after says which row grew, which is less work than instrumenting the bumping to report it.",
   },
@@ -526,9 +596,8 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     from: "permutation",
     to: "permutation",
     body: krewerasBody,
-    guard: krewerasGuard,
-    summary: "w⁻¹c, for w below the long cycle c = (1 2 ... n) in absolute order.",
-    note: "Only defined on the non-crossing permutations (the embedding of NC(n) in S_n by absolute order beneath c) — everywhere else this declines rather than answering for a word it was never defined on. K∘K is conjugation by c, and K is a bijection of NC(n) onto itself.",
+    summary: "π⁻¹c with the long cycle c = (1 2 ... n), FindStat's order: position i holds c(π⁻¹(i)).",
+    note: "Total, a bijection of S_n; it restricts to the classical Kreweras complement of the non-crossing permutations (those below c in absolute order), mapping NC(n) onto itself. K∘K is conjugation by c.",
   },
   {
     name: "ConjugateAfterCycleType",
@@ -551,9 +620,205 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     from: "permutation",
     to: "permutation",
     body: foataWord,
+    kernel: foataKernel,
     summary:
       "Foata's fundamental bijection: cycles rotated to their max, ordered by increasing max, parentheses erased.",
     note: "The first fundamental transformation — it sends a permutation with k cycles to one with k left-to-right maxima. (The catalog's title also names maj → inv, which is the SECOND fundamental transformation's property; this map is the first.)",
+  },
+  {
+    name: "InverseFoata",
+    from: "permutation",
+    to: "permutation",
+    // Entry v is where v goes in its cycle: on to the next entry of the word, or back to the cycle's
+    // first entry (the running maximum) when the next entry starts a new left-to-right maximum.
+    body: forEach(
+      positions,
+      bind(
+        "p",
+        where("i"),
+        bind(
+          "top",
+          ["Max", forEach(["Range", 1, "p", 1], at("k"), "k")],
+          [
+            "If",
+            ["Or", ["Equal", "p", size], ["Greater", at(["Min", ["Add", "p", 1], size]), "top"]],
+            "top",
+            at(["Add", "p", 1]),
+          ],
+        ),
+      ),
+    ),
+    kernel: inverseFoataKernel,
+    summary:
+      "The permutation whose cycles are the stretches of the word between successive left-to-right maxima, each read as a cycle.",
+    note: "FindStat's Mp00086, the inverse of Foata: a word's left-to-right maxima open its cycles.",
+  },
+  {
+    name: "InverseKrewerasComplement",
+    from: "permutation",
+    to: "permutation",
+    body: forEach(positions, where(longCycleAt("i"))),
+    summary: "cπ⁻¹ with the long cycle c = (1 2 ... n), FindStat's order: position i holds π⁻¹(c(i)).",
+    note: "FindStat's Mp00089; the inverse of KrewerasComplement.",
+  },
+  {
+    name: "LehmerCodeToMajorCode",
+    from: "permutation",
+    to: "permutation",
+    body: permutationOfMajorCode(lehmerCode),
+    summary: "The permutation whose major code is this permutation's Lehmer code.",
+    note: "FindStat's Mp00062. It carries the inversion count to the major index; the inverse is MajorCodeToLehmerCode.",
+  },
+  {
+    name: "MajorCodeToLehmerCode",
+    from: "permutation",
+    to: "permutation",
+    body: permutationOfLehmerCode(majorCode),
+    summary: "The permutation whose Lehmer code is this permutation's major code.",
+    note: "FindStat's Mp00073. It carries the major index to the inversion count; the inverse is LehmerCodeToMajorCode.",
+  },
+  {
+    name: "LehmerCodeRotation",
+    from: "permutation",
+    to: "permutation",
+    // Entry i of a Lehmer code runs 0 .. n - i, so adding one wraps at n - i + 1.
+    body: bind(
+      "lehmer",
+      lehmerCode,
+      permutationOfLehmerCode(
+        forEach(positions, ["Mod", ["Add", at("i", "lehmer"), 1], ["Subtract", ["Add", size, 1], "i"]]),
+      ),
+      "list<integer>",
+    ),
+    summary: "The permutation whose Lehmer code is this one's with every entry one larger, cyclically.",
+    note: "FindStat's Mp00149. Entry i wraps from n - i back to 0.",
+  },
+  {
+    name: "ConnectivityWord",
+    from: "permutation",
+    to: "binary_word",
+    // The first i entries lie below the rest exactly when they are 1 .. i.
+    body: forEach(
+      ["Range", 1, ["Subtract", size, 1], 1],
+      ["If", ["Equal", ["Max", forEach(["Range", 1, "i", 1], at("k"), "k")], "i"], 1, 0],
+    ),
+    guard: ["Greater", size, 0],
+    summary:
+      "Letter i is 1 when the first i entries are all smaller than the rest: the connectivity set as a binary word.",
+    note: "FindStat's Mp00114. One letter shorter than the permutation; the word is all 0 exactly when the permutation is connected.",
+  },
+  {
+    name: "LeftToRightMaximaDyckPath",
+    from: "permutation",
+    to: "dyck_path",
+    // Each left-to-right maximum at position q opens a rise up to its value and a fall as long as its reign.
+    body: [
+      "If",
+      ["Equal", size, 0],
+      ["List"],
+      bind(
+        "maxima",
+        [
+          "Fold",
+          [
+            "Function",
+            [
+              "If",
+              ["Equal", at("q"), ["Max", forEach(["Range", 1, "q", 1], at("k"), "k")]],
+              ["Join", "acc", ["List", "q"]],
+              "acc",
+            ],
+            "acc",
+            "q",
+          ],
+          ["List"],
+          positions,
+        ],
+        [
+          "Flatten",
+          forEach(
+            ["Range", 1, ["Length", "maxima"], 1],
+            forEach(
+              [
+                "Range",
+                1,
+                [
+                  "Add",
+                  [
+                    "Subtract",
+                    at(at("j", "maxima")),
+                    ["If", ["Equal", "j", 1], 0, at(at(["Subtract", "j", 1], "maxima"))],
+                  ],
+                  [
+                    "Subtract",
+                    ["If", ["Equal", "j", ["Length", "maxima"]], ["Add", size, 1], at(["Add", "j", 1], "maxima")],
+                    at("j", "maxima"),
+                  ],
+                ],
+                1,
+              ],
+              [
+                "If",
+                [
+                  "LessEqual",
+                  "t",
+                  [
+                    "Subtract",
+                    at(at("j", "maxima")),
+                    ["If", ["Equal", "j", 1], 0, at(at(["Subtract", "j", 1], "maxima"))],
+                  ],
+                ],
+                1,
+                0,
+              ],
+              "t",
+            ),
+            "j",
+          ),
+        ],
+        "list<integer>",
+      ),
+    ],
+    summary: "The Dyck path whose rises climb to each left-to-right maximum and whose falls run to the next one.",
+    note: "FindStat's Mp00127. Restricted to the 321-avoiding permutations it is a bijection with the Dyck paths.",
+  },
+  {
+    name: "FoataMajorToInversions",
+    from: "permutation",
+    to: "permutation",
+    body: foataMajorToInversionsBody,
+    kernel: foataMajorToInversionsKernel,
+    summary:
+      "Foata's bijection: each letter is put on the end of the image so far, which is cut into blocks, and every block is rotated one place right.",
+    note: "FindStat's Mp00067, Sage's foata_bijection. It sends the major index to the number of inversions; the inverse is FoataInversionsToMajor. Not the cycle-based Foata, which is FindStat's first fundamental transformation.",
+  },
+  {
+    name: "FoataInversionsToMajor",
+    from: "permutation",
+    to: "permutation",
+    body: foataInversionsToMajorBody,
+    kernel: foataInversionsToMajorKernel,
+    summary:
+      "The inverse of Foata's major-to-inversions bijection: peel off the last letter, rotate the blocks of the rest back.",
+    note: "FindStat's Mp00175, Sage's foata_bijection_inverse. It sends the number of inversions to the major index.",
+  },
+  {
+    name: "CactusEvacuation",
+    from: "permutation",
+    to: "permutation",
+    body: cactusEvacuationBody,
+    kernel: cactusEvacuationKernel,
+    summary: "The permutation with the same insertion tableau and the evacuation of the recording tableau.",
+    note: "FindStat's Mp00126, an involution: RSK, evacuate the recording tableau, RSK backwards.",
+  },
+  {
+    name: "RunSort",
+    from: "permutation",
+    to: "permutation",
+    // The runs start with different entries, so lexicographic order is the order of their first entries.
+    body: sortedRuns((first) => at(first)),
+    summary: "The permutation with its increasing runs sorted lexicographically.",
+    note: "FindStat's Mp00223. Lossy: the runs' order is forgotten.",
   },
 ];
 

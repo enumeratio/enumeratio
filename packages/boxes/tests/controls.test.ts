@@ -31,23 +31,19 @@ test("a Row of a Slider and a Dynamic is boxes end to end", () => {
 
 test("a control keeps its start, its entries and its options", () => {
   const entries = ["List", { str: "a" }, { str: "b" }];
-  const rules = ["List", ["KeyValuePair", { str: "a" }, { str: "a" }], ["KeyValuePair", { str: "b" }, { str: "b" }]];
+  const rules = ["List", ["Rule", { str: "a" }, { str: "a" }], ["Rule", { str: "b" }, { str: "b" }]];
   const picked = makeBoxes(json(["PopupMenu", ["Tuple", "c", { str: "b" }], entries]));
   expect(picked).toEqual(["PopupMenuBox", ["Dynamic", ["Tuple", "c", { str: "b" }]], rules]);
   // A pair of strings is the entries, not an option named "Apple".
   const pair = ["Tuple", { str: "Apple" }, { str: "Pear" }];
-  const pairRules = [
-    "List",
-    ["KeyValuePair", { str: "Apple" }, { str: "Apple" }],
-    ["KeyValuePair", { str: "Pear" }, { str: "Pear" }],
-  ];
+  const pairRules = ["List", ["Rule", { str: "Apple" }, { str: "Apple" }], ["Rule", { str: "Pear" }, { str: "Pear" }]];
   expect(makeBoxes(json(["PopupMenu", "c", pair]))).toEqual(["PopupMenuBox", ["Dynamic", "c"], pairRules]);
   // A label differing from its value rides in the rule and reads back as `Labeled`.
   const labeled = makeBoxes(json(["PopupMenu", "c", ["List", ["Labeled", 1, { str: "one" }], 2]]));
   expect(labeled).toEqual([
     "PopupMenuBox",
     ["Dynamic", "c"],
-    ["List", ["KeyValuePair", 1, { str: "one" }], ["KeyValuePair", 2, { str: "2" }]],
+    ["List", ["Rule", 1, { str: "one" }], ["Rule", 2, { str: "2" }]],
   ]);
   expect(controlOperands(labeled)).toEqual(["c", ["List", ["Labeled", 1, { str: "one" }], 2]]);
   const vertical = makeBoxes(json(["VerticalSlider", "h", ["Tuple", 0, 1], ["KeyValuePair", "Readout", "True"]]));
@@ -79,7 +75,7 @@ test("a toggler lists value -> label rules and shows its variable", () => {
   expect(toggler).toEqual([
     "TogglerBox",
     ["Dynamic", "s"],
-    ["List", ["KeyValuePair", "off", { str: "off" }], ["KeyValuePair", "on", { str: "on" }]],
+    ["List", ["Rule", "off", { str: "off" }], ["Rule", "on", { str: "on" }]],
     ["DynamicBox", ["ToBoxes", "s", "StandardForm"]],
   ]);
   expect(isBox(toggler)).toBe(true);
@@ -92,6 +88,23 @@ test("every control box has an intent, and boxes round-trip through MathJSON", (
   const box = makeBoxes(json(["Checkbox", "on"]));
   expect(fromMathJson(toMathJson(box))).toEqual(box);
   expect(toText(box)).toBe("-Checkbox-");
+});
+
+test("Checkbox, InputField and Locator leave the domain out unless one is given, as Wolfram's boxes do", () => {
+  expect(makeBoxes(json(["Checkbox", "on"]))).toEqual(["CheckboxBox", ["Dynamic", "on"]]);
+  const values = makeBoxes(json(["Checkbox", "on", ["Tuple", 0, 1]]));
+  expect(values).toEqual(["CheckboxBox", ["Dynamic", "on"], ["Tuple", 0, 1]]);
+  expect(makeBoxes(json(["InputField", "s", "String"]))).toEqual(["InputFieldBox", ["Dynamic", "s"], "String"]);
+  // The options follow the binding, not the domain.
+  const field = makeBoxes(json(["InputField", "s", ["KeyValuePair", "FieldSize", 12]]));
+  expect(field).toEqual(["InputFieldBox", ["Dynamic", "s"], { FieldSize: 12 }]);
+  expect(controlOperands(field)).toEqual(["s"]);
+  for (const box of [field, values, makeBoxes(json(["Locator", "p"]))]) {
+    expect(isBox(box)).toBe(true);
+    expect(fromMathJson(toMathJson(box))).toEqual(box);
+  }
+  // Records written with the old `Automatic` placeholder still read.
+  expect(controlOperands(fromMathJson(json(["CheckboxBox", ["Dynamic", "on"], "Automatic"])))).toEqual(["on"]);
 });
 
 test("a record written with a DynamicBox binding or without a shown box still reads (the binding stays as written)", () => {

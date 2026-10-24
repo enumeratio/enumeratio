@@ -13,6 +13,15 @@ seeAlso:
   - CenteredInterval
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    counterpart: false
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-21
+    note: SymPy has no value with an uncertainty, nor first-order propagation through arithmetic (that is the separate `uncertainties` package, not SymPy), so there is nothing for an Around row to run on; `sympy.stats` is probabilistic, not error propagation.
 ---
 
 - Add sums several independent uncertainties in quadrature (√Σdxᵢ²); a scalar Multiply scales the uncertainty linearly; several Around factors multiplied together combine their RELATIVE uncertainties in quadrature (the same rule, since d(∏xᵢ) = Σⱼ(∏_{i≠j}xᵢ)dxⱼ in quadrature, divided back out by the product); Power with a concrete exponent and Exp (Wolfram's Exp, canonicalized to Power(E, ·)) use their own closed-form derivatives.

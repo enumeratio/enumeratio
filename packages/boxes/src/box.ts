@@ -14,7 +14,8 @@ export type Box = string | BoxNode;
  * expression `Dynamic(x)`, where `x` may be `(x, start)`), a domain and options. The domain is
  * as Wolfram boxes it: a range, the corners, a rule list of `value -> label` for a menu or a
  * picker or a toggler, a list of the one value for a `SetterBox` and a `RadioButtonBox`
- * (`Automatic` when there is none, where Wolfram leaves the argument out). A `SetterBox` and a
+ * (`Automatic` when there is none, except on the heads of `OPTIONAL_DOMAIN_HEADS`, which leave the
+ * argument out as Wolfram does). A `SetterBox` and a
  * `TogglerBox` add the box they show as a third argument. The bars are rows of single-entry
  * boxes (`barOf`).
  */
@@ -37,6 +38,12 @@ export const CONTROL_BOX_HEADS = [
 ] as const;
 
 export type ControlBoxHead = (typeof CONTROL_BOX_HEADS)[number];
+
+/** The control boxes whose domain is left out when unstated, as in Wolfram (`CheckboxBox[Dynamic[b]]`). */
+export const OPTIONAL_DOMAIN_HEADS = ["CheckboxBox", "InputFieldBox", "LocatorBox"] as const;
+export type OptionalDomainHead = (typeof OPTIONAL_DOMAIN_HEADS)[number];
+const isOptionalDomainHead = (head: string): head is OptionalDomainHead =>
+  (OPTIONAL_DOMAIN_HEADS as readonly string[]).includes(head);
 
 /** The control boxes that show a box of their own, their third argument. */
 export const SHOWN_CONTROL_HEADS = ["SetterBox", "TogglerBox"] as const;
@@ -71,9 +78,9 @@ export type BoxNode =
   | readonly ["ErrorBox", Box]
   // Graphics (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives). A primitive's
   // geometry is its options, in the frame's coordinates; a mark is `TagBox`ed with its address,
-  // a link with its members. A `GraphicsBox` and a `GraphicsComplexBox` hold their primitives as a list, as Wolfram's do.
+  // a link with its members. A `GraphicsBox` holds its primitives as a list; a `GraphicsComplexBox` holds its coordinates, then its primitives, as Wolfram's do.
   | readonly ["GraphicsBox", readonly Box[], Options?]
-  | readonly ["GraphicsComplexBox", readonly Box[], Options?]
+  | readonly ["GraphicsComplexBox", readonly OptionValue[], readonly Box[], Options?]
   | readonly ["DiskBox", Options?]
   | readonly ["LineBox", Options?]
   | readonly ["PointBox", Options?]
@@ -88,9 +95,9 @@ export type BoxNode =
   | readonly ["RasterBox", Options?]
   // Space (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives, slice 7): the same contract in three
   // dimensions. A primitive's geometry is its options; inside a `GraphicsComplex3DBox` a `Polygon3DBox`
-  // or `Line3DBox` names its vertices by `Indices` into the complex's `Points`.
+  // or `Line3DBox` names its vertices by `Indices` into the complex's coordinates (its first operand).
   | readonly ["Graphics3DBox", readonly Box[], Options?]
-  | readonly ["GraphicsComplex3DBox", readonly Box[], Options?]
+  | readonly ["GraphicsComplex3DBox", readonly OptionValue[], readonly Box[], Options?]
   | readonly ["Polygon3DBox", Options?]
   | readonly ["Line3DBox", Options?]
   | readonly ["Point3DBox", Options?]
@@ -105,7 +112,13 @@ export type BoxNode =
   // expression rather than a box as in Wolfram.
   | readonly ["DynamicBox", MathJsonExpression, Options?]
   | readonly ["DynamicModuleBox", Box, Options?]
-  | readonly [Exclude<ControlBoxHead, ShownControlHead>, MathJsonExpression, MathJsonExpression, Options?]
+  | readonly [OptionalDomainHead, MathJsonExpression, MathJsonExpression?, Options?]
+  | readonly [
+      Exclude<ControlBoxHead, ShownControlHead | OptionalDomainHead>,
+      MathJsonExpression,
+      MathJsonExpression,
+      Options?,
+    ]
   | readonly [ShownControlHead, MathJsonExpression, MathJsonExpression, Box, Options?]
   // `form` is how the box reads: `TeXForm` holds TeX as written (its leaves are TeX, never
   // parsed); `TraditionalForm`/`StandardForm` hold formula boxes.
@@ -141,7 +154,7 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   InterpretationBox: 2,
   ErrorBox: 1,
   GraphicsBox: 1,
-  GraphicsComplexBox: 1,
+  GraphicsComplexBox: 2,
   DiskBox: 0,
   LineBox: 0,
   PointBox: 0,
@@ -152,7 +165,7 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   InsetBox: 1,
   RasterBox: 0,
   Graphics3DBox: 1,
-  GraphicsComplex3DBox: 1,
+  GraphicsComplex3DBox: 2,
   Polygon3DBox: 0,
   Line3DBox: 0,
   Point3DBox: 0,
@@ -164,9 +177,9 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   DynamicModuleBox: 1,
   SliderBox: 2,
   Slider2DBox: 2,
-  CheckboxBox: 2,
+  CheckboxBox: 1,
   PopupMenuBox: 2,
-  InputFieldBox: 2,
+  InputFieldBox: 1,
   SetterBox: 3,
   TogglerBox: 3,
   AnimatorBox: 2,
@@ -174,13 +187,25 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   StepperBox: 2,
   IntervalSliderBox: 2,
   ListPickerBox: 2,
-  LocatorBox: 2,
+  LocatorBox: 1,
   ColorSetterBox: 2,
   RadioButtonBox: 2,
   FormBox: 2,
   TemplateSlot: 1,
   TemplateExpression: 1,
 };
+
+/** A MathJSON object (`{ str }`, `{ num }`, ...) as against an options object, whose keys are option names. */
+const isMathJsonObject = (value: object): boolean => ["sym", "num", "str", "fn", "dict"].some((k) => k in value);
+
+/** How many positional arguments a node holds: its head's arity, plus the optional domain where one is given. */
+export function argCount(node: readonly unknown[]): number {
+  const head = node[0] as BoxHead;
+  if (!isOptionalDomainHead(head)) return ARITY[head];
+  const third = node[2];
+  const isOptions = typeof third === "object" && third !== null && !Array.isArray(third) && !isMathJsonObject(third);
+  return third === undefined || isOptions ? 1 : 2;
+}
 
 export const BOX_HEADS = Object.keys(ARITY) as readonly BoxHead[];
 
@@ -198,7 +223,7 @@ export const isBoxSequence = (value: Box | readonly Box[]): value is readonly Bo
 
 /** A node's options, or `{}`. */
 export const optionsOfBox = (box: BoxNode): Options => {
-  const last = box[ARITY[box[0]] + 1];
+  const last = box[argCount(box) + 1];
   return last !== undefined && typeof last === "object" && !Array.isArray(last) ? (last as Options) : {};
 };
 
@@ -238,8 +263,11 @@ export const interpretation = (box: Box, expr: MathJsonExpression): Box => ["Int
 export const error = (box: Box): Box => ["ErrorBox", box];
 export const graphics = (primitives: readonly Box[], options?: Options): Box =>
   ["GraphicsBox", ...withOptions([primitives] as const, options)] as Box;
-export const graphicsComplex = (primitives: readonly Box[], options?: Options): Box =>
-  ["GraphicsComplexBox", ...withOptions([primitives] as const, options)] as Box;
+export const graphicsComplex = (
+  coordinates: readonly OptionValue[],
+  primitives: readonly Box[],
+  options?: Options,
+): Box => ["GraphicsComplexBox", ...withOptions([coordinates, primitives] as const, options)] as Box;
 export const disk = (options?: Options): Box => ["DiskBox", ...withOptions([] as const, options)] as Box;
 export const line = (options?: Options): Box => ["LineBox", ...withOptions([] as const, options)] as Box;
 export const point = (options?: Options): Box => ["PointBox", ...withOptions([] as const, options)] as Box;
@@ -250,8 +278,11 @@ export const polyhedron = (options?: Options): Box => ["PolyhedronBox", ...withO
 export const raster = (options?: Options): Box => ["RasterBox", ...withOptions([] as const, options)] as Box;
 export const graphics3d = (primitives: readonly Box[], options?: Options): Box =>
   ["Graphics3DBox", ...withOptions([primitives] as const, options)] as Box;
-export const graphicsComplex3d = (primitives: readonly Box[], options?: Options): Box =>
-  ["GraphicsComplex3DBox", ...withOptions([primitives] as const, options)] as Box;
+export const graphicsComplex3d = (
+  coordinates: readonly OptionValue[],
+  primitives: readonly Box[],
+  options?: Options,
+): Box => ["GraphicsComplex3DBox", ...withOptions([coordinates, primitives] as const, options)] as Box;
 export const polygon3d = (options?: Options): Box => ["Polygon3DBox", ...withOptions([] as const, options)] as Box;
 export const line3d = (options?: Options): Box => ["Line3DBox", ...withOptions([] as const, options)] as Box;
 export const point3d = (options?: Options): Box => ["Point3DBox", ...withOptions([] as const, options)] as Box;
@@ -271,11 +302,17 @@ export const dynamicModule = (body: Box, options?: Options): Box =>
 export const control = (
   head: ControlBoxHead,
   binding: MathJsonExpression,
-  domain: MathJsonExpression,
+  domain: MathJsonExpression | undefined,
   options?: Options,
   shown?: Box,
 ): Box =>
-  [head, ...withOptions(shown === undefined ? [binding, domain] : [binding, domain, shown], options)] as unknown as Box;
+  [
+    head,
+    ...withOptions(
+      shown === undefined ? (domain === undefined ? [binding] : [binding, domain]) : [binding, domain, shown],
+      options,
+    ),
+  ] as unknown as Box;
 /** The binding a control box holds: `Dynamic(variable)`. */
 export const binding = (variable: MathJsonExpression): MathJsonExpression => ["Dynamic", variable];
 export const form = (box: Box, name: string): Box => ["FormBox", box, name];
@@ -310,22 +347,26 @@ export function isBox(value: unknown): value is Box {
   if (!Array.isArray(value) || !isBoxHead(value[0])) return false;
   const head = value[0];
   const arity = ARITY[head];
-  if (value.length < arity + 1 || value.length > arity + 2) return false;
+  const optionalDomain = isOptionalDomainHead(head);
+  if (value.length < arity + 1 || value.length > arity + (optionalDomain ? 3 : 2)) return false;
   if (head === "StyleBox" && value.length !== 3) return false;
-  if (value.length === arity + 2) {
-    const options = value[arity + 1];
+  const given = argCount(value);
+  if (optionalDomain && value.length !== given + 1 && value.length !== given + 2) return false;
+  if (value.length === given + 2) {
+    const options = value[given + 1];
     if (typeof options !== "object" || options === null || Array.isArray(options)) return false;
   }
-  const args = value.slice(1, arity + 1) as unknown[];
+  const args = value.slice(1, given + 1) as unknown[];
   switch (head) {
     case "RowBox":
     case "TextData":
       return Array.isArray(args[0]) && args[0].every(isBox);
     case "GraphicsBox":
-    case "GraphicsComplexBox":
     case "Graphics3DBox":
-    case "GraphicsComplex3DBox":
       return Array.isArray(args[0]) && args[0].every(isBox);
+    case "GraphicsComplexBox":
+    case "GraphicsComplex3DBox":
+      return Array.isArray(args[0]) && Array.isArray(args[1]) && args[1].every(isBox);
     case "GridBox":
       return Array.isArray(args[0]) && args[0].every((r: unknown) => Array.isArray(r) && r.every(isBox));
     case "PaneSelectorBox":
@@ -351,7 +392,7 @@ export function isBox(value: unknown): value is Box {
       return args[0] !== undefined;
     default:
       if (isControlBoxHead(head)) {
-        return args[0] !== undefined && args[1] !== undefined && (arity === 2 || isBox(args[2]));
+        return args[0] !== undefined && (optionalDomain || args[1] !== undefined) && (arity !== 3 || isBox(args[2]));
       }
       return args.every(isBox);
   }

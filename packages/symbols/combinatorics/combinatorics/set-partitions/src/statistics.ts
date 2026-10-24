@@ -220,6 +220,36 @@ const quadruplesWhere = (condition: (a: MathJSON, b: MathJSON, c: MathJSON, d: M
   ),
 ];
 
+/** The shapes of three blocks' worth of pattern: elements a < b < c, by which of them share a block. */
+const tripleShapes = {
+  "1Over23": (a: MathJSON, b: MathJSON, c: MathJSON): MathJSON => and(sameBlock(b, c), differentBlocks(a, b)),
+  "13Over2": (a: MathJSON, b: MathJSON, c: MathJSON): MathJSON => and(sameBlock(a, c), differentBlocks(a, b)),
+  "1Over2Over3": (a: MathJSON, b: MathJSON, c: MathJSON): MathJSON =>
+    and(differentBlocks(a, b), and(differentBlocks(a, c), differentBlocks(b, c))),
+};
+/** a < b lie in one block with none of its elements between them: an arc. */
+const consecutiveInBlock = (a: MathJSON, b: MathJSON): MathJSON =>
+  and(
+    sameBlock(a, b),
+    equals(count(["Range", 1, n], and(and(greater("e", a), less("e", b)), sameBlock("e", a)), "e"), 0),
+  );
+/** Occurrences of a pattern with side conditions on its positions (1 to 3), as in the family of
+ *  Chern, Diaconis, Kane and Rhoades: some positions the least (`openers`) or greatest (`closers`)
+ *  element of their block, some pairs consecutive in a block (`arcs`). */
+const constrainedOccurrences = (
+  shape: keyof typeof tripleShapes,
+  { openers = [], closers = [], arcs = [] }: { openers?: number[]; closers?: number[]; arcs?: [number, number][] },
+): MathJSON =>
+  triplesWhere((a, b, c) => {
+    const elements = [a, b, c];
+    const conditions = [
+      ...openers.map((p) => isOpener(elements[p - 1]!)),
+      ...closers.map((p) => isCloser(elements[p - 1]!)),
+      ...arcs.map(([p, q]) => consecutiveInBlock(elements[p - 1]!, elements[q - 1]!)),
+    ];
+    return conditions.reduce(and, tripleShapes[shape](a, b, c));
+  });
+
 /** Pairs a < b in different blocks with no element of either block strictly between them. */
 const intertwiningNumber: MathJSON = pairsWhere((a, b) =>
   and(
@@ -699,17 +729,17 @@ export const SET_PARTITION_STATISTICS: readonly Definition[] = [
   stat(
     "OccurrencesOf13Over2",
     "Occurrences of the pattern 13/2: a < c in one block with b between them in another.",
-    triplesWhere((a, b, c) => and(sameBlock(a, c), differentBlocks(a, b))),
+    triplesWhere(tripleShapes["13Over2"]),
   ),
   stat(
     "OccurrencesOf1Over23",
     "Occurrences of the pattern 1/23: b < c in one block and a < b in another.",
-    triplesWhere((a, b, c) => and(sameBlock(b, c), differentBlocks(a, b))),
+    triplesWhere(tripleShapes["1Over23"]),
   ),
   stat(
     "OccurrencesOf1Over2Over3",
     "Occurrences of the pattern 1/2/3: a < b < c in three different blocks.",
-    triplesWhere((a, b, c) => and(differentBlocks(a, b), and(differentBlocks(a, c), differentBlocks(b, c)))),
+    triplesWhere(tripleShapes["1Over2Over3"]),
   ),
   stat(
     "OccurrencesOf13Over24",
@@ -751,5 +781,181 @@ export const SET_PARTITION_STATISTICS: readonly Definition[] = [
     "SmallerBeforeCloserPairs",
     "Pairs a < b in different blocks with b the greatest element of its block.",
     pairsWhere((a, b) => and(differentBlocks(a, b), isCloser(b))),
+  ),
+  // The same patterns with conditions on their positions (Chern-Diaconis-Kane-Rhoades).
+  stat(
+    "OccurrencesOf1Over2Over3Openers2Closers3",
+    "Occurrences of the pattern 1/2/3 with 2 the least element of its block and 3 the greatest element of its block.",
+    constrainedOccurrences("1Over2Over3", { openers: [2], closers: [3] }),
+  ),
+  stat(
+    "OccurrencesOf13Over2Openers1Closers2",
+    "Occurrences of the pattern 13/2 with 1 the least element of its block and 2 the greatest element of its block.",
+    constrainedOccurrences("13Over2", { openers: [1], closers: [2] }),
+  ),
+  stat(
+    "OccurrencesOf13Over2Openers1Closers3Arc13",
+    "Occurrences of the pattern 13/2 with 1 the least element of its block, 3 the greatest element of its block and 1 and 3 consecutive in one block.",
+    constrainedOccurrences("13Over2", { openers: [1], closers: [3], arcs: [[1, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf1Over2Over3Openers1Closers3",
+    "Occurrences of the pattern 1/2/3 with 1 the least element of its block and 3 the greatest element of its block.",
+    constrainedOccurrences("1Over2Over3", { openers: [1], closers: [3] }),
+  ),
+  stat(
+    "OccurrencesOf13Over2Closers2Arc13",
+    "Occurrences of the pattern 13/2 with 2 the greatest element of its block and 1 and 3 consecutive in one block.",
+    constrainedOccurrences("13Over2", { closers: [2], arcs: [[1, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Openers2",
+    "Occurrences of the pattern 1/23 with 2 the least element of its block.",
+    constrainedOccurrences("1Over23", { openers: [2] }),
+  ),
+  stat(
+    "OccurrencesOf1Over2Over3Openers1",
+    "Occurrences of the pattern 1/2/3 with 1 the least element of its block.",
+    constrainedOccurrences("1Over2Over3", { openers: [1] }),
+  ),
+  stat(
+    "OccurrencesOf1Over2Over3Openers13Closers2",
+    "Occurrences of the pattern 1/2/3 with 1 and 3 the least elements of their blocks and 2 the greatest element of its block.",
+    constrainedOccurrences("1Over2Over3", { openers: [1, 3], closers: [2] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Closers1Arc23",
+    "Occurrences of the pattern 1/23 with 1 the greatest element of its block and 2 and 3 consecutive in one block.",
+    constrainedOccurrences("1Over23", { closers: [1], arcs: [[2, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Openers2Closers1Arc23",
+    "Occurrences of the pattern 1/23 with 2 the least element of its block, 1 the greatest element of its block and 2 and 3 consecutive in one block.",
+    constrainedOccurrences("1Over23", { openers: [2], closers: [1], arcs: [[2, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf1Over2Over3Closers2",
+    "Occurrences of the pattern 1/2/3 with 2 the greatest element of its block.",
+    constrainedOccurrences("1Over2Over3", { closers: [2] }),
+  ),
+  stat(
+    "OccurrencesOf1Over2Over3Closers1",
+    "Occurrences of the pattern 1/2/3 with 1 the greatest element of its block.",
+    constrainedOccurrences("1Over2Over3", { closers: [1] }),
+  ),
+  stat(
+    "OccurrencesOf1Over2Over3Openers12",
+    "Occurrences of the pattern 1/2/3 with 1 and 2 the least elements of their blocks.",
+    constrainedOccurrences("1Over2Over3", { openers: [1, 2] }),
+  ),
+  stat(
+    "OccurrencesOf13Over2Openers12Arc13",
+    "Occurrences of the pattern 13/2 with 1 and 2 the least elements of their blocks and 1 and 3 consecutive in one block.",
+    constrainedOccurrences("13Over2", { openers: [1, 2], arcs: [[1, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Openers1",
+    "Occurrences of the pattern 1/23 with 1 the least element of its block.",
+    constrainedOccurrences("1Over23", { openers: [1] }),
+  ),
+  stat(
+    "OccurrencesOf1Over2Over3Openers3Closers1",
+    "Occurrences of the pattern 1/2/3 with 3 the least element of its block and 1 the greatest element of its block.",
+    constrainedOccurrences("1Over2Over3", { openers: [3], closers: [1] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Openers2Arc23",
+    "Occurrences of the pattern 1/23 with 2 the least element of its block and 2 and 3 consecutive in one block.",
+    constrainedOccurrences("1Over23", { openers: [2], arcs: [[2, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Openers12Closers3Arc23",
+    "Occurrences of the pattern 1/23 with 1 and 2 the least elements of their blocks, 3 the greatest element of its block and 2 and 3 consecutive in one block.",
+    constrainedOccurrences("1Over23", { openers: [1, 2], closers: [3], arcs: [[2, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Arc23",
+    "Occurrences of the pattern 1/23 with 2 and 3 consecutive in one block.",
+    constrainedOccurrences("1Over23", { arcs: [[2, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf13Over2Openers1Arc13",
+    "Occurrences of the pattern 13/2 with 1 the least element of its block and 1 and 3 consecutive in one block.",
+    constrainedOccurrences("13Over2", { openers: [1], arcs: [[1, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Openers12Arc23",
+    "Occurrences of the pattern 1/23 with 1 and 2 the least elements of their blocks and 2 and 3 consecutive in one block.",
+    constrainedOccurrences("1Over23", { openers: [1, 2], arcs: [[2, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf13Over2Openers1",
+    "Occurrences of the pattern 13/2 with 1 the least element of its block.",
+    constrainedOccurrences("13Over2", { openers: [1] }),
+  ),
+  stat(
+    "OccurrencesOf1Over2Over3Openers23",
+    "Occurrences of the pattern 1/2/3 with 2 and 3 the least elements of their blocks.",
+    constrainedOccurrences("1Over2Over3", { openers: [2, 3] }),
+  ),
+  stat(
+    "OccurrencesOf1Over2Over3Openers3Closers2",
+    "Occurrences of the pattern 1/2/3 with 3 the least element of its block and 2 the greatest element of its block.",
+    constrainedOccurrences("1Over2Over3", { openers: [3], closers: [2] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Closers3Arc23",
+    "Occurrences of the pattern 1/23 with 3 the greatest element of its block and 2 and 3 consecutive in one block.",
+    constrainedOccurrences("1Over23", { closers: [3], arcs: [[2, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Closers13Arc23",
+    "Occurrences of the pattern 1/23 with 1 and 3 the greatest elements of their blocks and 2 and 3 consecutive in one block.",
+    constrainedOccurrences("1Over23", { closers: [1, 3], arcs: [[2, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Openers2Closers3Arc23",
+    "Occurrences of the pattern 1/23 with 2 the least element of its block, 3 the greatest element of its block and 2 and 3 consecutive in one block.",
+    constrainedOccurrences("1Over23", { openers: [2], closers: [3], arcs: [[2, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf1Over2Over3Openers12Closers3",
+    "Occurrences of the pattern 1/2/3 with 1 and 2 the least elements of their blocks and 3 the greatest element of its block.",
+    constrainedOccurrences("1Over2Over3", { openers: [1, 2], closers: [3] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Openers12",
+    "Occurrences of the pattern 1/23 with 1 and 2 the least elements of their blocks.",
+    constrainedOccurrences("1Over23", { openers: [1, 2] }),
+  ),
+  stat(
+    "OccurrencesOf13Over2Closers2",
+    "Occurrences of the pattern 13/2 with 2 the greatest element of its block.",
+    constrainedOccurrences("13Over2", { closers: [2] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Closers1",
+    "Occurrences of the pattern 1/23 with 1 the greatest element of its block.",
+    constrainedOccurrences("1Over23", { closers: [1] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Openers1Arc23",
+    "Occurrences of the pattern 1/23 with 1 the least element of its block and 2 and 3 consecutive in one block.",
+    constrainedOccurrences("1Over23", { openers: [1], arcs: [[2, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf13Over2Openers2Closers3Arc13",
+    "Occurrences of the pattern 13/2 with 2 the least element of its block, 3 the greatest element of its block and 1 and 3 consecutive in one block.",
+    constrainedOccurrences("13Over2", { openers: [2], closers: [3], arcs: [[1, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf1Over23Openers1Closers3Arc23",
+    "Occurrences of the pattern 1/23 with 1 the least element of its block, 3 the greatest element of its block and 2 and 3 consecutive in one block.",
+    constrainedOccurrences("1Over23", { openers: [1], closers: [3], arcs: [[2, 3]] }),
+  ),
+  stat(
+    "OccurrencesOf1Over2Over3Closers13",
+    "Occurrences of the pattern 1/2/3 with 1 and 3 the greatest elements of their blocks.",
+    constrainedOccurrences("1Over2Over3", { closers: [1, 3] }),
   ),
 ];

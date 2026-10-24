@@ -8,6 +8,7 @@
 import type { Definition, MathJSON } from "../../src/statistics/types.ts";
 import {
   add,
+  adjacent,
   and,
   at,
   atLeastValue,
@@ -88,6 +89,46 @@ const staircaseSide: MathJSON = [
 const largestEven: MathJSON = ["Max", forEach(positions, ["If", equals(["Mod", here, 2], 0), here, 0])];
 /** The distinct sums of sub-multisets of the parts, 0 (the empty one) included: each part either joins or not. */
 const subsetSums: MathJSON = fold(x, ["List", 0], ["Unique", ["Join", "a", forEach("a", add("i", "b"))]]);
+
+/** m!, with 0! = 1 (`Range(1, 0)` stays symbolic). */
+const factorialOf = (m: MathJSON): MathJSON => ["If", equals(m, 0), 1, ["Product", ["Range", 1, m]]];
+/** The product of the factorials of the multiplicities: a part's factor is its place within its run of equal parts. */
+const multiplicityFactorials: MathJSON = ["Product", forEach(positions, count(upTo("i"), equals(at("j"), here), "j"))];
+/** The sum of the greatest common divisors of all pairs of parts. */
+const pairwiseGreatestCommonDivisorSum: MathJSON = sumOver(
+  positions,
+  sumOver(
+    positions,
+    ["If", less("j", "i"), ["Divide", ["Multiply", at("i"), at("j")], ["LCM", at("i"), at("j")]], 0],
+    "j",
+  ),
+);
+/** The least common multiple and the greatest common divisor of the parts. */
+const leastCommonMultiple: MathJSON = fold(["Rest", x], at(1), ["LCM", "a", "b"]);
+const greatestCommonDivisor: MathJSON = fold(["Rest", x], at(1), ["Divide", ["Multiply", "a", "b"], ["LCM", "a", "b"]]);
+/** C(n, 2) and C(n, 3), for n a count. */
+const choose2 = (n: MathJSON): MathJSON => ["Divide", ["Multiply", n, subtract(n, 1)], 2];
+const choose3 = (n: MathJSON): MathJSON => ["Divide", ["Multiply", n, subtract(n, 1), subtract(n, 2)], 6];
+/** How many parts equal `value`, outside a definition that already binds `i`. */
+const partsEqualTo = (value: number): MathJSON => count(positions, equals(here, value));
+/** C(n, k) for counts, 0 when k > n. */
+const binomialOf = (n: MathJSON, k: MathJSON): MathJSON => [
+  "If",
+  greater(k, n),
+  0,
+  ["Divide", factorialOf(n), ["Multiply", factorialOf(k), factorialOf(subtract(n, k))]],
+];
+
+/** 1 when `p` is even, 0 when odd. */
+const deltaEven = (p: MathJSON): MathJSON => ["If", equals(["Mod", p, 2], 0), 1, 0];
+/** Half the last part, rounded up when it is odd: (last + 1 - delta)/2. */
+const lastFactor: MathJSON = ["Divide", subtract(add(at(length()), 1), deltaEven(at(length()))), 2];
+
+/** The gap from part i to the next, less 1 for each of the two that is even. */
+const pairGap: MathJSON = subtract(
+  subtract(subtract(here, at(add("i", 1))), deltaEven(here)),
+  deltaEven(at(add("i", 1))),
+);
 
 export const PARTITION_STATISTICS: readonly Definition[] = [
   stat("LargestPart", "The largest part.", nonEmpty(largest)),
@@ -437,29 +478,12 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     "The sum of the parts that are at least 2.",
     nonEmpty(sumOver(positions, ["If", atLeastValue(here, 2), here, 0])),
   ),
-  stat(
-    "GreatestCommonDivisorOfParts",
-    "The greatest common divisor of the parts.",
-    nonEmpty(fold(["Rest", x], at(1), ["Divide", ["Multiply", "a", "b"], ["LCM", "a", "b"]])),
-  ),
-  stat(
-    "LeastCommonMultipleOfParts",
-    "The least common multiple of the parts.",
-    nonEmpty(fold(["Rest", x], at(1), ["LCM", "a", "b"]), 1),
-  ),
+  stat("GreatestCommonDivisorOfParts", "The greatest common divisor of the parts.", nonEmpty(greatestCommonDivisor)),
+  stat("LeastCommonMultipleOfParts", "The least common multiple of the parts.", nonEmpty(leastCommonMultiple, 1)),
   stat(
     "PairwiseGreatestCommonDivisorSum",
     "The sum of the greatest common divisors of all pairs of parts.",
-    nonEmpty(
-      sumOver(
-        positions,
-        sumOver(
-          positions,
-          ["If", less("j", "i"), ["Divide", ["Multiply", at("i"), at("j")], ["LCM", at("i"), at("j")]], 0],
-          "j",
-        ),
-      ),
-    ),
+    nonEmpty(pairwiseGreatestCommonDivisorSum),
   ),
 
   // Parity of the parts.
@@ -524,5 +548,213 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     "Distinct odd sums of sub-multisets of the parts.",
     nonEmpty(bind("s", subsetSums, count("s", equals(["Mod", "i", 2], 1)))),
     'Follows FindStat\'s Sage code and its data, not its title: the "partial sums" it counts are the sums of arbitrary sub-multisets of the parts (the code runs over all subsets), not of the running prefixes.',
+  ),
+
+  // ── FindStat's integer-partition statistics, third round ─────────────────────────────────
+
+  // Parts by residue and parity.
+  stat(
+    "PartsNotCongruentToTwoModuloThree",
+    "Parts that are not congruent to 2 modulo 3.",
+    nonEmpty(count(positions, less(["Mod", here, 3], 2))),
+  ),
+  stat(
+    "PartsNotCongruentToZeroModuloThree",
+    "Parts that are not divisible by 3.",
+    nonEmpty(count(positions, greater(["Mod", here, 3], 0))),
+  ),
+  stat(
+    "PartsNotCongruentToOneModuloThree",
+    "Parts that are not congruent to 1 modulo 3.",
+    nonEmpty(count(positions, or(equals(["Mod", here, 3], 0), equals(["Mod", here, 3], 2)))),
+  ),
+  stat("PartsEqualTwo", "Parts equal to 2.", nonEmpty(partsEqualTo(2))),
+  stat(
+    "HalfSumOfEvenParts",
+    "Half the sum of the even parts.",
+    nonEmpty(["Divide", sumOver(positions, ["If", equals(["Mod", here, 2], 0), here, 0]), 2]),
+  ),
+  stat("HalfLargestEvenPart", "Half the largest even part; 0 if there is none.", nonEmpty(["Divide", largestEven, 2])),
+  stat(
+    "DistinctOddPartsBelowLargestEvenPart",
+    "Distinct odd part sizes smaller than the largest even part.",
+    nonEmpty(
+      bind(
+        "e",
+        largestEven,
+        count(
+          upTo(largest),
+          and(and(greater(multiplicityOf("k"), 0), equals(["Mod", "k", 2], 1)), less("k", "e")),
+          "k",
+        ),
+        "number",
+      ),
+    ),
+  ),
+
+  // Products, quotients and counts built from the parts.
+  stat(
+    "PartSquareProduct",
+    "The product of the squares of the parts.",
+    nonEmpty(["Product", forEach(positions, ["Power", here, 2])], 1),
+  ),
+  stat(
+    "MultinomialOfParts",
+    "The multinomial coefficient of the size over the parts: the size factorial over the product of the factorials of the parts.",
+    nonEmpty(["Divide", factorialOf(total), ["Product", forEach(positions, factorialOf(here))]], 1),
+  ),
+  stat(
+    "ExponensConsonantiae",
+    "The least common multiple of the parts over their greatest common divisor.",
+    nonEmpty(["Divide", leastCommonMultiple, greatestCommonDivisor]),
+  ),
+  stat(
+    "CyclicSievingPolynomialDegree",
+    "(1 - 1/largest part) times the least common multiple of the parts: the degree of the cyclic sieving polynomial of a permutation with these cycle lengths.",
+    nonEmpty(["Divide", ["Multiply", subtract(largest, 1), leastCommonMultiple], largest]),
+    "FindStat leaves the empty partition undefined; it is 0 here.",
+  ),
+  stat(
+    "GiniIndex",
+    "The size plus 1 choose 2, less the sum over the columns of the column length plus 1 choose 2.",
+    nonEmpty(
+      subtract(
+        ["Divide", ["Multiply", total, add(total, 1)], 2],
+        sumOver(conjugate, ["Divide", ["Multiply", "i", add("i", 1)], 2]),
+      ),
+    ),
+  ),
+  stat(
+    "InterlacingPartitionCount",
+    "The number of partitions that interlace this one: the product over the parts of the gap to the next part (0 after the last) plus 1.",
+    nonEmpty(
+      ["Product", forEach(positions, add(subtract(here, ["If", equals("i", length()), 0, at(add("i", 1))]), 1))],
+      1,
+    ),
+  ),
+  // Stays interpreted: the JavaScript compiler does not lower the fold that grows the subset-sum list (pinned by `interpreted.test.ts`).
+  stat(
+    "MinimalSubpartitionSizeDifference",
+    "The smallest difference in size between the two halves of a split of the parts into two sub-multisets.",
+    nonEmpty(
+      bind("s", subsetSums, [
+        "Min",
+        forEach(where("s", atLeastValue(["Multiply", "i", 2], total)), subtract(["Multiply", "i", 2], total)),
+      ]),
+    ),
+  ),
+  stat(
+    "AlladiWeight",
+    "The last part times the product over consecutive parts of the gap less 1.",
+    // The zero is spelled out: compiled, a -1 factor times a 0 one would leave -0.
+    nonEmpty([
+      "If",
+      equals(length(), 1),
+      at(length()),
+      [
+        "If",
+        greater(count(adjacent, equals(subtract(here, at(add("i", 1))), 1)), 0),
+        0,
+        ["Multiply", at(length()), ["Product", forEach(adjacent, subtract(subtract(here, at(add("i", 1))), 1))]],
+      ],
+    ]),
+  ),
+  stat(
+    "SecondAlladiWeight",
+    "Half the last part (rounded up if odd), times the product over consecutive parts of half the gap less 1 for each even one of the two.",
+    nonEmpty([
+      "If",
+      equals(length(), 1),
+      lastFactor,
+      [
+        "If",
+        greater(count(adjacent, equals(pairGap, 0)), 0),
+        0,
+        ["Multiply", lastFactor, ["Product", forEach(adjacent, ["Divide", pairGap, 2])]],
+      ],
+    ]),
+    "Alladi's second weight: for each part, delta is 1 if it is even and 0 if odd; the factor for the last part is (last + 1 - delta)/2 and for each consecutive pair (gap - delta - delta')/2.",
+  ),
+
+  // Cycle types: a partition read as the cycle lengths of a permutation.
+  stat(
+    "CentralizerSize",
+    "The size of the centralizer of a permutation with these cycle lengths: the product of the parts times the product of the factorials of the multiplicities.",
+    nonEmpty(["Multiply", ["Product", x], multiplicityFactorials], 1),
+  ),
+  stat(
+    "ConjugacyClassSize",
+    "The number of permutations of the same cycle type: n! over the product of the cycle sizes and the factorials of the multiplicities.",
+    nonEmpty(["Divide", factorialOf(total), ["Multiply", ["Product", x], multiplicityFactorials]], 1),
+  ),
+  stat(
+    "SetPartitionsWithBlockSizesCount",
+    "The number of set partitions whose block sizes are the parts: the size factorial over the product of the factorials of the parts and of the multiplicities.",
+    nonEmpty(
+      [
+        "Divide",
+        factorialOf(total),
+        ["Multiply", ["Product", forEach(positions, factorialOf(here))], multiplicityFactorials],
+      ],
+      1,
+    ),
+  ),
+  stat(
+    "KrewerasNumber",
+    "The number of noncrossing set partitions whose block sizes are the parts: the size factorial over the factorial of size + 1 - length and the factorials of the multiplicities.",
+    nonEmpty(
+      [
+        "Divide",
+        factorialOf(total),
+        ["Multiply", factorialOf(subtract(add(total, 1), length())), multiplicityFactorials],
+      ],
+      1,
+    ),
+  ),
+  stat(
+    "InvariantSubsetCount",
+    "Subsets of the points left invariant by a permutation with these cycle lengths: each cycle is in or out, 2 to the number of cycles.",
+    nonEmpty(["Power", 2, length()], 1),
+  ),
+  stat(
+    "InvariantTwoElementSubsetCount",
+    "Invariant 2-element subsets: a pair of fixed points or a 2-cycle.",
+    nonEmpty(add(choose2(ones), partsEqualTo(2))),
+  ),
+  stat(
+    "InvariantThreeElementSubsetCount",
+    "Invariant 3-element subsets: three fixed points, a fixed point and a 2-cycle, or a 3-cycle.",
+    nonEmpty(add(add(choose3(ones), ["Multiply", ones, partsEqualTo(2)]), partsEqualTo(3))),
+  ),
+  stat(
+    "EdgeOrbitCount",
+    "Orbits of the complete graph's edges under a permutation with these cycle lengths: the sum of half the parts rounded down, plus the sum of gcd(part, part) over pairs.",
+    nonEmpty(
+      add(sumOver(positions, ["Divide", subtract(here, ["Mod", here, 2]), 2]), pairwiseGreatestCommonDivisorSum),
+    ),
+  ),
+
+  // Symmetric functions evaluated at k ones, k the number of parts.
+  stat(
+    "ElementarySymmetricFunctionAtOne",
+    "The elementary symmetric function indexed by the partition, in as many variables as it has parts, all set to 1: the product of the binomial coefficients of the number of parts and each part.",
+    nonEmpty(["Product", forEach(positions, binomialOf(length(), here))], 1),
+  ),
+
+  // Subsets.
+  stat(
+    "SubsetGreatestCommonDivisorSum",
+    "The sum, over the non-empty subsets of the parts, of their greatest common divisor: the sum over d of phi(d) times one less than 2 to the number of parts divisible by d.",
+    nonEmpty(
+      sumOver(
+        upTo(largest),
+        [
+          "Multiply",
+          count(upTo("d"), equals(["Divide", ["Multiply", "k", "d"], ["LCM", "k", "d"]], 1), "k"),
+          subtract(["Power", 2, count(positions, equals(["Mod", here, "d"], 0))], 1),
+        ],
+        "d",
+      ),
+    ),
   ),
 ];

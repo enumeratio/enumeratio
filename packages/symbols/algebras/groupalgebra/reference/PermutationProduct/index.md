@@ -19,6 +19,16 @@ seeAlso:
   - Permute
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_permutation_product($1, $2)
+    arity: 2
+    note: Sage multiplies left to right by default, applying the left factor first, as Wolfram and ours do.
+  - origin: mapped
+    form: sage
+    template: enumeratio_permutation_product($1, $2, $3)
+    arity: 3
 ---
 
 - Either notation, as [[Permute]] and [[InversePermutation]] read them: a one-line word `{v1, ..., vn}` or [[Cycles]], or a `Permutation`

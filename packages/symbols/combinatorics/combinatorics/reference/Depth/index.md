@@ -10,6 +10,11 @@ signatures:
     description: Half the total displacement, (1/2) * sum |p(i) - i|.
     library: enumeratio-combinatorics
     type: (permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000029
+    url: https://www.findstat.org/St000029
+    on: Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

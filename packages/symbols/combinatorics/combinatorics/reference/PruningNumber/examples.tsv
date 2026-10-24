@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-ordered-tree			[PruningNumber, [OrderedTree, [List, [List], [List, [List]], [List]]]]	1			the ordered tree $[[],[[]],[]]$
+findstat-st000679-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'PruningNumber'"]	1	1	FindStat St000679	FindStat's value for [[]]
+findstat-st000679-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'PruningNumber'"]	1	1	FindStat St000679	FindStat's value for [[[]]]
+findstat-st000679-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'PruningNumber'"]	1	1	FindStat St000679	FindStat's value for [[],[]]

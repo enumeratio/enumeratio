@@ -25,6 +25,8 @@ import {
 import {
   largestPartPartitionsExact,
   orExact,
+  partitionsPastDoubles,
+  PASSES_2_53,
   partitionsExact,
 } from "../../../collections/src/families/exact-classes.ts";
 import {
@@ -143,10 +145,16 @@ const restricted = (
   family: EpsilFamily,
   builder: ReturnType<typeof partsInSet>,
   inSet: (part: number) => boolean,
+  from: number,
 ): EpsilFamily => ({
   ...family,
   fast: {
-    count: ([n]) => orExact(builder.count(n), () => partitionsExact(n, n, inSet)),
+    count: ([n]) =>
+      orExact(
+        n >= from,
+        () => builder.count(n),
+        () => partitionsExact(n, n, inSet),
+      ),
     unrank: ([n], r) => builder.unrank(n, r),
     rank: (x) => builder.rank(x as number[]),
     valid: (x, [n]) => builder.valid(x, n),
@@ -154,16 +162,21 @@ const restricted = (
 });
 
 const largestPartFast: FastKernel = {
-  count: ([n, m]) => orExact(largestPartCount(n, m), () => largestPartPartitionsExact(n, m)),
+  count: ([n, m]) =>
+    orExact(
+      partitionsPastDoubles(n - m, m),
+      () => largestPartCount(n, m),
+      () => largestPartPartitionsExact(n, m),
+    ),
   unrank: ([n, m], r) => largestPartUnrank(n, m, r),
   rank: (x, [, m]) => largestPartRank(x as number[], m),
   valid: (x, [n, m]) => isLargestPart(x, n, m),
 };
 
 export const entries: EpsilFamily[] = [
-  restricted(oddPartitions, oddPart, isOdd),
-  restricted(primePartitions, primePart, isPrimeSmall),
-  restricted(squarePartitions, squarePart, isSquare),
-  restricted(triangularPartitions, triangularPart, isTriangular),
+  restricted(oddPartitions, oddPart, isOdd, PASSES_2_53.oddPartitions),
+  restricted(primePartitions, primePart, isPrimeSmall, PASSES_2_53.primePartitions),
+  restricted(squarePartitions, squarePart, isSquare, PASSES_2_53.squarePartitions),
+  restricted(triangularPartitions, triangularPart, isTriangular, PASSES_2_53.triangularPartitions),
   { ...largestPartPartitions, fast: largestPartFast },
 ];

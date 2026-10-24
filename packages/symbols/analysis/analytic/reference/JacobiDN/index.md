@@ -46,6 +46,14 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    counterpart: false
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-21
+    note: "SymPy has no Jacobi elliptic functions: `sympy.jacobi` is the Jacobi polynomial P_n^(a,b), not sn/cn/dn, and there is no `ellipfun` (mpmath, Sage and Nemo carry them)."
 ---
 
 - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.

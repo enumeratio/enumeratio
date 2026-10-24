@@ -50,6 +50,18 @@ const isLeftToRightMinimum = (p: number[], i: number) => before(p, i).every((v) 
 const isRightToLeftMaximum = (p: number[], i: number) => after(p, i).every((v) => v < p[i]!);
 const isRightToLeftMinimum = (p: number[], i: number) => after(p, i).every((v) => v > p[i]!);
 
+/** Subsequences of p order-isomorphic to `pattern`, found by comparing every pair of positions. */
+const patternOccurrences = (p: number[], pattern: number[]): number => {
+  const k = pattern.length;
+  const choose = (from: number, left: number): number[][] =>
+    left === 0
+      ? [[]]
+      : range(from, p.length - left).flatMap((i) => choose(i + 1, left - 1).map((rest) => [i, ...rest]));
+  return choose(0, k).filter((at) =>
+    range(0, k - 1).every((a) => range(0, k - 1).every((b) => p[at[a]!]! < p[at[b]!]! === pattern[a]! < pattern[b]!)),
+  ).length;
+};
+
 export const FINDSTAT_READINGS: Record<string, (p: number[]) => number> = {
   LeftOuterPeaks: (p) => peaksOf([0, ...p]),
   RightOuterPeaks: (p) => peaksOf([...p, 0]),
@@ -98,4 +110,69 @@ export const FINDSTAT_READINGS: Record<string, (p: number[]) => number> = {
   EvenInversions: (p) => inversionPairs(p).filter(([i, j]) => (j - i) % 2 === 0).length,
   OddInversions: (p) => inversionPairs(p).filter(([i, j]) => (j - i) % 2 === 1).length,
   InverseMajorIndex: (p) => sum(descents(inverse(p))),
+
+  // The second batch.
+  FirstEntry: (p) => p[0] ?? 0,
+  LastEntry: (p) => p[p.length - 1] ?? 0,
+  Successions: (p) => indices(p).filter((i) => p[i + 1] === p[i]! + 1).length,
+  Adjacencies: (p) => indices(p).filter((i) => p[i + 1] === p[i]! - 1).length,
+  TwoRises: (p) => indices(p).filter((i) => p[i + 1] === p[i]! + 2).length,
+  MaximalRiseSize: (p) => Math.max(0, ...indices(p).flatMap((i) => (i + 1 < p.length ? [p[i + 1]! - p[i]!] : []))),
+  BigAscentsAfterPrependingZero: (p) => {
+    const q = [0, ...p];
+    return indices(q).filter((i) => i + 1 < q.length && q[i + 1]! - q[i]! > 1).length;
+  },
+  VeryBigAscents: (p) => indices(p).filter((i) => i + 1 < p.length && p[i + 1]! - p[i]! > 2).length,
+  VeryBigDescents: (p) => indices(p).filter((i) => i + 1 < p.length && p[i]! - p[i + 1]! > 2).length,
+  SmallExcedances: (p) => range(1, p.length).filter((i) => p[i - 1] === i + 1).length,
+  TwoExcedances: (p) => range(1, p.length).filter((i) => p[i - 1] === i + 2).length,
+  BigExcedances: (p) => range(1, p.length).filter((i) => p[i - 1]! - i > 1).length,
+  DoubleExcedances: (p) => range(1, p.length).filter((i) => i < p[i - 1]! && p[i - 1]! < p[p[i - 1]! - 1]!).length,
+  DoubleDeficiencies: (p) => range(1, p.length).filter((i) => i > p[i - 1]! && p[i - 1]! > p[p[i - 1]! - 1]!).length,
+  NestedExcedances: (p) => pairs(p).filter(([a, b]) => a + 1 < b + 1 && b + 1 < p[b]! && p[b]! < p[a]!).length,
+  PureExcedances: (p) =>
+    range(1, p.length).filter((i) => p[i - 1]! > i && !before(p, i).some((v) => i <= v && v < p[i - 1]!)).length,
+  GlobalAscents: (p) =>
+    range(1, p.length - 1).filter((i) =>
+      range(1, i).every((j) => range(i + 1, p.length).every((k) => p[j - 1]! < p[k - 1]!)),
+    ).length,
+  GlobalDescents: (p) =>
+    range(1, p.length - 1).filter((i) =>
+      range(1, i).every((j) => range(i + 1, p.length).every((k) => p[j - 1]! > p[k - 1]!)),
+    ).length,
+  DecompositionNumber: (p) =>
+    range(1, p.length).filter((k) =>
+      p
+        .slice(0, k)
+        .toSorted((a, b) => a - b)
+        .every((v, i) => v === i + 1),
+    ).length,
+  CyclesOfLengthAtLeastThree: (p) => cycles(p).filter((c) => c.length >= 3).length,
+  InversionsOfDistanceAtMostTwo: (p) => inversionPairs(p).filter(([i, j]) => j - i <= 2).length,
+  NonInversionSum: (p) =>
+    sum(
+      pairs(p)
+        .filter(([i, j]) => p[i]! < p[j]!)
+        .map(([i, j]) => j - i),
+    ),
+  TotalDisplacement: (p) => sum(p.map((v, i) => Math.abs(v - (i + 1)))),
+  DescentDifferenceSum: (p) => sum(descents(p).map((i) => p[i - 1]! - p[i]!)),
+  ShiftedMajorIndex: (p) => sum(range(1, p.length - 1).filter((i) => p[i - 1]! - p[i]! >= 2)),
+  Recoils: (p) => {
+    const q = inverse(p);
+    return descents(q).length;
+  },
+  DescentsOrRecoils: (p) => new Set([...descents(p), ...descents(inverse(p))]).size,
+  LeftToRightMaximaPositionSum: (p) =>
+    sum(
+      indices(p)
+        .filter((i) => isLeftToRightMaximum(p, i))
+        .map((i) => i + 1),
+    ),
+  ArithmeticProgressionsOfLengthTwo: (p) => triples(p).filter(([a, b, c]) => c - b === b - a).length,
+  OccurrencesOf1324: (p) => patternOccurrences(p, [1, 3, 2, 4]),
+  OccurrencesOf2143: (p) => patternOccurrences(p, [2, 1, 4, 3]),
+  OccurrencesOf4231: (p) => patternOccurrences(p, [4, 2, 3, 1]),
+  OccurrencesOf2413: (p) => patternOccurrences(p, [2, 4, 1, 3]),
+  OccurrencesOf1432: (p) => patternOccurrences(p, [1, 4, 3, 2]),
 };

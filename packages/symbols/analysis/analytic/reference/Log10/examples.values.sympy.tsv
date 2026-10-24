@@ -19,7 +19,7 @@ to-30-significant-digits-every-one-correctly	N(log(7, 10), 30)	0.845098040014256
 log-5	log(5, 10)	log(5)/log(10)	
 n-log-45-100	N(log(45, 10), 30)	1.65321251377534367937631691179	
 n-log-4-plus-i	N(log((4 + 1*I), 10), 30)	0.615224460689136964270084947164 + 0.106392881580032730198538817983*I	
-fullsimplify-matrixfunction-log10-list-list-1			
+fullsimplify-matrixfunction-log10-list-list-1	Matrix([[1, 100], [0, Rational(1, 100)]]).analytic_func(log(Symbol("_mf"), 10), Symbol("_mf")).applyfunc(simplify).tolist()	[[0, 20000/99], [0, -2]]	
 log-positiveinfinity	log(oo, 10)	oo	
 log-0	log(0, 10)	zoo	disagree
 a-float-argument-folds-even-for-a-fractional	log(0.001, 10)	-6.90775527898214/log(10)	

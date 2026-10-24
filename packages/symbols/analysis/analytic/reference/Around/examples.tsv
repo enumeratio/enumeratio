@@ -18,3 +18,4 @@ ln-around-2-0p01	Scope		[Ln, [Around, 2, 0.01]]	[Around, 0.6931471805599453, 0.0
 around-21-pow-21-19-pow-19	Scope		[Around, [Power, 21, 21], [Power, 19, 19]]	[Around, {num: "5842587018385982521381124421"}, {num: "1978419655660313589123979"}]		convention	both right: Around coerces its arguments to machine floats in Wolfram (an uncertain quantity is inherently approximate) while we keep the exact big integers 21^21 and 19^19 — same value, exact vs float-coerced representation.
 around-10-1-pow-2	Properties		[Power, [Around, 10, 1], 2]	[Around, 100, 20]	Squaring an uncertain value: the error doubles with the value, $2\cdot10\cdot1 = 20$		
 a-negative-uncertainty-is-its-magnitude	Possible issues	test	[Around, 1, -1]	[Around, 1, 1]	The uncertainty is a magnitude: a negative one is taken absolute		
+a-negative-uncertainty-keeps-the-value	Possible issues	test	[Around, 3, -0.5]	[Around, 3, 0.5]	Only the uncertainty is made a magnitude; the value keeps its sign and size		

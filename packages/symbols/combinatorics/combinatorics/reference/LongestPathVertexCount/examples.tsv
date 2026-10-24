@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-ordered-tree			[LongestPathVertexCount, [OrderedTree, [List, [List], [List, [List]], [List]]]]	3			the ordered tree $[[],[[]],[]]$
+findstat-st000094-1	Properties		[CombinatorialStat, [OrderedTree, [List, [List]]], "'LongestPathVertexCount'"]	2	2	FindStat St000094	FindStat's value for [[]]
+findstat-st000094-2	Properties		[CombinatorialStat, [OrderedTree, [List, [List, [List]]]], "'LongestPathVertexCount'"]	3	3	FindStat St000094	FindStat's value for [[[]]]
+findstat-st000094-3	Properties		[CombinatorialStat, [OrderedTree, [List, [List], [List]]], "'LongestPathVertexCount'"]	2	2	FindStat St000094	FindStat's value for [[],[]]

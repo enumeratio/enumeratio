@@ -128,6 +128,31 @@ export function schedule(cells: readonly CellBindings[]): Schedule {
     }
   }
 
+  // A reader of an ambiguous name has no well-defined input: block it (and, through its
+  // own binding, whatever reads *it*) rather than leave its last output standing. Neither
+  // duplicate wins -- Pluto/marimo's rule again -- so the fix is always to remove one.
+  const flagged = new Set(diagnostics.map((d) => d.cellId));
+  const ambiguous = new Set([...definedBy].filter(([, ids]) => ids.length > 1).map(([name]) => name));
+  const blockedNames = new Set(ambiguous);
+  const cause = new Map<string, string>(
+    [...ambiguous].map((n) => [n, `\`${n}\` is defined in more than one cell`] as const),
+  );
+  for (let grew = true; grew;) {
+    grew = false;
+    for (const cell of cells) {
+      if (flagged.has(cell.id)) continue;
+      const via = cell.reads.find((name) => blockedNames.has(name));
+      if (via === undefined) continue;
+      flagged.add(cell.id);
+      diagnostics.push({ cellId: cell.id, message: `reads \`${via}\`: ${cause.get(via)}` });
+      if (cell.assigns !== undefined && !blockedNames.has(cell.assigns)) {
+        blockedNames.add(cell.assigns);
+        cause.set(cell.assigns, cause.get(via)!); // the root cause travels downstream
+      }
+      grew = true;
+    }
+  }
+
   // An edge runs from the cell that assigns a name to every cell that reads it. Only a
   // name with exactly one definer has a well-defined source; a duplicate has already
   // been reported above and contributes no edge.

@@ -10,6 +10,11 @@ signatures:
     description: Sum of the excedance positions, plus the inversions within each of the excedance and non-excedance subwords.
     library: enumeratio-combinatorics
     type: (permutation) -> number
+catalog:
+  - system: findstat
+    identity: St000156
+    url: https://www.findstat.org/St000156
+    on: Permutation
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

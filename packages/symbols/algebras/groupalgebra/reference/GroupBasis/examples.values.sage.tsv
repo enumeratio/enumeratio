@@ -1,0 +1,5 @@
+id	in	out
+2-5-7-equiv-1	enumeratio_group_product(enumeratio_cyclic(6), enumeratio_basis("2"), enumeratio_basis("5"))	combination:{"GroupBasis(1)": 1}
+d-4-8	(enumeratio_group_algebra(enumeratio_dihedral(4))).dimension()	8
+s-2-1	enumeratio_group_product(enumeratio_dihedral(4), enumeratio_basis("s0"), enumeratio_basis("s0"))	combination:{"GroupBasis(0)": 1}
+so-k-d-4-is-not-commutative-either	enumeratio_is_abelian(enumeratio_dihedral(4))	False

@@ -41,14 +41,15 @@ const pointsOf = (value: unknown): Point[] =>
 function marksOf(box: Box): Mark[] | undefined {
   const complex = complexOf(box);
   if (!complex) return undefined;
-  const { Addresses, Places } = optionsOfBox(complex);
+  const Places = complex[1];
+  const { Addresses } = optionsOfBox(complex);
   const places = new Map<string, Point>();
   if (Array.isArray(Addresses) && Array.isArray(Places))
     Addresses.forEach((a, k) => {
       const place = pointOf(Places[k]);
       if (Array.isArray(a) && place) places.set(a.join(","), place);
     });
-  const items = complex[1];
+  const items = complex[2];
   const out: Mark[] = [];
   for (const item of items) {
     let look: Options = {};

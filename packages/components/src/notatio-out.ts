@@ -662,6 +662,10 @@ export class NotatioOut extends LitElement {
 
   async #recompute(): Promise<void> {
     const run = ++this.#runs;
+    if (this.#blocked !== undefined) {
+      this.#showBlocked(this.#blocked);
+      return;
+    }
     this.busy = true;
     try {
       await this.#compute(run);
@@ -809,6 +813,37 @@ export class NotatioOut extends LitElement {
    */
   revalidate(): Promise<void> {
     return this.#recompute();
+  }
+
+  #blocked: string | undefined;
+
+  /**
+   * A reactive module's schedule rejected this cell (a duplicate definition, or it reads
+   * one): show only `reason`, never a value from before. `undefined` lifts the block;
+   * the caller then `revalidate`s once the scope is ready.
+   */
+  block(reason: string | undefined): void {
+    if (reason === this.#blocked) return;
+    this.#blocked = reason;
+    if (reason !== undefined) void this.#recompute();
+  }
+
+  #showBlocked(reason: string): void {
+    this.#abort?.abort();
+    this._markup = "";
+    this._visual = "";
+    this._latex = "";
+    this._tex = "";
+    this._json = "";
+    this._input = "";
+    this._messages = [];
+    this._status = "error";
+    this._detail = reason;
+    this.#name = undefined;
+    this.#plot = undefined;
+    this.#awaitingBoxes = false;
+    this.busy = false;
+    this._answered = true;
   }
 
   #status(): unknown {

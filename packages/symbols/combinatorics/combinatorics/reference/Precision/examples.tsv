@@ -6,3 +6,4 @@ precision-inexact-literal	Scope		[Precision, 2.5]	MachinePrecision	A machine num
 precision-extended	Scope		[Precision, 3.141592653589793]	MachinePrecision	A double's sixteen digits are still a machine number		
 precision-5-times-x-pow-2-plus-3	Scope		[Precision, [Add, [Multiply, 5, [Power, x, 2]], 3]]	PositiveInfinity	Symbolic expressions with exact coefficients also report infinite precision		
 precision-beyond-a-double	Scope	test	[Precision, {num: "3.14159265358979323846"}]	21	More digits than a double holds: the digit count	convention	Wolfram's count is not an integer (20.497 here); ours counts the digits written.
+precision-of-a-short-decimal-is-machine	Possible issues	test	[Precision, 1.5]	MachinePrecision	A short decimal is a machine number		

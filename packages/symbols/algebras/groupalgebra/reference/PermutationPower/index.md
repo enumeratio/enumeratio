@@ -19,6 +19,11 @@ seeAlso:
   - PermutationOrder
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_permutation_power($1, $2)
+    arity: 2
 ---
 
 - Either notation or a `Permutation`, as [[PermutationProduct]] reads them; the result keeps the notation it was given

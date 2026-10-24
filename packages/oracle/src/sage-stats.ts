@@ -24,7 +24,7 @@ export const SAGE_STATS: Readonly<Record<string, Readonly<Record<string, string>
     ShortestCycleLength: "min(x.cycle_type())",
     ConjugacyClassSize: "Partition(x.cycle_type()).conjugacy_class_size()",
     ReflectionLength: "x.absolute_length()",
-    WeakExceedances: "len(x.weak_excedences())",
+    WeakExcedances: "len(x.weak_excedences())",
     RightToLeftMaxima: "x.number_of_saliances()",
     LeftToRightMaxima: "x.reverse().number_of_saliances()",
     RightToLeftMinima: "x.complement().number_of_saliances()",
@@ -45,6 +45,7 @@ export const SAGE_STATS: Readonly<Record<string, Readonly<Record<string, string>
     SumOfHookLengths: "sum(sum(r) for r in x.hook_lengths())",
     WeightedSize: "x.weighted_size()",
     LargestPart: "max(x, default=0)",
+    ConjugacyClassSize: "x.conjugacy_class_size()",
   },
   SetPartition: {
     Crossings: "x.number_of_crossings()",

@@ -21,6 +21,14 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    counterpart: false
+    arity: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-21
+    note: SymPy has no Ramanujan tau function or weight-12 cusp form (no `ramanujan_tau`, no q-expansion of the modular discriminant); only `divisor_sigma` and relatives exist.
 ---
 
 - Multiplicative: $\tau(mn)=\tau(m)\tau(n)$ for coprime $m,n$.

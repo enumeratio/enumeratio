@@ -13,6 +13,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { type Bounds, memoryCapMb, runBounded, withFile, wolframFileArgs } from "@enumeratio/utils/bounded";
+import { SAGE_GROUPS } from "./sage-groups.ts";
 import { sageStatsPython } from "./sage-stats.ts";
 import type { System } from "./systems.ts";
 /** Sources per kernel process. */
@@ -467,12 +468,13 @@ const SYMPY_IMPORT = `import os as _os
 _os.environ["SYMPY_GROUND_TYPES"] = "python"
 from sympy import *`;
 
-// SymPy helpers: `stirling` and `digits` live outside `from sympy import *`, and an identity is decided by
+// SymPy helpers: `stirling`, `digits` and `Permutation` live outside `from sympy import *`, and an identity is decided by
 // simplifying the difference, then numerically — `bool(Eq(…))` refuses anything it can't
 // settle syntactically.
 export const SYMPY_PREAMBLE = `
 from sympy.functions.combinatorial.numbers import stirling
 from sympy.ntheory.digits import digits
+from sympy.combinatorics import Permutation
 
 ${HELD_ALIKE}
 # How close a numeric identity must hold: 1e-20, loosened to the digits of the least precise float in it,
@@ -1281,6 +1283,8 @@ def _enumeratio_carrier(carrier, x):
     raise ValueError("no Sage object for " + carrier)
 
 ${sageStatsPython()}
+
+${SAGE_GROUPS}
 
 # Sage numbers the vertices of its catalog graphs from 0 (or labels them with tuples or strings); ours are numbered from 1,
 # in the order Sage sorts its own labels.

@@ -19,7 +19,7 @@ jobs:
   # fans the two back in under the required check name.
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40 # a cold dist-cache build (~20 min) precedes the checks
     steps:
       - uses: actions/checkout@v4
         with:
@@ -42,7 +42,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.site == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40 # a cold dist-cache build (~20 min) precedes the web build
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
@@ -102,10 +102,11 @@ jobs:
           if [ -n "$BASE" ]; then node tools/ci/affected.ts --base "$BASE" --github-output
           else node tools/ci/affected.ts --full --github-output; fi
 
-  # A handful of suites (statistics, combinatorics) are CPU-bound and saturate a 4-vCPU
+  # A handful of suites (statistics, combinatorics, reference) are CPU-bound and saturate a 4-vCPU
   # runner on their own, so splitting them across separate runners buys real wall-clock time —
   # unlike unordered-but-single-runner, which just makes them contend for the same 4 cores.
-  # Rebalance by moving a package between the shards in tools/ci/affected.ts (SHARDS).
+  # Rebalance by moving a package between the shards in tools/ci/affected.ts (SHARDS), or split one
+  # package's files across runners with SPLIT there (vitest --shard).
   test_shard:
     name: tests (${{ matrix.shard }})
     needs: changes
@@ -115,7 +116,7 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.changes.outputs.matrix) }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40 # a shard pays a cold dist-cache build (~20 min, reference's included) before its tests
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
@@ -123,10 +124,12 @@ jobs:
           packages: ${{ matrix.pkgs }}
       - env:
           PKGS: ${{ matrix.pkgs }}
+          ARGS: ${{ matrix.args }}
         run: |
           filters=()
           for p in $PKGS; do filters+=(--filter "$p"); done
-          pnpm -r "${filters[@]}" run test
+          # ARGS (a vitest --shard, when the shard is split) is intentionally word-split
+          pnpm -r "${filters[@]}" run test $ARGS
 
   # Branch protection names the required check `tests`, but that name has to stay off the matrix
   # job above (each shard would collide on it). This fans back in and fails if any shard did;

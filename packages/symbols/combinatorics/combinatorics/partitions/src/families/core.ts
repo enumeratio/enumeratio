@@ -40,31 +40,53 @@ import {
   distinctPartitionsExact,
   integerPartitionsExact,
   orExact,
+  partitionsPastDoubles,
+  PASSES_2_53,
   partitionsExact,
   partitionsIntoPartsExact,
 } from "../../../collections/src/families/exact-classes.ts";
 import { distinctPartitions, integerPartitions, partitionsIntoKParts, partitionsMaxPart } from "./walks.ts";
 
 const integerPartitionsFast: FastKernel = {
-  count: ([n]) => orExact(PartitionsP(n), () => integerPartitionsExact(n)),
+  count: ([n]) =>
+    orExact(
+      n >= PASSES_2_53.integerPartitions,
+      () => PartitionsP(n),
+      () => integerPartitionsExact(n),
+    ),
   unrank: ([n], r) => IntegerPartitionUnrank(n, r),
   rank: (x, [n]) => IntegerPartitionRank(x as number[], n),
   valid: (x, [n]) => IsPartitionOf(x as number[], n),
 };
 const partitionsIntoKPartsFast: FastKernel = {
-  count: ([n, k]) => orExact(KPartPartitionCount(n, k), () => partitionsIntoPartsExact(n, k)),
+  count: ([n, k]) =>
+    orExact(
+      partitionsPastDoubles(n - k, k),
+      () => KPartPartitionCount(n, k),
+      () => partitionsIntoPartsExact(n, k),
+    ),
   unrank: ([n, k], r) => IntegerPartitionKUnrank(n, k, r),
   rank: (x, [n]) => IntegerPartitionKRank(x as number[], n),
   valid: (x, [n, k]) => IsPartitionOf(x as number[], n, k),
 };
 const distinctPartitionsFast: FastKernel = {
-  count: ([n]) => orExact(PartitionsQ(n), () => distinctPartitionsExact(n)),
+  count: ([n]) =>
+    orExact(
+      n >= PASSES_2_53.distinctPartitions,
+      () => PartitionsQ(n),
+      () => distinctPartitionsExact(n),
+    ),
   unrank: ([n], r) => DistinctPartitionUnrank(n, r),
   rank: (x, [n]) => DistinctPartitionRank(x as number[], n),
   valid: (x, [n]) => IsDistinctPartitionOf(x as number[], n),
 };
 const partitionsMaxPartFast: FastKernel = {
-  count: ([n, m]) => orExact(PartitionsMaxPartCount(n, m), () => partitionsExact(n, m)),
+  count: ([n, m]) =>
+    orExact(
+      partitionsPastDoubles(n, m),
+      () => PartitionsMaxPartCount(n, m),
+      () => partitionsExact(n, m),
+    ),
   unrank: ([n, m], r) => PartitionsMaxPartUnrank(n, m, r),
   rank: (x, [, m]) => PartitionsMaxPartRank(x as number[], m),
   valid: (x, [n, m]) => IsPartitionMaxPart(x as number[], n, m),

@@ -8,6 +8,10 @@ catalog:
     identity: St000783
     url: https://www.findstat.org/St000783
     on: IntegerPartition
+  - system: findstat
+    identity: St001432
+    url: https://www.findstat.org/St001432
+    on: IntegerPartition
 statOn:
   - IntegerPartition
 signatures:

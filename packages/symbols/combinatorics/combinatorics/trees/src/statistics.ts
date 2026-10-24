@@ -7,7 +7,7 @@
 
 import { isLeaf as leafTest, recurse as recurseOver, self as callSelf } from "../../src/recursion.ts";
 import type { Definition, MathJSON } from "../../src/statistics/types.ts";
-import { add, and, equals, fold, less, subtract, x } from "../../src/statistics/vocabulary.ts";
+import { add, and, count, equals, fold, forEach, less, subtract, x } from "../../src/statistics/vocabulary.ts";
 
 const isLeaf = leafTest as (tree: MathJSON) => MathJSON;
 const self = callSelf as (...args: readonly MathJSON[]) => MathJSON;
@@ -61,6 +61,68 @@ const binarySubtrees: MathJSON = recurse(
   ["t"],
   x,
 );
+
+/** The nodes on the chain that starts at the tree and always takes the child at position `child`. */
+const chainNodes = (child: number): MathJSON =>
+  recurse(ifThen(isLeaf("t"), 0, add(1, self(["At", "t", child]))), ["t"], x);
+
+/** The nodes on the left spine or the right spine, the root once. */
+const boundaryNodes: MathJSON = ifThen(isLeaf(x), 0, subtract(add(chainNodes(1), chainNodes(2)), 1));
+
+const twoChildren = ifThen(noLeft, 0, ifThen(noRight, 0, 1));
+
+/** Field `n` of the pair bound to `name`. */
+const pairOf = (name: MathJSON, n: number): MathJSON => ["At", name, n];
+
+/** The pair [height in nodes, sum of the heights of the nodes]. */
+const heightAndHeightSum: MathJSON = recurse(
+  ifThen(isLeaf("t"), list(0, 0), [
+    "Apply",
+    [
+      "Function",
+      list(
+        add(1, ["Max", pairOf("a", 1), pairOf("b", 1)]),
+        add(add(1, ["Max", pairOf("a", 1), pairOf("b", 1)]), add(pairOf("a", 2), pairOf("b", 2))),
+      ),
+      ["Typed", "a", "'collection'"],
+      ["Typed", "b", "'collection'"],
+    ],
+    self(left("t")),
+    self(right("t")),
+  ]),
+  ["t"],
+  x,
+);
+
+/** The hooks of a decomposition: `mode` 0 is a whole tree, 1 the left chain below a node, 2 the right chain. */
+const hookCount: MathJSON = recurse(
+  ifThen(isLeaf("t"), 0, [
+    "If",
+    equals("mode", 0),
+    add(1, add(self(left("t"), 1), self(right("t"), 2))),
+    [
+      "If",
+      equals("mode", 1),
+      add(self(right("t"), 0), self(left("t"), 1)),
+      add(self(left("t"), 0), self(right("t"), 2)),
+    ],
+  ]),
+  ["t", "mode"],
+  x,
+  0,
+);
+
+/** The nodes from which the chain of children named by `directions` (1 left, 2 right) stays inside the tree. */
+const pathsStarting = (directions: readonly number[]): MathJSON => {
+  const walk = (node: MathJSON, rest: readonly number[]): MathJSON =>
+    rest.length === 0
+      ? 1
+      : (() => {
+          const child = ["At", node, rest[0]] as MathJSON;
+          return ifThen(isLeaf(child), 0, walk(child, rest.slice(1)));
+        })();
+  return overNodes(walk("t", directions));
+};
 
 // ── ordered trees ────────────────────────────────────────────────────────────────────────
 
@@ -125,6 +187,75 @@ const orderedSubtrees: MathJSON = recurse(
 /** The number of edges on the path that always takes the child at position `child` of `t`. */
 const edgesAlong = (child: MathJSON): MathJSON =>
   recurse(ifThen(childless("t"), 0, add(1, self(["At", "t", child]))), ["t"], x);
+
+/**
+ * The product, over the vertices, of the factorials of how many times each child tree occurs.
+ * A map over the subtrees rather than a recursion, so the lambdas inside may read the vertex:
+ * two child trees are equal when they are one after `Unique`.
+ */
+const automorphisms: MathJSON = fold(
+  forEach(
+    orderedSubtrees,
+    ifThen(
+      childless("s"),
+      1,
+      fold(
+        forEach(["Unique", "s"], factorialOf(count("s", equals(["Length", ["Unique", list("k", "u")]], 1), "k")), "u"),
+        1,
+        ["Multiply", "a", "b"],
+      ),
+    ),
+    "s",
+  ),
+  1,
+  ["Multiply", "a", "b"],
+);
+
+/** [vertices, edges-to-nearest-leaf summary]: the number of vertices whose nearest leaf is `distance` away, and the root's own distance. */
+const nearestLeafCounts = (distance: number): MathJSON =>
+  pairOver(
+    list(distance === 0 ? 1 : 0, 0),
+    "PositiveInfinity",
+    list(add(at("a", 1), at("b", 1)), ["Min", at("a", 2), at("b", 2)]),
+    list(add(at("r", 1), ifThen(equals(add(1, at("r", 2)), distance), 1)), add(1, at("r", 2))),
+  );
+
+/**
+ * [whether the tree is a chain (a leaf, or one child that is), how many prunings it takes to
+ * become a chain (1 if it is already one), the most that takes among its non-chain children].
+ * Pruning deletes the chains hanging off a vertex, so a tree is a chain after one pruning more
+ * than its second-slowest non-chain child, or as slow as its slowest. The fold carries the
+ * two slowest, the number of children, and whether the last one is a chain.
+ */
+const chainAndPruning: MathJSON = recurse(
+  ifThen(childless("t"), list(1, 0, 0), [
+    "Apply",
+    [
+      "Function",
+      list(
+        ifThen(and(equals(at("r", 3), 1), equals(at("r", 4), 1)), 1),
+        ifThen(and(equals(at("r", 3), 1), equals(at("r", 4), 1)), 0, ["Max", 1, at("r", 1), add(at("r", 2), 1)]),
+        at("r", 1),
+      ),
+      ["Typed", "r", "'collection'"],
+    ],
+    fold(
+      overChildren("t", self("c")),
+      list(0, 0, 0, 1),
+      list(
+        ifThen(equals(at("b", 1), 0), ["Max", at("a", 1), at("b", 2)], at("a", 1)),
+        ifThen(equals(at("b", 1), 0), ["Max", at("a", 2), ["Min", at("a", 1), at("b", 2)]], at("a", 2)),
+        add(at("a", 3), 1),
+        at("b", 1),
+      ),
+    ),
+  ]),
+  ["t"],
+  x,
+);
+
+/** The edges from the root down while a vertex has exactly one child. */
+const trunkLength: MathJSON = recurse(ifThen(equals(["Length", "t"], 1), add(1, self(["At", "t", 1])), 0), ["t"], x);
 
 export const TREE_STATISTICS: readonly Definition[] = [
   // ── binary trees ──
@@ -214,6 +345,75 @@ export const TREE_STATISTICS: readonly Definition[] = [
     "The edges from the root to the nearest leaf, a binary tree's empty subtree counting as a leaf.",
     recurse(ifThen(isLeaf("t"), 0, add(1, ["Min", self(left("t")), self(right("t"))])), ["t"], x),
   ),
+  binary("RightChildCount", "The number of nodes with a right child.", overNodes(ifThen(noRight, 0, 1))),
+  binary(
+    "RightSubtreeSizeSum",
+    "The sum, over the nodes, of the number of nodes in the right subtree.",
+    overNodes(nodesOf(right("t"))),
+  ),
+  binary(
+    "ParenthesisCodeValue",
+    "The value, read in binary, of the tree's parenthesis word: each node is ( left ) right, with ( as 1 and ) as 0.",
+    recurse(
+      ifThen(isLeaf("t"), 0, [
+        "Add",
+        ["Power", 2, subtract(["Multiply", 2, nodesOf("t")], 1)],
+        ["Multiply", self(left("t")), ["Power", 2, add(["Multiply", 2, nodesOf(right("t"))], 1)]],
+        self(right("t")),
+      ]),
+      ["t"],
+      x,
+    ),
+    "The word of a tree with n nodes has 2n digits; the empty tree's is empty, worth 0.",
+  ),
+  binary(
+    "BoundaryNodes",
+    "The number of nodes on the left spine or the right spine, the root counted once.",
+    boundaryNodes,
+    "FindStat calls these the external nodes; the name stays off the empty subtrees, which are Knuth's.",
+  ),
+  binary(
+    "NonBoundaryNodes",
+    "The number of nodes on neither the left spine nor the right spine.",
+    subtract(nodesOf(x), boundaryNodes),
+    "FindStat calls these the internal nodes.",
+  ),
+  binary(
+    "NonRootBinaryNodes",
+    "The number of nodes other than the root with two children.",
+    ifThen(isLeaf(x), 0, add(overNodes(twoChildren, left(x)), overNodes(twoChildren, right(x)))),
+    "The nodes of degree 3 in the tree's drawing: two children and a parent.",
+  ),
+  binary(
+    "HookNumber",
+    "The number of hooks in the decomposition of the tree into hooks: a node with the chains of left children and of right children below it, the subtrees hanging off those chains decomposed in turn.",
+    hookCount,
+  ),
+  binary(
+    "VertexHeightSum",
+    "The sum, over the nodes, of the node's height (the most nodes on a path down).",
+    pairOf(heightAndHeightSum, 2),
+  ),
+  ...(
+    [
+      [2, 2],
+      [2, 2, 2],
+      [2, 2, 2, 2],
+      [2, 2, 1],
+      [2, 2, 2, 1],
+      [2, 1, 1],
+      [2, 1, 1, 1],
+      [2, 2, 1, 1],
+      [2, 2, 1, 2],
+    ] as const
+  ).map((steps) =>
+    binary(
+      `${steps.map((step) => (step === 1 ? "Left" : "Right")).join("")}PathCount`,
+      `The number of nodes from which taking the ${steps.map((step) => (step === 1 ? "left" : "right")).join(", then the ")} child stays inside the tree.`,
+      pathsStarting(steps),
+      "A contiguous pattern of nodes along one path, the subtrees off it anything.",
+    ),
+  ),
 
   // ── ordered trees ──
   ordered("RootDegree", "The number of children of the root.", ["Length", x]),
@@ -294,7 +494,7 @@ export const TREE_STATISTICS: readonly Definition[] = [
   ordered(
     "TrunkLength",
     "The edges from the root to the first vertex that does not have exactly one child.",
-    recurse(ifThen(equals(["Length", "t"], 1), add(1, self(["At", "t", 1])), 0), ["t"], x),
+    trunkLength,
   ),
   ordered(
     "Breadth",
@@ -309,5 +509,53 @@ export const TREE_STATISTICS: readonly Definition[] = [
       list(x),
     ),
     "The largest number of nodes on one level, called breadth to keep width for posets.",
+  ),
+  ordered(
+    "LongestPathVertexCount",
+    "The most vertices on a path from the root: the height plus one.",
+    recurse(ifThen(childless("t"), 1, add(1, largest(overChildren("t", self("c"))))), ["t"], x),
+    "FindStat calls this the depth of an ordered tree.",
+  ),
+  ordered(
+    "AutomorphismGroupSize",
+    "The number of ways to permute identical children, at every vertex at once: the product, over the vertices, of the factorials of how many times each child tree occurs.",
+    automorphisms,
+  ),
+  ordered(
+    "InequivalentIncreasingTreeCount",
+    "The number of increasing labelings of the tree up to its automorphisms: n! over the tree factorial and the automorphism group size.",
+    [
+      "Apply",
+      [
+        "Function",
+        ["Divide", ["Divide", factorialOf(at("r", 1)), at("r", 2)], automorphisms],
+        ["Typed", "r", "'collection'"],
+      ],
+      verticesAndTreeFactorial,
+    ],
+  ),
+  ordered(
+    "OneProtectedNodeCount",
+    "The number of vertices whose nearest leaf is exactly one edge away.",
+    at(nearestLeafCounts(1), 1),
+  ),
+  ordered(
+    "TwoProtectedNodeCount",
+    "The number of vertices whose nearest leaf is exactly two edges away.",
+    at(nearestLeafCounts(2), 1),
+  ),
+  ordered(
+    "PruningNumber",
+    "The number of prunings, each deleting every maximal hanging branch (a path of single-child vertices to a leaf), that reduce the tree to a single vertex.",
+    [
+      "Apply",
+      ["Function", ifThen(childless(x), 0, add(1, at("p", 3))), ["Typed", "p", "'collection'"]],
+      chainAndPruning,
+    ],
+  ),
+  ordered(
+    "BoundaryLengthBeyondTrunk",
+    "The edges on the leftmost path or the rightmost path from the root, less the trunk they share.",
+    subtract(add(edgesAlong(1), edgesAlong(-1)), trunkLength),
   ),
 ];

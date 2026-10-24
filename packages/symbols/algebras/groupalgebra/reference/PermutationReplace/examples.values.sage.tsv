@@ -1,0 +1,14 @@
+id	in	out
+replaces-a-point	enumeratio_permutation_replace(2, enumeratio_cycles([[1, 2, 3]]))	3
+replaces-every-entry-of-a-list	enumeratio_permutation_replace([1, 2, 3, 4], enumeratio_cycles([[1, 2, 3]]))	[2, 3, 1, 4]
+conjugates-cycles	enumeratio_permutation_replace(enumeratio_cycles([[1, 2, 3]]), enumeratio_cycles([[1, 2]]))	["Cycles", ["List", ["List", 1, 3, 2]]]
+permutationreplace-4-cycles-list-list-2-3-4-6	enumeratio_permutation_replace(4, enumeratio_cycles([[2, 3, 4, 6]]))	6
+permutationreplace-4-cycles-list	enumeratio_permutation_replace(4, enumeratio_cycles([]))	4
+permutationreplace-cycles-list-list-1-4-list-2-5	enumeratio_permutation_replace(enumeratio_cycles([[1, 4], [2, 5, 6, 3]]), enumeratio_cycles([[2, 3, 5, 1, 4, 6]]))	["Cycles", ["List", ["List", 1, 2, 5, 3], ["List", 4, 6]]]
+permutationreplace-5-cycles-list-list-1-5-3-list	enumeratio_permutation_replace(5, enumeratio_cycles([[1, 5, 3], [2, 7]]))	3
+permutationreplace-3-cycles-list-list-1-5-3-list	enumeratio_permutation_replace(3, enumeratio_cycles([[1, 5, 3], [2, 7]]))	1
+permutationreplace-4-cycles-list-list-1-5-3-list	enumeratio_permutation_replace(4, enumeratio_cycles([[1, 5, 3], [2, 7]]))	4
+permutationreplace-list-1-2-3-4-5-6-cycles-list	enumeratio_permutation_replace([1, 2, 3, 4, 5, 6], enumeratio_cycles([[1, 5, 3], [2, 7]]))	[5, 7, 1, 4, 3, 6]
+an-empty-list-has-nothing-to-replace	enumeratio_permutation_replace([], enumeratio_cycles([[1, 2]]))	[]
+conjugation-is-canonicalised	enumeratio_permutation_replace(enumeratio_cycles([[1, 2]]), enumeratio_cycles([[1, 3, 2]]))	["Cycles", ["List", ["List", 1, 3]]]
+composition-law	enumeratio_permutation_replace(enumeratio_permutation_replace(enumeratio_cycles([[1, 2, 3]]), enumeratio_cycles([[1, 2]])), enumeratio_cycles([[1, 2, 3]]))	["Cycles", ["List", ["List", 1, 3, 2]]]

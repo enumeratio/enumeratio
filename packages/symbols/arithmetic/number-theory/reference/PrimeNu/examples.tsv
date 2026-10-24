@@ -5,7 +5,7 @@ primenu-105			[PrimeNu, 105]	3
 threads-element-wise-over-a-list-as-wolfram-s	Scope		[PrimeNu, [List, 4, 28, 180]]	[List, 1, 2, 3]			Threads element-wise over a list, as Wolfram's Listable heads do							
 large-integers-the-15-primes-up-to-50-divide-50	Scope		[PrimeNu, [Factorial, 50]]	15			Large integers: the 15 primes up to 50 divide $50!$						emit	Factorial is statrs's double here, which an exact-integer operation of the num crates can't take.
 gaussian-integers-3-i-1-i-2-i	Scope		[PrimeNu, [Complex, 3, 1]]	2			Gaussian integers: $3+i=(1+i)(2-i)$		domain	SymPy's function takes an integer; ours counts the prime factors of a Gaussian integer.	domain	Nemo's ZZ takes an integer only; compute-engine's PrimeNu also takes a Gaussian integer or a list, which this mapping does not pass on.		
-gaussianintegers-true-5-splits-so-105-has-4	Scope		[PrimeNu, 105, [KeyValuePair, Over, GaussianIntegers]]	4			GaussianIntegers -> True: $5$ splits, so $105$ has 4 Gaussian prime factors							
+gaussianintegers-true-5-splits-so-105-has-4	Scope		[PrimeNu, 105, [Rule, Over, GaussianIntegers]]	4			GaussianIntegers -> True: $5$ splits, so $105$ has 4 Gaussian prime factors							
 listable-over-a-range	Scope		[PrimeNu, [Range, 20]]	[List, 0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2]			Listable over a [[Range]]							
 primenu-30	Scope		[PrimeNu, 30]	3			Counts distinct primes: $2,3,5$							
 negative-n-the-sign-is-a-unit	Scope		[PrimeNu, -12]	2			Negative $n$: the sign is a unit, so $\omega(-12)=\omega(12)$		domain	SymPy's primenu() requires a positive integer; ours reads the sign as a unit, as Wolfram does.			domain	primal's factorization takes an unsigned integer; compute-engine's PrimeNu also takes a negative one.

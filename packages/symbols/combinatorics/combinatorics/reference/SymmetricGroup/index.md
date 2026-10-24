@@ -66,6 +66,10 @@ bindings:
     template: Permutations[Range[$1]]
     arity: 1
     note: Combinatorica's Permutations lists the arrangements of a list, lexicographically; ours is the collection for 1..n.
+  - origin: mapped
+    form: sage
+    template: SymmetricGroup($1)
+    arity: 1
 ---
 
 - A lazy indexed collection: $Count(SymmetricGroup(n)) = n!$ and $At$ unranks the $i$-th permutation, so $SymmetricGroup(20)$ — over $2 \times 10^{18}$ rows — pages as cheaply as a small one.

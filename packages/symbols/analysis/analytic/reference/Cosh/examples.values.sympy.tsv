@@ -21,7 +21,7 @@ to-30-significant-digits-every-one-correctly	N(cosh(1), 30)	1.543080634815243778
 n-cosh-6-over-5-50	N(cosh(Rational(6, 5)), 30)	1.81065556732437479308787251834	
 cosh-1-over-5-times-i-times-pi	cosh(((0 + Rational(1, 5)*I) * pi))	1/4 + sqrt(5)/4	
 cosh-1-over-24-times-i-times-pi	cosh(((0 + Rational(1, 24)*I) * pi))	sqrt(1/2 - sqrt(2)/4)/2 + sqrt(3)*sqrt(sqrt(2)/4 + 1/2)/2	
-matrixfunction-function-cosh-1-1-list-list-1			
+matrixfunction-function-cosh-1-1-list-list-1	Matrix([[((0 + Rational(1, 3)*I) * pi), ((0 + Rational(-1, 3)*I) * pi)], [0, ((0 + Rational(-1, 6)*I) * pi)]]).analytic_func(cosh(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	[[1/2, -1/3 + sqrt(3)/3], [0, sqrt(3)/2]]	
 even-function-cosh-x-cosh-x	enumeratio_equal(cosh((-1)), cosh(1))	True	
 hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	enumeratio_equal(((S(cosh(1))**2) - (S(sinh(1))**2)), 1)	True	
 the-definition-cosh-x-frac-e-x-e-x-2			

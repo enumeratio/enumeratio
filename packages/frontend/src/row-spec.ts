@@ -27,7 +27,7 @@ export interface RowSourceSpec {
 }
 
 const str = (value: string): Json => ({ str: value }) as unknown as Json;
-const rule = (name: string, value: Json): Json => ["KeyValuePair", name, value] as unknown as Json;
+const rule = (name: string, value: Json): Json => ["Rule", name, value] as unknown as Json;
 
 /** The `RowSource` expression for `spec`, which a `TableViewBox` holds. */
 export function rowSourceExpression(spec: RowSourceSpec): Json {

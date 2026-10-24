@@ -24,7 +24,7 @@ complex-n-and-k-evaluate-through-the-gamma	binomial((2 + 1*I), (7 + -3*I))	gamma
 interval-arithmetic-in-k-binom-1-2-k-is	binomial(Rational(1, 2), AccumBounds(0.5, 0.6))	binomial(1/2, AccumBounds(0.5, 0.6))	disagree
 n-binomial-7-over-3-1-over-5-20	N(binomial(Rational(7, 3), Rational(1, 5)), 30)	1.33312542446502865223592287085	
 binomial-n-4	binomial(Symbol("n"), 4)	binomial(n, 4)	
-matrixfunction-function-binomial-1-2-1-list-list			
+matrixfunction-function-binomial-1-2-1-list-list	Matrix([[(Rational(5, 6) * pi), 0], [(Rational(3, 2) * pi), (Rational(-1, 2) * pi)]]).analytic_func(binomial(Symbol("_mf"), 2), Symbol("_mf")).applyfunc(simplify).tolist()	[[5*pi*(-6 + 5*pi)/72, 0], [pi*(-3 + pi)/4, pi*(2 + pi)/8]]	
 the-number-of-distinct-5-card-hands-dealt-from-a	binomial(52, 5)	2598960	
 the-probability-of-exactly-3-heads-in-10-fair	(S(binomial(10, 3)) / (S(2)**10))	15/128	
 symmetry-binom-n-k-binom-n-n-k	enumeratio_equal(binomial(10, 3), binomial(10, 7))	True	

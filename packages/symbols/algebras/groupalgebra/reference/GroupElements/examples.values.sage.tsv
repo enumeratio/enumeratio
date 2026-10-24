@@ -1,0 +1,5 @@
+id	in	out
+every-element-of-a-permutation-group	enumeratio_group_elements(enumeratio_permutation_group([enumeratio_cycles([[1, 9, 6], [3, 7]])]))	[["Cycles", ["List"]], ["Cycles", ["List", ["List", 3, 7]]], ["Cycles", ["List", ["List", 1, 6, 9]]], ["Cycles", ["List", ["List", 1, 6, 9], ["List", 3, 7]]], ["Cycles", ["List", ["List", 1, 9, 6]]], ["Cycles", ["List", ["List", 1, 9, 6], ["List", 3, 7]]]]
+the-first-three-elements	enumeratio_group_elements(enumeratio_permutation_group([enumeratio_cycles([[1, 9, 6], [3, 7]])]), [1, 2, 3])	[["Cycles", ["List"]], ["Cycles", ["List", ["List", 3, 7]]], ["Cycles", ["List", ["List", 1, 6, 9]]]]
+the-last-element	enumeratio_group_elements(enumeratio_permutation_group([enumeratio_cycles([[1, 9, 6], [3, 7]])]), [-1])	[["Cycles", ["List", ["List", 1, 9, 6], ["List", 3, 7]]]]
+groupelements-permutationgroup-list-cycles-list		
