@@ -9,7 +9,7 @@ signatures:
   - call: Negate(x)
     description: "The additive inverse of x: $-x$."
     library: enumeratio-analytic
-    type: (complex | infinity) -> number
+    type: (complex | infinity | residue) -> number
     overrides: compute-engine
     on:
       - Around
@@ -18,21 +18,21 @@ signatures:
   - call: Negate(x)
     description: "The additive inverse of x: $-x$."
     library: enumeratio-hypercomplex
-    type: (complex | infinity) -> number
+    type: (complex | infinity | residue) -> number
     overrides: enumeratio-analytic
     symbols:
       - ^(?:i|j|epsilon|e|f|theta|epsilonSymbol|varepsilon|thetaSymbol|vartheta)_\d+$
   - call: Negate(x)
     description: "The additive inverse of x: $-x$."
     library: enumeratio-numerals
-    type: (complex | infinity) -> number
+    type: (complex | infinity | residue) -> number
     overrides: enumeratio-residues
     on:
       - AdicNumeral
   - call: Negate(x)
     description: "The additive inverse of x: $-x$."
     library: enumeratio-adeles
-    type: (complex | infinity) -> number
+    type: (complex | infinity | residue) -> number
     overrides: enumeratio-numerals
     on:
       - Adele
@@ -40,7 +40,7 @@ signatures:
   - call: Negate(x)
     description: "The additive inverse of x: $-x$."
     library: enumeratio-residues
-    type: (complex | infinity) -> number
+    type: (complex | infinity | residue) -> number
     overrides: enumeratio-hypercomplex
     on:
       - IntegerMod

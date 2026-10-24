@@ -306,6 +306,8 @@ export function declareListHeads(ce: Engine): void {
   // Mean/Median thread column-wise over a matrix (a list of equal-length rows), reusing
   // the native 1-arg logic on each column rather than reimplementing the arithmetic.
   for (const head of ["Mean", "Median"] as const) {
+    // The native data parameter is a collection of numbers and refuses a matrix when boxed.
+    widenSignature(ce, head, "(list<list<any>>) -> list");
     wrapOperator(
       ce,
       [head, 1],

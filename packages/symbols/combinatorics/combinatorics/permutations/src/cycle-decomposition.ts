@@ -62,8 +62,15 @@ export const permutationOfCycleDecompositionBody: MathJSON = [
   ["Range", 1, ["Length", ["Flatten", "_raw"]], 1],
 ];
 
-/** Only a canonical decomposition converts: the permutation must give it back. */
-export const permutationOfCycleDecompositionGuard: MathJSON = ["Equal", decomposition("_image"), "_raw"];
+/** Only a canonical decomposition converts: the permutation must give it back. A repeated or
+ *  missing point leaves a 0 in the image, which `cycleThrough` would follow forever, so the
+ *  image has to be a permutation before it is decomposed. */
+export const permutationOfCycleDecompositionGuard: MathJSON = [
+  "If",
+  ["Equal", ["Sort", "_image"], ["Range", 1, ["Length", "_image"], 1]],
+  ["Equal", decomposition("_image"), "_raw"],
+  "False",
+];
 
 /** The canonical decomposition of the permutation of 1..`_n` that the disjoint cycles `_raw`
  *  describe, the points they leave out fixed: the permutation first, then its decomposition. */

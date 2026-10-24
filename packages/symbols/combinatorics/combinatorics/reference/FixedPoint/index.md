@@ -7,15 +7,13 @@ signatures:
   - call: FixedPoint(f, x)
     description: iterates $f$ starting from $x$ until two successive values are equal.
     library: enumeratio-combinatorics
-    type: (any, any?) -> unknown
+    type: (any, any, integer?) -> unknown
     overrides: compute-engine
 seeAlso:
   - Nest
   - NestList
 names:
   wolframIdentity: true
-attributes:
-  - HoldAll
 ---
 
 - compute-engine declares $FixedPoint$ itself but ships no evaluator for it; this library extends that declaration rather than replacing it.

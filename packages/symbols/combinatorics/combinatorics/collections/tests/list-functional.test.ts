@@ -47,9 +47,9 @@ test("FixedPoint is idempotent once reached: one more f does nothing", () => {
   const fixed = run(["FixedPoint", fn, 100]);
   expect(run(["Apply", fn, fixed])).toEqual(fixed);
 });
-test("FixedPoint(f) alone (no x) stays unevaluated — only the 2-ary form has a handler", () => {
+test("FixedPoint(f) alone (no x) is an arity error — compute-engine declares the head with a seed", () => {
   const result = run(["FixedPoint", "f"]) as readonly unknown[];
-  expect(result[0]).toEqual("FixedPoint");
+  expect(result[0]).toEqual("Error");
 });
 
 // The termination rule (SameQ first, then agreement to working precision for an inexact

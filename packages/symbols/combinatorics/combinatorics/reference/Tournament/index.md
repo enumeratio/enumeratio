@@ -9,5 +9,5 @@ signatures:
   - call: Tournament(...)
     description: Catalogued in the enumeratio database; not yet written up here.
     library: enumeratio-combinatorics
-    type: (tuple<integer, list<integer>>) -> tournament
+    type: (tuple<integer, list<list<integer>>>) -> tournament
 ---

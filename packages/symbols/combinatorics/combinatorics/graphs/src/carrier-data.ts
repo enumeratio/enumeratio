@@ -13,7 +13,7 @@ export const GRAPHS_CARRIERS: readonly Carrier[] = [
   {
     name: "LabeledGraph",
     type: "labeled_graph",
-    shape: "tuple<integer, list<integer>>",
+    shape: "tuple<integer, list<list<integer>>>",
     id: "labeled_graph",
     plural: "LabeledGraphs",
     carrierParams: 1,
@@ -21,7 +21,7 @@ export const GRAPHS_CARRIERS: readonly Carrier[] = [
   {
     name: "Tournament",
     type: "tournament",
-    shape: "tuple<integer, list<integer>>",
+    shape: "tuple<integer, list<list<integer>>>",
     id: "tournament",
     plural: "Tournaments",
     carrierParams: 1,

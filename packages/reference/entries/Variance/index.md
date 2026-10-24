@@ -9,7 +9,7 @@ signatures:
   - call: Variance((collection<any> | distribution | number)+) -> nan | real<0..>
     description: Sample variance of a collection of numbers.
     library: enumeratio-statistics
-    type: ((collection<any> | distribution | number)+) -> nan | real<0..>
+    type: ((collection<nothing | number> | distribution | number)+) -> nan | real<0..>
     overrides: compute-engine
 names:
   wolframIdentity: true
