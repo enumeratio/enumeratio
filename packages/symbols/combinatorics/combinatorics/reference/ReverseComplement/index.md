@@ -19,7 +19,7 @@ signatures:
   - call: ReverseComplement(Permutation)
     description: Reverse, then complement.
     library: enumeratio-combinatorics
-    type: (dyck_path) -> dyck_path
+    type: ((dyck_path) -> dyck_path) & ((permutation) -> permutation)
 laws:
   - involution
   - graded:

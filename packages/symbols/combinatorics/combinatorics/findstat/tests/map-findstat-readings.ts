@@ -971,7 +971,7 @@ export const MAP_READINGS: Readonly<Record<string, Reading>> = {
     const n = ints(p).length;
     return list(ints(p).map((value) => (value > 0 ? n + 1 - value : -(n + 1 + value))));
   },
-  "Bar@SignedPermutation": (p) => list(ints(p).map((value) => 0 - value)),
+  "NegateSigns@SignedPermutation": (p) => list(ints(p).map((value) => 0 - value)),
   "SignWord@SignedPermutation": (p) =>
     ints(p)
       .map((value) => (value < 0 ? "1" : "0"))
@@ -996,8 +996,8 @@ export const MAP_READINGS: Readonly<Record<string, Reading>> = {
     const signs = flagZerosToZeros(ints(p).map((value) => (value > 0 ? 1 : 0)));
     return list(ints(p).map((value, k) => (signs[k] === 1 ? Math.abs(value) : -Math.abs(value))));
   },
-  "EvenCycleType@SignedPermutation": (p) => list(signedCycleType(ints(p), true)),
-  "OddCycleType@SignedPermutation": (p) => list(signedCycleType(ints(p), false)),
+  "PositiveCycleType@SignedPermutation": (p) => list(signedCycleType(ints(p), true)),
+  "NegativeCycleType@SignedPermutation": (p) => list(signedCycleType(ints(p), false)),
 
   "BinaryWord@IntegerPartition": (p) => {
     // Walk the boundary from the end of the first row: down along each row, then left to the next row's end.

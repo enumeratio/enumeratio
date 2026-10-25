@@ -216,7 +216,7 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     findstat: [{ id: "Mp00162", rows: 1200, compared: 1200, skipped: 0 }],
   },
   {
-    name: "Bar",
+    name: "NegateSigns",
     from: "SignedPermutation",
     to: "SignedPermutation",
     findstat: [{ id: "Mp00244", rows: 1200, compared: 1200, skipped: 0 }],
@@ -258,13 +258,13 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     findstat: [{ id: "Mp00271", rows: 1200, compared: 1200, skipped: 0 }],
   },
   {
-    name: "EvenCycleType",
+    name: "PositiveCycleType",
     from: "SignedPermutation",
     to: "IntegerPartition",
     findstat: [{ id: "Mp00166", rows: 1200, compared: 1200, skipped: 0 }],
   },
   {
-    name: "OddCycleType",
+    name: "NegativeCycleType",
     from: "SignedPermutation",
     to: "IntegerPartition",
     findstat: [{ id: "Mp00169", rows: 1200, compared: 1200, skipped: 0 }],

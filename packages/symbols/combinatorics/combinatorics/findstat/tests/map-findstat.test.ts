@@ -261,15 +261,15 @@ const IDS: Readonly<Record<string, string>> = {
   "Reverse@SignedPermutation": "Mp00161",
   "Inverse@SignedPermutation": "Mp00162",
   "Complement@SignedPermutation": "Mp00188",
-  "Bar@SignedPermutation": "Mp00244",
+  "NegateSigns@SignedPermutation": "Mp00244",
   "SignWord@SignedPermutation": "Mp00267",
   "UnderlyingPermutation@SignedPermutation": "Mp00163",
   "SignedPermutation@Permutation": "Mp00170",
   "Standardization@SignedPermutation": "Mp00245",
   "NegativesToFlagNegatives@SignedPermutation": "Mp00270",
   "FlagNegativesToNegatives@SignedPermutation": "Mp00271",
-  "EvenCycleType@SignedPermutation": "Mp00166",
-  "OddCycleType@SignedPermutation": "Mp00169",
+  "PositiveCycleType@SignedPermutation": "Mp00166",
+  "NegativeCycleType@SignedPermutation": "Mp00169",
 };
 
 test("every reading names the FindStat map it is", () => {

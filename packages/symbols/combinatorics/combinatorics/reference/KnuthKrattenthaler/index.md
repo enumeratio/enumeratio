@@ -24,4 +24,4 @@ signatures:
 ---
 
 - Takes a `DyckPath` and returns a `DyckPath` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
-- FindStat's Mp00296, the inverse of LeftToRightMaximaDyckPath restricted to 321-avoiding permutations.
+- FindStat's Mp00296: Dyck path, to 321-avoiding permutation (Krattenthaler's bijection), to RSK pair, to Dyck path (Knuth).

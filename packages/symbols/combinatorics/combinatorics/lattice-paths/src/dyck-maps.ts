@@ -350,7 +350,7 @@ export const DYCK_MAPS: readonly CombinatorialMap[] = [
     guard: dyckGuard,
     summary:
       "The 321-avoiding permutation whose left-to-right maxima are the path's peaks, its RSK pair, and the first row of P with the second row of Q as ups.",
-    note: "FindStat's Mp00296, the inverse of LeftToRightMaximaDyckPath restricted to 321-avoiding permutations.",
+    note: "FindStat's Mp00296: Dyck path, to 321-avoiding permutation (Krattenthaler's bijection), to RSK pair, to Dyck path (Knuth).",
   },
   {
     name: "SwapReturnsAndLastDescent",

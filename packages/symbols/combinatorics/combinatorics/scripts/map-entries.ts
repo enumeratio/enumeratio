@@ -80,8 +80,16 @@ const withIds = (examples: readonly { caption?: string }[]): ReferenceExample[] 
 /** The carrier name a signature reads, as the constructor spells it. */
 const carrier = (type: string): string => constructorFor[type] ?? type;
 
+/** A map's own subject where the carrier's sample is a fixed point of it. */
+const OWN_SAMPLES: Record<string, { contents: unknown; caption: string }> = {
+  KasraouiZeng: {
+    contents: ["List", ["List", 1, 4], ["List", 2, 3]],
+    caption: "the nesting $\\{1,4\\} \\mid \\{2,3\\}$",
+  },
+};
+
 function exampleFor(map: CombinatorialMap): { expr: unknown; expected: unknown; caption?: string }[] {
-  const sample = SAMPLES[map.from];
+  const sample = OWN_SAMPLES[map.name] ?? SAMPLES[map.from];
   if (sample === undefined) return [];
   const subject = [carrier(map.from), sample.contents];
   const expr = [map.name, subject];

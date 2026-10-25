@@ -89,12 +89,12 @@ export const SIGNED_PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     note: "FindStat's Mp00162.",
   },
   {
-    name: "Bar",
+    name: "NegateSigns",
     from: "signed_permutation",
     to: "signed_permutation",
     body: forEach(positions, ["Negate", at("i")]),
-    summary: "Every sign reversed.",
-    note: "FindStat's Mp00244.",
+    summary: "Every sign reversed: multiplication by the longest element −id of the hyperoctahedral group.",
+    note: 'FindStat\'s Mp00244, "bar".',
   },
   {
     name: "SignWord",
@@ -126,7 +126,7 @@ export const SIGNED_PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     name: "Standardization",
     from: "signed_permutation",
     to: "permutation",
-    // Order 1 < … < n < −n < … < −1: a negative entry −i sits at n + 1 + (n − i + 1)... i.e. 2n + 1 − i.
+    // In the order 1 < … < n < −n < … < −1, an entry −i has key 2n + 1 − i.
     body: bind(
       "sg_key",
       forEach(positions, ["If", ["Greater", at("i"), 0], at("i"), ["Add", ["Multiply", 2, n], 1, at("i")]]),
@@ -157,19 +157,21 @@ export const SIGNED_PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     note: "FindStat's Mp00271, the inverse of NegativesToFlagNegatives.",
   },
   {
-    name: "EvenCycleType",
+    name: "PositiveCycleType",
     from: "signed_permutation",
     to: "integer_partition",
     body: cycleLengthsOfParity(0),
-    summary: "The lengths of the cycles with an even number of negative entries, largest first.",
-    note: "FindStat's Mp00166. A cycle of the underlying permutation, its entries signed as in the word.",
+    summary:
+      "The lengths of the positive cycles, largest first: those of the underlying permutation with an even number of negative entries.",
+    note: "FindStat's Mp00166, \"even cycle type\". Geck and Pfeiffer's positive cycles.",
   },
   {
-    name: "OddCycleType",
+    name: "NegativeCycleType",
     from: "signed_permutation",
     to: "integer_partition",
     body: cycleLengthsOfParity(1),
-    summary: "The lengths of the cycles with an odd number of negative entries, largest first.",
-    note: "FindStat's Mp00169.",
+    summary:
+      "The lengths of the negative cycles, largest first: those of the underlying permutation with an odd number of negative entries.",
+    note: "FindStat's Mp00169, \"odd cycle type\". Geck and Pfeiffer's negative cycles.",
   },
 ];

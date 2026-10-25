@@ -39,7 +39,7 @@ signatures:
   - call: FoataInversionsToMajor(Permutation)
     description: "The inverse of Foata's major-to-inversions bijection: peel off the last letter, rotate the blocks of the rest back."
     library: enumeratio-combinatorics
-    type: ((binary_word) -> binary_word) & ((composition) -> composition)
+    type: ((binary_word) -> binary_word) & ((composition) -> composition) & ((permutation) -> permutation)
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

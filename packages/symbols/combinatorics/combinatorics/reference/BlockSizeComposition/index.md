@@ -29,7 +29,7 @@ signatures:
   - call: BlockSizeComposition(SetPartition)
     description: The block sizes of a set partition, its blocks taken in order of their least elements.
     library: enumeratio-combinatorics
-    type: (set_composition) -> composition
+    type: ((set_composition) -> composition) & ((set_partition) -> composition)
 ---
 
 - Takes a `SetPartition` and returns a `Composition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
