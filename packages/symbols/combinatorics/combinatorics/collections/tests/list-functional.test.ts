@@ -52,13 +52,9 @@ test("FixedPoint(f) alone (no x) is an arity error — compute-engine declares t
   expect(result[0]).toEqual("Error");
 });
 
-// The termination rule (SameQ first, then agreement to working precision for an inexact
-// sequence — see list-functional.ts's `withinWorkingPrecision`) has to actually land near
-// the true fixed point, not just near ANOTHER iterate: assert the residual |f(x) - x| is
-// within a couple of orders of magnitude of the engine's own working precision, for both
-// inexact examples. A termination test that is too loose (e.g. compute-engine's own
-// `isEqual`, which this replaced) stops many iterations early, at a residual many orders of
-// magnitude looser than this.
+// The guard digits have to leave the answer near the true fixed point: assert the residual
+// |f(x) - x| is within a couple of orders of magnitude of the engine's working precision,
+// for both inexact examples.
 const residualBound = 10 ** -(ce.precision - 2);
 test("FixedPoint(Cos, 0.5) lands within the working precision of the true fixed point", () => {
   const x = runExpr(["FixedPoint", "Cos", 0.5]);
