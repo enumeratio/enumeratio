@@ -407,17 +407,23 @@ const FINDSTAT_PERMUTATION_STATISTICS: readonly Definition[] = [
 const sumOverPairs = (also: MathJSON, body: MathJSON): MathJSON =>
   sumOver(adjacent, ["Sum", forEach(where(["Range", add("i", 1), length()], also, "j"), body, "j")]);
 
-/**
- * Occurrences of a classical pattern of length 4: quadruples i < j < k < l whose values stand in
- * the order `pattern` gives. The pattern's positions, sorted by value, become a chain of `<`.
- */
-const occurrencesOfLength4Pattern = (pattern: readonly number[]): MathJSON => {
-  const names = ["i", "j", "k", "l"];
-  const byValue = [0, 1, 2, 3].toSorted((a, b) => pattern[a]! - pattern[b]!);
-  const chain = byValue
+/** `values` stand in the order `pattern` gives: a chain of `<` through them, smallest first. */
+const orderedAs = (pattern: readonly number[], values: readonly MathJSON[]): MathJSON => {
+  const byValue = pattern.map((_, position) => position).toSorted((a, b) => pattern[a]! - pattern[b]!);
+  return byValue
     .slice(1)
-    .map((position, rank) => less(at(names[byValue[rank]!]!), at(names[position]!)))
+    .map((position, rank) => less(values[byValue[rank]!]!, values[position]!))
     .reduce((all, step) => and(all, step));
+};
+/** One of several same-length patterns: they cannot both hold, so counting the `or` sums them. */
+const orderedAsAny = (patterns: readonly (readonly number[])[], values: readonly MathJSON[]): MathJSON =>
+  patterns.map((pattern) => orderedAs(pattern, values)).reduce((any, one) => or(any, one));
+
+/**
+ * Occurrences of classical patterns of length 4 (any of `patterns`): quadruples i < j < k < l whose
+ * values stand in the order a pattern gives.
+ */
+const occurrencesOfLength4Patterns = (...patterns: (readonly number[])[]): MathJSON => {
   const n = length();
   return atLeast(
     4,
@@ -425,12 +431,67 @@ const occurrencesOfLength4Pattern = (pattern: readonly number[]): MathJSON => {
       ["Range", 1, subtract(n, 3)],
       sumOver(
         ["Range", add("i", 1), subtract(n, 2)],
-        sumOver(["Range", add("j", 1), subtract(n, 1)], count(["Range", add("k", 1), n], chain, "l"), "k"),
+        sumOver(
+          ["Range", add("j", 1), subtract(n, 1)],
+          count(["Range", add("k", 1), n], orderedAsAny(patterns, [at("i"), at("j"), at("k"), at("l")]), "l"),
+          "k",
+        ),
         "j",
       ),
     ),
   );
 };
+const occurrencesOfLength4Pattern = (pattern: readonly number[]): MathJSON => occurrencesOfLength4Patterns(pattern);
+
+/** Occurrences of classical patterns of length 3 (any of `patterns`), over bounded ranges. */
+const occurrencesOfLength3Patterns = (...patterns: (readonly number[])[]): MathJSON => {
+  const n = length();
+  return atLeast(
+    3,
+    sumOver(
+      ["Range", 1, subtract(n, 2)],
+      sumOver(
+        ["Range", add("i", 1), subtract(n, 1)],
+        count(["Range", add("j", 1), n], orderedAsAny(patterns, [at("i"), at("j"), at("k")]), "k"),
+        "j",
+      ),
+    ),
+  );
+};
+
+/** Occurrences of a vincular pattern whose first two entries are adjacent: i, i + 1, then any k > i + 1. */
+const occurrencesWithAdjacentStart = (pattern: readonly number[]): MathJSON => {
+  const n = length();
+  return atLeast(
+    3,
+    sumOver(
+      ["Range", 1, subtract(n, 2)],
+      count(["Range", add("i", 2), n], orderedAs(pattern, [at("i"), at(add("i", 1)), at("k")]), "k"),
+    ),
+  );
+};
+
+/** Occurrences whose first entry is p(1), the other two anywhere after it: j < k. */
+const occurrencesFromFirstEntry = (pattern: readonly number[]): MathJSON => {
+  const n = length();
+  return atLeast(
+    3,
+    sumOver(
+      ["Range", 2, subtract(n, 1)],
+      count(["Range", add("j", 1), n], orderedAs(pattern, [at(1), at("j"), at("k")]), "k"),
+      "j",
+    ),
+  );
+};
+/** Occurrences whose first two entries are p(1) and p(2), the third anywhere after them. */
+const occurrencesFromFirstTwoEntries = (pattern: readonly number[]): MathJSON =>
+  atLeast(3, count(["Range", 3, length()], orderedAs(pattern, [at(1), at(2), at("k")]), "k"));
+/** Occurrences whose first entry is p(1), the other two adjacent: j, j + 1. */
+const occurrencesFromFirstEntryThenAdjacent = (pattern: readonly number[]): MathJSON =>
+  atLeast(3, count(["Range", 2, subtract(length(), 1)], orderedAs(pattern, [at(1), at("j"), at(add("j", 1))]), "j"));
+/** Occurrences whose three entries are adjacent: i, i + 1, i + 2. */
+const occurrencesOfConsecutivePattern = (pattern: readonly number[]): MathJSON =>
+  atLeast(3, count(["Range", 1, subtract(length(), 2)], orderedAs(pattern, [here, next, at(add("i", 2))])));
 
 /** Whether i is a recoil: i + 1 stands to the left of i. */
 const isRecoilAt: MathJSON = greater(positionOf("i"), positionOf(add("i", 1)));
@@ -597,6 +658,208 @@ const FINDSTAT_PERMUTATION_STATISTICS_2: readonly Definition[] = [
   word("OccurrencesOf4231", "Quadruples i < j < k < l ordered as 4231.", occurrencesOfLength4Pattern([4, 2, 3, 1])),
   word("OccurrencesOf2413", "Quadruples i < j < k < l ordered as 2413.", occurrencesOfLength4Pattern([2, 4, 1, 3])),
   word("OccurrencesOf1432", "Quadruples i < j < k < l ordered as 1432.", occurrencesOfLength4Pattern([1, 4, 3, 2])),
+];
+
+/** The cyclic successor of position i: i + 1, and 1 after the last. */
+const cyclicNext: MathJSON = ["If", equals("i", length()), 1, add("i", 1)];
+const isSmallExcedance: MathJSON = equals(here, add("i", 1));
+const isSmallWeakExcedance: MathJSON = or(equals(here, "i"), isSmallExcedance);
+const isCyclicSmallExcedance: MathJSON = equals(here, cyclicNext);
+const isCyclicSmallWeakExcedance: MathJSON = or(equals(here, "i"), isCyclicSmallExcedance);
+/** The positions that fail `predicate`: all of them, less those that pass. */
+const countFailing = (predicate: MathJSON): MathJSON => subtract(length(), count(positions, predicate));
+
+/** A pattern count read off the permutation by `Occurrences...` and a pattern written in FindStat's notation. */
+const patternCount = (head: string, shape: string, expr: MathJSON, summary: string, note?: string): Definition =>
+  word(head, `${summary} (${shape}).`, expr, note);
+
+// The third batch of FindStat's permutation statistics: vincular and consecutive patterns,
+// pattern pairs, and the small-excedance families.
+const FINDSTAT_PERMUTATION_STATISTICS_3: readonly Definition[] = [
+  // Vincular patterns xy-z: the first two entries adjacent, the third anywhere after.
+  patternCount(
+    "OccurrencesOf21Dash3",
+    "21-3",
+    occurrencesWithAdjacentStart([2, 1, 3]),
+    "Triples i, i+1, k with k > i+1 ordered as 213",
+  ),
+  patternCount(
+    "OccurrencesOf13Dash2",
+    "13-2",
+    occurrencesWithAdjacentStart([1, 3, 2]),
+    "Triples i, i+1, k with k > i+1 ordered as 132",
+  ),
+  patternCount(
+    "OccurrencesOf12Dash3",
+    "12-3",
+    occurrencesWithAdjacentStart([1, 2, 3]),
+    "Triples i, i+1, k with k > i+1 ordered as 123",
+  ),
+  patternCount(
+    "OccurrencesOf31Dash2",
+    "31-2",
+    occurrencesWithAdjacentStart([3, 1, 2]),
+    "Triples i, i+1, k with k > i+1 ordered as 312",
+  ),
+  patternCount(
+    "OccurrencesOf23Dash1",
+    "23-1",
+    occurrencesWithAdjacentStart([2, 3, 1]),
+    "Triples i, i+1, k with k > i+1 ordered as 231",
+  ),
+  patternCount(
+    "OccurrencesOf32Dash1",
+    "32-1",
+    occurrencesWithAdjacentStart([3, 2, 1]),
+    "Triples i, i+1, k with k > i+1 ordered as 321",
+  ),
+
+  // Patterns whose first entry is p(1).
+  patternCount(
+    "OccurrencesOfInitial213",
+    "|213",
+    occurrencesFromFirstEntry([2, 1, 3]),
+    "Triples 1 < j < k ordered as 213",
+  ),
+  patternCount(
+    "OccurrencesOfInitial231",
+    "|231",
+    occurrencesFromFirstEntry([2, 3, 1]),
+    "Triples 1 < j < k ordered as 231",
+  ),
+  patternCount(
+    "OccurrencesOfInitial312",
+    "|312",
+    occurrencesFromFirstEntry([3, 1, 2]),
+    "Triples 1 < j < k ordered as 312",
+  ),
+  patternCount(
+    "OccurrencesOfInitial321",
+    "|321",
+    occurrencesFromFirstEntry([3, 2, 1]),
+    "Triples 1 < j < k ordered as 321",
+  ),
+  patternCount(
+    "OccurrencesOfInitial132",
+    "|132",
+    occurrencesFromFirstEntry([1, 3, 2]),
+    "Triples 1 < j < k ordered as 132",
+  ),
+  patternCount(
+    "OccurrencesOfInitial123",
+    "|123",
+    occurrencesFromFirstEntry([1, 2, 3]),
+    "Triples 1 < j < k ordered as 123",
+  ),
+  patternCount(
+    "OccurrencesOfInitial12Dash3",
+    "|12-3",
+    occurrencesFromFirstTwoEntries([1, 2, 3]),
+    "Triples 1, 2, k ordered as 123",
+    "FindStat titles this |1-23, but its definition matches p(1) and p(2) as adjacent.",
+  ),
+  patternCount(
+    "OccurrencesOfInitial2Dash13",
+    "|2-13",
+    occurrencesFromFirstEntryThenAdjacent([2, 1, 3]),
+    "Triples 1, j, j+1 ordered as 213",
+    "FindStat titles this |21-3.",
+  ),
+  patternCount(
+    "OccurrencesOfInitial1Dash23",
+    "|1-23",
+    occurrencesFromFirstEntryThenAdjacent([1, 2, 3]),
+    "Triples 1, j, j+1 ordered as 123",
+    "FindStat titles this |12-3.",
+  ),
+  patternCount(
+    "OccurrencesOfConsecutive132",
+    "consecutive 132",
+    occurrencesOfConsecutivePattern([1, 3, 2]),
+    "Triples i, i+1, i+2 ordered as 132",
+  ),
+
+  // More patterns of length 4.
+  word("OccurrencesOf3241", "Quadruples i < j < k < l ordered as 3241.", occurrencesOfLength4Pattern([3, 2, 4, 1])),
+  word("OccurrencesOf4213", "Quadruples i < j < k < l ordered as 4213.", occurrencesOfLength4Pattern([4, 2, 1, 3])),
+
+  // Pairs and triples of patterns, counted together.
+  word(
+    "OccurrencesOf123Or132",
+    "Triples ordered as 123 or as 132.",
+    occurrencesOfLength3Patterns([1, 2, 3], [1, 3, 2]),
+  ),
+  word(
+    "OccurrencesOf213Or321",
+    "Triples ordered as 213 or as 321.",
+    occurrencesOfLength3Patterns([2, 1, 3], [3, 2, 1]),
+  ),
+  word(
+    "OccurrencesOf132Or321",
+    "Triples ordered as 132 or as 321.",
+    occurrencesOfLength3Patterns([1, 3, 2], [3, 2, 1]),
+  ),
+  word(
+    "OccurrencesOf132Or213Or321",
+    "Triples ordered as 132, 213 or 321.",
+    occurrencesOfLength3Patterns([1, 3, 2], [2, 1, 3], [3, 2, 1]),
+    "Studied by Gepner in conformal field theory.",
+  ),
+  word(
+    "OccurrencesOf3241Or4231",
+    "Quadruples ordered as 3241 or as 4231.",
+    occurrencesOfLength4Patterns([3, 2, 4, 1], [4, 2, 3, 1]),
+    "A permutation avoids both exactly when it is an input-restricted deque.",
+  ),
+  word(
+    "OccurrencesOf4132Or4231",
+    "Quadruples ordered as 4132 or as 4231.",
+    occurrencesOfLength4Patterns([4, 1, 3, 2], [4, 2, 3, 1]),
+  ),
+  word(
+    "OccurrencesOf3412Or4231",
+    "Quadruples ordered as 3412 or as 4231.",
+    occurrencesOfLength4Patterns([3, 4, 1, 2], [4, 2, 3, 1]),
+    "A permutation avoids both exactly when its Schubert variety is smooth.",
+  ),
+  word(
+    "OccurrencesOf2143Or4213",
+    "Quadruples ordered as 2143 or as 4213.",
+    occurrencesOfLength4Patterns([2, 1, 4, 3], [4, 2, 1, 3]),
+  ),
+
+  // Small excedances, with and without the weak and cyclic variants.
+  stat(
+    "SmallWeakExcedances",
+    "Positions with p(i) = i or p(i) = i + 1.",
+    nonEmpty(count(positions, isSmallWeakExcedance)),
+  ),
+  stat("NonSmallExcedances", "Positions with p(i) != i + 1.", nonEmpty(countFailing(isSmallExcedance))),
+  stat(
+    "NonSmallWeakExcedances",
+    "Positions with p(i) not in {i, i + 1}.",
+    nonEmpty(countFailing(isSmallWeakExcedance)),
+  ),
+  stat(
+    "CyclicSmallExcedances",
+    "Positions with p(i) = i + 1, read cyclically: the last position counts when p(n) = 1.",
+    nonEmpty(count(positions, isCyclicSmallExcedance)),
+  ),
+  stat(
+    "CyclicSmallWeakExcedances",
+    "Positions with p(i) = i or p(i) = i + 1, read cyclically.",
+    nonEmpty(count(positions, isCyclicSmallWeakExcedance)),
+  ),
+  stat(
+    "NonCyclicSmallExcedances",
+    "Positions that are not cyclic small excedances.",
+    nonEmpty(countFailing(isCyclicSmallExcedance)),
+  ),
+  stat(
+    "NonCyclicSmallWeakExcedances",
+    "Positions that are not cyclic small weak excedances.",
+    nonEmpty(countFailing(isCyclicSmallWeakExcedance)),
+  ),
 ];
 
 export const PERMUTATION_STATISTICS: readonly Definition[] = [
@@ -800,4 +1063,5 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
   ),
   ...FINDSTAT_PERMUTATION_STATISTICS,
   ...FINDSTAT_PERMUTATION_STATISTICS_2,
+  ...FINDSTAT_PERMUTATION_STATISTICS_3,
 ];
