@@ -29,7 +29,7 @@ signatures:
   - call: RunSort(Permutation)
     description: The permutation with its increasing runs sorted lexicographically.
     library: enumeratio-combinatorics
-    type: (binary_word) -> binary_word
+    type: ((binary_word) -> binary_word) & ((permutation) -> permutation)
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

@@ -29,7 +29,7 @@ signatures:
   - call: Mirror(BinaryTree)
     description: "The left-right symmetry of a binary tree: every node's two subtrees swapped."
     library: enumeratio-combinatorics
-    type: (ordered_tree) -> ordered_tree
+    type: ((binary_tree) -> binary_tree) & ((ordered_tree) -> ordered_tree)
 ---
 
 - Takes a `BinaryTree` and returns a `BinaryTree` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

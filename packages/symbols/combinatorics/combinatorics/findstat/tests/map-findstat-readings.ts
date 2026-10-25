@@ -954,7 +954,234 @@ export const MAP_READINGS: Readonly<Record<string, Reading>> = {
   "BlockConcatenation@SetComposition": (p) => list(orderedBlocks(p).flat()),
   "CompositionBouncePath@Composition": (c) =>
     list(ints(c).flatMap((part) => [...range(1, part).map(() => 1), ...range(1, part).map(() => 0)])),
+
+  "Reverse@SignedPermutation": (p) => list(ints(p).toReversed()),
+  // The signed permutation as a bijection of ±1..±n, inverted as a table.
+  "Inverse@SignedPermutation": (p) => {
+    const word = ints(p);
+    const image = new Map<number, number>();
+    word.forEach((value, k) => {
+      image.set(k + 1, value);
+      image.set(-(k + 1), -value);
+    });
+    const back = new Map([...image].map(([from, to]) => [to, from]));
+    return list(word.map((_, k) => back.get(k + 1)!));
+  },
+  "Complement@SignedPermutation": (p) => {
+    const n = ints(p).length;
+    return list(ints(p).map((value) => (value > 0 ? n + 1 - value : -(n + 1 + value))));
+  },
+  "NegateSigns@SignedPermutation": (p) => list(ints(p).map((value) => 0 - value)),
+  "SignWord@SignedPermutation": (p) =>
+    ints(p)
+      .map((value) => (value < 0 ? "1" : "0"))
+      .join(""),
+  "UnderlyingPermutation@SignedPermutation": (p) => list(ints(p).map(Math.abs)),
+  "SignedPermutation@Permutation": (p) => list(ints(p)),
+  // Rank the entries in the order 1 < … < n < −n < … < −1 by sorting positions on that order.
+  "Standardization@SignedPermutation": (p) => {
+    const word = ints(p);
+    const n = word.length;
+    const order = (value: number): number => (value > 0 ? value : 2 * n + 1 + value);
+    const sorted = word.map((_, k) => k).toSorted((a, b) => order(word[a]!) - order(word[b]!));
+    const ranks = Array.from<number>({ length: n });
+    sorted.forEach((position, rank) => (ranks[position] = rank + 1));
+    return list(ranks);
+  },
+  "NegativesToFlagNegatives@SignedPermutation": (p) => {
+    const signs = zerosToFlagZeros(ints(p).map((value) => (value > 0 ? 1 : 0)));
+    return list(ints(p).map((value, k) => (signs[k] === 1 ? Math.abs(value) : -Math.abs(value))));
+  },
+  "FlagNegativesToNegatives@SignedPermutation": (p) => {
+    const signs = flagZerosToZeros(ints(p).map((value) => (value > 0 ? 1 : 0)));
+    return list(ints(p).map((value, k) => (signs[k] === 1 ? Math.abs(value) : -Math.abs(value))));
+  },
+  "PositiveCycleType@SignedPermutation": (p) => list(signedCycleType(ints(p), true)),
+  "NegativeCycleType@SignedPermutation": (p) => list(signedCycleType(ints(p), false)),
+
+  "BinaryWord@IntegerPartition": (p) => {
+    // Walk the boundary from the end of the first row: down along each row, then left to the next row's end.
+    const parts = ints(p);
+    let out = "";
+    let column = parts[0] ?? 0;
+    parts.forEach((_, k) => {
+      out += "1";
+      for (const target = parts[k + 1] ?? 0; column > target; column--) out += "0";
+    });
+    return out;
+  },
+  // The sweep with mutable open arcs: a closing element joins the open block with `gamma` open arcs above it.
+  "KasraouiZeng@SetPartition": (p) => {
+    const parts = blocks(p);
+    const n = sum(parts.map((block) => block.length));
+    const before = new Map<number, number>();
+    const after = new Set<number>();
+    for (const block of parts)
+      block.forEach((x, k) => {
+        if (k > 0) before.set(x, block[k - 1]!);
+        if (k < block.length - 1) after.add(x);
+      });
+    let open: number[][] = [];
+    const finished: number[][] = [];
+    for (let i = 1; i <= n; i++) {
+      let block = [i];
+      if (before.has(i)) {
+        const nested = [...before].filter(([y, a]) => a < before.get(i)! && y > i).length;
+        const [joined] = open.splice(open.length - 1 - nested, 1);
+        block = [...joined!, i];
+      }
+      (after.has(i) ? open : finished).push(block);
+    }
+    return blocksText(finished.toSorted((a, b) => a[0]! - b[0]!));
+  },
+  // Callan's rules as FindStat states them, on blocks ordered by largest element and edited in place.
+  "CallanSwitch@SetPartition": (text) => {
+    const p = blocks(text)
+      .map((block) => [...block])
+      .toSorted((a, b) => a.at(-1)! - b.at(-1)!);
+    const one = p.find((block) => block[0] === 1)!;
+    if (one.length === 1) return text;
+    const s = one[1]!;
+    const r = Math.min(...p.filter((block) => block.length > 1).map((block) => block.at(-1)!));
+    const x = p[0]!.at(-1)!;
+    const y = Math.min(r, s);
+    if (x === y) return canonical(p);
+    const leading = (stays: (block: number[]) => boolean): number[][] => {
+      let i = 0;
+      while (stays(p[i]!)) i++;
+      return p.splice(0, i);
+    };
+    if (x < y) {
+      if (r > s) {
+        const singles = leading((block) => block.length === 1 && block[0]! < s).flat();
+        one.splice(1, 1);
+        one.push(...singles);
+        p.push([s]);
+      } else one.push(...leading((block) => block.length === 1).flat());
+      return canonical(p);
+    }
+    const singles: number[][] = [];
+    while (one[1]! < x) singles.push(one.splice(1, 1));
+    if (p[0]!.length === 1) {
+      one.push(x);
+      p.shift();
+    }
+    return canonical([...singles, ...p]);
+  },
+  "InverseKrewerasComplement@DyckPath": (d) => {
+    const word = ints(d);
+    const n = word.length / 2;
+    return list(dyckOfBlocks(coarsestComplement(noncrossingBlocks(word), n), n));
+  },
+  // The permutations avoiding 321 whose left-to-right maxima trace the path, then their RSK pair.
+  "KnuthKrattenthaler@DyckPath": (d) => {
+    const word = ints(d);
+    const m = word.length / 2;
+    if (m === 0) return "[]";
+    const peaks = MAP_READINGS["LeftToRightMaximaDyckPath@Permutation"]!;
+    const found = permutationsOf(m).filter((w) => !hasPattern321(w) && peaks(list(w)) === list(word));
+    if (found.length !== 1) throw new Error(`${found.length} permutations`);
+    const [p, q] = rskPair(found[0]!);
+    const ups = new Set([...p[0]!, ...(q[1] ?? []).map((x) => 2 * m + 1 - x)]);
+    return list(range(1, 2 * m).map((position) => (ups.has(position) ? 1 : 0)));
+  },
+  // Characterized by what it keeps: the ups before each down that is neither a return nor in the last descent.
+  "SwapReturnsAndLastDescent@DyckPath": (d) => {
+    const word = ints(d);
+    if (word.length === 0) return "[]";
+    const match = dyckWords(word.length / 2).filter(
+      (v) =>
+        returnCount(v) === lastDescentLength(word) &&
+        lastDescentLength(v) === returnCount(word) &&
+        list(keptUps(v)) === list(keptUps(word)),
+    );
+    if (match.length !== 1) throw new Error(`${match.length} paths`);
+    return list(match[0]!);
+  },
 };
+
+const canonical = (items: readonly (readonly number[])[]): string =>
+  blocksText(items.map((block) => block.toSorted((a, b) => a - b)).toSorted((a, b) => a[0]! - b[0]!));
+
+const hasPattern321 = (w: readonly number[]): boolean =>
+  w.some((a, i) => w.some((b, j) => j > i && b < a && w.some((c, k) => k > j && c < b)));
+
+/** The ups before each down step. */
+const upsBeforeDowns = (word: readonly number[]): number[] => {
+  const out: number[] = [];
+  let ups = 0;
+  for (const step of word)
+    if (step === 1) ups++;
+    else out.push(ups);
+  return out;
+};
+const returnCount = (word: readonly number[]): number => upsBeforeDowns(word).filter((u, t) => u === t + 1).length;
+const lastDescentLength = (word: readonly number[]): number => word.length - word.lastIndexOf(1) - 1;
+const keptUps = (word: readonly number[]): number[] =>
+  upsBeforeDowns(word).filter((u, t, all) => u !== t + 1 && t < all.length - lastDescentLength(word));
+
+/** The noncrossing partition of a Dyck path: each down step closes the most recent open up step, and the downs
+ *  after the same up step share a block. */
+function noncrossingBlocks(word: readonly number[]): number[][] {
+  const open: number[] = [];
+  const blocks = new Map<number, number[]>();
+  let ups = 0;
+  for (const step of word) {
+    if (step === 1) open.push(++ups);
+    else blocks.set(ups, [...(blocks.get(ups) ?? []), open.pop()!]);
+  }
+  return [...blocks.values()];
+}
+const dyckOfBlocks = (blocks: readonly (readonly number[])[], n: number): number[] =>
+  range(1, n).flatMap((i) => [1, ...(blocks.find((b) => Math.max(...b) === i)?.map(() => 0) ?? [])]);
+
+/** Whether two blocks of points on a line cross: a < c < b < d for some a, b in one and c, d in the other. */
+const blocksCross = (x: readonly number[], y: readonly number[]): boolean =>
+  x.some((a) => x.some((b) => y.some((c) => y.some((e) => a < c && c < b && b < e))));
+/** The coarsest noncrossing partition of the primed points 1', …, n' that stays noncrossing with `blocks` on
+ *  1, 1', 2, 2', …: found by merging any two blocks while the result is still noncrossing. */
+function coarsestComplement(blocks: readonly (readonly number[])[], n: number): number[][] {
+  const unprimed = blocks.map((block) => block.map((i) => 2 * i - 1));
+  const primed = (block: readonly number[]): number[] => block.map((i) => 2 * i);
+  let merged: number[][] = range(1, n).map((i) => [i]);
+  const fits = (candidate: readonly (readonly number[])[]): boolean =>
+    candidate.every(
+      (a, i) =>
+        unprimed.every((b) => !blocksCross(primed(a), b) && !blocksCross(b, primed(a))) &&
+        candidate.every((c, j) => j <= i || (!blocksCross(primed(a), primed(c)) && !blocksCross(primed(c), primed(a)))),
+    );
+  for (let again = true; again;) {
+    again = false;
+    for (let i = 0; i < merged.length && !again; i++)
+      for (let j = i + 1; j < merged.length && !again; j++) {
+        const next = [...merged.filter((_, k) => k !== i && k !== j), [...merged[i]!, ...merged[j]!]];
+        if (fits(next)) {
+          merged = next;
+          again = true;
+        }
+      }
+  }
+  return merged;
+}
+
+/** The lengths, largest first, of the cycles of a signed permutation (walked on absolute values) whose product of
+ *  signs is positive (`even`) or negative. */
+function signedCycleType(word: readonly number[], even: boolean): number[] {
+  const seen = new Set<number>();
+  const lengths: number[] = [];
+  for (let start = 1; start <= word.length; start++) {
+    if (seen.has(start)) continue;
+    let length = 0;
+    let sign = 1;
+    for (let at = start; !seen.has(at); at = Math.abs(word[at - 1]!)) {
+      seen.add(at);
+      length++;
+      sign *= Math.sign(word[at - 1]!);
+    }
+    if (sign > 0 === even) lengths.push(length);
+  }
+  return descending(lengths);
+}
 
 /** The composition of n cut at the entries i in 2 .. n - 1 for which `pick` holds, given whether entry i is a descent. */
 function tableauComposition(

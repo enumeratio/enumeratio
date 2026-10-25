@@ -121,7 +121,9 @@ export function contributions(): Map<string, Contribution[]> {
     for (const c of list) {
       // Rows that add no shape leave the package's say to whatever else it did to the head.
       const own = table.rows.filter((row) => row.package === c.pkg).flatMap((row) => row.signature ?? []);
-      if (own.length > 0) c.type = ce.type(joinSignatures(own)).toString();
+      // A head this package introduced has its first case as the table's native signature, not a row.
+      if (own.length > 0)
+        c.type = ce.type(joinSignatures(c.previous === undefined ? [table.nativeSignature, ...own] : own)).toString();
       const rows = table.rows.filter((row) => row.package === c.pkg);
       const conditional = rows.every(
         (row) => row.on !== undefined || row.symbols !== undefined || row.types !== undefined,

@@ -25,6 +25,7 @@ import {
 /** A sample value per carrier TYPE, as the contents a constructor wraps. */
 const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
   permutation: { contents: ["List", 2, 3, 1], caption: "the one-line word $231$" },
+  signed_permutation: { contents: ["List", 2, -3, 1], caption: "the signed permutation $2\\,\\bar 3\\,1$" },
   integer_partition: { contents: ["List", 4, 2, 1], caption: "the partition $4 + 2 + 1$" },
   binary_tree: {
     contents: ["List", ["List", 0, 0], ["List", 0, ["List", 0, 0]]],
@@ -79,8 +80,16 @@ const withIds = (examples: readonly { caption?: string }[]): ReferenceExample[] 
 /** The carrier name a signature reads, as the constructor spells it. */
 const carrier = (type: string): string => constructorFor[type] ?? type;
 
+/** A map's own subject where the carrier's sample is a fixed point of it. */
+const OWN_SAMPLES: Record<string, { contents: unknown; caption: string }> = {
+  KasraouiZeng: {
+    contents: ["List", ["List", 1, 4], ["List", 2, 3]],
+    caption: "the nesting $\\{1,4\\} \\mid \\{2,3\\}$",
+  },
+};
+
 function exampleFor(map: CombinatorialMap): { expr: unknown; expected: unknown; caption?: string }[] {
-  const sample = SAMPLES[map.from];
+  const sample = OWN_SAMPLES[map.name] ?? SAMPLES[map.from];
   if (sample === undefined) return [];
   const subject = [carrier(map.from), sample.contents];
   const expr = [map.name, subject];

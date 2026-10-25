@@ -21,10 +21,13 @@ import { fastDefinition } from "./compiled.ts";
 import type { CombinatorialMap } from "./map-helpers.ts";
 import { MAP_LAWS } from "./maps-laws.generated.ts";
 import { COMPOSITIONS_MAPS } from "../compositions/src/maps.ts";
+import { DYCK_MAPS } from "../lattice-paths/src/dyck-maps.ts";
 import { LATTICE_PATHS_MAPS } from "../lattice-paths/src/maps.ts";
 import { PARTITIONS_MAPS } from "../partitions/src/maps.ts";
 import { declareCycleConversions } from "../permutations/src/cycles-conversion.ts";
 import { PERMUTATIONS_MAPS } from "../permutations/src/maps.ts";
+import { SIGNED_PERMUTATIONS_MAPS } from "../permutations/src/signed-maps.ts";
+import { SET_PARTITION_INVOLUTION_MAPS } from "../set-partitions/src/involution-maps.ts";
 import { SET_PARTITIONS_MAPS } from "../set-partitions/src/maps.ts";
 import { TABLEAUX_MAPS } from "../tableaux/src/maps.ts";
 import { TREES_MAPS } from "../trees/src/maps.ts";
@@ -43,10 +46,13 @@ const withLaws = (map: CombinatorialMap): CombinatorialMap => ({ ...map, ...MAP_
 
 export const MAPS: readonly CombinatorialMap[] = [
   ...PERMUTATIONS_MAPS,
+  ...SIGNED_PERMUTATIONS_MAPS,
   ...TREES_MAPS,
   ...LATTICE_PATHS_MAPS,
+  ...DYCK_MAPS,
   ...PARTITIONS_MAPS,
   ...SET_PARTITIONS_MAPS,
+  ...SET_PARTITION_INVOLUTION_MAPS,
   ...TABLEAUX_MAPS,
   ...COMPOSITIONS_MAPS,
   ...WORDS_MAPS,

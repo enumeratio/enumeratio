@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-signed-permutation-2-bar-3-1			[NegativesToFlagNegatives, [SignedPermutation, [List, 2, -3, 1]]]	[SignedPermutation, [List, -2, -3, 1]]	the signed permutation $2\,\bar 3\,1$

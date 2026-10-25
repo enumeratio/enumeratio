@@ -25,7 +25,7 @@ signatures:
   - call: InverseCyclicShift(Permutation)
     description: Rotate the word one place to the right.
     library: enumeratio-combinatorics
-    type: ((binary_word) -> binary_word) & ((composition) -> composition) & ((set_composition) -> set_composition)
+    type: ((binary_word) -> binary_word) & ((composition) -> composition) & ((permutation) -> permutation) & ((set_composition) -> set_composition)
 laws:
   - inverse: CyclicShift
   - graded:

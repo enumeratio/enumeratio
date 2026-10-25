@@ -11,6 +11,10 @@ catalog:
     identity: Mp00066
     url: https://www.findstat.org/Mp00066
     on: Permutation
+  - system: findstat
+    identity: Mp00162
+    url: https://www.findstat.org/Mp00162
+    on: SignedPermutation
 mapOn:
   - Permutation
   - SignedPermutation
@@ -23,16 +27,21 @@ signatures:
   - call: Inverse(Permutation)
     description: "The inverse permutation: position of each value."
     library: enumeratio-combinatorics
-    type: (permutation) -> permutation
+    type: ((permutation) -> permutation) & ((signed_permutation) -> signed_permutation)
     overrides: enumeratio-modular
     types:
       - permutation
+      - signed_permutation
 laws:
   - involution
   - graded:
       from: Permutations
       to: Permutations
     on: permutation
+  - graded:
+      from: SignedPermutations
+      to: SignedPermutations
+    on: signed_permutation
 names:
   wolframIdentity: true
 bindings:
@@ -54,3 +63,5 @@ bindings:
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+- Also takes a `SignedPermutation`, returning a `SignedPermutation`: The inverse signed permutation: ±j goes to the position of j, signed as the entry there.
+- FindStat's Mp00162.

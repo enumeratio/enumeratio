@@ -8,7 +8,7 @@ signatures:
   - call: BinaryWord(list)
     description: The singular-inhabitant constructor for a word over $\{0, 1\}$.
     library: enumeratio-combinatorics
-    type: ((list<integer>) -> binary_word) & ((dyck_path) -> binary_word) & ((finset) -> binary_word)
+    type: ((list<integer>) -> binary_word) & ((dyck_path) -> binary_word) & ((integer_partition) -> binary_word) & ((finset) -> binary_word)
 laws:
   - inverse: Finset
     on: finset
@@ -17,6 +17,10 @@ catalog:
     identity: Mp00093
     url: https://www.findstat.org/Mp00093
     on: DyckPath
+  - system: findstat
+    identity: Mp00095
+    url: https://www.findstat.org/Mp00095
+    on: IntegerPartition
 ---
 
 - A [[BinaryWords]] element.

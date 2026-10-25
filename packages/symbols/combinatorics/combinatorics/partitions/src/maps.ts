@@ -45,6 +45,26 @@ export const PARTITIONS_MAPS: readonly CombinatorialMap[] = [
     note: "FindStat's Mp00308. Not injective; the fixed points are the staircase partitions.",
   },
   {
+    name: "BinaryWord",
+    convert: true,
+    from: "integer_partition",
+    to: "binary_word",
+    // The k-th row is a 1 after the p1 - pk lefts of the rows above it, so the 1s sit at positions p1 - pk + k.
+    body: [
+      "If",
+      ["Equal", ["Length", "_raw"], 0],
+      ["List"],
+      forEach(
+        ["Range", 1, ["Add", at(1), ["Length", "_raw"]], 1],
+        ["If", ["Element", "t", forEach(positions, ["Add", ["Subtract", at(1), at("k")], "k"], "k")], 1, 0],
+        "t",
+      ),
+    ],
+    summary: "The shape's boundary read from the first row down: 1 for a step down, 0 for a step left.",
+    note: "FindStat's Mp00095. Injective.",
+    findstat: ["Mp00095"],
+  },
+  {
     name: "OddPartsWord",
     from: "integer_partition",
     to: "binary_word",
