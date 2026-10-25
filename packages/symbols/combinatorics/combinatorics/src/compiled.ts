@@ -80,7 +80,7 @@ export function fastDefinition(options: {
       const image = input === undefined ? undefined : fromJs(kernel(input as never));
       if (image !== undefined) return image;
     }
-    compiled ??= compile();
+    if (compiled === undefined) compiled = compile();
     const raw = compiled === null ? undefined : toJs(contents);
     if (compiled !== null && raw !== undefined) {
       try {
