@@ -1,0 +1,7 @@
+id	section	role	expr	expected	known	source	caption
+the-one-line-word-312			[DescentsOfDistanceTwo, [Permutation, [List, 3, 1, 2]]]	1			the one-line word $312$
+the-one-line-word-312-as-a-plain-list			[DescentsOfDistanceTwo, [List, 3, 1, 2]]	1			the one-line word $312$, as a plain list
+the-one-line-word-2413			[DescentsOfDistanceTwo, [Permutation, [List, 2, 4, 1, 3]]]	2			the one-line word $2413$
+findstat-st000836-1	Properties		[CombinatorialStat, [Permutation, [List, 1, 2]], "'DescentsOfDistanceTwo'"]	0	0	FindStat St000836	FindStat's value for [1,2]
+findstat-st000836-2	Properties		[CombinatorialStat, [Permutation, [List, 2, 1]], "'DescentsOfDistanceTwo'"]	0	0	FindStat St000836	FindStat's value for [2,1]
+findstat-st000836-3	Properties		[CombinatorialStat, [Permutation, [List, 1, 2, 3]], "'DescentsOfDistanceTwo'"]	0	0	FindStat St000836	FindStat's value for [1,2,3]
