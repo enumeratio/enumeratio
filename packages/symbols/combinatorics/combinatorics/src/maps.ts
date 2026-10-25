@@ -26,6 +26,7 @@ import { LATTICE_PATHS_MAPS } from "../lattice-paths/src/maps.ts";
 import { PARTITIONS_MAPS } from "../partitions/src/maps.ts";
 import { declareCycleConversions } from "../permutations/src/cycles-conversion.ts";
 import { PERMUTATIONS_MAPS } from "../permutations/src/maps.ts";
+import { SIGNED_PERMUTATIONS_ALGORITHM_MAPS } from "../permutations/src/signed-algorithms.ts";
 import { SIGNED_PERMUTATIONS_MAPS } from "../permutations/src/signed-maps.ts";
 import { SET_PARTITION_INVOLUTION_MAPS } from "../set-partitions/src/involution-maps.ts";
 import { SET_PARTITIONS_MAPS } from "../set-partitions/src/maps.ts";
@@ -47,6 +48,7 @@ const withLaws = (map: CombinatorialMap): CombinatorialMap => ({ ...map, ...MAP_
 export const MAPS: readonly CombinatorialMap[] = [
   ...PERMUTATIONS_MAPS,
   ...SIGNED_PERMUTATIONS_MAPS,
+  ...SIGNED_PERMUTATIONS_ALGORITHM_MAPS,
   ...TREES_MAPS,
   ...LATTICE_PATHS_MAPS,
   ...DYCK_MAPS,

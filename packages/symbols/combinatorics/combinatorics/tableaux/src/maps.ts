@@ -69,6 +69,164 @@ const compositionCutWhere = (cut: MathJSON): MathJSON => [
   ),
 ];
 
+const upTo = (count: MathJSON): MathJSON => ["Range", 1, count, 1];
+const entryOf = (list: MathJSON, index: MathJSON): MathJSON => ["At", list, index];
+/** The position of v in `list`. */
+const positionOf = (list: MathJSON, v: MathJSON): MathJSON => [
+  "IndexWhere",
+  list,
+  ["Function", ["Equal", "z", v], "z"],
+];
+/** `list` with the entries at positions a and b exchanged. */
+const exchanged = (list: MathJSON, a: MathJSON, b: MathJSON): MathJSON =>
+  forEach(
+    upTo(["Length", list]),
+    ["If", ["Equal", "q", a], entryOf(list, b), ["If", ["Equal", "q", b], entryOf(list, a), entryOf(list, "q")]],
+    "q",
+  );
+
+/** Two lists of `cells` entries end to end, as a fresh list: a `Join` of lazy lists stays lazy, and an accumulator must not. */
+const appended = (first: MathJSON, second: MathJSON): MathJSON =>
+  forEach(
+    upTo(["Multiply", 2, cells]),
+    ["If", ["LessEqual", "j", cells], entryOf(first, "j"), entryOf(second, ["Subtract", "j", cells])],
+    "j",
+  );
+
+/** Whether the two lists have the same descent positions. */
+const sameDescents = (first: MathJSON, second: MathJSON): MathJSON => [
+  "Equal",
+  [
+    "Count",
+    [
+      "Filter",
+      upTo(["Subtract", cells, 1]),
+      [
+        "Function",
+        [
+          "Not",
+          [
+            "Equal",
+            ["If", ["Greater", entryOf(first, "e"), entryOf(first, ["Add", "e", 1])], 1, 0],
+            ["If", ["Greater", entryOf(second, "e"), entryOf(second, ["Add", "e", 1])], 1, 0],
+          ],
+        ],
+        "e",
+      ],
+    ],
+  ],
+  0,
+];
+
+/** One t-action. The state is the labelling P then the tableau T, each by cell in reading order. P goes to P with its
+ *  first column descent d exchanged with d + 1; T has the two cells' entries exchanged unless that leaves the descents
+ *  of the linear extension unchanged. */
+const tableauAction: MathJSON = bind(
+  "ra_p",
+  forEach(upTo(cells), entryOf("ra_acc", "q"), "q"),
+  bind(
+    "ra_t",
+    forEach(upTo(cells), entryOf("ra_acc", ["Add", "q", cells]), "q"),
+    bind(
+      "ra_d",
+      [
+        "Min",
+        [
+          "Join",
+          [
+            "Filter",
+            upTo(["Subtract", cells, 1]),
+            [
+              "Function",
+              [
+                "Less",
+                entryOf("ra_col", positionOf("ra_p", ["Add", "d", 1])),
+                entryOf("ra_col", positionOf("ra_p", "d")),
+              ],
+              "d",
+            ],
+          ],
+          ["List", cells],
+        ],
+      ],
+      [
+        "If",
+        ["Equal", "ra_d", cells],
+        "ra_acc",
+        bind(
+          "ra_a",
+          positionOf("ra_p", "ra_d"),
+          bind(
+            "ra_b",
+            positionOf("ra_p", ["Add", "ra_d", 1]),
+            bind(
+              "ra_q",
+              exchanged("ra_p", "ra_a", "ra_b"),
+              bind(
+                "ra_s",
+                [
+                  "If",
+                  sameDescents(
+                    forEach(upTo(cells), entryOf("ra_p", positionOf("ra_t", "e")), "e"),
+                    forEach(upTo(cells), entryOf("ra_q", positionOf("ra_t", "e")), "e"),
+                  ),
+                  "ra_t",
+                  exchanged("ra_t", "ra_a", "ra_b"),
+                ],
+                appended("ra_q", "ra_s"),
+                "list<integer>",
+              ),
+              "list<integer>",
+            ),
+            "integer",
+          ),
+          "integer",
+        ),
+      ],
+      "integer",
+    ),
+    "list<integer>",
+  ),
+  "list<integer>",
+);
+
+/** Start from the natural labelling P = 1, 2, … and act by t_d at its first column descent d until it has none, carrying
+ *  the tableau along. P's column descents depend on P alone, and n² steps are more than it needs. */
+const rowDescentsToColumnDescents: MathJSON = [
+  "If",
+  ["Less", cells, 2],
+  "_raw",
+  bind(
+    "ra_col",
+    ["Flatten", forEach(upTo(["Length", "_raw"]), forEach(upTo(["Length", at("r")]), "c", "c"), "r")],
+    bind(
+      "ra_row",
+      ["Flatten", forEach(upTo(["Length", "_raw"]), forEach(upTo(["Length", at("r")]), "r", "c"), "r")],
+      bind(
+        "ra_end",
+        [
+          "Fold",
+          ["Function", tableauAction, "ra_acc", "ra_step"],
+          appended(upTo(cells), ["Flatten", "_raw"]),
+          upTo(["Multiply", cells, cells]),
+        ],
+        forEach(
+          upTo(["Length", "_raw"]),
+          forEach(
+            ["Filter", upTo(cells), ["Function", ["Equal", entryOf("ra_row", "c"), "r"], "c"]],
+            entryOf("ra_end", ["Add", "c", cells]),
+            "c",
+          ),
+          "r",
+        ),
+        "list<integer>",
+      ),
+      "list<integer>",
+    ),
+    "list<integer>",
+  ),
+];
+
 export const TABLEAUX_MAPS: readonly CombinatorialMap[] = [
   {
     name: "TableauShape",
@@ -214,5 +372,14 @@ export const TABLEAUX_MAPS: readonly CombinatorialMap[] = [
     guard: tableauGuard,
     summary: "Remove the first row and column-insert its entries back into the rest, largest first.",
     note: "FindStat's Mp00106. Not injective: a row and a column of the same size both give the row.",
+  },
+  {
+    name: "RowDescentsToColumnDescents",
+    from: "standard_tableau",
+    to: "standard_tableau",
+    body: rowDescentsToColumnDescents,
+    guard: tableauGuard,
+    summary: "A standard tableau of the same shape whose column descents are the original's row descents.",
+    note: "FindStat's Mp00226, a bijection. From the natural labelling of the shape, d and d + 1 are exchanged at each column descent d, the tableau following by the same exchange unless that keeps its descents.",
   },
 ];

@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { CARRIERS, declareCombinatorics, declareMaps, MAPS } from "../../src/index.ts";
-import { readObject } from "../src/objects.ts";
+import { objectSize, readObject } from "../src/objects.ts";
 import { MAP_READINGS } from "./map-findstat-readings.ts";
 
 // Each FindStat map we declare is read twice independently (a JS reading of FindStat's description, and
@@ -130,12 +130,19 @@ const mapFor = (key: string) => {
 
 const normalize = (text: string): string => text.replace(/\s+/g, "");
 
+/** Maps whose Epsil iterates (Demazure product, tableau actions) take their objects only this large in the standard run; DEEP_TESTS=1 lifts it. */
+const SLOW: Readonly<Record<string, number>> = {
+  "DemazureProductWithInverse@SignedPermutation": 3,
+  "RowDescentsToColumnDescents@StandardTableau": 4,
+};
+
 for (const [key, reading] of Object.entries(MAP_READINGS)) {
   const { head, from, to } = mapFor(key);
   test(`${key}: the declared map agrees with its independent reading`, { timeout: 120_000 }, () => {
     const objects = OBJECTS[from];
     expect(objects, `objects of ${from}`).toBeDefined();
-    for (const object of objects!) {
+    const largest = process.env.DEEP_TESTS === "1" ? Number.POSITIVE_INFINITY : (SLOW[key] ?? Number.POSITIVE_INFINITY);
+    for (const object of objects!.filter((o) => (objectSize(from, o) ?? 0) <= largest)) {
       let image: string;
       try {
         image = reading(object);
@@ -270,6 +277,13 @@ const IDS: Readonly<Record<string, string>> = {
   "FlagNegativesToNegatives@SignedPermutation": "Mp00271",
   "PositiveCycleType@SignedPermutation": "Mp00166",
   "NegativeCycleType@SignedPermutation": "Mp00169",
+  "KrewerasComplement@SignedPermutation": "Mp00168",
+  "InverseKrewerasComplement@SignedPermutation": "Mp00167",
+  "FoataHan@SignedPermutation": "Mp00190",
+  "InverseFoataHan@SignedPermutation": "Mp00194",
+  "DemazureProductWithInverse@SignedPermutation": "Mp00260",
+  "Rowmotion@SignedPermutation": "Mp00281",
+  "RowDescentsToColumnDescents@StandardTableau": "Mp00226",
 };
 
 test("every reading names the FindStat map it is", () => {
