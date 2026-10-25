@@ -220,10 +220,10 @@ export const rskPair: MathJSON = [
 /** The recording tableau alone, as its rows. */
 export const recordingRows: MathJSON = bind("pq", rskPair, at("pq", 2));
 
-/** Both tableaux as rows, ready for the `standard_tableau_pair` constructor — one RSK run for
- *  the pair, not one per half. */
-export const rskRows: MathJSON = bind("pq", rskPair, [
+/** Both tableaux, for the `standard_tableau_pair` constructor: the two RSK maps' own answers, so the
+ *  pair rides their fast paths and their definitions stay the single description of each half. */
+export const rskRows: MathJSON = [
   "Tuple",
-  ["StandardTableau", at("pq", 1)],
-  ["StandardTableau", at("pq", 2)],
-]);
+  ["RskInsertion", ["Permutation", "_raw"]],
+  ["RskRecording", ["Permutation", "_raw"]],
+];
