@@ -24,17 +24,22 @@ catalog:
     identity: Mp00289
     url: https://www.findstat.org/Mp00289
     on: SetComposition
+  - system: findstat
+    identity: Mp00188
+    url: https://www.findstat.org/Mp00188
+    on: SignedPermutation
 mapOn:
   - BinaryWord
   - Composition
   - Permutation
   - SetComposition
   - SetPartition
+  - SignedPermutation
 signatures:
   - call: Complement(Permutation)
     description: Each entry replaced by n + 1 minus itself.
     library: enumeratio-combinatorics
-    type: ((binary_word) -> binary_word) & ((composition) -> composition) & ((permutation) -> permutation) & ((set_composition) -> set_composition) & ((set_partition) -> set_partition)
+    type: ((binary_word) -> binary_word) & ((composition) -> composition) & ((permutation) -> permutation) & ((set_composition) -> set_composition) & ((set_partition) -> set_partition) & ((signed_permutation) -> signed_permutation)
     overrides: compute-engine
 laws:
   - involution
@@ -58,9 +63,15 @@ laws:
       from: SetCompositions
       to: SetCompositions
     on: set_composition
+  - graded:
+      from: SignedPermutations
+      to: SignedPermutations
+    on: signed_permutation
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+- Also takes a `SignedPermutation`, returning a `SignedPermutation`: Each entry ±i replaced by ±(n + 1 − i), its sign kept.
+- FindStat's Mp00188.
 - Also takes a `SetPartition`, returning a `SetPartition`: Each element i replaced by n + 1 - i: the set partition seen from the other end.
 - Also takes a `SetComposition`, returning a `SetComposition`: Each element i replaced by n + 1 - i, the blocks staying in their order.
 - FindStat's Mp00289.

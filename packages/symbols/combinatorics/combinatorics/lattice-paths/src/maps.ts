@@ -16,14 +16,14 @@ const stepsWhere = (letter: number, also: MathJSON = true, from: MathJSON = 1): 
 ];
 
 /** How many up steps `_raw` has among its first k steps. */
-const upsThrough = (k: MathJSON): MathJSON => [
+export const upsThrough = (k: MathJSON): MathJSON => [
   "Count",
   ["Filter", ["Range", 1, k, 1], ["Function", ["Equal", at("u"), 1], "u"]],
 ];
 
 /** Only a Dyck path: as many downs as ups, and no prefix with more downs than ups. The carrier also holds
  *  the grand paths other families draw, which these maps are not defined on. */
-const dyckGuard: MathJSON = [
+export const dyckGuard: MathJSON = [
   "And",
   ["Equal", ["Multiply", 2, upsThrough(["Length", "_raw"])], ["Length", "_raw"]],
   [

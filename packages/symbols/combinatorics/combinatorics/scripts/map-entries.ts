@@ -25,6 +25,7 @@ import {
 /** A sample value per carrier TYPE, as the contents a constructor wraps. */
 const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
   permutation: { contents: ["List", 2, 3, 1], caption: "the one-line word $231$" },
+  signed_permutation: { contents: ["List", 2, -3, 1], caption: "the signed permutation $2\\,\\bar 3\\,1$" },
   integer_partition: { contents: ["List", 4, 2, 1], caption: "the partition $4 + 2 + 1$" },
   binary_tree: {
     contents: ["List", ["List", 0, 0], ["List", 0, ["List", 0, 0]]],

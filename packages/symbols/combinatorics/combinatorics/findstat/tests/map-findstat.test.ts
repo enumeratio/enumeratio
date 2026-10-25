@@ -99,12 +99,19 @@ const integerPartitions = (n: number, most = n): number[][] =>
         .toReversed()
         .flatMap((part) => integerPartitions(n - part, part).map((rest) => [part, ...rest]));
 
+/** Signed permutations of 1..n: every permutation with every choice of signs. */
+const signedPermutations = (n: number): number[][] =>
+  permutations(n).flatMap((word) =>
+    range(0, 2 ** n - 1).map((mask) => word.map((value, k) => (mask & (1 << k) ? -value : value))),
+  );
+
 const through = <T>(max: number, from: number, make: (n: number) => T[]): T[] => range(from, max).flatMap(make);
 const OBJECTS: Readonly<Record<string, string[]>> = {
   Permutation: through(4, 1, permutations).map((p) => JSON.stringify(p).replaceAll(" ", "")),
   BinaryWord: through(5, 0, (n) => range(0, 2 ** n - 1).map((k) => (n === 0 ? "" : k.toString(2).padStart(n, "0")))),
   Composition: through(5, 1, compositions).map((c) => JSON.stringify(c)),
   DyckPath: through(4, 1, dyckWords).map((w) => JSON.stringify(w)),
+  SignedPermutation: through(4, 1, signedPermutations).map((p) => JSON.stringify(p).replaceAll(" ", "")),
   SetPartition: through(5, 1, setPartitions).map((p) => `{${p.map((block) => `{${block.join(",")}}`).join(",")}}`),
   StandardTableau: through(5, 1, tableaux).map((t) => JSON.stringify(t)),
   SetComposition: through(4, 1, setCompositions).map((p) => `[${p.map((block) => `{${block.join(",")}}`).join(",")}]`),
@@ -245,6 +252,24 @@ const IDS: Readonly<Record<string, string>> = {
   "BlockSizeComposition@SetComposition": "Mp00287",
   "UnderlyingSetPartition@SetComposition": "Mp00285",
   "BlockConcatenation@SetComposition": "Mp00286",
+  "BinaryWord@IntegerPartition": "Mp00095",
+  "KasraouiZeng@SetPartition": "Mp00115",
+  "CallanSwitch@SetPartition": "Mp00249",
+  "InverseKrewerasComplement@DyckPath": "Mp00327",
+  "KnuthKrattenthaler@DyckPath": "Mp00296",
+  "SwapReturnsAndLastDescent@DyckPath": "Mp00118",
+  "Reverse@SignedPermutation": "Mp00161",
+  "Inverse@SignedPermutation": "Mp00162",
+  "Complement@SignedPermutation": "Mp00188",
+  "Bar@SignedPermutation": "Mp00244",
+  "SignWord@SignedPermutation": "Mp00267",
+  "UnderlyingPermutation@SignedPermutation": "Mp00163",
+  "SignedPermutation@Permutation": "Mp00170",
+  "Standardization@SignedPermutation": "Mp00245",
+  "NegativesToFlagNegatives@SignedPermutation": "Mp00270",
+  "FlagNegativesToNegatives@SignedPermutation": "Mp00271",
+  "EvenCycleType@SignedPermutation": "Mp00166",
+  "OddCycleType@SignedPermutation": "Mp00169",
 };
 
 test("every reading names the FindStat map it is", () => {

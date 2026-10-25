@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-signed-permutation-2-bar-3-1			[SignWord, [SignedPermutation, [List, 2, -3, 1]]]	[BinaryWord, [List, 0, 1, 0]]	the signed permutation $2\,\bar 3\,1$

@@ -1354,6 +1354,18 @@ const NOVEL = [
   "OddPartsWord",
   "UnderlyingSetPartition",
   "BlockConcatenation",
+  "Bar",
+  "SignWord",
+  "UnderlyingPermutation",
+  "Standardization",
+  "NegativesToFlagNegatives",
+  "FlagNegativesToNegatives",
+  "EvenCycleType",
+  "OddCycleType",
+  "KnuthKrattenthaler",
+  "SwapReturnsAndLastDescent",
+  "KasraouiZeng",
+  "CallanSwitch",
 ];
 
 // What formats holds inert that is Wolfram's own (`Plot`, `Slider`, `Cell`): known elsewhere because
