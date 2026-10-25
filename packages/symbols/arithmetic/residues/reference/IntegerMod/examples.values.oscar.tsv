@@ -24,7 +24,7 @@ equal-across-moduli-mod-6-and-mod-3
 mod-is-the-remainder-integermod-is-the-class	mod(17, 5)
 simplify-folds-a-mixed-sum	
 simplify-folds-a-mixed-product	
-simplify-folds-the-classes-beside-a-symbol	
+simplify-keeps-the-classes-beside-a-symbol	
 chineseremainder-integermod-2-3-and-3-5	
 coprime-moduli-have-no-common-ring	
 2-mod-4-over-1-mod-6-has-no-inverse	

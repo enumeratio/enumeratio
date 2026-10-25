@@ -82,7 +82,7 @@ export function declareIntegerMod(ce: Engine): void {
   };
   ce.declare(INTEGER_MOD, {
     description: SUMMARIES.IntegerMod,
-    signature: "(any, any) -> value",
+    signature: "(any, any) -> residue",
     pure: true,
     lazy: true,
     canonical: (ops: readonly Expr[]) => {
@@ -149,49 +149,6 @@ export function declareIntegerMod(ce: Engine): void {
       },
     });
   }
-  // Simplify: compute-engine's simplifier folds classes of its own ResidueClass (it keys on that
-  // name) and passes IntegerMod by, so the classes among a sum's or a product's operands are
-  // folded here, after its pass: x + (2 mod 4) + (1 mod 4) is x + (3 mod 4).
-  const foldClasses = (expr: Expr): Expr => {
-    const ops = operandsOf(expr);
-    if (ops.length === 0) return expr;
-    const folded = ops.map(foldClasses);
-    const head = expr.operator;
-    const rebuilt = (kids: readonly Expr[]): Expr =>
-      ce.function(
-        head,
-        kids.map((op) => op.canonical),
-      );
-    if (head === "Add" || head === "Multiply") {
-      const group = folded.filter((op) => isIntegerMod(op) || bigRationalAt(op) !== undefined);
-      if (group.length >= 2 && group.some(isIntegerMod)) {
-        const meet = ce
-          .function(
-            head,
-            group.map((op) => op.canonical),
-          )
-          .evaluate();
-        if (isIntegerMod(meet)) {
-          const rest = folded.filter((op) => !group.includes(op));
-          return rest.length === 0 ? meet : rebuilt([...rest, meet]);
-        }
-      }
-    }
-    return folded.every((op, i) => op === ops[i]) ? expr : rebuilt(folded);
-  };
-  const simplifyDefinition = ce.lookupDefinition("Simplify");
-  const simplifyOperator =
-    simplifyDefinition !== undefined && "operator" in simplifyDefinition ? simplifyDefinition.operator : undefined;
-  const nativeSimplify = simplifyOperator?.evaluate as
-    | ((ops: readonly Expr[], options: never) => Expr | undefined)
-    | undefined;
-  if (simplifyOperator !== undefined && nativeSimplify !== undefined) {
-    simplifyOperator.evaluate = ((ops: readonly Expr[], options: never) => {
-      const simplified = nativeSimplify(ops, options);
-      return simplified === undefined || ops.length !== 1 ? simplified : foldClasses(simplified);
-    }) as typeof simplifyOperator.evaluate;
-  }
-
   defineOverload(ce, "ChineseRemainder", {
     package: "residues",
     on: [INTEGER_MOD],

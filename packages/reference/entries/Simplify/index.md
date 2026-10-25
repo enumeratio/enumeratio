@@ -9,11 +9,6 @@ signatures:
     library: enumeratio-analytic
     type: (any, any?) -> expression
     overrides: compute-engine
-  - call: Simplify(expr, options?)
-    description: After the passes above, folds the `IntegerMod` classes among a sum's or product's operands into one class in their common ring.
-    library: enumeratio-residues
-    type: (any, any?) -> expression
-    overrides: enumeratio-analytic
 bindings:
   - origin: mapped
     form: sympy
