@@ -24,7 +24,7 @@ equal-across-moduli-mod-6-and-mod-3	enumeratio_equal(Mod(5, 6), Mod(2, 3))	True
 mod-is-the-remainder-integermod-is-the-class	enumeratio_mod(17, 5)	2	
 simplify-folds-a-mixed-sum	SR((Mod(2, 4) + Mod(1, 6))).simplify_full()	TypeError: positive characteristic not allowed in symbolic computations	error
 simplify-folds-a-mixed-product	SR((Mod(2, 4) * Mod(1, 6))).simplify_full()	TypeError: positive characteristic not allowed in symbolic computations	error
-simplify-keeps-the-classes-beside-a-symbol	SR((SR.var("x") + Mod(2, 4) + Mod(1, 4))).simplify_full()	TypeError: unsupported operand parent(s) for +: 'Symbolic Ring' and 'Ring of integers modulo 4'	error
+simplify-folds-the-classes-beside-a-symbol	SR((SR.var("x") + Mod(2, 4) + Mod(1, 4))).simplify_full()	TypeError: unsupported operand parent(s) for +: 'Symbolic Ring' and 'Ring of integers modulo 4'	error
 chineseremainder-integermod-2-3-and-3-5	CRT_list(Mod(2, 3), Mod(3, 5))	ValueError: arguments to CRT_list should be lists	error
 coprime-moduli-have-no-common-ring	(Mod(3, 4) + Mod(5, 7))	TypeError: unsupported operand parent(s) for +: 'Ring of integers modulo 4' and 'Ring of integers modulo 7'	error
 2-mod-4-over-1-mod-6-has-no-inverse	(Mod(1, 6) / Mod(2, 4))	ZeroDivisionError: inverse of Mod(0, 2) does not exist	error

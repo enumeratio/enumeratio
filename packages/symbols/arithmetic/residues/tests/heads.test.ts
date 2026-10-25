@@ -89,11 +89,18 @@ test("classes of two moduli stay as written; ChineseRemainder is the way across"
   expect(ce.box(["MultiplicativeOrder", ["ResidueClass", 2, 7]]).evaluate().json).toBe(3);
 });
 
-test("Simplify folds a sum's or a product's IntegerMod classes when they are all its operands", () => {
+// compute-engine's simplifier folds ResidueClass sums by name and passes IntegerMod by, so Simplify folds them.
+test("Simplify folds the IntegerMod classes among a sum's or a product's operands", () => {
   const run = (expr: unknown): unknown => ce.box(["Simplify", expr] as never).evaluate().json;
   expect(run(["Add", ["IntegerMod", 2, 4], ["IntegerMod", 1, 6]])).toEqual(["IntegerMod", 1, 2]);
   expect(run(["Multiply", ["IntegerMod", 2, 4], ["IntegerMod", 1, 6]])).toEqual(["IntegerMod", 0, 2]);
   expect(run(["Add", ["IntegerMod", 2, 4], ["IntegerMod", 1, 4], 3])).toEqual(["IntegerMod", 2, 4]);
+  expect(run(["Add", "x", ["IntegerMod", 2, 4], ["IntegerMod", 1, 4]])).toEqual(["Add", "x", ["IntegerMod", 3, 4]]);
+  expect(run(["Multiply", "x", ["IntegerMod", 2, 4], ["IntegerMod", 3, 4]])).toEqual([
+    "Multiply",
+    "x",
+    ["IntegerMod", 2, 4],
+  ]);
   // Coprime moduli have no common ring: the sum stays as written.
   const stays: unknown = ["Add", ["IntegerMod", 3, 4], ["IntegerMod", 5, 7]];
   expect(run(stays)).toEqual(stays);

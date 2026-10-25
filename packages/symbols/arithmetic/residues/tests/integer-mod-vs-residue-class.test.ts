@@ -32,7 +32,7 @@ test("a class mod 1 absorbs the other class for IntegerMod only", () => {
   expect(rc).toEqual(["Add", ["ResidueClass", 0, 1], ["ResidueClass", 2, 7]]);
 });
 
-test("simplify(): only ResidueClass sums fold beside a symbol; both keep a non-unit quotient and Equal(c, c)", () => {
+test("simplify(): only ResidueClass sums fold beside a symbol, not IntegerMod's; both keep a non-unit quotient and Equal(c, c)", () => {
   const sum = (H: string): unknown => ["Add", "x", [H, 2, 4], [H, 1, 4]];
   expect(simp(sum("ResidueClass"))).toEqual(["Add", "x", ["ResidueClass", 3, 4]]);
   expect(simp(sum("IntegerMod"))).toEqual(["Add", "x", ["IntegerMod", 2, 4], ["IntegerMod", 1, 4]]);
@@ -41,4 +41,12 @@ test("simplify(): only ResidueClass sums fold beside a symbol; both keep a non-u
     expect(simp(["Divide", [H, 2, 4], [H, 2, 4]])).toEqual(["Divide", [H, 2, 4], [H, 2, 4]]);
     expect(simp(["Equal", [H, 2, 7], [H, 2, 7]])).toBe("True");
   }
+});
+
+test("Simplify(...) folds IntegerMod beside a symbol through our wrapper, not .simplify()", () => {
+  expect(ev(["Simplify", ["Add", "x", ["IntegerMod", 2, 4], ["IntegerMod", 1, 4]]])).toEqual([
+    "Add",
+    "x",
+    ["IntegerMod", 3, 4],
+  ]);
 });
