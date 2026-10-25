@@ -285,7 +285,9 @@ async function build(requested: string[]): Promise<void> {
       // One at a time: a member's build clears and rewrites its dist while a sibling's reads it.
       for (const m of buildOrder(buildable)) {
         try {
-          await run("pnpm", ["--filter", m.name, "run", "build"]);
+          const output = await run("pnpm", ["--filter", m.name, "run", "build"]);
+          // The build's output is shown only on failure; the memo reports (stamp.ts) are worth a line.
+          for (const line of output.split("\n")) if (line.startsWith("verdicts ")) console.log(`  ${line}`);
         } catch (e) {
           console.error(
             `::group::${m.name} build failed\n${(e as { output?: string }).output ?? String(e)}\n::endgroup::`,

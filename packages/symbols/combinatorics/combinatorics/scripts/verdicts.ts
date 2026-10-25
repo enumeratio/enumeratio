@@ -5,6 +5,9 @@
 // interpreter runs on are unchanged. Naming only the checkers keeps an edit to a driver, the
 // shard split say, from re-running every check.
 
+import { createHash } from "node:crypto";
+import { readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Verdicts } from "../src/statistics/generate-compiled.ts";
 
@@ -26,9 +29,16 @@ export const checkers = {
   maps: ["scripts/compile-maps.ts"],
   /** The statistics areas' shared `agrees`. */
   statistics: ["src/statistics/generate-compiled.ts"],
-  /** The families' `disagreements`, and the Epsil it reads them through. */
-  // The whole families source: each family's `early` callbacks choose which ranks are sampled.
-  families: ["scripts/family-checks.ts", "collections/src/families"],
+  /** The families' `disagreements`, and the Epsil it reads them through (epsil.ts and what it
+   *  imports locally). A family is read only through its own fields, which its verdict is keyed
+   *  on, so an edit to one family's file leaves the others' verdicts; `familySourceHash` covers
+   *  what a field can't carry. */
+  families: [
+    "scripts/family-checks.ts",
+    "collections/src/families/epsil.ts",
+    "collections/src/families/types.ts",
+    "collections/src/families/work.ts",
+  ],
 } as const;
 
 // Manifest's dist is built from every package's records, so any record edit would void every
@@ -42,3 +52,17 @@ export const verdictsFor = (step: string, roots: readonly string[]) =>
     skip: (path) => path.endsWith("/manifest/src/generated") || /\.generated\.(js|ts)$/.test(path),
     omitDists: ["@enumeratio/manifest"],
   });
+
+/** A hash of every source file under the families directory (not the generated module), for the
+ *  verdicts of a family whose `early` callbacks close over code in it. */
+let familySource: string | undefined;
+export function familySourceHash(): string {
+  if (familySource !== undefined) return familySource;
+  const dir = at("collections/src/families");
+  const hash = createHash("sha256");
+  for (const name of readdirSync(dir).toSorted()) {
+    if (!name.endsWith(".ts") || name.endsWith(".generated.d.ts")) continue;
+    hash.update(`${name}\0`).update(readFileSync(join(dir, name)));
+  }
+  return (familySource = hash.digest("hex"));
+}
