@@ -3,7 +3,8 @@
 // and Smooth still filter all n! permutations in lex order (PermutationUnrank) by an independently
 // written predicate, and index the filtered list: Simple has no polynomial completion count known
 // to us, and the exact ones for Baxter and Smooth have list-valued or exponential state (wiki
-// Speculative-Restrictions).
+// Speculative-Restrictions). Baxter's Count is the closed form (bigint, `baxterExact`); only At,
+// rank and enumeration stay brute force.
 import { binomial } from "../../../collections/src/families/shared.ts";
 import { Factorial, IsPermutationOf, modRank, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
