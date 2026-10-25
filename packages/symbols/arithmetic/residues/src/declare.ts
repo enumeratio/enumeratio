@@ -147,8 +147,8 @@ export function declareResidues(ce: Engine): void {
   });
 
   // OrderOfElement of a unit of ℤ/m is its multiplicative order; a non-unit declines. A
-  // `ResidueClass` is typed `residue`, which has to conform for the generic head to admit it;
-  // the overload below also covers `IntegerMod`, which is still `value`.
+  // `ResidueClass` and `IntegerMod` are typed `residue`, which has to conform for the generic
+  // head to admit them.
   ensureProtocols(ce);
   conform(ce, "residue", {
     Monoid: {

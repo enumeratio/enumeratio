@@ -7,7 +7,7 @@ signatures:
   - call: IntegerMod(k, n)
     description: the class of $k$, normalised into $[0, n)$, as for ResidueClass(k, n)
     library: enumeratio-residues
-    type: (any, any) -> value
+    type: (any, any) -> residue
   - call: IntegerMod(u/v, n)
     description: a rational reads as $u \cdot v^{-1}$, when $v$ is a unit mod $n$
 seeAlso:
