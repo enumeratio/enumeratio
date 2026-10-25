@@ -160,6 +160,7 @@ export function declareMaps<M extends MapDeclaration>(
   options: DeclareMapsOptions<M>,
 ): void {
   const { package: hostPackage, definitionFor, findstatFor } = options;
+  const carrierNames = new Set(Object.values(constructorFor));
   for (const map of maps) {
     const wrap = constructorFor[map.to];
     if (wrap === undefined) throw new Error(`no constructor for ${map.to}`);
@@ -171,6 +172,9 @@ export function declareMaps<M extends MapDeclaration>(
         : (definitionFor?.(map) ?? ((contents) => evaluateDefinition(ce, map, contents)));
 
     const handle = (subject: BoxedExpression): BoxedExpression | undefined => {
+      // A subject of another carrier is not this map's: a head with a case per carrier falls back to the
+      // first case it was declared with when the right one declines (a guard), and that must not answer.
+      if (carrierNames.has(subject.operator) && subject.operator !== constructorFor[map.from]) return undefined;
       // A composed map applies its steps right to left, each through its own declared head —
       // so every intermediate value is a properly constructed carrier and the composition is
       // type-checked at each step rather than only at the ends.

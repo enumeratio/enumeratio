@@ -18,6 +18,7 @@ mapOn:
 laws:
   - bijection
   - inverse: KrewerasComplement
+    on: permutation
   - graded:
       from: Permutations
       to: Permutations
