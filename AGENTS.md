@@ -214,25 +214,31 @@ kernel, the network or hand curation stays committed.
 
 ## CI and deployment
 
-- **Gate** (`ci.yml`, every push and PR): the library packages build, then `vp check`, the
-  per-package tests (`pnpm -r run test`) and the site build. The dists come first because
-  type-aware lint and the tests resolve siblings through `dist/`.
+- **Gate** (`ci.yml`, every push and PR): `changes` selects the affected packages and probes the dist cache;
+  one `dist` job builds the library packages (skipped when the cache holds this exact set) and the
+  rest (`check`, `site`, the test shards) restore its output, then `vp check`, the per-package tests and the
+  site build run. Required checks: `check + site build` and `tests`.
   - `node tools/ci/dist-cache.ts build` is the build everywhere (CI and locally): a package whose
     files, dependencies and shared config are unchanged restores its gitignored outputs from a
     content-addressed cache (`$DIST_CACHE_DIR`, else shared by all worktrees of a clone) instead
     of building. A build's outputs are whatever git ignores under its package, so nothing is listed.
-  - A PR's test shards run only the packages `node tools/ci/affected.ts` selects (changed
-    packages and their dependents); a change to the lockfile, root config, CI or the engine, and
-    every push to main, runs all.
+  - Only pushes to main save the dist cache (`dist-<os>-<hash of all unit keys>`; the newest few are kept);
+    a PR starts from main's newest entry and hands its build to the jobs as an artifact. A PR's caches go when it closes.
+  - PRs and main run only the packages `node tools/ci/affected.ts` selects (changed packages and their dependents;
+    main diffs against the last green main run), and combinatorics runs its smoke subset
+    (`SMOKE_TESTS=1`, the files in its `smoke-skip.json` left out). A change to the lockfile, root
+    config, CI or the engine selects all packages.
+  - The nightly (`ci.yml`'s schedule, also `workflow_dispatch`) tests every package and all of combinatorics, and files a
+    rolling `nightly-fixup` issue on failure. Main never cancels an in-progress run.
 - **Production** (`enumeratio.dev`) ships from Cloudflare Pages on merge to `main`. Every build
   also goes up as a Cloudflare Pages preview at `<sha7>.enumeratio.pages.dev`; the PR's
   sticky `<!-- cf-preview -->` comment carries the URL, and review links go below its first
   two lines, which each push rewrites.
-- **Advisory sweeps** (Plausible, the nightly and weekly oracle rescans, the tarball check) are never
+- **Advisory sweeps** (Plausible on main and nightly, the nightly and weekly oracle rescans, the nightly tarball check) are never
   required checks. A lane fails when an answered row changes verdict, classification or input, not on
   a float's printed digits. Failures file rolling issues labelled `nightly-fixup`; the
   nightly-fixup routine opens fix PRs and never merges. Workflows, secrets and artifacts:
   the wiki's [CI-and-Deployment](https://github.com/enumeratio/enumeratio/wiki/CI-and-Deployment).
-  The tarball check (`tarball.yml`, `tools/tarball-check`) packs every package, installs only the
+  The tarball check (`tarball.yml`, nightly only; `tools/tarball-check`) packs every package, installs only the
   tarballs into a scratch app, and runs census's tests and the site build (`SITE_FROM_PACKAGES=1`,
   no `srcAliases`) from it; run it locally with `node tools/tarball-check/run.ts`.
