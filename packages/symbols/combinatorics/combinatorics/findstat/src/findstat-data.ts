@@ -974,12 +974,6 @@ export const findstat: readonly FindStatMatch[] = [
     values: 1200,
   },
   {
-    head: "NonFixedPoints",
-    on: "Permutation",
-    findstat: ["St000673"],
-    values: 1200,
-  },
-  {
     head: "MaximalDisplacement",
     on: "Permutation",
     findstat: ["St000956"],

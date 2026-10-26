@@ -1138,7 +1138,6 @@ const NOVEL = [
   "MajorIndexMinusInversions",
   "InversionsPlusMajorIndex",
   "MajorIndexMinusExcedances",
-  "NonFixedPoints",
   "MaximalDisplacement",
   "PartsNotCongruentToTwoModuloThree",
   "PartsNotCongruentToZeroModuloThree",

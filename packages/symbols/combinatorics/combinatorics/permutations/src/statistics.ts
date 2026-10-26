@@ -954,7 +954,6 @@ const FINDSTAT_PERMUTATION_STATISTICS_4: readonly Definition[] = [
     hasPair(subtract(majorIndexOfWord, count(positions, greater(here, "i")))),
   ),
 
-  stat("NonFixedPoints", "Positions with p(i) != i.", nonEmpty(countFailing(equals(here, "i")))),
   stat("MaximalDisplacement", "The largest |p(i) - i|.", nonEmpty(max(forEach(positions, distance(here, "i"))))),
 ];
 

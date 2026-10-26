@@ -361,6 +361,5 @@ export const FINDSTAT_READINGS: Record<string, (p: number[]) => number> = {
   MajorIndexMinusInversions: (p) => sum(descents(p)) - inversionPairs(p).length,
   InversionsPlusMajorIndex: (p) => sum(descents(p)) + inversionPairs(p).length,
   MajorIndexMinusExcedances: (p) => sum(descents(p)) - range(1, p.length).filter((i) => p[i - 1]! > i).length,
-  NonFixedPoints: (p) => range(1, p.length).filter((i) => p[i - 1] !== i).length,
   MaximalDisplacement: (p) => Math.max(0, ...range(1, p.length).map((i) => Math.abs(p[i - 1]! - i))),
 };
