@@ -12,6 +12,7 @@ import {
   at,
   atLeastValue,
   atMostValue,
+  bind,
   count,
   equals,
   fold,
@@ -33,6 +34,7 @@ import {
   risesAfter,
   subtract,
   sumOver,
+  upTo,
   visiting,
   where,
   x,
@@ -237,6 +239,210 @@ const ribbonCorners: MathJSON = nonEmpty(
   ),
 );
 
+// ── cut points, meanders and bounce paths ────────────────────────────────────────────────
+
+/** The partial sums of the parts, from 0 to the total: where the blocks of the composition cut. */
+const cutPoints: MathJSON = fold(x, list(0), ["Join", "a", list(add(["Last", "a"], "b"))]);
+/** The last cut before position `i`, which is where the block holding `i` starts less one. */
+const cutBefore = (i: MathJSON): MathJSON => max(where("cuts", less("u", i), "u"));
+const reflected = (i: MathJSON): MathJSON => subtract(add(total, 1), i);
+
+/**
+ * The meander of the composition over the single block 1 .. n, as FindStat's code builds it: a
+ * simple graph, so an arc above and an arc below the same two dots are one edge. A vertex's
+ * neighbours are its mirror image in the block of the composition and in 1 .. n.
+ *
+ * Index = 2C + P - 1 with C the cycles and P the paths. Every vertex has at most two neighbours,
+ * so every component is a path or a cycle, and the paths are counted by their ends: P = (degree-1
+ * vertices)/2 + (isolated vertices). With K components, C = K - P, and the index is 2K - P - 1.
+ * K comes from propagating the least label along the edges, n times.
+ */
+const seaweedIndex: MathJSON = bind(
+  "cuts",
+  cutPoints,
+  bind(
+    "top",
+    forEach(upTo(total), subtract(add(add(cutBefore("i"), min(where("cuts", atLeastValue("u", "i"), "u"))), 1), "i")),
+    bind(
+      "degrees",
+      forEach(
+        upTo(total),
+        subtract(add(["If", differ(at("i", "top"), "i"), 1, 0], ["If", differ(reflected("i"), "i"), 1, 0]), [
+          "If",
+          and(equals(at("i", "top"), reflected("i")), differ(at("i", "top"), "i")),
+          1,
+          0,
+        ]),
+      ),
+      bind(
+        "labels",
+        fold(
+          upTo(total),
+          upTo(total),
+          forEach(upTo(total), ["Min", at("i", "a"), at(at("i", "top"), "a"), at(reflected("i"), "a")]),
+        ),
+        subtract(
+          subtract(
+            subtract(["Multiply", 2, count(upTo(total), equals(at("i", "labels"), "i"))], 1),
+            count(upTo(total), equals(at("i", "degrees"), 0)),
+          ),
+          ["Divide", count(upTo(total), equals(at("i", "degrees"), 1)), 2],
+        ),
+      ),
+    ),
+  ),
+);
+
+/**
+ * Dyck paths whose area sequence is at least the bounce path's, row by row. The bounce path of
+ * the composition has the area sequence 0 .. c_1 - 1, 0 .. c_2 - 1, and so on. An area sequence
+ * starts at 0 and rises by at most one a row, so the count carries, by area, the sequences so far.
+ */
+const dyckPathsAboveBouncePath: MathJSON = nonEmpty(
+  bind(
+    "cuts",
+    cutPoints,
+    bind("bounceAreas", forEach(upTo(total), subtract(subtract("i", 1), cutBefore("i"))), [
+      "If",
+      less(total, 2),
+      1,
+      [
+        "Sum",
+        fold(
+          ["Range", 2, total, 1],
+          forEach(upTo(total), ["If", equals("h", 1), 1, 0], "h"),
+          forEach(
+            upTo(total),
+            [
+              "If",
+              atLeastValue(subtract("h", 1), at(visiting, "bounceAreas")),
+              ["Sum", forEach(["Range", ["Max", subtract("h", 1), 1], total, 1], at("g", "a"), "g")],
+              0,
+            ],
+            "h",
+          ),
+        ),
+      ],
+    ]),
+  ),
+  1,
+);
+
+// ── parking functions and composition tableaux ───────────────────────────────────────────
+
+/**
+ * A parking function of size n has its inverse descent composition c exactly when the word of
+ * its cars, read along diagonals, has the inverse with descents at the partial sums of c. The
+ * parking functions' Frobenius characteristic is h_n[(n+1)X]/(n+1), and the RSK correspondence
+ * turns h_n[(n+1)X] into the words of length n on 1 .. n+1, so the count is 1/(n+1) of the
+ * words on 1 .. n+1 that fall inside each block of c and rise (weakly) between blocks. The list
+ * carries, for each last letter, the words so far.
+ */
+const inverseDescentParkingFunctions: MathJSON = bind("cuts", cutPoints, [
+  "If",
+  less(total, 2),
+  1,
+  [
+    "Divide",
+    [
+      "Sum",
+      fold(
+        ["Range", 1, subtract(total, 1), 1],
+        forEach(upTo(add(total, 1)), 1, "w"),
+        forEach(
+          upTo(add(total, 1)),
+          [
+            "Sum",
+            forEach(
+              where(
+                upTo(add(total, 1)),
+                ["If", greater(count("cuts", equals("c", "b"), "c"), 0), atMostValue("u", "w"), greater("u", "w")],
+                "u",
+              ),
+              at("u", "a"),
+              "u",
+            ),
+          ],
+          "w",
+        ),
+      ),
+    ],
+    add(total, 1),
+  ],
+]);
+
+/**
+ * Standard composition tableaux of the shape (Haglund, Luoto, Mason and van Willigenburg): rows
+ * decrease left to right, the first column increases downwards, and the triple rule holds. The
+ * entries go in as 1, 2, ..., so each row fills from its right end, and a state is how many
+ * cells each row has so far (read as the digits of a number, row j's with weight the product of
+ * the sizes before it). Row j may take its next cell, leaving m cells in the row, when
+ * - m = 0 (the first column): the row above is full, and
+ * - m > 0 (the triple rule, forbidding d < c < a for a, d above c's column pair): no row above
+ *   has exactly m cells left.
+ */
+const standardCompositionTableaux: MathJSON = nonEmpty(
+  bind("radices", fold(x, list(1), ["Join", "a", list(["Multiply", ["Last", "a"], add("b", 1)])]), [
+    "If",
+    equals(total, 0),
+    1,
+    [
+      "Last",
+      fold(["Range", 1, subtract(["Last", "radices"], 1), 1], list(1), [
+        "Join",
+        "a",
+        list(
+          bind(
+            "placed",
+            forEach(
+              positions,
+              [
+                "Divide",
+                subtract(["Mod", "b", at(add("j", 1), "radices")], ["Mod", "b", at("j", "radices")]),
+                at("j", "radices"),
+              ],
+              "j",
+            ),
+            [
+              "Sum",
+              forEach(
+                positions,
+                [
+                  "If",
+                  and(atLeastValue(at("j", "placed"), 1), [
+                    "If",
+                    equals(subtract(at("j"), at("j", "placed")), 0),
+                    [
+                      "If",
+                      equals("j", 1),
+                      ["Equal", 1, 1],
+                      equals(at(subtract("j", 1), "placed"), at(subtract("j", 1))),
+                    ],
+                    equals(
+                      count(
+                        positions,
+                        and(
+                          less("i", "j"),
+                          equals(subtract(at("i"), at("i", "placed")), subtract(at("j"), at("j", "placed"))),
+                        ),
+                      ),
+                      0,
+                    ),
+                  ]),
+                  at(add(subtract("b", at("j", "radices")), 1), "a"),
+                  0,
+                ],
+                "j",
+              ),
+            ],
+          ),
+        ),
+      ]),
+    ],
+  ]),
+  1,
+);
+
 export const COMPOSITION_STATISTICS: readonly Definition[] = [
   stat("LargestPart", "The largest part.", nonEmpty(max(x))),
   stat("FirstPart", "The first part.", nonEmpty(at(1))),
@@ -415,4 +621,28 @@ export const COMPOSITION_STATISTICS: readonly Definition[] = [
     "Stanley, Enumerative Combinatorics, volume 1, section 1.4: Proposition 1.4.1 counts permutations whose descents lie in a set, and inclusion-exclusion over it gives this count. FindStat cites the formula as section 14.4.",
   ),
   stat("RibbonCornerCount", "Corners of the ribbon: its inner and outer corners together.", ribbonCorners),
+  stat(
+    "SeaweedIndex",
+    "Twice the cycles plus the paths, less one, of the meander of the composition over the single block: the index of the maximal parabolic seaweed algebra.",
+    nonEmpty(seaweedIndex),
+    "Dergachev and Kirillov, Index of Lie algebras of seaweed type. FindStat's code builds the meander as a simple graph, so two dots joined by an arc above and one below are a path, not a cycle; the definition follows the code, not the prose. The empty composition is outside FindStat's rows.",
+  ),
+  stat(
+    "DyckPathsAboveBouncePathCount",
+    "Dyck paths of semilength n that stay weakly above the bounce path of the composition: their area sequences are at least 0 .. c_1 - 1, 0 .. c_2 - 1, ....",
+    dyckPathsAboveBouncePath,
+    "FindStat titles it the parabolic noncrossing partitions indexed by the composition (Mühle and Williams) and also the size of a nu-Tamari lattice (Bergeron, Ceballos and Pilaud); its code counts these Dyck paths.",
+  ),
+  stat(
+    "InverseDescentParkingFunctionCount",
+    "Parking functions of size n whose diagonal reading word has the inverse descent composition c.",
+    inverseDescentParkingFunctions,
+    "FindStat's St000285 is the size of that preimage; the count here is the equivalent word count, 1/(n+1) of the words on 1 .. n+1 that fall within each block and rise between blocks.",
+  ),
+  stat(
+    "StandardCompositionTableauCount",
+    "Standard composition tableaux of the shape: fillings of 1 .. n with rows decreasing, the first column increasing, and the triple rule.",
+    standardCompositionTableaux,
+    "Luoto, Mykytiuk and van Willigenburg, An introduction to quasisymmetric Schur functions (Definition 4.2.6).",
+  ),
 ];
