@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Which packages a change can affect, so CI tests only those (and builds only what they read).
 //
-//   node tools/ci/affected.ts [--base origin/main] [--full] [--json] [--github-output]
+//   node tools/ci/affected.ts [--base origin/main] [--full] [--smoke] [--json] [--github-output]
 //
 // A change selects the package that owns each changed file plus everything that depends on it
 // (declared or implicit, see workspace.ts). Anything that can change every package (the lockfile,
@@ -26,6 +26,10 @@ export const SHARDS: Record<string, string[]> = {
 
 /** A shard's package split by vitest file shard (`--shard=i/n`), for a shard one runner can't finish in time. */
 export const SPLIT: Record<string, number> = { combinatorics: 2 };
+
+/** Shards whose package has a smoke subset (`SMOKE_TESTS=1`, see its vite config): a smoke run is one
+ *  runner, a full run is SPLIT. PRs and main run smoke; the scheduled and manual runs run everything. */
+export const SMOKE = new Set(["combinatorics"]);
 
 /** Root-level files no package reads. */
 const INERT = /^(?:[^/]+\.md|LICENSE|\.vscode\/|\.vite-hooks\/|\.claude\/|\.scratch\/)/;
@@ -119,12 +123,14 @@ if (import.meta.main) {
       .filter(([, names]) => names.length > 0)
       .flatMap(([shard, names]) => {
         const pkgs = names.join(" ");
-        const n = SPLIT[shard] ?? 1;
-        if (n === 1) return [{ shard, pkgs, args: "" }];
+        const smoke = flag("smoke") && SMOKE.has(shard);
+        const n = smoke ? 1 : (SPLIT[shard] ?? 1);
+        if (n === 1) return [{ shard, pkgs, args: "", smoke: smoke ? "1" : "" }];
         return Array.from({ length: n }, (_, i) => ({
           shard: `${shard} ${i + 1}/${n}`,
           pkgs,
           args: `--shard=${i + 1}/${n}`,
+          smoke: "",
         }));
       });
     const lines = [`full=${sel.full}`, `site=${sel.site}`, `matrix=${JSON.stringify(matrix)}`];

@@ -1,0 +1,27 @@
+{
+  "skip": [
+    "collections/tests/numeric-epsil.test.ts",
+    "collections/tests/scan-epsil.test.ts",
+    "collections/tests/sequence-epsil.test.ts",
+    "compositions/tests/composition-statistics.test.ts",
+    "findstat/tests/map-findstat.test.ts",
+    "lattice-paths/tests/dyck-findstat.test.ts",
+    "permutations/tests/epsil-families.test.ts",
+    "permutations/tests/permutation-cycles-b.test.ts",
+    "set-partitions/tests/epsil-families.test.ts",
+    "set-partitions/tests/statistics-findstat.test.ts",
+    "tableaux/tests/tableau.test.ts",
+    "tests/combinatorica-gaps.test.ts",
+    "tests/compiled-maps.test.ts",
+    "tests/fast-kernels.test.ts",
+    "tests/map-kernels.test.ts",
+    "tests/map-laws-per-size.test.ts",
+    "tests/maps-conjugacy-class.test.ts",
+    "tests/maps-conjugation.test.ts",
+    "tests/maps-frontier-permutation.test.ts",
+    "tests/statistics-carrier-restriction.test.ts",
+    "tests/statistics-compiled.test.ts",
+    "trees/tests/nested-families.test.ts",
+    "trees/tests/tree-statistics.test.ts"
+  ]
+}
