@@ -10,6 +10,12 @@ catalog:
     on: StandardTableau
 mapOn:
   - StandardTableau
+laws:
+  - bijection
+  - graded:
+      from: StandardTableaux
+      to: StandardTableaux
+    on: standard_tableau
 signatures:
   - call: RowDescentsToColumnDescents(StandardTableau)
     description: A standard tableau of the same shape whose column descents are the original's row descents.

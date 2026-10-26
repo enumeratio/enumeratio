@@ -10,6 +10,14 @@ catalog:
     on: SignedPermutation
 mapOn:
   - SignedPermutation
+laws:
+  - bijection
+  - inverse: InverseFoataHan
+    on: signed_permutation
+  - graded:
+      from: SignedPermutations
+      to: SignedPermutations
+    on: signed_permutation
 signatures:
   - call: FoataHan(SignedPermutation)
     description: "Foata and Han's fundamental transformation: each letter in turn is put on the end of the image so far, which is cut into blocks and rotated."

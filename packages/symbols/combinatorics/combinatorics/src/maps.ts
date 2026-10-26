@@ -48,7 +48,6 @@ const withLaws = (map: CombinatorialMap): CombinatorialMap => ({ ...map, ...MAP_
 export const MAPS: readonly CombinatorialMap[] = [
   ...PERMUTATIONS_MAPS,
   ...SIGNED_PERMUTATIONS_MAPS,
-  ...SIGNED_PERMUTATIONS_ALGORITHM_MAPS,
   ...TREES_MAPS,
   ...LATTICE_PATHS_MAPS,
   ...DYCK_MAPS,
@@ -58,6 +57,8 @@ export const MAPS: readonly CombinatorialMap[] = [
   ...TABLEAUX_MAPS,
   ...COMPOSITIONS_MAPS,
   ...WORDS_MAPS,
+  // After the words: Rowmotion's primary carrier is BinaryWord.
+  ...SIGNED_PERMUTATIONS_ALGORITHM_MAPS,
 ].map(withLaws);
 
 /** Declare every combinatorics map, typed by carrier, via @enumeratio/structures' generic

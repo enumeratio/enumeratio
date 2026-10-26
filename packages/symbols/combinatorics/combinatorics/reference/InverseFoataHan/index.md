@@ -10,6 +10,14 @@ catalog:
     on: SignedPermutation
 mapOn:
   - SignedPermutation
+laws:
+  - bijection
+  - inverse: FoataHan
+    on: signed_permutation
+  - graded:
+      from: SignedPermutations
+      to: SignedPermutations
+    on: signed_permutation
 signatures:
   - call: InverseFoataHan(SignedPermutation)
     description: "The inverse of Foata and Han's transformation: the last letter is peeled off and the blocks of the rest are rotated back."

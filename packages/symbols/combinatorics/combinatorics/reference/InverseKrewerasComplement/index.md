@@ -32,6 +32,12 @@ laws:
       from: DyckPaths
       to: DyckPaths
     on: dyck_path
+  - inverse: KrewerasComplement
+    on: signed_permutation
+  - graded:
+      from: SignedPermutations
+      to: SignedPermutations
+    on: signed_permutation
 signatures:
   - call: InverseKrewerasComplement(Permutation)
     description: "cπ⁻¹ with the long cycle c = (1 2 ... n), FindStat's order: position i holds π⁻¹(c(i))."
