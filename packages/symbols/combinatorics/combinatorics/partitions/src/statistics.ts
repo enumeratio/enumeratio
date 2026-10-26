@@ -1131,4 +1131,13 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
       0,
     ),
   ),
+
+  // Parts counted, and the crank as FindStat's code reads it.
+  stat("PartCount", "The number of parts.", length()),
+  stat(
+    "LengthCrank",
+    "The number of parts when λ has no 1s, else (parts larger than the number of 1s) minus (the number of 1s).",
+    nonEmpty(["If", equals(ones, 0), length(), subtract(count(positions, greater(here, ones)), ones)]),
+    "Crank has the largest part where this has the number of parts; FindStat's St000146 follows the code, which takes the length.",
+  ),
 ];

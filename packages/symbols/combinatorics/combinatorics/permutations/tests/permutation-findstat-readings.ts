@@ -362,4 +362,113 @@ export const FINDSTAT_READINGS: Record<string, (p: number[]) => number> = {
   InversionsPlusMajorIndex: (p) => sum(descents(p)) + inversionPairs(p).length,
   MajorIndexMinusExcedances: (p) => sum(descents(p)) - range(1, p.length).filter((i) => p[i - 1]! > i).length,
   MaximalDisplacement: (p) => Math.max(0, ...range(1, p.length).map((i) => Math.abs(p[i - 1]! - i))),
+
+  // The fifth batch, each written the way FindStat's code reads it.
+  ValleysIncludingBoundary: (p) => {
+    const w = [p.length + 1, ...p, p.length + 1];
+    return range(1, p.length).filter((i) => w[i - 1]! > w[i]! && w[i]! < w[i + 1]!).length;
+  },
+  MaximalExcedance: (p) => Math.max(0, ...p.map((v, i) => v - i - 1)),
+  AdjacentCycles: (p) => cycles(p).filter((c) => c.every((v, k) => v === c[0]! + k)).length,
+  StrongFixedPoints: (p) =>
+    indices(p).filter((i) => before(p, i).every((v) => v < p[i]!) && after(p, i).every((v) => v > p[i]!)).length,
+  SortingIndex: (p) => {
+    const sort = (q: number[]): number => {
+      const n = q.length;
+      if (n === 0) return 0;
+      const x = q.indexOf(n) + 1;
+      if (x === n) return sort(q.slice(0, n - 1));
+      const swapped = [...q];
+      [swapped[x - 1], swapped[n - 1]] = [swapped[n - 1]!, swapped[x - 1]!];
+      return n - x + sort(swapped.slice(0, n - 1));
+    };
+    return sort(p);
+  },
+  Load: (p) => sum(descents(inverse(p).toReversed())),
+  CycleDescents: (p) => sum(cycles(p).map((c) => range(0, c.length - 2).filter((a) => c[a]! > c[a + 1]!).length)),
+  DescentsAfterZeroingFixedPoints: (p) => descents(p.map((v, i) => (v === i + 1 ? 0 : v))).length,
+  MajorIndexAfterZeroingFixedPoints: (p) => sum(descents(p.map((v, i) => (v === i + 1 ? 0 : v)))),
+  ElizaldePakRank: (p) => {
+    let k = 0;
+    while (range(1, k).every((i) => p[i - 1]! > k)) k++;
+    return k - 1;
+  },
+  Disorder: (p) => {
+    let i = 1;
+    let pos = 0;
+    let count = 0;
+    while (i < p.length) {
+      if (p[pos] === i) i++;
+      else if (p[pos]! > i) count++;
+      pos = (pos + 1) % p.length;
+    }
+    return count;
+  },
+  CyclesOfLengthAtMostTwo: (p) => cycles(p).filter((c) => c.length <= 2).length,
+  CyclesOfLengthAtMostThree: (p) => cycles(p).filter((c) => c.length <= 3).length,
+  InversionsOfDistanceAtMostThree: (p) => inversionPairs(p).filter(([i, j]) => j - i <= 3).length,
+  FirstDirectSummandSize: (p) => {
+    if (p.length === 0) return 0;
+    let k = 1;
+    while (
+      !p
+        .slice(0, k)
+        .toSorted((a, b) => a - b)
+        .every((v, i) => v === i + 1)
+    )
+      k++;
+    return k;
+  },
+  LargestDirectSummandSize: (p) => {
+    let start = 0;
+    let best = 0;
+    const seen: number[] = [];
+    for (const v of p) {
+      seen.push(v);
+      if (Math.max(...seen) === seen.length) {
+        best = Math.max(best, seen.length - start);
+        start = seen.length;
+      }
+    }
+    return best;
+  },
+  StretchingPairs: (p) => pairs(p).filter(([i, j]) => p[i]! < i + 1 && j + 1 < p[j]! && i < j).length,
+  InversionIndex: (p) => sum(inversionPairs(p).map(([i]) => p[i]!)),
+  TotalSquaredDisplacement: (p) => sum(p.map((v, i) => (v - i - 1) ** 2)),
+  LeftToRightMaximaXorRightToLeftMinima: (p) => {
+    const lrmax = new Set(indices(p).filter((i) => isLeftToRightMaximum(p, i)));
+    const rlmin = new Set(indices(p).filter((i) => isRightToLeftMinimum(p, i)));
+    return [...lrmax].filter((i) => !rlmin.has(i)).length + [...rlmin].filter((i) => !lrmax.has(i)).length;
+  },
+  MaximalSuccessiveDifference: (p) =>
+    p.length < 2 ? 0 : Math.max(...range(0, p.length - 2).map((i) => p[i + 1]! - p[i]!)),
+  MajorIndexPlusInverseMajorIndex: (p) => sum(descents(p)) + sum(descents(inverse(p))),
+  Tier: (p) => new Set(triples(p).flatMap(([a, b, c]) => (c < a && a < b && a === c + 1 ? [a] : []))).size,
+  Rafts: (p) => {
+    const rafts: number[][] = [[]];
+    for (let i = 0; i < p.length - 1; i++) {
+      if (p[i + 1] === p[i]! + 1) rafts[rafts.length - 1]!.push(i);
+      else rafts.push([]);
+    }
+    return rafts.filter((r) => r.length > 0).length;
+  },
+  WeakExcedanceMidPointsOfOccurrencesOf321: (p) =>
+    indices(p).filter(
+      (j) => p[j]! >= j + 1 && before(p, j).some((v) => v > p[j]!) && after(p, j).some((v) => v < p[j]!),
+    ).length,
+  NonWeakExcedanceMidPointsOfOccurrencesOf321: (p) =>
+    indices(p).filter((j) => p[j]! < j + 1 && before(p, j).some((v) => v > p[j]!) && after(p, j).some((v) => v < p[j]!))
+      .length,
+  TwoShiftedMajorIndex: (p) => sum(range(1, p.length - 1).filter((i) => p[i - 1]! - p[i]! > 2)),
+  ThreeShiftedMajorIndex: (p) => sum(range(1, p.length - 1).filter((i) => p[i - 1]! - p[i]! > 3)),
+  PinnacleSum: (p) =>
+    sum(
+      range(1, p.length - 2)
+        .filter((i) => p[i - 1]! < p[i]! && p[i]! > p[i + 1]!)
+        .map((i) => p[i]!),
+    ),
+  AugmentedDoubleAscents: (p) => {
+    const q = [0, ...p];
+    return range(0, q.length - 3).filter((i) => q[i]! < q[i + 1]! && q[i + 1]! < q[i + 2]!).length;
+  },
 };

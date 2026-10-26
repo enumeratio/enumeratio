@@ -138,23 +138,20 @@ const longestIncreasingRun: MathJSON = [
 /** The steps of a walk: n of them, enough to go round any cycle. */
 const steps: MathJSON = ["Range", 1, length(), 1];
 
-/** Whether i leads its cycle: walking from p(i), the walk gets back to i (marker 0) before it
- *  meets anything smaller (marker -1). */
-const leads = (i: MathJSON): MathJSON =>
-  equals(
-    [
-      "Fold",
-      [
-        "Function",
-        ["If", ["LessEqual", "w", 0], "w", ["If", equals("w", i), 0, ["If", less("w", i), -1, at("w")]]],
-        "w",
-        "k",
-      ],
-      at(i),
-      steps,
-    ],
-    0,
-  );
+/** Where the walk from p(i) ends: back at i (marker 0) before it meets anything smaller (marker -1). */
+const leadMarker = (i: MathJSON): MathJSON => [
+  "Fold",
+  [
+    "Function",
+    ["If", ["LessEqual", "w", 0], "w", ["If", equals("w", i), 0, ["If", less("w", i), -1, at("w")]]],
+    "w",
+    "k",
+  ],
+  at(i),
+  steps,
+];
+/** Whether i leads its cycle: the walk gets back to i before it meets anything smaller. */
+const leads = (i: MathJSON): MathJSON => equals(leadMarker(i), 0);
 
 /** The length of i's cycle: walking from i, on getting back to i at step k the marker is -k. */
 const cycleLengthAt = (i: MathJSON): MathJSON => [
@@ -957,6 +954,313 @@ const FINDSTAT_PERMUTATION_STATISTICS_4: readonly Definition[] = [
   stat("MaximalDisplacement", "The largest |p(i) - i|.", nonEmpty(max(forEach(positions, distance(here, "i"))))),
 ];
 
+/** `from .. to`, empty when `to < from` (a bare `Range` would count down). */
+const span = (from: MathJSON, to: MathJSON): MathJSON => ["Range", from, to, 1];
+/** The word with each fixed point replaced by 0 (Foata–Han's zeroing). */
+const fixedPointsZeroed: MathJSON = forEach(positions, ["If", equals(here, "i"), 0, here]);
+/** The descents of the zeroed word, then its major index. */
+const zeroedDescents = (body: MathJSON): MathJSON =>
+  hasPair(
+    bind("w", fixedPointsZeroed, [
+      "Sum",
+      forEach(where(span(1, subtract(length("w"), 1)), greater(at("i", "w"), at(add("i", 1), "w"))), body),
+    ]),
+  );
+
+/** Whether i is the smallest point of a run of consecutive values, one position apart: no earlier succession. */
+const startsSuccessionRun: MathJSON = [
+  "If",
+  equals("i", 1),
+  "True",
+  or(less(here, add(previous, 1)), greater(here, add(previous, 1))),
+];
+
+/** Whether position i is the middle of a 321 occurrence: something larger before, something smaller after. */
+const isMiddleOf321: MathJSON = and(less(here, max(upToHere)), greater(here, min(fromHere)));
+
+/** The values at the breakpoints: k such that p(1..k) is a permutation of 1..k. */
+const breakpoints: MathJSON = where(positions, equals(max(upToHere), "i"));
+
+/** Whether the value at position i sits to the left of the value one less: a drop in the inverse. */
+const inverseMajorIndex: MathJSON = sumOver(adjacent, [
+  "If",
+  greater(positionOf("i"), positionOf(add("i", 1))),
+  "i",
+  0,
+]);
+
+/** Selection sort swapping n into place, then n-1, ...: the total distance the entries travel (Petersen). */
+const sortingIndex: MathJSON = [
+  "At",
+  fold(
+    ["Range", length(), 1, -1],
+    ["List", 0, x],
+    [
+      "Apply",
+      [
+        "Function",
+        [
+          "List",
+          add(carried(1), subtract(visiting, "t")),
+          ["ReplaceAt", ["ReplaceAt", carried(2), "t", at(visiting, carried(2))], visiting, visiting],
+        ],
+        "t",
+      ],
+      ["Sum", forEach(positions, ["If", equals(at("j", carried(2)), visiting), "j", 0], "j")],
+    ],
+  ),
+  1,
+];
+
+/** The cycles whose smallest point is a, written a, p(a), p(p(a)), ...: a descent is a step down that does not close the cycle. */
+const cycleDescents: MathJSON = count(positions, and(less(here, "i"), less(leadMarker(here), 0)));
+
+/** Elizalde–Pak: the largest k with p(i) > k for every i <= k, read as the first k that fails less one. */
+const elizaldePakRank: MathJSON = count(
+  positions,
+  equals(count(span(1, "k"), atMostValue(min(slice(1, "m")), "m"), "m"), 0),
+  "k",
+);
+
+/** Positions where the entries seen so far, in the order of the scan, leave `i` unremoved: Disorder, value by value. */
+const disorder: MathJSON = sumOver(
+  span(1, subtract(length(), 1)),
+  bind(
+    "a",
+    positionOf(subtract("v", 1)),
+    bind(
+      "b",
+      positionOf("v"),
+      count(
+        positions,
+        and(
+          greater(at("q"), "v"),
+          or(
+            and(less("a", "b"), and(greater("q", "a"), less("q", "b"))),
+            and(greater("a", "b"), or(greater("q", "a"), less("q", "b"))),
+          ),
+        ),
+        "q",
+      ),
+      "number",
+    ),
+    "number",
+  ),
+  "v",
+);
+
+/** Positions a with the value p(a) - 1 to the right of a, and a larger entry in between. */
+const tier: MathJSON = count(
+  positions,
+  and(
+    greater(positionOf(subtract(here, 1)), "i"),
+    greater(count(span(add("i", 1), subtract(positionOf(subtract(here, 1)), 1)), greater(at("b"), here), "b"), 0),
+  ),
+);
+
+// The fifth batch: cycle, record and displacement statistics from the crawl that the earlier
+// batches left, and the fixed-point zeroing family.
+const FINDSTAT_PERMUTATION_STATISTICS_5: readonly Definition[] = [
+  stat(
+    "ValleysIncludingBoundary",
+    "Positions lower than both neighbours, a larger entry standing off each end.",
+    nonEmpty(
+      count(
+        positions,
+        and(
+          ["If", equals("i", 1), "True", greater(previous, here)],
+          ["If", equals("i", length()), "True", less(here, next)],
+        ),
+      ),
+    ),
+    "Excluding the boundary is Valleys.",
+  ),
+  stat(
+    "MaximalExcedance",
+    "The largest p(i) - i.",
+    nonEmpty(max(forEach(positions, subtract(here, "i")))),
+    "FindStat's title says drop size, i - p(i); its code takes p(i) - i. This follows the code.",
+  ),
+  stat(
+    "AdjacentCycles",
+    "Cycles of the form (a, a+1, ..., a+k), fixed points included.",
+    nonEmpty(
+      count(
+        positions,
+        greater(
+          count(
+            span("i", length()),
+            and(
+              equals(at("m"), "i"),
+              equals(
+                count(
+                  span("i", length()),
+                  and(less("j", "m"), or(less(at("j"), add("j", 1)), greater(at("j"), add("j", 1)))),
+                  "j",
+                ),
+                0,
+              ),
+            ),
+            "m",
+          ),
+          0,
+        ),
+      ),
+    ),
+  ),
+  word(
+    "StrongFixedPoints",
+    "Positions that are both a left-to-right maximum and a right-to-left minimum.",
+    nonEmpty(count(positions, and(isLeftToRightMaximum, isRightToLeftMinimum))),
+  ),
+  stat(
+    "SortingIndex",
+    "The total distance the entries move in selection sort.",
+    nonEmpty(sortingIndex),
+    "Selection sort swaps n into place, then n - 1, and so on; the fold carries the total and the word.",
+  ),
+  stat(
+    "Load",
+    "The major index of the reverse of the inverse.",
+    hasPair(sumOver(adjacent, ["If", less(positionOf("i"), positionOf(add("i", 1))), subtract(length(), "i"), 0])),
+  ),
+  stat("CycleDescents", "Steps down within the cycles, each written from its smallest point.", nonEmpty(cycleDescents)),
+  stat(
+    "DescentsAfterZeroingFixedPoints",
+    "The descents of the word with every fixed point replaced by 0.",
+    zeroedDescents(1),
+  ),
+  stat(
+    "MajorIndexAfterZeroingFixedPoints",
+    "The major index of the word with every fixed point replaced by 0.",
+    zeroedDescents("i"),
+  ),
+  stat(
+    "ElizaldePakRank",
+    "The largest k with p(i) > k for all i <= k.",
+    nonEmpty(elizaldePakRank),
+    "Read as FindStat's code does: the first k that fails, less one.",
+  ),
+  stat(
+    "Disorder",
+    "Scanning cyclically for 1, then 2, ...: the entries passed that are still larger than the one sought.",
+    hasPair(disorder),
+  ),
+  stat(
+    "CyclesOfLengthAtMostTwo",
+    "Cycles of size one or two.",
+    nonEmpty(count(cycleLengths, atMostValue("c", 2), "c")),
+  ),
+  stat(
+    "CyclesOfLengthAtMostThree",
+    "Cycles of size at most three.",
+    nonEmpty(count(cycleLengths, atMostValue("c", 3), "c")),
+  ),
+  word(
+    "InversionsOfDistanceAtMostThree",
+    "Inversions i < j with j - i <= 3.",
+    hasPair(sumOverInversions(1, atMostValue(subtract("j", "i"), 3))),
+  ),
+  stat("FirstDirectSummandSize", "The smallest k with {p(1), ..., p(k)} = {1, ..., k}.", nonEmpty(min(breakpoints))),
+  stat(
+    "LargestDirectSummandSize",
+    "The size of the largest block of p as a direct sum.",
+    nonEmpty(
+      bind(
+        "b",
+        ["Join", ["List", 0], breakpoints],
+        max(forEach(span(1, subtract(length("b"), 1)), subtract(at(add("i", 1), "b"), at("i", "b")))),
+      ),
+    ),
+  ),
+  stat(
+    "StretchingPairs",
+    "Pairs i < j with p(i) < i < j < p(j).",
+    hasPair(sumOverPairs(and(less(here, "i"), less("j", at("j"))), 1)),
+  ),
+  word(
+    "InversionIndex",
+    "The sum of the larger entry p(i) over the inversions i < j.",
+    hasPair(sumOverInversions(here)),
+  ),
+  stat(
+    "TotalSquaredDisplacement",
+    "The sum of (p(i) - i)^2.",
+    nonEmpty(sumOver(positions, ["Power", subtract(here, "i"), 2])),
+    "Twice InversionSum, though neither definition shows it. FindStat calls it Spearman's rho of p against the identity.",
+  ),
+  word(
+    "LeftToRightMaximaXorRightToLeftMinima",
+    "Positions that are a left-to-right maximum or a right-to-left minimum but not both.",
+    nonEmpty(
+      count(
+        positions,
+        or(
+          and(isLeftToRightMaximum, greater(here, min(fromHere))),
+          and(isRightToLeftMinimum, less(here, max(upToHere))),
+        ),
+      ),
+    ),
+  ),
+  word(
+    "MaximalSuccessiveDifference",
+    "The largest p(i+1) - p(i), negative for a decreasing permutation.",
+    hasPair(max(forEach(adjacent, subtract(next, here)))),
+    "MaximalRiseSize is the same with a floor of 0.",
+  ),
+  stat(
+    "MajorIndexPlusInverseMajorIndex",
+    "The major index plus the major index of the inverse.",
+    hasPair(add(majorIndexOfWord, inverseMajorIndex)),
+  ),
+  stat("Tier", "Positions a with a larger entry, then the value p(a) - 1, to its right.", nonEmpty(tier)),
+  word(
+    "Rafts",
+    "Maximal runs of consecutive successions p(i+1) = p(i) + 1.",
+    hasPair(count(adjacent, and(equals(next, add(here, 1)), startsSuccessionRun))),
+  ),
+  stat(
+    "WeakExcedanceMidPointsOfOccurrencesOf321",
+    "Positions i with p(i) >= i that are the middle of a 321 occurrence.",
+    nonEmpty(count(positions, and(atLeastValue(here, "i"), isMiddleOf321))),
+  ),
+  stat(
+    "NonWeakExcedanceMidPointsOfOccurrencesOf321",
+    "Positions i with p(i) < i that are the middle of a 321 occurrence.",
+    nonEmpty(count(positions, and(less(here, "i"), isMiddleOf321))),
+  ),
+  word(
+    "TwoShiftedMajorIndex",
+    "The sum of the positions i with p(i) - p(i+1) > 2.",
+    hasPair(["Sum", where(adjacent, greater(subtract(here, next), 2))]),
+    "ShiftedMajorIndex is the same with a gap of more than 1.",
+  ),
+  word(
+    "ThreeShiftedMajorIndex",
+    "The sum of the positions i with p(i) - p(i+1) > 3.",
+    hasPair(["Sum", where(adjacent, greater(subtract(here, next), 3))]),
+  ),
+  word(
+    "PinnacleSum",
+    "The sum of the peak values: p(i) over the interior peaks i.",
+    hasTriple(["Sum", forEach(where(interior, and(less(previous, here), greater(here, next))), here)]),
+  ),
+  word(
+    "AugmentedDoubleAscents",
+    "Positions i with w(i) < w(i+1) < w(i+2) in the word w = 0 p(1) ... p(n).",
+    hasPair(
+      bind(
+        "w",
+        zeroThen,
+        count(
+          span(1, subtract(length("w"), 2)),
+          and(less(at("i", "w"), at(add("i", 1), "w")), less(at(add("i", 1), "w"), at(add("i", 2), "w"))),
+        ),
+      ),
+    ),
+  ),
+];
+
 export const PERMUTATION_STATISTICS: readonly Definition[] = [
   word("Descents", "Positions i with p(i) > p(i+1).", hasPair(count(adjacent, fallsAfter))),
   word("Ascents", "Positions i with p(i) < p(i+1).", hasPair(count(adjacent, risesAfter))),
@@ -1160,4 +1464,5 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
   ...FINDSTAT_PERMUTATION_STATISTICS_2,
   ...FINDSTAT_PERMUTATION_STATISTICS_3,
   ...FINDSTAT_PERMUTATION_STATISTICS_4,
+  ...FINDSTAT_PERMUTATION_STATISTICS_5,
 ];

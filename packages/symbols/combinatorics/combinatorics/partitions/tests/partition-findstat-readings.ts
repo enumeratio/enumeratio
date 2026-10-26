@@ -553,4 +553,11 @@ export const PARTITION_READINGS: Record<string, (l: Partition) => number> = {
   SameLengthSubpartitionCount: (l) => subpartitions(l).filter((mu) => mu.length === l.length).length,
   // A covering relation is a partition and one of its corners removed: the corners are the distinct nonzero parts.
   YoungLatticeCoveringRelationCount: (l) => sum(subpartitions(l).map((mu) => new Set(mu).size)),
+
+  // The fifth batch.
+  PartCount: (l) => l.length,
+  LengthCrank: (l) => {
+    const ones = l.filter((p) => p === 1).length;
+    return ones === 0 ? l.length : l.filter((p) => p > ones).length - ones;
+  },
 };

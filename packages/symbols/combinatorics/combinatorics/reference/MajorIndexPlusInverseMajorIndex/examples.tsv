@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-one-line-word-312			[MajorIndexPlusInverseMajorIndex, [Permutation, [List, 3, 1, 2]]]	3			the one-line word $312$
+the-one-line-word-2413			[MajorIndexPlusInverseMajorIndex, [Permutation, [List, 2, 4, 1, 3]]]	6			the one-line word $2413$
+findstat-st000825-1	Properties		[CombinatorialStat, [Permutation, [List, 1]], "'MajorIndexPlusInverseMajorIndex'"]	0	0	FindStat St000825	FindStat's value for [1]
+findstat-st000825-2	Properties		[CombinatorialStat, [Permutation, [List, 1, 2]], "'MajorIndexPlusInverseMajorIndex'"]	0	0	FindStat St000825	FindStat's value for [1,2]
+findstat-st000825-3	Properties		[CombinatorialStat, [Permutation, [List, 2, 1]], "'MajorIndexPlusInverseMajorIndex'"]	2	2	FindStat St000825	FindStat's value for [2,1]
