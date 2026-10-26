@@ -1316,19 +1316,19 @@ export const findstat: readonly FindStatMatch[] = [
     values: 872,
   },
   {
-    head: "PermutationCrossings",
+    head: "Crossings",
     on: "Permutation",
     findstat: ["St000039"],
     values: 874,
   },
   {
-    head: "PermutationNestings",
+    head: "Nestings",
     on: "Permutation",
     findstat: ["St000223"],
     values: 2708,
   },
   {
-    head: "PermutationAlignments",
+    head: "Alignments",
     on: "Permutation",
     findstat: ["St000222"],
     values: 873,

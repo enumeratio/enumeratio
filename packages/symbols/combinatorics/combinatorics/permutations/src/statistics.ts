@@ -1484,19 +1484,19 @@ const FINDSTAT_PERMUTATION_STATISTICS_6: readonly Definition[] = [
     nonEmpty(count(positions, equals(distance(here, ["If", equals("i", length()), at(1), next]), 1))),
   ),
   stat(
-    "PermutationCrossings",
+    "Crossings",
     "Pairs i, j with i < j <= p(i) < p(j) or p(i) < p(j) < i < j.",
     arcPairs(or(and(less("i", "j"), chain(["j", here, wordAtJ], [0])), chain([here, wordAtJ, "i", "j"]))),
-    "Crossings of the arcs of the permutation diagram (Corteel); set partitions have Crossings.",
+    "Crossings of the arcs of the permutation diagram (Corteel).",
   ),
   stat(
-    "PermutationNestings",
+    "Nestings",
     "Pairs i, j with j < i < p(i) < p(j) or p(j) < p(i) <= i < j.",
     arcPairs(or(chain(["j", "i", here, wordAtJ]), chain([wordAtJ, here, "i", "j"], [1]))),
-    "Nestings of the arcs of the permutation diagram; set partitions have Nestings.",
+    "Nestings of the arcs of the permutation diagram.",
   ),
   stat(
-    "PermutationAlignments",
+    "Alignments",
     "Pairs i, j of arcs of the permutation diagram that align.",
     arcPairs(
       or(

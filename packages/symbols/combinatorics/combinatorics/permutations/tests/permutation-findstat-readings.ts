@@ -557,7 +557,7 @@ export const FINDSTAT_READINGS: Record<string, (p: number[]) => number> = {
     cycles(p).filter((c) => c.length === 2 && [1, p.length - 1].includes(Math.max(...c) - Math.min(...c))).length,
   Bonds: (p) => range(0, p.length - 2).filter((i) => Math.abs(p[i]! - p[i + 1]!) === 1).length,
   CyclicBonds: (p) => (p.length === 0 ? 0 : p.filter((v, i) => Math.abs(v - p[(i + 1) % p.length]!) === 1).length),
-  PermutationCrossings: (p) =>
+  Crossings: (p) =>
     sum(
       range(1, p.length).map(
         (i) =>
@@ -568,7 +568,7 @@ export const FINDSTAT_READINGS: Record<string, (p: number[]) => number> = {
           }).length,
       ),
     ),
-  PermutationNestings: (p) =>
+  Nestings: (p) =>
     sum(
       range(1, p.length).map(
         (i) =>
@@ -579,7 +579,7 @@ export const FINDSTAT_READINGS: Record<string, (p: number[]) => number> = {
           }).length,
       ),
     ),
-  PermutationAlignments: (p) =>
+  Alignments: (p) =>
     sum(
       range(1, p.length).map(
         (i) =>
