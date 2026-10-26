@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-partition-4-2-1-of-7			[SemistandardTableauCountWithEntriesUpToFour, [IntegerPartition, [List, 4, 2, 1]]]	140			the partition $4 + 2 + 1$ of $7$
+the-partition-3-3-1-of-7			[SemistandardTableauCountWithEntriesUpToFour, [IntegerPartition, [List, 3, 3, 1]]]	60			the partition $3 + 3 + 1$ of $7$
+findstat-st000712-1	Properties		[CombinatorialStat, [IntegerPartition, [List, 1]], "'SemistandardTableauCountWithEntriesUpToFour'"]	4	4	FindStat St000712	FindStat's value for [1]
+findstat-st000712-2	Properties		[CombinatorialStat, [IntegerPartition, [List, 2]], "'SemistandardTableauCountWithEntriesUpToFour'"]	10	10	FindStat St000712	FindStat's value for [2]
+findstat-st000712-3	Properties		[CombinatorialStat, [IntegerPartition, [List, 3]], "'SemistandardTableauCountWithEntriesUpToFour'"]	20	20	FindStat St000712	FindStat's value for [3]

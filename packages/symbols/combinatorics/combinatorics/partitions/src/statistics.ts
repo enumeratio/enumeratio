@@ -12,6 +12,7 @@ import {
   and,
   at,
   atLeastValue,
+  atMostValue,
   bind,
   count,
   equals,
@@ -129,6 +130,84 @@ const pairGap: MathJSON = subtract(
   subtract(subtract(here, at(add("i", 1))), deltaEven(here)),
   deltaEven(at(add("i", 1))),
 );
+
+/** The number of standard Young tableaux: the size factorial over the hook product. */
+const standardTableauxCount: MathJSON = ["Divide", factorialOf(total), hookProduct];
+/** The number of semistandard tableaux with entries up to `k`: the product of (k + j - i) over the cells, over the hook product. */
+const semistandardTableauxCount = (k: MathJSON): MathJSON => [
+  "Divide",
+  ["Product", forEach(positions, ["Product", forEach(upTo(here), add(k, subtract("j", "i")), "j")])],
+  hookProduct,
+];
+/** The same, 0 where the shape has more rows than entries: spelled out, or the compiled form leaves a -0. */
+const boundedSemistandardTableauxCount = (k: number): MathJSON => [
+  "If",
+  greater(length(), k),
+  0,
+  semistandardTableauxCount(k),
+];
+/** The sum of the squares of the hook lengths, reading the conjugate in place. */
+const hookSquareSum: MathJSON = ["Sum", forEach(positions, ["Sum", forEach(upTo(here), ["Power", hookAt, 2], "j")])];
+/** C(2p, p), as the rising product over p!. */
+const centralBinomial = (p: MathJSON): MathJSON => [
+  "Divide",
+  ["Product", ["Range", add(p, 1), ["Multiply", 2, p]]],
+  factorialOf(p),
+];
+/**
+ * The partitions contained in the shape, row by row. Entry j + 1 counts the choices of the first rows whose last row has j cells (j = 0 .. largest part, so
+ * `upTo(largest + 1)` positions); each row may be any size up to the shape's row and at most the row above, so its entry sums the entries from j up.
+ * `least` is the smallest size a row may take, 0 or 1 (every row non-empty: same length).
+ */
+const subpartitionRow = (previous: MathJSON, least: number, rowLength: MathJSON): MathJSON =>
+  forEach(upTo(add(largest, 1)), [
+    "If",
+    and(atLeastValue("i", least + 1), atMostValue("i", add(rowLength, 1))),
+    sumOver(["Range", "i", add(largest, 1)], at("k", previous), "k"),
+    0,
+  ]);
+const subpartitionCounts = (least: number): MathJSON =>
+  fold(
+    ["Rest", x],
+    forEach(upTo(add(largest, 1)), ["If", atLeastValue("i", least + 1), 1, 0]),
+    subpartitionRow("a", least, "b"),
+  );
+/** The parts before position i that are larger than part i: with the parts weakly decreasing, those that differ from it. */
+const largerPartsBefore: MathJSON = count(positions, and(less("j", "i"), greater(at("j"), here)), "j");
+
+/**
+ * The partition numbers p(0), ..., p(largest part) as a list, by the table that adds one part size at a time:
+ * with parts up to b allowed, p(s) is the sum of the old p(s - t b) over every t.
+ */
+const partitionNumberTable: MathJSON = fold(
+  upTo(largest),
+  forEach(upTo(add(largest, 1)), ["If", equals("i", 1), 1, 0]),
+  forEach(
+    upTo(add(largest, 1)),
+    sumOver(
+      ["Range", 0, ["Divide", subtract(subtract("i", 1), ["Mod", subtract("i", 1), "b"]), "b"]],
+      at(subtract("i", ["Multiply", "t", "b"]), "a"),
+      "t",
+    ),
+  ),
+);
+/**
+ * The k-rim hooks removed to reach the k-core: (size - core size) / k. On the abacus the beads are the parts
+ * shifted to distinct positions, part i + length - i; the core slides the c beads of each runner r (position mod k) to the
+ * first c places of the runner, which sit at r, r + k, ..., so its beads sum to c r + k c (c - 1) / 2 over the runners.
+ */
+const rimHooksRemoved = (k: number): MathJSON => {
+  const beadsOnRunner = count(positions, equals(["Mod", add(here, subtract(length(), "i")), k], "r"));
+  const coreBeadSum = sumOver(
+    ["Range", 0, k - 1],
+    ["Multiply", beadsOnRunner, add("r", ["Divide", ["Multiply", k, subtract(beadsOnRunner, 1)], 2])],
+    "r",
+  );
+  return ["Divide", subtract(total, subtract(coreBeadSum, choose2(length()))), k];
+};
+/** Part `i` of the highest weight (0 past the end) plus its Weyl shift for Sp(2r): the rho entry is r + 1 - i. */
+const symplecticWeight = (i: number, r: number): MathJSON =>
+  add(["If", atLeastValue(length(), i), at(i), 0], r + 1 - i);
 
 export const PARTITION_STATISTICS: readonly Definition[] = [
   stat("LargestPart", "The largest part.", nonEmpty(largest)),
@@ -755,6 +834,301 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
         ],
         "d",
       ),
+    ),
+  ),
+
+  // ── FindStat's integer-partition statistics, fourth round ────────────────────────────────
+
+  // Tableau counts by the hook-length and hook-content formulas.
+  stat(
+    "SemistandardTableauCountWithEntriesUpToTwo",
+    "Semistandard tableaux of the shape with entries at most 2: the product of 2 + j - i over the cells, over the hook product.",
+    nonEmpty(boundedSemistandardTableauxCount(2), 1),
+  ),
+  stat(
+    "SemistandardTableauCountWithEntriesUpToThree",
+    "Semistandard tableaux of the shape with entries at most 3.",
+    nonEmpty(boundedSemistandardTableauxCount(3), 1),
+  ),
+  stat(
+    "SemistandardTableauCountWithEntriesUpToFour",
+    "Semistandard tableaux of the shape with entries at most 4.",
+    nonEmpty(boundedSemistandardTableauxCount(4), 1),
+  ),
+  stat(
+    "SemistandardTableauCountWithEntriesUpToLength",
+    "Semistandard tableaux of the shape with entries at most the number of parts.",
+    nonEmpty(semistandardTableauxCount(length()), 1),
+  ),
+  stat(
+    "SemistandardTableauCountWithEntriesUpToSize",
+    "Semistandard tableaux of the shape with entries at most the size of the partition.",
+    nonEmpty(semistandardTableauxCount(total), 1),
+  ),
+  stat(
+    "PlancherelCount",
+    "The square of the number of standard tableaux: the permutations whose Robinson-Schensted shape is this partition.",
+    nonEmpty(["Power", standardTableauxCount, 2], 1),
+  ),
+  stat(
+    "CubedStandardTableauCount",
+    "The cube of the number of standard tableaux.",
+    nonEmpty(["Power", standardTableauxCount, 3], 1),
+  ),
+  stat(
+    "ShiftedStandardTableauCount",
+    "Standard tableaux of the shifted shape: the multinomial of the parts times, over pairs of parts, the difference over the sum. 0 when two parts are equal.",
+    nonEmpty(
+      [
+        "Divide",
+        [
+          "Multiply",
+          factorialOf(total),
+          [
+            "Product",
+            forEach(positions, [
+              "Product",
+              forEach(positions, ["If", less("j", "i"), subtract(at("j"), here), 1], "j"),
+            ]),
+          ],
+        ],
+        [
+          "Multiply",
+          ["Product", forEach(positions, factorialOf(here))],
+          [
+            "Product",
+            forEach(positions, ["Product", forEach(positions, ["If", less("j", "i"), add(at("j"), here), 1], "j")]),
+          ],
+        ],
+      ],
+      1,
+    ),
+  ),
+  stat(
+    "TwiceMeanMajorIndexOfStandardTableaux",
+    "Twice the mean major index over the standard tableaux: n choose 2, less the sum of the row lengths choose 2, plus the sum of the column lengths choose 2.",
+    nonEmpty(add(subtract(choose2(total), sumOver(x, choose2("i"))), sumOver(conjugate, choose2("i")))),
+  ),
+  stat(
+    "TwelveTimesMajorIndexVarianceOfStandardTableaux",
+    "Twelve times the variance of the major index over the standard tableaux: the sum of the first n squares, less the sum of the squared hook lengths.",
+    nonEmpty(subtract(sumOver(upTo(total), ["Power", "i", 2]), hookSquareSum)),
+    "Follows FindStat's description, whose Sage code does not parse; the values agree with it.",
+  ),
+  stat(
+    "PairsOfDistinctParts",
+    "Pairs of parts that differ in size: the degree of the polynomial counting semistandard tableaux of the stretched shape.",
+    nonEmpty(sumOver(positions, largerPartsBefore)),
+  ),
+  stat(
+    "DiagonalArmSum",
+    "The sum of the arms of the cells on the main diagonal.",
+    nonEmpty(sumOver(positions, ["If", atLeastValue(here, "i"), subtract(here, "i"), 0])),
+    "FindStat's spin (St000319) counts the crossings of the border strips and its dinv adjustment (St000320) sums over their starting columns; each strip contributes its first part less 1, which is the arm of one diagonal cell, and the two agree on every row.",
+  ),
+  stat(
+    "RimHooksRemovedToTwoCore",
+    "The 2-rim hooks removed to reach the 2-core: the size less the core's, over 2, the core read off the abacus.",
+    nonEmpty(rimHooksRemoved(2)),
+  ),
+  stat("RimHooksRemovedToThreeCore", "The 3-rim hooks removed to reach the 3-core.", nonEmpty(rimHooksRemoved(3))),
+  stat(
+    "MultipartitionCount",
+    "Tuples of partitions whose sizes are the parts: the product of the partition numbers of the parts.",
+    // Stays interpreted: the compiler does not lower the fold (pinned by `interpreted.test.ts`).
+    nonEmpty(bind("p", partitionNumberTable, ["Product", forEach(positions, at(add(here, 1), "p"))]), 1),
+  ),
+
+  // Counts from a formula on the parts.
+  stat(
+    "PartRearrangementCount",
+    "Distinct rearrangements of the parts, the compositions that sort to this partition: the number of parts factorial over the factorials of the multiplicities.",
+    nonEmpty(["Divide", factorialOf(length()), multiplicityFactorials], 1),
+  ),
+  stat(
+    "LagrangeInversionCoefficient",
+    "The coefficient of the monomial in the compositional-inverse series: n (n + 1) ... (n + length - 2) over the factorials of the multiplicities.",
+    nonEmpty(
+      [
+        "Divide",
+        ["If", equals(length(), 1), 1, ["Product", forEach(["Range", 0, subtract(length(), 2)], add(total, "k"), "k")]],
+        multiplicityFactorials,
+      ],
+      1,
+    ),
+  ),
+  stat(
+    "LogarithmicDerivativeCoefficient",
+    "The coefficient of the monomial in the logarithmic derivative of 1 - c_1 x - c_2 x^2/2! - ..., times a factorial: the set partitions with these block sizes, times (length - 1)! for arranging the blocks in a cycle.",
+    nonEmpty(
+      [
+        "Divide",
+        [
+          "Multiply",
+          ["Divide", factorialOf(total), ["Product", forEach(positions, factorialOf(here))]],
+          ["Divide", factorialOf(length()), multiplicityFactorials],
+        ],
+        length(),
+      ],
+      1,
+    ),
+  ),
+  stat(
+    "StarTranspositionFactorizationCount",
+    "Minimal transitive factorizations of a permutation of this cycle type into star transpositions: the product of the parts times (n + 1) ... (n + length - 2).",
+    nonEmpty(
+      [
+        "If",
+        equals(length(), 1),
+        1,
+        [
+          "Multiply",
+          ["Product", x],
+          ["If", equals(length(), 2), 1, ["Product", ["Range", add(total, 1), subtract(add(total, length()), 2)]]],
+        ],
+      ],
+      1,
+    ),
+  ),
+  stat(
+    "TransitiveMonotoneFactorizationCount",
+    "Transitive monotone factorizations of genus zero of a permutation of this cycle type, into n + length - 2 transpositions.",
+    nonEmpty(
+      [
+        "Divide",
+        [
+          "Multiply",
+          ["Product", forEach(positions, centralBinomial(here))],
+          ["Product", x],
+          [
+            "If",
+            less(length(), 4),
+            1,
+            ["Product", ["Range", add(["Multiply", 2, total], 1), subtract(add(["Multiply", 2, total], length()), 3)]],
+          ],
+        ],
+        [
+          "If",
+          equals(length(), 1),
+          ["Multiply", subtract(["Multiply", 2, total], 1), ["Multiply", 2, total]],
+          ["If", equals(length(), 2), ["Multiply", 2, total], 1],
+        ],
+      ],
+      1,
+    ),
+  ),
+  // Dimensions of irreducible representations of the symplectic groups, by the Weyl formula
+  // in the orthogonal basis: the partition (padded with zeros) is the highest weight.
+  stat(
+    "SymplecticDimensionRankTwo",
+    "The dimension of the irreducible representation of Sp(4) with this highest weight; 0 if the partition has more than 2 parts.",
+    nonEmpty(
+      [
+        "If",
+        greater(length(), 2),
+        0,
+        [
+          "Divide",
+          [
+            "Multiply",
+            symplecticWeight(1, 2),
+            symplecticWeight(2, 2),
+            subtract(["Power", symplecticWeight(1, 2), 2], ["Power", symplecticWeight(2, 2), 2]),
+          ],
+          ["Product", ["Range", 1, 3]],
+        ],
+      ],
+      1,
+    ),
+  ),
+  stat(
+    "SymplecticDimensionRankThree",
+    "The dimension of the irreducible representation of Sp(6) with this highest weight; 0 if the partition has more than 3 parts.",
+    nonEmpty(
+      [
+        "If",
+        greater(length(), 3),
+        0,
+        [
+          "Divide",
+          [
+            "Multiply",
+            symplecticWeight(1, 3),
+            symplecticWeight(2, 3),
+            symplecticWeight(3, 3),
+            subtract(["Power", symplecticWeight(1, 3), 2], ["Power", symplecticWeight(2, 3), 2]),
+            subtract(["Power", symplecticWeight(1, 3), 2], ["Power", symplecticWeight(3, 3), 2]),
+            subtract(["Power", symplecticWeight(2, 3), 2], ["Power", symplecticWeight(3, 3), 2]),
+          ],
+          ["Product", ["Range", 1, 6]],
+        ],
+      ],
+      1,
+    ),
+  ),
+
+  // The partitions below this one in the containment order.
+  stat(
+    "BorderSkewStandardTableauCount",
+    "Standard tableaux of the skew shape that adds a cell to every column of the diagram: the size factorial over the factorials of the cells added to each row (the size less the largest part, then the gaps between consecutive parts).",
+    nonEmpty(
+      [
+        "Divide",
+        factorialOf(total),
+        [
+          "Multiply",
+          factorialOf(subtract(total, largest)),
+          [
+            "Product",
+            forEach(positions, factorialOf(subtract(here, ["If", equals("i", length()), 0, at(add("i", 1))]))),
+          ],
+        ],
+      ],
+      1,
+    ),
+  ),
+  // Tables over the rows. `Max(..., 0)` floors the sum so the compiler types it real (it types a fold's sum complex otherwise); the last stays interpreted, the compiler does not lower its two-list fold (pinned by `interpreted.test.ts`).
+  stat(
+    "SubpartitionCount",
+    "The partitions contained in this one.",
+    nonEmpty(["Max", ["Sum", subpartitionCounts(0)], 0], 1),
+  ),
+  stat(
+    "SameLengthSubpartitionCount",
+    "The partitions with as many parts contained in this one.",
+    nonEmpty(["Max", ["Sum", subpartitionCounts(1)], 0], 1),
+  ),
+  stat(
+    "YoungLatticeCoveringRelationCount",
+    "The covering relations of Young's lattice among the partitions contained in this one: the sum of their corners.",
+    nonEmpty(
+      bind(
+        "t",
+        fold(
+          ["Rest", x],
+          ["List", forEach(upTo(add(largest, 1)), 1), forEach(upTo(add(largest, 1)), 0)],
+          [
+            "List",
+            subpartitionRow(["At", "a", 1], 0, "b"),
+            forEach(upTo(add(largest, 1)), [
+              "If",
+              atMostValue("i", add("b", 1)),
+              sumOver(
+                ["Range", "i", add(largest, 1)],
+                add(at("k", ["At", "a", 2]), ["If", greater("k", "i"), at("k", ["At", "a", 1]), 0]),
+                "k",
+              ),
+              0,
+            ]),
+          ],
+        ),
+        [
+          "Max",
+          add(["Sum", ["At", "t", 2]], ["Sum", forEach(["Range", 2, add(largest, 1)], at("i", ["At", "t", 1]))]),
+          0,
+        ],
+      ),
+      0,
     ),
   ),
 ];
