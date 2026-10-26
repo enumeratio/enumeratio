@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source	caption
+the-composition-2-1-3-1-1			[SeaweedIndex, [Composition, [List, 2, 1, 3, 1, 1]]]	1			the composition $[2,1,3,1,1]$
+findstat-st001263-1	Properties		[CombinatorialStat, [Composition, [List, 1]], "'SeaweedIndex'"]	0	0	FindStat St001263	FindStat's value for [1]
+findstat-st001263-2	Properties		[CombinatorialStat, [Composition, [List, 2]], "'SeaweedIndex'"]	0	0	FindStat St001263	FindStat's value for [2]
+findstat-st001263-3	Properties		[CombinatorialStat, [Composition, [List, 3]], "'SeaweedIndex'"]	1	1	FindStat St001263	FindStat's value for [3]

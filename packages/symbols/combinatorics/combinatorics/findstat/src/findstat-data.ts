@@ -3451,4 +3451,28 @@ export const findstat: readonly FindStatMatch[] = [
     findstat: ["St001486"],
     values: 1023,
   },
+  {
+    head: "SeaweedIndex",
+    on: "Composition",
+    findstat: ["St001263"],
+    values: 1023,
+  },
+  {
+    head: "DyckPathsAboveBouncePathCount",
+    on: "Composition",
+    findstat: ["St001312"],
+    values: 511,
+  },
+  {
+    head: "InverseDescentParkingFunctionCount",
+    on: "Composition",
+    findstat: ["St000285"],
+    values: 510,
+  },
+  {
+    head: "StandardCompositionTableauCount",
+    on: "Composition",
+    findstat: ["St000816"],
+    values: 511,
+  },
 ];
