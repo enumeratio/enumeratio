@@ -420,43 +420,20 @@ const orderedAsAny = (patterns: readonly (readonly number[])[], values: readonly
   patterns.map((pattern) => orderedAs(pattern, values)).reduce((any, one) => or(any, one));
 
 /**
- * Occurrences of classical patterns of length 4 (any of `patterns`): quadruples i < j < k < l whose
- * values stand in the order a pattern gives.
+ * Occurrences of classical patterns, all of one length (any of `patterns`): increasing position
+ * tuples i < j < k < ... whose values stand in the order a pattern gives, over bounded ranges.
  */
-const occurrencesOfLength4Patterns = (...patterns: (readonly number[])[]): MathJSON => {
+const occurrencesOfPatterns = (...patterns: (readonly number[])[]): MathJSON => {
+  const size = patterns[0]!.length;
+  const names = ["i", "j", "k", "l", "m"].slice(0, size);
+  const values = names.map((name) => at(name));
   const n = length();
-  return atLeast(
-    4,
-    sumOver(
-      ["Range", 1, subtract(n, 3)],
-      sumOver(
-        ["Range", add("i", 1), subtract(n, 2)],
-        sumOver(
-          ["Range", add("j", 1), subtract(n, 1)],
-          count(["Range", add("k", 1), n], orderedAsAny(patterns, [at("i"), at("j"), at("k"), at("l")]), "l"),
-          "k",
-        ),
-        "j",
-      ),
-    ),
-  );
-};
-const occurrencesOfLength4Pattern = (pattern: readonly number[]): MathJSON => occurrencesOfLength4Patterns(pattern);
-
-/** Occurrences of classical patterns of length 3 (any of `patterns`), over bounded ranges. */
-const occurrencesOfLength3Patterns = (...patterns: (readonly number[])[]): MathJSON => {
-  const n = length();
-  return atLeast(
-    3,
-    sumOver(
-      ["Range", 1, subtract(n, 2)],
-      sumOver(
-        ["Range", add("i", 1), subtract(n, 1)],
-        count(["Range", add("j", 1), n], orderedAsAny(patterns, [at("i"), at("j"), at("k")]), "k"),
-        "j",
-      ),
-    ),
-  );
+  const from = (depth: number): MathJSON => (depth === 0 ? 1 : add(names[depth - 1]!, 1));
+  const loop = (depth: number): MathJSON =>
+    depth === size - 1
+      ? count(["Range", from(depth), n], orderedAsAny(patterns, values), names[depth])
+      : sumOver(["Range", from(depth), subtract(n, size - 1 - depth)], loop(depth + 1), names[depth]);
+  return atLeast(size, loop(0));
 };
 
 /** Occurrences of a vincular pattern whose first two entries are adjacent: i, i + 1, then any k > i + 1. */
@@ -653,11 +630,11 @@ const FINDSTAT_PERMUTATION_STATISTICS_2: readonly Definition[] = [
   ),
 
   // Length-4 patterns.
-  word("OccurrencesOf1324", "Quadruples i < j < k < l ordered as 1324.", occurrencesOfLength4Pattern([1, 3, 2, 4])),
-  word("OccurrencesOf2143", "Quadruples i < j < k < l ordered as 2143.", occurrencesOfLength4Pattern([2, 1, 4, 3])),
-  word("OccurrencesOf4231", "Quadruples i < j < k < l ordered as 4231.", occurrencesOfLength4Pattern([4, 2, 3, 1])),
-  word("OccurrencesOf2413", "Quadruples i < j < k < l ordered as 2413.", occurrencesOfLength4Pattern([2, 4, 1, 3])),
-  word("OccurrencesOf1432", "Quadruples i < j < k < l ordered as 1432.", occurrencesOfLength4Pattern([1, 4, 3, 2])),
+  word("OccurrencesOf1324", "Quadruples i < j < k < l ordered as 1324.", occurrencesOfPatterns([1, 3, 2, 4])),
+  word("OccurrencesOf2143", "Quadruples i < j < k < l ordered as 2143.", occurrencesOfPatterns([2, 1, 4, 3])),
+  word("OccurrencesOf4231", "Quadruples i < j < k < l ordered as 4231.", occurrencesOfPatterns([4, 2, 3, 1])),
+  word("OccurrencesOf2413", "Quadruples i < j < k < l ordered as 2413.", occurrencesOfPatterns([2, 4, 1, 3])),
+  word("OccurrencesOf1432", "Quadruples i < j < k < l ordered as 1432.", occurrencesOfPatterns([1, 4, 3, 2])),
 ];
 
 /** The cyclic successor of position i: i + 1, and 1 after the last. */
@@ -780,52 +757,40 @@ const FINDSTAT_PERMUTATION_STATISTICS_3: readonly Definition[] = [
   ),
 
   // More patterns of length 4.
-  word("OccurrencesOf3241", "Quadruples i < j < k < l ordered as 3241.", occurrencesOfLength4Pattern([3, 2, 4, 1])),
-  word("OccurrencesOf4213", "Quadruples i < j < k < l ordered as 4213.", occurrencesOfLength4Pattern([4, 2, 1, 3])),
+  word("OccurrencesOf3241", "Quadruples i < j < k < l ordered as 3241.", occurrencesOfPatterns([3, 2, 4, 1])),
+  word("OccurrencesOf4213", "Quadruples i < j < k < l ordered as 4213.", occurrencesOfPatterns([4, 2, 1, 3])),
 
   // Pairs and triples of patterns, counted together.
-  word(
-    "OccurrencesOf123Or132",
-    "Triples ordered as 123 or as 132.",
-    occurrencesOfLength3Patterns([1, 2, 3], [1, 3, 2]),
-  ),
-  word(
-    "OccurrencesOf213Or321",
-    "Triples ordered as 213 or as 321.",
-    occurrencesOfLength3Patterns([2, 1, 3], [3, 2, 1]),
-  ),
-  word(
-    "OccurrencesOf132Or321",
-    "Triples ordered as 132 or as 321.",
-    occurrencesOfLength3Patterns([1, 3, 2], [3, 2, 1]),
-  ),
+  word("OccurrencesOf123Or132", "Triples ordered as 123 or as 132.", occurrencesOfPatterns([1, 2, 3], [1, 3, 2])),
+  word("OccurrencesOf213Or321", "Triples ordered as 213 or as 321.", occurrencesOfPatterns([2, 1, 3], [3, 2, 1])),
+  word("OccurrencesOf132Or321", "Triples ordered as 132 or as 321.", occurrencesOfPatterns([1, 3, 2], [3, 2, 1])),
   word(
     "OccurrencesOf132Or213Or321",
     "Triples ordered as 132, 213 or 321.",
-    occurrencesOfLength3Patterns([1, 3, 2], [2, 1, 3], [3, 2, 1]),
+    occurrencesOfPatterns([1, 3, 2], [2, 1, 3], [3, 2, 1]),
     "Studied by Gepner in conformal field theory.",
   ),
   word(
     "OccurrencesOf3241Or4231",
     "Quadruples ordered as 3241 or as 4231.",
-    occurrencesOfLength4Patterns([3, 2, 4, 1], [4, 2, 3, 1]),
+    occurrencesOfPatterns([3, 2, 4, 1], [4, 2, 3, 1]),
     "A permutation avoids both exactly when it is an input-restricted deque.",
   ),
   word(
     "OccurrencesOf4132Or4231",
     "Quadruples ordered as 4132 or as 4231.",
-    occurrencesOfLength4Patterns([4, 1, 3, 2], [4, 2, 3, 1]),
+    occurrencesOfPatterns([4, 1, 3, 2], [4, 2, 3, 1]),
   ),
   word(
     "OccurrencesOf3412Or4231",
     "Quadruples ordered as 3412 or as 4231.",
-    occurrencesOfLength4Patterns([3, 4, 1, 2], [4, 2, 3, 1]),
+    occurrencesOfPatterns([3, 4, 1, 2], [4, 2, 3, 1]),
     "A permutation avoids both exactly when its Schubert variety is smooth.",
   ),
   word(
     "OccurrencesOf2143Or4213",
     "Quadruples ordered as 2143 or as 4213.",
-    occurrencesOfLength4Patterns([2, 1, 4, 3], [4, 2, 1, 3]),
+    occurrencesOfPatterns([2, 1, 4, 3], [4, 2, 1, 3]),
   ),
 
   // Small excedances, with and without the weak and cyclic variants.
@@ -860,6 +825,136 @@ const FINDSTAT_PERMUTATION_STATISTICS_3: readonly Definition[] = [
     "Positions that are not cyclic small weak excedances.",
     nonEmpty(countFailing(isCyclicSmallWeakExcedance)),
   ),
+];
+
+const majorIndexOfWord: MathJSON = ["Sum", where(adjacent, fallsAfter)];
+/** Positions i with p(i) and p(i + distance) related by `relation`. */
+const pairsAtDistance = (distanceApart: number, relation: (a: MathJSON, b: MathJSON) => MathJSON): MathJSON =>
+  atLeast(
+    distanceApart + 1,
+    count(["Range", 1, subtract(length(), distanceApart)], relation(here, at(add("i", distanceApart)))),
+  );
+/** Descents i, counted when i itself satisfies `parity` (0 for even, 1 for odd). */
+const descentsAtParity = (parity: number): MathJSON =>
+  hasPair(count(adjacent, and(fallsAfter, equals(["Mod", "i", 2], parity))));
+const isLeftToRightMaximum: MathJSON = equals(here, max(upToHere));
+const isRightToLeftMinimum: MathJSON = equals(here, min(fromHere));
+
+// The fourth batch: the rest of the pattern pairs, length-5 patterns, and more fixed-size
+// excedances, rises and displacements.
+const FINDSTAT_PERMUTATION_STATISTICS_4: readonly Definition[] = [
+  // Pairs of length-3 patterns, counted together.
+  word("OccurrencesOf132Or231", "Triples ordered as 132 or as 231.", occurrencesOfPatterns([1, 3, 2], [2, 3, 1])),
+  word("OccurrencesOf132Or213", "Triples ordered as 132 or as 213.", occurrencesOfPatterns([1, 3, 2], [2, 1, 3])),
+  word("OccurrencesOf132Or312", "Triples ordered as 132 or as 312.", occurrencesOfPatterns([1, 3, 2], [3, 1, 2])),
+  word("OccurrencesOf123Or231", "Triples ordered as 123 or as 231.", occurrencesOfPatterns([1, 2, 3], [2, 3, 1])),
+  word("OccurrencesOf123Or213", "Triples ordered as 123 or as 213.", occurrencesOfPatterns([1, 2, 3], [2, 1, 3])),
+  word("OccurrencesOf123Or321", "Triples ordered as 123 or as 321.", occurrencesOfPatterns([1, 2, 3], [3, 2, 1])),
+  word("OccurrencesOf123Or312", "Triples ordered as 123 or as 312.", occurrencesOfPatterns([1, 2, 3], [3, 1, 2])),
+  word("OccurrencesOf231Or312", "Triples ordered as 231 or as 312.", occurrencesOfPatterns([2, 3, 1], [3, 1, 2])),
+  word("OccurrencesOf213Or312", "Triples ordered as 213 or as 312.", occurrencesOfPatterns([2, 1, 3], [3, 1, 2])),
+  word("OccurrencesOf213Or231", "Triples ordered as 213 or as 231.", occurrencesOfPatterns([2, 1, 3], [2, 3, 1])),
+  word("OccurrencesOf231Or321", "Triples ordered as 231 or as 321.", occurrencesOfPatterns([2, 3, 1], [3, 2, 1])),
+  word("OccurrencesOf312Or321", "Triples ordered as 312 or as 321.", occurrencesOfPatterns([3, 1, 2], [3, 2, 1])),
+  // Patterns of different lengths add: an occurrence of one is not an occurrence of the other.
+  word(
+    "OccurrencesOf321Or3412",
+    "Triples ordered as 321, plus quadruples ordered as 3412.",
+    add(occurrencesOfPatterns([3, 2, 1]), occurrencesOfPatterns([3, 4, 1, 2])),
+    "A permutation avoids both exactly when it is boolean: its Bruhat interval below is a boolean lattice.",
+  ),
+
+  // Length-5 patterns.
+  word(
+    "OccurrencesOf52341",
+    "Quintuples i < j < k < l < m ordered as 52341.",
+    occurrencesOfPatterns([5, 2, 3, 4, 1]),
+    "Avoiding it is necessary for the Schubert variety to have a complete parabolic bundle structure.",
+  ),
+  word(
+    "OccurrencesOf41352Or42351Or51342Or52341",
+    "Quintuples ordered as 41352, 42351, 51342 or 52341.",
+    occurrencesOfPatterns([4, 1, 3, 5, 2], [4, 2, 3, 5, 1], [5, 1, 3, 4, 2], [5, 2, 3, 4, 1]),
+  ),
+
+  // Fixed-size excedances, deficiencies, rises and distance-two steps.
+  stat("ThreeExcedances", "Positions with p(i) = i + 3.", nonEmpty(count(positions, equals(here, add("i", 3))))),
+  word("ThreeRises", "Positions i with p(i+1) = p(i) + 3.", hasPair(count(adjacent, equals(next, add(here, 3))))),
+  stat("BigDeficiencies", "Positions with i - p(i) > 1.", nonEmpty(count(positions, greater(subtract("i", here), 1)))),
+  word("DescentsOfDistanceTwo", "Positions i with p(i) > p(i+2).", pairsAtDistance(2, greater)),
+  word("AscentsOfDistanceTwo", "Positions i with p(i) < p(i+2).", pairsAtDistance(2, less)),
+  word(
+    "DoubleSuccessions",
+    "Positions i with p(i+1) = p(i) + 1 and p(i+2) = p(i) + 2.",
+    hasTriple(
+      count(
+        ["Range", 1, subtract(length(), 2)],
+        and(equals(next, add(here, 1)), equals(at(add("i", 2)), add(here, 2))),
+      ),
+    ),
+  ),
+
+  // Descents against recoils, and descents by parity.
+  stat(
+    "DescentsPlusRecoils",
+    "Descents plus recoils: the two counts added, not the union of the indices.",
+    hasPair(add(count(adjacent, fallsAfter), count(adjacent, isRecoilAt))),
+  ),
+  stat(
+    "DescentsAndRecoils",
+    "Indices i < n that are both a descent of p and a recoil.",
+    hasPair(count(adjacent, and(fallsAfter, isRecoilAt))),
+  ),
+  word("OddDescents", "Descents i with i odd.", descentsAtParity(1)),
+  word("EvenDescents", "Descents i with i even.", descentsAtParity(0)),
+  word(
+    "FinalRises",
+    "The ascents at the end: n - 1 less the last descent position.",
+    hasPair(
+      subtract(subtract(length(), 1), [
+        "If",
+        equals(count(adjacent, fallsAfter), 0),
+        0,
+        ["Max", where(adjacent, fallsAfter)],
+      ]),
+    ),
+  ),
+
+  // Records and middles of triples.
+  word(
+    "MidPointsOfOccurrencesOf321",
+    "Positions that are the middle of a 321 occurrence: neither a left-to-right maximum nor a right-to-left minimum.",
+    nonEmpty(count(positions, and(less(here, max(upToHere)), greater(here, min(fromHere))))),
+  ),
+  word(
+    "MidPointsOfOccurrencesOf123",
+    "Positions that are the middle of a 123 occurrence.",
+    nonEmpty(count(positions, and(greater(here, min(upToHere)), less(here, max(fromHere))))),
+  ),
+  word(
+    "LeftToRightMaximaOrRightToLeftMinima",
+    "Positions that are a left-to-right maximum, a right-to-left minimum, or both.",
+    nonEmpty(count(positions, or(isLeftToRightMaximum, isRightToLeftMinimum))),
+  ),
+
+  // Combinations of the major index with inversions and excedances.
+  word(
+    "MajorIndexMinusInversions",
+    "The major index less the number of inversions.",
+    hasPair(subtract(majorIndexOfWord, inversions)),
+  ),
+  word(
+    "InversionsPlusMajorIndex",
+    "The number of inversions plus the major index.",
+    hasPair(add(inversions, majorIndexOfWord)),
+  ),
+  stat(
+    "MajorIndexMinusExcedances",
+    "The major index less the number of positions with p(i) > i.",
+    hasPair(subtract(majorIndexOfWord, count(positions, greater(here, "i")))),
+  ),
+
+  stat("MaximalDisplacement", "The largest |p(i) - i|.", nonEmpty(max(forEach(positions, distance(here, "i"))))),
 ];
 
 export const PERMUTATION_STATISTICS: readonly Definition[] = [
@@ -1064,4 +1159,5 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
   ...FINDSTAT_PERMUTATION_STATISTICS,
   ...FINDSTAT_PERMUTATION_STATISTICS_2,
   ...FINDSTAT_PERMUTATION_STATISTICS_3,
+  ...FINDSTAT_PERMUTATION_STATISTICS_4,
 ];

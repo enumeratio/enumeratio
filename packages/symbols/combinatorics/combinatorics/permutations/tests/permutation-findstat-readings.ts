@@ -262,4 +262,104 @@ export const FINDSTAT_READINGS: Record<string, (p: number[]) => number> = {
   NonCyclicSmallExcedances: (p) => range(1, p.length).filter((i) => p[i - 1] !== (i % p.length) + 1).length,
   NonCyclicSmallWeakExcedances: (p) =>
     range(1, p.length).filter((i) => ![i, (i % p.length) + 1].includes(p[i - 1]!)).length,
+
+  // The fourth batch.
+  OccurrencesOf132Or231: (p) =>
+    anyOf(p, [
+      [1, 3, 2],
+      [2, 3, 1],
+    ]),
+  OccurrencesOf132Or213: (p) =>
+    anyOf(p, [
+      [1, 3, 2],
+      [2, 1, 3],
+    ]),
+  OccurrencesOf132Or312: (p) =>
+    anyOf(p, [
+      [1, 3, 2],
+      [3, 1, 2],
+    ]),
+  OccurrencesOf123Or231: (p) =>
+    anyOf(p, [
+      [1, 2, 3],
+      [2, 3, 1],
+    ]),
+  OccurrencesOf123Or213: (p) =>
+    anyOf(p, [
+      [1, 2, 3],
+      [2, 1, 3],
+    ]),
+  OccurrencesOf123Or321: (p) =>
+    anyOf(p, [
+      [1, 2, 3],
+      [3, 2, 1],
+    ]),
+  OccurrencesOf123Or312: (p) =>
+    anyOf(p, [
+      [1, 2, 3],
+      [3, 1, 2],
+    ]),
+  OccurrencesOf231Or312: (p) =>
+    anyOf(p, [
+      [2, 3, 1],
+      [3, 1, 2],
+    ]),
+  OccurrencesOf213Or312: (p) =>
+    anyOf(p, [
+      [2, 1, 3],
+      [3, 1, 2],
+    ]),
+  OccurrencesOf213Or231: (p) =>
+    anyOf(p, [
+      [2, 1, 3],
+      [2, 3, 1],
+    ]),
+  OccurrencesOf231Or321: (p) =>
+    anyOf(p, [
+      [2, 3, 1],
+      [3, 2, 1],
+    ]),
+  OccurrencesOf312Or321: (p) =>
+    anyOf(p, [
+      [3, 1, 2],
+      [3, 2, 1],
+    ]),
+  OccurrencesOf321Or3412: (p) => anyOf(p, [[3, 2, 1]]) + anyOf(p, [[3, 4, 1, 2]]),
+  OccurrencesOf52341: (p) => patternOccurrences(p, [5, 2, 3, 4, 1]),
+  OccurrencesOf41352Or42351Or51342Or52341: (p) =>
+    anyOf(p, [
+      [4, 1, 3, 5, 2],
+      [4, 2, 3, 5, 1],
+      [5, 1, 3, 4, 2],
+      [5, 2, 3, 4, 1],
+    ]),
+  ThreeExcedances: (p) => range(1, p.length).filter((i) => p[i - 1] === i + 3).length,
+  ThreeRises: (p) => ascents(p).filter((i) => p[i] === p[i - 1]! + 3).length,
+  BigDeficiencies: (p) => range(1, p.length).filter((i) => i - p[i - 1]! > 1).length,
+  DescentsOfDistanceTwo: (p) => range(1, p.length - 2).filter((i) => p[i - 1]! > p[i + 1]!).length,
+  AscentsOfDistanceTwo: (p) => range(1, p.length - 2).filter((i) => p[i - 1]! < p[i + 1]!).length,
+  DoubleSuccessions: (p) =>
+    range(1, p.length - 2).filter((i) => p[i] === p[i - 1]! + 1 && p[i + 1] === p[i - 1]! + 2).length,
+  DescentsPlusRecoils: (p) => descents(p).length + descents(inverse(p)).length,
+  DescentsAndRecoils: (p) => descents(p).filter((i) => descents(inverse(p)).includes(i)).length,
+  OddDescents: (p) => descents(p).filter((i) => i % 2 === 1).length,
+  EvenDescents: (p) => descents(p).filter((i) => i % 2 === 0).length,
+  // FindStat's loop: walk back from the end while the entries rise, with n + 1 prepended.
+  FinalRises: (p) => {
+    const n = p.length;
+    const w = [n + 1, ...p];
+    let rise = 0;
+    while (w[n - 1 - rise]! < w[n - rise]!) rise++;
+    return rise;
+  },
+  MidPointsOfOccurrencesOf321: (p) =>
+    indices(p).filter((j) => before(p, j).some((v) => v > p[j]!) && after(p, j).some((v) => v < p[j]!)).length,
+  MidPointsOfOccurrencesOf123: (p) =>
+    indices(p).filter((j) => before(p, j).some((v) => v < p[j]!) && after(p, j).some((v) => v > p[j]!)).length,
+  LeftToRightMaximaOrRightToLeftMinima: (p) =>
+    indices(p).filter((i) => isLeftToRightMaximum(p, i) || isRightToLeftMinimum(p, i)).length,
+  MajorIndexMinusInversions: (p) => sum(descents(p)) - inversionPairs(p).length,
+  InversionsPlusMajorIndex: (p) => sum(descents(p)) + inversionPairs(p).length,
+  MajorIndexMinusExcedances: (p) => sum(descents(p)) - range(1, p.length).filter((i) => p[i - 1]! > i).length,
+  MaximalDisplacement: (p) => Math.max(0, ...range(1, p.length).map((i) => Math.abs(p[i - 1]! - i))),
 };
