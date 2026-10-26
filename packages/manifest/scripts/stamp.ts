@@ -19,7 +19,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { createRequire } from "node:module";
-import { dirname, isAbsolute, join, relative, resolve } from "node:path";
+import { basename, dirname, isAbsolute, join, relative, resolve } from "node:path";
 
 const SCOPE = "@enumeratio/";
 const SKIPPED = new Set(["node_modules", "dist", ".git"]);
@@ -231,24 +231,59 @@ export function verdictCache(name: string, inputs: StepInputs): Verdicts {
   const file = verdictFile(inputs.dir, name);
   const env = hashInputs(inputs);
   let before: Record<string, unknown> = {};
+  // Why the whole file was set aside, if it was.
+  let discarded = "";
   try {
     const saved = JSON.parse(readFileSync(file, "utf8")) as { env: string; answers: Record<string, unknown> };
     if (saved.env === env) before = saved.answers;
-  } catch {
-    // none yet, or unreadable: every check runs
+    else discarded = `env changed (${saved.env.slice(0, 8)} -> ${env.slice(0, 8)})`;
+  } catch (error) {
+    discarded = (error as NodeJS.ErrnoException).code === "ENOENT" ? `no memo at ${basename(file)}` : "memo unreadable";
   }
   const kept: Record<string, unknown> = {};
+  let hits = 0;
+  let misses = 0;
   return {
     remember<T>(parts: unknown, compute: () => T): T {
       const key = createHash("sha256").update(JSON.stringify(parts)).digest("hex");
+      if (key in before) hits++;
+      else misses++;
       kept[key] = key in before ? before[key] : compute();
       return kept[key] as T;
     },
     save() {
+      // Answers an earlier run left under the same env stay: a key names the definition it
+      // checked, so a changed definition never matches one.
+      let merged = kept;
+      try {
+        const saved = JSON.parse(readFileSync(file, "utf8")) as { env: string; answers: Record<string, unknown> };
+        if (saved.env === env) merged = pruned({ ...saved.answers, ...kept }, kept);
+      } catch {
+        // nothing to merge
+      }
       mkdirSync(dirname(file), { recursive: true });
       const tmp = `${file}.${process.pid}.tmp`;
-      writeFileSync(tmp, JSON.stringify({ env, answers: kept }));
+      writeFileSync(tmp, JSON.stringify({ env, answers: merged }));
       renameSync(tmp, file);
+      console.log(
+        `verdicts ${name}: ${hits} reused, ${misses} checked` +
+          (discarded === "" ? "" : `; memo discarded: ${discarded}`),
+      );
     },
   };
+}
+
+/** The most answers a memo keeps: this run's, then the newest of the rest. */
+const MAX_ANSWERS = 50_000;
+
+function pruned(all: Record<string, unknown>, mine: Record<string, unknown>): Record<string, unknown> {
+  const keys = Object.keys(all);
+  if (keys.length <= MAX_ANSWERS) return all;
+  const out: Record<string, unknown> = { ...mine };
+  // Insertion order: the file's older answers come first, so the newest are last.
+  for (const k of keys.toReversed()) {
+    if (Object.keys(out).length >= MAX_ANSWERS) break;
+    if (!(k in out)) out[k] = all[k];
+  }
+  return out;
 }
