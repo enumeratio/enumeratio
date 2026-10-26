@@ -138,23 +138,20 @@ const longestIncreasingRun: MathJSON = [
 /** The steps of a walk: n of them, enough to go round any cycle. */
 const steps: MathJSON = ["Range", 1, length(), 1];
 
-/** Whether i leads its cycle: walking from p(i), the walk gets back to i (marker 0) before it
- *  meets anything smaller (marker -1). */
-const leads = (i: MathJSON): MathJSON =>
-  equals(
-    [
-      "Fold",
-      [
-        "Function",
-        ["If", ["LessEqual", "w", 0], "w", ["If", equals("w", i), 0, ["If", less("w", i), -1, at("w")]]],
-        "w",
-        "k",
-      ],
-      at(i),
-      steps,
-    ],
-    0,
-  );
+/** Where the walk from p(i) ends: back at i (marker 0) before it meets anything smaller (marker -1). */
+const leadMarker = (i: MathJSON): MathJSON => [
+  "Fold",
+  [
+    "Function",
+    ["If", ["LessEqual", "w", 0], "w", ["If", equals("w", i), 0, ["If", less("w", i), -1, at("w")]]],
+    "w",
+    "k",
+  ],
+  at(i),
+  steps,
+];
+/** Whether i leads its cycle: the walk gets back to i before it meets anything smaller. */
+const leads = (i: MathJSON): MathJSON => equals(leadMarker(i), 0);
 
 /** The length of i's cycle: walking from i, on getting back to i at step k the marker is -k. */
 const cycleLengthAt = (i: MathJSON): MathJSON => [
@@ -407,30 +404,68 @@ const FINDSTAT_PERMUTATION_STATISTICS: readonly Definition[] = [
 const sumOverPairs = (also: MathJSON, body: MathJSON): MathJSON =>
   sumOver(adjacent, ["Sum", forEach(where(["Range", add("i", 1), length()], also, "j"), body, "j")]);
 
-/**
- * Occurrences of a classical pattern of length 4: quadruples i < j < k < l whose values stand in
- * the order `pattern` gives. The pattern's positions, sorted by value, become a chain of `<`.
- */
-const occurrencesOfLength4Pattern = (pattern: readonly number[]): MathJSON => {
-  const names = ["i", "j", "k", "l"];
-  const byValue = [0, 1, 2, 3].toSorted((a, b) => pattern[a]! - pattern[b]!);
-  const chain = byValue
+/** `values` stand in the order `pattern` gives: a chain of `<` through them, smallest first. */
+const orderedAs = (pattern: readonly number[], values: readonly MathJSON[]): MathJSON => {
+  const byValue = pattern.map((_, position) => position).toSorted((a, b) => pattern[a]! - pattern[b]!);
+  return byValue
     .slice(1)
-    .map((position, rank) => less(at(names[byValue[rank]!]!), at(names[position]!)))
+    .map((position, rank) => less(values[byValue[rank]!]!, values[position]!))
     .reduce((all, step) => and(all, step));
+};
+/** One of several same-length patterns: they cannot both hold, so counting the `or` sums them. */
+const orderedAsAny = (patterns: readonly (readonly number[])[], values: readonly MathJSON[]): MathJSON =>
+  patterns.map((pattern) => orderedAs(pattern, values)).reduce((any, one) => or(any, one));
+
+/**
+ * Occurrences of classical patterns, all of one length (any of `patterns`): increasing position
+ * tuples i < j < k < ... whose values stand in the order a pattern gives, over bounded ranges.
+ */
+const occurrencesOfPatterns = (...patterns: (readonly number[])[]): MathJSON => {
+  const size = patterns[0]!.length;
+  const names = ["i", "j", "k", "l", "m"].slice(0, size);
+  const values = names.map((name) => at(name));
+  const n = length();
+  const from = (depth: number): MathJSON => (depth === 0 ? 1 : add(names[depth - 1]!, 1));
+  const loop = (depth: number): MathJSON =>
+    depth === size - 1
+      ? count(["Range", from(depth), n], orderedAsAny(patterns, values), names[depth])
+      : sumOver(["Range", from(depth), subtract(n, size - 1 - depth)], loop(depth + 1), names[depth]);
+  return atLeast(size, loop(0));
+};
+
+/** Occurrences of a vincular pattern whose first two entries are adjacent: i, i + 1, then any k > i + 1. */
+const occurrencesWithAdjacentStart = (pattern: readonly number[]): MathJSON => {
   const n = length();
   return atLeast(
-    4,
+    3,
     sumOver(
-      ["Range", 1, subtract(n, 3)],
-      sumOver(
-        ["Range", add("i", 1), subtract(n, 2)],
-        sumOver(["Range", add("j", 1), subtract(n, 1)], count(["Range", add("k", 1), n], chain, "l"), "k"),
-        "j",
-      ),
+      ["Range", 1, subtract(n, 2)],
+      count(["Range", add("i", 2), n], orderedAs(pattern, [at("i"), at(add("i", 1)), at("k")]), "k"),
     ),
   );
 };
+
+/** Occurrences whose first entry is p(1), the other two anywhere after it: j < k. */
+const occurrencesFromFirstEntry = (pattern: readonly number[]): MathJSON => {
+  const n = length();
+  return atLeast(
+    3,
+    sumOver(
+      ["Range", 2, subtract(n, 1)],
+      count(["Range", add("j", 1), n], orderedAs(pattern, [at(1), at("j"), at("k")]), "k"),
+      "j",
+    ),
+  );
+};
+/** Occurrences whose first two entries are p(1) and p(2), the third anywhere after them. */
+const occurrencesFromFirstTwoEntries = (pattern: readonly number[]): MathJSON =>
+  atLeast(3, count(["Range", 3, length()], orderedAs(pattern, [at(1), at(2), at("k")]), "k"));
+/** Occurrences whose first entry is p(1), the other two adjacent: j, j + 1. */
+const occurrencesFromFirstEntryThenAdjacent = (pattern: readonly number[]): MathJSON =>
+  atLeast(3, count(["Range", 2, subtract(length(), 1)], orderedAs(pattern, [at(1), at("j"), at(add("j", 1))]), "j"));
+/** Occurrences whose three entries are adjacent: i, i + 1, i + 2. */
+const occurrencesOfConsecutivePattern = (pattern: readonly number[]): MathJSON =>
+  atLeast(3, count(["Range", 1, subtract(length(), 2)], orderedAs(pattern, [here, next, at(add("i", 2))])));
 
 /** Whether i is a recoil: i + 1 stands to the left of i. */
 const isRecoilAt: MathJSON = greater(positionOf("i"), positionOf(add("i", 1)));
@@ -592,11 +627,638 @@ const FINDSTAT_PERMUTATION_STATISTICS_2: readonly Definition[] = [
   ),
 
   // Length-4 patterns.
-  word("OccurrencesOf1324", "Quadruples i < j < k < l ordered as 1324.", occurrencesOfLength4Pattern([1, 3, 2, 4])),
-  word("OccurrencesOf2143", "Quadruples i < j < k < l ordered as 2143.", occurrencesOfLength4Pattern([2, 1, 4, 3])),
-  word("OccurrencesOf4231", "Quadruples i < j < k < l ordered as 4231.", occurrencesOfLength4Pattern([4, 2, 3, 1])),
-  word("OccurrencesOf2413", "Quadruples i < j < k < l ordered as 2413.", occurrencesOfLength4Pattern([2, 4, 1, 3])),
-  word("OccurrencesOf1432", "Quadruples i < j < k < l ordered as 1432.", occurrencesOfLength4Pattern([1, 4, 3, 2])),
+  word("OccurrencesOf1324", "Quadruples i < j < k < l ordered as 1324.", occurrencesOfPatterns([1, 3, 2, 4])),
+  word("OccurrencesOf2143", "Quadruples i < j < k < l ordered as 2143.", occurrencesOfPatterns([2, 1, 4, 3])),
+  word("OccurrencesOf4231", "Quadruples i < j < k < l ordered as 4231.", occurrencesOfPatterns([4, 2, 3, 1])),
+  word("OccurrencesOf2413", "Quadruples i < j < k < l ordered as 2413.", occurrencesOfPatterns([2, 4, 1, 3])),
+  word("OccurrencesOf1432", "Quadruples i < j < k < l ordered as 1432.", occurrencesOfPatterns([1, 4, 3, 2])),
+];
+
+/** The cyclic successor of position i: i + 1, and 1 after the last. */
+const cyclicNext: MathJSON = ["If", equals("i", length()), 1, add("i", 1)];
+const isSmallExcedance: MathJSON = equals(here, add("i", 1));
+const isSmallWeakExcedance: MathJSON = or(equals(here, "i"), isSmallExcedance);
+const isCyclicSmallExcedance: MathJSON = equals(here, cyclicNext);
+const isCyclicSmallWeakExcedance: MathJSON = or(equals(here, "i"), isCyclicSmallExcedance);
+/** The positions that fail `predicate`: all of them, less those that pass. */
+const countFailing = (predicate: MathJSON): MathJSON => subtract(length(), count(positions, predicate));
+
+/** A pattern count read off the permutation by `Occurrences...` and a pattern written in FindStat's notation. */
+const patternCount = (head: string, shape: string, expr: MathJSON, summary: string, note?: string): Definition =>
+  word(head, `${summary} (${shape}).`, expr, note);
+
+// The third batch of FindStat's permutation statistics: vincular and consecutive patterns,
+// pattern pairs, and the small-excedance families.
+const FINDSTAT_PERMUTATION_STATISTICS_3: readonly Definition[] = [
+  // Vincular patterns xy-z: the first two entries adjacent, the third anywhere after.
+  patternCount(
+    "OccurrencesOf21Dash3",
+    "21-3",
+    occurrencesWithAdjacentStart([2, 1, 3]),
+    "Triples i, i+1, k with k > i+1 ordered as 213",
+  ),
+  patternCount(
+    "OccurrencesOf13Dash2",
+    "13-2",
+    occurrencesWithAdjacentStart([1, 3, 2]),
+    "Triples i, i+1, k with k > i+1 ordered as 132",
+  ),
+  patternCount(
+    "OccurrencesOf12Dash3",
+    "12-3",
+    occurrencesWithAdjacentStart([1, 2, 3]),
+    "Triples i, i+1, k with k > i+1 ordered as 123",
+  ),
+  patternCount(
+    "OccurrencesOf31Dash2",
+    "31-2",
+    occurrencesWithAdjacentStart([3, 1, 2]),
+    "Triples i, i+1, k with k > i+1 ordered as 312",
+  ),
+  patternCount(
+    "OccurrencesOf23Dash1",
+    "23-1",
+    occurrencesWithAdjacentStart([2, 3, 1]),
+    "Triples i, i+1, k with k > i+1 ordered as 231",
+  ),
+  patternCount(
+    "OccurrencesOf32Dash1",
+    "32-1",
+    occurrencesWithAdjacentStart([3, 2, 1]),
+    "Triples i, i+1, k with k > i+1 ordered as 321",
+  ),
+
+  // Patterns whose first entry is p(1).
+  patternCount(
+    "OccurrencesOfInitial213",
+    "|213",
+    occurrencesFromFirstEntry([2, 1, 3]),
+    "Triples 1 < j < k ordered as 213",
+  ),
+  patternCount(
+    "OccurrencesOfInitial231",
+    "|231",
+    occurrencesFromFirstEntry([2, 3, 1]),
+    "Triples 1 < j < k ordered as 231",
+  ),
+  patternCount(
+    "OccurrencesOfInitial312",
+    "|312",
+    occurrencesFromFirstEntry([3, 1, 2]),
+    "Triples 1 < j < k ordered as 312",
+  ),
+  patternCount(
+    "OccurrencesOfInitial321",
+    "|321",
+    occurrencesFromFirstEntry([3, 2, 1]),
+    "Triples 1 < j < k ordered as 321",
+  ),
+  patternCount(
+    "OccurrencesOfInitial132",
+    "|132",
+    occurrencesFromFirstEntry([1, 3, 2]),
+    "Triples 1 < j < k ordered as 132",
+  ),
+  patternCount(
+    "OccurrencesOfInitial123",
+    "|123",
+    occurrencesFromFirstEntry([1, 2, 3]),
+    "Triples 1 < j < k ordered as 123",
+  ),
+  patternCount(
+    "OccurrencesOfInitial12Dash3",
+    "|12-3",
+    occurrencesFromFirstTwoEntries([1, 2, 3]),
+    "Triples 1, 2, k ordered as 123",
+    "FindStat titles this |1-23, but its definition matches p(1) and p(2) as adjacent.",
+  ),
+  patternCount(
+    "OccurrencesOfInitial2Dash13",
+    "|2-13",
+    occurrencesFromFirstEntryThenAdjacent([2, 1, 3]),
+    "Triples 1, j, j+1 ordered as 213",
+    "FindStat titles this |21-3.",
+  ),
+  patternCount(
+    "OccurrencesOfInitial1Dash23",
+    "|1-23",
+    occurrencesFromFirstEntryThenAdjacent([1, 2, 3]),
+    "Triples 1, j, j+1 ordered as 123",
+    "FindStat titles this |12-3.",
+  ),
+  patternCount(
+    "OccurrencesOfConsecutive132",
+    "consecutive 132",
+    occurrencesOfConsecutivePattern([1, 3, 2]),
+    "Triples i, i+1, i+2 ordered as 132",
+  ),
+
+  // More patterns of length 4.
+  word("OccurrencesOf3241", "Quadruples i < j < k < l ordered as 3241.", occurrencesOfPatterns([3, 2, 4, 1])),
+  word("OccurrencesOf4213", "Quadruples i < j < k < l ordered as 4213.", occurrencesOfPatterns([4, 2, 1, 3])),
+
+  // Pairs and triples of patterns, counted together.
+  word("OccurrencesOf123Or132", "Triples ordered as 123 or as 132.", occurrencesOfPatterns([1, 2, 3], [1, 3, 2])),
+  word("OccurrencesOf213Or321", "Triples ordered as 213 or as 321.", occurrencesOfPatterns([2, 1, 3], [3, 2, 1])),
+  word("OccurrencesOf132Or321", "Triples ordered as 132 or as 321.", occurrencesOfPatterns([1, 3, 2], [3, 2, 1])),
+  word(
+    "OccurrencesOf132Or213Or321",
+    "Triples ordered as 132, 213 or 321.",
+    occurrencesOfPatterns([1, 3, 2], [2, 1, 3], [3, 2, 1]),
+    "Studied by Gepner in conformal field theory.",
+  ),
+  word(
+    "OccurrencesOf3241Or4231",
+    "Quadruples ordered as 3241 or as 4231.",
+    occurrencesOfPatterns([3, 2, 4, 1], [4, 2, 3, 1]),
+    "A permutation avoids both exactly when it is an input-restricted deque.",
+  ),
+  word(
+    "OccurrencesOf4132Or4231",
+    "Quadruples ordered as 4132 or as 4231.",
+    occurrencesOfPatterns([4, 1, 3, 2], [4, 2, 3, 1]),
+  ),
+  word(
+    "OccurrencesOf3412Or4231",
+    "Quadruples ordered as 3412 or as 4231.",
+    occurrencesOfPatterns([3, 4, 1, 2], [4, 2, 3, 1]),
+    "A permutation avoids both exactly when its Schubert variety is smooth.",
+  ),
+  word(
+    "OccurrencesOf2143Or4213",
+    "Quadruples ordered as 2143 or as 4213.",
+    occurrencesOfPatterns([2, 1, 4, 3], [4, 2, 1, 3]),
+  ),
+
+  // Small excedances, with and without the weak and cyclic variants.
+  stat(
+    "SmallWeakExcedances",
+    "Positions with p(i) = i or p(i) = i + 1.",
+    nonEmpty(count(positions, isSmallWeakExcedance)),
+  ),
+  stat("NonSmallExcedances", "Positions with p(i) != i + 1.", nonEmpty(countFailing(isSmallExcedance))),
+  stat(
+    "NonSmallWeakExcedances",
+    "Positions with p(i) not in {i, i + 1}.",
+    nonEmpty(countFailing(isSmallWeakExcedance)),
+  ),
+  stat(
+    "CyclicSmallExcedances",
+    "Positions with p(i) = i + 1, read cyclically: the last position counts when p(n) = 1.",
+    nonEmpty(count(positions, isCyclicSmallExcedance)),
+  ),
+  stat(
+    "CyclicSmallWeakExcedances",
+    "Positions with p(i) = i or p(i) = i + 1, read cyclically.",
+    nonEmpty(count(positions, isCyclicSmallWeakExcedance)),
+  ),
+  stat(
+    "NonCyclicSmallExcedances",
+    "Positions that are not cyclic small excedances.",
+    nonEmpty(countFailing(isCyclicSmallExcedance)),
+  ),
+  stat(
+    "NonCyclicSmallWeakExcedances",
+    "Positions that are not cyclic small weak excedances.",
+    nonEmpty(countFailing(isCyclicSmallWeakExcedance)),
+  ),
+];
+
+const majorIndexOfWord: MathJSON = ["Sum", where(adjacent, fallsAfter)];
+/** Positions i with p(i) and p(i + distance) related by `relation`. */
+const pairsAtDistance = (distanceApart: number, relation: (a: MathJSON, b: MathJSON) => MathJSON): MathJSON =>
+  atLeast(
+    distanceApart + 1,
+    count(["Range", 1, subtract(length(), distanceApart)], relation(here, at(add("i", distanceApart)))),
+  );
+/** Descents i, counted when i itself satisfies `parity` (0 for even, 1 for odd). */
+const descentsAtParity = (parity: number): MathJSON =>
+  hasPair(count(adjacent, and(fallsAfter, equals(["Mod", "i", 2], parity))));
+const isLeftToRightMaximum: MathJSON = equals(here, max(upToHere));
+const isRightToLeftMinimum: MathJSON = equals(here, min(fromHere));
+
+// The fourth batch: the rest of the pattern pairs, length-5 patterns, and more fixed-size
+// excedances, rises and displacements.
+const FINDSTAT_PERMUTATION_STATISTICS_4: readonly Definition[] = [
+  // Pairs of length-3 patterns, counted together.
+  word("OccurrencesOf132Or231", "Triples ordered as 132 or as 231.", occurrencesOfPatterns([1, 3, 2], [2, 3, 1])),
+  word("OccurrencesOf132Or213", "Triples ordered as 132 or as 213.", occurrencesOfPatterns([1, 3, 2], [2, 1, 3])),
+  word("OccurrencesOf132Or312", "Triples ordered as 132 or as 312.", occurrencesOfPatterns([1, 3, 2], [3, 1, 2])),
+  word("OccurrencesOf123Or231", "Triples ordered as 123 or as 231.", occurrencesOfPatterns([1, 2, 3], [2, 3, 1])),
+  word("OccurrencesOf123Or213", "Triples ordered as 123 or as 213.", occurrencesOfPatterns([1, 2, 3], [2, 1, 3])),
+  word("OccurrencesOf123Or321", "Triples ordered as 123 or as 321.", occurrencesOfPatterns([1, 2, 3], [3, 2, 1])),
+  word("OccurrencesOf123Or312", "Triples ordered as 123 or as 312.", occurrencesOfPatterns([1, 2, 3], [3, 1, 2])),
+  word("OccurrencesOf231Or312", "Triples ordered as 231 or as 312.", occurrencesOfPatterns([2, 3, 1], [3, 1, 2])),
+  word("OccurrencesOf213Or312", "Triples ordered as 213 or as 312.", occurrencesOfPatterns([2, 1, 3], [3, 1, 2])),
+  word("OccurrencesOf213Or231", "Triples ordered as 213 or as 231.", occurrencesOfPatterns([2, 1, 3], [2, 3, 1])),
+  word("OccurrencesOf231Or321", "Triples ordered as 231 or as 321.", occurrencesOfPatterns([2, 3, 1], [3, 2, 1])),
+  word("OccurrencesOf312Or321", "Triples ordered as 312 or as 321.", occurrencesOfPatterns([3, 1, 2], [3, 2, 1])),
+  // Patterns of different lengths add: an occurrence of one is not an occurrence of the other.
+  word(
+    "OccurrencesOf321Or3412",
+    "Triples ordered as 321, plus quadruples ordered as 3412.",
+    add(occurrencesOfPatterns([3, 2, 1]), occurrencesOfPatterns([3, 4, 1, 2])),
+    "A permutation avoids both exactly when it is boolean: its Bruhat interval below is a boolean lattice.",
+  ),
+
+  // Length-5 patterns.
+  word(
+    "OccurrencesOf52341",
+    "Quintuples i < j < k < l < m ordered as 52341.",
+    occurrencesOfPatterns([5, 2, 3, 4, 1]),
+    "Avoiding it is necessary for the Schubert variety to have a complete parabolic bundle structure.",
+  ),
+  word(
+    "OccurrencesOf41352Or42351Or51342Or52341",
+    "Quintuples ordered as 41352, 42351, 51342 or 52341.",
+    occurrencesOfPatterns([4, 1, 3, 5, 2], [4, 2, 3, 5, 1], [5, 1, 3, 4, 2], [5, 2, 3, 4, 1]),
+  ),
+
+  // Fixed-size excedances, deficiencies, rises and distance-two steps.
+  stat("ThreeExcedances", "Positions with p(i) = i + 3.", nonEmpty(count(positions, equals(here, add("i", 3))))),
+  word("ThreeRises", "Positions i with p(i+1) = p(i) + 3.", hasPair(count(adjacent, equals(next, add(here, 3))))),
+  stat("BigDeficiencies", "Positions with i - p(i) > 1.", nonEmpty(count(positions, greater(subtract("i", here), 1)))),
+  word("DescentsOfDistanceTwo", "Positions i with p(i) > p(i+2).", pairsAtDistance(2, greater)),
+  word("AscentsOfDistanceTwo", "Positions i with p(i) < p(i+2).", pairsAtDistance(2, less)),
+  word(
+    "DoubleSuccessions",
+    "Positions i with p(i+1) = p(i) + 1 and p(i+2) = p(i) + 2.",
+    hasTriple(
+      count(
+        ["Range", 1, subtract(length(), 2)],
+        and(equals(next, add(here, 1)), equals(at(add("i", 2)), add(here, 2))),
+      ),
+    ),
+  ),
+
+  // Descents against recoils, and descents by parity.
+  stat(
+    "DescentsPlusRecoils",
+    "Descents plus recoils: the two counts added, not the union of the indices.",
+    hasPair(add(count(adjacent, fallsAfter), count(adjacent, isRecoilAt))),
+  ),
+  stat(
+    "DescentsAndRecoils",
+    "Indices i < n that are both a descent of p and a recoil.",
+    hasPair(count(adjacent, and(fallsAfter, isRecoilAt))),
+  ),
+  word("OddDescents", "Descents i with i odd.", descentsAtParity(1)),
+  word("EvenDescents", "Descents i with i even.", descentsAtParity(0)),
+  word(
+    "FinalRises",
+    "The ascents at the end: n - 1 less the last descent position.",
+    hasPair(
+      subtract(subtract(length(), 1), [
+        "If",
+        equals(count(adjacent, fallsAfter), 0),
+        0,
+        ["Max", where(adjacent, fallsAfter)],
+      ]),
+    ),
+  ),
+
+  // Records and middles of triples.
+  word(
+    "MidPointsOfOccurrencesOf321",
+    "Positions that are the middle of a 321 occurrence: neither a left-to-right maximum nor a right-to-left minimum.",
+    nonEmpty(count(positions, and(less(here, max(upToHere)), greater(here, min(fromHere))))),
+  ),
+  word(
+    "MidPointsOfOccurrencesOf123",
+    "Positions that are the middle of a 123 occurrence.",
+    nonEmpty(count(positions, and(greater(here, min(upToHere)), less(here, max(fromHere))))),
+  ),
+  word(
+    "LeftToRightMaximaOrRightToLeftMinima",
+    "Positions that are a left-to-right maximum, a right-to-left minimum, or both.",
+    nonEmpty(count(positions, or(isLeftToRightMaximum, isRightToLeftMinimum))),
+  ),
+
+  // Combinations of the major index with inversions and excedances.
+  word(
+    "MajorIndexMinusInversions",
+    "The major index less the number of inversions.",
+    hasPair(subtract(majorIndexOfWord, inversions)),
+  ),
+  word(
+    "InversionsPlusMajorIndex",
+    "The number of inversions plus the major index.",
+    hasPair(add(inversions, majorIndexOfWord)),
+  ),
+  stat(
+    "MajorIndexMinusExcedances",
+    "The major index less the number of positions with p(i) > i.",
+    hasPair(subtract(majorIndexOfWord, count(positions, greater(here, "i")))),
+  ),
+
+  stat("MaximalDisplacement", "The largest |p(i) - i|.", nonEmpty(max(forEach(positions, distance(here, "i"))))),
+];
+
+/** `from .. to`, empty when `to < from` (a bare `Range` would count down). */
+const span = (from: MathJSON, to: MathJSON): MathJSON => ["Range", from, to, 1];
+/** The word with each fixed point replaced by 0 (Foata–Han's zeroing). */
+const fixedPointsZeroed: MathJSON = forEach(positions, ["If", equals(here, "i"), 0, here]);
+/** The descents of the zeroed word, then its major index. */
+const zeroedDescents = (body: MathJSON): MathJSON =>
+  hasPair(
+    bind("w", fixedPointsZeroed, [
+      "Sum",
+      forEach(where(span(1, subtract(length("w"), 1)), greater(at("i", "w"), at(add("i", 1), "w"))), body),
+    ]),
+  );
+
+/** Whether i is the smallest point of a run of consecutive values, one position apart: no earlier succession. */
+const startsSuccessionRun: MathJSON = [
+  "If",
+  equals("i", 1),
+  "True",
+  or(less(here, add(previous, 1)), greater(here, add(previous, 1))),
+];
+
+/** Whether position i is the middle of a 321 occurrence: something larger before, something smaller after. */
+const isMiddleOf321: MathJSON = and(less(here, max(upToHere)), greater(here, min(fromHere)));
+
+/** The values at the breakpoints: k such that p(1..k) is a permutation of 1..k. */
+const breakpoints: MathJSON = where(positions, equals(max(upToHere), "i"));
+
+/** Whether the value at position i sits to the left of the value one less: a drop in the inverse. */
+const inverseMajorIndex: MathJSON = sumOver(adjacent, [
+  "If",
+  greater(positionOf("i"), positionOf(add("i", 1))),
+  "i",
+  0,
+]);
+
+/** Selection sort swapping n into place, then n-1, ...: the total distance the entries travel (Petersen). */
+const sortingIndex: MathJSON = [
+  "At",
+  fold(
+    ["Range", length(), 1, -1],
+    ["List", 0, x],
+    [
+      "Apply",
+      [
+        "Function",
+        [
+          "List",
+          add(carried(1), subtract(visiting, "t")),
+          ["ReplaceAt", ["ReplaceAt", carried(2), "t", at(visiting, carried(2))], visiting, visiting],
+        ],
+        "t",
+      ],
+      ["Sum", forEach(positions, ["If", equals(at("j", carried(2)), visiting), "j", 0], "j")],
+    ],
+  ),
+  1,
+];
+
+/** The cycles whose smallest point is a, written a, p(a), p(p(a)), ...: a descent is a step down that does not close the cycle. */
+const cycleDescents: MathJSON = count(positions, and(less(here, "i"), less(leadMarker(here), 0)));
+
+/** Elizalde–Pak: the largest k with p(i) > k for every i <= k, read as the first k that fails less one. */
+const elizaldePakRank: MathJSON = count(
+  positions,
+  equals(count(span(1, "k"), atMostValue(min(slice(1, "m")), "m"), "m"), 0),
+  "k",
+);
+
+/** Positions where the entries seen so far, in the order of the scan, leave `i` unremoved: Disorder, value by value. */
+const disorder: MathJSON = sumOver(
+  span(1, subtract(length(), 1)),
+  bind(
+    "a",
+    positionOf(subtract("v", 1)),
+    bind(
+      "b",
+      positionOf("v"),
+      count(
+        positions,
+        and(
+          greater(at("q"), "v"),
+          or(
+            and(less("a", "b"), and(greater("q", "a"), less("q", "b"))),
+            and(greater("a", "b"), or(greater("q", "a"), less("q", "b"))),
+          ),
+        ),
+        "q",
+      ),
+      "number",
+    ),
+    "number",
+  ),
+  "v",
+);
+
+/** Positions a with the value p(a) - 1 to the right of a, and a larger entry in between. */
+const tier: MathJSON = count(
+  positions,
+  and(
+    greater(positionOf(subtract(here, 1)), "i"),
+    greater(count(span(add("i", 1), subtract(positionOf(subtract(here, 1)), 1)), greater(at("b"), here), "b"), 0),
+  ),
+);
+
+// The fifth batch: cycle, record and displacement statistics from the crawl that the earlier
+// batches left, and the fixed-point zeroing family.
+const FINDSTAT_PERMUTATION_STATISTICS_5: readonly Definition[] = [
+  stat(
+    "ValleysIncludingBoundary",
+    "Positions lower than both neighbours, a larger entry standing off each end.",
+    nonEmpty(
+      count(
+        positions,
+        and(
+          ["If", equals("i", 1), "True", greater(previous, here)],
+          ["If", equals("i", length()), "True", less(here, next)],
+        ),
+      ),
+    ),
+    "Excluding the boundary is Valleys.",
+  ),
+  stat(
+    "MaximalExcedance",
+    "The largest p(i) - i.",
+    nonEmpty(max(forEach(positions, subtract(here, "i")))),
+    "FindStat's title says drop size, i - p(i); its code takes p(i) - i. This follows the code.",
+  ),
+  stat(
+    "AdjacentCycles",
+    "Cycles of the form (a, a+1, ..., a+k), fixed points included.",
+    nonEmpty(
+      count(
+        positions,
+        greater(
+          count(
+            span("i", length()),
+            and(
+              equals(at("m"), "i"),
+              equals(
+                count(
+                  span("i", length()),
+                  and(less("j", "m"), or(less(at("j"), add("j", 1)), greater(at("j"), add("j", 1)))),
+                  "j",
+                ),
+                0,
+              ),
+            ),
+            "m",
+          ),
+          0,
+        ),
+      ),
+    ),
+  ),
+  word(
+    "StrongFixedPoints",
+    "Positions that are both a left-to-right maximum and a right-to-left minimum.",
+    nonEmpty(count(positions, and(isLeftToRightMaximum, isRightToLeftMinimum))),
+  ),
+  stat(
+    "SortingIndex",
+    "The total distance the entries move in selection sort.",
+    nonEmpty(sortingIndex),
+    "Selection sort swaps n into place, then n - 1, and so on; the fold carries the total and the word.",
+  ),
+  stat(
+    "Load",
+    "The major index of the reverse of the inverse.",
+    hasPair(sumOver(adjacent, ["If", less(positionOf("i"), positionOf(add("i", 1))), subtract(length(), "i"), 0])),
+  ),
+  stat("CycleDescents", "Steps down within the cycles, each written from its smallest point.", nonEmpty(cycleDescents)),
+  stat(
+    "DescentsAfterZeroingFixedPoints",
+    "The descents of the word with every fixed point replaced by 0.",
+    zeroedDescents(1),
+  ),
+  stat(
+    "MajorIndexAfterZeroingFixedPoints",
+    "The major index of the word with every fixed point replaced by 0.",
+    zeroedDescents("i"),
+  ),
+  stat(
+    "ElizaldePakRank",
+    "The largest k with p(i) > k for all i <= k.",
+    nonEmpty(elizaldePakRank),
+    "Read as FindStat's code does: the first k that fails, less one.",
+  ),
+  stat(
+    "Disorder",
+    "Scanning cyclically for 1, then 2, ...: the entries passed that are still larger than the one sought.",
+    hasPair(disorder),
+  ),
+  stat(
+    "CyclesOfLengthAtMostTwo",
+    "Cycles of size one or two.",
+    nonEmpty(count(cycleLengths, atMostValue("c", 2), "c")),
+  ),
+  stat(
+    "CyclesOfLengthAtMostThree",
+    "Cycles of size at most three.",
+    nonEmpty(count(cycleLengths, atMostValue("c", 3), "c")),
+  ),
+  word(
+    "InversionsOfDistanceAtMostThree",
+    "Inversions i < j with j - i <= 3.",
+    hasPair(sumOverInversions(1, atMostValue(subtract("j", "i"), 3))),
+  ),
+  stat("FirstDirectSummandSize", "The smallest k with {p(1), ..., p(k)} = {1, ..., k}.", nonEmpty(min(breakpoints))),
+  stat(
+    "LargestDirectSummandSize",
+    "The size of the largest block of p as a direct sum.",
+    nonEmpty(
+      bind(
+        "b",
+        ["Join", ["List", 0], breakpoints],
+        max(forEach(span(1, subtract(length("b"), 1)), subtract(at(add("i", 1), "b"), at("i", "b")))),
+      ),
+    ),
+  ),
+  stat(
+    "StretchingPairs",
+    "Pairs i < j with p(i) < i < j < p(j).",
+    hasPair(sumOverPairs(and(less(here, "i"), less("j", at("j"))), 1)),
+  ),
+  word(
+    "InversionIndex",
+    "The sum of the larger entry p(i) over the inversions i < j.",
+    hasPair(sumOverInversions(here)),
+  ),
+  stat(
+    "TotalSquaredDisplacement",
+    "The sum of (p(i) - i)^2.",
+    nonEmpty(sumOver(positions, ["Power", subtract(here, "i"), 2])),
+    "Twice InversionSum, though neither definition shows it. FindStat calls it Spearman's rho of p against the identity.",
+  ),
+  word(
+    "LeftToRightMaximaXorRightToLeftMinima",
+    "Positions that are a left-to-right maximum or a right-to-left minimum but not both.",
+    nonEmpty(
+      count(
+        positions,
+        or(
+          and(isLeftToRightMaximum, greater(here, min(fromHere))),
+          and(isRightToLeftMinimum, less(here, max(upToHere))),
+        ),
+      ),
+    ),
+  ),
+  word(
+    "MaximalSuccessiveDifference",
+    "The largest p(i+1) - p(i), negative for a decreasing permutation.",
+    hasPair(max(forEach(adjacent, subtract(next, here)))),
+    "MaximalRiseSize is the same with a floor of 0.",
+  ),
+  stat(
+    "MajorIndexPlusInverseMajorIndex",
+    "The major index plus the major index of the inverse.",
+    hasPair(add(majorIndexOfWord, inverseMajorIndex)),
+  ),
+  stat("Tier", "Positions a with a larger entry, then the value p(a) - 1, to its right.", nonEmpty(tier)),
+  word(
+    "Rafts",
+    "Maximal runs of consecutive successions p(i+1) = p(i) + 1.",
+    hasPair(count(adjacent, and(equals(next, add(here, 1)), startsSuccessionRun))),
+  ),
+  stat(
+    "WeakExcedanceMidPointsOfOccurrencesOf321",
+    "Positions i with p(i) >= i that are the middle of a 321 occurrence.",
+    nonEmpty(count(positions, and(atLeastValue(here, "i"), isMiddleOf321))),
+  ),
+  stat(
+    "NonWeakExcedanceMidPointsOfOccurrencesOf321",
+    "Positions i with p(i) < i that are the middle of a 321 occurrence.",
+    nonEmpty(count(positions, and(less(here, "i"), isMiddleOf321))),
+  ),
+  word(
+    "TwoShiftedMajorIndex",
+    "The sum of the positions i with p(i) - p(i+1) > 2.",
+    hasPair(["Sum", where(adjacent, greater(subtract(here, next), 2))]),
+    "ShiftedMajorIndex is the same with a gap of more than 1.",
+  ),
+  word(
+    "ThreeShiftedMajorIndex",
+    "The sum of the positions i with p(i) - p(i+1) > 3.",
+    hasPair(["Sum", where(adjacent, greater(subtract(here, next), 3))]),
+  ),
+  word(
+    "PinnacleSum",
+    "The sum of the peak values: p(i) over the interior peaks i.",
+    hasTriple(["Sum", forEach(where(interior, and(less(previous, here), greater(here, next))), here)]),
+  ),
+  word(
+    "AugmentedDoubleAscents",
+    "Positions i with w(i) < w(i+1) < w(i+2) in the word w = 0 p(1) ... p(n).",
+    hasPair(
+      bind(
+        "w",
+        zeroThen,
+        count(
+          span(1, subtract(length("w"), 2)),
+          and(less(at("i", "w"), at(add("i", 1), "w")), less(at(add("i", 1), "w"), at(add("i", 2), "w"))),
+        ),
+      ),
+    ),
+  ),
 ];
 
 export const PERMUTATION_STATISTICS: readonly Definition[] = [
@@ -800,4 +1462,7 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
   ),
   ...FINDSTAT_PERMUTATION_STATISTICS,
   ...FINDSTAT_PERMUTATION_STATISTICS_2,
+  ...FINDSTAT_PERMUTATION_STATISTICS_3,
+  ...FINDSTAT_PERMUTATION_STATISTICS_4,
+  ...FINDSTAT_PERMUTATION_STATISTICS_5,
 ];

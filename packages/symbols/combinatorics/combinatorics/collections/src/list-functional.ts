@@ -5,7 +5,6 @@ import {
   integerAt,
   operandsOf,
   symbolNameOf,
-  widenSignature,
   wrapOperator,
 } from "@enumeratio/engine";
 
@@ -13,10 +12,7 @@ import {
 // RecurrenceTable), two heads that generate exact recurrence sequences (LinearRecurrence,
 // RecurrenceTable), a minimal Association, and two means that are Power/Divide in a coat.
 //
-// None of these exist on compute-engine except FixedPoint, which it declares as a 1-ary
-// stub with no `evaluate` (any call to it errors) — `widenSignature` + `wrapOperator` extend
-// that definition in place rather than redeclaring it, per the rule for a head CE already
-// has under the same name.
+// None of these exist on compute-engine except FixedPoint, which `wrapOperator` extends.
 
 /** Compute-engine answers a handful of heads (`Most`, `Rest`, `Take`, `Drop`, `Range`, …)
  *  entirely through the operator's lazy COLLECTION protocol, never through a value-returning
@@ -55,73 +51,29 @@ function nestListValues(ce: Engine, fn: Expr, x: Expr, n: number): Expr {
   return ce.box(["List", ...items]);
 }
 
-/** Caps a `FixedPoint` that never settles — an infinite loop otherwise, since nothing else
- *  bounds the iteration. Wolfram's own default cap is $MaxIterations (a much larger,
- *  configurable number); ours is fixed and unconfigurable, which is the scope this backlog
- *  entry asked for. */
-const FIXED_POINT_MAX_ITERATIONS = 10_000;
-
-/**
- * Whether `next` and `current` agree to the engine's working precision — `|Δ| ≤ |next| ·
- * 10^(1 - precision)`, Wolfram's own rule of thumb for "close enough" at a given precision.
- * Only meaningful for two inexact reals with a `bignumRe` (an exact value or a non-numeric
- * result is `isSame`'s job, below), and deliberately done in `BigDecimal` arithmetic
- * (`.cmp`, not compute-engine's own `LessEqual`/`isLess`): compute-engine's numeric
- * comparison heads fold anything near machine-epsilon-of-zero together, so comparing a tiny
- * absolute `delta` against an even tinier `tolerance` — exactly what iterations near a
- * fixed point produce — comes back `true` no matter which is actually larger. `BigDecimal`'s
- * own `.cmp` has no such fuzz.
- */
-function withinWorkingPrecision(next: Expr, current: Expr, digits: number | string): boolean {
-  if (typeof digits !== "number") return false;
-  const nextBig = next.bignumRe;
-  const currentBig = current.bignumRe;
-  if (nextBig === undefined || currentBig === undefined) return false;
-  if (!nextBig.isFinite() || !currentBig.isFinite()) return false;
-  const delta = nextBig.sub(currentBig).abs();
-  // `digits` carries the guard digits; an exact iterate (a rational) stops at the engine's own.
-  const stop = isInexact(next) ? digits : digits - FIXED_POINT_GUARD_DIGITS;
-  const tolerance = nextBig.abs().mul(10 ** -(stop - 1));
-  return delta.cmp(tolerance) <= 0;
-}
-
-const isInexact = (x: Expr): boolean => (x as unknown as { isExact?: boolean }).isExact === false;
-
 /** Digits an inexact iteration carries past the engine's precision. The last step's error is a
  *  few times the stopping gap, so without them the last digit or two of the answer are wrong;
  *  rounding back from this many leaves every printed digit right. */
 const FIXED_POINT_GUARD_DIGITS = 10;
 
-function fixedPointValue(ce: Engine, fn: Expr, x: Expr): Expr {
+const isInexact = (x: Expr): boolean => (x as unknown as { isExact?: boolean }).isExact === false;
+
+/** Compute-engine's own `FixedPoint`, run with guard digits and rounded back to the engine's. */
+function fixedPointValue(ce: Engine, native: () => Expr | undefined): Expr | undefined {
   const digits = ce.precision;
-  if (typeof digits !== "number") return iterateToFixedPoint(ce, fn, x, digits);
+  if (typeof digits !== "number") return native();
   ce.precision = digits + FIXED_POINT_GUARD_DIGITS;
-  let answer: Expr;
+  let answer: Expr | undefined;
   try {
-    answer = iterateToFixedPoint(ce, fn, x, digits + FIXED_POINT_GUARD_DIGITS);
+    answer = native();
   } finally {
     ce.precision = digits;
   }
-  const big = answer.bignumRe;
-  // An exact or non-real answer needs no rounding; an inexact real is cut to the engine's digits.
-  return big === undefined || !isInexact(answer) || answer.im !== 0 || !big.isFinite()
+  const big = answer?.bignumRe;
+  // An exact, non-real or unevaluated answer needs no rounding; an inexact real is cut to the engine's digits.
+  return answer === undefined || big === undefined || !isInexact(answer) || answer.im !== 0 || !big.isFinite()
     ? answer
     : ce.box({ num: big.toPrecision(digits).toString() } as never);
-}
-
-function iterateToFixedPoint(ce: Engine, fn: Expr, x: Expr, digits: number | string): Expr {
-  let current = x;
-  for (let i = 0; i < FIXED_POINT_MAX_ITERATIONS; i++) {
-    const next = callFn(ce, fn, [current]);
-    // Wolfram's own stopping rule: two successive iterates read the SAME (`SameQ`), not
-    // merely numerically equal — structural equality, which is exact for an exact value
-    // (an integer sequence that has truly settled) and otherwise essentially never fires
-    // for an inexact one (see `withinWorkingPrecision`, right below).
-    if (next.isSame(current)) return next;
-    if (withinWorkingPrecision(next, current, digits)) return next;
-    current = next;
-  }
-  return current;
 }
 
 /** The sequence a_1, a_2, … up to (at least) index `upTo`, given `kernel` (c_1 .. c_k, so
@@ -207,17 +159,13 @@ export function declareListFunctional(ce: Engine): void {
     },
   });
 
-  // FixedPoint(f, x): compute-engine already declares the head (a lazy 1-ary stub with no
-  // `evaluate`, so any call to it errors) — widen its signature to the 2-ary form and wrap
-  // it with the actual iteration, rather than redeclaring and losing whatever else its
-  // definition carries.
-  widenSignature(ce, "FixedPoint", "(function: any, x: any) -> any");
+  // compute-engine iterates; this only gives an inexact iteration guard digits.
   wrapOperator(
     ce,
     ["FixedPoint", 1, 1],
     () => true,
-    () => (ops) => fixedPointValue(ce, ops[0], ops[1]),
-    2,
+    (native) => (ops, options) => fixedPointValue(ce, () => native?.(ops, options) ?? undefined),
+    { min: 2, max: 3 },
   );
 
   ce.declare("Outer", {

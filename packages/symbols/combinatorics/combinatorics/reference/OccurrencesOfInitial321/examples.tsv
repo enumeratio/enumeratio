@@ -1,0 +1,7 @@
+id	section	role	expr	expected	known	source	caption
+the-one-line-word-312			[OccurrencesOfInitial321, [Permutation, [List, 3, 1, 2]]]	0			the one-line word $312$
+the-one-line-word-312-as-a-plain-list			[OccurrencesOfInitial321, [List, 3, 1, 2]]	0			the one-line word $312$, as a plain list
+the-one-line-word-2413			[OccurrencesOfInitial321, [Permutation, [List, 2, 4, 1, 3]]]	0			the one-line word $2413$
+findstat-st000802-1	Properties		[CombinatorialStat, [Permutation, [List, 1, 2]], "'OccurrencesOfInitial321'"]	0	0	FindStat St000802	FindStat's value for [1,2]
+findstat-st000802-2	Properties		[CombinatorialStat, [Permutation, [List, 2, 1]], "'OccurrencesOfInitial321'"]	0	0	FindStat St000802	FindStat's value for [2,1]
+findstat-st000802-3	Properties		[CombinatorialStat, [Permutation, [List, 1, 2, 3]], "'OccurrencesOfInitial321'"]	0	0	FindStat St000802	FindStat's value for [1,2,3]

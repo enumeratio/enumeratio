@@ -30,9 +30,13 @@ test("every composition definition has an independent reading", () => {
 
 // The brute-force readings (tableaux, subsequences) are the slow ones: every composition of 0..7.
 const SMALL = upTo(7);
+// The subset dynamic program behind these takes tens of seconds on the compositions of 7; size 7
+// is nightly (DEEP_TESTS=1) for them.
+const SLOW = new Set(["StandardCompositionTableauCount"]);
 for (const [head, expected] of Object.entries(COMPOSITION_READINGS)) {
-  test(`${head} agrees over every composition of 0..7`, () => {
-    for (const c of SMALL) expect(evaluate(head, c), JSON.stringify(c)).toBe(expected(c));
+  const sizes = SLOW.has(head) ? upTo(6) : SMALL;
+  test(`${head} agrees over every composition of 0..${SLOW.has(head) ? 6 : 7}`, () => {
+    for (const c of sizes) expect(evaluate(head, c), JSON.stringify(c)).toBe(expected(c));
   });
 }
 
@@ -52,6 +56,9 @@ test.skipIf(!process.env.DEEP_TESTS)(
     for (const c of compositions(8))
       for (const [head, expected] of Object.entries(COMPOSITION_READINGS))
         expect(evaluate(head, c), `${head} ${JSON.stringify(c)}`).toBe(expected(c));
+    for (const c of compositions(7))
+      for (const head of SLOW)
+        expect(evaluate(head, c), `${head} ${JSON.stringify(c)}`).toBe(COMPOSITION_READINGS[head]!(c));
   },
   1_800_000,
 );

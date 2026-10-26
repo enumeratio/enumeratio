@@ -16,7 +16,9 @@ const INTERPRETED = [
   "HookLengthOfLastDiagonalCell",
   "HookLengthSquareSum",
   "MinimalSubpartitionSizeDifference",
+  "MultipartitionCount",
   "SymmetricDiagonalHooks",
+  "YoungLatticeCoveringRelationCount",
 ];
 
 // The compiled file is built, and empty until the package's build has run.

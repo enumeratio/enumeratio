@@ -82,7 +82,7 @@ export function declareIntegerMod(ce: Engine): void {
   };
   ce.declare(INTEGER_MOD, {
     description: SUMMARIES.IntegerMod,
-    signature: "(any, any) -> value",
+    signature: "(any, any) -> residue",
     pure: true,
     lazy: true,
     canonical: (ops: readonly Expr[]) => {
@@ -149,9 +149,10 @@ export function declareIntegerMod(ce: Engine): void {
       },
     });
   }
-  // Simplify: compute-engine's simplifier folds classes of its own ResidueClass (it keys on that
-  // name) and passes IntegerMod by, so the classes among a sum's or a product's operands are
-  // folded here, after its pass: x + (2 mod 4) + (1 mod 4) is x + (3 mod 4).
+  // Simplify: compute-engine folds classes beside a symbol only for ResidueClass (it keys on that
+  // name, not the `residue` type), so the IntegerMod classes among a sum's or a product's operands
+  // are folded here, after its pass: x + (2 mod 4) + (1 mod 4) is x + (3 mod 4). Retires once
+  // compute-engine folds residues by type.
   const foldClasses = (expr: Expr): Expr => {
     const ops = operandsOf(expr);
     if (ops.length === 0) return expr;

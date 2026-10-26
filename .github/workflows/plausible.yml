@@ -3,18 +3,16 @@ name: Plausible
 # Property-based sampling over the collection catalogue (packages/symbols/combinatorics/combinatorics/collections/scripts/plausible.ts): random
 # (family, params, rank) points, checked for round trip, validity, injectivity and count. A fresh seed each run
 # means a red result is a finding to triage, not a broken build — so this is ADVISORY, never a required check.
-#   push / PR  — default budget, scoped to the kernels and the harness. The job stays green; a failure
-#                opens/reopens ONE rolling tracking issue (labelled `nightly-fixup`, which the fixup routine sweeps).
-#   nightly    — a deep sample; a failure also fails this (non-blocking) run, and a green one closes the issue.
+#   main      — after CI passes a push that touched the collections, default budget, on the dists CI cached. The
+#               job stays green; a failure opens/reopens ONE rolling tracking issue (labelled `nightly-fixup`,
+#               which the fixup routine sweeps). Never on a PR.
+#   nightly   — a deep sample; a failure also fails this (non-blocking) run, and a green one closes the issue.
 
 on:
-  push:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
     branches: [main]
-    paths:
-      - packages/symbols/combinatorics/combinatorics/collections/**
-  pull_request:
-    paths:
-      - packages/symbols/combinatorics/combinatorics/collections/**
   schedule:
     - cron: "41 4 * * *" # 04:41 UTC, after nightly.yml
   workflow_dispatch:
@@ -24,19 +22,49 @@ permissions:
   issues: write
 
 concurrency:
-  group: plausible-${{ github.ref }}
+  group: plausible-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
+  # A CI push run that passed and touched the collections (a squash merge is one commit); nightly and manual runs always go.
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.paths.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 2
+      - id: paths
+        env:
+          EVENT: ${{ github.event_name }}
+          CI_EVENT: ${{ github.event.workflow_run.event }}
+          CI_RESULT: ${{ github.event.workflow_run.conclusion }}
+        run: |
+          run=true
+          if [ "$EVENT" = workflow_run ]; then
+            run=false
+            if [ "$CI_EVENT" = push ] && [ "$CI_RESULT" = success ] \
+              && git diff --name-only HEAD^ HEAD | grep -q '^packages/symbols/combinatorics/combinatorics/collections/'; then run=true; fi
+          fi
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+
   plausible:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 25 # margin for a cold dist cache; the build below is already narrowed
     steps:
       - uses: actions/checkout@v4
-      # The sampler reads only combinatorics (and what it reads); a full build timed out here.
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      # The sampler reads only combinatorics (and what it reads); CI's dist cache holds it for this commit.
       - uses: ./.github/actions/setup
         with:
           packages: "@enumeratio/combinatorics"
+          dist-key: auto
 
       - id: run
         continue-on-error: true
@@ -56,9 +84,8 @@ jobs:
             const fs = require('fs')
             const TITLE = 'plausible sampling regression'
             const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
-            const trigger = context.eventName === 'schedule'
-              ? 'nightly (deep sample)'
-              : `${context.eventName} on \`${context.ref.replace('refs/heads/', '')}\``
+            const trigger = context.eventName === 'schedule' ? 'nightly (deep sample)' : 'main, after CI'
+
             let log = ''
             try { log = fs.readFileSync('plausible.log', 'utf8') } catch {}
             const tail = log.split('\n').slice(-60).join('\n')
@@ -93,7 +120,7 @@ jobs:
             }
 
       - name: nightly — close the issue on recovery
-        # only the deep sample may close it; a push/PR sample is too small to prove anything
+        # only the deep sample may close it; a main sample is too small to prove anything
         if: github.event_name == 'schedule' && steps.run.outcome == 'success'
         uses: actions/github-script@v7
         with:
