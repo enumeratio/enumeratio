@@ -78,6 +78,18 @@ const adjacentStart = (at: number[]) => at[1] === at[0]! + 1;
 const fromFirst = (at: number[]) => at[0] === 0;
 const anyOf = (p: number[], patterns: number[][]): number => sum(patterns.map((q) => patternOccurrences(p, q)));
 
+/** Maximal runs of consecutive small ascents (steps i with p(i+1) = p(i) + 1), as 0-based step lists. */
+const raftsOf = (p: number[]): number[][] => {
+  const rafts: number[][] = [[]];
+  for (let i = 0; i < p.length - 1; i++) {
+    if (p[i + 1] === p[i]! + 1) rafts[rafts.length - 1]!.push(i);
+    else rafts.push([]);
+  }
+  return rafts.filter((r) => r.length > 0);
+};
+const raftSteps = (p: number[]): Set<number> => new Set(raftsOf(p).flat());
+const consecutiveGaps = (p: number[]): number[] => range(0, p.length - 2).map((i) => Math.abs(p[i]! - p[i + 1]!));
+
 export const FINDSTAT_READINGS: Record<string, (p: number[]) => number> = {
   LeftOuterPeaks: (p) => peaksOf([0, ...p]),
   RightOuterPeaks: (p) => peaksOf([...p, 0]),
@@ -471,4 +483,138 @@ export const FINDSTAT_READINGS: Record<string, (p: number[]) => number> = {
     const q = [0, ...p];
     return range(0, q.length - 3).filter((i) => q[i]! < q[i + 1]! && q[i + 1]! < q[i + 2]!).length;
   },
+
+  // Batch 5.
+  AlternatingRuns: (p) => peaksOf(p) + peaksOf(p.map((v) => p.length + 1 - v)),
+  UpDownRuns: (p) => {
+    if (p.length === 0) return 0;
+    const switches = peaksOf(p) + peaksOf(p.map((v) => p.length + 1 - v));
+    return p.length > 1 && p[0]! > p[1]! ? switches + 2 : switches + 1;
+  },
+  NonInitialLeftToRightMinima: (p) =>
+    range(2, p.length).filter((j) => p.slice(0, j - 1).every((v) => v > p[j - 1]!)).length,
+  RightFloats: (p) => {
+    const r = raftSteps(p);
+    return range(0, p.length - 2).filter((i) => p[i + 1]! > p[i]! + 1 && !r.has(i - 1) && !r.has(i + 1)).length;
+  },
+  RightRopes: (p) => {
+    const lasts = raftsOf(p).map((r) => r[r.length - 1]!);
+    return lasts.filter((last) => last < p.length - 2 && p[last + 1]! < p[last + 2]!).length;
+  },
+  RightTethers: (p) => {
+    const rafts = raftsOf(p);
+    return range(0, rafts.length - 2).filter(
+      (i) =>
+        rafts[i]![rafts[i]!.length - 1]! + 2 === rafts[i + 1]![0]! &&
+        p[rafts[i]![rafts[i]!.length - 1]! + 1]! < p[rafts[i + 1]![0]!]!,
+    ).length;
+  },
+  MinimalJump: (p) => (p.length < 2 ? 0 : Math.min(...consecutiveGaps(p))),
+  MaximalJump: (p) => (p.length < 2 ? 0 : Math.max(...consecutiveGaps(p))),
+  CyclicMaximalJump: (p) => (p.length === 0 ? 0 : Math.max(...consecutiveGaps([...p, p[0]!]))),
+  NeighboringNumber: (p) => (p.length < 2 ? 0 : Math.min(...consecutiveGaps(p), Math.abs(p[0]! - p[p.length - 1]!))),
+  DistinctDiagonalSums: (p) =>
+    new Set(range(1 - p.length, p.length - 1).map((k) => p.filter((v, i) => v - i - 1 === k).length)).size,
+  MaximalDiagonalOccupancy: (p) =>
+    p.length === 0
+      ? 0
+      : Math.max(...range(1 - p.length, p.length - 1).map((k) => p.filter((v, i) => v - i - 1 === k).length)),
+  DescentsOfDistanceThree: (p) => range(0, p.length - 4).filter((i) => p[i]! > p[i + 3]!).length,
+  RepeatedLehmerCodeEntries: (p) => {
+    const code = p.map((v, i) => p.slice(i + 1).filter((w) => w < v).length);
+    return p.length - new Set(code).size;
+  },
+  AdjacenciesWithZeroAppended: (p) => range(0, p.length - 1).filter((i) => p[i]! === (p[i + 1] ?? 0) + 1).length,
+  SmallestFixedPoint: (p) => [...p, p.length + 1].findIndex((v, i) => v === i + 1) + 1,
+  LargestWeakExcedancePosition: (p) => Math.max(0, ...range(1, p.length).filter((i) => p[i - 1]! >= i)),
+  FixedPointsBeforeLargestMovedPoint: (p) => {
+    const moved = range(1, p.length).filter((i) => p[i - 1]! !== i);
+    return moved.length === 0 ? 0 : range(1, Math.max(...moved)).filter((i) => p[i - 1]! === i).length;
+  },
+  AscentTopsWithSmallerValuesBefore: (p) =>
+    range(0, p.length - 2).filter(
+      (i) => p[i]! < p[i + 1]! && range(1, p[i + 1]! - 1).every((v) => p.slice(0, i + 1).includes(v)),
+    ).length,
+  DescentsOfTypeTwo: (p) =>
+    range(0, p.length - 2).filter((i) => p[i]! > p[i + 1]! && p.slice(0, i).every((v) => v < p[i]!)).length,
+  LongestSuccessionRun: (p) => {
+    let best = 0;
+    let run = 0;
+    p.forEach((v, i) => {
+      run = i > 0 && v === p[i - 1]! + 1 ? run + 1 : 1;
+      best = Math.max(best, run);
+    });
+    return best;
+  },
+  MaximalModularDisplacement: (p) => {
+    const n = p.length;
+    const mod = (a: number) => ((a % n) + n) % n;
+    return n === 0 ? 0 : Math.max(...p.map((e, i) => Math.min(mod(e - 1 - i), mod(i - e + 1))));
+  },
+  AdjacentTranspositions: (p) =>
+    cycles(p).filter((c) => c.length === 2 && Math.max(...c) - Math.min(...c) === 1).length,
+  CyclicallyAdjacentTranspositions: (p) =>
+    cycles(p).filter((c) => c.length === 2 && [1, p.length - 1].includes(Math.max(...c) - Math.min(...c))).length,
+  Bonds: (p) => range(0, p.length - 2).filter((i) => Math.abs(p[i]! - p[i + 1]!) === 1).length,
+  CyclicBonds: (p) => (p.length === 0 ? 0 : p.filter((v, i) => Math.abs(v - p[(i + 1) % p.length]!) === 1).length),
+  PermutationCrossings: (p) =>
+    sum(
+      range(1, p.length).map(
+        (i) =>
+          range(1, p.length).filter((j) => {
+            const a = p[i - 1]!;
+            const b = p[j - 1]!;
+            return (i < j && j <= a && a < b) || (a < b && b < i && i < j);
+          }).length,
+      ),
+    ),
+  PermutationNestings: (p) =>
+    sum(
+      range(1, p.length).map(
+        (i) =>
+          range(1, p.length).filter((j) => {
+            const a = p[i - 1]!;
+            const b = p[j - 1]!;
+            return (j < i && i < a && a < b) || (b < a && a <= i && i < j);
+          }).length,
+      ),
+    ),
+  PermutationAlignments: (p) =>
+    sum(
+      range(1, p.length).map(
+        (i) =>
+          range(1, p.length).filter((j) => {
+            const a = p[i - 1]!;
+            const b = p[j - 1]!;
+            return (
+              (j < i && i < a && a < b) ||
+              (b < a && a <= i && i < j) ||
+              (j <= b && b < a && a < i) ||
+              (a < i && i < j && j <= b)
+            );
+          }).length,
+      ),
+    ),
+  CyclicValleys: (p) => {
+    const n = p.length;
+    return n === 0 ? 0 : range(0, n - 1).filter((i) => p[(i + n - 1) % n]! > p[i]! && p[i]! < p[(i + 1) % n]!).length;
+  },
+  CyclePeaks: (p) => {
+    const q = inverse(p);
+    return range(1, p.length).filter((i) => q[i - 1]! < i && i > p[i - 1]!).length;
+  },
+  NonOverlappingDescents: (p) => {
+    let i = 0;
+    let c = 0;
+    while (i < p.length - 1) {
+      if (p[i]! > p[i + 1]!) {
+        c++;
+        i += 2;
+      } else i++;
+    }
+    return c;
+  },
+  VisibleInversions: (p) => inversionPairs(p).filter(([i, j]) => p[j]! <= Math.min(i + 1, p[i]!)).length,
+  InvisibleInversions: (p) => inversionPairs(p).filter(([i, j]) => p[i]! > p[j]! && p[j]! > i + 1).length,
+  PrefixSumProduct: (p) => range(1, p.length - 1).reduce((acc, i) => acc * sum(p.slice(0, i)), 1),
 };

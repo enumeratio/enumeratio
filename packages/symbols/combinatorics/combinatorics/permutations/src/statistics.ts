@@ -1261,6 +1261,307 @@ const FINDSTAT_PERMUTATION_STATISTICS_5: readonly Definition[] = [
   ),
 ];
 
+/** Step k is inside the word: 1 <= k <= n - 1. */
+const isStep = (k: MathJSON): MathJSON => and(atLeastValue(k, 1), atMostValue(k, subtract(length(), 1)));
+/** Step k is a small ascent, p(k+1) = p(k) + 1 (false off the ends). */
+const smallAscentAt = (k: MathJSON): MathJSON => ["If", isStep(k), equals(at(add(k, 1)), add(at(k), 1)), "False"];
+/** Step k is anything but a small ascent (true off the ends). */
+const notSmallAscentAt = (k: MathJSON): MathJSON => [
+  "If",
+  isStep(k),
+  or(less(at(add(k, 1)), add(at(k), 1)), greater(at(add(k, 1)), add(at(k), 1))),
+  "True",
+];
+/** Step k is a large ascent, p(k+1) > p(k) + 1 (false off the ends). */
+const largeAscentAt = (k: MathJSON): MathJSON => ["If", isStep(k), greater(at(add(k, 1)), add(at(k), 1)), "False"];
+/** The steps 1 .. n - 1, empty for a word shorter than two. */
+const steps1: MathJSON = span(1, subtract(length(), 1));
+
+/** The interior peaks and valleys: the peaks of the word and of its complement. */
+const directionChanges: MathJSON = add(
+  peaksOfWord(x),
+  peaksOfWord(forEach(positions, subtract(add(length(), 1), here))),
+);
+
+/** The gaps |p(i+1) - p(i)|, one per step. */
+const jumps: MathJSON = forEach(steps1, distance(next, here));
+/** The jumps with the wrap-around gap |p(n) - p(1)|. */
+const cyclicJumps: MathJSON = ["Join", jumps, ["List", distance(at(length()), at(1))]];
+
+/** How many positions i have p(i) - i = k: the entries on the diagonal k. */
+const diagonalCount = (k: MathJSON): MathJSON => count(positions, equals(subtract(here, "i"), k));
+
+/** The Lehmer code entry at i: later entries smaller than p(i). */
+const lehmerCodeAt: MathJSON = count(span(add("i", 1), length()), less(at("j"), here), "j");
+
+/** The pairs (i, j) of positions, in either order, satisfying `cond`, over the arcs i -> p(i) and j -> p(j). */
+const arcPairs = (cond: MathJSON): MathJSON => nonEmpty(sumOver(positions, count(positions, cond, "j")));
+/** `values[0] < values[1] < ...`, with the links listed in `weak` read as `<=`. */
+const chain = (values: readonly MathJSON[], weak: readonly number[] = []): MathJSON =>
+  values
+    .slice(1)
+    .map((v, k) => (weak.includes(k) ? atMostValue(values[k]!, v) : less(values[k]!, v)))
+    .reduce((all, link) => and(all, link));
+/** p(j), beside `here` = p(i). */
+const wordAtJ = at("j");
+
+/** The word p(n) p(1) ... p(n) p(1), whose interior reads p cyclically. */
+const cyclicWord: MathJSON = ["Join", ["List", at(length())], x, ["List", at(1)]];
+
+// The sixth batch: jumps, diagonals, rafts and their floats, and the cyclic and visibility variants.
+const FINDSTAT_PERMUTATION_STATISTICS_6: readonly Definition[] = [
+  word(
+    "AlternatingRuns",
+    "The interior peaks plus the interior valleys.",
+    hasTriple(directionChanges),
+    "FindStat's title: the times the word switches from increasing to decreasing or back.",
+  ),
+  word(
+    "UpDownRuns",
+    "Maximal monotone runs, with p(1) counted alone when it is a descent.",
+    nonEmpty([
+      "If",
+      less(length(), 2),
+      1,
+      ["If", greater(at(1), at(2)), add(hasTriple(directionChanges), 2), add(hasTriple(directionChanges), 1)],
+    ]),
+  ),
+  word(
+    "NonInitialLeftToRightMinima",
+    "Positions i >= 2 with p(i) smaller than everything before it.",
+    nonEmpty(count(span(2, length()), less(here, min(slice(1, subtract("i", 1)))))),
+    "FindStat's title speaks of indices with all smaller indices to the right; its code counts these, one less than LeftToRightMinima.",
+  ),
+  word(
+    "RightFloats",
+    "Large ascents p(i+1) > p(i) + 1 beside no raft.",
+    hasPair(
+      count(steps1, and(largeAscentAt("i"), and(notSmallAscentAt(subtract("i", 1)), notSmallAscentAt(add("i", 1))))),
+    ),
+    "Rafts are the maximal runs of successions; a large ascent beside none of them floats.",
+  ),
+  word(
+    "RightRopes",
+    "Large ascents right after a raft.",
+    hasPair(count(steps1, and(smallAscentAt("i"), largeAscentAt(add("i", 1))))),
+  ),
+  word(
+    "RightTethers",
+    "Large ascents between two rafts.",
+    hasPair(count(steps1, and(smallAscentAt("i"), and(largeAscentAt(add("i", 1)), smallAscentAt(add("i", 2)))))),
+  ),
+  word("MinimalJump", "The smallest |p(i+1) - p(i)|.", hasPair(min(jumps))),
+  word("MaximalJump", "The largest |p(i+1) - p(i)|.", hasPair(max(jumps))),
+  word("CyclicMaximalJump", "The largest |p(i+1) - p(i)|, with p(n+1) = p(1).", nonEmpty(max(cyclicJumps))),
+  word(
+    "NeighboringNumber",
+    "The smallest |p(i+1) - p(i)|, the wrap-around gap |p(1) - p(n)| included.",
+    hasPair(min(cyclicJumps)),
+  ),
+  stat(
+    "DistinctDiagonalSums",
+    "The number of distinct sums along the diagonals of the permutation matrix.",
+    nonEmpty(
+      count(
+        span(0, length()),
+        greater(count(span(subtract(1, length()), subtract(length(), 1)), equals(diagonalCount("k"), "v"), "k"), 0),
+        "v",
+      ),
+    ),
+    "The sum along the diagonal k counts the i with p(i) - i = k, empty diagonals included.",
+  ),
+  stat(
+    "MaximalDiagonalOccupancy",
+    "The most entries on one diagonal of the permutation matrix: the largest number of i sharing a p(i) - i.",
+    nonEmpty(max(forEach(positions, count(positions, equals(subtract(wordAtJ, "j"), subtract(here, "i")), "j")))),
+  ),
+  word("DescentsOfDistanceThree", "Positions i with p(i) > p(i+3).", pairsAtDistance(3, greater)),
+  word(
+    "RepeatedLehmerCodeEntries",
+    "The Lehmer code's length less its number of distinct entries.",
+    nonEmpty(
+      subtract(
+        length(),
+        count(span(0, subtract(length(), 1)), greater(count(positions, equals(lehmerCodeAt, "v")), 0), "v"),
+      ),
+    ),
+  ),
+  word(
+    "AdjacenciesWithZeroAppended",
+    "Positions i with p(i) = p(i+1) + 1, reading p(n+1) = 0.",
+    nonEmpty(count(positions, ["If", equals("i", length()), equals(here, 1), equals(here, add(next, 1))])),
+    "Adjacencies counts the same without the appended zero.",
+  ),
+  stat(
+    "SmallestFixedPoint",
+    "The smallest i with p(i) = i, or n + 1 when there is none.",
+    min(["Join", where(span(1, length()), equals(here, "i")), ["List", add(length(), 1)]]),
+  ),
+  stat(
+    "LargestWeakExcedancePosition",
+    "The largest i with p(i) >= i.",
+    nonEmpty(max(where(positions, atLeastValue(here, "i")))),
+  ),
+  stat(
+    "FixedPointsBeforeLargestMovedPoint",
+    "Fixed points smaller than the largest i with p(i) != i.",
+    nonEmpty(
+      bind(
+        "m",
+        max(["Join", ["List", 0], where(positions, or(less(here, "i"), greater(here, "i")))]),
+        count(span(1, "m"), equals(here, "i")),
+        "number",
+      ),
+    ),
+  ),
+  stat(
+    "AscentTopsWithSmallerValuesBefore",
+    "Ascents i whose top p(i+1) has every smaller value among p(1), ..., p(i).",
+    hasPair(count(steps1, and(risesAfter, equals(count(upToHere, less("t", next), "t"), subtract(next, 1))))),
+  ),
+  word(
+    "DescentsOfTypeTwo",
+    "Descents i with p(i) larger than everything before it.",
+    hasPair(count(steps1, and(fallsAfter, equals(here, max(upToHere))))),
+  ),
+  word(
+    "LongestSuccessionRun",
+    "The length of the longest factor p(k), ..., p(l) with p(i+1) = p(i) + 1.",
+    nonEmpty([
+      "At",
+      fold(
+        x,
+        ["List", 0, 0, 0],
+        [
+          "If",
+          equals(visiting, add(carried(3), 1)),
+          ["List", ["Max", ["List", carried(1), add(carried(2), 1)]], add(carried(2), 1), visiting],
+          ["List", ["Max", ["List", carried(1), 1]], 1, visiting],
+        ],
+      ),
+      1,
+    ]),
+    "FindStat's St001662 reads the same, but its code miscounts runs that restart after a gap, so only St001652 is matched.",
+  ),
+  stat(
+    "MaximalModularDisplacement",
+    "The largest cyclic distance between p(i) and i, taken mod n.",
+    nonEmpty(
+      max(
+        forEach(positions, [
+          "Min",
+          [
+            "List",
+            ["Mod", add(subtract(here, "i"), length()), length()],
+            ["Mod", add(subtract("i", here), length()), length()],
+          ],
+        ]),
+      ),
+    ),
+  ),
+  stat(
+    "AdjacentTranspositions",
+    "Two-cycles (i, i+1).",
+    hasPair(count(steps1, and(equals(here, add("i", 1)), equals(next, "i")))),
+  ),
+  stat(
+    "CyclicallyAdjacentTranspositions",
+    "Two-cycles (i, i+1), and the two-cycle (1, n).",
+    hasPair(
+      add(count(steps1, and(equals(here, add("i", 1)), equals(next, "i"))), [
+        "If",
+        and(greater(length(), 2), and(equals(at(1), length()), equals(at(length()), 1))),
+        1,
+        0,
+      ]),
+    ),
+    "For n = 2 the one two-cycle is counted once.",
+  ),
+  word("Bonds", "Positions i with |p(i) - p(i+1)| = 1.", hasPair(count(steps1, equals(distance(here, next), 1)))),
+  word(
+    "CyclicBonds",
+    "Positions i with |p(i) - p(i+1)| = 1, with p(n+1) = p(1).",
+    nonEmpty(count(positions, equals(distance(here, ["If", equals("i", length()), at(1), next]), 1))),
+  ),
+  stat(
+    "PermutationCrossings",
+    "Pairs i, j with i < j <= p(i) < p(j) or p(i) < p(j) < i < j.",
+    arcPairs(or(and(less("i", "j"), chain(["j", here, wordAtJ], [0])), chain([here, wordAtJ, "i", "j"]))),
+    "Crossings of the arcs of the permutation diagram (Corteel); set partitions have Crossings.",
+  ),
+  stat(
+    "PermutationNestings",
+    "Pairs i, j with j < i < p(i) < p(j) or p(j) < p(i) <= i < j.",
+    arcPairs(or(chain(["j", "i", here, wordAtJ]), chain([wordAtJ, here, "i", "j"], [1]))),
+    "Nestings of the arcs of the permutation diagram; set partitions have Nestings.",
+  ),
+  stat(
+    "PermutationAlignments",
+    "Pairs i, j of arcs of the permutation diagram that align.",
+    arcPairs(
+      or(
+        or(chain(["j", "i", here, wordAtJ]), chain([wordAtJ, here, "i", "j"], [1])),
+        or(chain(["j", wordAtJ, here, "i"], [0]), chain([here, "i", "j", wordAtJ], [2])),
+      ),
+    ),
+  ),
+  word(
+    "CyclicValleys",
+    "Positions lower than both neighbours, reading the word cyclically.",
+    nonEmpty(
+      bind(
+        "w",
+        cyclicWord,
+        count(
+          span(2, subtract(length("w"), 1)),
+          and(greater(at(subtract("i", 1), "w"), at("i", "w")), less(at("i", "w"), at(add("i", 1), "w"))),
+        ),
+      ),
+    ),
+    "As many cyclic peaks as cyclic valleys, so this is both.",
+  ),
+  stat(
+    "CyclePeaks",
+    "Values i with p^-1(i) < i > p(i).",
+    nonEmpty(count(positions, and(less(positionOf("i"), "i"), less(here, "i")))),
+    "Every cycle has as many peaks as valleys, so this is the cycle valleys too.",
+  ),
+  word(
+    "NonOverlappingDescents",
+    "Descents taken greedily left to right, none starting where the last one ended.",
+    hasPair([
+      "At",
+      fold(
+        steps1,
+        ["List", 0, -1],
+        [
+          "If",
+          and(greater(at(visiting), at(add(visiting, 1))), less(carried(2), subtract(visiting, 1))),
+          ["List", add(carried(1), 1), visiting],
+          "a",
+        ],
+      ),
+      1,
+    ]),
+    "Each maximal descending run of length m contributes floor(m / 2).",
+  ),
+  stat(
+    "VisibleInversions",
+    "Pairs i < j with p(j) <= min(i, p(i)).",
+    hasPair(sumOverPairs(and(atMostValue(wordAtJ, "i"), atMostValue(wordAtJ, here)), 1)),
+  ),
+  stat(
+    "InvisibleInversions",
+    "Pairs i < j with p(i) > p(j) > i.",
+    hasPair(sumOverPairs(and(greater(here, wordAtJ), greater(wordAtJ, "i")), 1)),
+  ),
+  word(
+    "PrefixSumProduct",
+    "The product of the prefix sums p(1) + ... + p(i) for i < n.",
+    hasPair(["Product", forEach(steps1, ["Sum", upToHere])], 1),
+  ),
+];
+
 export const PERMUTATION_STATISTICS: readonly Definition[] = [
   word("Descents", "Positions i with p(i) > p(i+1).", hasPair(count(adjacent, fallsAfter))),
   word("Ascents", "Positions i with p(i) < p(i+1).", hasPair(count(adjacent, risesAfter))),
@@ -1465,4 +1766,5 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
   ...FINDSTAT_PERMUTATION_STATISTICS_3,
   ...FINDSTAT_PERMUTATION_STATISTICS_4,
   ...FINDSTAT_PERMUTATION_STATISTICS_5,
+  ...FINDSTAT_PERMUTATION_STATISTICS_6,
 ];

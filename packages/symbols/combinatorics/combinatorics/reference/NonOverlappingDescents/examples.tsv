@@ -1,0 +1,7 @@
+id	section	role	expr	expected	known	source	caption
+the-one-line-word-312			[NonOverlappingDescents, [Permutation, [List, 3, 1, 2]]]	1			the one-line word $312$
+the-one-line-word-312-as-a-plain-list			[NonOverlappingDescents, [List, 3, 1, 2]]	1			the one-line word $312$, as a plain list
+the-one-line-word-2413			[NonOverlappingDescents, [Permutation, [List, 2, 4, 1, 3]]]	1			the one-line word $2413$
+findstat-st001928-1	Properties		[CombinatorialStat, [Permutation, [List, 1]], "'NonOverlappingDescents'"]	0	0	FindStat St001928	FindStat's value for [1]
+findstat-st001928-2	Properties		[CombinatorialStat, [Permutation, [List, 1, 2]], "'NonOverlappingDescents'"]	0	0	FindStat St001928	FindStat's value for [1,2]
+findstat-st001928-3	Properties		[CombinatorialStat, [Permutation, [List, 2, 1]], "'NonOverlappingDescents'"]	1	1	FindStat St001928	FindStat's value for [2,1]
