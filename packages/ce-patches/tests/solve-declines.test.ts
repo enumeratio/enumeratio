@@ -21,7 +21,7 @@ test("a quintic with symbolic coefficients is not 'no solutions'", () => {
 });
 
 test("symbolic and variable exponents decline", () => {
-  declines(equal(["Add", ["Multiply", 2, power("x", "a")], power("x", ["Multiply", 2, "a"]), 1], 0), "x");
+  declines(equal(["Add", power("x", ["Multiply", 2, "a"]), ["Multiply", 2, power("x", "a")], 1], 0), "x");
   declines(equal(power(["Add", power("x", 5), -1], "x"), 0), "x");
 });
 

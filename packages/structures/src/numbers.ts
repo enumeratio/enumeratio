@@ -79,9 +79,14 @@ export function conformNumbers(ce: ComputeEngine): void {
     }
     const [xs, ys] = [operandsOf(a), operandsOf(b)];
     if (a.operator !== "List" || b.operator !== "List" || xs.length !== ys.length) return undefined;
+    // A component typed only `number` (a bare symbol in a list literal) has no implementation: it stays as written.
+    const midpoint = (x: Expression, y: Expression): Expression => {
+      const result = call("Midpoint", x, y);
+      return result.operator === "Error" ? ce.function("Midpoint", [x, y]) : result;
+    };
     return ce.function(
       "List",
-      xs.map((x, i) => call("Midpoint", x, ys[i]!)),
+      xs.map((x, i) => midpoint(x, ys[i]!)),
     );
   };
   conform(ce, "list<any>", {

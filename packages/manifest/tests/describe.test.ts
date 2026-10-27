@@ -29,7 +29,7 @@ test("a head we know: its summary, page, every overload, and the one it is decla
     kind: "function",
     description: "The sine of x, in radians.",
     url: "https://enumeratio.dev/reference/symbol/Sin",
-    signature: "(complex) -> number",
+    signature: "(complex | quantity) -> number",
     params: ["x"],
     documented: ["analytic"],
   });

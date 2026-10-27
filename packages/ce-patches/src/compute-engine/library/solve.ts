@@ -18,7 +18,10 @@ export function evaluateSolveDeclines(ce: ComputeEngine): void {
   if (operator === undefined || native === undefined) return;
 
   operator.evaluate = (ops, options) => {
-    const result = native(ops, options);
+    // 0.170 answers an unevaluated `Solve` for an equation it can't solve; that is no answer. One holding an
+    // error (a bad call inside) stays, so the error surfaces.
+    const solved = native(ops, options);
+    const result = solved?.operator === "Solve" && solved.isValid ? undefined : solved;
     const condition = ops[0];
     if (condition === undefined) return result;
     if (result === undefined) return provesNoSolution(ce, ops, false) ? ce.function("List", []) : result;
