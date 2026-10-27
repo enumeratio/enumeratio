@@ -16,7 +16,7 @@ test("a declared head keeps compute-engine's keys, and gains the manifest's", ()
   expect(sin).toMatchObject({
     name: "Sin",
     kind: "function",
-    signature: "(complex) -> number",
+    signature: "(complex | quantity) -> number",
     description: "Sine of an angle.",
     examples: ["Sin(Pi / 6)", "Sin(1)", "N(Sin(1))"],
     url: "https://enumeratio.dev/reference/symbol/Sin",
