@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { widenSignature, wrapOperator } from "@enumeratio/engine";
 
 // Graphics as *values*: an `Image` head, and a `Rasterize` that makes one.
@@ -45,7 +45,7 @@ export const svgDataUri = (svg: string): string =>
   `data:image/svg+xml;base64,${toBase64(new TextEncoder().encode(svg))}`;
 
 /** The URI an `Image` expression carries, or undefined if it is not one. */
-export function imageUri(expr: BoxedExpression | undefined): string | undefined {
+export function imageUri(expr: Expression | undefined): string | undefined {
   const json = expr?.json as unknown;
   if (!Array.isArray(json) || json[0] !== "Image") return undefined;
   const first = json[1];
@@ -61,7 +61,7 @@ export function imageUri(expr: BoxedExpression | undefined): string | undefined 
 const stripQuotes = (s: string): string => (s.length >= 2 && s.startsWith("'") && s.endsWith("'") ? s.slice(1, -1) : s);
 
 /** The SVG source a value carries, if it carries one. */
-function svgOf(expr: BoxedExpression): string | undefined {
+function svgOf(expr: Expression): string | undefined {
   const json = expr.json as unknown;
   if (typeof json === "string") {
     const text = stripQuotes(json);

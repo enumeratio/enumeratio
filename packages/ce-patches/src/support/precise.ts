@@ -1,4 +1,4 @@
-import { type BigDecimal, type BoxedExpression, ComputeEngine, isNumber } from "@cortex-js/compute-engine";
+import { type BigDecimal, type Expression, ComputeEngine, isNumber } from "@cortex-js/compute-engine";
 import { inexactComplex } from "./box.ts";
 
 /** Above this many digits a double is no longer the limiting factor — and neither should we be. */
@@ -26,7 +26,7 @@ export const exceedsDoublePrecision = (ce: ComputeEngine, numericApproximation: 
   (numericApproximation ?? false) && ce.precision > DOUBLE_DIGITS + REQUESTED_DIGITS_GUARD;
 
 /** A float literal that carries no more digits than a machine double holds (`0.5`, not `1/3` widened by `N`). */
-const isMachineFloat = (x: BoxedExpression): boolean =>
+const isMachineFloat = (x: Expression): boolean =>
   (x as Partial<{ isExact: boolean }>).isExact === false &&
   [x.bignumRe, x.bignumIm].every((part) => part === undefined || part.toPrecision(DOUBLE_DIGITS + 2).eq(part));
 
@@ -42,7 +42,7 @@ let defaultPrecision: number | undefined;
 export const wantsBigDigits = (
   ce: ComputeEngine,
   options: { readonly numericApproximation?: boolean },
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
 ): boolean => {
   if (!(options.numericApproximation ?? false) || ce.precision <= DOUBLE_DIGITS) return false;
   defaultPrecision ??= new ComputeEngine().precision;
@@ -50,11 +50,11 @@ export const wantsBigDigits = (
 };
 
 /** An operand with a nonzero imaginary part: compute-engine's complex Gamma, Cos, … run in doubles. */
-export const hasComplexOperand = (ops: readonly BoxedExpression[]): boolean =>
+export const hasComplexOperand = (ops: readonly Expression[]): boolean =>
   ops.some((op) => Number.isFinite(op.re) && Number.isFinite(op.im) && op.im !== 0);
 
 /** An operand written as a machine float (`2.5`, not `5/2`): the caller asked for a float answer. */
-export const hasFloatOperand = (ops: readonly BoxedExpression[]): boolean =>
+export const hasFloatOperand = (ops: readonly Expression[]): boolean =>
   ops.some((op) => (op as Partial<{ isExact: boolean }>).isExact === false);
 
 /**
@@ -63,7 +63,7 @@ export const hasFloatOperand = (ops: readonly BoxedExpression[]): boolean =>
  * the engine's precision, printing ~20 digits of which ~16 are right. Boxing the double
  * itself, as the kernels do, prints only what it holds.
  */
-export function asDouble(ce: ComputeEngine, value: BoxedExpression): BoxedExpression {
+export function asDouble(ce: ComputeEngine, value: Expression): Expression {
   if (!isNumber(value) || !Number.isFinite(value.re) || !Number.isFinite(value.im)) return value;
   return value.im === 0 ? ce.number(value.re) : inexactComplex(ce, value.re, value.im);
 }
@@ -76,8 +76,8 @@ export function asDouble(ce: ComputeEngine, value: BoxedExpression): BoxedExpres
 export function inDoubles(
   ce: ComputeEngine,
   options: { readonly numericApproximation?: boolean },
-  compute: () => BoxedExpression | undefined,
-): BoxedExpression | undefined {
+  compute: () => Expression | undefined,
+): Expression | undefined {
   const value = compute();
   if (value === undefined) return undefined;
   if (isNumber(value) && value.re === 0 && value.im === 0) return value;
@@ -92,10 +92,10 @@ export function inDoubles(
  */
 export function doublesForFloats(
   ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   options: { readonly numericApproximation?: boolean },
-  compute: () => BoxedExpression | undefined,
-): BoxedExpression | undefined {
+  compute: () => Expression | undefined,
+): Expression | undefined {
   const value = compute();
   return value === undefined || options.numericApproximation || !hasFloatOperand(ops) ? value : asDouble(ce, value);
 }
@@ -103,10 +103,10 @@ export function doublesForFloats(
 /** `inDoubles` when an operand is complex (a head whose real route is bignum-backed), else `compute()` as is. */
 export function inDoublesIfComplex(
   ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   options: { readonly numericApproximation?: boolean },
-  compute: () => BoxedExpression | undefined,
-): BoxedExpression | undefined {
+  compute: () => Expression | undefined,
+): Expression | undefined {
   return hasComplexOperand(ops) ? inDoubles(ce, options, compute) : compute();
 }
 
@@ -156,7 +156,7 @@ export const tauTooCloseToRealAxis = (im: number): boolean =>
  * truncation error rather than merely unwarranted. A head should hand back the precision it
  * claims and no more, so every routed result goes through here.
  */
-export function atEnginePrecision(ce: ComputeEngine, value: BoxedExpression): BoxedExpression | undefined {
+export function atEnginePrecision(ce: ComputeEngine, value: Expression): Expression | undefined {
   if (!isNumber(value)) return undefined;
   const big = value.bignumRe;
   return big === undefined ? value : ce.number(big.toPrecision(ce.precision));
@@ -166,10 +166,10 @@ export function atEnginePrecision(ce: ComputeEngine, value: BoxedExpression): Bo
  * `compute()` run with `guard` extra digits of working precision, its result rounded back
  * to the caller's — for a formula whose own arithmetic loses the last few.
  */
-export function withGuardDigits(ce: ComputeEngine, compute: () => BoxedExpression, guard = 10): BoxedExpression {
+export function withGuardDigits(ce: ComputeEngine, compute: () => Expression, guard = 10): Expression {
   const precision = ce.precision;
   ce.precision = precision + guard;
-  let value: BoxedExpression;
+  let value: Expression;
   try {
     value = compute();
   } finally {
@@ -183,11 +183,11 @@ export function withGuardDigits(ce: ComputeEngine, compute: () => BoxedExpressio
  * or undefined when the engine asks for no more than a double (the double kernel is then the
  * better trade) or `x` is not a finite real number.
  */
-export function bigRealOperand(ce: ComputeEngine, x: BoxedExpression): BigDecimal | undefined {
+export function bigRealOperand(ce: ComputeEngine, x: Expression): BigDecimal | undefined {
   if (ce.precision <= DOUBLE_DIGITS || x.im !== 0 || !Number.isFinite(x.re)) return undefined;
   return x.bignumRe ?? ce.bignum(x.re);
 }
 
 /** An arbitrary-precision kernel's value, boxed at the engine's precision. */
-export const bigResult = (ce: ComputeEngine, value: BigDecimal): BoxedExpression =>
+export const bigResult = (ce: ComputeEngine, value: BigDecimal): Expression =>
   ce.number(value.toPrecision(ce.precision));

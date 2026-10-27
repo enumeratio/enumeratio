@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { ballImage } from "./interval-balls.ts";
 import { type BoundOrigin, outwardBound } from "./interval-bounds.ts";
@@ -51,16 +51,16 @@ import type { Resolver } from "./tagged-arithmetic.ts";
 // for why (a per-head, per-tagged-type `wrapOperator` chain cost ~4x on every Add/Multiply
 // in the engine, tagged or not).
 
-const isInterval = (e: BoxedExpression): boolean => e.operator === "Interval" && operandsOf(e).length === 2;
+const isInterval = (e: Expression): boolean => e.operator === "Interval" && operandsOf(e).length === 2;
 
-const lo = (e: BoxedExpression): BoxedExpression => operandsOf(e)[0];
-const hi = (e: BoxedExpression): BoxedExpression => operandsOf(e)[1];
+const lo = (e: Expression): Expression => operandsOf(e)[0];
+const hi = (e: Expression): Expression => operandsOf(e)[1];
 
 /** A numeric approximation of `e`, for ordering endpoints only — never the returned value. */
-const numAt = (e: BoxedExpression): number => e.N().re;
+const numAt = (e: Expression): number => e.N().re;
 
-const minOf = (xs: readonly BoxedExpression[]): BoxedExpression => xs.reduce((a, b) => (numAt(b) < numAt(a) ? b : a));
-const maxOf = (xs: readonly BoxedExpression[]): BoxedExpression => xs.reduce((a, b) => (numAt(b) > numAt(a) ? b : a));
+const minOf = (xs: readonly Expression[]): Expression => xs.reduce((a, b) => (numAt(b) < numAt(a) ? b : a));
+const maxOf = (xs: readonly Expression[]): Expression => xs.reduce((a, b) => (numAt(b) > numAt(a) ? b : a));
 
 /** Unary heads with no known shape (interval-shapes.ts), or one known on part of the axis only
  * (Zeta, right of its pole): their images come from sampling the derivative's sign
@@ -93,30 +93,29 @@ export const NOT_RIGOROUS: readonly string[] = [...NOT_RIGOROUS_UNARY, ...Object
  * registered here directly, so Add/Multiply/etc. are wrapped exactly once no matter how
  * many of the three tagged types extend them. */
 export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Resolver>> {
-  const add = (a: BoxedExpression, b: BoxedExpression) => ce.function("Add", [a, b]).evaluate();
-  const neg = (a: BoxedExpression) => ce.function("Negate", [a]).evaluate();
-  const mul = (a: BoxedExpression, b: BoxedExpression) => ce.function("Multiply", [a, b]).evaluate();
-  const div = (a: BoxedExpression, b: BoxedExpression) => ce.function("Divide", [a, b]).evaluate();
-  const pow = (a: BoxedExpression, n: number) => ce.function("Power", [a, n]).evaluate();
-  const interval = (l: BoxedExpression | number, h: BoxedExpression | number) =>
-    ce.function("Interval", [l, h]).evaluate();
+  const add = (a: Expression, b: Expression) => ce.function("Add", [a, b]).evaluate();
+  const neg = (a: Expression) => ce.function("Negate", [a]).evaluate();
+  const mul = (a: Expression, b: Expression) => ce.function("Multiply", [a, b]).evaluate();
+  const div = (a: Expression, b: Expression) => ce.function("Divide", [a, b]).evaluate();
+  const pow = (a: Expression, n: number) => ce.function("Power", [a, n]).evaluate();
+  const interval = (l: Expression | number, h: Expression | number) => ce.function("Interval", [l, h]).evaluate();
   /** `e` as an interval, degenerate `[e, e]` if it is a plain number. */
-  const asInterval = (e: BoxedExpression) => (isInterval(e) ? e : interval(e, e));
+  const asInterval = (e: Expression) => (isInterval(e) ? e : interval(e, e));
   /** `[l, h]` with each bound made safe: exact when it is, otherwise rounded outward (see
    * interval-bounds.ts for why an arithmetic result and a function value differ). */
-  const enclosure = (l: BoxedExpression, h: BoxedExpression, origin: BoundOrigin) =>
+  const enclosure = (l: Expression, h: Expression, origin: BoundOrigin) =>
     interval(outwardBound(ce, l, "lo", origin), outwardBound(ce, h, "hi", origin));
 
-  const intervalNegate = (a: BoxedExpression): BoxedExpression => {
+  const intervalNegate = (a: Expression): Expression => {
     const A = asInterval(a);
     return interval(neg(hi(A)), neg(lo(A)));
   };
-  const intervalAdd = (a: BoxedExpression, b: BoxedExpression): BoxedExpression => {
+  const intervalAdd = (a: Expression, b: Expression): Expression => {
     const A = asInterval(a);
     const B = asInterval(b);
     return enclosure(add(lo(A), lo(B)), add(hi(A), hi(B)), "arithmetic");
   };
-  const intervalMul = (a: BoxedExpression, b: BoxedExpression): BoxedExpression => {
+  const intervalMul = (a: Expression, b: Expression): Expression => {
     const A = asInterval(a);
     const B = asInterval(b);
     const products = [mul(lo(A), lo(B)), mul(lo(A), hi(B)), mul(hi(A), lo(B)), mul(hi(A), hi(B))];
@@ -124,12 +123,12 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
   };
   /** 1/I for an interval not containing 0 — decreasing on each branch, so `[1/hi, 1/lo]`
    * whichever side of 0 it's on. */
-  const intervalRecip = (a: BoxedExpression): BoxedExpression | undefined => {
+  const intervalRecip = (a: Expression): Expression | undefined => {
     const A = asInterval(a);
     if (numAt(lo(A)) <= 0 && numAt(hi(A)) >= 0) return undefined; // 0 in range: no reciprocal
     return enclosure(div(ce.One, hi(A)), div(ce.One, lo(A)), "arithmetic");
   };
-  const intervalDiv = (a: BoxedExpression, b: BoxedExpression): BoxedExpression | undefined => {
+  const intervalDiv = (a: Expression, b: Expression): Expression | undefined => {
     const recip = intervalRecip(b);
     return recip === undefined ? divideAcrossZero(a, b) : intervalMul(a, recip);
   };
@@ -138,11 +137,11 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
    * [1/h, ∞) (if h > 0), and A, excluding 0, times each ray is one piece of the union. An A
    * containing 0 reaches every real; B = [0, 0] has no quotient.
    */
-  const divideAcrossZero = (a: BoxedExpression, b: BoxedExpression): BoxedExpression | undefined => {
+  const divideAcrossZero = (a: Expression, b: Expression): Expression | undefined => {
     const [A, B] = [asInterval(a), asInterval(b)];
     if (numAt(lo(B)) === 0 && numAt(hi(B)) === 0) return undefined;
     if (numAt(lo(A)) <= 0 && numAt(hi(A)) >= 0) return interval(ce.NegativeInfinity, ce.PositiveInfinity);
-    const rays: [BoxedExpression, BoxedExpression][] = [];
+    const rays: [Expression, Expression][] = [];
     if (numAt(lo(B)) < 0) rays.push([ce.NegativeInfinity, div(ce.One, lo(B))]);
     if (numAt(hi(B)) > 0) rays.push([div(ce.One, hi(B)), ce.PositiveInfinity]);
     const pieces = rays.map(([from, to]) => {
@@ -153,7 +152,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
   };
   /** Integer powers only — the exponent the examples use, and the case with a clean rule:
    * odd powers are monotonic, even powers fold to `[0, …]` once the interval straddles 0. */
-  const intervalPow = (a: BoxedExpression, n: BoxedExpression): BoxedExpression | undefined => {
+  const intervalPow = (a: Expression, n: Expression): Expression | undefined => {
     if (n.im !== 0 || !Number.isInteger(n.re) || n.re < 0) return undefined;
     const A = asInterval(a);
     const l = lo(A);
@@ -163,7 +162,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
     if (numAt(h) <= 0) return enclosure(pow(h, n.re), pow(l, n.re), "arithmetic");
     return enclosure(ce.Zero, maxOf([pow(l, n.re), pow(h, n.re)]), "arithmetic");
   };
-  const intervalAbs = (a: BoxedExpression): BoxedExpression => {
+  const intervalAbs = (a: Expression): Expression => {
     const A = asInterval(a);
     const l = lo(A);
     const h = hi(A);
@@ -175,13 +174,13 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
    * it (bounded oscillation, so the image is `[-1, 1]` regardless of how wide the interval
    * is) — every other head here declines on an infinite bound, via `imageOverArg`'s own
    * `Number.isFinite` check. */
-  const isInfinite = (e: BoxedExpression): boolean => !Number.isFinite(numAt(e));
+  const isInfinite = (e: Expression): boolean => !Number.isFinite(numAt(e));
 
   /** Exact `(k + phaseNum/phaseDen)·π` — a periodic head's poles and critical points are both
    * equally spaced multiples of π plus a half-integer phase, so this builds either kind of
    * point exactly (an integer or half-integer coefficient times the exact symbol `Pi`, never
    * a decimal), for `pointsInRange` below. */
-  const piMultiple = (k: number, phaseNum: number, phaseDen: number): BoxedExpression => {
+  const piMultiple = (k: number, phaseNum: number, phaseDen: number): Expression => {
     const numerator = k * phaseDen + phaseNum;
     const coefficient =
       phaseDen === 1 ? ce.number(numerator) : ce.function("Rational", [numerator, phaseDen]).evaluate();
@@ -194,12 +193,12 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
    * strictly-interior: a pole sitting right at an endpoint is still a pole to decline on, and a
    * critical point sitting right at an endpoint is already covered by the endpoint evaluation,
    * so including it again is harmless. */
-  const pointsInRange = (l: number, h: number, phaseNum: number, phaseDen: number): BoxedExpression[] => {
+  const pointsInRange = (l: number, h: number, phaseNum: number, phaseDen: number): Expression[] => {
     const phase = phaseNum / phaseDen;
     const eps = 1e-9;
     const kLow = Math.ceil(l / Math.PI - phase - eps);
     const kHigh = Math.floor(h / Math.PI - phase + eps);
-    const points: BoxedExpression[] = [];
+    const points: Expression[] = [];
     for (let k = kLow; k <= kHigh; k++) points.push(piMultiple(k, phaseNum, phaseDen));
     return points;
   };
@@ -228,7 +227,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
   /** Which way a periodic head heads off to infinity just beside the pole `pole`, on the side
    * `side` of it: the sign of its value a hair away. Near a simple pole the sign is constant on
    * each side, so one nearby point decides it. */
-  const infinityBeside = (head: string, pole: BoxedExpression, side: "below" | "above"): BoxedExpression => {
+  const infinityBeside = (head: string, pole: Expression, side: "below" | "above"): Expression => {
     const p = numAt(pole);
     const hair = 1e-9 * Math.max(1, Math.abs(p));
     const value = ce.function(head, [ce.number(side === "below" ? p - hair : p + hair)]).N().re;
@@ -237,9 +236,9 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
 
   /** `[a, b]` pieces merged where they overlap or touch, as one `Interval`, or a `Union` of
    * disjoint ones in increasing order. */
-  const unionOf = (pieces: readonly (readonly [BoxedExpression, BoxedExpression])[]) => {
+  const unionOf = (pieces: readonly (readonly [Expression, Expression])[]) => {
     const sorted = [...pieces].toSorted((x, y) => numAt(x[0]) - numAt(y[0]));
-    const merged: [BoxedExpression, BoxedExpression][] = [];
+    const merged: [Expression, Expression][] = [];
     for (const [a, b] of sorted) {
       const last = merged.at(-1);
       if (last !== undefined && numAt(a) <= numAt(last[1])) {
@@ -263,21 +262,21 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
    * merged: `Cot(Interval(-π/4, π/4))` is `(-∞, -1] ∪ [1, ∞)`, and `Tan(Interval(0, π))`,
    * whose two pieces cover every real, is `Interval(-∞, ∞)`.
    */
-  const periodicImage = (head: string, a: BoxedExpression): BoxedExpression | undefined => {
+  const periodicImage = (head: string, a: Expression): Expression | undefined => {
     const A = asInterval(a);
     const l = lo(A);
     const h = hi(A);
     const lNum = numAt(l);
     const hNum = numAt(h);
     if (!Number.isFinite(lNum) || !Number.isFinite(hNum)) return undefined;
-    const evaluateHeadAt = (x: BoxedExpression) => ce.function(head, [x]).evaluate();
+    const evaluateHeadAt = (x: Expression) => ce.function(head, [x]).evaluate();
     const phase = PERIODIC_POLES[head];
     const poles = phase === undefined ? [] : pointsInRange(lNum, hNum, phase[0], phase[1]);
     const critical = PERIODIC_CRITICAL[head];
 
     // Cut [l, h] at each pole: a piece is [start, end] with either end possibly a pole.
-    const pieces: (readonly [BoxedExpression, BoxedExpression])[] = [];
-    const cuts: { at: BoxedExpression; pole: boolean }[] = [
+    const pieces: (readonly [Expression, Expression])[] = [];
+    const cuts: { at: Expression; pole: boolean }[] = [
       { at: l, pole: false },
       ...poles.map((at) => ({ at, pole: true })),
       { at: h, pole: false },
@@ -286,7 +285,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
       const start = cuts[i]!;
       const end = cuts[i + 1]!;
       if (numAt(end.at) - numAt(start.at) <= 0) continue; // a pole sitting on an endpoint
-      const values: BoxedExpression[] = [];
+      const values: Expression[] = [];
       if (start.pole) values.push(infinityBeside(head, start.at, "above"));
       else values.push(evaluateHeadAt(start.at));
       if (end.pole) values.push(infinityBeside(head, end.at, "below"));
@@ -307,10 +306,10 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
    * lies inside -- exact whenever the endpoints are. Declines past the head's real domain. */
   const shapedImage = (
     shape: Shape,
-    valueAt: (x: BoxedExpression) => BoxedExpression,
-    l: BoxedExpression,
-    h: BoxedExpression,
-  ): BoxedExpression | undefined => {
+    valueAt: (x: Expression) => Expression,
+    l: Expression,
+    h: Expression,
+  ): Expression | undefined => {
     const lNum = numAt(l);
     const hNum = numAt(h);
     if (Number.isNaN(lNum) || Number.isNaN(hNum) || lNum > hNum) return undefined;
@@ -333,7 +332,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
    * `NOT_RIGOROUS` only -- `imageOverArg`'s derivative-sign sampling. Declines when none does,
    * never a guess past them.
    */
-  const image = (ops: readonly BoxedExpression[], head: string, argIndex: number): BoxedExpression | undefined => {
+  const image = (ops: readonly Expression[], head: string, argIndex: number): Expression | undefined => {
     const target = ops[argIndex];
     if (target === undefined || !isInterval(target)) return undefined;
     const [l, h] = [lo(target), hi(target)];
@@ -354,20 +353,20 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
 
   /** `Log(x, b)`, with `Log(x)` base 10 (compute-engine's reading, and what `Log10` and
    * `Log2` canonicalize to): monotonic in `x` for any base in (0, 1) or above 1. */
-  const logImage = (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+  const logImage = (ops: readonly Expression[]): Expression | undefined => {
     const [x, b] = ops;
     if (x === undefined || !isInterval(x) || ops.length > 2) return undefined;
     const base = b ?? ce.number(10);
     const shape = logShape(numAt(base));
     if (shape === undefined) return undefined;
-    const valueAt = (at: BoxedExpression) => ce.function("Log", b === undefined ? [at] : [at, base]).evaluate();
+    const valueAt = (at: Expression) => ce.function("Log", b === undefined ? [at] : [at, base]).evaluate();
     return shapedImage(shape, valueAt, lo(x), hi(x));
   };
 
   /** `Sin`/`Cos` alone: bounded oscillation makes the image `[-1, 1]` on an infinite bound,
    * where `periodicImage`'s finite-endpoint enumeration can't apply at all. A finite bound
    * falls through to `periodicImage`. */
-  const boundedOscillation = (a: BoxedExpression, head: string): BoxedExpression | undefined => {
+  const boundedOscillation = (a: Expression, head: string): Expression | undefined => {
     const A = asInterval(a);
     if (isInfinite(lo(A)) || isInfinite(hi(A))) return interval(-1, 1);
     return periodicImage(head, a);
@@ -398,7 +397,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
       // extremum to find, so a direct endpoint image is exact.
       const rawA = raw[0] ?? a;
       if (rawA.isSame(ce.E) && isInterval(n)) {
-        const exp = (x: BoxedExpression) => ce.function("Exp", [x]).evaluate();
+        const exp = (x: Expression) => ce.function("Exp", [x]).evaluate();
         return shapedImage({ kind: "increasing" }, exp, lo(n), hi(n));
       }
       return undefined;
@@ -427,12 +426,12 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
     },
     Max: (ops) => {
       if (ops.length !== 2 || !ops.some(isInterval)) return undefined;
-      const [a, b] = ops.map(asInterval) as [BoxedExpression, BoxedExpression];
+      const [a, b] = ops.map(asInterval) as [Expression, Expression];
       return interval(maxOf([lo(a), lo(b)]), maxOf([hi(a), hi(b)]));
     },
     Min: (ops) => {
       if (ops.length !== 2 || !ops.some(isInterval)) return undefined;
-      const [a, b] = ops.map(asInterval) as [BoxedExpression, BoxedExpression];
+      const [a, b] = ops.map(asInterval) as [Expression, Expression];
       return interval(minOf([lo(a), lo(b)]), minOf([hi(a), hi(b)]));
     },
   };

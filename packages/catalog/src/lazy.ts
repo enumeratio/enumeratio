@@ -10,7 +10,7 @@
 // for names we don't claim) passes `rawParse`, and the candidate walk already understands
 // the raw tree's ["InvisibleOperator", name, ["Delimiter", …]] applications.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { ResourceRegistry } from "./registry.ts";
 import type { Resource } from "./types.ts";
 
@@ -80,7 +80,7 @@ export async function prepare(
   registry: ResourceRegistry,
   install: Install,
   parse: ParseStage = canonicalParse,
-): Promise<BoxedExpression> {
+): Promise<Expression> {
   const json = typeof source === "string" ? parse(ce, source) : source;
 
   for (const name of applicationCandidates(json, ce)) {

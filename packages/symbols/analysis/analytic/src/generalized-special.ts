@@ -1,4 +1,4 @@
-import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
+import { type Expression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf, refusing, widenSignature, wrapOperator } from "@enumeratio/engine";
 import { declined, type EvalOptions, isRealInt } from "@enumeratio/ce-patches";
 
@@ -52,11 +52,11 @@ function incompleteBetaExact(z: Q, a: bigint, b: bigint): Q | undefined {
 // identity, or (Nielsen PolyLog) a small numeric kernel of its own. Registered by
 // `declareAnalytic` in hurwitz-zeta.ts.
 
-const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
+const finish = (expr: Expression, options: EvalOptions): Expression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
 
 /** Does `r`'s JSON still mention `head`? (same test `incomplete-gamma.ts` uses for Gamma.) */
-const stillMentions = (r: BoxedExpression, head: string): boolean => JSON.stringify(r.json).includes(`"${head}"`);
+const stillMentions = (r: Expression, head: string): boolean => JSON.stringify(r.json).includes(`"${head}"`);
 
 /**
  * Is `r` literally the float `NaN` value (`isNumberLiteral`, `re` unrepresentable), as
@@ -64,7 +64,7 @@ const stillMentions = (r: BoxedExpression, head: string): boolean => JSON.string
  * ALSO `NaN` (it isn't a number at all), so testing `Number.isNaN(r.re)` alone would
  * misfire on every ordinary decline, not just a genuine `NaN` answer.
  */
-const isNaNValue = (r: BoxedExpression | undefined): boolean =>
+const isNaNValue = (r: Expression | undefined): boolean =>
   r !== undefined && (r as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true && Number.isNaN(r.re);
 
 // --- Beta: complete (a, b), incomplete (z, a, b) and generalized incomplete (z0, z1, a, b) ---
@@ -99,9 +99,9 @@ export function declareGeneralizedBeta(ce: ComputeEngine): void {
         // NOT get this: Γ oscillates through a pole at every negative integer along the
         // way, so no single limit exists there -- it falls through to Indeterminate below,
         // same as every other exact-NaN case (including B(0, 0), a genuine double pole).
-        const isExact = (op: BoxedExpression): boolean => (op as Partial<{ isExact: boolean }>).isExact !== false;
-        const isZero = (op: BoxedExpression): boolean => op.re === 0 && (op.im === 0 || op.im === undefined);
-        const isPositiveInfinity = (op: BoxedExpression): boolean => op.re === Infinity;
+        const isExact = (op: Expression): boolean => (op as Partial<{ isExact: boolean }>).isExact !== false;
+        const isZero = (op: Expression): boolean => op.re === 0 && (op.im === 0 || op.im === undefined);
+        const isPositiveInfinity = (op: Expression): boolean => op.re === Infinity;
         if (isNaNValue(r) && isExact(a) && isExact(b)) {
           if ((isZero(a) && isPositiveInfinity(b)) || (isPositiveInfinity(a) && isZero(b))) {
             return ce.symbol("ComplexInfinity");
@@ -112,7 +112,7 @@ export function declareGeneralizedBeta(ce: ComputeEngine): void {
         // B(a, 1) = Γ(a)Γ(1)/Γ(a+1) = 1/a, exact for any a (including symbolic).
         if (isRealInt(b) && b.re === 1) return finish(ce.function("Divide", [ce.One, a]), options);
         // B(a, n) = (n−1)!/(a(a+1)⋯(a+n−1)) at a small positive integer n, either side.
-        const small = (x: BoxedExpression) => isRealInt(x) && x.re >= 2 && x.re <= 10;
+        const small = (x: Expression) => isRealInt(x) && x.re >= 2 && x.re <= 10;
         const [x, n] = small(b) && !isNumber(a) ? [a, b.re] : small(a) && !isNumber(b) ? [b, a.re] : [];
         if (x !== undefined && n !== undefined) {
           const factors = Array.from({ length: n }, (_, k) => (k === 0 ? x : ce.function("Add", [x, ce.number(k)])));

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt, wrapOperator } from "@enumeratio/engine";
 import { declined, type EvalOptions, isRealInt } from "@enumeratio/ce-patches";
 
@@ -9,7 +9,7 @@ import { declined, type EvalOptions, isRealInt } from "@enumeratio/ce-patches";
 // approximation, so it applies to a symbolic operand exactly as well as a numeric one.
 
 /** `expr`, `.N()`'d if the caller asked for a numeric approximation, `.evaluate()`'d otherwise. */
-const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
+const finish = (expr: Expression, options: EvalOptions): Expression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
 
 /**
@@ -28,7 +28,7 @@ const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
  * doesn't apply it to the bare 3-argument call either).
  */
 function declareIncompleteGammaClosedForms(ce: ComputeEngine): void {
-  const isHalf = (x: BoxedExpression): boolean => {
+  const isHalf = (x: Expression): boolean => {
     const q = bigRationalAt(x);
     return q !== undefined && q[0] === 1n && q[1] === 2n;
   };

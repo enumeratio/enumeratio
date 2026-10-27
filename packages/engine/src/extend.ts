@@ -1,9 +1,9 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type Operator, shadowsLibrary } from "./ce-internals.ts";
 import type { CompileHandler } from "./facade.ts";
 import { addHeadOverload } from "./overloads.ts";
 
-type OperatorDefinition = NonNullable<BoxedExpression["operatorDefinition"]>;
+type OperatorDefinition = NonNullable<Expression["operatorDefinition"]>;
 
 /**
  * How a head compiles once a package has replaced its `evaluate` or `canonical`.

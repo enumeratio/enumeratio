@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { stringAt } from "@enumeratio/engine";
 import { catalogRegistry, ENUMERATIO } from "./resources.ts";
 import type { ResourceRegistry } from "./registry.ts";
@@ -34,7 +34,7 @@ export function declareCatalog(ce: ComputeEngine, options: CatalogOptions = {}):
 
   ce.declare("Resource", {
     signature: "(string, number*) -> any",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expression[]): Expression | undefined => {
       const spelling = stringAt(ops[0]);
       if (spelling === undefined) return undefined;
       const resource = registry.resolve(spelling);

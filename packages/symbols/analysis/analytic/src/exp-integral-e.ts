@@ -1,5 +1,5 @@
 // unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   atDigits,
   bigRealOperand,
@@ -110,7 +110,7 @@ function expIntegralEContinued(n: number, x: number): number | undefined {
 export function declareExpIntegralE(ce: ComputeEngine): void {
   ce.declare("ExpIntegralE", {
     signature: "(number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [n, z] = ops;
       if (n === undefined || z === undefined) return undefined;
 

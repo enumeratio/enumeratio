@@ -1,5 +1,5 @@
 // unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   atDigits,
   bigRealOperand,
@@ -221,7 +221,7 @@ const MAX_DOUBLINGS = 1100;
  * that double, as everywhere else. One finer than a double (a Rational or bignum s a hair under 1:
  * 1 − 1e-20 rounds to 1, and 1 − 3e-17 gives q off by tens of percent) takes q from the exact
  * value, which compute-engine subtracts exactly. */
-function complementOf(ce: ComputeEngine, s: BoxedExpression): number {
+function complementOf(ce: ComputeEngine, s: Expression): number {
   const exact = s.bignumRe;
   if (exact === undefined || exact.sub(new BigDecimal(String(s.re))).isZero()) return 1 - s.re;
   return ce.One.sub(s).re;
@@ -338,7 +338,7 @@ function inverseGammaRegularizedBig(a: BigDecimal, s: BigDecimal, z0: number, di
 export function declareInverseGammaRegularized(ce: ComputeEngine): void {
   ce.declare("InverseGammaRegularized", {
     signature: "(number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [a, s] = ops;
       if (a === undefined || s === undefined) return undefined;
       // Q(a, 0) = 1 and Q(a, ∞) = 0 for ANY a — even a symbolic one.
@@ -386,7 +386,7 @@ export function declareInverseGammaRegularized(ce: ComputeEngine): void {
 export function declareInverseBetaRegularized(ce: ComputeEngine): void {
   ce.declare("InverseBetaRegularized", {
     signature: "(number, number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [s, a, b] = ops;
       if (s === undefined || a === undefined || b === undefined) return undefined;
       if (s.is(0)) return ce.Zero;

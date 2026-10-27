@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
   isFiniteNum,
@@ -109,12 +109,12 @@ export function hypergeometricUStar(a: Cx, b: Cx, z: Cx): Cx | undefined {
   return mul(cpow(z, a), u);
 }
 
-const toCx = (x: BoxedExpression): Cx => cx(x.re, x.im);
+const toCx = (x: Expression): Cx => cx(x.re, x.im);
 
 export function declareHypergeometricUStar(ce: ComputeEngine): void {
   ce.declare("HypergeometricUStar", {
     signature: "(number, number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [a, b, z] = ops;
       if (a === undefined || b === undefined || z === undefined) return undefined;
       if (!isFiniteNum(a) || !isFiniteNum(b) || !isFiniteNum(z)) return undefined;
@@ -137,7 +137,7 @@ export function declareHypergeometricUStar(ce: ComputeEngine): void {
 export function declareHypergeometricU(ce: ComputeEngine): void {
   ce.declare("HypergeometricU", {
     signature: "(number, number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [a, b, z] = ops;
       if (a === undefined || b === undefined || z === undefined) return undefined;
       if (!isFiniteNum(a) || !isFiniteNum(b) || !isFiniteNum(z)) return undefined;

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   bernoulliPolyAt,
   bernoulliPolyAtComplex,
@@ -13,10 +13,10 @@ import { cx } from "../compute-engine/numerics/complex-arithmetic.ts";
 
 export function evaluateBernoulliPolynomial(
   ce: ComputeEngine,
-  n: BoxedExpression,
-  x: BoxedExpression,
+  n: Expression,
+  x: Expression,
   numeric: boolean,
-): BoxedExpression | undefined {
+): Expression | undefined {
   if (!isRealInt(n) || n.re < 0) return undefined;
 
   if (numeric && isFiniteNum(x)) {

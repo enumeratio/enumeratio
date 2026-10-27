@@ -1,11 +1,11 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type CompileStance, extendHead } from "./extend.ts";
 import { addHeadSignature, EVALUATES_OPERANDS } from "./overloads.ts";
 
 // Reading values back out of compute-engine expressions.
 //
 // `.ops`, `.symbol` and `.string` live on compute-engine's NARROWED expression
-// interfaces (FunctionInterface / SymbolInterface / StringInterface). `BoxedExpression`
+// interfaces (FunctionInterface / SymbolInterface / StringInterface). `Expression`
 // is an alias for the `Expression` union, and 0.128 documents `isFunction()` /
 // `isSymbol()` / `isString()` predicates it does not actually ship, so there is no
 // typed route from the union to any of them. Read each through one checked accessor
@@ -17,9 +17,9 @@ import { addHeadSignature, EVALUATES_OPERANDS } from "./overloads.ts";
  * CONSTRUCTOR arguments -- for `Range(1, 10)` that is `[1, 10]`, two operands, not the ten
  * elements the range denotes. Reaching for the actual elements of something that may be a
  * collection is `collectionElements`, not this. */
-export const operandsOf = (expr: BoxedExpression | undefined): readonly BoxedExpression[] => {
+export const operandsOf = (expr: Expression | undefined): readonly Expression[] => {
   const ops = (expr as { ops?: unknown } | undefined)?.ops;
-  return Array.isArray(ops) ? (ops as readonly BoxedExpression[]) : [];
+  return Array.isArray(ops) ? (ops as readonly Expression[]) : [];
 };
 
 /**
@@ -39,7 +39,7 @@ export const operandsOf = (expr: BoxedExpression | undefined): readonly BoxedExp
  * that reads as "the answer is this short list", which is exactly the wrong answer this
  * function exists to avoid.
  */
-export const collectionElements = (expr: BoxedExpression): readonly BoxedExpression[] | undefined => {
+export const collectionElements = (expr: Expression): readonly Expression[] | undefined => {
   if (!expr.isCollection) return operandsOf(expr);
   try {
     return [...expr.each()];
@@ -49,7 +49,7 @@ export const collectionElements = (expr: BoxedExpression): readonly BoxedExpress
 };
 
 /** The symbol an expression names, or `undefined` if it is not a symbol. */
-export const symbolNameOf = (expr: BoxedExpression): string | undefined => {
+export const symbolNameOf = (expr: Expression): string | undefined => {
   const name = (expr as { symbol?: unknown }).symbol;
   return typeof name === "string" ? name : undefined;
 };
@@ -61,7 +61,7 @@ export const symbolNameOf = (expr: BoxedExpression): string | undefined => {
  * non-integers rather than truncating them matters on the membership path, where a
  * truncated `1.5` would read as the perfectly valid element `1`.
  */
-export const integerAt = (expr: BoxedExpression | undefined): number | undefined =>
+export const integerAt = (expr: Expression | undefined): number | undefined =>
   expr !== undefined && expr.im === 0 && Number.isSafeInteger(expr.re) ? expr.re : undefined;
 
 /**
@@ -71,7 +71,7 @@ export const integerAt = (expr: BoxedExpression | undefined): number | undefined
  * `[bigint, 1n]` (denominator 1, since it's an integer). Both lanes land here so a caller
  * never has to reach for `.re`, which silently loses precision past 2^53.
  */
-export const bigIntegerAt = (expr: BoxedExpression | undefined): bigint | undefined => {
+export const bigIntegerAt = (expr: Expression | undefined): bigint | undefined => {
   if (expr === undefined || expr.im !== 0 || expr.isInteger !== true) return undefined;
   const value = (expr as { numericValue?: unknown }).numericValue;
   if (typeof value === "number") return Number.isInteger(value) ? BigInt(value) : undefined;
@@ -85,7 +85,7 @@ export const bigIntegerAt = (expr: BoxedExpression | undefined): bigint | undefi
 const unquote = (text: string): string => text.replace(/^'(.*)'$/s, "$1").replace(/^"(.*)"$/s, "$1");
 
 /** The string an expression denotes — bare, `["String", …]`-wrapped, or quoted JSON. */
-export const stringAt = (expr: BoxedExpression | undefined): string | undefined => {
+export const stringAt = (expr: Expression | undefined): string | undefined => {
   if (expr === undefined) return undefined;
   const direct = (expr as { string?: unknown }).string;
   if (typeof direct === "string") return unquote(direct);
@@ -104,7 +104,7 @@ export const stringAt = (expr: BoxedExpression | undefined): string | undefined 
  * lanes as `bigIntegerAt`: a machine-range integer is a plain `number`, everything else
  * is an `ExactNumericValue` carrying `.rational`.
  */
-export const bigRationalAt = (expr: BoxedExpression | undefined): readonly [bigint, bigint] | undefined => {
+export const bigRationalAt = (expr: Expression | undefined): readonly [bigint, bigint] | undefined => {
   if (expr === undefined || expr.im !== 0 || expr.isRational !== true) return undefined;
   const value = (expr as { numericValue?: unknown }).numericValue;
   if (typeof value === "number") return Number.isInteger(value) ? [BigInt(value), 1n] : undefined;
@@ -117,14 +117,11 @@ export const bigRationalAt = (expr: BoxedExpression | undefined): readonly [bigi
   return d === 0n ? undefined : d < 0n ? [-BigInt(num), -d] : [BigInt(num), d];
 };
 
-type OperatorDefinition = NonNullable<BoxedExpression["operatorDefinition"]>;
+type OperatorDefinition = NonNullable<Expression["operatorDefinition"]>;
 export type NativeEvaluate = OperatorDefinition["evaluate"];
 export type EvaluateOptions = Parameters<NonNullable<NativeEvaluate>>[1];
 export type { EvaluateOptions as EvalOptions };
-export type EvaluateHandler = (
-  ops: readonly BoxedExpression[],
-  options: EvaluateOptions,
-) => BoxedExpression | undefined;
+export type EvaluateHandler = (ops: readonly Expression[], options: EvaluateOptions) => Expression | undefined;
 
 /**
  * How many operands a `wrapOperator` handler answers: exactly `n`, or a `min`–`max` range
@@ -177,7 +174,7 @@ const isWrapOptions = (stated: Arity | WrapOptions | undefined): stated is WrapO
 export function wrapOperator(
   ce: ComputeEngine,
   probe: readonly [string, ...unknown[]],
-  applies: (ops: readonly BoxedExpression[]) => boolean,
+  applies: (ops: readonly Expression[]) => boolean,
   build: (native: NativeEvaluate) => EvaluateHandler,
   stated?: Arity | WrapOptions,
 ): void {
@@ -191,7 +188,7 @@ export function wrapOperator(
   const foldsOperands = lazy && EVALUATES_OPERANDS.has(probe[0]);
   extendHead(ce, probe[0], {
     compile,
-    evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvaluateOptions) => {
       if (!fitsArity(arity, ops.length)) return native?.(ops, options);
       const values = lazy ? ops.map((op) => op.evaluate()) : ops;
       return applies(values) ? handler(values, options) : native?.(foldsOperands ? values : ops, options);
@@ -239,7 +236,7 @@ export function widenSignature(
   ce: ComputeEngine,
   name: string,
   signature: string,
-  nativeAccepts?: (op: BoxedExpression) => boolean,
+  nativeAccepts?: (op: Expression) => boolean,
 ): void {
   addHeadSignature(ce, name, signature, nativeAccepts);
 }
@@ -258,7 +255,7 @@ export function threadOverLists(ce: ComputeEngine, names: readonly string[]): vo
 }
 
 /** A `widenSignature` gate for heads natively typed `integer`: anything not provably non-integer. */
-export const mayBeInteger = (op: BoxedExpression): boolean => op.isInteger !== false;
+export const mayBeInteger = (op: Expression): boolean => op.isInteger !== false;
 
 export { collectMessages, defineMessages, emit, formatArgument, type Message, messageLine } from "./messages.ts";
 export {

@@ -1,5 +1,5 @@
 // unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
   bigRealOperand,
@@ -411,10 +411,10 @@ export const carlsonRGReal = (x: number, y: number, z: number): number => carlso
  */
 function pastDouble(
   ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   options: EvalOptions,
   kernel: (args: BigDecimal[], digits: number) => BigDecimal | undefined,
-): { readonly value: BoxedExpression | undefined } | undefined {
+): { readonly value: Expression | undefined } | undefined {
   if (!exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
   const args = ops.map((op) => bigRealOperand(ce, op));
   if (args.some((a) => a === undefined)) return { value: undefined };
@@ -424,12 +424,12 @@ function pastDouble(
 
 function evaluate3(
   ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   kernel: (x: Cx, y: Cx, z: Cx) => Cx,
   options: EvalOptions,
   big: (args: BigDecimal[], digits: number) => BigDecimal | undefined,
   declines?: (x: Cx, y: Cx, z: Cx) => boolean,
-): BoxedExpression | undefined {
+): Expression | undefined {
   const [x, y, z] = ops;
   if (x === undefined || y === undefined || z === undefined) return undefined;
   if (!wantsNumber(ops, options) || !isFiniteNum(x) || !isFiniteNum(y) || !isFiniteNum(z)) {
@@ -448,10 +448,10 @@ function evaluate3(
  */
 function equalArguments(
   ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   options: EvalOptions,
   exponent: readonly [number, number],
-): BoxedExpression | undefined {
+): Expression | undefined {
   const x = ops[0];
   if (x === undefined || wantsNumber(ops, options)) return undefined;
   if (!x.isConstant || x.isPositive !== true || !ops.every((op) => op.isSame(x))) return undefined;

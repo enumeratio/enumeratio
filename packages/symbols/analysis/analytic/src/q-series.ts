@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { extendHead } from "@enumeratio/engine";
 import {
   atDigits,
@@ -47,25 +47,25 @@ import { qFactorialBig } from "./q-factorial-big.ts";
 const MAX_PRODUCT = 2000;
 
 /** [k]_q = 1 + q + ... + q^(k-1), k ≥ 1. */
-function qInteger(ce: ComputeEngine, k: number, q: BoxedExpression): BoxedExpression {
-  const terms: BoxedExpression[] = [ce.One];
+function qInteger(ce: ComputeEngine, k: number, q: Expression): Expression {
+  const terms: Expression[] = [ce.One];
   for (let j = 1; j < k; j++) terms.push(ce.function("Power", [q, ce.number(j)]));
   return terms.length === 1 ? terms[0] : ce.function("Add", terms).evaluate();
 }
 
 /** [n]_q! = product_{k=1}^n [k]_q, n ≥ 0 (empty product at n = 0). */
-function qFactorialExpr(ce: ComputeEngine, n: number, q: BoxedExpression): BoxedExpression {
-  let r: BoxedExpression = ce.One;
+function qFactorialExpr(ce: ComputeEngine, n: number, q: Expression): Expression {
+  let r: Expression = ce.One;
   for (let k = 1; k <= n; k++) r = ce.function("Multiply", [r, qInteger(ce, k, q)]).evaluate();
   return r;
 }
 
 /** The Gaussian binomial, via the Pascal-like recurrence described above. */
-function qBinomialExpr(ce: ComputeEngine, n: number, k: number, q: BoxedExpression): BoxedExpression {
+function qBinomialExpr(ce: ComputeEngine, n: number, k: number, q: Expression): Expression {
   if (k < 0 || k > n) return ce.Zero;
-  let row: BoxedExpression[] = [ce.One];
+  let row: Expression[] = [ce.One];
   for (let i = 1; i <= n; i++) {
-    const next: BoxedExpression[] = [ce.One];
+    const next: Expression[] = [ce.One];
     for (let j = 1; j < i; j++) {
       const term2 = ce.function("Multiply", [ce.function("Power", [q, ce.number(j)]), row[j]]).evaluate();
       next.push(ce.function("Add", [row[j - 1], term2]).evaluate());
@@ -77,8 +77,8 @@ function qBinomialExpr(ce: ComputeEngine, n: number, k: number, q: BoxedExpressi
 }
 
 /** (a; q)_n = product_{k=0}^{n-1} (1 - a q^k), n ≥ 0 (empty product at n = 0). */
-function qPochhammerFinite(ce: ComputeEngine, a: BoxedExpression, q: BoxedExpression, n: number): BoxedExpression {
-  let r: BoxedExpression = ce.One;
+function qPochhammerFinite(ce: ComputeEngine, a: Expression, q: Expression, n: number): Expression {
+  let r: Expression = ce.One;
   for (let k = 0; k < n; k++) {
     const qPowK = k === 0 ? ce.One : ce.function("Power", [q, ce.number(k)]);
     const term = ce.function("Subtract", [ce.One, ce.function("Multiply", [a, qPowK]).evaluate()]);
@@ -133,14 +133,9 @@ function qBinomialContinued(n: Cx, k: Cx, q: number): Cx {
  * exact operand stays exact until `N`; q = 1 is the limit ∏ (n-j)/(j+1). `undefined` at a zero
  * denominator (q a root of unity).
  */
-function qBinomialProduct(
-  ce: ComputeEngine,
-  n: BoxedExpression,
-  k: number,
-  q: BoxedExpression,
-): BoxedExpression | undefined {
+function qBinomialProduct(ce: ComputeEngine, n: Expression, k: number, q: Expression): Expression | undefined {
   const unit = q.re === 1 && q.im === 0;
-  let result: BoxedExpression = ce.One;
+  let result: Expression = ce.One;
   for (let j = 0; j < k; j++) {
     const top = unit
       ? ce.function("Subtract", [n, ce.number(j)])
@@ -162,7 +157,7 @@ export function declareQSeries(ce: ComputeEngine): void {
   // the finite and infinite cases share this one hook rather than splitting.)
   ce.declare("QPochhammer", {
     signature: "(complex, complex, integer | infinity) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const a = ops[0];
       const q = ops[1];
       const n = ops[2];
@@ -187,7 +182,7 @@ export function declareQSeries(ce: ComputeEngine): void {
   // QFactorial's fractional-n `evaluate` is attached afterwards, with `extendHead`).
   ce.declare("QFactorial", {
     signature: "(real, complex) -> number",
-    canonical: (ops: readonly BoxedExpression[]) => {
+    canonical: (ops: readonly Expression[]) => {
       const n = ops[0];
       const q = ops[1];
       if (n === undefined || q === undefined) return null;
@@ -200,7 +195,7 @@ export function declareQSeries(ce: ComputeEngine): void {
 
   // Canonical handles the integer n; the numeric q-Gamma continuation is an evaluate on top of it.
   extendHead(ce, "QFactorial", {
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [n, q] = ops;
       if (n === undefined || q === undefined || !wantsNumber(ops, options)) return undefined;
       if (n.im !== 0 || q.im !== 0 || !Number.isFinite(n.re) || !Number.isFinite(q.re)) return undefined;
@@ -219,7 +214,7 @@ export function declareQSeries(ce: ComputeEngine): void {
 
   ce.declare("QBinomial", {
     signature: "(complex, complex, complex) -> number",
-    canonical: (ops: readonly BoxedExpression[]) => {
+    canonical: (ops: readonly Expression[]) => {
       const n = ops[0];
       const k = ops[1];
       const q = ops[2];
@@ -232,7 +227,7 @@ export function declareQSeries(ce: ComputeEngine): void {
   // N(QBinomial(n, k, q)) away from integer (n, k): a non-negative integer k is a finite product, any
   // other k the q-Gamma ratio, at a real q > 0 and a double's digits.
   extendHead(ce, "QBinomial", {
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [n, k, q] = ops;
       if (n === undefined || k === undefined || q === undefined || !wantsNumber(ops, options)) return undefined;
       if (![n, k, q].every(isFiniteNum)) return undefined;

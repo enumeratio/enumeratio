@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, wrapOperator } from "@enumeratio/engine";
 import { type EvalOptions, isFiniteNum, wantsNumber } from "@enumeratio/ce-patches";
 
@@ -14,7 +14,7 @@ export function declareInverseErfc(ce: ComputeEngine): void {
   ce.declare("InverseErfc", {
     signature: "(number) -> number",
     broadcastable: true, // InverseErfc([0, 1]) threads, like Wolfram's Listable
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [s] = ops;
       if (s === undefined) return undefined;
       if (s.re === 0 && s.im === 0) return ce.symbol("PositiveInfinity");

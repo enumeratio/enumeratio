@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { symbolNameOf, wrapOperator } from "@enumeratio/engine";
 import {
   add,
@@ -59,7 +59,7 @@ function lambertWBranch(k: number, z: Cx): Cx | undefined {
  * argument was written (or reduces) to exactly that shape. Handles the closed forms Wolfram's
  * page and this package's examples give: 0, ±1 at 0/-1/e, integer w·e^w, and -ln(k)/k (whose
  * w = -ln k, since e^{-ln k} = 1/k). Returns the exact w expression, or undefined. */
-function exactLambertW(ce: ComputeEngine, zExpr: BoxedExpression): BoxedExpression | undefined {
+function exactLambertW(ce: ComputeEngine, zExpr: Expression): Expression | undefined {
   if (zExpr.re === 0 && zExpr.im === 0) return ce.Zero;
   if (symbolNameOf(zExpr) === "ExponentialE") return ce.One; // e = 1·e¹
   // -1/e: Negate(Divide(1, ExponentialE)) or the equivalent rational-power forms compute-engine

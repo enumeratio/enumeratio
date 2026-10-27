@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // TrigFactor(expr): the factoring counterpart of compute-engine's native TrigExpand /
@@ -28,29 +28,29 @@ import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 // other than `Sin`/`Cos`, an argument-dependent (non-numeric) exponent, and anything
 // `recognize`d as a shape but for which `Factor` itself declines.
 
-const opAt = (expr: BoxedExpression, i: number): BoxedExpression => operandsOf(expr)[i];
-const isOne = (x: BoxedExpression): boolean => x.re === 1 && x.im === 0;
+const opAt = (expr: Expression, i: number): Expression => operandsOf(expr)[i];
+const isOne = (x: Expression): boolean => x.re === 1 && x.im === 0;
 /** See function-properties.ts's header comment on `isNumberLiteral` — same narrowed,
- * structural read (not on the public `BoxedExpression` type). */
-const isIntegerLiteral = (expr: BoxedExpression): boolean =>
+ * structural read (not on the public `Expression` type). */
+const isIntegerLiteral = (expr: Expression): boolean =>
   (expr as { isNumberLiteral?: unknown }).isNumberLiteral === true && expr.im === 0 && Number.isInteger(expr.re);
 
 /** `o`, or `Negate[o]`'s operand with a sign flip — reads a 2-term `Add`'s operand as
  * `(value, sign)` so every pattern below can match either arrangement of a `+`/`-`
  * uniformly. */
-function signedTerm(o: BoxedExpression): { readonly value: BoxedExpression; readonly sign: 1 | -1 } {
+function signedTerm(o: Expression): { readonly value: Expression; readonly sign: 1 | -1 } {
   return o.operator === "Negate" ? { value: opAt(o, 0), sign: -1 } : { value: o, sign: 1 };
 }
 
 /** `half(a op b)`, exactly the way `TrigFactor`'s own half-angle arguments print
  * (`Divide[Add[a,b],2]`, not `Multiply[1/2, Add[a,b]]`). */
-const half = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression, sign: 1 | -1): BoxedExpression =>
+const half = (ce: ComputeEngine, a: Expression, b: Expression, sign: 1 | -1): Expression =>
   ce.function("Divide", [ce.function("Add", [a, sign === 1 ? b : ce.function("Negate", [b])]), 2]);
 
 /** The four sum-to-product pairs (`Sin(a) +/- Sin(b)`, `Cos(a) +/- Cos(b)`) and the two
  * half-angle pairs (`1 +/- Cos(x)`), matched on a 2-term `Add` in EITHER order (each
  * operand read via `signedTerm`, so which one is written first doesn't matter). */
-function matchNamedPairs(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression | undefined {
+function matchNamedPairs(ce: ComputeEngine, expr: Expression): Expression | undefined {
   if (expr.operator !== "Add") return undefined;
   const ops = operandsOf(expr);
   if (ops.length !== 2) return undefined;
@@ -116,7 +116,7 @@ function matchNamedPairs(ce: ComputeEngine, expr: BoxedExpression): BoxedExpress
 }
 
 /** Does `expr` contain a subterm structurally equal (`isEqual`) to `target` anywhere? */
-function containsExpr(expr: BoxedExpression, target: BoxedExpression): boolean {
+function containsExpr(expr: Expression, target: Expression): boolean {
   if (expr.isEqual(target)) return true;
   return operandsOf(expr).some((o) => containsExpr(o, target));
 }
@@ -124,7 +124,7 @@ function containsExpr(expr: BoxedExpression, target: BoxedExpression): boolean {
 /** The argument of the first `Sin`/`Cos` node found in `expr` (depth-first), fixing
  * which trig argument `factorViaPolynomial` treats as `x0` — or `undefined` if `expr`
  * has no `Sin`/`Cos` at all. */
-function findTrigArgument(expr: BoxedExpression): BoxedExpression | undefined {
+function findTrigArgument(expr: Expression): Expression | undefined {
   if (expr.operator === "Sin" || expr.operator === "Cos") return opAt(expr, 0);
   for (const o of operandsOf(expr)) {
     const found = findTrigArgument(o);
@@ -142,11 +142,11 @@ function findTrigArgument(expr: BoxedExpression): BoxedExpression | undefined {
  * than decline outright. */
 function substituteTrig(
   ce: ComputeEngine,
-  expr: BoxedExpression,
-  x0: BoxedExpression,
-  u: BoxedExpression,
-  v: BoxedExpression,
-): BoxedExpression | undefined {
+  expr: Expression,
+  x0: Expression,
+  u: Expression,
+  v: Expression,
+): Expression | undefined {
   if (!containsExpr(expr, x0)) return expr;
   const op = expr.operator;
   if (op === "Sin" && opAt(expr, 0).isEqual(x0)) return u;
@@ -154,7 +154,7 @@ function substituteTrig(
   if (op === "Add" || op === "Multiply" || op === "Subtract") {
     const subOps = operandsOf(expr).map((o) => substituteTrig(ce, o, x0, u, v));
     if (subOps.some((o) => o === undefined)) return undefined;
-    return ce.function(op, subOps as BoxedExpression[]);
+    return ce.function(op, subOps as Expression[]);
   }
   if (op === "Negate") {
     const inner = substituteTrig(ce, opAt(expr, 0), x0, u, v);
@@ -174,7 +174,7 @@ function substituteTrig(
 
 /** Substitute a polynomial in `Sin(x0)`/`Cos(x0)` via compute-engine's own `Factor`,
  * then translate the factored polynomial back through `u -> Sin(x0)`, `v -> Cos(x0)`. */
-function factorViaPolynomial(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression | undefined {
+function factorViaPolynomial(ce: ComputeEngine, expr: Expression): Expression | undefined {
   const x0 = findTrigArgument(expr);
   if (x0 === undefined) return undefined;
   const u = ce.symbol("_TrigFactorU");
@@ -188,14 +188,14 @@ function factorViaPolynomial(ce: ComputeEngine, expr: BoxedExpression): BoxedExp
   return factored.subs({ [uName]: ce.function("Sin", [x0]), [vName]: ce.function("Cos", [x0]) }).evaluate();
 }
 
-export function matchTrigFactor(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression | undefined {
+export function matchTrigFactor(ce: ComputeEngine, expr: Expression): Expression | undefined {
   return matchNamedPairs(ce, expr) ?? factorViaPolynomial(ce, expr);
 }
 
 export function declareTrigFactor(ce: ComputeEngine): void {
   ce.declare("TrigFactor", {
     signature: "(expression) -> expression",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [expr] = ops;
       if (expr === undefined || ops.length !== 1) return undefined;
       return matchTrigFactor(ce, expr);

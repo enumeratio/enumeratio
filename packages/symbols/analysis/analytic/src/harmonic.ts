@@ -1,4 +1,4 @@
-import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
+import { type Expression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
 import type { Json } from "@enumeratio/ce-patches";
 import {
   bernoulliRational,
@@ -64,7 +64,7 @@ const FINITE_SUM_MAX = 4;
 /** Largest k for which H_z^(−k) expands to its Faulhaber polynomial. */
 const FAULHABER_MAX = 20;
 
-const isExactRational = (x: BoxedExpression): boolean => isNumber(x) && x.isExact && x.im === 0 && !isRealInt(x);
+const isExactRational = (x: Expression): boolean => isNumber(x) && x.isExact && x.im === 0 && !isRealInt(x);
 
 const binomial = (n: number, k: number): bigint => {
   let r = 1n;
@@ -94,15 +94,15 @@ function faulhaber(k: number, z: Json): Json {
  */
 export function evaluateHarmonicNumber(
   ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   numeric: boolean,
   options: { readonly numericApproximation?: boolean } = {},
-): BoxedExpression | undefined {
+): Expression | undefined {
   const z = ops[0];
   const r = ops[1];
   if (z === undefined) return undefined;
   const box = (expr: Json) => ce.box(expr as unknown as BoxInput);
-  const finish = (expr: BoxedExpression) => (numeric ? expr.N() : expr.evaluate());
+  const finish = (expr: Expression) => (numeric ? expr.N() : expr.evaluate());
 
   if (isRealInt(z) && z.re < 0) return ce.symbol("ComplexInfinity"); // no sum below n = 0
 

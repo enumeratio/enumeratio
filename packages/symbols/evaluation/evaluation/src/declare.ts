@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { CancellationError } from "@cortex-js/compute-engine";
 import { applyNativeHeadPatches } from "@enumeratio/ce-patches";
 import {
@@ -50,13 +50,13 @@ export function declareEvaluation(ce: ComputeEngine): void {
     description: SUMMARIES.TimeConstrained,
     signature: "(any, real, any?) time -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [held, secondsExpr, failExpr] = ops;
       if (held === undefined || secondsExpr === undefined) return undefined;
       const seconds = secondsExpr.canonical.evaluate().re;
       if (seconds === undefined || Number.isNaN(seconds)) return undefined;
       const ms = msOf(seconds);
-      const fail = (): BoxedExpression => (failExpr === undefined ? ce.symbol(ABORTED) : failExpr.canonical.evaluate());
+      const fail = (): Expression => (failExpr === undefined ? ce.symbol(ABORTED) : failExpr.canonical.evaluate());
       try {
         return withDeadline(ms, () =>
           ce.withTimeLimit({ ms, label: "TimeConstrained" }, () => held.canonical.evaluate()),
@@ -66,13 +66,13 @@ export function declareEvaluation(ce: ComputeEngine): void {
         throw e;
       }
     },
-    evaluateAsync: async (ops: readonly BoxedExpression[], options) => {
+    evaluateAsync: async (ops: readonly Expression[], options) => {
       const [held, secondsExpr, failExpr] = ops;
       if (held === undefined || secondsExpr === undefined) return undefined;
       const seconds = secondsExpr.canonical.evaluate().re;
       if (seconds === undefined || Number.isNaN(seconds)) return undefined;
       const ms = msOf(seconds);
-      const fail = (): BoxedExpression => (failExpr === undefined ? ce.symbol(ABORTED) : failExpr.canonical.evaluate());
+      const fail = (): Expression => (failExpr === undefined ? ce.symbol(ABORTED) : failExpr.canonical.evaluate());
       const timeoutSignal = AbortSignal.timeout(ms);
       const signals = options.signal === undefined ? [timeoutSignal] : [timeoutSignal, options.signal];
       const anyFn = (AbortSignal as unknown as { any?: (s: AbortSignal[]) => AbortSignal }).any;
@@ -96,7 +96,7 @@ export function declareEvaluation(ce: ComputeEngine): void {
     description: SUMMARIES.MemoryConstrained,
     signature: "(any, real<0..>, any?) environment -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       emit(ce, "MemoryConstrained", "isolated", [ops[1] ?? ce.number(0)]);
       return undefined;
     },
@@ -121,7 +121,7 @@ function declareVerificationTest(ce: ComputeEngine): void {
     description: SUMMARIES.VerificationTest,
     signature: "(any*) time -> expression<TestResultObject>",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [input, expectedRaw, ...rest] = ops;
       if (input === undefined) return undefined;
       const expected = expectedRaw?.canonical;
@@ -136,7 +136,7 @@ function declareVerificationTest(ce: ComputeEngine): void {
       const sameTest =
         sameTestExpr === undefined
           ? undefined
-          : (actual: BoxedExpression, expectedValue: BoxedExpression): boolean => {
+          : (actual: Expression, expectedValue: Expression): boolean => {
               const applied = applyFunction(ce, sameTestExpr, [actual, expectedValue]);
               return symbolNameOf(applied) === "True";
             };
@@ -159,10 +159,9 @@ function declareVerificationTest(ce: ComputeEngine): void {
  * a STRING, not a symbol: `Input` collides with compute-engine's own console-input function,
  * and a string key sidesteps every such collision (`ruleOf`'s `optionName` accepts either).
  */
-function testResultExpression(ce: ComputeEngine, result: TestResult): BoxedExpression {
-  const rule = (name: string, value: BoxedExpression): BoxedExpression =>
-    ce.function("KeyValuePair", [ce.string(name), value]);
-  const rows: BoxedExpression[] = [
+function testResultExpression(ce: ComputeEngine, result: TestResult): Expression {
+  const rule = (name: string, value: Expression): Expression => ce.function("KeyValuePair", [ce.string(name), value]);
+  const rows: Expression[] = [
     rule("Outcome", ce.string(result.outcome)),
     rule("Input", result.input),
     rule("ExpectedOutput", result.expectedOutput ?? ce.symbol("Missing")),

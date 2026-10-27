@@ -1,4 +1,4 @@
-import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
+import { type Expression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
 import { wrapOperator } from "@enumeratio/engine";
 import type { Json } from "@enumeratio/ce-patches";
 import { type BoxInput, wantsNumber, withGuardDigits } from "@enumeratio/ce-patches";
@@ -7,7 +7,7 @@ import { type BoxInput, wantsNumber, withGuardDigits } from "@enumeratio/ce-patc
 // nothing to work with. Both asymptotic series converge absurdly fast out here, so a few
 // terms carry every digit the engine asks for, in its own decimal arithmetic.
 
-const isHuge = (op: BoxedExpression | undefined): boolean =>
+const isHuge = (op: Expression | undefined): boolean =>
   op !== undefined && isNumber(op) && op.im === 0 && op.re === Infinity && op.bignumRe?.isFinite() === true;
 
 /** lnΓ(x) = (x − ½)ln x − x + ½ln 2π + 1/(12x) − 1/(360x³) + 1/(1260x⁵). */

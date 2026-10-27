@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 
@@ -10,7 +10,7 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 // for `PowerExpand` (it assumes it unless told otherwise via `Assumptions`, which this does
 // not model).
 
-export function powerExpand(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
+export function powerExpand(ce: ComputeEngine, e: Expression): Expression {
   const ops = operandsOf(e);
   if (ops.length === 0) return e;
   const children = ops.map((o) => powerExpand(ce, o));
@@ -66,7 +66,7 @@ export function powerExpand(ce: ComputeEngine, e: BoxedExpression): BoxedExpress
 export function declarePowerExpand(ce: ComputeEngine): void {
   ce.declare("PowerExpand", {
     signature: "(expression) -> expression",
-    evaluate: (ops: readonly BoxedExpression[], _options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], _options: EvalOptions) => {
       const expr = ops[0];
       return expr === undefined ? undefined : powerExpand(ce, expr);
     },

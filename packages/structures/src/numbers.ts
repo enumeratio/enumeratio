@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf, stringAt } from "@enumeratio/engine";
 import { conform } from "./conform.ts";
 
@@ -10,12 +10,12 @@ import { conform } from "./conform.ts";
 const sign = (x: number): number => (Number.isNaN(x) ? Number.NaN : Math.sign(x));
 
 export function conformNumbers(ce: ComputeEngine): void {
-  const call = (head: string, ...args: BoxedExpression[]) => ce.function(head, args).evaluate();
-  const half = (a: BoxedExpression, b: BoxedExpression) => call("Divide", call("Add", a, b), ce.number(2));
+  const call = (head: string, ...args: Expression[]) => ce.function(head, args).evaluate();
+  const half = (a: Expression, b: Expression) => call("Divide", call("Add", a, b), ce.number(2));
 
   // Units of ℚ and ℤ[i]: only roots of unity have finite order, and an exact rational (or
   // Gaussian rational) is one only if it is ±1 (or ±i). Anything inexact or symbolic declines.
-  const orderOf = (re: BoxedExpression, im?: BoxedExpression): BoxedExpression | undefined => {
+  const orderOf = (re: Expression, im?: Expression): Expression | undefined => {
     const [a, b] = [bigRationalAt(re), im === undefined ? ([0n, 1n] as const) : bigRationalAt(im)];
     if (a === undefined || b === undefined) return undefined;
     const unit = (n: readonly [bigint, bigint]) => n[1] === 1n && (n[0] === 1n || n[0] === -1n);
@@ -37,7 +37,7 @@ export function conformNumbers(ce: ComputeEngine): void {
   });
 
   // Strings by code unit, as compute-engine's `Sort` orders them.
-  const order = (a: BoxedExpression, b: BoxedExpression): number => {
+  const order = (a: Expression, b: Expression): number => {
     const [x, y] = [stringAt(a) ?? "", stringAt(b) ?? ""];
     return x < y ? -1 : x > y ? 1 : 0;
   };
@@ -52,7 +52,7 @@ export function conformNumbers(ce: ComputeEngine): void {
 
   // The complex numbers as the product order on (Re, Im): ticks are the Gaussian integers, so
   // Floor(2.5 + 3.7i) is 2 + 3i, Wolfram's componentwise answer.
-  const parts = (z: BoxedExpression) => [call("Re", z), call("Im", z)];
+  const parts = (z: Expression) => [call("Re", z), call("Im", z)];
   conform(ce, "complex", {
     Monoid: { OrderOfElement: (z) => orderOf(call("Re", z), call("Im", z)) },
     PartialOrder: {
@@ -72,7 +72,7 @@ export function conformNumbers(ce: ComputeEngine): void {
   // Midpoint, so a matrix is a list of vectors and a point keeps its head (Wolfram's
   // `Midpoint[{{1, 1}, {2, 3}}]`, `Midpoint[{Point[…], Point[…]}]`). Lists of different shapes
   // have no midpoint and stay as written.
-  const componentwise = (a: BoxedExpression, b: BoxedExpression): BoxedExpression | undefined => {
+  const componentwise = (a: Expression, b: Expression): Expression | undefined => {
     if (a.operator === "Point" && b.operator === "Point") {
       const inner = componentwise(operandsOf(a)[0]!, operandsOf(b)[0]!);
       return inner === undefined ? undefined : ce.function("Point", [inner]);

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
   exceedsDoublePrecision,
@@ -107,15 +107,15 @@ function theta(a: 1 | 2 | 3 | 4, u: Cx, q: Cx, derivative: boolean): Cx | undefi
 
 // --- compute-engine declarations -----------------------------------------------------
 
-const cxOf = (x: BoxedExpression): Cx => cx(x.re, x.im);
+const cxOf = (x: Expression): Cx => cx(x.re, x.im);
 
-const isValidOrder = (a: BoxedExpression): a is BoxedExpression & { re: 1 | 2 | 3 | 4 } =>
+const isValidOrder = (a: Expression): a is Expression & { re: 1 | 2 | 3 | 4 } =>
   a.im === 0 && Number.isInteger(a.re) && a.re >= 1 && a.re <= 4;
 
 function declareOne(ce: ComputeEngine, head: string, derivative: boolean): void {
   ce.declare(head, {
     signature: "(number, number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [a, u, q] = ops;
       if (a === undefined || u === undefined || q === undefined) return undefined;
       // q = 0 leaves only the constant term: θ3 = θ4 = 1, θ1 = θ2 = 0 (q^{1/4} factor), and every

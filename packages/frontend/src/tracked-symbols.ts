@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { referencesOrdinal } from "./reactive.ts";
 import { headOf, opsOf, symOf } from "./symbols.ts";
@@ -66,7 +66,7 @@ export function cellBindings(
   const ordinal = referencesOrdinal(source, json);
   if (json === undefined) return { id, reads: [], ordinal };
   const assigns = assignedName(json);
-  let boxed: BoxedExpression | undefined;
+  let boxed: Expression | undefined;
   try {
     boxed = engine.box(json);
   } catch {

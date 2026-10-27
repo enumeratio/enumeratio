@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { add, cx, type Cx, mul, scale, type EvalOptions, wantsNumber, inexactComplex } from "@enumeratio/ce-patches";
 
@@ -25,23 +25,23 @@ import { add, cx, type Cx, mul, scale, type EvalOptions, wantsNumber, inexactCom
 // path above answers m's exponential), not a matrix-free Krylov method — Wolfram's own
 // documented call form, same value either way (#113).
 
-export type BMatrix = readonly (readonly BoxedExpression[])[];
+export type BMatrix = readonly (readonly Expression[])[];
 
 /** Read `m` as a rectangular matrix of (already-evaluated) entries. Shared with
  * matrix-function.ts, which needs the same reading of a boxed matrix. */
-export function rowsOf(expr: BoxedExpression): BMatrix {
+export function rowsOf(expr: Expression): BMatrix {
   return operandsOf(expr).map((row) => operandsOf(row));
 }
 
 /** compute-engine's own convention for a non-square operand — see native Inverse/Eigenvalues/…. */
-export function squareMatrixError(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression {
+export function squareMatrixError(ce: ComputeEngine, expr: Expression): Expression {
   return ce.error("expected-square-matrix", expr.toString());
 }
 
-const isZero = (e: BoxedExpression): boolean => e.isSame(0);
+const isZero = (e: Expression): boolean => e.isSame(0);
 
 /** `.isExact` lives on compute-engine's boxed-number interface, not the general one. */
-const mayBeExact = (e: BoxedExpression): boolean => (e as Partial<{ isExact: boolean }>).isExact !== false;
+const mayBeExact = (e: Expression): boolean => (e as Partial<{ isExact: boolean }>).isExact !== false;
 
 export function isDiagonal(rows: BMatrix, n: number): boolean {
   for (let i = 0; i < n; i++) {
@@ -52,7 +52,7 @@ export function isDiagonal(rows: BMatrix, n: number): boolean {
   return true;
 }
 
-export function listOf(ce: ComputeEngine, rows: readonly (readonly BoxedExpression[])[]): BoxedExpression {
+export function listOf(ce: ComputeEngine, rows: readonly (readonly Expression[])[]): Expression {
   return ce.function(
     "List",
     rows.map((row) => ce.function("List", [...row])),
@@ -60,8 +60,8 @@ export function listOf(ce: ComputeEngine, rows: readonly (readonly BoxedExpressi
 }
 
 /** diag(m) exact, elementwise: exp(a_ii) on the diagonal, 0 off it. */
-function expDiagonal(ce: ComputeEngine, rows: BMatrix, n: number): BoxedExpression {
-  const result: BoxedExpression[][] = [];
+function expDiagonal(ce: ComputeEngine, rows: BMatrix, n: number): Expression {
+  const result: Expression[][] = [];
   for (let i = 0; i < n; i++) {
     result[i] = [];
     for (let j = 0; j < n; j++) {
@@ -75,7 +75,7 @@ function expDiagonal(ce: ComputeEngine, rows: BMatrix, n: number): BoxedExpressi
  * The 2×2 closed form (see the file header). Handles every 2×2 matrix exactly — diagonal,
  * nilpotent, and the general case — via one formula with a removable singularity at Δ = 0.
  */
-function expTwoByTwo(ce: ComputeEngine, rows: BMatrix): BoxedExpression {
+function expTwoByTwo(ce: ComputeEngine, rows: BMatrix): Expression {
   const [[a, b], [c, d]] = rows;
   const trace = ce.function("Add", [a, d]).evaluate();
   const det = ce.function("Subtract", [ce.function("Multiply", [a, d]), ce.function("Multiply", [b, c])]).evaluate();
@@ -110,7 +110,7 @@ function expTwoByTwo(ce: ComputeEngine, rows: BMatrix): BoxedExpression {
           ])
           .evaluate();
 
-  const entry = (i: number, j: number): BoxedExpression => {
+  const entry = (i: number, j: number): Expression => {
     const aij = rows[i][j];
     const iij = i === j ? 1 : 0;
     // (2·a_ij − tr·I_ij), the "2M − tr·I" entry.
@@ -129,8 +129,8 @@ function expTwoByTwo(ce: ComputeEngine, rows: BMatrix): BoxedExpression {
   ]);
 }
 
-function identityExact(ce: ComputeEngine, n: number): BoxedExpression[][] {
-  const rows: BoxedExpression[][] = [];
+function identityExact(ce: ComputeEngine, n: number): Expression[][] {
+  const rows: Expression[][] = [];
   for (let i = 0; i < n; i++) {
     rows[i] = [];
     for (let j = 0; j < n; j++) rows[i][j] = i === j ? ce.One : ce.Zero;
@@ -138,12 +138,12 @@ function identityExact(ce: ComputeEngine, n: number): BoxedExpression[][] {
   return rows;
 }
 
-function mulExact(ce: ComputeEngine, a: BMatrix, b: BMatrix, n: number): BoxedExpression[][] {
-  const result: BoxedExpression[][] = [];
+function mulExact(ce: ComputeEngine, a: BMatrix, b: BMatrix, n: number): Expression[][] {
+  const result: Expression[][] = [];
   for (let i = 0; i < n; i++) {
     result[i] = [];
     for (let j = 0; j < n; j++) {
-      const terms: BoxedExpression[] = [];
+      const terms: Expression[] = [];
       for (let k = 0; k < n; k++) terms.push(ce.function("Multiply", [a[i][k], b[k][j]]));
       result[i][j] = ce.function("Add", terms).evaluate();
     }
@@ -161,24 +161,22 @@ function isZeroMatrix(m: BMatrix, n: number): boolean {
  * where Nᵏ = 0 terminates it (k ≤ n for an n×n matrix). Returns undefined if N turns out not
  * to be nilpotent after all (Nⁿ ≠ 0), so the caller can fall back to the numeric path.
  */
-function expNilpotentExact(ce: ComputeEngine, rows: BMatrix, n: number): BoxedExpression | undefined {
-  let power: BoxedExpression[][] = identityExact(ce, n);
-  let sum: BoxedExpression[][] = identityExact(ce, n);
+function expNilpotentExact(ce: ComputeEngine, rows: BMatrix, n: number): Expression | undefined {
+  let power: Expression[][] = identityExact(ce, n);
+  let sum: Expression[][] = identityExact(ce, n);
   let factorial = 1;
   for (let k = 1; k <= n; k++) {
     power = mulExact(ce, power, rows, n);
     if (isZeroMatrix(power, n)) return listOf(ce, sum);
     factorial *= k;
-    const scaled: BoxedExpression[][] = power.map((row) =>
-      row.map((e) => ce.function("Divide", [e, factorial]).evaluate()),
-    );
+    const scaled: Expression[][] = power.map((row) => row.map((e) => ce.function("Divide", [e, factorial]).evaluate()));
     sum = sum.map((row, i) => row.map((e, j) => ce.function("Add", [e, scaled[i][j]]).evaluate()));
   }
   return undefined; // Nⁿ ≠ 0: not nilpotent
 }
 
 /** Read a matrix entry as a double-precision complex number, via N(); undefined if not finite. */
-function entryToCx(e: BoxedExpression): Cx | undefined {
+function entryToCx(e: Expression): Cx | undefined {
   const v = e.N();
   return Number.isFinite(v.re) && Number.isFinite(v.im) ? cx(v.re, v.im) : undefined;
 }
@@ -257,8 +255,8 @@ function expNumeric(a: NMatrix, n: number): NMatrix {
   return result;
 }
 
-function nMatrixToExpr(ce: ComputeEngine, m: NMatrix, n: number): BoxedExpression {
-  const rows: BoxedExpression[][] = [];
+function nMatrixToExpr(ce: ComputeEngine, m: NMatrix, n: number): Expression {
+  const rows: Expression[][] = [];
   for (let i = 0; i < n; i++) {
     rows[i] = [];
     for (let j = 0; j < n; j++) {
@@ -274,20 +272,20 @@ function nMatrixToExpr(ce: ComputeEngine, m: NMatrix, n: number): BoxedExpressio
  * list, or m's exponential itself doesn't reduce (the numeric fallback still needs N()). */
 function expTimesVector(
   ce: ComputeEngine,
-  m: BoxedExpression,
-  v: BoxedExpression,
+  m: Expression,
+  v: Expression,
   n: number,
   options: EvalOptions,
   numeric: boolean,
-): BoxedExpression | undefined {
+): Expression | undefined {
   const vEntries = operandsOf(v);
   if (vEntries.length !== n) return undefined;
   const innerOptions: EvalOptions = numeric ? { ...options, numericApproximation: true } : options;
   const expM = evaluateMatrixExp(ce, [m], innerOptions);
   if (expM === undefined) return undefined;
   const expRows = rowsOf(expM);
-  const finish = (e: BoxedExpression): BoxedExpression => (numeric ? e.N() : e);
-  const result: BoxedExpression[] = [];
+  const finish = (e: Expression): Expression => (numeric ? e.N() : e);
+  const result: Expression[] = [];
   for (let i = 0; i < n; i++) {
     const terms = vEntries.map((vj, j) => ce.function("Multiply", [expRows[i][j], vj]));
     result.push(finish(ce.function("Add", terms).evaluate()));
@@ -297,9 +295,9 @@ function expTimesVector(
 
 export function evaluateMatrixExp(
   ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   options: EvalOptions,
-): BoxedExpression | undefined {
+): Expression | undefined {
   const m = ops[0];
   if (m === undefined) return undefined;
   const rows = rowsOf(m);
@@ -317,7 +315,7 @@ export function evaluateMatrixExp(
     return v === undefined ? undefined : expTimesVector(ce, m, v, n, options, numeric);
   }
 
-  const finish = (e: BoxedExpression): BoxedExpression => (numeric ? e.N() : e);
+  const finish = (e: Expression): Expression => (numeric ? e.N() : e);
 
   if (isDiagonal(rows, n)) return finish(expDiagonal(ce, rows, n));
   if (n === 2) return finish(expTwoByTwo(ce, rows));
@@ -335,6 +333,6 @@ export function evaluateMatrixExp(
 export function declareMatrixExp(ce: ComputeEngine): void {
   ce.declare("MatrixExp", {
     signature: "(matrix, list<number>?) -> matrix | list<number>",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateMatrixExp(ce, ops, options),
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => evaluateMatrixExp(ce, ops, options),
   });
 }

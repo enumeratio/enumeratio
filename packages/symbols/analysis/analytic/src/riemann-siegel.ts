@@ -1,4 +1,4 @@
-import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
+import { BigDecimal, type Expression, type ComputeEngine } from "@cortex-js/compute-engine";
 import {
   atDigits,
   bigRealOperand,
@@ -161,7 +161,7 @@ export function refineZeroBig(t: number): number | undefined {
 }
 
 /** Z(t) at the engine's precision, for N(…, d) past a double's digits. */
-function riemannSiegelZPastDouble(ce: ComputeEngine, t: BoxedExpression): BoxedExpression | undefined {
+function riemannSiegelZPastDouble(ce: ComputeEngine, t: Expression): Expression | undefined {
   if (ce.precision <= DOUBLE_DIGITS) return undefined;
   const im = t.bignumIm ?? ce.bignum(t.im);
   if (im.isZero()) {
@@ -175,7 +175,7 @@ function riemannSiegelZPastDouble(ce: ComputeEngine, t: BoxedExpression): BoxedE
 }
 
 /** ½ + i·t_k at the engine's precision from the double zero `seed`; ZetaZero(−k) is the conjugate. */
-function zetaZeroPastDouble(ce: ComputeEngine, k: number, seed: number): BoxedExpression | undefined {
+function zetaZeroPastDouble(ce: ComputeEngine, k: number, seed: number): Expression | undefined {
   if (ce.precision <= DOUBLE_DIGITS) return undefined;
   const root = riemannZetaZeroBig(refineZeroBig(seed) ?? seed, ce.precision);
   if (root === undefined) return undefined;
@@ -185,7 +185,7 @@ function zetaZeroPastDouble(ce: ComputeEngine, k: number, seed: number): BoxedEx
 export function declareRiemannSiegel(ce: ComputeEngine): void {
   ce.declare("RiemannSiegelTheta", {
     signature: "(number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const t = ops[0];
       if (t === undefined || t.im !== 0 || !Number.isFinite(t.re)) return undefined;
       if (t.re === 0) return ce.Zero; // ϑ(0) = Im ln Γ(¼) = 0 exactly — no N() needed
@@ -196,7 +196,7 @@ export function declareRiemannSiegel(ce: ComputeEngine): void {
 
   ce.declare("RiemannSiegelZ", {
     signature: "(number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const t = ops[0];
       if (t === undefined || !Number.isFinite(t.re) || !Number.isFinite(t.im)) return undefined;
       if (!wantsNumber(ops, options)) return undefined;
@@ -220,7 +220,7 @@ export function declareRiemannSiegel(ce: ComputeEngine): void {
 
   ce.declare("RiemannZetaZero", {
     signature: "(integer) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const k = ops[0];
       if (k === undefined || !isRealInt(k) || k.re === 0) return undefined;
       if (!wantsNumber(ops, options)) return undefined;

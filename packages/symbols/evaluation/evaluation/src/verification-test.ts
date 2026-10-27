@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { CancellationError } from "@cortex-js/compute-engine";
 import { DeadlineExceededError, withDeadline } from "@enumeratio/engine";
 
@@ -6,18 +6,18 @@ export type Outcome = "Success" | "Failure" | "Error" | "Aborted";
 
 export interface TestResult {
   readonly outcome: Outcome;
-  readonly input: BoxedExpression;
-  readonly expectedOutput?: BoxedExpression;
-  readonly actualOutput?: BoxedExpression;
+  readonly input: Expression;
+  readonly expectedOutput?: Expression;
+  readonly actualOutput?: Expression;
   readonly absoluteTimeUsed: number;
   readonly testId?: string;
 }
 
 export interface VerificationTestOptions {
-  readonly input: BoxedExpression;
-  readonly expected?: BoxedExpression;
-  /** Default: `BoxedExpression.isSame` — structural sameness. */
-  readonly sameTest?: (actual: BoxedExpression, expected: BoxedExpression) => boolean;
+  readonly input: Expression;
+  readonly expected?: Expression;
+  /** Default: `Expression.isSame` — structural sameness. */
+  readonly sameTest?: (actual: Expression, expected: Expression) => boolean;
   readonly timeConstraintSeconds?: number;
   readonly memoryConstraintBytes?: number;
   readonly testId?: string;
@@ -55,7 +55,7 @@ export function verificationTest(ce: ComputeEngine, opts: VerificationTestOption
     };
   }
 
-  let actual: BoxedExpression;
+  let actual: Expression;
   try {
     const held = input.canonical;
     actual =

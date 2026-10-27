@@ -3,7 +3,7 @@
 // head dispatches from. Rows are ordered by what they are, never by who declared first, and
 // the head's signature is computed from them, never assigned.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type CompileStance, declareCompile, extendHead } from "./extend.ts";
 import { widenedSignature } from "./widen.ts";
 import type { EvaluateOptions } from "./index.ts";
@@ -35,28 +35,28 @@ export interface Overload {
   readonly unless?: readonly string[];
   readonly arity?: Arity;
   /** Any further condition, over the evaluated operands. */
-  readonly when?: (ops: readonly BoxedExpression[]) => boolean;
+  readonly when?: (ops: readonly Expression[]) => boolean;
   /** Match `on` against the operands as written (one level under a `Negate`), before any is
    *  evaluated: cheap on a hot head, and sound only where the carrier is always written as
    *  itself, never produced by evaluating an operand (`Add(HenselLift(…), …)` is). */
   readonly written?: boolean;
   /** A cheap test over the operands as written, for a row with no `on`: when it fails, the row
    *  is passed over without evaluating anything (a hot head's sums and products mostly fail). */
-  readonly gate?: (ops: readonly BoxedExpression[]) => boolean;
+  readonly gate?: (ops: readonly Expression[]) => boolean;
   /** Packages whose rows this one is tried before, where both would apply. */
   readonly overrides?: readonly string[];
   /** What the head's own handler accepts, when this row's signature lets more through: the
    *  handler only sees calls every row's `native` gate passes. */
-  readonly native?: (op: BoxedExpression) => boolean;
+  readonly native?: (op: Expression) => boolean;
   /** How the head compiles with this row (see `CompileStance`).
    *  A carrier row (`on`, `types`) fires only on operands compiled numeric code never sees, so it
    *  needs none; any other row states it, or closes the head. */
   readonly compile?: CompileStance;
   /** The answer, or `undefined` to let the next row (or the head's own handler) try. */
-  readonly evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => BoxedExpression | undefined;
+  readonly evaluate: (ops: readonly Expression[], options: EvaluateOptions) => Expression | undefined;
 }
 
-type Evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) => BoxedExpression | undefined;
+type Evaluate = (ops: readonly Expression[], options: EvaluateOptions) => Expression | undefined;
 
 type OperatorLike = { signature?: unknown; evaluate?: Evaluate; lazy?: boolean };
 
@@ -77,7 +77,7 @@ interface Table {
   /** Call shapes a package added as overloads of their own (`extendHead`'s `addSignature`). */
   readonly added: string[];
   /** What each `widenSignature` gate admits of the head's own handler. */
-  readonly gates: ((op: BoxedExpression) => boolean)[];
+  readonly gates: ((op: Expression) => boolean)[];
   readonly rows: Overload[];
   ordered: Overload[];
   /** The handler the rows sit in front of: whatever `evaluate` the head had when they arrived. */
@@ -170,12 +170,12 @@ export function overloadTable(ce: ComputeEngine, head: string): OverloadTable | 
   };
 }
 
-const operands = (op: BoxedExpression): readonly BoxedExpression[] =>
-  (op as unknown as { ops?: readonly BoxedExpression[] }).ops ?? [];
+const operands = (op: Expression): readonly Expression[] =>
+  (op as unknown as { ops?: readonly Expression[] }).ops ?? [];
 
 /** The heads among the operands as written, and one level under a bare `Negate`, which is how
  *  `Subtract(a, x)` arrives. */
-function writtenHeads(ops: readonly BoxedExpression[]): Set<string> {
+function writtenHeads(ops: readonly Expression[]): Set<string> {
   const heads = new Set<string>();
   for (const op of ops) {
     heads.add(op.operator);
@@ -185,13 +185,13 @@ function writtenHeads(ops: readonly BoxedExpression[]): Set<string> {
 }
 
 /** Could `row` apply, judged from the operands as written, before evaluating any? */
-const mayApply = (row: Overload, ops: readonly BoxedExpression[], heads: () => Set<string>): boolean => {
+const mayApply = (row: Overload, ops: readonly Expression[], heads: () => Set<string>): boolean => {
   if (!fits(row.arity, ops.length)) return false;
   if (row.written === true && row.on !== undefined) return row.on.some((head) => heads().has(head));
   return row.gate === undefined || row.gate(ops);
 };
 
-const matches = (row: Overload, ops: readonly BoxedExpression[]): boolean =>
+const matches = (row: Overload, ops: readonly Expression[]): boolean =>
   fits(row.arity, ops.length) &&
   (row.on === undefined || ops.some((op) => row.on!.includes(op.operator))) &&
   (row.types === undefined || ops.some((op) => row.types!.includes(String(op.type)))) &&
@@ -268,7 +268,7 @@ export function addHeadSignature(
   ce: ComputeEngine,
   head: string,
   signature: string,
-  nativeAccepts?: (op: BoxedExpression) => boolean,
+  nativeAccepts?: (op: Expression) => boolean,
 ): boolean {
   const table = tableOf(ce, head);
   if (table === undefined) return false;

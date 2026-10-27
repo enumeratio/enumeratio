@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 import { declined, type EvalOptions, characterExponent } from "@enumeratio/ce-patches";
 import { gammaExactValue, type Rational } from "./widened.ts";
@@ -12,7 +12,7 @@ import { gammaExactValue, type Rational } from "./widened.ts";
  * of the plain number it expects, and the caller's own `.re` turns into NaN. Respecting
  * `options.numericApproximation` here is what keeps every such nested call intact.
  */
-const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
+const finish = (expr: Expression, options: EvalOptions): Expression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
 
 // #113 exact closed forms: heads that already evaluate numerically but leave an
@@ -37,10 +37,10 @@ const factorial = (n: bigint): bigint => {
 };
 
 /** A bigint as a boxed exact integer — `ce.number` takes a bigint directly, at any magnitude. */
-const intNode = (ce: ComputeEngine, v: bigint): BoxedExpression => ce.number(v);
+const intNode = (ce: ComputeEngine, v: bigint): Expression => ce.number(v);
 
 /** An exact [numerator, denominator] bigint pair as a boxed rational (or integer, at d = 1). */
-const ratNode = (ce: ComputeEngine, [n, d]: Rational): BoxedExpression => (d === 1n ? ce.number(n) : ce.number([n, d]));
+const ratNode = (ce: ComputeEngine, [n, d]: Rational): Expression => (d === 1n ? ce.number(n) : ce.number([n, d]));
 
 export function declareClosedForms113(ce: ComputeEngine): void {
   // ψ⁽ⁿ⁾(m) = (−1)ⁿ⁺¹ n! (ζ(n+1) − Σ_{k<m} k^(−n−1)) at a positive integer m and order
@@ -342,7 +342,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       () => (ops, options) => {
         const n = bigIntegerAt(ops[0])!;
         const x = ops[1];
-        const terms: BoxedExpression[] = [];
+        const terms: Expression[] = [];
         for (let k = 0n; k < n; k++) {
           // k = 0's term is exactly 1 by definition of the sum -- built directly rather
           // than through Power(x, 0), which compute-engine leaves symbolic (and, at x = 0
@@ -438,7 +438,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const list = ops[0];
       if (list?.operator !== "List") return false;
       const terms = operandsOf(list);
-      const plain = (t: BoxedExpression) =>
+      const plain = (t: Expression) =>
         symbolNameOf(t) !== undefined || (t.isInteger === true && operandsOf(t).length === 0);
       return terms.length > 0 && terms.every(plain) && terms.some((t) => symbolNameOf(t) !== undefined);
     },

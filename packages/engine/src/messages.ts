@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "./index.ts";
 
 // Messages, the way Wolfram does them: a head that declines to evaluate still returns
@@ -40,8 +40,7 @@ export function defineMessages(ce: ComputeEngine, head: string, templates: Reado
   for (const [code, template] of Object.entries(templates)) table.set(`${head}::${code}`, template);
 }
 
-const isBoxed = (x: unknown): x is BoxedExpression =>
-  typeof x === "object" && x !== null && "operator" in x && "json" in x;
+const isBoxed = (x: unknown): x is Expression => typeof x === "object" && x !== null && "operator" in x && "json" in x;
 
 /** An argument as text: a symbol by name, a list bracketed, anything else as the engine prints it. */
 export function formatArgument(x: unknown): string {

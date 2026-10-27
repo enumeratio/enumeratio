@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, mayBeInteger, widenSignature, wrapOperator } from "@enumeratio/engine";
 
 // compute-engine's Gamma-built combinatorial heads, widened to the exact values Wolfram gives
@@ -8,7 +8,7 @@ import { bigIntegerAt, bigRationalAt, mayBeInteger, widenSignature, wrapOperator
 // compute-engine already gives changes. Declared by `declareAnalytic`. The inverse trigonometric
 // and hyperbolic heads past their real domain are widened the same way, at the end of the file.
 
-type Ops = readonly BoxedExpression[];
+type Ops = readonly Expression[];
 export type Rational = readonly [bigint, bigint];
 
 const gcd = (a: bigint, b: bigint): bigint => (b === 0n ? (a < 0n ? -a : a) : gcd(b, a % b));
@@ -43,11 +43,7 @@ function gammaExact(x: Rational): { c: Rational; h: 0 | 1 } | "pole" | undefined
  * half-integer and none upstairs is a pole. A pole downstairs makes the whole ratio 0, since
  * 1/Γ is entire.
  */
-function gammaRatio(
-  ce: ComputeEngine,
-  up: readonly Rational[],
-  down: readonly Rational[],
-): BoxedExpression | undefined {
+function gammaRatio(ce: ComputeEngine, up: readonly Rational[], down: readonly Rational[]): Expression | undefined {
   let c: Rational = [1n, 1n];
   let h = 0; // the power of √π
   for (const [xs, sign] of [
@@ -111,7 +107,7 @@ const GAMMA_ARITY: Record<string, number> = {
  * `Gamma(x)` has no "side" — a pole is just `ComplexInfinity` — and anything neither an
  * integer nor a half-integer is left for the caller to fall back on.
  */
-export function gammaExactValue(ce: ComputeEngine, x: Rational): BoxedExpression | undefined {
+export function gammaExactValue(ce: ComputeEngine, x: Rational): Expression | undefined {
   const g = gammaExact(x);
   if (g === undefined) return undefined;
   if (g === "pole") return ce.symbol("ComplexInfinity");
@@ -265,26 +261,25 @@ export function declareWidened(ce: ComputeEngine): void {
 // outside their domain. A float or an N() already takes the same branch natively.
 
 export function declareInverseOutsideDomain(ce: ComputeEngine): void {
-  const rational = (ops: readonly BoxedExpression[]): Rational | undefined => bigRationalAt(ops[0]);
-  const fn = (name: string, ...args: unknown[]): BoxedExpression => ce.function(name, args as never);
+  const rational = (ops: readonly Expression[]): Rational | undefined => bigRationalAt(ops[0]);
+  const fn = (name: string, ...args: unknown[]): Expression => ce.function(name, args as never);
   const abs = ([p, q]: Rational): Rational => [p < 0n ? -p : p, q];
-  const num = ([p, q]: Rational): BoxedExpression => ce.number([p, q]);
-  const reciprocal = ([p, q]: Rational): BoxedExpression => num(p < 0n ? [-q, -p] : [q, p]);
-  const half = (e: BoxedExpression): BoxedExpression => fn("Divide", e, 2);
-  const imaginary = (e: BoxedExpression): BoxedExpression => fn("Multiply", "ImaginaryUnit", e);
+  const num = ([p, q]: Rational): Expression => ce.number([p, q]);
+  const reciprocal = ([p, q]: Rational): Expression => num(p < 0n ? [-q, -p] : [q, p]);
+  const half = (e: Expression): Expression => fn("Divide", e, 2);
+  const imaginary = (e: Expression): Expression => fn("Multiply", "ImaginaryUnit", e);
 
   /** L(t) for a rational t > 1. */
-  const arcoshOf = ([p, q]: Rational): BoxedExpression =>
+  const arcoshOf = ([p, q]: Rational): Expression =>
     fn("Ln", fn("Add", num([p, q]), fn("Sqrt", num([p * p - q * q, q * q]))));
   /** ½ ln((a+b)/(a−b)) for the rational t = a/b > 1, the real part of Artanh(t). */
-  const artanhOf = ([p, q]: Rational): BoxedExpression => half(fn("Ln", num([p + q, p - q])));
-  const signed = (x: Rational, e: BoxedExpression): BoxedExpression => (x[0] < 0n ? fn("Negate", e) : e);
-  const finish = (e: BoxedExpression, numeric: boolean | undefined): BoxedExpression =>
-    numeric ? e.N() : e.evaluate();
+  const artanhOf = ([p, q]: Rational): Expression => half(fn("Ln", num([p + q, p - q])));
+  const signed = (x: Rational, e: Expression): Expression => (x[0] < 0n ? fn("Negate", e) : e);
+  const finish = (e: Expression, numeric: boolean | undefined): Expression => (numeric ? e.N() : e.evaluate());
   const outside = (x: Rational): boolean => abs(x)[0] > x[1]; // |x| > 1
   const inside = (x: Rational): boolean => x[0] !== 0n && abs(x)[0] < x[1]; // 0 < |x| < 1
 
-  const wrap = (head: string, applies: (x: Rational) => boolean, build: (x: Rational) => BoxedExpression): void =>
+  const wrap = (head: string, applies: (x: Rational) => boolean, build: (x: Rational) => Expression): void =>
     // compile builtin: exact folds and identities, and exact operands native rejects (half-integers, negative odd)
     wrapOperator(
       ce,
@@ -297,7 +292,7 @@ export function declareInverseOutsideDomain(ce: ComputeEngine): void {
       { arity: 1, compile: "builtin" },
     );
 
-  const principalArcsin = (x: Rational): BoxedExpression =>
+  const principalArcsin = (x: Rational): Expression =>
     signed(x, fn("Subtract", fn("Divide", "Pi", 2), imaginary(arcoshOf(abs(x)))));
 
   wrap("Arcsin", outside, principalArcsin);

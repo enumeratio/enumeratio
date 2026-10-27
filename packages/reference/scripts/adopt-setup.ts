@@ -3,7 +3,7 @@
 // then runs under the worker's time cap like evaluating it does: canonicalising
 // `GeneratingFunction(Fibonacci(n), n, x)` never returns.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { configure as declareLibraries } from "./engines.ts";
 
 export function configure(ce: ComputeEngine): void {
@@ -11,6 +11,6 @@ export function configure(ce: ComputeEngine): void {
   ce.declare("CanonicalForm", {
     signature: "(any) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => ce.function("Hold", [ops[0]!.canonical]),
+    evaluate: (ops: readonly Expression[]) => ce.function("Hold", [ops[0]!.canonical]),
   });
 }

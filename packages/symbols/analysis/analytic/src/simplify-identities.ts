@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { hyperbolicPythagoras } from "./full-simplify.ts";
 import { declareCompile } from "@enumeratio/engine";
 
@@ -114,7 +114,7 @@ export function goldenRatioCollapse(json: unknown): unknown {
   return d === 1n ? Number(n) : ["Rational", Number(n), Number(d)];
 }
 
-type Evaluate = (ops: ReadonlyArray<BoxedExpression>, options: never) => BoxedExpression | undefined;
+type Evaluate = (ops: ReadonlyArray<Expression>, options: never) => Expression | undefined;
 
 // Attached directly rather than through `wrapOperator`: Simplify is lazy, and the wrapper
 // would evaluate its argument in full before every call.
@@ -123,7 +123,7 @@ export function declareSimplifyIdentities(ce: ComputeEngine): void {
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   const native = operator?.evaluate as Evaluate | undefined;
   if (operator === undefined || native === undefined) return;
-  operator.evaluate = ((ops: ReadonlyArray<BoxedExpression>, options: never) => {
+  operator.evaluate = ((ops: ReadonlyArray<Expression>, options: never) => {
     const simplified = native(ops, options);
     if (simplified === undefined || ops.length !== 1) return simplified;
     const json = simplified.json;

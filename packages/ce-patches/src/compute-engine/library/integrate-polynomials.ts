@@ -1,7 +1,7 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCompile, integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
-type Evaluate = (ops: readonly BoxedExpression[], options: { numericApproximation?: boolean }) => unknown;
+type Evaluate = (ops: readonly Expression[], options: { numericApproximation?: boolean }) => unknown;
 
 // cortex-js/compute-engine: `Integrate` expands a product of polynomials and integrates a power of
 // a linear form, but leaves `∫(x² + 1)² dx` and `∫(1 + x + x²)² dx` unevaluated -- a power of a
@@ -11,7 +11,7 @@ type Evaluate = (ops: readonly BoxedExpression[], options: { numericApproximatio
 // `Integrate`'s canonical form wraps the integrand as `Function(Block(body), x)`.
 /** `ops` with the polynomial integrand expanded, or `undefined` when it isn't a polynomial in the
  * variable or expanding changes nothing. */
-function expandedPolynomialOps(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression[] | undefined {
+function expandedPolynomialOps(ce: ComputeEngine, ops: readonly Expression[]): Expression[] | undefined {
   const [integrand, ...rest] = ops;
   if (integrand?.operator !== "Function") return undefined;
   const [inner, variable, ...extra] = operandsOf(integrand);
@@ -32,12 +32,12 @@ export function integrateExpandsPolynomials(ce: ComputeEngine): void {
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   const native = operator?.evaluate as Evaluate | undefined;
   if (operator === undefined || native === undefined) return;
-  operator.evaluate = ((ops: readonly BoxedExpression[], options: { numericApproximation?: boolean }) => {
-    const result = native(ops, options) as BoxedExpression | undefined;
+  operator.evaluate = ((ops: readonly Expression[], options: { numericApproximation?: boolean }) => {
+    const result = native(ops, options) as Expression | undefined;
     if (result !== undefined && result.operator !== "Integrate") return result;
     const retryOps = expandedPolynomialOps(ce, ops);
     if (retryOps === undefined) return result;
-    const retried = native(retryOps, options) as BoxedExpression | undefined;
+    const retried = native(retryOps, options) as Expression | undefined;
     return retried !== undefined && retried.operator !== "Integrate" ? retried : result;
   }) as never;
   declareCompile(ce, "Integrate", "builtin"); // the same integral, expanded first

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { fractionFactors } from "./transforms.ts";
 
@@ -36,15 +36,15 @@ import { fractionFactors } from "./transforms.ts";
 // higher argument to sin/cos/log, an opaque function, GenerateConditions-style strips
 // finer than a single interval, and (for the inverse) any shape not among the nine.
 
-const opAt = (expr: BoxedExpression, i: number): BoxedExpression => operandsOf(expr)[i];
-const isSym = (x: BoxedExpression, name: string): boolean => symbolNameOf(x) === name;
-const isE = (x: BoxedExpression): boolean => isSym(x, "ExponentialE");
-const hasVar = (expr: BoxedExpression, name: string): boolean => expr.has(name);
-const isOne = (x: BoxedExpression): boolean => x.re === 1 && x.im === 0;
-const isHalf = (x: BoxedExpression): boolean => x.re === 0.5 && x.im === 0;
+const opAt = (expr: Expression, i: number): Expression => operandsOf(expr)[i];
+const isSym = (x: Expression, name: string): boolean => symbolNameOf(x) === name;
+const isE = (x: Expression): boolean => isSym(x, "ExponentialE");
+const hasVar = (expr: Expression, name: string): boolean => expr.has(name);
+const isOne = (x: Expression): boolean => x.re === 1 && x.im === 0;
+const isHalf = (x: Expression): boolean => x.re === 0.5 && x.im === 0;
 
 /** `expr` as `a*x` (no additive offset) — bare `x` gives `a = 1`. */
-function linearCoeff(ce: ComputeEngine, expr: BoxedExpression, name: string): BoxedExpression | undefined {
+function linearCoeff(ce: ComputeEngine, expr: Expression, name: string): Expression | undefined {
   if (isSym(expr, name)) return ce.One;
   if (expr.operator === "Divide" && !hasVar(opAt(expr, 1), name)) {
     const inner = linearCoeff(ce, opAt(expr, 0), name);
@@ -65,14 +65,14 @@ function linearCoeff(ce: ComputeEngine, expr: BoxedExpression, name: string): Bo
 }
 
 /** The scale factor `a^(-s)`, left out when `a` is 1: a symbolic `s` of no known type keeps `1^(-s)`. */
-const scalePower = (ce: ComputeEngine, a: BoxedExpression, s: BoxedExpression): BoxedExpression =>
+const scalePower = (ce: ComputeEngine, a: Expression, s: Expression): Expression =>
   a.isSame(1) ? ce.One : ce.function("Power", [a, ce.function("Negate", [s])]);
 
 /** `expr` as `b*x^2` (any sign of `b`, `Negate` handled the same way `linearCoeff` does)
  * — the Gaussian's exponent shape (no scaling helper reuse: the argument is quadratic,
  * not linear). */
-function quadraticCoeffSigned(ce: ComputeEngine, expr: BoxedExpression, name: string): BoxedExpression | undefined {
-  const isXSq = (o: BoxedExpression) => o.operator === "Power" && isSym(opAt(o, 0), name) && opAt(o, 1).re === 2;
+function quadraticCoeffSigned(ce: ComputeEngine, expr: Expression, name: string): Expression | undefined {
+  const isXSq = (o: Expression) => o.operator === "Power" && isSym(opAt(o, 0), name) && opAt(o, 1).re === 2;
   if (isXSq(expr)) return ce.One;
   if (expr.operator === "Negate") {
     const inner = quadraticCoeffSigned(ce, opAt(expr, 0), name);
@@ -89,21 +89,21 @@ function quadraticCoeffSigned(ce: ComputeEngine, expr: BoxedExpression, name: st
 }
 
 /** `expr` as `Power[x, c]` or bare `x` (`c = 1`) — the power-shift factor. */
-function isPowerOfXFactor(expr: BoxedExpression, name: string): boolean {
+function isPowerOfXFactor(expr: Expression, name: string): boolean {
   if (isSym(expr, name)) return true;
   return expr.operator === "Power" && isSym(opAt(expr, 0), name) && !hasVar(opAt(expr, 1), name);
 }
-function powerOfXExponent(ce: ComputeEngine, expr: BoxedExpression, name: string): BoxedExpression {
+function powerOfXExponent(ce: ComputeEngine, expr: Expression, name: string): Expression {
   return isSym(expr, name) ? ce.One : opAt(expr, 1);
 }
 
 /** `Add[Y, 1]` (either order) — the `1 + Y` shape shared by `1/(1+x)`, `(1+x)^A`, and
  * `log(1+x)`. Returns `Y`, or undefined. */
-function asOnePlus(expr: BoxedExpression): BoxedExpression | undefined {
+function asOnePlus(expr: Expression): Expression | undefined {
   if (expr.operator !== "Add") return undefined;
   const ops = operandsOf(expr);
   if (ops.length !== 2) return undefined;
-  const [p0, p1] = ops as [BoxedExpression, BoxedExpression];
+  const [p0, p1] = ops as [Expression, Expression];
   if (isOne(p0)) return p1;
   if (isOne(p1)) return p0;
   return undefined;
@@ -112,12 +112,7 @@ function asOnePlus(expr: BoxedExpression): BoxedExpression | undefined {
 // --- Forward: MellinTransform ---------------------------------------------------------
 
 /** One of the nine base shapes, `s` already shifted by any enclosing power-of-x factor. */
-function atomicMellin(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  x: string,
-  s: BoxedExpression,
-): BoxedExpression | undefined {
+function atomicMellin(ce: ComputeEngine, expr: Expression, x: string, s: Expression): Expression | undefined {
   if (expr.operator === "Power" && isE(opAt(expr, 0))) {
     // The exponent must read as `-a*x` (linear) or `-b*x^2` (Gaussian) for some
     // provably positive `a`/`b`. A literal coefficient folds `Negate` away during
@@ -165,7 +160,7 @@ function atomicMellin(
     if (y === undefined) return undefined;
     const a = linearCoeff(ce, y, x);
     if (a === undefined || a.isPositive !== true) return undefined;
-    let bigA: BoxedExpression | undefined;
+    let bigA: Expression | undefined;
     if (exponent.operator === "Negate") bigA = opAt(exponent, 0);
     else if (exponent.im === 0 && Number.isFinite(exponent.re) && exponent.re < 0) bigA = ce.number(-exponent.re);
     if (bigA === undefined || hasVar(bigA, x)) return undefined;
@@ -205,12 +200,7 @@ function atomicMellin(
   return undefined;
 }
 
-export function matchMellin(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  x: BoxedExpression,
-  s: BoxedExpression,
-): BoxedExpression | undefined {
+export function matchMellin(ce: ComputeEngine, expr: Expression, x: Expression, s: Expression): Expression | undefined {
   const xName = symbolNameOf(x);
   if (xName === undefined || !hasVar(expr, xName)) return undefined;
   if (expr.operator === "Multiply") {
@@ -218,8 +208,8 @@ export function matchMellin(
     const consts = ops.filter((o) => !hasVar(o, xName));
     const rest = ops.filter((o) => hasVar(o, xName));
     const powIdx = rest.findIndex((o) => isPowerOfXFactor(o, xName));
-    let core: BoxedExpression;
-    let sEff: BoxedExpression;
+    let core: Expression;
+    let sEff: Expression;
     if (powIdx !== -1) {
       const c = powerOfXExponent(ce, rest[powIdx]!, xName);
       const others = rest.filter((_, i) => i !== powIdx);
@@ -242,14 +232,14 @@ export function matchMellin(
 
 /** A `Power[b, Negate[s]]` factor — the scale term every base pair above produces on
  * its own forward side (`b^(-s)`, `b` not containing `s`). */
-function isScalePower(expr: BoxedExpression, sName: string): boolean {
+function isScalePower(expr: Expression, sName: string): boolean {
   if (expr.operator !== "Power") return false;
   const exponent = opAt(expr, 1);
   return exponent.operator === "Negate" && isSym(opAt(exponent, 0), sName) && !hasVar(opAt(expr, 0), sName);
 }
 
 /** `Power[a, s]`, a > 0: the scale term of M{f(x/a)} = a^s F(s), the same theorem with the scale inverted. */
-const isInverseScalePower = (expr: BoxedExpression, sName: string): boolean =>
+const isInverseScalePower = (expr: Expression, sName: string): boolean =>
   expr.operator === "Power" &&
   isSym(opAt(expr, 1), sName) &&
   !hasVar(opAt(expr, 0), sName) &&
@@ -261,13 +251,11 @@ const isInverseScalePower = (expr: BoxedExpression, sName: string): boolean =>
  * one). `b = 1` (no scale) when there is no such factor. */
 function stripScale(
   ce: ComputeEngine,
-  expr: BoxedExpression,
+  expr: Expression,
   sName: string,
-): { readonly b: BoxedExpression; readonly rest: BoxedExpression } {
-  const pullFrom = (
-    mul: BoxedExpression,
-  ): { readonly b: BoxedExpression; readonly rest: BoxedExpression } | undefined => {
-    const scaleOf = (o: BoxedExpression) =>
+): { readonly b: Expression; readonly rest: Expression } {
+  const pullFrom = (mul: Expression): { readonly b: Expression; readonly rest: Expression } | undefined => {
+    const scaleOf = (o: Expression) =>
       isScalePower(o, sName)
         ? opAt(o, 0)
         : isInverseScalePower(o, sName)
@@ -295,7 +283,7 @@ function stripScale(
 
 /** `s`, or `s + c` (`c` not containing `s`) — the one shift shape this table supports
  * (`Gamma(a+s)` <-> `x^a e^(-x)`). Returns `c` (zero for a bare `s`), or undefined. */
-function sPlusShift(ce: ComputeEngine, expr: BoxedExpression, sName: string): BoxedExpression | undefined {
+function sPlusShift(ce: ComputeEngine, expr: Expression, sName: string): Expression | undefined {
   if (isSym(expr, sName)) return ce.Zero;
   if (expr.operator !== "Add") return undefined;
   const ops = operandsOf(expr);
@@ -305,19 +293,19 @@ function sPlusShift(ce: ComputeEngine, expr: BoxedExpression, sName: string): Bo
   return rest.length === 1 ? rest[0]! : ce.function("Add", rest).evaluate();
 }
 
-const isPiTimesS = (expr: BoxedExpression, sName: string): boolean => {
+const isPiTimesS = (expr: Expression, sName: string): boolean => {
   if (expr.operator !== "Multiply") return false;
   const ops = operandsOf(expr);
   return ops.length === 2 && ops.some((o) => isSym(o, "Pi")) && ops.some((o) => isSym(o, sName));
 };
 /** `Multiply[1/2, s]` — Wolfram's `Gamma(s/2)/2` canonicalizes its argument this way,
  * not as `Divide[s, 2]` (confirmed by boxing it directly). */
-const isHalfS = (expr: BoxedExpression, sName: string): boolean => {
+const isHalfS = (expr: Expression, sName: string): boolean => {
   if (expr.operator !== "Multiply") return false;
   const ops = operandsOf(expr);
   return ops.length === 2 && ops.some(isHalf) && ops.some((o) => isSym(o, sName));
 };
-const isHalfPiS = (expr: BoxedExpression, sName: string): boolean => {
+const isHalfPiS = (expr: Expression, sName: string): boolean => {
   if (expr.operator !== "Multiply") return false;
   const ops = operandsOf(expr);
   return ops.length === 3 && ops.some(isHalf) && ops.some((o) => isSym(o, "Pi")) && ops.some((o) => isSym(o, sName));
@@ -325,10 +313,10 @@ const isHalfPiS = (expr: BoxedExpression, sName: string): boolean => {
 
 function atomicInverseMellin(
   ce: ComputeEngine,
-  expr: BoxedExpression,
+  expr: Expression,
   sName: string,
-  x: BoxedExpression,
-): BoxedExpression | undefined {
+  x: Expression,
+): Expression | undefined {
   if (
     expr.operator === "Power" &&
     opAt(expr, 1).re === 2 &&
@@ -424,10 +412,7 @@ function atomicInverseMellin(
 }
 
 /** `arg` as `α·s + β` with rational-valued α, β: its value at s = 0 and at s = 1 (a third point rules out a curve). */
-function affineInS(
-  expr: BoxedExpression,
-  sName: string,
-): { readonly alpha: number; readonly beta: number } | undefined {
+function affineInS(expr: Expression, sName: string): { readonly alpha: number; readonly beta: number } | undefined {
   const at = (v: number) => expr.subs({ [sName]: v }).evaluate();
   const [b0, b1, b2] = [at(0), at(1), at(2)];
   if ([b0, b1, b2].some((b) => b.im !== 0 || !Number.isFinite(b.re))) return undefined;
@@ -438,17 +423,15 @@ function affineInS(
 /** `expr` as constants times Gamma factors over Gamma factors and linear denominators, none of the rest. */
 function gammaQuotient(
   ce: ComputeEngine,
-  expr: BoxedExpression,
+  expr: Expression,
   sName: string,
-):
-  | { consts: BoxedExpression[]; up: BoxedExpression[]; down: BoxedExpression[]; linear: BoxedExpression[] }
-  | undefined {
+): { consts: Expression[]; up: Expression[]; down: Expression[]; linear: Expression[] } | undefined {
   const { numer, denom } = fractionFactors(expr);
   const out = {
-    consts: [] as BoxedExpression[],
-    up: [] as BoxedExpression[],
-    down: [] as BoxedExpression[],
-    linear: [] as BoxedExpression[],
+    consts: [] as Expression[],
+    up: [] as Expression[],
+    down: [] as Expression[],
+    linear: [] as Expression[],
   };
   for (const [factors, inverted] of [
     [numer, false],
@@ -469,12 +452,7 @@ function gammaQuotient(
  * (∫_0^∞ erfc(x) x^{s-1} dx, integrating by parts against erfc' = -2e^{-x²}/√π), shifted by the
  * power-shift rule. A multiple of the denominator and constant factors carry through.
  */
-function inverseErfc(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  sName: string,
-  x: BoxedExpression,
-): BoxedExpression | undefined {
+function inverseErfc(ce: ComputeEngine, expr: Expression, sName: string, x: Expression): Expression | undefined {
   const parts = gammaQuotient(ce, expr, sName);
   if (parts?.up.length !== 1 || parts.down.length !== 0 || parts.linear.length !== 1) return undefined;
   const [g, l] = [affineInS(parts.up[0]!, sName), affineInS(parts.linear[0]!, sName)];
@@ -498,10 +476,10 @@ function inverseErfc(
  */
 function inverseDuplicatedBeta(
   ce: ComputeEngine,
-  expr: BoxedExpression,
+  expr: Expression,
   sName: string,
-  x: BoxedExpression,
-): BoxedExpression | undefined {
+  x: Expression,
+): Expression | undefined {
   const parts = gammaQuotient(ce, expr, sName);
   if (parts?.up.length !== 2 || parts.down.length !== 1 || parts.linear.length !== 0) return undefined;
   const [a, b] = parts.up.map((u) => affineInS(u, sName));
@@ -524,16 +502,11 @@ function inverseDuplicatedBeta(
  * M⁻¹{2^{s-1} a^{-s} Γ((ν+s)/2)/Γ(1+(ν-s)/2)} = J_ν(a x), for integer ν: DLMF 10.22.43,
  * ∫_0^∞ J_ν(t) t^{s-1} dt = 2^{s-1} Γ(½(ν+s))/Γ(1+½(ν-s)), with the scaling rule for a.
  */
-function inverseBesselJ(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  sName: string,
-  x: BoxedExpression,
-): BoxedExpression | undefined {
+function inverseBesselJ(ce: ComputeEngine, expr: Expression, sName: string, x: Expression): Expression | undefined {
   const { numer, denom } = fractionFactors(expr);
-  let scale: BoxedExpression = ce.One;
-  let up: BoxedExpression | undefined;
-  let down: BoxedExpression | undefined;
+  let scale: Expression = ce.One;
+  let up: Expression | undefined;
+  let down: Expression | undefined;
   let twoPower = false;
   for (const { base, power } of numer) {
     if (power !== 1) return undefined;
@@ -559,10 +532,10 @@ function inverseBesselJ(
 
 export function matchInverseMellin(
   ce: ComputeEngine,
-  expr: BoxedExpression,
-  s: BoxedExpression,
-  x: BoxedExpression,
-): BoxedExpression | undefined {
+  expr: Expression,
+  s: Expression,
+  x: Expression,
+): Expression | undefined {
   const sName = symbolNameOf(s);
   if (sName === undefined || !hasVar(expr, sName)) return undefined;
   const gammaPair =
@@ -580,7 +553,7 @@ export function matchInverseMellin(
 export function declareMellinTransform(ce: ComputeEngine): void {
   ce.declare("MellinTransform", {
     signature: "(expression, expression, expression) -> expression",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [f, x, s] = ops;
       if (f === undefined || x === undefined || s === undefined || ops.length > 3) return undefined;
       return matchMellin(ce, f, x, s);
@@ -588,7 +561,7 @@ export function declareMellinTransform(ce: ComputeEngine): void {
   });
   ce.declare("InverseMellinTransform", {
     signature: "(expression, expression, expression) -> expression",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [F, s, x] = ops;
       if (F === undefined || s === undefined || x === undefined || ops.length > 3) return undefined;
       return matchInverseMellin(ce, F, s, x);

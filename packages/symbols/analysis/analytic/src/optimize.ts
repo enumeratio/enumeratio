@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import {
   optimizeRecognized,
@@ -39,7 +39,7 @@ import {
 /** The single real variable a `Minimize`-family call names -- a bare symbol, or a
  * one-element `{x}` list (Wolfram accepts both). More than one variable, or anything else,
  * declines: multivariate optimization isn't attempted here. */
-function targetVar(varsArg: BoxedExpression): string | undefined {
+function targetVar(varsArg: Expression): string | undefined {
   const bare = symbolNameOf(varsArg);
   if (bare !== undefined) return bare;
   if (varsArg.operator === "List") {
@@ -53,11 +53,7 @@ function targetVar(varsArg: BoxedExpression): string | undefined {
  * `{f, cons}` with a simple interval constraint on `x`. `undefined` declines -- an
  * unparseable constraint (`Or`, one coupling `x` to another variable, ...) is not silently
  * dropped. */
-function parseProblem(
-  ce: ComputeEngine,
-  firstArg: BoxedExpression,
-  x: string,
-): { expr: BoxedExpression; ivl: Ivl } | undefined {
+function parseProblem(ce: ComputeEngine, firstArg: Expression, x: string): { expr: Expression; ivl: Ivl } | undefined {
   if (firstArg.operator !== "List") return { expr: firstArg, ivl: UNBOUNDED_IVL };
   const ops = operandsOf(firstArg);
   if (ops.length !== 2) return undefined;
@@ -66,8 +62,8 @@ function parseProblem(
 }
 
 interface Solved {
-  readonly value: BoxedExpression;
-  readonly point: BoxedExpression | undefined;
+  readonly value: Expression;
+  readonly point: Expression | undefined;
 }
 
 /**
@@ -82,8 +78,8 @@ interface Solved {
  */
 function solve(
   ce: ComputeEngine,
-  firstArg: BoxedExpression,
-  varsArg: BoxedExpression,
+  firstArg: Expression,
+  varsArg: Expression,
   direction: "min" | "max",
   needPoint: boolean,
 ): Solved | undefined {
@@ -107,7 +103,7 @@ function declareValueHead(ce: ComputeEngine, name: string, direction: "min" | "m
   ce.declare(name, {
     signature: "(expression, symbol | list<symbol>) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [firstArg, varsArg] = ops;
       if (firstArg === undefined || varsArg === undefined) return undefined;
       return solve(ce, firstArg, varsArg, direction, false)?.value;
@@ -119,7 +115,7 @@ function declareMinMax(ce: ComputeEngine, name: string, direction: "min" | "max"
   ce.declare(name, {
     signature: "(expression, symbol | list<symbol>) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [firstArg, varsArg] = ops;
       if (firstArg === undefined || varsArg === undefined) return undefined;
       const x = targetVar(varsArg);

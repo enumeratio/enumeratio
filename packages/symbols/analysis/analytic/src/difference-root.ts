@@ -1,4 +1,4 @@
-import { type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
+import { type Expression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
 import { operandsOf, wrapOperator } from "@enumeratio/engine";
 
 // DifferenceRootReduce(f(n), n) / DifferenceRoot(...)[n]: Wolfram's holonomic (P-recursive)
@@ -37,11 +37,11 @@ import { operandsOf, wrapOperator } from "@enumeratio/engine";
 // construction site is the boundary back into compute-engine's own types.
 type Json = number | string | boolean | { num: string } | readonly Json[];
 
-const j = (expr: BoxedExpression): Json => expr.json as unknown as Json;
+const j = (expr: Expression): Json => expr.json as unknown as Json;
 
 /** A name not among `expr`'s free variables, so the reduction's own `Function` scope can't
  * shadow something the input actually uses (e.g. `Binomial(n, y)` with `y` a free parameter). */
-function freshSymbol(expr: BoxedExpression, base: string): string {
+function freshSymbol(expr: Expression, base: string): string {
   const used = new Set(expr.freeVariables);
   if (!used.has(base)) return base;
   for (let i = 2; ; i++) if (!used.has(`${base}${i}`)) return `${base}${i}`;
@@ -49,26 +49,26 @@ function freshSymbol(expr: BoxedExpression, base: string): string {
 
 /** The bound index's name: the first of `n k j i l` that is neither the outer `varName` nor free in
  * `expr`, so the printed recurrence reads `y(k+1)` rather than `y(n2+1)`. */
-function boundIndexName(expr: BoxedExpression, varName: string): string {
+function boundIndexName(expr: Expression, varName: string): string {
   const taken = new Set([varName, ...expr.freeVariables]);
   return ["n", "k", "j", "i", "l"].find((name) => !taken.has(name)) ?? freshSymbol(expr, "k");
 }
 
-const isExactNumber = (x: BoxedExpression): boolean => isNumber(x) && x.isExact;
+const isExactNumber = (x: Expression): boolean => isNumber(x) && x.isExact;
 
 /** The integer an exact numeric literal names, or undefined (declines non-integers). */
-function intLiteral(x: BoxedExpression): number | undefined {
+function intLiteral(x: Expression): number | undefined {
   if (!isExactNumber(x) || x.im !== 0 || !Number.isInteger(x.re)) return undefined;
   return x.re;
 }
 
-const isZeroExpr = (x: BoxedExpression): boolean => isExactNumber(x) && x.re === 0 && x.im === 0;
+const isZeroExpr = (x: Expression): boolean => isExactNumber(x) && x.re === 0 && x.im === 0;
 
 /** Whether `expr` is built only from symbols (the reduction's own variable or any other,
  * treated as a symbolic constant), exact numeric literals, and +, −, ×, and integer powers —
  * i.e. a polynomial with possibly-symbolic coefficients, in whichever symbol the caller cares
  * about. */
-function isPolynomialIn(expr: BoxedExpression): boolean {
+function isPolynomialIn(expr: Expression): boolean {
   if (isSymbol(expr)) return true;
   if (isExactNumber(expr)) return true;
   const ops = operandsOf(expr);
@@ -96,8 +96,8 @@ function isPolynomialIn(expr: BoxedExpression): boolean {
 
 /** A hypergeometric term's ratio t(n+1)/t(n) = num(n)/den(n), both in terms of `varName`. */
 interface Ratio {
-  readonly num: BoxedExpression;
-  readonly den: BoxedExpression;
+  readonly num: Expression;
+  readonly den: Expression;
 }
 
 const ONE = (ce: ComputeEngine) => ce.One;
@@ -106,9 +106,9 @@ const ONE = (ce: ComputeEngine) => ce.One;
  * Factorial(n), a^n, CatalanNumber(n), polynomials in n, and Multiply/Divide/Negate/Power
  * combinations of these. Binomial(n, k) is handled only as the WHOLE expression (see
  * `reduceOrder1`) because its anchor pair isn't a plain ratio. */
-function decomposeRatio(ce: ComputeEngine, expr: BoxedExpression, varName: string): Ratio | undefined {
+function decomposeRatio(ce: ComputeEngine, expr: Expression, varName: string): Ratio | undefined {
   const ops = operandsOf(expr);
-  const shiftUp = (e: BoxedExpression) => e.subs({ [varName]: ["Add", varName, 1] as never }).evaluate();
+  const shiftUp = (e: Expression) => e.subs({ [varName]: ["Add", varName, 1] as never }).evaluate();
 
   if (!expr.freeVariables.includes(varName)) return { num: ONE(ce), den: ONE(ce) }; // constant: ratio 1
 
@@ -167,7 +167,7 @@ function decomposeRatio(ce: ComputeEngine, expr: BoxedExpression, varName: strin
 
 /** Native evaluation of the original expression at a concrete index — used only to build
  * initial-condition anchors at reduction time, never at `Apply` evaluation time. */
-function nativeAt(expr: BoxedExpression, varName: string, index: number): BoxedExpression {
+function nativeAt(expr: Expression, varName: string, index: number): Expression {
   return expr.subs({ [varName]: index }).evaluate();
 }
 
@@ -176,23 +176,23 @@ function nativeAt(expr: BoxedExpression, varName: string, index: number): BoxedE
  * `coeffs[order]` vanishes (see `evaluateAt`). */
 interface LinearRec {
   readonly order: number;
-  readonly coeffs: readonly BoxedExpression[]; // length order + 1, functions of varName
-  readonly rhsConst: BoxedExpression; // function of varName; 0 for every homogeneous case
+  readonly coeffs: readonly Expression[]; // length order + 1, functions of varName
+  readonly rhsConst: Expression; // function of varName; 0 for every homogeneous case
   readonly varName: string;
-  readonly anchors: ReadonlyMap<number, BoxedExpression>;
+  readonly anchors: ReadonlyMap<number, Expression>;
 }
 
 /** Order-1 reduction: Binomial(n, k) as a whole (its own anchor pair), else the general
  * hypergeometric-ratio decomposition, with an extra anchor at n = 1 when the ratio's own
  * denominator vanishes at n = 0 (a monomial n^k, say) so forward stepping never needs it. */
-function reduceOrder1(ce: ComputeEngine, expr: BoxedExpression, varName: string): LinearRec | undefined {
+function reduceOrder1(ce: ComputeEngine, expr: Expression, varName: string): LinearRec | undefined {
   const ops = operandsOf(expr);
   if (expr.operator === "Binomial" && ops.length === 2 && isSymbol(ops[0]) && ops[0].symbol === varName) {
     const k = intLiteral(ops[1]);
     if (k === undefined || k < 0 || ops[1].freeVariables.includes(varName)) return undefined;
     const A = ce.box(["Add", varName, 1] as never); // n + 1
     const B = ce.box(["Subtract", A.json as never, k] as never).evaluate(); // n + 1 - k
-    const anchors = new Map<number, BoxedExpression>([
+    const anchors = new Map<number, Expression>([
       [-1, nativeAt(expr, varName, -1)],
       [k, ce.One],
     ]);
@@ -207,7 +207,7 @@ function reduceOrder1(ce: ComputeEngine, expr: BoxedExpression, varName: string)
 
   const ratio = decomposeRatio(ce, expr, varName);
   if (ratio === undefined) return undefined;
-  const anchors = new Map<number, BoxedExpression>([[0, nativeAt(expr, varName, 0)]]);
+  const anchors = new Map<number, Expression>([[0, nativeAt(expr, varName, 0)]]);
   const denAt0 = ratio.den.subs({ [varName]: 0 }).evaluate();
   if (isZeroExpr(denAt0)) {
     const v1 = nativeAt(expr, varName, 1);
@@ -224,7 +224,7 @@ function reduceOrder1(ce: ComputeEngine, expr: BoxedExpression, varName: string)
 }
 
 /** Fibonacci(n) / LucasL(n): constant-coefficient order 2. */
-function reduceConstOrder2(ce: ComputeEngine, expr: BoxedExpression, varName: string): LinearRec | undefined {
+function reduceConstOrder2(ce: ComputeEngine, expr: Expression, varName: string): LinearRec | undefined {
   const ops = operandsOf(expr);
   if (ops.length !== 1 || !isSymbol(ops[0]) || ops[0].symbol !== varName) return undefined;
   const seed: readonly [number, number] | undefined =
@@ -246,7 +246,7 @@ function reduceConstOrder2(ce: ComputeEngine, expr: BoxedExpression, varName: st
 /** HarmonicNumber(n): order 1, (n+1)(y(n+1) − y(n)) = 1 — Wolfram's own reduction, an
  * inhomogeneous constant rather than the order-2 homogeneous form the recurrence for H_n
  * would otherwise suggest. */
-function reduceHarmonic(ce: ComputeEngine, expr: BoxedExpression, varName: string): LinearRec | undefined {
+function reduceHarmonic(ce: ComputeEngine, expr: Expression, varName: string): LinearRec | undefined {
   const ops = operandsOf(expr);
   if (expr.operator !== "HarmonicNumber" || ops.length !== 1 || !isSymbol(ops[0]) || ops[0].symbol !== varName) {
     return undefined;
@@ -265,27 +265,27 @@ function reduceHarmonic(ce: ComputeEngine, expr: BoxedExpression, varName: strin
  * classical elimination (a 2D cross-product on the vectors (1,1), (r1(n),r2(n)),
  * (r1(n)r1(n+1), r2(n)r2(n+1))). Declines when the two ratios coincide (degenerate: the
  * elimination collapses to 0 == 0, not a genuine order-2 recurrence). */
-function reduceSum(ce: ComputeEngine, expr: BoxedExpression, varName: string): LinearRec | undefined {
+function reduceSum(ce: ComputeEngine, expr: Expression, varName: string): LinearRec | undefined {
   const parts = operandsOf(expr);
   if (expr.operator !== "Add" || parts.length !== 2) return undefined;
   const r1 = decomposeRatio(ce, parts[0], varName);
   const r2 = decomposeRatio(ce, parts[1], varName);
   if (r1 === undefined || r2 === undefined) return undefined;
 
-  const shiftUp = (e: BoxedExpression) => e.subs({ [varName]: ["Add", varName, 1] as never }).evaluate();
+  const shiftUp = (e: Expression) => e.subs({ [varName]: ["Add", varName, 1] as never }).evaluate();
   const r = (ratio: Ratio) => ce.box(["Divide", j(ratio.num), j(ratio.den)] as never).evaluate();
   const r1n = r(r1);
   const r2n = r(r2);
   const r1n1 = shiftUp(r1n);
   const r2n1 = shiftUp(r2n);
-  const mul = (a: BoxedExpression, b: BoxedExpression) => ce.box(["Multiply", j(a), j(b)] as never).evaluate();
-  const sub = (a: BoxedExpression, b: BoxedExpression) => ce.box(["Subtract", j(a), j(b)] as never).evaluate();
+  const mul = (a: Expression, b: Expression) => ce.box(["Multiply", j(a), j(b)] as never).evaluate();
+  const sub = (a: Expression, b: Expression) => ce.box(["Subtract", j(a), j(b)] as never).evaluate();
 
   const c2 = sub(r2n, r1n); // v0 x v1
   const c1 = sub(mul(r1n, r1n1), mul(r2n, r2n1)); // v2 x v0
   const c0 = sub(mul(r1n, mul(r2n, r2n1)), mul(r2n, mul(r1n, r1n1))); // v1 x v2
 
-  const probe = (c: BoxedExpression) => c.subs({ [varName]: 7 }).evaluate();
+  const probe = (c: Expression) => c.subs({ [varName]: 7 }).evaluate();
   if (isZeroExpr(probe(c2)) && isZeroExpr(probe(c1)) && isZeroExpr(probe(c0))) return undefined; // degenerate
 
   return {
@@ -300,7 +300,7 @@ function reduceSum(ce: ComputeEngine, expr: BoxedExpression, varName: string): L
   };
 }
 
-function reduce(ce: ComputeEngine, expr: BoxedExpression, varName: string): LinearRec | undefined {
+function reduce(ce: ComputeEngine, expr: Expression, varName: string): LinearRec | undefined {
   return (
     reduceConstOrder2(ce, expr, varName) ??
     reduceHarmonic(ce, expr, varName) ??
@@ -315,7 +315,7 @@ const yCall = (yName: string, varName: string, shift: number): Json =>
   shift === 0 ? [yName, varName] : [yName, ["Add", varName, shift]];
 
 /** Build `Function([recurrence == 0, ic...], y, n)` from a `LinearRec`. */
-function buildFunction(ce: ComputeEngine, rec: LinearRec, yName: string): BoxedExpression {
+function buildFunction(ce: ComputeEngine, rec: LinearRec, yName: string): Expression {
   const terms: Json[] = [];
   for (let i = 0; i <= rec.order; i++) {
     if (isZeroExpr(rec.coeffs[i])) continue;
@@ -335,7 +335,7 @@ export function declareDifferenceRoot(ce: ComputeEngine): void {
   ce.declare("DifferenceRootReduce", {
     signature: "(expression, symbol) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expression[]): Expression | undefined => {
       const [expr, varExpr] = ops;
       if (expr === undefined || varExpr === undefined || !isSymbol(varExpr)) return undefined;
       const varName = varExpr.symbol!;
@@ -363,7 +363,7 @@ const ROOTS = new Set(["DifferenceRoot", "DifferentialRoot"]);
 const REDUCES = new Set(["DifferenceRootReduce", "DifferentialRootReduce"]);
 
 /** The `Apply(Root(fn), v)` a reduction returns, for a callee that is that reduction (or its result). */
-const reducedRoot = (callee: BoxedExpression): BoxedExpression | undefined => {
+const reducedRoot = (callee: Expression): Expression | undefined => {
   const reduced = REDUCES.has(callee.operator) ? callee.evaluate() : callee;
   const [root, variable] = operandsOf(reduced);
   return reduced.operator === "Apply" && root !== undefined && ROOTS.has(root.operator) && isSymbol(variable)
@@ -391,10 +391,10 @@ function attachReducedRootApply(ce: ComputeEngine): void {
 /** `y(literal)` (an initial condition) vs `y(n + shift)` (the recurrence) — the recurrence is
  * the one equation whose argument to `y` mentions the bound variable symbolically. */
 function classifyEquation(
-  eq: BoxedExpression,
+  eq: Expression,
   yName: string,
   varName: string,
-): { kind: "ic"; index: number; value: BoxedExpression } | { kind: "rec"; lhs: BoxedExpression } | undefined {
+): { kind: "ic"; index: number; value: Expression } | { kind: "rec"; lhs: Expression } | undefined {
   const [lhs, rhs] = operandsOf(eq);
   if (eq.operator !== "Equal" || lhs === undefined || rhs === undefined) return undefined;
   if (lhs.freeVariables.includes(varName)) return { kind: "rec", lhs };
@@ -412,22 +412,22 @@ function classifyEquation(
  * unchanged. */
 function parseRecurrence(
   ce: ComputeEngine,
-  lhs: BoxedExpression,
+  lhs: Expression,
   yName: string,
   varName: string,
-): { order: number; coeffs: Map<number, BoxedExpression>; rhsConst: BoxedExpression } | undefined {
+): { order: number; coeffs: Map<number, Expression>; rhsConst: Expression } | undefined {
   const terms = lhs.operator === "Add" ? operandsOf(lhs) : [lhs];
-  const coeffs = new Map<number, BoxedExpression>();
+  const coeffs = new Map<number, Expression>();
   let rhsConst = ce.Zero;
-  const addConst = (c: BoxedExpression) => {
+  const addConst = (c: Expression) => {
     rhsConst = ce.box(["Add", j(rhsConst), j(c)] as never).evaluate();
   };
-  const addCoeff = (shift: number, c: BoxedExpression) => {
+  const addCoeff = (shift: number, c: Expression) => {
     const prev = coeffs.get(shift);
     coeffs.set(shift, prev === undefined ? c : ce.box(["Add", j(prev), j(c)] as never).evaluate());
   };
   /** shift of `y(expr)`/`Derivative`-free call `[yName, idxExpr]`, or undefined if not one. */
-  const shiftOf = (call: BoxedExpression): number | undefined => {
+  const shiftOf = (call: Expression): number | undefined => {
     if (call.operator !== yName) return undefined;
     const idx = operandsOf(call)[0];
     if (idx === undefined) return undefined;
@@ -445,14 +445,14 @@ function parseRecurrence(
   /** Split one additive `term` into its (at most one) `y`-call shift and the remaining
    * coefficient factor, recursing through `Negate` so a negated constant or a negated
    * `Multiply(coeff, y(...))` are both handled the same way as the un-negated cases. */
-  const decomposeTerm = (term: BoxedExpression): { shift: number | undefined; coeff: BoxedExpression } => {
+  const decomposeTerm = (term: Expression): { shift: number | undefined; coeff: Expression } => {
     if (term.operator === "Negate") {
       const inner = decomposeTerm(operandsOf(term)[0]!);
       return { shift: inner.shift, coeff: ce.box(["Negate", j(inner.coeff)] as never).evaluate() };
     }
     const factors = term.operator === "Multiply" ? operandsOf(term) : [term];
     let shift: number | undefined;
-    const rest: BoxedExpression[] = [];
+    const rest: Expression[] = [];
     for (const f of factors) {
       const s = shiftOf(f);
       if (s !== undefined) shift = s;
@@ -477,11 +477,11 @@ function parseRecurrence(
  * coefficient is exactly 0 with no anchor to jump to instead. */
 function evaluateAt(
   ce: ComputeEngine,
-  rec: { order: number; coeffs: Map<number, BoxedExpression>; rhsConst: BoxedExpression },
+  rec: { order: number; coeffs: Map<number, Expression>; rhsConst: Expression },
   varName: string,
-  anchors: ReadonlyMap<number, BoxedExpression>,
+  anchors: ReadonlyMap<number, Expression>,
   target: number,
-): BoxedExpression | undefined {
+): Expression | undefined {
   if (anchors.has(target)) return anchors.get(target);
   const known = new Map(anchors);
   const below = [...known.keys()].filter((i) => i <= target).toSorted((a, b) => a - b);
@@ -489,7 +489,7 @@ function evaluateAt(
   const base = below[below.length - 1]!;
   for (let m = base + 1; m <= target; m++) {
     const n0 = m - rec.order;
-    const at = (c: BoxedExpression) => c.subs({ [varName]: n0 } as never).evaluate();
+    const at = (c: Expression) => c.subs({ [varName]: n0 } as never).evaluate();
     const top = at(rec.coeffs.get(rec.order)!);
     if (isZeroExpr(top)) {
       if (known.has(m)) continue;
@@ -512,14 +512,14 @@ function attachDifferenceRootApply(ce: ComputeEngine): void {
     ["Apply"],
     (ops) => ops[0]?.operator === "DifferenceRoot",
     () => (ops) => {
-      const [target, arg] = ops as [BoxedExpression, BoxedExpression];
+      const [target, arg] = ops as [Expression, Expression];
       const fn = operandsOf(target)[0];
       const index = intLiteral(arg.evaluate());
       if (fn === undefined || index === undefined || index < 0) return undefined; // stays symbolic
       const fnOps = operandsOf(fn);
-      const block: BoxedExpression | undefined = fnOps[0];
-      const ySym: BoxedExpression | undefined = fnOps[1];
-      const varSym: BoxedExpression | undefined = fnOps[2];
+      const block: Expression | undefined = fnOps[0];
+      const ySym: Expression | undefined = fnOps[1];
+      const varSym: Expression | undefined = fnOps[2];
       // `Function`'s body is canonicalized to a `Block` wrapping our `List` of equations
       // (see the header of function-utils.d.ts, quoted in derivatives.ts).
       const body = block?.operator === "Block" ? operandsOf(block)[0] : block;
@@ -527,8 +527,8 @@ function attachDifferenceRootApply(ce: ComputeEngine): void {
       const yName = ySym.symbol;
       const varName = varSym.symbol;
       if (yName === undefined || varName === undefined) return undefined;
-      const anchors = new Map<number, BoxedExpression>();
-      let recLhs: BoxedExpression | undefined;
+      const anchors = new Map<number, Expression>();
+      let recLhs: Expression | undefined;
       for (const eq of operandsOf(body)) {
         const c = classifyEquation(eq, yName, varName);
         if (c === undefined) return undefined;

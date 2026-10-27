@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { inDoublesIfComplex, isRealInt } from "@enumeratio/ce-patches";
 
 // FallingFactorial(x, n) = x(x−1)…(x−n+1). Integer n: (−1)^n·Pochhammer(−x, n), exact and
@@ -6,11 +6,11 @@ import { inDoublesIfComplex, isRealInt } from "@enumeratio/ce-patches";
 
 export function evaluateFallingFactorial(
   ce: ComputeEngine,
-  x: BoxedExpression,
-  n: BoxedExpression,
+  x: Expression,
+  n: Expression,
   numeric: boolean,
   options: { readonly numericApproximation?: boolean } = {},
-): BoxedExpression | undefined {
+): Expression | undefined {
   if (isRealInt(n)) {
     const r = ce.box(["Multiply", ["Power", -1, n.json], ["Pochhammer", ["Negate", x.json], n.json]] as never);
     return numeric ? r.N() : r.evaluate();

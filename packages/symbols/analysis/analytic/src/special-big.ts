@@ -1,5 +1,5 @@
 // unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@enumeratio/engine/unstable";
+import { BigDecimal, type Expression, type ComputeEngine } from "@enumeratio/engine/unstable";
 import { wrapOperator } from "@enumeratio/engine";
 import { atDigits, bigRealOperand, bigResult, wantsBigDigits, isFiniteNum, isRealInt } from "@enumeratio/ce-patches";
 import { pfqRegularizedBig } from "./hypergeometric-big.ts";
@@ -202,7 +202,7 @@ export function besselKYBig(kind: "K" | "Y", order: number, x: BigDecimal, digit
 type Handler = (x: BigDecimal, digits: number) => BigDecimal | undefined;
 
 export function declareSpecialBig(ce: ComputeEngine): void {
-  const real = (ops: readonly BoxedExpression[], arity: number): boolean =>
+  const real = (ops: readonly Expression[], arity: number): boolean =>
     ops.length === arity && ops.every(isFiniteNum) && ops.every((op) => op.im === 0);
   // What each kernel can answer, so a call it always refuses never reaches it.
   const unary: readonly [string, Handler, (x: number) => boolean][] = [

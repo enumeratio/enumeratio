@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 
 // Shared calculus for Interval's monotonic-image rule and Around's first-order propagation:
 // both need "the derivative of `head`'s `argIndex`-th argument, evaluated at a point" — the
@@ -16,16 +16,16 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 function evalAt(
   ce: ComputeEngine,
   head: string,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   argIndex: number,
-  x: BoxedExpression,
-): BoxedExpression {
+  x: Expression,
+): Expression {
   const args = ops.map((o, i) => (i === argIndex ? x : o));
   return ce.function(head, args).evaluate();
 }
 
 /** The same, but as a plain double — for derivative sampling and sign checks only. */
-function numAt(ce: ComputeEngine, head: string, ops: readonly BoxedExpression[], argIndex: number, x: number): number {
+function numAt(ce: ComputeEngine, head: string, ops: readonly Expression[], argIndex: number, x: number): number {
   const args = ops.map((o, i) => (i === argIndex ? ce.number(x) : o));
   return ce.function(head, args).N().re;
 }
@@ -45,10 +45,10 @@ function numAt(ce: ComputeEngine, head: string, ops: readonly BoxedExpression[],
 export function makeDerivativeEvaluator(
   ce: ComputeEngine,
   head: string,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   argIndex: number,
 ): (at: number) => number | undefined {
-  let symbolic: BoxedExpression | undefined;
+  let symbolic: Expression | undefined;
   try {
     const t = ce.symbol("_tagged_calculus_t");
     const argsWithT = ops.map((o, i) => (i === argIndex ? t : o));
@@ -83,7 +83,7 @@ export function makeDerivativeEvaluator(
 export function derivativeAt(
   ce: ComputeEngine,
   head: string,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   argIndex: number,
   at: number,
 ): number | undefined {
@@ -157,11 +157,11 @@ const SIGN_SAMPLES = 24;
 export function imageOverArg(
   ce: ComputeEngine,
   head: string,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   argIndex: number,
-  l: BoxedExpression,
-  h: BoxedExpression,
-): { lo: BoxedExpression; hi: BoxedExpression } | undefined {
+  l: Expression,
+  h: Expression,
+): { lo: Expression; hi: Expression } | undefined {
   const lNum = l.N().re;
   const hNum = h.N().re;
   if (!Number.isFinite(lNum) || !Number.isFinite(hNum) || lNum > hNum) return undefined;
@@ -186,7 +186,7 @@ export function imageOverArg(
   // which side of it the extremum falls on.
   const signs = derivatives.map((d) => ((d as number) > 0 ? 1 : -1));
 
-  const candidates: BoxedExpression[] = [evalAt(ce, head, ops, argIndex, l), evalAt(ce, head, ops, argIndex, h)];
+  const candidates: Expression[] = [evalAt(ce, head, ops, argIndex, l), evalAt(ce, head, ops, argIndex, h)];
   let signChanges = 0;
   for (let i = 1; i < signs.length; i++) {
     if (signs[i] === signs[i - 1]) continue;
@@ -200,7 +200,7 @@ export function imageOverArg(
     candidates.push(evalAt(ce, head, ops, argIndex, ce.number(root)));
   }
 
-  const numOf = (e: BoxedExpression) => e.N().re;
+  const numOf = (e: Expression) => e.N().re;
   const lo = candidates.reduce((a, b) => (numOf(b) < numOf(a) ? b : a));
   const hi = candidates.reduce((a, b) => (numOf(b) > numOf(a) ? b : a));
   return { lo, hi };

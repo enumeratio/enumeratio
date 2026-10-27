@@ -1,4 +1,4 @@
-import type { BoxedExpression } from "@cortex-js/compute-engine";
+import type { Expression } from "@cortex-js/compute-engine";
 
 // The shared view a workworksheet's panes are drawn into.
 //
@@ -52,7 +52,7 @@ export const AUTO_VIEW: Record<string, SpaceView> = {
 };
 
 /** A number from a boxed setting, or undefined if it is not one. */
-function numberOf(value: BoxedExpression | undefined): number | undefined {
+function numberOf(value: Expression | undefined): number | undefined {
   if (!value) return undefined;
   return Number.isFinite(value.re) && value.im === 0 ? value.re : undefined;
 }
@@ -79,7 +79,7 @@ function jsonNumber(node: unknown): number | undefined {
  * A 2-vector from `(a, b)` or `[a, b]`, or a bare number meaning both axes. Read off
  * the MathJSON rather than the boxed operands, which are not part of the public type.
  */
-function pairOf(value: BoxedExpression | undefined): [number, number] | undefined {
+function pairOf(value: Expression | undefined): [number, number] | undefined {
   if (!value) return undefined;
   const single = numberOf(value);
   if (single !== undefined) return [single, single];
@@ -95,7 +95,7 @@ function pairOf(value: BoxedExpression | undefined): [number, number] | undefine
 const PAIR_HEADS = new Set(["Tuple", "List", "Pair", "Delimiter", "Sequence"]);
 
 /** Is this setting explicitly `Auto` — i.e. "work it out"? */
-const isAuto = (value: BoxedExpression | undefined): boolean => {
+const isAuto = (value: Expression | undefined): boolean => {
   const json = value?.json as unknown;
   return json === "Auto" || json === "Automatic";
 };
@@ -109,7 +109,7 @@ const isAuto = (value: BoxedExpression | undefined): boolean => {
  * centre-and-extent the camera actually holds, since that is the same statement made
  * two ways and authors think in ranges.
  */
-export function resolveView(kind: string, settings: ReadonlyMap<string, BoxedExpression>): SpaceView {
+export function resolveView(kind: string, settings: ReadonlyMap<string, Expression>): SpaceView {
   const base = AUTO_VIEW[kind] ?? AUTO_VIEW.portrait;
   const view: SpaceView = { ...base, center: [...base.center] as [number, number] };
   const read = (name: string) => {

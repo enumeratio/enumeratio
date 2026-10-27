@@ -12,7 +12,7 @@
 // kernels below stay: @enumeratio/analytic still calls them directly for certified-
 // precision evaluation, and DirichletBeta/DirichletL still need HurwitzZeta/Zeta correct
 // beyond a double's digits.
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { wrapOperator } from "@enumeratio/engine";
 import type { LibraryRecord } from "../../patch.ts";
 import { atEnginePrecision, bigRealOperand, bigResult, DOUBLE_DIGITS } from "../../support/precise.ts";
@@ -48,7 +48,7 @@ type Json = number | string | { num: string } | Json[];
  * of a^(−s), which compute-engine's own Power and LerchPhi get wrong by reading (−2.664)^(−2.976)
  * as a real odd root. The kernel (numerics/lerch-phi.ts) takes the branch.
  */
-export function principalAtZero(ops: readonly BoxedExpression[], numeric: boolean): boolean {
+export function principalAtZero(ops: readonly Expression[], numeric: boolean): boolean {
   const [z, s, a] = ops;
   return (
     numeric &&
@@ -63,17 +63,13 @@ export function principalAtZero(ops: readonly BoxedExpression[], numeric: boolea
   );
 }
 
-export function evaluateLerch(
-  ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
-  numeric: boolean,
-): BoxedExpression | undefined {
+export function evaluateLerch(ce: ComputeEngine, ops: readonly Expression[], numeric: boolean): Expression | undefined {
   const z = ops[0];
   const s = ops[1];
   const a = ops[2];
   if (z === undefined || s === undefined || a === undefined) return undefined;
   const boxed = (expr: unknown) => ce.box(expr as never);
-  const done = (expr: BoxedExpression) => (numeric ? expr.N() : expr.evaluate());
+  const done = (expr: Expression) => (numeric ? expr.N() : expr.evaluate());
 
   // Φ(1, s, a) = ζ(s, a) — flows into the HurwitzZeta closed forms.
   if (z.im === 0 && z.re === 1) return done(boxed(["HurwitzZeta", s.json, a.json]));
@@ -119,7 +115,7 @@ export const lerchPhiLibrary: LibraryRecord = {
   LerchPhi: {
     description: "The Lerch transcendent Φ(z, s, a) = Σ zⁿ(n+a)^(−s).",
     signature: "(number, number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
+    evaluate: (ops: readonly Expression[], options: EvalOptions) =>
       evaluateLerch(options.engine, ops, wantsNumber(ops, options)),
     compile: realCompile(3, { js: "__lp", wgsl: "lerchPhi", wgslReal: "lerchPhiReal" }),
   },
@@ -133,15 +129,15 @@ export const lerchPhiLibrary: LibraryRecord = {
 
 export function evaluateHurwitz(
   ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   numeric: boolean,
-): BoxedExpression | undefined {
+): Expression | undefined {
   const s = ops[0];
   const a = ops[1];
   if (s === undefined || a === undefined) return undefined;
 
   const boxed = (expr: Json) => ce.box(expr as never);
-  const done = (expr: BoxedExpression) => (numeric ? expr.N() : expr.evaluate());
+  const done = (expr: Expression) => (numeric ? expr.N() : expr.evaluate());
 
   // ζ(1, a): a simple pole for every a.
   if (isRealInt(s) && s.re === 1) return ce.symbol("ComplexInfinity");
@@ -212,11 +208,7 @@ const MAX_EXACT_SHIFT = 64;
  * cap, and any other concrete exact s at n = 1 (1 + ζ(s)), which is where Wolfram stops too; a
  * longer sum with a non-closed ζ(s) stays symbolic. Elsewhere undefined, so it stays symbolic.
  */
-export function zetaAtNonpositiveShift(
-  ce: ComputeEngine,
-  s: BoxedExpression,
-  a: BoxedExpression,
-): BoxedExpression | undefined {
+export function zetaAtNonpositiveShift(ce: ComputeEngine, s: Expression, a: Expression): Expression | undefined {
   if (a.im !== 0 || !Number.isInteger(a.re) || a.re >= 0 || -a.re > MAX_EXACT_SHIFT || !isFiniteNum(s))
     return undefined;
   const sJson = s.json as unknown as Json;
@@ -231,11 +223,7 @@ export function zetaAtNonpositiveShift(
   return ce.box(["Add", ...terms] as never).evaluate();
 }
 
-export function evaluateZeta(
-  ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
-  numeric: boolean,
-): BoxedExpression | undefined {
+export function evaluateZeta(ce: ComputeEngine, ops: readonly Expression[], numeric: boolean): Expression | undefined {
   const s = ops[0];
   const a = ops[1];
   if (s === undefined || a === undefined) return undefined;
@@ -274,7 +262,7 @@ export function evaluateZeta(
  * bignum (1/3 to every digit asked for); at machine precision it is the double, which is
  * closer than the 15-digit bignum compute-engine would give.
  */
-const bigOperand = (ce: ComputeEngine, x: BoxedExpression): BigCx =>
+const bigOperand = (ce: ComputeEngine, x: Expression): BigCx =>
   bigCx(ce.precision > DOUBLE_DIGITS ? (x.bignumRe ?? x.re) : x.re, x.im);
 
 /**
@@ -285,9 +273,9 @@ const bigOperand = (ce: ComputeEngine, x: BoxedExpression): BigCx =>
 function bigZetaResult(
   ce: ComputeEngine,
   kernel: (s: BigCx, a: BigCx, digits: number) => BigCx | undefined,
-  s: BoxedExpression,
-  a: BoxedExpression,
-): BoxedExpression | undefined {
+  s: Expression,
+  a: Expression,
+): Expression | undefined {
   if (zetaKernel !== "bignum") return undefined;
   const r = kernel(bigOperand(ce, s), bigOperand(ce, a), Math.max(ce.precision, 17));
   if (r === undefined) return undefined;
@@ -307,7 +295,7 @@ function bigZetaResult(
  * `MAX_WORKING_DIGITS`, or when the bignum route is switched off (`setZetaKernel`); the
  * caller falls back to `polygamma` and its cancellation guard.
  */
-function bigPolygamma(ce: ComputeEngine, m: number, z: BoxedExpression): Cx | undefined {
+function bigPolygamma(ce: ComputeEngine, m: number, z: Expression): Cx | undefined {
   if (zetaKernel !== "bignum") return undefined;
   const r = hurwitzZetaBig(bigCx(m + 1), bigOperand(ce, z), Math.max(ce.precision, 17));
   if (r === undefined) return undefined;
@@ -318,9 +306,9 @@ function bigPolygamma(ce: ComputeEngine, m: number, z: BoxedExpression): Cx | un
 export function evaluatePolygamma(
   ce: ComputeEngine,
   native: NativeEval,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   options: EvalOptions,
-): BoxedExpression | undefined {
+): Expression | undefined {
   const r = native?.(ops, options);
   if (!declined(r, "PolyGamma")) return r;
 

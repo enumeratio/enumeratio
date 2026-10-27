@@ -5,7 +5,7 @@
 // (:export / :import) are injected by the host via `commands`.
 
 import { allFormats, exportFormats, importFormats, mimeTypeToFormatList } from "@enumeratio/formats";
-import type { BoxedExpression } from "@cortex-js/compute-engine";
+import type { Expression } from "@cortex-js/compute-engine";
 import { can, type Environment, ENVIRONMENTS, environmentNamed } from "@enumeratio/frontend";
 import { evaluateReadouts, reduce } from "@enumeratio/frontend";
 import { bold, cyan, dim, red } from "./ansi.ts";
@@ -114,7 +114,7 @@ export class Repl {
   }
 
   /** The result as the chosen environment would have it; unreduced by default. */
-  reduced(expr: BoxedExpression): BoxedExpression {
+  reduced(expr: Expression): Expression {
     if (this.environment === undefined || can.drive(this.environment)) return expr;
     const { ce } = this.session;
     const out = evaluateReadouts(

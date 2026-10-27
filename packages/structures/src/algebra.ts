@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { symbolNameOf, wrapOperator } from "@enumeratio/engine";
 import { conform, member } from "./conform.ts";
 import { ensureProtocols } from "./protocols.ts";
@@ -17,7 +17,7 @@ import { ensureProtocols } from "./protocols.ts";
  * a generator-free product rather than fold it into `Multiply`: that would silently assume
  * commutativity the caller never granted.
  */
-export type Product = (operands: readonly BoxedExpression[], head: string) => BoxedExpression | undefined;
+export type Product = (operands: readonly Expression[], head: string) => Expression | undefined;
 
 const PRODUCT_HEADS = ["NonCommutativeMultiply", "GeometricProduct", "CircleTimes"];
 
@@ -42,7 +42,7 @@ export function ensureAlgebraHeads(ce: ComputeEngine): void {
       signature: "(number*) -> number",
       commutative: false,
       associative: true,
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expression[]) => {
         for (const product of products.values()) {
           const answer = product(ops, head);
           if (answer !== undefined) return answer;
@@ -79,9 +79,9 @@ export function registerProduct(ce: ComputeEngine, name: string, product: Produc
 export interface AlgebraFamily {
   /** The type whose values name these algebras, minted by the library. */
   readonly type: string;
-  basis(algebra: BoxedExpression): BoxedExpression | undefined;
-  dimension(algebra: BoxedExpression): BoxedExpression | undefined;
-  contains?(element: BoxedExpression, algebra: BoxedExpression): BoxedExpression | undefined;
+  basis(algebra: Expression): Expression | undefined;
+  dimension(algebra: Expression): Expression | undefined;
+  contains?(element: Expression, algebra: Expression): Expression | undefined;
   /** The ordered product of this family's elements. */
   product?: Product;
 }

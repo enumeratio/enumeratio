@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { withAssumed } from "./piecewise-assumptions.ts";
 
@@ -24,7 +24,7 @@ import { withAssumed } from "./piecewise-assumptions.ts";
 /** The individual boolean conditions from a single condition, an `And` of conditions, or a
  * `List` of conditions — Wolfram's `Assuming`/`Refine` accept all three shapes for their
  * assumptions argument. */
-function flattenConditions(cond: BoxedExpression): BoxedExpression[] {
+function flattenConditions(cond: Expression): Expression[] {
   if (cond.operator === "And" || cond.operator === "List") {
     return operandsOf(cond).flatMap(flattenConditions);
   }
@@ -33,7 +33,7 @@ function flattenConditions(cond: BoxedExpression): BoxedExpression[] {
 
 /** Assume every condition in a fresh scope, run `body`, then restore no matter what
  * `body` does (including throwing). */
-function withAssumptions<T>(ce: ComputeEngine, conds: readonly BoxedExpression[], body: () => T): T {
+function withAssumptions<T>(ce: ComputeEngine, conds: readonly Expression[], body: () => T): T {
   ce.pushScope();
   try {
     for (const c of conds) ce.assume(c);
@@ -45,7 +45,7 @@ function withAssumptions<T>(ce: ComputeEngine, conds: readonly BoxedExpression[]
 
 /** A finite lazy collection (`Map(f, list)`) would run once the scope has closed, without the
  * assumptions; materialize it here. */
-function evaluateInScope(body: BoxedExpression): BoxedExpression {
+function evaluateInScope(body: Expression): Expression {
   const result = body.evaluate();
   const count = result.isCollection ? (result as { count?: unknown }).count : undefined;
   return result.operator !== "List" && typeof count === "number" && Number.isFinite(count)
@@ -57,7 +57,7 @@ function declareAssuming(ce: ComputeEngine): void {
   ce.declare("Assuming", {
     signature: "(expression, expression) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [cond, body] = ops;
       if (!cond || !body) return undefined;
       return withAssumptions(ce, flattenConditions(cond), () => evaluateInScope(body));
@@ -69,7 +69,7 @@ function declareRefine(ce: ComputeEngine): void {
   ce.declare("Refine", {
     signature: "(expression, expression?) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [expr, cond] = ops;
       if (!expr) return undefined;
       if (!cond) return expr.simplify();

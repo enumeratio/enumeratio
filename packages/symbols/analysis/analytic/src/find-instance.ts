@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { isExactExpression } from "./interval-bounds.ts";
 
@@ -30,15 +30,15 @@ const RELATIONS = new Set(["Equal", "NotEqual", "Less", "LessEqual", "Greater", 
 
 interface Atom {
   readonly rel: string;
-  readonly lhs: BoxedExpression;
-  readonly rhs: BoxedExpression;
+  readonly lhs: Expression;
+  readonly rhs: Expression;
 }
 
 /** Flatten `expr` into its ANDed atomic relations — nested `And` flattened, an n-ary
  * chain (`Less(a,b,c)`) decomposed into consecutive pairs, our own `Inequality`
  * evaluated first so a mixed chain reaches here the same way. `undefined` for anything
  * this scope doesn't cover (`Or`, a non-relational head, ...). */
-function flattenConstraints(expr: BoxedExpression): Atom[] | undefined {
+function flattenConstraints(expr: Expression): Atom[] | undefined {
   const op = expr.operator;
   if (op === "And") {
     const out: Atom[] = [];
@@ -63,7 +63,7 @@ function flattenConstraints(expr: BoxedExpression): Atom[] | undefined {
   return symbolNameOf(expr) === "True" ? [] : undefined;
 }
 
-function varsOf(arg: BoxedExpression): string[] | undefined {
+function varsOf(arg: Expression): string[] | undefined {
   const name = symbolNameOf(arg);
   if (name !== undefined) return [name];
   if (arg.operator !== "List") return undefined;
@@ -71,24 +71,24 @@ function varsOf(arg: BoxedExpression): string[] | undefined {
   return names.every((n): n is string => n !== undefined) ? names : undefined;
 }
 
-function domainOf(arg: BoxedExpression | undefined): "Reals" | "Integers" | undefined {
+function domainOf(arg: Expression | undefined): "Reals" | "Integers" | undefined {
   if (arg === undefined) return undefined; // the unstated default is Complexes -- out of scope
   const name = symbolNameOf(arg);
   if (name === "Reals" || name === "RealNumbers") return "Reals";
   return name === "Integers" ? "Integers" : undefined;
 }
 
-function countOf(arg: BoxedExpression | undefined): number | undefined {
+function countOf(arg: Expression | undefined): number | undefined {
   if (arg === undefined) return 1;
   const n = integerAt(arg.evaluate());
   return n !== undefined && n > 0 ? n : undefined;
 }
 
-function holds(atom: Atom, assignment: Record<string, BoxedExpression>, ce: ComputeEngine): boolean {
+function holds(atom: Atom, assignment: Record<string, Expression>, ce: ComputeEngine): boolean {
   return symbolNameOf(ce.function(atom.rel, [atom.lhs, atom.rhs]).subs(assignment).evaluate()) === "True";
 }
 
-function verify(atoms: readonly Atom[], assignment: Record<string, BoxedExpression>, ce: ComputeEngine): boolean {
+function verify(atoms: readonly Atom[], assignment: Record<string, Expression>, ce: ComputeEngine): boolean {
   return atoms.every((a) => holds(a, assignment, ce));
 }
 
@@ -118,9 +118,9 @@ function mulPoly(a: readonly number[], b: readonly number[]): number[] {
  * bare `x` or integer literal. No division: a fractional coefficient would need exact
  * rational tracking to stay provable, which this route doesn't carry, so it declines
  * rather than round. */
-function quadraticCoeffs(expr: BoxedExpression, x: string): number[] | undefined {
-  const has = (e: BoxedExpression): boolean => symbolNameOf(e) === x || operandsOf(e).some(has);
-  function go(e: BoxedExpression): number[] | undefined {
+function quadraticCoeffs(expr: Expression, x: string): number[] | undefined {
+  const has = (e: Expression): boolean => symbolNameOf(e) === x || operandsOf(e).some(has);
+  function go(e: Expression): number[] | undefined {
     if (!has(e)) {
       const v = integerAt(e.evaluate());
       return v === undefined ? undefined : [v];
@@ -172,7 +172,7 @@ function quadraticCoeffs(expr: BoxedExpression, x: string): number[] | undefined
 /** The COMPLETE real-root set of a degree <= 2 polynomial with ascending coefficients
  * `coeffs` — `[]` when PROVEN to have none (negative discriminant), `undefined` when
  * `coeffs` is degree 0 (no `x` term to solve: not this route's problem). */
-function realRootsOfQuadratic(ce: ComputeEngine, coeffs: readonly number[]): BoxedExpression[] | undefined {
+function realRootsOfQuadratic(ce: ComputeEngine, coeffs: readonly number[]): Expression[] | undefined {
   const c = trimPoly(coeffs);
   if (c.length === 1) return undefined;
   if (c.length === 2) {
@@ -194,7 +194,7 @@ function realRootsOfQuadratic(ce: ComputeEngine, coeffs: readonly number[]): Box
 /** Real candidates from compute-engine's own `Solve` — a best-effort finder, not a
  * completeness proof (`Solve` returns the same empty list for "no solution", "solves to
  * every value" and "gave up" — see the header note). Never used to declare infeasibility. */
-function solveRealCandidates(ce: ComputeEngine, equation: BoxedExpression, x: string): BoxedExpression[] {
+function solveRealCandidates(ce: ComputeEngine, equation: Expression, x: string): Expression[] {
   // Over the reals: an unrestricted `Solve` declines a polynomial whose complex roots it can't all name.
   const solved = ce
     .function("Solve", [equation, ce.function("Element", [ce.symbol(x), ce.symbol("RealNumbers")])])
@@ -211,7 +211,7 @@ function tryUnivariateAlgebraic(
   x: string,
   domain: "Reals" | "Integers",
   n: number,
-): readonly BoxedExpression[] | "infeasible" | undefined {
+): readonly Expression[] | "infeasible" | undefined {
   const equalities = atoms.filter((a) => a.rel === "Equal");
   if (equalities.length === 0) return undefined;
 
@@ -300,7 +300,7 @@ function tryBoundedIntegerSearch(
   atoms: readonly Atom[],
   vars: readonly string[],
   n: number,
-): readonly BoxedExpression[][] | undefined {
+): readonly Expression[][] | undefined {
   const bounds = integerBounds(atoms, vars);
   if (bounds === undefined) return undefined;
   const los = vars.map((v) => bounds.get(v)![0]);
@@ -308,7 +308,7 @@ function tryBoundedIntegerSearch(
   const total = sizes.reduce((a, b) => a * b, 1);
   if (total > MAX_BOX_SIZE) return undefined;
 
-  const found: BoxedExpression[][] = [];
+  const found: Expression[][] = [];
   for (let idx = 0; idx < total && found.length < n; idx++) {
     let rem = idx;
     const values: number[] = Array.from({ length: vars.length });
@@ -316,7 +316,7 @@ function tryBoundedIntegerSearch(
       values[i] = los[i]! + (rem % sizes[i]!);
       rem = Math.floor(rem / sizes[i]!);
     }
-    const assignment: Record<string, BoxedExpression> = {};
+    const assignment: Record<string, Expression> = {};
     vars.forEach((v, i) => (assignment[v] = ce.number(values[i]!)));
     if (verify(atoms, assignment, ce)) found.push(vars.map((v) => assignment[v]!));
   }
@@ -329,7 +329,7 @@ export function declareFindInstance(ce: ComputeEngine): void {
   ce.declare("FindInstance", {
     signature: "(expression, symbol | list<symbol>, symbol?, integer<1..>?) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [exprArg, varsArg, domainArg, nArg] = ops;
       if (exprArg === undefined || varsArg === undefined) return undefined;
       const vars = varsOf(varsArg);
@@ -341,7 +341,7 @@ export function declareFindInstance(ce: ComputeEngine): void {
       const atoms = flattenConstraints(exprArg);
       if (atoms === undefined) return undefined;
 
-      const wrap = (instances: readonly (readonly BoxedExpression[])[]): BoxedExpression =>
+      const wrap = (instances: readonly (readonly Expression[])[]): Expression =>
         ce.function(
           "List",
           instances.map((inst) =>

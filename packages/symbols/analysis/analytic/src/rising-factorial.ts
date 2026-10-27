@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { isFiniteNum, numberResult, cexp, cx, sub, logGamma } from "@enumeratio/ce-patches";
 
 // RisingFactorial(a, n) — Fungrim's name for CE's native `Pochhammer`, delegated to. Native
@@ -6,10 +6,10 @@ import { isFiniteNum, numberResult, cexp, cx, sub, logGamma } from "@enumeratio/
 
 export function evaluateRisingFactorial(
   ce: ComputeEngine,
-  a: BoxedExpression,
-  n: BoxedExpression,
+  a: Expression,
+  n: Expression,
   numeric: boolean,
-): BoxedExpression | undefined {
+): Expression | undefined {
   const native = ce.box(["Pochhammer", a.json, n.json] as never);
   const result = numeric ? native.N() : native.evaluate();
   if (!numeric || !Number.isNaN(result.re)) return result;

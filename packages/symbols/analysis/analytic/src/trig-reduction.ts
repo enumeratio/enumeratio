@@ -1,4 +1,4 @@
-import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
+import { BigDecimal, type Expression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf, wrapOperator } from "@enumeratio/engine";
 import { type EvalOptions, wantsNumber, DOUBLE_DIGITS } from "@enumeratio/ce-patches";
 
@@ -35,7 +35,7 @@ const GUARD_DIGITS = 15;
  * already-computed `re`/`im`, which is cheap whether or not the call fits. Every other shape (a
  * modest argument, a symbolic one, a complex one) falls straight through to native, so this has to
  * stay cheap -- Sin and Cos are hot heads. */
-function isHugeReal(op: BoxedExpression): boolean {
+function isHugeReal(op: Expression): boolean {
   if (op.im !== 0) return false;
   const r = op.re;
   return !Number.isNaN(r) && Math.abs(r) > HUGE_THRESHOLD;
@@ -55,7 +55,7 @@ function integerDigitsOfRational(num: bigint, den: bigint): number {
  * `bigRationalAt` already covers). Read off the field itself rather than through `expr.bignumRe`,
  * which rounds to whatever `BigDecimal.precision` happens to be at the time; the whole point here
  * is to see every digit the literal actually has. */
-function bignumDecimalOf(expr: BoxedExpression): BigDecimal | undefined {
+function bignumDecimalOf(expr: Expression): BigDecimal | undefined {
   if (expr.im !== 0) return undefined;
   const value = (expr as { numericValue?: unknown }).numericValue;
   const decimal = (value as { decimal?: unknown } | undefined)?.decimal;
@@ -82,7 +82,7 @@ type ExactValue =
  * symbolic, e.g. a free variable slipped in as `expr`'s only operand and never folded by
  * `evaluate()`). Deliberately does no division or other `BigDecimal.precision`-dependent work: the
  * caller sizes the working precision from `digits` first, then calls `toBigDecimal` below. */
-function bigValueOf(expr: BoxedExpression): ExactValue | undefined {
+function bigValueOf(expr: Expression): ExactValue | undefined {
   const rational = bigRationalAt(expr);
   if (rational !== undefined) {
     const [num, den] = rational;
@@ -113,7 +113,7 @@ type Circular = "Sin" | "Cos" | "Tan" | "Sec" | "Csc" | "Cot";
  * mod 2*pi in `BigDecimal` and never touching a machine double until the final rounding -- or
  * undefined to decline (falls back to native) when `expr` didn't resolve to a real number after
  * all, or the ratio it needs (Tan, Sec, Csc, Cot) divides by an exact zero. */
-function evaluateHugeTrig(ce: ComputeEngine, head: Circular, expr: BoxedExpression): BoxedExpression | undefined {
+function evaluateHugeTrig(ce: ComputeEngine, head: Circular, expr: Expression): Expression | undefined {
   const found = bigValueOf(expr.evaluate());
   if (found === undefined) return undefined;
   const targetDigits = Math.max(ce.precision, DOUBLE_DIGITS + 2);

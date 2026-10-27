@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine, MathJsonExpression } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine, MathJsonExpression } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-syntax";
 
 // LaTeX for compute-engine heads that have none of their own; the shared engine always
@@ -65,7 +65,7 @@ export function expandDictionaries(node: unknown): unknown {
 const hasDictionary = (node: unknown): boolean => isDict(node) || (Array.isArray(node) && node.some(hasDictionary));
 
 /** `expr.latex`, except that a dictionary anywhere inside is written rather than dropped. */
-export function latexOf(ce: ComputeEngine, expr: BoxedExpression, options?: Record<string, unknown>): string {
+export function latexOf(ce: ComputeEngine, expr: Expression, options?: Record<string, unknown>): string {
   // `.latex` rounds to the engine's working precision, so `N(Pi, 50)` would show ~21 digits.
   const written = { digits: "max", ...options };
   const json = expr.json;

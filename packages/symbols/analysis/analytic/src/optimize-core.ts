@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { containsVar, type Recognized, recognize, signShape } from "./function-properties.ts";
 
@@ -40,7 +40,7 @@ import { containsVar, type Recognized, recognize, signShape } from "./function-p
  * sign, +-Infinity); otherwise `expr` is the EXACT boundary value and `closed` says
  * whether it is included (attained) or open (a limit, not a value, at that end). */
 export interface End {
-  readonly expr: BoxedExpression | undefined;
+  readonly expr: Expression | undefined;
   readonly approx: number;
   readonly closed: boolean;
 }
@@ -82,14 +82,14 @@ const FLIP: Record<string, string> = {
 
 interface Atom {
   readonly rel: string;
-  readonly lhs: BoxedExpression;
-  readonly rhs: BoxedExpression;
+  readonly lhs: Expression;
+  readonly rhs: Expression;
 }
 
 /** Flatten `cons` into its ANDed atomic relations -- `And` flattened, an n-ary chain
  * (`LessEqual(a, x, b)`) decomposed into consecutive pairs. `undefined` for anything this
  * scope doesn't cover (`Or`, a non-relational head). */
-function flattenAtoms(cons: BoxedExpression): Atom[] | undefined {
+function flattenAtoms(cons: Expression): Atom[] | undefined {
   const op = cons.operator;
   const ops = operandsOf(cons);
   if (op === "And") {
@@ -115,7 +115,7 @@ function flattenAtoms(cons: BoxedExpression): Atom[] | undefined {
  * from that small vocabulary, couples `x` to something other than a constant, or is
  * infeasible (`lo > hi`) -- every case declines rather than guess at Wolfram's intent.
  */
-export function parseInterval(ce: ComputeEngine, cons: BoxedExpression, x: string): Ivl | undefined {
+export function parseInterval(ce: ComputeEngine, cons: Expression, x: string): Ivl | undefined {
   const atoms = flattenAtoms(cons);
   if (atoms === undefined || atoms.length === 0) return undefined;
   let ivl = UNBOUNDED_IVL;
@@ -146,10 +146,10 @@ export function parseInterval(ce: ComputeEngine, cons: BoxedExpression, x: strin
  * `Solve` itself can still do exactly (typically degree <= 2 already, occasionally a
  * cubic/quartic with a nice closed form; a `Root` object counts as exact here too).
  */
-function realRootsViaSolve(ce: ComputeEngine, lhs: BoxedExpression, x: string): BoxedExpression[] | undefined {
+function realRootsViaSolve(ce: ComputeEngine, lhs: Expression, x: string): Expression[] | undefined {
   const solved = ce.function("Solve", [ce.function("Equal", [lhs, 0]), ce.symbol(x)]).evaluate();
   if (solved.operator !== "List") return undefined;
-  const out: BoxedExpression[] = [];
+  const out: Expression[] = [];
   for (const r of operandsOf(solved)) {
     const n = r.N();
     if (n.im !== 0) continue;
@@ -178,15 +178,15 @@ function realRootsViaSolve(ce: ComputeEngine, lhs: BoxedExpression, x: string): 
 // runs `Factor` first and solves each piece this way before ever falling back to `Solve`.
 
 /** One `Add` term of a LINEAR/QUADRATIC-in-`x` factor, as `(coeff, power)` -- `coeff` an
- * x-free `BoxedExpression`, `power` the exponent of `x` it scales (0, 1, or 2 -- anything
+ * x-free `Expression`, `power` the exponent of `x` it scales (0, 1, or 2 -- anything
  * else, or a shape not built from `Negate`/`Multiply`/`Power`/bare `x`/a constant,
  * `undefined`s the whole parse). Terms straight out of `Factor` are already this simple
  * within each irreducible piece -- this does not attempt to expand a nested product. */
 function termOf(
   ce: ComputeEngine,
-  term: BoxedExpression,
+  term: Expression,
   x: string,
-): { readonly coeff: BoxedExpression; readonly power: number } | undefined {
+): { readonly coeff: Expression; readonly power: number } | undefined {
   if (!containsVar(term, x)) return { coeff: term, power: 0 };
   if (symbolNameOf(term) === x) return { coeff: ce.One, power: 1 };
   if (term.operator === "Negate" && operandsOf(term).length === 1) {
@@ -196,7 +196,7 @@ function termOf(
       : { coeff: ce.function("Negate", [inner.coeff]).evaluate(), power: inner.power };
   }
   if (term.operator === "Power" && operandsOf(term).length === 2) {
-    const [base, exp] = operandsOf(term) as [BoxedExpression, BoxedExpression];
+    const [base, exp] = operandsOf(term) as [Expression, Expression];
     if (symbolNameOf(base) !== x) return undefined;
     const n = exp.N();
     if (n.im !== 0 || !Number.isInteger(n.re) || n.re < 0) return undefined;
@@ -223,17 +223,17 @@ function termOf(
  */
 function quadraticCoeffsOf(
   ce: ComputeEngine,
-  factor: BoxedExpression,
+  factor: Expression,
   x: string,
-): { readonly c0: BoxedExpression; readonly c1: BoxedExpression; readonly c2: BoxedExpression } | undefined {
+): { readonly c0: Expression; readonly c1: Expression; readonly c2: Expression } | undefined {
   const terms = factor.operator === "Add" ? operandsOf(factor) : [factor];
-  const byPower: BoxedExpression[][] = [[], [], []];
+  const byPower: Expression[][] = [[], [], []];
   for (const term of terms) {
     const parsed = termOf(ce, term, x);
     if (parsed === undefined || parsed.power > 2) return undefined;
     byPower[parsed.power]!.push(parsed.coeff);
   }
-  const sum = (parts: BoxedExpression[]): BoxedExpression =>
+  const sum = (parts: Expression[]): Expression =>
     parts.length === 0 ? ce.Zero : parts.length === 1 ? parts[0]! : ce.function("Add", parts).evaluate();
   return { c0: sum(byPower[0]!), c1: sum(byPower[1]!), c2: sum(byPower[2]!) };
 }
@@ -244,11 +244,7 @@ function quadraticCoeffsOf(
  * quadratic in `x` (the caller falls back to `Solve`). `[]` is a proven "no real roots"
  * (a quadratic with negative discriminant), same contract as `realRootsViaSolve`.
  */
-function realRootsOfLinearOrQuadratic(
-  ce: ComputeEngine,
-  factor: BoxedExpression,
-  x: string,
-): BoxedExpression[] | undefined {
+function realRootsOfLinearOrQuadratic(ce: ComputeEngine, factor: Expression, x: string): Expression[] | undefined {
   const coeffs = quadraticCoeffsOf(ce, factor, x);
   if (coeffs === undefined) return undefined;
   const { c0, c1, c2 } = coeffs;
@@ -284,10 +280,10 @@ function realRootsOfLinearOrQuadratic(
  * irreducible, or `Factor` declined to run) -- the same shape `realRootsOfLinearOrQuadratic`/
  * `realRootsViaSolve` would see without any factoring.
  */
-function factorsOf(ce: ComputeEngine, lhs: BoxedExpression, x: string): BoxedExpression[] {
+function factorsOf(ce: ComputeEngine, lhs: Expression, x: string): Expression[] {
   const factored = ce.function("Factor", [lhs]).evaluate();
   const raw = factored.operator === "Multiply" ? operandsOf(factored) : [factored];
-  const out: BoxedExpression[] = [];
+  const out: Expression[] = [];
   for (const f0 of raw) {
     const f = f0.operator === "Negate" && operandsOf(f0).length === 1 ? operandsOf(f0)[0]! : f0;
     if (!containsVar(f, x)) continue; // a constant factor (incl. an overall sign) has no roots
@@ -317,9 +313,9 @@ function factorsOf(ce: ComputeEngine, lhs: BoxedExpression, x: string): BoxedExp
  * caller, notably `extremize`'s tie-break between equally-good critical points, was built
  * against that order), and factoring collects roots piece by piece, not ascending.
  */
-export function exactRealRootsOf(ce: ComputeEngine, lhs: BoxedExpression, x: string): BoxedExpression[] | undefined {
+export function exactRealRootsOf(ce: ComputeEngine, lhs: Expression, x: string): Expression[] | undefined {
   const factors = factorsOf(ce, lhs, x);
-  const out: BoxedExpression[] = [];
+  const out: Expression[] = [];
   for (const factor of factors) {
     const roots = realRootsOfLinearOrQuadratic(ce, factor, x) ?? realRootsViaSolve(ce, factor, x);
     if (roots === undefined) return undefined;
@@ -331,29 +327,23 @@ export function exactRealRootsOf(ce: ComputeEngine, lhs: BoxedExpression, x: str
 // ---- tail/edge behaviour, via compute-engine's own Limit -------------------------------
 
 export type Tail =
-  | { readonly kind: "pos-inf"; readonly atPoint: BoxedExpression }
-  | { readonly kind: "neg-inf"; readonly atPoint: BoxedExpression }
+  | { readonly kind: "pos-inf"; readonly atPoint: Expression }
+  | { readonly kind: "neg-inf"; readonly atPoint: Expression }
   | {
       readonly kind: "finite";
-      readonly value: BoxedExpression;
+      readonly value: Expression;
       readonly approx: number;
-      readonly atPoint: BoxedExpression;
+      readonly atPoint: Expression;
     };
 
 /** The behaviour of `expr` as `x` approaches an open end of the interval -- `end.expr`
  * itself (from the domain side, directionally) when finite, or +-Infinity when unbounded.
  * `undefined` when `Limit` can't determine it (declines, or a complex/indeterminate
  * result) -- the caller declines the whole optimization rather than guess. */
-export function limitAt(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  x: string,
-  end: End,
-  side: "lo" | "hi",
-): Tail | undefined {
-  const point: BoxedExpression =
+export function limitAt(ce: ComputeEngine, expr: Expression, x: string, end: End, side: "lo" | "hi"): Tail | undefined {
+  const point: Expression =
     end.expr === undefined ? ce.symbol(end.approx < 0 ? "NegativeInfinity" : "PositiveInfinity") : end.expr;
-  const args: BoxedExpression[] =
+  const args: Expression[] =
     end.expr === undefined
       ? [expr, ce.symbol(x), point]
       : [expr, ce.symbol(x), point, ce.number(side === "lo" ? 1 : -1)];
@@ -370,8 +360,8 @@ export function limitAt(
 // ---- the extremizer ---------------------------------------------------------------------
 
 export interface Extreme {
-  readonly value: BoxedExpression;
-  readonly point: BoxedExpression;
+  readonly value: Expression;
+  readonly point: Expression;
   readonly attained: boolean;
 }
 
@@ -388,7 +378,7 @@ export interface Extreme {
  */
 export function extremize(
   ce: ComputeEngine,
-  expr: BoxedExpression,
+  expr: Expression,
   x: string,
   ivl: Ivl,
   direction: "min" | "max",
@@ -409,16 +399,16 @@ export function extremize(
   const critical = exactRealRootsOf(ce, deriv, x);
   if (critical === undefined) return undefined;
 
-  const strictlyInside = (pt: BoxedExpression): boolean => {
+  const strictlyInside = (pt: Expression): boolean => {
     const a = pt.N().re;
     return a > ivl.lo.approx && a < ivl.hi.approx;
   };
-  const candidates: BoxedExpression[] = critical.filter(strictlyInside);
+  const candidates: Expression[] = critical.filter(strictlyInside);
   if (ivl.lo.expr !== undefined && ivl.lo.closed) candidates.push(ivl.lo.expr);
   if (ivl.hi.expr !== undefined && ivl.hi.closed) candidates.push(ivl.hi.expr);
 
   let best: Extreme | undefined;
-  const consider = (value: BoxedExpression, point: BoxedExpression, attained: boolean): void => {
+  const consider = (value: Expression, point: Expression, attained: boolean): void => {
     const n = value.N();
     // +-Infinity is a legitimate candidate (an unbounded tail) -- only NaN/complex are
     // rejected here. `Number.isFinite` would also reject +-Infinity, which is exactly the
@@ -463,7 +453,7 @@ export function extremize(
  * exact, unlike `Recognized`'s own (structural-only) float coefficients. `undefined` when
  * `expr`'s top-level shape doesn't match what a `recognize` tag promises (kept narrow on
  * purpose: this file only ever calls it right after `recognize` returned that same tag). */
-export function exactPart(expr: BoxedExpression, tag: Recognized["tag"]): BoxedExpression | undefined {
+export function exactPart(expr: Expression, tag: Recognized["tag"]): Expression | undefined {
   const op = expr.operator;
   const ops = operandsOf(expr);
   switch (tag) {
@@ -493,7 +483,7 @@ export function exactPart(expr: BoxedExpression, tag: Recognized["tag"]): BoxedE
 export function naturalDomain(
   ce: ComputeEngine,
   rec: Recognized,
-  expr: BoxedExpression,
+  expr: Expression,
   x: string,
 ): Ivl | "empty" | undefined {
   switch (rec.tag) {
@@ -527,7 +517,7 @@ export function naturalDomain(
       // root cases were already routed away above): nonneg BETWEEN them (downward
       // quadratic) is the only single-interval case; nonneg OUTSIDE them (upward) is two
       // disjoint rays -- decline.
-      const [a, b] = zeros.toSorted((p, q) => p.N().re - q.N().re) as [BoxedExpression, BoxedExpression];
+      const [a, b] = zeros.toSorted((p, q) => p.N().re - q.N().re) as [Expression, Expression];
       const leadPositive = rec.radicand[rec.radicand.length - 1]! > 0;
       if (leadPositive) return undefined; // outside the roots: two disjoint rays
       return { lo: { expr: a, approx: a.N().re, closed: true }, hi: { expr: b, approx: b.N().re, closed: true } };
@@ -550,7 +540,7 @@ export function naturalDomain(
 
 /** For `rational` only: `expr`'s exact real poles, or `undefined` to decline (`Solve`
  * wasn't exact/complete). `[]` is a proven "no real poles". */
-export function realPolesOf(ce: ComputeEngine, expr: BoxedExpression, x: string): BoxedExpression[] | undefined {
+export function realPolesOf(ce: ComputeEngine, expr: Expression, x: string): Expression[] | undefined {
   const den = exactPart(expr, "rational");
   if (den === undefined) return undefined;
   return exactRealRootsOf(ce, den, x);
@@ -558,7 +548,7 @@ export function realPolesOf(ce: ComputeEngine, expr: BoxedExpression, x: string)
 
 /** Does any of `poles` sit strictly inside, or exactly on a CLOSED end of, `ivl`? Either
  * way the interval isn't cleanly `expr`'s domain, so the caller should decline. */
-export function polesConflict(poles: readonly BoxedExpression[], ivl: Ivl): boolean {
+export function polesConflict(poles: readonly Expression[], ivl: Ivl): boolean {
   for (const p of poles) {
     const a = p.N().re;
     if (a > ivl.lo.approx && a < ivl.hi.approx) return true;
@@ -577,7 +567,7 @@ export function polesConflict(poles: readonly BoxedExpression[], ivl: Ivl): bool
 export function optimizeRecognized(
   ce: ComputeEngine,
   rec: Recognized,
-  expr: BoxedExpression,
+  expr: Expression,
   x: string,
   given: Ivl,
   direction: "min" | "max",

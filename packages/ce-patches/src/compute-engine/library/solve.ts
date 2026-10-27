@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCompile, integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // cortex-js/compute-engine: `Solve`'s single-unknown path calls `equation.solve(unknown)`, which
@@ -32,7 +32,7 @@ export function evaluateSolveDeclines(ce: ComputeEngine): void {
 }
 
 /** Is `expr` `Solve`'s native "no solutions" answer -- `List()`, zero operands? */
-function isEmptySolutionList(expr: BoxedExpression | undefined): boolean {
+function isEmptySolutionList(expr: Expression | undefined): boolean {
   return expr !== undefined && expr.operator === "List" && operandsOf(expr).length === 0;
 }
 
@@ -40,7 +40,7 @@ function isEmptySolutionList(expr: BoxedExpression | undefined): boolean {
 const MAX_CLOSED_FORM_DEGREE = 4;
 
 /** The equations a (canonical) `Solve` first operand states: the operand, or an `And`/`List` member. */
-function equationsOf(expr: BoxedExpression): readonly BoxedExpression[] {
+function equationsOf(expr: Expression): readonly Expression[] {
   const items = ["And", "List", "Set"].includes(expr.operator) ? operandsOf(expr) : [expr];
   return items.filter((item) => item.operator === "Equal" && operandsOf(item).length === 2);
 }
@@ -54,7 +54,7 @@ function equationsOf(expr: BoxedExpression): readonly BoxedExpression[] {
  *   it of closed-form degree: every root was enumerated, so the list is empty only because a
  *   domain or side condition excluded them all.
  */
-function provesNoSolution(ce: ComputeEngine, ops: readonly BoxedExpression[], answeredEmpty: boolean): boolean {
+function provesNoSolution(ce: ComputeEngine, ops: readonly Expression[], answeredEmpty: boolean): boolean {
   const statement = ops[0]?.canonical;
   if (statement === undefined) return false;
   if (symbolNameOf(statement.evaluate()) === "False") return true;
@@ -64,7 +64,7 @@ function provesNoSolution(ce: ComputeEngine, ops: readonly BoxedExpression[], an
     return ce.function("Subtract", [left!, right!]).simplify();
   });
   if (residuals.some(neverZero)) return true;
-  const sides = equationsOf(statement).map((equation) => operandsOf(equation) as [BoxedExpression, BoxedExpression]);
+  const sides = equationsOf(statement).map((equation) => operandsOf(equation) as [Expression, Expression]);
   if (sides.some(([left, right]) => isImpossible(left, right))) return true;
 
   // Past this point a proof rests on the native answer having enumerated every root.
@@ -82,7 +82,7 @@ function provesNoSolution(ce: ComputeEngine, ops: readonly BoxedExpression[], an
  * nonzero constant to a power; `b^-n` (zero only at infinity); `b^n` for nonzero `b`; and
  * products, quotients and negations of those.
  */
-function neverZero(expr: BoxedExpression): boolean {
+function neverZero(expr: Expression): boolean {
   const ops = operandsOf(expr);
   switch (expr.operator) {
     case "Exp":
@@ -94,7 +94,7 @@ function neverZero(expr: BoxedExpression): boolean {
     case "Divide":
       return neverZero(ops[0]!);
     case "Power": {
-      const [base, exponent] = ops as [BoxedExpression, BoxedExpression];
+      const [base, exponent] = ops as [Expression, Expression];
       if (base.unknowns.length === 0 && base.is(0) === false) return true;
       const n = exponent.unknowns.length === 0 ? exponent.N().re : Number.NaN;
       return n < 0 || (n > 0 && neverZero(base));
@@ -109,8 +109,8 @@ function neverZero(expr: BoxedExpression): boolean {
  * value is a non-negative real, so neither equals a constant that is negative (`sqrt(x) == -1`,
  * `|x| == -1`). Either side may carry the function.
  */
-function isImpossible(a: BoxedExpression, b: BoxedExpression): boolean {
-  const impossibleAgainst = (side: BoxedExpression, constant: BoxedExpression) => {
+function isImpossible(a: Expression, b: Expression): boolean {
+  const impossibleAgainst = (side: Expression, constant: Expression) => {
     if (constant.unknowns.length > 0) return false;
     const value = constant.N();
     if (!(value.re < 0)) return false;
@@ -120,7 +120,7 @@ function isImpossible(a: BoxedExpression, b: BoxedExpression): boolean {
 }
 
 /** The one unknown a `Solve` names, bare or as `Element(x, domain)`; none for a system. */
-function soleUnknown(ops: readonly BoxedExpression[]): string | undefined {
+function soleUnknown(ops: readonly Expression[]): string | undefined {
   const specs = ops.slice(1);
   if (specs.length !== 1) return undefined;
   const spec = specs[0]!;
@@ -130,7 +130,7 @@ function soleUnknown(ops: readonly BoxedExpression[]): string | undefined {
 const PERIODIC = new Set(["Sin", "Cos", "Tan", "Cot", "Sec", "Csc"]);
 
 /** Does `expr` apply a periodic trig function to something containing an unknown? */
-function hasPeriodicOfUnknown(expr: BoxedExpression): boolean {
+function hasPeriodicOfUnknown(expr: Expression): boolean {
   if (PERIODIC.has(expr.operator) && operandsOf(expr).some((arg) => arg.unknowns.length > 0)) return true;
   return operandsOf(expr).some(hasPeriodicOfUnknown);
 }
@@ -140,7 +140,7 @@ function hasPeriodicOfUnknown(expr: BoxedExpression): boolean {
  * condition (`Element`, `And`) bounds the unknown, so the principal values may be all there are;
  * only an unbounded `Solve(equation, x)` is left out.
  */
-function dropsPeriodicFamilies(ops: readonly BoxedExpression[]): boolean {
+function dropsPeriodicFamilies(ops: readonly Expression[]): boolean {
   const statement = ops[0]?.canonical;
   if (statement === undefined || statement.operator !== "Equal") return false;
   if (ops.slice(1).some((spec) => spec.operator === "Element")) return false;
@@ -163,7 +163,7 @@ export function evaluateSolveDomains(ce: ComputeEngine): void {
   if (operator === undefined || inner === undefined) return;
 
   /** Is `value` in `domain`? `undefined` when that isn't decided. */
-  const member = (value: BoxedExpression, domain: BoxedExpression): boolean | undefined => {
+  const member = (value: Expression, domain: Expression): boolean | undefined => {
     const verdict = symbolNameOf(ce.function("Element", [value, domain]).evaluate());
     return verdict === "True" ? true : verdict === "False" ? false : undefined;
   };
@@ -195,7 +195,7 @@ export function evaluateSolveDomains(ce: ComputeEngine): void {
             .evaluate(options);
     if (answer === undefined || answer.operator !== "List") return undefined;
 
-    const kept: BoxedExpression[] = [];
+    const kept: Expression[] = [];
     for (const solution of operandsOf(answer)) {
       const parts = specs.length === 1 ? [solution] : operandsOf(solution);
       if (parts.length !== specs.length) return undefined;

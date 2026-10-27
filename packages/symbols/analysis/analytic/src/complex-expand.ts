@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 
@@ -26,13 +26,13 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 // specifically.
 
 interface RealImaginary {
-  readonly re: BoxedExpression;
-  readonly im: BoxedExpression;
+  readonly re: Expression;
+  readonly im: Expression;
 }
 
-const add = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Add", [a, b]).evaluate();
-const sub = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Subtract", [a, b]).evaluate();
-const mul = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Multiply", [a, b]).evaluate();
+const add = (ce: ComputeEngine, a: Expression, b: Expression) => ce.function("Add", [a, b]).evaluate();
+const sub = (ce: ComputeEngine, a: Expression, b: Expression) => ce.function("Subtract", [a, b]).evaluate();
+const mul = (ce: ComputeEngine, a: Expression, b: Expression) => ce.function("Multiply", [a, b]).evaluate();
 
 /** (a+bi)(c+di) = (ac−bd) + (ad+bc)i. */
 const complexMul = (ce: ComputeEngine, a: RealImaginary, b: RealImaginary): RealImaginary => ({
@@ -40,7 +40,7 @@ const complexMul = (ce: ComputeEngine, a: RealImaginary, b: RealImaginary): Real
   im: add(ce, mul(ce, a.re, b.im), mul(ce, a.im, b.re)),
 });
 
-function splitRI(ce: ComputeEngine, e: BoxedExpression): RealImaginary {
+function splitRI(ce: ComputeEngine, e: Expression): RealImaginary {
   // A concrete PURE-IMAGINARY number is atomic — no `.ops` to recurse into — but it can be an
   // exact irrational (`Complex(0, √2/4)`, from folding a literal `i` factor into a numeric
   // coefficient; see exp-to-trig.ts for the same fold). Divide back out by `ImaginaryUnit`
@@ -106,7 +106,7 @@ function splitRI(ce: ComputeEngine, e: BoxedExpression): RealImaginary {
   // sinh(a+bi) = sinh(a)cos(b) + i·cosh(a)sin(b).
   if ((e.operator === "Cos" || e.operator === "Cosh" || e.operator === "Sinh") && ops.length > 0) {
     const { re: a, im: b } = splitRI(ce, ops[0]);
-    const f = (name: string, x: BoxedExpression) => ce.function(name, [x]).evaluate();
+    const f = (name: string, x: Expression) => ce.function(name, [x]).evaluate();
     if (e.operator === "Cos")
       return {
         re: mul(ce, f("Cos", a), f("Cosh", b)),
@@ -155,7 +155,7 @@ function splitRI(ce: ComputeEngine, e: BoxedExpression): RealImaginary {
   return { re: e, im: ce.Zero }; // assumed real — see the file header
 }
 
-export function evaluateComplexExpand(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+export function evaluateComplexExpand(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   const expr = ops[0];
   if (expr === undefined) return undefined;
   // An argument with no free structure (a concrete number, possibly already the exact
@@ -177,6 +177,6 @@ export function evaluateComplexExpand(ce: ComputeEngine, ops: readonly BoxedExpr
 export function declareComplexExpand(ce: ComputeEngine): void {
   ce.declare("ComplexExpand", {
     signature: "(expression) -> expression",
-    evaluate: (ops: readonly BoxedExpression[], _options: EvalOptions) => evaluateComplexExpand(ce, ops),
+    evaluate: (ops: readonly Expression[], _options: EvalOptions) => evaluateComplexExpand(ce, ops),
   });
 }

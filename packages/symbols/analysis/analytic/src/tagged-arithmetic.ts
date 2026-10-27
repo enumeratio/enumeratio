@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { defineOverload, type EvaluateOptions, operandsOf } from "@enumeratio/engine";
 
 // A shared, low-overhead registration for the arithmetic heads Interval, CenteredInterval
@@ -25,15 +25,12 @@ const TAGS: ReadonlySet<string> = new Set(["Interval", "CenteredInterval", "Arou
  * when `raw` and `ops` disagree in length (an associative flatten, a dropped operand — see
  * the same doc comment), so it is never indexed on a mismatched shape.
  */
-export type Resolver = (
-  ops: readonly BoxedExpression[],
-  raw: readonly BoxedExpression[],
-) => BoxedExpression | undefined;
+export type Resolver = (ops: readonly Expression[], raw: readonly Expression[]) => Expression | undefined;
 
 /** A cheap, allocation-free structural test over the raw (pre-evaluate) operands: does this
  * call look worth the full evaluate-and-resolve path, when no operand is tagged? (Multiply's
  * e^a·e^b combiner in exp-combine.ts.) */
-export type Gate = (ops: readonly BoxedExpression[]) => boolean;
+export type Gate = (ops: readonly Expression[]) => boolean;
 
 /**
  * Rows in `head`'s table (defineOverload) that try each resolver in turn: one for a tagged
@@ -48,7 +45,7 @@ export function registerTaggedHead(
   gateSymbols?: string,
 ): void {
   if (resolvers.length === 0) return;
-  const evaluate = (values: readonly BoxedExpression[], options: EvaluateOptions): BoxedExpression | undefined => {
+  const evaluate = (values: readonly Expression[], options: EvaluateOptions): Expression | undefined => {
     const rawOps = operandsOf(options.expression);
     const raw = rawOps.length === values.length ? rawOps : values;
     for (const resolve of resolvers) {

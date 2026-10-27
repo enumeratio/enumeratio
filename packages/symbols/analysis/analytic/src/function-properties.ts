@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { specialFunctionRange } from "./function-range.ts";
 
@@ -60,12 +60,12 @@ function degreeOf(coeffs: readonly number[]): number {
 // ---- reading a real coefficient polynomial in `x` out of a boxed expression --------
 
 /** Is `expr` exactly the bare symbol named `x`? */
-const isSym = (expr: BoxedExpression, x: string): boolean => symbolNameOf(expr) === x;
+const isSym = (expr: Expression, x: string): boolean => symbolNameOf(expr) === x;
 
 /** Does `expr` mention the symbol named `x` anywhere in its tree? Exported for
  * `optimize-core.ts`, which needs the same free-variable test when parsing an interval
  * constraint's endpoints. */
-export function containsVar(expr: BoxedExpression, x: string): boolean {
+export function containsVar(expr: Expression, x: string): boolean {
   if (symbolNameOf(expr) === x) return true;
   return operandsOf(expr).some((o) => containsVar(o, x));
 }
@@ -74,7 +74,7 @@ export function containsVar(expr: BoxedExpression, x: string): boolean {
  * built and verified for one real variable, closed-form numeric coefficients --
  * anything with a second symbol (another variable, or a named constant like `Pi`
  * we do not special-case) declines rather than risk a wrong answer. */
-function hasForeignSymbol(expr: BoxedExpression, x: string): boolean {
+function hasForeignSymbol(expr: Expression, x: string): boolean {
   const name = symbolNameOf(expr);
   if (name !== undefined) return name !== x;
   return operandsOf(expr).some((o) => hasForeignSymbol(o, x));
@@ -82,17 +82,16 @@ function hasForeignSymbol(expr: BoxedExpression, x: string): boolean {
 
 /**
  * `isNumberLiteral` lives on compute-engine's NARROWED expression interface (like
- * `.ops`/`.symbol` — see `@enumeratio/engine`'s header comment); `BoxedExpression` is
+ * `.ops`/`.symbol` — see `@enumeratio/engine`'s header comment); `Expression` is
  * an alias for the public `Expression` union, which doesn't carry it. Read it
  * structurally rather than casting to the internal type.
  */
-const isNumberLiteral = (expr: BoxedExpression): boolean =>
-  (expr as { isNumberLiteral?: unknown }).isNumberLiteral === true;
+const isNumberLiteral = (expr: Expression): boolean => (expr as { isNumberLiteral?: unknown }).isNumberLiteral === true;
 
 /** A subtree with no occurrence of `x` reduces to a plain number by construction
  * (no foreign symbols reach here — `hasForeignSymbol` gates the caller), so a
  * numeric evaluation is exact rather than a guess. */
-function constantValue(expr: BoxedExpression): number | undefined {
+function constantValue(expr: Expression): number | undefined {
   try {
     const v = expr.N();
     return isNumberLiteral(v) && v.im === 0 && Number.isFinite(v.re) ? v.re : undefined;
@@ -108,7 +107,7 @@ function constantValue(expr: BoxedExpression): number | undefined {
  * polynomial (an unsupported head, a non-integer or negative exponent, a
  * denominator that itself depends on `x`, or a degree above `MAX_DEGREE`).
  */
-function polyOf(expr: BoxedExpression, x: string, depth = 0): number[] | undefined {
+function polyOf(expr: Expression, x: string, depth = 0): number[] | undefined {
   if (depth > 64) return undefined;
   if (!containsVar(expr, x)) {
     const c = constantValue(expr);
@@ -191,7 +190,7 @@ export type Recognized =
  * (`undefined`) when it is multivariate, or built from anything outside the small
  * vocabulary this file understands. This is the single entry point every head below
  * calls before doing anything else. */
-export function recognize(expr: BoxedExpression, x: string): Recognized | undefined {
+export function recognize(expr: Expression, x: string): Recognized | undefined {
   if (hasForeignSymbol(expr, x) || !containsVar(expr, x)) return undefined;
 
   const poly = polyOf(expr, x);
@@ -315,10 +314,10 @@ function vertexValue(coeffs: readonly number[]): number {
 
 /** `x` restricted to where `shape`'s polynomial is nonzero: `Or` of the open
  * intervals between (and beyond) its zeros. `undefined`/no zeros renders `True`. */
-function conditionNonzero(ce: ComputeEngine, x: string, shape: SignShape): BoxedExpression {
+function conditionNonzero(ce: ComputeEngine, x: string, shape: SignShape): Expression {
   if (shape.zeros.length === 0) return ce.symbol("True");
   const zs = shape.zeros;
-  const parts: BoxedExpression[] = [ce.function("Less", [x, zs[0]!])];
+  const parts: Expression[] = [ce.function("Less", [x, zs[0]!])];
   for (let i = 0; i + 1 < zs.length; i++) parts.push(ce.function("Less", [zs[i]!, x, zs[i + 1]!]));
   parts.push(ce.function("Less", [zs[zs.length - 1]!, x]));
   return ce.function("Or", parts);
@@ -335,7 +334,7 @@ function conditionSign(
   x: string,
   shape: SignShape,
   want: "nonneg" | "pos" | "nonpos" | "neg",
-): BoxedExpression {
+): Expression {
   const strict = want === "pos" || want === "neg";
   const positive = want === "nonneg" || want === "pos";
   if (shape.sign === "pos") return ce.symbol(positive ? "True" : "False");
@@ -367,7 +366,7 @@ export function domainOf(
   ce: ComputeEngine,
   rec: Recognized,
   x: string,
-): { readonly expr: BoxedExpression; readonly isAll: boolean } | undefined {
+): { readonly expr: Expression; readonly isAll: boolean } | undefined {
   switch (rec.tag) {
     case "poly":
       return { expr: ce.symbol("True"), isAll: true };
@@ -403,7 +402,7 @@ export function domainOf(
 
 // ---- range --------------------------------------------------------------------------
 
-export function rangeOf(ce: ComputeEngine, rec: Recognized, y: string): BoxedExpression | undefined {
+export function rangeOf(ce: ComputeEngine, rec: Recognized, y: string): Expression | undefined {
   switch (rec.tag) {
     case "poly": {
       const d = degreeOf(rec.coeffs);
@@ -593,7 +592,7 @@ export function surjectiveOntoRealsOf(rec: Recognized): boolean | undefined {
 
 /** Where the expression fails to be (finitely) defined, as a condition in `x` —
  * `undefined` when this file can't characterise it. */
-export function singularitiesOf(ce: ComputeEngine, rec: Recognized, x: string): BoxedExpression | undefined {
+export function singularitiesOf(ce: ComputeEngine, rec: Recognized, x: string): Expression | undefined {
   switch (rec.tag) {
     case "poly":
     case "exp":
@@ -677,7 +676,7 @@ const RATIO_HEADS = new Set(["Tan", "Cot", "Sec", "Csc", "Tanh", "Coth", "Sech",
  * `undefined` where the closure says nothing (a branch point, an essential singularity such as
  * `Exp(1/x)`, an unlisted head).
  */
-function meromorphicClass(expr: BoxedExpression, x: string): "entire" | "meromorphic" | undefined {
+function meromorphicClass(expr: Expression, x: string): "entire" | "meromorphic" | undefined {
   if (isSym(expr, x) || (isNumberLiteral(expr) && expr.im === 0)) return "entire";
   const ops = operandsOf(expr);
   const classes = ops.map((op) => meromorphicClass(op, x));
@@ -688,7 +687,7 @@ function meromorphicClass(expr: BoxedExpression, x: string): "entire" | "meromor
     return allEntire ? "entire" : "meromorphic";
   if (op === "Divide" && ops.length === 2) return ops[1]!.is(0) ? undefined : "meromorphic";
   if (op === "Power" && ops.length === 2) {
-    const [base, exponent] = ops as [BoxedExpression, BoxedExpression];
+    const [base, exponent] = ops as [Expression, Expression];
     // `Exp(a)` canonicalizes to `Power(E, a)`.
     if (symbolNameOf(base) === "ExponentialE" && classes[1] === "entire") return "entire";
     if (!isNumberLiteral(exponent) || exponent.im !== 0 || !Number.isInteger(exponent.re)) return undefined;
@@ -704,7 +703,7 @@ function meromorphicClass(expr: BoxedExpression, x: string): "entire" | "meromor
 // ---- period -------------------------------------------------------------------------
 
 /** `0` = provably non-periodic. `undefined` = decline. */
-export function periodOf(ce: ComputeEngine, rec: Recognized): BoxedExpression | undefined {
+export function periodOf(ce: ComputeEngine, rec: Recognized): Expression | undefined {
   switch (rec.tag) {
     case "poly":
       return degreeOf(rec.coeffs) >= 1 ? ce.number(0) : undefined;
@@ -715,7 +714,7 @@ export function periodOf(ce: ComputeEngine, rec: Recognized): BoxedExpression | 
       return ce.number(0); // monotonic-or-unbounded: a periodic function can't be
     case "trig": {
       // Exact: `Pi` (or `2*Pi`) over `|a|`, not a floating-point multiple of it.
-      const basePi: BoxedExpression = rec.fn === "Tan" ? ce.symbol("Pi") : ce.function("Multiply", [2, "Pi"]);
+      const basePi: Expression = rec.fn === "Tan" ? ce.symbol("Pi") : ce.function("Multiply", [2, "Pi"]);
       return ce.function("Divide", [basePi, Math.abs(rec.a)]);
     }
     default:
@@ -804,18 +803,18 @@ function continuousIntervalsOf(rec: Recognized): readonly RealInterval[] | undef
 
 /** A concrete finite real value read off a subtree with no occurrence of `x` — the
  * domain restriction's bound. Mirrors `constantValue` above (not exported from here). */
-function boundValue(expr: BoxedExpression, x: string): number | undefined {
+function boundValue(expr: Expression, x: string): number | undefined {
   if (containsVar(expr, x)) return undefined;
   return constantValue(expr);
 }
 
 /** One relation `x <op> c` or `c <op> x`, read as a half-open-or-unbounded interval —
  * `Less`/`LessEqual`/`Greater`/`GreaterEqual`, 2-ary, or 3-ary chained (`a < x < b`). */
-function oneSidedInterval(cond: BoxedExpression, x: string): Partial<RealInterval> | undefined {
+function oneSidedInterval(cond: Expression, x: string): Partial<RealInterval> | undefined {
   const ops = operandsOf(cond);
   const op = cond.operator;
   if (ops.length === 3 && (op === "Less" || op === "LessEqual")) {
-    const [p0, p1, p2] = ops as [BoxedExpression, BoxedExpression, BoxedExpression];
+    const [p0, p1, p2] = ops as [Expression, Expression, Expression];
     if (!isSym(p1, x)) return undefined;
     const lo = boundValue(p0, x);
     const hi = boundValue(p2, x);
@@ -826,7 +825,7 @@ function oneSidedInterval(cond: BoxedExpression, x: string): Partial<RealInterva
   if (ops.length !== 2 || (op !== "Less" && op !== "LessEqual" && op !== "Greater" && op !== "GreaterEqual")) {
     return undefined;
   }
-  const [p0, p1] = ops as [BoxedExpression, BoxedExpression];
+  const [p0, p1] = ops as [Expression, Expression];
   if (isSym(p0, x)) {
     // x <op> c
     const c = boundValue(p1, x);
@@ -851,7 +850,7 @@ function oneSidedInterval(cond: BoxedExpression, x: string): Partial<RealInterva
 /** The domain restriction as ONE real interval — a bare relation, a 3-ary chain, or
  * `And` of two one-sided relations that together bound both sides. `undefined` =
  * decline (anything else: `Or`, `NotEqual`, a relation not in `x`, ...). */
-function domainRestrictionInterval(domain: BoxedExpression, x: string): RealInterval | undefined {
+function domainRestrictionInterval(domain: Expression, x: string): RealInterval | undefined {
   let parts: Partial<RealInterval>[];
   if (domain.operator === "And") {
     const ops = operandsOf(domain);
@@ -898,8 +897,8 @@ function continuousOf(
   ce: ComputeEngine,
   rec: Recognized,
   x: string,
-  domain: BoxedExpression | undefined,
-): BoxedExpression | undefined {
+  domain: Expression | undefined,
+): Expression | undefined {
   if (domain === undefined) {
     const sing = singularitiesOf(ce, rec, x);
     if (sing === undefined) return undefined;
@@ -920,7 +919,7 @@ function continuousOf(
 // a declined one -- but Wolfram itself declines to reduce these past the bare call (its own
 // FunctionMonotonicity etc. answer Indeterminate, not a value), so we match that by staying
 // unevaluated too rather than picking a marker of our own.
-const trendToExpr = (ce: ComputeEngine, t: Trend | undefined): BoxedExpression | undefined =>
+const trendToExpr = (ce: ComputeEngine, t: Trend | undefined): Expression | undefined =>
   t === undefined || t === "indeterminate" ? undefined : ce.number(t);
 
 /** A `(any, symbol) -> any` head over `recognize` + `f`, declining (returning
@@ -928,12 +927,12 @@ const trendToExpr = (ce: ComputeEngine, t: Trend | undefined): BoxedExpression |
 function declareUnary(
   ce: ComputeEngine,
   name: string,
-  f: (ce: ComputeEngine, rec: Recognized, x: string) => BoxedExpression | undefined,
+  f: (ce: ComputeEngine, rec: Recognized, x: string) => Expression | undefined,
 ): void {
   ce.declare(name, {
     signature: "(expression, symbol) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [expr, xExpr] = ops;
       const x = xExpr === undefined ? undefined : symbolNameOf(xExpr);
       if (expr === undefined || x === undefined) return undefined;
@@ -950,7 +949,7 @@ export function declareFunctionProperties(ce: ComputeEngine): void {
   ce.declare("FunctionRange", {
     signature: "(expression, symbol, symbol) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [expr, xExpr, yExpr] = ops;
       const x = xExpr === undefined ? undefined : symbolNameOf(xExpr);
       const y = yExpr === undefined ? undefined : symbolNameOf(yExpr);
@@ -982,7 +981,7 @@ export function declareFunctionProperties(ce: ComputeEngine): void {
   ce.declare("FunctionSurjective", {
     signature: "(expression, symbol, symbol?) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [expr, xExpr, codomain] = ops;
       const x = xExpr === undefined ? undefined : symbolNameOf(xExpr);
       if (expr === undefined || x === undefined) return undefined;
@@ -1002,7 +1001,7 @@ export function declareFunctionProperties(ce: ComputeEngine): void {
   ce.declare("FunctionMeromorphic", {
     signature: "(expression, symbol) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [expr, xExpr] = ops;
       const x = xExpr === undefined ? undefined : symbolNameOf(xExpr);
       if (expr === undefined || x === undefined || hasForeignSymbol(expr, x) || !containsVar(expr, x)) return undefined;
@@ -1016,7 +1015,7 @@ export function declareFunctionProperties(ce: ComputeEngine): void {
   ce.declare("FunctionContinuous", {
     signature: "(expression, symbol, expression?) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [expr, xExpr, domain] = ops;
       const x = xExpr === undefined ? undefined : symbolNameOf(xExpr);
       if (expr === undefined || x === undefined) return undefined;

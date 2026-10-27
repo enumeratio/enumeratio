@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 
 // The dataflow core shared by `<notatio-notebook>` and `<notatio-worksheet>`: cells with
 // stable identity, evaluated top-to-bottom in a scope that is rebuilt from scratch on
@@ -144,7 +144,7 @@ export function inferRange(value: number, integer = false): { min: number; max: 
  */
 export function controlsFor(
   name: string | undefined,
-  value: BoxedExpression,
+  value: Expression,
   range?: ControlRange,
   integer = false,
 ): WorksheetControl[] {
@@ -314,14 +314,14 @@ export function projectionReason(kind: ProjectionKind, free: readonly string[]):
 }
 
 /** The value a declining projection yields: understood, and declined. */
-export const missingProjection = (ce: ComputeEngine): BoxedExpression => ce.symbol("Missing");
+export const missingProjection = (ce: ComputeEngine): Expression => ce.symbol("Missing");
 
 /**
  * The free variables of a cell: symbols it reads that the sheet's scope does not
  * bind. `bound` is every name the sheet defines, so a cell over a slider variable is
  * not "free" in it -- only the axes it is actually plotted against remain.
  */
-export function freeVariables(expr: BoxedExpression, bound: ReadonlySet<string>): string[] {
+export function freeVariables(expr: Expression, bound: ReadonlySet<string>): string[] {
   const out = new Set<string>();
   for (const name of expr.unknowns) if (!bound.has(name)) out.add(name);
   return [...out].toSorted();
@@ -333,7 +333,7 @@ export interface PassCell {
   cell: Cell;
   result: CellResult;
   /** The cell's evaluated value, when it produced one. */
-  value?: BoxedExpression;
+  value?: Expression;
   /**
    * The cell as written with every binding substituted, but *not* evaluated -- what a
    * plot should draw.
@@ -345,7 +345,7 @@ export interface PassCell {
    * Substituting alone keeps `HurwitzZeta(1, z)` a Hurwitz zeta, which draws its pole
    * like any other -- and keeps the compiled shape fixed while a slider moves.
    */
-  plot?: BoxedExpression;
+  plot?: Expression;
 }
 
 export interface PassOptions {
@@ -410,7 +410,7 @@ export function runPass(engine: ComputeEngine, cells: readonly Cell[], options: 
         }
       }
     }
-    const bindings: Record<string, BoxedExpression> = {};
+    const bindings: Record<string, Expression> = {};
     for (const cell of cells) {
       if (!cell.value.trim()) continue;
       const passed = evaluateCell(engine, cell, options, bindings);
@@ -424,7 +424,7 @@ export function runPass(engine: ComputeEngine, cells: readonly Cell[], options: 
 }
 
 /** `subs` on an expression that cannot take it is not worth failing a cell over. */
-function safeSubs(expr: BoxedExpression, bindings: Record<string, BoxedExpression>): BoxedExpression | undefined {
+function safeSubs(expr: Expression, bindings: Record<string, Expression>): Expression | undefined {
   try {
     return expr.subs(bindings);
   } catch {
@@ -450,11 +450,10 @@ export const ELIDE_ABOVE = 64;
  * General, not worksheet-specific: any cell can ask for it (`notatio-out`'s
  * `elide-above`), with its own threshold.
  */
-export function elideResult(expr: BoxedExpression, above: number = ELIDE_ABOVE): string | undefined {
+export function elideResult(expr: Expression, above: number = ELIDE_ABOVE): string | undefined {
   if (expr.operator !== "List") return undefined;
   // `ops` lives on compute-engine's narrowed function interface; read it structurally.
-  const opsOf = (e: BoxedExpression): readonly BoxedExpression[] =>
-    (e as unknown as { ops?: readonly BoxedExpression[] }).ops ?? [];
+  const opsOf = (e: Expression): readonly Expression[] => (e as unknown as { ops?: readonly Expression[] }).ops ?? [];
   const rows = opsOf(expr).length;
   if (rows <= above) return undefined;
   const inner = opsOf(expr)[0];
@@ -474,8 +473,8 @@ export function elideResult(expr: BoxedExpression, above: number = ELIDE_ABOVE):
  * Deliberately not evaluated -- see `PassCell.plot`'s own comment for why (a pole should
  * stay a pole as a bound parameter moves past it).
  */
-export function substitutedForm(engine: ComputeEngine, expr: BoxedExpression): BoxedExpression {
-  const bindings: Record<string, BoxedExpression> = {};
+export function substitutedForm(engine: ComputeEngine, expr: Expression): Expression {
+  const bindings: Record<string, Expression> = {};
   // `.symbols`, not `.unknowns`: a name the scope has ALREADY bound (`s` after `s := 2`)
   // has a value and so is not "unknown" to compute-engine at all -- exactly the ones
   // this function exists to substitute. `.unknowns` is for what is LEFT free afterwards.
@@ -494,7 +493,7 @@ function evaluateCell(
   engine: ComputeEngine,
   cell: Cell,
   options: PassOptions,
-  bindings: Record<string, BoxedExpression>,
+  bindings: Record<string, Expression>,
 ): PassCell {
   const fail = (status: "error" | "invalid", detail: string): PassCell => ({
     cell,

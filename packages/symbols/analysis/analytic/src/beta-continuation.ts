@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, wrapOperator } from "@enumeratio/engine";
 import {
   atEnginePrecision,
@@ -65,7 +65,7 @@ export function declareBetaContinuation(ce: ComputeEngine): void {
    * A rational (or finite double) x outside [0, 1] with integers a, b ≥ 1: the polynomial's value
    * at x, exact; a double x is taken as the dyadic rational it is.
    */
-  const exactOutside = (ops: readonly BoxedExpression[]): [bigint, bigint, number, number] | undefined => {
+  const exactOutside = (ops: readonly Expression[]): [bigint, bigint, number, number] | undefined => {
     const [x, a, b] = ops;
     const [m, n] = [bigIntegerAt(a), bigIntegerAt(b)];
     if (x === undefined || m === undefined || n === undefined || ops.length !== 3) return undefined;
@@ -122,7 +122,7 @@ export function declareBetaContinuation(ce: ComputeEngine): void {
         return d === 1n ? ce.number(n) : ce.function("Rational", [ce.number(n), ce.number(d)]).evaluate();
       }
       if (!wantsNumber(ops, options)) return native?.(ops, options);
-      const [x, a, b] = ops.map((op: BoxedExpression) => op.re) as [number, number, number];
+      const [x, a, b] = ops.map((op: Expression) => op.re) as [number, number, number];
       let sum = 0;
       let binomial = 1;
       for (let j = 0; j < b; j++) {

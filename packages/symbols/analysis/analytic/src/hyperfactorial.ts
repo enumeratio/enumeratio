@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt } from "@enumeratio/engine";
 import { logBarnesG, cx, logGamma, wantsNumber, type EvalOptions } from "@enumeratio/ce-patches";
 
@@ -24,10 +24,10 @@ function hyperfactorialReal(z: number): number {
 
 function evaluateHyperfactorial(
   ce: ComputeEngine,
-  x: BoxedExpression | undefined,
-  ops: readonly BoxedExpression[],
+  x: Expression | undefined,
+  ops: readonly Expression[],
   options: EvalOptions,
-): BoxedExpression | undefined {
+): Expression | undefined {
   if (x === undefined) return undefined;
   const n = bigIntegerAt(x);
   if (n !== undefined && n >= 0n) return ce.number(hyperfactorialExact(n));
@@ -43,7 +43,6 @@ export function declareHyperfactorial(ce: ComputeEngine): void {
   ce.declare("Hyperfactorial", {
     signature: "(number) -> number",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      evaluateHyperfactorial(ce, ops[0], ops, options),
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => evaluateHyperfactorial(ce, ops[0], ops, options),
   });
 }

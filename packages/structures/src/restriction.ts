@@ -19,7 +19,7 @@
 // "Partitions whose largest part is at most k" cannot be, not for every k; enumeratio models
 // those as constructor parameters for exactly this reason.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { carrierNameForType, registerCollectionCarrier } from "./operations.ts";
 
 /** A named restriction: a base collection plus the predicate that selects from it. */
@@ -267,7 +267,7 @@ export function fillPredicate(node: unknown, subject: unknown, contents: unknown
 export function declareRestricted(ce: ComputeEngine): void {
   ce.declare("Restricted", {
     signature: "(collection, function) -> collection",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expression[]): Expression | undefined => {
       const [base, predicate] = ops;
       if (base === undefined || predicate === undefined) return undefined;
       return ce.function("Filter", [base, predicate]).evaluate();
@@ -304,7 +304,7 @@ export function declareRestrictions(ce: ComputeEngine, restrictions: readonly Re
     }
     ce.declare(restriction.name, {
       signature: "(integer) -> collection",
-      evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+      evaluate: (ops: readonly Expression[]): Expression | undefined => {
         const size = ops[0];
         if (size === undefined) return undefined;
         // `_x` is the bound element as Filter hands it back — carrier-typed when `carrier` is

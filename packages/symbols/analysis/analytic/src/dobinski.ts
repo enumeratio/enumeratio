@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCompile, bigIntegerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 
@@ -9,16 +9,15 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 // Attached to `Sum` directly rather than through `wrapOperator`: Sum is lazy, and its
 // operands hold a bound index that must not be evaluated ahead of the sum.
 
-type Evaluate = (ops: ReadonlyArray<BoxedExpression>, options: EvalOptions) => BoxedExpression | undefined;
+type Evaluate = (ops: ReadonlyArray<Expression>, options: EvalOptions) => Expression | undefined;
 
 /** Largest n expanded; Bₙ is exact at any n, but the sum is rarely asked past this. */
 const N_MAX = 200n;
 
-const symbolOf = (x: BoxedExpression | undefined): string | undefined =>
-  x === undefined ? undefined : symbolNameOf(x);
+const symbolOf = (x: Expression | undefined): string | undefined => (x === undefined ? undefined : symbolNameOf(x));
 
 /** The n of kⁿ/k! over the index k, or undefined for any other summand. */
-function dobinskiOrder(body: BoxedExpression, k: string): bigint | undefined {
+function dobinskiOrder(body: Expression, k: string): bigint | undefined {
   if (body.operator !== "Divide") return undefined;
   const [num, den] = operandsOf(body);
   if (den?.operator !== "Factorial" || symbolOf(operandsOf(den)[0]) !== k) return undefined;
@@ -34,7 +33,7 @@ export function declareDobinski(ce: ComputeEngine): void {
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   const native = operator?.evaluate as Evaluate | undefined;
   if (operator === undefined || native === undefined) return;
-  operator.evaluate = ((ops: ReadonlyArray<BoxedExpression>, options: EvalOptions) => {
+  operator.evaluate = ((ops: ReadonlyArray<Expression>, options: EvalOptions) => {
     const [body, limits] = ops;
     if (ops.length === 2 && body !== undefined && limits?.operator === "Limits") {
       const [index, lo, hi] = operandsOf(limits);

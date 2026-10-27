@@ -15,7 +15,7 @@
 // no `@*` — so this declares one. Wolfram spells it `Composition` and reads it right to
 // left as we do, which is a transpiler mapping rather than a reason to rename.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 /** Apply `steps` to `subject` right to left — `compose(f, g)(x)` is `f(g(x))`.
@@ -23,14 +23,10 @@ import { operandsOf, symbolNameOf } from "@enumeratio/engine";
  *  Each step goes through its own declared head, so every intermediate value is a properly
  *  constructed carrier and each step is type-checked against the next. That is the whole
  *  reason maps carry types. */
-export function applyComposition(
-  ce: ComputeEngine,
-  steps: readonly string[],
-  subject: BoxedExpression,
-): BoxedExpression {
+export function applyComposition(ce: ComputeEngine, steps: readonly string[], subject: Expression): Expression {
   const reversed = [...steps];
   reversed.reverse();
-  return reversed.reduce<BoxedExpression>((value, step) => ce.function(step, [value]).evaluate(), subject);
+  return reversed.reduce<Expression>((value, step) => ce.function(step, [value]).evaluate(), subject);
 }
 
 /**
@@ -43,7 +39,7 @@ export function declareCompose(ce: ComputeEngine): void {
     // FUNCTION type, so a signature asking for `symbol` rejects exactly the names worth
     // composing.
     signature: "(any+) -> function",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expression[]): Expression | undefined => {
       const steps = ops.map(symbolNameOf).filter((name): name is string => name !== undefined);
       if (steps.length !== ops.length) return undefined;
       // A function value that closes over the step names. `_composed` is a bound parameter,
@@ -67,7 +63,7 @@ export function declareCompose(ce: ComputeEngine): void {
   // argument is known.
   ce.declare("ComposeApply", {
     signature: "(list<any>, any) -> any",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expression[]): Expression | undefined => {
       const [list, subject] = ops;
       if (list === undefined || subject === undefined) return undefined;
       const names = operandsOf(list)

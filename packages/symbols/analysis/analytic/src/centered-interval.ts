@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import type { Resolver } from "./tagged-arithmetic.ts";
 
@@ -18,31 +18,30 @@ import type { Resolver } from "./tagged-arithmetic.ts";
 // head by `declare-tagged-arithmetic.ts` — see tagged-arithmetic.ts for why this doesn't
 // call `wrapOperator` itself.
 
-const isCenteredInterval = (e: BoxedExpression): boolean =>
-  e.operator === "CenteredInterval" && operandsOf(e).length === 2;
+const isCenteredInterval = (e: Expression): boolean => e.operator === "CenteredInterval" && operandsOf(e).length === 2;
 
-const center = (e: BoxedExpression): BoxedExpression => operandsOf(e)[0];
-const radius = (e: BoxedExpression): BoxedExpression => operandsOf(e)[1];
+const center = (e: Expression): Expression => operandsOf(e)[0];
+const radius = (e: Expression): Expression => operandsOf(e)[1];
 
 /** This module's resolvers — see the file header. */
 export function centeredIntervalResolvers(ce: ComputeEngine): Readonly<Record<string, Resolver>> {
-  const add = (a: BoxedExpression, b: BoxedExpression) => ce.function("Add", [a, b]).evaluate();
-  const neg = (a: BoxedExpression) => ce.function("Negate", [a]).evaluate();
-  const mul = (a: BoxedExpression, b: BoxedExpression) => ce.function("Multiply", [a, b]).evaluate();
-  const abs = (a: BoxedExpression) => ce.function("Abs", [a]).evaluate();
-  const centeredInterval = (c: BoxedExpression | number, r: BoxedExpression | number) =>
+  const add = (a: Expression, b: Expression) => ce.function("Add", [a, b]).evaluate();
+  const neg = (a: Expression) => ce.function("Negate", [a]).evaluate();
+  const mul = (a: Expression, b: Expression) => ce.function("Multiply", [a, b]).evaluate();
+  const abs = (a: Expression) => ce.function("Abs", [a]).evaluate();
+  const centeredInterval = (c: Expression | number, r: Expression | number) =>
     ce.function("CenteredInterval", [c, r]).evaluate();
   /** `e` as a `CenteredInterval`, degenerate `(e, 0)` if it is a plain number. */
-  const asCentered = (e: BoxedExpression) => (isCenteredInterval(e) ? e : centeredInterval(e, 0));
+  const asCentered = (e: Expression) => (isCenteredInterval(e) ? e : centeredInterval(e, 0));
 
-  const centeredNegate = (a: BoxedExpression): BoxedExpression => {
+  const centeredNegate = (a: Expression): Expression => {
     const A = asCentered(a);
     return centeredInterval(neg(center(A)), radius(A));
   };
   /** Centers add, and — since `Subtract(a, b)` canonicalizes to `Add(a, Negate(b))` before
    * any operator hook runs, and `Negate` above leaves the radius alone — radii always add
    * too, on both sides: this reproduces Wolfram's "radii add under subtraction too". */
-  const centeredAdd = (a: BoxedExpression, b: BoxedExpression): BoxedExpression => {
+  const centeredAdd = (a: Expression, b: Expression): Expression => {
     const A = asCentered(a);
     const B = asCentered(b);
     return centeredInterval(add(center(A), center(B)), add(radius(A), radius(B)));
@@ -50,12 +49,12 @@ export function centeredIntervalResolvers(ce: ComputeEngine): Readonly<Record<st
   /** A scalar times a `CenteredInterval`: the center scales by the factor, the radius by its
    * absolute value. Only exactly one `CenteredInterval` operand among plain scalars is
    * handled — two centered intervals multiplied has no example and no simple exact rule. */
-  const centeredScale = (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+  const centeredScale = (ops: readonly Expression[]): Expression | undefined => {
     const centered = ops.filter(isCenteredInterval);
     if (centered.length !== 1) return undefined;
     const A = centered[0];
     const scalars = ops.filter((o) => o !== A);
-    const k = scalars.reduce((acc, e) => mul(acc, e), ce.One as BoxedExpression);
+    const k = scalars.reduce((acc, e) => mul(acc, e), ce.One as Expression);
     return centeredInterval(mul(k, center(A)), mul(abs(k), radius(A)));
   };
 
@@ -74,7 +73,7 @@ export function centeredIntervalResolvers(ce: ComputeEngine): Readonly<Record<st
 export function declareCenteredInterval(ce: ComputeEngine): void {
   ce.declare("CenteredInterval", {
     signature: "(number | set<real>, real?) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const single = ops[0];
       if (ops.length === 1 && single !== undefined && single.operator === "Interval") {
         const [a, b] = operandsOf(single);

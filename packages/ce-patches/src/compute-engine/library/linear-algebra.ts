@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCompile, operandsOf } from "@enumeratio/engine";
 
 // cortex-js/compute-engine: `Shape` reads `xs.shape`, which is the `dimensions` of the operand's
@@ -22,7 +22,7 @@ function commonPrefix(rows: readonly (readonly number[])[]): number[] {
 }
 
 /** `Dimensions` of a nested `List` by structure (`[]` for anything that is not one). */
-export function structuralShape(expr: BoxedExpression): number[] {
+export function structuralShape(expr: Expression): number[] {
   if (expr.operator !== "List") return [];
   const ops = operandsOf(expr);
   return [ops.length, ...commonPrefix(ops.map(structuralShape))];
@@ -34,7 +34,7 @@ export function evaluateShapeOfUnknownElements(ce: ComputeEngine): void {
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   const native = operator?.evaluate;
   if (operator === undefined || native === undefined) return;
-  (operator as { evaluate: unknown }).evaluate = (ops: readonly BoxedExpression[], options: never) => {
+  (operator as { evaluate: unknown }).evaluate = (ops: readonly Expression[], options: never) => {
     const [xs] = ops;
     if (xs === undefined || xs.shape.length > 0) return native(ops, options);
     const shape = structuralShape(xs);

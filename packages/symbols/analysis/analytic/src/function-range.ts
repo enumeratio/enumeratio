@@ -1,5 +1,5 @@
 // unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@enumeratio/engine/unstable";
+import { BigDecimal, type Expression, type ComputeEngine } from "@enumeratio/engine/unstable";
 import { isRealInt } from "@enumeratio/ce-patches";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { airyBig, airyPrimeBig, besselKYBig } from "./special-big.ts";
@@ -144,14 +144,9 @@ function extremes(curve: Curve): { min?: number; max?: number } | undefined {
 }
 
 /** `FunctionRange(f, x, y)` for the special functions above, as a numeric condition in `y`. */
-export function specialFunctionRange(
-  ce: ComputeEngine,
-  f: BoxedExpression,
-  x: string,
-  y: string,
-): BoxedExpression | undefined {
+export function specialFunctionRange(ce: ComputeEngine, f: Expression, x: string, y: string): Expression | undefined {
   const args = operandsOf(f);
-  const ofX = (e: BoxedExpression | undefined): boolean => e !== undefined && symbolNameOf(e) === x;
+  const ofX = (e: Expression | undefined): boolean => e !== undefined && symbolNameOf(e) === x;
   let curve: Curve | undefined;
   if ((f.operator === "AiryAi" || f.operator === "AiryBi") && args.length === 1 && ofX(args[0])) {
     curve = airyCurve(f.operator === "AiryAi" ? "Ai" : "Bi");
