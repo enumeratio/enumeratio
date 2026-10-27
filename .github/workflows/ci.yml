@@ -80,7 +80,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.warm != 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 50 # a cold build (a compute-engine bump voids combinatorics' verdicts) takes ~35 min
+    timeout-minutes: 90 # a cold build (a compute-engine bump voids combinatorics' verdicts) takes 50+ min on a runner
     permissions:
       contents: read
       actions: write # to prune the older cache entries
