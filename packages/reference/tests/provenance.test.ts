@@ -1494,6 +1494,10 @@ const NOVEL = [
   "SwapReturnsAndLastDescent",
   "KasraouiZeng",
   "CallanSwitch",
+  "FoataHan",
+  "InverseFoataHan",
+  "DemazureProductWithInverse",
+  "RowDescentsToColumnDescents",
 ];
 
 // What formats holds inert that is Wolfram's own (`Plot`, `Slider`, `Cell`): known elsewhere because

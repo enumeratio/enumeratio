@@ -270,6 +270,42 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     findstat: [{ id: "Mp00169", rows: 1200, compared: 1200, skipped: 0 }],
   },
   {
+    name: "KrewerasComplement",
+    from: "SignedPermutation",
+    to: "SignedPermutation",
+    findstat: [{ id: "Mp00168", rows: 1200, compared: 1200, skipped: 0 }],
+  },
+  {
+    name: "InverseKrewerasComplement",
+    from: "SignedPermutation",
+    to: "SignedPermutation",
+    findstat: [{ id: "Mp00167", rows: 1200, compared: 1200, skipped: 0 }],
+  },
+  {
+    name: "FoataHan",
+    from: "SignedPermutation",
+    to: "SignedPermutation",
+    findstat: [{ id: "Mp00190", rows: 1200, compared: 1200, skipped: 0 }],
+  },
+  {
+    name: "InverseFoataHan",
+    from: "SignedPermutation",
+    to: "SignedPermutation",
+    findstat: [{ id: "Mp00194", rows: 1200, compared: 1200, skipped: 0 }],
+  },
+  {
+    name: "DemazureProductWithInverse",
+    from: "SignedPermutation",
+    to: "SignedPermutation",
+    findstat: [{ id: "Mp00260", rows: 1200, compared: 1200, skipped: 0 }],
+  },
+  {
+    name: "Rowmotion",
+    from: "SignedPermutation",
+    to: "SignedPermutation",
+    findstat: [{ id: "Mp00281", rows: 1200, compared: 1200, skipped: 0 }],
+  },
+  {
     name: "DyckPath",
     from: "BinaryTree",
     to: "DyckPath",
@@ -646,6 +682,12 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     from: "StandardTableau",
     to: "StandardTableau",
     findstat: [{ id: "Mp00106", rows: 1200, compared: 119, skipped: 0 }],
+  },
+  {
+    name: "RowDescentsToColumnDescents",
+    from: "StandardTableau",
+    to: "StandardTableau",
+    findstat: [{ id: "Mp00226", rows: 1200, compared: 119, skipped: 0 }],
   },
   {
     name: "Reverse",

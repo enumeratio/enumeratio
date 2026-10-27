@@ -1,3 +1,4 @@
 id	section	role	expr	expected	caption
 the-one-line-word-231			[InverseKrewerasComplement, [Permutation, [List, 2, 3, 1]]]	[Permutation, [List, 1, 2, 3]]	the one-line word $231$
+the-signed-permutation-2-bar-3-1			[InverseKrewerasComplement, [SignedPermutation, [List, 2, -3, 1]]]	[SignedPermutation, [List, 1, -2, -3]]	the signed permutation $2\,\bar 3\,1$
 the-dyck-path-uuddud			[InverseKrewerasComplement, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	[DyckPath, [List, 1, 0, 1, 1, 0, 0]]	the Dyck path $UUDDUD$
