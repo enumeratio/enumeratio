@@ -9,7 +9,7 @@ signatures:
   - call: Arcsec(x)
     description: Arcsecant, the inverse of [[Sec]].
     library: enumeratio-analytic
-    type: (complex | infinity) -> number
+    type: (complex | infinity | quantity) -> number
     overrides: compute-engine
 seeAlso:
   - Sec

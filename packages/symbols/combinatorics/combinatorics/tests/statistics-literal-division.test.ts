@@ -1,8 +1,7 @@
-// Compiled code lowers `x / 6` to `x * 0.1666…` (compute-engine canonicalizes it to a Rational
-// coefficient and the JS target embeds that as a double), so an integer statistic can come out
-// a hair off, or not an integer, once its operand is large enough. Every compiled definition that
-// divides by a literal other than a power of two must still equal the interpreter on subjects
-// with big entries; a regression in either the compiler or a definition shows up here.
+// A literal divisor is lowered exactly (`x / 6`, not `x * 0.1666…`; before compute-engine 0.170 the
+// Rational coefficient went out as a double), so an integer statistic stays an integer however large its
+// operand. Every compiled definition that divides by a literal other than a power of two must equal the
+// interpreter on subjects with big entries; a regression in either the compiler or a definition shows up here.
 
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
@@ -63,11 +62,8 @@ for (const definition of AFFECTED) {
   });
 }
 
-// Known compute-engine gap: `x * (1/6)` gives 559.9999999999999, not a safe integer, so the
-// compiled code declines and the interpreter answers instead (correct, but slow). This flips when
-// CE lowers a literal divisor exactly; then drop `.fails` (and the Product(Range(..)) divisors
-// in partitions/src/statistics.ts can go back to a plain literal).
-test.fails("compiled code answers where the divided product is not exactly representable", () => {
+// `n(n-1)(n-2) / 6` at n = 16 was 559.9999999999999, so the compiled code declined and the interpreter answered.
+test("compiled code answers where the divided product is not exactly representable", () => {
   const definition = AFFECTED.find((d) => d.head === "InvariantThreeElementSubsetCount")!;
   expect(compiledStatistic(ce, definition)!(list(ones(16)))).toBeDefined();
 });

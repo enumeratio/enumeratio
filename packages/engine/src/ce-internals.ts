@@ -39,12 +39,21 @@ export function libraryOperator(ce: ComputeEngine, name: string): Operator | und
     : undefined;
 }
 
-/** Whether compute-engine would treat `operator` as a user definition shadowing the library head `name`. */
-export function shadowsLibrary(ce: ComputeEngine, name: string, operator: Operator): boolean {
+/** What compute-engine compares of an extension (the copy `ce.declare(..., { extend: true })` makes of a library head). */
+const EXTENSION_SHADOWING_FIELDS = ["lazy", "broadcastable", "evaluateAsync"] as const;
+
+/** The definitions `extendHead` built from an earlier one. */
+export const extensions = new WeakSet<object>();
+
+/**
+ * Whether compute-engine would treat `operator` as a user definition shadowing the library head `name`.
+ * An extension shadows only by what changes how operands are held or threaded: a replaced `evaluate` or
+ * `canonical` on it still compiles as the library head, so a package that replaces one states its stance.
+ */
+export function shadowsLibrary(ce: ComputeEngine, name: string, operator: Operator, extension = false): boolean {
   const library = libraryOperator(ce, name);
-  return (
-    library !== undefined && operator !== library && SHADOWING_FIELDS.some((key) => operator[key] !== library[key])
-  );
+  const fields: readonly (keyof Operator)[] = extension ? EXTENSION_SHADOWING_FIELDS : SHADOWING_FIELDS;
+  return library !== undefined && operator !== library && fields.some((key) => operator[key] !== library[key]);
 }
 
 /** The `evaluate` entry points of function nodes, as `modular.ts` wraps them. */

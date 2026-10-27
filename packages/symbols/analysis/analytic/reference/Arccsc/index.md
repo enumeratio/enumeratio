@@ -9,7 +9,7 @@ signatures:
   - call: Arccsc(x)
     description: Arccosecant, the inverse of [[Csc]].
     library: enumeratio-analytic
-    type: (complex | infinity) -> number
+    type: (complex | infinity | quantity) -> number
     overrides: compute-engine
 seeAlso:
   - Csc
