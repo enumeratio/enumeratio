@@ -10,14 +10,14 @@ listable-over-a-range
 primenu-30	primenu(30)	3	
 negative-n-the-sign-is-a-unit	primenu(-12)	ValueError: n should be a positive integer	error
 moebiusmu-42-eq-neg-1-pow-primenu-42	enumeratio_equal(mobius(42), (S(-1)**primenu(42)))	True	
-liouvillelambda-42-eq-neg-1-pow-primenu-42			
+liouvillelambda-42-eq-neg-1-pow-primenu-42	enumeratio_equal((-1)**primeomega(42), (S(-1)**primenu(42)))		
 primenu-n-is-the-length-of-factorinteger-n	enumeratio_equal(primenu(50), (len(list(factorrat(S(50)).items())) if hasattr(list(factorrat(S(50)).items()), '__len__') else (len((list(factorrat(S(50)).items())).args) if hasattr(list(factorrat(S(50)).items()), 'args') else 0)))	True	
 primenu-50	primenu(50)	2	
 primenu-360-eq-primenu-9-plus-primenu-40	enumeratio_equal(primenu(360), (primenu(9) + primenu(40)))	True	
 primenu-49	primenu(49)	1	
 primenu-210-eq-primeomega-210	enumeratio_equal(primenu(210), primeomega(210))	True	
 moebiusmu-33-eq-neg-1-pow-primenu-33	enumeratio_equal(mobius(33), (S(-1)**primenu(33)))	True	
-liouvillelambda-33-eq-neg-1-pow-primenu-33			
+liouvillelambda-33-eq-neg-1-pow-primenu-33	enumeratio_equal((-1)**primeomega(33), (S(-1)**primenu(33)))		
 primenu-2	primenu(2)	1	
 primenu-3	primenu(3)	1	
 primenu-6	primenu(6)	2	

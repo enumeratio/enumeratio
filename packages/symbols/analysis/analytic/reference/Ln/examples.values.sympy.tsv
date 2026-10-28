@@ -45,7 +45,7 @@ series-ln-x-x-1-4	series(log(Symbol("x")), Symbol("x"), 1, 4 + 1)	-1 - (x - 1)**
 series-ln-x-x-neg-2-3	series(log(Symbol("x")), Symbol("x"), -2, 3 + 1)	I*pi + log(2) - 1 - (x + 2)**2/8 - (x + 2)**3/24 - x/2 + O((x + 2)**4, (x, -2))	
 inverse-of-exp-ln-e-x-x	enumeratio_equal(log(exp(5)), 5)	True	
 product-rule-ln-ab-ln-a-ln-b	enumeratio_equal((log(2) + log(3)), log(6))	True	
-powerexpand-splits-a-logarithm-of-a-product			
+powerexpand-splits-a-logarithm-of-a-product	expand_log(powdenest(expand_power_base(log((Symbol("x") * Symbol("y"))), force=True), force=True), force=True)		
 n-ln-2-pow-2	N((S(log(2))**2), 30)	0.480453013918201424667102526327	
 n-ln-2-pow-3	N((S(log(2))**3), 30)	0.333024651988929479718853582612	
 n-ln-2-pow-4	N((S(log(2))**4), 30)	0.230835098583083451887497717768	

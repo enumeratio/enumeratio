@@ -53,6 +53,6 @@ gamma-x-gamma-x-psi-x-so-the-logarithmic	(S(diff(gamma(Symbol("x")), Symbol("x")
 1-over-gamma-1-over-2	(S(1) / gamma(Rational(1, 2)))	1/sqrt(pi)	
 gamma-1-over-2-pow-2	(S(gamma(Rational(1, 2)))**2)	pi	
 gamma-neg-1-over-2-times-gamma-1-over-2	(gamma(Rational(-1, 2)) * gamma(Rational(1, 2)))	-2*pi	
-product-gamma-1-over-2-times-2k-plus-1-over-2-k			
+product-gamma-1-over-2-times-2k-plus-1-over-2-k	product(gamma((Rational(1, 2) * ((2 * Symbol("k")) + Rational(1, 2)))), (Symbol("k"), 0, 1))		
 squaring-the-reflection-formula-at-z-1-2	enumeratio_equal((S(gamma(Rational(1, 2)))**2), pi)	True	
 gamma-i-2-pi-sinh-pi-0-27203	N((S(Abs(gamma(I)))**2), 30)	0.272029054982133162950236583672	

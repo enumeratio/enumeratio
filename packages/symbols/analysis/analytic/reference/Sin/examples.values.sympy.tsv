@@ -69,7 +69,7 @@ double-angle-formula-via-trigexpand
 angle-addition-formula-via-trigexpand			
 triple-angle-formula			
 power-reduction-sin-2-x-frac-1-cos-2x-2			
-euler-s-formula-sin-x-frac-e-ix-e-ix-2i			
+euler-s-formula-sin-x-frac-e-ix-e-ix-2i	(sin(Symbol("x"))).rewrite(exp)		
 simplify-knows-the-pythagorean-identity	simplify(((S(sin(Symbol("x")))**2) + (S(cos(Symbol("x")))**2)))	1	
 the-same-through-fullsimplify	simplify(((S(sin(Symbol("x")))**2) + (S(cos(Symbol("x")))**2)))	1	
 sin-3-over-10-times-pi	sin((Rational(3, 10) * pi))	1/4 + sqrt(5)/4	
@@ -93,4 +93,4 @@ a-huge-exact-argument-is-reduced-modulo-2-pi	N(sin((S(10)**20)), 30)	-0.64525128
 an-even-huger-argument-11-38	N(sin((S(11)**38)), 30)	0.867534193184863032081750429728	
 sin-complexinfinity-is-indeterminate-off-the	sin(zoo)	nan	disagree
 the-special-angle-table-reaches-past-30-45-60	sin((S(pi) / 5))	sqrt(5/8 - sqrt(5)/8)	
-functionexpand-gives-the-nested-radical-form			
+functionexpand-gives-the-nested-radical-form	expand_func(sin((S(pi) / 15)))		

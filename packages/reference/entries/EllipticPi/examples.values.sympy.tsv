@@ -1,5 +1,5 @@
 id	in	out	verdict
-fullsimplify-normal-series-ellipticpi-n-m-m			
+fullsimplify-normal-series-ellipticpi-n-m-m	simplify((series(elliptic_pi(Symbol("n"), Symbol("m")), Symbol("m"), oo, 2 + 1)).removeO())		
 functionexpand-ellipticpi-list-list-neg-1-0-list	expand_func([[elliptic_pi(-1, 0), elliptic_pi(0, 0)], [elliptic_pi(0, 0), elliptic_pi(Rational(1, 2), 0)]])	AttributeError: 'list' object has no attribute 'expand'	error
 functionexpand-matrixfunction-function	expand_func(Matrix([[-1, 0], [0, Rational(1, 2)]]).analytic_func(elliptic_pi(Symbol("_mf"), 0), Symbol("_mf")).applyfunc(simplify).tolist())	AttributeError: 'list' object has no attribute 'expand'	error
 n-ellipticpi-3-over-10-2-over-5-50	N(elliptic_pi(Rational(3, 10), Rational(2, 5)), 30)	2.14879541586645663593602278638	

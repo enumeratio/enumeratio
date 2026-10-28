@@ -12,5 +12,5 @@ uncertainty-propagation-eta-2-pm-0-01-0-82247-pm
 to-30-significant-digits-not-yet-the-last-digit	N(dirichlet_eta(Rational(1, 2)), 30)	0.604898643421630370247265914236	
 nonpositive-integers-eta-n-2-n-1-1-b-n-1-n-1	[dirichlet_eta(0), dirichlet_eta(-1), dirichlet_eta(-2), dirichlet_eta(-3)]	[1/2, 1/4, 0, -1/8]	
 eta-4-frac-78-zeta-4-7-pi-4-720	dirichlet_eta(4)	7*pi**4/720	
-rewriting-in-terms-of-zeta-eta-s-1-2-1-s-zeta-s			
+rewriting-in-terms-of-zeta-eta-s-1-2-1-s-zeta-s	expand_func(dirichlet_eta(Symbol("s")))		
 an-exact-non-integer-argument-stays-symbolic	dirichlet_eta(Rational(1, 2))	dirichlet_eta(1/2)	

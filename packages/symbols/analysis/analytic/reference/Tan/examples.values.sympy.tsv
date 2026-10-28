@@ -50,7 +50,7 @@ tan-x-frac-sin-x-cos-x	enumeratio_equal(tan((S(pi) / 4)), (S(sin((S(pi) / 4))) /
 odd-function-tan-x-tan-x	tan((-(S(pi) / 4)))	-1	
 period-pi-not-2-pi-adding-a-half-turn-doesn-t	tan(((S(pi) / 4) + pi))	1	
 sin-x-cos-x-should-simplify-to-tan-x-simplify	simplify((S(sin(Symbol("x"))) / cos(Symbol("x"))))	tan(x)	
-rewritten-in-exponentials			
+rewritten-in-exponentials	(tan(Symbol("x"))).rewrite(exp)		
 tan-3-over-10-times-pi	tan((Rational(3, 10) * pi))	sqrt(2*sqrt(5)/5 + 1)	
 tan-3-over-8-times-pi	tan((Rational(3, 8) * pi))	1 + sqrt(2)	
 n-1-minus-tan-1-over-2-pow-2-times-tan-1	N(((1 + (-(S(tan(Rational(1, 2)))**2))) * tan(1)), 30)	1.09260497968758102651035893156	

@@ -15,7 +15,7 @@ list-isprimepower-27-issquarefree-27	[(abs(27) > 1 and len(factorint(abs(27))) =
 list-isprimepower-3-issquarefree-3	[(abs(3) > 1 and len(factorint(abs(3))) == 1), (mobius(abs(3)) != 0 if 3 != 0 else False)]	[True, True]
 isprimepower-25	(abs(25) > 1 and len(factorint(abs(25))) == 1)	True
 isprimepower-16-807	(abs(16807) > 1 and len(factorint(abs(16807))) == 1)	True
-list-isprimepower-121-iscomposite-121-moebiusmu	[(abs(121) > 1 and len(factorint(abs(121))) == 1), (abs(121) > 1 and not isprime(abs(121))), mobius(121)]	[True, True, 0]
+list-isprimepower-121-iscomposite-121-moebiusmu	[(abs(121) > 1 and len(factorint(abs(121))) == 1), (121 > 1 and not isprime(121)), mobius(121)]	[True, True, 0]
 list-isprimepower-11-isprime-11-moebiusmu-11	[(abs(11) > 1 and len(factorint(abs(11))) == 1), isprime(11), mobius(11)]	[True, True, -1]
 isprimepower-2-401	(abs(2401) > 1 and len(factorint(abs(2401))) == 1)	True
 isprimepower-121	(abs(121) > 1 and len(factorint(abs(121))) == 1)	True
