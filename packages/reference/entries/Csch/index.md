@@ -9,7 +9,7 @@ signatures:
   - call: Csch(complex | signed_infinity) -> number
     description: Hyperbolic cosecant, the reciprocal of hyperbolic sine.
     library: enumeratio-analytic
-    type: (complex | signed_infinity) -> number
+    type: (complex | quantity | signed_infinity) -> number
     overrides: compute-engine
 names:
   wolframIdentity: true

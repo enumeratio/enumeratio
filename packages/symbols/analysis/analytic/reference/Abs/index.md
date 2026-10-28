@@ -9,7 +9,7 @@ signatures:
   - call: Abs(x)
     description: "The absolute value or magnitude of x: $|x|$, its distance from 0."
     library: enumeratio-analytic
-    type: (complex | infinity) -> number
+    type: (complex | infinity | quantity) -> number
     overrides: compute-engine
     on:
       - Around

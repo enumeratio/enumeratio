@@ -1,10 +1,10 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { symbolNameOf } from "@enumeratio/engine";
 import { ancestry, ensureProtocols, PROTOCOLS, type ProtocolName, protocol } from "./protocols.ts";
 
 /** A member's implementation: the receiver first. `undefined` when it has no answer, which
  *  leaves the call unevaluated. */
-export type Member = (...args: BoxedExpression[]) => BoxedExpression | undefined;
+export type Member = (...args: Expression[]) => Expression | undefined;
 
 /** The protocols a type conforms to, each with its members' implementations. */
 export type Conformance = Partial<Record<ProtocolName, Readonly<Record<string, Member>>>>;
@@ -29,10 +29,7 @@ export function conform(ce: ComputeEngine, type: string, conformance: Conformanc
     // A member with no answer leaves the call as written, as a head without a rule does,
     // rather than compute-engine's `Nothing`.
     const answering = Object.fromEntries(
-      Object.entries(functions).map(([m, f]) => [
-        m,
-        (...args: BoxedExpression[]) => f(...args) ?? ce.function(m, args),
-      ]),
+      Object.entries(functions).map(([m, f]) => [m, (...args: Expression[]) => f(...args) ?? ce.function(m, args)]),
     );
     ce.declareProtocolImplementation(type, name, { functions: answering });
   }
@@ -43,14 +40,14 @@ export function conform(ce: ComputeEngine, type: string, conformance: Conformanc
  * Epsil answers too. `undefined` when the value's type doesn't conform or the member has no
  * answer for these arguments.
  */
-export function member(ce: ComputeEngine, name: string, args: readonly BoxedExpression[]): BoxedExpression | undefined {
+export function member(ce: ComputeEngine, name: string, args: readonly Expression[]): Expression | undefined {
   const result = ce.function(name, [...args]).evaluate();
   if (result.operator === name || result.operator === "Error" || symbolNameOf(result) === "Nothing") return undefined;
   return result;
 }
 
 /** `Compare(a, b)` as -1, 0 or 1; `undefined` when incomparable or not ordered at all. */
-export function compare(ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression): -1 | 0 | 1 | undefined {
+export function compare(ce: ComputeEngine, a: Expression, b: Expression): -1 | 0 | 1 | undefined {
   const c = member(ce, "Compare", [a, b])?.re;
   return c === -1 || c === 0 || c === 1 ? c : undefined;
 }

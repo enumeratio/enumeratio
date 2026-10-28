@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type EvalOptions, isRealInt, wantsNumber } from "@enumeratio/ce-patches";
 
 // MultiZetaValue(s₁, s₂) — Fungrim's depth-2 multiple zeta value
@@ -84,7 +84,7 @@ export function multiZetaValue(ce: ComputeEngine, s1: number, s2: number): numbe
 export function declareMultiZetaValue(ce: ComputeEngine): void {
   ce.declare("MultiZetaValue", {
     signature: "(integer, integer) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [a, b] = ops;
       if (a === undefined || b === undefined) return undefined;
       if (!isRealInt(a) || !isRealInt(b) || a.re < 2 || b.re < 2) return undefined;

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { applyFunction, symbolNameOf } from "@enumeratio/engine";
 import { isDiagonal, listOf, rowsOf, squareMatrixError } from "./matrix-exp.ts";
 import { type EvalOptions, wantsNumber } from "@enumeratio/ce-patches";
@@ -24,7 +24,7 @@ import { type EvalOptions, wantsNumber } from "@enumeratio/ce-patches";
  * unevaluated `Apply(f, t)` a `Function` literal boxes as. `x0` substitutes as the boxed
  * expression it is (exact stays exact) — `subs` takes an `Expression` directly, no need to
  * round-trip it through a JS number. */
-function derivativeOfFAt(ce: ComputeEngine, f: BoxedExpression, x0: BoxedExpression): BoxedExpression {
+function derivativeOfFAt(ce: ComputeEngine, f: Expression, x0: Expression): Expression {
   const t = "_matrixFunction_t";
   const applied = applyFunction(ce, f, [ce.symbol(t)]);
   const derivative = ce.function("D", [applied, ce.symbol(t)]).evaluate();
@@ -33,11 +33,11 @@ function derivativeOfFAt(ce: ComputeEngine, f: BoxedExpression, x0: BoxedExpress
 
 function diagonalApply(
   ce: ComputeEngine,
-  f: BoxedExpression,
-  rows: readonly (readonly BoxedExpression[])[],
+  f: Expression,
+  rows: readonly (readonly Expression[])[],
   n: number,
-): BoxedExpression {
-  const result: BoxedExpression[][] = [];
+): Expression {
+  const result: Expression[][] = [];
   for (let i = 0; i < n; i++) {
     result[i] = [];
     for (let j = 0; j < n; j++) result[i][j] = i === j ? applyFunction(ce, f, [rows[i][j]]) : ce.Zero;
@@ -47,11 +47,7 @@ function diagonalApply(
 
 /** Lagrange's formula for a 2×2 matrix function at its two eigenvalues, taking the Jordan
  * limit when they coincide — see the file header. */
-function twoByTwoViaEigen(
-  ce: ComputeEngine,
-  f: BoxedExpression,
-  rows: readonly (readonly BoxedExpression[])[],
-): BoxedExpression {
+function twoByTwoViaEigen(ce: ComputeEngine, f: Expression, rows: readonly (readonly Expression[])[]): Expression {
   const [[a, b], [c, d]] = rows;
   const trace = ce.function("Add", [a, d]).evaluate();
   const det = ce.function("Subtract", [ce.function("Multiply", [a, d]), ce.function("Multiply", [b, c])]).evaluate();
@@ -63,7 +59,7 @@ function twoByTwoViaEigen(
     const lambda = ce.function("Divide", [trace, 2]).evaluate();
     const fLambda = applyFunction(ce, f, [lambda]);
     const fPrime = derivativeOfFAt(ce, f, lambda);
-    const entry = (i: number, j: number): BoxedExpression => {
+    const entry = (i: number, j: number): Expression => {
       const iij = i === j ? 1 : 0;
       const mMinusLambdaI = ce.function("Subtract", [rows[i][j], ce.function("Multiply", [iij, lambda])]).evaluate();
       return ce
@@ -81,7 +77,7 @@ function twoByTwoViaEigen(
   const lambda2 = ce.function("Divide", [ce.function("Subtract", [trace, disc]), 2]).evaluate();
   const f1 = applyFunction(ce, f, [lambda1]);
   const f2 = applyFunction(ce, f, [lambda2]);
-  const entry = (i: number, j: number): BoxedExpression => {
+  const entry = (i: number, j: number): Expression => {
     const iij = i === j ? 1 : 0;
     const term1 = ce
       .function("Divide", [
@@ -105,9 +101,9 @@ function twoByTwoViaEigen(
 
 export function evaluateMatrixFunction(
   ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   options: EvalOptions,
-): BoxedExpression | undefined {
+): Expression | undefined {
   const f = ops[0];
   const m = ops[1];
   if (f === undefined || m === undefined) return undefined;
@@ -116,7 +112,7 @@ export function evaluateMatrixFunction(
   if (n === 0 || rows.some((row) => row.length !== n)) return squareMatrixError(ce, m);
 
   const numeric = wantsNumber(ops, options);
-  const finish = (e: BoxedExpression): BoxedExpression => (numeric ? e.N() : e);
+  const finish = (e: Expression): Expression => (numeric ? e.N() : e);
 
   if (isDiagonal(rows, n)) return finish(diagonalApply(ce, f, rows, n));
   if (symbolNameOf(f) === "Exp") return finish(ce.function("MatrixExp", [m]).evaluate());
@@ -127,6 +123,6 @@ export function evaluateMatrixFunction(
 export function declareMatrixFunction(ce: ComputeEngine): void {
   ce.declare("MatrixFunction", {
     signature: "(function, matrix) -> matrix",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateMatrixFunction(ce, ops, options),
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => evaluateMatrixFunction(ce, ops, options),
   });
 }

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { isReal, type Cx } from "../compute-engine/numerics/complex-arithmetic.ts";
 
 // Shared glue between the numeric kernels and compute-engine's boxed expressions:
@@ -6,24 +6,24 @@ import { isReal, type Cx } from "../compute-engine/numerics/complex-arithmetic.t
 // and the `compile` handler factory the heads share.
 
 export type BoxInput = Parameters<ComputeEngine["box"]>[0];
-export type NativeEval = NonNullable<BoxedExpression["operatorDefinition"]>["evaluate"];
+export type NativeEval = NonNullable<Expression["operatorDefinition"]>["evaluate"];
 export type EvalOptions = Parameters<NonNullable<NativeEval>>[1];
 
 /** A concrete real integer operand (NaN re from a symbolic operand fails Number.isInteger). */
-export const isRealInt = (x: BoxedExpression): boolean => x.im === 0 && Number.isInteger(x.re);
+export const isRealInt = (x: Expression): boolean => x.im === 0 && Number.isInteger(x.re);
 
 /** A concrete (finite) numeric operand — as opposed to a symbolic one (NaN re/im). */
-export const isFiniteNum = (x: BoxedExpression): boolean => Number.isFinite(x.re) && Number.isFinite(x.im);
+export const isFiniteNum = (x: Expression): boolean => Number.isFinite(x.re) && Number.isFinite(x.im);
 
 /**
  * A complex number boxed inexact. compute-engine 0.147 boxes a JS Complex with whole-number
  * parts as exact (`-911 - 1056i`); a numeric route must still yield floats, so `.N()` marks it.
  */
-export const inexactComplex = (ce: ComputeEngine, re: number, im: number): BoxedExpression =>
+export const inexactComplex = (ce: ComputeEngine, re: number, im: number): Expression =>
   ce.number(ce.complex(re, im)).N();
 
 /** Box a complex result, collapsing to a real number when the imaginary part vanishes. */
-export const numberResult = (ce: ComputeEngine, r: Cx): BoxedExpression => {
+export const numberResult = (ce: ComputeEngine, r: Cx): Expression => {
   if (!Number.isFinite(r.re) || !Number.isFinite(r.im)) return ce.symbol("ComplexInfinity");
   // Real inputs with a positive real base stay on the Math.pow path (im exactly 0);
   // a negative real a gives a genuinely complex value.
@@ -40,7 +40,7 @@ export const numberResult = (ce: ComputeEngine, r: Cx): BoxedExpression => {
  * interface the package doesn't re-export, so it is read structurally here. A
  * non-literal operand has no float to lose and counts as exact.
  */
-export const wantsNumber = (ops: readonly BoxedExpression[], options: EvalOptions): boolean =>
+export const wantsNumber = (ops: readonly Expression[], options: EvalOptions): boolean =>
   (options.numericApproximation ?? false) || ops.some((o) => (o as Partial<{ isExact: boolean }>).isExact === false);
 
 /**
@@ -48,8 +48,7 @@ export const wantsNumber = (ops: readonly BoxedExpression[], options: EvalOption
  * head, unevaluated? That is compute-engine's way of staying symbolic, and it marks
  * exactly the cases our kernels are here to fill in.
  */
-export const declined = (r: BoxedExpression | undefined, head: string): boolean =>
-  r === undefined || r.operator === head;
+export const declined = (r: Expression | undefined, head: string): boolean => r === undefined || r.operator === head;
 
 /**
  * A `compile` handler so `ce.compile(expr, {target})` emits a call to our kernel for
@@ -64,11 +63,7 @@ export const declined = (r: BoxedExpression | undefined, head: string): boolean 
  */
 export const realCompile =
   (arity: number, emit: { js?: string; wgsl?: string; wgslReal?: string }) =>
-  (
-    args: readonly BoxedExpression[],
-    compile: (e: BoxedExpression) => string,
-    ctx: { language?: string },
-  ): string | undefined => {
+  (args: readonly Expression[], compile: (e: Expression) => string, ctx: { language?: string }): string | undefined => {
     const ops = args.slice(0, arity);
     if (ops.length < arity || ops.some((o) => o === undefined)) return undefined;
     const cs = ops.map(compile);

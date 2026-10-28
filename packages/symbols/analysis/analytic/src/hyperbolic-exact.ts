@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf, wrapOperator } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 
@@ -17,12 +17,12 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 // already turned into −Sinh(ln q) by the parity rules in elementary-remaining.ts. Not
 // upstreamed -- stays here.
 
-const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
+const finish = (expr: Expression, options: EvalOptions): Expression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
 
-type Rational = (q: BoxedExpression, inverse: BoxedExpression) => BoxedExpression;
+type Rational = (q: Expression, inverse: Expression) => Expression;
 
-const half = (ce: ComputeEngine, x: BoxedExpression): BoxedExpression => ce.function("Divide", [x, ce.number(2)]);
+const half = (ce: ComputeEngine, x: Expression): Expression => ce.function("Divide", [x, ce.number(2)]);
 
 const RULES: Readonly<Record<string, (ce: ComputeEngine) => Rational>> = {
   Sinh: (ce) => (q, p) => half(ce, ce.function("Subtract", [q, p])),
@@ -34,7 +34,7 @@ const RULES: Readonly<Record<string, (ce: ComputeEngine) => Rational>> = {
 };
 
 /** The q of `Ln(q)`, for a positive exact rational q other than 1. */
-function logArgument(op: BoxedExpression | undefined): readonly [bigint, bigint] | undefined {
+function logArgument(op: Expression | undefined): readonly [bigint, bigint] | undefined {
   const args = operandsOf(op);
   if (op?.operator !== "Ln" || args.length !== 1) return undefined;
   const q = bigRationalAt(args[0]);
@@ -42,7 +42,7 @@ function logArgument(op: BoxedExpression | undefined): readonly [bigint, bigint]
 }
 
 /** f(x0) for the exact x0 (other than 0 -- hyperbolic-zero's) at which a head has a plain value. */
-const SPECIAL: Readonly<Record<string, readonly [number, (ce: ComputeEngine) => BoxedExpression]>> = {
+const SPECIAL: Readonly<Record<string, readonly [number, (ce: ComputeEngine) => Expression]>> = {
   Arcosh: [1, (ce) => ce.Zero],
 };
 

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt } from "@enumeratio/engine";
 import { bernoulliRational, type Rat, type EvalOptions, isFiniteNum, wantsNumber } from "@enumeratio/ce-patches";
 
@@ -104,13 +104,13 @@ function evalPolyFloat(poly: Poly, a: number): number {
 
 /** A reduced [num, den] rational as a boxed number — compute-engine accepts a bigint pair
  * directly (see widened.ts), collapsing to a plain integer when den is 1. */
-function ratExpr(ce: ComputeEngine, r: Rat): BoxedExpression {
+function ratExpr(ce: ComputeEngine, r: Rat): Expression {
   return ce.number(r as unknown as [number, number]);
 }
 
 /** Σ cᵢ·aⁱ as a MathJSON expression in the symbolic operand `aExpr`. */
-function polyExpr(ce: ComputeEngine, poly: Poly, aExpr: BoxedExpression): BoxedExpression {
-  const terms: BoxedExpression[] = [];
+function polyExpr(ce: ComputeEngine, poly: Poly, aExpr: Expression): Expression {
+  const terms: Expression[] = [];
   poly.forEach((c, i) => {
     if (c[0] === 0n) return;
     const coeff = ratExpr(ce, c);
@@ -128,7 +128,7 @@ const MAX_N = 60; // plenty for a documented example or a plot; keeps the polyno
 export function declareNorlundB(ce: ComputeEngine): void {
   ce.declare("NorlundB", {
     signature: "(integer, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [nExpr, aExpr] = ops;
       if (nExpr === undefined || aExpr === undefined) return undefined;
       const n = bigIntegerAt(nExpr);

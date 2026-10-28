@@ -3,7 +3,7 @@
 // on elements drawn from every family over that carrier. Every map is also checked TYPED —
 // its result is a value of the `to` carrier — whether or not it declares anything.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { Law, MapDeclaration } from "./maps.ts";
 
 export interface LawFailure {
@@ -24,11 +24,11 @@ export function checkLaws(
   subject: unknown,
 ): LawFailure | undefined {
   const fail = (law: string, detail: string): LawFailure => ({ map: map.name, law, subject, detail });
-  const apply = (head: string, x: unknown): BoxedExpression => ce.box([head, x] as never).evaluate();
-  const same = (a: BoxedExpression, b: unknown): boolean =>
+  const apply = (head: string, x: unknown): Expression => ce.box([head, x] as never).evaluate();
+  const same = (a: Expression, b: unknown): boolean =>
     JSON.stringify(a.json) === JSON.stringify(ce.box(b as never).evaluate().json);
 
-  let image: BoxedExpression;
+  let image: Expression;
   try {
     image = apply(map.name, subject);
   } catch (error) {

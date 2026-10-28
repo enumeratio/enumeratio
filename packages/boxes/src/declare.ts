@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import type { DeclaredSymbol } from "@enumeratio/manifest";
 import { SYMBOLS } from "@enumeratio/manifest/package/boxes";
@@ -36,7 +36,7 @@ export function declareBoxes(ce: ComputeEngine): void {
 
   for (const head of BOX_HEADS) ce.declare(head, recorded(head));
 
-  const boxesOf = (expr: BoxedExpression): BoxedExpression =>
+  const boxesOf = (expr: Expression): Expression =>
     ce.box(toMathJson(makeBoxes(expr.json as MathJsonExpression)) as never);
 
   // `ToBoxes` evaluates its argument first; `MakeBoxes` holds it (the notation of what was written).

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { type EvalOptions, isFiniteNum, numberResult, wantsNumber, cx, type Cx } from "@enumeratio/ce-patches";
 import { pfqSeries } from "./hypergeometric.ts";
@@ -14,15 +14,15 @@ import { pfqSeries } from "./hypergeometric.ts";
 
 const mag = (z: Cx): number => Math.hypot(z.re, z.im);
 
-const listOf = (expr: BoxedExpression | undefined): readonly BoxedExpression[] =>
+const listOf = (expr: Expression | undefined): readonly Expression[] =>
   expr?.operator === "List" ? operandsOf(expr) : [];
 
-const isZero = (x: BoxedExpression): boolean => x.re === 0 && x.im === 0;
+const isZero = (x: Expression): boolean => x.re === 0 && x.im === 0;
 
 export function declareHypergeometricPFQ(ce: ComputeEngine): void {
   ce.declare("HypergeometricPFQ", {
     signature: "(list, list, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [upperExpr, lowerExpr, z] = ops;
       if (upperExpr === undefined || lowerExpr === undefined || z === undefined) return undefined;
       const upper = listOf(upperExpr);

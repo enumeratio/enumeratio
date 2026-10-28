@@ -3,7 +3,7 @@
 // consume an SVG string. Encoders reuse the existing transpilers/renderers; the
 // engine is threaded in via opts only where a decoder needs to parse (TeX).
 
-import type { BoxedExpression } from "@cortex-js/compute-engine";
+import type { Expression } from "@cortex-js/compute-engine";
 import { compile, GLSLTarget, PythonTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
 import { parseEpsil, serializeEpsil } from "@cortex-js/compute-engine/epsil";
 import { MATHJSON_MIME } from "@enumeratio/boxes/render";
@@ -18,7 +18,7 @@ import { parseExpression, ruleAsPair, rulesInCalls } from "./expression.ts";
 import { portableTeX } from "./tex.ts";
 import { type FormatOptions, type ImageValue, registerFileFormat } from "./registry.ts";
 
-const asExpr = (v: unknown): BoxedExpression => v as BoxedExpression;
+const asExpr = (v: unknown): Expression => v as Expression;
 const asSvg = (v: unknown): string => {
   if (typeof v !== "string") throw new Error("expected an SVG string");
   return v;

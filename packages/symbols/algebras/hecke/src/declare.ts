@@ -1,5 +1,5 @@
 import { declareAlgebra } from "@enumeratio/structures";
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { registerNotation } from "@enumeratio/boxes";
 import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 import {
@@ -29,14 +29,14 @@ import { HECKE_NOTATION } from "./notation.ts";
 //     `Subs`.
 
 /** `HeckeAlgebra(n, q)` → n. */
-function algebraSize(expr: BoxedExpression): number | undefined {
+function algebraSize(expr: Expression): number | undefined {
   if (expr.operator !== "HeckeAlgebra") return undefined;
   const n = integerAt(operandsOf(expr)[0]);
   return n !== undefined && n >= 1 ? n : undefined;
 }
 
 /** The parameter of the first `HeckeT` or `HeckeAlgebra` inside `expr`. */
-function parameterOf(expr: BoxedExpression): BoxedExpression | undefined {
+function parameterOf(expr: Expression): Expression | undefined {
   const ops = operandsOf(expr);
   if (expr.operator === "HeckeT" || expr.operator === "HeckeAlgebra") return ops[1];
   for (const op of ops) {
@@ -47,7 +47,7 @@ function parameterOf(expr: BoxedExpression): BoxedExpression | undefined {
 }
 
 /** `HeckeT([2,1,3], q)` → the permutation, if it is one and carries this `q`. */
-function basisPermutation(expr: BoxedExpression, q: BoxedExpression): Permutation | undefined {
+function basisPermutation(expr: Expression, q: Expression): Permutation | undefined {
   if (expr.operator !== "HeckeT") return undefined;
   const carried = operandsOf(expr)[1];
   if (carried === undefined || !carried.isSame(q)) return undefined;
@@ -64,7 +64,7 @@ function basisPermutation(expr: BoxedExpression, q: BoxedExpression): Permutatio
 export function declareHecke(ce: ComputeEngine): void {
   registerNotation(ce, HECKE_NOTATION);
   /** Coefficients are compute-engine expressions, evaluated as they are combined. */
-  const ringFor = (q: BoxedExpression): Coefficients<BoxedExpression> => ({
+  const ringFor = (q: Expression): Coefficients<Expression> => ({
     zero: ce.number(0),
     one: ce.number(1),
     q,
@@ -74,7 +74,7 @@ export function declareHecke(ce: ComputeEngine): void {
     isZero: (a) => a.is(0) === true,
   });
 
-  const toExpression = (element: Element<BoxedExpression>, q: BoxedExpression): BoxedExpression => {
+  const toExpression = (element: Element<Expression>, q: Expression): Expression => {
     const terms = [...element.values()].toSorted((a, b) => permutationKey(a.w).localeCompare(permutationKey(b.w)));
     if (terms.length === 0) return ce.number(0);
     const parts = terms.map((term) => {
@@ -95,14 +95,14 @@ export function declareHecke(ce: ComputeEngine): void {
    * a sum of those. Anything else is not ours — including a `HeckeT` on a different
    * number of strands, which belongs to a different algebra.
    */
-  const toElement = (expr: BoxedExpression, q: BoxedExpression): Element<BoxedExpression> | undefined => {
+  const toElement = (expr: Expression, q: Expression): Element<Expression> | undefined => {
     const ring = ringFor(q);
     const w = basisPermutation(expr, q);
     if (w !== undefined) return basisElement(ring, w);
     const ops = operandsOf(expr);
     if (expr.operator === "Add") {
       const parts = ops.map((op) => toElement(op, q));
-      return parts.every((p): p is Element<BoxedExpression> => p !== undefined) ? add(ring, parts) : undefined;
+      return parts.every((p): p is Element<Expression> => p !== undefined) ? add(ring, parts) : undefined;
     }
     if (expr.operator === "Negate") {
       const inner = ops[0] === undefined ? undefined : toElement(ops[0], q);
@@ -123,7 +123,7 @@ export function declareHecke(ce: ComputeEngine): void {
   };
 
   /** Every T_w carried by an expression must be on the same number of strands. */
-  const sameSize = (element: Element<BoxedExpression>): boolean => {
+  const sameSize = (element: Element<Expression>): boolean => {
     const sizes = new Set([...element.values()].map((t) => t.w.length));
     return sizes.size <= 1;
   };
@@ -170,7 +170,7 @@ export function declareHecke(ce: ComputeEngine): void {
       const q = ops.map(parameterOf).find((found) => found !== undefined);
       if (q === undefined) return undefined;
       const parts = ops.map((op) => toElement(op, q));
-      if (!parts.every((p): p is Element<BoxedExpression> => p !== undefined)) return undefined;
+      if (!parts.every((p): p is Element<Expression> => p !== undefined)) return undefined;
       if (!parts.every(sameSize)) return undefined;
       const sizes = new Set(parts.flatMap((p) => [...p.values()].map((t) => t.w.length)));
       if (sizes.size > 1) return undefined; // different algebras
@@ -188,7 +188,7 @@ export function declareHecke(ce: ComputeEngine): void {
    */
   ce.declare("HeckeSpecialize", {
     signature: "(number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const q = ops[0] === undefined ? undefined : parameterOf(ops[0]);
       const element = q === undefined || ops[0] === undefined ? undefined : toElement(ops[0], q);
       const value = ops[1];
@@ -212,7 +212,7 @@ export function declareHecke(ce: ComputeEngine): void {
   /** The identity element T_e, for writing products that start from one. */
   ce.declare("HeckeIdentity", {
     signature: "(integer, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const n = integerAt(ops[0]);
       const q = ops[1];
       if (n === undefined || n < 1 || q === undefined) return undefined;

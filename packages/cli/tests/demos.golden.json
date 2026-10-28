@@ -242,7 +242,7 @@
     },
     {
       "in": "x^2 + 1",
-      "out": "\u001b[2mOut[4]= \u001b[0mx ** 2 + 1"
+      "out": "\u001b[2mOut[4]= \u001b[0m(float('nan') if x is None else x) ** 2 + 1"
     },
     {
       "in": ":form js",
@@ -264,7 +264,7 @@
     },
     {
       "in": "Sqrt(x^2 + 1)",
-      "out": "\u001b[2mOut[1]= \u001b[0mnp.sqrt(x ** 2 + 1)"
+      "out": "\u001b[2mOut[1]= \u001b[0mnp.sqrt((float('nan') if x is None else x) ** 2 + 1)"
     },
     {
       "in": ":form glsl",
@@ -272,7 +272,7 @@
     },
     {
       "in": "Sin(x) * Cos(x)",
-      "out": "\u001b[2mOut[2]= \u001b[0msin(x) * cos(x)"
+      "out": "\u001b[2mOut[2]= \u001b[0m_gpu_sin(x) * _gpu_cos(x)"
     },
     {
       "in": ":form wgsl",
@@ -280,7 +280,7 @@
     },
     {
       "in": "Sin(x) * Cos(x)",
-      "out": "\u001b[2mOut[3]= \u001b[0msin(x) * cos(x)"
+      "out": "\u001b[2mOut[3]= \u001b[0m_gpu_sin(x) * _gpu_cos(x)"
     },
     {
       "in": ":form inputform",

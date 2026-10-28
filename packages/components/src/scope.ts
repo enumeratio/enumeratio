@@ -4,7 +4,7 @@
 // anywhere on a page, with no wrapper, still find each other -- the wrapper is only
 // for isolation, when two examples reuse a name (https://github.com/enumeratio/enumeratio/wiki/Vdom).
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import {
   CONTROL_EVENT,
@@ -209,7 +209,7 @@ export class Scope {
     const bound = this.#templates.filter(templating.takesBindings);
     const bindings = Object.fromEntries([...this.#values].map(([name, value]) => [`_${name}`, value]));
     for (const t of bound) (t.el as { bindings?: Record<string, unknown> }).bindings = bindings;
-    const boxed = new Map<string, BoxedExpression>();
+    const boxed = new Map<string, Expression>();
     for (const [name, value] of this.#values) boxed.set(name, engine.box(value as never));
     templating.applyTemplates(
       engine,

@@ -2,7 +2,7 @@
 // `compile`), or on the page's own engine when there is none. The page gets source text, and
 // runs it with no engine of its own (`@enumeratio/components`' `plot-kernel.ts`).
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
 import { selfContainedCode } from "@enumeratio/engine/compiled";
 import { zetaWGSL } from "@enumeratio/analytic/shader";
@@ -44,17 +44,17 @@ export interface CompiledPlot {
 const LIST_HEADS = new Set(["List", "Set", "Tuple", "Sequence"]);
 
 // `ops` lives on compute-engine's narrowed function interface; read it structurally.
-const opsOf = (e: BoxedExpression): readonly BoxedExpression[] | undefined =>
-  (e as unknown as { ops?: readonly BoxedExpression[] }).ops;
+const opsOf = (e: Expression): readonly Expression[] | undefined =>
+  (e as unknown as { ops?: readonly Expression[] }).ops;
 
-const numeric = (e: BoxedExpression): number | undefined => {
+const numeric = (e: Expression): number | undefined => {
   if (e.unknowns.length > 0) return undefined;
   const re = e.N().re;
   return typeof re === "number" && Number.isFinite(re) ? re : undefined;
 };
 
 /** A bivariate expression as a WGSL `plotFn`; `zetaWGSL` comes first so the zeta heads resolve. */
-export function toWgslFn(expr: BoxedExpression, vx: string, vy: string): string | undefined {
+export function toWgslFn(expr: Expression, vx: string, vy: string): string | undefined {
   try {
     const r = new WGSLTarget().compile(expr) as { success?: boolean; code?: string };
     if (!r?.success || !r.code) return undefined;
@@ -64,7 +64,7 @@ export function toWgslFn(expr: BoxedExpression, vx: string, vy: string): string 
   }
 }
 
-function compileItem(e: BoxedExpression, spec: PlotCompileSpec, unknowns: readonly string[]): CompiledItem {
+function compileItem(e: Expression, spec: PlotCompileSpec, unknowns: readonly string[]): CompiledItem {
   const item: { -readonly [K in keyof CompiledItem]: CompiledItem[K] } = { json: e.json, label: e.toString() };
   const value = numeric(e);
   if (value !== undefined) item.value = value;

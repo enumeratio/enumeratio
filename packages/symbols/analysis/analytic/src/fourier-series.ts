@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { Json } from "@enumeratio/ce-patches";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
@@ -29,13 +29,13 @@ import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 // for symbolic n, higher powers of x, a period other than 2pi, mixed polynomial-times-
 // trig products (x * Cos(x)), and any function outside this list.
 
-const opAt = (expr: BoxedExpression, i: number): BoxedExpression => operandsOf(expr)[i];
-const isSym = (x: BoxedExpression, name: string): boolean => symbolNameOf(x) === name;
-const hasVar = (expr: BoxedExpression, name: string): boolean => expr.has(name);
+const opAt = (expr: Expression, i: number): Expression => operandsOf(expr)[i];
+const isSym = (x: Expression, name: string): boolean => symbolNameOf(x) === name;
+const hasVar = (expr: Expression, name: string): boolean => expr.has(name);
 
 /** `expr` as `coeff * x` with no additive offset, `coeff` free of x -- Cos/Sin/Exp's
  * linear argument. Undefined if not that shape. */
-function pureLinearCoeff(ce: ComputeEngine, expr: BoxedExpression, name: string): BoxedExpression | undefined {
+function pureLinearCoeff(ce: ComputeEngine, expr: Expression, name: string): Expression | undefined {
   if (isSym(expr, name)) return ce.One;
   if (expr.operator === "Negate") {
     const inner = pureLinearCoeff(ce, opAt(expr, 0), name);
@@ -66,7 +66,7 @@ const binomial = (n: number, k: number): number => {
  * `sum / 2^(P+Q)`; the `1/(2i)^Q = (1/2^Q)(-i)^Q` factor contributes a unit that only
  * depends on `Q mod 4`.
  */
-function trigMonomialCoeff(ce: ComputeEngine, P: number, Q: number, k: number): BoxedExpression {
+function trigMonomialCoeff(ce: ComputeEngine, P: number, Q: number, k: number): Expression {
   let sum = 0;
   for (let j = 0; j <= P; j++) {
     const mCos = P - 2 * j;
@@ -90,7 +90,7 @@ function trigMonomialCoeff(ce: ComputeEngine, P: number, Q: number, k: number): 
 /** Every factor a nonnegative integer power of `Cos(x)` or `Sin(x)` (argument exactly
  * the series variable) -- the total cos/sin degree, or undefined if any factor doesn't
  * fit that shape. */
-function trigPowers(factors: readonly BoxedExpression[], xName: string): { P: number; Q: number } | undefined {
+function trigPowers(factors: readonly Expression[], xName: string): { P: number; Q: number } | undefined {
   let P = 0;
   let Q = 0;
   for (const f of factors) {
@@ -116,7 +116,7 @@ function trigPowers(factors: readonly BoxedExpression[], xName: string): { P: nu
  * `(-2i cos(pi a/2) Gamma(a+1) k^-(a+1) - pi^(a+1) (E(i k pi) - E(-i k pi))) / 2pi`, checked
  * against Wolfram's `FourierCoefficient(CubeRoot(x), x, k)` and numerical quadrature.
  */
-function oddRootCoefficient(ce: ComputeEngine, m: number, k: number): BoxedExpression {
+function oddRootCoefficient(ce: ComputeEngine, m: number, k: number): Expression {
   if (k === 0) return ce.Zero;
   const K = Math.abs(k);
   const a1: Json = ["Rational", m + 1, m];
@@ -142,10 +142,10 @@ function oddRootCoefficient(ce: ComputeEngine, m: number, k: number): BoxedExpre
  * operands (a single element for everything but a trig monomial). */
 function atomCoefficient(
   ce: ComputeEngine,
-  factors: readonly BoxedExpression[],
+  factors: readonly Expression[],
   xName: string,
   k: number,
-): BoxedExpression | undefined {
+): Expression | undefined {
   const trig = trigPowers(factors, xName);
   if (trig !== undefined) return trigMonomialCoeff(ce, trig.P, trig.Q, k);
   if (factors.length !== 1) return undefined;
@@ -199,12 +199,12 @@ function atomCoefficient(
 
 /** `c_k`, the coefficient of `Exp(i k x)` in the Fourier series of `f` -- by linearity
  * over Add/Negate/a constant factor, down to `atomCoefficient` at the leaves. */
-function coefficientOf(ce: ComputeEngine, f: BoxedExpression, xName: string, k: number): BoxedExpression | undefined {
+function coefficientOf(ce: ComputeEngine, f: Expression, xName: string, k: number): Expression | undefined {
   if (!hasVar(f, xName)) return k === 0 ? f : ce.Zero;
   if (f.operator === "Add") {
     const parts = operandsOf(f).map((term) => coefficientOf(ce, term, xName, k));
     if (parts.some((p) => p === undefined)) return undefined;
-    return ce.function("Add", parts as BoxedExpression[]).evaluate();
+    return ce.function("Add", parts as Expression[]).evaluate();
   }
   if (f.operator === "Negate") {
     const inner = coefficientOf(ce, opAt(f, 0), xName, k);
@@ -221,12 +221,12 @@ function coefficientOf(ce: ComputeEngine, f: BoxedExpression, xName: string, k: 
   return atomCoefficient(ce, [f], xName, k);
 }
 
-const asInt = (n: BoxedExpression): number | undefined => (n.im === 0 && Number.isInteger(n.re) ? n.re : undefined);
+const asInt = (n: Expression): number | undefined => (n.im === 0 && Number.isInteger(n.re) ? n.re : undefined);
 
 export function declareFourierSeries(ce: ComputeEngine): void {
   ce.declare("FourierCoefficient", {
     signature: "(expression, expression, integer) -> expression",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [f, xExpr, nExpr] = ops;
       if (f === undefined || xExpr === undefined || nExpr === undefined) return undefined;
       const xName = symbolNameOf(xExpr);
@@ -238,13 +238,13 @@ export function declareFourierSeries(ce: ComputeEngine): void {
 
   ce.declare("FourierSeries", {
     signature: "(expression, expression, integer<0..>) -> expression",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [f, xExpr, nExpr] = ops;
       if (f === undefined || xExpr === undefined || nExpr === undefined) return undefined;
       const xName = symbolNameOf(xExpr);
       const n = asInt(nExpr);
       if (xName === undefined || n === undefined || n < 0) return undefined;
-      const terms: BoxedExpression[] = [];
+      const terms: Expression[] = [];
       for (let k = -n; k <= n; k++) {
         const c = coefficientOf(ce, f, xName, k);
         if (c === undefined) return undefined;

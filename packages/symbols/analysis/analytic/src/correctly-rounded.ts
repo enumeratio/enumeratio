@@ -1,4 +1,4 @@
-import { isNumber, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
+import { isNumber, type Expression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { lower, upper, DOUBLE_DIGITS } from "@enumeratio/ce-patches";
 import { enclosure } from "./certified.ts";
 import { declareCompile } from "@enumeratio/engine";
@@ -48,22 +48,22 @@ const MAX_DOUBLINGS = 4;
 const MAX_DIGITS = 1000;
 
 /** The finest reading each answer was rounded from. Weak, so it lives as long as the answer. */
-const refinements = new WeakMap<BoxedExpression, BoxedExpression>();
+const refinements = new WeakMap<Expression, Expression>();
 
 /** The enclosure each certified answer was rounded from. */
-const enclosures = new WeakMap<BoxedExpression, BoxedExpression>();
+const enclosures = new WeakMap<Expression, Expression>();
 
 /** The enclosure `result` -- an answer of `N(x, d)` -- was proven from, an `Interval` whose
  * ends both round to `result`; `undefined` for an answer resting on agreement alone, or
  * anything else. Its presence is the certificate. */
-export function enclosureOf(result: BoxedExpression): BoxedExpression | undefined {
+export function enclosureOf(result: Expression): Expression | undefined {
   return enclosures.get(result);
 }
 
 /** The reading `result` -- an answer of `N(x, d)` -- was rounded from, carrying the loop's extra
  * guard digits; `undefined` for anything else. Those digits agreed with a coarser reading only
  * up to the `d`th, so they are a head start, not a promise. */
-export function refinementOf(result: BoxedExpression): BoxedExpression | undefined {
+export function refinementOf(result: Expression): Expression | undefined {
   return refinements.get(result);
 }
 
@@ -111,7 +111,7 @@ function hasDoubleOnly(ce: ComputeEngine, json: unknown, precision: number): boo
 /** Is `x` a value we hold exactly or were handed -- a number literal, or an expression that
  * folds to an exact number (`2^-50`, `1/2^40`)? Its 15-17 digit reading is then the value itself,
  * not a double standing in for digits a kernel could not compute. */
-function isGivenValue(x: BoxedExpression): boolean {
+function isGivenValue(x: Expression): boolean {
   if (isNumber(x)) return true;
   const folded = x.evaluate();
   return isNumber(folded) && (folded as Partial<{ isExact: boolean }>).isExact === true;
@@ -119,7 +119,7 @@ function isGivenValue(x: BoxedExpression): boolean {
 
 /** `x` to `d` digits proven by its enclosure, or `undefined` when `x` has none or it can't
  * decide them within the guard's doublings. */
-function certifiedRounding(ce: ComputeEngine, x: BoxedExpression, d: number): BoxedExpression | undefined {
+function certifiedRounding(ce: ComputeEngine, x: Expression, d: number): Expression | undefined {
   for (let guard = FIRST_GUARD, doubling = 0; doubling <= MAX_DOUBLINGS; guard *= 2, doubling++) {
     const ball = enclosure(x, d + guard);
     if (ball === undefined) return undefined;
@@ -154,14 +154,14 @@ function inexact(json: unknown): unknown {
 /** `x` to `d` digits by Ziv's loop, or `undefined` when the loop can't vouch for them because
  * more digits are asked for than a double holds and a head in it answers with one. Leaves
  * `ce.precision` changed; the caller restores it. */
-function correctlyRounded(ce: ComputeEngine, x: BoxedExpression, d: number): BoxedExpression | undefined {
-  const reading = (precision: number): BoxedExpression => {
+function correctlyRounded(ce: ComputeEngine, x: Expression, d: number): Expression | undefined {
+  const reading = (precision: number): Expression => {
     ce.precision = precision;
     return x.N();
   };
   const certified = certifiedRounding(ce, x, d);
   if (certified !== undefined) return certified;
-  const key = (v: BoxedExpression): string => JSON.stringify(roundedTree(ce, v.json, d));
+  const key = (v: Expression): string => JSON.stringify(roundedTree(ce, v.json, d));
   // The finer reading first: a kernel that caches what it computes at the most digits it has
   // been asked for (bigzeta.ts's coefficients, barnes-g-big.ts's ζ values) then serves the
   // coarser one by rounding, rather than recomputing everything one precision up.

@@ -1,11 +1,10 @@
 // A curve's points out of an evaluated expression: `[[x, y, z], …]`.
 
-import type { BoxedExpression } from "@cortex-js/compute-engine";
+import type { Expression } from "@cortex-js/compute-engine";
 import type { Triple } from "@enumeratio/frontend/core";
 
 // `ops` lives on compute-engine's narrowed function interface; read it structurally.
-const opsOf = (e: BoxedExpression): readonly BoxedExpression[] =>
-  (e as unknown as { ops?: readonly BoxedExpression[] }).ops ?? [];
+const opsOf = (e: Expression): readonly Expression[] => (e as unknown as { ops?: readonly Expression[] }).ops ?? [];
 
 /**
  * Read `[[x,y,z], …]` out of an evaluated expression.
@@ -15,7 +14,7 @@ const opsOf = (e: BoxedExpression): readonly BoxedExpression[] =>
  * curve already allocated. Falls back to the JSON reading for anything not shaped as a boxed list
  * of boxed lists.
  */
-export function pointsOf(value: BoxedExpression): Triple[] {
+export function pointsOf(value: Expression): Triple[] {
   if (value.operator === "List") {
     const out: Triple[] = [];
     for (const row of opsOf(value)) {

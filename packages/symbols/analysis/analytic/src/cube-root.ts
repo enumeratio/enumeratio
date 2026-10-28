@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 
 // CubeRoot(x) — Wolfram's real cube root. compute-engine's own `Root(x, 3)` already takes
@@ -6,11 +6,7 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 // is a thin reduction to it rather than a new numeric kernel. Real domain only, matching
 // Wolfram: a concretely complex operand is left unevaluated.
 
-function evaluateCubeRoot(
-  ce: ComputeEngine,
-  x: BoxedExpression | undefined,
-  options: EvalOptions,
-): BoxedExpression | undefined {
+function evaluateCubeRoot(ce: ComputeEngine, x: Expression | undefined, options: EvalOptions): Expression | undefined {
   if (x === undefined) return undefined;
   if (Number.isFinite(x.im) && x.im !== 0) return undefined; // real domain only
   const expr = ce.function("Root", [x, 3]);
@@ -21,6 +17,6 @@ export function declareCubeRoot(ce: ComputeEngine): void {
   ce.declare("CubeRoot", {
     signature: "(number) -> number",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateCubeRoot(ce, ops[0], options),
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => evaluateCubeRoot(ce, ops[0], options),
   });
 }

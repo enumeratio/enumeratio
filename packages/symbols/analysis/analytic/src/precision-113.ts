@@ -1,4 +1,4 @@
-import type { BigDecimal, BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { BigDecimal, Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, wrapOperator } from "@enumeratio/engine";
 import {
   isFiniteNum,
@@ -25,7 +25,7 @@ import {
  * `ce.precision` is nudged one digit above `DOUBLE_DIGITS`, then restoring it, forces the
  * bignum path for just this literal without touching the caller's precision setting.
  */
-function floatNumber(ce: ComputeEngine, x: number): BoxedExpression {
+function floatNumber(ce: ComputeEngine, x: number): Expression {
   const saved = ce.precision;
   if (saved <= DOUBLE_DIGITS) ce.precision = DOUBLE_DIGITS + 1;
   try {
@@ -46,7 +46,7 @@ function floatNumber(ce: ComputeEngine, x: number): BoxedExpression {
  * doing: it's no worse than the plain construction, and it's what keeps the real branch
  * (`floatNumber`) correct.
  */
-function floatComplex(ce: ComputeEngine, re: number, im: number): BoxedExpression {
+function floatComplex(ce: ComputeEngine, re: number, im: number): Expression {
   const saved = ce.precision;
   if (saved <= DOUBLE_DIGITS) ce.precision = DOUBLE_DIGITS + 1;
   try {
@@ -196,7 +196,7 @@ function rationalizeToTolerance([xn, xd]: Fraction, [tn, td]: Fraction): Fractio
  * N(π) is 1.2·10^-16 off π, more than a 10^-16 tolerance. A float literal comes back as
  * written (0.1 stays 1/10), the decimal its author meant.
  */
-function decimalBeyond(ce: ComputeEngine, x: BoxedExpression, tolerance: BigDecimal): BigDecimal {
+function decimalBeyond(ce: ComputeEngine, x: Expression, tolerance: BigDecimal): BigDecimal {
   const precision = ce.precision;
   const whole = Math.max(0, Math.ceil(Math.log10(Math.abs(x.N().re))));
   ce.precision = precision + whole + Math.max(0, -tolerance.exponent);

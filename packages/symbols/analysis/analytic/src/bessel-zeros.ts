@@ -1,4 +1,4 @@
-import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
+import { BigDecimal, type Expression, type ComputeEngine } from "@cortex-js/compute-engine";
 import {
   atDigits,
   bigCx,
@@ -180,7 +180,7 @@ export function besselJZeroBig(nu: BigDecimal, k: number, digits: number): BigDe
 export function declareBesselJZero(ce: ComputeEngine): void {
   ce.declare("BesselJZero", {
     signature: "(number, integer) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [nu, k] = ops;
       if (nu === undefined || k === undefined) return undefined;
       if (!isFiniteNum(nu) || nu.im !== 0 || nu.re <= -1) return undefined;

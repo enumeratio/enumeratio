@@ -4,7 +4,7 @@
 // sampler (a distribution, in statistics). The Wolfram spellings (`RandomInteger`,
 // `RandomVariate`, …) rewrite to `Random` over the right domain.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCompile } from "./extend.ts";
 import { operandsOf } from "./index.ts";
 import { defineMessages, emit } from "./messages.ts";
@@ -44,7 +44,7 @@ export function uniform01(ce: ComputeEngine): number {
 }
 
 /** One draw from `domain`, or undefined when this sampler doesn't know the domain. */
-export type Sampler = (domain: BoxedExpression, ce: ComputeEngine) => BoxedExpression | undefined;
+export type Sampler = (domain: Expression, ce: ComputeEngine) => Expression | undefined;
 
 const samplers = new WeakMap<ComputeEngine, Sampler[]>();
 
@@ -59,7 +59,7 @@ interface Collection {
   readonly isEnumerable?: boolean;
   readonly isCollection?: boolean;
   readonly count?: number;
-  at?(index: number): BoxedExpression | undefined;
+  at?(index: number): Expression | undefined;
 }
 
 /** Uniform in [0, n) for any bigint n: 32-bit chunks from the seeded stream, rejecting the
@@ -78,7 +78,7 @@ export function randomBelow(ce: ComputeEngine, n: bigint): bigint {
 
 /** The exact count past 2^53, which compute-engine's number-only `count` can't carry:
  *  `Count` answers it as an integer where the family has a bigint kernel. */
-const bigCount = (domain: BoxedExpression, ce: ComputeEngine): bigint | undefined => {
+const bigCount = (domain: Expression, ce: ComputeEngine): bigint | undefined => {
   const counted = ce.box(["Count", domain.json] as never).evaluate();
   const number = counted as unknown as {
     isNumberLiteral?: boolean;
@@ -90,11 +90,11 @@ const bigCount = (domain: BoxedExpression, ce: ComputeEngine): bigint | undefine
   return Number.isSafeInteger(counted.re) ? BigInt(counted.re) : undefined;
 };
 
-type DigitsAt = (c: BoxedExpression, index: string) => BoxedExpression | undefined;
+type DigitsAt = (c: Expression, index: string) => Expression | undefined;
 
 /** A finite collection past 2^53 elements: a uniform bigint rank, unranked by the family's own
  *  `at` (which takes the ordinal as digits). No bigint count or unrank means no draw at all. */
-const hugeSampler = (domain: BoxedExpression, ce: ComputeEngine): BoxedExpression | undefined => {
+const hugeSampler = (domain: Expression, ce: ComputeEngine): Expression | undefined => {
   const def = ce.lookupDefinition(domain.operator);
   const at =
     def && "operator" in def
@@ -141,7 +141,7 @@ const operatorOf = (ce: ComputeEngine, name: string) => {
 };
 
 /** One draw from `domain` by whichever sampler knows it. */
-export function sample(ce: ComputeEngine, domain: BoxedExpression): BoxedExpression | undefined {
+export function sample(ce: ComputeEngine, domain: Expression): Expression | undefined {
   for (const sampler of samplers.get(ce) ?? []) {
     const drawn = sampler(domain, ce);
     if (drawn !== undefined) return drawn;
@@ -151,7 +151,7 @@ export function sample(ce: ComputeEngine, domain: BoxedExpression): BoxedExpress
 }
 
 /** Why `Random` left a collection unevaluated (a huge one says so in `hugeSampler`). */
-function explainDecline(ce: ComputeEngine, domain: BoxedExpression): void {
+function explainDecline(ce: ComputeEngine, domain: Expression): void {
   const c = domain as unknown as Collection;
   if (c.isCollection !== true) return;
   if (c.isFiniteCollection === false) emit(ce, "Random", "infinite", [domain]);
@@ -190,16 +190,16 @@ export function ensureRandom(ce: ComputeEngine): void {
   const operator = operatorOf(ce, "Random");
   if (operator === undefined) return;
   (operator as { signature: unknown }).signature = ce.type(ARMS.join(" & "));
-  operator.evaluate = (ops: readonly BoxedExpression[]) => {
+  operator.evaluate = (ops: readonly Expression[]) => {
     if (ops.length === 0) return ce.number(uniform01(ce));
     const domain = ops[0];
     const shape = ops[1];
     if (shape === undefined) return sample(ce, domain);
     const dims = shape.operator === "List" ? operandsOf(shape).map((d) => d.re) : [shape.re];
     if (dims.some((d) => !Number.isSafeInteger(d) || d < 0)) return undefined;
-    const build = (at: number): BoxedExpression | undefined => {
+    const build = (at: number): Expression | undefined => {
       if (at === dims.length) return sample(ce, domain);
-      const items: BoxedExpression[] = [];
+      const items: Expression[] = [];
       for (let i = 0; i < dims[at]; i++) {
         const item = build(at + 1);
         if (item === undefined) return undefined;

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/engine";
 import { compare, member } from "./conform.ts";
 
@@ -8,10 +8,10 @@ import { compare, member } from "./conform.ts";
 // else goes to the members of the protocols its type conforms to; when it conforms to none,
 // the native handler has it as before.
 
-const isReal = (op: BoxedExpression): boolean => op.type.matches("real") || op.type.matches("signed_infinity");
+const isReal = (op: Expression): boolean => op.type.matches("real") || op.type.matches("signed_infinity");
 
 /** A value the generic path can look at: not a real number, and nothing left unknown. */
-const isStructured = (op: BoxedExpression): boolean =>
+const isStructured = (op: Expression): boolean =>
   // A collection other than a literal list or a string (a lazy `Map`, a `Range`) is a pool the
   // native head reads itself, not one value to compare.
   !isReal(op) && op.unknowns.length === 0 && (op.type.matches("string") || !op.type.matches("collection"));
@@ -26,12 +26,12 @@ export function readsOwnExtremum(ce: ComputeEngine, head: string): void {
 }
 
 /** The pool `Min`/`Max` compare: lists flattened, as compute-engine's do. */
-const pool = (ops: readonly BoxedExpression[]): BoxedExpression[] =>
+const pool = (ops: readonly Expression[]): Expression[] =>
   ops.flatMap((op) => (op.operator === "List" ? pool(operandsOf(op)) : [op]));
 
 /** Each value's components when all of them are product-ordered, else undefined. */
-function coordinatesOf(ce: ComputeEngine, values: readonly BoxedExpression[]): BoxedExpression[][] | undefined {
-  const out: BoxedExpression[][] = [];
+function coordinatesOf(ce: ComputeEngine, values: readonly Expression[]): Expression[][] | undefined {
+  const out: Expression[][] = [];
   for (const v of values) {
     const parts = member(ce, "Coordinates", [v]);
     if (parts === undefined) return undefined;
@@ -44,9 +44,9 @@ function coordinatesOf(ce: ComputeEngine, values: readonly BoxedExpression[]): B
 function componentwise(
   ce: ComputeEngine,
   head: string,
-  like: BoxedExpression,
-  parts: readonly BoxedExpression[][],
-): BoxedExpression | undefined {
+  like: Expression,
+  parts: readonly Expression[][],
+): Expression | undefined {
   const width = parts[0]!.length;
   if (parts.some((p) => p.length !== width)) return undefined;
   const combined = Array.from({ length: width }, (_, i) =>
@@ -63,10 +63,10 @@ function componentwise(
 /** The least (`side` -1) or greatest (1) of `values`: the lattice's meet or join, else by `Compare`. */
 function extremum(
   ce: ComputeEngine,
-  values: readonly BoxedExpression[],
+  values: readonly Expression[],
   side: -1 | 1,
-  lone?: BoxedExpression,
-): BoxedExpression | undefined {
+  lone?: Expression,
+): Expression | undefined {
   const head = side < 0 ? "Min" : "Max";
   // A complex operand has no order to pick from (compute-engine leaves `Max(3/2, i)` as written,
   // as Wolfram does): the product order is for rounding it, not for choosing between values.
@@ -94,7 +94,7 @@ function extremum(
  * `Floor` or `Ceil` of `x`: coordinate by coordinate in a product order, an integer in a floor
  * ring (Mathlib's), else the neighbouring tick of a floor order.
  */
-function floorOrCeil(ce: ComputeEngine, x: BoxedExpression, head: "Floor" | "Ceil"): BoxedExpression | undefined {
+function floorOrCeil(ce: ComputeEngine, x: Expression, head: "Floor" | "Ceil"): Expression | undefined {
   const parts = coordinatesOf(ce, [x]);
   if (parts !== undefined) return componentwise(ce, head, x, parts);
   return (
@@ -110,7 +110,7 @@ function floorOrCeil(ce: ComputeEngine, x: BoxedExpression, head: "Floor" | "Cei
  * which is `x + x < 2 ⌊x⌋ + 1` in the ring's own arithmetic, so ties go up there too. A
  * product order rounds coordinate by coordinate.
  */
-function round(ce: ComputeEngine, x: BoxedExpression): BoxedExpression | undefined {
+function round(ce: ComputeEngine, x: Expression): Expression | undefined {
   const parts = coordinatesOf(ce, [x]);
   if (parts !== undefined) return componentwise(ce, "Round", x, parts);
   const lo = member(ce, "LowerTick", [x]);
@@ -161,7 +161,7 @@ export function declareGenericHeads(ce: ComputeEngine): void {
     ["Clamp", "'m'", "'c'", "'k'"],
     (ops) => ops.some(isStructured),
     (native) => (ops, options) => {
-      const [x, lo, hi] = ops as [BoxedExpression, BoxedExpression, BoxedExpression];
+      const [x, lo, hi] = ops as [Expression, Expression, Expression];
       const below = extremum(ce, [x, hi], -1);
       return (below === undefined ? undefined : extremum(ce, [lo, below], 1)) ?? native?.(ops, options);
     },

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, wrapOperator } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 
@@ -14,23 +14,23 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 // exact ½iπ instead of a decimal (issue #107's bug, recurring here).
 
 /** Build then finish an expression the way the caller asked: N() for N(...), else evaluate(). */
-const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
+const finish = (expr: Expression, options: EvalOptions): Expression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
 
 // A Multiply with a real coefficient folds straight into the ImaginaryUnit literal --
 // Multiply(ImaginaryUnit, Divide(Pi, 2)) boxes to Multiply(Complex(0, 1/2), Pi), not
 // Multiply(Complex(0, 1), Multiply(1/2, Pi)) -- so "is this Multiply(i, t)" has to allow
 // any nonzero purely-imaginary numeric factor, not just literal i.
-const isImaginaryLiteral = (op: BoxedExpression): boolean => op.operator === "Complex" && op.re === 0 && op.im !== 0;
+const isImaginaryLiteral = (op: Expression): boolean => op.operator === "Complex" && op.re === 0 && op.im !== 0;
 
 /** Cheap (O(operands), no allocation): does this Multiply carry a purely-imaginary factor? */
-const hasImaginaryFactor = (op: BoxedExpression): boolean =>
+const hasImaginaryFactor = (op: Expression): boolean =>
   op.operator === "Multiply" && operandsOf(op).some(isImaginaryLiteral);
 
 /** t, given op = i*t: dividing the whole product back out by i is exact and lets
  * compute-engine's own arithmetic re-fold the real coefficient, rather than this code
  * trying to reconstruct it. Only called after `hasImaginaryFactor` has said yes. */
-const realPartOf = (ce: ComputeEngine, op: BoxedExpression): BoxedExpression =>
+const realPartOf = (ce: ComputeEngine, op: Expression): Expression =>
   ce.function("Divide", [op, "ImaginaryUnit"]).evaluate();
 
 /**
@@ -38,7 +38,7 @@ const realPartOf = (ce: ComputeEngine, op: BoxedExpression): BoxedExpression =>
  * Csch(i*t) = -i*csc(t), Sech(i*t) = sec(t), Coth(i*t) = -i*cot(t).
  */
 function declareHyperbolicAtImaginary(ce: ComputeEngine): void {
-  const rewrites: Record<string, (t: BoxedExpression) => BoxedExpression> = {
+  const rewrites: Record<string, (t: Expression) => Expression> = {
     Sinh: (t) => ce.function("Multiply", ["ImaginaryUnit", ce.function("Sin", [t])]),
     Cosh: (t) => ce.function("Cos", [t]),
     Tanh: (t) => ce.function("Multiply", ["ImaginaryUnit", ce.function("Tan", [t])]),

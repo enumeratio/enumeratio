@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, operandsOf } from "@enumeratio/engine";
 
 // BellY(n, k, {x1, …, x_{n−k+1}}) — the partial (incomplete) Bell polynomial B_{n,k},
@@ -21,27 +21,27 @@ const binom = (n: number, k: number): bigint => {
   return num / den;
 };
 
-const bigNumber = (ce: ComputeEngine, v: bigint): BoxedExpression => ce.number([v, 1n] as unknown as [number, number]);
+const bigNumber = (ce: ComputeEngine, v: bigint): Expression => ce.number([v, 1n] as unknown as [number, number]);
 
 function bellYExpr(
   ce: ComputeEngine,
-  xs: readonly BoxedExpression[],
-  memo: Map<string, BoxedExpression>,
+  xs: readonly Expression[],
+  memo: Map<string, Expression>,
   n: number,
   k: number,
-): BoxedExpression {
+): Expression {
   if (n === 0 && k === 0) return ce.One;
   if (n === 0 || k === 0 || k > n) return ce.Zero;
   const key = `${n},${k}`;
   const cached = memo.get(key);
   if (cached !== undefined) return cached;
-  const terms: BoxedExpression[] = [];
+  const terms: Expression[] = [];
   for (let i = 1; i <= n - k + 1; i++) {
     const coeff = binom(n - 1, i - 1);
     if (coeff === 0n) continue;
     const inner = bellYExpr(ce, xs, memo, n - i, k - 1);
     if (inner.re === 0 && inner.im === 0) continue; // a literal zero subterm — drop it
-    const factors: BoxedExpression[] = coeff === 1n ? [xs[i - 1], inner] : [bigNumber(ce, coeff), xs[i - 1], inner];
+    const factors: Expression[] = coeff === 1n ? [xs[i - 1], inner] : [bigNumber(ce, coeff), xs[i - 1], inner];
     terms.push(ce.function("Multiply", factors));
   }
   const result = (terms.length === 0 ? ce.Zero : ce.function("Add", terms)).evaluate();
@@ -52,7 +52,7 @@ function bellYExpr(
 export function declareBellY(ce: ComputeEngine): void {
   ce.declare("BellY", {
     signature: "(integer, integer, list) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [nExpr, kExpr, xsExpr] = ops;
       if (nExpr === undefined || kExpr === undefined || xsExpr === undefined) return undefined;
       const n = bigIntegerAt(nExpr);

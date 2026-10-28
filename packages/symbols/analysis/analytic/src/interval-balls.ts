@@ -1,4 +1,4 @@
-import type { BoxedExpression } from "@cortex-js/compute-engine";
+import type { Expression } from "@cortex-js/compute-engine";
 import { BigDecimal } from "@cortex-js/compute-engine";
 import {
   type Ball,
@@ -191,10 +191,10 @@ interface Piece {
  * pole in it, or past their reach). */
 export function ballImage(
   head: string,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   argIndex: number,
-  l: BoxedExpression,
-  h: BoxedExpression,
+  l: Expression,
+  h: Expression,
 ): { readonly lo: BigDecimal; readonly hi: BigDecimal } | undefined {
   const differentiable = DIFFERENTIABLE[head];
   if (differentiable === undefined || differentiable.arity !== ops.length || differentiable.argIndex !== argIndex) {

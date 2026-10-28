@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
   isRealInt,
@@ -83,7 +83,7 @@ const RADIUS = 1.2;
 const STEPS = 256;
 
 /** λ₁ = 1 + γ/2 − ½ln(4π) (Fungrim fungrim:d8d820) — computed symbolically, not numerically. */
-function lambda1(ce: ComputeEngine, options: EvalOptions): BoxedExpression {
+function lambda1(ce: ComputeEngine, options: EvalOptions): Expression {
   return ce
     .box(["Subtract", ["Add", ["Divide", "EulerGamma", 2], 1], ["Divide", ["Ln", ["Multiply", 4, "Pi"]], 2]])
     .evaluate(options);
@@ -96,7 +96,7 @@ function lambda1(ce: ComputeEngine, options: EvalOptions): BoxedExpression {
  * `evaluate()` keeps the exact symbolic form; n ≥ 2 is always numeric (the contour
  * differentiation of `logXi` at s = 1 below).
  */
-function keiperLiLambda(ce: ComputeEngine, n: number, options: EvalOptions): BoxedExpression {
+function keiperLiLambda(ce: ComputeEngine, n: number, options: EvalOptions): Expression {
   if (n === 0) return ce.Zero;
   if (n === 1) return lambda1(ce, options);
   const g = (s: Cx): Cx => mul(cexp(scale(clog(s), n - 1)), logXi(s)); // s^(n-1)·log ξ(s)
@@ -119,7 +119,7 @@ export function declareKeiperLi(ce: ComputeEngine): void {
 
   ce.declare("KeiperLiLambda", {
     signature: "(integer) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [n] = ops;
       if (n === undefined || !isRealInt(n) || n.re < 0 || n.re > MAX_N) return undefined;
       if (n.re > 1 && !wantsNumber(ops, options)) return undefined;

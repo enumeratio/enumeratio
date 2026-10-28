@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCompile, operandsOf } from "@enumeratio/engine";
 
 // Sin(Arcsin z) = z, Cosh(Arcosh z) = z and Tanh(Artanh z) = z hold for every complex z --
@@ -36,7 +36,7 @@ import { declareCompile, operandsOf } from "@enumeratio/engine";
 // `canonical` runs before any evaluation, so it sees the un-reduced `inverse(z)` node in every
 // case above.
 
-type OperatorDefinition = NonNullable<BoxedExpression["operatorDefinition"]>;
+type OperatorDefinition = NonNullable<Expression["operatorDefinition"]>;
 type CanonicalHandler = OperatorDefinition["canonical"];
 
 /**

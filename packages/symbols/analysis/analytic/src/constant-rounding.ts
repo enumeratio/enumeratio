@@ -1,4 +1,4 @@
-import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
+import { BigDecimal, type Expression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 
 // Wolfram folds Floor/Ceil/Round of an exact numeric constant expression -- Pi, E, a
@@ -32,7 +32,7 @@ const KNOWN_CONSTANTS = new Set([
 const CONSTANT_HEADS = new Set(["Negate", "Add", "Subtract", "Multiply", "Divide", "Power", "Sqrt", "Log"]);
 
 /** O(1): reads only `operator`, and for a bare symbol its `symbol` name. */
-function looksConstant(op: BoxedExpression): boolean {
+function looksConstant(op: Expression): boolean {
   if (op.operator === "Symbol") return KNOWN_CONSTANTS.has(symbolNameOf(op) ?? "");
   return CONSTANT_HEADS.has(op.operator ?? "");
 }
@@ -56,7 +56,7 @@ type Rounding = "Floor" | "Ceil" | "Round";
  * needs more than `MAX_ROUNDING_DIGITS`, or its fractional part is within
  * `BREAKPOINT_MARGIN` of a breakpoint.
  */
-function roundExactly(ce: ComputeEngine, name: Rounding, x: BoxedExpression): bigint | undefined {
+function roundExactly(ce: ComputeEngine, name: Rounding, x: Expression): bigint | undefined {
   const rough = x.N();
   if (rough.im !== 0 || !Number.isFinite(rough.re)) return undefined;
   const digits = Math.max(1, Math.ceil(Math.log10(Math.abs(rough.re) + 1))) + GUARD_DIGITS;
@@ -111,7 +111,7 @@ function declareRoundingHead(ce: ComputeEngine, name: Rounding): void {
 }
 
 /** The pool Max/Min compare: a single List argument's elements, or the bare arguments. */
-function pool(ops: readonly BoxedExpression[]): readonly BoxedExpression[] {
+function pool(ops: readonly Expression[]): readonly Expression[] {
   return ops.length === 1 && ops[0]?.operator === "List" ? operandsOf(ops[0]) : ops;
 }
 
@@ -138,7 +138,7 @@ function declareExtremum(ce: ComputeEngine, name: "Max" | "Min", better: (a: num
     },
     (native) => (ops, options) => {
       const items = pool(ops);
-      let best: { op: BoxedExpression; v: number } | undefined;
+      let best: { op: Expression; v: number } | undefined;
       for (const op of items) {
         const n = op.N();
         if (n.im !== 0 || !Number.isFinite(n.re)) return native?.(ops, options);

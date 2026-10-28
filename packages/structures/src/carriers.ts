@@ -9,7 +9,7 @@
 // keeps the type `Permutation`. That is what lets a statistic declared over `Permutation`
 // reject a bare list — and, more usefully, reject a SetPartition.
 
-import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
+import { type Expression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
 import { declareCompile, operandsOf } from "@enumeratio/engine";
 import { carrierNameForType, registerCarrier, registerCollectionCarrier } from "./operations.ts";
 
@@ -136,12 +136,12 @@ function declareConstructor(ce: ComputeEngine, carrier: Carrier): void {
   const existingEvaluate = operator.evaluate;
   const existingSignature = operator.signature;
   (operator as { signature: unknown }).signature = ce.type(`(${clause}) & ${String(existingSignature)}`);
-  operator.evaluate = (ops: readonly BoxedExpression[], options) => existingEvaluate?.(ops, options);
+  operator.evaluate = (ops: readonly Expression[], options) => existingEvaluate?.(ops, options);
   declareCompile(ce, carrier.name, "builtin"); // a pass-through
 }
 
 /** The value inside a constructed carrier — what a statistic reaches for. */
-export const contentsOf = (value: BoxedExpression | undefined): BoxedExpression | undefined => operandsOf(value)[0];
+export const contentsOf = (value: Expression | undefined): Expression | undefined => operandsOf(value)[0];
 
 /**
  * Mint every carrier's plural TYPE-SPACE name as a set-valued symbol, the way compute-engine's
@@ -184,7 +184,7 @@ export function declareCarrierElement(ce: ComputeEngine, carriers: readonly Carr
   );
   const constructors = new Set(carriers.map((c) => c.name));
 
-  const membership = (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+  const membership = (ops: readonly Expression[]): Expression | undefined => {
     const element = ops[0];
     const target = ops[1];
     if (element === undefined || target === undefined) return undefined;
@@ -207,13 +207,13 @@ export function declareCarrierElement(ce: ComputeEngine, carriers: readonly Carr
     ce.popScope();
     ce.declare("Element", {
       signature: "(any, any, boolean?) -> boolean",
-      evaluate: (ops: readonly BoxedExpression[], options) => membership(ops) ?? nativeEvaluate?.(ops, options),
+      evaluate: (ops: readonly Expression[], options) => membership(ops) ?? nativeEvaluate?.(ops, options),
     });
     return;
   }
 
   const existingEvaluate = operator.evaluate;
-  operator.evaluate = (ops: readonly BoxedExpression[], options) => membership(ops) ?? existingEvaluate?.(ops, options);
+  operator.evaluate = (ops: readonly Expression[], options) => membership(ops) ?? existingEvaluate?.(ops, options);
   declareCompile(ce, "Element", "builtin"); // answers only for a carrier or an algebra
 }
 
@@ -236,7 +236,7 @@ export function attachConversion(
   sourceConstructor: string,
   sourceType: string,
   to: string,
-  handle: (subject: BoxedExpression, ...extra: BoxedExpression[]) => BoxedExpression | undefined,
+  handle: (subject: Expression, ...extra: Expression[]) => Expression | undefined,
   extra: readonly string[] = [],
 ): void {
   const definition = ce.lookupDefinition(target);
@@ -250,7 +250,7 @@ export function attachConversion(
   (operator as { signature: unknown }).signature = ce.type(
     `${arms} & ((${[sourceType, ...extra].join(", ")}) -> ${to})`,
   );
-  operator.evaluate = (ops: readonly BoxedExpression[], options) =>
+  operator.evaluate = (ops: readonly Expression[], options) =>
     ops.length === 1 + extra.length && ops[0]?.operator === sourceConstructor
       ? handle(ops[0], ...ops.slice(1))
       : existingEvaluate?.(ops, options);

@@ -4,14 +4,14 @@
 // to write a permutation as a partition, and `ParseAs` returns a constructed carrier value
 // rather than a bare list.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { ALL_REPRESENTATIONS, canonicalFor, type Medium, type Representation } from "@enumeratio/structures";
 
-const intsOf = (expr: BoxedExpression | undefined): number[] =>
+const intsOf = (expr: Expression | undefined): number[] =>
   operandsOf(expr).map((operand) => Math.trunc(Number(operand.re)));
 
-const stringOf = (expr: BoxedExpression | undefined): string | undefined => {
+const stringOf = (expr: Expression | undefined): string | undefined => {
   const direct = (expr as { string?: unknown } | undefined)?.string;
   if (typeof direct === "string") return direct.replace(/^'(.*)'$/s, "$1");
   const json = expr?.json;
@@ -33,7 +33,7 @@ export function declareRendering(
 
   ce.declare("Render", {
     signature: "(any, string?, string?) -> string",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expression[]): Expression | undefined => {
       const [value, which, wanted] = ops;
       if (value === undefined) return undefined;
       const carrier = String(value.type);
@@ -49,7 +49,7 @@ export function declareRendering(
 
   ce.declare("ParseAs", {
     signature: "(string, string, string?) -> any",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expression[]): Expression | undefined => {
       const [text, carrierName, which] = ops;
       const source = stringOf(text);
       const carrier = stringOf(carrierName);

@@ -9,7 +9,7 @@ signatures:
   - call: Multiply(number*) -> number
     description: Product of two or more values.
     library: enumeratio-analytic
-    type: ((number | residue)*) -> number
+    type: (number*) -> number
     overrides: compute-engine
     on:
       - Around
@@ -20,21 +20,21 @@ signatures:
   - call: Multiply(number*) -> number
     description: Product of two or more values.
     library: enumeratio-hypercomplex
-    type: ((number | residue)*) -> number
+    type: (number*) -> number
     overrides: enumeratio-analytic
     symbols:
       - ^(?:i|j|epsilon|e|f|theta|epsilonSymbol|varepsilon|thetaSymbol|vartheta)_\d+$
   - call: Multiply(number*) -> number
     description: Product of two or more values.
     library: enumeratio-numerals
-    type: ((number | residue)*) -> number
+    type: (number*) -> number
     overrides: enumeratio-residues
     on:
       - AdicNumeral
   - call: Multiply(number*) -> number
     description: Product of two or more values.
     library: enumeratio-adeles
-    type: ((number | residue)*) -> number
+    type: (number*) -> number
     overrides: enumeratio-numerals
     on:
       - Adele
@@ -43,7 +43,7 @@ signatures:
   - call: Multiply(number*) -> number
     description: Product of two or more values.
     library: enumeratio-residues
-    type: ((number | residue)*) -> number
+    type: (number*) -> number
     overrides: enumeratio-hypercomplex
     on:
       - IntegerMod

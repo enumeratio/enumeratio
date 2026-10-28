@@ -144,7 +144,7 @@ export {
   loadEngine,
   loadMarkup,
 } from "./mathlive.ts";
-export type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+export type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 
 declare global {
   interface HTMLElementTagNameMap {

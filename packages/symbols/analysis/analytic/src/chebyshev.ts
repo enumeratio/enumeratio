@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { Json } from "@enumeratio/ce-patches";
 import {
   type BoxInput,
@@ -88,14 +88,14 @@ function normalizeOrder(n: number, kind: "T" | "U"): { index: number; negate: bo
 function evaluate(
   ce: ComputeEngine,
   kind: "T" | "U",
-  n: BoxedExpression,
-  x: BoxedExpression,
+  n: Expression,
+  x: Expression,
   numeric: boolean,
-): BoxedExpression | undefined {
+): Expression | undefined {
   if (!isRealInt(n)) return undefined;
   const { index, negate, zero } = normalizeOrder(n.re, kind);
   const box = (expr: Json) => ce.box(expr as unknown as BoxInput);
-  const finish = (expr: BoxedExpression) => (numeric ? expr.N() : expr.evaluate());
+  const finish = (expr: Expression) => (numeric ? expr.N() : expr.evaluate());
   if (zero) return finish(box(0));
   if (numeric && isFiniteNum(x)) {
     const v = chebyshevAt(index, cx(x.re, x.im), kind);
@@ -116,11 +116,7 @@ const MAX_COMPILED_ORDER = 1_000_000;
  */
 const compileChebyshev =
   (kind: "T" | "U") =>
-  (
-    args: readonly BoxedExpression[],
-    compile: (e: BoxedExpression) => string,
-    ctx: { language?: string },
-  ): string | undefined => {
+  (args: readonly Expression[], compile: (e: Expression) => string, ctx: { language?: string }): string | undefined => {
     const [n, x] = args;
     if (ctx.language !== "javascript" || n === undefined || x === undefined) return undefined;
     const fold = kind === "T" ? "n = Math.abs(n);" : "if (n === -1) return 0; if (n < 0) { n = -n - 2; sign = -1; }";
@@ -138,18 +134,18 @@ export const compileChebyshevU = compileChebyshev("U");
 
 export function evaluateChebyshevT(
   ce: ComputeEngine,
-  n: BoxedExpression,
-  x: BoxedExpression,
+  n: Expression,
+  x: Expression,
   numeric: boolean,
-): BoxedExpression | undefined {
+): Expression | undefined {
   return evaluate(ce, "T", n, x, numeric);
 }
 
 export function evaluateChebyshevU(
   ce: ComputeEngine,
-  n: BoxedExpression,
-  x: BoxedExpression,
+  n: Expression,
+  x: Expression,
   numeric: boolean,
-): BoxedExpression | undefined {
+): Expression | undefined {
   return evaluate(ce, "U", n, x, numeric);
 }

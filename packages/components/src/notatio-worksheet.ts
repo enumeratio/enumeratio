@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { html, LitElement, type PropertyValues } from "lit";
 import { repeat } from "lit/directives/repeat.js";
 import "./notatio-cell.ts";
@@ -140,7 +140,7 @@ export class NotatioWorksheet extends LitElement {
   #cellData = new Map<number, CellData>();
   /** `#cellData`'s evaluated JSON, boxed -- cached by JSON text, since a slider redraws
    * only the cell it drives; every OTHER cell's box is unchanged from the last pass. */
-  #boxedCache = new Map<string, BoxedExpression | null>();
+  #boxedCache = new Map<string, Expression | null>();
   #deriveTimer: ReturnType<typeof setTimeout> | undefined;
   #lastDeriveAt = 0;
   /** How many points a curve cell evaluated to, for the elided readout. */
@@ -497,11 +497,11 @@ export class NotatioWorksheet extends LitElement {
   }
 
   /** `jsonStr`, boxed -- cached, since most cells are unchanged from the last pass. */
-  #boxedFor(jsonStr: string): BoxedExpression | undefined {
+  #boxedFor(jsonStr: string): Expression | undefined {
     if (!this.#engine || !jsonStr) return undefined;
     const hit = this.#boxedCache.get(jsonStr);
     if (hit !== undefined) return hit ?? undefined;
-    let value: BoxedExpression | null = null;
+    let value: Expression | null = null;
     try {
       value = this.#engine.box(JSON.parse(jsonStr));
     } catch {
@@ -521,7 +521,7 @@ export class NotatioWorksheet extends LitElement {
   #deriveState(): void {
     if (!this.#engine) return;
     const controls: WorksheetControl[] = [];
-    const settings = new Map<string, BoxedExpression>();
+    const settings = new Map<string, Expression>();
     const draw: Drawable[] = [];
     const declined: Record<number, string> = {};
 

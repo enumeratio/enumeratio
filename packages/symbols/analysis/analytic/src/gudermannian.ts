@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { type EvalOptions, isFiniteNum, wantsNumber } from "@enumeratio/ce-patches";
 
@@ -27,7 +27,7 @@ import { type EvalOptions, isFiniteNum, wantsNumber } from "@enumeratio/ce-patch
 // landed `DirectedInfinity` on main since the first version of this file, which only had
 // undirected `ComplexInfinity` here).
 
-const HALF_PI = (ce: ComputeEngine): BoxedExpression => ce.function("Multiply", [ce.number([1, 2]), ce.Pi]).evaluate();
+const HALF_PI = (ce: ComputeEngine): Expression => ce.function("Multiply", [ce.number([1, 2]), ce.Pi]).evaluate();
 
 /** How close a numeric evaluation must land to a breakpoint before it's trusted — same wide
  *  margin convention as signals.ts / closed-forms-113.ts's `Mod` block: a double carries
@@ -47,7 +47,7 @@ const resolutionOf = (approx: number): number => Math.abs(approx) * 2 ** -52 * R
  *  part, divided by π, within the margin of a half-odd-integer. A genuine float `x` (`isExact
  *  === false`) never qualifies — it can land close to a pole but, being a float, not exactly on
  *  one, so it takes the ordinary (large but finite) numeric path below instead. */
-function poleK(x: BoxedExpression): bigint | undefined {
+function poleK(x: Expression): bigint | undefined {
   if ((x as Partial<{ isExact: boolean }>).isExact === false) return undefined;
   const approx = isFiniteNum(x) ? x : x.N();
   if (!isFiniteNum(approx)) return undefined;
@@ -62,7 +62,7 @@ function poleK(x: BoxedExpression): bigint | undefined {
  *  the sign derivation above. JS's `%` keeps a bigint operand's own sign, so `k % 2n === 0n`
  *  already picks out "even" correctly for a negative `k` too (`-4n % 2n === 0n`,
  *  `-3n % 2n === -1n`). */
-function directedPoleInfinity(ce: ComputeEngine, k: bigint): BoxedExpression {
+function directedPoleInfinity(ce: ComputeEngine, k: bigint): Expression {
   const direction =
     k % 2n === 0n ? ce.symbol("ImaginaryUnit") : ce.function("Negate", [ce.symbol("ImaginaryUnit")]).evaluate();
   return ce.function("DirectedInfinity", [direction]).evaluate();
@@ -70,9 +70,9 @@ function directedPoleInfinity(ce: ComputeEngine, k: bigint): BoxedExpression {
 
 function evaluateGudermannian(
   ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   options: EvalOptions,
-): BoxedExpression | undefined {
+): Expression | undefined {
   const x = ops[0];
   if (x === undefined) return undefined;
   if (x.is(0)) return ce.Zero;
@@ -103,6 +103,6 @@ function evaluateGudermannian(
 export function declareGudermannian(ce: ComputeEngine): void {
   ce.declare("Gudermannian", {
     signature: "(number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateGudermannian(ce, ops, options),
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => evaluateGudermannian(ce, ops, options),
   });
 }

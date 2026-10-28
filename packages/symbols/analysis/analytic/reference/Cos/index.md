@@ -9,7 +9,7 @@ signatures:
   - call: Cos(x)
     description: The cosine of x, in radians.
     library: enumeratio-analytic
-    type: (complex) -> number
+    type: (complex | quantity) -> number
     overrides: compute-engine
 seeAlso:
   - Sin

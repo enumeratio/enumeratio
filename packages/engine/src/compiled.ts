@@ -3,7 +3,7 @@
 // fast. A separate entry (`@enumeratio/engine/compiled`), so only what compiles pulls in the
 // compiler.
 
-import { type BoxedExpression, type ComputeEngine, version } from "@cortex-js/compute-engine";
+import { type Expression, type ComputeEngine, version } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
 
 export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
@@ -96,7 +96,7 @@ export function compileTyped(
   ce.pushScope();
   try {
     for (const [name, type] of Object.entries(types)) ce.declare(name, type);
-    const result = new JavaScriptTarget().compile(ce.box(expression as never) as BoxedExpression) as {
+    const result = new JavaScriptTarget().compile(ce.box(expression as never) as Expression) as {
       success?: boolean;
       run?: Compilation["run"];
       code?: string;
@@ -116,7 +116,7 @@ export function compileTyped(
 /** `expr` compiled to a plain JS function of its free variables, or undefined when the compiler
  *  has no lowering for something in it. For a hot loop that would otherwise `subs` and `N` per
  *  point; the caller keeps the symbolic route as its fallback. */
-export function compileExpression(expr: BoxedExpression): CompiledRun | undefined {
+export function compileExpression(expr: Expression): CompiledRun | undefined {
   try {
     const result = new JavaScriptTarget().compile(expr.canonical) as { success?: boolean; run?: CompiledRun };
     return result.success === true && typeof result.run === "function" ? result.run : undefined;

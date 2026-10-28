@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt } from "@enumeratio/engine";
 import { type EvalOptions, isFiniteNum } from "@enumeratio/ce-patches";
 
@@ -14,20 +14,16 @@ import { type EvalOptions, isFiniteNum } from "@enumeratio/ce-patches";
 // RealSign always resolves to an exact -1, 0 or 1, falling back to a numeric probe
 // (`.N()`) exactly where native `Sign` would rather stay symbolic.
 
-const isConcretelyComplex = (x: BoxedExpression): boolean => Number.isFinite(x.im) && x.im !== 0;
+const isConcretelyComplex = (x: Expression): boolean => Number.isFinite(x.im) && x.im !== 0;
 
-function evaluateRealAbs(
-  ce: ComputeEngine,
-  x: BoxedExpression | undefined,
-  options: EvalOptions,
-): BoxedExpression | undefined {
+function evaluateRealAbs(ce: ComputeEngine, x: Expression | undefined, options: EvalOptions): Expression | undefined {
   if (x === undefined) return undefined;
   if (isConcretelyComplex(x)) return undefined; // real domain only
   const expr = ce.function("Abs", [x]);
   return options.numericApproximation ? expr.N() : expr.evaluate();
 }
 
-function evaluateRealSign(ce: ComputeEngine, x: BoxedExpression | undefined): BoxedExpression | undefined {
+function evaluateRealSign(ce: ComputeEngine, x: Expression | undefined): Expression | undefined {
   if (x === undefined) return undefined;
   if (isConcretelyComplex(x)) return undefined; // real domain only
   const q = bigRationalAt(x);
@@ -41,12 +37,12 @@ export function declareRealAbsSign(ce: ComputeEngine): void {
   ce.declare("RealAbs", {
     signature: "(number) -> number",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateRealAbs(ce, ops[0], options),
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => evaluateRealAbs(ce, ops[0], options),
   });
 
   ce.declare("RealSign", {
     signature: "(number) -> number",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateRealSign(ce, ops[0]),
+    evaluate: (ops: readonly Expression[]) => evaluateRealSign(ce, ops[0]),
   });
 }

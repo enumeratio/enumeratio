@@ -1,11 +1,11 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, threadOverLists, widenSignature, wrapOperator } from "@enumeratio/engine";
 import type { EvalOptions, NativeEval } from "@enumeratio/ce-patches";
 
 /** No free variable anywhere in `expr` — a plain number, `Pi`/`ExponentialE`, or a closed
  * call over them (`Exp(Sqrt(2))`) all qualify, even though `evaluate()` alone leaves the
  * last one exactly as symbolic as `Add(1.2, Multiply(6.7, x))` does. */
-const isClosed = (expr: BoxedExpression): boolean => expr.freeVariables.length === 0;
+const isClosed = (expr: Expression): boolean => expr.freeVariables.length === 0;
 
 // #113 threading gaps: heads that reject or ignore a list/matrix argument where
 // Wolfram's Listable heads thread over it. `threadOverLists` just flips the
@@ -33,10 +33,10 @@ const isClosed = (expr: BoxedExpression): boolean => expr.freeVariables.length =
 function rationalizeDeep(
   ce: ComputeEngine,
   native: NativeEval,
-  expr: BoxedExpression,
-  tolerance: BoxedExpression | undefined,
+  expr: Expression,
+  tolerance: Expression | undefined,
   options: EvalOptions,
-): BoxedExpression {
+): Expression {
   if (expr.operator !== "List" && isClosed(expr)) {
     if ((expr as Partial<{ isExact: boolean }>).isExact !== false) return expr; // already exact
     const args = tolerance === undefined ? [expr] : [expr, tolerance];

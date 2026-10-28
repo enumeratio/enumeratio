@@ -1,4 +1,4 @@
-import { ComputeEngine, type BoxedExpression } from "@cortex-js/compute-engine";
+import { ComputeEngine, type Expression } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { strOf } from "../src/symbols.ts";
 import { Transcript } from "../src/transcript.ts";
@@ -21,7 +21,7 @@ function evaluate(t: Transcript, engine: ComputeEngine, latex: string) {
 // has no call syntax for an arbitrary declared symbol).
 function evaluateJson(t: Transcript, engine: ComputeEngine, json: Parameters<ComputeEngine["box"]>[0], input: string) {
   return t.run(() => {
-    const raw: BoxedExpression = engine.box(json);
+    const raw: Expression = engine.box(json);
     const value = raw.evaluate();
     const n = t.record(input, raw, value);
     return { n, value };

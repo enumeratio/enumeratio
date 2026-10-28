@@ -41,7 +41,7 @@
     },
     {
       "cmd": "notatio -f numpy \"Sqrt(x^2 + 1)\"",
-      "out": "np.sqrt(x ** 2 + 1)",
+      "out": "np.sqrt((float('nan') if x is None else x) ** 2 + 1)",
       "code": 0
     },
     {
@@ -51,7 +51,7 @@
     },
     {
       "cmd": "notatio -f glsl \"Sin(x) * Cos(x)\"",
-      "out": "sin(x) * cos(x)",
+      "out": "_gpu_sin(x) * _gpu_cos(x)",
       "code": 0
     }
   ],

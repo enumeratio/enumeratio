@@ -2,7 +2,7 @@
 // kernel takes it, and the forms only an engine can write. `notatio-out.ts` imports this
 // when it needs it, so a page whose cells all go through a kernel never loads it.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type MathJsonExpression, serializeEpsil } from "@cortex-js/compute-engine/epsil";
 import { collectMessages, type Message } from "@enumeratio/engine";
 import { normalizeInputForm, toInputForm } from "@enumeratio/formats/inputform";
@@ -40,7 +40,7 @@ function declareLocal(engine: ComputeEngine, name: string | undefined): void {
 }
 
 /** `PlotInfo` for `raw` (parsed, unevaluated), read against `engine`'s current scope. */
-function plotOf(engine: ComputeEngine, raw: BoxedExpression): PlotInfo | undefined {
+function plotOf(engine: ComputeEngine, raw: Expression): PlotInfo | undefined {
   try {
     const substituted = substitutedForm(engine, raw);
     return {
@@ -77,10 +77,10 @@ export function evaluateHere(
   const form = cell.raw && !cell.evaluate ? { form: "raw" as const } : undefined;
   const host = cell.host;
   const transcript = host?.transcriptFor(engine);
-  const parseText = (): BoxedExpression =>
+  const parseText = (): Expression =>
     cell.format === "latex" ? engine.parse(source, form) : engine.box(cellJson(engine, cell.format, source), form);
 
-  let parsed: BoxedExpression | undefined;
+  let parsed: Expression | undefined;
   let plotInfo: PlotInfo | undefined;
   const { value: result, messages } = collectMessages(engine, () => {
     if (transcript && cell.evaluate) {

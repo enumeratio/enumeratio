@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { ComputeEngine as Engine } from "@cortex-js/compute-engine";
 import { operandsOf, stringAt, symbolNameOf } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
@@ -9,7 +9,7 @@ declareEvaluation(ce);
 const box = (expr: unknown) => ce.box(expr as Parameters<ComputeEngine["box"]>[0]);
 
 /** A `TestResultObject`'s `Outcome` rule value, read back as a plain string. */
-const outcomeOf = (result: BoxedExpression): unknown => {
+const outcomeOf = (result: Expression): unknown => {
   const outcome = operandsOf(result).find((rule) => stringAt(operandsOf(rule)[0]) === "Outcome");
   const value = outcome === undefined ? undefined : operandsOf(outcome)[1];
   return value === undefined ? undefined : (stringAt(value) ?? symbolNameOf(value));

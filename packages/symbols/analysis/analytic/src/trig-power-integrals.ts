@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, declareCompile, operandsOf, symbolNameOf } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 import { atEnginePrecision } from "@enumeratio/ce-patches";
@@ -13,22 +13,22 @@ import { atEnginePrecision } from "@enumeratio/ce-patches";
 // Attached to Integrate directly rather than through `wrapOperator`: Integrate is lazy, and
 // its integrand must not be evaluated ahead of it.
 
-type Evaluate = (ops: ReadonlyArray<BoxedExpression>, options: EvalOptions) => BoxedExpression | undefined;
+type Evaluate = (ops: ReadonlyArray<Expression>, options: EvalOptions) => Expression | undefined;
 
 /** Largest exponent expanded; the polynomial has about half this many terms. */
 const EXPONENT_MAX = 40n;
 
 interface TrigPower {
-  readonly coefficient: BoxedExpression;
-  readonly u: BoxedExpression;
+  readonly coefficient: Expression;
+  readonly u: Expression;
   readonly m: number; // power of sin u
   readonly n: number; // power of cos u
 }
 
-const freeOf = (e: BoxedExpression, x: string): boolean => !e.symbols.includes(x);
+const freeOf = (e: Expression, x: string): boolean => !e.symbols.includes(x);
 
 /** One factor as (head, argument, power) for a positive integer power of Sin or Cos. */
-function trigFactor(f: BoxedExpression): readonly [string, BoxedExpression, number] | undefined {
+function trigFactor(f: Expression): readonly [string, Expression, number] | undefined {
   let base = f;
   let power = 1n;
   if (f.operator === "Power") {
@@ -44,10 +44,10 @@ function trigFactor(f: BoxedExpression): readonly [string, BoxedExpression, numb
 }
 
 /** The integrand as c·sinᵐ(u)·cosⁿ(u), c free of x, or undefined for anything else. */
-function trigPower(ce: ComputeEngine, body: BoxedExpression, x: string): TrigPower | undefined {
+function trigPower(ce: ComputeEngine, body: Expression, x: string): TrigPower | undefined {
   const factors = body.operator === "Multiply" ? operandsOf(body) : [body];
-  const constants: BoxedExpression[] = [];
-  let u: BoxedExpression | undefined;
+  const constants: Expression[] = [];
+  let u: Expression | undefined;
   let [m, n] = [0, 0];
   for (const f of factors) {
     if (freeOf(f, x)) {
@@ -74,11 +74,11 @@ const binomial = (k: number, j: number): number => {
 };
 
 /** An antiderivative of sinᵐ(u) cosⁿ(u) in u, for m or n odd. */
-function antiderivative(ce: ComputeEngine, u: BoxedExpression, m: number, n: number) {
+function antiderivative(ce: ComputeEngine, u: Expression, m: number, n: number) {
   const sineOdd = m % 2 === 1;
   const [k, other] = sineOdd ? [(m - 1) / 2, n] : [(n - 1) / 2, m];
   const fn = ce.function(sineOdd ? "Cos" : "Sin", [u]);
-  const terms: BoxedExpression[] = [];
+  const terms: Expression[] = [];
   for (let j = 0; j <= k; j++) {
     const e = other + 2 * j + 1;
     const sign = (j % 2 === 0 ? 1 : -1) * (sineOdd ? -1 : 1);
@@ -94,7 +94,7 @@ export function declareTrigPowerIntegrals(ce: ComputeEngine): void {
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   const native = operator?.evaluate as Evaluate | undefined;
   if (operator === undefined || native === undefined) return;
-  operator.evaluate = ((ops: ReadonlyArray<BoxedExpression>, options: EvalOptions) => {
+  operator.evaluate = ((ops: ReadonlyArray<Expression>, options: EvalOptions) => {
     const [fn, limits] = ops;
     if (ops.length !== 2 || fn?.operator !== "Function" || limits?.operator !== "Limits") {
       return native(ops, options);

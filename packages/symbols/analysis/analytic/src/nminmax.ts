@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { parseInterval, type Ivl } from "./optimize-core.ts";
 
@@ -28,7 +28,7 @@ const PHI = (Math.sqrt(5) - 1) / 2;
 type NumFn = (t: number) => number | undefined;
 
 const toNumFn =
-  (ce: ComputeEngine, expr: BoxedExpression, x: string): NumFn =>
+  (ce: ComputeEngine, expr: Expression, x: string): NumFn =>
   (t: number) => {
     const v = expr
       .subs({ [x]: ce.number(t) })
@@ -67,7 +67,7 @@ function goldenSectionMin(f: NumFn, a: number, b: number): number {
   return (lo + hi) / 2;
 }
 
-function targetVar(varsArg: BoxedExpression): string | undefined {
+function targetVar(varsArg: Expression): string | undefined {
   const bare = symbolNameOf(varsArg);
   if (bare !== undefined) return bare;
   if (varsArg.operator === "List") {
@@ -82,9 +82,9 @@ function targetVar(varsArg: BoxedExpression): string | undefined {
  * malformed `{f, cons}`. */
 function parseBoundedProblem(
   ce: ComputeEngine,
-  firstArg: BoxedExpression,
+  firstArg: Expression,
   x: string,
-): { expr: BoxedExpression; ivl: Ivl } | undefined {
+): { expr: Expression; ivl: Ivl } | undefined {
   if (firstArg.operator !== "List") return undefined;
   const ops = operandsOf(firstArg);
   if (ops.length !== 2) return undefined;
@@ -95,7 +95,7 @@ function parseBoundedProblem(
 
 function numericExtreme(
   ce: ComputeEngine,
-  expr: BoxedExpression,
+  expr: Expression,
   x: string,
   ivl: Ivl,
   direction: "min" | "max",
@@ -133,7 +133,7 @@ function declareOne(ce: ComputeEngine, name: string, direction: "min" | "max"): 
   ce.declare(name, {
     signature: "(tuple<expression, expression>, symbol | list<symbol>) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [firstArg, varsArg] = ops;
       if (firstArg === undefined || varsArg === undefined) return undefined;
       const x = targetVar(varsArg);

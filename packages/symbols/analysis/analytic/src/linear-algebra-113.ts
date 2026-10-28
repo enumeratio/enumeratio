@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 
 // #113: MatrixRank of a square matrix whose entries are pairwise-distinct symbols is n,
@@ -14,7 +14,7 @@ import { operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 // determinant `x² − 1` is still generically nonzero, but "generically" now depends on a
 // relation between entries that this argument doesn't settle, so compute-engine's own
 // unevaluated answer stands there (see that entry's own divergence note).
-const isDistinctSymbolMatrix = (op: BoxedExpression): number | undefined => {
+const isDistinctSymbolMatrix = (op: Expression): number | undefined => {
   if (op.operator !== "List") return undefined;
   const rows = operandsOf(op);
   const n = rows.length;

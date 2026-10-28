@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 
@@ -18,7 +18,7 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
  * concrete `Complex(0, k)` numeric coefficient rather than keeping a bare `ImaginaryUnit`
  * operand around, so this looks for THAT.
  */
-function pureImaginaryArg(ce: ComputeEngine, u: BoxedExpression): BoxedExpression | undefined {
+function pureImaginaryArg(ce: ComputeEngine, u: Expression): Expression | undefined {
   if (u.re === 0 && u.im !== 0 && Number.isFinite(u.im)) return ce.number(u.im); // atomic k·i
   if (u.operator !== "Multiply") return undefined;
   const ops = operandsOf(u);
@@ -31,7 +31,7 @@ function pureImaginaryArg(ce: ComputeEngine, u: BoxedExpression): BoxedExpressio
   return k === 1 ? restExpr : ce.function("Multiply", [ce.number(k), restExpr]).evaluate();
 }
 
-function rewriteExp(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
+function rewriteExp(ce: ComputeEngine, e: Expression): Expression {
   const ops = operandsOf(e);
   if (e.operator === "Power" && ops.length === 2 && ops[0].isSame(ce.E)) {
     const u = rewriteExp(ce, ops[1]);
@@ -55,7 +55,7 @@ function rewriteExp(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
     .evaluate();
 }
 
-export function evaluateExpToTrig(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+export function evaluateExpToTrig(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   const expr = ops[0];
   return expr === undefined ? undefined : rewriteExp(ce, expr).simplify();
 }
@@ -63,6 +63,6 @@ export function evaluateExpToTrig(ce: ComputeEngine, ops: readonly BoxedExpressi
 export function declareExpToTrig(ce: ComputeEngine): void {
   ce.declare("ExpToTrig", {
     signature: "(expression) -> expression",
-    evaluate: (ops: readonly BoxedExpression[], _options: EvalOptions) => evaluateExpToTrig(ce, ops),
+    evaluate: (ops: readonly Expression[], _options: EvalOptions) => evaluateExpToTrig(ce, ops),
   });
 }

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { dividedByT, fractionFactors } from "./transforms.ts";
 
@@ -46,14 +46,14 @@ import { dividedByT, fractionFactors } from "./transforms.ts";
 // e^(-a*r)/e^(-a*r^2) at a general order `n` involve `Hypergeometric2F1Regularized` /
 // `Hypergeometric1F1Regularized` — not elementary, not chased), and an unknown-sign `a`.
 
-const opAt = (expr: BoxedExpression, i: number): BoxedExpression => operandsOf(expr)[i];
-const isSym = (x: BoxedExpression, name: string): boolean => symbolNameOf(x) === name;
-const isE = (x: BoxedExpression): boolean => isSym(x, "ExponentialE");
-const hasVar = (expr: BoxedExpression, name: string): boolean => expr.has(name);
+const opAt = (expr: Expression, i: number): Expression => operandsOf(expr)[i];
+const isSym = (x: Expression, name: string): boolean => symbolNameOf(x) === name;
+const isE = (x: Expression): boolean => isSym(x, "ExponentialE");
+const hasVar = (expr: Expression, name: string): boolean => expr.has(name);
 
 /** `expr` as `a*x` (any sign; `Negate` folds through, mirroring `mellin-transform.ts`'s
  * `linearCoeff`) — bare `x` gives `a = 1`. */
-function linearCoeffSigned(ce: ComputeEngine, expr: BoxedExpression, name: string): BoxedExpression | undefined {
+function linearCoeffSigned(ce: ComputeEngine, expr: Expression, name: string): Expression | undefined {
   if (isSym(expr, name)) return ce.One;
   if (expr.operator === "Negate") {
     const inner = linearCoeffSigned(ce, opAt(expr, 0), name);
@@ -70,8 +70,8 @@ function linearCoeffSigned(ce: ComputeEngine, expr: BoxedExpression, name: strin
 }
 
 /** `expr` as `b*x^2` (any sign — mirrors `mellin-transform.ts`'s `quadraticCoeffSigned`). */
-function quadraticCoeffSigned(ce: ComputeEngine, expr: BoxedExpression, name: string): BoxedExpression | undefined {
-  const isXSq = (o: BoxedExpression) => o.operator === "Power" && isSym(opAt(o, 0), name) && opAt(o, 1).re === 2;
+function quadraticCoeffSigned(ce: ComputeEngine, expr: Expression, name: string): Expression | undefined {
+  const isXSq = (o: Expression) => o.operator === "Power" && isSym(opAt(o, 0), name) && opAt(o, 1).re === 2;
   if (isXSq(expr)) return ce.One;
   if (expr.operator === "Negate") {
     const inner = quadraticCoeffSigned(ce, opAt(expr, 0), name);
@@ -89,7 +89,7 @@ function quadraticCoeffSigned(ce: ComputeEngine, expr: BoxedExpression, name: st
 
 /** `1/sqrt(r^2 + a^2)`: `Divide[1, Sqrt[Add[Power[r,2], Power[X,2]]]]` (either order in
  * the `Add`), reading `a = X` (requires `X` to be a LITERAL square, and `isPositive`). */
-function radialInverseDistance(ce: ComputeEngine, expr: BoxedExpression, r: string): BoxedExpression | undefined {
+function radialInverseDistance(ce: ComputeEngine, expr: Expression, r: string): Expression | undefined {
   if (expr.operator !== "Divide" || !(opAt(expr, 0).re === 1 && opAt(expr, 0).im === 0)) return undefined;
   const den = opAt(expr, 1);
   if (den.operator !== "Sqrt") return undefined;
@@ -97,7 +97,7 @@ function radialInverseDistance(ce: ComputeEngine, expr: BoxedExpression, r: stri
   if (radicand.operator !== "Add") return undefined;
   const ops = operandsOf(radicand);
   if (ops.length !== 2) return undefined;
-  const isRSq = (o: BoxedExpression) => o.operator === "Power" && isSym(opAt(o, 0), r) && opAt(o, 1).re === 2;
+  const isRSq = (o: Expression) => o.operator === "Power" && isSym(opAt(o, 0), r) && opAt(o, 1).re === 2;
   const rTerm = ops.find(isRSq);
   const aTerm = ops.find((o) => o !== rTerm);
   if (rTerm === undefined || aTerm === undefined) return undefined;
@@ -106,15 +106,10 @@ function radialInverseDistance(ce: ComputeEngine, expr: BoxedExpression, r: stri
 }
 
 /** `1/r` exactly (`Divide[1, r]`). */
-const isReciprocalOfR = (expr: BoxedExpression, r: string): boolean =>
+const isReciprocalOfR = (expr: Expression, r: string): boolean =>
   expr.operator === "Divide" && opAt(expr, 0).re === 1 && opAt(expr, 0).im === 0 && isSym(opAt(expr, 1), r);
 
-function atomicHankelOrder0(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  r: string,
-  s: BoxedExpression,
-): BoxedExpression | undefined {
+function atomicHankelOrder0(ce: ComputeEngine, expr: Expression, r: string, s: Expression): Expression | undefined {
   if (isReciprocalOfR(expr, r)) return ce.function("Power", [s, -1]).evaluate();
   if (expr.operator === "Power" && isE(opAt(expr, 0))) {
     const exponent = opAt(expr, 1);
@@ -152,12 +147,7 @@ function atomicHankelOrder0(
 }
 
 /** Order 1's one stated closed form: `e^(-a*r) -> s/(a^2+s^2)^(3/2)`. */
-function atomicHankelOrder1(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  r: string,
-  s: BoxedExpression,
-): BoxedExpression | undefined {
+function atomicHankelOrder1(ce: ComputeEngine, expr: Expression, r: string, s: Expression): Expression | undefined {
   if (expr.operator !== "Power" || !isE(opAt(expr, 0))) return undefined;
   const k = linearCoeffSigned(ce, opAt(expr, 1), r);
   if (k === undefined || k.isNegative !== true) return undefined;
@@ -170,12 +160,7 @@ function atomicHankelOrder1(
 }
 
 /** `g(r)/r` for the two `g` above: the Laplace transform of J_0 (DLMF 10.22.49), and G&R 6.618.1's Gaussian. */
-function hankelOverR(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  r: string,
-  s: BoxedExpression,
-): BoxedExpression | undefined {
+function hankelOverR(ce: ComputeEngine, expr: Expression, r: string, s: Expression): Expression | undefined {
   const g = dividedByT(ce, expr, r);
   if (g === undefined || g.operator !== "Power" || !isE(opAt(g, 0))) return undefined;
   const exponent = opAt(g, 1);
@@ -206,7 +191,7 @@ function hankelOverR(
 }
 
 /** The scaling `k` of `Erfc(kr)` / `E_1(kr)`, when `expr` is `g(kr)/r` with that `g` and `k > 0`. */
-function scaledOverR(ce: ComputeEngine, expr: BoxedExpression, r: string, head: "Erfc" | "ExpIntegralE") {
+function scaledOverR(ce: ComputeEngine, expr: Expression, r: string, head: "Erfc" | "ExpIntegralE") {
   const g = dividedByT(ce, expr, r);
   if (g === undefined || g.operator !== head) return undefined;
   const ops = operandsOf(g);
@@ -216,9 +201,9 @@ function scaledOverR(ce: ComputeEngine, expr: BoxedExpression, r: string, head: 
 }
 
 /** `(1 - e^(-m r)) / r^2` for m > 0: returns m. */
-function decayDefectOverRSquared(ce: ComputeEngine, expr: BoxedExpression, r: string): BoxedExpression | undefined {
+function decayDefectOverRSquared(ce: ComputeEngine, expr: Expression, r: string): Expression | undefined {
   const { numer, denom } = fractionFactors(expr);
-  const isR = (f: { base: BoxedExpression }) => isSym(f.base, r);
+  const isR = (f: { base: Expression }) => isSym(f.base, r);
   const rFactors = [...numer.filter(isR).map((f) => -f.power), ...denom.filter(isR).map((f) => f.power)];
   const rest = [...numer.filter((f) => !isR(f)), ...denom.filter((f) => !isR(f))];
   if (
@@ -243,7 +228,7 @@ function decayDefectOverRSquared(ce: ComputeEngine, expr: BoxedExpression, r: st
 }
 
 /** `ln(1 + a^2/r^2)`: returns `a`. */
-function logOnePlusRatio(ce: ComputeEngine, expr: BoxedExpression, r: string): BoxedExpression | undefined {
+function logOnePlusRatio(ce: ComputeEngine, expr: Expression, r: string): Expression | undefined {
   if (expr.operator !== "Ln" || opAt(expr, 0).operator !== "Add") return undefined;
   const terms = operandsOf(opAt(expr, 0));
   const one = terms.find((o) => o.re === 1 && o.im === 0);
@@ -257,12 +242,7 @@ function logOnePlusRatio(ce: ComputeEngine, expr: BoxedExpression, r: string): B
 }
 
 /** `sin(a r)/r` or `cos(a r)/r` for a real, nonzero `a`: a `Piecewise` in `s`, on either side of `|a|`. */
-function trigOverR(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  r: string,
-  s: BoxedExpression,
-): BoxedExpression | undefined {
+function trigOverR(ce: ComputeEngine, expr: Expression, r: string, s: Expression): Expression | undefined {
   const g = dividedByT(ce, expr, r);
   if (g === undefined || (g.operator !== "Sin" && g.operator !== "Cos")) return undefined;
   const a = linearCoeffSigned(ce, opAt(g, 0), r);
@@ -272,8 +252,8 @@ function trigOverR(
   const sSquared = ce.function("Power", [s, 2]);
   const below = ce.function("Less", [s, k]);
   const above = ce.function("Greater", [s, k]);
-  const root = (radicand: BoxedExpression) => ce.function("Power", [radicand, ce.number([-1, 2])]);
-  const signed = (value: BoxedExpression) => (a.isPositive === true ? value : ce.function("Negate", [value]));
+  const root = (radicand: Expression) => ce.function("Power", [radicand, ce.number([-1, 2])]);
+  const signed = (value: Expression) => (a.isPositive === true ? value : ce.function("Negate", [value]));
   const clauses =
     g.operator === "Sin"
       ? [
@@ -297,12 +277,7 @@ function trigOverR(
   return value.operator === "Indeterminate" ? undefined : value;
 }
 
-function hankelPairs(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  r: string,
-  s: BoxedExpression,
-): BoxedExpression | undefined {
+function hankelPairs(ce: ComputeEngine, expr: Expression, r: string, s: Expression): Expression | undefined {
   const erfcK = scaledOverR(ce, expr, r, "Erfc");
   if (erfcK !== undefined) {
     const half = ce.function("Divide", [s, ce.function("Multiply", [2, erfcK])]);
@@ -330,11 +305,11 @@ function hankelPairs(
 
 export function matchHankel(
   ce: ComputeEngine,
-  expr: BoxedExpression,
-  r: BoxedExpression,
-  s: BoxedExpression,
-  order: BoxedExpression | undefined,
-): BoxedExpression | undefined {
+  expr: Expression,
+  r: Expression,
+  s: Expression,
+  order: Expression | undefined,
+): Expression | undefined {
   const rName = symbolNameOf(r);
   if (rName === undefined || !hasVar(expr, rName)) return undefined;
   if (order === undefined || (order.re === 0 && order.im === 0)) {
@@ -358,7 +333,7 @@ export function matchHankel(
 export function declareHankelTransform(ce: ComputeEngine): void {
   ce.declare("HankelTransform", {
     signature: "(expression, expression, expression, number?) -> expression",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [f, r, s, n] = ops;
       if (f === undefined || r === undefined || s === undefined || ops.length > 4) return undefined;
       return matchHankel(ce, f, r, s, n);

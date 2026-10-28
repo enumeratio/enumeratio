@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 
 // Rigorous endpoints for an interval image: the promise an `Interval` result makes is that
@@ -53,7 +53,7 @@ export const nextDown = (x: number): number => -nextUp(-x);
 
 /** Is `e` exact all the way down -- no inexact number literal anywhere in it? `Pi`, `Sqrt(3)`
  * and `Arctan(1/3)` are; `1.4` and `Sin(1.4)` are not. */
-export function isExactExpression(e: BoxedExpression): boolean {
+export function isExactExpression(e: Expression): boolean {
   // Both live on compute-engine's narrowed number-literal interface, which the `Expression`
   // union doesn't expose a typed route to (the same cast collections/src/list-stats.ts makes).
   const literal = e as unknown as { isNumberLiteral?: boolean; isExact?: boolean };
@@ -80,12 +80,7 @@ export type BoundOrigin = "arithmetic" | "function";
  * value rounded outward -- one ulp past a working-precision value, `DOUBLE_SOURCE_ULPS` past a
  * bare double (see the file header). An infinite bound is already as safe as it gets.
  */
-export function outwardBound(
-  ce: ComputeEngine,
-  value: BoxedExpression,
-  side: "lo" | "hi",
-  origin: BoundOrigin,
-): BoxedExpression {
+export function outwardBound(ce: ComputeEngine, value: Expression, side: "lo" | "hi", origin: BoundOrigin): Expression {
   if (isExactExpression(value)) return value;
   const numeric = value.N();
   const re = numeric.re;

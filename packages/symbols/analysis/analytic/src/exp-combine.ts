@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import type { Resolver } from "./tagged-arithmetic.ts";
 
@@ -17,7 +17,7 @@ import type { Resolver } from "./tagged-arithmetic.ts";
 /** True when `op` is `Power(ExponentialE, _)`, read structurally off `.operator` and the
  * base operand's `.symbol` — no evaluation, no allocation. Canonicalization already turns
  * `Exp(x)` into this form at box time, so this also matches an un-evaluated `Exp(x)`. */
-function isExpPower(op: BoxedExpression): boolean {
+function isExpPower(op: Expression): boolean {
   if (op.operator !== "Power") return false;
   const base = operandsOf(op)[0];
   return base !== undefined && symbolNameOf(base) === "ExponentialE";
@@ -32,7 +32,7 @@ export const EXP_SYMBOLS = "^ExponentialE$";
  * overwhelming majority of Multiply calls — costs one early-terminating scan and nothing
  * else.
  */
-export function hasTwoExpPowers(ops: readonly BoxedExpression[]): boolean {
+export function hasTwoExpPowers(ops: readonly Expression[]): boolean {
   let seen = 0;
   for (const op of ops) if (isExpPower(op) && ++seen === 2) return true;
   return false;
@@ -46,8 +46,8 @@ export function hasTwoExpPowers(ops: readonly BoxedExpression[]): boolean {
 export function expCombineResolvers(ce: ComputeEngine): Record<string, Resolver> {
   return {
     Multiply: (ops) => {
-      const exponents: BoxedExpression[] = [];
-      const rest: BoxedExpression[] = [];
+      const exponents: Expression[] = [];
+      const rest: Expression[] = [];
       for (const op of ops) {
         if (isExpPower(op)) exponents.push(operandsOf(op)[1]!);
         else rest.push(op);

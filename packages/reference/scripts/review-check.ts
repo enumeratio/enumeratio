@@ -34,7 +34,7 @@ interface Backlog {
 const { applyItemPatch, parseBacklog } = (await import(
   new URL("../../../web/.vitepress/review/backlog.ts", import.meta.url).href
 )) as Backlog;
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { parseExpression } from "@enumeratio/formats";
 import { declaredEngine } from "./engines.ts";
 
@@ -60,11 +60,11 @@ export function parseExpects(item: BacklogItem): Expect[] {
 }
 
 /** The elements of a list expression, else undefined. */
-const elements = (e: BoxedExpression): readonly BoxedExpression[] | undefined =>
-  e.operator === "List" ? (e as unknown as { ops: readonly BoxedExpression[] }).ops : undefined;
+const elements = (e: Expression): readonly Expression[] | undefined =>
+  e.operator === "List" ? (e as unknown as { ops: readonly Expression[] }).ops : undefined;
 
 /** Numbers (complex too) agree to `tol` of their size, via |a - b|; lists agree elementwise. */
-function approx(ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression, tol: number): boolean {
+function approx(ce: ComputeEngine, a: Expression, b: Expression, tol: number): boolean {
   const [as, bs] = [elements(a), elements(b)];
   if (as && bs) return as.length === bs.length && as.every((x, i) => approx(ce, x, bs[i]!, tol));
   const gap = ce.box(["Abs", ["Subtract", a.json, b.json]] as never).N().re;
@@ -73,8 +73,8 @@ function approx(ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression, tol: 
 }
 
 interface Evaluated {
-  raw: BoxedExpression;
-  expr: BoxedExpression;
+  raw: Expression;
+  expr: Expression;
 }
 
 function run(ce: ComputeEngine, src: string): Evaluated {
@@ -84,7 +84,7 @@ function run(ce: ComputeEngine, src: string): Evaluated {
   return { raw, expr: raw.evaluate() };
 }
 
-const show = (e: BoxedExpression): string => JSON.stringify(e.json);
+const show = (e: Expression): string => JSON.stringify(e.json);
 
 export function check(ce: ComputeEngine, { input, expected, tolerance }: Expect): Verdict {
   try {

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
 
 // Wildcard binding: the substitution machinery shared by `<notatio-manipulate>` and
@@ -113,9 +113,9 @@ export function captureTemplates(
 export function applyTemplates(
   engine: ComputeEngine,
   templates: readonly Template[],
-  values: ReadonlyMap<string, BoxedExpression>,
+  values: ReadonlyMap<string, Expression>,
 ): void {
-  const subs: Record<string, BoxedExpression> = {};
+  const subs: Record<string, Expression> = {};
   for (const [name, value] of values) subs[`_${name}`] = value;
   for (const t of templates) {
     let next: string;

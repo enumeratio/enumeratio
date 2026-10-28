@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 
 // `createScope`'s return type rather than importing `Scope` directly -- both name the same
 // thing, but this stays correct across a version bump that renames or narrows the export.
@@ -27,9 +27,9 @@ export interface TranscriptEntry {
   /** The cell's source, as authored (for `InString(n)`). */
   readonly input: string;
   /** Parsed but not evaluated (for `In(n)`, which Wolfram gives a delayed value). */
-  readonly raw: BoxedExpression;
+  readonly raw: Expression;
   /** Evaluated (for `Out(n)`). */
-  readonly value: BoxedExpression;
+  readonly value: Expression;
 }
 
 /** `new Transcript(engine, options)`'s options. */
@@ -67,7 +67,7 @@ export class Transcript {
   }
 
   #declareHistory(): void {
-    const at = (ops: readonly BoxedExpression[], what: string): TranscriptEntry => {
+    const at = (ops: readonly Expression[], what: string): TranscriptEntry => {
       const n = ops[0]?.re;
       if (n === undefined || !Number.isInteger(n) || n === 0) {
         throw new Error(`${what} takes a line number`);
@@ -109,7 +109,7 @@ export class Transcript {
    * Record an evaluated cell as the next `In[n]` / `Out[n]`, and return its line number
    * -- or `undefined`, doing nothing, when this transcript was built with `history: false`.
    */
-  record(input: string, raw: BoxedExpression, value: BoxedExpression): number | undefined {
+  record(input: string, raw: Expression, value: Expression): number | undefined {
     if (!this.#history) return undefined;
     const n = this.history.length + 1;
     this.history.push({ n, input, raw, value });

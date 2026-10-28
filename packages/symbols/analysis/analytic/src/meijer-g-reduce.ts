@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // MeijerGReduce(expr, x): rewrites a handful of elementary/special functions into
@@ -19,21 +19,21 @@ import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 // evaluator is what's verified). Anything else — a bare `log(x)`, a shifted or scaled
 // trig argument beyond plain substitution, any other head — is declined.
 
-const opAt = (expr: BoxedExpression, i: number): BoxedExpression => operandsOf(expr)[i];
-const isE = (x: BoxedExpression): boolean => symbolNameOf(x) === "ExponentialE";
+const opAt = (expr: Expression, i: number): Expression => operandsOf(expr)[i];
+const isE = (x: Expression): boolean => symbolNameOf(x) === "ExponentialE";
 
 function meijerGCall(
   ce: ComputeEngine,
-  aBlocks: [BoxedExpression[], BoxedExpression[]],
-  bBlocks: [BoxedExpression[], BoxedExpression[]],
-  z: BoxedExpression,
-): BoxedExpression {
-  const list2 = (blocks: [BoxedExpression[], BoxedExpression[]]) =>
+  aBlocks: [Expression[], Expression[]],
+  bBlocks: [Expression[], Expression[]],
+  z: Expression,
+): Expression {
+  const list2 = (blocks: [Expression[], Expression[]]) =>
     ce.function("List", [ce.function("List", blocks[0]), ce.function("List", blocks[1])]);
   return ce.function("MeijerG", [list2(aBlocks), list2(bBlocks), z]);
 }
 
-function reduce(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression | undefined {
+function reduce(ce: ComputeEngine, expr: Expression): Expression | undefined {
   if (expr.operator === "Power" && isE(opAt(expr, 0))) {
     const g = opAt(expr, 1);
     const negG = ce.function("Negate", [g]).evaluate();
@@ -42,7 +42,7 @@ function reduce(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression | und
   if (expr.operator === "Sin" || expr.operator === "Cos") {
     const g = opAt(expr, 0);
     const gSq4 = ce.function("Divide", [ce.function("Power", [g, 2]), 4]).evaluate();
-    const bBlocks: [BoxedExpression[], BoxedExpression[]] =
+    const bBlocks: [Expression[], Expression[]] =
       expr.operator === "Sin" ? [[ce.Half], [ce.Zero]] : [[ce.Zero], [ce.Half]];
     const g_ = meijerGCall(ce, [[], []], bBlocks, gSq4);
     return ce.function("Multiply", [ce.function("Sqrt", [ce.Pi]), g_]).evaluate();
@@ -69,7 +69,7 @@ function reduce(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression | und
 export function declareMeijerGReduce(ce: ComputeEngine): void {
   ce.declare("MeijerGReduce", {
     signature: "(expression, expression) -> expression",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [expr, x] = ops;
       const xName = x === undefined ? undefined : symbolNameOf(x);
       if (expr === undefined || xName === undefined || !expr.has(xName)) return undefined;

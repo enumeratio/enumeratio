@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { Json } from "@enumeratio/ce-patches";
 import {
   type BoxInput,
@@ -107,14 +107,14 @@ function legendreAt(n: number, x: Cx): Cx {
 
 export function evaluateLegendreP(
   ce: ComputeEngine,
-  n: BoxedExpression,
-  x: BoxedExpression,
+  n: Expression,
+  x: Expression,
   numeric: boolean,
-): BoxedExpression | undefined {
+): Expression | undefined {
   if (!isRealInt(n)) return undefined;
   const index = n.re >= 0 ? n.re : -n.re - 1; // P_{−n} = P_{n−1}, n ≥ 1
   const box = (expr: Json) => ce.box(expr as unknown as BoxInput);
-  const finish = (expr: BoxedExpression) => (numeric ? expr.N() : expr.evaluate());
+  const finish = (expr: Expression) => (numeric ? expr.N() : expr.evaluate());
   if (numeric && isFiniteNum(x)) {
     return numberResult(ce, legendreAt(index, cx(x.re, x.im)));
   }

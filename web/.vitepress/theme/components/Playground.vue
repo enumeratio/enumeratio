@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BoxedExpression, ComputeEngine } from "@enumeratio/components";
+import type { Expression, ComputeEngine } from "@enumeratio/components";
 import { onMounted, ref, shallowRef, watch } from "vue";
 
 type Mode = "latex" | "mathjson";
@@ -19,7 +19,7 @@ const examples: Record<Mode, string> = {
   mathjson: '["Add", ["Rational", 1, 2], ["Rational", 1, 3]]',
 };
 
-function pretty(expr: BoxedExpression): string {
+function pretty(expr: Expression): string {
   return JSON.stringify(expr.json, null, 2);
 }
 

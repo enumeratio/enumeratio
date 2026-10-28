@@ -1,5 +1,5 @@
 // unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
+import { type Expression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
 import { declareCompile, bigRationalAt, operandsOf } from "@enumeratio/engine";
 import type { Json } from "@enumeratio/ce-patches";
 import type { BoxInput, EvalOptions, NativeEval } from "@enumeratio/ce-patches";
@@ -60,10 +60,10 @@ type Real = { readonly frac: Frac } | { readonly num: number };
 
 const R = (n: number, d = 1): Real => ({ frac: [BigInt(n), BigInt(d)] });
 
-const isConcretelyComplex = (x: BoxedExpression): boolean => Number.isFinite(x.im) && x.im !== 0;
+const isConcretelyComplex = (x: Expression): boolean => Number.isFinite(x.im) && x.im !== 0;
 
 /** Read a decided real value off an operand, or `undefined` to decline (stay symbolic). */
-function realOf(x: BoxedExpression): Real | undefined {
+function realOf(x: Expression): Real | undefined {
   if (isConcretelyComplex(x)) return undefined;
   const q = bigRationalAt(x);
   if (q !== undefined) return { frac: q };
@@ -103,7 +103,7 @@ function cmp(a: Real, b: Real): -1 | 0 | 1 {
 }
 const isZero = (a: Real): boolean => ("frac" in a ? a.frac[0] === 0n : a.num === 0);
 
-function box(ce: ComputeEngine, r: Real): BoxedExpression {
+function box(ce: ComputeEngine, r: Real): Expression {
   if ("frac" in r) {
     const [n, d] = r.frac;
     return d === 1n ? ce.number(n) : ce.number([n, d]);
@@ -132,7 +132,7 @@ function box(ce: ComputeEngine, r: Real): BoxedExpression {
 
 type Decided =
   | { readonly frac: Frac }
-  | { readonly expr: BoxedExpression; readonly approx: number }
+  | { readonly expr: Expression; readonly approx: number }
   | { readonly num: number };
 
 /** How wide a margin a double's branch decision must clear before it's trusted. */
@@ -160,7 +160,7 @@ const FRAC_NEG_ONE: Frac = [-1n, 1n];
  *  `.N()` otherwise, used ONLY to decide a branch, never to build a result), or `num` once the
  *  operand already is a float — same three-way split `realOf` makes, except the irrational case
  *  keeps its expression instead of falling to `x.N()` for the result too. */
-function decide(x: BoxedExpression): Decided | undefined {
+function decide(x: Expression): Decided | undefined {
   if (isConcretelyComplex(x)) return undefined;
   const q = bigRationalAt(x);
   if (q !== undefined) return { frac: q };
@@ -219,7 +219,7 @@ function certifiedFloor(d: Decided): bigint | undefined {
 
 /** `d`'s value, boxed: `d.expr` itself for an exact-but-irrational operand — no rounding — a
  *  rational number for `frac`, a float for `num`. */
-function decidedBox(ce: ComputeEngine, d: Decided): BoxedExpression {
+function decidedBox(ce: ComputeEngine, d: Decided): Expression {
   if ("expr" in d) return d.expr;
   return box(ce, d);
 }
@@ -332,14 +332,14 @@ const SQUARE_RANGE: readonly [Frac, Frac] = [FRAC_NEG_ONE, FRAC_ONE];
 /** The sign of an operand, certified: exact for a rational, the double's own for a float, and
  *  for an exact irrational only once its double clears `BRANCH_MARGIN` -- `undefined` when it
  *  can't. ½√(2 − √(2 + √2)) − sin(π/16) is exactly 0, and its double is 2.5e-17, not 0. */
-function signOf(x: BoxedExpression): -1 | 0 | 1 | undefined {
+function signOf(x: Expression): -1 | 0 | 1 | undefined {
   const d = decide(x);
   if (d === undefined) return undefined;
   if ("num" in d) return d.num === 0 ? 0 : d.num < 0 ? -1 : 1;
   return certifiedCmpFrac(d, FRAC_ZERO);
 }
 
-function evaluateHeavisideTheta(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function evaluateHeavisideTheta(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   if (ops.length === 0) return undefined;
   let sawZero = false;
   let undecided = false;
@@ -356,7 +356,7 @@ function evaluateHeavisideTheta(ce: ComputeEngine, ops: readonly BoxedExpression
   return ce.number(1);
 }
 
-function evaluateHeavisidePi(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function evaluateHeavisidePi(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   if (ops.length !== 1 || ops[0] === undefined) return undefined;
   const v = realOf(ops[0]);
   if (v === undefined) return undefined;
@@ -365,7 +365,7 @@ function evaluateHeavisidePi(ce: ComputeEngine, ops: readonly BoxedExpression[])
   return ce.number(1);
 }
 
-function evaluateUnitBox(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function evaluateUnitBox(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   if (ops.length === 0) return undefined;
   let undecided = false;
   for (const op of ops) {
@@ -381,11 +381,7 @@ function evaluateUnitBox(ce: ComputeEngine, ops: readonly BoxedExpression[]): Bo
   return ce.number(1);
 }
 
-function evaluateTent(
-  ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
-  options: EvalOptions,
-): BoxedExpression | undefined {
+function evaluateTent(ce: ComputeEngine, ops: readonly Expression[], options: EvalOptions): Expression | undefined {
   if (ops.length !== 1 || ops[0] === undefined) return undefined;
   // `N(x, d)` hands an inexact operand over at its bignum digits; the tent is 1 - |x| in them.
   if (
@@ -401,7 +397,7 @@ function evaluateTent(
   return r === undefined ? undefined : decidedBox(ce, r);
 }
 
-function evaluateRamp(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function evaluateRamp(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   if (ops.length !== 1 || ops[0] === undefined) return undefined;
   const v = decide(ops[0]);
   if (v === undefined) return undefined;
@@ -409,7 +405,7 @@ function evaluateRamp(ce: ComputeEngine, ops: readonly BoxedExpression[]): Boxed
   return r === undefined ? undefined : decidedBox(ce, r);
 }
 
-function evaluateDiracDelta(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function evaluateDiracDelta(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   if (ops.length === 0) return undefined;
   for (const op of ops) {
     const sign = signOf(op);
@@ -419,7 +415,7 @@ function evaluateDiracDelta(ce: ComputeEngine, ops: readonly BoxedExpression[]):
   return undefined; // every decided argument is 0 (or none were decided) -- stays symbolic
 }
 
-function evaluateDiscreteDelta(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function evaluateDiscreteDelta(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   if (ops.length === 0) return undefined;
   let undecided = false;
   for (const op of ops) {
@@ -435,8 +431,8 @@ function evaluateDiscreteDelta(ce: ComputeEngine, ops: readonly BoxedExpression[
 
 /** `{x}` or `{{min, max}, x}` -- the wave functions' own argument order, range first. */
 function parseWaveArgs(
-  ops: readonly BoxedExpression[],
-): { x: BoxedExpression; range?: readonly [BoxedExpression, BoxedExpression] } | undefined {
+  ops: readonly Expression[],
+): { x: Expression; range?: readonly [Expression, Expression] } | undefined {
   if (ops.length === 1 && ops[0] !== undefined) return { x: ops[0] };
   if (ops.length === 2 && ops[0]?.operator === "List" && ops[1] !== undefined) {
     const [lo, hi] = operandsOf(ops[0]);
@@ -448,10 +444,10 @@ function parseWaveArgs(
 
 function evaluateWave(
   ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   base: (ce: ComputeEngine, v: Decided) => Decided | undefined,
   natural: readonly [Frac, Frac],
-): BoxedExpression | undefined {
+): Expression | undefined {
   const parsed = parseWaveArgs(ops);
   if (parsed === undefined) return undefined;
   const xv = decide(parsed.x);
@@ -491,7 +487,7 @@ function evaluateWave(
  * range to rescale against has no sensible reading and stays unevaluated. Rescale(x, {min,
  * max}) maps to {0, 1}; Rescale(x, {min, max}, {ymin, ymax}) maps to the given target range.
  */
-function evaluateRescale(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function evaluateRescale(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   const x = ops[0];
   if (x === undefined) return undefined;
 
@@ -551,19 +547,14 @@ function evaluateRescale(ce: ComputeEngine, ops: readonly BoxedExpression[]): Bo
  *  argument, not a third argument. A pure substitution, not an arithmetic evaluation, so it
  *  works on `f` as a literal expression (e.g. `a(n)`) rather than requiring `f` itself to
  *  be declared. */
-function substitute(
-  ce: ComputeEngine,
-  e: BoxedExpression,
-  name: string,
-  replacement: BoxedExpression,
-): BoxedExpression {
+function substitute(ce: ComputeEngine, e: Expression, name: string, replacement: Expression): Expression {
   if (isSymbol(e) && e.symbol === name) return replacement;
   const ops = operandsOf(e);
   if (ops.length === 0) return e;
   return ce.box([e.operator, ...ops.map((o) => substitute(ce, o, name, replacement).json)] as never);
 }
 
-function evaluateDiscreteShift(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function evaluateDiscreteShift(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   const [f, second] = ops;
   if (f === undefined || second === undefined) return undefined;
   if (isSymbol(second)) {
@@ -631,7 +622,7 @@ function declareSignalDerivatives(ce: ComputeEngine): void {
   const derivative = operatorOf(ce, "Derivative");
   if (derivative === undefined) return;
   const native: NativeEval = derivative.evaluate;
-  derivative.evaluate = (ops: readonly BoxedExpression[], options: EvalOptions): BoxedExpression | undefined => {
+  derivative.evaluate = (ops: readonly Expression[], options: EvalOptions): Expression | undefined => {
     const f = ops[0];
     const table = f !== undefined && isSymbol(f) ? SIGNAL_DERIVATIVES[f.symbol] : undefined;
     const orders = ops.slice(1).map((order) => order.re);
@@ -652,45 +643,45 @@ function declareSignalDerivatives(ce: ComputeEngine): void {
 export function declareSignals(ce: ComputeEngine): void {
   ce.declare("HeavisideTheta", {
     signature: "(real, real*) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateHeavisideTheta(ce, ops),
+    evaluate: (ops: readonly Expression[]) => evaluateHeavisideTheta(ce, ops),
   });
   ce.declare("HeavisidePi", {
     signature: "(real) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateHeavisidePi(ce, ops),
+    evaluate: (ops: readonly Expression[]) => evaluateHeavisidePi(ce, ops),
   });
   ce.declare("HeavisideLambda", {
     signature: "(real) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateTent(ce, ops, options),
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => evaluateTent(ce, ops, options),
   });
   ce.declare("UnitBox", {
     signature: "(real, real*) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateUnitBox(ce, ops),
+    evaluate: (ops: readonly Expression[]) => evaluateUnitBox(ce, ops),
   });
   ce.declare("UnitTriangle", {
     signature: "(real) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateTent(ce, ops, options),
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => evaluateTent(ce, ops, options),
   });
   ce.declare("Ramp", {
     signature: "(real) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateRamp(ce, ops),
+    evaluate: (ops: readonly Expression[]) => evaluateRamp(ce, ops),
   });
   ce.declare("SawtoothWave", {
     signature: "(real | list<real^2>, real?) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateWave(ce, ops, sawtoothBaseDecided, SAWTOOTH_RANGE),
+    evaluate: (ops: readonly Expression[]) => evaluateWave(ce, ops, sawtoothBaseDecided, SAWTOOTH_RANGE),
   });
   ce.declare("TriangleWave", {
     signature: "(real | list<real^2>, real?) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateWave(ce, ops, triangleBaseDecided, TRIANGLE_RANGE),
+    evaluate: (ops: readonly Expression[]) => evaluateWave(ce, ops, triangleBaseDecided, TRIANGLE_RANGE),
   });
   ce.declare("SquareWave", {
     signature: "(real | list<real^2>, real?) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateWave(ce, ops, squareBaseDecided, SQUARE_RANGE),
+    evaluate: (ops: readonly Expression[]) => evaluateWave(ce, ops, squareBaseDecided, SQUARE_RANGE),
   });
   ce.declare("Rescale", {
     signature: "(real | list<real>, list<real^2>?, list<real^2>?) -> real | list<real>",
     // Held, so a rational operand stays exact until the one rounding in `N(…, d)`.
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const result = evaluateRescale(
         ce,
         ops.map((op) => op.evaluate()),
@@ -700,15 +691,15 @@ export function declareSignals(ce: ComputeEngine): void {
   });
   ce.declare("DiracDelta", {
     signature: "(real, real*) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateDiracDelta(ce, ops),
+    evaluate: (ops: readonly Expression[]) => evaluateDiracDelta(ce, ops),
   });
   ce.declare("DiscreteDelta", {
     signature: "(real, real*) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateDiscreteDelta(ce, ops),
+    evaluate: (ops: readonly Expression[]) => evaluateDiscreteDelta(ce, ops),
   });
   ce.declare("DiscreteShift", {
     signature: "(expression, expression) -> expression",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateDiscreteShift(ce, ops),
+    evaluate: (ops: readonly Expression[]) => evaluateDiscreteShift(ce, ops),
   });
 
   declareSignalDerivatives(ce);

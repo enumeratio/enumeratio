@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
   exceedsDoublePrecision,
@@ -166,7 +166,7 @@ function declareKleinInvariantJ(ce: ComputeEngine): void {
   if (ce.lookupDefinition("KleinInvariantJ") !== undefined) return;
   ce.declare("KleinInvariantJ", {
     signature: "(number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [tau] = ops;
       if (tau === undefined || !isFiniteNum(tau)) return undefined;
       if (tau.re === 0 && tau.im === 1) return ce.One; // j(i) = 1728 exactly
@@ -191,7 +191,7 @@ export function declareModular(ce: ComputeEngine): void {
 
   ce.declare("ModularJ", {
     signature: "(number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [tau] = ops;
       if (tau === undefined || !wantsNumber(ops, options) || !isFiniteNum(tau)) return undefined;
       if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
@@ -202,7 +202,7 @@ export function declareModular(ce: ComputeEngine): void {
 
   ce.declare("ModularLambda", {
     signature: "(number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [tau] = ops;
       if (tau === undefined || !wantsNumber(ops, options) || !isFiniteNum(tau)) return undefined;
       if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
@@ -215,7 +215,7 @@ export function declareModular(ce: ComputeEngine): void {
 
   ce.declare("EisensteinG", {
     signature: "(integer, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [k, tau] = ops;
       if (k === undefined || tau === undefined) return undefined;
       if (!isRealInt(k) || k.re < 4 || k.re % 2 !== 0) return undefined;

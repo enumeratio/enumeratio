@@ -11,7 +11,7 @@
 // The area-specific catalog of maps (their bodies, FindStat ids, the compiled fast paths) is
 // each area's own data; this only declares whatever table of them a host hands over.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { attachConversion } from "./carriers.ts";
 import { applyComposition } from "./compose.ts";
@@ -105,11 +105,11 @@ export function evaluateEpsil(
  *  list on its own — which is right for a collection and wrong for a carrier VALUE. A
  *  permutation is a list of numbers, not a promise of one, so a map materialises before
  *  wrapping. */
-function materialise(ce: ComputeEngine, value: BoxedExpression): BoxedExpression {
+function materialise(ce: ComputeEngine, value: Expression): Expression {
   // A Tuple is already a concrete value — and materialising one would flatten it into a
   // List, which is exactly wrong for a composite carrier like `standard_tableau_pair`.
   const concrete = value.operator === "List" || value.operator === "Tuple";
-  let items: readonly BoxedExpression[];
+  let items: readonly Expression[];
   if (concrete) items = operandsOf(value);
   else {
     const size = ce.function("Count", [value]).evaluate().re;
@@ -171,7 +171,7 @@ export function declareMaps<M extends MapDeclaration>(
         ? undefined
         : (definitionFor?.(map) ?? ((contents) => evaluateDefinition(ce, map, contents)));
 
-    const handle = (subject: BoxedExpression): BoxedExpression | undefined => {
+    const handle = (subject: Expression): Expression | undefined => {
       // A subject of another carrier is not this map's: a head with a case per carrier falls back to the
       // first case it was declared with when the right one declines (a guard), and that must not answer.
       if (carrierNames.has(subject.operator) && subject.operator !== constructorFor[map.from]) return undefined;

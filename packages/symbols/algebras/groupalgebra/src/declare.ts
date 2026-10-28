@@ -1,5 +1,5 @@
 import { declareAlgebra } from "@enumeratio/structures";
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { registerNotation } from "@enumeratio/boxes";
 import { integerAt, operandsOf, stringAt, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/engine";
 import {
@@ -68,7 +68,7 @@ const gcdBig = (a: bigint, b: bigint): bigint => (b === 0n ? a : gcdBig(b, a % b
  */
 
 /** Read `CyclicGroup(n)`, `DihedralGroup(n)` or `GroupDirectProduct(g, h)`. */
-function groupOf(expr: BoxedExpression): Group | undefined {
+function groupOf(expr: Expression): Group | undefined {
   const ops = operandsOf(expr);
   if (expr.operator === "CyclicGroup") {
     const n = integerAt(ops[0]);
@@ -89,28 +89,28 @@ function groupOf(expr: BoxedExpression): Group | undefined {
 // ── permutations: Cycles, Permute, PermutationGroup ────────────────────────────────
 
 /** Read one cycle `List(i1, i2, …)` as a plain number array, or `undefined` if malformed. */
-function cycleOf(expr: BoxedExpression): Cycle | undefined {
+function cycleOf(expr: Expression): Cycle | undefined {
   if (expr.operator !== "List") return undefined;
   const entries = operandsOf(expr).map(integerAt);
   return entries.every((x): x is number => x !== undefined) ? entries : undefined;
 }
 
 /** Read `List(cycle, cycle, …)` — the argument `Cycles` and `PermutationCycles` both take. */
-function cycleListOf(listExpr: BoxedExpression): Cycle[] | undefined {
+function cycleListOf(listExpr: Expression): Cycle[] | undefined {
   if (listExpr.operator !== "List") return undefined;
   const cycles = operandsOf(listExpr).map(cycleOf);
   return cycles.every((c): c is Cycle => c !== undefined) ? cycles : undefined;
 }
 
 /** Read `Cycles(List(cycle, cycle, …))` as an array of cycles. */
-function cyclesOf(expr: BoxedExpression): Cycle[] | undefined {
+function cyclesOf(expr: Expression): Cycle[] | undefined {
   if (expr.operator !== "Cycles") return undefined;
   const listExpr = operandsOf(expr)[0];
   return listExpr === undefined ? undefined : cycleListOf(listExpr);
 }
 
 /** Read a plain one-line permutation `List(sigma(1), sigma(2), …)`. */
-function oneLineOf(expr: BoxedExpression): number[] | undefined {
+function oneLineOf(expr: Expression): number[] | undefined {
   if (expr.operator !== "List") return undefined;
   const entries = operandsOf(expr).map(integerAt);
   return entries.every((x): x is number => x !== undefined) ? entries : undefined;
@@ -121,13 +121,13 @@ const maxSupport = (cycles: readonly Cycle[]): number =>
   cycles.reduce((m, cycle) => cycle.reduce((mm, x) => Math.max(mm, x), m), 0);
 
 /** A one-line word that is actually a permutation -- anything else is left unevaluated. */
-function permutationWordOf(expr: BoxedExpression): number[] | undefined {
+function permutationWordOf(expr: Expression): number[] | undefined {
   const word = oneLineOf(expr);
   return word !== undefined && isPermutation(word) ? word : undefined;
 }
 
 /** Either notation for a permutation, widened to degree `n` (identity past its own support). */
-function permutationOf(expr: BoxedExpression, n?: number): number[] | undefined {
+function permutationOf(expr: Expression, n?: number): number[] | undefined {
   const cycles = cyclesOf(expr);
   if (cycles !== undefined) {
     if (!cyclesAreValid(cycles)) return undefined;
@@ -139,7 +139,7 @@ function permutationOf(expr: BoxedExpression, n?: number): number[] | undefined 
   return oneLine.concat(identityPermutation(n).slice(oneLine.length));
 }
 
-const cyclesExpression = (ce: ComputeEngine, cycles: readonly Cycle[]): BoxedExpression =>
+const cyclesExpression = (ce: ComputeEngine, cycles: readonly Cycle[]): Expression =>
   ce.function("Cycles", [
     ce.function(
       "List",
@@ -154,7 +154,7 @@ const cyclesExpression = (ce: ComputeEngine, cycles: readonly Cycle[]): BoxedExp
 
 /** `PermutationGroup(List(Cycles(...), …))` or `PermutationGroup(List(...), n)`. */
 function permutationGroupOf(
-  expr: BoxedExpression,
+  expr: Expression,
 ): { readonly degree: number; readonly generators: readonly number[][] } | undefined {
   if (expr.operator !== "PermutationGroup") return undefined;
   const ops = operandsOf(expr);
@@ -178,7 +178,7 @@ const resolvePosition = (index: number, n: number): number | undefined => {
 };
 
 /** `GroupAlgebra(group)` → its group. */
-const algebraOf = (expr: BoxedExpression): Group | undefined =>
+const algebraOf = (expr: Expression): Group | undefined =>
   expr.operator === "GroupAlgebra"
     ? (() => {
         const inner = operandsOf(expr)[0];
@@ -201,10 +201,9 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   ce.declare("GroupAlgebra", { signature: `(${groupLike}) -> group_algebra` });
   ce.declare("GroupBasis", { signature: "(string) -> number" });
 
-  const basisExpression = (g: Group, i: number): BoxedExpression =>
-    ce.function("GroupBasis", [ce.string(g.elements[i]!)]);
+  const basisExpression = (g: Group, i: number): Expression => ce.function("GroupBasis", [ce.string(g.elements[i]!)]);
 
-  const toExpression = (g: Group, element: Element): BoxedExpression => {
+  const toExpression = (g: Group, element: Element): Expression => {
     const terms = [...element].toSorted(([a], [b]) => a - b);
     if (terms.length === 0) return ce.number(0);
     const parts = terms.map(([index, coefficient]) => {
@@ -215,7 +214,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   };
 
   /** Read an element of k[G]: a basis element, a scalar multiple, or a sum of those. */
-  const toElement = (g: Group, expr: BoxedExpression): Element | undefined => {
+  const toElement = (g: Group, expr: Expression): Element | undefined => {
     if (expr.operator === "GroupBasis") {
       const label = stringAt(operandsOf(expr)[0]);
       if (label === undefined) return undefined;
@@ -248,10 +247,10 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   };
 
   /** A head taking a group and returning a plain value. */
-  const aboutGroup = (head: string, signature: string, answer: (g: Group) => BoxedExpression | undefined): void => {
+  const aboutGroup = (head: string, signature: string, answer: (g: Group) => Expression | undefined): void => {
     ce.declare(head, {
       signature,
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expression[]) => {
         const g = ops[0] === undefined ? undefined : groupOf(ops[0]);
         return g === undefined ? undefined : answer(g);
       },
@@ -352,7 +351,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   /** The k-th class sum: a basis element of the centre of k[G]. */
   ce.declare("ClassSum", {
     signature: `(${groupLike}, integer) -> expression`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const g = ops[0] === undefined ? undefined : groupOf(ops[0]);
       const k = integerAt(ops[1]);
       if (g === undefined || k === undefined) return undefined;
@@ -365,7 +364,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   /** Whether an element lies in the centre. */
   ce.declare("IsCentral", {
     signature: `(${groupLike}, expression) -> boolean`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const g = ops[0] === undefined ? undefined : groupOf(ops[0]);
       const element = g === undefined || ops[1] === undefined ? undefined : toElement(g, ops[1]);
       if (g === undefined || element === undefined) return undefined;
@@ -376,7 +375,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   /** The product of k[G] — it takes the group, since a basis element does not carry it. */
   ce.declare("GroupProduct", {
     signature: `(${groupLike}, expression, expression) -> expression`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const g = ops[0] === undefined ? undefined : groupOf(ops[0]);
       if (g === undefined) return undefined;
       const a = ops[1] === undefined ? undefined : toElement(g, ops[1]);
@@ -392,7 +391,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
    *  Canonicalizes as Wolfram's does: no fixed points, each cycle from its smallest point, cycles by first point. */
   ce.declare("Cycles", {
     signature: "(list<list<integer>>) -> expression<Cycles>",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const cycles = ops[0] === undefined ? undefined : cycleListOf(ops[0]);
       if (cycles === undefined || !cyclesAreValid(cycles)) return undefined;
       const canonical = canonicalCycles(cycles);
@@ -403,7 +402,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
 
   /** `PermutationCycles(perm)` -> cycle notation; `PermutationCycles(perm, f)` wraps EVERY
    *  position (fixed points included) with `f` instead of `Cycles`. */
-  const permutationCycles = (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+  const permutationCycles = (ops: readonly Expression[]): Expression | undefined => {
     const input = ops[0];
     if (input === undefined) return undefined;
     const head = ops[1];
@@ -463,7 +462,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   /** `InversePermutation(perm)`, in either notation. */
   ce.declare("InversePermutation", {
     signature: `(${permutationLike}) -> ${permutationLike}`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const input = ops[0];
       if (input === undefined) return undefined;
       if (input.operator === "Cycles") {
@@ -487,7 +486,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
 
   /** Wolfram's rule for a result's notation: `Cycles` when any operand is `Cycles` (or none
    *  is given), else a list. */
-  const inNotationOf = (operands: readonly BoxedExpression[], sigma: readonly number[]): BoxedExpression =>
+  const inNotationOf = (operands: readonly Expression[], sigma: readonly number[]): Expression =>
     operands.length === 0 || operands.some((op) => op.operator === "Cycles")
       ? cyclesExpression(ce, permutationToCycles(sigma))
       : ce.function(
@@ -498,7 +497,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   /** `PermutationProduct(p, q, …)` applies the LEFT factor first (Wolfram's order). */
   ce.declare("PermutationProduct", {
     signature: `(${permutationLike}*) -> ${permutationLike}`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const degree = Math.max(
         0,
         ...ops.map((op) => (op.operator === "Cycles" ? maxSupport(cyclesOf(op) ?? []) : (oneLineOf(op)?.length ?? 0))),
@@ -515,7 +514,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   /** `PermutationPower(p, n)`, `n` any integer; a negative `n` powers the inverse. */
   ce.declare("PermutationPower", {
     signature: `(${permutationLike}, integer) -> ${permutationLike}`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const base = ops[0];
       const exponent = ops[1] === undefined ? undefined : integerAt(ops[1]);
       const sigma = base === undefined ? undefined : permutationOf(base);
@@ -536,7 +535,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
    *  the list permuted by EVERY element of the group. */
   ce.declare("Permute", {
     signature: `(list<any>, ${permutationLike} | expression<PermutationGroup>) -> list<any> | list<list<any>>`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const listExpr = ops[0];
       const permExpr = ops[1];
       if (listExpr === undefined || permExpr === undefined || listExpr.operator !== "List") {
@@ -563,7 +562,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
    *  support leaves the call unevaluated — there is nowhere for the extra points to go). */
   ce.declare("PermutationList", {
     signature: "(expression<Cycles>, integer?) -> list<integer>",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const input = ops[0];
       if (input === undefined || input.operator !== "Cycles") return undefined;
       const cycles = cyclesOf(input);
@@ -588,7 +587,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
    *  through unchanged. */
   ce.declare("PermutationReplace", {
     signature: `(integer | list<integer> | expression<Cycles>, ${permutationLike}) -> integer | list<integer> | expression<Cycles>`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const expr = ops[0];
       const permExpr = ops[1];
       if (expr === undefined || permExpr === undefined) return undefined;
@@ -639,7 +638,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   /** `GroupGenerators(PermutationGroup(gens))` -> the given generators, in cycle notation. */
   ce.declare("GroupGenerators", {
     signature: "(expression<PermutationGroup> | expression<AlternatingGroup>) -> list<expression<Cycles>>",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const group = ops[0] === undefined ? undefined : permutationGroupOf(ops[0]);
       if (group === undefined) return undefined;
       return ce.function(
@@ -717,7 +716,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   // (D_1 on 2, D_2 on 4), S_n and A_n on n, a PermutationGroup on the points it moves.
   ce.declare("CycleIndexPolynomial", {
     signature: `(${anyGroupLike}, list) -> number`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const group = ops[0];
       if (group === undefined || ops[1]?.operator !== "List") return undefined;
       const variables = operandsOf(ops[1]);
@@ -748,7 +747,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
       const { order } = index;
       const terms = [...index.types.values()].map(({ exponents, count }) => {
         const divisor = gcdBig(count, order);
-        const factors: BoxedExpression[] = [];
+        const factors: Expression[] = [];
         if (count !== order)
           factors.push(ce.function("Divide", [ce.number(count / divisor), ce.number(order / divisor)]));
         exponents.forEach((power, i) => {
