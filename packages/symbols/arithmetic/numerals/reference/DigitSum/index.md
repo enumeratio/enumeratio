@@ -45,6 +45,25 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: sum(digits(abs($1))[1:])
+    arity: 1
+    threadArgOnly:
+      - 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
+  - origin: mapped
+    form: sympy
+    template: sum(digits(abs($1), $2)[1:])
+    arity: 2
+    threadArgOnly:
+      - 1
+      - 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
 ---
 
 - Equivalent to summing [[IntegerDigits]](n, base).

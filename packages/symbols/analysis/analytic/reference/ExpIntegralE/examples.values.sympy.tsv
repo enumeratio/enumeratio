@@ -17,12 +17,12 @@ expintegrale-0-z	expint(0, Symbol("z"))	exp(-z)/z
 seriescoefficient-expintegrale-0-x-list-x-0-n			
 expintegrale-0-positiveinfinity	expint(0, oo)	0	
 n-expintegrale-3-11-over-5-50	N(expint(3, Rational(11, 5)), 30)	0.0235206566482765000078317199118	
-simplify-functionexpand-list-expintegrale-5			
-functionexpand-expintegrale-3-over-2-z			
-functionexpand-expintegrale-3-z			
-functionexpand-expintegrale-minus-2-z			
-functionexpand-expintegrale-1-over-3-z			
-functionexpand-expintegrale-n-z			
+simplify-functionexpand-list-expintegrale-5	simplify(expand_func([expint((5 * (S(2)**-1)), Symbol("z")), expint(4, Symbol("z")), expint(-4, Symbol("z"))]))		
+functionexpand-expintegrale-3-over-2-z	expand_func(expint(Rational(3, 2), Symbol("z")))		
+functionexpand-expintegrale-3-z	expand_func(expint(3, Symbol("z")))		
+functionexpand-expintegrale-minus-2-z	expand_func(expint(-2, Symbol("z")))		
+functionexpand-expintegrale-1-over-3-z	expand_func(expint(Rational(1, 3), Symbol("z")))		
+functionexpand-expintegrale-n-z	expand_func(expint(Symbol("n"), Symbol("z")))		
 series-expintegrale-n-x-x-0-7	series(expint(Symbol("n"), Symbol("x")), Symbol("x"), 0, 7 + 1)	expint(n, 0) - x*expint(n - 1, 0) + x**2*expint(n - 2, 0)/2 - x**3*expint(n - 3, 0)/6 + x**4*expint(n - 4, 0)/24 - x**5*expint(n - 5, 0)/120 + x**6*expint(n - 6, 0)/720 - x**7*expint(n - 7, 0)/5040 + O(x**8)	
 e-n-0-1-n-1-for-n-1	expint(2, 0)	expint(2, 0)	
 e-0-x-e-x-x	expint(0, Symbol("x"))	exp(-x)/x	

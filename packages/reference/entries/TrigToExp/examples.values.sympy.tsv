@@ -1,0 +1,12 @@
+id	in	out	verdict
+trigtoexp-cos-x	(cos(Symbol("x"))).rewrite(exp)	exp(I*x)/2 + exp(-I*x)/2	
+trigtoexp-sinh-x	(sinh(Symbol("x"))).rewrite(exp)	exp(x)/2 - exp(-x)/2	
+trigtoexp-tanh-x	(tanh(Symbol("x"))).rewrite(exp)	(exp(x) - exp(-x))/(exp(x) + exp(-x))	
+trigtoexp-arcsin-x	(asin(Symbol("x"))).rewrite(exp)	asin(x)	
+trigtoexp-arcoth-x	(acoth(Symbol("x"))).rewrite(exp)	acoth(x)	
+trigtoexp-sinh-x-lt-eq-11-arctan-x-eq-7	(And(Le(sinh(Symbol("x")), 11), enumeratio_equal(atan(Symbol("x")), 7))).rewrite(exp)	False	disagree
+trigtoexp-list-sin-x-cos-x-tan-x	([sin(Symbol("x")), cos(Symbol("x")), tan(Symbol("x"))]).rewrite(exp)	AttributeError: 'list' object has no attribute 'rewrite'	error
+trigtoexp-cos-x-plus-imaginaryunit-times-sin-x	((cos(Symbol("x")) + (I * sin(Symbol("x"))))).rewrite(exp)	exp(I*x)	
+trigtoexp-sin-5-times-arcsin-x	(sin((5 * asin(Symbol("x"))))).rewrite(exp)	-I*(exp(5*I*asin(x)) - exp(-5*I*asin(x)))/2	
+trigtoexp-sin-x-lt-x-lt-tan-x	(And(Lt(sin(Symbol("x")), Symbol("x")), Lt(Symbol("x"), tan(Symbol("x"))))).rewrite(exp)	(-I*(exp(I*x) - exp(-I*x))/2 < x) & (x < I*(-exp(I*x) + exp(-I*x))/(exp(I*x) + exp(-I*x)))	disagree
+trigtoexp-sin-x-eq-pi-times-3-pow-neg-1	(enumeratio_equal(sin(Symbol("x")), (pi * (S(3)**-1)))).rewrite(exp)	AttributeError: 'bool' object has no attribute 'rewrite'	error

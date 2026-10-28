@@ -16,8 +16,8 @@ fibonacci-n-x-symbolic-order-stays-exact	fibonacci(Symbol("n"), Symbol("x"))	Non
 fibonacci-half-x-exact-closed-form	fibonacci(Rational(1, 2), Symbol("x"))	None	inconclusive
 n-fibonacci-15-over-17-50	N(fibonacci(Rational(15, 17)), 30)	0.956519913924311225085822634277	
 n-fibonacci-5-8-minus-i	N(fibonacci(5, (8 + -1*I)), 30)	3903.0 - 2064.0*I	
-functionexpand-fibonacci-n-x			
-functionexpand-fibonacci-1-over-2-x			
+functionexpand-fibonacci-n-x	expand_func(fibonacci(Symbol("n"), Symbol("x")))		
+functionexpand-fibonacci-1-over-2-x	expand_func(fibonacci(Rational(1, 2), Symbol("x")))		
 fibonacci-2-neg-x-eq-neg-fibonacci-2-x	enumeratio_equal(fibonacci(2, (-Symbol("x"))), (-fibonacci(2, Symbol("x"))))	True	
 fibonacci-1-neg-x-eq-fibonacci-1-x	enumeratio_equal(fibonacci(1, (-Symbol("x"))), fibonacci(1, Symbol("x")))	True	
 fibonacci-list-1-2-3-4-5	[fibonacci(1), fibonacci(2), fibonacci(3), fibonacci(4), fibonacci(5)]	[1, 1, 2, 3, 5]	

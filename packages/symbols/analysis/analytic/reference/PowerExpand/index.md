@@ -8,6 +8,14 @@ signatures:
     description: "`expr` with Ln and Power distributed over products, assuming positivity."
     library: "@enumeratio/analytic"
     type: (expression) -> expression
+bindings:
+  - origin: mapped
+    form: sympy
+    template: expand_log(powdenest(expand_power_base($1, force=True), force=True), force=True)
+    arity: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
 seeAlso:
   - FunctionExpand
   - Ln

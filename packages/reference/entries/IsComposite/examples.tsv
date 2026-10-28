@@ -1,15 +1,15 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	julia.kind	julia.note	rust.kind	rust.note
-iscomposite-4			[IsComposite, 4]	True	The smallest composite number						
-iscomposite-13			[IsComposite, 13]	False	A prime is not composite						
-iscomposite-of-a-negative-integer		test	[IsComposite, -49]	False		convention	compute-engine rules IsPrime(-7) False, and IsComposite inherits it (ERROR-MODEL, RULED 2026-08-29: a composite is a natural number), so IsComposite(-49) is False; Wolfram's CompositeQ[-49] counts associates and answers True.	convention	compute-engine rules IsComposite(-49) False (ERROR-MODEL, RULED 2026-08-29: a composite is a natural number); this mapping (|n| > 1 and not prime) counts associates, as Wolfram's CompositeQ does, and answers true.	domain	primal takes non-negative machine-size integers and the adapter declines; compute-engine's IsComposite answers False for a negative integer.
-a-negative-number-is-not-composite		test	[IsComposite, -168]	False		convention	Wolfram's CompositeQ ignores the sign (CompositeQ[-168] is True); compute-engine takes composite as greater than 1 and not prime.	convention	The Julia mapping takes the absolute value, as Wolfram's CompositeQ does; compute-engine takes composite as greater than 1 and not prime.	domain	primal's is_composite takes an unsigned integer, so it has no answer for a negative number; compute-engine answers False.
-iscomposite-1-plus-10-pow-3-000	Scope		[IsComposite, [Add, 1, [Power, 10, 3000]]]	True	A huge number decided without factoring it					domain	primal's primality test works on a machine word (u64); the operand is past 2^64.
-iscomposite-list-1-2-3-4-5-6	Scope		[IsComposite, [List, 1, 2, 3, 4, 5, 6]]	[List, False, False, False, True, False, True]	Threads over a list; 1 is neither prime nor composite						
-iscomposite-5	Scope		[IsComposite, 5]	False	Primes are never composite						
-iscomposite-3-plus-i	Scope		[IsComposite, [Complex, 3, 1]]	True				domain	Nemo's ZZ takes an integer only; compute-engine's IsComposite also takes a Gaussian integer or a list, which this mapping does not pass on.		
-iscomposite-8	Properties		[IsComposite, 8]	True	A power of two beyond 2 is composite						
-iscomposite-12	Properties		[IsComposite, 12]	True	Has the proper divisors 2, 3, 4, 6						
-iscomposite-67	Properties		[IsComposite, 67]	False	A prime just past 64, so not composite						
-iscomposite-28	Properties		[IsComposite, 28]	True	A perfect number, $28 = 2^2\cdot 7$, is composite						
-iscomposite-60	Properties		[IsComposite, 60]	True	Highly divisible, with many proper divisors						
-iscomposite-48-828-125	Properties		[IsComposite, 48828125]	True	A large perfect power, $5^{11}$, caught as composite						
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sympy.kind	sympy.note	julia.kind	julia.note	rust.kind	rust.note
+iscomposite-4			[IsComposite, 4]	True	The smallest composite number								
+iscomposite-13			[IsComposite, 13]	False	A prime is not composite								
+iscomposite-of-a-negative-integer		test	[IsComposite, -49]	False		convention	compute-engine rules IsPrime(-7) False, and IsComposite inherits it (ERROR-MODEL, RULED 2026-08-29: a composite is a natural number), so IsComposite(-49) is False; Wolfram's CompositeQ[-49] counts associates and answers True.			convention	compute-engine rules IsComposite(-49) False (ERROR-MODEL, RULED 2026-08-29: a composite is a natural number); this mapping (|n| > 1 and not prime) counts associates, as Wolfram's CompositeQ does, and answers true.	domain	primal takes non-negative machine-size integers and the adapter declines; compute-engine's IsComposite answers False for a negative integer.
+a-negative-number-is-not-composite		test	[IsComposite, -168]	False		convention	Wolfram's CompositeQ ignores the sign (CompositeQ[-168] is True); compute-engine takes composite as greater than 1 and not prime.			convention	The Julia mapping takes the absolute value, as Wolfram's CompositeQ does; compute-engine takes composite as greater than 1 and not prime.	domain	primal's is_composite takes an unsigned integer, so it has no answer for a negative number; compute-engine answers False.
+iscomposite-1-plus-10-pow-3-000	Scope		[IsComposite, [Add, 1, [Power, 10, 3000]]]	True	A huge number decided without factoring it							domain	primal's primality test works on a machine word (u64); the operand is past 2^64.
+iscomposite-list-1-2-3-4-5-6	Scope		[IsComposite, [List, 1, 2, 3, 4, 5, 6]]	[List, False, False, False, True, False, True]	Threads over a list; 1 is neither prime nor composite								
+iscomposite-5	Scope		[IsComposite, 5]	False	Primes are never composite								
+iscomposite-3-plus-i	Scope		[IsComposite, [Complex, 3, 1]]	True				domain	SymPy's comparison needs a real argument and raises on a Gaussian integer; ours decides compositeness in Z[i].	domain	Nemo's ZZ takes an integer only; compute-engine's IsComposite also takes a Gaussian integer or a list, which this mapping does not pass on.		
+iscomposite-8	Properties		[IsComposite, 8]	True	A power of two beyond 2 is composite								
+iscomposite-12	Properties		[IsComposite, 12]	True	Has the proper divisors 2, 3, 4, 6								
+iscomposite-67	Properties		[IsComposite, 67]	False	A prime just past 64, so not composite								
+iscomposite-28	Properties		[IsComposite, 28]	True	A perfect number, $28 = 2^2\cdot 7$, is composite								
+iscomposite-60	Properties		[IsComposite, 60]	True	Highly divisible, with many proper divisors								
+iscomposite-48-828-125	Properties		[IsComposite, 48828125]	True	A large perfect power, $5^{11}$, caught as composite								

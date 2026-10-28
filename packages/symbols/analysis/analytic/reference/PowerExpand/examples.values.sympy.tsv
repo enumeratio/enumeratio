@@ -1,0 +1,12 @@
+id	in	out
+sqrt-x-2-x-for-positive-x	expand_log(powdenest(expand_power_base(sqrt((S(Symbol("x"))**2)), force=True), force=True), force=True)	x
+splits-a-logarithm-of-a-product	expand_log(powdenest(expand_power_base(log((Symbol("x") * Symbol("y"))), force=True), force=True), force=True)	log(x) + log(y)
+powerexpand-sqrt-x-times-y	expand_log(powdenest(expand_power_base(sqrt((Symbol("x") * Symbol("y"))), force=True), force=True), force=True)	sqrt(x)*sqrt(y)
+pulls-out-an-exponent	expand_log(powdenest(expand_power_base(log((S(Symbol("x"))**Symbol("n"))), force=True), force=True), force=True)	n*log(x)
+distributes-a-power-over-a-product	expand_log(powdenest(expand_power_base((S((Symbol("a") * Symbol("b")))**Symbol("c")), force=True), force=True), force=True)	(a*b)**c
+powerexpand-sqrt-a-times-b	expand_log(powdenest(expand_power_base(sqrt((Symbol("a") * Symbol("b"))), force=True), force=True), force=True)	sqrt(a)*sqrt(b)
+powerexpand-x-times-y-pow-a	expand_log(powdenest(expand_power_base((S((Symbol("x") * Symbol("y")))**Symbol("a")), force=True), force=True), force=True)	(x*y)**a
+powerexpand-sqrt-z-pow-2	expand_log(powdenest(expand_power_base(sqrt((S(Symbol("z"))**2)), force=True), force=True), force=True)	z
+powerexpand-ln-1-over-z	expand_log(powdenest(expand_power_base(log((S(1) / Symbol("z"))), force=True), force=True), force=True)	-log(z)
+powerexpand-ln-z-pow-a	expand_log(powdenest(expand_power_base(log((S(Symbol("z"))**Symbol("a"))), force=True), force=True), force=True)	a*log(z)
+powerexpand-sqrt-x-minus-y-pow-2-plus-sqrt-neg-x	expand_log(powdenest(expand_power_base((sqrt((S((Symbol("x") + (-Symbol("y"))))**2)) + sqrt((S(((-Symbol("x")) + Symbol("y")))**2))), force=True), force=True), force=True)	0

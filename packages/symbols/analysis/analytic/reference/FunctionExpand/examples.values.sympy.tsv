@@ -1,0 +1,14 @@
+id	in	out	verdict
+eta-s-1-2-1-s-zeta-s	expand_func(dirichlet_eta(Symbol("s")))	dirichlet_eta(s)	
+beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34	expand_func((polylog(Symbol("s"), I) - polylog(Symbol("s"), -I)) / (2*I))	-I*(-polylog(s, -I) + polylog(s, I))/2	
+g-frac-12-in-glaisher-s-constant			
+radicals-past-the-automatic-special-angle-table	expand_func(sin((S(pi) / 15)))	sqrt(3)*(1/4 - sqrt(5)/4)/2 + sqrt(sqrt(5)/8 + 5/8)/2	
+half-angle-radicals-cos-frac-pi-24-frac-12-sqrt	expand_func(cos((S(pi) / 24)))	sqrt(1/2 - sqrt(2)/4)/2 + sqrt(3)*sqrt(sqrt(2)/4 + 1/2)/2	
+a-rising-factorial-with-an-integer-length	expand_func(rf(Symbol("x"), 3))	x*(x + 1)*(x + 2)	
+binom-n2-frac-n-n-1-2	expand_func(binomial(Symbol("n"), 2))	n*(n - 1)/2	
+functionexpand-1-over-sqrt-x-pow-2-times-sin	expand_func(((S(1) / sqrt((S(Symbol("x"))**2))) * sin(sqrt((S(Symbol("x"))**2)))))	sin(sqrt(x**2))/sqrt(x**2)	
+functionexpand-1-over-zeta-z-times-zeta-neg-z	expand_func(((S(1) / zeta(Symbol("z"))) * zeta(((-Symbol("z")) + 1))))	zeta(1 - z)/zeta(z)	
+functionexpand-list-sqrt-neg-x-pow-2-ln-sqrt-neg	expand_func([sqrt((-(S(Symbol("x"))**2))), log(sqrt(((-(S(Symbol("x"))**2)) + 1)))])	AttributeError: 'list' object has no attribute 'expand'	error
+functionexpand-airyai-x-times-neg-1-pow-4-over-3			
+functionexpand-polylog-2-z-plus-polylog-2-neg-z	expand_func((polylog(2, Symbol("z")) + polylog(2, ((-Symbol("z")) + 1)) + (-zeta(2))))	polylog(2, z) + polylog(2, 1 - z) - pi**2/6	
+a-generic-cos-argument-passes-through-unchanged	expand_func(cos(Symbol("theta")))	cos(theta)	

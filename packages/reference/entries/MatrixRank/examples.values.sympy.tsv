@@ -1,0 +1,29 @@
+id	in	out	verdict
+matrixrank-list-list-1-0-list-0-1	Matrix([[1, 0], [0, 1]]).rank()	2	
+matrixrank-list-list-1-2-list-2-4	Matrix([[1, 2], [2, 4]]).rank()	1	
+matrixrank-list-list-1-2-3-list-4-5-6-list-7-8-9	Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).rank()	2	
+non-square-matrices-too	Matrix([[1, 2, 3], [2, 4, 6]]).rank()	1	
+matrixrank-list-list-0-0-list-0-0	Matrix([[0, 0], [0, 0]]).rank()	0	
+a-matrix-of-pairwise-distinct-symbols-has-full	Matrix([[Symbol("a"), Symbol("b")], [Symbol("c"), Symbol("d")]]).rank()	2	
+matrixrank-list-list-0-5-2-4-4-list-2-5-0-4-0	Matrix([[0, 5, 2, 4, 4], [2, 5, 0, 4, 0], [5, 1, 5, 4, 5]]).rank()	3	
+matrixrank-list-list-a-b-c-list-d-m-f-list-g-h-k	Matrix([[Symbol("a"), Symbol("b"), Symbol("c")], [Symbol("d"), Symbol("m"), Symbol("f")], [Symbol("g"), Symbol("h"), Symbol("k")]]).rank()	3	
+approximate-entries	Matrix([[1, 2.5], [3.5, 4]]).rank()	2	
+complex-entries-the-second-row-is-i-times-the	Matrix([[1, I], [I, -1]]).rank()	1	
+exact-numeric-entries	Matrix([[pi, E], [(2 * pi), (2 * E)]]).rank()	1	
+the-second-row-is-sqrt-2-times-the-first	Matrix([[sqrt(2), 1], [2, sqrt(2)]]).rank()	1	
+a-3-4-matrix-with-one-dependent-row	Matrix([[1, 2, 3, 4], [2, 4, 6, 8], [1, 0, 1, 0]]).rank()	2	
+matrixrank-identitymatrix-5			
+a-3-times-3-matrix-of-pairwise-distinct-symbols	Matrix([[Symbol("p"), Symbol("q"), Symbol("r")], [Symbol("s"), Symbol("t"), Symbol("u")], [Symbol("v"), Symbol("w"), Symbol("x")]]).rank()	3	
+matrixrank-list-list-a-b-list-2a-2b	Matrix([[Symbol("a"), Symbol("b")], [(2 * Symbol("a")), (2 * Symbol("b"))]]).rank()	1	
+matrixrank-hilbertmatrix-3			
+matrixrank-identitymatrix-3			
+the-4-4-hilbert-matrix-is-badly-conditioned-but			
+row-rank-equals-column-rank			
+rank-nullity-the-rank-plus-the-dimension-of-the			
+an-outer-product-u-v-top-has-rank-1-a-lazy			
+a-symbolic-matrix-stays-unevaluated-wolfram	Matrix([[Symbol("x"), 1], [1, Symbol("x")]]).rank()	2	inconclusive
+a-vector-is-treated-as-a-1-n-matrix-wolfram	Matrix([1, 2, 3]).rank()	1	
+a-non-square-matrix-of-distinct-symbols-stays	Matrix([[Symbol("a"), Symbol("b"), Symbol("c")], [Symbol("d"), Symbol("g"), Symbol("h")]]).rank()	2	inconclusive
+repeating-a-symbol-across-rows-doesn-t-qualify	Matrix([[Symbol("a"), Symbol("b")], [Symbol("a"), Symbol("b")]]).rank()	1	
+matrixrank-list-list-1-0-list-0-0	Matrix([[1, 0], [0, 0]]).rank()	1	
+every-matrix-with-entries-i-j-has-rank-2			

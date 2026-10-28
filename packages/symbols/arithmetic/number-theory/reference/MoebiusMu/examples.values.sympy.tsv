@@ -15,7 +15,7 @@ moebiusmu-253-eq-moebiusmu-11-times-moebiusmu-23	enumeratio_equal(mobius(253), (
 moebiusmu-5-187	mobius(5187)	1	
 moebiusmu-32-538	mobius(32538)	-1	
 moebiusmu-1-440	mobius(1440)	0	
-list-isprimepower-121-iscomposite-121-moebiusmu			
+list-isprimepower-121-iscomposite-121-moebiusmu	[And((abs(121) > 1 and len(factorint(abs(121))) == 1), (121 > 1 and not isprime(121))), mobius(121)]		
 list-isprime-11-moebiusmu-11	[isprime(11), mobius(11)]	[True, -1]	
 moebiusmu-2	mobius(2)	-1	
 moebiusmu-3	mobius(3)	-1	

@@ -38,6 +38,15 @@ bindings:
     checked:
       version: primal 0.3.3
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: (abs($1) > 1 and len(factorint(abs($1))) == 1)
+    arity: 1
+    threadArgOnly:
+      - 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
 ---
 
 - $1=p^0$ does not count: it has no prime base.

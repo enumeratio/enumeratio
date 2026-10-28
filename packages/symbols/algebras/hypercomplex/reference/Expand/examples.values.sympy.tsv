@@ -1,0 +1,20 @@
+id	in	out	verdict
+expand-x-1-2-into-x-2-2x-1	expand((S((Symbol("x") + 1))**2))	x**2 + 2*x + 1	
+expand-x-1-x-1-into-the-difference-of-squares	expand(((Symbol("x") + 1) * (Symbol("x") + -1)))	x**2 - 1	
+expand-x-plus-3-times-x-plus-2	expand(((Symbol("x") + 3) * (Symbol("x") + 2)))	x**2 + 5*x + 6	
+expand-1-plus-x-pow-3-times-5-times-x-pow-2-plus	expand(((S((1 + Symbol("x")))**3) * ((5 * (S(Symbol("x"))**2)) + 1) * ((S(Symbol("x"))**5) + 1)))	5*x**10 + 15*x**9 + 16*x**8 + 8*x**7 + 3*x**6 + 6*x**5 + 15*x**4 + 16*x**3 + 8*x**2 + 3*x + 1	
+expand-x-plus-y-pow-5-minus-x-pow-5-plus-y-pow-5	expand(((S((Symbol("x") + Symbol("y")))**5) + (-1 * ((S(Symbol("x"))**5) + (S(Symbol("y"))**5)))))	5*x**4*y + 10*x**3*y**2 + 10*x**2*y**3 + 5*x*y**4	
+expand-x-y-3-a-two-variable-binomial-power	expand((S((Symbol("x") + Symbol("y")))**3))	x**3 + 3*x**2*y + 3*x*y**2 + y**3	
+expand-x-plus-y-pow-2-times-x-minus-y-pow-2	expand(((S((Symbol("x") + Symbol("y")))**2) * (S((Symbol("x") + (-1 * Symbol("y"))))**2)))	x**4 - 2*x**2*y**2 + y**4	
+expand-x-plus-y-pow-2-times-x-minus-y-pow-2-pow	expand(((S((Symbol("x") + Symbol("y")))**2) * (S((S((Symbol("x") + (-1 * Symbol("y"))))**2))**-1)))	x**2/(x**2 - 2*x*y + y**2) + 2*x*y/(x**2 - 2*x*y + y**2) + y**2/(x**2 - 2*x*y + y**2)	
+expand-sin-x-plus-cos-x-pow-2	expand((S((sin(Symbol("x")) + cos(Symbol("x"))))**2))	sin(x)**2 + 2*sin(x)*cos(x) + cos(x)**2	
+expand-sqrt-1-plus-x-pow-2	expand(sqrt((S((1 + Symbol("x")))**2)))	sqrt(x**2 + 2*x + 1)	disagree
+expand-x-plus-y-pow-2-times-z-plus-y-pow-2-pow	expand(((S((Symbol("x") + Symbol("y")))**2) * (S((S((Symbol("z") + Symbol("y")))**2))**-1)))	x**2/(y**2 + 2*y*z + z**2) + 2*x*y/(y**2 + 2*y*z + z**2) + y**2/(y**2 + 2*y*z + z**2)	
+x-pow-5-plus-5-times-x-pow-4-plus-10-times-x-pow	enumeratio_equal(((S(Symbol("x"))**5) + (5 * (S(Symbol("x"))**4)) + (10 * (S(Symbol("x"))**3)) + (10 * (S(Symbol("x"))**2)) + (5 * Symbol("x")) + 1), expand((S((Symbol("x") + 1))**5)))	True	
+expand-x-plus-imaginaryunit-times-x-minus	expand(((Symbol("x") + I) * (Symbol("x") + (-1 * I))))	x**2 + 1	
+expand-x-pow-s-plus-2-times-exponentiale-pow-neg	expand((S(((S(Symbol("x"))**Symbol("s")) + (2 * (S(E)**(-1 * Symbol("x"))))))**3))	x**(3*s) + 6*x**(2*s)*exp(-x) + 12*x**s*exp(-2*x) + 8*exp(-3*x)	
+expand-1-minus-x-times-neg-1-minus-x-times-1	expand(((1 + (-1 * Symbol("x"))) * (-1 + (-1 * Symbol("x"))) * (1 + (-1 * Symbol("x"))) * (-1 + (-1 * Symbol("x")))))	x**4 - 2*x**2 + 1	
+expand-1-plus-x-plus-y-times-2-minus-x-pow-3	expand(((1 + Symbol("x") + Symbol("y")) * (S((2 + (-1 * Symbol("x"))))**3)))	-x**4 - x**3*y + 5*x**3 + 6*x**2*y - 6*x**2 - 12*x*y - 4*x + 8*y + 8	
+expand-1-plus-x-times-2-plus-x-times-3-plus-x	expand(((1 + Symbol("x")) * (2 + Symbol("x")) * (3 + Symbol("x"))))	x**3 + 6*x**2 + 11*x + 6	
+expand-product-x-plus-i-i-6	expand(product((Symbol("x") + Symbol("i")), (Symbol("i"), 1, 6)))	x**6 + 21*x**5 + 175*x**4 + 735*x**3 + 1624*x**2 + 1764*x + 720	
+expand-product-x-plus-k-k-6	expand(product((Symbol("x") + Symbol("k")), (Symbol("k"), 1, 6)))	x**6 + 21*x**5 + 175*x**4 + 735*x**3 + 1624*x**2 + 1764*x + 720	
