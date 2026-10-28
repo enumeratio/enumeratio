@@ -1,0 +1,14 @@
+{
+  "id": "2026-10-28T09-59Z-7692e97",
+  "sha": "7692e97faf64c8a413d35bcea220d67d57dbcbda",
+  "date": "2026-10-28T09:59:52.196Z",
+  "trigger": "sage-weekly",
+  "url": "https://github.com/enumeratio/enumeratio/actions/runs/40665331711",
+  "job": "sage-weekly",
+  "suite": "deep",
+  "systems": [
+    "sage",
+    "ts"
+  ],
+  "machine": "sha256:848e99580688bdd8"
+}
