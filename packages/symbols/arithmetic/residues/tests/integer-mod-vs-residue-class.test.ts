@@ -50,3 +50,18 @@ test("Simplify(...) folds IntegerMod beside a symbol", () => {
     ["IntegerMod", 3, 4],
   ]);
 });
+
+test("Equal and NotEqual decide through eq on evaluate() and N(); classes have no order", () => {
+  const nv = (e: unknown): unknown => ce.box(e as Json).N().json;
+  const [c1, c2, c6] = [
+    ["IntegerMod", 1, 5],
+    ["IntegerMod", 2, 5],
+    ["IntegerMod", 6, 5],
+  ];
+  for (const f of [ev, nv]) {
+    expect(f(["Equal", c1, c2])).toBe("False");
+    expect(f(["NotEqual", c1, c2])).toBe("True");
+    expect(f(["Equal", c1, c6])).toBe("True");
+    expect(f(["Less", c1, c2])).toEqual(["Less", c1, c2]);
+  }
+});

@@ -66,6 +66,13 @@ export function declareIntegerMod(ce: Engine): void {
     return x === undefined ? undefined : writeClass(x.residue, x.modulus);
   }
 
+  /** Whether two classes (or a class and an integer) agree in their common ring, if they share one. */
+  const sameClass = (a: Expr, b: Expr): boolean | undefined => {
+    const g = commonModulus([a, b]);
+    const [x, y] = [a, b].map((op) => integerModOf(op)?.residue ?? bigIntegerAt(op));
+    return g === undefined || x === undefined || y === undefined ? undefined : mod(x - y, g) === 0n;
+  };
+
   /** The classes and plain numbers among a sum's or product's operands, folded as one class. */
   const fold = (head: "Add" | "Multiply", all: readonly Expr[]): { value: Expr; operands: number[] }[] => {
     const operands = all.flatMap((op, i) => (isIntegerMod(op) || bigRationalAt(op) !== undefined ? [i] : []));
@@ -115,35 +122,12 @@ export function declareIntegerMod(ce: Engine): void {
         isIntegerMod(base.evaluated) && bigIntegerAt(exponent.evaluated) !== undefined
           ? combine("Power", [base.evaluated, exponent.evaluated])
           : undefined,
-      // Sage's ==: equal in the common ring. Classes that differ have no order.
-      compare: (a, b) => {
-        const ops = [a.evaluated, b.evaluated];
-        const g = commonModulus(ops);
-        const [x, y] = ops.map((op) => integerModOf(op)?.residue ?? bigIntegerAt(op));
-        if (g === undefined || x === undefined || y === undefined) return undefined;
-        return mod(x - y, g) === 0n ? 0 : undefined;
-      },
+      // Classes have no order: equal or undefined, so Equal/NotEqual fall to `eq`.
+      compare: (a, b) => (sameClass(a.evaluated, b.evaluated) ? 0 : undefined),
     },
+    // Sage's ==: equal in the common ring; a plain integer is read in it. Decidable without a prover.
+    eq: (a, b) => sameClass(a, b),
   });
-
-  // `compare` answers only equal. The verdict "different" is ours: a hook's `undefined` leaves
-  // Equal and NotEqual unevaluated under evaluate() (only simplify() settles them).
-  for (const [head, equal] of [
-    ["Equal", true],
-    ["NotEqual", false],
-  ] as const) {
-    defineOverload(ce, head, {
-      package: "residues",
-      on: [INTEGER_MOD],
-      arity: 2,
-      evaluate: (ops) => {
-        const g = commonModulus(ops);
-        const [x, y] = ops.map((op) => integerModOf(op)?.residue ?? bigIntegerAt(op));
-        if (g === undefined || x === undefined || y === undefined) return undefined;
-        return ce.symbol((mod(x - y, g) === 0n) === equal ? "True" : "False");
-      },
-    });
-  }
 
   // The rest of the strict class's heads take each class at its own modulus.
   const own = (op: Expr): Expr => {

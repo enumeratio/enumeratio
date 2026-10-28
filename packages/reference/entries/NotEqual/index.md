@@ -10,7 +10,7 @@ signatures:
     description: Inequality comparison (not equal to).
     library: enumeratio-adeles
     type: (any, any) -> boolean
-    overrides: enumeratio-residues
+    overrides: compute-engine
     on:
       - Adele
       - Idele
