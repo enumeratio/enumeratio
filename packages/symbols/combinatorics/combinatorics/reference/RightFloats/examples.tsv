@@ -1,0 +1,7 @@
+id	section	role	expr	expected	known	source	caption
+the-one-line-word-312			[RightFloats, [Permutation, [List, 3, 1, 2]]]	0			the one-line word $312$
+the-one-line-word-312-as-a-plain-list			[RightFloats, [List, 3, 1, 2]]	0			the one-line word $312$, as a plain list
+the-one-line-word-2413			[RightFloats, [Permutation, [List, 2, 4, 1, 3]]]	2			the one-line word $2413$
+findstat-st000663-1	Properties		[CombinatorialStat, [Permutation, [List, 1]], "'RightFloats'"]	0	0	FindStat St000663	FindStat's value for [1]
+findstat-st000663-2	Properties		[CombinatorialStat, [Permutation, [List, 1, 2]], "'RightFloats'"]	0	0	FindStat St000663	FindStat's value for [1,2]
+findstat-st000663-3	Properties		[CombinatorialStat, [Permutation, [List, 2, 1]], "'RightFloats'"]	0	0	FindStat St000663	FindStat's value for [2,1]
