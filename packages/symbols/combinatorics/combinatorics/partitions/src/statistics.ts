@@ -209,6 +209,131 @@ const rimHooksRemoved = (k: number): MathJSON => {
 const symplecticWeight = (i: number, r: number): MathJSON =>
   add(["If", atLeastValue(length(), i), at(i), 0], r + 1 - i);
 
+/** The parts shortest first: the order a Ferrers board is filled row by row. */
+const rowsAscending: MathJSON = forEach(positions, at(add(subtract(length(), "i"), 1)));
+/**
+ * The rook numbers r_0 .. r_length of the Ferrers board, as a list (entry k + 1 is r_k): a row of b cells takes its rook
+ * in one of the b - (k - 1) columns the earlier rows' k - 1 rooks leave free.
+ */
+const rookNumbers: MathJSON = fold(
+  rowsAscending,
+  forEach(upTo(add(length(), 1)), ["If", equals("i", 1), 1, 0]),
+  forEach(upTo(add(length(), 1)), [
+    "If",
+    equals("i", 1),
+    at(1, "a"),
+    add(at("i", "a"), ["Multiply", subtract("b", subtract("i", 2)), at(subtract("i", 1), "a")]),
+  ]),
+);
+/** The parts that start a run of equal parts, one per distinct part size. */
+const startsOfRuns: MathJSON = ["Or", equals("i", length()), greater(here, at(add("i", 1)))];
+/** Euler's totient of `d`: the numbers up to d with no common factor with it. */
+const totientOf = (d: MathJSON): MathJSON =>
+  count(upTo(d), equals(["Divide", ["Multiply", "k", d], ["LCM", "k", d]], 1), "k");
+/**
+ * The standard tableaux counted by their major index: entry k + 1 of the list is the number whose major index is k (k up to size
+ * (size + 1) / 2, past the largest possible). The q-hook formula: q^n(λ) times the product of 1 - q^i for i up to the size, over that of
+ * 1 - q^h for the hooks h; multiply out, then divide by each 1 - q^h as the sum along its arithmetic progression.
+ */
+const majorIndexCounts: MathJSON = withConjugate(
+  fold(
+    ["Flatten", forEach(positions, forEach(upTo(here), hookWith, "j"))],
+    fold(
+      upTo(total),
+      forEach(upTo(add(["Divide", ["Multiply", total, add(total, 1)], 2], 1)), ["If", equals("i", 1), 1, 0]),
+      forEach(upTo(add(["Divide", ["Multiply", total, add(total, 1)], 2], 1)), [
+        "If",
+        greater("i", "b"),
+        subtract(at("i", "a"), at(subtract("i", "b"), "a")),
+        at("i", "a"),
+      ]),
+    ),
+    forEach(
+      upTo(add(["Divide", ["Multiply", total, add(total, 1)], 2], 1)),
+      sumOver(
+        ["Range", 0, ["Divide", subtract(subtract("i", 1), ["Mod", subtract("i", 1), "b"]), "b"]],
+        at(subtract("i", ["Multiply", "t", "b"]), "a"),
+        "t",
+      ),
+    ),
+  ),
+);
+/** The minimum major index of a standard tableau: the sum over the rows of (row - 1) times its length. */
+const minimalMajorIndex: MathJSON = sumOver(positions, ["Multiply", subtract("i", 1), here]);
+/** The standard tableaux whose major index leaves remainder `remainder` on division by the size. */
+const tableauxWithMajorIndexRemainder = (remainder: number): MathJSON =>
+  bind(
+    "m",
+    minimalMajorIndex,
+    bind(
+      "q",
+      majorIndexCounts,
+      sumOver(upTo(add(["Divide", ["Multiply", total, add(total, 1)], 2], 1)), [
+        "If",
+        equals(["Mod", add(subtract("i", 1), "m"), total], remainder),
+        at("i", "q"),
+        0,
+      ]),
+    ),
+    "number",
+  );
+/**
+ * The partitions that cover `partition` in dominance order, counted: Brylawski's covers move a cell from row j up to row i < j,
+ * when the result is still a partition and the rows are adjacent or equal. `partition` is bound to `u`.
+ */
+const upperCoversIn = (partition: MathJSON): MathJSON => {
+  const part = (k: MathJSON): MathJSON => at(k, "u");
+  const rows: MathJSON = ["Length", "u"];
+  return bind(
+    "u",
+    partition,
+    sumOver(
+      upTo(rows),
+      count(
+        upTo(rows),
+        and(
+          greater("j", "i"),
+          and(
+            or(equals("i", 1), greater(part(subtract("i", 1)), part("i"))),
+            and(
+              or(equals("j", rows), greater(part("j"), part(add("j", 1)))),
+              or(equals("j", add("i", 1)), equals(part("i"), part("j"))),
+            ),
+          ),
+        ),
+        "j",
+      ),
+    ),
+  );
+};
+/** The number of odd parts. */
+const oddParts: MathJSON = count(positions, equals(["Mod", here, 2], 1));
+/** The product of the factorials of the halves of the parts, rounded down. */
+const halfPartFactorials: MathJSON = [
+  "Product",
+  forEach(positions, factorialOf(["Divide", subtract(here, ["Mod", here, 2]), 2])),
+];
+/** The sum over the rotations of the cyclic group of the colorings each fixes: the d-th power of a rotation has d cycles of equal length. */
+const rotationFixedColorings: MathJSON = bind(
+  "g",
+  greatestCommonDivisor,
+  sumOver(
+    upTo("g"),
+    [
+      "If",
+      equals(["Mod", "g", "d"], 0),
+      [
+        "Divide",
+        ["Multiply", totientOf("d"), factorialOf(["Divide", total, "d"])],
+        ["Product", forEach(positions, factorialOf(["Divide", here, "d"]))],
+      ],
+      0,
+    ],
+    "d",
+  ),
+  "number",
+);
+
 export const PARTITION_STATISTICS: readonly Definition[] = [
   stat("LargestPart", "The largest part.", nonEmpty(largest)),
   stat(
@@ -1145,5 +1270,149 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     "The number of parts when λ has no 1s, else (parts larger than the number of 1s) minus (the number of 1s).",
     nonEmpty(["If", equals(ones, 0), length(), subtract(count(positions, greater(here, ones)), ones)]),
     "Crank has the largest part where this has the number of parts; FindStat's St000146 follows the code, which takes the length.",
+  ),
+
+  // The sixth batch.
+  stat(
+    "SeaweedAlgebraDimension",
+    "The dimension of the maximal parabolic seaweed algebra: half the sum of the squares of the parts and of the size.",
+    nonEmpty(["Divide", add(sumOver(positions, ["Power", here, 2]), ["Power", total, 2]), 2]),
+  ),
+  stat(
+    "CartanDeterminant",
+    "The determinant of the matrix of the minimums of the distinct parts: the least distinct part times the gaps between consecutive distinct parts.",
+    nonEmpty(
+      [
+        "Product",
+        forEach(where(positions, startsOfRuns), subtract(here, ["If", equals("i", length()), 0, at(add("i", 1))])),
+      ],
+      1,
+    ),
+  ),
+  stat(
+    "RookPlacementCount",
+    "The rook placements, of any number of rooks, on the Ferrers board of the diagram.",
+    nonEmpty(bind("r", rookNumbers, ["Sum", "r"]), 1),
+  ),
+  stat(
+    "MaximalRookPlacementCount",
+    "The ways to place as many non-attacking rooks as possible on the Ferrers board of the diagram.",
+    nonEmpty(
+      bind(
+        "r",
+        rookNumbers,
+        at(["Max", forEach(upTo(add(length(), 1)), ["If", greater(at("i", "r"), 0), "i", 0])], "r"),
+      ),
+      1,
+    ),
+  ),
+  stat(
+    "ShorterSideRookPlacementCount",
+    "The ways to place as many non-attacking rooks as the shorter side of the Ferrers board's bounding rectangle has cells, 0 when they do not fit.",
+    nonEmpty(bind("r", rookNumbers, at(add(["Min", length(), largest], 1), "r")), 1),
+    "FindStat's title calls this the leading coefficient of the rook polynomial, but its code takes the entry for the shorter side, which is 0 when no placement fills it; the name follows the code.",
+  ),
+  stat(
+    "NecklaceCount",
+    "The colorings of a cycle with these color multiplicities, up to rotation: the size's divisors d of the greatest common divisor of the parts, each contributing totient(d) multinomials, over the size.",
+    nonEmpty(["Divide", rotationFixedColorings, total]),
+    "FindStat's St001605 (the cyclic group); its title says colourings of a cycle.",
+  ),
+  stat(
+    "BraceletCount",
+    "The colorings of a polygon with these color multiplicities, up to rotation and reflection: the necklaces and the colorings fixed by the reflections, over twice the size.",
+    nonEmpty(
+      bind(
+        "o",
+        oddParts,
+        [
+          "Divide",
+          add(rotationFixedColorings, [
+            "If",
+            greater("o", 2),
+            0,
+            ["Multiply", total, ["Divide", factorialOf(["Divide", subtract(total, "o"), 2]), halfPartFactorials]],
+          ]),
+          ["Multiply", 2, total],
+        ],
+        "number",
+      ),
+    ),
+    "FindStat's St001603 (the dihedral group); its title says colourings of a polygon. It is only defined there for sizes of at least 3.",
+  ),
+  stat(
+    "BulgarianSolitairePreimageCount",
+    "The partitions of the same size that Bulgarian solitaire (remove the first column, insert it as a row) sends to this one: the distinct part sizes of at least the number of parts less one.",
+    nonEmpty(count(positions, and(startsOfRuns, atLeastValue(here, subtract(length(), 1)))), 1),
+  ),
+  stat(
+    "InvariantOrientedCycleCount",
+    "The cyclic permutations that a permutation of this cycle type fixes under conjugation: none unless the parts are all equal to some d, in which case totient(d) d^(m-1) (m-1)! for m parts.",
+    nonEmpty(
+      [
+        "If",
+        equals(largest, at(length())),
+        ["Multiply", totientOf(largest), ["Power", largest, subtract(length(), 1)], factorialOf(subtract(length(), 1))],
+        0,
+      ],
+      0,
+    ),
+  ),
+  stat(
+    "SmirnovWordCount",
+    "The words with each letter used this many times and no letter twice in a row: the Carlitz-Scoville-Vaughan sum over the numbers of runs of each letter, taken as a binomial convolution over the parts.",
+    // `Max(..., 0)` floors the sum so the compiler types it real.
+    nonEmpty(
+      [
+        "Max",
+        [
+          "Sum",
+          fold(
+            x,
+            forEach(upTo(add(total, 1)), ["If", equals("i", 1), 1, 0]),
+            forEach(
+              upTo(add(total, 1)),
+              sumOver(
+                upTo("i"),
+                [
+                  "Multiply",
+                  binomialOf(subtract("i", 1), subtract("j", 1)),
+                  at(add(subtract("i", "j"), 1), "a"),
+                  [
+                    "If",
+                    or(equals("j", 1), greater(subtract("j", 1), "b")),
+                    0,
+                    [
+                      "Multiply",
+                      ["Power", -1, subtract("b", subtract("j", 1))],
+                      binomialOf(subtract("b", 1), subtract("j", 2)),
+                    ],
+                  ],
+                ],
+                "j",
+              ),
+            ),
+          ),
+        ],
+        0,
+      ],
+      1,
+    ),
+    "FindStat's St001097 reads it as a coefficient of the formal group law for linear orders; its description gives the Smirnov words.",
+  ),
+  stat(
+    "StandardTableauCountWithMajorIndexCongruentToOneModuloSize",
+    "The standard Young tableaux whose major index leaves remainder 1 on division by the size of the shape (never, when the size is 1).",
+    nonEmpty(tableauxWithMajorIndexRemainder(1)),
+  ),
+  stat(
+    "UpperCoverCountInDominanceOrder",
+    "The partitions of the same size that cover this one in dominance order.",
+    nonEmpty(upperCoversIn(x)),
+  ),
+  stat(
+    "LowerCoverCountInDominanceOrder",
+    "The partitions of the same size that this one covers in dominance order: the upper covers of its conjugate.",
+    nonEmpty(upperCoversIn(conjugate)),
   ),
 ];

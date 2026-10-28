@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-partition-4-2-1-of-7			[RookPlacementCount, [IntegerPartition, [List, 4, 2, 1]]]	20			the partition $4 + 2 + 1$ of $7$
+the-partition-3-3-1-of-7			[RookPlacementCount, [IntegerPartition, [List, 3, 3, 1]]]	20			the partition $3 + 3 + 1$ of $7$
+findstat-st000532-1	Properties		[CombinatorialStat, [IntegerPartition, [List, 1]], "'RookPlacementCount'"]	2	2	FindStat St000532	FindStat's value for [1]
+findstat-st000532-2	Properties		[CombinatorialStat, [IntegerPartition, [List, 2]], "'RookPlacementCount'"]	3	3	FindStat St000532	FindStat's value for [2]
+findstat-st000532-3	Properties		[CombinatorialStat, [IntegerPartition, [List, 3]], "'RookPlacementCount'"]	4	4	FindStat St000532	FindStat's value for [3]
