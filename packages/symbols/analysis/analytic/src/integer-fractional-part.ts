@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt } from "@enumeratio/engine";
 import { isFiniteNum } from "@enumeratio/ce-patches";
 
@@ -15,9 +15,9 @@ import { isFiniteNum } from "@enumeratio/ce-patches";
 // finite, truncates component-wise (IntegerPart only — Wolfram doesn't extend
 // FractionalPart's sign convention to the complex plane, and neither example calls for it).
 
-const isConcretelyComplex = (x: BoxedExpression): boolean => Number.isFinite(x.im) && x.im !== 0;
+const isConcretelyComplex = (x: Expression): boolean => Number.isFinite(x.im) && x.im !== 0;
 
-function evaluateIntegerPart(ce: ComputeEngine, x: BoxedExpression | undefined): BoxedExpression | undefined {
+function evaluateIntegerPart(ce: ComputeEngine, x: Expression | undefined): Expression | undefined {
   if (x === undefined) return undefined;
   if (x.im === 0) {
     const q = bigRationalAt(x);
@@ -29,7 +29,7 @@ function evaluateIntegerPart(ce: ComputeEngine, x: BoxedExpression | undefined):
   return ce.number(Math.trunc(approx.re));
 }
 
-function evaluateFractionalPart(ce: ComputeEngine, x: BoxedExpression | undefined): BoxedExpression | undefined {
+function evaluateFractionalPart(ce: ComputeEngine, x: Expression | undefined): Expression | undefined {
   if (x === undefined) return undefined;
   if (isConcretelyComplex(x)) return undefined; // real domain only
   const q = bigRationalAt(x);
@@ -47,12 +47,12 @@ export function declareIntegerFractionalPart(ce: ComputeEngine): void {
   ce.declare("IntegerPart", {
     signature: "(number) -> number",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateIntegerPart(ce, ops[0]),
+    evaluate: (ops: readonly Expression[]) => evaluateIntegerPart(ce, ops[0]),
   });
 
   ce.declare("FractionalPart", {
     signature: "(number) -> number",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateFractionalPart(ce, ops[0]),
+    evaluate: (ops: readonly Expression[]) => evaluateFractionalPart(ce, ops[0]),
   });
 }

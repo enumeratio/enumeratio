@@ -1,4 +1,4 @@
-import { type BoxedExpression, type ComputeEngine, isFunction, isSymbol } from "@cortex-js/compute-engine";
+import { type Expression, type ComputeEngine, isFunction, isSymbol } from "@cortex-js/compute-engine";
 import type { Patch } from "../patch.ts";
 import { declareCompile } from "@enumeratio/engine";
 
@@ -31,7 +31,7 @@ export const iteratorUpperBound: Patch = {
       const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
       const native = operator?.canonical;
       if (operator === undefined || native === undefined) continue;
-      (operator as { canonical: unknown }).canonical = (ops: readonly BoxedExpression[], context: never) =>
+      (operator as { canonical: unknown }).canonical = (ops: readonly Expression[], context: never) =>
         native(
           ops.map((op, i) => (i === 0 ? op : withLowerBound(ce, op))),
           context,
@@ -46,7 +46,7 @@ export const iteratorUpperBound: Patch = {
 
 type Operator = Record<
   "evaluate" | "evaluateAsync",
-  ((ops: readonly BoxedExpression[], options: never) => unknown) | undefined
+  ((ops: readonly Expression[], options: never) => unknown) | undefined
 >;
 
 /** `operator[key]` declining (staying the call) when an index has no bounds at all. */
@@ -57,14 +57,13 @@ function holdUnbounded(operator: Operator, key: "evaluate" | "evaluateAsync"): v
 }
 
 /** `Limits(k, Nothing, Nothing)`: an index with neither bound. */
-const isUnbounded = (op: BoxedExpression): boolean =>
+const isUnbounded = (op: Expression): boolean =>
   isFunction(op) && op.operator === "Limits" && op.ops.length === 3 && isNothing(op.ops[1]) && isNothing(op.ops[2]);
 
-const isNothing = (op: BoxedExpression | undefined): boolean =>
-  op !== undefined && isSymbol(op) && op.symbol === "Nothing";
+const isNothing = (op: Expression | undefined): boolean => op !== undefined && isSymbol(op) && op.symbol === "Nothing";
 
 /** `Limits(k, Nothing, n)` as `Limits(k, 1, n)`; anything else as it is. */
-function withLowerBound(ce: ComputeEngine, op: BoxedExpression): BoxedExpression {
+function withLowerBound(ce: ComputeEngine, op: Expression): Expression {
   if (!isFunction(op)) return op;
   const parts = op.ops;
   const [index, lower, upper] = parts;

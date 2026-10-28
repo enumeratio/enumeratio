@@ -1,5 +1,5 @@
-// unstable: the BoxedExpression and ComputeEngine types, which the nucleus facade doesn't re-export
-import type { BoxedExpression, ComputeEngine } from "@enumeratio/engine/unstable";
+// unstable: the Expression and ComputeEngine types, which the nucleus facade doesn't re-export
+import type { Expression, ComputeEngine } from "@enumeratio/engine/unstable";
 import type { Json } from "@enumeratio/ce-patches";
 import {
   type BoxInput,
@@ -62,9 +62,9 @@ function laguerreAt(n: number, a: Cx, x: Cx): Cx {
 /** `ops` is (n, x) or (n, a, x). */
 export function evaluateLaguerreL(
   ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   numeric: boolean,
-): BoxedExpression | undefined {
+): Expression | undefined {
   const n = ops[0];
   const a = ops.length === 3 ? ops[1] : undefined;
   const x = ops.length === 3 ? ops[2] : ops[1];
@@ -86,8 +86,8 @@ export function evaluateLaguerreL(
  * order that is negative, non-integer or past `MAX_NUMERIC_ORDER`. Other targets aren't lowered.
  */
 export const compileLaguerreL = (
-  args: readonly BoxedExpression[],
-  compile: (e: BoxedExpression) => string,
+  args: readonly Expression[],
+  compile: (e: Expression) => string,
   ctx: { language?: string },
 ): string | undefined => {
   const n = args[0];

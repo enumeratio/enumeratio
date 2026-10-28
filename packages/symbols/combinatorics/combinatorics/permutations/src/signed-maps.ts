@@ -58,6 +58,19 @@ const cycleLengthsOfParity = (parity: number): MathJSON =>
     ),
   );
 
+/** The entry of the inverse signed permutation at the positive k: the position of ±k, signed as the entry there. */
+const inverseEntry = (k: MathJSON): MathJSON => {
+  const position: MathJSON = ["IndexWhere", "_raw", ["Function", ["Equal", ["Abs", "x"], k], "x"]];
+  return ["Multiply", ["Sign", at(position)], position];
+};
+
+/** The long cycle c = (1 2 … n −1 −2 … −n) at the nonzero j: c(j) = j + 1, c(n) = −1, c(−j) = −c(j). */
+const longCycleAt = (j: MathJSON): MathJSON => [
+  "Multiply",
+  ["Sign", j],
+  ["If", ["Equal", ["Abs", j], n], -1, ["Add", ["Abs", j], 1]],
+];
+
 export const SIGNED_PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
   {
     name: "Reverse",
@@ -173,5 +186,24 @@ export const SIGNED_PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     summary:
       "The lengths of the negative cycles, largest first: those of the underlying permutation with an odd number of negative entries.",
     note: "FindStat's Mp00169, \"odd cycle type\". Geck and Pfeiffer's negative cycles.",
+  },
+  {
+    name: "KrewerasComplement",
+    from: "signed_permutation",
+    to: "signed_permutation",
+    body: forEach(positions, bind("kc_j", inverseEntry("i"), longCycleAt("kc_j"), "integer")),
+    summary: "π⁻¹c with the long cycle c = (1 … n −1 … −n): position i holds c(π⁻¹(i)).",
+    note: "FindStat's Mp00168. A bijection of order 2n.",
+  },
+  {
+    name: "InverseKrewerasComplement",
+    from: "signed_permutation",
+    to: "signed_permutation",
+    body: forEach(
+      positions,
+      bind("kc_j", longCycleAt("i"), ["Multiply", ["Sign", "kc_j"], inverseEntry(["Abs", "kc_j"])], "integer"),
+    ),
+    summary: "cπ⁻¹ with the long cycle c = (1 … n −1 … −n): position i holds π⁻¹(c(i)).",
+    note: "FindStat's Mp00167, the inverse of KrewerasComplement.",
   },
 ];

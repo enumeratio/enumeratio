@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, operandsOf } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 import { evaluateExpToTrig } from "./exp-to-trig.ts";
@@ -25,7 +25,7 @@ import { evaluateExpToTrig } from "./exp-to-trig.ts";
 
 /** Γ(a)/Γ(b) where a − b is a nonzero concrete integer n: the functional equation
  * Γ(x+1) = x·Γ(x), applied |n| times (either direction). */
-function gammaRatio(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
+function gammaRatio(ce: ComputeEngine, e: Expression): Expression {
   const ops = operandsOf(e);
   if (e.operator !== "Divide" || ops.length !== 2) return e;
   const [num, den] = ops;
@@ -39,7 +39,7 @@ function gammaRatio(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
   const diff = ce.function("Subtract", [a, b]).evaluate();
   if (diff.im !== 0 || !Number.isInteger(diff.re) || diff.re === 0) return e;
   const n = diff.re;
-  const terms: BoxedExpression[] = [];
+  const terms: Expression[] = [];
   if (n > 0) {
     for (let k = 0; k < n; k++) terms.push(ce.function("Add", [b, k]).evaluate());
   } else {
@@ -52,18 +52,18 @@ function gammaRatio(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
 
 /** cosh(u)² − sinh(u)² = 1, recognized once `simplify()` has rearranged the difference into
  * an `Add` of `cosh(u)²` and `−sinh(u)²` for the SAME `u`. */
-export function hyperbolicPythagoras(e: BoxedExpression, ce: ComputeEngine): BoxedExpression {
+export function hyperbolicPythagoras(e: Expression, ce: ComputeEngine): Expression {
   const ops = operandsOf(e);
   if (e.operator !== "Add" || ops.length !== 2) return e;
   const [x, y] = ops;
-  const coshSquared = (t: BoxedExpression): BoxedExpression | undefined => {
+  const coshSquared = (t: Expression): Expression | undefined => {
     const tOps = operandsOf(t);
     const inner = operandsOf(tOps[0]);
     return t.operator === "Power" && tOps.length === 2 && tOps[0].operator === "Cosh" && tOps[1].isSame(2)
       ? inner[0]
       : undefined;
   };
-  const negSinhSquared = (t: BoxedExpression): BoxedExpression | undefined => {
+  const negSinhSquared = (t: Expression): Expression | undefined => {
     const tOps = operandsOf(t);
     const inner = t.operator === "Negate" && tOps.length === 1 ? tOps[0] : undefined;
     const innerOps = inner === undefined ? [] : operandsOf(inner);
@@ -133,7 +133,7 @@ interface ArctanTerm {
   readonly q: bigint;
 }
 
-function arctanTerm(t: BoxedExpression): ArctanTerm | undefined {
+function arctanTerm(t: Expression): ArctanTerm | undefined {
   let c = 1n;
   let inner = t;
   if (t.operator === "Negate") {
@@ -157,7 +157,7 @@ function arctanTerm(t: BoxedExpression): ArctanTerm | undefined {
  * angle is a multiple of π/4 exactly when X = 0, Y = 0 or |X| = |Y|, and the double sum
  * picks which one.
  */
-function arctanSum(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
+function arctanSum(ce: ComputeEngine, e: Expression): Expression {
   if (e.operator !== "Add") return e;
   const terms = operandsOf(e).map(arctanTerm);
   if (terms.length < 2 || terms.some((t) => t === undefined || t.c > 64n || t.c < -64n)) return e;
@@ -205,10 +205,9 @@ function expLogGamma(ce: ComputeEngine, json: unknown): unknown {
   return [head, ...children];
 }
 
-const denestSqrt = (ce: ComputeEngine, e: BoxedExpression): BoxedExpression =>
-  ce.box(denestSqrtJson(e.json) as never).evaluate();
+const denestSqrt = (ce: ComputeEngine, e: Expression): Expression => ce.box(denestSqrtJson(e.json) as never).evaluate();
 
-export function fullSimplify(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression {
+export function fullSimplify(ce: ComputeEngine, expr: Expression): Expression {
   let e = expr.simplify();
   e = gammaRatio(ce, e).simplify();
   e = hyperbolicPythagoras(e, ce);
@@ -225,7 +224,7 @@ export function fullSimplify(ce: ComputeEngine, expr: BoxedExpression): BoxedExp
 export function declareFullSimplify(ce: ComputeEngine): void {
   ce.declare("FullSimplify", {
     signature: "(expression) -> expression",
-    evaluate: (ops: readonly BoxedExpression[], _options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], _options: EvalOptions) => {
       const expr = ops[0];
       return expr === undefined ? undefined : fullSimplify(ce, expr);
     },

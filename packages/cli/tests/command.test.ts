@@ -16,7 +16,7 @@ test("$…$ islands and :latex reach LaTeX; bare LaTeX is rejected", () => {
 
 test("--form selects the output form (unambiguous prefix ok)", () => {
   expect(run(["--form", "wolfram", "x^2 + 1"]).stdout).toBe("Plus[Power[x, 2], 1]\n");
-  expect(run(["-f", "numpy", "Sin(x)"]).stdout).toBe("np.sin(x)\n");
+  expect(run(["-f", "numpy", "Sin(x)"]).stdout).toBe("np.sin((float('nan') if x is None else x))\n");
   expect(run(["-f", "wolf", "x^2 + 1"]).stdout).toBe("Plus[Power[x, 2], 1]\n");
 });
 

@@ -1,4 +1,4 @@
-import type { BigDecimal, BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { BigDecimal, Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
   isFiniteNum,
@@ -236,7 +236,7 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
   return undefined; // did not converge inside the term budget
 }
 
-const toCx = (x: BoxedExpression): Cx => cx(x.re, x.im);
+const toCx = (x: Expression): Cx => cx(x.re, x.im);
 
 /**
  * pFq(upper; b; z)/Γ(b) at the engine's precision, for the one-lower-parameter heads, when
@@ -245,10 +245,10 @@ const toCx = (x: BoxedExpression): Cx => cx(x.re, x.im);
  */
 function regularizedPastDouble(
   ce: ComputeEngine,
-  upper: readonly BoxedExpression[],
-  b: BoxedExpression,
-  z: BoxedExpression,
-): BoxedExpression | undefined {
+  upper: readonly Expression[],
+  b: Expression,
+  z: Expression,
+): Expression | undefined {
   const ua = upper.map((a) => bigRealOperand(ce, a));
   const bb = bigRealOperand(ce, b);
   const zz = bigRealOperand(ce, z);
@@ -258,7 +258,7 @@ function regularizedPastDouble(
 }
 
 /** 1F1(a; b; z)/Γ(b) at the engine's precision for real operands, past a double's digits. */
-function regularized1F1PastDouble(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function regularized1F1PastDouble(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   const [a, b, z] = ops.map((op) => bigRealOperand(ce, op));
   if (a === undefined || b === undefined || z === undefined) return undefined;
   const value = hypergeometric1F1RegularizedBig(a, b, z, ce.precision);
@@ -266,7 +266,7 @@ function regularized1F1PastDouble(ce: ComputeEngine, ops: readonly BoxedExpressi
 }
 
 /** 2F1(a, b; c; z)/Γ(c) at the engine's precision for real operands and z < 1, past a double's digits. */
-function regularized2F1PastDouble(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function regularized2F1PastDouble(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   const [a, b, c, z] = ops.map((op) => bigRealOperand(ce, op));
   if (a === undefined || b === undefined || c === undefined || z === undefined) return undefined;
   const value = hypergeometric2F1RegularizedBig(a, b, c, z, ce.precision);
@@ -274,7 +274,7 @@ function regularized2F1PastDouble(ce: ComputeEngine, ops: readonly BoxedExpressi
 }
 
 /** 3F2(a₁, a₂, a₃; b₁, b₂; z)/(Γ(b₁)Γ(b₂)) at the engine's precision for real operands and |z| < 1. */
-function regularized3F2PastDouble(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function regularized3F2PastDouble(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   const [a1, a2, a3, b1, b2, z] = ops.map((op) => bigRealOperand(ce, op));
   if (a1 === undefined || a2 === undefined || a3 === undefined) return undefined;
   if (b1 === undefined || b2 === undefined || z === undefined) return undefined;
@@ -283,7 +283,7 @@ function regularized3F2PastDouble(ce: ComputeEngine, ops: readonly BoxedExpressi
 }
 
 /** Shared operand plumbing: unbox to Cx, decline on a non-concrete or z = 0-with-pole operand. */
-function operandsOf(ops: readonly BoxedExpression[]): Cx[] | undefined {
+function operandsOf(ops: readonly Expression[]): Cx[] | undefined {
   if (ops.some((o) => o === undefined || !isFiniteNum(o))) return undefined;
   return ops.map(toCx);
 }
@@ -294,7 +294,7 @@ function operandsOf(ops: readonly BoxedExpression[]): Cx[] | undefined {
  *   ₁F₁(a;2a;z)/Γ(2a) = e^(z/2) Γ(a+1/2)/Γ(2a) (z/4)^(1/2-a) I_(a-1/2)(z/2) for a positive non-integer a.
  * Other shapes are left to the numeric series.
  */
-function regularizedBessel(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function regularizedBessel(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   const [z, b] = [ops.at(-1), ops.at(-2)];
   if (z === undefined || b === undefined || !(z.re > 0) || z.im !== 0 || z.unknowns.length > 0) return undefined;
   const lower = bigRationalAt(b);
@@ -335,7 +335,7 @@ function regularizedBessel(ce: ComputeEngine, ops: readonly BoxedExpression[]): 
 }
 
 /** `regularizedMinusOne` on exact operands: b = a − 1 exactly, and a − 1 off the poles. */
-function regularizedMinusOneExact(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function regularizedMinusOneExact(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   const [a, b, z] = ops;
   if (a === undefined || b === undefined || z === undefined) return undefined;
   const shift = ce.function("Subtract", [a, 1]).evaluate();
@@ -353,7 +353,7 @@ function regularizedMinusOneExact(ce: ComputeEngine, ops: readonly BoxedExpressi
 }
 
 /** `regularizedDiagonal` on exact operands: b = a exactly, and a off the poles. */
-function regularizedDiagonalExact(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function regularizedDiagonalExact(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   const [a, b, z] = ops;
   if (a === undefined || b === undefined || z === undefined) return undefined;
   const aExact = bigRationalAt(a);
@@ -416,7 +416,7 @@ const MAX_RAISE = 4;
  * − e^z/Γ(α+1) cancels to exactly 0 only when both sit at the same end; α ≥ 0 is left as written
  * (the chain's canonical end), which also ends the recursion.
  */
-function regularizedRaiseExact(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function regularizedRaiseExact(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   const [a, b, z] = ops;
   if (a === undefined || b === undefined || z === undefined) return undefined;
   if (z.re === 0 || z.im !== 0 || z.unknowns.length > 0) return undefined;
@@ -430,7 +430,7 @@ function regularizedRaiseExact(ce: ComputeEngine, ops: readonly BoxedExpression[
   )
     return undefined;
   if (-alpha[0] / alpha[1] >= BigInt(MAX_RAISE)) return undefined;
-  const build = (c: BoxedExpression): unknown => {
+  const build = (c: Expression): unknown => {
     if (c.re > 0) return ["Hypergeometric1F1Regularized", c.json, ["Add", c.json, 1], z.json];
     const next = ce.function("Add", [c, 1]).evaluate();
     return ["Subtract", ["Divide", ["Exp", z.json], ["Gamma", next.json]], ["Multiply", z.json, build(next)]];
@@ -452,7 +452,7 @@ export function declareHypergeometric(ce: ComputeEngine): void {
   // Hypergeometric0F1(b, z) = 0F1(b; z), entire in z; pole at b a non-positive integer.
   ce.declare("Hypergeometric0F1", {
     signature: "(number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       // ₀F₁(b; 0) = 1 for any b that isn't a pole (a symbolic b included).
       const [b0, z0] = ops;
       if (z0?.re === 0 && z0.im === 0 && b0 !== undefined && !(b0.re <= 0 && Number.isInteger(b0.re))) return ce.One;
@@ -473,7 +473,7 @@ export function declareHypergeometric(ce: ComputeEngine): void {
   // Hypergeometric0F1Regularized(b, z) = 0F1(b; z) / Γ(b), entire in both b and z.
   ce.declare("Hypergeometric0F1Regularized", {
     signature: "(number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const cs = operandsOf(ops);
       if (cs !== undefined && !wantsNumber(ops, options)) return regularizedBessel(ce, ops);
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
@@ -489,7 +489,7 @@ export function declareHypergeometric(ce: ComputeEngine): void {
   // Hypergeometric1F1Regularized(a, b, z) = 1F1(a, b; z) / Γ(b), entire in b and z.
   ce.declare("Hypergeometric1F1Regularized", {
     signature: "(number, number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const cs = operandsOf(ops);
       if (cs !== undefined && !wantsNumber(ops, options))
         return (
@@ -512,7 +512,7 @@ export function declareHypergeometric(ce: ComputeEngine): void {
   // converges only for |z| < 1 (p = q + 1), so declines outside the unit disc.
   ce.declare("Hypergeometric2F1Regularized", {
     signature: "(number, number, number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       // 2F1(a, b; b; z) = (1 − z)⁻ᵃ, so the regularized form is (1 − z)⁻ᵃ / Γ(b): exact for exact
       // operands, and past |z| = 1 where the series gives out. Off the cut [1, ∞) of (1 − z)⁻ᵃ,
       // and not at a pole of Γ (where the regularized value is 0 instead).
@@ -541,7 +541,7 @@ export function declareHypergeometric(ce: ComputeEngine): void {
   // converges only for |z| < 1 (p = q + 1), so declines outside the unit disc.
   ce.declare("Hypergeometric3F2Regularized", {
     signature: "(number, number, number, number, number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const cs = operandsOf(ops);
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
       const [a1, a2, a3, b1, b2, z] = cs;

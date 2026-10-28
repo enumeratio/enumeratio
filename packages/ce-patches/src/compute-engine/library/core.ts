@@ -1,16 +1,16 @@
-import { type BoxedExpression, type ComputeEngine, isDictionary } from "@cortex-js/compute-engine";
+import { type Expression, type ComputeEngine, isDictionary } from "@cortex-js/compute-engine";
 
 /** `About`'s entries, in order, from the dictionary it evaluated to. */
-export function entriesOf(dictionary: BoxedExpression): [string, BoxedExpression][] {
+export function entriesOf(dictionary: Expression): [string, Expression][] {
   if (!isDictionary(dictionary)) return [];
   return [...dictionary.keys].flatMap((key) => {
     const value = dictionary.get(key);
-    return value === undefined ? [] : [[key, value] as [string, BoxedExpression]];
+    return value === undefined ? [] : [[key, value] as [string, Expression]];
   });
 }
 
 /** A dictionary of `entries`, evaluated as `About` assembles its own. */
-export const dictionaryOf = (ce: ComputeEngine, entries: readonly [string, BoxedExpression][]): BoxedExpression =>
+export const dictionaryOf = (ce: ComputeEngine, entries: readonly [string, Expression][]): Expression =>
   ce
     .function(
       "Dictionary",

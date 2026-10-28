@@ -1,32 +1,132 @@
 name: CI
 
+# PRs and main run what a change can affect (tools/ci/affected.ts) with the smoke subset of the long
+# suites; the nightly schedule and a manual run test everything. Branch protection names two required
+# checks, `check + site build` and `tests`.
+
 on:
   push:
     branches: [main]
   pull_request:
+  schedule:
+    - cron: "5 3 * * *" # 03:05 UTC, before nightly.yml
   workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read # `changes` finds the last green main run
   pull-requests: write # the `preview` job keeps a sticky preview-URL comment
 
+# Main never cancels: its run is the one that saves the dist cache. The nightly has its own group so it
+# can't displace a queued push.
 concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: ci-${{ github.event_name == 'schedule' && 'nightly' || github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
+  # Which packages the change can affect, and whether the dists are already cached.
+  #   PR    — against its base.
+  #   main  — against the last green push run (so a skipped or failed run's changes are retested next time);
+  #           everything when there is none.
+  #   nightly and manual runs — everything, and no smoke subset.
+  # Anything that can move every package (lockfile, root config, CI, the engine) selects them all.
+  # A PR confined to web/ and root docs selects nothing, so the shards skip. The shards build only their
+  # selection and what it reads (from the dists `dist` makes).
+  changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.select.outputs.matrix }}
+      site: ${{ steps.select.outputs.site }}
+      dist_key: ${{ steps.key.outputs.key }}
+      warm: ${{ steps.probe.outputs.cache-hit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - id: select
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          case "$EVENT" in
+            pull_request) args=(--base "$PR_BASE" --smoke) ;;
+            push)
+              last=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs?branch=main&event=push&status=success&per_page=1" \
+                --jq '.workflow_runs[0].head_sha // empty' || true)
+              if [ -n "$last" ] && git cat-file -e "$last^{commit}" 2>/dev/null; then args=(--base "$last" --smoke)
+              else args=(--full --smoke); fi ;;
+            *) args=(--full) ;;
+          esac
+          node tools/ci/affected.ts "${args[@]}" --github-output
+      # One key for every build unit's key: an exact hit means the dists are already cached and `dist` is skipped.
+      - id: key
+        run: echo "key=$(node tools/ci/dist-cache.ts keys | sha256sum | cut -c1-32)" >> "$GITHUB_OUTPUT"
+      - id: probe
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/dist-cache
+          key: dist-${{ runner.os }}-${{ steps.key.outputs.key }}
+          lookup-only: true
+
+  # Builds every library package once, for the jobs below. Starts from the newest main entry, so it builds
+  # only the units that changed. Main saves the result to the cache (a PR's would be unreadable to anyone
+  # else); every run hands it on as an artifact. Skipped when the cache already holds this exact set.
+  dist:
+    needs: changes
+    if: needs.changes.outputs.warm != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90 # a cold build (a compute-engine bump voids combinatorics' verdicts) takes 50+ min on a runner
+    permissions:
+      contents: read
+      actions: write # to prune the older cache entries
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          dist-key: ${{ needs.changes.outputs.dist_key }}
+          seed: "true"
+          save: "true"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-cache
+          path: ${{ runner.temp }}/dist-cache
+          compression-level: 1
+          retention-days: 1
+      # Keep main's newest few entries (a PR forks from a recent main, not always the latest) and drop
+      # the rest; no other ref saves one, so what's left over from before is dropped too.
+      - name: prune dist cache entries
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh cache list --key dist-Linux- --limit 100 --json id,ref,createdAt \
+            --jq '[.[] | select(.ref == "refs/heads/main")] | sort_by(.createdAt) | reverse | .[3:][].id' \
+            | xargs -r -n1 gh cache delete
+          gh cache list --key dist-Linux- --limit 100 --json id,ref \
+            --jq '.[] | select(.ref != "refs/heads/main") | .id' | xargs -r -n1 gh cache delete
+
   # Lint/typecheck and the web unit tests. Runs beside the site build, not before it; `build` below
   # fans the two back in under the required check name.
   check:
+    needs: [changes, dist]
+    if: ${{ !cancelled() && needs.changes.result == 'success' && contains(fromJSON('["success","skipped"]'), needs.dist.result) }}
     runs-on: ubuntu-latest
-    timeout-minutes: 40 # a cold dist-cache build (~20 min) precedes the checks
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # the id check reads the base commit
       - uses: ./.github/actions/setup
         with:
-          save: "true"
+          dist-key: ${{ needs.changes.outputs.dist_key }}
+          artifact: "true"
       - run: pnpm exec vp check
       - name: example ids aren't renamed silently
         if: github.event_name == 'pull_request'
@@ -39,13 +139,16 @@ jobs:
   # The docs build; its dist is the artifact `preview` deploys. Skipped when `changes` finds nothing
   # the site reads (a PR to root docs, say); `preview` is then skipped too.
   site:
-    needs: changes
-    if: needs.changes.outputs.site == 'true'
+    needs: [changes, dist]
+    if: ${{ !cancelled() && needs.changes.result == 'success' && needs.changes.outputs.site == 'true' && contains(fromJSON('["success","skipped"]'), needs.dist.result) }}
     runs-on: ubuntu-latest
-    timeout-minutes: 40 # a cold dist-cache build (~20 min) precedes the web build
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
+        with:
+          dist-key: ${{ needs.changes.outputs.dist_key }}
+          artifact: "true"
       - run: pnpm --filter @enumeratio/web run build
       - uses: actions/upload-artifact@v4
         with:
@@ -54,21 +157,26 @@ jobs:
           retention-days: 3
 
   # Branch protection names the required check `check + site build`; the work is in `check` and `site`.
-  # A skipped `site` passes, but only when `changes` itself succeeded.
+  # A skipped `site` passes, but only when `changes` and `dist` themselves did not fail.
   build:
     name: check + site build
-    needs: [changes, check, site]
+    needs: [changes, dist, check, site]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - env:
           CHANGES: ${{ needs.changes.result }}
+          DIST: ${{ needs.dist.result }}
           CHECK: ${{ needs.check.result }}
           SITE: ${{ needs.site.result }}
         run: |
           if [ "$CHANGES" != "success" ] || [ "$CHECK" != "success" ]; then
             echo "changes: $CHANGES, check: $CHECK"
+            exit 1
+          fi
+          if [ "$DIST" != "success" ] && [ "$DIST" != "skipped" ]; then
+            echo "dist build: $DIST"
             exit 1
           fi
           if [ "$SITE" != "success" ] && [ "$SITE" != "skipped" ]; then
@@ -78,53 +186,33 @@ jobs:
           [ "$SITE" = "skipped" ] && echo "::notice::nothing the site reads changed — site build skipped"
           exit 0
 
-  # Which packages a PR can affect (tools/ci/affected.ts): each changed package and what depends on
-  # it. Anything that can move every package (lockfile, root config, CI, the engine) selects them
-  # all, and pushes to main and manual runs always test everything. A PR confined to web/ and root
-  # docs selects nothing, so the shards skip. The shards build only their selection and what it reads.
-  changes:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    outputs:
-      matrix: ${{ steps.select.outputs.matrix }}
-      site: ${{ steps.select.outputs.site }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-      - id: select
-        env:
-          BASE: ${{ github.event.pull_request.base.sha }}
-        run: |
-          if [ -n "$BASE" ]; then node tools/ci/affected.ts --base "$BASE" --github-output
-          else node tools/ci/affected.ts --full --github-output; fi
-
   # A handful of suites (statistics, combinatorics, reference) are CPU-bound and saturate a 4-vCPU
   # runner on their own, so splitting them across separate runners buys real wall-clock time —
   # unlike unordered-but-single-runner, which just makes them contend for the same 4 cores.
   # Rebalance by moving a package between the shards in tools/ci/affected.ts (SHARDS), or split one
-  # package's files across runners with SPLIT there (vitest --shard).
+  # package's files across runners with SPLIT there (vitest --shard). Combinatorics runs its smoke
+  # subset (SMOKE_TESTS, see its smoke-skip.json) except on the nightly, which splits the whole suite.
   test_shard:
     name: tests (${{ matrix.shard }})
-    needs: changes
-    if: needs.changes.outputs.matrix != '[]'
+    needs: [changes, dist]
+    if: ${{ !cancelled() && needs.changes.result == 'success' && needs.changes.outputs.matrix != '[]' && contains(fromJSON('["success","skipped"]'), needs.dist.result) }}
     strategy:
       fail-fast: false
       matrix:
         include: ${{ fromJSON(needs.changes.outputs.matrix) }}
     runs-on: ubuntu-latest
-    timeout-minutes: 40 # a shard pays a cold dist-cache build (~20 min, reference's included) before its tests
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
         with:
           packages: ${{ matrix.pkgs }}
+          dist-key: ${{ needs.changes.outputs.dist_key }}
+          artifact: "true"
       - env:
           PKGS: ${{ matrix.pkgs }}
           ARGS: ${{ matrix.args }}
+          SMOKE_TESTS: ${{ matrix.smoke }}
         run: |
           filters=()
           for p in $PKGS; do filters+=(--filter "$p"); done
@@ -133,20 +221,25 @@ jobs:
 
   # Branch protection names the required check `tests`, but that name has to stay off the matrix
   # job above (each shard would collide on it). This fans back in and fails if any shard did;
-  # shards skipped by `changes` pass, but only when `changes` itself succeeded.
+  # shards skipped by `changes` pass, but only when `changes` and `dist` themselves did not fail.
   tests:
     name: tests
-    needs: [changes, test_shard]
+    needs: [changes, dist, test_shard]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - env:
           CHANGES: ${{ needs.changes.result }}
+          DIST: ${{ needs.dist.result }}
           SHARDS: ${{ needs.test_shard.result }}
         run: |
           if [ "$CHANGES" != "success" ]; then
             echo "change detection failed: $CHANGES"
+            exit 1
+          fi
+          if [ "$DIST" != "success" ] && [ "$DIST" != "skipped" ]; then
+            echo "dist build: $DIST"
             exit 1
           fi
           if [ "$SHARDS" != "success" ] && [ "$SHARDS" != "skipped" ]; then
@@ -156,6 +249,45 @@ jobs:
           [ "$SHARDS" = "skipped" ] && echo "::notice::no package changes — test shards skipped"
           exit 0
 
+  # The nightly's red/green: one rolling issue, opened when the full sweep fails and closed when it passes.
+  nightly-report:
+    if: github.event_name == 'schedule' && always()
+    needs: [build, tests]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/github-script@v7
+        env:
+          RESULTS: ${{ needs.build.result }} ${{ needs.tests.result }}
+        with:
+          script: |
+            const TITLE = 'nightly full CI failing'
+            const ok = process.env.RESULTS.split(' ').every((r) => r === 'success')
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            const found = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} is:issue in:title "${TITLE}"`,
+            })
+            const existing = found.data.items.find((i) => i.title === TITLE)
+            if (ok) {
+              if (existing && existing.state === 'open') {
+                await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number, body: `Green again. ${runUrl}` })
+                await github.rest.issues.update({ ...context.repo, issue_number: existing.number, state: 'closed' })
+              }
+              return
+            }
+            const body = `The nightly full run (every package, combinatorics in full) failed: ${runUrl}`
+            if (existing) {
+              if (existing.state === 'closed') await github.rest.issues.update({ ...context.repo, issue_number: existing.number, state: 'open' })
+              await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number, body })
+            } else {
+              try {
+                await github.rest.issues.createLabel({ ...context.repo, name: 'nightly-fixup', color: 'fbca04', description: 'swept nightly by the fixup routine' })
+              } catch (e) { /* exists */ }
+              await github.rest.issues.create({ ...context.repo, title: TITLE, body, labels: ['bug', 'nightly-fixup'] })
+            }
+
   # Every build of every commit goes up as a Cloudflare Pages preview at <sha7>.enumeratio.pages.dev — PR pushes
   # and main alike — and a push to main also deploys as production (enumeratio.dev). Direct upload of the artifact `site` made: no second
   # site build, no CF build minutes. Same-repo only — fork PRs have no secrets. `--branch` is CF's one alias slot,
@@ -163,7 +295,7 @@ jobs:
   preview:
     name: preview (Cloudflare Pages)
     needs: site
-    if: needs.site.result == 'success' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    if: needs.site.result == 'success' && github.event_name != 'schedule' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

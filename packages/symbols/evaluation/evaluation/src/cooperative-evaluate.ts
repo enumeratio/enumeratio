@@ -7,7 +7,7 @@
 // worker survives, and a session loses no state. Only a tight, uncooperative loop still
 // needs the host's hard kill -- see node.ts/browser.ts's own grace margin around this.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { CancellationError } from "@cortex-js/compute-engine";
 import { DeadlineExceededError, withDeadline } from "@enumeratio/engine";
 
@@ -39,14 +39,14 @@ export function evaluateCooperatively(
   timeMs: number | undefined,
   materialize = false,
 ): CooperativeResult {
-  const boxed: BoxedExpression = ce.box(json as never);
+  const boxed: Expression = ce.box(json as never);
   // A lazy collection (`Range`, `Tabulate`, …) stays lazy unless asked: its `.json` is then
   // still the call, not the elements. Asked, a result with a known count up to
   // MATERIALIZE_LIMIT is expanded in full. Past that (count unknown -- a `Select`/`Filter`
   // result may not report one ahead of walking it -- or too large), it stays lazy, exactly as
   // `materialize: false` would leave it: a caller can tell a lazy expression
   // (`isLazyCollection`) from data, but not a truncated list from a whole one.
-  const run = (): BoxedExpression => {
+  const run = (): Expression => {
     const result = boxed.evaluate();
     if (!materialize || !result.isLazyCollection) return result;
     const count = result.count;

@@ -21,6 +21,7 @@ import {
   operationTypes,
 } from "../collections/src/families/epsil.ts";
 import { allFamilies } from "../collections/src/families/index.ts";
+import { familySourceHash } from "./verdicts.ts";
 import { noVerdicts, type Verdicts } from "../src/statistics/generate-compiled.ts";
 
 export interface Entry {
@@ -205,8 +206,18 @@ export function compiledFamilies(
   const out: Entry[] = [];
   for (const family of (allFamilies.filter(isEpsilFamily) as EpsilFamily[]).filter((f) => only(f.head))) {
     const { code, runs } = compileFamily(ce, family);
-    const interpreted = verdicts.remember({ params: family.params, epsil: family.epsil, code }, () =>
-      disagreements(ce, family, runs),
+    // disagreements reads a family only through these fields, and `early.unrank`/`early.rank`,
+    // whose closures may reach any family source: a family with either keys on all of it.
+    const { early } = family;
+    const data = { ...family, early: undefined, fast: undefined, fastCount: undefined };
+    const reachesSource = early?.unrank !== undefined || early?.rank !== undefined;
+    const interpreted = verdicts.remember(
+      {
+        data,
+        code,
+        source: reachesSource ? familySourceHash() : undefined,
+      },
+      () => disagreements(ce, family, runs),
     );
     for (const operation of interpreted) delete code[operation];
     out.push({ head: family.head, hash: familyHash(family), code, interpreted });

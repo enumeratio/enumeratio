@@ -311,7 +311,7 @@ function returnKinds(returnType: string): ReturnKind[] {
 
 /** `true` when the sample produced a real answer of the expected kind.
  *
- *  `BoxedExpression` is an alias for compute-engine's `Expression` union, and `.symbol`
+ *  `Expression` is an alias for compute-engine's `Expression` union, and `.symbol`
  *  lives only on its narrowed symbol member — same story as `@enumeratio/engine`'s
  *  `symbolNameOf`, not reused here to avoid a new cross-package dependency for one line. */
 function producedAnswer(ce: ComputeEngine, head: string, args: unknown[], kind: ReturnKind): boolean {

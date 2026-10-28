@@ -4,7 +4,7 @@
 // No Node builtins, no file I/O, no rendering — the graphic side of :plot/:glyph
 // is returned as structured data and drawn by whichever adapter runs the core.
 
-import { type BoxedExpression, ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
+import { type Expression, ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
 import { combineNotation, registerNotation } from "@enumeratio/boxes";
 import { setEngineDefaults } from "@enumeratio/engine";
 import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics";
@@ -108,7 +108,7 @@ const FORMAT_OF: Record<Form, string> = {
 };
 
 /** Render a boxed expression in the requested output form (via the format registry). */
-export function renderForm(expr: BoxedExpression, form: Form): string {
+export function renderForm(expr: Expression, form: Form): string {
   return String(exportTo(expr, FORMAT_OF[form]));
 }
 
@@ -168,8 +168,8 @@ export interface EvalResult {
   n: number;
   input: string;
   syntax: Syntax;
-  raw: BoxedExpression;
-  expr: BoxedExpression;
+  raw: Expression;
+  expr: Expression;
 }
 
 export interface PlotPoint {
@@ -195,7 +195,7 @@ export interface SessionDefaults {
 export interface Parsed {
   syntax: Syntax;
   body: string;
-  raw: BoxedExpression;
+  raw: Expression;
 }
 
 /** Every package's notation as one: its LaTeX goes into the dictionary, which is fixed when the
@@ -208,7 +208,7 @@ const CONSTRUCTOR_FOR: Readonly<Record<string, string>> = Object.fromEntries(CAR
 export class Session {
   readonly ce: ComputeEngine;
   readonly history: EvalResult[] = [];
-  readonly vars = new Map<string, BoxedExpression>();
+  readonly vars = new Map<string, Expression>();
   form: Form = "inputform";
   defaultSyntax: Syntax = "epsil";
   private counter = 0;
@@ -263,7 +263,7 @@ export class Session {
    * A negative index counts back from the last line, so `Out(-1)` is `%`.
    */
   private declareHistory(): void {
-    const at = (ops: readonly BoxedExpression[], what: string): EvalResult => {
+    const at = (ops: readonly Expression[], what: string): EvalResult => {
       const n = ops[0]?.re;
       if (n === undefined || !Number.isInteger(n) || n === 0) throw new Error(`${what} takes a line number`);
       const res = n > 0 ? this.history[n - 1] : this.history.at(n);
@@ -321,7 +321,7 @@ export class Session {
     return res;
   }
 
-  render(expr: BoxedExpression, form: Form = this.form): string {
+  render(expr: Expression, form: Form = this.form): string {
     try {
       const out = renderForm(expr, form);
       return out === "" ? `(no ${FORM_LABEL[form]} for this expression)` : out;
@@ -341,7 +341,7 @@ export class Session {
     return this.sampleBoxed(this.ce.box(json as Parameters<ComputeEngine["box"]>[0]), opts);
   }
 
-  private sampleBoxed(expr: BoxedExpression, opts: SampleOptions): PlotPoint[] {
+  private sampleBoxed(expr: Expression, opts: SampleOptions): PlotPoint[] {
     const variable = opts.variable ?? "x";
     const from = opts.from ?? -5;
     const to = opts.to ?? 5;
@@ -355,7 +355,7 @@ export class Session {
     return points;
   }
 
-  private box(syntax: Syntax, body: string): BoxedExpression {
+  private box(syntax: Syntax, body: string): Expression {
     switch (syntax) {
       case "latex": {
         const expr = this.ce.parse(body);
@@ -391,7 +391,7 @@ export class Session {
     });
   }
 
-  private serialize(expr: BoxedExpression, syntax: Syntax): string {
+  private serialize(expr: Expression, syntax: Syntax): string {
     switch (syntax) {
       case "latex":
         return `\\left(${expr.latex}\\right)`;

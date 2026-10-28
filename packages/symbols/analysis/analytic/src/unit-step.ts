@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf } from "@enumeratio/engine";
 import { isFiniteNum } from "@enumeratio/ce-patches";
 
@@ -8,10 +8,10 @@ import { isFiniteNum } from "@enumeratio/ce-patches";
 // are different shapes, so both are handled explicitly rather than via `broadcastable`,
 // which only knows the first.
 
-const isConcretelyComplex = (x: BoxedExpression): boolean => Number.isFinite(x.im) && x.im !== 0;
+const isConcretelyComplex = (x: Expression): boolean => Number.isFinite(x.im) && x.im !== 0;
 
 /** 0 or 1 for a single real argument, or `undefined` to decline (stay symbolic). */
-function unitStepOf(x: BoxedExpression): 0 | 1 | undefined {
+function unitStepOf(x: Expression): 0 | 1 | undefined {
   if (isConcretelyComplex(x)) return undefined;
   const q = bigRationalAt(x);
   if (q !== undefined) return q[0] < 0n ? 0 : 1;
@@ -20,10 +20,10 @@ function unitStepOf(x: BoxedExpression): 0 | 1 | undefined {
   return approx.re < 0 ? 0 : 1;
 }
 
-function evaluateUnitStep(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function evaluateUnitStep(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   if (ops.length === 1 && ops[0]?.operator === "List") {
     const elements = operandsOf(ops[0]);
-    const mapped: BoxedExpression[] = [];
+    const mapped: Expression[] = [];
     for (const el of elements) {
       const v = unitStepOf(el);
       if (v === undefined) return undefined;
@@ -43,6 +43,6 @@ function evaluateUnitStep(ce: ComputeEngine, ops: readonly BoxedExpression[]): B
 export function declareUnitStep(ce: ComputeEngine): void {
   ce.declare("UnitStep", {
     signature: "(number | list<number>, number*) -> number | list<number>",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateUnitStep(ce, ops),
+    evaluate: (ops: readonly Expression[]) => evaluateUnitStep(ce, ops),
   });
 }

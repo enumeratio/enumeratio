@@ -9,7 +9,7 @@ signatures:
   - call: Arcoth(x)
     description: Inverse hyperbolic cotangent, the inverse of Coth.
     library: enumeratio-analytic
-    type: (complex | infinity) -> number
+    type: (complex | infinity | quantity) -> number
     overrides: compute-engine
 seeAlso:
   - Artanh

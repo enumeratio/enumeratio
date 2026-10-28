@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf, widenSignature, wrapOperator } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 
@@ -19,31 +19,31 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 // the argument shape it was written for).
 
 /** Build then finish an expression the way the caller asked: N() for N(...), else evaluate(). */
-const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
+const finish = (expr: Expression, options: EvalOptions): Expression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
 
-const neg = (ce: ComputeEngine, e: BoxedExpression | number | string) => ce.function("Negate", [e]);
-const sqrt = (ce: ComputeEngine, e: BoxedExpression | number | string) => ce.function("Sqrt", [e]);
-const oneMinusSquare = (ce: ComputeEngine, x: BoxedExpression) =>
+const neg = (ce: ComputeEngine, e: Expression | number | string) => ce.function("Negate", [e]);
+const sqrt = (ce: ComputeEngine, e: Expression | number | string) => ce.function("Sqrt", [e]);
+const oneMinusSquare = (ce: ComputeEngine, x: Expression) =>
   ce.function("Add", [1, neg(ce, ce.function("Power", [x, 2]))]);
-const onePlusSquare = (ce: ComputeEngine, x: BoxedExpression) => ce.function("Add", [ce.function("Power", [x, 2]), 1]);
+const onePlusSquare = (ce: ComputeEngine, x: Expression) => ce.function("Add", [ce.function("Power", [x, 2]), 1]);
 
 /** A Multiply with a purely-imaginary numeric factor -- compute-engine folds a literal `i`
  * factor into a concrete `Complex(0, k)` coefficient rather than keeping `ImaginaryUnit`
  * itself as an operand, so this looks for that, same as trig-normalisation.ts. */
-const isImaginaryLiteral = (op: BoxedExpression): boolean => op.operator === "Complex" && op.re === 0 && op.im !== 0;
+const isImaginaryLiteral = (op: Expression): boolean => op.operator === "Complex" && op.re === 0 && op.im !== 0;
 
-const hasImaginaryFactor = (op: BoxedExpression): boolean =>
+const hasImaginaryFactor = (op: Expression): boolean =>
   op.operator === "Multiply" && operandsOf(op).some(isImaginaryLiteral);
 
 /** ComplexInfinity is a numeric value (its own `.symbol` is undefined -- it is not boxed as
  * a plain Symbol node), unlike the signed `PositiveInfinity`/`NegativeInfinity`: all three
  * have `isInfinity === true`, but only complex infinity's imaginary part is itself infinite. */
-const isComplexInfinity = (op: BoxedExpression): boolean => op.isInfinity === true && !Number.isFinite(op.im);
+const isComplexInfinity = (op: Expression): boolean => op.isInfinity === true && !Number.isFinite(op.im);
 
 /** t, given op = i*t: dividing back out by i is exact, letting compute-engine's own
  * arithmetic re-fold the real coefficient. Only called once `hasImaginaryFactor` says yes. */
-const imaginaryFactor = (ce: ComputeEngine, op: BoxedExpression): BoxedExpression =>
+const imaginaryFactor = (ce: ComputeEngine, op: Expression): Expression =>
   ce.function("Divide", [op, "ImaginaryUnit"]).evaluate();
 
 /**
@@ -214,7 +214,7 @@ function declareArccosCosReduction(ce: ComputeEngine): void {
  * extended it). Each is the standard closed form; only the top-level call is rewritten, not
  * an inverse function buried inside a larger expression. */
 function declareTrigToExpInverses(ce: ComputeEngine): void {
-  const rewrites: Record<string, (x: BoxedExpression) => BoxedExpression> = {
+  const rewrites: Record<string, (x: Expression) => Expression> = {
     // arcsin(x) = -i*ln(i*x + sqrt(1 - x^2))
     Arcsin: (x) =>
       ce.function("Multiply", [
@@ -384,13 +384,13 @@ function exactLogInteger(base: bigint, n: bigint): bigint | undefined {
 function declareLogComplexInfinityAndReciprocalPower(ce: ComputeEngine): void {
   /** The base Log(z, base) uses: 2 the explicit second operand, or 10 (compute-engine's own
    * default, matching Log10(x) -> Log(x)) when there is none. */
-  const baseOf = (ops: readonly BoxedExpression[]): bigint | undefined => {
+  const baseOf = (ops: readonly Expression[]): bigint | undefined => {
     if (ops.length === 1) return 10n;
     if (ops.length !== 2) return undefined;
     const b = bigRationalAt(ops[1]);
     return b !== undefined && b[1] === 1n && b[0] > 1n ? b[0] : undefined;
   };
-  const reciprocalExponent = (ops: readonly BoxedExpression[]): bigint | undefined => {
+  const reciprocalExponent = (ops: readonly Expression[]): bigint | undefined => {
     const base = baseOf(ops);
     if (base === undefined) return undefined;
     const r = bigRationalAt(ops[0]);

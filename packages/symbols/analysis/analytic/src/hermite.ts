@@ -1,5 +1,5 @@
-// unstable: the BoxedExpression and ComputeEngine types, which the nucleus facade doesn't re-export
-import type { BoxedExpression, ComputeEngine } from "@enumeratio/engine/unstable";
+// unstable: the Expression and ComputeEngine types, which the nucleus facade doesn't re-export
+import type { Expression, ComputeEngine } from "@enumeratio/engine/unstable";
 import type { Json } from "@enumeratio/ce-patches";
 import {
   type BoxInput,
@@ -60,10 +60,10 @@ function hermiteAt(n: number, x: Cx): Cx {
 
 export function evaluateHermiteH(
   ce: ComputeEngine,
-  n: BoxedExpression,
-  x: BoxedExpression,
+  n: Expression,
+  x: Expression,
   numeric: boolean,
-): BoxedExpression | undefined {
+): Expression | undefined {
   if (!isRealInt(n) || n.re < 0) return undefined;
   const order = n.re;
   if (numeric && isFiniteNum(x)) {
@@ -82,8 +82,8 @@ export function evaluateHermiteH(
  * is negative, non-integer or past `MAX_NUMERIC_ORDER`. Other targets aren't lowered (undefined).
  */
 export const compileHermiteH = (
-  args: readonly BoxedExpression[],
-  compile: (e: BoxedExpression) => string,
+  args: readonly Expression[],
+  compile: (e: Expression) => string,
   ctx: { language?: string },
 ): string | undefined => {
   const [n, x] = args;

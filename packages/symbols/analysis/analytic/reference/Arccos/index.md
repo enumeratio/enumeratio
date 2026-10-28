@@ -9,7 +9,7 @@ signatures:
   - call: Arccos(x)
     description: Arccosine, the inverse of [[Cos]] restricted to $[0, \pi]$.
     library: enumeratio-analytic
-    type: (complex) -> number
+    type: (complex | quantity) -> number
     overrides: compute-engine
 seeAlso:
   - Cos

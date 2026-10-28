@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { isFiniteNum, type NativeEval, numberResult, realCompile } from "@enumeratio/ce-patches";
 import type { Cx } from "@enumeratio/ce-patches";
 
@@ -41,10 +41,10 @@ export const juliaReal = (z: number, cRe: number, n: number): number =>
 
 function evaluateIterate(
   ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   numeric: boolean,
   from: "zero" | "point",
-): BoxedExpression | undefined {
+): Expression | undefined {
   const first = ops[0];
   const second = ops[1];
   const third = ops[2];
@@ -66,14 +66,14 @@ function evaluateIterate(
 export function declareFractals(ce: ComputeEngine): void {
   ce.declare("Mandelbrot", {
     signature: "(number, number?) -> number",
-    evaluate: ((ops: readonly BoxedExpression[], options: { numericApproximation?: boolean }) =>
+    evaluate: ((ops: readonly Expression[], options: { numericApproximation?: boolean }) =>
       evaluateIterate(ce, ops, options.numericApproximation ?? false, "zero")) as NativeEval,
     compile: realCompile(2, { js: "__mb", wgsl: "mandelbrot" }),
   });
 
   ce.declare("Julia", {
     signature: "(number, number, number?) -> number",
-    evaluate: ((ops: readonly BoxedExpression[], options: { numericApproximation?: boolean }) =>
+    evaluate: ((ops: readonly Expression[], options: { numericApproximation?: boolean }) =>
       evaluateIterate(ce, ops, options.numericApproximation ?? false, "point")) as NativeEval,
     compile: realCompile(3, { js: "__ju", wgsl: "julia" }),
   });

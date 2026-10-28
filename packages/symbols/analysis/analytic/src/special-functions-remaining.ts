@@ -1,15 +1,15 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 
 /** A concrete +oo operand -- `PositiveInfinity` boxes as an infinite NUMBER in
  * compute-engine 0.128 (its `.symbol` is undefined), not a symbol; matches q-series.ts's
  * own `n.isInfinity && n.re > 0` check for the same constant. */
-const isPositiveInfinity = (x: BoxedExpression): boolean =>
+const isPositiveInfinity = (x: Expression): boolean =>
   (x as Partial<{ isInfinity: boolean }>).isInfinity === true && x.re > 0;
 
 /** A concrete ImaginaryUnit operand -- also a numeric constant (Complex(0,1)), not a symbol. */
-const isImaginaryUnit = (x: BoxedExpression): boolean => x.re === 0 && x.im === 1;
+const isImaginaryUnit = (x: Expression): boolean => x.re === 0 && x.im === 1;
 
 // Lane B-26 (#113 aspirational sweep, special-functions.ts / analytic-special.ts): the
 // remaining closed forms and limits that don't need Interval/Around/CenteredInterval
@@ -19,7 +19,7 @@ const isImaginaryUnit = (x: BoxedExpression): boolean => x.re === 0 && x.im === 
 // rather than replacing them. Each `wrapOperator` call's own `arity` argument filters the
 // call before the predicate runs, per #141 -- predicates below don't re-check ops.length.
 
-const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
+const finish = (expr: Expression, options: EvalOptions): Expression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
 
 export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
@@ -204,7 +204,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   // `plainX` excludes an Interval/CenteredInterval/Around x: those heads are another
   // lane's item, and x^a / 1-(1-x)^b would otherwise silently do real arithmetic on
   // one and read as an (accidental, wrong-owner) interval-arithmetic result. ---
-  const plainX = (x: BoxedExpression): boolean =>
+  const plainX = (x: Expression): boolean =>
     x.operator !== "Interval" && x.operator !== "CenteredInterval" && x.operator !== "Around";
   // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
@@ -299,7 +299,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       const n = bigIntegerAt(ops[1])!;
       const mFactorial = ce.function("Factorial", [ce.number(m)]);
       const sign = m % 2n === 0n ? -1 : 1;
-      const terms: BoxedExpression[] = [ce.function("Zeta", [ce.number(m + 1n)])];
+      const terms: Expression[] = [ce.function("Zeta", [ce.number(m + 1n)])];
       for (let k = 1n; k < n; k++) {
         terms.push(ce.function("Negate", [ce.function("Power", [ce.number(k), ce.number(-(m + 1n))])]));
       }

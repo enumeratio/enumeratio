@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // DSolveValue(eqn, y(x), x) / DSolveValue({eqn, ic1, ic2, ...}, y(x), x): linear
@@ -38,10 +38,10 @@ import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 // derivatives, ...), forcing that mixes shapes or isn't one of the three above, and
 // initial conditions at anything but a plain real-number point.
 
-const opAt = (expr: BoxedExpression, i: number): BoxedExpression => operandsOf(expr)[i];
-const isSym = (x: BoxedExpression, name: string): boolean => symbolNameOf(x) === name;
-const hasVar = (expr: BoxedExpression, name: string): boolean => expr.has(name);
-const isRealLiteral = (expr: BoxedExpression): boolean => expr.im === 0 && Number.isFinite(expr.re);
+const opAt = (expr: Expression, i: number): Expression => operandsOf(expr)[i];
+const isSym = (x: Expression, name: string): boolean => symbolNameOf(x) === name;
+const hasVar = (expr: Expression, name: string): boolean => expr.has(name);
+const isRealLiteral = (expr: Expression): boolean => expr.im === 0 && Number.isFinite(expr.re);
 const ZERO_EPS = 1e-9;
 
 // ---- reading the equation: which order, whose coefficients, what forcing ------------
@@ -49,7 +49,7 @@ const ZERO_EPS = 1e-9;
 /** `0` for bare `y(x)`, `k` for `Apply(Derivative(y, k), x)` — the one derivative-of-y
  * shape this file recognizes. `undefined` otherwise (including `y` applied to anything
  * but the plain variable `x`). */
-function derivativeOrderOf(term: BoxedExpression, yName: string, xName: string): number | undefined {
+function derivativeOrderOf(term: Expression, yName: string, xName: string): number | undefined {
   if (term.operator === yName) {
     const ops = operandsOf(term);
     return ops.length === 1 && isSym(ops[0]!, xName) ? 0 : undefined;
@@ -69,7 +69,7 @@ function derivativeOrderOf(term: BoxedExpression, yName: string, xName: string):
  * anywhere in its tree? Used to separate the linear `y`-terms from the forcing, and to
  * catch a nonlinear mixture (`y(x)^2`, `Sin(y(x))`, ...) so it declines instead of
  * silently mis-filing it as forcing. */
-function referencesY(expr: BoxedExpression, yName: string): boolean {
+function referencesY(expr: Expression, yName: string): boolean {
   if (expr.operator === yName) return true;
   if (expr.operator === "Derivative" && symbolNameOf(opAt(expr, 0)) === yName) return true;
   return operandsOf(expr).some((o) => referencesY(o, yName));
@@ -78,23 +78,23 @@ function referencesY(expr: BoxedExpression, yName: string): boolean {
 interface ODEShape {
   readonly order: number;
   /** Ascending: `coeffs[k]` is the coefficient of the order-`k` derivative. */
-  readonly coeffs: readonly BoxedExpression[];
-  readonly forcing: BoxedExpression;
+  readonly coeffs: readonly Expression[];
+  readonly forcing: Expression;
 }
 
 /** `diff = LHS - RHS` (already `Subtract`'d and evaluated) classified into the linear
  * `y`-term coefficients and the `x`-only forcing — or `undefined`: a nonlinear term, a
  * `y`-coefficient that still contains `x`, or no `y`-term at all. */
-function classifyODE(ce: ComputeEngine, diff: BoxedExpression, yName: string, xName: string): ODEShape | undefined {
+function classifyODE(ce: ComputeEngine, diff: Expression, yName: string, xName: string): ODEShape | undefined {
   const terms = diff.operator === "Add" ? operandsOf(diff) : [diff];
-  const coeffMap = new Map<number, BoxedExpression>();
-  const forcingParts: BoxedExpression[] = [];
+  const coeffMap = new Map<number, Expression>();
+  const forcingParts: Expression[] = [];
   for (const rawTerm of terms) {
     if (!referencesY(rawTerm, yName)) {
       forcingParts.push(rawTerm);
       continue;
     }
-    let coeff: BoxedExpression = ce.One;
+    let coeff: Expression = ce.One;
     let core = rawTerm;
     if (core.operator === "Negate") {
       coeff = ce.function("Negate", [coeff]).evaluate();
@@ -115,7 +115,7 @@ function classifyODE(ce: ComputeEngine, diff: BoxedExpression, yName: string, xN
   }
   if (coeffMap.size === 0) return undefined;
   const order = Math.max(...coeffMap.keys());
-  const coeffs: BoxedExpression[] = [];
+  const coeffs: Expression[] = [];
   for (let i = 0; i <= order; i++) coeffs.push(coeffMap.get(i) ?? ce.Zero);
   if (coeffs.some((c) => hasVar(c, xName) || !isRealLiteral(c))) return undefined;
   if (coeffs[order]!.re === 0) return undefined; // a degenerate leading coefficient
@@ -131,15 +131,15 @@ function classifyODE(ce: ComputeEngine, diff: BoxedExpression, yName: string, xN
 // ---- characteristic roots ------------------------------------------------------------
 
 type Roots =
-  | { readonly kind: "order1"; readonly r: BoxedExpression }
-  | { readonly kind: "distinct"; readonly r1: BoxedExpression; readonly r2: BoxedExpression }
-  | { readonly kind: "repeated"; readonly r: BoxedExpression }
-  | { readonly kind: "complex"; readonly p: BoxedExpression; readonly q: BoxedExpression };
+  | { readonly kind: "order1"; readonly r: Expression }
+  | { readonly kind: "distinct"; readonly r1: Expression; readonly r2: Expression }
+  | { readonly kind: "repeated"; readonly r: Expression }
+  | { readonly kind: "complex"; readonly p: Expression; readonly q: Expression };
 
 /** `a` is ascending, ALREADY normalized so `a[order] = 1`. */
-function characteristicRoots(ce: ComputeEngine, a: readonly BoxedExpression[], order: number): Roots | undefined {
+function characteristicRoots(ce: ComputeEngine, a: readonly Expression[], order: number): Roots | undefined {
   if (order === 1) return { kind: "order1", r: ce.function("Negate", [a[0]!]).evaluate() };
-  const [a0, a1] = a as [BoxedExpression, BoxedExpression];
+  const [a0, a1] = a as [Expression, Expression];
   const disc = ce.function("Subtract", [ce.function("Power", [a1, 2]), ce.function("Multiply", [4, a0])]).evaluate();
   if (!isRealLiteral(disc)) return undefined;
   if (disc.re > 0) {
@@ -161,11 +161,11 @@ function characteristicRoots(ce: ComputeEngine, a: readonly BoxedExpression[], o
 function buildHomogeneous(
   ce: ComputeEngine,
   roots: Roots,
-  xSym: BoxedExpression,
-  C1: BoxedExpression,
-  C2: BoxedExpression | undefined,
-): BoxedExpression {
-  const expOf = (r: BoxedExpression) => ce.function("Exp", [ce.function("Multiply", [r, xSym])]);
+  xSym: Expression,
+  C1: Expression,
+  C2: Expression | undefined,
+): Expression {
+  const expOf = (r: Expression) => ce.function("Exp", [ce.function("Multiply", [r, xSym])]);
   switch (roots.kind) {
     case "order1":
       return ce.function("Multiply", [C1, expOf(roots.r)]).evaluate();
@@ -198,8 +198,8 @@ function buildHomogeneous(
 /** Every real root this shape carries (for resonance-order counting): 1 value for
  * `order1`/`repeated` (doubled for `repeated`, matching its multiplicity), 2 for
  * `distinct`, none (real) for `complex`. */
-function realRootMultiplicity(roots: Roots, target: BoxedExpression): number {
-  const eq = (a: BoxedExpression) => a.re === target.re && a.im === target.im;
+function realRootMultiplicity(roots: Roots, target: Expression): number {
+  const eq = (a: Expression) => a.re === target.re && a.im === target.im;
   switch (roots.kind) {
     case "order1":
       return eq(roots.r) ? 1 : 0;
@@ -215,7 +215,7 @@ function realRootMultiplicity(roots: Roots, target: BoxedExpression): number {
 }
 
 /** Whether `+/- w*i` is exactly this shape's complex-conjugate pair. */
-function isComplexPairRoot(roots: Roots, w: BoxedExpression): boolean {
+function isComplexPairRoot(roots: Roots, w: Expression): boolean {
   return roots.kind === "complex" && roots.p.re === 0 && roots.p.im === 0 && roots.q.re === w.re;
 }
 
@@ -223,21 +223,21 @@ function isComplexPairRoot(roots: Roots, w: BoxedExpression): boolean {
 
 /** Ascending real coefficients of a polynomial in `x` — `Add`/`Negate`/`Multiply`/an
  * integer `Power`/a constant `Divide`, same shape `function-properties.ts`'s `polyOf`
- * reads, but keeping each coefficient as an exact `BoxedExpression` rather than a
+ * reads, but keeping each coefficient as an exact `Expression` rather than a
  * `number` (this file's coefficients feed straight back into exact CE arithmetic). */
-function polyCoeffsBoxed(ce: ComputeEngine, expr: BoxedExpression, xName: string): BoxedExpression[] | undefined {
+function polyCoeffsBoxed(ce: ComputeEngine, expr: Expression, xName: string): Expression[] | undefined {
   if (!hasVar(expr, xName)) return isRealLiteral(expr) ? [expr] : undefined;
   if (isSym(expr, xName)) return [ce.Zero, ce.One];
   const op = expr.operator;
   const ops = operandsOf(expr);
-  const addPoly = (a: readonly BoxedExpression[], b: readonly BoxedExpression[]): BoxedExpression[] => {
+  const addPoly = (a: readonly Expression[], b: readonly Expression[]): Expression[] => {
     const n = Math.max(a.length, b.length);
-    const out: BoxedExpression[] = [];
+    const out: Expression[] = [];
     for (let i = 0; i < n; i++) out.push(ce.function("Add", [a[i] ?? ce.Zero, b[i] ?? ce.Zero]).evaluate());
     return out;
   };
-  const mulPoly = (a: readonly BoxedExpression[], b: readonly BoxedExpression[]): BoxedExpression[] => {
-    const out: BoxedExpression[] = Array.from({ length: a.length + b.length - 1 }, () => ce.Zero);
+  const mulPoly = (a: readonly Expression[], b: readonly Expression[]): Expression[] => {
+    const out: Expression[] = Array.from({ length: a.length + b.length - 1 }, () => ce.Zero);
     for (let i = 0; i < a.length; i++) {
       for (let j = 0; j < b.length; j++) {
         out[i + j] = ce.function("Add", [out[i + j]!, ce.function("Multiply", [a[i]!, b[j]!])]).evaluate();
@@ -250,7 +250,7 @@ function polyCoeffsBoxed(ce: ComputeEngine, expr: BoxedExpression, xName: string
     return p?.map((c) => ce.function("Negate", [c]).evaluate());
   }
   if (op === "Add") {
-    let acc: BoxedExpression[] = [ce.Zero];
+    let acc: Expression[] = [ce.Zero];
     for (const o of ops) {
       const p = polyCoeffsBoxed(ce, o, xName);
       if (p === undefined) return undefined;
@@ -268,7 +268,7 @@ function polyCoeffsBoxed(ce: ComputeEngine, expr: BoxedExpression, xName: string
     );
   }
   if (op === "Multiply") {
-    let acc: BoxedExpression[] = [ce.One];
+    let acc: Expression[] = [ce.One];
     for (const o of ops) {
       const p = polyCoeffsBoxed(ce, o, xName);
       if (p === undefined) return undefined;
@@ -281,7 +281,7 @@ function polyCoeffsBoxed(ce: ComputeEngine, expr: BoxedExpression, xName: string
     if (!isRealLiteral(n) || !Number.isInteger(n.re) || n.re < 0 || n.re > 8) return undefined;
     const base = polyCoeffsBoxed(ce, ops[0]!, xName);
     if (base === undefined) return undefined;
-    let acc: BoxedExpression[] = [ce.One];
+    let acc: Expression[] = [ce.One];
     for (let i = 0; i < n.re; i++) acc = mulPoly(acc, base);
     return acc;
   }
@@ -298,7 +298,7 @@ function polyCoeffsBoxed(ce: ComputeEngine, expr: BoxedExpression, xName: string
 
 /** `a*x` (any sign; `Negate` folds through, same convention as this repo's other
  * transform tables) — bare `x` gives `a = 1`. */
-function linearCoeffSigned(ce: ComputeEngine, expr: BoxedExpression, name: string): BoxedExpression | undefined {
+function linearCoeffSigned(ce: ComputeEngine, expr: Expression, name: string): Expression | undefined {
   if (isSym(expr, name)) return ce.One;
   if (expr.operator === "Negate") {
     const inner = linearCoeffSigned(ce, opAt(expr, 0), name);
@@ -316,17 +316,17 @@ function linearCoeffSigned(ce: ComputeEngine, expr: BoxedExpression, name: strin
 
 type Forcing =
   | { readonly kind: "zero" }
-  | { readonly kind: "poly"; readonly coeffs: readonly BoxedExpression[] }
-  | { readonly kind: "exp"; readonly amp: BoxedExpression; readonly c: BoxedExpression }
-  | { readonly kind: "trig"; readonly a: BoxedExpression; readonly b: BoxedExpression; readonly w: BoxedExpression };
+  | { readonly kind: "poly"; readonly coeffs: readonly Expression[] }
+  | { readonly kind: "exp"; readonly amp: Expression; readonly c: Expression }
+  | { readonly kind: "trig"; readonly a: Expression; readonly b: Expression; readonly w: Expression };
 
-function classifyForcing(ce: ComputeEngine, forcing: BoxedExpression, xName: string): Forcing | undefined {
+function classifyForcing(ce: ComputeEngine, forcing: Expression, xName: string): Forcing | undefined {
   if (forcing.re === 0 && forcing.im === 0) return { kind: "zero" };
   const poly = polyCoeffsBoxed(ce, forcing, xName);
   if (poly !== undefined) return { kind: "poly", coeffs: poly };
 
-  const asExp = (term: BoxedExpression): { amp: BoxedExpression; c: BoxedExpression } | undefined => {
-    const isE = (o: BoxedExpression) => symbolNameOf(o) === "ExponentialE";
+  const asExp = (term: Expression): { amp: Expression; c: Expression } | undefined => {
+    const isE = (o: Expression) => symbolNameOf(o) === "ExponentialE";
     if (term.operator === "Power" && isE(opAt(term, 0))) {
       const c = linearCoeffSigned(ce, opAt(term, 1), xName);
       return c === undefined ? undefined : { amp: ce.One, c };
@@ -347,9 +347,9 @@ function classifyForcing(ce: ComputeEngine, forcing: BoxedExpression, xName: str
   if (expMatch !== undefined) return { kind: "exp", ...expMatch };
 
   const asTrigTerm = (
-    term: BoxedExpression,
-  ): { readonly fn: "Sin" | "Cos"; readonly coeff: BoxedExpression; readonly w: BoxedExpression } | undefined => {
-    let coeff: BoxedExpression = ce.One;
+    term: Expression,
+  ): { readonly fn: "Sin" | "Cos"; readonly coeff: Expression; readonly w: Expression } | undefined => {
+    let coeff: Expression = ce.One;
     let core = term;
     if (core.operator === "Negate") {
       coeff = ce.function("Negate", [coeff]).evaluate();
@@ -393,10 +393,10 @@ function classifyForcing(ce: ComputeEngine, forcing: BoxedExpression, xName: str
 
 /** Solve the `n x n` system `M . c = rhs` by Cramer's rule (`n <= 3`, exact CE
  * arithmetic throughout) — `undefined` if `M` is singular or `n > 3`. */
-function solveLinear(ce: ComputeEngine, M: BoxedExpression[][], rhs: BoxedExpression[]): BoxedExpression[] | undefined {
+function solveLinear(ce: ComputeEngine, M: Expression[][], rhs: Expression[]): Expression[] | undefined {
   const n = M.length;
   if (n === 0 || n > 3) return undefined;
-  const det = (m: BoxedExpression[][]): BoxedExpression => {
+  const det = (m: Expression[][]): Expression => {
     if (m.length === 1) return m[0]![0]!;
     if (m.length === 2) {
       return ce
@@ -407,9 +407,9 @@ function solveLinear(ce: ComputeEngine, M: BoxedExpression[][], rhs: BoxedExpres
         .evaluate();
     }
     // 3x3, cofactor expansion along the first row.
-    let sum: BoxedExpression = ce.Zero;
+    let sum: Expression = ce.Zero;
     for (let j = 0; j < 3; j++) {
-      const minor: BoxedExpression[][] = [0, 1, 2]
+      const minor: Expression[][] = [0, 1, 2]
         .filter((i) => i !== 0)
         .map((i) => [0, 1, 2].filter((k) => k !== j).map((k) => m[i]![k]!));
       const cofactor = ce
@@ -421,7 +421,7 @@ function solveLinear(ce: ComputeEngine, M: BoxedExpression[][], rhs: BoxedExpres
   };
   const d = det(M);
   if (!isRealLiteral(d) || d.re === 0) return undefined;
-  const out: BoxedExpression[] = [];
+  const out: Expression[] = [];
   for (let col = 0; col < n; col++) {
     const Mi = M.map((row, i) => row.map((v, j) => (j === col ? rhs[i]! : v)));
     out.push(ce.function("Divide", [det(Mi), d]).evaluate());
@@ -434,7 +434,7 @@ function solveLinear(ce: ComputeEngine, M: BoxedExpression[][], rhs: BoxedExpres
  * resonance-degeneracy check would need to reason about the trial's own structure;
  * trying several small values and taking the first non-singular set is simpler and
  * just as safe, since `solveLinear` itself refuses a singular matrix). */
-function candidatePoints(ce: ComputeEngine, w: BoxedExpression | undefined): BoxedExpression[] {
+function candidatePoints(ce: ComputeEngine, w: Expression | undefined): Expression[] {
   const base = [ce.Zero, ce.One, ce.number(2), ce.number(-1), ce.number(3)];
   if (w === undefined) return base;
   const quarterPeriod = ce.function("Divide", [ce.Pi, ce.function("Multiply", [2, w])]).evaluate();
@@ -443,14 +443,9 @@ function candidatePoints(ce: ComputeEngine, w: BoxedExpression | undefined): Box
 
 /** `L[f](x) = sum_k a[k] * f^(k)(x)` — computed via repeated symbolic `D`, matching the
  * ODE's own linear operator. */
-function applyOperator(
-  ce: ComputeEngine,
-  f: BoxedExpression,
-  xSym: BoxedExpression,
-  a: readonly BoxedExpression[],
-): BoxedExpression {
+function applyOperator(ce: ComputeEngine, f: Expression, xSym: Expression, a: readonly Expression[]): Expression {
   let deriv = f;
-  const terms: BoxedExpression[] = [ce.function("Multiply", [a[0]!, f])];
+  const terms: Expression[] = [ce.function("Multiply", [a[0]!, f])];
   for (let k = 1; k < a.length; k++) {
     deriv = ce.function("D", [deriv, xSym]).evaluate();
     terms.push(ce.function("Multiply", [a[k]!, deriv]));
@@ -462,13 +457,13 @@ function applyOperator(
  * forcing`, by sampling the (linear-in-`c_k`) residual at `basis.length` points. */
 function solveUndetermined(
   ce: ComputeEngine,
-  basis: readonly BoxedExpression[],
+  basis: readonly Expression[],
   s: number,
-  forcing: BoxedExpression,
-  a: readonly BoxedExpression[],
-  xSym: BoxedExpression,
-  w: BoxedExpression | undefined,
-): BoxedExpression | undefined {
+  forcing: Expression,
+  a: readonly Expression[],
+  xSym: Expression,
+  w: Expression | undefined,
+): Expression | undefined {
   const n = basis.length;
   const cs = basis.map((_, i) => ce.symbol(`_dsolveC${i}`));
   const xPowS = s === 0 ? ce.One : ce.function("Power", [xSym, s]);
@@ -490,8 +485,8 @@ function solveUndetermined(
   const points = candidatePoints(ce, w);
   for (let start = 0; start + n <= points.length; start++) {
     const pts = points.slice(start, start + n);
-    const M: BoxedExpression[][] = [];
-    const rhs: BoxedExpression[] = [];
+    const M: Expression[][] = [];
+    const rhs: Expression[] = [];
     let ok = true;
     for (const pt of pts) {
       const constantRow = residual
@@ -501,7 +496,7 @@ function solveUndetermined(
         ok = false;
         break;
       }
-      const row: BoxedExpression[] = [];
+      const row: Expression[] = [];
       for (let i = 0; i < n; i++) {
         const unit = Object.fromEntries(cs.map((c, j) => [symbolNameOf(c)!, i === j ? 1 : 0]));
         const withOne = residual.subs({ [xName]: pt, ...unit }).evaluate();
@@ -528,9 +523,9 @@ function solveParticular(
   ce: ComputeEngine,
   forcing: Forcing,
   roots: Roots,
-  a: readonly BoxedExpression[],
-  xSym: BoxedExpression,
-): BoxedExpression | undefined {
+  a: readonly Expression[],
+  xSym: Expression,
+): Expression | undefined {
   switch (forcing.kind) {
     case "zero":
       return ce.Zero;
@@ -571,9 +566,9 @@ function solveParticular(
 
 /** `y(p) == v` or `Apply(Derivative(y, k), p) == v`, `p` a real-number literal. */
 function parseIC(
-  ic: BoxedExpression,
+  ic: Expression,
   yName: string,
-): { readonly k: number; readonly point: BoxedExpression; readonly value: BoxedExpression } | undefined {
+): { readonly k: number; readonly point: Expression; readonly value: Expression } | undefined {
   if (ic.operator !== "Equal") return undefined;
   const lhs = opAt(ic, 0);
   const value = opAt(ic, 1);
@@ -595,27 +590,27 @@ function parseIC(
 
 function applyInitialConditions(
   ce: ComputeEngine,
-  y: BoxedExpression,
-  Cs: readonly BoxedExpression[],
-  ics: readonly BoxedExpression[],
+  y: Expression,
+  Cs: readonly Expression[],
+  ics: readonly Expression[],
   yName: string,
-  xSym: BoxedExpression,
-): BoxedExpression | undefined {
+  xSym: Expression,
+): Expression | undefined {
   if (ics.length !== Cs.length) return undefined;
   const parsed = ics.map((ic) => parseIC(ic, yName));
   if (parsed.some((p) => p === undefined)) return undefined;
   const xName = symbolNameOf(xSym)!;
-  const derivs: BoxedExpression[] = [y];
+  const derivs: Expression[] = [y];
   const maxK = Math.max(...(parsed as Array<NonNullable<(typeof parsed)[number]>>).map((p) => p.k));
   for (let k = 1; k <= maxK; k++) derivs.push(ce.function("D", [derivs[k - 1]!, xSym]).evaluate());
   const cNames = Cs.map((c) => symbolNameOf(c)!);
-  const M: BoxedExpression[][] = [];
-  const rhs: BoxedExpression[] = [];
+  const M: Expression[][] = [];
+  const rhs: Expression[] = [];
   for (const p of parsed as Array<NonNullable<(typeof parsed)[number]>>) {
     const atPoint = derivs[p.k]!.subs({ [xName]: p.point });
     const constant = atPoint.subs(Object.fromEntries(cNames.map((n) => [n, 0]))).evaluate();
     if (!isRealLiteral(constant)) return undefined;
-    const row: BoxedExpression[] = [];
+    const row: Expression[] = [];
     for (let i = 0; i < cNames.length; i++) {
       const unit = Object.fromEntries(cNames.map((n, j) => [n, i === j ? 1 : 0]));
       const withOne = atPoint.subs(unit).evaluate();
@@ -637,10 +632,10 @@ function applyInitialConditions(
  * sample point's numeric residual under `1e-9` — `false` declines the whole solve. */
 function verifySolution(
   ce: ComputeEngine,
-  y: BoxedExpression,
-  a: readonly BoxedExpression[],
-  forcing: BoxedExpression,
-  xSym: BoxedExpression,
+  y: Expression,
+  a: readonly Expression[],
+  forcing: Expression,
+  xSym: Expression,
 ): boolean {
   const residual = ce.function("Subtract", [applyOperator(ce, y, xSym, a), forcing]).evaluate();
   if (residual.re === 0 && residual.im === 0) return true;
@@ -657,11 +652,11 @@ function verifySolution(
 
 function solveODE(
   ce: ComputeEngine,
-  eqn: BoxedExpression,
-  ics: readonly BoxedExpression[],
+  eqn: Expression,
+  ics: readonly Expression[],
   yName: string,
   xName: string,
-): BoxedExpression | undefined {
+): Expression | undefined {
   if (eqn.operator !== "Equal") return undefined;
   const diff = ce.function("Subtract", [opAt(eqn, 0), opAt(eqn, 1)]).evaluate();
   const shape = classifyODE(ce, diff, yName, xName);
@@ -694,7 +689,7 @@ function solveODE(
     if (!verifySolution(ce, y, a, forcing, xSym)) return undefined;
     return y;
   }
-  const rename: Record<string, BoxedExpression> = { _dsolveConst1: ce.function("C", [1]) };
+  const rename: Record<string, Expression> = { _dsolveConst1: ce.function("C", [1]) };
   if (C2 !== undefined) rename._dsolveConst2 = ce.function("C", [2]);
   return y.subs(rename).evaluate();
 }
@@ -703,7 +698,7 @@ export function declareDSolveValue(ce: ComputeEngine): void {
   ce.declare("DSolveValue", {
     signature: "(expression, expression, symbol) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [spec, yApplied, xExpr] = ops;
       if (spec === undefined || yApplied === undefined || xExpr === undefined || ops.length !== 3) return undefined;
       const xName = symbolNameOf(xExpr);
@@ -711,8 +706,8 @@ export function declareDSolveValue(ce: ComputeEngine): void {
       const yName = yApplied.operator;
       const yOps = operandsOf(yApplied);
       if (yName === undefined || yOps.length !== 1 || !isSym(yOps[0]!, xName)) return undefined;
-      let eqn: BoxedExpression;
-      let ics: readonly BoxedExpression[];
+      let eqn: Expression;
+      let ics: readonly Expression[];
       if (spec.operator === "List") {
         const parts = operandsOf(spec);
         if (parts.length === 0) return undefined;

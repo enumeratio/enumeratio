@@ -2,7 +2,7 @@ import { wrapOperator } from "@enumeratio/engine";
 import type { Patch } from "../patch.ts";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { evaluateLerch, principalAtZero } from "../compute-engine/library/special-functions.ts";
-import type { BoxedExpression } from "@cortex-js/compute-engine";
+import type { Expression } from "@cortex-js/compute-engine";
 import { isFiniteNum, wantsNumber } from "../support/box.ts";
 
 // compute-engine evaluates LerchPhi natively, exactly for rational arguments and to the engine's
@@ -24,7 +24,7 @@ const defaultDigits = (): number => (defaultPrecision ??= new ComputeEngine().pr
  * resolve) native's complex answer can't be trusted.
  */
 const noiseFloor = 1e-13;
-const unresolvableImaginary = (ops: readonly BoxedExpression[], answer: BoxedExpression): boolean => {
+const unresolvableImaginary = (ops: readonly Expression[], answer: Expression): boolean => {
   const [z, s, a] = ops;
   if (z === undefined || s === undefined || a === undefined) return false;
   if (![z, s, a].every((x) => isFiniteNum(x) && x.im === 0)) return false;

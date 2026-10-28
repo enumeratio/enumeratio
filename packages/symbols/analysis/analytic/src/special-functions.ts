@@ -1,4 +1,4 @@
-import { type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
+import { type Expression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { type EvalOptions, evaluateBernoulliPolynomial } from "@enumeratio/ce-patches";
 import { compileChebyshevT, compileChebyshevU, evaluateChebyshevT, evaluateChebyshevU } from "./chebyshev.ts";
 import { evaluateCsgn } from "./csgn.ts";
@@ -21,7 +21,7 @@ import { GLAISHER_VALUE } from "./const-glaisher.ts";
 // wanted, symbolic otherwise. Declared by `declareAnalytic` (declare.ts).
 
 /** The evaluate option plus the float-operand rule, as one flag. */
-const wants = (ops: readonly BoxedExpression[], options: EvalOptions): boolean =>
+const wants = (ops: readonly Expression[], options: EvalOptions): boolean =>
   (options.numericApproximation ?? false) || ops.some((o) => (o as Partial<{ isExact: boolean }>).isExact === false);
 
 export function declareSpecialFunctions(ce: ComputeEngine): void {

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // NSum(f, {n, a, b}) -- a numeric series, either a finite range or `b = Infinity`.
@@ -52,7 +52,7 @@ function factorial(n: number): number {
  * non-finite (a domain edge, say), which callers treat as "this method doesn't apply"
  * rather than crashing on it. */
 const termFn =
-  (ce: ComputeEngine, expr: BoxedExpression, n: string) =>
+  (ce: ComputeEngine, expr: Expression, n: string) =>
   (i: number): number | undefined => {
     const v = expr
       .subs({ [n]: ce.number(i) })
@@ -161,7 +161,7 @@ function accelerateSmoothTail(f: (i: number) => number | undefined): { value: nu
 
 const PROBE_TERMS = 60;
 
-function nsumInfinite(ce: ComputeEngine, expr: BoxedExpression, n: string, a: number): BoxedExpression | undefined {
+function nsumInfinite(ce: ComputeEngine, expr: Expression, n: string, a: number): Expression | undefined {
   const raw = termFn(ce, expr, n);
   // Every helper below (and `f` itself, passed on to `accelerateSmoothTail`) is indexed
   // from 0 -- `f(i)` means the term for `n = a + i` -- so a range starting anywhere other
@@ -202,13 +202,7 @@ function nsumInfinite(ce: ComputeEngine, expr: BoxedExpression, n: string, a: nu
   return ce.number(result.value);
 }
 
-function nsumFinite(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  n: string,
-  a: number,
-  b: number,
-): BoxedExpression | undefined {
+function nsumFinite(ce: ComputeEngine, expr: Expression, n: string, a: number, b: number): Expression | undefined {
   if (b < a) return ce.number(0);
   if (b - a + 1 > MAX_FINITE_TERMS) return undefined;
   const f = termFn(ce, expr, n);
@@ -224,7 +218,7 @@ function nsumFinite(
 /** `{n, a, b}` -- the summation variable, its integer start, and its end (a finite
  * integer, or `Infinity`/`PositiveInfinity`). `undefined` for anything else (a non-integer
  * start, a start above the end that isn't the trivial empty-range case, ...). */
-function parseRange(rangeArg: BoxedExpression): { n: string; a: number; b: number | "infinite" } | undefined {
+function parseRange(rangeArg: Expression): { n: string; a: number; b: number | "infinite" } | undefined {
   if (rangeArg.operator !== "List") return undefined;
   const ops = operandsOf(rangeArg);
   if (ops.length !== 3) return undefined;
@@ -244,7 +238,7 @@ export function declareNSum(ce: ComputeEngine): void {
   ce.declare("NSum", {
     signature: "(expression, tuple<symbol, integer, integer | infinity>) -> number",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [f, rangeArg] = ops;
       if (f === undefined || rangeArg === undefined) return undefined;
       const range = parseRange(rangeArg);

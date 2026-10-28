@@ -18,7 +18,7 @@
 // decision (a carrier-only statistic silently landing on ⚠, or a bare-list one being wrapped
 // into a different answer) rather than just re-confirming the statistic's own algorithm.
 
-import type { BoxedExpression } from "@cortex-js/compute-engine";
+import type { Expression } from "@cortex-js/compute-engine";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { CARRIERS, declareCombinatorics } from "@enumeratio/combinatorics";
@@ -45,7 +45,7 @@ function productionEngine(): ComputeEngine {
  * unwrapped, and "wrapped" is the value as-is -- never a double wrap, never a fabricated one.
  */
 function representationsOf(
-  elt: BoxedExpression,
+  elt: Expression,
   carrier: string | undefined,
 ): { bare: MathJsonExpression; wrapped: MathJsonExpression } {
   if (!carrier) return { bare: elt.json, wrapped: elt.json };
@@ -58,17 +58,17 @@ function representationsOf(
 
 /** The row's own flat integers, read off its BARE representation regardless of whether the
  *  element itself arrived already wrapped in its carrier. */
-function intsOf(elt: BoxedExpression, carrier: string | undefined): number[] {
+function intsOf(elt: Expression, carrier: string | undefined): number[] {
   const { bare } = representationsOf(elt, carrier);
   return (bare as unknown as unknown[]).slice(1) as number[];
 }
 
-/** Every row of a finite collection, as its `BoxedExpression` -- bare or already a carrier
+/** Every row of a finite collection, as its `Expression` -- bare or already a carrier
  *  value, whichever the family yields. */
-function rowsOf(ce: ComputeEngine, expr: MathJsonExpression): BoxedExpression[] {
+function rowsOf(ce: ComputeEngine, expr: MathJsonExpression): Expression[] {
   const coll = ce.box(expr as never);
   const total = coll.count as number;
-  const rows: BoxedExpression[] = [];
+  const rows: Expression[] = [];
   for (let i = 1; i <= total; i++) rows.push(coll.at(i)!);
   return rows;
 }
@@ -76,7 +76,7 @@ function rowsOf(ce: ComputeEngine, expr: MathJsonExpression): BoxedExpression[] 
 /** Evaluate `head(_)` at `elt`, through the SAME per-argument wrap decision the table uses:
  *  bare when the head's declared type already accepts it, else wrapped in `carrier` when the
  *  head declares that carrier as its type -- never a blanket choice, never a double wrap. */
-function evalStat(ce: ComputeEngine, head: string, elt: BoxedExpression, carrier: string | undefined): number {
+function evalStat(ce: ComputeEngine, head: string, elt: Expression, carrier: string | undefined): number {
   const { bare, wrapped } = representationsOf(elt, carrier);
   const bareType = bare === elt.json ? elt.type : ce.box(bare as never).type;
   const carrierType = carrier ? (wrapped === elt.json ? elt.type : ce.box(wrapped as never).type) : undefined;

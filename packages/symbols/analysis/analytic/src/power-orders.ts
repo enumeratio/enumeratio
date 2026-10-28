@@ -1,5 +1,5 @@
 import { isRealInt } from "@enumeratio/ce-patches";
-import { type Engine as ComputeEngine, type Expr as BoxedExpression, isNumber, operandsOf } from "@enumeratio/engine";
+import { type Engine as ComputeEngine, type Expr as Expression, isNumber, operandsOf } from "@enumeratio/engine";
 
 // The n-th derivative and Taylor coefficient of c·u^a, for u linear in x and n a symbol: the
 // falling-factorial power rule, which D and SeriesCoefficient otherwise decline at a symbolic
@@ -8,20 +8,20 @@ import { type Engine as ComputeEngine, type Expr as BoxedExpression, isNumber, o
 
 interface PowerForm {
   /** The factor free of x. */
-  readonly c: BoxedExpression;
+  readonly c: Expression;
   /** The linear base `b·x + d`, with `b` its slope. */
-  readonly u: BoxedExpression;
-  readonly b: BoxedExpression;
+  readonly u: Expression;
+  readonly b: Expression;
   /** The exponent `a` (`1/m` for a root). */
-  readonly a: BoxedExpression;
+  readonly a: Expression;
   /** The root's index when the power is the real branch of an odd root. */
   readonly realRoot?: number;
 }
 
-const free = (e: BoxedExpression, x: string): boolean => !e.has(x);
+const free = (e: Expression, x: string): boolean => !e.has(x);
 
 /** `f` as `c·u^a`, or undefined. */
-function powerForm(ce: ComputeEngine, f: BoxedExpression, x: string): PowerForm | undefined {
+function powerForm(ce: ComputeEngine, f: Expression, x: string): PowerForm | undefined {
   const parts = decompose(ce, f, x);
   if (parts === undefined) return undefined;
   const { u, a, c, realRoot } = parts;
@@ -32,11 +32,11 @@ function powerForm(ce: ComputeEngine, f: BoxedExpression, x: string): PowerForm 
 
 function decompose(
   ce: ComputeEngine,
-  f: BoxedExpression,
+  f: Expression,
   x: string,
-): { c: BoxedExpression; u: BoxedExpression; a: BoxedExpression; realRoot?: number } | undefined {
+): { c: Expression; u: Expression; a: Expression; realRoot?: number } | undefined {
   const ops = operandsOf(f);
-  const scaled = (c: BoxedExpression, rest: BoxedExpression) => {
+  const scaled = (c: Expression, rest: Expression) => {
     const inner = decompose(ce, rest, x);
     return inner === undefined ? undefined : { ...inner, c: ce.function("Multiply", [c, inner.c]) };
   };
@@ -88,10 +88,10 @@ function decompose(
  * with u linear in x. */
 export function powerOrderDerivative(
   ce: ComputeEngine,
-  f: BoxedExpression,
+  f: Expression,
   xName: string,
-  k: BoxedExpression,
-): BoxedExpression | undefined {
+  k: Expression,
+): Expression | undefined {
   if (!free(k, xName) || (isNumber(k) && !(isRealInt(k) && k.re >= 0))) return undefined;
   const form = powerForm(ce, f, xName);
   if (form === undefined) return undefined;
@@ -112,11 +112,11 @@ export function powerOrderDerivative(
  * linear in x and nonzero at x0: `c·C(a, n)·bⁿ·u0^(a−n)`, a Piecewise that is 0 for negative n. */
 export function powerSeriesCoefficient(
   ce: ComputeEngine,
-  f: BoxedExpression,
+  f: Expression,
   xName: string,
-  x0: BoxedExpression,
-  n: BoxedExpression,
-): BoxedExpression | undefined {
+  x0: Expression,
+  n: Expression,
+): Expression | undefined {
   if (isNumber(n) || !free(n, xName) || !free(x0, xName)) return undefined;
   const form = powerForm(ce, f, xName);
   if (form === undefined) return undefined;

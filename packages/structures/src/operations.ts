@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { stringAt, symbolNameOf } from "@enumeratio/engine";
 
 // Named operations on a carrier: the combinatorial statistics and maps
@@ -19,9 +19,9 @@ export interface Operation {
   /** What it returns, in compute-engine's type grammar: `integer` for a statistic. */
   readonly type?: string;
   /** The definition: an expression, so it is the specification. Applied to the carrier value. */
-  readonly definition?: (subject: BoxedExpression) => BoxedExpression | undefined;
+  readonly definition?: (subject: Expression) => Expression | undefined;
   /** A fast path, preferred when present; the definition then checks it. */
-  readonly kernel?: (subject: BoxedExpression) => BoxedExpression | undefined;
+  readonly kernel?: (subject: Expression) => Expression | undefined;
   /** The Epsil the definition evaluates, over `subject` (the placeholder for the carrier
    *  value's contents), so a definition that calls this operation can be compiled through it.
    *  `wrap` names the constructor a map's answer is wrapped in. Absent when the definition
@@ -73,7 +73,7 @@ interface Registry {
 }
 
 /** A bijection between carriers, applied to a value of the first. */
-type Transport = (subject: BoxedExpression) => BoxedExpression | undefined;
+type Transport = (subject: Expression) => Expression | undefined;
 
 // On the engine, so a package's dist and another's source share one registry.
 const REGISTRY = Symbol.for("@enumeratio/structures:operations");
@@ -254,7 +254,7 @@ export function operationEpsil(ce: ComputeEngine, carrier: string, name: string)
 /** The carrier `subject` is a value of: its type matched as protocol dispatch matches it. */
 const parsedTypes = new WeakMap<CarrierRegistration, ReturnType<ComputeEngine["type"]>>();
 
-function carrierOf(ce: ComputeEngine, registry: Registry, subject: BoxedExpression): CarrierRegistration | undefined {
+function carrierOf(ce: ComputeEngine, registry: Registry, subject: Expression): CarrierRegistration | undefined {
   // A carrier's own constructor names it outright: `Permutation([…])` is a permutation.
   const named = subject.operator === undefined ? undefined : registry.carriers.get(subject.operator);
   if (named?.type !== undefined) return named;

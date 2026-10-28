@@ -1,5 +1,5 @@
 // unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { wrapOperator } from "@enumeratio/engine";
 import type { BigDecimal } from "@enumeratio/engine/unstable";
 import {
@@ -48,7 +48,7 @@ function declareIncompleteF(ce: ComputeEngine): void {
   if (ce.lookupDefinition("IncompleteEllipticF") !== undefined) return; // never redeclare
   ce.declare("IncompleteEllipticF", {
     signature: "(number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [phi, m] = ops;
       if (phi === undefined || m === undefined) return undefined;
       // F(0,m) = 0 for any m — the integral's upper limit is its lower limit — exact even
@@ -86,7 +86,7 @@ function declareIncompleteE(ce: ComputeEngine): void {
 
   ce.declare("IncompleteEllipticE", {
     signature: "(number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [phi, m] = ops;
       if (phi === undefined || m === undefined || !wantsNumber(ops, options)) return undefined;
       if (!isFiniteNum(phi) || !isFiniteNum(m)) return ce.box(["EllipticE", phi, m]).evaluate(options);
@@ -182,7 +182,7 @@ function declareIncompleteEllipticPi(ce: ComputeEngine): void {
 
   ce.declare("IncompleteEllipticPi", {
     signature: "(number, number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [n, phi, m] = ops;
       if (n === undefined || phi === undefined || m === undefined) return undefined;
       if (!wantsNumber(ops, options) || !isFiniteNum(n) || !isFiniteNum(phi) || !isFiniteNum(m)) {

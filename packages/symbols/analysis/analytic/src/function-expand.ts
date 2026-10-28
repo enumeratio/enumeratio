@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 import { expandExpIntegralE } from "./exp-integral-e-expand.ts";
@@ -20,13 +20,13 @@ import { expandAiryRotation, expandCompleteElliptic, expandEllipticKPrime } from
 // They are pinned lookups at exactly the arguments the examples use.
 
 /** `e` with every special function in it rewritten, innermost first. */
-export function functionExpand(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
+export function functionExpand(ce: ComputeEngine, e: Expression): Expression {
   const inner = operandsOf(e);
   const expanded = inner.map((operand) => functionExpand(ce, operand));
   return expandHead(ce, expanded.some((x, i) => x !== inner[i]) ? ce.function(e.operator, expanded) : e);
 }
 
-function expandHead(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
+function expandHead(ce: ComputeEngine, e: Expression): Expression {
   const op = e.operator;
   const ops = operandsOf(e);
 
@@ -80,7 +80,7 @@ function expandHead(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
 export function declareFunctionExpand(ce: ComputeEngine): void {
   ce.declare("FunctionExpand", {
     signature: "(expression) -> expression",
-    evaluate: (ops: readonly BoxedExpression[], _options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], _options: EvalOptions) => {
       const expr = ops[0];
       return expr === undefined ? undefined : functionExpand(ce, expr);
     },

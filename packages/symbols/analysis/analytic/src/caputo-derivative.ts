@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // CaputoD(f, {x, alpha}): the Caputo fractional derivative of order `alpha` > 0 of `f`
@@ -31,23 +31,23 @@ import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 // than being invented for this one head — see AGENTS.md's instruction to decline rather
 // than add a head this table doesn't otherwise need).
 
-const opAt = (expr: BoxedExpression, i: number): BoxedExpression => operandsOf(expr)[i];
-const isSym = (x: BoxedExpression, name: string): boolean => symbolNameOf(x) === name;
-const hasVar = (expr: BoxedExpression, name: string): boolean => expr.has(name);
+const opAt = (expr: Expression, i: number): Expression => operandsOf(expr)[i];
+const isSym = (x: Expression, name: string): boolean => symbolNameOf(x) === name;
+const hasVar = (expr: Expression, name: string): boolean => expr.has(name);
 
 /** A concrete (non-`x`-dependent) real number literal — `NaN`/complex declines by
  * returning `undefined`. `CaputoD` is declared `lazy`, so an operand like an exact
  * `1/2` order arrives as an uncanonicalized `Rational(1, 2)` call, not a boxed number
  * (`.re`/`.im` are `NaN` on that raw form) — `evaluate()` first canonicalizes it
  * (x-free, so this can't touch `f`'s own `x`-dependence). */
-function realLiteral(expr: BoxedExpression): number | undefined {
+function realLiteral(expr: Expression): number | undefined {
   const value = expr.evaluate();
   return value.im === 0 && Number.isFinite(value.re) ? value.re : undefined;
 }
 
 /** `x^beta` (`beta` a real-literal exponent) or bare `x` (`beta = 1`) — the one shape
  * this file's power-function rule accepts. */
-function powerBeta(ce: ComputeEngine, expr: BoxedExpression, xName: string): BoxedExpression | undefined {
+function powerBeta(ce: ComputeEngine, expr: Expression, xName: string): Expression | undefined {
   if (isSym(expr, xName)) return ce.One;
   if (expr.operator === "Power" && isSym(opAt(expr, 0), xName) && !hasVar(opAt(expr, 1), xName)) {
     return opAt(expr, 1);
@@ -59,10 +59,10 @@ function powerBeta(ce: ComputeEngine, expr: BoxedExpression, xName: string): Box
  * or `undefined` (declined) — see the header comment for which is which. */
 function caputoOfPower(
   ce: ComputeEngine,
-  betaExpr: BoxedExpression,
+  betaExpr: Expression,
   xName: string,
-  alphaExpr: BoxedExpression,
-): BoxedExpression | undefined {
+  alphaExpr: Expression,
+): Expression | undefined {
   const alpha = realLiteral(alphaExpr);
   const beta = realLiteral(betaExpr);
   if (alpha === undefined || beta === undefined || alpha <= 0) return undefined;
@@ -84,15 +84,15 @@ function caputoOfPower(
 
 export function matchCaputoD(
   ce: ComputeEngine,
-  expr: BoxedExpression,
+  expr: Expression,
   xName: string,
-  alpha: BoxedExpression,
-): BoxedExpression | undefined {
+  alpha: Expression,
+): Expression | undefined {
   if (!hasVar(expr, xName)) return ce.Zero;
   if (expr.operator === "Add") {
     const parts = operandsOf(expr).map((o) => matchCaputoD(ce, o, xName, alpha));
     if (parts.some((p) => p === undefined)) return undefined;
-    return ce.function("Add", parts as BoxedExpression[]).evaluate();
+    return ce.function("Add", parts as Expression[]).evaluate();
   }
   if (expr.operator === "Negate") {
     const inner = matchCaputoD(ce, opAt(expr, 0), xName, alpha);
@@ -116,12 +116,12 @@ export function declareCaputoD(ce: ComputeEngine): void {
   ce.declare("CaputoD", {
     signature: "(expression, tuple<symbol, real>) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [f, spec] = ops;
       if (f === undefined || spec === undefined || ops.length !== 2) return undefined;
       const specOps = operandsOf(spec);
       if (specOps.length !== 2) return undefined;
-      const [xExpr, alpha] = specOps as [BoxedExpression, BoxedExpression];
+      const [xExpr, alpha] = specOps as [Expression, Expression];
       const xName = symbolNameOf(xExpr);
       if (xName === undefined) return undefined;
       return matchCaputoD(ce, f, xName, alpha);

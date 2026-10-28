@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-signed-permutation-2-bar-3-1			[FoataHan, [SignedPermutation, [List, 2, -3, 1]]]	[SignedPermutation, [List, 3, 2, 1]]	the signed permutation $2\,\bar 3\,1$

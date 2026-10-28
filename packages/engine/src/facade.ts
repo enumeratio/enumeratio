@@ -3,7 +3,7 @@
 // importing compute-engine, and leave every member reachable. Narrowing them to the members
 // libraries use is a later step.
 import type {
-  BoxedExpression,
+  Expression,
   ComputeEngine,
   MathJsonExpression,
   OperatorDefinition,
@@ -13,7 +13,7 @@ import type {
 /** A compute-engine instance. */
 export type Engine = ComputeEngine;
 /** An expression boxed by an `Engine`. */
-export type Expr = BoxedExpression;
+export type Expr = Expression;
 /** MathJSON: what `box` takes and `.json` gives back. */
 export type Json = MathJsonExpression;
 /** A head's definition, as `ce.declare` takes it. */

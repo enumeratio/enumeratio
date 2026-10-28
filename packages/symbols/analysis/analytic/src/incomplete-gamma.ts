@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt } from "@enumeratio/engine";
 import {
   type BoxInput,
@@ -32,7 +32,7 @@ import { gammaExactValue } from "./widened.ts";
 // half-integers via `gammaExactValue` — the same kernel Binomial/Beta/CatalanNumber reuse.
 
 /** Does this result still mention the head it was supposed to reduce away? */
-const unreduced = (r: BoxedExpression, head: string): boolean => JSON.stringify(r.json).includes(`"${head}"`);
+const unreduced = (r: Expression, head: string): boolean => JSON.stringify(r.json).includes(`"${head}"`);
 
 /**
  * Is `r` literally the float `NaN` value (`isNumberLiteral`, `re` unrepresentable), as
@@ -40,7 +40,7 @@ const unreduced = (r: BoxedExpression, head: string): boolean => JSON.stringify(
  * ALSO `NaN` (it isn't a number at all), so testing `Number.isNaN(r.re)` alone would
  * misfire on every ordinary decline, not just a genuine `NaN` answer.
  */
-const isNaNValue = (r: BoxedExpression | undefined): boolean =>
+const isNaNValue = (r: Expression | undefined): boolean =>
   r !== undefined && (r as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true && Number.isNaN(r.re);
 
 /**
@@ -52,9 +52,9 @@ const isNaNValue = (r: BoxedExpression | undefined): boolean =>
 const rewrite = (
   ce: ComputeEngine,
   head: "Gamma" | "GammaRegularized",
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   options: EvalOptions,
-): BoxedExpression | undefined => {
+): Expression | undefined => {
   const [s, z0, z1] = ops.map((o) => o.json as unknown as BoxInput);
   const difference: BoxInput = ["Subtract", ["Gamma", s, z0], ["Gamma", s, z1]] as BoxInput;
   const expr = ce.box(head === "Gamma" ? difference : (["Divide", difference, ["Gamma", s]] as BoxInput));
@@ -124,9 +124,9 @@ export function evaluateIncompleteGamma(
   ce: ComputeEngine,
   head: "Gamma" | "GammaRegularized",
   native: NativeEval,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expression[],
   options: EvalOptions,
-): BoxedExpression | undefined {
+): Expression | undefined {
   if (ops.length < 3) {
     const r = native?.(ops, options);
     if (ops.length === 1) {
@@ -141,7 +141,7 @@ export function evaluateIncompleteGamma(
     // and native answers the exact call with the float sentinel `NaN` rather than declining
     // it -- our convention keeps `NaN` for a genuinely inexact operand and calls an exact
     // indeterminate ratio `Indeterminate` instead (CE 0.141's own convention elsewhere).
-    const isExact = (op: BoxedExpression): boolean => (op as Partial<{ isExact: boolean }>).isExact !== false;
+    const isExact = (op: Expression): boolean => (op as Partial<{ isExact: boolean }>).isExact !== false;
     if (head === "GammaRegularized" && isNaNValue(r) && isExact(s) && isExact(z)) {
       return ce.symbol("Indeterminate");
     }

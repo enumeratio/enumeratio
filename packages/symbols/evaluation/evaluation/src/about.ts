@@ -5,7 +5,7 @@
 // A name is given as a symbol (`About(Zeta)`) or a field chain (`About(ada.Sq)`). A string is a
 // value, as compute-engine has it: `About("Sin")` describes the string.
 
-import { type BoxedExpression, type ComputeEngine, isFunction, isString, isSymbol } from "@cortex-js/compute-engine";
+import { type Expression, type ComputeEngine, isFunction, isString, isSymbol } from "@cortex-js/compute-engine";
 import { dictionaryOf, entriesOf } from "@enumeratio/ce-patches";
 import { describe, describeNow } from "@enumeratio/manifest";
 import { declareCompile } from "@enumeratio/engine";
@@ -15,7 +15,7 @@ import { declareCompile } from "@enumeratio/engine";
 const NOT_CARRIED = new Set(["examples", "kind", "name"]);
 
 /** The name `x` gives: a symbol, or `a.b` for `Field(a, "b")`. */
-export function nameGiven(x: BoxedExpression | undefined): string | undefined {
+export function nameGiven(x: Expression | undefined): string | undefined {
   if (x === undefined) return undefined;
   if (isSymbol(x)) return x.symbol;
   if (!isFunction(x) || x.operator !== "Field" || x.nops !== 2) return undefined;
@@ -51,7 +51,7 @@ export function aboutOf(
 }
 
 /** A JSON value as an expression: strings as strings, lists as lists, records as dictionaries. */
-function boxed(ce: ComputeEngine, value: unknown): BoxedExpression {
+function boxed(ce: ComputeEngine, value: unknown): Expression {
   if (typeof value === "string") return ce.string(value);
   if (typeof value === "number") return ce.number(value);
   if (typeof value === "boolean") return ce.symbol(value ? "True" : "False");
@@ -69,10 +69,10 @@ function boxed(ce: ComputeEngine, value: unknown): BoxedExpression {
 }
 
 /** An entry's value as plain JSON: a string as itself (not MathJSON's `'quoted'`), a list as an array. */
-const plainOf = (value: BoxedExpression): unknown =>
+const plainOf = (value: Expression): unknown =>
   isString(value) ? value.string : isFunction(value) && value.operator === "List" ? value.ops.map(plainOf) : value.json;
 
-const recordOf = (dictionary: BoxedExpression): Record<string, unknown> =>
+const recordOf = (dictionary: Expression): Record<string, unknown> =>
   Object.fromEntries(entriesOf(dictionary).map(([key, value]) => [key, plainOf(value)]));
 
 /** `a.b.c` as the field chain `Field(Field(a, "b"), "c")`. */
@@ -86,7 +86,7 @@ export function aboutRecord(ce: ComputeEngine, name: string): Record<string, unk
 }
 
 /** `About`'s dictionary for `name`, from compute-engine's own (`native`). */
-function aboutDictionary(ce: ComputeEngine, name: string, native: BoxedExpression): BoxedExpression {
+function aboutDictionary(ce: ComputeEngine, name: string, native: Expression): Expression {
   const own = new Map(entriesOf(native));
   const record = aboutOf(ce, name, recordOf(native));
   return dictionaryOf(
@@ -102,7 +102,7 @@ function aboutDictionary(ce: ComputeEngine, name: string, native: BoxedExpressio
 
 const widened = new WeakSet<ComputeEngine>();
 
-type Evaluate = (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
+type Evaluate = (ops: readonly Expression[], options: unknown) => Expression | undefined;
 
 /** `About` widened with the manifest's description; compute-engine's `examples`, `keywords`
  *  and attribute list come with it. */
@@ -113,7 +113,7 @@ export function declareAbout(ce: ComputeEngine): void {
     | {
         operator?: {
           evaluate?: Evaluate;
-          evaluateAsync?: (ops: readonly BoxedExpression[], options: unknown) => Promise<BoxedExpression | undefined>;
+          evaluateAsync?: (ops: readonly Expression[], options: unknown) => Promise<Expression | undefined>;
         };
       }
     | undefined;

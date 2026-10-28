@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import {
   type EvalOptions,
@@ -218,11 +218,11 @@ export function amplitude(u: Cx, m: Cx): Cx | undefined {
 /** Build then finish an expression the way the caller asked: N() for N(...), else
  * evaluate() — same helper as elementary-special-values.ts, so a Pi or Sqrt(rational)
  * inside an exact special value still comes out as a decimal under N(). */
-const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
+const finish = (expr: Expression, options: EvalOptions): Expression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
 
-const isZeroExpr = (x: BoxedExpression): boolean => x.re === 0 && x.im === 0;
-const isOneExpr = (x: BoxedExpression): boolean => x.re === 1 && x.im === 0;
+const isZeroExpr = (x: Expression): boolean => x.re === 0 && x.im === 0;
+const isOneExpr = (x: Expression): boolean => x.re === 1 && x.im === 0;
 
 /**
  * The four exact building blocks {S, C, D, N} of `pq(u,m)`, as boxed expressions, for
@@ -232,7 +232,7 @@ const isOneExpr = (x: BoxedExpression): boolean => x.re === 1 && x.im === 0;
  * dn = √(1−m)), matching Fungrim/DLMF 22.5. `undefined` when none apply, so the caller
  * falls through to the numeric AGM kernel.
  */
-function exactSCDN(ce: ComputeEngine, u: BoxedExpression, m: BoxedExpression): SCDN<BoxedExpression> | undefined {
+function exactSCDN(ce: ComputeEngine, u: Expression, m: Expression): SCDN<Expression> | undefined {
   if (isZeroExpr(u)) return { S: ce.Zero, C: ce.One, D: ce.One, N: ce.One };
   // The quarter period u = EllipticK(m) is checked before m = 0/1 below: at m = 0 it
   // coincides with u = EllipticK(0) = π/2, where cn is the pole (0), not cos(EllipticK(0))
@@ -255,7 +255,7 @@ function exactSCDN(ce: ComputeEngine, u: BoxedExpression, m: BoxedExpression): S
   return undefined;
 }
 
-const cxOf = (x: BoxedExpression): Cx => cx(x.re, x.im);
+const cxOf = (x: Expression): Cx => cx(x.re, x.im);
 
 /**
  * `u` is far enough out that its own double rounding already exceeds a period, so the AGM
@@ -268,7 +268,7 @@ const cxOf = (x: BoxedExpression): Cx => cx(x.re, x.im);
  * `EllipticK` doesn't return a clean positive real period here — m outside [0, 1] already
  * declines earlier in `sncndn`/`amplitude`, or leaves this a no-op for the exact table.
  */
-function argumentTooFarForDouble(ce: ComputeEngine, u: BoxedExpression, m: BoxedExpression): boolean {
+function argumentTooFarForDouble(ce: ComputeEngine, u: Expression, m: Expression): boolean {
   const K = ce.box(["EllipticK", m]).N();
   if (Number.isFinite(K.re) && K.im === 0 && K.re > 0 && periodsExceedDouble(u.re, 4 * K.re)) return true;
   if (u.im !== 0) {
@@ -284,7 +284,7 @@ function argumentTooFarForDouble(ce: ComputeEngine, u: BoxedExpression, m: Boxed
 function declarePQ(ce: ComputeEngine, head: string, p: PQLetter, q: PQLetter): void {
   ce.declare(head, {
     signature: "(number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [u, m] = ops;
       if (u === undefined || m === undefined) return undefined;
 
@@ -319,7 +319,7 @@ function declarePQ(ce: ComputeEngine, head: string, p: PQLetter, q: PQLetter): v
 function declareJacobiAmplitude(ce: ComputeEngine): void {
   ce.declare("JacobiAmplitude", {
     signature: "(number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [u, m] = ops;
       if (u === undefined || m === undefined) return undefined;
       if (isZeroExpr(u)) return finish(ce.Zero, options);
@@ -348,7 +348,7 @@ function declareJacobiAmplitude(ce: ComputeEngine): void {
 function declareJacobiZN(ce: ComputeEngine): void {
   ce.declare("JacobiZN", {
     signature: "(number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [u, m] = ops;
       if (u === undefined || m === undefined) return undefined;
       if (isZeroExpr(u) || isZeroExpr(m)) return finish(ce.Zero, options);

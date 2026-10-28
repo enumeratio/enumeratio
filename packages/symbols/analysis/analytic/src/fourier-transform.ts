@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, ruleOf } from "@enumeratio/engine";
 import { add, cosPi, cx, mul, scale, sinPi, type Cx, type BoxInput, isFiniteNum } from "@enumeratio/ce-patches";
 
@@ -29,14 +29,14 @@ const floatLiteral = (x: number): BoxInput => {
 };
 
 /** Fourier's entries are machine reals in Wolfram even for exact input: always inexact, never `5`. */
-function floatEntry(ce: ComputeEngine, r: Cx): BoxedExpression {
+function floatEntry(ce: ComputeEngine, r: Cx): Expression {
   if (!Number.isFinite(r.re) || !Number.isFinite(r.im)) return ce.symbol("ComplexInfinity");
   return ce.box((r.im === 0 ? floatLiteral(r.re) : ["Complex", floatLiteral(r.re), floatLiteral(r.im)]) as never);
 }
 
-const complexAt = (x: BoxedExpression): Cx | undefined => (isFiniteNum(x) ? cx(x.re, x.im) : undefined);
+const complexAt = (x: Expression): Cx | undefined => (isFiniteNum(x) ? cx(x.re, x.im) : undefined);
 
-function asVector(expr: BoxedExpression): Cx[] | undefined {
+function asVector(expr: Expression): Cx[] | undefined {
   if (expr.operator !== "List") return undefined;
   const ops = operandsOf(expr);
   if (ops.length === 0) return undefined;
@@ -44,7 +44,7 @@ function asVector(expr: BoxedExpression): Cx[] | undefined {
   return vals.some((v) => v === undefined) ? undefined : (vals as Cx[]);
 }
 
-function asMatrix(expr: BoxedExpression): Cx[][] | undefined {
+function asMatrix(expr: Expression): Cx[][] | undefined {
   if (expr.operator !== "List") return undefined;
   const rows = operandsOf(expr);
   if (rows.length === 0) return undefined;
@@ -106,7 +106,7 @@ function dft2(mat: readonly Cx[][], a: number, b: number): Cx[][] {
  * option name, or a value that isn't a 2-element real list -- declined rather than
  * guessed at.
  */
-function fourierParameters(ce: ComputeEngine, ops: readonly BoxedExpression[]): readonly [number, number] | undefined {
+function fourierParameters(ce: ComputeEngine, ops: readonly Expression[]): readonly [number, number] | undefined {
   if (ops.length === 1) return [0, 1];
   if (ops.length !== 2 || ops[1] === undefined) return undefined;
   const rule = ruleOf(ops[1].json as never);
@@ -116,11 +116,7 @@ function fourierParameters(ce: ComputeEngine, ops: readonly BoxedExpression[]): 
   return [vec[0].re, vec[1].re];
 }
 
-function evaluateFourier(
-  ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
-  invert: boolean,
-): BoxedExpression | undefined {
+function evaluateFourier(ce: ComputeEngine, ops: readonly Expression[], invert: boolean): Expression | undefined {
   const params = fourierParameters(ce, ops);
   const listExpr = ops[0];
   if (params === undefined || listExpr === undefined) return undefined;
@@ -154,10 +150,10 @@ function evaluateFourier(
 export function declareFourierTransform(ce: ComputeEngine): void {
   ce.declare("Fourier", {
     signature: "(list<number> | list<list<number>>, expression?) -> list<number> | list<list<number>>",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateFourier(ce, ops, false),
+    evaluate: (ops: readonly Expression[]) => evaluateFourier(ce, ops, false),
   });
   ce.declare("InverseFourier", {
     signature: "(list<number> | list<list<number>>, expression?) -> list<number> | list<list<number>>",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateFourier(ce, ops, true),
+    evaluate: (ops: readonly Expression[]) => evaluateFourier(ce, ops, true),
   });
 }

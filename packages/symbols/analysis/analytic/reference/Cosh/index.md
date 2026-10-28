@@ -9,7 +9,7 @@ signatures:
   - call: Cosh(x)
     description: 'Hyperbolic cosine: $\cosh(x) = \frac{e^x + e^{-x}}{2}$.'
     library: enumeratio-analytic
-    type: (complex | signed_infinity) -> number
+    type: (complex | quantity | signed_infinity) -> number
     overrides: compute-engine
 seeAlso:
   - Sinh

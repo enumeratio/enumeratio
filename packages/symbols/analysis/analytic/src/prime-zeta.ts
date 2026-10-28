@@ -1,4 +1,4 @@
-import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
+import { BigDecimal, type Expression, type ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
   type Cx,
@@ -248,13 +248,13 @@ function primeZetaPBig(
 }
 
 /** 1/k for a squarefree k: ln ζ(1) is infinite and nothing cancels it. Wolfram answers ComplexInfinity there. */
-function isExactPole(s: BoxedExpression): boolean {
+function isExactPole(s: Expression): boolean {
   if (!(s as Partial<{ isExact: boolean }>).isExact || s.im !== 0 || !(s.re > 0)) return false;
   const k = Math.round(1 / s.re);
   return k >= 1 && k <= 1e6 && Math.abs(1 / s.re - k) < 1e-9 && moebiusUpTo(k)[k] !== 0;
 }
 
-function boxBig(ce: ComputeEngine, value: { re: BigDecimal; im: BigDecimal }, digits: number): BoxedExpression {
+function boxBig(ce: ComputeEngine, value: { re: BigDecimal; im: BigDecimal }, digits: number): Expression {
   const re = bigResult(ce, value.re.toPrecision(digits));
   return value.im.isZero() ? re : ce.function("Complex", [re, bigResult(ce, value.im.toPrecision(digits))]);
 }
@@ -262,7 +262,7 @@ function boxBig(ce: ComputeEngine, value: { re: BigDecimal; im: BigDecimal }, di
 export function declarePrimeZetaP(ce: ComputeEngine): void {
   ce.declare("PrimeZetaP", {
     signature: "(number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [s] = ops;
       if (s === undefined || !isFiniteNum(s)) return undefined;
       if (isExactPole(s)) return ce.symbol("ComplexInfinity");

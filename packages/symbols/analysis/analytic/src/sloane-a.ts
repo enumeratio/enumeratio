@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type EvalOptions, isRealInt } from "@enumeratio/ce-patches";
 
 // SloaneA(id, n) — Fungrim's "the n-th term of OEIS sequence `id`" head, id a quoted
@@ -66,7 +66,7 @@ export function landauFunction(n: number): number {
   return dp[n];
 }
 
-type Alias = (ce: ComputeEngine, n: number) => BoxedExpression;
+type Alias = (ce: ComputeEngine, n: number) => Expression;
 
 const ALIASES: Readonly<Record<string, Alias>> = {
   A000045: (ce, n) => ce.box(["Fibonacci", n]),
@@ -83,10 +83,10 @@ const ALIASES: Readonly<Record<string, Alias>> = {
 export function declareSloaneA(ce: ComputeEngine): void {
   ce.declare("SloaneA", {
     signature: "(string, integer) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [id, n] = ops;
       if (id === undefined || n === undefined || !isRealInt(n)) return undefined;
-      // `id` is the boxed string literal (e.g. 'A000045'); `.string` is a BoxedExpression
+      // `id` is the boxed string literal (e.g. 'A000045'); `.string` is a Expression
       // property the shared `EvalOptions`-based signature above doesn't surface, so it is
       // read structurally rather than widening this file's operand type everywhere else.
       const idString = (id as unknown as { string?: string }).string ?? "";

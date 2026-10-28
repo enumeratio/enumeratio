@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -80,12 +80,12 @@ export class NotatioDynamic extends LitElement {
    * arrives with twenty digits, which is not a thing to put in the middle of a
    * sentence. A list or an application is shortened leaf by leaf; a symbol is left alone.
    */
-  #shorten(engine: ComputeEngine, expr: BoxedExpression): BoxedExpression {
+  #shorten(engine: ComputeEngine, expr: Expression): Expression {
     if (!(this.digits > 0) || !/\d\.\d/.test(expr.latex)) return expr;
     const round = (v: number) => Number(v.toPrecision(this.digits));
     // A list or an application -- a point, a colour, an interval -- is shortened leaf by
     // leaf, since what a control binds is as often a `List` as a number.
-    const ops = (expr as unknown as { ops?: readonly BoxedExpression[] | null }).ops;
+    const ops = (expr as unknown as { ops?: readonly Expression[] | null }).ops;
     if (ops && expr.operator) {
       const shortened = ops.map((op) => this.#shorten(engine, op));
       return engine.box([expr.operator, ...shortened.map((op) => op.json)] as never);

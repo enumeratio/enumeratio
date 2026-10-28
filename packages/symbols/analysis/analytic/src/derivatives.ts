@@ -1,4 +1,4 @@
-import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
+import { type Expression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
 import type { Json } from "@enumeratio/ce-patches";
 import type { BoxInput, EvalOptions, NativeEval } from "@enumeratio/ce-patches";
 import { declareCompile, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
@@ -135,7 +135,7 @@ function operatorOf(ce: ComputeEngine, name: string) {
  * nothing for every other head, whose `D` already returns something evaluated.
  */
 export function declareDerivatives(ce: ComputeEngine): void {
-  const partialOf = (ops: readonly BoxedExpression[]): Partial | undefined => {
+  const partialOf = (ops: readonly Expression[]): Partial | undefined => {
     const f = ops[0];
     if (f === undefined || !isSymbol(f)) return undefined;
     const orders = ops.slice(1).map((order) => order.re);
@@ -159,7 +159,7 @@ export function declareDerivatives(ce: ComputeEngine): void {
     // Evaluating a head with no partial reaches `D` again from inside compute-engine's
     // `Derivative`, which would re-evaluate without end: only the outermost call iterates.
     let iterating = false;
-    d.evaluate = (ops: readonly BoxedExpression[], options: EvalOptions): BoxedExpression | undefined => {
+    d.evaluate = (ops: readonly Expression[], options: EvalOptions): Expression | undefined => {
       const spec = ops[1];
       const [variable, order] = spec?.operator === "List" && ops.length === 2 ? operandsOf(spec) : [];
       const name = variable === undefined ? undefined : symbolNameOf(variable);

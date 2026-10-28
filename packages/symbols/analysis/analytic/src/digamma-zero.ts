@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type EvalOptions, isRealInt, wantsNumber } from "@enumeratio/ce-patches";
 
 // DigammaFunctionZero(n) — Fungrim's n-th real zero of the digamma function ψ.
@@ -47,7 +47,7 @@ export function digammaFunctionZero(ce: ComputeEngine, n: number): number {
 export function declareDigammaFunctionZero(ce: ComputeEngine): void {
   ce.declare("DigammaFunctionZero", {
     signature: "(integer) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const n = ops[0];
       if (n === undefined || !isRealInt(n) || n.re < 0) return undefined;
       if (!wantsNumber(ops, options)) return undefined;

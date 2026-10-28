@@ -1,4 +1,4 @@
-import type { BoxedExpression } from "@cortex-js/compute-engine";
+import type { Expression } from "@cortex-js/compute-engine";
 import { BigDecimal } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import {
@@ -86,7 +86,7 @@ export function kernelOf(head: string, arity: number): ((args: readonly Ball[]) 
 
 /** A ball holding `x`'s value, about `digits` digits wide, or undefined when `x` is not a
  * certified head on exact arguments, or its kernel declines them. */
-export function enclosure(x: BoxedExpression, digits: number): Ball | undefined {
+export function enclosure(x: Expression, digits: number): Ball | undefined {
   const ops = operandsOf(x);
   const kernel = kernelOf(x.operator, ops.length);
   if (kernel === undefined) return undefined;
@@ -101,7 +101,7 @@ const DECIMAL = /^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i;
 
 /** An exact argument's ball at the working precision -- radius 0 for an integer or a decimal,
  * the division's rounding for a rational -- or undefined for anything else. */
-export function argumentBall(e: BoxedExpression): Ball | undefined {
+export function argumentBall(e: Expression): Ball | undefined {
   const json = e.json as unknown;
   const digits =
     typeof json === "number"

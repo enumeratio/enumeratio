@@ -7,7 +7,7 @@
 // `At` answers any range directly; one without it is walked, with a window of the walk kept. A
 // filter or a sort scans in slices that yield and honor an abort, and say how far they have got.
 
-import type { BoxedExpression, BoxedType, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, BoxedType, ComputeEngine } from "@cortex-js/compute-engine";
 import { type MathJsonExpression, serializeEpsil } from "@cortex-js/compute-engine/epsil";
 import {
   type Box,
@@ -91,8 +91,8 @@ const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
 
 /** A family's unrank by a bigint index, which it takes as digits. */
 interface DigitsUnrank {
-  readonly coll: BoxedExpression;
-  readonly at: (c: BoxedExpression, index: string) => BoxedExpression | undefined;
+  readonly coll: Expression;
+  readonly at: (c: Expression, index: string) => Expression | undefined;
 }
 
 const yieldNow = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 0));
@@ -159,7 +159,7 @@ export class CollectionRows implements RowSource {
   readonly rowHeight = 1.9;
   readonly #ce: ComputeEngine;
   readonly #spec: RowSourceSpec;
-  readonly #coll: BoxedExpression;
+  readonly #coll: Expression;
   /** The collection's own count: exact, infinite, or not known (a walk will find out). */
   readonly #total: RowCount;
   readonly #cols: readonly Column[];
@@ -170,10 +170,10 @@ export class CollectionRows implements RowSource {
   #carrierType: BoxedType | undefined;
   readonly #wrapCache = new Map<string, boolean>();
   readonly #cells = new Map<string, CellValue>();
-  readonly #elements = new Map<bigint, BoxedExpression>();
+  readonly #elements = new Map<bigint, Expression>();
 
   // The walk of a source with no `At`.
-  #walker: Iterator<BoxedExpression, undefined> | undefined;
+  #walker: Iterator<Expression, undefined> | undefined;
   #walked = 0n;
   #walkEnd: bigint | undefined;
 
@@ -229,7 +229,7 @@ export class CollectionRows implements RowSource {
 
   // ---- counts ----------------------------------------------------------------------------
 
-  #countOf(coll: BoxedExpression): RowCount {
+  #countOf(coll: Expression): RowCount {
     const known = coll.count;
     if (known === Number.POSITIVE_INFINITY) return { kind: "infinite" };
     if (typeof known === "bigint") return { kind: "exact", n: known };
@@ -286,7 +286,7 @@ export class CollectionRows implements RowSource {
   // ---- elements --------------------------------------------------------------------------
 
   /** The row at a source index, by unranking (random) or from the walk's window. */
-  #at(index: bigint): BoxedExpression | undefined {
+  #at(index: bigint): Expression | undefined {
     const hit = this.#elements.get(index);
     if (hit) return hit;
     if (!this.random) return undefined;
@@ -297,7 +297,7 @@ export class CollectionRows implements RowSource {
     return elt;
   }
 
-  #unrank(index: bigint): BoxedExpression | undefined {
+  #unrank(index: bigint): Expression | undefined {
     const coll = this.#coll;
     if (index <= MAX_SAFE)
       return coll.at(Number(index)) ?? this.#ce.box(["At", coll.json, Number(index)] as BoxInput).evaluate();
@@ -314,7 +314,7 @@ export class CollectionRows implements RowSource {
   /** The family's bigint unranks to try: its own, then its rewrite's (`Permutations(n)` is `SymmetricGroup(n)`). */
   #digitsAt(): DigitsUnrank[] {
     if (this.#digits === undefined) {
-      const handler = (c: BoxedExpression): DigitsUnrank["at"] | undefined => {
+      const handler = (c: Expression): DigitsUnrank["at"] | undefined => {
         const def = this.#ce.lookupDefinition(c.operator);
         const collection =
           def && "operator" in def
@@ -375,7 +375,7 @@ export class CollectionRows implements RowSource {
     index: bigint,
     signal: AbortSignal | undefined,
     budget = WALK_BUDGET,
-  ): Promise<BoxedExpression | undefined> {
+  ): Promise<Expression | undefined> {
     if (this.random) return this.#at(index);
     return (await this.#walkTo(index, signal, budget)) ? this.#elements.get(index) : undefined;
   }
@@ -406,12 +406,12 @@ export class CollectionRows implements RowSource {
     this.#cells.clear();
   }
 
-  #probeFirst(): BoxedExpression | undefined {
+  #probeFirst(): Expression | undefined {
     const next = this.#coll.each().next();
     return next.done === true ? undefined : next.value;
   }
 
-  #representations(elt: BoxedExpression): { bare: Json; wrapped: Json } {
+  #representations(elt: Expression): { bare: Json; wrapped: Json } {
     const name = this.#carrierName;
     const json = elt.json;
     if (!name || elt.operator !== name || !Array.isArray(json) || json.length !== 2)
@@ -419,11 +419,7 @@ export class CollectionRows implements RowSource {
     return { bare: carrierBody(json[1] as Json, this.#carrierParams), wrapped: json };
   }
 
-  #typesFor(
-    elt: BoxedExpression,
-    bare: Json,
-    wrapped: Json,
-  ): { bareType: BoxedType; carrierType: BoxedType | undefined } {
+  #typesFor(elt: Expression, bare: Json, wrapped: Json): { bareType: BoxedType; carrierType: BoxedType | undefined } {
     if (!this.#carrierName) return { bareType: elt.type, carrierType: undefined };
     if (!this.#bareType) {
       try {
@@ -451,14 +447,14 @@ export class CollectionRows implements RowSource {
     return decision;
   }
 
-  #substitute(json: Json, elt: BoxedExpression): Json {
+  #substitute(json: Json, elt: Expression): Json {
     if (!this.#carrierName) return substituteRow(json, elt.json);
     const { bare, wrapped } = this.#representations(elt);
     const { bareType, carrierType } = this.#typesFor(elt, bare, wrapped);
     return substituteRowPerHead(json, bare, wrapped, (head, i) => this.#decide(head, i, bareType, carrierType));
   }
 
-  #cell(col: Column, index: bigint, elt: BoxedExpression): CellValue {
+  #cell(col: Column, index: bigint, elt: Expression): CellValue {
     const key = `${col.source}\0${index}`;
     const hit = this.#cells.get(key);
     if (hit) return hit;
@@ -481,7 +477,7 @@ export class CollectionRows implements RowSource {
     return value;
   }
 
-  #holds(elt: BoxedExpression): boolean {
+  #holds(elt: Expression): boolean {
     try {
       return this.#ce.box(this.#substitute(this.#predicate.json!, elt) as BoxInput).evaluate().json === "True";
     } catch {
@@ -513,7 +509,7 @@ export class CollectionRows implements RowSource {
   }
 
   /** A row's cells, over the display columns `[first, last)`. */
-  #cellsOf(index: bigint, elt: BoxedExpression, first: number, last: number): Box[] {
+  #cellsOf(index: bigint, elt: Expression, first: number, last: number): Box[] {
     const hasGlyph = this.columns.length > this.#cols.length + 1;
     const out: Box[] = [];
     for (let c = first; c < Math.min(last, this.columns.length); c++) {

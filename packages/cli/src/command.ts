@@ -4,7 +4,7 @@
 // `eval` (the default), `convert`, `forms`, `formats`, `completion`; `serve` is
 // Node-only and handled by the bin before it gets here.
 
-import type { BoxedExpression } from "@cortex-js/compute-engine";
+import type { Expression } from "@cortex-js/compute-engine";
 import { allFormats } from "@enumeratio/formats";
 import { can, type Environment, ENVIRONMENTS, environmentNamed, PIPE } from "@enumeratio/frontend";
 import { evaluateReadouts, reduce } from "@enumeratio/frontend";
@@ -112,7 +112,7 @@ export function evaluateCommand(req: EvalRequest, defaults: SessionDefaults = {}
     precision: req.precision ?? defaults.precision,
   });
   try {
-    let expr: BoxedExpression;
+    let expr: Expression;
     let syntax: Syntax;
     if (req.evaluate === false) {
       ({ raw: expr, syntax } = session.parse(req.input));
@@ -146,7 +146,7 @@ export function evaluateCommand(req: EvalRequest, defaults: SessionDefaults = {}
   }
 }
 
-function render(expr: BoxedExpression, form: Form): string {
+function render(expr: Expression, form: Form): string {
   const out = renderForm(expr, form);
   if (out === "") throw new Error(`no ${FORM_LABEL[form]} for this expression`);
   return out;

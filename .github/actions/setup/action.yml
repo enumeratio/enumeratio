@@ -5,9 +5,25 @@ inputs:
   packages:
     description: Space-separated package names to build, with everything they read. Empty builds every library package.
     default: ""
-  save:
-    description: Save the dist cache after building. Only the job that builds everything should.
+  dist-key:
+    description: >-
+      Names the dist cache's exact entry (`dist-<os>-<key>`, the hash of every build unit's key), made by
+      the `dist` job. `auto` computes it here. Empty restores only the newest entry, as a seed.
+    default: ""
+  seed:
+    description: With a `dist-key`, also restore the newest entry as a starting point (the job that builds).
     default: "false"
+  artifact:
+    description: With a `dist-key` that has no entry, download the `dist-cache` artifact the `dist` job uploaded (PRs, which never save).
+    default: "false"
+  save:
+    description: Save the dist cache under `dist-key`, from main only. Only the job that builds everything should.
+    default: "false"
+
+outputs:
+  dist-key:
+    description: The dist cache key in use.
+    value: ${{ steps.key.outputs.key }}
 
 runs:
   using: composite
@@ -21,8 +37,34 @@ runs:
         cache: pnpm
     - run: pnpm install --frozen-lockfile
       shell: bash
+    - id: key
+      shell: bash
+      env:
+        DIST_KEY: ${{ inputs.dist-key }}
+      run: |
+        if [ "$DIST_KEY" = auto ]; then DIST_KEY=$(node tools/ci/dist-cache.ts keys | sha256sum | cut -c1-32); fi
+        echo "key=$DIST_KEY" >> "$GITHUB_OUTPUT"
     # Entries are content-addressed, so any earlier cache is a valid seed; the newest one wins.
-    - uses: actions/cache/restore@v4
+    - if: steps.key.outputs.key == '' || inputs.seed == 'true'
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ runner.temp }}/dist-cache
+        key: dist-${{ runner.os }}-${{ github.sha }}
+        restore-keys: dist-${{ runner.os }}-
+    - id: exact
+      if: steps.key.outputs.key != '' && inputs.seed != 'true'
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ runner.temp }}/dist-cache
+        key: dist-${{ runner.os }}-${{ steps.key.outputs.key }}
+    - if: steps.exact.outputs.cache-hit != 'true' && steps.key.outputs.key != '' && inputs.seed != 'true' && inputs.artifact == 'true'
+      uses: actions/download-artifact@v4
+      with:
+        name: dist-cache
+        path: ${{ runner.temp }}/dist-cache
+    # No entry for this exact set and nothing downloaded: start from the newest one rather than from nothing.
+    - if: steps.key.outputs.key != '' && inputs.seed != 'true' && steps.exact.outputs.cache-hit != 'true' && inputs.artifact != 'true'
+      uses: actions/cache/restore@v4
       with:
         path: ${{ runner.temp }}/dist-cache
         key: dist-${{ runner.os }}-${{ github.sha }}
@@ -37,10 +79,11 @@ runs:
         # 4 vCPUs); the units' own parallelism keeps its default of 4.
         BUILD_JOBS: 3
         DIST_CACHE_JOBS: 4
-    - if: inputs.save == 'true' && steps.build.outputs.built != '0'
+    # Main only: a PR's entry is unreadable to everyone else, and the PR hands its dists on as an artifact.
+    - if: inputs.save == 'true' && steps.key.outputs.key != '' && github.ref == 'refs/heads/main'
       uses: actions/cache/save@v4
       with:
         path: ${{ runner.temp }}/dist-cache
-        key: dist-${{ runner.os }}-${{ github.sha }}
+        key: dist-${{ runner.os }}-${{ steps.key.outputs.key }}
     - run: node tools/ci/clean-tree.ts
       shell: bash

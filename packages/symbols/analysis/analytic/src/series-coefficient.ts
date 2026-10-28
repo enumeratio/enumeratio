@@ -1,4 +1,4 @@
-import { isNumber, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
+import { isNumber, type Expression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { isRealInt } from "@enumeratio/ce-patches";
 import { powerSeriesCoefficient } from "./power-orders.ts";
@@ -25,7 +25,7 @@ import { fractionFactors } from "./transforms.ts";
 // ComplexInfinity/NaN means f wasn't actually analytic at x0, and the call is declined rather
 // than risk a wrong closed form.
 
-function isDeclinedResult(r: BoxedExpression, xName: string): boolean {
+function isDeclinedResult(r: Expression, xName: string): boolean {
   // A concrete numeric literal is bad exactly when it's not finite — NaN (0/0, an
   // indeterminate form) or an infinite magnitude (ComplexInfinity, a pole at x0). Both are
   // represented as number literals with a non-finite re/im here, not as named symbols, so
@@ -41,13 +41,13 @@ function isDeclinedResult(r: BoxedExpression, xName: string): boolean {
 
 function seriesCoefficient(
   ce: ComputeEngine,
-  f: BoxedExpression,
+  f: Expression,
   xName: string,
-  x0: BoxedExpression,
+  x0: Expression,
   n: number,
-): BoxedExpression | undefined {
+): Expression | undefined {
   if (!Number.isInteger(n) || n < 0) return undefined; // Laurent/Puiseux — declined, see header
-  let d: BoxedExpression = f;
+  let d: Expression = f;
   for (let k = 0; k < n; k++) {
     d = ce.box(["D", d.json, xName] as never).evaluate();
     if (d.operator === "D") return undefined; // compute-engine's own D declined
@@ -65,15 +65,15 @@ function seriesCoefficient(
  */
 function besselCoefficient(
   ce: ComputeEngine,
-  f: BoxedExpression,
+  f: Expression,
   xName: string,
-  x0: BoxedExpression,
-  n: BoxedExpression,
-): BoxedExpression | undefined {
+  x0: Expression,
+  n: Expression,
+): Expression | undefined {
   if (!(x0.re === 0 && x0.im === 0)) return undefined;
-  const consts: BoxedExpression[] = [];
+  const consts: Expression[] = [];
   let m = 0;
-  let bessel: BoxedExpression | undefined;
+  let bessel: Expression | undefined;
   const { numer, denom } = fractionFactors(f);
   for (const [factors, sign] of [
     [numer, 1],
@@ -121,10 +121,10 @@ function besselCoefficient(
 }
 
 /** `arg` as `k·x` with `k` free of x (bare `x` gives 1). */
-function linearInX(ce: ComputeEngine, arg: BoxedExpression, xName: string): BoxedExpression | undefined {
+function linearInX(ce: ComputeEngine, arg: Expression, xName: string): Expression | undefined {
   if (symbolNameOf(arg) === xName) return ce.One;
   const { numer, denom } = fractionFactors(arg);
-  const k: BoxedExpression[] = [];
+  const k: Expression[] = [];
   let seen = false;
   for (const [factors, sign] of [
     [numer, 1],
@@ -142,7 +142,7 @@ function linearInX(ce: ComputeEngine, arg: BoxedExpression, xName: string): Boxe
 export function declareSeriesCoefficient(ce: ComputeEngine): void {
   ce.declare("SeriesCoefficient", {
     signature: "(expression, list<any^3>) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [f, triple] = ops;
       if (!f || !triple || triple.operator !== "List") return undefined;
       const [xSym, x0, nExpr] = operandsOf(triple);

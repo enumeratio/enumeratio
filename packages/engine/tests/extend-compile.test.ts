@@ -5,8 +5,8 @@ import { compileExpression, compileTyped } from "../src/compiled.ts";
 import { defineOverload, declareCompile, extendHead, refusing, widenSignature, wrapOperator } from "../src/index.ts";
 
 // compute-engine lowers a head by name (`Sin` to `Math.sin`) only while its definition keeps the library's
-// handlers: an extension whose `evaluate` was replaced is a shadow, and compiling it throws. A package says
-// how the head compiles instead (`CompileStance`); a replacement that says nothing closes the head.
+// handlers: a definition whose `evaluate` was replaced is a shadow, and compiling it throws (an extension
+// shadows only by `lazy`, `broadcastable` or `evaluateAsync`). A package says how the head compiles instead (`CompileStance`); a replacement that says nothing closes the head.
 const code = (ce: ComputeEngine, head: string, ...operands: string[]): string | undefined =>
   compileTyped(ce, [head, ...operands], Object.fromEntries(operands.map((name) => [name, "real"])))?.code;
 
@@ -89,9 +89,15 @@ test("a handler attached in place states its own stance", () => {
   extendHead(ce, "Sin", { broadcastable: true });
   const operator = (ce.lookupDefinition("Sin") as { operator: { evaluate?: unknown } }).operator;
   operator.evaluate = () => undefined;
-  expect(failure(ce, ["Sin", "x"])).toMatch(/shadows the library operator/);
-  declareCompile(ce, "Sin", "builtin");
+  // compute-engine 0.170 compiles an extension whose `evaluate` was replaced in place as the library head.
   expect(code(ce, "Sin", "x")).toBe("Math.sin(_.x)");
+  declareCompile(ce, "Sin", undefined);
+  expect(failure(ce, ["Sin", "x"])).toMatch(CLOSED);
+  const stated = new ComputeEngine();
+  extendHead(stated, "Sin", { broadcastable: true });
+  (stated.lookupDefinition("Sin") as { operator: { evaluate?: unknown } }).operator.evaluate = () => undefined;
+  declareCompile(stated, "Sin", "builtin");
+  expect(code(stated, "Sin", "x")).toBe("Math.sin(_.x)");
 });
 
 test("an overload row with no carrier states how the head compiles", () => {

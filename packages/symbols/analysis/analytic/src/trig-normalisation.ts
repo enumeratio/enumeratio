@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 
@@ -17,11 +17,11 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 // (issue #107's bug: a wrapper that ignores `options.numericApproximation`).
 
 /** Build then finish an expression the way the caller asked: N() for N(...), else evaluate(). */
-const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
+const finish = (expr: Expression, options: EvalOptions): Expression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
 
 /** The integer k with op = k*Pi (as bare Pi, Negate(Pi), or Multiply(k, Pi)), if any. */
-function piMultiple(op: BoxedExpression): bigint | undefined {
+function piMultiple(op: Expression): bigint | undefined {
   if (op.operator === "Symbol") return symbolNameOf(op) === "Pi" ? 1n : undefined;
   if (op.operator === "Negate") {
     const inner = operandsOf(op)[0];
@@ -43,20 +43,20 @@ function piMultiple(op: BoxedExpression): bigint | undefined {
 // Multiply(ImaginaryUnit, Divide(Pi, 2)) boxes to Multiply(Complex(0, 1/2), Pi), not
 // Multiply(Complex(0, 1), Multiply(1/2, Pi)) -- so "is this Multiply(i, t)" has to allow
 // any nonzero purely-imaginary numeric factor, not just literal i.
-const isImaginaryLiteral = (op: BoxedExpression): boolean => op.operator === "Complex" && op.re === 0 && op.im !== 0;
+const isImaginaryLiteral = (op: Expression): boolean => op.operator === "Complex" && op.re === 0 && op.im !== 0;
 
 /** Cheap (O(operands), no allocation): does this Multiply carry a purely-imaginary factor? */
-const hasImaginaryFactor = (op: BoxedExpression): boolean =>
+const hasImaginaryFactor = (op: Expression): boolean =>
   op.operator === "Multiply" && operandsOf(op).some(isImaginaryLiteral);
 
 /** t, given op = i*t (only called once `hasImaginaryFactor` has said yes): dividing the
  * whole product back out by i is exact and lets compute-engine's own arithmetic re-fold
  * the real coefficient, rather than this code trying to reconstruct it. */
-function imaginaryFactor(ce: ComputeEngine, op: BoxedExpression): BoxedExpression {
+function imaginaryFactor(ce: ComputeEngine, op: Expression): Expression {
   return ce.function("Divide", [op, "ImaginaryUnit"]).evaluate();
 }
 
-function evaluateSin(ce: ComputeEngine, op: BoxedExpression, options: EvalOptions): BoxedExpression | undefined {
+function evaluateSin(ce: ComputeEngine, op: Expression, options: EvalOptions): Expression | undefined {
   const k = piMultiple(op);
   if (k !== undefined) return ce.Zero; // sin(k*pi) = 0 for any integer k
 
@@ -103,7 +103,7 @@ function evaluateSin(ce: ComputeEngine, op: BoxedExpression, options: EvalOption
  * result when this says yes -- an unrelated Add or Multiply (the common case for either,
  * e.g. a plain sum or product of symbols) must fall through to native undisturbed. Cheap:
  * a couple of structural reads, no evaluation, no recursion past one level of Negate. */
-function looksNormalisable(op: BoxedExpression): boolean {
+function looksNormalisable(op: Expression): boolean {
   switch (op.operator) {
     case "Symbol":
       return symbolNameOf(op) === "Pi";

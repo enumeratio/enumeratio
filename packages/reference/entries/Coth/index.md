@@ -9,7 +9,7 @@ signatures:
   - call: Coth(complex | signed_infinity) -> number
     description: Hyperbolic cotangent, the reciprocal of hyperbolic tangent.
     library: enumeratio-analytic
-    type: (complex | signed_infinity) -> number
+    type: (complex | quantity | signed_infinity) -> number
     overrides: compute-engine
 names:
   dlmf: hyperbolic cotangent function

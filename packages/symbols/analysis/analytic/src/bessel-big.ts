@@ -1,5 +1,5 @@
 // unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@enumeratio/engine/unstable";
+import { BigDecimal, type Expression, type ComputeEngine } from "@enumeratio/engine/unstable";
 import { onlyForIntegers, wrapOperator } from "@enumeratio/engine";
 import {
   atDigits,
@@ -46,7 +46,7 @@ export function declareBesselBig(ce: ComputeEngine): void {
       (ops) => ops.length === 2 && ops.every(isFiniteNum) && isRealInt(ops[0]!) && ops[1]!.im === 0,
       (native) => (ops, options) => {
         if (!wantsBigDigits(ce, options, ops)) return native?.(ops, options);
-        const [order, x] = ops as [BoxedExpression, BoxedExpression];
+        const [order, x] = ops as [Expression, Expression];
         const arg = bigRealOperand(ce, x);
         const value = arg === undefined ? undefined : besselBig(kind, order.re, arg, ce.precision);
         // a series that cannot vouch for the digits leaves the call to native, as it was
@@ -69,7 +69,7 @@ export function declareBesselBig(ce: ComputeEngine): void {
         ops[1]!.re > 0,
       (native) => (ops, options) => {
         if (!wantsNumber(ops, options)) return native?.(ops, options);
-        const [order, x] = ops as [BoxedExpression, BoxedExpression];
+        const [order, x] = ops as [Expression, Expression];
         const quarter = ce.function("Divide", [ce.function("Multiply", [x, x]), ce.number(4)]);
         const series = ce.function("Hypergeometric0F1Regularized", [
           ce.function("Add", [order, ce.One]),

@@ -1,0 +1,23 @@
+name: Cache cleanup
+
+# A PR's caches (refs/pull/N/merge) are readable by nobody else, so they go when it closes.
+# Best-effort: a fork PR's token can't delete, and that never fails anything.
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  actions: write
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          REF: refs/pull/${{ github.event.pull_request.number }}/merge
+        run: gh cache list --ref "$REF" --limit 100 --json id --jq '.[].id' | xargs -r -n1 gh cache delete

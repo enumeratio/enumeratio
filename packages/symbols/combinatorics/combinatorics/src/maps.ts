@@ -26,6 +26,7 @@ import { LATTICE_PATHS_MAPS } from "../lattice-paths/src/maps.ts";
 import { PARTITIONS_MAPS } from "../partitions/src/maps.ts";
 import { declareCycleConversions } from "../permutations/src/cycles-conversion.ts";
 import { PERMUTATIONS_MAPS } from "../permutations/src/maps.ts";
+import { SIGNED_PERMUTATIONS_ALGORITHM_MAPS } from "../permutations/src/signed-algorithms.ts";
 import { SIGNED_PERMUTATIONS_MAPS } from "../permutations/src/signed-maps.ts";
 import { SET_PARTITION_INVOLUTION_MAPS } from "../set-partitions/src/involution-maps.ts";
 import { SET_PARTITIONS_MAPS } from "../set-partitions/src/maps.ts";
@@ -56,6 +57,8 @@ export const MAPS: readonly CombinatorialMap[] = [
   ...TABLEAUX_MAPS,
   ...COMPOSITIONS_MAPS,
   ...WORDS_MAPS,
+  // After the words: Rowmotion's primary carrier is BinaryWord.
+  ...SIGNED_PERMUTATIONS_ALGORITHM_MAPS,
 ].map(withLaws);
 
 /** Declare every combinatorics map, typed by carrier, via @enumeratio/structures' generic

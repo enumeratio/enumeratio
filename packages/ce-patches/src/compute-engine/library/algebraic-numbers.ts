@@ -4,7 +4,7 @@
 // An argument is read as a polynomial in one generator — a radical of a rational, i, the golden
 // ratio, or a PolynomialRoot — and anything else is left unevaluated.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { LibraryRecord } from "../../patch.ts";
 import {
   degree,
@@ -253,7 +253,7 @@ export interface Read {
   readonly x: FieldElement;
 }
 
-function read(ce: ComputeEngine, arg: BoxedExpression): Read | undefined {
+function read(ce: ComputeEngine, arg: Expression): Read | undefined {
   const j = normalize(arg.json);
   const atoms: Atom[] = [];
   if (!atomsOf(j, ce, atoms)) return undefined;
@@ -379,14 +379,14 @@ function expressionOnPowers(field: GeneratedField, x: FieldElement): Json {
 }
 
 /** Box an answer. */
-const boxed = (ce: ComputeEngine, j: Json): BoxedExpression => ce.box(j as never);
+const boxed = (ce: ComputeEngine, j: Json): Expression => ce.box(j as never);
 
 export const algebraicNumbersLibrary: LibraryRecord = {
   PolynomialRoot: {
     description:
       "The k-th root of the polynomial p in its unknown: real roots first in increasing order, then complex roots by increasing real part and then imaginary part (Wolfram's Root).",
     signature: "(any, integer) -> number",
-    evaluate: (ops: readonly BoxedExpression[], { engine: ce }: { engine: ComputeEngine }) => {
+    evaluate: (ops: readonly Expression[], { engine: ce }: { engine: ComputeEngine }) => {
       // Degree 1 and 2 are rationals and radicals; past them the root is its own name.
       const cs = coefficientsOf(ce, ops[0]!.json);
       const k = ops[1]?.re;
@@ -412,7 +412,7 @@ export const algebraicNumbersLibrary: LibraryRecord = {
     description:
       "The minimal polynomial of the algebraic number a in x: primitive over ℤ, positive leading coefficient.",
     signature: "(number, any) -> expression",
-    evaluate: (ops: readonly BoxedExpression[], { engine: ce }: { engine: ComputeEngine }) => {
+    evaluate: (ops: readonly Expression[], { engine: ce }: { engine: ComputeEngine }) => {
       const r = read(ce, ops[0]!);
       return r && boxed(ce, polynomialIn(minimalOf(r), ops[1]!.json));
     },
@@ -421,7 +421,7 @@ export const algebraicNumbersLibrary: LibraryRecord = {
   AlgebraicIntegerQ: {
     description: "Whether a is an algebraic integer: a root of a monic polynomial over ℤ.",
     signature: "(number) -> boolean",
-    evaluate: (ops: readonly BoxedExpression[], { engine: ce }: { engine: ComputeEngine }) => {
+    evaluate: (ops: readonly Expression[], { engine: ce }: { engine: ComputeEngine }) => {
       const r = read(ce, ops[0]!);
       return r && ce.symbol(isIntegral(r.field.f, r.x) ? "True" : "False");
     },
@@ -431,7 +431,7 @@ export const algebraicNumbersLibrary: LibraryRecord = {
     description:
       "The norm of a over ℚ in the field ℚ(a): (−1)ᵈ times its minimal polynomial's constant term over its leading one.",
     signature: "(number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], { engine: ce }: { engine: ComputeEngine }) => {
+    evaluate: (ops: readonly Expression[], { engine: ce }: { engine: ComputeEngine }) => {
       const r = read(ce, ops[0]!);
       if (r === undefined) return undefined;
       const m = minimalOf(r);
@@ -445,7 +445,7 @@ export const algebraicNumbersLibrary: LibraryRecord = {
     description:
       "The trace of a over ℚ in the field ℚ(a): minus its minimal polynomial's second coefficient over its leading one.",
     signature: "(number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], { engine: ce }: { engine: ComputeEngine }) => {
+    evaluate: (ops: readonly Expression[], { engine: ce }: { engine: ComputeEngine }) => {
       const r = read(ce, ops[0]!);
       if (r === undefined) return undefined;
       const m = minimalOf(r);
@@ -458,7 +458,7 @@ export const algebraicNumbersLibrary: LibraryRecord = {
   NumberFieldDiscriminant: {
     description: "The discriminant of the field ℚ(a): of its ring of integers.",
     signature: "(number) -> integer",
-    evaluate: (ops: readonly BoxedExpression[], { engine: ce }: { engine: ComputeEngine }) => {
+    evaluate: (ops: readonly Expression[], { engine: ce }: { engine: ComputeEngine }) => {
       const r = read(ce, ops[0]!);
       const generated = r && generatedBy(r);
       const o = generated && maximalOrder(generated.f);
@@ -469,7 +469,7 @@ export const algebraicNumbersLibrary: LibraryRecord = {
   NumberFieldIntegralBasis: {
     description: "A ℤ-basis of the ring of integers of ℚ(a), written on a's powers as Wolfram writes it.",
     signature: "(number) -> list",
-    evaluate: (ops: readonly BoxedExpression[], { engine: ce }: { engine: ComputeEngine }) => {
+    evaluate: (ops: readonly Expression[], { engine: ce }: { engine: ComputeEngine }) => {
       const r = read(ce, ops[0]!);
       const generated = r && generatedBy(r);
       const basis = generated && integralBasis(generated);
@@ -480,7 +480,7 @@ export const algebraicNumbersLibrary: LibraryRecord = {
   NumberFieldSignature: {
     description: "The signature (r₁, r₂) of ℚ(a): its real embeddings and its pairs of complex ones.",
     signature: "(number) -> list<integer>",
-    evaluate: (ops: readonly BoxedExpression[], { engine: ce }: { engine: ComputeEngine }) => {
+    evaluate: (ops: readonly Expression[], { engine: ce }: { engine: ComputeEngine }) => {
       const r = read(ce, ops[0]!);
       const generated = r && generatedBy(r);
       if (generated === undefined) return undefined;
@@ -506,8 +506,8 @@ function generatedBy(r: Read): GeneratedField | undefined {
  */
 export function readAlgebraic(
   ce: ComputeEngine,
-  generator: BoxedExpression,
-  x: BoxedExpression = generator,
+  generator: Expression,
+  x: Expression = generator,
 ): { field: GeneratedField; generator: FieldElement; x: FieldElement } | undefined {
   const [g, j] = [normalize(generator.json), normalize(x.json)];
   const atoms: Atom[] = [];

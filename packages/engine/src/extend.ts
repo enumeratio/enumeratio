@@ -1,9 +1,9 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type Operator, shadowsLibrary } from "./ce-internals.ts";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
+import { type Operator, extensions, shadowsLibrary } from "./ce-internals.ts";
 import type { CompileHandler } from "./facade.ts";
 import { addHeadOverload } from "./overloads.ts";
 
-type OperatorDefinition = NonNullable<BoxedExpression["operatorDefinition"]>;
+type OperatorDefinition = NonNullable<Expression["operatorDefinition"]>;
 
 /**
  * How a head compiles once a package has replaced its `evaluate` or `canonical`.
@@ -99,7 +99,7 @@ function install(ce: ComputeEngine, name: string, stance: Stance): void {
   if (definition === undefined || !("operator" in definition)) return;
   const operator = definition.operator as Operator;
   const restricts = stance.closed || stance.upTo !== Infinity || stance.handlers.size > 0;
-  if (restricts || shadowsLibrary(ce, name, operator)) operator.compile = stance.compile;
+  if (restricts || shadowsLibrary(ce, name, operator, extensions.has(definition))) operator.compile = stance.compile;
 }
 
 /**
@@ -114,6 +114,10 @@ export function declareCompile(ce: ComputeEngine, name: string, stated: CompileS
   else if (stated !== "builtin") stance.handlers.add(stated);
   install(ce, name, stance);
 }
+
+/** Whether `definition` is one `extendHead` built from an earlier one, not a declaration of its own. */
+export const isExtension = (definition: unknown): boolean =>
+  typeof definition === "object" && definition !== null && extensions.has(definition);
 
 /**
  * Patch a head the engine already defines, keeping every field the patch doesn't name: a
@@ -132,12 +136,6 @@ export function declareCompile(ce: ComputeEngine, name: string, stated: CompileS
  * A patch that replaces `evaluate` or `canonical` also states how the head compiles (`compile`,
  * see `CompileStance`).
  */
-const extensions = new WeakSet<object>();
-
-/** Whether `definition` is one `extendHead` built from an earlier one, not a declaration of its own. */
-export const isExtension = (definition: unknown): boolean =>
-  typeof definition === "object" && definition !== null && extensions.has(definition);
-
 export function extendHead(ce: ComputeEngine, name: string, patch: HeadPatch & { signature?: string }): boolean {
   const definition = ce.lookupDefinition(name);
   if (definition === undefined || !("operator" in definition)) return false;

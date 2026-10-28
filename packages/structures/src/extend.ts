@@ -21,7 +21,7 @@
 //   At(Reverse([1,2,3]), 1)         3                      handlers intact
 //   Reverse("abc")                  'cba'                  string overload intact
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { defineOverload, extendHead, overloadTable, type EvaluateOptions } from "@enumeratio/engine";
 
 /** Heads whose `evaluate` has already had the materialization fallback below layered on
@@ -57,7 +57,7 @@ export interface Extension {
   /** What the extension returns, as a type expression. */
   readonly returns: string;
   /** Our case. Called only when the argument really is `on`. */
-  readonly handle: (subject: BoxedExpression, ce: ComputeEngine) => BoxedExpression | undefined;
+  readonly handle: (subject: Expression, ce: ComputeEngine) => Expression | undefined;
 }
 
 /**
@@ -118,20 +118,20 @@ function restoreMaterialization(ce: ComputeEngine, head: string): void {
   if (operator?.collection === undefined || done.has(head)) return;
   done.add(head);
   const dispatched = operator.evaluate as (
-    ops: readonly BoxedExpression[],
+    ops: readonly Expression[],
     options: EvaluateOptions,
-  ) => BoxedExpression | undefined;
+  ) => Expression | undefined;
   extendHead(ce, head, {
     // Only answers `evaluate({ materialization })`, which compiled code never asks for.
     compile: "builtin",
-    evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvaluateOptions) => {
       const result = dispatched(ops, options);
       if (result !== undefined) return result;
       // `materialization` is `boolean | number | [number, number]`; anything but `false` or
       // absent asks for it.
       const materialization = options.materialization as boolean | number | readonly number[] | undefined;
       if (materialization === undefined || materialization === false) return undefined;
-      const expr = (options as { expression?: BoxedExpression }).expression;
+      const expr = (options as { expression?: Expression }).expression;
       if (expr === undefined || !expr.isCollection) return undefined;
       try {
         return expr.engine.function("List", [...expr.each()]);

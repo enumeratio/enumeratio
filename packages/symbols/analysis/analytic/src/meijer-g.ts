@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { type EvalOptions, isFiniteNum, numberResult, wantsNumber, add, cx, type Cx } from "@enumeratio/ce-patches";
 import { meijerGSeriesBig } from "./meijer-g-big.ts";
@@ -29,7 +29,7 @@ import { meijerGSeriesBig } from "./meijer-g-big.ts";
 
 const isNonPosInt = (z: Cx): boolean => z.im === 0 && z.re <= 0 && Number.isInteger(z.re);
 
-function listPair(expr: BoxedExpression | undefined): [Cx[], Cx[]] | undefined {
+function listPair(expr: Expression | undefined): [Cx[], Cx[]] | undefined {
   if (expr === undefined || expr.operator !== "List") return undefined;
   const parts = operandsOf(expr);
   if (parts.length !== 2) return undefined;
@@ -68,7 +68,7 @@ function meijerGSeries(a: readonly Cx[], b: readonly Cx[], m: number, n: number,
 export function declareMeijerG(ce: ComputeEngine): void {
   ce.declare("MeijerG", {
     signature: "(list, list, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+    evaluate: (ops: readonly Expression[], options: EvalOptions) => {
       const [upperExpr, lowerExpr, zExpr] = ops;
       if (upperExpr === undefined || lowerExpr === undefined || zExpr === undefined) return undefined;
       if (!wantsNumber(ops, options) || !isFiniteNum(zExpr)) return undefined;

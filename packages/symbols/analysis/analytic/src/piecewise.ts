@@ -1,4 +1,4 @@
-import { isNumber, isSymbol, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
+import { isNumber, isSymbol, type Expression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { type Knowledge, knowledgeOf, narrowPiecewise, withAssumed } from "./piecewise-assumptions.ts";
 import { compose } from "./piecewise-compose.ts";
@@ -21,16 +21,16 @@ import { expandStep, STEP_HEADS } from "./piecewise-rewrites.ts";
 // `Assuming`) is what's consulted — same as Wolfram reading `$Assumptions`. The rewrites read
 // the bounds those conditions state (piecewise-assumptions.ts), not only what `ce.assume` kept.
 
-function pair(ce: ComputeEngine, value: BoxedExpression, cond: BoxedExpression): BoxedExpression {
+function pair(ce: ComputeEngine, value: Expression, cond: Expression): Expression {
   return ce.box(["List", value.json, cond.json] as never);
 }
 
-function evaluatePiecewise(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function evaluatePiecewise(ce: ComputeEngine, ops: readonly Expression[]): Expression | undefined {
   const [clauses, defaultArg] = ops;
   if (!clauses || clauses.operator !== "List") return undefined;
   const originalClauses = operandsOf(clauses);
   const fallback = defaultArg ?? ce.number(0);
-  const kept: BoxedExpression[] = [];
+  const kept: Expression[] = [];
   for (const clause of originalClauses) {
     if (clause.operator !== "List") return undefined;
     const [value, cond] = operandsOf(clause);
@@ -49,23 +49,18 @@ function evaluatePiecewise(ce: ComputeEngine, ops: readonly BoxedExpression[]): 
 export function declarePiecewise(ce: ComputeEngine): void {
   ce.declare("Piecewise", {
     signature: "(list, expression?) -> expression",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluatePiecewise(ce, ops),
+    evaluate: (ops: readonly Expression[]) => evaluatePiecewise(ce, ops),
   });
 }
 
 /** Is `v` known to be real-valued under whatever the caller (or PiecewiseExpand's own
  * `assumptions` argument) has already assumed? Concrete real number literals count too. */
-function isKnownReal(ce: ComputeEngine, v: BoxedExpression): boolean {
+function isKnownReal(ce: ComputeEngine, v: Expression): boolean {
   if (isNumber(v) && v.im === 0 && Number.isFinite(v.re)) return true;
   return ce.ask(["Element", v.json, "RealNumbers"] as never).length > 0;
 }
 
-function expandOne(
-  ce: ComputeEngine,
-  e: BoxedExpression,
-  allReal: boolean,
-  kn: Knowledge,
-): BoxedExpression | undefined {
+function expandOne(ce: ComputeEngine, e: Expression, allReal: boolean, kn: Knowledge): Expression | undefined {
   const op = e.operator;
   const ops = operandsOf(e);
   if (op === "Abs" && ops.length === 1 && (allReal || isKnownReal(ce, ops[0]))) {
@@ -115,11 +110,10 @@ function expandOne(
 // A relation holds a Piecewise only as a boolean combination; that rewrite is not made here.
 const RELATIONS = new Set(["Less", "LessEqual", "Greater", "GreaterEqual", "Equal", "NotEqual", "Inequality"]);
 
-const holdsPiecewise = (e: BoxedExpression): boolean =>
-  e.operator === "Piecewise" || operandsOf(e).some(holdsPiecewise);
+const holdsPiecewise = (e: Expression): boolean => e.operator === "Piecewise" || operandsOf(e).some(holdsPiecewise);
 
 /** Recursively rewrite every eligible subexpression, innermost first. */
-function expand(ce: ComputeEngine, e: BoxedExpression, allReal: boolean, kn: Knowledge): BoxedExpression {
+function expand(ce: ComputeEngine, e: Expression, allReal: boolean, kn: Knowledge): Expression {
   const ops = operandsOf(e);
   if (ops.length === 0 || RELATIONS.has(e.operator)) return e;
   const inner = ops.map((o) => expand(ce, o, allReal, kn));
@@ -137,7 +131,7 @@ export function declarePiecewiseExpand(ce: ComputeEngine): void {
   ce.declare("PiecewiseExpand", {
     signature: "(expression, expression?) -> expression",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expression[]) => {
       const [expr, assumptions] = ops;
       if (!expr) return undefined;
       if (!assumptions) return expand(ce, expr.evaluate(), false, knowledgeOf(ce));
