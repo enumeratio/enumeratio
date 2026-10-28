@@ -28,7 +28,7 @@ signatures:
     description: Product of two or more values.
     library: enumeratio-numerals
     type: (number*) -> number
-    overrides: enumeratio-residues
+    overrides: enumeratio-hypercomplex
     on:
       - AdicNumeral
   - call: Multiply(number*) -> number

@@ -26,7 +26,7 @@ signatures:
     description: Sum of two or more values.
     library: enumeratio-numerals
     type: (value+) -> value
-    overrides: enumeratio-residues
+    overrides: enumeratio-hypercomplex
     on:
       - AdicNumeral
   - call: Add(value+) -> value
