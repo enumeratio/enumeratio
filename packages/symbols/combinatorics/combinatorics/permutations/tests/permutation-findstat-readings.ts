@@ -90,6 +90,43 @@ const raftsOf = (p: number[]): number[][] => {
 const raftSteps = (p: number[]): Set<number> => new Set(raftsOf(p).flat());
 const consecutiveGaps = (p: number[]): number[] => range(0, p.length - 2).map((i) => Math.abs(p[i]! - p[i + 1]!));
 
+const adjacentEnd = (at: number[]) => at[2] === at[1]! + 1;
+
+/** The smallest d >= 1 at which the entry at 0-based position i meets a greater entry, the ends counting as greater. */
+const gapToGreater = (p: number[], i: number): number => {
+  const n = p.length;
+  const q = [n + 1, ...p, n + 1];
+  let d = 1;
+  while (!(q[i + 1 - d]! > q[i + 1]! || q[i + 1 + d]! > q[i + 1]!)) d++;
+  return d;
+};
+const longestIncreasing = (p: number[]): number => {
+  const best: number[] = [];
+  p.forEach((v, i) => (best[i] = 1 + Math.max(0, ...best.slice(0, i).filter((_, k) => p[k]! < v))));
+  return Math.max(0, ...best);
+};
+/** The 1-based pairs (i, j), over every ordered pair of positions, for which `holds(i, j, p(i), p(j))`. */
+const orderedPairs = (p: number[], holds: (i: number, j: number, a: number, b: number) => boolean): number =>
+  sum(range(1, p.length).map((i) => range(1, p.length).filter((j) => holds(i, j, p[i - 1]!, p[j - 1]!)).length));
+const cyclicallyOrdered = (a: number, b: number, c: number, d: number): boolean =>
+  (a < b && b < c && c < d) || (b < c && c < d && d < a) || (c < d && d < a && a < b) || (d < a && a < b && b < c);
+/** How many distinct positions the pattern's letter number `mark` takes over the occurrences of the pattern. */
+const letterPositions = (p: number[], pattern: number[], mark: number): number =>
+  new Set(tuples(p.length, pattern.length, (at) => matchesAt(p, at, pattern)).map((at) => at[mark])).size;
+const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+/** Shareshian and Wachs's admissible inversions: i < j, p(i) > p(j), and p(j) < p(j+1) or a smaller entry between. */
+const shareshianWachs = (p: number[]): number =>
+  sum(
+    range(1, p.length).map(
+      (i) =>
+        range(i + 1, p.length).filter(
+          (j) =>
+            p[i - 1]! > p[j - 1]! &&
+            ((j < p.length && p[j - 1]! < p[j]!) || range(i + 1, j - 1).some((k) => p[k - 1]! < p[j - 1]!)),
+        ).length,
+    ),
+  );
+
 export const FINDSTAT_READINGS: Record<string, (p: number[]) => number> = {
   LeftOuterPeaks: (p) => peaksOf([0, ...p]),
   RightOuterPeaks: (p) => peaksOf([...p, 0]),
@@ -617,4 +654,120 @@ export const FINDSTAT_READINGS: Record<string, (p: number[]) => number> = {
   VisibleInversions: (p) => inversionPairs(p).filter(([i, j]) => p[j]! <= Math.min(i + 1, p[i]!)).length,
   InvisibleInversions: (p) => inversionPairs(p).filter(([i, j]) => p[i]! > p[j]! && p[j]! > i + 1).length,
   PrefixSumProduct: (p) => range(1, p.length - 1).reduce((acc, i) => acc * sum(p.slice(0, i)), 1),
+
+  // Batch 6.
+  OneBoxPatterns: (p) => p.filter((v, i) => p.some((w, j) => Math.abs(i - j) + Math.abs(v - w) === 2)).length,
+  MaximumOfDescentsAndInverseDescents: (p) => Math.max(descents(p).length, descents(inverse(p)).length),
+  InvisibleDescents: (p) => descents(p).filter((i) => p[i]! > i).length,
+  VisibleDescents: (p) => descents(p).filter((i) => p[i]! <= Math.min(i, p[i - 1]!)).length,
+  GreaterNeighborOfMaximum: (p) => {
+    if (p.length === 0) return 0;
+    const q = [0, ...p, 0];
+    const i = q.indexOf(p.length);
+    return Math.max(q[i - 1]!, q[i + 1]!);
+  },
+  InversionsOfThirdEntry: (p) => p.slice(3).filter((v) => v < p[2]!).length,
+  InversionsOfSecondEntry: (p) => p.slice(2).filter((v) => v < p[1]!).length,
+  SumOfDistancesToGreaterElement: (p) => sum(p.map((_, i) => gapToGreater(p, i))),
+  NormalizedSumOfDistancesToGreaterElement: (p) => sum(p.map((_, i) => gapToGreater(p, i) - 1)),
+  HalfParityMismatches: (p) => p.filter((v, i) => Math.abs(i + 1 - v) % 2 === 1).length / 2,
+  DescentWeightMinusInversions: (p) => sum(descents(p).map((i) => i * (p.length - i))) - inversionPairs(p).length,
+  ReducedWordSupport: (p) => {
+    // Bubble sort to the identity: the swaps are a reduced word.
+    const q = [...p];
+    const used = new Set<number>();
+    for (let swapped = true; swapped;) {
+      swapped = false;
+      for (let i = 0; i + 1 < q.length; i++) {
+        if (q[i]! > q[i + 1]!) {
+          [q[i], q[i + 1]] = [q[i + 1]!, q[i]!];
+          used.add(i + 1);
+          swapped = true;
+        }
+      }
+    }
+    return used.size;
+  },
+  PermutationCosine: (p) => sum(p.map((v, i) => (i + 1) * v)),
+  Mak: (p) =>
+    vincular(p, [2, 3, 1], adjacentEnd) +
+    vincular(p, [3, 2, 1], adjacentStart) +
+    vincular(p, [1, 3, 2], adjacentEnd) +
+    vincular(p, [2, 1], adjacentStart),
+  Mad: (p) =>
+    2 * vincular(p, [2, 3, 1], adjacentEnd) +
+    vincular(p, [3, 1, 2], adjacentStart) +
+    vincular(p, [2, 1], adjacentStart),
+  Makl: (p) =>
+    vincular(p, [1, 3, 2], adjacentEnd) +
+    vincular(p, [3, 1, 2], adjacentStart) +
+    vincular(p, [3, 2, 1], adjacentStart) +
+    vincular(p, [2, 1], adjacentStart),
+  BabsonSteingrimssonStatistic: (p) =>
+    vincular(p, [1, 3, 2], adjacentStart) +
+    vincular(p, [2, 1, 3], adjacentStart) +
+    vincular(p, [3, 2, 1], adjacentStart) +
+    vincular(p, [2, 1], adjacentStart),
+  UlamDistance: (p) => p.length - longestIncreasing(inverse(p)),
+  EvenWeakDeficienciesAndOddWeakExcedances: (p) =>
+    range(1, p.length).filter((i) => (i % 2 === 0 ? p[i - 1]! <= i : p[i - 1]! >= i)).length,
+  VerticalSeparators: (p) => range(2, p.length - 1).filter((i) => Math.abs(p[i - 2]! - p[i]!) === 1).length,
+  CyclicAlignments: (p) => orderedPairs(p, (i, j, a, b) => cyclicallyOrdered(i, j, b, a)),
+  CyclicMisalignments: (p) => orderedPairs(p, (i, j, a, b) => cyclicallyOrdered(i, a, j, b)),
+  CyclicCrossings: (p) => orderedPairs(p, (i, j, a, b) => cyclicallyOrdered(i, b, a, j)),
+  RestrictedNonInversionsBetweenExcedances: (p) => orderedPairs(p, (i, j, a, b) => i < j && j < a && a < b),
+  InversionsBetweenExcedancesWithLinkedGreater: (p) =>
+    orderedPairs(p, (i, j, a, b) => i < j && j < b && b < a && inverse(p)[j - 1]! < j),
+  RestrictedNonInversionsBetweenExcedancesWithLinkedRightmost: (p) =>
+    orderedPairs(p, (i, j, a, b) => i < j && j < a && a < b && inverse(p)[j - 1]! < j),
+  InversionsBetweenExcedancesAndFixedPoints: (p) => orderedPairs(p, (i, j, a, b) => i < j && j === b && b < a),
+  UpperMiddleEntry: (p) => (p.length === 0 ? 0 : p[Math.floor(p.length / 2)]!),
+  LowerMiddleEntry: (p) => (p.length === 0 ? 0 : p[Math.floor((p.length + 1) / 2) - 1]!),
+  Convexity: (p) => Math.max(0, ...range(1, p.length - 2).map((i) => 2 * p[i]! - p[i - 1]! - p[i + 1]!)),
+  ProperBlocks: (p) => {
+    if (p.length <= 2) return 0;
+    const windows = pairs(p).filter(([i, j]) => {
+      const w = p.slice(i, j + 1);
+      return Math.max(...w) - Math.min(...w) === j - i;
+    });
+    return windows.length - 1;
+  },
+  HertzsprungOccurrencesOf132: (p) =>
+    range(0, p.length - 3).filter((i) => {
+      const d = p[i]! - 1;
+      return p[i + 1]! - 3 === d && p[i + 2]! - 2 === d;
+    }).length,
+  PositionsOfLetterOneIn123: (p) => letterPositions(p, [1, 2, 3], 0),
+  PositionsOfLetterOneIn132: (p) => letterPositions(p, [1, 3, 2], 0),
+  PositionsOfLetterTwoIn213: (p) => letterPositions(p, [2, 1, 3], 0),
+  PositionsOfLetterThreeIn132: (p) => letterPositions(p, [1, 3, 2], 1),
+  OccurrencesOf14Dash2Dash3Or14Dash3Dash2: (p) =>
+    sum(
+      range(0, p.length - 2).map((i) => {
+        if (p[i]! > p[i + 1]!) return 0;
+        const c = p.slice(i + 2).filter((v) => p[i]! < v && v < p[i + 1]!).length;
+        return (c * (c - 1)) / 2;
+      }),
+    ),
+  InversionsOfCyclicEmbedding: (p) => {
+    const n = p.length;
+    const q = new Array<number>(n + 1);
+    p.forEach((v, i) => (q[v - 1] = i + 1 < n ? p[i + 1]! : n + 1));
+    q[n] = n === 0 ? 1 : p[0]!;
+    return inversionPairs(q).length;
+  },
+  ShareshianWachsAdmissibleInversions: (p) => shareshianWachs(p),
+  AdmissibleInversionsPlusDescents: (p) => shareshianWachs(p) + descents(p).length,
+  AdmissibleInversions: (p) =>
+    range(1, p.length).reduce(
+      (total, i) =>
+        total +
+        range(i + 1, p.length).filter(
+          (j) =>
+            p[i - 1]! > p[j - 1]! &&
+            ((i > 1 && p[i - 2]! < p[i - 1]!) || range(i + 1, j - 1).some((l) => p[i - 1]! < p[l - 1]!)),
+        ).length,
+      0,
+    ),
+  LargestGreatestCommonDivisorOfPositionAndValue: (p) => Math.max(0, ...p.map((v, i) => gcd(i + 1, v))),
 };

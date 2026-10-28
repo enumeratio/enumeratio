@@ -493,6 +493,7 @@ export const PARTITION_READINGS: Record<string, (l: Partition) => number> = {
   SemistandardTableauCountWithEntriesUpToFour: (l) => weylDimension(l, 4),
   SemistandardTableauCountWithEntriesUpToLength: (l) => weylDimension(l, l.length),
   SemistandardTableauCountWithEntriesUpToSize: (l) => weylDimension(l, sum(l)),
+  StandardTableauCount: standardTableaux,
   PlancherelCount: (l) => standardTableaux(l) ** 2,
   CubedStandardTableauCount: (l) => standardTableaux(l) ** 3,
   ShiftedStandardTableauCount: shiftedStandardTableaux,

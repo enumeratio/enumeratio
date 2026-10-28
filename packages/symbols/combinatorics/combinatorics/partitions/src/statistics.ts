@@ -287,6 +287,12 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     "The product of all hook lengths — the denominator in the hook-length formula.",
     nonEmpty(hookProduct, 1),
   ),
+  stat(
+    "StandardTableauCount",
+    "The number of standard Young tableaux of the shape: the size factorial over the hook product.",
+    nonEmpty(standardTableauxCount, 1),
+    "Defined by the hook-length formula; PlancherelCount is its square.",
+  ),
 
   stat("DysonRank", "Largest part minus number of parts.", nonEmpty(subtract(largest, length()))),
 
