@@ -67,7 +67,7 @@ const multiplicityOf = (value: MathJSON): MathJSON => count(positions, equals(he
 /** The sum of the parts. */
 const total: MathJSON = ["Sum", x];
 /** `body` with `c` bound to the conjugate, evaluated once rather than at every cell. */
-const withConjugate = (body: MathJSON): MathJSON => bind("c", conjugate, body);
+const withConjugate = (body: MathJSON): MathJSON => bind("c", conjugate, body, "list<integer>");
 /** The conjugate's entry for column j, reading the bound `c`. */
 const columnLength = (j: MathJSON): MathJSON => ["At", "c", j];
 /** Arm minus leg of cell (i, j). */
@@ -274,6 +274,7 @@ const tableauxWithMajorIndexRemainder = (remainder: number): MathJSON =>
         at("i", "q"),
         0,
       ]),
+      "list<integer>",
     ),
     "number",
   );
@@ -304,6 +305,7 @@ const upperCoversIn = (partition: MathJSON): MathJSON => {
         "j",
       ),
     ),
+    "list<integer>",
   );
 };
 /** The number of odd parts. */
@@ -640,7 +642,6 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     "Pairs of cells in the same row: the sum over parts of the binomial coefficient of the part and 2.",
     nonEmpty(sumOver(positions, ["Divide", ["Multiply", here, subtract(here, 1)], 2])),
   ),
-  // Stays interpreted: the JavaScript compiler does not lower a cell-by-cell walk over a bound conjugate, as for the hook and diagonal statistics (pinned by `interpreted.test.ts`).
   stat(
     "CellsWithZeroLegAndOddArm",
     "Cells with leg 0 and an odd arm.",
@@ -745,18 +746,16 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
     nonEmpty(bind("s", subsetSums, subtract(length("s"), 1))),
     'Follows FindStat\'s Sage code and its data, not its title: the "partial sums" it counts are the sums of arbitrary sub-multisets of the parts (the code runs over all subsets), not of the running prefixes.',
   ),
-  // Stays interpreted: the JavaScript compiler does not lower the fold that grows the subset-sum list (pinned by `interpreted.test.ts`).
   stat(
     "DistinctEvenSubsetSums",
     "Distinct nonzero even sums of sub-multisets of the parts.",
-    nonEmpty(bind("s", subsetSums, subtract(count("s", equals(["Mod", "i", 2], 0)), 1))),
+    nonEmpty(bind("s", subsetSums, subtract(count("s", equals(["Mod", "i", 2], 0)), 1), "list<integer>")),
     'Follows FindStat\'s Sage code and its data, not its title: the "partial sums" it counts are the sums of arbitrary sub-multisets of the parts (the code runs over all subsets), not of the running prefixes. The empty sum, 0, is not counted.',
   ),
-  // Stays interpreted, as above.
   stat(
     "DistinctOddSubsetSums",
     "Distinct odd sums of sub-multisets of the parts.",
-    nonEmpty(bind("s", subsetSums, count("s", equals(["Mod", "i", 2], 1)))),
+    nonEmpty(bind("s", subsetSums, count("s", equals(["Mod", "i", 2], 1)), "list<integer>")),
     'Follows FindStat\'s Sage code and its data, not its title: the "partial sums" it counts are the sums of arbitrary sub-multisets of the parts (the code runs over all subsets), not of the running prefixes.',
   ),
 
@@ -842,15 +841,16 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
       1,
     ),
   ),
-  // Stays interpreted: the JavaScript compiler does not lower the fold that grows the subset-sum list (pinned by `interpreted.test.ts`).
   stat(
     "MinimalSubpartitionSizeDifference",
     "The smallest difference in size between the two halves of a split of the parts into two sub-multisets.",
     nonEmpty(
-      bind("s", subsetSums, [
-        "Min",
-        forEach(where("s", atLeastValue(["Multiply", "i", 2], total)), subtract(["Multiply", "i", 2], total)),
-      ]),
+      bind(
+        "s",
+        subsetSums,
+        ["Min", forEach(where("s", atLeastValue(["Multiply", "i", 2], total)), subtract(["Multiply", "i", 2], total))],
+        "list<integer>",
+      ),
     ),
   ),
   stat(
@@ -1066,8 +1066,10 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
   stat(
     "MultipartitionCount",
     "Tuples of partitions whose sizes are the parts: the product of the partition numbers of the parts.",
-    // Stays interpreted: the compiler does not lower the fold (pinned by `interpreted.test.ts`).
-    nonEmpty(bind("p", partitionNumberTable, ["Product", forEach(positions, at(add(here, 1), "p"))]), 1),
+    nonEmpty(
+      bind("p", partitionNumberTable, ["Product", forEach(positions, at(add(here, 1), "p"))], "list<integer>"),
+      1,
+    ),
   ),
 
   // Counts from a formula on the parts.
@@ -1218,7 +1220,7 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
       1,
     ),
   ),
-  // Tables over the rows. `Max(..., 0)` floors the sum so the compiler types it real (it types a fold's sum complex otherwise); the last stays interpreted, the compiler does not lower its two-list fold (pinned by `interpreted.test.ts`).
+  // Tables over the rows. `Max(..., 0)` floors the sum so the compiler types it real (it types a fold's sum complex otherwise).
   stat(
     "SubpartitionCount",
     "The partitions contained in this one.",
@@ -1258,6 +1260,7 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
           add(["Sum", ["At", "t", 2]], ["Sum", forEach(["Range", 2, add(largest, 1)], at("i", ["At", "t", 1]))]),
           0,
         ],
+        "list<list<integer>>",
       ),
       0,
     ),
@@ -1292,7 +1295,7 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
   stat(
     "RookPlacementCount",
     "The rook placements, of any number of rooks, on the Ferrers board of the diagram.",
-    nonEmpty(bind("r", rookNumbers, ["Sum", "r"]), 1),
+    nonEmpty(bind("r", rookNumbers, ["Sum", "r"], "list<integer>"), 1),
   ),
   stat(
     "MaximalRookPlacementCount",
@@ -1302,6 +1305,7 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
         "r",
         rookNumbers,
         at(["Max", forEach(upTo(add(length(), 1)), ["If", greater(at("i", "r"), 0), "i", 0])], "r"),
+        "list<integer>",
       ),
       1,
     ),
@@ -1309,7 +1313,7 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
   stat(
     "ShorterSideRookPlacementCount",
     "The ways to place as many non-attacking rooks as the shorter side of the Ferrers board's bounding rectangle has cells, 0 when they do not fit.",
-    nonEmpty(bind("r", rookNumbers, at(add(["Min", length(), largest], 1), "r")), 1),
+    nonEmpty(bind("r", rookNumbers, at(add(["Min", length(), largest], 1), "r"), "list<integer>"), 1),
     "FindStat's title calls this the leading coefficient of the rook polynomial, but its code takes the entry for the shorter side, which is 0 when no placement fills it; the name follows the code.",
   ),
   stat(

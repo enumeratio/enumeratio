@@ -1908,6 +1908,7 @@ const FINDSTAT_PERMUTATION_STATISTICS_7: readonly Definition[] = [
           ["Range", 1, length()],
           count(["Range", add("i", 1), add(length(), 1)], greater(at("i", "q"), at("j", "q")), "j"),
         ),
+        "list<integer>",
       ),
     ),
   ),
