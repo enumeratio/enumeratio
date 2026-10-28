@@ -21,7 +21,7 @@ test("every statistic prints a non-empty definition that reads back as its expre
     expect(errors, `${head} on ${on}: ${shown!.source}`).toEqual([]);
     expect(canonical(json), `${head} on ${on}`).toEqual(canonical(applied(expr)));
   }
-});
+}, 30_000); // grows with the statistic count
 
 test("every Epsil family prints each of its definitions", () => {
   for (const family of allFamilies.filter(isEpsilFamily)) {
