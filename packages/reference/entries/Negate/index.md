@@ -26,7 +26,7 @@ signatures:
     description: "The additive inverse of x: $-x$."
     library: enumeratio-numerals
     type: (complex | infinity) -> number
-    overrides: enumeratio-residues
+    overrides: enumeratio-hypercomplex
     on:
       - AdicNumeral
   - call: Negate(x)

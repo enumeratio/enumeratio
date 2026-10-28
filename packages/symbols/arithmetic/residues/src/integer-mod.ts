@@ -66,6 +66,24 @@ export function declareIntegerMod(ce: Engine): void {
     return x === undefined ? undefined : writeClass(x.residue, x.modulus);
   }
 
+  /** Whether two classes (or a class and an integer) agree in their common ring, if they share one. */
+  const sameClass = (a: Expr, b: Expr): boolean | undefined => {
+    const g = commonModulus([a, b]);
+    const [x, y] = [a, b].map((op) => integerModOf(op)?.residue ?? bigIntegerAt(op));
+    return g === undefined || x === undefined || y === undefined ? undefined : mod(x - y, g) === 0n;
+  };
+
+  /** The classes and plain numbers among a sum's or product's operands, folded as one class. */
+  const fold = (head: "Add" | "Multiply", all: readonly Expr[]): { value: Expr; operands: number[] }[] => {
+    const operands = all.flatMap((op, i) => (isIntegerMod(op) || bigRationalAt(op) !== undefined ? [i] : []));
+    if (operands.length < 2) return [];
+    const value = combine(
+      head,
+      operands.map((i) => all[i]!),
+    );
+    return value === undefined ? [] : [{ value, operands }];
+  };
+
   // The value: normalised as ResidueClass normalises it, and left as written where it can't be.
   const asIntegerMod = (ops: readonly Expr[]): Expr | undefined => {
     const answer = ce
@@ -94,40 +112,22 @@ export function declareIntegerMod(ce: Engine): void {
       const exact = ops.map((op) => op.evaluate());
       return asIntegerMod(exact) ?? build(exact);
     },
+    // compute-engine folds these on every route. A non-unit divisor or unrelated moduli decline.
+    arithmetic: {
+      add: (ops) => fold("Add", ops.evaluated),
+      multiply: (ops) => fold("Multiply", ops.evaluated),
+      negate: (x) => combine("Negate", [x.evaluated]),
+      divide: (a, b) => combine("Divide", [a.evaluated, b.evaluated]),
+      power: (base, exponent) =>
+        isIntegerMod(base.evaluated) && bigIntegerAt(exponent.evaluated) !== undefined
+          ? combine("Power", [base.evaluated, exponent.evaluated])
+          : undefined,
+      // Classes have no order: equal or undefined, so Equal/NotEqual fall to `eq`.
+      compare: (a, b) => (sameClass(a.evaluated, b.evaluated) ? 0 : undefined),
+    },
+    // Sage's ==: equal in the common ring; a plain integer is read in it. Decidable without a prover.
+    eq: (a, b) => sameClass(a, b),
   });
-
-  for (const head of ["Add", "Multiply", "Divide", "Negate"]) {
-    defineOverload(ce, head, {
-      package: "residues",
-      on: [INTEGER_MOD],
-      evaluate: (ops) => combine(head, ops),
-    });
-  }
-  defineOverload(ce, "Power", {
-    package: "residues",
-    on: [INTEGER_MOD],
-    arity: 2,
-    when: (ops) => isIntegerMod(ops[0]) && bigIntegerAt(ops[1]) !== undefined,
-    evaluate: (ops) => combine("Power", ops),
-  });
-
-  // Sage's ==: classes are equal when they agree in the common ring; a plain integer is read in it.
-  for (const [head, equal] of [
-    ["Equal", true],
-    ["NotEqual", false],
-  ] as const) {
-    defineOverload(ce, head, {
-      package: "residues",
-      on: [INTEGER_MOD],
-      arity: 2,
-      evaluate: (ops) => {
-        const g = commonModulus(ops);
-        const [x, y] = ops.map((op) => integerModOf(op)?.residue ?? bigIntegerAt(op));
-        if (g === undefined || x === undefined || y === undefined) return undefined;
-        return ce.symbol((mod(x - y, g) === 0n) === equal ? "True" : "False");
-      },
-    });
-  }
 
   // The rest of the strict class's heads take each class at its own modulus.
   const own = (op: Expr): Expr => {
@@ -149,50 +149,6 @@ export function declareIntegerMod(ce: Engine): void {
       },
     });
   }
-  // Simplify: compute-engine folds classes beside a symbol only for ResidueClass (it keys on that
-  // name, not the `residue` type), so the IntegerMod classes among a sum's or a product's operands
-  // are folded here, after its pass: x + (2 mod 4) + (1 mod 4) is x + (3 mod 4). Retires once
-  // compute-engine folds residues by type.
-  const foldClasses = (expr: Expr): Expr => {
-    const ops = operandsOf(expr);
-    if (ops.length === 0) return expr;
-    const folded = ops.map(foldClasses);
-    const head = expr.operator;
-    const rebuilt = (kids: readonly Expr[]): Expr =>
-      ce.function(
-        head,
-        kids.map((op) => op.canonical),
-      );
-    if (head === "Add" || head === "Multiply") {
-      const group = folded.filter((op) => isIntegerMod(op) || bigRationalAt(op) !== undefined);
-      if (group.length >= 2 && group.some(isIntegerMod)) {
-        const meet = ce
-          .function(
-            head,
-            group.map((op) => op.canonical),
-          )
-          .evaluate();
-        if (isIntegerMod(meet)) {
-          const rest = folded.filter((op) => !group.includes(op));
-          return rest.length === 0 ? meet : rebuilt([...rest, meet]);
-        }
-      }
-    }
-    return folded.every((op, i) => op === ops[i]) ? expr : rebuilt(folded);
-  };
-  const simplifyDefinition = ce.lookupDefinition("Simplify");
-  const simplifyOperator =
-    simplifyDefinition !== undefined && "operator" in simplifyDefinition ? simplifyDefinition.operator : undefined;
-  const nativeSimplify = simplifyOperator?.evaluate as
-    | ((ops: readonly Expr[], options: never) => Expr | undefined)
-    | undefined;
-  if (simplifyOperator !== undefined && nativeSimplify !== undefined) {
-    simplifyOperator.evaluate = ((ops: readonly Expr[], options: never) => {
-      const simplified = nativeSimplify(ops, options);
-      return simplified === undefined || ops.length !== 1 ? simplified : foldClasses(simplified);
-    }) as typeof simplifyOperator.evaluate;
-  }
-
   defineOverload(ce, "ChineseRemainder", {
     package: "residues",
     on: [INTEGER_MOD],

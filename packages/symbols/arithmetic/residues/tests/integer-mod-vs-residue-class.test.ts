@@ -4,7 +4,7 @@ import { expect, test } from "vite-plus/test";
 import { declareResidues } from "../src/declare.ts";
 
 // BL-238: where IntegerMod differs from CE's ResidueClass. IntegerMod is typed `residue`, so CE
-// protects it as a class; its arithmetic stays ours. A row changing is news, not necessarily a regression.
+// protects it as a class; its arithmetic is the `arithmetic` hooks of its declaration. A row changing is news, not necessarily a regression.
 
 const ce = createEngine(declareResidues);
 const ev = (e: unknown): unknown => ce.box(e as Json).evaluate().json;
@@ -32,10 +32,10 @@ test("a class mod 1 absorbs the other class for IntegerMod only", () => {
   expect(rc).toEqual(["Add", ["ResidueClass", 0, 1], ["ResidueClass", 2, 7]]);
 });
 
-test("simplify(): only ResidueClass sums fold beside a symbol, not IntegerMod's; both keep a non-unit quotient and Equal(c, c)", () => {
+test("simplify() folds sums beside a symbol for both; both keep a non-unit quotient and Equal(c, c)", () => {
   const sum = (H: string): unknown => ["Add", "x", [H, 2, 4], [H, 1, 4]];
   expect(simp(sum("ResidueClass"))).toEqual(["Add", "x", ["ResidueClass", 3, 4]]);
-  expect(simp(sum("IntegerMod"))).toEqual(["Add", "x", ["IntegerMod", 2, 4], ["IntegerMod", 1, 4]]);
+  expect(simp(sum("IntegerMod"))).toEqual(["Add", "x", ["IntegerMod", 3, 4]]);
   for (const H of ["ResidueClass", "IntegerMod"]) {
     // A non-unit over itself is not 1.
     expect(simp(["Divide", [H, 2, 4], [H, 2, 4]])).toEqual(["Divide", [H, 2, 4], [H, 2, 4]]);
@@ -43,10 +43,25 @@ test("simplify(): only ResidueClass sums fold beside a symbol, not IntegerMod's;
   }
 });
 
-test("Simplify(...) folds IntegerMod beside a symbol through our wrapper, not .simplify()", () => {
+test("Simplify(...) folds IntegerMod beside a symbol", () => {
   expect(ev(["Simplify", ["Add", "x", ["IntegerMod", 2, 4], ["IntegerMod", 1, 4]]])).toEqual([
     "Add",
     "x",
     ["IntegerMod", 3, 4],
   ]);
+});
+
+test("Equal and NotEqual decide through eq on evaluate() and N(); classes have no order", () => {
+  const nv = (e: unknown): unknown => ce.box(e as Json).N().json;
+  const [c1, c2, c6] = [
+    ["IntegerMod", 1, 5],
+    ["IntegerMod", 2, 5],
+    ["IntegerMod", 6, 5],
+  ];
+  for (const f of [ev, nv]) {
+    expect(f(["Equal", c1, c2])).toBe("False");
+    expect(f(["NotEqual", c1, c2])).toBe("True");
+    expect(f(["Equal", c1, c6])).toBe("True");
+    expect(f(["Less", c1, c2])).toEqual(["Less", c1, c2]);
+  }
 });
