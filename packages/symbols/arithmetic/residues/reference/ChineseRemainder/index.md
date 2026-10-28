@@ -35,6 +35,14 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: crt($2, $1)[0]
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
+    note: crt answers None where no solution exists; the third argument, a least solution at or above a bound, is not mapped.
 ---
 
 - When the moduli are pairwise coprime, the result is unique modulo $m_1m_2\cdots m_n$ by the Chinese remainder theorem.

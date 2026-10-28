@@ -25,6 +25,21 @@ bindings:
     checked:
       version: 1.3.0
       on: 2026-10-15
+  - origin: mapped
+    form: sympy
+    template: hyper([$1, $2, $3], [$4, $5], $6) / (gamma($4) * gamma($5))
+    arity: 6
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
+    note: SymPy has no regularized hypergeometric, so this divides by Γ(b1)Γ(b2); at a pole of either (a non-positive integer) the quotient is not the limit that ours is.
 seeAlso:
   - Hypergeometric2F1Regularized
 ---

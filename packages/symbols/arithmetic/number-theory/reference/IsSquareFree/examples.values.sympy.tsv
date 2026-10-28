@@ -1,0 +1,31 @@
+id	in	out	verdict
+issquarefree-10	(mobius(abs(10)) != 0 if 10 != 0 else False)	True	
+issquarefree-4	(mobius(abs(4)) != 0 if 4 != 0 else False)	False	
+issquarefree-12	(mobius(abs(12)) != 0 if 12 != 0 else False)	False	
+every-prime-is-squarefree	(mobius(abs(17)) != 0 if 17 != 0 else False)	True	
+issquarefree-20	(mobius(abs(20)) != 0 if 20 != 0 else False)	False	
+issquarefree-of-zero	(mobius(abs(0)) != 0 if 0 != 0 else False)	False	
+threads-element-wise-over-a-list	[(mobius(abs(10)) != 0 if 10 != 0 else False), (mobius(abs(4)) != 0 if 4 != 0 else False), (mobius(abs(12)) != 0 if 12 != 0 else False)]	[True, False, False]	
+gaussian-integers-3-2i-is-a-gaussian-prime	(mobius(abs((3 + 2*I))) != 0 if (3 + 2*I) != 0 else False)	TypeError: n should be an integer	error
+gaussianintegers-true-2-i-1-i-2			
+rationals-numerator-and-denominator-are-both	(mobius(abs(Rational(2, 3))) != 0 if Rational(2, 3) != 0 else False)	TypeError: n should be an integer	error
+polynomials-x-2-6x-6-has-no-repeated-factor	(mobius(abs(((S(Symbol("x"))**2) + (6 * Symbol("x")) + 6))) != 0 if ((S(Symbol("x"))**2) + (6 * Symbol("x")) + 6) != 0 else False)	True	
+multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	(mobius(abs(((S(Symbol("x"))**3) - ((S(Symbol("x"))**2) * Symbol("y"))))) != 0 if ((S(Symbol("x"))**3) - ((S(Symbol("x"))**2) * Symbol("y"))) != 0 else False)	True	disagree
+squarefree-as-a-polynomial-in-x-alone-y-is-just			
+but-not-in-y-alone-y-appears-squared			
+a-non-squarefree-rational	(mobius(abs(Rational(4, 3))) != 0 if Rational(4, 3) != 0 else False)	TypeError: n should be an integer	error
+x-1-2-has-a-repeated-root	(mobius(abs(((S(Symbol("x"))**2) + (-2 * Symbol("x")) + 1))) != 0 if ((S(Symbol("x"))**2) + (-2 * Symbol("x")) + 1) != 0 else False)	True	disagree
+x-3-y-3-has-no-repeated-factor	(mobius(abs(((S(Symbol("x"))**3) - (S(Symbol("y"))**3)))) != 0 if ((S(Symbol("x"))**3) - (S(Symbol("y"))**3)) != 0 else False)	True	
+issquarefree-3-plus-10-pow-70	(mobius(abs((3 + (S(10)**70)))) != 0 if (3 + (S(10)**70)) != 0 else False)	True	
+issquarefree-2	(mobius(abs(2)) != 0 if 2 != 0 else False)	True	
+issquarefree-x-pow-2-minus-3	(mobius(abs(((S(Symbol("x"))**2) + -3))) != 0 if ((S(Symbol("x"))**2) + -3) != 0 else False)	True	
+n-1-over-100-000-times-length-filter-range-1-100			
+issquarefree-q	(mobius(abs(Symbol("q"))) != 0 if Symbol("q") != 0 else False)	True	
+n-is-squarefree-exactly-when-mu-n-neq-0-see	enumeratio_equal((mobius(abs(10)) != 0 if 10 != 0 else False), Not(enumeratio_equal(mobius(10), 0)))	True	
+issquarefree-210	(mobius(abs(210)) != 0 if 210 != 0 else False)	True	
+issquarefree-14	(mobius(abs(14)) != 0 if 14 != 0 else False)	True	
+isprimepower-17-issquarefree-17	And((abs(17) > 1 and len(factorint(abs(17))) == 1), (mobius(abs(17)) != 0 if 17 != 0 else False))	True	
+issquarefree-x-pow-2-minus-2x-plus-1-x			
+simplify-issquarefree-a-pow-2-a-in-integers			
+issquarefree-expand-x-plus-1-pow-3-times-x-plus	(mobius(abs(expand(((S((Symbol("x") + 1))**3) * (S((Symbol("x") + 2))**2) * (S((Symbol("x") + 3))**2))))) != 0 if expand(((S((Symbol("x") + 1))**3) * (S((Symbol("x") + 2))**2) * (S((Symbol("x") + 3))**2))) != 0 else False)	True	disagree
+1-is-vacuously-squarefree-it-has-no-repeated	(mobius(abs(1)) != 0 if 1 != 0 else False)	True	

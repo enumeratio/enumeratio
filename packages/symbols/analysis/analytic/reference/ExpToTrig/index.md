@@ -8,6 +8,14 @@ signatures:
     description: "`expr` with each `Exp` rewritten via Euler's formula or its hyperbolic analogue."
     library: "@enumeratio/analytic"
     type: (expression) -> expression
+bindings:
+  - origin: mapped
+    form: sympy
+    template: ($1).rewrite(cos)
+    arity: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
 seeAlso:
   - ComplexExpand
   - TrigToExp

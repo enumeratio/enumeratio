@@ -1,0 +1,31 @@
+id	in	out
+digitsum-58-127	sum(digits(abs(58127))[1:])	23
+in-base-2-this-is-the-number-of-set-bits	sum(digits(abs(58127), 2)[1:])	9
+255-ff-16-15-15	sum(digits(abs(255), 16)[1:])	30
+threads-element-wise-over-a-list-as-wolfram-s	[sum(digits(abs(12))[1:]), sum(digits(abs(345))[1:])]	[3, 12]
+just-the-first-4-digits-6-3-4-5-18-not-the-full		
+a-negative-k-sums-the-last-3-digits-instead		
+k-at-least-the-digit-count-is-the-plain-sum		
+digitsum-1-plus-9-pow-1-000	sum(digits(abs((1 + (S(9)**1000))))[1:])	4339
+digitsum-58-127-16	sum(digits(abs(58127), 16)[1:])	32
+digitsum-list-6-7-2-2	[sum(digits(abs(6), 2)[1:]), sum(digits(abs(7), 2)[1:]), sum(digits(abs(2), 2)[1:])]	[2, 3, 1]
+digitsum-7-list-2-3-4	[sum(digits(abs(7), 2)[1:]), sum(digits(abs(7), 3)[1:]), sum(digits(abs(7), 4)[1:])]	[3, 3, 4]
+digitsum-6-345-354-10-neg-4		
+digitsum-35-297	sum(digits(abs(35297))[1:])	26
+digit-sum-n-mod-9-the-basis-of-the-classic	enumeratio_equal((sum(digits(abs(58127))[1:]) % 9), (58127 % 9))	True
+digitsum-37-103	sum(digits(abs(37103))[1:])	14
+digitsum-143-2	sum(digits(abs(143), 2)[1:])	5
+digitsum-123-000-10-neg-3		
+digitsum-0-10-neg-3		
+digitsum-2-147-2	sum(digits(abs(2147), 2)[1:])	5
+digitsum-2-147	sum(digits(abs(2147))[1:])	14
+digitsum-1-over-9-times-neg-1-plus-10-pow-17	sum(digits(abs((Rational(1, 9) * (-1 + (S(10)**17)))))[1:])	17
+digitsum-123-456-10-7		
+digitsum-263-5	sum(digits(abs(263), 5)[1:])	7
+digitsum-integerreverse-263-5-5		
+digitsum-neg-3-134	sum(digits(abs(-3134))[1:])	11
+digitsum-0	sum(digits(abs(0))[1:])	0
+the-sign-is-discarded	sum(digits(abs(-123))[1:])	6
+sign-is-discarded-in-the-3-argument-form-too		
+digitsum-100-factorial	sum(digits(abs(factorial(100)))[1:])	648
+the-digit-sum-of-2-1000	sum(digits(abs((S(2)**1000)))[1:])	1366

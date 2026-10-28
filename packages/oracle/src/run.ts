@@ -468,13 +468,14 @@ const SYMPY_IMPORT = `import os as _os
 _os.environ["SYMPY_GROUND_TYPES"] = "python"
 from sympy import *`;
 
-// SymPy helpers: `stirling`, `digits` and `Permutation` live outside `from sympy import *`, and an identity is decided by
+// SymPy helpers: `stirling`, `digits`, `Permutation` and `crt` live outside `from sympy import *`, and an identity is decided by
 // simplifying the difference, then numerically — `bool(Eq(…))` refuses anything it can't
 // settle syntactically.
 export const SYMPY_PREAMBLE = `
 from sympy.functions.combinatorial.numbers import stirling
 from sympy.ntheory.digits import digits
 from sympy.combinatorics import Permutation
+from sympy.ntheory.modular import crt
 
 ${HELD_ALIKE}
 # How close a numeric identity must hold: 1e-20, loosened to the digits of the least precise float in it,

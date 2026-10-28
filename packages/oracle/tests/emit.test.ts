@@ -926,3 +926,8 @@ test("SymPy's Inverse is the permutation inverse, and nothing else", () => {
   );
   expect(sympy(["Inverse", ["List", ["List", 1, 1], ["List", 1, 2]]])).toBeUndefined();
 });
+
+test("a SymPy Product takes its iterator as a tuple, as Sum does", () => {
+  const out = emit(["Product", "k", ["Limits", "k", 1, 5]] as MathJSON, "sympy");
+  expect(out.ok && out.source).toContain('product(Symbol("k"), (Symbol("k"), 1, 5))');
+});

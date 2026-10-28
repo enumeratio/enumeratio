@@ -35,6 +35,13 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: product($1, $2)
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
 ---
 
 - The empty product is 1 by convention, matching $Factorial(0)$. See [[Factorial]].

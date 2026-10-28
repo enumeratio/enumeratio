@@ -8,6 +8,14 @@ signatures:
     description: "`expr` with a handful of named special-function identities applied."
     library: "@enumeratio/analytic"
     type: (expression) -> expression
+bindings:
+  - origin: mapped
+    form: sympy
+    template: expand_func($1)
+    arity: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
 seeAlso:
   - FullSimplify
   - DirichletEta

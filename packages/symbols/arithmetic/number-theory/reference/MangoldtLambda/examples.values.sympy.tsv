@@ -1,0 +1,30 @@
+id	in	out	verdict
+8-2-3	(log(list(factorint(8))[0]) if 8 > 1 and len(factorint(8)) == 1 else 0)	log(2)	
+6-is-not-a-prime-power	(log(list(factorint(6))[0]) if 6 > 1 and len(factorint(6)) == 1 else 0)	0	
+mangoldtlambda-7	(log(list(factorint(7))[0]) if 7 > 1 and len(factorint(7)) == 1 else 0)	log(7)	
+mangoldtlambda-9	(log(list(factorint(9))[0]) if 9 > 1 and len(factorint(9)) == 1 else 0)	log(3)	
+mangoldtlambda-25	(log(list(factorint(25))[0]) if 25 > 1 and len(factorint(25)) == 1 else 0)	log(5)	
+numerically-ln-3	N((log(list(factorint(9))[0]) if 9 > 1 and len(factorint(9)) == 1 else 0), 30)	1.09861228866810969139524523692	
+listable	[(log(list(factorint(2))[0]) if 2 > 1 and len(factorint(2)) == 1 else 0), (log(list(factorint(4))[0]) if 4 > 1 and len(factorint(4)) == 1 else 0), (log(list(factorint(6))[0]) if 6 > 1 and len(factorint(6)) == 1 else 0), (log(list(factorint(25))[0]) if 25 > 1 and len(factorint(25)) == 1 else 0)]	[log(2), log(2), 0, log(5)]	
+n-of-a-zero-result-is-still-0	N((log(list(factorint(6))[0]) if 6 > 1 and len(factorint(6)) == 1 else 0), 30)	0	
+mangoldtlambda-125	(log(list(factorint(125))[0]) if 125 > 1 and len(factorint(125)) == 1 else 0)	log(5)	
+mangoldtlambda-7-pow-300	(log(list(factorint((S(7)**300)))[0]) if (S(7)**300) > 1 and len(factorint((S(7)**300))) == 1 else 0)	log(7)	
+mangoldtlambda-list-2-6-9-8-15	[(log(list(factorint(2))[0]) if 2 > 1 and len(factorint(2)) == 1 else 0), (log(list(factorint(6))[0]) if 6 > 1 and len(factorint(6)) == 1 else 0), (log(list(factorint(9))[0]) if 9 > 1 and len(factorint(9)) == 1 else 0), (log(list(factorint(8))[0]) if 8 > 1 and len(factorint(8)) == 1 else 0), (log(list(factorint(15))[0]) if 15 > 1 and len(factorint(15)) == 1 else 0)]	[log(2), 0, log(3), log(2), 0]	
+mangoldtlambda-81-factorial-eq-0			
+list-mangoldtlambda-6-mangoldtlambda-2-plus	[(log(list(factorint(6))[0]) if 6 > 1 and len(factorint(6)) == 1 else 0), ((log(list(factorint(2))[0]) if 2 > 1 and len(factorint(2)) == 1 else 0) + (log(list(factorint(3))[0]) if 3 > 1 and len(factorint(3)) == 1 else 0))]	[0, log(2) + log(3)]	
+list-mangoldtlambda-6-mangoldtlambda-2-times	[(log(list(factorint(6))[0]) if 6 > 1 and len(factorint(6)) == 1 else 0), ((log(list(factorint(2))[0]) if 2 > 1 and len(factorint(2)) == 1 else 0) * (log(list(factorint(3))[0]) if 3 > 1 and len(factorint(3)) == 1 else 0))]	[0, log(2)*log(3)]	
+mangoldtlambda-5	(log(list(factorint(5))[0]) if 5 > 1 and len(factorint(5)) == 1 else 0)	log(5)	
+mangoldtlambda-2	(log(list(factorint(2))[0]) if 2 > 1 and len(factorint(2)) == 1 else 0)	log(2)	
+mangoldtlambda-3	(log(list(factorint(3))[0]) if 3 > 1 and len(factorint(3)) == 1 else 0)	log(3)	
+mangoldtlambda-4	(log(list(factorint(4))[0]) if 4 > 1 and len(factorint(4)) == 1 else 0)	log(2)	
+mangoldtlambda-10	(log(list(factorint(10))[0]) if 10 > 1 and len(factorint(10)) == 1 else 0)	0	
+mangoldtlambda-11	(log(list(factorint(11))[0]) if 11 > 1 and len(factorint(11)) == 1 else 0)	log(11)	
+mangoldtlambda-12	(log(list(factorint(12))[0]) if 12 > 1 and len(factorint(12)) == 1 else 0)	0	
+simplify-sum-mangoldtlambda-n-n-20	simplify(summation((log(list(factorint(Symbol("n")))[0]) if Symbol("n") > 1 and len(factorint(Symbol("n"))) == 1 else 0), (Symbol("n"), 1, 20)))	TypeError: cannot determine truth value of Relational: n > 1	error
+mangoldtlambda-13	(log(list(factorint(13))[0]) if 13 > 1 and len(factorint(13)) == 1 else 0)	log(13)	
+mangoldtlambda-14	(log(list(factorint(14))[0]) if 14 > 1 and len(factorint(14)) == 1 else 0)	0	
+mangoldtlambda-15	(log(list(factorint(15))[0]) if 15 > 1 and len(factorint(15)) == 1 else 0)	0	
+mangoldtlambda-16	(log(list(factorint(16))[0]) if 16 > 1 and len(factorint(16)) == 1 else 0)	log(2)	
+mangoldtlambda-17	(log(list(factorint(17))[0]) if 17 > 1 and len(factorint(17)) == 1 else 0)	log(17)	
+ln-16-eq-divisorsum-16-function-mangoldtlambda-1			
+lambda-1-0	(log(list(factorint(1))[0]) if 1 > 1 and len(factorint(1)) == 1 else 0)	0	

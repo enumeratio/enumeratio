@@ -52,6 +52,15 @@ bindings:
     checked:
       version: primal 0.3.3
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: (mobius(abs($1)) != 0 if $1 != 0 else False)
+    arity: 1
+    threadArgOnly:
+      - 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
 ---
 
 - An integer is squarefree if it is divisible by no perfect square other than 1.

@@ -1,0 +1,15 @@
+id	in	out	verdict
+a-generic-point-inside-the-unit-disc	hyper([1, 1, 1], [2, 3], 0.5) / (gamma(2) * gamma(3))	hyper((1, 1, 1), (2, 3), 0.5)/2	inconclusive
+a-0-5-1-1-5-2-2-5-at-neg-0-4	hyper([0.5, 1, 1.5], [2, 2.5], -0.4) / (gamma(2) * gamma(2.5))	0.752252778063675*hyper((0.5, 1.5, 1), (2.5, 2), -0.4)	inconclusive
+a-lower-parameter-0-at-0-3	hyper([1, 1, 1], [0, 2], 0.3) / (gamma(0) * gamma(2))	0	disagree
+a-lower-parameter-neg-1-at-0-3	hyper([1, 1, 1], [-1, 2], 0.3) / (gamma(-1) * gamma(2))	0	disagree
+an-upper-parameter-neg-1-at-0-3	hyper([1, 1, 1], [2, -1], 0.3) / (gamma(2) * gamma(-1))	0	disagree
+a-complex-argument	N(hyper([1, 1, 1], [2, 3], (0.3 + 0.2*I)) / (gamma(2) * gamma(3)), 30)	0.52616748168904027091088085866 + 0.0206561537324027141689900632001*I	
+n-hypergeometric3f2regularized-1-over-2-1-3-over	N(hyper([Rational(1, 2), 1, Rational(3, 2)], [2, Rational(5, 2)], Rational(-2, 5)) / (gamma(2) * gamma(Rational(5, 2))), 30)	0.712541516124743840932449610592	
+n-hypergeometric3f2regularized-1-1-1-neg-1-2-3	N(hyper([1, 1, 1], [-1, 2], Rational(3, 10)) / (gamma(-1) * gamma(2)), 30)	0	disagree
+n-hypergeometric3f2regularized-1-2-3-4-5-neg-99	N(hyper([1, 2, 3], [4, 5], Rational(-99, 100)) / (gamma(4) * gamma(5)), 30)	0.00544431107561067145112642371579	
+n-hypergeometric3f2regularized-1-2-3-4-5-99-over	N(hyper([1, 2, 3], [4, 5], Rational(99, 100)) / (gamma(4) * gamma(5)), 30)	0.0107777425880661929498982568182	
+n-hypergeometric3f2regularized-1-1-1-2-3-1-over	N(hyper([1, 1, 1], [2, 3], Rational(1, 2)) / (gamma(2) * gamma(3)), 30)	0.550775414049915630639776883236	
+z-ge-1-stays-symbolic-no-continuation-past-the	hyper([1, 1, 1], [2, 3], 1.2) / (gamma(2) * gamma(3))	hyper((1, 1, 1), (2, 3), 1.2)/2	disagree
+n-hypergeometric3f2regularized-1-1-1-2-3-6-over	N(hyper([1, 1, 1], [2, 3], Rational(6, 5)) / (gamma(2) * gamma(3)), 30)	0.71744148192634133084237140079 - 0.0409844065138693640567038329041*I	disagree
+n-hypergeometric3f2regularized-1-2-3-4-5-999	N(hyper([1, 2, 3], [4, 5], Rational(999, 1000)) / (gamma(4) * gamma(5)), 30)	0.0108572552598338045310570492989	inconclusive

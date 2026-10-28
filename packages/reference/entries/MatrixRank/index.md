@@ -26,6 +26,13 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: Matrix($1).rank()
+    arity: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
 ---
 
 - Written $\operatorname{rank} A$. Row rank equals column rank, so $\operatorname{rank} A = \operatorname{rank} A^\top$.

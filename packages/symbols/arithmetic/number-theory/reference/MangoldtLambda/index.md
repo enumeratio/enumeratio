@@ -8,6 +8,16 @@ signatures:
     description: $\ln p$ for $n=p^k$, else 0
     library: enumeratio-number-theory
     type: (integer) -> number
+bindings:
+  - origin: mapped
+    form: sympy
+    template: (log(list(factorint($1))[0]) if $1 > 1 and len(factorint($1)) == 1 else 0)
+    arity: 1
+    threadArgOnly:
+      - 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
 seeAlso:
   - IsPrimePower
   - FactorInteger

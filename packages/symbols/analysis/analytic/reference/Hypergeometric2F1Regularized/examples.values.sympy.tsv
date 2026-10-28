@@ -1,0 +1,17 @@
+id	in	out	verdict
+matches-hypergeometric2f1-1-1-2-0-5-gamma-2	hyper([1, 1], [2], 0.5) / gamma(2)	hyper((1, 1), (2,), 0.5)	inconclusive
+a-0-5-b-1-5-c-2-5-at-neg-0-6	hyper([0.5, 1.5], [2.5], -0.6) / gamma(2.5)	0.752252778063675*hyper((0.5, 1.5), (2.5,), -0.6)	inconclusive
+c-0-at-0-5	hyper([1, 1], [0], 0.5) / gamma(0)	0	disagree
+b-2-c-neg-2-at-0-4	hyper([1, 2], [-2], 0.4) / gamma(-2)	0	disagree
+a-complex-argument-at-c-2	N(hyper([1, 1], [2], (0.3 + 0.3*I)) / gamma(2), 30)	1.12875895667653239549134860762 + 0.220880330940412335022993935314*I	
+a-complex-argument-at-a-nonpositive-integer-c	N(hyper([1, 1], [-1], (0.2 + -0.1*I)) / gamma(-1), 30)	0	inconclusive
+simplify-normal-series			
+normal-series-hypergeometric2f1regularized-1	(series(hyper([Rational(1, 2), 1], [2], Symbol("x")) / gamma(2), Symbol("x"), 1, 2 + 1)).removeO()	nan	inconclusive
+n-hypergeometric2f1regularized-1-1-neg-1-0	N(hyper([1, 1], [-1], 0) / gamma(-1), 30)	0	
+n-hypergeometric2f1regularized-1-over-3-1-3-neg	N(hyper([Rational(1, 3), 1], [3], -7) / gamma(3), 30)	0.355102040816326530612244897959	
+n-hypergeometric2f1regularized-1-over-3-1-0-neg	N(hyper([Rational(1, 3), 1], [0], -7) / gamma(0), 30)	0	disagree
+matrixfunction-function	Matrix([[Rational(1, 2), 0], [0, Rational(1, 2)]]).analytic_func(hyper([Rational(1, 2), 1], [1], Symbol("_mf")) / gamma(1), Symbol("_mf")).applyfunc(simplify).tolist()	[[sqrt(2), 0], [0, sqrt(2)]]	
+hypergeometric2f1regularized-1-1-1-0	hyper([1, 1], [1], 0) / gamma(1)	hyper((1,), (), 0)	inconclusive
+hypergeometric2f1regularized-1-over-2-1-1-over-2	hyper([Rational(1, 2), 1], [Rational(1, 2)], Symbol("x")) / gamma(Rational(1, 2))	hyper((1,), (), x)/sqrt(pi)	
+stays-finite-at-a-nonpositive-integer-lower	N(hyper([1, 1], [-1], 0.3) / gamma(-1), 30)	0	disagree
+z-ge-1-stays-symbolic-no-continuation-past-the	hyper([1, 1], [2], 1.5) / gamma(2)	hyper((1, 1), (2,), 1.5)	disagree

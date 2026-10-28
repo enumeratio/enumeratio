@@ -560,11 +560,12 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         return "0";
       }
     }
-    // SymPy's `summation(f, (k, a, b))`: the iterator is a tuple, from 1 when its start is `Nothing` or left out.
+    // SymPy's `summation(f, (k, a, b))` and `product(f, (k, a, b))`: the iterator is a tuple, from 1 when its start is
+    // `Nothing` or left out.
     // Sage's `sum(f, k, a, b)` and `product(f, k, a, b)` take the iterator's parts as arguments, k a symbol.
     if (
       (system === "sympy"
-        ? head === "Sum"
+        ? head === "Sum" || head === "Product"
         : system === "sage" && (head === "Sum" || head === "Product") && !extra.some((m) => m.head === head)) &&
       operands.length === 2
     ) {

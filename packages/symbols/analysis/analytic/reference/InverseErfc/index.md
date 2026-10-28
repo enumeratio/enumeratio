@@ -22,6 +22,15 @@ bindings:
     checked:
       version: statrs 0.18.0
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: erfcinv($1)
+    arity: 1
+    threadArgOnly:
+      - 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
 seeAlso:
   - Erfc
 names:

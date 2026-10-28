@@ -42,6 +42,19 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: hyper([$1, $2], [$3], $4) / gamma($3)
+    arity: 4
+    threadArgOnly:
+      - 1
+      - 2
+      - 3
+      - 4
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
+    note: SymPy has no regularized hypergeometric, so this divides by Γ(c); at a pole of Γ(c) (c a non-positive integer) the quotient is not the limit that ours is.
 seeAlso:
   - Hypergeometric3F2Regularized
   - Hypergeometric1F1Regularized

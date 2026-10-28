@@ -1,23 +1,23 @@
 id	in	out
-8-2-3		
-12-2-2-cdot-3-has-two-distinct-primes		
-a-prime-is-its-own-first-power		
-isprimepower-6		
+8-2-3	(abs(8) > 1 and len(factorint(abs(8))) == 1)	True
+12-2-2-cdot-3-has-two-distinct-primes	(abs(12) > 1 and len(factorint(abs(12))) == 1)	False
+a-prime-is-its-own-first-power	(abs(7) > 1 and len(factorint(abs(7))) == 1)	True
+isprimepower-6	(abs(6) > 1 and len(factorint(abs(6))) == 1)	False
 isprime-of-a-negative-prime	isprime(-5)	False
-listable		
-large-integers		
-isprimepower-9		
-isprimepower-list-1-2-3-4-5-6-7		
+listable	[(abs(2) > 1 and len(factorint(abs(2))) == 1), (abs(4) > 1 and len(factorint(abs(4))) == 1), (abs(6) > 1 and len(factorint(abs(6))) == 1), (abs(9) > 1 and len(factorint(abs(9))) == 1), (abs(10) > 1 and len(factorint(abs(10))) == 1), (abs(16) > 1 and len(factorint(abs(16))) == 1)]	[True, True, False, True, False, True]
+large-integers	(abs((S(3)**40)) > 1 and len(factorint(abs((S(3)**40)))) == 1)	True
+isprimepower-9	(abs(9) > 1 and len(factorint(abs(9))) == 1)	True
+isprimepower-list-1-2-3-4-5-6-7	[(abs(1) > 1 and len(factorint(abs(1))) == 1), (abs(2) > 1 and len(factorint(abs(2))) == 1), (abs(3) > 1 and len(factorint(abs(3))) == 1), (abs(4) > 1 and len(factorint(abs(4))) == 1), (abs(5) > 1 and len(factorint(abs(5))) == 1), (abs(6) > 1 and len(factorint(abs(6))) == 1), (abs(7) > 1 and len(factorint(abs(7))) == 1)]	[False, True, True, True, True, False, True]
 filter-range-1-100-function-isprimepower-1		
-isprimepower-625		
-isprimepower-53		
-list-isprimepower-27-issquarefree-27		
-list-isprimepower-3-issquarefree-3		
-isprimepower-25		
-isprimepower-16-807		
-list-isprimepower-121-iscomposite-121-moebiusmu		
-list-isprimepower-11-isprime-11-moebiusmu-11		
-isprimepower-2-401		
-isprimepower-121		
+isprimepower-625	(abs(625) > 1 and len(factorint(abs(625))) == 1)	True
+isprimepower-53	(abs(53) > 1 and len(factorint(abs(53))) == 1)	True
+list-isprimepower-27-issquarefree-27	[(abs(27) > 1 and len(factorint(abs(27))) == 1), (mobius(abs(27)) != 0 if 27 != 0 else False)]	[True, False]
+list-isprimepower-3-issquarefree-3	[(abs(3) > 1 and len(factorint(abs(3))) == 1), (mobius(abs(3)) != 0 if 3 != 0 else False)]	[True, True]
+isprimepower-25	(abs(25) > 1 and len(factorint(abs(25))) == 1)	True
+isprimepower-16-807	(abs(16807) > 1 and len(factorint(abs(16807))) == 1)	True
+list-isprimepower-121-iscomposite-121-moebiusmu	[(abs(121) > 1 and len(factorint(abs(121))) == 1), (abs(121) > 1 and not isprime(abs(121))), mobius(121)]	[True, True, 0]
+list-isprimepower-11-isprime-11-moebiusmu-11	[(abs(11) > 1 and len(factorint(abs(11))) == 1), isprime(11), mobius(11)]	[True, True, -1]
+isprimepower-2-401	(abs(2401) > 1 and len(factorint(abs(2401))) == 1)	True
+isprimepower-121	(abs(121) > 1 and len(factorint(abs(121))) == 1)	True
 map-function-divisorsigma-1-1-lt-2-times-1-1		
-1-is-p-0-which-does-not-count		
+1-is-p-0-which-does-not-count	(abs(1) > 1 and len(factorint(abs(1))) == 1)	False
