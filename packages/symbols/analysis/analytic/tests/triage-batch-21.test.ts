@@ -85,7 +85,8 @@ test("Solve: through CubeRoot and InverseErfc", () => {
 
 test("PiecewiseExpand: If, Boole and the deltas are conditional values", () => {
   expect(json(["PiecewiseExpand", ["If", "a", "b", "c"]])).toEqual(["Piecewise", ["List", ["List", "b", "a"]], "c"]);
-  expect(json(["PiecewiseExpand", ["Boole", "a"]])).toEqual(["Piecewise", ["List", ["List", 1, "a"]], 0]);
+  // a bare symbol in an earlier list literal is typed number for the engine's life (0.168), so Boole gets a fresh one
+  expect(json(["PiecewiseExpand", ["Boole", "p"]])).toEqual(["Piecewise", ["List", ["List", 1, "p"]], 0]);
   const kronecker = raw(["PiecewiseExpand", ["KroneckerDelta", "x", "y"]]);
   expect(kronecker[0]).toBe("Piecewise");
   const discrete = raw(["PiecewiseExpand", ["DiscreteDelta", "x", "y"]]) as unknown[][];
