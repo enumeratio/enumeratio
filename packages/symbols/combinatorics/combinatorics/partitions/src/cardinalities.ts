@@ -1,10 +1,9 @@
 // Catalog "statistics" that are really the SIZE OF A COLLECTION determined by the element.
 //
-// A fourth category, and the one that says something about naming. `StandardTableauCount`
-// is not a statistic of a partition in the way `DurfeeSquare` is — it is the cardinality of
-// `StandardTableaux(λ)`, a collection the partition indexes. Written as a statistic it reads
-// as an oddly specific one-off; written as `Count(StandardTableaux(λ))` it is an instance of
-// something completely general.
+// A fourth category, and the one that says something about naming. Such a head is not a
+// statistic of an element in the way `DurfeeSquare` is — it is the cardinality of a collection
+// the element indexes. Written as a statistic it reads as an oddly specific one-off; written
+// as `Count(Collection(x))` it is an instance of something completely general.
 //
 // So these do not get definitions. They get a note saying which collection they count, and
 // the machinery that already answers `Count` over a lazy collection answers them.
@@ -20,11 +19,6 @@ export interface Cardinality {
   readonly why: string;
 }
 
-export const CARDINALITIES: readonly Cardinality[] = [
-  {
-    head: "StandardTableauCount",
-    on: "IntegerPartition",
-    counts: "StandardTableaux",
-    why: "The size of StandardTableaux(λ), not a property of λ's diagram. The hook-length formula is one way to compute that size; Count over the collection is another, and neither belongs in a statistics table.",
-  },
-];
+// Empty since `StandardTableauCount` (FindStat St000003), the one entry, became a statistic of an
+// IntegerPartition by the hook-length formula, as `PlancherelCount` already was.
+export const CARDINALITIES: readonly Cardinality[] = [];

@@ -1562,6 +1562,390 @@ const FINDSTAT_PERMUTATION_STATISTICS_6: readonly Definition[] = [
   ),
 ];
 
+/** Occurrences of a vincular pattern whose last two entries are adjacent: any i, then j, j + 1. */
+const occurrencesWithAdjacentEnd = (pattern: readonly number[]): MathJSON =>
+  atLeast(
+    3,
+    sumOver(
+      ["Range", 2, subtract(length(), 1)],
+      count(["Range", 1, subtract("j", 1)], orderedAs(pattern, [at("i"), at("j"), at(add("j", 1))]), "i"),
+      "j",
+    ),
+  );
+/** The descents: the vincular pattern (21). */
+const adjacentDescents: MathJSON = hasPair(count(adjacent, fallsAfter));
+
+/** The 1-based position of the value `v`, summed over a variable that `v` does not mention. */
+const positionOfValue = (v: MathJSON): MathJSON => sumOver(positions, ["If", equals(at("m"), v), "m", 0], "m");
+
+/** The values at positions `from .. to`, read with a variable the caller's loops do not use. */
+const between = (from: MathJSON, to: MathJSON): MathJSON => forEach(["Range", from, to], at("k"), "k");
+
+/** a, b, c, d run once round a circle, from whichever starting point. */
+const cyclicOrder = (a: MathJSON, b: MathJSON, c: MathJSON, d: MathJSON): MathJSON =>
+  or(or(chain([a, b, c, d]), chain([b, c, d, a])), or(chain([c, d, a, b]), chain([d, a, b, c])));
+
+/** The floor of m / 2 for an integer m >= 0, with no Floor. */
+const halfFloor = (m: MathJSON): MathJSON => ["Divide", subtract(m, ["Mod", m, 2]), 2];
+
+/** The gap to the nearest greater entry, the entries beyond either end counting as greater. */
+const distanceToGreater: MathJSON = [
+  "Min",
+  [
+    "Join",
+    ["List", "i", subtract(add(length(), 1), "i")],
+    forEach(where(positions, greater(at("j"), here), "j"), distance("j", "i"), "j"),
+  ],
+];
+
+/** The positions i that start an occurrence of the pattern: i < j < k with the values ordered as it says. */
+const distinctFirstPositions = (pattern: readonly number[]): MathJSON =>
+  atLeast(
+    3,
+    count(
+      ["Range", 1, subtract(length(), 2)],
+      greater(
+        sumOver(
+          ["Range", add("i", 1), subtract(length(), 1)],
+          count(["Range", add("j", 1), length()], orderedAs(pattern, [at("i"), at("j"), at("k")]), "k"),
+          "j",
+        ),
+        0,
+      ),
+    ),
+  );
+/** The positions j in the middle of an occurrence of the pattern: i < j < k with the values ordered as it says. */
+const distinctMiddlePositions = (pattern: readonly number[]): MathJSON =>
+  atLeast(
+    3,
+    count(
+      ["Range", 2, subtract(length(), 1)],
+      greater(
+        sumOver(
+          ["Range", 1, subtract("j", 1)],
+          count(["Range", add("j", 1), length()], orderedAs(pattern, [at("i"), at("j"), at("k")]), "k"),
+          "i",
+        ),
+        0,
+      ),
+      "j",
+    ),
+  );
+
+/** Pairs i < j with p(i) > p(j) that are admissible in Shareshian and Wachs's sense. */
+const shareshianWachsAdmissible: MathJSON = sumOverPairs(
+  and(
+    greater(here, wordAtJ),
+    or(
+      ["If", less("j", length()), less(wordAtJ, at(add("j", 1))), "False"],
+      ["If", less(add("i", 1), "j"), greater(wordAtJ, min(between(add("i", 1), subtract("j", 1)))), "False"],
+    ),
+  ),
+  1,
+);
+
+/** The cycle (p(1), ..., p(n), n + 1) as a one-line permutation of n + 1: each value goes to the one after it. */
+const cyclicEmbedding: MathJSON = forEach(
+  ["Range", 1, add(length(), 1)],
+  [
+    "If",
+    equals("v", add(length(), 1)),
+    at(1),
+    sumOver(
+      positions,
+      ["If", equals(at("m"), "v"), ["If", equals("m", length()), add(length(), 1), at(add("m", 1))], 0],
+      "m",
+    ),
+  ],
+  "v",
+);
+
+// The seventh batch: the vincular family mak, mad and makl, the cyclic and arc counts, and a few small leftovers.
+const FINDSTAT_PERMUTATION_STATISTICS_7: readonly Definition[] = [
+  stat(
+    "OneBoxPatterns",
+    "Positions i with a neighbouring entry, left or right, differing from p(i) by exactly 1.",
+    hasPair(
+      count(
+        positions,
+        or(
+          ["If", greater("i", 1), equals(distance(here, previous), 1), "False"],
+          ["If", less("i", length()), equals(distance(here, next), 1), "False"],
+        ),
+      ),
+    ),
+  ),
+  stat(
+    "MaximumOfDescentsAndInverseDescents",
+    "The larger of the number of descents and the number of inverse descents.",
+    hasPair([
+      "Max",
+      [
+        "List",
+        count(adjacent, fallsAfter),
+        count(adjacent, greater(positionOfValue("i"), positionOfValue(add("i", 1)))),
+      ],
+    ]),
+  ),
+  word(
+    "InvisibleDescents",
+    "Positions i with p(i) > p(i+1) > i.",
+    hasPair(count(adjacent, and(fallsAfter, greater(next, "i")))),
+  ),
+  word(
+    "VisibleDescents",
+    "Positions i with p(i+1) <= min(i, p(i)).",
+    hasPair(count(adjacent, and(atMostValue(next, "i"), atMostValue(next, here)))),
+  ),
+  stat(
+    "GreaterNeighborOfMaximum",
+    "The larger of the two entries beside n, an end counting as 0.",
+    nonEmpty(
+      sumOver(positions, [
+        "If",
+        equals(here, length()),
+        max(["List", ["If", greater("i", 1), previous, 0], ["If", less("i", length()), next, 0]]),
+        0,
+      ]),
+    ),
+  ),
+  stat(
+    "InversionsOfThirdEntry",
+    "Positions after the third with a smaller entry than p(3).",
+    atLeast(4, count(["Range", 4, length()], less(at("j"), at(3)), "j")),
+  ),
+  stat(
+    "InversionsOfSecondEntry",
+    "Positions after the second with a smaller entry than p(2).",
+    atLeast(3, count(["Range", 3, length()], less(at("j"), at(2)), "j")),
+  ),
+  stat(
+    "SumOfDistancesToGreaterElement",
+    "Over each position, the gap to the nearest greater entry, the ends counting as greater.",
+    nonEmpty(sumOver(positions, distanceToGreater)),
+  ),
+  stat(
+    "NormalizedSumOfDistancesToGreaterElement",
+    "The same sum, each gap one less: the entries strictly between a position and its nearest greater entry.",
+    nonEmpty(sumOver(positions, subtract(distanceToGreater, 1))),
+  ),
+  stat(
+    "HalfParityMismatches",
+    "Half the positions i where i and p(i) differ in parity.",
+    nonEmpty(["Divide", count(positions, equals(["Mod", add(here, "i"), 2], 1)), 2]),
+  ),
+  stat(
+    "DescentWeightMinusInversions",
+    "The sum of i(n - i) over the descents i, less the inversions.",
+    hasPair(subtract(sumOver(adjacent, ["If", fallsAfter, ["Multiply", "i", subtract(length(), "i")], 0]), inversions)),
+  ),
+  stat(
+    "ReducedWordSupport",
+    "The simple reflections in a reduced word: the i < n with some entry of p(1), ..., p(i) larger than i.",
+    hasPair(count(adjacent, greater(max(upToHere), "i"))),
+    "The size of the support in the Coxeter sense: the i for which p does not preserve {1, ..., i}. PermutationSupport counts the moved points instead.",
+  ),
+  stat(
+    "PermutationCosine",
+    "The sum of i p(i).",
+    nonEmpty(sumOver(positions, ["Multiply", here, "i"])),
+    "The scalar product of p with the identity: n(n+1)(2n+1) / 6 times the cosine of the angle between them.",
+  ),
+  word(
+    "Mak",
+    "Foata and Zeilberger's mak: (2-31) + (32-1) + (1-32) + (21).",
+    add(
+      add(occurrencesWithAdjacentEnd([2, 3, 1]), occurrencesWithAdjacentStart([3, 2, 1])),
+      add(occurrencesWithAdjacentEnd([1, 3, 2]), adjacentDescents),
+    ),
+  ),
+  word(
+    "Mad",
+    "Foata and Zeilberger's mad: 2 (2-31) + (31-2) + (21).",
+    add(
+      add(occurrencesWithAdjacentEnd([2, 3, 1]), occurrencesWithAdjacentEnd([2, 3, 1])),
+      add(occurrencesWithAdjacentStart([3, 1, 2]), adjacentDescents),
+    ),
+  ),
+  word(
+    "Makl",
+    "Foata and Zeilberger's makl: (1-32) + (31-2) + (32-1) + (21).",
+    add(
+      add(occurrencesWithAdjacentEnd([1, 3, 2]), occurrencesWithAdjacentStart([3, 1, 2])),
+      add(occurrencesWithAdjacentStart([3, 2, 1]), adjacentDescents),
+    ),
+  ),
+  word(
+    "BabsonSteingrimssonStatistic",
+    "Babson and Steingrimsson's stat: (13-2) + (21-3) + (32-1) + (21).",
+    add(
+      add(occurrencesWithAdjacentStart([1, 3, 2]), occurrencesWithAdjacentStart([2, 1, 3])),
+      add(occurrencesWithAdjacentStart([3, 2, 1]), adjacentDescents),
+    ),
+  ),
+  word(
+    "UlamDistance",
+    "The entries to remove to leave an increasing sequence: n less the length of a longest increasing subsequence.",
+    nonEmpty(subtract(length(), ["Count", piles(["Less", "t", visiting])])),
+    "FindStat takes the longest increasing subsequence of the inverse, which has the same length.",
+  ),
+  stat(
+    "EvenWeakDeficienciesAndOddWeakExcedances",
+    "Positions i with p(i) <= i for even i, and p(i) >= i for odd i.",
+    nonEmpty(count(positions, ["If", equals(["Mod", "i", 2], 0), atMostValue(here, "i"), atLeastValue(here, "i")])),
+  ),
+  word(
+    "VerticalSeparators",
+    "Interior positions i with |p(i-1) - p(i+1)| = 1.",
+    hasTriple(count(interior, equals(distance(previous, next), 1))),
+  ),
+  stat(
+    "CyclicAlignments",
+    "Pairs (i, j) with i, j, p(j), p(i) in cyclic order.",
+    arcPairs(cyclicOrder("i", "j", wordAtJ, here)),
+  ),
+  stat(
+    "CyclicMisalignments",
+    "Pairs (i, j) with i, p(i), j, p(j) in cyclic order.",
+    arcPairs(cyclicOrder("i", here, "j", wordAtJ)),
+  ),
+  stat(
+    "CyclicCrossings",
+    "Pairs (i, j) with i, p(j), p(i), j in cyclic order.",
+    arcPairs(cyclicOrder("i", wordAtJ, here, "j")),
+  ),
+  stat(
+    "RestrictedNonInversionsBetweenExcedances",
+    "Pairs i < j < p(i) < p(j).",
+    arcPairs(chain(["i", "j", here, wordAtJ])),
+  ),
+  stat(
+    "InversionsBetweenExcedancesWithLinkedGreater",
+    "Pairs i < j < p(j) < p(i) with p^-1(j) < j.",
+    arcPairs(and(chain(["i", "j", wordAtJ, here]), less(positionOfValue("j"), "j"))),
+  ),
+  stat(
+    "RestrictedNonInversionsBetweenExcedancesWithLinkedRightmost",
+    "Pairs i < j < p(i) < p(j) with p^-1(j) < j.",
+    arcPairs(and(chain(["i", "j", here, wordAtJ]), less(positionOfValue("j"), "j"))),
+  ),
+  stat(
+    "InversionsBetweenExcedancesAndFixedPoints",
+    "Pairs i < j = p(j) < p(i).",
+    arcPairs(and(equals(wordAtJ, "j"), and(less("i", "j"), less("j", here)))),
+  ),
+  stat("UpperMiddleEntry", "The entry p(floor(n/2) + 1).", nonEmpty(at(add(halfFloor(length()), 1)))),
+  stat("LowerMiddleEntry", "The entry p(floor((n+1)/2)).", nonEmpty(at(halfFloor(add(length(), 1))))),
+  word(
+    "Convexity",
+    "The largest 2 p(i) - p(i-1) - p(i+1) over the interior positions, or 0.",
+    hasTriple(max(["Join", ["List", 0], forEach(interior, subtract(subtract(["Multiply", 2, here], previous), next))])),
+  ),
+  word(
+    "ProperBlocks",
+    "Windows p(i), ..., p(j) of two or more entries whose values are consecutive integers, the whole word excepted.",
+    atLeast(
+      3,
+      subtract(
+        sumOver(
+          adjacent,
+          count(
+            ["Range", add("i", 1), length()],
+            equals(subtract(max(between("i", "j")), min(between("i", "j"))), subtract("j", "i")),
+            "j",
+          ),
+        ),
+        1,
+      ),
+    ),
+  ),
+  word(
+    "HertzsprungOccurrencesOf132",
+    "Positions i with p(i+1) = p(i) + 2 and p(i+2) = p(i) + 1.",
+    hasTriple(
+      count(
+        ["Range", 1, subtract(length(), 2)],
+        and(equals(next, add(here, 2)), equals(at(add("i", 2)), add(here, 1))),
+      ),
+    ),
+  ),
+  word("PositionsOfLetterOneIn123", "Positions that start an occurrence of 123.", distinctFirstPositions([1, 2, 3])),
+  word("PositionsOfLetterOneIn132", "Positions that start an occurrence of 132.", distinctFirstPositions([1, 3, 2])),
+  word("PositionsOfLetterTwoIn213", "Positions that start an occurrence of 213.", distinctFirstPositions([2, 1, 3])),
+  word(
+    "PositionsOfLetterThreeIn132",
+    "Positions that are the middle of an occurrence of 132.",
+    distinctMiddlePositions([1, 3, 2]),
+  ),
+  word(
+    "OccurrencesOf14Dash2Dash3Or14Dash3Dash2",
+    "Adjacent ascents p(i) < p(i+1) with two later entries between them, in either order, counted in pairs.",
+    hasTriple(
+      sumOver(
+        ["Range", 1, subtract(length(), 2)],
+        [
+          "If",
+          risesAfter,
+          bind(
+            "c",
+            count(["Range", add("i", 2), length()], and(less(here, at("j")), less(at("j"), next)), "j"),
+            ["Divide", ["Multiply", "c", subtract("c", 1)], 2],
+            "number",
+          ),
+          0,
+        ],
+      ),
+    ),
+  ),
+  stat(
+    "InversionsOfCyclicEmbedding",
+    "The inversions of the cycle (p(1), ..., p(n), n + 1), as a permutation of n + 1.",
+    nonEmpty(
+      bind(
+        "q",
+        cyclicEmbedding,
+        sumOver(
+          ["Range", 1, length()],
+          count(["Range", add("i", 1), add(length(), 1)], greater(at("i", "q"), at("j", "q")), "j"),
+        ),
+      ),
+    ),
+  ),
+  word(
+    "ShareshianWachsAdmissibleInversions",
+    "Pairs i < j with p(i) > p(j) and either p(j) < p(j+1) or some entry between them smaller than p(j).",
+    hasPair(shareshianWachsAdmissible),
+  ),
+  word(
+    "AdmissibleInversionsPlusDescents",
+    "ShareshianWachsAdmissibleInversions plus the descents.",
+    hasPair(add(shareshianWachsAdmissible, count(adjacent, fallsAfter))),
+    "Shareshian and Wachs's aid.",
+  ),
+  word(
+    "AdmissibleInversions",
+    "Pairs i < j with p(i) > p(j) and either p(i-1) < p(i) or some entry between them larger than p(i).",
+    hasPair(
+      sumOverPairs(
+        and(
+          greater(here, wordAtJ),
+          or(
+            ["If", greater("i", 1), less(previous, here), "False"],
+            ["If", less(add("i", 1), "j"), greater(max(between(add("i", 1), subtract("j", 1))), here), "False"],
+          ),
+        ),
+        1,
+      ),
+    ),
+    "FindStat's St000866 is the Shareshian-Wachs version, which differs.",
+  ),
+  stat(
+    "LargestGreatestCommonDivisorOfPositionAndValue",
+    "The largest gcd(i, p(i)).",
+    nonEmpty(max(forEach(positions, ["Divide", ["Multiply", "i", here], ["LCM", "i", here]]))),
+  ),
+];
+
 export const PERMUTATION_STATISTICS: readonly Definition[] = [
   word("Descents", "Positions i with p(i) > p(i+1).", hasPair(count(adjacent, fallsAfter))),
   word("Ascents", "Positions i with p(i) < p(i+1).", hasPair(count(adjacent, risesAfter))),
@@ -1767,4 +2151,5 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
   ...FINDSTAT_PERMUTATION_STATISTICS_4,
   ...FINDSTAT_PERMUTATION_STATISTICS_5,
   ...FINDSTAT_PERMUTATION_STATISTICS_6,
+  ...FINDSTAT_PERMUTATION_STATISTICS_7,
 ];
