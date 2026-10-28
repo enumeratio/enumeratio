@@ -15,9 +15,15 @@ const INTERPRETED = [
   "DistinctOddSubsetSums",
   "HookLengthOfLastDiagonalCell",
   "HookLengthSquareSum",
+  "LowerCoverCountInDominanceOrder",
+  "MaximalRookPlacementCount",
   "MinimalSubpartitionSizeDifference",
   "MultipartitionCount",
+  "RookPlacementCount",
+  "ShorterSideRookPlacementCount",
+  "StandardTableauCountWithMajorIndexCongruentToOneModuloSize",
   "SymmetricDiagonalHooks",
+  "UpperCoverCountInDominanceOrder",
   "YoungLatticeCoveringRelationCount",
 ];
 

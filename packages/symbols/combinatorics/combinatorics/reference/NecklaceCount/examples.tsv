@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-partition-4-2-1-of-7			[NecklaceCount, [IntegerPartition, [List, 4, 2, 1]]]	15			the partition $4 + 2 + 1$ of $7$
+the-partition-3-3-1-of-7			[NecklaceCount, [IntegerPartition, [List, 3, 3, 1]]]	20			the partition $3 + 3 + 1$ of $7$
+findstat-st001605-1	Properties		[CombinatorialStat, [IntegerPartition, [List, 3]], "'NecklaceCount'"]	1	1	FindStat St001605	FindStat's value for [3]
+findstat-st001605-2	Properties		[CombinatorialStat, [IntegerPartition, [List, 4]], "'NecklaceCount'"]	1	1	FindStat St001605	FindStat's value for [4]
+findstat-st001605-3	Properties		[CombinatorialStat, [IntegerPartition, [List, 5]], "'NecklaceCount'"]	1	1	FindStat St001605	FindStat's value for [5]

@@ -378,6 +378,181 @@ const starFactorizations = (l: Partition, length: number): number => {
   return walk(length, permutationOfCycleType(l), 0);
 };
 
+// ── The sixth batch's helpers ─────────────────────────────────────────────────────────────
+
+/** The determinant of an integer matrix, by fraction-free elimination (Bareiss). */
+const determinant = (m: readonly (readonly number[])[]): bigint => {
+  const a = m.map((row) => row.map((v) => BigInt(v)));
+  const n = a.length;
+  let [sign, previous] = [1n, 1n];
+  for (let k = 0; k < n - 1; k++) {
+    if (a[k]![k] === 0n) {
+      const swap = a.findIndex((row, r) => r > k && row[k] !== 0n);
+      if (swap < 0) return 0n;
+      [a[k], a[swap]] = [a[swap]!, a[k]!];
+      sign = -sign;
+    }
+    for (let i = k + 1; i < n; i++)
+      for (let j = k + 1; j < n; j++) a[i]![j] = (a[i]![j]! * a[k]![k]! - a[i]![k]! * a[k]![j]!) / previous;
+    previous = a[k]![k]!;
+  }
+  return n === 0 ? 1n : sign * a[n - 1]![n - 1]!;
+};
+
+/** The numbers of ways to place 0, 1, ... non-attacking rooks on the Ferrers board, by walking the rows with the used columns. */
+const rookVector = (l: Partition): number[] => {
+  const vector = new Array<number>(l.length + 1).fill(0);
+  const place = (row: number, used: number, rooks: number): void => {
+    if (row === l.length) {
+      vector[rooks]!++;
+      return;
+    }
+    place(row + 1, used, rooks);
+    for (let c = 0; c < l[row]!; c++) if (!((used >> c) & 1)) place(row + 1, used | (1 << c), rooks + 1);
+  };
+  place(0, 0, 0);
+  return vector;
+};
+
+/** The colorings of positions 0..n-1 with `l[c]` of color c that a permutation of the positions fixes: each of its cycles takes one color. */
+const fixedColorings = (cycleLengths: readonly number[], l: Partition): number => {
+  const left = [...l];
+  const memo = new Map<string, number>();
+  const go = (k: number): number => {
+    if (k === cycleLengths.length) return left.every((m) => m === 0) ? 1 : 0;
+    const key = `${k}:${left.join()}`;
+    if (memo.has(key)) return memo.get(key)!;
+    let ways = 0;
+    for (let c = 0; c < left.length; c++)
+      if (left[c]! >= cycleLengths[k]!) {
+        left[c]! -= cycleLengths[k]!;
+        ways += go(k + 1);
+        left[c]! += cycleLengths[k]!;
+      }
+    memo.set(key, ways);
+    return ways;
+  };
+  return go(0);
+};
+/** The cycle lengths of a permutation of 0..n-1. */
+const cycleLengthsOf = (p: readonly number[]): number[] => {
+  const seen = new Set<number>();
+  const out: number[] = [];
+  for (let s = 0; s < p.length; s++) {
+    if (seen.has(s)) continue;
+    let [length, at] = [0, s];
+    while (!seen.has(at)) {
+      seen.add(at);
+      at = p[at]!;
+      length++;
+    }
+    out.push(length);
+  }
+  return out;
+};
+/** The colorings of an n-cycle with these multiplicities up to the cyclic group, or the dihedral one, by Burnside over the group's elements. */
+const cycleColoringOrbits = (l: Partition, dihedral: boolean): number => {
+  const n = sum(l);
+  const rotation = (r: number): number[] => Array.from({ length: n }, (_, i) => (i + r) % n);
+  const reflection = (r: number): number[] => Array.from({ length: n }, (_, i) => (((r - i) % n) + n) % n);
+  let total = 0;
+  for (let r = 0; r < n; r++) {
+    total += fixedColorings(cycleLengthsOf(rotation(r)), l);
+    if (dihedral) total += fixedColorings(cycleLengthsOf(reflection(r)), l);
+  }
+  return total / (n * (dihedral ? 2 : 1));
+};
+
+/** The standard tableaux of the shape with major index m, as a map from m: entries placed one at a time, carrying (shape so far, row of the last entry). */
+const majorIndexHistogram = (l: Partition): Map<number, number> => {
+  let states = new Map<string, Map<number, number>>([[`${l.map(() => 0).join()}|0`, new Map([[0, 1]])]]);
+  for (let placed = 0; placed < sum(l); placed++) {
+    const next = new Map<string, Map<number, number>>();
+    for (const [key, histogram] of states) {
+      const [shapeKey, lastKey] = key.split("|");
+      const shape = shapeKey!.split(",").map(Number);
+      for (let row = 0; row < l.length; row++) {
+        if (shape[row]! >= l[row]! || (row > 0 && shape[row]! >= shape[row - 1]!)) continue;
+        const grown = shape.map((p, r) => (r === row ? p + 1 : p));
+        const target = `${grown.join()}|${row}`;
+        const into = next.get(target) ?? new Map<number, number>();
+        const step = placed > 0 && row > Number(lastKey) ? placed : 0;
+        for (const [m, c] of histogram) into.set(m + step, (into.get(m + step) ?? 0) + c);
+        next.set(target, into);
+      }
+    }
+    states = next;
+  }
+  const total = new Map<number, number>();
+  for (const histogram of states.values()) for (const [m, c] of histogram) total.set(m, (total.get(m) ?? 0) + c);
+  return total;
+};
+const tableauxWithMajorIndexRemainder = (l: Partition, remainder: number): number =>
+  sum([...majorIndexHistogram(l)].filter(([m]) => m % sum(l) === remainder).map(([, c]) => c));
+
+/** The cyclic permutations of 0..n-1 that commute with a permutation of the given cycle type, by trying every n-cycle. */
+const commutingCycles = (l: Partition): number => {
+  const n = sum(l);
+  const sigma = permutationOfCycleType(l);
+  let found = 0;
+  const walk = (order: number[]): void => {
+    if (order.length === n) {
+      const tau = new Array<number>(n);
+      order.forEach((v, i) => (tau[v] = order[(i + 1) % n]!));
+      if (tau.every((_, v) => tau[sigma[v]!] === sigma[tau[v]!])) found++;
+      return;
+    }
+    for (let v = 1; v < n; v++) if (!order.includes(v)) walk([...order, v]);
+  };
+  walk([0]);
+  return found;
+};
+/** Words with l[c] letters c and no letter twice running, by the last letter and what is left. */
+const smirnovWords = (l: Partition): number => {
+  const memo = new Map<string, number>();
+  const go = (left: number[], last: number): number => {
+    if (left.every((m) => m === 0)) return 1;
+    const key = `${left.join()}|${last}`;
+    if (memo.has(key)) return memo.get(key)!;
+    let ways = 0;
+    for (let c = 0; c < left.length; c++)
+      if (c !== last && left[c]! > 0) {
+        left[c]!--;
+        ways += go(left, c);
+        left[c]!++;
+      }
+    memo.set(key, ways);
+    return ways;
+  };
+  return go([...l], -1);
+};
+/** Partitions covering this one in dominance order, by the definition: strictly dominating, with nothing strictly between (the same size, parts padded with zeros). */
+const dominates = (a: Partition, b: Partition): boolean => {
+  let [x, y] = [0, 0];
+  for (let i = 0; i < Math.max(a.length, b.length); i++) {
+    x += a[i] ?? 0;
+    y += b[i] ?? 0;
+    if (x < y) return false;
+  }
+  return true;
+};
+const upperCovers = (l: Partition): number => {
+  const all = partitionsOf(sum(l));
+  const above = all.filter((m) => m.join() !== l.join() && dominates(m, l));
+  return above.filter((m) => !above.some((k) => k.join() !== m.join() && dominates(m, k))).length;
+};
+
+/** The partitions of n as weakly decreasing part lists. */
+const partitionsOf = (n: number, cap = n): number[][] =>
+  n === 0
+    ? [[]]
+    : Array.from({ length: Math.min(n, cap) }, (_, k) => Math.min(n, cap) - k).flatMap((part) =>
+        partitionsOf(n - part, part).map((rest) => [part, ...rest]),
+      );
+/** One move of Bulgarian solitaire: the first column becomes a row. */
+const bulgarianMove = (l: Partition): number[] =>
+  [...l.map((p) => p - 1), l.length].filter((p) => p > 0).toSorted((a, b) => b - a);
+
 export const PARTITION_READINGS: Record<string, (l: Partition) => number> = {
   PartRange: (l) => (l.length === 0 ? 0 : l[0]! - l.at(-1)!),
   ContainingRectangleShortSide: (l) => (l.length === 0 ? 0 : Math.min(l[0]!, l.length)),
@@ -561,4 +736,35 @@ export const PARTITION_READINGS: Record<string, (l: Partition) => number> = {
     const ones = l.filter((p) => p === 1).length;
     return ones === 0 ? l.length : l.filter((p) => p > ones).length - ones;
   },
+
+  // The sixth batch.
+  SeaweedAlgebraDimension: (l) => (sum(l.map((p) => p * p)) + sum(l) ** 2) / 2,
+  CartanDeterminant: (l) => {
+    const distinct = [...new Set(l)];
+    return Number(determinant(distinct.map((p) => distinct.map((q) => Math.min(p, q)))));
+  },
+  RookPlacementCount: (l) => sum(rookVector(l)),
+  MaximalRookPlacementCount: (l) => rookVector(l).findLast((v) => v > 0)!,
+  ShorterSideRookPlacementCount: (l) => rookVector(l)[Math.min(l.length, l[0] ?? 0)] ?? 0,
+  NecklaceCount: (l) => (l.length === 0 ? 0 : cycleColoringOrbits(l, false)),
+  BraceletCount: (l) => (l.length === 0 ? 0 : cycleColoringOrbits(l, true)),
+  // Tried against every n-cycle for small sizes. Beyond that, by counting the pairs (n-cycle, power of it of this type): such a power
+  // exists only for equal parts d, m of them, and there are totient(d) generating powers of each n-cycle among the n!/(d^m m!) permutations of the type.
+  InvariantOrientedCycleCount: (l) => {
+    if (l.length === 0) return 0;
+    if (sum(l) <= 7) return commutingCycles(l);
+    if (new Set(l).size > 1) return 0;
+    const [d, m] = [l[0]!, l.length];
+    const phi = Array.from({ length: d }, (_, k) => k + 1).filter((k) => gcd(k, d) === 1).length;
+    return Number(
+      (bigFactorial(sum(l) - 1) * BigInt(phi) * BigInt(d) ** BigInt(m) * bigFactorial(m)) / bigFactorial(sum(l)),
+    );
+  },
+  SmirnovWordCount: smirnovWords,
+  StandardTableauCountWithMajorIndexCongruentToOneModuloSize: (l) =>
+    l.length === 0 ? 0 : tableauxWithMajorIndexRemainder(l, 1),
+  UpperCoverCountInDominanceOrder: (l) => (l.length === 0 ? 0 : upperCovers(l)),
+  LowerCoverCountInDominanceOrder: (l) => (l.length === 0 ? 0 : upperCovers(conjugate(l))),
+  BulgarianSolitairePreimageCount: (l) =>
+    partitionsOf(sum(l)).filter((mu) => bulgarianMove(mu).join() === l.join()).length,
 };
