@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-step-word-uuddud			[SimplesOfProjectiveDimensionTwo, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	1			the step word $UUDDUD$
+the-step-word-uduudd			[SimplesOfProjectiveDimensionTwo, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]	1			the step word $UDUUDD$
+findstat-st001011-1	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0]], "'SimplesOfProjectiveDimensionTwo'"]	0	0	FindStat St001011	FindStat's value for [1,0]
+findstat-st001011-2	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0]], "'SimplesOfProjectiveDimensionTwo'"]	1	1	FindStat St001011	FindStat's value for [1,0,1,0]
+findstat-st001011-3	Properties		[CombinatorialStat, [DyckPath, [List, 1, 1, 0, 0]], "'SimplesOfProjectiveDimensionTwo'"]	0	0	FindStat St001011	FindStat's value for [1,1,0,0]

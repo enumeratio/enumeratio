@@ -12,9 +12,12 @@ import {
   at,
   atLeastValue,
   atMostValue,
+  bind,
   count,
   equals,
+  fold,
   forEach,
+  visiting,
   greater,
   less,
   max,
@@ -131,6 +134,155 @@ const internalPoints: MathJSON = [
       greater(max(forEach(["Range", add("e", 1), groundSize], at("j", openerOfEach), "j")), at("e", openerOfEach)),
     ),
     "e",
+  ),
+];
+
+// ── chains and components of arcs, for FindStat's crossing number, nesting number and components ──
+
+const groundSet: MathJSON = ["Range", 1, groundSize, 1];
+const blockIndices: MathJSON = ["Range", 1, ["Length", "_x"], 1];
+/** For each element e, the right end of the arc leaving it, or 0 if none does. */
+const arcEndFrom: MathJSON = forEach(
+  groundSet,
+  sumOver(allArcs, ["If", equals(at("i", lefts), "e"), at("i", rights), 0], "i"),
+  "e",
+);
+/**
+ * The longest chain of arcs under `follows`, where `valid` says which arcs may take part. Arcs
+ * are taken by their left end e in turn; the carried list holds, at entry e + 1, the longest
+ * chain ending in the arc leaving e (entry 1 is a zero for the empty chain).
+ */
+const longestArcChain = (
+  valid: (e: MathJSON) => MathJSON,
+  follows: (earlier: MathJSON, e: MathJSON) => MathJSON,
+): MathJSON => [
+  "Max",
+  fold(
+    groundSet,
+    forEach(["Range", 1, add(groundSize, 1), 1], 0, "w"),
+    forEach(
+      ["Range", 1, add(groundSize, 1), 1],
+      [
+        "If",
+        equals("w", add(visiting, 1)),
+        [
+          "If",
+          valid(visiting),
+          add(
+            1,
+            max(
+              forEach(
+                ["Range", 0, subtract(visiting, 1), 1],
+                ["If", equals("u", 0), 0, ["If", and(valid("u"), follows("u", visiting)), at(add("u", 1), "a"), 0]],
+                "u",
+              ),
+            ),
+          ),
+          0,
+        ],
+        at("w", "a"),
+      ],
+      "w",
+    ),
+  ),
+];
+const arcEnd = (e: MathJSON): MathJSON => at(e, "ends");
+/** Arcs that nest: the earlier one starts first and ends last. */
+const nestingNumber: MathJSON = hasArc(
+  bind(
+    "ends",
+    arcEndFrom,
+    longestArcChain(
+      (e) => greater(arcEnd(e), 0),
+      (earlier, e) => greater(arcEnd(earlier), arcEnd(e)),
+    ),
+  ),
+);
+/** Arcs that cross all at once: some point m has them all start at or before m and end after it. */
+const crossingNumber: MathJSON = hasArc(
+  bind(
+    "ends",
+    arcEndFrom,
+    max(
+      forEach(
+        ["Range", 1, subtract(groundSize, 1), 1],
+        longestArcChain(
+          (e) => and(atMostValue(e, "m"), greater(arcEnd(e), "m")),
+          (earlier, e) => less(arcEnd(earlier), arcEnd(e)),
+        ),
+        "m",
+      ),
+    ),
+  ),
+);
+/**
+ * The components of the blocks under crossing: two blocks join when an arc of one crosses an arc
+ * of the other. Each block carries the least block index it can reach, and a pass pulls in the
+ * labels across every crossing; the components are the blocks that keep their own index.
+ */
+const arcComponents: MathJSON = [
+  "If",
+  less(arcCount, 1),
+  ["Length", "_x"],
+  bind(
+    "owner",
+    forEach(groundSet, ["Min", ["Filter", blockIndices, ["Function", ["Contains", at("k", "_x"), "e"], "k"]]], "e"),
+    bind(
+      "arcOwner",
+      forEach(allArcs, at(at("i", lefts), "owner"), "i"),
+      bind(
+        "crossing",
+        forEach(allArcs, forEach(allArcs, ["If", isCrossing("i", "j"), 1, 0], "j"), "i"),
+        bind(
+          "labels",
+          fold(
+            blockIndices,
+            blockIndices,
+            bind(
+              "reach",
+              forEach(
+                allArcs,
+                min(
+                  forEach(
+                    ["Range", 0, arcCount, 1],
+                    [
+                      "If",
+                      equals("j", 0),
+                      add(["Length", "_x"], 1),
+                      [
+                        "If",
+                        equals(at("j", at("i", "crossing")), 1),
+                        at(at("j", "arcOwner"), "a"),
+                        add(["Length", "_x"], 1),
+                      ],
+                    ],
+                    "j",
+                  ),
+                ),
+                "i",
+              ),
+              forEach(
+                blockIndices,
+                min(
+                  forEach(
+                    ["Range", 0, arcCount, 1],
+                    [
+                      "If",
+                      equals("i", 0),
+                      at("c", "a"),
+                      ["If", equals(at("i", "arcOwner"), "c"), at("i", "reach"), add(["Length", "_x"], 1)],
+                    ],
+                    "i",
+                  ),
+                ),
+                "c",
+              ),
+            ),
+          ),
+          count(blockIndices, equals(at("c", "labels"), "c"), "c"),
+        ),
+      ),
+    ),
   ),
 ];
 
@@ -957,5 +1109,21 @@ export const SET_PARTITION_STATISTICS: readonly Definition[] = [
     "OccurrencesOf1Over2Over3Closers13",
     "Occurrences of the pattern 1/2/3 with 1 and 3 the greatest elements of their blocks.",
     constrainedOccurrences("1Over2Over3", { closers: [1, 3] }),
+  ),
+
+  // ── FindStat's chains and components of arcs ───────────────────────────────────────────────
+
+  stat(
+    "CrossingNumber",
+    "The largest number of arcs that mutually cross.",
+    crossingNumber,
+    "FindStat's St000253. A set of arcs mutually crosses when all start before any ends; the longest such chain is found at each point between starts and ends.",
+  ),
+  stat("NestingNumber", "The largest number of arcs that mutually nest.", nestingNumber, "FindStat's St000254."),
+  stat(
+    "TopologicallyConnectedComponents",
+    "The topologically connected components of the arc diagram: blocks joined when an arc of one crosses an arc of the other.",
+    arcComponents,
+    "FindStat's St000925. A singleton, which has no arc, is a component of its own.",
   ),
 ];

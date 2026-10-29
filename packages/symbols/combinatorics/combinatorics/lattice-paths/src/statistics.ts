@@ -473,6 +473,232 @@ const eastRuns = (path: MathJSON): MathJSON =>
     0,
   ]);
 
+// ── helpers for FindStat's third Dyck-path batch ──────────────────────────────────────────
+
+/** Step `i`, or 2 (neither step) when `i` is off the path, so a guard can read past either end. */
+const stepOrNone = (i: MathJSON): MathJSON => ["If", and(atLeastValue(i, 1), atMostValue(i, length())), at(i), 2];
+/** The first `j` whose step 2j is a down step. */
+const firstEvenDown: MathJSON = ["Min", where(upTo(semilength), equals(at(["Multiply", 2, "i"]), 0))];
+/**
+ * Natural descents k of a set-valued two-row tableau, read off the path as FindStat gives them
+ * (St001955): with j the first index whose step 2j goes down, k is one when it is past the
+ * pivot and steps 2k-3, 2k-2 differ, when it is past the pivot and steps 2k-2 to 2k read 0, 1, 1,
+ * when it is the pivot and steps 2k-1, 2k both go down, or when it precedes the pivot and steps
+ * 2k-1, 2k read 0, 1.
+ */
+const isNaturalDescent = (k: MathJSON): MathJSON => {
+  const s = (offset: number): MathJSON => stepOrNone(subtract(["Multiply", 2, k], offset));
+  return or(
+    or(
+      or(
+        and(atLeastValue(subtract(k, 2), "j"), equals(add(s(3), s(2)), 1)),
+        and(atLeastValue(subtract(k, 1), "j"), and(and(equals(s(2), 0), equals(s(1), 1)), equals(s(0), 1))),
+      ),
+      and(equals(k, "j"), and(equals(s(1), 0), equals(s(0), 0))),
+    ),
+    and(less(k, "j"), and(equals(s(1), 0), equals(s(0), 1))),
+  );
+};
+const naturalDescents: MathJSON = where(upTo(add(semilength, 1)), isNaturalDescent("k"), "k");
+
+/** Steps 2p-1 and 2p as one number: 3 for up-up, 2 for up-down, 1 for down-up, 0 for down-down. */
+const pairCode = (p: MathJSON): MathJSON =>
+  add(["Multiply", 2, at(subtract(["Multiply", 2, p], 1))], at(["Multiply", 2, p]));
+/** The invariant's descents (St001104) are the pairs p with a pair p+1 after it that breaks the pattern. */
+const invariantDescents: MathJSON = count(
+  upTo(subtract(semilength, 1)),
+  bind(
+    "level",
+    subtract(
+      count(upTo(semilength), and(atMostValue("q", "p"), equals(pairCode("q"), 3)), "q"),
+      count(upTo(semilength), and(less("q", "p"), equals(pairCode("q"), 0)), "q"),
+    ),
+    or(
+      or(
+        and(
+          equals(pairCode("p"), 3),
+          or(equals(pairCode(add("p", 1)), 1), and(equals(pairCode(add("p", 1)), 0), greater("level", 1))),
+        ),
+        and(equals(pairCode("p"), 2), or(less(pairCode(add("p", 1)), 2), greater(pairCode(add("p", 1)), 2))),
+      ),
+      and(equals(pairCode("p"), 1), equals(pairCode(add("p", 1)), 0)),
+    ),
+    "integer",
+  ),
+  "p",
+);
+
+/**
+ * The standard monomial relative to the diagonal boundary (St001508): walk the steps carrying
+ * (open, blocked, found). An up step opens a column unless it reaches the next blocker, one of
+ * the odd positions 1, 3, 5, ..., and then it spends that blocker; a down step with an open
+ * column closes it, spends the next blocker and adds one to the monomial.
+ */
+const standardMonomialDegree: MathJSON = fold(
+  positions,
+  ["List", 0, 1, 0],
+  [
+    "If",
+    equals(at(visiting), 1),
+    [
+      "If",
+      less(visiting, [
+        "If",
+        atMostValue(carried(2), semilength),
+        subtract(["Multiply", 2, carried(2)], 1),
+        add(length(), 1),
+      ]),
+      ["List", add(carried(1), 1), carried(2), carried(3)],
+      ["List", carried(1), add(carried(2), 1), carried(3)],
+    ],
+    [
+      "If",
+      greater(carried(1), 0),
+      ["List", subtract(carried(1), 1), add(carried(2), 1), add(carried(3), 1)],
+      ["List", carried(1), carried(2), carried(3)],
+    ],
+  ],
+);
+
+/**
+ * Pairs of singleton blocks of Biane's noncrossing partition (the ups whose matching downs lie in
+ * one run of downs) whose merger is still noncrossing: no other block has a member strictly
+ * between the two and another outside them.
+ */
+const mergeableSingletonPairs: MathJSON = bind(
+  "ups",
+  where(positions, isUp("i")),
+  bind(
+    "h",
+    profile,
+    bind(
+      "block",
+      forEach(
+        upTo(semilength),
+        bind(
+          "close",
+          [
+            "Min",
+            where(
+              ["Range", add(at("j", "ups"), 1), length(), 1],
+              equals(at("q", "h"), subtract(at(at("j", "ups"), "h"), 1)),
+              "q",
+            ),
+          ],
+          count(peakPositions, less("r", "close"), "r"),
+          "integer",
+        ),
+        "j",
+      ),
+      bind(
+        "low",
+        forEach(
+          upTo(semilength),
+          ["Min", where(upTo(semilength), equals(at("l", "block"), at("k", "block")), "l")],
+          "k",
+        ),
+        bind(
+          "high",
+          forEach(
+            upTo(semilength),
+            ["Max", where(upTo(semilength), equals(at("l", "block"), at("k", "block")), "l")],
+            "k",
+          ),
+          sumOver(
+            upTo(semilength),
+            count(
+              upTo(semilength),
+              and(
+                and(
+                  greater("t", "s"),
+                  equals(count(upTo(semilength), equals(at("l", "block"), at("s", "block")), "l"), 1),
+                ),
+                and(
+                  equals(count(upTo(semilength), equals(at("l", "block"), at("t", "block")), "l"), 1),
+                  equals(
+                    count(
+                      upTo(semilength),
+                      and(
+                        and(greater("k", "s"), less("k", "t")),
+                        or(less(at("k", "low"), "s"), greater(at("k", "high"), "t")),
+                      ),
+                      "k",
+                    ),
+                    0,
+                  ),
+                ),
+              ),
+              "t",
+            ),
+            "s",
+          ),
+        ),
+      ),
+    ),
+  ),
+);
+
+// The linear Nakayama algebra of a path, by its Kupisch series: the heights after the up steps from
+// the right, each plus one, then 1. A module is (top vertex x, length y); it is projective when y is
+// the series' entry at x, and otherwise its syzygy is (x + y, entry - y). Vertices count from 0.
+const vertexCount: MathJSON = add(semilength, 1);
+const kupischSeries: MathJSON = bind(
+  "h",
+  profile,
+  bind("ups", where(positions, isUp("i")), [
+    "Join",
+    forEach(upTo(semilength), add(at(at(subtract(add(semilength, 1), "t"), "ups"), "h"), 1), "t"),
+    ["List", 1],
+  ]),
+);
+/** The projective dimension of the module (x0, y0): syzygies taken until the module is projective. */
+const projectiveDimension = (x0: MathJSON, y0: MathJSON): MathJSON => [
+  "At",
+  fold(
+    upTo(vertexCount),
+    ["List", x0, y0, 0],
+    bind(
+      "entry",
+      at(add(carried(1), 1), "series"),
+      [
+        "If",
+        equals(carried(2), "entry"),
+        ["List", carried(1), carried(2), carried(3)],
+        ["List", add(carried(1), carried(2)), subtract("entry", carried(2)), add(carried(3), 1)],
+      ],
+      "integer",
+    ),
+  ),
+  3,
+];
+/** The projective dimension of each simple module, vertex by vertex. */
+const simpleDimensions: MathJSON = forEach(upTo(vertexCount), projectiveDimension(subtract("v", 1), 1), "v");
+/** The projective dimension of each indecomposable injective module, by socle: the longest module ending there. */
+const injectiveDimensions: MathJSON = forEach(
+  upTo(vertexCount),
+  bind(
+    "top",
+    [
+      "Min",
+      where(["Range", 0, subtract("v", 1), 1], greater(add("x", at(add("x", 1), "series")), subtract("v", 1)), "x"),
+    ],
+    projectiveDimension("top", subtract("v", "top")),
+    "integer",
+  ),
+  "v",
+);
+/** `body`, reading the simples' projective dimensions as `dims` and the series as `series`. */
+const overSimples = (body: MathJSON): MathJSON =>
+  nonEmpty(bind("series", kupischSeries, bind("dims", simpleDimensions, body)));
+/** `body`, reading `dims` as for the simples and the injectives' as `injectiveDims`. */
+const overSimplesAndInjectives = (body: MathJSON): MathJSON =>
+  nonEmpty(
+    bind("series", kupischSeries, bind("dims", simpleDimensions, bind("injectiveDims", injectiveDimensions, body))),
+  );
+const globalDimension: MathJSON = ["Max", "dims"];
+const simplesWhere = (test: (dimension: MathJSON) => MathJSON): MathJSON => count("dims", test("d"), "d");
+const injectivesWhere = (test: (dimension: MathJSON) => MathJSON): MathJSON => count("injectiveDims", test("d"), "d");
+
 export const DYCK_STATISTICS: readonly Definition[] = [
   stat("Height", "The greatest height the path reaches.", nonEmpty(["Max", profile])),
 
@@ -1176,5 +1402,152 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "The inner corners of the polyomino's upper path: its turns from east to north, not counting the first.",
     nonEmpty(bind("east", polyominoEastFirst, subtract(eastRuns("east"), 1))),
     "The upper path of FindStat's polyomino is the one that opens with an east step here, up to reflecting the polyomino in the diagonal.",
+  ),
+
+  // ── FindStat's third Dyck-path batch ───────────────────────────────────────────────────────
+
+  stat(
+    "SetValuedTableauNaturalDescents",
+    "The natural descents of the set-valued two-row tableau the path corresponds to, read off the step pairs by FindStat's rules.",
+    nonEmpty(bind("j", firstEvenDown, ["Length", naturalDescents], "integer")),
+    "FindStat's St001955. The rules go through bicolored Motzkin paths; they are stated on the path itself and implemented as given.",
+  ),
+  stat(
+    "SetValuedTableauComajorIndex",
+    "The comajor index of the set-valued two-row tableau the path corresponds to: the sum, over its natural descents k, of the semilength plus one less k.",
+    nonEmpty(bind("j", firstEvenDown, sumOver(naturalDescents, subtract(add(semilength, 1), "k"), "k"), "integer")),
+    "FindStat's St001956; the natural descents are those of `SetValuedTableauNaturalDescents`.",
+  ),
+  stat(
+    "AdjointInvariantDescents",
+    "The descents of the invariant in a tensor power of the adjoint representation of GL2 that the path indexes, read over its step pairs.",
+    atLeast(4, invariantDescents),
+    "FindStat's St001104. The step pairs are up-up, up-down, down-up or down-down; a descent is a pair after which the next pair breaks the pattern, an up-up pair judged against the level reached.",
+  ),
+  stat(
+    "DiagonalStandardMonomialDegree",
+    "The degree of the standard monomial of the path relative to the diagonal boundary.",
+    nonEmpty(["At", standardMonomialDegree, 3]),
+    "FindStat's St001508, as its Sage code walks the path. St001509, the same relative to the trivial lower boundary, is not adopted: its published code does not run.",
+  ),
+  stat(
+    "NoncrossingMergeableSingletonPairs",
+    "Pairs of singleton blocks of the path's noncrossing partition that can be merged into one block, leaving the partition noncrossing.",
+    nonEmpty(mergeableSingletonPairs),
+    "FindStat's St001932, under Biane's bijection (`NoncrossingPartition`): the ups whose matching downs share a run form a block.",
+  ),
+
+  // Simple and injective modules of the linear Nakayama algebra of a path, by their projective dimensions.
+  stat(
+    "NakayamaGlobalDimension",
+    "The global dimension of the linear Nakayama algebra of the path: the largest projective dimension of a simple module.",
+    overSimples(globalDimension),
+    "FindStat's St000684.",
+  ),
+  stat(
+    "FirstSimpleProjectiveDimension",
+    "The projective dimension of the first simple module of the path's linear Nakayama algebra.",
+    overSimples(at(1, "dims")),
+    "FindStat's St001135.",
+  ),
+  stat(
+    "SimpleProjectiveDimensionSum",
+    "The sum of the projective dimensions of the simple modules of the path's linear Nakayama algebra.",
+    overSimples(["Sum", "dims"]),
+  ),
+  stat(
+    "SimpleProjectiveDimensionProduct",
+    "The product of the nonzero projective dimensions of the simple modules of the path's linear Nakayama algebra.",
+    overSimples(["Product", forEach("dims", ["If", equals("d", 0), 1, "d"], "d")]),
+  ),
+  stat(
+    "SimplesOfMaximalProjectiveDimension",
+    "The simple modules whose projective dimension is the global dimension.",
+    overSimples(simplesWhere((d) => equals(d, globalDimension))),
+  ),
+  stat(
+    "SimplesOfProjectiveDimensionTwo",
+    "The simple modules of projective dimension two.",
+    overSimples(simplesWhere((d) => equals(d, 2))),
+  ),
+  stat(
+    "SimplesOfProjectiveDimensionThree",
+    "The simple modules of projective dimension three.",
+    overSimples(simplesWhere((d) => equals(d, 3))),
+  ),
+  stat(
+    "SimplesOfProjectiveDimensionFour",
+    "The simple modules of projective dimension four.",
+    overSimples(simplesWhere((d) => equals(d, 4))),
+  ),
+  stat(
+    "SimplesOfProjectiveDimensionAtMostTwo",
+    "The simple modules of projective dimension at most two.",
+    overSimples(simplesWhere((d) => atMostValue(d, 2))),
+  ),
+  stat(
+    "SimplesOfProjectiveDimensionAtMostThree",
+    "The simple modules of projective dimension at most three.",
+    overSimples(simplesWhere((d) => atMostValue(d, 3))),
+  ),
+  stat(
+    "SimplesOfProjectiveDimensionAtMostFour",
+    "The simple modules of projective dimension at most four.",
+    overSimples(simplesWhere((d) => atMostValue(d, 4))),
+  ),
+  stat(
+    "SimplesOfEvenProjectiveDimension",
+    "The simple modules of even projective dimension.",
+    overSimples(simplesWhere((d) => equals(["Mod", d, 2], 0))),
+  ),
+  stat(
+    "SimplesOfMaximalEvenProjectiveDimension",
+    "The simple modules whose projective dimension is the greatest even one that occurs: the global dimension if it is even, else one less.",
+    overSimples(simplesWhere((d) => equals(d, subtract(globalDimension, ["Mod", globalDimension, 2])))),
+  ),
+  stat(
+    "HalfEvenSimpleProjectiveDimensionSum",
+    "Half the sum of the projective dimensions of the simple modules that have even projective dimension.",
+    overSimples(["Divide", ["Sum", forEach("dims", ["If", equals(["Mod", "d", 2], 0), "d", 0], "d")], 2]),
+  ),
+  stat(
+    "FirstSimpleOfMaximalProjectiveDimension",
+    "The first vertex, counting from 0, whose simple module has projective dimension equal to the global dimension.",
+    overSimples(subtract(["Min", where(upTo(vertexCount), equals(at("v", "dims"), globalDimension), "v")], 1)),
+  ),
+  stat(
+    "LastSimpleOfMaximalProjectiveDimension",
+    "The last vertex, counting from 0, whose simple module has projective dimension equal to the global dimension.",
+    overSimples(subtract(["Max", where(upTo(vertexCount), equals(at("v", "dims"), globalDimension), "v")], 1)),
+  ),
+  stat(
+    "PeaksMinusNakayamaGlobalDimension",
+    "The peaks of the path less the global dimension of its linear Nakayama algebra.",
+    overSimples(subtract(count(upTo(subtract(length(), 1)), and(isUp("i"), isDown(nextIndex))), globalDimension)),
+  ),
+  stat(
+    "InjectiveProjectiveDimensionSum",
+    "The sum of the projective dimensions of the indecomposable injective modules of the path's linear Nakayama algebra.",
+    overSimplesAndInjectives(["Sum", "injectiveDims"]),
+  ),
+  stat(
+    "InjectivesOfProjectiveDimensionOne",
+    "The indecomposable injective modules of projective dimension one.",
+    overSimplesAndInjectives(injectivesWhere((d) => equals(d, 1))),
+  ),
+  stat(
+    "InjectivesOfProjectiveDimensionAtMostOne",
+    "The indecomposable injective modules of projective dimension at most one.",
+    overSimplesAndInjectives(injectivesWhere((d) => atMostValue(d, 1))),
+  ),
+  stat(
+    "InjectivesOfProjectiveDimensionAtMostTwo",
+    "The indecomposable injective modules of projective dimension at most two.",
+    overSimplesAndInjectives(injectivesWhere((d) => atMostValue(d, 2))),
+  ),
+  stat(
+    "InjectivesOfMaximalProjectiveDimension",
+    "The indecomposable injective modules whose projective dimension is the global dimension.",
+    overSimplesAndInjectives(injectivesWhere((d) => equals(d, globalDimension))),
   ),
 ];

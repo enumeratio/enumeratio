@@ -92,7 +92,32 @@ const rotationOrbit = (p: SetPartition): number => {
 
 const depthOfElement = (p: SetPartition, i: number): number => arcs(p).filter(([a, b]) => a < i && i < b).length;
 
+const crosses = ([a, b]: [number, number], [c, d]: [number, number]): boolean =>
+  (a < c && c < b && b < d) || (c < a && a < d && d < b);
+const nests = ([a, b]: [number, number], [c, d]: [number, number]): boolean => (a < c && d < b) || (c < a && b < d);
+/** The size of the largest set of arcs any two of which `related`, by trying every subset of arcs. */
+const largestMutualSet = (p: SetPartition, related: (x: [number, number], y: [number, number]) => boolean): number => {
+  const all = arcs(p);
+  let best = 0;
+  for (let mask = 0; mask < 1 << all.length; mask++) {
+    const chosen = all.filter((_, i) => (mask >> i) & 1);
+    if (chosen.length > best && pairs(chosen).every(([x, y]) => related(x, y))) best = chosen.length;
+  }
+  return best;
+};
+/** Blocks joined (union-find) whenever an arc of one crosses an arc of the other. */
+const crossingComponents = (p: SetPartition): number => {
+  const root = p.map((_, i) => i);
+  const find = (i: number): number => (root[i] === i ? i : (root[i] = find(root[i]!)));
+  const owner = blockIndex(p);
+  for (const [x, y] of pairs(arcs(p))) if (crosses(x, y)) root[find(owner[x[0] - 1]!)] = find(owner[y[0] - 1]!);
+  return p.filter((_, i) => find(i) === i).length;
+};
+
 export const SET_PARTITION_READINGS: Readonly<Record<string, (p: SetPartition) => number>> = {
+  CrossingNumber: (p) => largestMutualSet(p, crosses),
+  NestingNumber: (p) => largestMutualSet(p, nests),
+  TopologicallyConnectedComponents: crossingComponents,
   RotationOrbitSize: rotationOrbit,
   IntertwiningNumber: (p) =>
     sum(

@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-step-word-uuddud			[InjectivesOfProjectiveDimensionOne, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	1			the step word $UUDDUD$
+the-step-word-uduudd			[InjectivesOfProjectiveDimensionOne, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]	1			the step word $UDUUDD$
+findstat-st001008-1	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0]], "'InjectivesOfProjectiveDimensionOne'"]	1	1	FindStat St001008	FindStat's value for [1,0]
+findstat-st001008-2	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0]], "'InjectivesOfProjectiveDimensionOne'"]	0	0	FindStat St001008	FindStat's value for [1,0,1,0]
+findstat-st001008-3	Properties		[CombinatorialStat, [DyckPath, [List, 1, 1, 0, 0]], "'InjectivesOfProjectiveDimensionOne'"]	2	2	FindStat St001008	FindStat's value for [1,1,0,0]

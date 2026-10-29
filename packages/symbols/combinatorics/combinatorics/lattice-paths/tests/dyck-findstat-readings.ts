@@ -244,7 +244,164 @@ const polyominoCorners = (w: Word, edge: "bottom" | "top"): number => {
   return new Set(edges).size - 1;
 };
 
+// ── natural descents (St001955, St001956), as FindStat's rules state them ──────────────────
+
+/** True if the steps from 1-based position `from` read `pattern`. */
+const readsAt = (w: Word, from: number, pattern: readonly number[]): boolean =>
+  from >= 1 && pattern.every((s, offset) => w[from - 1 + offset] === s);
+const naturalDescentsOf = (w: Word): number[] => {
+  let pivot = 1;
+  while (w[2 * pivot - 1] !== 0) pivot++;
+  const found: number[] = [];
+  for (let k = 1; k <= w.length + 1; k++) {
+    const past = k - 2 >= pivot;
+    if (
+      (past && readsAt(w, 2 * k - 3, [0, 1])) ||
+      (past && readsAt(w, 2 * k - 3, [1, 0])) ||
+      (k - 1 >= pivot && readsAt(w, 2 * k - 2, [0, 1, 1])) ||
+      (k === pivot && readsAt(w, 2 * k - 1, [0, 0])) ||
+      (k < pivot && readsAt(w, 2 * k - 1, [0, 1]))
+    )
+      found.push(k);
+  }
+  return found;
+};
+
+// ── the invariant's descents (St001104) ────────────────────────────────────────────────────
+
+const invariantDescentsOf = (w: Word): number => {
+  const pairs = Array.from({ length: w.length / 2 }, (_, i) => `${w[2 * i]}${w[2 * i + 1]}`);
+  let level = 0;
+  let found = 0;
+  for (let i = 0; i + 1 < pairs.length; i++) {
+    const [here, next] = [pairs[i], pairs[i + 1]];
+    if (here === "11") {
+      level++;
+      if (next === "01" || (next === "00" && level > 1)) found++;
+    } else if (here === "10") {
+      if (next !== "10") found++;
+    } else if (here === "01") {
+      if (next === "00") found++;
+    } else level--;
+  }
+  return found;
+};
+
+// ── the standard monomial relative to the diagonal (St001508) ──────────────────────────────
+
+const standardMonomialSize = (w: Word): number => {
+  const blockers = Array.from({ length: w.length / 2 }, (_, i) => 2 * i + 1);
+  let open = 0;
+  let size = 0;
+  w.forEach((s, index) => {
+    const position = index + 1;
+    if (s === 1) {
+      if (blockers.length === 0 || position < blockers[0]!) open++;
+      else blockers.shift();
+    } else if (open > 0) {
+      open--;
+      size++;
+      blockers.shift();
+    }
+  });
+  return size;
+};
+
+// ── Biane's noncrossing partition and merging its singletons (St001932) ────────────────────
+
+const mergeableSingletonPairs = (w: Word): number => {
+  const open: number[] = [];
+  let ups = 0;
+  let run = -1;
+  const blocks = new Map<number, number[]>();
+  w.forEach((s, i) => {
+    if (s === 1) open.push(++ups);
+    else {
+      if (i === 0 || w[i - 1] === 1) run++;
+      blocks.set(run, [...(blocks.get(run) ?? []), open.pop()!]);
+    }
+  });
+  const parts = [...blocks.values()];
+  // Two blocks cross when some a < c < b < d has a, b in one and c, d in the other.
+  const cross = (x: number[], y: number[]): boolean =>
+    x.some((a) => x.some((b) => y.some((c) => y.some((d) => a < c && c < b && b < d))));
+  const noncrossing = (ps: number[][]): boolean => ps.every((x) => ps.every((y) => x === y || !cross(x, y)));
+  const singles = parts.filter((b) => b.length === 1);
+  let found = 0;
+  for (let i = 0; i < singles.length; i++)
+    for (let j = i + 1; j < singles.length; j++) {
+      const merged = [...singles[i]!, ...singles[j]!];
+      if (noncrossing([...parts.filter((b) => b !== singles[i] && b !== singles[j]), merged])) found++;
+    }
+  return found;
+};
+
+// ── the linear Nakayama algebra of a path (module counts by projective dimension) ──────────
+
+/**
+ * Kupisch series from the reversed path, as FindStat builds it: one entry per down step of the
+ * reversed path (one more than the height it starts from), then a final 1. A module (top x, length
+ * y) is projective when y is the entry at x; its syzygy has top x + y and length entry - y.
+ */
+const nakayama = (w: Word) => {
+  const reversed = w.toReversed().map((s) => 1 - s);
+  const h = heights(reversed);
+  const series = [...reversed.flatMap((s, i) => (s === 0 ? [1 + h[i]!] : [])), 1];
+  const projectiveDimension = (top: number, length: number): number => {
+    let [x, y, steps] = [top, length, 0];
+    while (y !== series[x]) {
+      [x, y] = [x + y, series[x]! - y];
+      steps++;
+    }
+    return steps;
+  };
+  const modules = series.flatMap((entry, x) => Array.from({ length: entry }, (_, k): [number, number] => [x, k + 1]));
+  const simple = modules.filter(([, y]) => y === 1).map(([x, y]) => projectiveDimension(x, y));
+  // An injective module cannot be lengthened to the left.
+  const injective = modules
+    .filter(([x, y]) => x === 0 || series[x - 1]! <= y)
+    .map(([x, y]) => projectiveDimension(x, y));
+  return { simple, injective, global: Math.max(...simple) };
+};
+const overNakayama =
+  (body: (a: ReturnType<typeof nakayama>) => number) =>
+  (w: Word): number =>
+    w.length === 0 ? 0 : body(nakayama(w));
+const countOf = (xs: readonly number[], test: (d: number) => boolean): number => xs.filter(test).length;
+const peaksOf = (w: Word): number => w.filter((s, i) => s === 1 && w[i + 1] === 0).length;
+
 export const DYCK_READINGS: Record<string, (w: Word) => number> = {
+  SetValuedTableauNaturalDescents: (w) => (w.length === 0 ? 0 : naturalDescentsOf(w).length),
+  SetValuedTableauComajorIndex: (w) =>
+    w.length === 0 ? 0 : naturalDescentsOf(w).reduce((total, k) => total + w.length / 2 + 1 - k, 0),
+  AdjointInvariantDescents: invariantDescentsOf,
+  DiagonalStandardMonomialDegree: standardMonomialSize,
+  NoncrossingMergeableSingletonPairs: mergeableSingletonPairs,
+  NakayamaGlobalDimension: overNakayama((a) => a.global),
+  FirstSimpleProjectiveDimension: overNakayama((a) => a.simple[0]!),
+  SimpleProjectiveDimensionSum: overNakayama((a) => sum(a.simple)),
+  SimpleProjectiveDimensionProduct: overNakayama((a) => a.simple.reduce((p, d) => (d === 0 ? p : p * d), 1)),
+  SimplesOfMaximalProjectiveDimension: overNakayama((a) => countOf(a.simple, (d) => d === a.global)),
+  SimplesOfProjectiveDimensionTwo: overNakayama((a) => countOf(a.simple, (d) => d === 2)),
+  SimplesOfProjectiveDimensionThree: overNakayama((a) => countOf(a.simple, (d) => d === 3)),
+  SimplesOfProjectiveDimensionFour: overNakayama((a) => countOf(a.simple, (d) => d === 4)),
+  SimplesOfProjectiveDimensionAtMostTwo: overNakayama((a) => countOf(a.simple, (d) => d <= 2)),
+  SimplesOfProjectiveDimensionAtMostThree: overNakayama((a) => countOf(a.simple, (d) => d <= 3)),
+  SimplesOfProjectiveDimensionAtMostFour: overNakayama((a) => countOf(a.simple, (d) => d <= 4)),
+  SimplesOfEvenProjectiveDimension: overNakayama((a) => countOf(a.simple, (d) => d % 2 === 0)),
+  SimplesOfMaximalEvenProjectiveDimension: overNakayama((a) => {
+    const target = Math.max(...a.simple.filter((d) => d % 2 === 0));
+    return countOf(a.simple, (d) => d === target);
+  }),
+  HalfEvenSimpleProjectiveDimensionSum: overNakayama((a) => sum(a.simple.filter((d) => d % 2 === 0)) / 2),
+  FirstSimpleOfMaximalProjectiveDimension: overNakayama((a) => a.simple.indexOf(a.global)),
+  LastSimpleOfMaximalProjectiveDimension: overNakayama((a) => a.simple.lastIndexOf(a.global)),
+  PeaksMinusNakayamaGlobalDimension: (w) => (w.length === 0 ? 0 : peaksOf(w) - nakayama(w).global),
+  InjectiveProjectiveDimensionSum: overNakayama((a) => sum(a.injective)),
+  InjectivesOfProjectiveDimensionOne: overNakayama((a) => countOf(a.injective, (d) => d === 1)),
+  InjectivesOfProjectiveDimensionAtMostOne: overNakayama((a) => countOf(a.injective, (d) => d <= 1)),
+  InjectivesOfProjectiveDimensionAtMostTwo: overNakayama((a) => countOf(a.injective, (d) => d <= 2)),
+  InjectivesOfMaximalProjectiveDimension: overNakayama((a) => countOf(a.injective, (d) => d === a.global)),
   Area: areaOf,
   Bounce: bounceOf,
   BounceCount: (w) => (w.length === 0 ? 0 : bouncePoints(w).length - 2),
@@ -511,4 +668,31 @@ export const DYCK_FINDSTAT: Record<string, string> = {
   ParallelogramPolyominoMaximalColumnHeight: "St001039",
   ParallelogramPolyominoInnerCorners: "St001036",
   ParallelogramPolyominoUpperInnerCorners: "St001037",
+  SetValuedTableauNaturalDescents: "St001955",
+  SetValuedTableauComajorIndex: "St001956",
+  AdjointInvariantDescents: "St001104",
+  DiagonalStandardMonomialDegree: "St001508",
+  NoncrossingMergeableSingletonPairs: "St001932",
+  NakayamaGlobalDimension: "St000684",
+  FirstSimpleProjectiveDimension: "St001135",
+  SimpleProjectiveDimensionSum: "St001019",
+  SimpleProjectiveDimensionProduct: "St001299",
+  SimplesOfMaximalProjectiveDimension: "St001006",
+  SimplesOfProjectiveDimensionTwo: "St001011",
+  SimplesOfProjectiveDimensionThree: "St001022",
+  SimplesOfProjectiveDimensionFour: "St001025",
+  SimplesOfProjectiveDimensionAtMostTwo: "St001012",
+  SimplesOfProjectiveDimensionAtMostThree: "St001023",
+  SimplesOfProjectiveDimensionAtMostFour: "St001190",
+  SimplesOfEvenProjectiveDimension: "St001165",
+  SimplesOfMaximalEvenProjectiveDimension: "St001493",
+  HalfEvenSimpleProjectiveDimensionSum: "St001507",
+  FirstSimpleOfMaximalProjectiveDimension: "St001264",
+  LastSimpleOfMaximalProjectiveDimension: "St001265",
+  PeaksMinusNakayamaGlobalDimension: "St000966",
+  InjectiveProjectiveDimensionSum: "St001018",
+  InjectivesOfProjectiveDimensionOne: "St001008",
+  InjectivesOfProjectiveDimensionAtMostOne: "St001180",
+  InjectivesOfProjectiveDimensionAtMostTwo: "St001179",
+  InjectivesOfMaximalProjectiveDimension: "St001009",
 };

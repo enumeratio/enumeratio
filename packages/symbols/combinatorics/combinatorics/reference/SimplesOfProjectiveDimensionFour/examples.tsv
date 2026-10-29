@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-step-word-uuddud			[SimplesOfProjectiveDimensionFour, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	0			the step word $UUDDUD$
+the-step-word-uduudd			[SimplesOfProjectiveDimensionFour, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]	0			the step word $UDUUDD$
+findstat-st001025-1	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0]], "'SimplesOfProjectiveDimensionFour'"]	0	0	FindStat St001025	FindStat's value for [1,0]
+findstat-st001025-2	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0]], "'SimplesOfProjectiveDimensionFour'"]	0	0	FindStat St001025	FindStat's value for [1,0,1,0]
+findstat-st001025-3	Properties		[CombinatorialStat, [DyckPath, [List, 1, 1, 0, 0]], "'SimplesOfProjectiveDimensionFour'"]	0	0	FindStat St001025	FindStat's value for [1,1,0,0]
