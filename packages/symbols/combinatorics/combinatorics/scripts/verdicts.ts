@@ -11,13 +11,29 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Verdicts } from "../src/statistics/generate-compiled.ts";
 
+/** What one process learned (manifest's `VerdictShare`), for the process that saves the memo. */
+interface Share {
+  answers: Record<string, unknown>;
+  hits: number;
+  misses: number;
+}
+
+/** A memo that also hands its answers across a process boundary (see shards.ts). */
+export type SharedVerdicts = Verdicts & { save(): void; share(): Share; adopt(share: Share): void };
+
 // Imported by URL: a file outside the package in the program makes `vp pack` write its
 // declarations beside it.
 const { verdictCache } = (await import(new URL("../../../../manifest/scripts/stamp.ts", import.meta.url).href)) as {
   verdictCache: (
     step: string,
-    inputs: { dir: string; roots: string[]; skip: (path: string) => boolean; omitDists: string[] },
-  ) => Verdicts & { save(): void };
+    inputs: {
+      dir: string;
+      roots: string[];
+      skip: (path: string) => boolean;
+      omitDists: string[];
+      imports?: string[];
+    },
+  ) => SharedVerdicts;
 };
 
 const at = (path: string): string => fileURLToPath(new URL(`../${path}`, import.meta.url));
@@ -41,6 +57,11 @@ export const checkers = {
   ],
 } as const;
 
+/** The workspace packages the checks load (and so the dists, with what those import, that a
+ *  verdict depends on); a dependency of this package outside them, such as plausible, cannot
+ *  change one. tests/verdict-inputs.test.ts holds the checks' module graph to it. */
+export const CHECKED_ON = ["@enumeratio/engine", "@enumeratio/structures", "@enumeratio/residues"];
+
 // Manifest's dist is built from every package's records, so any record edit would void every
 // verdict. The checks run on a bare engine and structures' interpreter, which read none of that
 // data; only manifest's code (src, minus what the build generates) reaches them, through boxes.
@@ -51,6 +72,7 @@ export const verdictsFor = (step: string, roots: readonly string[]) =>
     // Generated outputs are what the steps write, not what the checks read.
     skip: (path) => path.endsWith("/manifest/src/generated") || /\.generated\.(js|ts)$/.test(path),
     omitDists: ["@enumeratio/manifest"],
+    imports: CHECKED_ON,
   });
 
 let familySource: string | undefined;
