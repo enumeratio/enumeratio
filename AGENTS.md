@@ -44,15 +44,18 @@ so a page reads the same on GitHub and on the site.
 
 ## Names
 
-- **enumeratio** is the mathematics: the symbol definitions (collections, domains,
-  statistics and maps, the special functions, the algebras) and their evaluation, built on
-  `@cortex-js/compute-engine` and written in its language, Epsil. When prose says "the
-  library", "the catalogue", "a head we declare", it is talking about enumeratio.
-- **notatio** is the interface: the notebook, the `<notatio-*>` elements, the plots and
-  glyphs, the CLI and REPL, the format registry, the docs site — and the vdom, the
-  component form of an expression. Never describe notatio as "the extension libraries" or
-  "combinatorial math for compute-engine"; that is enumeratio. Nor as a syntax: the text
-  is Epsil.
+- **notatio** is the project: this repository, the docs site, and the interface: the notebook,
+  the `<notatio-*>` elements, the plots and glyphs, the CLI and REPL, the format registry, the
+  vdom (the component form of an expression). It is also the name of the restricted-Epsil
+  subset those read and write. **Epsil** is the language underneath (compute-engine's, in which
+  definitions are written). Never describe notatio as "the extension libraries" or
+  "combinatorial math for compute-engine"; that is enumeratio. Nor as a syntax: the text is Epsil.
+- **enumeratio** is the mathematics, the catalogue: the symbol definitions (collections,
+  domains, statistics and maps, the special functions, the algebras) and their evaluation,
+  built on `@cortex-js/compute-engine` and written in Epsil. It is also the `@enumeratio/*`
+  package scope, the GitHub org and the enumeratio.dev domain, which do not follow the project
+  name. When prose says "the library", "the catalogue", "a head we declare", it is talking
+  about enumeratio.
 - The line runs by what the word governs: enumeratio owns _meaning_ ("a head", "defined
   as", "evaluates to"), notatio owns _writing and showing_ ("written as", "typed", "prints
   as", InputForm, the `*Form` heads). What an attribute or cell holds is an expression:
@@ -69,7 +72,7 @@ so a page reads the same on GitHub and on the site.
   stays for the notebook and app shell. A tag someone else defined is logged and left; CSS keys on the tags.
 - Options are `Rule` (`Over -> R`); `parseExpression` normalizes a `->` in a call's arguments to `Rule`, and
   `KeyValuePair` stays the dictionary entry.
-- Package names have not all caught up; do not rename them in passing — see the wiki's
+- Package names have not all caught up, and the scope stays `@enumeratio/*`; do not rename them in passing — see the wiki's
   [Component-Naming](https://github.com/enumeratio/enumeratio/wiki/Component-Naming) for how renames wait.
 
 ## Upstream candidates
@@ -230,8 +233,8 @@ kernel, the network or hand curation stays committed.
     config, CI or the engine selects all packages.
   - The nightly (`ci.yml`'s schedule, also `workflow_dispatch`) tests every package and all of combinatorics, and files a
     rolling `nightly-fixup` issue on failure. Main never cancels an in-progress run.
-- **Production** (`enumeratio.dev`) ships from Cloudflare Pages on merge to `main`. Every build
-  also goes up as a Cloudflare Pages preview at `<sha7>.enumeratio.pages.dev`; the PR's
+- **Production** (`enumeratio.dev`) ships from Cloudflare Pages (project `enumeratio`) on merge to `main`; `ci.yml` deploys it. Every
+  build also goes up as a Cloudflare Pages preview at `<sha7>.enumeratio.pages.dev`; the PR's
   sticky `<!-- cf-preview -->` comment carries the URL, and review links go below its first
   two lines, which each push rewrites.
 - **Advisory sweeps** (Plausible on main and nightly, the nightly and weekly oracle rescans, the nightly tarball check) are never

@@ -229,7 +229,7 @@ drift from the binary. Form and syntax names resolve on any **unambiguous prefix
 
 ### Running it
 
-The CLI is part of the enumeratio monorepo. In a checkout:
+The CLI is part of the notatio monorepo. In a checkout:
 
 ```bash
 # interactive REPL
