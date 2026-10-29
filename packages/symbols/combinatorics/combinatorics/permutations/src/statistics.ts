@@ -991,18 +991,18 @@ const inverseMajorIndex: MathJSON = sumOver(adjacent, [
   0,
 ]);
 
-/** Selection sort swapping n into place, then n-1, ...: the total distance the entries travel (Petersen). */
+/** Selection sort swapping n into place, then n-1, ...: the total distance the entries travel (Petersen). The accumulator is a Tuple: a List would be homogeneous, and the compiler would not type its mixed entries. */
 const sortingIndex: MathJSON = [
   "At",
   fold(
     ["Range", length(), 1, -1],
-    ["List", 0, x],
+    ["Tuple", 0, x],
     [
       "Apply",
       [
         "Function",
         [
-          "List",
+          "Tuple",
           add(carried(1), subtract(visiting, "t")),
           ["ReplaceAt", ["ReplaceAt", carried(2), "t", at(visiting, carried(2))], visiting, visiting],
         ],

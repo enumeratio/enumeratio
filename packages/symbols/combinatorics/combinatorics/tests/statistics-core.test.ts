@@ -61,6 +61,7 @@ const CORE = [
   "Rest",
   "Subtract",
   "Sum",
+  "Tuple",
   "Typed",
   "Unique",
 ];
