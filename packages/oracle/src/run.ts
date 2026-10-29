@@ -44,10 +44,10 @@ export type Result =
 // run while that code holds the GIL. So a supervisor outside it polls the kernel's process
 // group, kills it past a byte limit -- or, given a stall limit, once no line has come for that
 // many seconds since the first -- and names the item it was on (the one after the last
-// printed); runIn resumes the batch after that. Arguments: bytes, stall seconds (0: none),
+// printed, or the one a kernel announced it began); runIn resumes the batch after that. Arguments: bytes, stall seconds (0: none),
 // then the kernel's command line; a leading `--pty` runs it on a pseudo-terminal, for a kernel (Lean)
 // that block-buffers a pipe and would show no progress until it exits.
-const SUPERVISOR = `
+export const SUPERVISOR = `
 import os, re, signal, subprocess, sys, threading, time
 limit = int(sys.argv[1])
 stall = int(sys.argv[2])
@@ -94,16 +94,19 @@ threading.Thread(target=watch, daemon=True).start()
 last = 0
 for line in stream:
     progress = time.time()
-    done = re.match(r"<<(\\d+)", line)
+    done = re.match(r"<<(\\d+)(-?)", line)
     if done:
-        last = int(done.group(1))
+        # A "<<n->>" line says item n has begun: n - 1 are behind it, answered or not.
+        last = int(done.group(1)) - (1 if done.group(2) else 0)
     sys.stdout.write(line)
     sys.stdout.flush()
 kernel.wait()
 if killed:
     print("<<%d>>!!%s" % (last + 1, killed), flush=True)
+elif kernel.returncode in (137, -9):
+    # SIGKILL from outside: macOS reclaiming memory faster than the poll. Same as a poll kill.
+    print("<<%d>>!!MemoryError: over %d MiB" % (last + 1, limit // 2**20), flush=True)
 elif kernel.returncode != 0:
-    # Killed from outside (macOS reclaims memory faster than the poll) or crashed.
     print("<<%d>>!!KernelDied: exit %d" % (last + 1, kernel.returncode), flush=True)
 `;
 
@@ -362,14 +365,22 @@ const LEAN_IMPORTS = [
 ];
 
 /** The Lean file for one batch: the imports, a `<<0>>` that starts the supervisor's clock once
- * Mathlib has loaded, then one `#eval` per source. `header` is the line count before source 1's
- * line, which is how an error's line number maps back to its item. */
+ * Mathlib has loaded, then per source a `<<n->>` begin line and its `#eval`. An item that fails
+ * to elaborate prints no `<<n>>`, so without the begin line a kill would land on the successor
+ * of the last item that answered, however many failed items sit before the real culprit.
+ * `header` is the line count before the first begin line; see `leanItemAt`. */
 export function leanBatchCode(sources: readonly string[]): { code: string; header: number } {
   const imports = [...LEAN_IMPORTS.map((module) => `import ${module}`), "open Nat"];
-  const lines = sources.map((source, i) => `#eval IO.println ("<<${i + 1}>>" ++ toString (${source}))`);
+  const lines = sources.flatMap((source, i) => [
+    `#eval IO.println "<<${i + 1}->>"`,
+    `#eval IO.println ("<<${i + 1}>>" ++ toString (${source}))`,
+  ]);
   const start = '#eval IO.println "<<0>>"';
   return { code: [...imports, start, ...lines, ""].join("\n"), header: imports.length + 1 };
 }
+
+/** The 0-based item a Lean message at `line` (1-based) belongs to, given `leanBatchCode`'s `header`. */
+export const leanItemAt = (line: number, header: number): number => Math.floor((line - header - 1) / 2);
 
 /** Lean: one `#eval` per line of a file importing Mathlib, elaborated in the `lean/` Lake
  * project. Lean reports an error per command, by line, so a bad item costs only itself. The
@@ -401,7 +412,7 @@ async function runLean(sources: readonly string[], itemSeconds: number): Promise
   if (!("out" in run)) return failAll(sources.length, run.reason);
   const results = collect(run.out, sources.length);
   for (const match of run.out.matchAll(/:(\d+):\d+: error(?:\([^)]*\))?: (.*)/g)) {
-    const index = Number(match[1]) - header - 1;
+    const index = leanItemAt(Number(match[1]), header);
     if (index >= 0 && index < sources.length && !("value" in results[index]!)) {
       results[index] = { error: (match[2] as string).slice(0, 100) };
     }
