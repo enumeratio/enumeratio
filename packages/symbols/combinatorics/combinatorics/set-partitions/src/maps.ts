@@ -7,6 +7,7 @@ import {
   blocksOf,
   descending,
   forEach,
+  lets,
   type CombinatorialMap,
   type MathJSON,
   positions,
@@ -52,6 +53,92 @@ const relabeled = (image: MathJSON): MathJSON =>
     ],
     "list<list<integer>>",
   );
+
+const upTo = (k: MathJSON): MathJSON => ["Range", 1, k, 1];
+const elements: MathJSON = ["Length", ["Flatten", "_raw"]];
+
+/** The block of the set partition `_raw` that holds the element e. */
+const blockOf = (e: MathJSON): MathJSON => [
+  "At",
+  "_raw",
+  ["IndexWhere", "_raw", ["Function", ["Element", e, "b"], "b"]],
+];
+
+/** The next larger element in e's block, 0 for the largest. */
+const successorInBlock = (e: MathJSON): MathJSON =>
+  bind(
+    "sb_block",
+    blockOf(e),
+    [
+      "If",
+      ["Greater", ["Count", ["Filter", "sb_block", ["Function", ["Greater", "y", e], "y"]]], 0],
+      ["Min", ["Filter", "sb_block", ["Function", ["Greater", "y", e], "y"]]],
+      0,
+    ],
+    "list<integer>",
+  );
+
+/** Mp00171: the number of crossings of the arc (or half-arc) ending at each element, the arcs joining consecutive
+ *  block elements, the half-arcs coming from the closers (block maxima) to infinity. */
+const intertwiningWord: MathJSON = lets(
+  [
+    ["iw_next", forEach(upTo(elements), successorInBlock("e"), "e"), "list<integer>"],
+    [
+      // The arcs (k, next k), over those k with a next.
+      "iw_arcs",
+      ["Filter", upTo(elements), ["Function", ["Greater", at("k", "iw_next"), 0], "k"]],
+      "list<integer>",
+    ],
+  ],
+  forEach(upTo(elements), [
+    "If",
+    // An opener: nothing before it in its block.
+    [
+      "Equal",
+      ["Count", ["Filter", upTo(["Subtract", "i", 1]), ["Function", ["Equal", at("k", "iw_next"), "i"], "k"]]],
+      0,
+    ],
+    [
+      "Add",
+      [
+        "Count",
+        ["Filter", "iw_arcs", ["Function", ["And", ["Less", "k", "i"], ["Less", "i", at("k", "iw_next")]], "k"]],
+      ],
+      [
+        "Count",
+        ["Filter", upTo(elements), ["Function", ["And", ["Equal", at("k", "iw_next"), 0], ["Less", "k", "i"]], "k"]],
+      ],
+    ],
+    lets(
+      [
+        [
+          "iw_from",
+          ["Max", ["Filter", upTo(["Subtract", "i", 1]), ["Function", ["Equal", at("k", "iw_next"), "i"], "k"]]],
+          "integer",
+        ],
+      ],
+      [
+        "Add",
+        [
+          "Count",
+          [
+            "Filter",
+            "iw_arcs",
+            ["Function", ["And", ["Less", "iw_from", "k"], ["Less", "k", "i"], ["Less", "i", at("k", "iw_next")]], "k"],
+          ],
+        ],
+        [
+          "Count",
+          [
+            "Filter",
+            upTo(elements),
+            ["Function", ["And", ["Equal", at("k", "iw_next"), 0], ["Less", "iw_from", "k"], ["Less", "k", "i"]], "k"],
+          ],
+        ],
+      ],
+    ),
+  ]),
+);
 
 export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
   {
@@ -254,5 +341,143 @@ export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
     body: ["Flatten", forEach(["Range", 1, ["Length", "_raw"], 1], ["Sort", at("i")])],
     summary: "The permutation that lists the blocks in order, each sorted increasingly.",
     note: "FindStat's Mp00286. Lossy: where one block ends and the next starts is forgotten.",
+  },
+  {
+    name: "IncreasingCyclePermutation",
+    from: "set_partition",
+    to: "permutation",
+    body: forEach(upTo(elements), [
+      "Apply",
+      [
+        "Function",
+        [
+          "If",
+          ["Greater", ["Length", ["Filter", "blk", ["Function", ["Greater", "y", "i"], "y"]]], 0],
+          ["Min", ["Filter", "blk", ["Function", ["Greater", "y", "i"], "y"]]],
+          ["Min", "blk"],
+        ],
+        ["Typed", "blk", "'list<integer>'"],
+      ],
+      blockOf("i"),
+    ]),
+    summary:
+      "The permutation whose cycles are the blocks, each cycle increasing: every element goes to the next larger in its block, the largest to the least.",
+    note: "FindStat's Mp00080, Sage's to_permutation. Injective; it maximizes the exceedances among the permutations with these cycles.",
+  },
+  {
+    name: "AssociatedStandardTableau",
+    from: "set_partition",
+    to: "standard_tableau",
+    // Column j holds the j-th smallest elements of the blocks that have one, sorted; the rows read across.
+    body: [
+      "If",
+      ["Equal", ["Length", "_raw"], 0],
+      ["List"],
+      lets(
+        [
+          ["at_width", ["Max", forEach(upTo(["Length", "_raw"]), ["Length", at("i")])], "integer"],
+          [
+            "at_columns",
+            forEach(
+              upTo("at_width"),
+              [
+                "Sort",
+                [
+                  "Map",
+                  ["Function", ["At", ["Sort", "b"], "j"], "b"],
+                  ["Filter", "_raw", ["Function", ["GreaterEqual", ["Length", "b"], "j"], "b"]],
+                ],
+              ],
+              "j",
+            ),
+            "list<list<integer>>",
+          ],
+        ],
+        forEach(
+          upTo(["Length", at(1, "at_columns")]),
+          [
+            "Map",
+            ["Function", ["At", ["At", "at_columns", "j"], "r"], "j"],
+            [
+              "Filter",
+              upTo("at_width"),
+              ["Function", ["GreaterEqual", ["Length", ["At", "at_columns", "j"]], "r"], "j"],
+            ],
+          ],
+          "r",
+        ),
+      ),
+    ],
+    summary:
+      "The standard tableau whose j-th column holds the j-th smallest elements of the blocks, in increasing order.",
+    note: "FindStat's Mp00258. Not injective.",
+  },
+  {
+    name: "IntertwiningToDualMajorIndex",
+    from: "set_partition",
+    to: "set_partition",
+    body: bind("iw", intertwiningWord, blocksOf("iw", 0), "list<integer>"),
+    summary:
+      "The set partition whose growth word is the intertwining word: a bijection taking the intertwining number to the dual major index.",
+    note: "FindStat's Mp00171, the inverse of DualMajorIndexToIntertwining. Entry i of the intertwining word counts the arcs crossing the one that ends at i.",
+  },
+  {
+    name: "DualMajorIndexToIntertwining",
+    from: "set_partition",
+    to: "set_partition",
+    // The growth word read as an intertwining word. An entry one above all earlier ones opens a block; any other
+    // entry w joins the block of the w-th most recent closer (an element not yet followed in its block), which stops being one.
+    body: [
+      "If",
+      ["Equal", ["Length", "_raw"], 0],
+      ["List"],
+      lets(
+        [["dm_word", growthStringOf("_raw", 0), "list<integer>"]],
+        bind(
+          "dm_state",
+          [
+            "Fold",
+            [
+              "Function",
+              lets(
+                [
+                  ["dm_labels", ["At", "acc", 1], "list<integer>"],
+                  ["dm_closers", ["At", "acc", 2], "list<integer>"],
+                  ["dm_top", ["At", "acc", 3], "integer"],
+                  ["dm_w", at("e", "dm_word"), "integer"],
+                  // 0 when the entry opens a block (no closer is removed), else the closer it joins.
+                  [
+                    "dm_l",
+                    ["If", ["Equal", "dm_w", ["Add", "dm_top", 1]], 0, at(["Add", "dm_w", 1], "dm_closers")],
+                    "integer",
+                  ],
+                ],
+                [
+                  "Tuple",
+                  [
+                    "Join",
+                    "dm_labels",
+                    [
+                      "List",
+                      ["If", ["Equal", "dm_w", ["Add", "dm_top", 1]], ["Add", "dm_top", 1], at("dm_l", "dm_labels")],
+                    ],
+                  ],
+                  ["Join", ["List", "e"], ["Filter", "dm_closers", ["Function", ["Not", ["Equal", "x", "dm_l"]], "x"]]],
+                  ["If", ["Equal", "dm_w", ["Add", "dm_top", 1]], ["Add", "dm_top", 1], "dm_top"],
+                ],
+              ),
+              "acc",
+              "e",
+            ],
+            ["Tuple", ["List", 0], ["List", 1], 0],
+            ["Range", 2, elements, 1],
+          ],
+          lets([["dm_final", ["At", "dm_state", 1], "list<integer>"]], blocksOf("dm_final", 0)),
+        ),
+      ),
+    ],
+    summary:
+      "The inverse of IntertwiningToDualMajorIndex: read the growth word as an intertwining word and rebuild the blocks.",
+    note: "FindStat's Mp00174.",
   },
 ];

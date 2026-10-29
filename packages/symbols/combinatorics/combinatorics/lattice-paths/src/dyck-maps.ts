@@ -141,7 +141,7 @@ const inverseKrewerasComplementBody: MathJSON = [
  * increasingly), its RSK pair of two-row tableaux, and the path with ups at the first row of P and at 2m + 1 - q
  * for q in the second row of Q.
  */
-const knuthKrattenthalerBody: MathJSON = [
+const krattenthalerThen = (next: MathJSON): MathJSON => [
   "If",
   ["Equal", steps, 0],
   ["List"],
@@ -181,29 +181,7 @@ const knuthKrattenthalerBody: MathJSON = [
                 ],
                 "x",
               ),
-              bind(
-                "kk_pq",
-                renamed(rskPair, "_raw", "kk_pi"),
-                forEach(
-                  upTo(steps),
-                  [
-                    "If",
-                    [
-                      "Or",
-                      ["Element", "p", at(1, at(1, "kk_pq"))],
-                      [
-                        "And",
-                        ["Greater", ["Length", at(2, "kk_pq")], 1],
-                        ["Element", ["Subtract", ["Add", steps, 1], "p"], at(2, at(2, "kk_pq"))],
-                      ],
-                    ],
-                    1,
-                    0,
-                  ],
-                  "p",
-                ),
-                "list<list<list<integer>>>",
-              ),
+              next,
               "list<integer>",
             ),
             "list<integer>",
@@ -217,6 +195,35 @@ const knuthKrattenthalerBody: MathJSON = [
     "list<integer>",
   ),
 ];
+
+const knuthKrattenthalerBody: MathJSON = krattenthalerThen(
+  bind(
+    "kk_pq",
+    renamed(rskPair, "_raw", "kk_pi"),
+    forEach(
+      upTo(steps),
+      [
+        "If",
+        [
+          "Or",
+          ["Element", "p", at(1, at(1, "kk_pq"))],
+          [
+            "And",
+            ["Greater", ["Length", at(2, "kk_pq")], 1],
+            ["Element", ["Subtract", ["Add", steps, 1], "p"], at(2, at(2, "kk_pq"))],
+          ],
+        ],
+        1,
+        0,
+      ],
+      "p",
+    ),
+    "list<list<list<integer>>>",
+  ),
+);
+
+/** Mp00119: the 321-avoiding permutation whose left-to-right maxima are the path's peaks. */
+export const krattenthalerPermutationBody: MathJSON = krattenthalerThen("kk_pi");
 
 /** One phi step of Elizalde-Rubey on the path `dy` (a bound name): the first of the last descent's downs moves
  *  back to just before the point where the last descent, taken with the steps after it, stops exceeding the ups by

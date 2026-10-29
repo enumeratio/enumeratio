@@ -61,6 +61,10 @@ export const bind = (name: string, value: MathJSON, body: MathJSON, type?: strin
   value,
 ];
 
+/** Nested `bind`s, outermost first: each binding is `[name, value, type?]`. */
+export const lets = (bindings: readonly (readonly [string, MathJSON, string?])[], body: MathJSON): MathJSON =>
+  bindings.toReversed().reduce((inner, [name, value, type]) => bind(name, value, inner, type), body);
+
 /** The blocks of a restricted growth string whose labels start at `base`: block j holds the
  *  positions labelled j, in increasing order. Shared by set-partitions' own maps
  *  (SetPartition, SetComposition) and permutations' CyclePartition. */
