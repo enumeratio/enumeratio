@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-dyck-path-uuddud			[TwoRowTableau, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	[StandardTableau, [List, [List, 1, 2, 5], [List, 3, 4, 6]]]	the Dyck path $UUDDUD$

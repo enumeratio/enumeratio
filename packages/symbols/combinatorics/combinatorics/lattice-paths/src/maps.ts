@@ -41,7 +41,7 @@ export const dyckGuard: MathJSON = [
 ];
 
 /** The area sequence: entry i is the height before the i-th up step, 2i - 1 - (its position). */
-const areaSequence: MathJSON = bind(
+export const areaSequence: MathJSON = bind(
   "ups",
   stepsWhere(1),
   forEach(["Range", 1, ["Length", "ups"], 1], ["Subtract", ["Subtract", ["Multiply", 2, "i"], 1], at("i", "ups")]),
@@ -64,7 +64,7 @@ const positionsOf = (letter: number): MathJSON => [
 ];
 
 /** The two-row standard tableau of a Dyck path: the positions of its up steps, then those of its down steps. */
-const twoRowTableau: MathJSON = ["List", positionsOf(1), positionsOf(0)];
+export const twoRowTableau: MathJSON = ["List", positionsOf(1), positionsOf(0)];
 
 /** The Dyck path whose up steps are the entries of the first row of the tableau `table`. */
 const pathOfTwoRowTableau = (table: string): MathJSON =>

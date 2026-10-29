@@ -27,6 +27,22 @@ test("the build compiled maps", () => {
   expect(Object.keys(COMPILED_MAPS).length).toBeGreaterThan(0);
 });
 
+// Maps whose Epsil the compiler can't take, left to the interpreter on purpose: each is pinned here with its
+// reason, so one that starts to compile (or is dropped) shows up as a failure rather than going unnoticed.
+const INTERPRETED: Readonly<Record<string, string>> = {
+  "Avoiding321Permutation@dyck_path": "inverse RSK folds over nested tableaux, which have no compiled type",
+};
+
+test("the pinned maps are declared and not compiled", () => {
+  for (const key of Object.keys(INTERPRETED)) {
+    expect(
+      MAPS.some((m) => `${m.name}@${m.from}` === key),
+      key,
+    ).toBe(true);
+    expect(COMPILED_MAPS[key]?.run, key).toBeUndefined();
+  }
+});
+
 // Families overlap, and the build's cross-checks cost per subject.
 test("each small element is sampled once", () => {
   const subjects = smallElements(ce, "Permutation").map((s) => JSON.stringify(s));

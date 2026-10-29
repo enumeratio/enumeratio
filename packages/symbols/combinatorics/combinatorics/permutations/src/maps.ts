@@ -15,6 +15,7 @@ import {
   bind,
   blocksOf,
   forEach,
+  lets,
   type CombinatorialMap,
   type MathJSON,
   positions,
@@ -819,6 +820,53 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     body: sortedRuns((first) => at(first)),
     summary: "The permutation with its increasing runs sorted lexicographically.",
     note: "FindStat's Mp00223. Lossy: the runs' order is forgotten.",
+  },
+  {
+    name: "WeakExceedancePartition",
+    from: "permutation",
+    to: "set_partition",
+    // The coarsest set partition containing the arcs (i, π(i)) with i ≤ π(i): each element takes the least label
+    // reachable along them, n rounds of passing the least label across every arc.
+    body: [
+      "If",
+      ["Equal", ["Length", "_raw"], 0],
+      ["List"],
+      lets(
+        [["we_position", forEach(positions, ["IndexOf", "_raw", "i"]), "list<integer>"]],
+        bind(
+          "we_labels",
+          [
+            "Fold",
+            [
+              "Function",
+              forEach(
+                positions,
+                [
+                  "Min",
+                  at("i", "acc"),
+                  ["If", ["LessEqual", "i", at("i")], at(at("i"), "acc"), at("i", "acc")],
+                  ["If", ["LessEqual", at("i", "we_position"), "i"], at(at("i", "we_position"), "acc"), at("i", "acc")],
+                ],
+                "i",
+              ),
+              "acc",
+              "r",
+            ],
+            positions,
+            positions,
+          ],
+          [
+            "Map",
+            ["Function", ["Filter", positions, ["Function", ["Equal", at("p", "we_labels"), "m"], "p"]], "m"],
+            // One block per label that is its own least element.
+            ["Filter", positions, ["Function", ["Equal", at("p", "we_labels"), "p"], "p"]],
+          ],
+          "list<integer>",
+        ),
+      ),
+    ],
+    summary: "The coarsest set partition containing every arc from i to π(i) with i ≤ π(i).",
+    note: "FindStat's Mp00240, the weak exceedance partition. Not injective.",
   },
 ];
 

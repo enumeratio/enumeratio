@@ -4,6 +4,8 @@
 // is held to the crawl's MapData as exact strings, and an engine result is read back to text the
 // same way. Keyed `Head@Carrier`, the carrier being the map's source.
 
+import { BATCH_SEVEN_READINGS } from "./map-findstat-readings-7.ts";
+
 export type Reading = (text: string) => string;
 
 const ints = (text: string): number[] => JSON.parse(text) as number[];
@@ -759,6 +761,7 @@ const rowToColumnDescents = (tableau: readonly (readonly number[])[]): number[][
 };
 
 export const MAP_READINGS: Readonly<Record<string, Reading>> = {
+  ...BATCH_SEVEN_READINGS,
   // Binary words are strings of 0s and 1s.
   "Reverse@BinaryWord": (w) => w.split("").toReversed().join(""),
   "Complement@BinaryWord": (w) =>
