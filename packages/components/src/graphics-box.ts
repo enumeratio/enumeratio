@@ -12,8 +12,6 @@ import {
   declared,
   drawAxisLabels,
   drawLatticeLines,
-  evaluatedShow,
-  FIGURE_NOTATION,
   type GestureHandling,
   GRID_STEP,
   GRADIENTS,
@@ -24,7 +22,7 @@ import {
   homeView,
   latticeCoordinates,
   type LatticeView,
-  loadLatticeModules,
+  loweredShow,
   MAX_POINTS,
   maxExtentFor,
   nearestLatticePoint,
@@ -44,8 +42,6 @@ import {
   type SchemeColor,
   type ShowLayer,
   type ShowSpec,
-  showBox,
-  specOf,
   splitOptions,
   stringOf,
   throughCamera,
@@ -56,10 +52,9 @@ import {
   wildcardOf,
   zoomed,
 } from "@enumeratio/frontend/core";
-import { graphicsOf, makeBoxes } from "@enumeratio/boxes";
 import { emitControl } from "./define.ts";
 import { scopeOf } from "./scope.ts";
-import { type FramePlacement, figureFrame, isVertical, placementOf } from "./figure-frame.ts";
+import { captionPlacement, type FramePlacement, figureFrame, isVertical, placementOf } from "./figure-frame.ts";
 import { ensureStyles } from "./styles.ts";
 import type { PlotView } from "./plot-view.ts";
 
@@ -205,7 +200,7 @@ export class GraphicsBoxElement extends LitElement {
     gestureHandling: { type: String, attribute: "gesture-handling" },
     /** Where the legend goes: `below`, `right`, a corner to overlay, `none`. */
     legendAt: { type: String, attribute: "legend-at", reflect: true },
-    /** Where the info strip (what is under the pointer, or the layer as a whole) goes: `below`, a side, `none`. */
+    /** Where the info strip goes: `below`, a side, `none`; unwritten, `below` unless the figure is a compact glyph. */
     captionAt: { type: String, attribute: "caption-at", reflect: true },
     /** The values of the variables its wildcards name, by wildcard (`_d`), set by its scope. */
     bindings: { attribute: false },
@@ -281,7 +276,7 @@ export class GraphicsBoxElement extends LitElement {
     this.aspectRatio = "";
     this.gestureHandling = "";
     this.legendAt = "right";
-    this.captionAt = "below";
+    this.captionAt = "";
     this.bindings = undefined;
     this._spec = undefined;
     this._params = new Map();
@@ -440,19 +435,15 @@ export class GraphicsBoxElement extends LitElement {
       return;
     }
     const rebuild = ++this.#rebuilds;
-    const shown = await evaluatedShow(this.#source, bound);
-    const spec = specOf(shown);
-    await loadLatticeModules(spec.tiles);
+    const lowered = await loweredShow(this.#source, bound);
     // A later binding started its own rebuild while this one evaluated: that one draws.
     if (rebuild !== this.#rebuilds) return;
-    if (await this.#followExample(spec)) return;
-    // The one lowering: what a terminal or an SVG draws is what this draws.
-    const box = makeBoxes(shown as never, FIGURE_NOTATION);
-    if (graphicsOf(box) === undefined) {
-      const why = showBox(shown);
-      this._status = typeof why === "string" ? why : "Not a Show(…) expression.";
+    if (typeof lowered === "string") {
+      this._status = lowered;
       return;
     }
+    const { box, spec } = lowered;
+    if (await this.#followExample(spec)) return;
     const key = JSON.stringify([spec.tiles, spec.aspect]);
     if (key !== this.#layerKey) {
       const producer = producerOf(box);
@@ -1192,7 +1183,7 @@ export class GraphicsBoxElement extends LitElement {
         stageStyle: `min-height:${this.#height}px`,
         legend: this.#legendTemplate(isVertical(legendAt)),
         caption: this.#infoTemplate(),
-        captionAt: placementOf(this.captionAt, "below"),
+        captionAt: captionPlacement(this.captionAt, this.#height),
         legendAt,
       })}
     </div>`;

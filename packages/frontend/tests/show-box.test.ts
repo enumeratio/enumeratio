@@ -9,6 +9,7 @@ import {
   evaluatedShow,
   FIGURE_NOTATION,
   heldShow,
+  loweredShow,
   pinnedBox,
   producerOf,
   showBox,
@@ -158,4 +159,25 @@ it("draws BraidClosure as the closed braid, without a Show", () => {
   expect(closed?.marks.length).toBeGreaterThan(0);
   // The closing arcs are extra marks and links beside the braid's own.
   expect(closed!.marks.length + closed!.links.length).toBeGreaterThan(open!.marks.length + open!.links.length);
+});
+
+it("lowers a bound Show in one step: evaluated, its library loaded, a box and its spec", async () => {
+  const source = ["Show", ["LatticeTiles", ["_R", ["Sqrt", "_d"]]]];
+  const bound = bind(
+    source,
+    new Map<string, unknown>([
+      ["R", "AlgebraicIntegers"],
+      ["d", -5],
+    ]),
+  );
+  const lowered = await loweredShow(source, bound);
+  if (typeof lowered === "string") throw new Error(lowered);
+  expect(drawnOptions(lowered.box)).toMatchObject({ Producer: "LatticeTiles", ViewKind: "plane" });
+  expect(lowered.spec.tiles?.head).toBe("LatticeTiles");
+  const out = pinnedBox(lowered.box);
+  if (typeof out === "string") throw new Error(out);
+  const direct = await pinned(["Show", ["LatticeTiles", ["QuadraticIntegers", -5]]]);
+  expect(displayListOfBox(out)!.marks.length).toBe(direct.marks.length);
+  // The reason it can't be drawn, as text.
+  expect(await loweredShow(["Show"], ["Show"])).toMatch(/needs a layer/);
 });

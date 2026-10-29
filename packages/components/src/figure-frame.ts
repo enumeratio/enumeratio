@@ -38,6 +38,16 @@ export const placementOf = (value: string | null | undefined, fallback: FramePla
 /** Whether content placed here reads down rather than across: beside the stage, or over it. */
 export const isVertical = (at: FramePlacement): boolean => at === "left" || at === "right" || isOverlay(at);
 
+/** A figure this tall (CSS px) or shorter is an inline glyph: no room for a caption under it. */
+export const COMPACT_HEIGHT = 120;
+
+/**
+ * Where the caption goes: as written, else `below`, or nowhere on a compact figure (the strip
+ * would be taller than the glyph). Writing `caption-at` overrides the height rule.
+ */
+export const captionPlacement = (value: string | null | undefined, height: number): FramePlacement =>
+  placementOf(value, height <= COMPACT_HEIGHT ? "none" : "below");
+
 export interface FrameParts {
   readonly toolbar?: unknown;
   /** The drawing surface; it fills whatever room the frame leaves it. */
