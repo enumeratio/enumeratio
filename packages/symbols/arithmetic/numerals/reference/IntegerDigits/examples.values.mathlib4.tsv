@@ -1,0 +1,51 @@
+id	in	out	verdict
+integerdigits-1-234	(let n : ℕ := 1234; if n = 0 then [0] else (Nat.digits 10 n).reverse)	[1, 2, 3, 4]	
+integerdigits-2-147-2	(let n : ℕ := 2147; if n = 0 then [0] else (Nat.digits 2 n).reverse)	[1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1]	
+integerdigits-58-127	(let n : ℕ := 58127; if n = 0 then [0] else (Nat.digits 10 n).reverse)	[5, 8, 1, 2, 7]	
+integerdigits-58-127-2	(let n : ℕ := 58127; if n = 0 then [0] else (Nat.digits 2 n).reverse)	[1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1]	
+93-784-seconds-as-days-hours-minutes-seconds			
+100-89-8-3-with-no-two-adjacent-ones			
+integerdigits-102-341-mixedradixnumerals-list-24			
+digits-past-9-are-plain-integers-58127-e30f-16	(let n : ℕ := 58127; if n = 0 then [0] else (Nat.digits 16 n).reverse)	[14, 3, 0, 15]	
+a-mixed-radix-spelled-mixedradix-102-341-seconds			
+the-leading-digit-is-unbounded-137-3-cdot-3-2			
+a-width-longer-than-the-numeral-pads-with	(((Nat.digits 2 5) ++ List.replicate 8 0).take 8).reverse	[0, 0, 0, 0, 0, 1, 0, 1]	
+listable-in-the-base-one-digit-list-per-base	(let n : ℕ := 7; if n = 0 then [0] else (Nat.digits [2, 3, 4] n).reverse)	Application type mismatch: The argument	error
+listable-threads-over-a-range-of-integers	(let n : ℕ := ((List.range (Int.natAbs ((7 : ℤ) - 0) + 1)).map (fun (k : ℕ) => (((0 : ℤ) + Int.sign ((7 : ℤ) - 0) * k : ℤ) : ℚ))); if n = 0 then [0] else (Nat.digits 2 n).reverse)	Type mismatch	error
+threads-element-wise-over-a-list-as-wolfram-s	(let n : ℕ := [6, 7, 2]; if n = 0 then [0] else (Nat.digits 2 n).reverse)	Type mismatch	error
+ordinary-base-2-as-a-system-value-same-digits-as			
+the-same-20-13-5-2-over-a-continued-fraction-s			
+a-negative-integer-with-no-sign			
+spreadsheet-column-aaa			
+independent-residues-no-place-values			
+the-10-adic-truncation-a-negative-is-spelled-by			
+factoradic-5-is-the-lehmer-code-2-1-0			
+factoradic-463-a-longer-lehmer-code			
+balanced-ternary-5-is-1-1-1			
+negativenumerals-2-3-is-1-1-1			
+negativenumerals-2-minus-2-is-1-0			
+combinatorial-base-3-zero-is-2-1-0			
+primorial-base-30-is-1-0-0-0			
+ostrowski-12-over-all-ones-convergents			
+zeckendorf-12-is-8-3-1			
+ostrowski-9-over-2-2-2-is-1-2-0			
+bijective-base-26-27-is-aa			
+bijective-base-26-702-is-zz			
+integerdigits-137-mixedradixnumerals-list-3-12			
+integerdigits-1-084-mixedradixnumerals-list-17			
+the-3-argument-form-keeps-only-the-4-least	(((Nat.digits 10 6345354) ++ List.replicate 4 0).take 4).reverse	[5, 3, 5, 4]	
+all-3-bit-words-by-threading-a-padded-form-over	(((Nat.digits 2 ((List.range (Int.natAbs ((7 : ℤ) - 0) + 1)).map (fun (k : ℕ) => (((0 : ℤ) + Int.sign ((7 : ℤ) - 0) * k : ℤ) : ℚ)))) ++ List.replicate 3 0).take 3).reverse	Application type mismatch: The argument	error
+the-lehmer-code-of-the-6th-permutation-of-four			
+an-integer-base-is-still-the-native-handler	(let n : ℕ := 255; if n = 0 then [0] else (Nat.digits 16 n).reverse)	[15, 15]	
+integerdigits-98-534-mixedradixnumerals-list-24			
+unlike-integerstring-there-s-always-at-least-one	(let n : ℕ := 0; if n = 0 then [0] else (Nat.digits 10 n).reverse)	[0]	
+the-sign-is-discarded	(let n : ℕ := (-3134); if n = 0 then [0] else (Nat.digits 10 n).reverse)	failed to synthesize instance of type class	error
+no-numeral-for-a-negative-in-a-system-that			
+fixed-base-2-drops-the-sign-of-minus-5	(let n : ℕ := (-5); if n = 0 then [0] else (Nat.digits 2 n).reverse)	failed to synthesize instance of type class	error
+positionalnumerals-declines-a-negative			
+an-even-balanced-base-declines			
+an-unrecognized-system-symbol-leaves-the-call			
+ostrowski-declines-past-its-ceiling			
+past-the-product-there-is-no-residue-numeral			
+bijective-base-26-zero-is-the-empty-numeral			
+100-has-158-digits			

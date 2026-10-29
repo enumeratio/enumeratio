@@ -70,6 +70,11 @@ bindings:
     checked:
       version: primal 0.3.3
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: "(let n : ℕ := $1; (Nat.primeFactorsList n).eraseDups.map fun p => [p, (Nat.primeFactorsList n).count p])"
+    arity: 1
+    note: "Nat.primeFactorsList (ascending, with multiplicity) grouped into [prime, exponent] pairs. Natural n only: Mathlib has no unit factor, so 0 and 1 give [] where ours gives 0^1 and 1^1, and a negative or rational n is a domain error."
 ---
 
 - For $n=p_1^{k_1}\cdots p_m^{k_m}$, returns the pairs $\{p_1,k_1\},\ldots,\{p_m,k_m\}$ in increasing order of prime.

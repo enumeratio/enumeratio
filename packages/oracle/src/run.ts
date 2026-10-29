@@ -349,6 +349,7 @@ const LEAN_IMPORTS = [
   "Mathlib.Data.Nat.Digits.Defs",
   "Mathlib.Data.Nat.Factorial.Basic",
   "Mathlib.Data.Nat.Factorial.DoubleFactorial",
+  "Mathlib.Data.Nat.Factors",
   "Mathlib.Data.Nat.Fib.Basic",
   "Mathlib.Data.Nat.Prime.Basic",
   "Mathlib.Data.Nat.Squarefree",

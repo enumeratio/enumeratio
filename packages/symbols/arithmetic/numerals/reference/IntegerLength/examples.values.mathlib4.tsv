@@ -1,0 +1,9 @@
+id	in	out	verdict
+integerlength-12-345	((Nat.digits 10 12345).length)	5	
+integerlength-123-456-789	((Nat.digits 10 123456789).length)	9	
+integerlength-100-factorial-2	((Nat.digits 2 (Nat.factorial 100)).length)	525	
+integerlength-2-pow-100	((Nat.digits 10 (2 ^ 100)).length)	31	
+255-ff-16	((Nat.digits 16 255).length)	2	
+listable	((Nat.digits 10 [1, 10, 100]).length)	Application type mismatch: The argument	error
+the-sign-is-not-counted	((Nat.digits 10 (-123)).length)	failed to synthesize instance of type class	error
+0-has-length-0-unlike-its-one-element	((Nat.digits 10 0).length)	0	

@@ -1,0 +1,39 @@
+id	in	out	verdict
+fromdigits-list-5-1-2-8	(Nat.ofDigits (10 : ℤ) (List.reverse ([5, 1, 2, 8] : List ℕ)))	5128	
+fromdigits-list-1-0-1-1-0-1-1-2	(Nat.ofDigits (2 : ℤ) (List.reverse ([1, 0, 1, 1, 0, 1, 1] : List ℕ)))	91	
+1d-2h-3m-4s-back-to-seconds			
+crt-reconstruction			
+fromdigits-list-1-4-25-41-mixedradixnumerals			
+the-digits-can-be-given-as-a-string-0-9-then-a-z	(Nat.ofDigits (10 : ℤ) (List.reverse ("1923" : List ℕ)))	Type mismatch	error
+a-digit-string-in-a-given-base	(Nat.ofDigits (2 : ℤ) (List.reverse ("1011011" : List ℕ)))	Type mismatch	error
+roman-numerals-with-the-base-roman	(Nat.ofDigits ("Roman" : ℤ) (List.reverse ("XVII" : List ℕ)))	Type mismatch	error
+a-mixed-radix-spelled-mixedradix-1d-4h-25m-41s			
+the-inverse-of-integerdigits-137-mixedradix-3-12			
+digits-past-9-are-plain-integers-1-cdot-16-15	(Nat.ofDigits (16 : ℤ) (List.reverse ([1, 15] : List ℕ)))	31	
+a-symbolic-base-gives-the-polynomial-x-2-2x-3			
+a-negative-base-1-cdot-4-1-cdot-2-0-2	(Nat.ofDigits ((-2) : ℤ) (List.reverse ([1, 1, 0] : List ℕ)))	2	
+a-digits-exponent-pair-the-shape-realdigits	(Nat.ofDigits (10 : ℤ) (List.reverse ([[1, 4, 1, 5], 1] : List ℕ)))	Application type mismatch: The argument	error
+ordinary-base-2-as-a-system-value			
+zeckendorf-100-89-8-3-back-through-fromdigits			
+a-factoradic-lehmer-code-back-to-463			
+balanced-ternary-1-1-1-back-to-5			
+combinatorial-base-3-3-2-1-back-to-3			
+ostrowski-golden-digits-back-to-12			
+bijective-base-26-the-empty-numeral-is-zero			
+the-horner-reduction-in-base-5	(Nat.ofDigits (5 : ℤ) (List.reverse ([1, 2, 3] : List ℕ)))	38	
+a-negative-base-minus-3-1-0-1	(Nat.ofDigits ((-3) : ℤ) (List.reverse ([1, 0, 1] : List ℕ)))	10	
+a-negative-base-minus-4-3-2-1	(Nat.ofDigits ((-4) : ℤ) (List.reverse ([3, 2, 1] : List ℕ)))	41	
+a-digits-exponent-pair-exponent-3-is-an-exact	(Nat.ofDigits (10 : ℤ) (List.reverse ([[1, 2, 3], 3] : List ℕ)))	Application type mismatch: The argument	error
+a-digits-exponent-pair-exponent-5-is-12-300	(Nat.ofDigits (10 : ℤ) (List.reverse ([[1, 2, 3], 5] : List ℕ)))	Application type mismatch: The argument	error
+fromdigits-list-3-2-5-mixedradixnumerals-list-3			
+a-lehmer-code-back-to-its-rank			
+fromdigits-inverts-integerdigits	(decide ((Nat.ofDigits (10 : ℤ) (List.reverse ((let n : ℕ := 58127; if n = 0 then [0] else (Nat.digits 10 n).reverse) : List ℕ))) = 58127))	true	
+the-round-trip-holds-in-any-base	(Nat.ofDigits (2 : ℤ) (List.reverse ((let n : ℕ := 58127; if n = 0 then [0] else (Nat.digits 2 n).reverse) : List ℕ)))	58127	
+fromdigits-list-1-3-22-14-mixedradixnumerals			
+an-empty-digit-list-is-left-unevaluated-rather	(Nat.ofDigits (10 : ℤ) (List.reverse ([] : List ℕ)))	0	inconclusive
+two-adjacent-ones-is-not-a-numeral-so-it-denotes			
+ostrowski-declines-a-string-past-its-ceiling			
+non-coprime-residues-an-inconsistent-string			
+a-malformed-roman-numeral-declines	(Nat.ofDigits ("Roman" : ℤ) (List.reverse ("IIII" : List ℕ)))	Type mismatch	error
+map-fromdigits-list-7-8-9-a-b-c-d			
+digits-the-base-carry-into-higher-place-values-7	(Nat.ofDigits (10 : ℤ) (List.reverse ([7, 11, 0, 0, 0, 122] : List ℕ)))	810122	
