@@ -13,6 +13,7 @@ signatures:
     library: enumeratio-combinatorics
 seeAlso:
   - Attributes
+  - ClearAttributes
 names:
   wolframIdentity: true
 attributes:
@@ -20,4 +21,5 @@ attributes:
 ---
 
 - Only $\{Flat, HoldAll, Listable, Orderless\}$ can actually be turned on — see [[Attributes]] for why those four and no others. Declines (stays unevaluated) for an undeclared $f$, or any attribute name outside that set, rather than silently accepting a change that didn't happen.
+- A declared head is `Protected`: `SetAttributes` leaves the call unevaluated and says `SetAttributes::write` (`Tag f in f is Protected.`), where Wolfram, whose `Protected` guards definitions rather than attributes, makes the change. Only a symbol of your own, defined first, takes attributes.
 - Always returns $Nothing$, like Wolfram's own $Null$.

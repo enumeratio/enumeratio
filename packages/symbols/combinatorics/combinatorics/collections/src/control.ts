@@ -8,9 +8,10 @@ import {
   operandsOf,
   symbolNameOf,
 } from "@enumeratio/engine";
+import { symbolInfo } from "@enumeratio/manifest";
 
 // Wolfram-frontier scoping/control heads: With, Module, Reap/Sow, Do, Switch, NestWhile(List),
-// While, FixedPointList, Throw/Catch, Echo, AbsoluteTiming, Attributes/SetAttributes, AppendTo.
+// While, FixedPointList, Throw/Catch, Echo, AbsoluteTiming, Attributes/SetAttributes/ClearAttributes, AppendTo.
 //
 // None of these exist on compute-engine (probed via `ce.lookupDefinition` for every one) --
 // they're declared fresh below. Compute-engine DOES already declare `Block` (a scoped,
@@ -571,6 +572,23 @@ function declareAbsoluteTiming(ce: Engine): void {
 const ATTRIBUTE_NAMES = ["Flat", "HoldAll", "Listable", "Orderless"] as const;
 type AttributeName = (typeof ATTRIBUTE_NAMES)[number];
 
+/**
+ * `Protected` is not a flag on the operator: a head is protected when we declare it, as in
+ * Wolfram. The reference records name every head compute-engine or a package declares, and
+ * a user's own symbol (`ce.declare`d or assigned) has none, so it stays writable. Nothing
+ * can switch `Protected` on or off, which keeps the answer the same on every route.
+ */
+const isProtected = (name: string): boolean => symbolInfo(name) !== undefined;
+
+/** `SetAttributes::write` / `ClearAttributes::write`, defined once per engine. */
+const writeMessagesDefined = new WeakSet<Engine>();
+function defineWriteMessagesOnce(ce: Engine): void {
+  if (writeMessagesDefined.has(ce)) return;
+  writeMessagesDefined.add(ce);
+  for (const head of ["SetAttributes", "ClearAttributes"])
+    defineMessages(ce, head, { write: "Tag `1` in `1` is Protected." });
+}
+
 interface FlaggedOperator {
   associative: boolean;
   lazy: boolean;
@@ -598,26 +616,26 @@ const readAttribute = (op: FlaggedOperator, attr: AttributeName): boolean => {
   }
 };
 
-const writeAttribute = (op: FlaggedOperator, attr: AttributeName): void => {
+const writeAttribute = (op: FlaggedOperator, attr: AttributeName, on: boolean): void => {
   switch (attr) {
     case "Flat":
-      op.associative = true;
+      op.associative = on;
       break;
     case "HoldAll":
-      op.lazy = true;
+      op.lazy = on;
       break;
     case "Listable":
-      op.broadcastable = true;
+      op.broadcastable = on;
       break;
     case "Orderless":
-      op.commutative = true;
+      op.commutative = on;
       break;
   }
 };
 
-/** `Attributes(f)`: the subset of `ATTRIBUTE_NAMES` `f`'s operator definition carries,
- *  alphabetically (Wolfram's own print order). An undeclared or non-operator `f` reads as
- *  no attributes, same as a plain symbol in Wolfram. */
+/** `Attributes(f)`: the subset of `ATTRIBUTE_NAMES` `f`'s operator definition carries, plus
+ *  `Protected` for a declared head, alphabetically (Wolfram's own print order). An undeclared
+ *  `f` reads as no attributes, same as a plain symbol in Wolfram. */
 function declareAttributes(ce: Engine): void {
   ce.declare("Attributes", {
     signature: "(symbol) -> list<symbol>",
@@ -626,37 +644,50 @@ function declareAttributes(ce: Engine): void {
       const name = ops[0] !== undefined ? symbolNameOf(ops[0]) : undefined;
       if (name === undefined) return undefined;
       const op = operatorFlagsOf(ce, name);
-      const present = op === undefined ? [] : ATTRIBUTE_NAMES.filter((a) => readAttribute(op, a));
+      const present: string[] = op === undefined ? [] : ATTRIBUTE_NAMES.filter((a) => readAttribute(op, a));
+      if (isProtected(name)) present.push("Protected");
       return ce.box(["List", ...present.map((a) => ce.symbol(a))]);
     },
   });
 }
 
-/** `SetAttributes(f, attr)` / `SetAttributes(f, {attr1, attr2, ...})`: flips the matching
- *  operator flag(s) ON, in place -- `ce`'s flags are plain mutable fields on the shared
- *  definition object, the same mechanism `wrapOperator`'s callers rely on. Declines
- *  (stays unevaluated) for an undeclared `f`, or any attribute name outside
- *  `ATTRIBUTE_NAMES` -- silently accepting an attribute we can't actually represent would
- *  claim a change that didn't happen. Returns `Nothing`, like Wolfram's own `Null`. */
-function declareSetAttributes(ce: Engine): void {
-  ce.declare("SetAttributes", {
+/** Flips the named flag(s) of `f` on or off for `SetAttributes` / `ClearAttributes`. A
+ *  protected `f` refuses with `Head::write`, ahead of any other check; an undeclared `f`, or
+ *  any attribute name outside `ATTRIBUTE_NAMES`, declines silently -- accepting an attribute
+ *  we can't represent would claim a change that didn't happen. Returns `Nothing`, like
+ *  Wolfram's `Null`. */
+function declareAttributeWriter(ce: Engine, head: "SetAttributes" | "ClearAttributes", on: boolean): void {
+  defineWriteMessagesOnce(ce);
+  ce.declare(head, {
     signature: "(symbol, any) -> any",
     lazy: true,
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const name = ops[0] !== undefined ? symbolNameOf(ops[0]) : undefined;
       const attrsExpr = ops[1];
       if (name === undefined || attrsExpr === undefined) return undefined;
+      if (isProtected(name)) {
+        emit(ce, head, "write", [name]);
+        return undefined;
+      }
       const op = operatorFlagsOf(ce, name);
       if (op === undefined) return undefined;
       const requested = attrsExpr.operator === "List" ? operandsOf(attrsExpr) : [attrsExpr];
       const names = requested.map((r) => symbolNameOf(r));
       if (names.some((n): n is undefined => n === undefined || !(ATTRIBUTE_NAMES as readonly string[]).includes(n)))
         return undefined;
-      for (const n of names) writeAttribute(op, n as AttributeName);
+      for (const n of names) writeAttribute(op, n as AttributeName, on);
       return ce.Nothing;
     },
   });
 }
+
+/** `SetAttributes(f, attr)` / `SetAttributes(f, {attr1, attr2, ...})`: turns the operator
+ *  flag(s) ON, in place -- `ce`'s flags are plain mutable fields on the shared definition
+ *  object, the same mechanism `wrapOperator`'s callers rely on. */
+const declareSetAttributes = (ce: Engine): void => declareAttributeWriter(ce, "SetAttributes", true);
+
+/** `ClearAttributes(f, attr)` / `ClearAttributes(f, {attr1, ...})`: `SetAttributes`' inverse. */
+const declareClearAttributes = (ce: Engine): void => declareAttributeWriter(ce, "ClearAttributes", false);
 
 // --- AppendTo --------------------------------------------------------------------------------
 
@@ -686,7 +717,7 @@ function declareAppendTo(ce: Engine): void {
 
 /** Declare the Wolfram-frontier scoping/control heads: `With`, `Module`, `Reap`/`Sow`,
  *  `Do`, `Switch`, `While`, `NestWhile`/`NestWhileList`, `FixedPointList`, `Throw`/`Catch`,
- *  `Echo`, `AbsoluteTiming`, `Attributes`/`SetAttributes`, `AppendTo`. `Clear`,
+ *  `Echo`, `AbsoluteTiming`, `Attributes`/`SetAttributes`/`ClearAttributes`, `AppendTo`. `Clear`,
  *  `Attributes`' `idempotent`/`involution` flags, and `Return` are deliberately left out --
  *  see the module doc and `declareAttributes`'s own comment for why. */
 export function declareControl(ce: Engine): void {
@@ -706,5 +737,6 @@ export function declareControl(ce: Engine): void {
   declareAbsoluteTiming(ce);
   declareAttributes(ce);
   declareSetAttributes(ce);
+  declareClearAttributes(ce);
   declareAppendTo(ce);
 }

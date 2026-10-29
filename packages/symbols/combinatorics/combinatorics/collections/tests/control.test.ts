@@ -176,8 +176,8 @@ test("AbsoluteTiming returns {seconds, value} with the value intact (seconds unp
 test("Attributes reports Add's Flat, HoldAll, Listable and Orderless", () => {
   // Add is associative (Flat), commutative (Orderless), broadcastable (Listable) and lazy
   // (HoldAll, the closest of the Hold* family -- see control.ts's own comment on the
-  // approximation) on this engine.
-  expect(run(["Attributes", "Add"])).toEqual(["List", "Flat", "HoldAll", "Listable", "Orderless"]);
+  // approximation) on this engine, and Protected like every declared head.
+  expect(run(["Attributes", "Add"])).toEqual(["List", "Flat", "HoldAll", "Listable", "Orderless", "Protected"]);
 });
 test("Attributes of an undeclared symbol is empty", () => {
   expect(run(["Attributes", "SomeUndeclaredHeadZz"])).toEqual(["List"]);
@@ -192,6 +192,35 @@ test("SetAttributes declines an attribute we can't represent", () => {
   ce.declare("ControlTestSetAttr2", { signature: "(any) -> any", evaluate: (ops) => ops[0] });
   const result = run(["SetAttributes", "ControlTestSetAttr2", "Protected"]) as readonly unknown[];
   expect(result[0]).toEqual("SetAttributes");
+});
+
+test("a declared head is Protected, and SetAttributes/ClearAttributes refuse with a message", () => {
+  expect(run(["Attributes", "HarmonicMean"])).toContain("Protected");
+  for (const head of ["SetAttributes", "ClearAttributes"]) {
+    const { value, messages } = collectMessages(ce, () => runExpr([head, "HarmonicMean", "Orderless"]));
+    expect(value.json).toEqual([head, "HarmonicMean", "Orderless"]);
+    expect(messages.map((m) => m.text)).toEqual(["Tag HarmonicMean in HarmonicMean is Protected."]);
+  }
+  expect(run(["Attributes", "HarmonicMean"])).not.toContain("Orderless");
+});
+test("the refusal is the same under N()", () => {
+  expect(ce.box(["SetAttributes", "HarmonicMean", "Orderless"]).N().json).toEqual([
+    "SetAttributes",
+    "HarmonicMean",
+    "Orderless",
+  ]);
+});
+test("a symbol of your own is not Protected, and ClearAttributes undoes SetAttributes", () => {
+  ce.declare("ControlTestClearAttr", { signature: "(any) -> any", evaluate: (ops) => ops[0] });
+  run(["SetAttributes", "ControlTestClearAttr", ["List", "Flat", "Orderless"]]);
+  expect(run(["Attributes", "ControlTestClearAttr"])).toEqual(["List", "Flat", "Orderless"]);
+  run(["ClearAttributes", "ControlTestClearAttr", "Flat"]);
+  expect(run(["Attributes", "ControlTestClearAttr"])).toEqual(["List", "Orderless"]);
+});
+test("an in-language head is not Protected either", () => {
+  run(["Assign", "controlTestUserHead", ["Function", ["Add", "x", 1], "x"]]);
+  run(["SetAttributes", "controlTestUserHead", "Orderless"]);
+  expect(run(["Attributes", "controlTestUserHead"])).toEqual(["List", "Orderless"]);
 });
 
 // AppendTo

@@ -84,6 +84,7 @@ export const coverage: Readonly<Record<string, readonly string[]>> = {
   Circle: ["wolfram", "sympy"],
   CircleTimes: ["wolfram"],
   CirculantGraph: ["wolfram"],
+  ClearAttributes: ["wolfram"],
   CliffordAlgebra: ["wolfram"],
   ClosenessCentrality: ["wolfram"],
   ColorSetterBox: ["wolfram"],
