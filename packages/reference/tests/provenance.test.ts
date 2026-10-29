@@ -1612,6 +1612,15 @@ const NOVEL = [
   "DualMajorIndexToIntertwining",
   "WeakExceedancePartition",
   "RowSetPartition",
+  "CoriLeBorgne",
+  "ElizaldeDeutsch",
+  "BarnabeiCastronuovo",
+  "WachsWhite",
+  "InverseWachsWhite",
+  "WachsWhiteRho",
+  "InverseWachsWhiteRho",
+  "Yip",
+  "InverseYip",
 ];
 
 // What formats holds inert that is Wolfram's own (`Plot`, `Slider`, `Cell`): known elsewhere because

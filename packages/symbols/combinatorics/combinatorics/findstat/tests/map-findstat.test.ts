@@ -309,6 +309,15 @@ const IDS: Readonly<Record<string, string>> = {
   "DualMajorIndexToIntertwining@SetPartition": "Mp00174",
   "WeakExceedancePartition@Permutation": "Mp00240",
   "RowSetPartition@StandardTableau": "Mp00284",
+  "CoriLeBorgne@DyckPath": "Mp00121",
+  "ElizaldeDeutsch@DyckPath": "Mp00122",
+  "BarnabeiCastronuovo@DyckPath": "Mp00123",
+  "WachsWhite@SetPartition": "Mp00215",
+  "InverseWachsWhite@SetPartition": "Mp00216",
+  "WachsWhiteRho@SetPartition": "Mp00217",
+  "InverseWachsWhiteRho@SetPartition": "Mp00218",
+  "InverseYip@SetPartition": "Mp00219",
+  "Yip@SetPartition": "Mp00220",
 };
 
 test("every reading names the FindStat map it is", () => {

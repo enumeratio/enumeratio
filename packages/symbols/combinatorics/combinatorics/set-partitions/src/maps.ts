@@ -140,6 +140,96 @@ const intertwiningWord: MathJSON = lets(
   ]),
 );
 
+// --- the rook-placement bijections of Wachs-White and Yip, read off the set partition's arcs ---
+// Each element e has a predecessor rk_prv[e] and successor rk_nxt[e] in its block (0 when none); the arcs are the
+// pairs (rk_prv[e], e). Sage's sequential rook placements are written as counts over these.
+
+const elementRange: MathJSON = upTo(elements);
+
+const rookLists = (body: MathJSON): MathJSON =>
+  lets(
+    [
+      ["rk_gw", growthStringOf("_raw", 0), "list<integer>"],
+      [
+        "rk_prv",
+        forEach(
+          elementRange,
+          bind(
+            "rk_before",
+            [
+              "Filter",
+              elementRange,
+              ["Function", ["And", ["Less", "k", "e"], ["Equal", at("k", "rk_gw"), at("e", "rk_gw")]], "k"],
+            ],
+            ["If", ["Greater", ["Count", "rk_before"], 0], ["Max", "rk_before"], 0],
+            "list<integer>",
+          ),
+          "e",
+        ),
+        "list<integer>",
+      ],
+      [
+        "rk_nxt",
+        forEach(
+          elementRange,
+          bind(
+            "rk_after",
+            [
+              "Filter",
+              elementRange,
+              ["Function", ["And", ["Greater", "k", "e"], ["Equal", at("k", "rk_gw"), at("e", "rk_gw")]], "k"],
+            ],
+            ["If", ["Greater", ["Count", "rk_after"], 0], ["Min", "rk_after"], 0],
+            "list<integer>",
+          ),
+          "e",
+        ),
+        "list<integer>",
+      ],
+    ],
+    body,
+  );
+
+/** No elements: the empty partition; one: itself; else `body`, which may fold over Range(2, n). */
+const fromTwoElements = (body: MathJSON): MathJSON => ["If", ["LessEqual", elements, 1], "_raw", rookLists(body)];
+
+/** The blocks of a list that labels each element with the least element of its block. */
+const blocksOfLeastLabels = (labels: MathJSON): MathJSON =>
+  bind(
+    "ll",
+    labels,
+    [
+      "Map",
+      ["Function", ["Filter", elementRange, ["Function", ["Equal", at("p", "ll"), "m"], "p"]], "m"],
+      ["Filter", elementRange, ["Function", ["Equal", at("m", "ll"), "m"], "m"]],
+    ],
+    "list<integer>",
+  );
+
+/** How many of the elements below j have the least element x, for a partition labelled by `iy_least`. */
+const iySizeBefore = (x: MathJSON, j: MathJSON): MathJSON => [
+  "Count",
+  ["Filter", ["Range", 1, ["Subtract", j, 1], 1], ["Function", ["Equal", at("t", "iy_least"), x], "t"]],
+];
+
+/** The least-element labels of the partition whose element y joins element `pred`(y) (0 for none) below it. */
+const chainLabels = (pred: (y: MathJSON) => MathJSON): MathJSON => [
+  "Fold",
+  [
+    "Function",
+    bind(
+      "cl_pred",
+      pred("y"),
+      ["Join", "acc", ["List", ["If", ["Greater", "cl_pred", 0], at("cl_pred", "acc"), "y"]]],
+      "integer",
+    ),
+    "acc",
+    "y",
+  ],
+  ["List", 1],
+  ["Range", 2, elements, 1],
+];
+
 export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
   {
     name: "Complement",
@@ -479,5 +569,515 @@ export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
     summary:
       "The inverse of IntertwiningToDualMajorIndex: read the growth word as an intertwining word and rebuild the blocks.",
     note: "FindStat's Mp00174.",
+  },
+  {
+    name: "WachsWhite",
+    from: "set_partition",
+    to: "set_partition",
+    // Wachs and White's gamma on the rook placement of the arcs: the growth word's entry at e counts the cells left in
+    // column e - 1 once every rook has struck the cells north of it and east of it.
+    body: [
+      "If",
+      ["Equal", elements, 0],
+      ["List"],
+      rookLists(
+        bind(
+          "ww_word",
+          forEach(
+            elementRange,
+            [
+              "If",
+              ["Equal", "e", 1],
+              0,
+              bind(
+                "ww_left",
+                ["Add", ["Subtract", elements, "e"], 1],
+                [
+                  "Subtract",
+                  ["Subtract", "e", 1],
+                  [
+                    "Count",
+                    [
+                      "Filter",
+                      ["Range", ["Add", "ww_left", 1], elements, 1],
+                      [
+                        "Function",
+                        [
+                          "Or",
+                          ["Greater", at("x", "rk_prv"), "ww_left"],
+                          ["GreaterEqual", at("ww_left", "rk_nxt"), "x"],
+                        ],
+                        "x",
+                      ],
+                    ],
+                  ],
+                ],
+                "integer",
+              ),
+            ],
+            "e",
+          ),
+          blocksOf("ww_word", 0),
+          "list<integer>",
+        ),
+      ),
+    ],
+    summary:
+      "The set partition whose arcs, read as a rook placement, Wachs and White's bijection gamma carries to a set partition.",
+    note: "FindStat's Mp00215. The inverse of InverseWachsWhite.",
+  },
+  {
+    name: "InverseWachsWhite",
+    from: "set_partition",
+    to: "set_partition",
+    // Each element e that is not a block minimum puts a rook in the free row ranked by its block's index; the rook joins
+    // n + 1 - e with n minus that row.
+    body: fromTwoElements(
+      bind(
+        "iw_rows",
+        [
+          "Fold",
+          [
+            "Function",
+            [
+              "Join",
+              "acc",
+              [
+                "List",
+                [
+                  "If",
+                  ["Equal", at("e", "rk_prv"), 0],
+                  -1,
+                  [
+                    "At",
+                    ["Filter", ["Range", 0, elements, 1], ["Function", ["Not", ["Element", "x", "acc"]], "x"]],
+                    ["Add", at("e", "rk_gw"), 1],
+                  ],
+                ],
+              ],
+            ],
+            "acc",
+            "e",
+          ],
+          ["List", -1],
+          ["Range", 2, elements, 1],
+        ],
+        blocksOfLeastLabels(
+          chainLabels((y) =>
+            bind(
+              "iw_hit",
+              ["Filter", elementRange, ["Function", ["Equal", at("q", "iw_rows"), ["Subtract", elements, y]], "q"]],
+              ["If", ["Greater", ["Count", "iw_hit"], 0], ["Subtract", ["Add", elements, 1], ["Min", "iw_hit"]], 0],
+              "list<integer>",
+            ),
+          ),
+        ),
+        "list<integer>",
+      ),
+    ),
+    summary:
+      "The set partition joined by the arcs of the rook placement that Wachs and White's bijection gamma assigns to the set partition.",
+    note: "FindStat's Mp00216, the inverse of WachsWhite.",
+  },
+  {
+    name: "WachsWhiteRho",
+    from: "set_partition",
+    to: "set_partition",
+    // Wachs and White's rho: the arcs' rooks leave rs[x] cells in row x; element x joins the rs[x]-th block, in order,
+    // that has not yet taken its closer.
+    body: fromTwoElements(
+      lets(
+        [
+          ["wr_closers", ["Filter", elementRange, ["Function", ["Equal", at("e", "rk_nxt"), 0], "e"]], "list<integer>"],
+          [
+            "wr_rs",
+            forEach(
+              elementRange,
+              [
+                "Count",
+                [
+                  "Filter",
+                  elementRange,
+                  [
+                    "Function",
+                    [
+                      "And",
+                      ["Less", "a", "x"],
+                      ["Greater", at("a", "rk_nxt"), "x"],
+                      ["Greater", "a", at("x", "rk_prv")],
+                    ],
+                    "a",
+                  ],
+                ],
+              ],
+              "x",
+            ),
+            "list<integer>",
+          ],
+          [
+            "wr_labels",
+            [
+              "Fold",
+              [
+                "Function",
+                [
+                  "Join",
+                  "acc",
+                  [
+                    "List",
+                    [
+                      "At",
+                      [
+                        "Filter",
+                        ["Range", 1, ["Count", "wr_closers"], 1],
+                        // A block is taken once its latest element so far is a closer.
+                        [
+                          "Function",
+                          [
+                            "Equal",
+                            [
+                              "Count",
+                              [
+                                "Filter",
+                                ["Range", 1, ["Subtract", "e", 1], 1],
+                                [
+                                  "Function",
+                                  ["And", ["Element", "k", "wr_closers"], ["Equal", at("k", "acc"), "b"]],
+                                  "k",
+                                ],
+                              ],
+                            ],
+                            0,
+                          ],
+                          "b",
+                        ],
+                      ],
+                      ["Add", at("e", "wr_rs"), 1],
+                    ],
+                  ],
+                ],
+                "acc",
+                "e",
+              ],
+              ["List", 1],
+              ["Range", 2, elements, 1],
+            ],
+          ],
+        ],
+        [
+          "Map",
+          ["Function", ["Filter", elementRange, ["Function", ["Equal", at("p", "wr_labels"), "j"], "p"]], "j"],
+          ["Range", 1, ["Count", "wr_closers"], 1],
+        ],
+      ),
+    ),
+    summary:
+      "The set partition whose arcs, read as a rook placement, Wachs and White's bijection rho carries to a set partition.",
+    note: "FindStat's Mp00217. The inverse of InverseWachsWhiteRho.",
+  },
+  {
+    name: "InverseWachsWhiteRho",
+    from: "set_partition",
+    to: "set_partition",
+    // Down the rows, row y puts its rook in the rs-th free column to its right (the closers' columns taken); the rook
+    // joins n + 1 - column with y.
+    body: fromTwoElements(
+      bind(
+        "iwr_columns",
+        [
+          "At",
+          [
+            "Fold",
+            [
+              "Function",
+              lets(
+                [
+                  [
+                    "iwr_rs",
+                    [
+                      "Count",
+                      [
+                        "Filter",
+                        elementRange,
+                        [
+                          "Function",
+                          [
+                            "And",
+                            ["Equal", at("c", "rk_nxt"), 0],
+                            ["Greater", "c", "y"],
+                            ["Less", at("c", "rk_gw"), at("y", "rk_gw")],
+                          ],
+                          "c",
+                        ],
+                      ],
+                    ],
+                    "integer",
+                  ],
+                  [
+                    "iwr_free",
+                    [
+                      "Filter",
+                      ["Range", ["Add", ["Subtract", elements, "y"], 2], elements, 1],
+                      ["Function", ["Not", ["Element", "j", ["At", "acc", 1]]], "j"],
+                    ],
+                    "list<integer>",
+                  ],
+                ],
+                [
+                  "If",
+                  ["Less", "iwr_rs", ["Length", "iwr_free"]],
+                  [
+                    "Tuple",
+                    ["Join", ["At", "acc", 1], ["List", at(["Add", "iwr_rs", 1], "iwr_free")]],
+                    ["Join", ["At", "acc", 2], ["List", at(["Add", "iwr_rs", 1], "iwr_free")]],
+                  ],
+                  ["Tuple", ["At", "acc", 1], ["Join", ["At", "acc", 2], ["List", 0]]],
+                ],
+              ),
+              "acc",
+              "y",
+            ],
+            [
+              "Tuple",
+              [
+                "Map",
+                ["Function", ["Subtract", ["Add", elements, 1], "e"], "e"],
+                ["Filter", elementRange, ["Function", ["Equal", at("e", "rk_nxt"), 0], "e"]],
+              ],
+              ["List", 0],
+            ],
+            ["Range", 2, elements, 1],
+          ],
+          2,
+        ],
+        blocksOfLeastLabels(
+          chainLabels((y) => [
+            "If",
+            ["Greater", at(y, "iwr_columns"), 0],
+            ["Subtract", ["Add", elements, 1], at(y, "iwr_columns")],
+            0,
+          ]),
+        ),
+        "list<integer>",
+      ),
+    ),
+    summary:
+      "The set partition joined by the arcs of the rook placement that Wachs and White's bijection rho assigns to the set partition.",
+    note: "FindStat's Mp00218, the inverse of WachsWhiteRho.",
+  },
+  {
+    name: "Yip",
+    from: "set_partition",
+    to: "set_partition",
+    // Yip's psi: element e joins the block of rank e - r - c among the blocks so far, ordered by size (largest first)
+    // then least element, where r is e's predecessor and c counts the earlier elements whose predecessor is above r.
+    // One rank past the last block opens a new block.
+    body: fromTwoElements(
+      blocksOfLeastLabels([
+        "Fold",
+        [
+          "Function",
+          lets(
+            [
+              [
+                "yp_rank",
+                [
+                  "Subtract",
+                  ["Subtract", "e", at("e", "rk_prv")],
+                  [
+                    "Count",
+                    [
+                      "Filter",
+                      ["Range", 1, ["Subtract", "e", 1], 1],
+                      ["Function", ["Greater", at("j", "rk_prv"), at("e", "rk_prv")], "j"],
+                    ],
+                  ],
+                ],
+                "integer",
+              ],
+              [
+                // One key per block, sorting by size then least element; the least element is the key's remainder.
+                "yp_keys",
+                [
+                  "Sort",
+                  [
+                    "Map",
+                    [
+                      "Function",
+                      [
+                        "Add",
+                        [
+                          "Multiply",
+                          [
+                            "Subtract",
+                            elements,
+                            [
+                              "Count",
+                              [
+                                "Filter",
+                                ["Range", 1, ["Subtract", "e", 1], 1],
+                                ["Function", ["Equal", at("k", "acc"), "m"], "k"],
+                              ],
+                            ],
+                          ],
+                          ["Add", elements, 1],
+                        ],
+                        "m",
+                      ],
+                      "m",
+                    ],
+                    [
+                      "Filter",
+                      ["Range", 1, ["Subtract", "e", 1], 1],
+                      ["Function", ["Equal", at("m", "acc"), "m"], "m"],
+                    ],
+                  ],
+                ],
+                "list<integer>",
+              ],
+            ],
+            [
+              "Join",
+              "acc",
+              [
+                "List",
+                [
+                  "If",
+                  ["Greater", "yp_rank", ["Length", "yp_keys"]],
+                  "e",
+                  ["Mod", at("yp_rank", "yp_keys"), ["Add", elements, 1]],
+                ],
+              ],
+            ],
+          ),
+          "acc",
+          "e",
+        ],
+        ["List", 1],
+        ["Range", 2, elements, 1],
+      ]),
+    ),
+    summary: "The set partition whose arcs, read as a rook placement, Yip's bijection psi carries to a set partition.",
+    note: "FindStat's Mp00220. The inverse of InverseYip.",
+  },
+  {
+    name: "InverseYip",
+    from: "set_partition",
+    to: "set_partition",
+    // Taking the elements off from the largest, the rank of the block an element leaves is the degree of its column; the
+    // rooks are then placed up the columns, each in the lowest row that degree allows, and their ends joined.
+    body: fromTwoElements(
+      lets(
+        [
+          [
+            "iy_least",
+            forEach(
+              elementRange,
+              ["Min", ["Filter", elementRange, ["Function", ["Equal", at("k", "rk_gw"), at("e", "rk_gw")], "k"]]],
+              "e",
+            ),
+            "list<integer>",
+          ],
+          [
+            "iy_degrees",
+            forEach(
+              elementRange,
+              [
+                "If",
+                ["Equal", at("j", "rk_prv"), 0],
+                0,
+                bind(
+                  "iy_home",
+                  at("j", "iy_least"),
+                  bind(
+                    "iy_homeSize",
+                    iySizeBefore("iy_home", "j"),
+                    [
+                      "Subtract",
+                      ["Subtract", "j", 1],
+                      [
+                        "Count",
+                        [
+                          "Filter",
+                          ["Range", 1, ["Subtract", "j", 1], 1],
+                          [
+                            "Function",
+                            [
+                              "And",
+                              ["Equal", at("k", "iy_least"), "k"],
+                              [
+                                "Or",
+                                ["Greater", iySizeBefore("k", "j"), "iy_homeSize"],
+                                ["And", ["Equal", iySizeBefore("k", "j"), "iy_homeSize"], ["Less", "k", "iy_home"]],
+                              ],
+                            ],
+                            "k",
+                          ],
+                        ],
+                      ],
+                    ],
+                    "integer",
+                  ),
+                  "integer",
+                ),
+              ],
+              "j",
+            ),
+            "list<integer>",
+          ],
+          [
+            "iy_state",
+            [
+              "Fold",
+              [
+                "Function",
+                [
+                  "If",
+                  ["Equal", at("j", "rk_prv"), 0],
+                  ["Tuple", ["Join", ["At", "acc", 1], ["List", "j"]], ["At", "acc", 2]],
+                  bind(
+                    "iy_row",
+                    [
+                      "Min",
+                      [
+                        "Filter",
+                        ["Range", 1, elements, 1],
+                        [
+                          "Function",
+                          [
+                            "LessEqual",
+                            at("j", "iy_degrees"),
+                            [
+                              "Add",
+                              "i",
+                              ["Count", ["Filter", ["At", "acc", 2], ["Function", ["Greater", "r", "i"], "r"]]],
+                            ],
+                          ],
+                          "i",
+                        ],
+                      ],
+                    ],
+                    [
+                      "Tuple",
+                      ["Join", ["At", "acc", 1], ["List", at("iy_row", ["At", "acc", 1])]],
+                      ["Join", ["At", "acc", 2], ["List", "iy_row"]],
+                    ],
+                    "integer",
+                  ),
+                ],
+                "acc",
+                "j",
+              ],
+              ["Tuple", ["List", 1], ["List", 0]],
+              ["Range", 2, elements, 1],
+            ],
+          ],
+        ],
+        blocksOfLeastLabels(["At", "iy_state", 1]),
+      ),
+    ),
+    summary:
+      "The set partition joined by the arcs of the rook placement that Yip's bijection psi assigns to the set partition.",
+    note: "FindStat's Mp00219, the inverse of Yip.",
   },
 ];
