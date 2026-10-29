@@ -105,6 +105,21 @@ bindings:
     checked:
       version: num-bigint 0.4.8
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: "(let n : ℕ := $1; if n = 0 then [0] else (Nat.digits 10 n).reverse)"
+    arity: 1
+    note: Nat.digits is little-endian and gives [] for 0, so the template reverses it and answers [0] at 0, as ours does; natural n only, so a negative n (whose sign ours discards) is a domain error.
+  - origin: mapped
+    form: mathlib4
+    template: "(let n : ℕ := $1; if n = 0 then [0] else (Nat.digits $2 n).reverse)"
+    arity: 2
+    note: As the one-argument row, in an integer base; Nat.digits also takes a base of 0 or 1, which ours leaves unevaluated, and no example uses one.
+  - origin: mapped
+    form: mathlib4
+    template: (((Nat.digits $2 $1) ++ List.replicate $3 0).take $3).reverse
+    arity: 3
+    note: The least-significant digits, zero-padded to the width and truncated to it, reversed to most significant first.
 ---
 
 - Digits come out most significant first, matching ordinary positional notation.

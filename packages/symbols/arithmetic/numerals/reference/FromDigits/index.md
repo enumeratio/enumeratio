@@ -57,6 +57,16 @@ bindings:
     checked:
       version: num-bigint 0.4.8
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: "(Nat.ofDigits (10 : ℤ) (List.reverse ($1 : List ℕ)))"
+    arity: 1
+    note: Nat.ofDigits is Horner's rule over a little-endian list, so the list is reversed; digits past the base carry as ours do. Natural digits only, and an empty list is 0 where ours stays unevaluated.
+  - origin: mapped
+    form: mathlib4
+    template: "(Nat.ofDigits ($2 : ℤ) (List.reverse ($1 : List ℕ)))"
+    arity: 2
+    note: As the one-argument row, in an integer base read over ℤ so a negative base is the same Horner reduction; a digit string or symbolic base is a type error.
 ---
 
 - A digit string that denotes NO integer leaves the call standing: two adjacent Zeckendorf ones, an out-of-range mixed-radix digit, residues that no integer satisfies

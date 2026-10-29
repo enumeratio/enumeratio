@@ -64,6 +64,21 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-28
+  - origin: mapped
+    form: mathlib4
+    template: ((Nat.digits 10 $1).sum)
+    arity: 1
+    note: The sum of Nat.digits; natural n only, so a negative n (whose sign ours discards) is a domain error.
+  - origin: mapped
+    form: mathlib4
+    template: ((Nat.digits $2 $1).sum)
+    arity: 2
+    note: As the one-argument row, in an integer base.
+  - origin: mapped
+    form: mathlib4
+    template: (((Nat.digits $2 $1).reverse.take $3).sum)
+    arity: 3
+    note: The first k digits, most significant first; k past the digit count is the plain sum. A negative k (the last |k| digits) is a domain error, as is a negative n.
 ---
 
 - Equivalent to summing [[IntegerDigits]](n, base).
