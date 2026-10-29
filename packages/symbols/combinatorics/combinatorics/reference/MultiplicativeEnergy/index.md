@@ -21,6 +21,17 @@ catalog:
     identity: Finset.mulEnergy
     url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Additive/Energy.html#Finset.mulEnergy
     note: Finset.mulEnergy s t; mathlib takes any multiplicative Finset, ours exact rationals
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: "(Finset.mulEnergy (List.toFinset ($1 : List ℚ)) (List.toFinset ($1 : List ℚ)))"
+    arity: 1
+    note: mathlib's energy is over Finsets, so each list is read as a Finset of rationals (duplicates collapse, as ours do)
+  - origin: mapped
+    form: mathlib4
+    template: "(Finset.mulEnergy (List.toFinset ($1 : List ℚ)) (List.toFinset ($2 : List ℚ)))"
+    arity: 2
+    note: mathlib's energy is over Finsets, so each list is read as a Finset of rationals (duplicates collapse, as ours do)
 ---
 
 - Defined in Epsil as $\sum_x r(x)^2$, where $r(x)$ is the number of pairs $(a,b)\in A\times B$ with $ab=x$: [[AdditiveEnergy]] with products for sums.

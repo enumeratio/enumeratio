@@ -310,6 +310,7 @@ export const juliaFlags = (project: string): string[] => [
 /** The Mathlib modules the `mathlib4` mapping rows reach. All of Mathlib would be simpler, but
  * it costs several GB resident, and the umbrella module is not always in the cache. */
 const LEAN_IMPORTS = [
+  "Mathlib.Combinatorics.Additive.Energy",
   "Mathlib.Combinatorics.Enumerative.Catalan.Basic",
   "Mathlib.Combinatorics.Enumerative.Stirling",
   "Mathlib.Data.Nat.Choose.Basic",
