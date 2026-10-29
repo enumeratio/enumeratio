@@ -1,44 +1,44 @@
-id	in	out
-extendedgcd-2-3		
-extendedgcd-12-18		
-extendedgcd-3-5		
-extendedgcd-6-4		
-extendedgcd-0-0		
-any-number-of-arguments-folding-pairwise-6-times		
-gaussian-integers-by-euclid-with-the-rounded		
-negative-arguments-12-18-6		
-big-integers-the-coefficients-stay-minimal-x-b		
-three-arguments-4-cdot-4-6-cdot-4-9-1		
-listable-threads-over-a-list		
-gaussian-integer-and-a-plain-integer		
-one-argument-a-unit-the-identity-bezout-pair		
-one-argument-i-a-unit		
-a-zero-first-argument		
-a-zero-second-argument		
-two-coprime-gaussian-primes-above-5		
-a-gaussian-prime-and-a-real-prime-3-mod-4		
-an-associate-pair-by-i		
-an-associate-pair-by-1		
-two-unrelated-composites-of-norm-25		
-with-a-negative-real-prime		
-two-large-norm-gaussians		
-past-2-53-in-both-parts		
-a-real-split-prime-and-its-gaussian-factor		
-two-real-composites-plain-integer-case		
-with-a-negative-real-composite		
-the-larger-norm-argument-given-first		
-with-an-associate-times-1		
-with-an-associate-times-i		
-two-coprime-primes-above-13		
-recovering-a-shared-prime-above-13		
-with-a-real-prime-s-associate-by-the-unit-i		
-with-a-real-composite-5-squared		
-with-a-negative-associate		
-a-large-norm-gaussian-and-a-real-prime-19		
-the-modular-inverse-of-3-mod-11-is-4-since-3		
-confirms-the-coefficients-above-satisfy-2x-3y	((2 * (-1)) + (3 * 1))	1
-extendedgcd-6-21		
-bezout-coefficients-when-a-0-0-times-0-5-times-1		
-a-real-two-argument-case-stays-unevaluated		
-a-gaussian-third-argument-past-two-declines		
-a-real-argument-past-two-also-declines		
+id	in	out	verdict
+extendedgcd-2-3	[(Int.gcd 2 3 : ℤ), Int.gcdA 2 3, Int.gcdB 2 3]	[1, -1, 1]	
+extendedgcd-12-18	[(Int.gcd 12 18 : ℤ), Int.gcdA 12 18, Int.gcdB 12 18]	[6, -1, 1]	
+extendedgcd-3-5	[(Int.gcd 3 5 : ℤ), Int.gcdA 3 5, Int.gcdB 3 5]	[1, 2, -1]	
+extendedgcd-6-4	[(Int.gcd 6 4 : ℤ), Int.gcdA 6 4, Int.gcdB 6 4]	[2, 1, -1]	
+extendedgcd-0-0	[(Int.gcd 0 0 : ℤ), Int.gcdA 0 0, Int.gcdB 0 0]	[0, 0, 1]	disagree
+any-number-of-arguments-folding-pairwise-6-times			
+gaussian-integers-by-euclid-with-the-rounded			
+negative-arguments-12-18-6	[(Int.gcd (-12) 18 : ℤ), Int.gcdA (-12) 18, Int.gcdB (-12) 18]	[6, 1, 1]	
+big-integers-the-coefficients-stay-minimal-x-b	[(Int.gcd (2 ^ 100) (3 ^ 50) : ℤ), Int.gcdA (2 ^ 100) (3 ^ 50), Int.gcdB (2 ^ 100) (3 ^ 50)]	[1, 208475958620489751737959, -368122879029235364752383564167]	
+three-arguments-4-cdot-4-6-cdot-4-9-1			
+listable-threads-over-a-list	[(Int.gcd 3 [5, 15] : ℤ), Int.gcdA 3 [5, 15], Int.gcdB 3 [5, 15]]	Application type mismatch: The argument	error
+gaussian-integer-and-a-plain-integer			
+one-argument-a-unit-the-identity-bezout-pair			
+one-argument-i-a-unit			
+a-zero-first-argument			
+a-zero-second-argument			
+two-coprime-gaussian-primes-above-5			
+a-gaussian-prime-and-a-real-prime-3-mod-4			
+an-associate-pair-by-i			
+an-associate-pair-by-1			
+two-unrelated-composites-of-norm-25			
+with-a-negative-real-prime			
+two-large-norm-gaussians			
+past-2-53-in-both-parts			
+a-real-split-prime-and-its-gaussian-factor			
+two-real-composites-plain-integer-case	[(Int.gcd 4 9 : ℤ), Int.gcdA 4 9, Int.gcdB 4 9]	[1, -2, 1]	
+with-a-negative-real-composite			
+the-larger-norm-argument-given-first			
+with-an-associate-times-1			
+with-an-associate-times-i			
+two-coprime-primes-above-13			
+recovering-a-shared-prime-above-13			
+with-a-real-prime-s-associate-by-the-unit-i			
+with-a-real-composite-5-squared			
+with-a-negative-associate			
+a-large-norm-gaussian-and-a-real-prime-19			
+the-modular-inverse-of-3-mod-11-is-4-since-3	[(Int.gcd 3 11 : ℤ), Int.gcdA 3 11, Int.gcdB 3 11]	[1, 4, -1]	
+confirms-the-coefficients-above-satisfy-2x-3y	((2 * (-1)) + (3 * 1))	1	
+extendedgcd-6-21	[(Int.gcd 6 21 : ℤ), Int.gcdA 6 21, Int.gcdB 6 21]	[3, -3, 1]	
+bezout-coefficients-when-a-0-0-times-0-5-times-1	[(Int.gcd 0 5 : ℤ), Int.gcdA 0 5, Int.gcdB 0 5]	[5, 0, 1]	
+a-real-two-argument-case-stays-unevaluated	[(Int.gcd 2.5 3 : ℤ), Int.gcdA 2.5 3, Int.gcdB 2.5 3]	failed to synthesize instance of type class	error
+a-gaussian-third-argument-past-two-declines			
+a-real-argument-past-two-also-declines			

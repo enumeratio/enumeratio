@@ -77,7 +77,7 @@ neg-27-over-10-mod-23-over-5	(((((-27) : ℚ) / 10) : ℤ) % ((23 : ℚ) / 5))	f
 pi-mod-exponentiale			
 2-pow-totient-3-mod-3	(((2 ^ (Nat.totient 3)) : ℤ) % 3)	1	
 1-plus-neg-1-plus-nthprime-2-factorial-mod			
-2-minus-jacobisymbol-2-3-mod-3			
+2-minus-jacobisymbol-2-3-mod-3	(((2 + (-((jacobiSym 2 3)))) : ℤ) % 3)	0	
 1-plus-neg-1-plus-nthprime-3-factorial-mod			
 2pi-mod-exponentiale			
 neg-pi-mod-2			

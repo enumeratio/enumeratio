@@ -51,6 +51,11 @@ bindings:
     checked:
       version: num-integer 0.1.47
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: (decide (Int.gcd $1 $2 = 1))
+    arity: 2
+    note: Int.gcd a b = 1, defined on every integer pair (gcd 0 0 = 0, so (0, 0) is not coprime); binary only.
 ---
 
 - Pairwise, not collectively: $\gcd$ of the whole set being 1 is not enough — every pair must itself be coprime.

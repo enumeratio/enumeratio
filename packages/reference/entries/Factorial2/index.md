@@ -59,6 +59,11 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: (Nat.doubleFactorial $1)
+    arity: 1
+    note: Nat.doubleFactorial n, n!! with 0!! = 1!! = 1; natural n only, so the negative odd extension (-1)!! = 1, (-3)!! = -1 is out of its domain.
 ---
 
 - Skips every other factor: $n!! = n(n-2)(n-4)\cdots$, stopping at 1 (n odd) or 2 (n even).

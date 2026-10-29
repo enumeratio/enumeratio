@@ -81,6 +81,11 @@ bindings:
     checked:
       version: num-integer 0.1.47
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: "[(Int.gcd $1 $2 : ℤ), Int.gcdA $1 $2, Int.gcdB $1 $2]"
+    arity: 2
+    note: Int.gcd with its Bezout coefficients Int.gcdA and Int.gcdB, as a flat list [g, s, t] (a Lean tuple prints nested); the pair is whichever the Euclidean algorithm reaches, which need not be the one ours picks.
 ---
 
 - Implements the extended Euclidean algorithm, the standard way to compute modular inverses. See [[PowerMod]].

@@ -49,6 +49,11 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: ((Nat.properDivisors $1).sum id)
+    arity: 1
+    note: The sum over Nat.properDivisors, so aliquot 0 = 0; natural n only, where ours takes the sign of n as a unit.
 ---
 
 - A prime has aliquot sum 1, and $s(1)=0$ since 1 has no proper divisor.

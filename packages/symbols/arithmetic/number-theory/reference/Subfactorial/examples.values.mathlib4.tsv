@@ -1,0 +1,27 @@
+id	in	out	verdict
+subfactorial-0	(numDerangements 0)	1	
+a-single-object-can-t-be-deranged	(numDerangements 1)	0	
+subfactorial-4	(numDerangements 4)	9	
+subfactorial-5	(numDerangements 5)	44	
+subfactorial-20	(numDerangements 20)	895014631192902121	
+fullsimplify-normal-series-subfactorial-x-x-0-2			
+fullsimplify-normal-series-subfactorial-x-x			
+threads-element-wise-over-a-list-as-wolfram-s	(numDerangements [1, 2, 3, 4])	Application type mismatch: The argument	error
+exact-for-large-n	(numDerangements 48)	TimeoutError: over 60 s	error
+real-arguments-evaluate-as-frac-gamma-n-1-1-e	(numDerangements 4.5)	failed to synthesize instance of type class	error
+complex-arguments-evaluate-as-frac-gamma-n-1-1-e			
+threads-over-a-matrix-element-wise	(numDerangements [[2, 0], [0, 2]])	Application type mismatch: The argument	error
+subfactorial-list-5-10-20	(numDerangements [5, 10, 20])	Application type mismatch: The argument	error
+matrixfunction-function-subfactorial-1-1-list			
+n-subfactorial-1-over-3-50			
+fullsimplify-normal-series-subfactorial-x-x-2			
+fullsimplify-normal-series-subfactorial-x-x-x0-2			
+the-hat-check-problem-the-number-of-ways-6	(numDerangements 6)	265	
+recurrence-d-n-n-d-n-1-1-n	(decide ((numDerangements 4) = ((4 * (numDerangements 3)) + ((-1) ^ 4))))	failed to synthesize instance of type class	error
+d-n-is-frac-n-e-rounded-to-the-nearest-integer			
+two-term-recurrence-d-n-1-n-d-n-d-n-1	(decide ((numDerangements 6) = (5 * ((numDerangements 5) + (numDerangements 4)))))	true	
+exponentialgeneratingfunction-subfactorial-n-n-x			
+subfactorial-2	(numDerangements 2)	1	
+subfactorial-3	(numDerangements 3)	2	
+a-negative-argument-is-left-unevaluated	(numDerangements (-1))	failed to synthesize instance of type class	error
+148-349-eq-sum-subfactorial-list-1-4-8-3-4-9			

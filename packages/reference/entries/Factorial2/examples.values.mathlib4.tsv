@@ -1,0 +1,18 @@
+id	in	out	verdict
+7-5-3-1	(Nat.doubleFactorial 7)	105	
+8-6-4-2	(Nat.doubleFactorial 8)	384	
+factorial2-10	(Nat.doubleFactorial 10)	3840	
+factorial2-0	(Nat.doubleFactorial 0)	1	
+factorial2-20	(Nat.doubleFactorial 20)	3715891200	
+the-recurrence-n-n-cdot-n-2-run-downwards	(Nat.doubleFactorial (-1))	failed to synthesize instance of type class	error
+threads-element-wise-over-a-list	(Nat.doubleFactorial [1, 2, 3, 4, 5])	Application type mismatch: The argument	error
+negative-odd-integers-follow-the-recurrence	(Nat.doubleFactorial (-3))	failed to synthesize instance of type class	error
+5-frac-1-3-by-the-backward-recurrence	(Nat.doubleFactorial (-5))	failed to synthesize instance of type class	error
+real-arguments-use-the-analytic-continuation-2-1	(Nat.doubleFactorial 2.5)	failed to synthesize instance of type class	error
+the-number-of-ways-to-pair-up-10-people-into-5	(Nat.doubleFactorial 9)	945	
+splits-an-ordinary-factorial-into-even-and-odd	(decide ((Nat.factorial 8) = ((Nat.doubleFactorial 8) * (Nat.doubleFactorial 7))))	true	
+even-double-factorials-2n-2-n-n	(decide ((Nat.doubleFactorial 10) = ((2 ^ 5) * (Nat.factorial 5))))	true	
+odd-double-factorials-2n-1-frac-2n-2-n-n	(decide ((Nat.doubleFactorial 9) = (((Nat.factorial 10) : ℚ) / ((2 ^ 5) * (Nat.factorial 5)))))	true	
+negative-even-arguments-hit-a-pole-in-the	(Nat.doubleFactorial (-2))	failed to synthesize instance of type class	error
+15-2-027-025-already-past-two-million-despite	(Nat.doubleFactorial 15)	2027025	
+factorial2-of-negative-infinity-is-indeterminate			

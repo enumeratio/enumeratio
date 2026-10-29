@@ -62,6 +62,11 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: (Nat.ascFactorial $1 $2)
+    arity: 2
+    note: Nat.ascFactorial n k = n(n+1)...(n+k-1); natural arguments only, so a rational, real or negative argument fails to typecheck.
 seeAlso:
   - Pochhammer
   - FallingFactorial

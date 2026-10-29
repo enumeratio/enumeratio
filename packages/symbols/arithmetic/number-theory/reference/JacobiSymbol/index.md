@@ -51,6 +51,11 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: (jacobiSym $1 $2)
+    arity: 2
+    note: "Mathlib's jacobiSym a b is the product of Legendre symbols over the prime factors of b, for any natural b: at an even b the factor at 2 is the quadratic character of ZMod 2, not the Kronecker symbol, so only an odd positive b is comparable."
 ---
 
 - Generalizes the Legendre symbol from prime $m$ to any odd $m$, by multiplying the Legendre symbols of $m$'s prime factors.
