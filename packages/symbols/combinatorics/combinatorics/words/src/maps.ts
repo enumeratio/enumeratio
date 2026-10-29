@@ -270,6 +270,20 @@ const codeCompositionBody: MathJSON = bind(
   "list<integer>",
 );
 
+/** Mp00056: the support Dyck path of a parking function: its i-th up step, counting the sorted entries from
+ *  1, comes after s_i - 1 downs, so it sits at position s_i + i - 1. */
+const supportDyckPathBody: MathJSON = [
+  "If",
+  ["Equal", ["Length", "_raw"], 0],
+  ["List"],
+  bind(
+    "sd_ups",
+    forEach(["Range", 1, ["Length", "_raw"], 1], ["Subtract", ["Add", ["At", ["Sort", "_raw"], "i"], "i"], 1]),
+    forEach(["Range", 1, ["Multiply", 2, ["Length", "_raw"]], 1], ["If", ["Element", "p", "sd_ups"], 1, 0], "p"),
+    "list<integer>",
+  ),
+];
+
 export const WORDS_MAPS: readonly CombinatorialMap[] = [
   {
     name: "Reverse",
@@ -459,5 +473,13 @@ export const WORDS_MAPS: readonly CombinatorialMap[] = [
     summary:
       "The composition whose code is the word with a 1 put in front: each 1 opens a part, of 1 plus the zeros after it.",
     note: "FindStat's Mp00178, Sage's from_code. An injection one size up (the empty composition has no preimage); the inverse of CodeWord on the words that start with 1. Not Composition, whose word marks the cuts.",
+  },
+  {
+    name: "SupportDyckPath",
+    from: "parking_function",
+    to: "dyck_path",
+    body: supportDyckPathBody,
+    summary: "The Dyck path whose area sequence is j minus the j-th smallest entry: the parking function's support.",
+    note: "FindStat's Mp00056, Sage's to_area_sequence. A surjection: the preimage of a path is its parking functions, the labelings of its up steps.",
   },
 ];

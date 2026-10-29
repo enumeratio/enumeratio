@@ -533,6 +533,245 @@ const barnabeiCastronuovoBody: MathJSON = lets(
   ]),
 );
 
+/** The word `word` with its values `a` and `b` exchanged. */
+const swappedValues = (word: MathJSON, a: MathJSON, b: MathJSON): MathJSON =>
+  forEach(upTo(["Length", word]), [
+    "If",
+    ["Equal", at("i", word), a],
+    b,
+    ["If", ["Equal", at("i", word), b], a, at("i", word)],
+  ]);
+
+/**
+ * The Adin-Bagno-Roichman bijection of a 321-avoiding permutation, which Sage's code recurses on, run as two folds.
+ * Going down, with n the length of `w` and k the number of prefixes holding the values up to their length, a last
+ * entry n is dropped (op 1); n after n - 1 is lifted out (op 2); n before n - 1 has the values n - 1 and n
+ * exchanged (op 3). Each op is recorded as [kind, n, k, where n was]. Coming back up, newest op first, op 1 puts n
+ * on the end, op 2 puts n back and exchanges the values n - k - 1 and n - k, and op 3 rotates the values from
+ * n - k up one place (n to n - k). A step takes at most two rounds per length, so 2n rounds run past the bottom.
+ */
+const abrOfPermutation = (permutation: string): MathJSON =>
+  lets(
+    [
+      [
+        "ab_down",
+        [
+          "Fold",
+          [
+            "Function",
+            lets(
+              [
+                ["ab_w", at(1, "acc"), "list<integer>"],
+                ["ab_ops", at(2, "acc"), "list<list<integer>>"],
+                ["ab_n", ["Length", "ab_w"], "integer"],
+              ],
+              [
+                "If",
+                ["Less", "ab_n", 2],
+                "acc",
+                lets(
+                  [
+                    [
+                      "ab_k",
+                      [
+                        "Count",
+                        [
+                          "Filter",
+                          upTo("ab_n"),
+                          [
+                            "Function",
+                            [
+                              "Equal",
+                              [
+                                "Count",
+                                [
+                                  "Filter",
+                                  upTo("ab_n"),
+                                  [
+                                    "Function",
+                                    ["And", ["LessEqual", "j", "q"], ["Greater", at("j", "ab_w"), "q"]],
+                                    "j",
+                                  ],
+                                ],
+                              ],
+                              0,
+                            ],
+                            "q",
+                          ],
+                        ],
+                      ],
+                      "integer",
+                    ],
+                    ["ab_at", ["IndexOf", "ab_w", "ab_n"], "integer"],
+                    ["ab_before", ["IndexOf", "ab_w", ["Subtract", "ab_n", 1]], "integer"],
+                  ],
+                  [
+                    "If",
+                    ["Equal", at("ab_n", "ab_w"), "ab_n"],
+                    [
+                      "Tuple",
+                      forEach(upTo(["Subtract", "ab_n", 1]), at("i", "ab_w")),
+                      ["Join", "ab_ops", ["List", ["List", 1, "ab_n", "ab_k", "ab_at"]]],
+                    ],
+                    [
+                      "If",
+                      ["Greater", "ab_at", "ab_before"],
+                      [
+                        "Tuple",
+                        ["Filter", "ab_w", ["Function", ["Less", "x", "ab_n"], "x"]],
+                        ["Join", "ab_ops", ["List", ["List", 2, "ab_n", "ab_k", "ab_at"]]],
+                      ],
+                      [
+                        "Tuple",
+                        swappedValues("ab_w", ["Subtract", "ab_n", 1], "ab_n"),
+                        ["Join", "ab_ops", ["List", ["List", 3, "ab_n", "ab_k", "ab_at"]]],
+                      ],
+                    ],
+                  ],
+                ),
+              ],
+            ),
+            "acc",
+            "t",
+          ],
+          ["Tuple", permutation, ["List"]],
+          upTo(["Multiply", 2, ["Length", permutation]]),
+        ],
+      ],
+    ],
+    [
+      "If",
+      ["Equal", ["Length", at(2, "ab_down")], 0],
+      at(1, "ab_down"),
+      [
+        "Fold",
+        [
+          "Function",
+          lets(
+            [
+              [
+                "ab_op",
+                at(["Subtract", ["Add", ["Length", at(2, "ab_down")], 1], "t"], at(2, "ab_down")),
+                "list<integer>",
+              ],
+            ],
+            [
+              "If",
+              ["Equal", at(1, "ab_op"), 1],
+              ["Join", "acc", ["List", at(2, "ab_op")]],
+              [
+                "If",
+                ["Equal", at(1, "ab_op"), 2],
+                swappedValues(
+                  forEach(upTo(at(2, "ab_op")), [
+                    "If",
+                    ["Less", "i", at(4, "ab_op")],
+                    at("i", "acc"),
+                    ["If", ["Equal", "i", at(4, "ab_op")], at(2, "ab_op"), at(["Subtract", "i", 1], "acc")],
+                  ]),
+                  ["Subtract", ["Subtract", at(2, "ab_op"), at(3, "ab_op")], 1],
+                  ["Subtract", at(2, "ab_op"), at(3, "ab_op")],
+                ),
+                forEach(upTo(at(2, "ab_op")), [
+                  "If",
+                  ["GreaterEqual", at("i", "acc"), ["Subtract", at(2, "ab_op"), at(3, "ab_op")]],
+                  [
+                    "If",
+                    ["Equal", at("i", "acc"), at(2, "ab_op")],
+                    ["Subtract", at(2, "ab_op"), at(3, "ab_op")],
+                    ["Add", at("i", "acc"), 1],
+                  ],
+                  at("i", "acc"),
+                ]),
+              ],
+            ],
+          ),
+          "acc",
+          "t",
+        ],
+        at(1, "ab_down"),
+        upTo(["Length", at(2, "ab_down")]),
+      ],
+    ],
+  );
+
+/** The Dyck path whose block for each left-to-right maximum of the permutation `pi` (a bound name) is the ups from
+ *  the last maximum's value up to this one, then the downs to the position of the next maximum (or the end). */
+const peaksOfMaxima = (pi: string): MathJSON =>
+  lets(
+    [
+      [
+        "pk_at",
+        [
+          "Filter",
+          upTo(["Length", pi]),
+          [
+            "Function",
+            [
+              "Equal",
+              [
+                "Count",
+                [
+                  "Filter",
+                  upTo(["Length", pi]),
+                  ["Function", ["And", ["Less", "j", "p"], ["Greater", at("j", pi), at("p", pi)]], "j"],
+                ],
+              ],
+              0,
+            ],
+            "p",
+          ],
+        ],
+        "list<integer>",
+      ],
+    ],
+    [
+      "Fold",
+      [
+        "Function",
+        [
+          "Join",
+          "acc",
+          forEach(
+            upTo([
+              "Subtract",
+              at(at("t", "pk_at"), pi),
+              ["If", ["Equal", "t", 1], 0, at(at(["Subtract", "t", 1], "pk_at"), pi)],
+            ]),
+            1,
+            "z",
+          ),
+          forEach(
+            upTo([
+              "Subtract",
+              ["If", ["Equal", "t", ["Length", "pk_at"]], ["Add", ["Length", pi], 1], at(["Add", "t", 1], "pk_at")],
+              at("t", "pk_at"),
+            ]),
+            0,
+            "z",
+          ),
+        ],
+        "acc",
+        "t",
+      ],
+      ["List"],
+      upTo(["Length", "pk_at"]),
+    ],
+  );
+
+const adinBagnoRoichmanBody: MathJSON = [
+  "If",
+  ["Equal", steps, 0],
+  ["List"],
+  lets(
+    [
+      ["ab_start", krattenthalerPermutationBody, "list<integer>"],
+      ["ab_pi", abrOfPermutation("ab_start"), "list<integer>"],
+    ],
+    peaksOfMaxima("ab_pi"),
+  ),
+];
+
 export const DYCK_MAPS: readonly CombinatorialMap[] = [
   {
     name: "InverseKrewerasComplement",
@@ -591,5 +830,15 @@ export const DYCK_MAPS: readonly CombinatorialMap[] = [
     guard: dyckGuard,
     summary: "The Schützenberger involution that reverses the canonical decompositions of the two halves of the path.",
     note: "FindStat's Mp00123. In each half the up steps the path never returns beneath are the empty pieces of the decomposition.",
+  },
+  {
+    name: "AdinBagnoRoichman",
+    from: "dyck_path",
+    to: "dyck_path",
+    body: adinBagnoRoichmanBody,
+    guard: dyckGuard,
+    summary:
+      "The bijection of Adin, Bagno and Roichman on the 321-avoiding permutation of the path, read back as a path: it keeps the ups before each peak.",
+    note: "FindStat's Mp00124. It sends the number of returns to the number of ups after the last double rise.",
   },
 ];

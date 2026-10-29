@@ -6,6 +6,7 @@
 
 import { BATCH_SEVEN_READINGS } from "./map-findstat-readings-7.ts";
 import { BATCH_EIGHT_READINGS } from "./map-findstat-readings-8.ts";
+import { BATCH_NINE_READINGS } from "./map-findstat-readings-9.ts";
 
 export type Reading = (text: string) => string;
 
@@ -764,6 +765,7 @@ const rowToColumnDescents = (tableau: readonly (readonly number[])[]): number[][
 export const MAP_READINGS: Readonly<Record<string, Reading>> = {
   ...BATCH_SEVEN_READINGS,
   ...BATCH_EIGHT_READINGS,
+  ...BATCH_NINE_READINGS,
   // Binary words are strings of 0s and 1s.
   "Reverse@BinaryWord": (w) => w.split("").toReversed().join(""),
   "Complement@BinaryWord": (w) =>

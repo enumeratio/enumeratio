@@ -56,6 +56,7 @@ const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
     ],
     caption: "the pair of tableaux $13/2$ and $12/3$",
   },
+  parking_function: { contents: ["List", 2, 1, 1, 3], caption: "the parking function $2113$" },
   binary_word: { contents: ["List", 0, 1, 1, 0, 0], caption: "the binary word $01100$" },
   standard_tableau: {
     contents: ["List", ["List", 1, 3], ["List", 2]],
