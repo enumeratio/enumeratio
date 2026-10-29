@@ -29,18 +29,19 @@ export interface CompiledDefinition {
  *  shape, e.g. `list<integer>`). Definitions the compiler can't take yet are left out, and so are
  *  those whose compiled code answers differently from the interpreter on any of
  *  `subjectsOf(carrier)`: compiled code is otherwise trusted, so a miscompile would answer
- *  wrong silently. */
+ *  wrong silently. Only those `mine` takes are looked at (a shard's share). */
 export function compiledDefinitionsFor(
   definitions: readonly Definition[],
   shape: string,
   subjectsOf: (ce: Engine, carrier: string) => readonly unknown[],
   verdicts: Verdicts = noVerdicts,
+  mine: (signature: string) => boolean = () => true,
 ): { compiled: CompiledDefinition[]; disagreed: string[] } {
   const ce = bareEngine();
   const subjects = new Map<string, readonly unknown[]>();
   const compiled: CompiledDefinition[] = [];
   const disagreed: string[] = [];
-  for (const definition of definitions) {
+  for (const definition of definitions.filter((d) => mine(signatureOf(d)))) {
     const code = compileTyped(ce, definition.expr, { [SUBJECT]: shape });
     if (code === undefined) continue;
     if (!subjects.has(definition.on)) subjects.set(definition.on, subjectsOf(ce, definition.on));

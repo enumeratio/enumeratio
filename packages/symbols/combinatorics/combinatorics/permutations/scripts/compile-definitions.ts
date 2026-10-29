@@ -4,24 +4,14 @@
 //   vp node packages/symbols/combinatorics/combinatorics/permutations/scripts/compile-definitions.ts
 
 import { fileURLToPath } from "node:url";
-import { smallElements } from "../../scripts/samples.ts";
-import { checkers, verdictsFor } from "../../scripts/verdicts.ts";
-import { writeGenerated } from "../../scripts/write-generated.ts";
-import { compiledDefinitionsFor, renderCompiled } from "../../src/statistics/generate-compiled.ts";
+import { compileArea } from "../../scripts/compile-area.ts";
 import { PERMUTATION_STATISTICS } from "../src/statistics.ts";
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const verdicts = verdictsFor("compile-permutations", checkers.statistics);
-  const { compiled: entries, disagreed } = compiledDefinitionsFor(
+if (process.argv[1] === fileURLToPath(import.meta.url))
+  await compileArea(
+    import.meta.url,
+    "compile-permutations",
     PERMUTATION_STATISTICS,
     "list<integer>",
-    smallElements,
-    verdicts,
+    "../src/statistics.compiled.generated.js",
   );
-  const target = fileURLToPath(new URL("../src/statistics.compiled.generated.js", import.meta.url));
-  writeGenerated(target, renderCompiled(entries));
-  verdicts.save();
-  console.log(`${entries.length} of ${PERMUTATION_STATISTICS.length} definitions compiled`);
-  for (const signature of disagreed)
-    console.log(`${signature}: compiled code disagreed with the interpreter; left interpreted`);
-}

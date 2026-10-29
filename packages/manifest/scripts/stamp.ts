@@ -37,8 +37,9 @@ function filesUnder(root: string, skip: (path: string) => boolean): string[] {
   return out;
 }
 
-/** The `dist` directories of the workspace packages `dir` depends on, transitively. */
-export function workspaceDists(dir: string, omit: readonly string[] = []): string[] {
+/** The `dist` directories of the workspace packages `dir` depends on, transitively; with `from`,
+ *  of those packages (full names, resolved from `dir`) and what they depend on instead. */
+export function workspaceDists(dir: string, omit: readonly string[] = [], from?: readonly string[]): string[] {
   const seen = new Map<string, string>();
   const visit = (home: string): void => {
     const pkg = JSON.parse(readFileSync(join(home, "package.json"), "utf8")) as Record<string, Record<string, string>>;
@@ -57,7 +58,14 @@ export function workspaceDists(dir: string, omit: readonly string[] = []): strin
       visit(dep);
     }
   };
-  visit(dir);
+  const enter = (name: string): void => {
+    if (seen.has(name)) return;
+    const dep = realpathSync(join(dir, "node_modules", name));
+    seen.set(name, omit.includes(name) ? "" : join(dep, "dist"));
+    visit(dep);
+  };
+  if (from === undefined) visit(dir);
+  else for (const name of from) enter(name);
   return [...seen.values()].filter((dist) => dist !== "");
 }
 
@@ -86,16 +94,26 @@ export interface StepInputs {
    *  `roots` what of them it reads. For a dist built from every package's records, which any
    *  record edit changes. */
   readonly omitDists?: readonly string[];
+  /** Workspace packages (full names) the step imports. Their dists, and those of what they depend
+   *  on, are hashed instead of every dist `dir` depends on: a dependency the step never loads
+   *  (and nothing it loads imports) cannot change what it computes. */
+  readonly imports?: readonly string[];
 }
 
 /** A hash of everything the step reads. */
-export function hashInputs({ dir, roots: own = [dir], skip = () => false, omitDists = [] }: StepInputs): string {
+export function hashInputs({
+  dir,
+  roots: own = [dir],
+  skip = () => false,
+  omitDists = [],
+  imports,
+}: StepInputs): string {
   const hash = createHash("sha256");
   const add = (label: string, data: string | Buffer): void => {
     hash.update(`${label}\0${data.length}\0`);
     hash.update(data);
   };
-  const roots = [...own, ...workspaceDists(dir, omitDists)];
+  const roots = [...own, ...workspaceDists(dir, omitDists, imports)];
   for (const root of roots) {
     for (const file of filesUnder(root, skip)) add(relative(dir, file), readFileSync(file));
   }
@@ -199,10 +217,26 @@ export interface Verdicts {
   remember<T>(parts: unknown, compute: () => T): T;
   /** Keeps this run's answers, and only those, for the next run. */
   save(): void;
+  /** This run's answers and counts, for the process that saves them (a shard hands them up). */
+  share(): VerdictShare;
+  /** Folds a shard's `share` into this run. */
+  adopt(share: VerdictShare): void;
+}
+
+/** What one process learned, in a form that crosses a process boundary as JSON. */
+export interface VerdictShare {
+  readonly answers: Record<string, unknown>;
+  readonly hits: number;
+  readonly misses: number;
 }
 
 /** Every answer is computed, and none kept. */
-export const noVerdicts: Verdicts = { remember: (_parts, compute) => compute(), save() {} };
+export const noVerdicts: Verdicts = {
+  remember: (_parts, compute) => compute(),
+  save() {},
+  share: () => ({ answers: {}, hits: 0, misses: 0 }),
+  adopt() {},
+};
 
 /**
  * Where a step's verdicts live: in the shared store when `$DIST_CACHE_DIR` names one (CI carries
@@ -250,6 +284,12 @@ export function verdictCache(name: string, inputs: StepInputs): Verdicts {
       else misses++;
       kept[key] = key in before ? before[key] : compute();
       return kept[key] as T;
+    },
+    share: () => ({ answers: kept, hits, misses }),
+    adopt(share) {
+      Object.assign(kept, share.answers);
+      hits += share.hits;
+      misses += share.misses;
     },
     save() {
       // Answers an earlier run left under the same env stay: a key names the definition it

@@ -16,7 +16,8 @@ import { CARRIERS } from "../src/carriers.ts";
 import { evaluateDefinition, MAPS } from "../src/maps.ts";
 import { noVerdicts, type Verdicts } from "../src/statistics/generate-compiled.ts";
 import { smallElements } from "./samples.ts";
-import { checkers, verdictsFor } from "./verdicts.ts";
+import { sharded } from "./shards.ts";
+import { checkers } from "./verdicts.ts";
 import { writeGenerated } from "./write-generated.ts";
 
 interface Entry {
@@ -56,14 +57,15 @@ function agrees(
 }
 
 /** Each compilable map's key (`Name@from`), hash and generated code; no code for a map whose
- *  compiled code disagreed with the interpreter. */
-export function compiledMaps(verdicts: Verdicts = noVerdicts): Entry[] {
+ *  compiled code disagreed with the interpreter. Only the keys `mine` takes are looked at (a
+ *  shard's share). */
+export function compiledMaps(verdicts: Verdicts = noVerdicts, mine: (key: string) => boolean = () => true): Entry[] {
   const ce = bareEngine();
   const carrierOf = new Map(CARRIERS.map((carrier) => [carrier.type, carrier]));
   const out: Entry[] = [];
   const samples = new Map<string, unknown[]>();
   for (const map of MAPS) {
-    if (map.body === undefined) continue;
+    if (map.body === undefined || !mine(`${map.name}@${map.from}`)) continue;
     const from = carrierOf.get(map.from);
     const to = carrierOf.get(map.to);
     if (from === undefined || to === undefined) continue;
@@ -111,11 +113,12 @@ ${body}
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const verdicts = verdictsFor("compile-maps", checkers.maps);
-  const entries = compiledMaps(verdicts);
+  const run = await sharded(import.meta.url, "compile-maps", checkers.maps, compiledMaps);
+  if (run === undefined) process.exit(0);
+  const entries = run.results.flat().toSorted((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
   const target = fileURLToPath(new URL("../src/compiled-maps.generated.js", import.meta.url));
   writeGenerated(target, render(entries));
-  verdicts.save();
+  run.verdicts.save();
   const compiled = entries.filter((e) => e.body !== undefined);
   console.log(`${compiled.length} of ${MAPS.filter((m) => m.body !== undefined).length} map definitions compiled`);
   for (const e of entries.filter((entry) => entry.body === undefined))
