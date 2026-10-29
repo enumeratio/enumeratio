@@ -99,6 +99,63 @@ export function evaluateEpsil(
   return materialise(ce, ce.box(filled as never).evaluate()).json;
 }
 
+/** `evaluateEpsil` for many bindings of one definition: the definition is boxed once, as a
+ *  `Function` of the names, instead of filled and boxed per call, which makes compute-engine
+ *  canonicalize and type the whole body each time (most of an interpreted call). The answer is
+ *  not always `evaluateEpsil`'s (a `Fold` building a table from `_n` answers differently when
+ *  `_n` is a symbol at canonicalization), so a caller that must have `evaluateEpsil`'s answer
+ *  re-asks it when the two differ. */
+export function evaluateEpsilRepeatedly(
+  ce: ComputeEngine,
+  expression: unknown,
+  bindings: Readonly<Record<string, unknown>>,
+): unknown {
+  return materialise(ce, applyBound(ce, expression, bindings)).json;
+}
+
+const literalCalls = new WeakMap<object, boolean>();
+
+/** Whether `node` calls a function written out in place, `[["Function", …], argument…]` as
+ *  `recurse` does, or by `Apply`. Such a call threads over a list argument differently when the
+ *  argument is a bound symbol than when it is the value itself, so a definition with one is
+ *  filled rather than applied. */
+function callsFunctionLiteral(node: unknown): boolean {
+  if (!Array.isArray(node)) return false;
+  let found = literalCalls.get(node);
+  if (found === undefined) {
+    found = Array.isArray(node[0]) || node[0] === "Apply" || node.some(callsFunctionLiteral);
+    literalCalls.set(node, found);
+  }
+  return found;
+}
+
+/** Boxed `Function`s by engine, then definition, then parameter names. */
+const boxedFunctions = new WeakMap<ComputeEngine, WeakMap<object, Map<string, Expression>>>();
+
+/** `expression` evaluated with each name in `bindings` bound to its MathJSON value.
+ *
+ *  The definition is boxed once, as a `Function` of those names, and applied: filling the
+ *  values in and boxing the whole definition per call makes compute-engine canonicalize and
+ *  type the body again every time. A bare symbol or number has nothing to cache, and a body
+ *  that calls a function in place is filled in directly (see `callsFunctionLiteral`). */
+function applyBound(ce: ComputeEngine, expression: unknown, bindings: Readonly<Record<string, unknown>>): Expression {
+  const names = Object.keys(bindings);
+  if (typeof expression !== "object" || expression === null || names.length === 0 || callsFunctionLiteral(expression)) {
+    let filled = expression;
+    for (const name of names) filled = fill(filled, bindings[name], name);
+    return ce.box(filled as never).evaluate();
+  }
+  let byDefinition = boxedFunctions.get(ce);
+  if (byDefinition === undefined) boxedFunctions.set(ce, (byDefinition = new WeakMap()));
+  let byNames = byDefinition.get(expression);
+  if (byNames === undefined) byDefinition.set(expression, (byNames = new Map()));
+  const key = names.join(",");
+  let fn = byNames.get(key);
+  if (fn === undefined) byNames.set(key, (fn = ce.box(["Function", expression, ...names] as never)));
+  const values = names.map((name) => ce.box((isEmptyList(bindings[name]) ? EMPTY_LIST : bindings[name]) as never));
+  return ce.function("Apply", [fn, ...values]).evaluate();
+}
+
 /** Force a lazy result into a concrete List.
  *
  *  `Map` and `Filter` over a `Range` stay lazy — `Range(1, 3)` does not even evaluate to a
