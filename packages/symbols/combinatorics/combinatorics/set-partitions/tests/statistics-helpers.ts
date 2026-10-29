@@ -125,10 +125,18 @@ export const EXPECTED: Record<string, (b: number[][]) => number> = {
  *  `test()` calls made this way exactly as it would ones written inline. */
 export function checkAgainstEngine(heads: readonly string[]): void {
   for (const head of heads) {
-    test(`${head} agrees over every set partition of 1..6`, () => {
+    const sweep = (over: typeof ALL) => () => {
       const expected = EXPECTED[head];
       if (!expected) throw new Error(`no expected reading for ${head}`);
-      for (const b of ALL) expect(evaluate(head, b), JSON.stringify(b)).toBe(expected(b));
-    });
+      for (const b of over) expect(evaluate(head, b), JSON.stringify(b)).toBe(expected(b));
+    };
+    if (SLOW.has(head)) {
+      test(`${head} agrees over every set partition of 1..4`, sweep(QUICK));
+      test.skipIf(!process.env.DEEP_TESTS)(`${head} agrees over every set partition of 1..6`, sweep(ALL), 1_800_000);
+    } else test(`${head} agrees over every set partition of 1..6`, sweep(ALL));
   }
 }
+
+/** Seconds per partition at n = 6: the standard run sweeps n <= 4, the rest is nightly (DEEP_TESTS=1). */
+const SLOW = new Set(["CrossingNumber", "NestingNumber", "TopologicallyConnectedComponents"]);
+const QUICK = ALL.filter((b) => b.flat().length <= 4);
