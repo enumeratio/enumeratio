@@ -1,0 +1,21 @@
+id	in	out
+the-documented-subsets-collection-form-listed-in		
+2-4-subsets		
+the-empty-subset		
+subsets-list-a-b-c-d-2		
+subsets-list-a-b-c-d-list-2		
+a-size-bound-the-subsets-with-at-most-2-elements		
+an-exact-size-2-binom-4-2-subsets		
+a-size-range-0-5-2-the-even-size-subsets-2-4-of		
+subsets-list-a-b-c-d		
+subsets-a-plus-b-plus-c		
+subsets-list-a-b-c-d-k-list-0-5-2		
+subsets-divisors-10		
+subsets-list-1-2-3-4-list-3		
+sum-subsets-a-times-b-times-c-times-d-times-k		
+subsets-list-1-2-4-8-16-list-3		
+a-set-of-n-elements-has-2-n-subsets-count		
+counting-by-size-sum-k-binom-n-k-2-n-subsets-of	((Finset.Icc 0 5).sum (fun (k : ℕ) => (Nat.choose 5 k)))	32
+subsets-list-c-b-a		
+subsets-list-a-b-c-list-2		
+subsets-list-a-b-b-b		

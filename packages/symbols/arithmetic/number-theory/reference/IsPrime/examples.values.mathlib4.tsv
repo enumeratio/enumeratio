@@ -52,9 +52,9 @@ isprime-list-7-11	(decide (Nat.Prime [7, 11]))	Application type mismatch: The ar
 isprime-list-5-7-2	(decide (Nat.Prime [5, 7, 2]))	Application type mismatch: The argument	error
 isprime-19	(decide (Nat.Prime 19))	true	
 divisorsum-19-function-1-1-isprime			
-filter-divisors-625-isprime			
-filter-divisors-2-434-500-isprime			
-filter-divisors-65-isprime			
+filter-divisors-625-isprime	(((Finset.sort (Nat.divisors 625))).filter (fun (s₁ : ℕ) => (decide (Nat.Prime s₁))))	[5]	
+filter-divisors-2-434-500-isprime	(((Finset.sort (Nat.divisors 2434500))).filter (fun (s₁ : ℕ) => (decide (Nat.Prime s₁))))	[2, 3, 5, 541]	
+filter-divisors-65-isprime	(((Finset.sort (Nat.divisors 65))).filter (fun (s₁ : ℕ) => (decide (Nat.Prime s₁))))	[5, 13]	
 non-integers-are-not-prime	(decide (Nat.Prime ((1 : ℚ) / 2)))	Type mismatch	error
 another-non-integer-3-halves	(decide (Nat.Prime ((3 : ℚ) / 2)))	Type mismatch	error
 a-symbol-stays-unevaluated			

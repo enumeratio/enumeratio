@@ -1,0 +1,4 @@
+id	in	out
+sum-k-pow-2-k-nothing-10	((Finset.Icc 1 10).sum (fun (k : ℤ) => (k ^ 2)))	385
+sum-k-pow-neg-6-k-1-positiveinfinity		
+sum-k-pow-neg-2-k-1-positiveinfinity		

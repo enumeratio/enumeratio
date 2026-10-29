@@ -10,7 +10,7 @@ a-mid-sized-n-and-k-past-the-fast-paths	(Nat.stirlingFirst 40 14)	TimeoutError: 
 the-number-of-permutations-of-5-elements-with	(Nat.stirlingFirst 5 3)	35	
 abs-stirlings1-n-range-1-n			
 the-unsigned-values-in-a-row-sum-to-n			
-the-signed-row-sum-vanishes-for-n-ge-2			
+the-signed-row-sum-vanishes-for-n-ge-2	((Finset.Icc 0 6).sum (fun (k : ℕ) => (Nat.stirlingFirst 6 k)))	720	disagree
 s-n-n-1-binom-n-2	(decide ((Nat.stirlingFirst 6 5) = (-((Nat.choose 6 2)))))	failed to synthesize instance of type class	error
 the-generating-property-sum-k-s-n-k-x-k-x-x-1-x			
 n-stirlings1-100-11			

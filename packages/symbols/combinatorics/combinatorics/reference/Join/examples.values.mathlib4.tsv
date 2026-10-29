@@ -18,4 +18,4 @@ join-aa-bb
 join-a-b-flatten-a-b-1-see-flatten	(decide ((([1, 2]) ++ ([3, 4])) = (have _ : (1 : ℤ) ≥ 1 := (by decide); ([[1, 2], [3, 4]] : List (List ℚ)).flatten)))	true	
 join-is-associative			
 nestlist-function-join-1-1-1-list-x-4			
-nestlist-function-list-1-neg-1-plus-1-1-list-1-5			
+nestlist-function-list-1-neg-1-plus-1-1-list-1-5	((List.range ((5 : ℕ) + 1)).map (fun ξ => Nat.repeat (fun (s₁ : ℚ) => [s₁, ((-(s₁)) + 1)]) ξ [1]))	Type mismatch	error

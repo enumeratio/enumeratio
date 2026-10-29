@@ -10,11 +10,11 @@ stirling-n-range-1-n
 sum-stirling-6-k-times-apply-derivative-f-k			
 one-block-means-one-partition-s-n-1-1	(Nat.stirlingSecond 5 1)	1	
 singletons-only-s-n-n-1	(Nat.stirlingSecond 5 5)	1	
-row-sums-give-the-bell-numbers			
+row-sums-give-the-bell-numbers	(decide (((Finset.Icc 0 4).sum (fun (k : ℕ) => (Nat.stirlingSecond 4 k))) = (Nat.bell 4)))	true	
 two-blocks-s-n-2-2-n-1-1	(decide ((Nat.stirlingSecond 10 2) = ((2 ^ 9) - 1)))	true	
 s-n-n-1-binom-n-2-one-block-is-a-pair	(decide ((Nat.stirlingSecond 6 5) = (Nat.choose 6 2)))	true	
 explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j			
-orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m			
+orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m	((Finset.Icc 0 4).sum (fun (k : ℕ) => ((Nat.stirlingFirst 4 k) * (Nat.stirlingSecond k 2))))	36	disagree
 n-stirling-120-10			
 stirling-10-4	(Nat.stirlingSecond 10 4)	34105	
 stirling-1-0	(Nat.stirlingSecond 1 0)	0	

@@ -345,6 +345,7 @@ const LEAN_IMPORTS = [
   "Mathlib.Combinatorics.Enumerative.Partition.Basic",
   "Mathlib.Combinatorics.Enumerative.Stirling",
   "Mathlib.Data.Int.GCD",
+  "Mathlib.Data.Int.Interval",
   "Mathlib.Data.List.Lex",
   "Mathlib.Data.Multiset.Sort",
   "Mathlib.Data.Nat.Choose.Basic",

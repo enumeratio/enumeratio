@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { expect, test } from "vite-plus/test";
+import { expect, test, vi } from "vite-plus/test";
 import { preludeFor, SYMPY_PREAMBLE } from "../src/run.ts";
 import {
   alignFunctions,
@@ -21,6 +21,9 @@ import {
   SYMBOLIC_SECONDS,
   symbolicAgreementSource,
 } from "../src/symbolic.ts";
+
+// The sympy tests start Python; under load that outruns the 5 s default.
+vi.setConfig({ testTimeout: 120_000 });
 
 // `Add(x, x)` against `Multiply(2, x)`: the same identity on all three symbolic systems, to
 // pin the source each one gets asked to run. Real kernels confirmed these three strings each

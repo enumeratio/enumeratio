@@ -42,6 +42,11 @@ bindings:
     checked:
       version: 1.14.0
       on: 2026-10-28
+  - origin: mapped
+    form: mathlib4
+    template: ((Finset.Icc $2 $3).prod $1)
+    arity: 3
+    note: As Sum; an empty range is 1, as ours.
 ---
 
 - The empty product is 1 by convention, matching $Factorial(0)$. See [[Factorial]].

@@ -16,4 +16,10 @@ names:
 stub: engine
 attributes:
   - HoldAll
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: (($1).filter $2)
+    arity: 2
+    note: The elements where the predicate holds; a predicate that is not a Bool or decidable Prop fails to elaborate.
 ---

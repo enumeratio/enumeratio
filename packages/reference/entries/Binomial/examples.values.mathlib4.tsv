@@ -30,12 +30,12 @@ the-probability-of-exactly-3-heads-in-10-fair	(((Nat.choose 10 3) : ℚ) / (2 ^ 
 symmetry-binom-n-k-binom-n-n-k	(decide ((Nat.choose 10 3) = (Nat.choose 10 7)))	true	
 pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n	(decide (((Nat.choose 9 2) + (Nat.choose 9 3)) = (Nat.choose 10 3)))	true	
 row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4	(decide (((Nat.choose 4 0) + (Nat.choose 4 1) + (Nat.choose 4 2) + (Nat.choose 4 3) + (Nat.choose 4 4)) = (2 ^ 4)))	true	
-sum-of-squares-along-a-row-sum-k-binom-n-k-2			
+sum-of-squares-along-a-row-sum-k-binom-n-k-2	(decide (((Finset.Icc 0 6).sum (fun (k : ℕ) => ((Nat.choose 6 k) ^ 2))) = (Nat.choose 12 6)))	true	
 vandermonde-s-identity-sum-k-binom-m-k-binom-n-r			
-the-alternating-row-sum-vanishes-sum-k-1-k-binom			
+the-alternating-row-sum-vanishes-sum-k-1-k-binom	((Finset.Icc 0 6).sum (fun (k : ℕ) => (((-1) ^ k) * (Nat.choose 6 k))))	failed to synthesize instance of type class	error
 the-factorial-form-binom-n-k-frac-n-k-n-k-see	(decide ((Nat.choose 7 3) = (((Nat.factorial 7) : ℚ) / ((Nat.factorial 3) * (Nat.factorial 4)))))	true	
 binomial-1-over-2-neg-1-over-2-plus-binomial-1	((Nat.choose ((1 : ℚ) / 2) (((-1) : ℚ) / 2)) + (Nat.choose ((1 : ℚ) / 2) ((1 : ℚ) / 2)))		
-sum-binomial-2-k-pow-2-times-binomial-k-plus-2-k			
+sum-binomial-2-k-pow-2-times-binomial-k-plus-2-k	((Finset.Icc 0 2).sum (fun (k : ℕ) => (((Nat.choose 2 k) ^ 2) * ((Nat.choose (k + 2) k) ^ 2))))	73	
 sum-binomial-2-2k-plus-1-times-2-pow-k-k-0-floor			
 binomial-1-over-2-1-over-2-plus-binomial-1-over	((Nat.choose ((1 : ℚ) / 2) ((1 : ℚ) / 2)) + (Nat.choose ((1 : ℚ) / 2) ((3 : ℚ) / 2)))		
 choosing-more-elements-than-available-k-n-gives	(Nat.choose 5 7)	0	
