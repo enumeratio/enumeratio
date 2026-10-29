@@ -11,7 +11,7 @@ import {
   atLeast,
   atLeastValue,
   atMostValue,
-  bind,
+  bind as bindTyped,
   carried,
   fold,
   visiting,
@@ -34,6 +34,9 @@ import {
 } from "../../src/statistics/vocabulary.ts";
 
 const on = "DyckPath";
+/** `bind` with the value typed a list of integers: the compiler can index, count and sum over that, not the default `collection`. */
+const bindList = (name: string, value: MathJSON, body: MathJSON, type = "list<integer>"): MathJSON =>
+  bindTyped(name, value, body, type);
 const stat = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
   head,
   on,
@@ -86,7 +89,7 @@ const areaSequence: MathJSON = forEach(where(positions, isUp("i")), heightBefore
  * path from the right: H(x) for x = 0 .. n-1 is the height after the (n-x)-th up step, plus x
  * (the up steps still to come). `ups` holds the positions of the up steps.
  */
-const bounceCeilings: MathJSON = bind(
+const bounceCeilings: MathJSON = bindList(
   "ups",
   where(positions, isUp("i")),
   forEach(
@@ -125,7 +128,7 @@ const peakHeights: MathJSON = forEach(peakPositions, heightAfter("i"));
 const upsUpTo = (i: MathJSON): MathJSON => count(upTo(i), isUp("k"), "k");
 /** The length of each rise (maximal run of up steps), left to right. Up steps are counted at
  *  each peak, and a rise is what accrues since the previous peak. */
-const riseLengths: MathJSON = bind(
+const riseLengths: MathJSON = bindList(
   "u",
   forEach(peakPositions, upsUpTo("i")),
   forEach(
@@ -135,12 +138,11 @@ const riseLengths: MathJSON = bind(
   ),
 );
 /** First position of the double rises' pairs (an up step followed by an up step); 0 if none. */
-const lastDoubleRise: MathJSON = bind("doubles", where(upTo(subtract(length(), 1)), and(isUp("i"), isUp(nextIndex))), [
-  "If",
-  equals(["Length", "doubles"], 0),
-  0,
-  ["Max", "doubles"],
-]);
+const lastDoubleRise: MathJSON = bindList(
+  "doubles",
+  where(upTo(subtract(length(), 1)), and(isUp("i"), isUp(nextIndex))),
+  ["If", equals(["Length", "doubles"], 0), 0, ["Max", "doubles"]],
+);
 /** A step `i` that equals its successor, at positions where one exists. */
 const repeatsAt = (value: number): MathJSON =>
   where(upTo(subtract(length(), 1)), and(equals(step("i"), value), equals(step(nextIndex), value)));
@@ -171,7 +173,7 @@ const differ = (a: MathJSON, b: MathJSON): MathJSON => ["If", equals(add(a, b), 
  * last up step before it that ends at the height the down step starts from (the path between
  * stays at or above that height, or a later such up step would exist).
  */
-const matchingUps: MathJSON = bind(
+const matchingUps: MathJSON = bindList(
   "h",
   profile,
   forEach(
@@ -195,7 +197,7 @@ const centered = (p: MathJSON): MathJSON => equals(add(p, ["At", "m", p]), add(l
 const leftOf = (p: MathJSON): MathJSON => less(add(p, ["At", "m", p]), add(length(), 1));
 /** Pairs of tunnels in the set, one strictly inside the other. */
 const nestedTunnelPairs = (member: (p: MathJSON) => MathJSON): MathJSON =>
-  bind(
+  bindList(
     "m",
     matchingUps,
     sumOver(
@@ -209,7 +211,7 @@ const nestedTunnelPairs = (member: (p: MathJSON) => MathJSON): MathJSON =>
     ),
   );
 const tunnelCount = (member: (p: MathJSON) => MathJSON): MathJSON =>
-  bind("m", matchingUps, ["Length", tunnelsWhere(member)]);
+  bindList("m", matchingUps, ["Length", tunnelsWhere(member)]);
 
 /**
  * The interactions of a path: runs of one step type build a count, and the next run of the other
@@ -237,7 +239,7 @@ const interactions = (builder: number): MathJSON => [
 
 /** Rises of a given length, counted by `test` on each length. */
 const risesWhere = (test: (r: MathJSON) => MathJSON): MathJSON =>
-  bind("lengths", riseLengths, count("lengths", test("r"), "r"));
+  bindList("lengths", riseLengths, count("lengths", test("r"), "r"));
 /** Whether step `i` differs from the step before it, or is the first. */
 const startsRun = (i: MathJSON): MathJSON => ["If", equals(i, 1), 1, differ(at(subtract(i, 1)), at(i))];
 /** Whether step `i` differs from the step after it, or is the last. */
@@ -283,7 +285,7 @@ const dinvValue: MathJSON = atLeast(
 );
 /** The bounce statistic, from the bounce path that starts at the end of the path. */
 const bounceWalk = (field: number): MathJSON =>
-  bind("ceilings", bounceCeilings, ["At", fold(upTo(semilength), ["List", 0, 0, 0], bounceStep), field]);
+  bindList("ceilings", bounceCeilings, ["At", fold(upTo(semilength), ["List", 0, 0, 0], bounceStep), field]);
 const bounceValue: MathJSON = atLeast(2, bounceWalk(3));
 /** The number of cells of the staircase below the diagonal, binomial(n, 2). */
 const triangle: MathJSON = ["Divide", ["Multiply", semilength, subtract(semilength, 1)], 2];
@@ -304,13 +306,13 @@ const peakDowns: MathJSON = forEach(peakPositions, subtract("i", upsUpTo("i")));
  */
 const boxesBelowPeaks = (test: (coveringPeaks: MathJSON) => MathJSON): MathJSON =>
   hasPair(
-    bind(
+    bindList(
       "pu",
       peakUps,
-      bind(
+      bindList(
         "pd",
         peakDowns,
-        bind(
+        bindList(
           "downs",
           where(positions, isDown("i")),
           sumOver(
@@ -332,6 +334,9 @@ const boxesBelowPeaks = (test: (coveringPeaks: MathJSON) => MathJSON): MathJSON 
     ),
   );
 
+/** `sum` floored at 0, so the compiler types it real (it types a fold's sum complex otherwise); sums of counts are never negative. */
+const floored = (sum: MathJSON): MathJSON => ["Max", sum, 0];
+
 /**
  * Dyck paths whose area sequence stays on one side of this path's. The area sequence starts at 0
  * and rises by at most 1, so one pass along this path's own sequence suffices: the carried list
@@ -342,23 +347,27 @@ const areaSequenceBounded = (keeps: (next: MathJSON, bound: MathJSON) => MathJSO
   "If",
   less(semilength, 2),
   1,
-  bind("s", areaSequence, [
-    "Sum",
-    fold(
-      forEach(["Range", 2, semilength], at("i", "s")),
-      forEach(upTo(semilength), ["If", equals("w", 1), 1, 0], "w"),
-      forEach(
-        upTo(semilength),
-        [
-          "If",
-          keeps(subtract("w", 1), visiting),
-          ["Sum", forEach(["Range", ["Max", ["List", subtract("w", 1), 1]], semilength], at("u", "a"), "u")],
-          0,
-        ],
-        "w",
+  bindList(
+    "s",
+    areaSequence,
+    floored([
+      "Sum",
+      fold(
+        forEach(["Range", 2, semilength], at("i", "s")),
+        forEach(upTo(semilength), ["If", equals("w", 1), 1, 0], "w"),
+        forEach(
+          upTo(semilength),
+          [
+            "If",
+            keeps(subtract("w", 1), visiting),
+            ["Sum", forEach(["Range", ["Max", ["List", subtract("w", 1), 1]], semilength], at("u", "a"), "u")],
+            0,
+          ],
+          "w",
+        ),
       ),
-    ),
-  ]),
+    ]),
+  ),
 ];
 
 /**
@@ -367,33 +376,41 @@ const areaSequenceBounded = (keeps: (next: MathJSON, bound: MathJSON) => MathJSO
  * walk's up step keeps d and its down step lowers it; against a down step its up step raises d
  * and its down step keeps it; below zero is dropped.
  */
-const pathsWeaklyAbove: MathJSON = bind(
+const pathsWeaklyAbove: MathJSON = bindList(
   "m",
   add(length(), 1),
-  [
-    "Sum",
-    [
-      "Fold",
-      // The carried list is typed, so the compiled sum stays an integer rather than a complex number.
+  bindList(
+    "start",
+    forEach(upTo("m"), ["If", equals("w", 1), 1, 0], "w"),
+    floored([
+      "Sum",
       [
-        "Function",
-        forEach(
-          upTo("m"),
-          [
-            "If",
-            equals(visiting, 1),
-            add(at("w", "a"), ["If", less("w", "m"), at(add("w", 1), "a"), 0]),
-            add(at("w", "a"), ["If", greater("w", 1), at(subtract("w", 1), "a"), 0]),
-          ],
-          "w",
-        ),
-        ["Typed", "a", "'list<integer>'"],
-        "b",
+        "Fold",
+        // The carried list is typed, so the compiled sum stays an integer rather than a complex number.
+        [
+          "Function",
+          bindList(
+            "next",
+            forEach(
+              upTo("m"),
+              [
+                "If",
+                equals(visiting, 1),
+                add(at("w", "a"), ["If", less("w", "m"), at(add("w", 1), "a"), 0]),
+                add(at("w", "a"), ["If", greater("w", 1), at(subtract("w", 1), "a"), 0]),
+              ],
+              "w",
+            ),
+            "next",
+          ),
+          ["Typed", "a", "'list<integer>'"],
+          "b",
+        ],
+        "start",
+        x,
       ],
-      forEach(upTo("m"), ["If", equals("w", 1), 1, 0], "w"),
-      x,
-    ],
-  ],
+    ]),
+  ),
   "integer",
 );
 
@@ -417,7 +434,7 @@ const bounceAreaStep: MathJSON = [
     ]),
   ],
 ];
-const bouncePathArea: MathJSON = bind("ceilings", bounceCeilings, [
+const bouncePathArea: MathJSON = bindList("ceilings", bounceCeilings, [
   "At",
   fold(upTo(semilength), ["List", 0, 0, 0], bounceAreaStep),
   3,
@@ -443,19 +460,19 @@ const polyominoEastFirst: MathJSON = [
 const eastSteps = (path: MathJSON): MathJSON => where(upTo(add(semilength, 1)), equals(at("i", path), 0));
 /** Column heights, left to right, with the two paths bound as `north` and `east`. */
 const withColumnHeights = (body: MathJSON): MathJSON =>
-  bind(
+  bindList(
     "north",
     polyominoNorthFirst,
-    bind(
+    bindList(
       "east",
       polyominoEastFirst,
-      bind(
+      bindList(
         "northEasts",
         eastSteps("north"),
-        bind(
+        bindList(
           "eastEasts",
           eastSteps("east"),
-          bind(
+          bindList(
             "columns",
             forEach(upTo(["Length", "northEasts"]), subtract(at("j", "northEasts"), at("j", "eastEasts")), "j"),
             body,
@@ -852,13 +869,13 @@ export const DYCK_STATISTICS: readonly Definition[] = [
   stat(
     "RisesOfLengthOne",
     "Rises (maximal runs of up steps) of length 1.",
-    hasPair(bind("lengths", riseLengths, count("lengths", equals("r", 1), "r"))),
+    hasPair(bindList("lengths", riseLengths, count("lengths", equals("r", 1), "r"))),
   ),
   stat("MinimalRise", "The length of the shortest rise.", hasPair(["Min", riseLengths])),
   stat(
     "RisesOfLengthAtLeastTwo",
     "Rises (maximal runs of up steps) of length at least 2.",
-    hasPair(bind("lengths", riseLengths, count("lengths", ["GreaterEqual", "r", 2], "r"))),
+    hasPair(bindList("lengths", riseLengths, count("lengths", ["GreaterEqual", "r", 2], "r"))),
   ),
 
   stat(
@@ -869,7 +886,7 @@ export const DYCK_STATISTICS: readonly Definition[] = [
   stat(
     "UpStepsAfterLastDoubleRise",
     "Up steps after the first step of the last double rise; all of them if there is none.",
-    hasPair(bind("m", lastDoubleRise, count(positions, and(isUp("i"), greater("i", "m"))), "number")),
+    hasPair(bindList("m", lastDoubleRise, count(positions, and(isUp("i"), greater("i", "m"))), "number")),
   ),
 
   stat(
@@ -892,18 +909,23 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "LogarithmicHeight",
     "The floor of the binary logarithm of the height plus one.",
     nonEmpty(
-      bind("h", height, count(["Range", 1, add("h", 1)], ["LessEqual", ["Power", 2, "k"], add("h", 1)], "k"), "number"),
+      bindList(
+        "h",
+        height,
+        count(["Range", 1, add("h", 1)], ["LessEqual", ["Power", 2, "k"], add("h", 1)], "k"),
+        "number",
+      ),
     ),
   ),
   stat(
     "FirstMaximalPeakPosition",
     "The position of the up step into the first peak of maximal height.",
-    nonEmpty(bind("h", height, ["Min", where(positions, equals(heightAfter("i"), "h"))], "number")),
+    nonEmpty(bindList("h", height, ["Min", where(positions, equals(heightAfter("i"), "h"))], "number")),
   ),
   stat(
     "GlobalMaxima",
     "The number of points of the path at the greatest height it reaches.",
-    ["If", equals(length(), 0), 1, bind("h", height, count(positions, equals(heightAfter("i"), "h")), "number")],
+    ["If", equals(length(), 0), 1, bindList("h", height, count(positions, equals(heightAfter("i"), "h")), "number")],
     "The origin counts as a point, so the empty path has one; otherwise these are its highest peaks.",
   ),
   stat(
@@ -955,7 +977,7 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "ValleyTunnelSemilengthSum",
     "The sum of the semilengths of the tunnels that end at a valley.",
     hasPair(
-      bind("m", matchingUps, [
+      bindList("m", matchingUps, [
         "Sum",
         forEach(valleyPositions, ["Divide", add(subtract("p", ["At", "m", "p"]), 1), 2], "p"),
       ]),
@@ -965,7 +987,7 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "CenteredMultitunnels",
     "Factorizations of the path into three parts, the middle one a Dyck path and the outer two of equal length.",
     nonEmpty(
-      bind(
+      bindList(
         "v",
         vertexProfile,
         count(
@@ -1017,10 +1039,10 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "PeakRectangleAreaSum",
     "The sum, over consecutive peaks, of the area of the rectangle they span with the valley between them.",
     hasPair(
-      bind(
+      bindList(
         "peaks",
         peakPositions,
-        bind("valleys", valleyPositions, [
+        bindList("valleys", valleyPositions, [
           "If",
           equals(["Length", "valleys"], 0),
           0,
@@ -1108,7 +1130,7 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "MinimalValleyHeight",
     "The lowest height of a valley, or the semilength if the path has none.",
     hasPair(
-      bind("valleyHeights", forEach(valleyPositions, heightAfter("i")), [
+      bindList("valleyHeights", forEach(valleyPositions, heightAfter("i")), [
         "If",
         equals(["Length", "valleyHeights"], 0),
         semilength,
@@ -1143,7 +1165,7 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "MiddleNonRunHeight",
     "The height of the middle turning point: the middle one of the peaks and valleys, left to right.",
     hasPair(
-      bind(
+      bindList(
         "turns",
         forEach(where(upTo(subtract(length(), 1)), equals(add(step("i"), step(nextIndex)), 1)), heightAfter("i")),
         ["At", "turns", ["Divide", add(["Length", "turns"], 1), 2]],
@@ -1154,7 +1176,7 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "SymmetryDegree",
     "The number of step pairs, counting inward from the ends, at which the path agrees in height with its mirror image.",
     nonEmpty(
-      bind(
+      bindList(
         "v",
         vertexProfile,
         count(
@@ -1222,18 +1244,18 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "DoubleStepVisiblePoints",
     "Points below the path, at the parity of the path's height there, from which the north-east diagonal meets a double fall and the north-west diagonal meets a double rise.",
     hasPair(
-      bind(
+      bindList(
         "vp",
         vertexProfile,
-        bind(
+        bindList(
           "doubleRises",
           forEach(repeatsAt(1), add("i", heightAfter("i"))),
-          bind(
+          bindList(
             "doubleFalls",
             forEach(repeatsAt(0), subtract("i", heightAfter("i"))),
             sumOver(
               ["Range", 0, length()],
-              bind(
+              bindList(
                 "h",
                 at(add("v", 1), "vp"),
                 [
@@ -1313,14 +1335,14 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "The total orderings of the up steps such that the up steps after the k-th down step are never among the first k in the order.",
     atLeast(
       4,
-      bind("us", forEach(upTo(semilength), subtract(at("k", where(positions, isDown("i"))), "k"), "k"), [
+      bindList("us", forEach(upTo(semilength), subtract(at("k", where(positions, isDown("i"))), "k"), "k"), [
         "Product",
         forEach(
           ["Range", 1, subtract(semilength, 1)],
           [
             "Divide",
             subtract(at("k", "us"), subtract("k", 1)),
-            bind(
+            bindList(
               "t",
               ["If", equals("k", 1), at(1, "us"), subtract(at("k", "us"), at(subtract("k", 1), "us"))],
               factorialOf("t"),
@@ -1339,17 +1361,17 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "The paths from the origin to (n, n, n) with x >= y >= z whose first two coordinates trace this Dyck path and whose last two coordinates trace it as well.",
     atLeast(
       4,
-      bind(
+      bindList(
         "ups",
         where(positions, isUp("i")),
-        bind("downs", where(positions, isDown("i")), [
+        bindList("downs", where(positions, isDown("i")), [
           "Product",
           forEach(
             ["Range", 1, subtract(semilength, 1)],
-            bind(
+            bindList(
               "r",
               subtract(subtract(at(add("k", 1), "ups"), at("k", "ups")), 1),
-              bind(
+              bindList(
                 "s",
                 subtract(subtract(at(add("k", 1), "downs"), at("k", "downs")), 1),
                 ["Divide", factorialOf(add("r", "s")), ["Multiply", factorialOf("r"), factorialOf("s")]],
@@ -1390,17 +1412,17 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "ParallelogramPolyominoInnerCorners",
     "The inner corners of the parallelogram polyomino: the turns from east to north on its two bounding paths, not counting the corners every polyomino has.",
     nonEmpty(
-      bind(
+      bindList(
         "north",
         polyominoNorthFirst,
-        bind("east", polyominoEastFirst, subtract(add(eastRuns("north"), eastRuns("east")), 2)),
+        bindList("east", polyominoEastFirst, subtract(add(eastRuns("north"), eastRuns("east")), 2)),
       ),
     ),
   ),
   stat(
     "ParallelogramPolyominoUpperInnerCorners",
     "The inner corners of the polyomino's upper path: its turns from east to north, not counting the first.",
-    nonEmpty(bind("east", polyominoEastFirst, subtract(eastRuns("east"), 1))),
+    nonEmpty(bindList("east", polyominoEastFirst, subtract(eastRuns("east"), 1))),
     "The upper path of FindStat's polyomino is the one that opens with an east step here, up to reflecting the polyomino in the diagonal.",
   ),
 
