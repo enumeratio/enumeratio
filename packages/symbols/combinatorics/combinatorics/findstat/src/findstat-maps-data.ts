@@ -498,6 +498,24 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     findstat: [{ id: "Mp00118", rows: 1200, compared: 196, skipped: 0 }],
   },
   {
+    name: "CoriLeBorgne",
+    from: "DyckPath",
+    to: "DyckPath",
+    findstat: [{ id: "Mp00121", rows: 1200, compared: 196, skipped: 0 }],
+  },
+  {
+    name: "ElizaldeDeutsch",
+    from: "DyckPath",
+    to: "DyckPath",
+    findstat: [{ id: "Mp00122", rows: 1200, compared: 196, skipped: 0 }],
+  },
+  {
+    name: "BarnabeiCastronuovo",
+    from: "DyckPath",
+    to: "DyckPath",
+    findstat: [{ id: "Mp00123", rows: 1200, compared: 196, skipped: 0 }],
+  },
+  {
     name: "CutOutPartition",
     from: "DyckPath",
     to: "IntegerPartition",
@@ -730,6 +748,42 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     from: "SetPartition",
     to: "SetPartition",
     findstat: [{ id: "Mp00174", rows: 1200, compared: 278, skipped: 0 }],
+  },
+  {
+    name: "WachsWhite",
+    from: "SetPartition",
+    to: "SetPartition",
+    findstat: [{ id: "Mp00215", rows: 1200, compared: 278, skipped: 0 }],
+  },
+  {
+    name: "InverseWachsWhite",
+    from: "SetPartition",
+    to: "SetPartition",
+    findstat: [{ id: "Mp00216", rows: 1200, compared: 278, skipped: 0 }],
+  },
+  {
+    name: "WachsWhiteRho",
+    from: "SetPartition",
+    to: "SetPartition",
+    findstat: [{ id: "Mp00217", rows: 1200, compared: 278, skipped: 0 }],
+  },
+  {
+    name: "InverseWachsWhiteRho",
+    from: "SetPartition",
+    to: "SetPartition",
+    findstat: [{ id: "Mp00218", rows: 1200, compared: 278, skipped: 0 }],
+  },
+  {
+    name: "Yip",
+    from: "SetPartition",
+    to: "SetPartition",
+    findstat: [{ id: "Mp00220", rows: 1200, compared: 278, skipped: 0 }],
+  },
+  {
+    name: "InverseYip",
+    from: "SetPartition",
+    to: "SetPartition",
+    findstat: [{ id: "Mp00219", rows: 1200, compared: 278, skipped: 0 }],
   },
   {
     name: "KasraouiZeng",

@@ -2,7 +2,7 @@
 // Knuth-Krattenthaler bijection and the Elizalde-Rubey involution. Bodies are over `_raw`, the
 // path's 0/1 steps (1 up).
 
-import { at, bind, forEach, type CombinatorialMap, type MathJSON } from "../../src/map-helpers.ts";
+import { at, bind, forEach, lets, type CombinatorialMap, type MathJSON } from "../../src/map-helpers.ts";
 import { rskPair } from "../../tableaux/src/tableau.ts";
 import { dyckGuard, upsThrough } from "./maps.ts";
 
@@ -338,6 +338,201 @@ const swapReturnsAndLastDescentBody: MathJSON = [
   ),
 ];
 
+/** The Dyck path rotated, reading `_raw` appended with a down step backwards: the one rotation that is a Dyck word
+ *  followed by a down step, found as the first place the walk's height is least, with that last step dropped. */
+const coriLeBorgneBody: MathJSON = bind(
+  "cl_rev",
+  forEach(upTo(["Add", steps, 1]), ["If", ["Equal", "k", 1], 0, at(["Subtract", ["Add", steps, 2], "k"])], "k"),
+  bind(
+    "cl_heights",
+    // Height after j steps of the reversed word, j = 0 .. 2n.
+    forEach(
+      ["Range", 0, steps, 1],
+      [
+        "Subtract",
+        [
+          "Multiply",
+          2,
+          [
+            "Count",
+            [
+              "Filter",
+              upTo(["Add", steps, 1]),
+              ["Function", ["And", ["LessEqual", "k", "j"], ["Equal", at("k", "cl_rev"), 1]], "k"],
+            ],
+          ],
+        ],
+        "j",
+      ],
+      "j",
+    ),
+    bind(
+      "cl_start",
+      [
+        "Min",
+        [
+          "Filter",
+          ["Range", 0, steps, 1],
+          ["Function", ["Equal", at(["Add", "j", 1], "cl_heights"), ["Min", "cl_heights"]], "j"],
+        ],
+      ],
+      forEach(
+        upTo(steps),
+        at(["Add", ["Mod", ["Add", "cl_start", ["Subtract", "t", 1]], ["Add", steps, 1]], 1], "cl_rev"),
+        "t",
+      ),
+      "integer",
+    ),
+    "list<integer>",
+  ),
+  "list<integer>",
+);
+
+/** Each step takes the next place in the order 1, 2n, 2, 2n - 1, ..., and is an up step when its partner in the
+ *  matching of the path's up steps with their downs comes later in that order. */
+const elizaldeDeutschBody: MathJSON = bind(
+  "ed_heights",
+  forEach(upTo(steps), ["Subtract", ["Multiply", 2, upsThrough("p")], "p"], "p"),
+  bind(
+    "ed_partner",
+    forEach(
+      upTo(steps),
+      [
+        "If",
+        ["Equal", at("p"), 1],
+        [
+          "Min",
+          [
+            "Filter",
+            ["Range", ["Add", "p", 1], steps, 1],
+            ["Function", ["Equal", at("q", "ed_heights"), ["Subtract", at("p", "ed_heights"), 1]], "q"],
+          ],
+        ],
+        [
+          "Max",
+          [
+            "Filter",
+            upTo(steps),
+            [
+              "Function",
+              [
+                "And",
+                ["Less", "q", "p"],
+                ["Equal", at("q"), 1],
+                ["Equal", at("q", "ed_heights"), ["Add", at("p", "ed_heights"), 1]],
+              ],
+              "q",
+            ],
+          ],
+        ],
+      ],
+      "p",
+    ),
+    forEach(upTo(steps), [
+      "If",
+      [
+        "Greater",
+        // The partner's place in the order.
+        bind(
+          "ed_mate",
+          at(
+            [
+              "If",
+              ["Equal", ["Mod", "i", 2], 1],
+              ["Divide", ["Add", "i", 1], 2],
+              ["Subtract", ["Add", steps, 1], ["Divide", "i", 2]],
+            ],
+            "ed_partner",
+          ),
+          [
+            "If",
+            ["LessEqual", "ed_mate", ["Divide", steps, 2]],
+            ["Subtract", ["Multiply", 2, "ed_mate"], 1],
+            ["Multiply", 2, ["Subtract", ["Add", steps, 1], "ed_mate"]],
+          ],
+          "integer",
+        ),
+        "i",
+      ],
+      1,
+      0,
+    ]),
+    "list<integer>",
+  ),
+  "list<integer>",
+);
+
+/** The height after each step of the symbol `word`, a list of 0/1 steps. */
+const heightsAfter = (word: string): MathJSON =>
+  forEach(
+    upTo(["Length", word]),
+    [
+      "Subtract",
+      [
+        "Multiply",
+        2,
+        [
+          "Count",
+          [
+            "Filter",
+            upTo(["Length", word]),
+            ["Function", ["And", ["LessEqual", "k", "s"], ["Equal", at("k", word), 1]], "k"],
+          ],
+        ],
+      ],
+      "s",
+    ],
+    "s",
+  );
+
+/** The symbol `word` with each up step the path never returns beneath turned into a down step, given its `heights`. */
+const finalAscentsDown = (word: string, heights: string): MathJSON =>
+  forEach(
+    upTo(["Length", word]),
+    [
+      "If",
+      [
+        "And",
+        ["Equal", at("s", word), 1],
+        [
+          "Equal",
+          [
+            "Count",
+            [
+              "Filter",
+              upTo(["Length", word]),
+              ["Function", ["And", ["Greater", "t", "s"], ["Less", at("t", heights), at("s", heights)]], "t"],
+            ],
+          ],
+          0,
+        ],
+      ],
+      0,
+      at("s", word),
+    ],
+    "s",
+  );
+
+/** The first half with its final ascent turned down, read backwards and complemented, then the second half read
+ *  the same way round, complemented, and treated alike (the two reversals cancel). */
+const barnabeiCastronuovoBody: MathJSON = lets(
+  [
+    ["bc_n", ["Divide", steps, 2], "integer"],
+    ["bc_a", forEach(upTo("bc_n"), at("i")), "list<integer>"],
+    ["bc_aHeights", heightsAfter("bc_a"), "list<integer>"],
+    ["bc_first", finalAscentsDown("bc_a", "bc_aHeights"), "list<integer>"],
+    ["bc_b", forEach(upTo("bc_n"), ["Subtract", 1, at(["Subtract", ["Add", steps, 1], "i"])]), "list<integer>"],
+    ["bc_bHeights", heightsAfter("bc_b"), "list<integer>"],
+    ["bc_second", finalAscentsDown("bc_b", "bc_bHeights"), "list<integer>"],
+  ],
+  forEach(upTo(steps), [
+    "If",
+    ["LessEqual", "i", "bc_n"],
+    ["Subtract", 1, at(["Subtract", ["Add", "bc_n", 1], "i"], "bc_first")],
+    at(["Subtract", "i", "bc_n"], "bc_second"),
+  ]),
+);
+
 export const DYCK_MAPS: readonly CombinatorialMap[] = [
   {
     name: "InverseKrewerasComplement",
@@ -367,5 +562,34 @@ export const DYCK_MAPS: readonly CombinatorialMap[] = [
     guard: dyckGuard,
     summary: "An involution exchanging the number of returns with the length of the last descent.",
     note: "FindStat's Mp00118, the specialization to Dyck paths of the map of Elizalde and Rubey. It keeps the number of ups before each down that is neither a return nor in the last descent.",
+  },
+  {
+    name: "CoriLeBorgne",
+    from: "dyck_path",
+    to: "dyck_path",
+    body: ["If", ["Equal", steps, 0], ["List"], coriLeBorgneBody],
+    guard: dyckGuard,
+    summary:
+      "The involution that appends a down step to the path, reverses the word, and takes its one rotation that is a Dyck word followed by a down step.",
+    note: "FindStat's Mp00121.",
+  },
+  {
+    name: "ElizaldeDeutsch",
+    from: "dyck_path",
+    to: "dyck_path",
+    body: ["If", ["Equal", steps, 0], ["List"], elizaldeDeutschBody],
+    guard: dyckGuard,
+    summary:
+      "Reading the steps in the order first, last, second, second to last, and so on, a step of the image is an up step when its matching step has not yet been read.",
+    note: "FindStat's Mp00122, the bijection of Elizalde and Deutsch.",
+  },
+  {
+    name: "BarnabeiCastronuovo",
+    from: "dyck_path",
+    to: "dyck_path",
+    body: ["If", ["Equal", steps, 0], ["List"], barnabeiCastronuovoBody],
+    guard: dyckGuard,
+    summary: "The Schützenberger involution that reverses the canonical decompositions of the two halves of the path.",
+    note: "FindStat's Mp00123. In each half the up steps the path never returns beneath are the empty pieces of the decomposition.",
   },
 ];
