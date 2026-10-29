@@ -7,7 +7,7 @@ carmichaellambda-neg-10	(ArithmeticFunction.carmichael (-10))	failed to synthesi
 carmichaellambda-list-2-4-7	(ArithmeticFunction.carmichael [2, 4, 7])	Application type mismatch: The argument	error
 561-mod-carmichaellambda-561	((561 : ℤ) % (ArithmeticFunction.carmichael 561))	1	
 carmichaellambda-12	(ArithmeticFunction.carmichael 12)	2	
-list-divides-8-24-divides-carmichaellambda-8			
+list-divides-8-24-divides-carmichaellambda-8	[(decide ((8 : ℤ) ∣ 24)), (decide (((ArithmeticFunction.carmichael 8) : ℤ) ∣ (ArithmeticFunction.carmichael 24)))]	[true, true]	
 3-pow-1-plus-carmichaellambda-17-mod-17	(((3 ^ (1 + (ArithmeticFunction.carmichael 17))) : ℤ) % 17)	3	
 divides-multiplicativeorder-4-9-carmichaellambda			
 carmichaellambda-1	(ArithmeticFunction.carmichael 1)	1	
@@ -16,7 +16,7 @@ carmichaellambda-3	(ArithmeticFunction.carmichael 3)	2
 carmichaellambda-4	(ArithmeticFunction.carmichael 4)	2	
 carmichaellambda-5	(ArithmeticFunction.carmichael 5)	4	
 carmichaellambda-6	(ArithmeticFunction.carmichael 6)	2	
-divides-carmichaellambda-8-totient-8			
+divides-carmichaellambda-8-totient-8	(decide (((ArithmeticFunction.carmichael 8) : ℤ) ∣ (Nat.totient 8)))	true	
 carmichaellambda-7	(ArithmeticFunction.carmichael 7)	6	
 carmichaellambda-8	(ArithmeticFunction.carmichael 8)	2	
 carmichaellambda-9	(ArithmeticFunction.carmichael 9)	6	

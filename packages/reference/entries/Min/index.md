@@ -37,6 +37,15 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: mathlib4
+    template: "(([$*,] : List ℚ).min?.get (by decide +kernel))"
+    note: The smallest of the arguments as exact rationals. Several arguments are the pool; a lone argument is a list of numbers. The empty pool (ours is NaN, or +∞ with no arguments) and a nested list (ours flattens it) fail to elaborate rather than defaulting.
+  - origin: mapped
+    form: mathlib4
+    template: "(($1 : List ℚ).min?.get (by decide +kernel))"
+    arity: 1
+    note: A single list of numbers; a lone number fails to elaborate.
+  - origin: mapped
     form: wolfram
     template: Min[$*,]
     note: Same flattening as Max.

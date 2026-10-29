@@ -1,0 +1,24 @@
+id	in	out	verdict
+flatten-list-list-1-2-list-3-4	(([[1, 2], [3, 4]] : List (List ℚ)).flatten)	[1, 2, 3, 4]	
+flatten-list-list-1-list-2-3-list-4	(([[1, [2, 3]], [4]] : List (List ℚ)).flatten)	Application type mismatch: The argument	error
+flatten-list-list-a-b-list-c-list-d-f-list-g			
+flatten-single-level-non-list-unaffected			
+flatten-list-list-a-b-list-c-list-d-k-list-f			
+flatten-list-list-a-b-list-c-list-d-k-list-f-2			
+a-depth-argument-limits-flattening-to-just-that	(have _ : (1 : ℤ) ≥ 1 := (by decide); ([[1, 2], [3, [4]]] : List (List ℚ)).flatten)	Application type mismatch: The argument	error
+flatten-only-the-first-level			
+depth-0-leaves-the-list-unchanged	(have _ : (0 : ℤ) ≥ 1 := (by decide); ([0, [1], [[2, (-2)]], [[[3], [(-3)]]], [[[[4]]]]] : List (List ℚ)).flatten)	Tactic `decide` proved that the proposition	error
+depth-2-removes-two-levels-of-nesting	(have _ : (2 : ℤ) ≥ 1 := (by decide); ([0, [1], [[2, (-2)]], [[[3], [(-3)]]], [[[[4]]]]] : List (List ℚ)).flatten)	Application type mismatch: The argument	error
+depth-3	(have _ : (3 : ℤ) ≥ 1 := (by decide); ([0, [1], [[2, (-2)]], [[[3], [(-3)]]], [[[[4]]]]] : List (List ℚ)).flatten)	Application type mismatch: The argument	error
+depth-4-reaches-the-deepest-level	(have _ : (4 : ℤ) ≥ 1 := (by decide); ([0, [1], [[2, (-2)]], [[[3], [(-3)]]], [[[[4]]]]] : List (List ℚ)).flatten)	Application type mismatch: The argument	error
+an-explicit-infinite-depth-flattens-every-level			
+a-list-of-levels-regroups-the-dimensions-here	(have _ : ([[2], [1]] : ℤ) ≥ 1 := (by decide); ([[1, 2], [3, 4]] : List (List ℚ)).flatten)	Type mismatch	error
+nested-calls-of-any-one-head-flatten-not-just			
+flatten-list-0-list-1-list-list-2-neg-2-list	(have _ : (1 : ℤ) ≥ 1 := (by decide); ([0, [1], [[2, (-2)]], [[[3], [(-3)]]], [[[[4]]]]] : List (List ℚ)).flatten)	Application type mismatch: The argument	error
+flatten-list-0-list-1-list-list-2-neg-2-list-2	(([0, [1], [[2, (-2)]], [[[3], [(-3)]]], [[[[4]]]]] : List (List ℚ)).flatten)	Application type mismatch: The argument	error
+flatten-undoes-partition-chunking-and-re			
+a-list-with-no-nesting-is-unchanged	(([1, 2, 3] : List (List ℚ)).flatten)	failed to synthesize instance of type class	error
+flattening-an-m-times-n-matrix-gives-mn-elements	(List.length (([[1, 2, 3], [4, 5, 6]] : List (List ℚ)).flatten))	6	
+flatten-array-a-list-3-4			
+flatten-array-function-100-times-1-plus-10-times			
+flatten-array			

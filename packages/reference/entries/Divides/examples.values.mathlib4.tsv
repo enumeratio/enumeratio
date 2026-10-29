@@ -1,0 +1,11 @@
+id	in	out
+divides-2-10	(decide ((2 : ℤ) ∣ 10))	true
+divides-2-5	(decide ((2 : ℤ) ∣ 5))	false
+divides-3-6	(decide ((3 : ℤ) ∣ 6))	true
+divides-16-001-1-plus-10-pow-3-000	(decide ((16001 : ℤ) ∣ (1 + (10 ^ 3000))))	true
+divides-3-2-895	(decide ((3 : ℤ) ∣ 2895))	true
+divides-11-918-082	(decide ((11 : ℤ) ∣ 918082))	true
+list-isinteger-5-divides-2-10		
+divides-8-48	(decide ((8 : ℤ) ∣ 48))	true
+divides-12-25	(decide ((12 : ℤ) ∣ 25))	false
+simplify-divides-a-b-times-a-list-a-b-in		
