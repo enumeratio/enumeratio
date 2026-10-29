@@ -16,6 +16,17 @@ seeAlso:
   - Append
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: (($1) ++ ($2))
+    arity: 2
+    note: Two lists of one element type concatenated; a trailing level integer, or a non-list operand, fails to elaborate.
+  - origin: mapped
+    form: mathlib4
+    template: (($1) ++ ($2) ++ ($3))
+    arity: 3
+    note: Three lists of one element type concatenated; a trailing level integer, or a non-list operand, fails to elaborate.
 ---
 
 - $Join(A, B) = Flatten(\{A, B\}, 1)$. See [[Flatten]].

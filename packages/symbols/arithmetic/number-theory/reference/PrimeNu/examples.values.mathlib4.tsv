@@ -11,7 +11,7 @@ primenu-30	(ArithmeticFunction.cardDistinctFactors 30)	3
 negative-n-the-sign-is-a-unit	(ArithmeticFunction.cardDistinctFactors (-12))	failed to synthesize instance of type class	error
 moebiusmu-42-eq-neg-1-pow-primenu-42	(decide ((ArithmeticFunction.moebius 42) = ((-1) ^ (ArithmeticFunction.cardDistinctFactors 42))))	true	
 liouvillelambda-42-eq-neg-1-pow-primenu-42	(decide ((ArithmeticFunction.liouville 42) = ((-1) ^ (ArithmeticFunction.cardDistinctFactors 42))))	true	
-primenu-n-is-the-length-of-factorinteger-n			
+primenu-n-is-the-length-of-factorinteger-n	(decide ((ArithmeticFunction.cardDistinctFactors 50) = (List.length (let n : ℕ := 50; (Nat.primeFactorsList n).eraseDups.map fun p => [p, (Nat.primeFactorsList n).count p]))))	true	
 primenu-50	(ArithmeticFunction.cardDistinctFactors 50)	2	
 primenu-360-eq-primenu-9-plus-primenu-40	(decide ((ArithmeticFunction.cardDistinctFactors 360) = ((ArithmeticFunction.cardDistinctFactors 9) + (ArithmeticFunction.cardDistinctFactors 40))))	true	
 primenu-49	(ArithmeticFunction.cardDistinctFactors 49)	1	

@@ -1,4 +1,4 @@
-id	section	role	expr	expected	caption	sage.kind	sage.note
-total-of-a-list			[Total, [List, 1, 2, 3]]	6			
-total-of-a-matrix-is-columnwise			[Total, [List, [List, 1, 2], [List, 3, 4]]]	[List, 4, 6]	A matrix totals column by column	domain	Sage raises TypeError: unsupported operand type(s) for +: 'int' and 'list'; ours answers [List,4,6].
-total-of-symbols			[Total, [List, a, b, c]]	[Add, a, b, c]			
+id	section	role	expr	expected	caption	sage.kind	sage.note	mathlib4.kind	mathlib4.note
+total-of-a-list			[Total, [List, 1, 2, 3]]	6					
+total-of-a-matrix-is-columnwise			[Total, [List, [List, 1, 2], [List, 3, 4]]]	[List, 4, 6]	A matrix totals column by column	domain	Sage raises TypeError: unsupported operand type(s) for +: 'int' and 'list'; ours answers [List,4,6].	domain	A matrix totals column by column in compute-engine; Lean lists do not add, so List.sum of a list of lists fails to elaborate.
+total-of-symbols			[Total, [List, a, b, c]]	[Add, a, b, c]					

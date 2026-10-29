@@ -15,6 +15,11 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: mathlib4
+    template: (List.sum $1)
+    arity: 1
+    note: The sum of a list of numbers, 0 for the empty list; a matrix (ours totals column by column) fails to elaborate, since lists do not add.
+  - origin: mapped
     form: sage
     template: sum($1)
     arity: 1

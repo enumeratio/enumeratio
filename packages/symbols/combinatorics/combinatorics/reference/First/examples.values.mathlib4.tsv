@@ -1,0 +1,18 @@
+id	in	out	verdict
+first-list-1-2-3	(([1, 2, 3])[0]'(by decide +kernel))	1	
+first-list-10-20-30	(([10, 20, 30])[0]'(by decide +kernel))	10	
+first-list-a-b-c			
+first-default-ignored-when-nonempty			
+first-of-association-is-first-value			
+first-of-empty-association-falls-through			
+first-of-nonempty-association-ignores-default			
+first-list-x			
+a-second-argument-supplies-a-default-for-an			
+of-a-matrix-the-first-row			
+a-lazy-range-works-too	((((List.range (Int.natAbs ((10 : ℤ) - 5) + 1)).map (fun (k : ℕ) => (((5 : ℤ) + Int.sign ((10 : ℤ) - 5) * k : ℤ) : ℚ))))[0]'(by decide +kernel))	5	
+any-expression-not-just-a-list-the-first-term-of			
+a-default-is-ignored-when-the-collection-has-a			
+first-sparsearray-range-1-100			
+first-c-at-c-1-see-at	(decide ((([1, 2, 3])[0]'(by decide +kernel)) = (([1, 2, 3])[(if (1 : ℤ) > 0 then ((1 : ℤ).toNat - 1) else ((([1, 2, 3]).length : ℤ) + (1 : ℤ)).toNat)]'(by decide +kernel))))	true	
+an-empty-collection-has-no-first-element-compute	(([])[0]'(by decide +kernel))	Expected type must not contain metavariables	error
+first-a-pow-neg-2			

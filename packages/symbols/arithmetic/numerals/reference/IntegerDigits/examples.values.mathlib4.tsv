@@ -48,4 +48,4 @@ an-unrecognized-system-symbol-leaves-the-call
 ostrowski-declines-past-its-ceiling			
 past-the-product-there-is-no-residue-numeral			
 bijective-base-26-zero-is-the-empty-numeral			
-100-has-158-digits			
+100-has-158-digits	(List.length (let n : ℕ := (Nat.factorial 100); if n = 0 then [0] else (Nat.digits 10 n).reverse))	158	

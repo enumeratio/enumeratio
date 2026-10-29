@@ -1,3 +1,3 @@
 id	in	out
 count-partitions-of-8-max-part-3	(List.length ((((Finset.univ : Finset (Nat.Partition (8 : ℕ))).filter (fun p => ∀ x ∈ p.parts, x ≤ (3 : ℕ))).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·)))	10
-partitions-of-5-max-part-2		
+partitions-of-5-max-part-2	(if (3 : ℤ) ≥ 0 then (((((Finset.univ : Finset (Nat.Partition (5 : ℕ))).filter (fun p => ∀ x ∈ p.parts, x ≤ (2 : ℕ))).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·))).take (3 : ℤ).toNat else (((((Finset.univ : Finset (Nat.Partition (5 : ℕ))).filter (fun p => ∀ x ∈ p.parts, x ≤ (2 : ℕ))).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·))).drop ((((((Finset.univ : Finset (Nat.Partition (5 : ℕ))).filter (fun p => ∀ x ∈ p.parts, x ≤ (2 : ℕ))).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·))).length - (-(3 : ℤ)).toNat))	[[2, 2, 1], [2, 1, 1, 1], [1, 1, 1, 1, 1]]
