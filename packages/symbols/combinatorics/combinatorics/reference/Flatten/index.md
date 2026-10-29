@@ -23,6 +23,17 @@ seeAlso:
   - Join
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: "(($1 : List (List ℚ)).flatten)"
+    arity: 1
+    note: A list of lists of numbers, merged one level, which is every level there is. Deeper or ragged nesting and a flat list fail to elaborate, since Lean types them differently from ours.
+  - origin: mapped
+    form: mathlib4
+    template: "(have _ : ($2 : ℤ) ≥ 1 := (by decide); ($1 : List (List ℚ)).flatten)"
+    arity: 2
+    note: A depth of one or more over a list of lists of numbers, where that is the same as flattening fully. Depth zero or a negative depth fails to elaborate, as does any nesting deeper than two levels.
 ---
 
 - Undoes [[Partition]]: chunking and then re-flattening recovers the original list.

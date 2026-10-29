@@ -32,6 +32,15 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: mathlib4
+    template: "(([$*,] : List ℚ).max?.get (by decide +kernel))"
+    note: The largest of the arguments as exact rationals. Several arguments are the pool; a lone argument is a list of numbers. The empty pool (ours is NaN) and a nested list (ours flattens it) fail to elaborate rather than defaulting.
+  - origin: mapped
+    form: mathlib4
+    template: "(($1 : List ℚ).max?.get (by decide +kernel))"
+    arity: 1
+    note: A single list of numbers; a lone number fails to elaborate.
+  - origin: mapped
     form: wolfram
     template: Max[$*,]
     note: Wolfram (and our Max) flattens nested lists into one pool; bare SymPy Max()/Sage max() on a list (or a list of lists) either raise or compare lexicographically instead, so both go through a flattening helper (run.ts's SYMPY_PREAMBLE / SAGE_PREAMBLE).

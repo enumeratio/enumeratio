@@ -11,6 +11,11 @@ names:
 stub: engine
 bindings:
   - origin: mapped
+    form: mathlib4
+    template: "(decide (($1 : ℤ) ∣ $2))"
+    arity: 2
+    note: Divisibility over the integers, zero included (0 divides only 0); a rational operand fails to elaborate.
+  - origin: mapped
     form: julia
     template: iszero(mod(ZZ($2), ZZ($1)))
     arity: 2

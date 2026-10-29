@@ -15,7 +15,7 @@ ragged-rows-join-at-level-2-too
 a-row-missing-from-the-shorter-array-simply-isn			
 any-head-as-long-as-all-the-arguments-share-it			
 join-aa-bb			
-join-a-b-flatten-a-b-1-see-flatten			
+join-a-b-flatten-a-b-1-see-flatten	(decide ((([1, 2]) ++ ([3, 4])) = (have _ : (1 : ℤ) ≥ 1 := (by decide); ([[1, 2], [3, 4]] : List (List ℚ)).flatten)))	true	
 join-is-associative			
 nestlist-function-join-1-1-1-list-x-4			
 nestlist-function-list-1-neg-1-plus-1-1-list-1-5			

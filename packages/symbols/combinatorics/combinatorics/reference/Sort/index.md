@@ -17,6 +17,12 @@ seeAlso:
   - Ordering
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: "(($1 : List ℚ).mergeSort)"
+    arity: 1
+    note: A stable sort of exact rationals, increasing. Strings, symbols and nested lists fail to elaborate, since ours orders them by Wolfram's canonical order. A comparator is unbound.
 ---
 
 - Idempotent: sorting an already-sorted collection changes nothing.

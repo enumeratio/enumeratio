@@ -1,0 +1,25 @@
+id	in	out	verdict
+min-3-1-4-1-5	(([3, 1, 4, 1, 5] : List ℚ).min?.get (by decide +kernel))	1	
+also-accepts-a-single-list-argument	(([3, 1, 4] : List ℚ).min?.get (by decide +kernel))	1	
+min-neg-1-neg-5	(([(-1), (-5)] : List ℚ).min?.get (by decide +kernel))	-5	
+a-single-argument-is-returned-unchanged	((3 : List ℚ).min?.get (by decide +kernel))	failed to synthesize instance of type class	error
+min-9-2	(([9, 2] : List ℚ).min?.get (by decide +kernel))	2	
+min-list-4-1-7-2	(([4, 1, 7, 2] : List ℚ).min?.get (by decide +kernel))	1	
+min-5p56-neg-4p8-7p3	(([5.56, (-4.8), 7.3] : List ℚ).min?.get (by decide +kernel))	-24/5	
+min-min-folds-into-a-normal-call	(([(([] : List ℚ).min?.get (by decide +kernel)), 5] : List ℚ).min?.get (by decide +kernel))	Tactic `decide` proved that the proposition	error
+nested-lists-are-flattened-into-the-pool	(([2, 3, [[((1 : ℚ) / 2), (-1)], [(((-5) : ℚ) / 3), ((1 : ℚ) / 2)]]] : List ℚ).min?.get (by decide +kernel))	Application type mismatch: The argument	error
+exact-numbers-are-compared-numerically			
+the-numeric-arguments-collapse-to-their-minimum			
+compares-exact-constants-numerically-min-e-pi-5			
+the-min-of-two-intervals-is-the-interval-of			
+the-smallest-member-of-a-finset	(([1, 3, 4] : List ℚ).min?.get (by decide +kernel))	1	
+the-day-s-low-from-the-same-hourly-readings-see	(([68, 72, 65, 80, 74] : List ℚ).min?.get (by decide +kernel))	65	
+commutative-order-doesn-t-matter	(decide ((([3, 7] : List ℚ).min?.get (by decide +kernel)) = (([7, 3] : List ℚ).min?.get (by decide +kernel))))	true	
+min-a-b-max-a-b-a-b-see-max	(decide (((([4, 9] : List ℚ).min?.get (by decide +kernel)) + (([4, 9] : List ℚ).max?.get (by decide +kernel))) = (4 + 9)))	true	
+idempotent-min-x-x-x			
+infinities-participate-directly-in-the			
+multiple-arguments-lists-included-are-flattened	(([[3, 1], 0] : List ℚ).min?.get (by decide +kernel))	Application type mismatch: The argument	error
+with-no-arguments-it-returns-the-identity	(([] : List ℚ).min?.get (by decide +kernel))	Tactic `decide` proved that the proposition	error
+the-min-of-an-empty-list-is-nan	(([] : List ℚ).min?.get (by decide +kernel))	Tactic `decide` proved that the proposition	error
+min-with-complexinfinity-stays-unevaluated			
+the-smallest-member-of-the-empty-finset	(([] : List ℚ).min?.get (by decide +kernel))	Tactic `decide` proved that the proposition	error
