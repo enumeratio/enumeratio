@@ -31,6 +31,8 @@ test("the build compiled maps", () => {
 // reason, so one that starts to compile (or is dropped) shows up as a failure rather than going unnoticed.
 const INTERPRETED: Readonly<Record<string, string>> = {
   "Avoiding321Permutation@dyck_path": "inverse RSK folds over nested tableaux, which have no compiled type",
+  "NoncrossingPermutation@dyck_path":
+    "folds a Tuple of the area sequence and permutation over touch cycles, a list of lists the compiler won't take",
 };
 
 test("the pinned maps are declared and not compiled", () => {

@@ -1621,6 +1621,10 @@ const NOVEL = [
   "InverseWachsWhiteRho",
   "Yip",
   "InverseYip",
+  "NoncrossingPermutation",
+  "AdinBagnoRoichman",
+  "Ringel",
+  "SupportDyckPath",
 ];
 
 // What formats holds inert that is Wolfram's own (`Plot`, `Slider`, `Cell`): known elsewhere because

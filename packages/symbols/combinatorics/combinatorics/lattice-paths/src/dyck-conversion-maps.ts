@@ -454,6 +454,229 @@ const cutOutBody: MathJSON = lets(
 /** Mp00033: the positions of the ups, then those of the downs. */
 const twoRowBody: MathJSON = ["If", isEmpty, ["List"], twoRowTableau];
 
+/** Mp00023, one peeling of Stump's bijection on the area sequence `area` (a bound name of length n >= 2): the touch
+ *  points, as the lists of positions whose entries rotate together, and the pending touches. */
+const peeledCycles = (area: string): MathJSON =>
+  lets(
+    [
+      [
+        "pl_scan",
+        [
+          "Fold",
+          [
+            "Function",
+            lets(
+              [
+                ["pl_touches", at(1, "acc"), "list<integer>"],
+                ["pl_cycles", at(2, "acc"), "list<list<integer>>"],
+                ["pl_next", at(["Add", "k", 1], area), "integer"],
+                ["pl_with", ["Join", at(1, "acc"), ["List", "k"]], "list<integer>"],
+              ],
+              [
+                "If",
+                ["Equal", "pl_next", 0],
+                [
+                  "If",
+                  ["Greater", ["Length", "pl_with"], 1],
+                  ["Tuple", ["List"], ["Join", "pl_cycles", ["List", "pl_with"]]],
+                  [
+                    "If",
+                    ["Equal", at("k", area), 0],
+                    ["Tuple", ["List"], "pl_cycles"],
+                    ["Tuple", "pl_with", "pl_cycles"],
+                  ],
+                ],
+                ["If", ["Equal", "pl_next", 1], ["Tuple", "pl_with", "pl_cycles"], "acc"],
+              ],
+            ),
+            "acc",
+            "k",
+          ],
+          ["Tuple", ["List"], ["List"]],
+          ["Range", 1, ["Subtract", ["Length", area], 1], 1],
+        ],
+      ],
+    ],
+    // The last position closes a cycle when its entry is positive and a touch is pending.
+    [
+      "If",
+      ["And", ["Greater", at(["Length", area], area), 0], ["Greater", ["Length", at(1, "pl_scan")], 0]],
+      ["Join", at(2, "pl_scan"), ["List", ["Join", at(1, "pl_scan"), ["List", ["Length", area]]]]],
+      at(2, "pl_scan"),
+    ],
+  );
+
+/** Mp00023: Stump's bijection. A round peels the area sequence and rotates the entries at each touch cycle one
+ *  place; a round with no cycles leaves the state alone, so n rounds run past the last. */
+const noncrossingPermutationBody: MathJSON = [
+  "If",
+  isEmpty,
+  ["List"],
+  [
+    "If",
+    ["Equal", steps, 2],
+    ["List", 1],
+    at(2, [
+      "Fold",
+      [
+        "Function",
+        lets(
+          [
+            ["nc_area", at(1, "acc"), "list<integer>"],
+            ["nc_pi", at(2, "acc"), "list<integer>"],
+            ["nc_cycles", peeledCycles("nc_area"), "list<list<integer>>"],
+          ],
+          [
+            "If",
+            ["Equal", ["Length", "nc_cycles"], 0],
+            "acc",
+            [
+              "Tuple",
+              forEach(
+                upTo(semilength),
+                ["If", ["Equal", "j", semilength], 0, ["Max", ["Subtract", at(["Add", "j", 1], "nc_area"), 2], 0]],
+                "j",
+              ),
+              [
+                "Fold",
+                [
+                  "Function",
+                  forEach(
+                    upTo(semilength),
+                    [
+                      "If",
+                      ["Element", "j", at("c", "nc_cycles")],
+                      at(
+                        at(
+                          [
+                            "If",
+                            ["Equal", ["IndexOf", at("c", "nc_cycles"), "j"], ["Length", at("c", "nc_cycles")]],
+                            1,
+                            ["Add", ["IndexOf", at("c", "nc_cycles"), "j"], 1],
+                          ],
+                          at("c", "nc_cycles"),
+                        ),
+                        "ring",
+                      ),
+                      at("j", "ring"),
+                    ],
+                    "j",
+                  ),
+                  "ring",
+                  "c",
+                ],
+                "nc_pi",
+                upTo(["Length", "nc_cycles"]),
+              ],
+            ],
+          ],
+        ),
+        "acc",
+        "r",
+      ],
+      ["Tuple", areaSequence, upTo(semilength)],
+      upTo(semilength),
+    ]),
+  ],
+];
+
+/** The positions of `_raw` whose step is `letter`. */
+const stepPositions = (letter: number): MathJSON => [
+  "Filter",
+  upTo(steps),
+  ["Function", ["Equal", at("p"), letter], "p"],
+];
+
+/** The last 1 in row `row` of the Ringel matrix, from the bound list `rg_hi` (rows past the last stay put). */
+const lastOneIn = (row: MathJSON): MathJSON => at(["Add", ["Min", row, "rg_n"], 1], "rg_hi");
+
+/** Mp00201's omega, on the pair (row, column): to (column + 1, the last 1 of the row, or n when the column is
+ *  already beyond it). */
+const omegaRow = (column: MathJSON): MathJSON => ["Add", column, 1];
+const omegaColumn = (column: MathJSON, row: MathJSON): MathJSON => [
+  "If",
+  ["Greater", column, lastOneIn(row)],
+  "rg_n",
+  lastOneIn(row),
+];
+
+/** One round of the walk on the state (injective row and column, simple row and column, answer or -1). */
+const ringelStep: MathJSON = [
+  "Function",
+  lets(
+    [
+      ["rg_ir", at(1, "acc"), "integer"],
+      ["rg_ic", at(2, "acc"), "integer"],
+      ["rg_sr", at(3, "acc"), "integer"],
+      ["rg_sc", at(4, "acc"), "integer"],
+      ["rg_ar", omegaRow("rg_ic"), "integer"],
+      ["rg_ac", omegaColumn("rg_ic", "rg_ir"), "integer"],
+      ["rg_br", omegaRow("rg_ac"), "integer"],
+      ["rg_bc", omegaColumn("rg_ac", "rg_ar"), "integer"],
+      ["rg_cr", omegaRow("rg_sc"), "integer"],
+      ["rg_cc", omegaColumn("rg_sc", "rg_sr"), "integer"],
+      ["rg_dr", omegaRow("rg_cc"), "integer"],
+      ["rg_dc", omegaColumn("rg_cc", "rg_cr"), "integer"],
+    ],
+    [
+      "If",
+      ["GreaterEqual", at(5, "acc"), 0],
+      "acc",
+      [
+        "If",
+        ["Equal", lastOneIn("rg_ir"), "rg_ic"],
+        ["Tuple", "rg_ir", "rg_ic", "rg_sr", "rg_sc", "rg_ir"],
+        [
+          "If",
+          ["Equal", lastOneIn("rg_cr"), "rg_cc"],
+          ["Tuple", "rg_br", "rg_bc", "rg_cr", "rg_cc", "rg_cr"],
+          ["Tuple", "rg_br", "rg_bc", "rg_dr", "rg_dc", -1],
+        ],
+      ],
+    ],
+  ),
+  "acc",
+  "t",
+];
+
+/** The state a walk for the number of downs `i` starts from. */
+const ringelStart = (): MathJSON => ["Tuple", at(["Add", "i", 1], "rg_lo"), "i", "i", "i", -1];
+
+/**
+ * Mp00201: the Ringel permutation of the Nakayama algebra of the path, after Sage's code on the matrix with a 1 at
+ * (downs, ups) at every lattice point of the path. Row i holds its 1s from `ups` to `hi_i` and column j its 1s from
+ * `lo_j`, so the walk of the code needs only those: it moves a pair (row, column) by (column + 1, the last 1 of the
+ * row, or n when the column is past it) until the pair sits on a row's last 1, and the answer is its row, plus 1.
+ */
+const ringelBody: MathJSON = [
+  "If",
+  isEmpty,
+  ["List", 1],
+  lets(
+    [
+      ["rg_n", semilength, "integer"],
+      ["rg_up", stepPositions(1), "list<integer>"],
+      ["rg_down", stepPositions(0), "list<integer>"],
+      // The most ups at each number of downs (index downs + 1), and the fewest downs at each number of ups.
+      [
+        "rg_hi",
+        ["Join", forEach(upTo("rg_n"), ["Subtract", at("k", "rg_down"), "k"], "k"), ["List", "rg_n"]],
+        "list<integer>",
+      ],
+      [
+        "rg_lo",
+        ["Join", ["List", 0], forEach(upTo("rg_n"), ["Subtract", at("k", "rg_up"), "k"], "k")],
+        "list<integer>",
+      ],
+    ],
+    forEach(
+      ["Range", 0, "rg_n", 1],
+      ["Add", at(5, ["Fold", ringelStep, ringelStart(), upTo(["Add", "rg_n", 1])]), 1],
+      "i",
+    ),
+  ),
+];
+
 export const DYCK_CONVERSION_MAPS: readonly CombinatorialMap[] = [
   {
     name: "CutOutPartition",
@@ -572,5 +795,24 @@ export const DYCK_CONVERSION_MAPS: readonly CombinatorialMap[] = [
     summary:
       "Reflect the path's parallelogram polyomino across the diagonal, so the first column becomes the first row.",
     note: "FindStat's Mp00228, an involution: it swaps each adjacent pair of steps from the second step on.",
+  },
+  {
+    name: "NoncrossingPermutation",
+    from: "dyck_path",
+    to: "permutation",
+    body: noncrossingPermutationBody,
+    guard: dyckGuard,
+    summary:
+      "The noncrossing permutation Stump's bijection gives the path: the cycles of its touch points, peeled off round by round.",
+    note: "FindStat's Mp00023, Sage's to_noncrossing_permutation. Injective: its image is the noncrossing permutations. It sends the area to the number of inversions.",
+  },
+  {
+    name: "Ringel",
+    from: "dyck_path",
+    to: "permutation",
+    body: ringelBody,
+    guard: dyckGuard,
+    summary: "The Ringel permutation of the Nakayama algebra whose Kupisch series the path gives, one size up.",
+    note: "FindStat's Mp00201, after Ringel's The finitistic dimension of a Nakayama algebra. Injective, into the permutations of n + 1.",
   },
 ];

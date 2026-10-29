@@ -516,6 +516,12 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     findstat: [{ id: "Mp00123", rows: 1200, compared: 196, skipped: 0 }],
   },
   {
+    name: "AdinBagnoRoichman",
+    from: "DyckPath",
+    to: "DyckPath",
+    findstat: [{ id: "Mp00124", rows: 1200, compared: 196, skipped: 0 }],
+  },
+  {
     name: "CutOutPartition",
     from: "DyckPath",
     to: "IntegerPartition",
@@ -586,6 +592,18 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     from: "DyckPath",
     to: "DyckPath",
     findstat: [{ id: "Mp00228", rows: 1200, compared: 196, skipped: 0 }],
+  },
+  {
+    name: "NoncrossingPermutation",
+    from: "DyckPath",
+    to: "Permutation",
+    findstat: [{ id: "Mp00023", rows: 1200, compared: 196, skipped: 0 }],
+  },
+  {
+    name: "Ringel",
+    from: "DyckPath",
+    to: "Permutation",
+    findstat: [{ id: "Mp00201", rows: 1200, compared: 196, skipped: 0 }],
   },
   {
     name: "TransposePartition",
@@ -1042,6 +1060,12 @@ export const findstatMaps: readonly FindStatMapMatch[] = [
     from: "BinaryWord",
     to: "Composition",
     findstat: [{ id: "Mp00178", rows: 1200, compared: 126, skipped: 0 }],
+  },
+  {
+    name: "SupportDyckPath",
+    from: "ParkingFunction",
+    to: "DyckPath",
+    findstat: [{ id: "Mp00056", rows: 1200, compared: 1200, skipped: 0 }],
   },
   {
     name: "FoataHan",
