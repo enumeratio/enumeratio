@@ -3,7 +3,7 @@ import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { applyTemplates, captureTemplates, type Template, takesBindings, whenTemplatesDefined } from "./bindings.ts";
-import { controlsTemplate } from "./manipulate-ui.ts";
+import { controlsTemplate, rawOf } from "./manipulate-ui.ts";
 import { ensureFor, loadBareEngine, loadMarkup } from "./mathlive.ts";
 import "./dynamic-box.ts";
 import "./knob-box.ts";
@@ -154,7 +154,8 @@ export class NotatioManipulate extends LitElement {
 
   #onKnob = (event: CustomEvent<ControlChange>): void => {
     event.stopPropagation();
-    this.#setControl(event.detail.name, String(event.detail.re));
+    const c = this._controls.find((k) => k.name === event.detail.name);
+    this.#setControl(event.detail.name, c === undefined ? String(event.detail.re) : rawOf(c, event.detail));
   };
 
   protected override willUpdate(changed: PropertyValues): void {
@@ -193,11 +194,31 @@ export class NotatioManipulate extends LitElement {
   #apply(): void {
     const engine = this.#engine;
     if (!engine) return;
-    const bindings = Object.fromEntries(this._controls.map((c) => [`_${c.name}`, c.value]));
+    // Plots sample numbers: a checkbox is 1 or 0 to them, and a text parameter has no number.
+    const bindings = Object.fromEntries(
+      this._controls
+        .filter((c) => c.kind !== "text")
+        .map((c) => [`_${c.name}`, typeof c.value === "boolean" ? Number(c.value) : (c.value as number)]),
+    );
     const bound = this.#templates.filter(takesBindings);
     for (const t of bound) (t.el as { bindings?: Record<string, number> }).bindings = bindings;
     const rest = this.#templates.filter((t) => !bound.includes(t));
-    applyTemplates(engine, rest, new Map(this._controls.map((c) => [c.name, engine.number(c.value)])));
+    applyTemplates(
+      engine,
+      rest,
+      new Map(
+        this._controls.map((c) => [
+          c.name,
+          c.kind === "toggle"
+            ? engine.box(c.value ? "True" : "False")
+            : c.kind === "text"
+              ? engine.box({ str: c.value })
+              : c.kind === "point" && c.im !== 0
+                ? engine.box(["Complex", c.value, c.im])
+                : engine.number(c.value),
+        ]),
+      ),
+    );
   }
 
   /** Playback covers one step per this many milliseconds, whatever the frame rate. */
@@ -205,10 +226,16 @@ export class NotatioManipulate extends LitElement {
 
   /** Apply an input immediately — never interpolated; see `advanceValue`. */
   #setControl = (name: string, raw: string): void => {
-    const v = Number(raw);
-    if (!Number.isFinite(v)) return;
     this._controls = this._controls.map((c) => {
       if (c.name !== name) return c;
+      if (c.kind === "toggle") return { ...c, value: raw === "True" };
+      if (c.kind === "text") return { ...c, value: raw };
+      if (c.kind === "point") {
+        const [re, im] = raw.split(",").map(Number);
+        return Number.isFinite(re) && Number.isFinite(im) ? { ...c, value: re, im } : c;
+      }
+      const v = Number(raw);
+      if (!Number.isFinite(v)) return c;
       return c.kind === "slider" ? { ...c, value: clamp(v, c.min, c.max) } : { ...c, value: v };
     });
   };

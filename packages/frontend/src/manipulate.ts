@@ -20,7 +20,9 @@ export type ControlType =
   | "PopupMenu"
   | "Toggler"
   | "ListPicker"
-  | "InputField";
+  | "InputField"
+  | "Checkbox"
+  | "Slider2D";
 
 export const CONTROL_TYPES: readonly ControlType[] = [
   "Slider",
@@ -33,6 +35,8 @@ export const CONTROL_TYPES: readonly ControlType[] = [
   "Toggler",
   "ListPicker",
   "InputField",
+  "Checkbox",
+  "Slider2D",
 ];
 
 export interface SliderControl {
@@ -53,7 +57,33 @@ export interface ChoiceControl {
   control?: ControlType;
 }
 
-export type Control = SliderControl | ChoiceControl;
+/** A true/false parameter: a checkbox. */
+export interface ToggleControl {
+  kind: "toggle";
+  name: string;
+  value: boolean;
+  control?: ControlType;
+}
+
+/** A complex parameter, `value + im i`: a pad. */
+export interface PointControl {
+  kind: "point";
+  name: string;
+  /** The real part. */
+  value: number;
+  im: number;
+  control?: ControlType;
+}
+
+/** A text parameter: an input field. */
+export interface TextControl {
+  kind: "text";
+  name: string;
+  value: string;
+  control?: ControlType;
+}
+
+export type Control = SliderControl | ChoiceControl | ToggleControl | PointControl | TextControl;
 
 /** Split `s` on top-level `sep`, ignoring separators nested inside `{ }`. */
 function splitTop(s: string, sep: string): string[] {
@@ -157,6 +187,8 @@ export function defaultStep(min: number, max: number): number {
   return (norm >= 5 ? 5 : norm >= 2 ? 2 : 1) * mag;
 }
 
+const NON_NUMERIC = new Set(["Boolean", "String", "Complex"]);
+
 /** Does the leading `{` of `s` close only at its very end — i.e. wrap the whole of it? */
 function wrapsWhole(s: string): boolean {
   if (!s.startsWith("{") || !s.endsWith("}")) return false;
@@ -190,6 +222,8 @@ function splitControls(spec: string): string[] {
  *   `{a, 0, 5, 0.5}`       + explicit step
  *   `{{a, 2}, 0, 5}`       + explicit initial value
  *   `{k, {2, 3, 5, 7}}`    a choice setter over a discrete list
+ *   `{b, Boolean}`         a checkbox; `{s, String}` a text field; `{z, Complex}` a pad
+ *                          (each starts elsewhere as `{{b, True}, Boolean}`, `{{z, re, im}, Complex}`)
  * Malformed controls are skipped rather than throwing.
  */
 export function parseControls(spec: string): Control[] {
@@ -200,12 +234,14 @@ export function parseControls(spec: string): Control[] {
     const fields = splitTop(body, ",");
     if (fields.length < 2) continue;
 
-    // The variable spec is either `name` or `{name, init}`.
+    // The variable spec is either `name` or `{name, init}` (`{name, re, im}` for a complex one).
     let name = fields[0];
     let init: number | undefined;
+    let rawInit: string[] = [];
     if (name.startsWith("{")) {
       const inner = splitTop(name.slice(1, -1), ",");
       name = inner[0];
+      rawInit = inner.slice(1);
       init = num(inner[1]);
     }
     name = name.trim();
@@ -215,6 +251,19 @@ export function parseControls(spec: string): Control[] {
     const last = fields[fields.length - 1].trim() as ControlType;
     const control = fields.length > 2 && CONTROL_TYPES.includes(last) ? last : undefined;
     if (control !== undefined) fields.pop();
+
+    // `{name, Boolean}`, `{name, String}`, `{name, Complex}`: a control for a non-numeric value.
+    if (fields.length === 2 && NON_NUMERIC.has(fields[1])) {
+      const at = { name, ...(control && { control }) };
+      if (fields[1] === "Boolean") controls.push({ kind: "toggle", ...at, value: rawInit[0] === "True" });
+      else if (fields[1] === "String") {
+        controls.push({ kind: "text", ...at, value: (rawInit[0] ?? "''").replace(/^'(.*)'$/s, "$1") });
+      } else {
+        const [re, im] = rawInit.map(num);
+        controls.push({ kind: "point", ...at, value: Number.isFinite(re) ? re : 0, im: Number.isFinite(im) ? im : 0 });
+      }
+      continue;
+    }
 
     // `{name, {choices...}}` -> a discrete choice setter.
     if (fields.length === 2 && fields[1].startsWith("{")) {

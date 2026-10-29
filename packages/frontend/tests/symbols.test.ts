@@ -47,6 +47,9 @@ const CORPUS = [
   "CollectionTable(Subsets(4))",
   "Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))",
   "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))",
+  // No tuples: the controls are inferred from the free symbols, or from a bare name.
+  "Manipulate(Sin(a) * b)",
+  "Manipulate(Plot(Sin(a * x), (x, 0, 10)), a, (b, 0, 1))",
   'Image("data:image/png;base64,AAA")',
   "Sin(x) + 1",
   // A cell: the held input, its forms, and the value it should come to.

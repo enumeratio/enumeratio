@@ -7,12 +7,14 @@
 
 import { html, type TemplateResult } from "lit";
 import "./animator-box.ts";
+import "./checkbox-box.ts";
 import "./input-field-box.ts";
 import "./knob-box.ts";
 import "./list-picker-box.ts";
 import "./popup-menu-box.ts";
 import "./radio-button-bar-box.ts";
 import "./setter-bar-box.ts";
+import "./slider-2d-box.ts";
 import "./slider-box.ts";
 import "./toggler-box.ts";
 import type { LongPress } from "./popover.ts";
@@ -56,8 +58,37 @@ export function tagFor(c: Control): string {
       return "input-field-box";
     case "Slider":
       return "slider-box";
+    case "Checkbox":
+      return "checkbox-box";
+    case "Slider2D":
+      return "slider-2d-box";
     default:
-      return c.kind === "slider" ? "slider-box" : c.choices.length <= BAR_LIMIT ? "setter-bar-box" : "popup-menu-box";
+      switch (c.kind) {
+        case "slider":
+          return "slider-box";
+        case "toggle":
+          return "checkbox-box";
+        case "point":
+          return "slider-2d-box";
+        case "text":
+          return "input-field-box";
+        default:
+          return c.choices.length <= BAR_LIMIT ? "setter-bar-box" : "popup-menu-box";
+      }
+  }
+}
+
+/** The raw string a control's change is handed to the host as: what `Control` reads back in. */
+export function rawOf(c: Control, change: ControlChange): string {
+  switch (c.kind) {
+    case "toggle":
+      return change.value === "True" ? "True" : "False";
+    case "point":
+      return `${change.re},${change.im}`;
+    case "text":
+      return typeof change.value === "string" ? change.value.replace(/^'(.*)'$/s, "$1") : JSON.stringify(change.value);
+    default:
+      return String(change.re);
   }
 }
 
@@ -77,7 +108,8 @@ export function controlsTemplate(
   // stop here so a host that also owns a prose panel does not hear them twice.
   const onChange = (e: CustomEvent<ControlChange>): void => {
     e.stopPropagation();
-    h.set(e.detail.name, String(e.detail.re));
+    const c = controls.find((k) => k.name === e.detail.name);
+    h.set(e.detail.name, c === undefined ? String(e.detail.re) : rawOf(c, e.detail));
   };
   return html`<div class="notatio-controls" role="group" aria-label="parameters" @notatio-control-change=${onChange}>
     ${controls.map((c) =>
@@ -103,7 +135,7 @@ export function controlsTemplate(
             ></label
           >`
         : html`<label class="notatio-control"
-            ><span class="notatio-control-name">${c.name}</span>${choiceControl(c)}</label
+            ><span class="notatio-control-name">${c.name}</span>${valueControl(c)}</label
           >`,
     )}${fps ? html`<span class="notatio-control-fps">${fps} fps</span>` : null}
   </div>`;
@@ -135,6 +167,28 @@ function sliderControl(c: Extract<Control, { kind: "slider" }>): TemplateResult 
         max=${c.max}
         step=${c.step}
       ></slider-box>`;
+  }
+}
+
+/** Any parameter but a range as its control. */
+function valueControl(c: Exclude<Control, { kind: "slider" }>): TemplateResult {
+  switch (c.kind) {
+    case "toggle":
+      return html`<checkbox-box name=${c.name} .value=${c.value ? "True" : "False"}></checkbox-box>`;
+    case "point":
+      return html`<slider-2d-box
+        name=${c.name}
+        complex
+        .value=${`${c.value},${c.im}`}
+        min="-2,-2"
+        max="2,2"
+        step="0.05"
+        readout
+      ></slider-2d-box>`;
+    case "text":
+      return html`<input-field-box name=${c.name} .value=${`'${c.value}'`}></input-field-box>`;
+    default:
+      return choiceControl(c);
   }
 }
 
