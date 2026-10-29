@@ -10,7 +10,7 @@ foldlist-lcm-1-range-2-10-lazy-not-list	((((List.range (Int.natAbs ((10 : ℤ) -
 foldlist-permute-list-a-b-c-d-list-list-1-4-3-2			
 foldlist-cross-list-list-1-neg-1-1-list-0-1-1			
 foldlist-multiply-1-array-nthprime-10			
-foldlist-max-0-list-1-3-1-2-4-1-5-3-6-2-8-11			
+foldlist-max-0-list-1-3-1-2-4-1-5-3-6-2-8-11	(([1, 3, 1, 2, 4, 1, 5, 3, 6, 2, 8, 11]).scanl (fun (s₁ : ℚ) (s₂ : ℚ) => (([s₁, s₂] : List ℚ).max?.get (by decide +kernel))) 0)	Expected type must not contain free variables	error
 foldlist-at-a-plus-b-times-x-pow-2-plus-y-pow-2			
 foldlist-append-list-x-list-a-b-c-d			
 foldlist-list-x-list-a-b-c-d			
