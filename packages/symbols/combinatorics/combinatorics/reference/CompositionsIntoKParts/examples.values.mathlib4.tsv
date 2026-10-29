@@ -1,0 +1,4 @@
+id	in	out
+count-compositions-of-6-into-3-parts	(List.length (((((Finset.univ : Finset (Composition (6 : ℕ)))).filter (fun c => c.length = (3 : ℕ))).val.map (fun c => c.blocks)).sort (· ≤ ·)))	10
+all-compositions-of-4-into-2-parts		
+first-element		

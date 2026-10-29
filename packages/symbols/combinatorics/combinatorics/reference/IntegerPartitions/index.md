@@ -68,6 +68,11 @@ bindings:
     template: If[IntegerQ[$2], Reverse[Sort[Map[TransposePartition, Partitions[$1, $2]], Function[{a, b}, OrderedQ[{PadRight[a, $1], PadRight[b, $1]}]]]], If[ListQ[$2] && 1 <= Length[$2] <= 3, Select[Partitions[$1], MemberQ[Switch[Length[$2], 1, $2, 2, Range[$2[[1]], Min[$2[[2]], $1]], 3, Range[$2[[1]], Min[$2[[2]], $1], $2[[3]]]], Length[#]] &], Missing["NotCombinatorica"]]]
     arity: 2
     note: Combinatorica's Partitions[n, k] bounds the LARGEST part by k; ours (and Wolfram's) bound the number of parts, so the template transposes each partition and restores descending lexicographic order. A list `{k}`, `{kmin, kmax}` or `{kmin, kmax, dk}` selects the partitions of `Partitions[n]` by their number of parts.
+  - origin: mapped
+    form: mathlib4
+    template: "((((Finset.univ : Finset (Nat.Partition ($1 : ℕ)))).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·))"
+    arity: 1
+    note: Nat.Partition n enumerated (Fintype), each partition's parts sorted largest first and the lot in reverse lexicographic order, as ours lists them; the one-argument form only
 ---
 
 - A lazy indexed collection, unranked in reverse-lexicographic order; the count is the partition number $p(n)$ — $p(8) = 22$ — with no elementary closed form.

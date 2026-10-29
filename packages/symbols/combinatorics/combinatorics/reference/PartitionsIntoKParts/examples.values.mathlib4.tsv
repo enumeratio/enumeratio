@@ -1,0 +1,3 @@
+id	in	out
+count-partitions-of-8-into-3-parts	(List.length ((((Finset.univ : Finset (Nat.Partition (8 : ℕ))).filter (fun p => p.parts.card = (3 : ℕ))).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·)))	5
+partitions-of-6-into-3-parts		

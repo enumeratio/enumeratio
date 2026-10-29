@@ -11,4 +11,10 @@ signatures:
 seeAlso:
   - IntegerPartitions
   - PartitionsInBox
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: "((((Finset.univ : Finset (Nat.Partition ($1 : ℕ))).filter (fun p => ∀ x ∈ p.parts, x ≤ ($2 : ℕ))).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·))"
+    arity: 2
+    note: Nat.Partition n enumerated, those with every part at most m, ordered as IntegerPartitions
 ---

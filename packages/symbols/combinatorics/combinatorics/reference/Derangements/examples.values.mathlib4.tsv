@@ -1,0 +1,3 @@
+id	in	out
+4	(List.length ((((Finset.univ : Finset (derangements (Fin (4 : ℕ))))).val.map (fun p => List.ofFn (fun i : Fin (4 : ℕ) => (p.1 i).val + 1))).sort (· ≤ ·)))	9
+two-cycle-types		
