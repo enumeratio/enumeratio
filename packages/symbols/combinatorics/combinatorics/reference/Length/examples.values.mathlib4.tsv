@@ -25,7 +25,7 @@ length-integerdigits-1-000-factorial	(List.length (let n : ℕ := (Nat.factorial
 map-length-list-list-a-b-list-a-b-c-list-x			
 length-list-list-a-b-c-list-d-k-f			
 length-join-a-b-length-a-length-b-see-join	(decide ((List.length (([1, 2, 3]) ++ ([4, 5]))) = ((List.length [1, 2, 3]) + (List.length [4, 5]))))	true	
-length-filter-issquarefree-past-iteration-budget	(List.length ((((List.range (Int.natAbs ((1679 : ℤ) - 1) + 1)).map (fun (k : ℕ) => (((1 : ℤ) + Int.sign ((1679 : ℤ) - 1) * k : ℤ) : ℚ)))).filter (fun (s₁ : ℕ) => (decide (Squarefree (s₁ : ℕ))))))	Application type mismatch: The argument	error
+length-filter-issquarefree-past-iteration-budget	(List.length (((((List.range (Int.natAbs ((1679 : ℤ) - 1) + 1)).map (fun (k : ℕ) => ((1 : ℤ) + Int.sign ((1679 : ℤ) - 1) * k : ℤ))).map Int.toNat)).filter (fun (s₁ : ℕ) => (decide (Squarefree (s₁ : ℕ))))))	1025	inconclusive
 length-1-over-3	(List.length ((1 : ℚ) / 3))	failed to synthesize instance of type class	error
 length-2-plus-i			
 length-7	(List.length 7)	failed to synthesize instance of type class	error

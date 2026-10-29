@@ -171,6 +171,30 @@ test("mathlib4 writes a function argument as a lambda, or does not emit the row"
     expect(emit(["Map", f as never, list], "mathlib4").ok).toBe(false);
 });
 
+test("mathlib4 types a Range as ℕ or ℤ only for a lambda that needs it", () => {
+  // Not consumed by such a lambda: the list of ℚ it has always been.
+  expect(emit(["Map", ["Function", ["Add", "_", 1]], ["Range", 1, 4]], "mathlib4")).toEqual({
+    ok: true,
+    source:
+      "((((List.range (Int.natAbs ((4 : ℤ) - 1) + 1)).map (fun (k : ℕ) => (((1 : ℤ) + Int.sign ((4 : ℤ) - 1) * k : ℤ) : ℚ)))).map (fun (s₁ : ℚ) => (s₁ + 1)))",
+  });
+  // A binder that must be an integer takes a List ℤ, or a List ℕ when the endpoints are naturals.
+  expect(emit(["Map", ["Function", ["Mod", "x", 3], "x"], ["Range", 1, 4]], "mathlib4")).toEqual({
+    ok: true,
+    source:
+      "((((List.range (Int.natAbs ((4 : ℤ) - 1) + 1)).map (fun (k : ℕ) => ((1 : ℤ) + Int.sign ((4 : ℤ) - 1) * k : ℤ)))).map (fun (x : ℤ) => ((x : ℤ) % 3)))",
+  });
+  const natural = emit(["Map", ["Function", ["DivisorSigma", 1, "x"], "x"], ["Range", 1, 4]], "mathlib4");
+  expect(natural).toMatchObject({ ok: true });
+  expect((natural as { source: string }).source).toContain(".map Int.toNat)");
+  // A natural range cannot hold a negative, and its endpoints are not known to be.
+  for (const range of [
+    ["Range", -2, 4],
+    ["Range", "n"],
+  ])
+    expect(emit(["Map", ["Function", ["DivisorSigma", 1, "x"], "x"], range as never], "mathlib4").ok).toBe(false);
+});
+
 test("mathlib4 reads a Sum or Product iterator as a range over the integers", () => {
   expect(emit(["Sum", ["Power", "k", 2], ["Limits", "k", "Nothing", 10]], "mathlib4")).toEqual({
     ok: true,

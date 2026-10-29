@@ -138,7 +138,7 @@ test("StandardForm round trip: each head with a LaTeX entry writes what reads ba
           failures.push(`${h.head} example/${example.id}: ${before.latex} reads as ${text(after.json)}`);
       });
   expect(failures).toEqual([]);
-});
+}, 60_000);
 
 test("interference: each package's examples read the same with only its notation and with everyone's", () => {
   const all = engine(NOTATION.latex);

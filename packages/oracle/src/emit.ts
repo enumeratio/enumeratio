@@ -119,17 +119,36 @@ function fill(template: string, parts: readonly string[]): string {
 }
 
 /**
- * mathlib4: heads that take a function, as `[operand count, which operand, the function's arity]`. A bare head
- * there is eta-expanded to that arity; a `Function` is translated as it is.
+ * mathlib4: heads that take a function, as `[operand count, which operand, the function's arity]`, and for those
+ * that map a list, `[which operand, which parameter takes its elements]`. A bare head there is eta-expanded to
+ * that arity; a `Function` is translated as it is.
  */
-const LEAN_FUNCTION_OPERANDS: Readonly<Record<string, readonly [number, number, number]>> = {
-  Map: [2, 0, 1],
-  Filter: [2, 1, 1],
+const LEAN_FUNCTION_OPERANDS: Readonly<
+  Record<string, readonly [number, number, number] | readonly [number, number, number, number, number]>
+> = {
+  Map: [2, 0, 1, 1, 0],
+  Filter: [2, 1, 1, 0, 0],
   Nest: [3, 0, 1],
   NestList: [3, 0, 1],
-  Fold: [3, 0, 2],
-  FoldList: [3, 0, 2],
+  Fold: [3, 0, 2, 2, 1],
+  FoldList: [3, 0, 2, 2, 1],
 };
+
+/** Our `Range` over the integers, as a Lean `List ℤ`: inclusive, counting down when the start is past the end. */
+const LEAN_INT_RANGE: Readonly<Record<number, string>> = {
+  1: "((List.range (Int.natAbs (($1 : ℤ) - 1) + 1)).map (fun (k : ℕ) => (1 + Int.sign (($1 : ℤ) - 1) * k : ℤ)))",
+  2: "((List.range (Int.natAbs (($2 : ℤ) - $1) + 1)).map (fun (k : ℕ) => (($1 : ℤ) + Int.sign (($2 : ℤ) - $1) * k : ℤ)))",
+  3: "(if ($3 : ℤ) ≠ 0 ∧ 0 ≤ (($2 : ℤ) - ($1 : ℤ)) * ($3 : ℤ) then (List.range (Int.natAbs (($2 : ℤ) - ($1 : ℤ)) / Int.natAbs ($3 : ℤ) + 1)).map (fun (k : ℕ) => (($1 : ℤ) + ($3 : ℤ) * k : ℤ)) else ([] : List ℤ))",
+};
+
+/** Whether `node` is certainly an integer of at least 0: a literal, or a sum, product or power of those. */
+function isNaturalLiteral(node: MathJSON): boolean {
+  if (typeof node === "number") return Number.isInteger(node) && node >= 0;
+  if (isCall(node))
+    return ["Add", "Multiply", "Power"].includes(node[0] as string) && node.slice(1).every(isNaturalLiteral);
+  const text = (node as { num?: unknown } | null)?.num;
+  return typeof text === "string" && /^\d+$/.test(text);
+}
 
 /** The Lean type a mathlib4 template needs of operand `slot`, when it says: an ascription, a `let`, or an argument of `Nat.*`. */
 function leanSlotDemand(template: string, slot: number): "ℕ" | "ℤ" | undefined {
@@ -543,6 +562,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     return params.map((param) => wanted.get(param) ?? fallback);
   };
 
+  // The binder types of the lambda `leanLambda` wrote last, for a caller to read straight after.
+  let lambdaTypes: readonly string[] = [];
   const leanLambda = (params: readonly string[], body: MathJSON, fallback: string): string | undefined => {
     const types = leanBinderTypes(params, body, fallback);
     // ℕ subtraction truncates at 0, where ours goes negative; ℕ has no negation to write.
@@ -554,6 +575,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     for (const param of fresh) bound.add(param);
     try {
       const source = walk(body);
+      lambdaTypes = types;
       return `(fun ${params.map((param, i) => `(${boundName(param)} : ${types[i]})`).join(" ")} => ${source})`;
     } finally {
       for (const param of fresh) bound.delete(param);
@@ -618,9 +640,28 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
           missing.push(`${head}/function-argument`);
           return "0";
         }
+        // A list that is a `Range` is a `List ℚ` unless the lambda needs its elements as ℕ or ℤ.
+        const listed = spec.length === 5 ? (operands[spec[3]] as MathJSON) : undefined;
+        const elements = spec.length === 5 ? lambdaTypes[spec[4]] : undefined;
+        let typed: string | undefined;
+        if (listed !== undefined && isCall(listed) && listed[0] === "Range" && (elements === "ℕ" || elements === "ℤ")) {
+          const ends = listed.slice(1) as MathJSON[];
+          const rangeTemplate = LEAN_INT_RANGE[ends.length];
+          if (rangeTemplate === undefined || (elements === "ℕ" && !ends.every(isNaturalLiteral))) {
+            missing.push("Range/natural-negative");
+            return "0";
+          }
+          const ints = fill(
+            rangeTemplate,
+            ends.map((end) => walk(end)),
+          );
+          typed = elements === "ℕ" ? `(${ints}.map Int.toNat)` : ints;
+        }
         return fill(
           template,
-          operands.map((operand, i) => (i === spec[1] ? lambda : walk(operand as MathJSON))),
+          operands.map((operand, i) =>
+            i === spec[1] ? lambda : i === spec[3] && typed !== undefined ? typed : walk(operand as MathJSON),
+          ),
         );
       }
       // `Sum(f, {k, a, b})` is `f` over the integers a through b, and `{k, b}` from 1; an empty range is the

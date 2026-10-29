@@ -6,7 +6,7 @@ foldlist-f-list-a-b-c-d
 foldlist-function-1-pow-2-1-2-x-list-a-b-c-d			
 foldlist-add-1-2-3			
 foldlist-multiply-1-1-2-3-4	(([1, 2, 3, 4]).scanl (fun (s₁ : ℚ) (s₂ : ℚ) => (s₁ * s₂)) 1)	[1, 1, 2, 6, 24]	
-foldlist-lcm-1-range-2-10-lazy-not-list	((((List.range (Int.natAbs ((10 : ℤ) - 2) + 1)).map (fun (k : ℕ) => (((2 : ℤ) + Int.sign ((10 : ℤ) - 2) * k : ℤ) : ℚ)))).scanl (fun (s₁ : ℤ) (s₂ : ℤ) => (Int.lcm s₁ s₂)) 1)	Application type mismatch: The argument	error
+foldlist-lcm-1-range-2-10-lazy-not-list	((((List.range (Int.natAbs ((10 : ℤ) - 2) + 1)).map (fun (k : ℕ) => ((2 : ℤ) + Int.sign ((10 : ℤ) - 2) * k : ℤ)))).scanl (fun (s₁ : ℤ) (s₂ : ℤ) => (Int.lcm s₁ s₂)) 1)	[1, 2, 6, 12, 60, 60, 420, 840, 2520, 2520]	
 foldlist-permute-list-a-b-c-d-list-list-1-4-3-2			
 foldlist-cross-list-list-1-neg-1-1-list-0-1-1			
 foldlist-multiply-1-array-nthprime-10			
