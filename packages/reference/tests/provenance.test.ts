@@ -1691,6 +1691,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
       "CheckboxBox",
       "CircleTimes",
       "CirculantGraph",
+      "ClearAttributes",
       "CliffordAlgebra",
       "ClosenessCentrality",
       "ColorSetterBox",

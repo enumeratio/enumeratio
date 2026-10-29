@@ -1,3 +1,4 @@
 id	in	out	tex.in	tex.out	verdict
-turn-on-orderless	List[SetAttributes[HarmonicMean, Orderless], Attributes[HarmonicMean]]	{Null, {Orderless, Protected, ReadProtected}}	\{\text{SetAttributes}[\text{HarmonicMean},\text{Orderless}],\text{Attributes}[\text{HarmonicMean}]\}	\{\text{Null},\{\text{Orderless},\text{Protected},\text{ReadProtected}\}\}	disagree
+turn-on-orderless	List[SetAttributes[HarmonicMean, Orderless], Attributes[HarmonicMean]]				
+set-protected-refused	SetAttributes[HarmonicMean, Orderless]	Null	\text{SetAttributes}[\text{HarmonicMean},\text{Orderless}]	\text{Null}	disagree
 attributes-setattributes	Attributes[SetAttributes]	{HoldFirst, Protected}	\text{Attributes}[\text{SetAttributes}]	\{\text{HoldFirst},\text{Protected}\}	disagree
