@@ -32,5 +32,5 @@ bindings:
     form: mathlib4
     template: "(((((Finset.univ : Finset (Composition ($1 : ℕ)))).filter (fun c => c.length = ($2 : ℕ))).val.map (fun c => c.blocks)).sort (· ≤ ·))"
     arity: 2
-    note: "Composition n enumerated, those with exactly k blocks, in lexicographic order"
+    note: Composition n enumerated, those with exactly k blocks, in lexicographic order
 ---

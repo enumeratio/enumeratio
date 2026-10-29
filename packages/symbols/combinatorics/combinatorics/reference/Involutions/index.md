@@ -44,7 +44,7 @@ bindings:
     form: mathlib4
     template: "((((Finset.univ : Finset (Equiv.Perm (Fin ($1 : ℕ)))).filter (fun p => p * p = 1)).val.map (fun p => List.ofFn (fun i : Fin ($1 : ℕ) => (p i).val + 1))).sort (· ≤ ·))"
     arity: 1
-    note: "The permutations of Fin n with p * p = 1, each as a 1-based one-line list, in lexicographic order"
+    note: The permutations of Fin n with p * p = 1, each as a 1-based one-line list, in lexicographic order
 ---
 
 - Count satisfies $a(n) = a(n-1) + (n-1)\,a(n-2)$

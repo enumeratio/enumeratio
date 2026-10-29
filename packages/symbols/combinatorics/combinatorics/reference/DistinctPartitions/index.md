@@ -31,5 +31,5 @@ bindings:
     form: mathlib4
     template: "(((Nat.Partition.distincts ($1 : ℕ)).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·))"
     arity: 1
-    note: "Nat.Partition.distincts, enumerated and ordered as IntegerPartitions"
+    note: Nat.Partition.distincts, enumerated and ordered as IntegerPartitions
 ---
