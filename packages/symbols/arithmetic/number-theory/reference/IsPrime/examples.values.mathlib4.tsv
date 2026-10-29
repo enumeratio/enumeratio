@@ -15,9 +15,9 @@ large-integers-10-3000-1-is-divisible-by-10-8-1	(decide (Nat.Prime ((10 ^ 3000) 
 isprime-neg-1-is-false	(decide (Nat.Prime (-1)))	failed to synthesize instance of type class	error
 isprime-neg-4-is-false	(decide (Nat.Prime (-4)))	failed to synthesize instance of type class	error
 isprime-neg-2-is-true	(decide (Nat.Prime (-2)))	failed to synthesize instance of type class	error
-a-unit-is-not-prime	(decide (Nat.Prime 1))		
+a-unit-is-not-prime	(decide (Nat.Prime 1))	false	
 i-a-unit-is-not-prime			
-0-is-not-prime	(decide (Nat.Prime 0))		
+0-is-not-prime	(decide (Nat.Prime 0))	false	
 the-ramified-prime-above-2			
 a-prime-above-5			
 the-other-prime-above-5			
@@ -38,19 +38,19 @@ a-real-composite-5-squared-is-not-prime
 1-is-not-prime-gaussian-or-not			
 0-is-not-prime-gaussian-or-not			
 a-common-choice-of-prime-modulus-for-hashing	(decide (Nat.Prime 1000000007))	true	
-isprime-257	(decide (Nat.Prime 257))		
-isprime-1-plus-2-pow-128	(decide (Nat.Prime (1 + (2 ^ 128))))		
+isprime-257	(decide (Nat.Prime 257))	true	
+isprime-1-plus-2-pow-128	(decide (Nat.Prime (1 + (2 ^ 128))))	TimeoutError: over 60 s	error
 filter-range-1-100-function-isprimepower-1			
 an-odd-prime-stays-prime-in-z-i-exactly-when-p			
-isprime-37	(decide (Nat.Prime 37))		
-isprime-29	(decide (Nat.Prime 29))		
-isprime-17	(decide (Nat.Prime 17))		
-isprime-12	(decide (Nat.Prime 12))		
-isprime-23	(decide (Nat.Prime 23))		
-isprime-24	(decide (Nat.Prime 24))		
-isprime-list-7-11	(decide (Nat.Prime [7, 11]))		
-isprime-list-5-7-2	(decide (Nat.Prime [5, 7, 2]))		
-isprime-19	(decide (Nat.Prime 19))		
+isprime-37	(decide (Nat.Prime 37))	true	
+isprime-29	(decide (Nat.Prime 29))	true	
+isprime-17	(decide (Nat.Prime 17))	true	
+isprime-12	(decide (Nat.Prime 12))	false	
+isprime-23	(decide (Nat.Prime 23))	true	
+isprime-24	(decide (Nat.Prime 24))	false	
+isprime-list-7-11	(decide (Nat.Prime [7, 11]))	Application type mismatch: The argument	error
+isprime-list-5-7-2	(decide (Nat.Prime [5, 7, 2]))	Application type mismatch: The argument	error
+isprime-19	(decide (Nat.Prime 19))	true	
 divisorsum-19-function-1-1-isprime			
 filter-divisors-625-isprime			
 filter-divisors-2-434-500-isprime			
