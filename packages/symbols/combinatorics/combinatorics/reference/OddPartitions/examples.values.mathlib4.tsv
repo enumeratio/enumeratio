@@ -1,0 +1,4 @@
+id	in	out
+count-oddpartitions-10	(List.length (((Nat.Partition.odds (10 : ℕ)).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·)))	10
+first-element-of-oddpartitions-10		
+every-element-of-oddpartitions-10		

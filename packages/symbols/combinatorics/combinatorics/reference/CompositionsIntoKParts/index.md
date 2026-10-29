@@ -27,4 +27,10 @@ signatures:
     description: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, oeis, sage; not yet written up here.
     library: enumeratio-combinatorics
     type: (integer<0..>, integer<0..>) -> indexed_collection<composition>
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: "(((((Finset.univ : Finset (Composition ($1 : ℕ)))).filter (fun c => c.length = ($2 : ℕ))).val.map (fun c => c.blocks)).sort (· ≤ ·))"
+    arity: 2
+    note: "Composition n enumerated, those with exactly k blocks, in lexicographic order"
 ---

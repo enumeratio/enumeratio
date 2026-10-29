@@ -21,6 +21,12 @@ seeAlso:
   - IndexOf
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: "(List.length $1)"
+    arity: 1
+    note: "The element count of a finite list; Lean has the collections (lists, enumerated Finsets) that the combinatorics heads bind to, not the lazy families"
 ---
 
 - A value absent from the collection counts as 0.

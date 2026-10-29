@@ -1,0 +1,4 @@
+id	in	out
+count-distinct-partitions-of-6	(List.length (((Nat.Partition.distincts (6 : ℕ)).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·)))	4
+distinct-partitions-of-6-listed		
+count-distinct-partitions-of-10	(List.length (((Nat.Partition.distincts (10 : ℕ)).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·)))	10

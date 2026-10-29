@@ -50,6 +50,11 @@ bindings:
     template: Derangements[Range[$1]]
     arity: 1
     note: Combinatorica lists the derangements of a permutation; ours are those of 1..n.
+  - origin: mapped
+    form: mathlib4
+    template: "((((Finset.univ : Finset (derangements (Fin ($1 : ℕ))))).val.map (fun p => List.ofFn (fun i : Fin ($1 : ℕ) => (p.1 i).val + 1))).sort (· ≤ ·))"
+    arity: 1
+    note: "Mathlib's derangements of Fin n, each as a 1-based one-line list, in lexicographic order"
 ---
 
 - Count is the subfactorial $!n$ (see [[Subfactorial]])

@@ -4,7 +4,7 @@ the-empty-partition	((Nat.Partition.distincts 0).card)	1
 exact-for-large-n	((Nat.Partition.distincts 100).card)	TimeoutError: over 60 s	error
 threads-over-a-list	((Nat.Partition.distincts [1, 2, 3, 4, 5, 6, 7, 8]).card)	Application type mismatch: The argument	error
 partitionsq-list-2-4-6	((Nat.Partition.distincts [2, 4, 6]).card)	Application type mismatch: The argument	error
-counts-the-distinctpartitions-family			
+counts-the-distinctpartitions-family	(decide (((Nat.Partition.distincts 10).card) = (List.length (((Nat.Partition.distincts (10 : ℕ)).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·)))))	true	
 euler-as-many-partitions-into-odd-parts-as-into			
 partitionsq-5	((Nat.Partition.distincts 5).card)	3	
 partitionsq-1	((Nat.Partition.distincts 1).card)	1	
