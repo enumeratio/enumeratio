@@ -53,7 +53,6 @@ const CORE = [
   "Mod",
   "Most",
   "Multiply",
-  "Negate",
   "Or",
   "Power",
   "Product",
