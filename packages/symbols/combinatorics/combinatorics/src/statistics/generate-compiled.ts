@@ -7,7 +7,7 @@
 import type { Engine } from "@enumeratio/engine";
 import { bareEngine } from "@enumeratio/engine/testing";
 import { compileTyped, definitionHash, fromJs, toJs } from "@enumeratio/engine/compiled";
-import { evaluateEpsil } from "@enumeratio/structures";
+import { evaluateEpsil, evaluateEpsilRepeatedly } from "@enumeratio/structures";
 import type { Definition } from "./types.ts";
 import { SUBJECT, signatureOf } from "./types.ts";
 
@@ -75,8 +75,13 @@ function agrees(
       continue;
     }
     if (answer === undefined) continue;
-    const expected = evaluateEpsil(ce, definition.expr, { [SUBJECT]: subject });
-    if (JSON.stringify(answer) !== JSON.stringify(expected)) return false;
+    const same = (expected: unknown) => JSON.stringify(answer) === JSON.stringify(expected);
+    // The repeated route is the cheap one; the interpreter's own answer settles a difference.
+    if (
+      !same(evaluateEpsilRepeatedly(ce, definition.expr, { [SUBJECT]: subject })) &&
+      !same(evaluateEpsil(ce, definition.expr, { [SUBJECT]: subject }))
+    )
+      return false;
   }
   return true;
 }

@@ -64,6 +64,7 @@ export {
   type DeclareMapsOptions,
   evaluateDefinition,
   evaluateEpsil,
+  evaluateEpsilRepeatedly,
   fill,
   type Graded,
   type Law,
