@@ -94,6 +94,11 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: (bernoulli $1)
+    arity: 1
+    note: Mathlib's bernoulli (not bernoulli', which has B(1) = +1/2) takes B(1) = -1/2, as Wolfram does; natural n only.
 ---
 
 - Defined by the generating function $\dfrac{t}{e^t-1} = \sum_{n=0}^{\infty} B_n \dfrac{t^n}{n!}$.

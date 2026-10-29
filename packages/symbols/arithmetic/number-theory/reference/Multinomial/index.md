@@ -43,6 +43,10 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: "(let l : List ℕ := [$*,]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0))"
+    note: Nat.multinomial over the indices of the argument list, so the empty call is 1; natural arguments only.
 ---
 
 - Counts the ways to split $k_1 + k_2 + \cdots$ labeled items into groups of the given sizes.

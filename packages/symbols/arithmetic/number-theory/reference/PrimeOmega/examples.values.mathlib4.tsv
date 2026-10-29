@@ -1,0 +1,18 @@
+id	in	out	verdict
+primeomega-30	(ArithmeticFunction.cardFactors 30)	3	
+primeomega-360	(ArithmeticFunction.cardFactors 360)	6	
+primeomega-12	(ArithmeticFunction.cardFactors 12)	3	
+threads-element-wise-over-a-list-as-wolfram-s	(ArithmeticFunction.cardFactors [4, 12, 24])	Application type mismatch: The argument	error
+large-integers	(ArithmeticFunction.cardFactors (Nat.factorial 30))	59	
+gaussian-integers-5-9i-has-norm-106-2-cdot-53-so			
+gaussianintegers-true-12-1-i-4-cdot-3			
+listable-over-a-range	(ArithmeticFunction.cardFactors ((List.range (Int.natAbs ((20 : ℤ) - 1) + 1)).map (fun (k : ℕ) => ((1 + Int.sign ((20 : ℤ) - 1) * k : ℤ) : ℚ))))	Application type mismatch: The argument	error
+primeomega-28	(ArithmeticFunction.cardFactors 28)	3	
+negative-n-the-sign-is-a-unit	(ArithmeticFunction.cardFactors (-12))	failed to synthesize instance of type class	error
+completely-additive-omega-mn-omega-m-omega-n-for	(decide ((ArithmeticFunction.cardFactors (24 * 40)) = ((ArithmeticFunction.cardFactors 24) + (ArithmeticFunction.cardFactors 40))))	true	
+omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3			
+primeomega-100	(ArithmeticFunction.cardFactors 100)	4	
+primeomega-16-807	(ArithmeticFunction.cardFactors 16807)	5	
+primeomega-165-eq-primenu-165	(decide ((ArithmeticFunction.cardFactors 165) = (ArithmeticFunction.cardDistinctFactors 165)))	true	
+all-range-1-100-function-primenu-1-lt-eq			
+1-has-no-prime-factors	(ArithmeticFunction.cardFactors 1)	0	

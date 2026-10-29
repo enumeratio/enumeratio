@@ -1,0 +1,38 @@
+id	in	out	verdict
+bernoullib-0	(bernoulli 0)	1	
+bernoullib-1	(bernoulli 1)	-1/2	
+bernoullib-2	(bernoulli 2)	1/6	
+bernoullib-4	(bernoulli 4)	-1/30	
+bernoullib-12	(bernoulli 12)	-691/2730	
+bernoullib-10	(bernoulli 10)	5/66	
+b-1-sign-in-a-sum-over-k-1-to-2			
+exact-rationals-at-any-index	(bernoulli 60)	TimeoutError: over 60 s	error
+listable-b-n-threads-over-a-list-of-indices	(bernoulli [2, 4, 6])	Application type mismatch: The argument	error
+the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac			
+the-bernoulli-polynomial-at-a-rational-point-b-2			
+with-a-second-argument-the-bernoulli-polynomial			
+threads-element-wise-over-a-list-as-wolfram-s	(bernoulli [1, 2, 3])	Application type mismatch: The argument	error
+faulhaber-s-formula-recovers-sum-k-0-4-k-2-30	(((((Nat.choose 3 0) * (bernoulli 0) * (5 ^ 3)) + ((Nat.choose 3 1) * (bernoulli 1) * (5 ^ 2)) + ((Nat.choose 3 2) * (bernoulli 2) * (5 ^ 1))) : ℚ) / 3)	30	
+von-staudt-clausen-the-denominator-of-b-2n-is			
+zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see			
+the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here	(((Nat.choose 5 0) * (bernoulli 0)) + ((Nat.choose 5 1) * (bernoulli 1)) + ((Nat.choose 5 2) * (bernoulli 2)) + ((Nat.choose 5 3) * (bernoulli 3)) + ((Nat.choose 5 4) * (bernoulli 4)))	0	
+b-n-0-for-every-odd-n-1	(decide ((bernoulli 5) = 0))	true	
+bernoullib-3	(bernoulli 3)	0	
+bernoullib-5	(bernoulli 5)	0	
+bernoullib-6	(bernoulli 6)	1/42	
+bernoullib-7	(bernoulli 7)	0	
+bernoullib-8	(bernoulli 8)	-1/30	
+bernoullib-9	(bernoulli 9)	0	
+bernoullib-2-0			
+bernoullib-3-0			
+bernoullib-2-1			
+bernoullib-3-1			
+bernoullib-0-1-over-6			
+sum-k-plus-3-times-binomial-3-k-times-bernoullib			
+sum-1-over-k-times-1-over-neg-k-plus-3-times			
+sum-k-plus-3-times-binomial-4-k-times-bernoullib			
+sum-1-over-k-times-1-over-neg-k-plus-4-times			
+b-1-1-frac-12-is-the-other-convention-for-b-1			
+bernoulli-numbers-are-only-defined-for-n-ge-0-a	(bernoulli (-1))	failed to synthesize instance of type class	error
+numerators-and-denominators-grow-quickly-b-20	(bernoulli 20)	-174611/330	
+bernoullib-12-x			

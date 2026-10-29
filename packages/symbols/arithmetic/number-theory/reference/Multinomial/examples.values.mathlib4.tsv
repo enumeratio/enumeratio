@@ -1,0 +1,18 @@
+id	in	out	verdict
+multinomial-1-2-1	(let l : List ℕ := [1, 2, 1]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0))	12	
+multinomial-2-3-4	(let l : List ℕ := [2, 3, 4]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0))	1260	
+threads-element-wise-over-a-list-as-wolfram-s	(let l : List ℕ := [[2, 3, 5], 3]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0))	Application type mismatch: The argument	error
+zero-parts-contribute-0-1	(let l : List ℕ := [0, 0, 1]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0))	1	
+real-arguments-evaluate-via-the-gamma-function	(let l : List ℕ := [2, 0.2, 5]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0))	failed to synthesize instance of type class	error
+complex-arguments-evaluate-via-the-gamma			
+an-around-argument-should-propagate-its			
+the-number-of-distinct-letter-arrangements-of	(let l : List ℕ := [1, 4, 4, 2]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0))	34650	
+the-coefficient-of-a-2-b-3-c-in-a-b-c-6	(let l : List ℕ := [2, 3, 1]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0))	60	
+with-two-arguments-it-reduces-to-binomial-binom	(decide ((let l : List ℕ := [7, 3]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0)) = (Nat.choose 10 3)))	true	
+orderless-permuting-the-arguments-doesn-t-change	(decide ((let l : List ℕ := [1, 2, 3]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0)) = (let l : List ℕ := [3, 1, 2]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0))))	true	
+the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3	(decide ((let l : List ℕ := [3, 4, 5]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0)) = (((Nat.factorial 12) : ℚ) / ((Nat.factorial 3) * (Nat.factorial 4) * (Nat.factorial 5)))))	true	
+all-ones-parts-give-n-every-part-is-a-single	(let l : List ℕ := [1, 1, 1, 1]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0))	24	
+all-zero-arguments-still-give-the-empty-product	(let l : List ℕ := [0, 0, 0]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0))	1	
+a-single-argument-is-always-1-there-s-only-one	(let l : List ℕ := [5]; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0))	1	
+a-single-symbolic-argument-is-also-1			
+with-no-arguments-it-is-the-empty-product-1	(let l : List ℕ := []; Nat.multinomial (Finset.range l.length) (fun i => l.getD i 0))	1	

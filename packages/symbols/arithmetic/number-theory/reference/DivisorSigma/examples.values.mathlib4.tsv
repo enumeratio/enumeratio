@@ -1,0 +1,32 @@
+id	in	out	verdict
+k-0-gives-the-number-of-divisors	(ArithmeticFunction.sigma 0 20)	6	
+k-1-gives-the-sum-of-divisors	(ArithmeticFunction.sigma 1 20)	42	
+divisorsigma-2-20	(ArithmeticFunction.sigma 2 20)	546	
+divisorsigma-2-6	(ArithmeticFunction.sigma 2 6)	50	
+a-negative-order-sums-reciprocal-powers-sigma-1	(ArithmeticFunction.sigma (-1) 6)	failed to synthesize instance of type class	error
+large-integers	(ArithmeticFunction.sigma 2 (10 ^ 30))	MemoryError: over 4096 MiB	error
+negative-k-1-frac-14-frac-1-25-frac-1-100	(ArithmeticFunction.sigma (-2) 10)	failed to synthesize instance of type class	error
+rational-k-the-square-roots-of-the-divisors-of	(ArithmeticFunction.sigma ((1 : ℚ) / 2) 12)	Type mismatch	error
+gaussian-integers-1-1-i-1-2i-3-i-over-divisors			
+gaussianintegers-true-squares-of-1-1-i-2-3-3-3i			
+listable-in-n	(ArithmeticFunction.sigma 2 [1, 2, 3, 4, 5])	Application type mismatch: The argument	error
+symbolic-k-expands-over-the-divisors			
+negative-n-stays-unevaluated	(ArithmeticFunction.sigma 1 (-12))	failed to synthesize instance of type class	error
+k-0-of-a-negative-n-stays-unevaluated	(ArithmeticFunction.sigma 0 (-12))	failed to synthesize instance of type class	error
+6-is-a-perfect-number-sigma-1-6-2-times-6	(ArithmeticFunction.sigma 1 6)	12	
+28-is-the-next-perfect-number-sigma-1-28-2-times	(ArithmeticFunction.sigma 1 28)	56	
+filter-range-1-30-function-divisorsigma-1-1-eq-2			
+filter-range-1-30-function-divisorsigma-1-1-lt-2			
+filter-range-1-30-function-2-times-1-lt			
+nestlist-function-neg-1-plus-divisorsigma-1-1-1			
+apply-function-divisorsigma-0-1-1-list-2-3-5-6-7			
+apply-function-divisorsigma-0-1-1-list-1-4-9			
+multiplicative-sigma-1-mn-sigma-1-m-sigma-1-n	(decide (((ArithmeticFunction.sigma 1 9) * (ArithmeticFunction.sigma 1 8)) = (ArithmeticFunction.sigma 1 72)))	true	
+divisorsigma-5-100	(ArithmeticFunction.sigma 5 100)	10325569807	
+divisorsigma-3-18-times-divisorsigma-3-25-eq	(decide (((ArithmeticFunction.sigma 3 18) * (ArithmeticFunction.sigma 3 25)) = (ArithmeticFunction.sigma 3 450)))	true	
+divisorsigma-neg-1-28	(ArithmeticFunction.sigma (-1) 28)	failed to synthesize instance of type class	error
+divisorsigma-0-1	(ArithmeticFunction.sigma 0 1)	1	
+divisorsigma-0-2	(ArithmeticFunction.sigma 0 2)	2	
+divisorsigma-0-3	(ArithmeticFunction.sigma 0 3)	2	
+map-function-divisorsigma-1-1-lt-2-times-1-1			
+the-trivial-base-case	(ArithmeticFunction.sigma 1 1)	1	

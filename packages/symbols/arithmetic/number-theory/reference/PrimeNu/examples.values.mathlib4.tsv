@@ -1,0 +1,27 @@
+id	in	out	verdict
+primenu-24	(ArithmeticFunction.cardDistinctFactors 24)	2	
+primenu-360	(ArithmeticFunction.cardDistinctFactors 360)	3	
+primenu-105	(ArithmeticFunction.cardDistinctFactors 105)	3	
+threads-element-wise-over-a-list-as-wolfram-s	(ArithmeticFunction.cardDistinctFactors [4, 28, 180])	Application type mismatch: The argument	error
+large-integers-the-15-primes-up-to-50-divide-50	(ArithmeticFunction.cardDistinctFactors (Nat.factorial 50))	15	
+gaussian-integers-3-i-1-i-2-i			
+gaussianintegers-true-5-splits-so-105-has-4			
+listable-over-a-range	(ArithmeticFunction.cardDistinctFactors ((List.range (Int.natAbs ((20 : ℤ) - 1) + 1)).map (fun (k : ℕ) => ((1 + Int.sign ((20 : ℤ) - 1) * k : ℤ) : ℚ))))	Application type mismatch: The argument	error
+primenu-30	(ArithmeticFunction.cardDistinctFactors 30)	3	
+negative-n-the-sign-is-a-unit	(ArithmeticFunction.cardDistinctFactors (-12))	failed to synthesize instance of type class	error
+moebiusmu-42-eq-neg-1-pow-primenu-42	(decide ((ArithmeticFunction.moebius 42) = ((-1) ^ (ArithmeticFunction.cardDistinctFactors 42))))	true	
+liouvillelambda-42-eq-neg-1-pow-primenu-42	(decide ((ArithmeticFunction.liouville 42) = ((-1) ^ (ArithmeticFunction.cardDistinctFactors 42))))	true	
+primenu-n-is-the-length-of-factorinteger-n			
+primenu-50	(ArithmeticFunction.cardDistinctFactors 50)	2	
+primenu-360-eq-primenu-9-plus-primenu-40	(decide ((ArithmeticFunction.cardDistinctFactors 360) = ((ArithmeticFunction.cardDistinctFactors 9) + (ArithmeticFunction.cardDistinctFactors 40))))	true	
+primenu-49	(ArithmeticFunction.cardDistinctFactors 49)	1	
+primenu-210-eq-primeomega-210	(decide ((ArithmeticFunction.cardDistinctFactors 210) = (ArithmeticFunction.cardFactors 210)))	true	
+moebiusmu-33-eq-neg-1-pow-primenu-33	(decide ((ArithmeticFunction.moebius 33) = ((-1) ^ (ArithmeticFunction.cardDistinctFactors 33))))	true	
+liouvillelambda-33-eq-neg-1-pow-primenu-33	(decide ((ArithmeticFunction.liouville 33) = ((-1) ^ (ArithmeticFunction.cardDistinctFactors 33))))	true	
+primenu-2	(ArithmeticFunction.cardDistinctFactors 2)	1	
+primenu-3	(ArithmeticFunction.cardDistinctFactors 3)	1	
+primenu-6	(ArithmeticFunction.cardDistinctFactors 6)	2	
+primenu-4	(ArithmeticFunction.cardDistinctFactors 4)	1	
+all-range-1-100-function-primenu-1-lt-eq			
+32-2-5-has-just-one-distinct-prime-factor	(ArithmeticFunction.cardDistinctFactors 32)	1	
+1-has-no-prime-factors	(ArithmeticFunction.cardDistinctFactors 1)	0	

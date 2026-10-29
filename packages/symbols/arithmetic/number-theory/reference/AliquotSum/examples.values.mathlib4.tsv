@@ -1,0 +1,12 @@
+id	in	out	verdict
+aliquotsum-12	((Nat.properDivisors 12).sum id)	16	
+aliquotsum-28	((Nat.properDivisors 28).sum id)	28	
+aliquotsum-13	((Nat.properDivisors 13).sum id)	1	
+aliquotsum-1	((Nat.properDivisors 1).sum id)	0	
+negative-n-the-sign-is-a-unit	((Nat.properDivisors (-12)).sum id)	failed to synthesize instance of type class	error
+listable-over-a-list	((Nat.properDivisors [6, 12, 13]).sum id)	Application type mismatch: The argument	error
+large-integers-a-power-of-two	((Nat.properDivisors (2 ^ 40)).sum id)	MemoryError: over 4096 MiB	error
+amicable-pair-220-and-284	((Nat.properDivisors 220).sum id)	284	
+amicable-pair-the-other-way	((Nat.properDivisors ((Nat.properDivisors 220).sum id)).sum id)	220	
+aliquotsum-is-sigma-minus-n	(decide (((Nat.properDivisors 360).sum id) = ((ArithmeticFunction.sigma 1 360) - 360)))	true	
+zero-stays-unevaluated	((Nat.properDivisors 0).sum id)	0	inconclusive

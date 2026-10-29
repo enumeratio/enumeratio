@@ -55,6 +55,11 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: (ArithmeticFunction.sigma $1 $2)
+    arity: 2
+    note: ArithmeticFunction.sigma k n = the sum of the kth powers of the divisors of n, with sigma k 0 = 0; natural k and n only.
 ---
 
 - $k=0$ gives the divisor count $d(n)$; $k=1$ gives the ordinary sum of divisors.

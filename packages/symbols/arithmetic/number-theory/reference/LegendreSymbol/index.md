@@ -38,6 +38,11 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: (jacobiSym $1 $2)
+    arity: 2
+    note: Mathlib's legendreSym needs a Fact p.Prime instance a literal cannot supply, so this reads jacobiSym a p, which Mathlib proves equal to legendreSym p a at an odd prime p (jacobiSym.legendreSym.to_jacobiSym); a composite or even p is outside the Legendre domain and gives the Jacobi value or zero.
 ---
 
 - 1 if $n$ is a nonzero quadratic residue mod $p$, $-1$ if it is a nonresidue, 0 if $p\mid n$.

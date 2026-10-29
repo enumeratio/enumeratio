@@ -49,6 +49,11 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: (Finset.sort (Nat.divisors $1))
+    arity: 1
+    note: Nat.divisors sorted ascending into a list; natural n only, with divisors 0 = the empty list.
 ---
 
 - Includes both 1 and $n$ itself; a prime's only divisors are those two.

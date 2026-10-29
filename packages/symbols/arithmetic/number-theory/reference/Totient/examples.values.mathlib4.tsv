@@ -16,7 +16,7 @@ varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	(Nat.totient 81)
 totient-100	(Nat.totient 100)	
 totient-35	(Nat.totient 35)	
 divides-carmichaellambda-8-totient-8		
-list-totient-25-carmichaellambda-25		
+list-totient-25-carmichaellambda-25	[(Nat.totient 25), (ArithmeticFunction.carmichael 25)]	[20, 20]
 divisorsum-15-totient-eq-15		
 totient-1-023-eq-totient-3-times-totient-11	(decide ((Nat.totient 1023) = ((Nat.totient 3) * (Nat.totient 11) * (Nat.totient 31))))	
 totient-2	(Nat.totient 2)	

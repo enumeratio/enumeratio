@@ -1,0 +1,31 @@
+id	in	out	verdict
+issquarefree-10	(decide (Squarefree (10 : ℕ)))	true	
+issquarefree-4	(decide (Squarefree (4 : ℕ)))	false	
+issquarefree-12	(decide (Squarefree (12 : ℕ)))	false	
+every-prime-is-squarefree	(decide (Squarefree (17 : ℕ)))	true	
+issquarefree-20	(decide (Squarefree (20 : ℕ)))	false	
+issquarefree-of-zero	(decide (Squarefree (0 : ℕ)))	false	
+threads-element-wise-over-a-list	(decide (Squarefree ([10, 4, 12] : ℕ)))	Type mismatch	error
+gaussian-integers-3-2i-is-a-gaussian-prime			
+gaussianintegers-true-2-i-1-i-2			
+rationals-numerator-and-denominator-are-both	(decide (Squarefree (((2 : ℚ) / 3) : ℕ)))	Type mismatch	error
+polynomials-x-2-6x-6-has-no-repeated-factor			
+multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor			
+squarefree-as-a-polynomial-in-x-alone-y-is-just			
+but-not-in-y-alone-y-appears-squared			
+a-non-squarefree-rational	(decide (Squarefree (((4 : ℚ) / 3) : ℕ)))	Type mismatch	error
+x-1-2-has-a-repeated-root			
+x-3-y-3-has-no-repeated-factor			
+issquarefree-3-plus-10-pow-70	(decide (Squarefree ((3 + (10 ^ 70)) : ℕ)))	TimeoutError: over 60 s	error
+issquarefree-2	(decide (Squarefree (2 : ℕ)))	true	
+issquarefree-x-pow-2-minus-3			
+n-1-over-100-000-times-length-filter-range-1-100			
+issquarefree-q			
+n-is-squarefree-exactly-when-mu-n-neq-0-see			
+issquarefree-210	(decide (Squarefree (210 : ℕ)))	true	
+issquarefree-14	(decide (Squarefree (14 : ℕ)))	true	
+isprimepower-17-issquarefree-17			
+issquarefree-x-pow-2-minus-2x-plus-1-x			
+simplify-issquarefree-a-pow-2-a-in-integers			
+issquarefree-expand-x-plus-1-pow-3-times-x-plus			
+1-is-vacuously-squarefree-it-has-no-repeated	(decide (Squarefree (1 : ℕ)))	true	

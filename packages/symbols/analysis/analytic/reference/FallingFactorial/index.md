@@ -53,4 +53,9 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: (Nat.descFactorial $1 $2)
+    arity: 2
+    note: Nat.descFactorial n k = n(n-1)...(n-k+1), which is 0 for k > n like the product through 0; natural arguments only.
 ---
