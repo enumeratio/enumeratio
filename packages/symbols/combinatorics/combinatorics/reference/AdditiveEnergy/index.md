@@ -21,6 +21,17 @@ catalog:
     identity: Finset.addEnergy
     url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Additive/Energy.html#Finset.addEnergy
     note: Finset.addEnergy s t; mathlib takes any additive Finset, ours exact rationals
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: "(Finset.addEnergy (List.toFinset ($1 : List ℚ)) (List.toFinset ($1 : List ℚ)))"
+    arity: 1
+    note: mathlib's energy is over Finsets, so each list is read as a Finset of rationals (duplicates collapse, as ours do)
+  - origin: mapped
+    form: mathlib4
+    template: "(Finset.addEnergy (List.toFinset ($1 : List ℚ)) (List.toFinset ($2 : List ℚ)))"
+    arity: 2
+    note: mathlib's energy is over Finsets, so each list is read as a Finset of rationals (duplicates collapse, as ours do)
 ---
 
 - Defined in Epsil as $\sum_x r(x)^2$, where $r(x)$ is the number of pairs $(a,b)\in A\times B$ with $a+b=x$: two pairs with the same sum are one quadruple, so tallying the $|A||B|$ sums is enough and the $|A|^2|B|^2$ quadruples are never tested.
