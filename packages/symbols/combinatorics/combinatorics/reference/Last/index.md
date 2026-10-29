@@ -19,6 +19,12 @@ seeAlso:
   - At
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: (($1)[(($1).length - 1)]'(by decide +kernel))
+    arity: 1
+    note: The last element of a list; an empty list fails to elaborate (ours is Missing) rather than defaulting, and so does an expression that is not a list.
 ---
 
 - $Last(c) = At(c, -1)$. See [[At]].

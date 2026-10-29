@@ -1,0 +1,12 @@
+id	in	out	verdict
+append-list-1-2-3-4	(([1, 2, 3]) ++ [4])	[1, 2, 3, 4]	
+append-list-a-b-c-d-x			
+a-set-as-well-as-a-list	(((List.dedup ([1, 2, 3] : List ℚ))) ++ [4])	[1, 2, 3, 4]	
+onto-the-empty-list			
+a-lazy-range-is-materialised-first	((((List.range (Int.natAbs ((3 : ℤ) - 1) + 1)).map (fun (k : ℕ) => (((1 : ℤ) + Int.sign ((3 : ℤ) - 1) * k : ℤ) : ℚ)))) ++ [4])	[1, 2, 3, 4]	
+any-head-not-just-a-list			
+adding-a-row-to-a-matrix	(([[1, 2], [3, 4]]) ++ [[5, 6]])	[[1, 2], [3, 4], [5, 6]]	
+nestlist-function-symbol-x-1-list-a-5			
+append-c-x-join-c-x-see-join	(decide ((([1, 2, 3]) ++ [4]) = (([1, 2, 3]) ++ ([4]))))	true	
+appending-adds-exactly-one-element-see-length	(decide ((List.length (([1, 2, 3]) ++ [4])) = ((List.length [1, 2, 3]) + 1)))	true	
+appending-a-list-nests-it-as-a-single-element	(([1, 2, 3]) ++ [[9]])	failed to synthesize instance of type class	error

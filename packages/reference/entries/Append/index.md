@@ -14,6 +14,12 @@ seeAlso:
   - Prepend
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: (($1) ++ [$2])
+    arity: 2
+    note: The value as a new last element; a list value onto a list of scalars fails to elaborate (ours nests it as one element), as does a set.
 ---
 
 - $Append(c, x) = Join(c, \{x\})$. See [[Join]].

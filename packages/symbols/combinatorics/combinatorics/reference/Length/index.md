@@ -24,6 +24,11 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: mathlib4
+    template: (List.length $1)
+    arity: 1
+    note: The element count of a finite list; an atom or other non-list expression (ours is 0) fails to elaborate.
+  - origin: mapped
     form: oscar
     template: length($1)
     arity: 1

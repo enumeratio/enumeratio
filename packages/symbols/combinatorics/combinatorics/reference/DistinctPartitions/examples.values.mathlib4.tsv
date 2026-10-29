@@ -1,4 +1,4 @@
 id	in	out
 count-distinct-partitions-of-6	(List.length (((Nat.Partition.distincts (6 : ℕ)).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·)))	4
-distinct-partitions-of-6-listed		
+distinct-partitions-of-6-listed	(if (3 : ℤ) ≥ 0 then ((((Nat.Partition.distincts (6 : ℕ)).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·))).take (3 : ℤ).toNat else ((((Nat.Partition.distincts (6 : ℕ)).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·))).drop (((((Nat.Partition.distincts (6 : ℕ)).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·))).length - (-(3 : ℤ)).toNat))	[[6], [5, 1], [4, 2]]
 count-distinct-partitions-of-10	(List.length (((Nat.Partition.distincts (10 : ℕ)).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·)))	10
