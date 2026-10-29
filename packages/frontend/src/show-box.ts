@@ -215,10 +215,17 @@ export interface LoweredShow {
  */
 export async function loweredShow(source: Json, bound: Json): Promise<LoweredShow | string> {
   const shown = await evaluatedShow(source, bound);
-  const spec = specOf(shown);
-  await loadLatticeModules(spec.tiles);
+  await loadLatticeModules(specOf(shown).tiles);
+  return lowerShow(shown);
+}
+
+/**
+ * A `Show` already evaluated, its layers' libraries registered (an environment that has them in
+ * hand, like the terminal), lowered to a `GraphicsBox`; the reason it can't be drawn otherwise.
+ */
+export function lowerShow(shown: Json): LoweredShow | string {
   const box = makeBoxes(shown as never, FIGURE_NOTATION);
-  if (graphicsOf(box) !== undefined) return { box, spec };
+  if (graphicsOf(box) !== undefined) return { box, spec: specOf(shown) };
   const why = showBox(shown);
   return typeof why === "string" ? why : "Not a Show(…) expression.";
 }
