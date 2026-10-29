@@ -153,15 +153,13 @@ const leadMarker = (i: MathJSON): MathJSON => [
 /** Whether i leads its cycle: the walk gets back to i before it meets anything smaller. */
 const leads = (i: MathJSON): MathJSON => equals(leadMarker(i), 0);
 
-/** The length of i's cycle: walking from i, on getting back to i at step k the marker is -k. */
+/**
+ * The length of i's cycle: the least k >= 1 with p^k(i) = i. Spelled as a search over k rather than a walk
+ * that stops on return, whose accumulator the compiler types as possibly Nothing.
+ */
 const cycleLengthAt = (i: MathJSON): MathJSON => [
-  "Negate",
-  [
-    "Fold",
-    ["Function", ["If", ["LessEqual", "w", 0], "w", ["If", equals(at("w"), i), ["Negate", "k"], at("w")]], "w", "k"],
-    i,
-    steps,
-  ],
+  "Min",
+  where(steps, equals(["Fold", ["Function", at("w"), "w", "j"], i, ["Range", 1, "k", 1]], i), "k"),
 ];
 
 /** Positions that lead their own cycle, one per cycle. */
@@ -206,6 +204,7 @@ const peaksOfWord = (w: MathJSON): MathJSON =>
       ["Range", 2, subtract(length("w"), 1)],
       and(less(at(subtract("i", 1), "w"), at("i", "w")), greater(at("i", "w"), at(add("i", 1), "w"))),
     ),
+    "list<integer>",
   );
 /** The word 0 p(1) ... p(n) / p(1) ... p(n) 0: a zero stands in for the boundary. */
 const zeroThen: MathJSON = ["Join", ["List", 0], x];
@@ -474,6 +473,7 @@ const bigAscentsFromZero: MathJSON = bind(
   "w",
   zeroThen,
   count(["Range", 1, length("w")], greater(subtract(at(add("i", 1), "w"), at("i", "w")), 1)),
+  "list<integer>",
 );
 
 // The second batch of FindStat's permutation statistics.
@@ -961,10 +961,12 @@ const fixedPointsZeroed: MathJSON = forEach(positions, ["If", equals(here, "i"),
 /** The descents of the zeroed word, then its major index. */
 const zeroedDescents = (body: MathJSON): MathJSON =>
   hasPair(
-    bind("w", fixedPointsZeroed, [
-      "Sum",
-      forEach(where(span(1, subtract(length("w"), 1)), greater(at("i", "w"), at(add("i", 1), "w"))), body),
-    ]),
+    bind(
+      "w",
+      fixedPointsZeroed,
+      ["Sum", forEach(where(span(1, subtract(length("w"), 1)), greater(at("i", "w"), at(add("i", 1), "w"))), body)],
+      "list<integer>",
+    ),
   );
 
 /** Whether i is the smallest point of a run of consecutive values, one position apart: no earlier succession. */
@@ -1170,6 +1172,7 @@ const FINDSTAT_PERMUTATION_STATISTICS_5: readonly Definition[] = [
         "b",
         ["Join", ["List", 0], breakpoints],
         max(forEach(span(1, subtract(length("b"), 1)), subtract(at(add("i", 1), "b"), at("i", "b")))),
+        "list<integer>",
       ),
     ),
   ),
@@ -1256,6 +1259,7 @@ const FINDSTAT_PERMUTATION_STATISTICS_5: readonly Definition[] = [
           span(1, subtract(length("w"), 2)),
           and(less(at("i", "w"), at(add("i", 1), "w")), less(at(add("i", 1), "w"), at(add("i", 2), "w"))),
         ),
+        "list<integer>",
       ),
     ),
   ),
@@ -1516,6 +1520,7 @@ const FINDSTAT_PERMUTATION_STATISTICS_6: readonly Definition[] = [
           span(2, subtract(length("w"), 1)),
           and(greater(at(subtract("i", 1), "w"), at("i", "w")), less(at("i", "w"), at(add("i", 1), "w"))),
         ),
+        "list<integer>",
       ),
     ),
     "As many cyclic peaks as cyclic valleys, so this is both.",
