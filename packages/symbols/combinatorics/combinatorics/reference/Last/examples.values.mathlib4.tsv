@@ -1,0 +1,18 @@
+id	in	out	verdict
+last-list-1-2-3	(([1, 2, 3])[(([1, 2, 3]).length - 1)]'(by decide +kernel))	3	
+last-list-10-20-30	(([10, 20, 30])[(([10, 20, 30]).length - 1)]'(by decide +kernel))	30	
+last-list-a-b-c			
+last-default-ignored-when-nonempty			
+last-of-association-is-last-value			
+last-of-empty-association-falls-through			
+last-list-x			
+last-list-list-a-b-list-c-d-list-k-f			
+a-second-argument-supplies-a-default-for-an			
+of-a-matrix-the-last-row			
+a-lazy-range-works-too	((((List.range (Int.natAbs ((10 : ℤ) - 5) + 1)).map (fun (k : ℕ) => (((5 : ℤ) + Int.sign ((10 : ℤ) - 5) * k : ℤ) : ℚ))))[((((List.range (Int.natAbs ((10 : ℤ) - 5) + 1)).map (fun (k : ℕ) => (((5 : ℤ) + Int.sign ((10 : ℤ) - 5) * k : ℤ) : ℚ)))).length - 1)]'(by decide +kernel))	10	
+any-expression-not-just-a-list-the-last-term-of			
+a-default-is-ignored-when-the-collection-has-a			
+last-sparsearray-range-1-100			
+last-c-at-c-1-see-at	(decide ((([1, 2, 3])[(([1, 2, 3]).length - 1)]'(by decide +kernel)) = (([1, 2, 3])[(if ((-1) : ℤ) > 0 then (((-1) : ℤ).toNat - 1) else ((([1, 2, 3]).length : ℤ) + ((-1) : ℤ)).toNat)]'(by decide +kernel))))	true	
+an-empty-collection-has-no-last-element-compute	(([])[(([]).length - 1)]'(by decide +kernel))	Expected type must not contain metavariables	error
+last-1-over-b			

@@ -105,6 +105,12 @@ const signedPermutations = (n: number): number[][] =>
     range(0, 2 ** n - 1).map((mask) => word.map((value, k) => (mask & (1 << k) ? -value : value))),
   );
 
+/** Parking functions of length n: the words over 1..n whose i-th smallest entry is at most i. */
+const parkingFunctions = (n: number): number[][] =>
+  range(0, n ** n - 1)
+    .map((k) => range(0, n - 1).map((i) => (Math.floor(k / n ** i) % n) + 1))
+    .filter((word) => word.toSorted((a, b) => a - b).every((value, i) => value <= i + 1));
+
 const through = <T>(max: number, from: number, make: (n: number) => T[]): T[] => range(from, max).flatMap(make);
 const OBJECTS: Readonly<Record<string, string[]>> = {
   Permutation: through(4, 1, permutations).map((p) => JSON.stringify(p).replaceAll(" ", "")),
@@ -117,6 +123,7 @@ const OBJECTS: Readonly<Record<string, string[]>> = {
   SetComposition: through(4, 1, setCompositions).map((p) => `[${p.map((block) => `{${block.join(",")}}`).join(",")}]`),
   BinaryTree: through(5, 1, binaryTrees),
   OrderedTree: through(5, 1, orderedTrees),
+  ParkingFunction: through(4, 1, parkingFunctions).map((p) => JSON.stringify(p)),
   IntegerPartition: through(6, 1, integerPartitions).map((p) => JSON.stringify(p)),
 };
 
@@ -284,6 +291,44 @@ const IDS: Readonly<Record<string, string>> = {
   "DemazureProductWithInverse@SignedPermutation": "Mp00260",
   "Rowmotion@SignedPermutation": "Mp00281",
   "RowDescentsToColumnDescents@StandardTableau": "Mp00226",
+  "CutOutPartition@DyckPath": "Mp00027",
+  "TwoRowTableau@DyckPath": "Mp00033",
+  "KrattenthalerPermutation@DyckPath": "Mp00119",
+  "BilleyJockuschStanleyPermutation@DyckPath": "Mp00129",
+  "Avoiding132Permutation@DyckPath": "Mp00025",
+  "Avoiding312Permutation@DyckPath": "Mp00031",
+  "Avoiding321Permutation@DyckPath": "Mp00024",
+  "NoncrossingPartition@DyckPath": "Mp00138",
+  "TamariBinaryTree@DyckPath": "Mp00029",
+  "TamariDyckPath@BinaryTree": "Mp00020",
+  "DelestViennot@DyckPath": "Mp00229",
+  "InverseDelestViennot@DyckPath": "Mp00227",
+  "ReflectParallelogramPolyomino@DyckPath": "Mp00228",
+  "MinimalDyckPath@IntegerPartition": "Mp00043",
+  "ParallelogramPolyominoDyckPath@IntegerPartition": "Mp00230",
+  "InitialTableau@IntegerPartition": "Mp00042",
+  "ReadingTableau@IntegerPartition": "Mp00045",
+  "GlaisherFranklin@IntegerPartition": "Mp00312",
+  "InverseGlaisherFranklin@IntegerPartition": "Mp00313",
+  "IncreasingCyclePermutation@SetPartition": "Mp00080",
+  "AssociatedStandardTableau@SetPartition": "Mp00258",
+  "IntertwiningToDualMajorIndex@SetPartition": "Mp00171",
+  "DualMajorIndexToIntertwining@SetPartition": "Mp00174",
+  "WeakExceedancePartition@Permutation": "Mp00240",
+  "RowSetPartition@StandardTableau": "Mp00284",
+  "CoriLeBorgne@DyckPath": "Mp00121",
+  "ElizaldeDeutsch@DyckPath": "Mp00122",
+  "BarnabeiCastronuovo@DyckPath": "Mp00123",
+  "WachsWhite@SetPartition": "Mp00215",
+  "InverseWachsWhite@SetPartition": "Mp00216",
+  "WachsWhiteRho@SetPartition": "Mp00217",
+  "InverseWachsWhiteRho@SetPartition": "Mp00218",
+  "InverseYip@SetPartition": "Mp00219",
+  "Yip@SetPartition": "Mp00220",
+  "NoncrossingPermutation@DyckPath": "Mp00023",
+  "AdinBagnoRoichman@DyckPath": "Mp00124",
+  "Ringel@DyckPath": "Mp00201",
+  "SupportDyckPath@ParkingFunction": "Mp00056",
 };
 
 test("every reading names the FindStat map it is", () => {

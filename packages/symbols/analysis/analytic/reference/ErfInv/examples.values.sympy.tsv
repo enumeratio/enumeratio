@@ -13,9 +13,9 @@ interval-arithmetic-the-inverse-is-increasing-so	erfinv(AccumBounds(0.5, 0.6))	e
 uncertainty-propagation			
 to-30-significant-digits-every-one-correctly	N(erfinv(Rational(1, 2)), 30)	0.476936276204469873381418353643	
 n-erfinv-33-over-100-50	N(erfinv(Rational(33, 100)), 30)	0.301332146133705826128502718158	
-functionexpand-matrixfunction-erfinv-list-list-0			
+functionexpand-matrixfunction-erfinv-list-list-0	expand_func(Matrix([[0, Rational(1, 2)], [1, 0]]).analytic_func(erfinv(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist())		
 erfinv-a-erf-a-z			
-functionexpand-erf-erfinv-s			
+functionexpand-erf-erfinv-s	expand_func(erf(erfinv(Symbol("s"))))		
 erfinv-s-eq-erfinv-0-s			
 series-erfinv-x-x-0-8	series(erfinv(Symbol("x")), Symbol("x"), 0, 8 + 1)	sqrt(pi)*x/2 + pi**(3/2)*x**3/24 + 7*pi**(5/2)*x**5/960 + 127*pi**(7/2)*x**7/80640 + O(x**9)	
 series-erfinv-z0-s-z0-0-2			

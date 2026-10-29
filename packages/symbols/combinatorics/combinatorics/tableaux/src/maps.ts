@@ -382,4 +382,13 @@ export const TABLEAUX_MAPS: readonly CombinatorialMap[] = [
     summary: "A standard tableau of the same shape whose column descents are the original's row descents.",
     note: "FindStat's Mp00226, a bijection. From the natural labelling of the shape, d and d + 1 are exchanged at each column descent d, the tableau following by the same exchange unless that keeps its descents.",
   },
+  {
+    name: "RowSetPartition",
+    from: "standard_tableau",
+    to: "set_partition",
+    body: "_raw",
+    guard: tableauGuard,
+    summary: "The set partition whose blocks are the rows of the tableau.",
+    note: "FindStat's Mp00284. Injective on the tableaux of a given shape; the shape is the sequence of block sizes.",
+  },
 ];

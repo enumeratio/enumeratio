@@ -35,6 +35,12 @@ grades:
   - name: n
     role: axis
 carrier: Composition
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: "(((((Finset.univ : Finset (Composition ($1 : ℕ))))).val.map (fun c => c.blocks)).sort (· ≤ ·))"
+    arity: 1
+    note: Composition n enumerated (Fintype) as block lists, in lexicographic order
 ---
 
 - Count is $2^{n-1}$ for $n \ge 1$

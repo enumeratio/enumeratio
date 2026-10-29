@@ -6,17 +6,18 @@
 // `Producer -> head`. An environment asks the producer for the marks in a view (`producerOf`),
 // and a static one pins a view first (`pinnedBox`), which gives a finite list like any figure.
 //
-// Evaluating a `Show`'s bound parameters (`evaluatedShow`) comes before lowering and is the
-// caller's: the lowering is a pure function of the expression, as every `makeBoxes` rule is.
+// Evaluating a `Show`'s bound parameters (`evaluatedShow`) comes before lowering, as every
+// `makeBoxes` rule is a pure function of the expression; `loweredShow` does both, and loads the
+// libraries a lattice layer reads, so an environment asks for a box and draws what it gets.
 
-import { type Box, type Notation, type NotationRule, optionsOfBox } from "@enumeratio/boxes";
+import { type Box, makeBoxes, type Notation, type NotationRule, optionsOfBox } from "@enumeratio/boxes";
 import { cameraSpecOf, throughCamera } from "./camera-frame.ts";
 import { loadEngineFor } from "./engine.ts";
 import { FIGURE_HEADS, type FigureHead, figureLayerOf, VALUE_FRAMES } from "./figure-frames.ts";
 import { argsOf, headOf, type Json } from "./frame-json.ts";
 import { displayListOfBox, graphicsBoxOf, graphicsOf } from "./graphics-box.ts";
 import { plainJson, ruleNameOf, splitOptions } from "./graphics-rules.ts";
-import { latticeLayerOf, type ShowLayer } from "./lattice-layers.ts";
+import { latticeLayerOf, loadLatticeModules, type ShowLayer } from "./lattice-layers.ts";
 import { clampLatticeView, type LatticeView, maxExtentFor } from "./lattice.ts";
 import { declared, type ShowSpec, type ShowTiles, specOf } from "./show-spec.ts";
 import { svg, type SvgOptions } from "./svg-draw.ts";
@@ -199,6 +200,34 @@ export async function evaluatedShow(source: Json, bound: Json): Promise<Json> {
     }),
   );
   return [headOf(bound) ?? "Show", ...out];
+}
+
+/** A `Show` bound and lowered: its box, and the spec it was read as. */
+export interface LoweredShow {
+  readonly box: Box;
+  readonly spec: ShowSpec;
+}
+
+/**
+ * `bound` (`source` with its wildcards filled in) evaluated where it needs to be, its layers'
+ * libraries loaded, and lowered to a `GraphicsBox`; the reason it can't be drawn, as text,
+ * otherwise.
+ */
+export async function loweredShow(source: Json, bound: Json): Promise<LoweredShow | string> {
+  const shown = await evaluatedShow(source, bound);
+  await loadLatticeModules(specOf(shown).tiles);
+  return lowerShow(shown);
+}
+
+/**
+ * A `Show` already evaluated, its layers' libraries registered (an environment that has them in
+ * hand, like the terminal), lowered to a `GraphicsBox`; the reason it can't be drawn otherwise.
+ */
+export function lowerShow(shown: Json): LoweredShow | string {
+  const box = makeBoxes(shown as never, FIGURE_NOTATION);
+  if (graphicsOf(box) !== undefined) return { box, spec: specOf(shown) };
+  const why = showBox(shown);
+  return typeof why === "string" ? why : "Not a Show(…) expression.";
 }
 
 // ── The producer ─────────────────────────────────────────────────────────────────────────

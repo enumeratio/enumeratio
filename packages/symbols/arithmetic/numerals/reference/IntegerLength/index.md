@@ -16,6 +16,17 @@ seeAlso:
   - IntegerString
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: ((Nat.digits 10 $1).length)
+    arity: 1
+    note: The length of Nat.digits, which is [] at 0, so 0 has length 0 as ours; natural n only.
+  - origin: mapped
+    form: mathlib4
+    template: ((Nat.digits $2 $1).length)
+    arity: 2
+    note: As the one-argument row, in an integer base.
 ---
 
 - The sign of $n$ is not counted — `IntegerLength(-123)` is 3, same as `IntegerLength(123)`

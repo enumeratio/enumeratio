@@ -53,7 +53,6 @@ const CORE = [
   "Mod",
   "Most",
   "Multiply",
-  "Negate",
   "Or",
   "Power",
   "Product",
@@ -62,6 +61,7 @@ const CORE = [
   "Rest",
   "Subtract",
   "Sum",
+  "Tuple",
   "Typed",
   "Unique",
 ];

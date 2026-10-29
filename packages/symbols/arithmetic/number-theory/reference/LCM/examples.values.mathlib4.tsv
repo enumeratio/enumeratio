@@ -22,7 +22,7 @@ lcm-with-a-negative-real-prime
 lcm-of-two-large-norm-gaussians			
 lcm-past-2-53-in-both-parts			
 a-real-split-prime-and-its-gaussian-factor			
-lcm-of-two-real-composites-plain-integer-case	(Int.lcm 4 9)		
+lcm-of-two-real-composites-plain-integer-case	(Int.lcm 4 9)	36	
 lcm-with-a-negative-real-composite			
 lcm-with-an-associate-times-1			
 lcm-with-an-associate-times-i			
@@ -35,11 +35,11 @@ lcm-of-two-composites-sharing-the-prime-above-13
 lcm-of-a-lazy-range-1-10-not-a-materialised-list			
 reduceconditions-lcm-a-3-lt-3a-neg-10-lt-a-lt-10			
 the-smallest-number-divisible-by-each-of-1			
-lcm-10-15	(Int.lcm 10 15)		
+lcm-10-15	(Int.lcm 10 15)	30	
 foldlist-lcm-1-range-2-10			
 ln-lcm-range-1-10			
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd	(decide (((Int.gcd 27 81) * (Int.lcm 27 81)) = (27 * 81)))	true	
-lcm-27-81	(Int.lcm 27 81)		
+lcm-27-81	(Int.lcm 27 81)	81	
 lcm-6-11-25-eq-1-650			
 lcm-5-7-2-eq-70			
 ln-1-over-lcm-range-1-4-times-lcm-range-1-5			

@@ -30,6 +30,20 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: (-1)**primeomega($1)
+    arity: 1
+    threadArgOnly:
+      - 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
+  - origin: mapped
+    form: mathlib4
+    template: (ArithmeticFunction.liouville $1)
+    arity: 1
+    note: ArithmeticFunction.liouville, (-1)^Omega(n), with lambda(0) = 0 by definition; natural n only.
 ---
 
 - Completely multiplicative: $\lambda(mn)=\lambda(m)\lambda(n)$ for every $m,n$, not just coprime ones — unlike [[MoebiusMu]].

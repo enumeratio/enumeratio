@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-dyck-path-uuddud			[Avoiding132Permutation, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	[Permutation, [List, 3, 1, 2]]	the Dyck path $UUDDUD$

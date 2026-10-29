@@ -1,0 +1,2 @@
+id	in	out
+2-4	(List.length (((((Finset.univ : Finset (Composition (5 : ℕ))))).val.map (fun c => c.blocks)).sort (· ≤ ·)))	16

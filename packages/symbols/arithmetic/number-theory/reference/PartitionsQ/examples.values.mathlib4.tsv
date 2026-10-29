@@ -1,0 +1,25 @@
+id	in	out	verdict
+the-partitions-of-10-into-distinct-parts	((Nat.Partition.distincts 10).card)	10	
+the-empty-partition	((Nat.Partition.distincts 0).card)	1	
+exact-for-large-n	((Nat.Partition.distincts 100).card)	TimeoutError: over 60 s	error
+threads-over-a-list	((Nat.Partition.distincts [1, 2, 3, 4, 5, 6, 7, 8]).card)	Application type mismatch: The argument	error
+partitionsq-list-2-4-6	((Nat.Partition.distincts [2, 4, 6]).card)	Application type mismatch: The argument	error
+counts-the-distinctpartitions-family	(decide (((Nat.Partition.distincts 10).card) = (List.length (((Nat.Partition.distincts (10 : ℕ)).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·)))))	true	
+euler-as-many-partitions-into-odd-parts-as-into			
+partitionsq-5	((Nat.Partition.distincts 5).card)	3	
+partitionsq-1	((Nat.Partition.distincts 1).card)	1	
+partitionsq-2	((Nat.Partition.distincts 2).card)	1	
+partitionsq-3	((Nat.Partition.distincts 3).card)	2	
+partitionsq-4	((Nat.Partition.distincts 4).card)	2	
+partitionsq-6	((Nat.Partition.distincts 6).card)	4	
+partitionsq-7	((Nat.Partition.distincts 7).card)	5	
+partitionsq-8	((Nat.Partition.distincts 8).card)	6	
+partitionsq-9	((Nat.Partition.distincts 9).card)	8	
+partitionsq-11	((Nat.Partition.distincts 11).card)	12	
+partitionsq-12	((Nat.Partition.distincts 12).card)	15	
+partitionsq-13	((Nat.Partition.distincts 13).card)	18	
+partitionsq-14	((Nat.Partition.distincts 14).card)	22	
+partitionsq-15	((Nat.Partition.distincts 15).card)	27	
+partitionsq-16	((Nat.Partition.distincts 16).card)	32	
+partitionsq-17	((Nat.Partition.distincts 17).card)	38	
+partitionsq-neg-expand-exponentiale-plus-1-pow-2			

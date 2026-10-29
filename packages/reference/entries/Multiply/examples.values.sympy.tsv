@@ -4,4 +4,4 @@ list-list-a-b-list-c-d-times-list-x-y	enumeratio_broadcast(lambda _a0, _a1: (_a0
 interval-neg-1-2-times-interval-2-3	(AccumBounds(-1, 2) * AccumBounds(2, 3))	AccumBounds(-3, 6)	
 replaceall-a-times-b-times-c-times-d-rule-a			
 neg-noncommutativemultiply-b-a-plus			
-product-1-over-k-plus-2-times-k-plus-1-k-1-n			
+product-1-over-k-plus-2-times-k-plus-1-k-1-n	product(((S(1) / (Symbol("k") + 2)) * (Symbol("k") + 1)), (Symbol("k"), 1, Symbol("n")))		

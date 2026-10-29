@@ -34,6 +34,11 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: (ArithmeticFunction.carmichael $1)
+    arity: 1
+    note: ArithmeticFunction.carmichael, the exponent of the multiplicative group mod n; natural n only.
 ---
 
 - compute-engine has this natively; the gap closed here is Wolfram's $\lambda(-n)=\lambda(n)$ and threading over a list, which the native handler left unevaluated.

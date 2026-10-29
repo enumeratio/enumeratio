@@ -13,7 +13,7 @@ interval-arithmetic-erfc-is-decreasing-so-the	erfc(AccumBounds(0.2, 0.3))	erfc(A
 uncertainty-propagation			
 to-30-significant-digits-every-one-correctly	N(erfc(2), 30)	0.00467773498104726583793074363275	
 n-erfc-3-over-2-50	N(erfc(Rational(3, 2)), 30)	0.0338948535246892729330237383541	
-functionexpand-matrixfunction-erfc-list-list-0-1			
+functionexpand-matrixfunction-erfc-list-list-0-1	expand_func(Matrix([[0, ((0 + Rational(1, 2)*I) * pi)], [pi, 0]]).analytic_func(erfc(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist())		
 fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2	simplify(enumeratio_equal(erfc((-Symbol("z"))), ((-erfc(Symbol("z"))) + 2)))	True	
 series-erfc-x-x-0-7	series(erfc(Symbol("x")), Symbol("x"), 0, 7 + 1)	1 - 2*x/sqrt(pi) + 2*x**3/(3*sqrt(pi)) - x**5/(5*sqrt(pi)) + x**7/(21*sqrt(pi)) + O(x**8)	
 normal-series-erfc-x-x-positiveinfinity-1	(series(erfc(Symbol("x")), Symbol("x"), oo, 1 + 1)).removeO()	None	inconclusive

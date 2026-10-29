@@ -1,0 +1,32 @@
+id	in	out	verdict
+length-list-1-2-3-4	(List.length [1, 2, 3, 4])	4	
+length-list-1-2-3-4-5	(List.length [1, 2, 3, 4, 5])	5	
+works-on-any-collection-not-just-list	(List.length (List.dedup ([1, 2, 3] : List ℚ)))	3	
+length-list-a-b-c-d			
+length-of-association-counts-values			
+length-association			
+an-atom-has-no-parts-so-its-length-is-0	(List.length 5)	failed to synthesize instance of type class	error
+the-empty-list-has-length-0	(List.length [])	don't know how to synthesize implicit argument `α`	error
+of-a-matrix-the-number-of-rows	(List.length [[1, 2], [3, 4], [5, 6]])	3	
+a-set-holds-each-element-once-so-a-repeated	(List.length (List.dedup ([1, 1, 2] : List ℚ)))	2	
+any-expression-the-number-of-terms-in-a-sum			
+the-number-of-arguments-of-a-call-counting-only			
+a-symbol-such-as-pi-is-an-atom-of-length-0			
+a-lazy-range-is-counted-without-being	(List.length ((List.range (Int.natAbs ((20 : ℤ) - 1) + 1)).map (fun (k : ℕ) => (((1 : ℤ) + Int.sign ((20 : ℤ) - 1) * k : ℤ) : ℚ))))	20	
+length-x			
+length-123-456	(List.length 123456)	failed to synthesize instance of type class	error
+length-1-over-10	(List.length ((1 : ℚ) / 10))	failed to synthesize instance of type class	error
+length-3-plus-i			
+length-string	(List.length "string")	Application type mismatch: The argument	error
+the-cardinality-of-a-finset	(List.length [1, 3, 4])	3	
+the-empty-finset-has-no-members	(List.length [])	don't know how to synthesize implicit argument `α`	error
+length-x-pow-9-plus-x-pow-2-plus-x-plus-1			
+length-integerdigits-1-000-factorial	(List.length (let n : ℕ := (Nat.factorial 1000); if n = 0 then [0] else (Nat.digits 10 n).reverse))	2568	
+map-length-list-list-a-b-list-a-b-c-list-x			
+length-list-list-a-b-c-list-d-k-f			
+length-join-a-b-length-a-length-b-see-join	(decide ((List.length (([1, 2, 3]) ++ ([4, 5]))) = ((List.length [1, 2, 3]) + (List.length [4, 5]))))	true	
+length-filter-issquarefree-past-iteration-budget			
+length-1-over-3	(List.length ((1 : ℚ) / 3))	failed to synthesize instance of type class	error
+length-2-plus-i			
+length-7	(List.length 7)	failed to synthesize instance of type class	error
+length-sqrt-7			

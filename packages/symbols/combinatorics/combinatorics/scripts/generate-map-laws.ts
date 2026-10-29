@@ -13,9 +13,10 @@
 
 import { fileURLToPath } from "node:url";
 import { type EntryLaw, lawsFor } from "@enumeratio/entry";
-import { readEntry, writeFormatted } from "@enumeratio/entry/node";
+import { headNames, readEntry, writeFormatted } from "@enumeratio/entry/node";
 import type { Graded, Law } from "@enumeratio/structures";
 import { COMPOSITIONS_MAPS } from "../compositions/src/maps.ts";
+import { DYCK_CONVERSION_MAPS } from "../lattice-paths/src/dyck-conversion-maps.ts";
 import { LATTICE_PATHS_MAPS } from "../lattice-paths/src/maps.ts";
 import { PARTITIONS_MAPS } from "../partitions/src/maps.ts";
 import { PERMUTATIONS_MAPS } from "../permutations/src/maps.ts";
@@ -32,6 +33,7 @@ const MAPS = [
   ...SIGNED_PERMUTATIONS_ALGORITHM_MAPS,
   ...TREES_MAPS,
   ...LATTICE_PATHS_MAPS,
+  ...DYCK_CONVERSION_MAPS,
   ...PARTITIONS_MAPS,
   ...SET_PARTITIONS_MAPS,
   ...TABLEAUX_MAPS,
@@ -68,8 +70,12 @@ function toMapLaws(entryLaws: readonly EntryLaw[]): MapLaws {
 /** Every map's laws by `${name}@${from}`, for the maps whose record has a `laws:` list. */
 export function mapLaws(): Map<string, MapLaws> {
   const out = new Map<string, MapLaws>();
+  // A head's record is written by collect-map-entries, which loads the package and so needs this
+  // file first: a head with no record yet has no laws, and the build does not wait on it.
+  const recorded = new Set(headNames(REFERENCE_DIR));
   for (const map of MAPS) {
     if (map.name === "Permutation") continue; // no record -- see file comment.
+    if (!recorded.has(map.name)) continue;
     const entry = readEntry(REFERENCE_DIR, map.name);
     const forThisOverload = lawsFor(entry.laws, map.from);
     if (forThisOverload.length === 0) continue;

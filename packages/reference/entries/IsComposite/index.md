@@ -32,4 +32,14 @@ bindings:
     checked:
       version: primal 0.3.3
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: ($1 > 1 and not isprime($1))
+    arity: 1
+    threadArgOnly:
+      - 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
+    note: Greater than 1 and not prime; a negative integer is not composite here.
 ---

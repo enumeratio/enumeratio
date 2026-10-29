@@ -1,0 +1,31 @@
+id	in	out	verdict
+carmichaellambda-10	(ArithmeticFunction.carmichael 10)	4	
+listable	(ArithmeticFunction.carmichael [8, 15])	Application type mismatch: The argument	error
+negative-n-lambda-n-lambda-n	(ArithmeticFunction.carmichael (-100))	failed to synthesize instance of type class	error
+listable-over-a-range	(ArithmeticFunction.carmichael ((List.range (Int.natAbs ((10 : ℤ) - 1) + 1)).map (fun (k : ℕ) => ((1 + Int.sign ((10 : ℤ) - 1) * k : ℤ) : ℚ))))	Application type mismatch: The argument	error
+carmichaellambda-neg-10	(ArithmeticFunction.carmichael (-10))	failed to synthesize instance of type class	error
+carmichaellambda-list-2-4-7	(ArithmeticFunction.carmichael [2, 4, 7])	Application type mismatch: The argument	error
+561-mod-carmichaellambda-561	((561 : ℤ) % (ArithmeticFunction.carmichael 561))	1	
+carmichaellambda-12	(ArithmeticFunction.carmichael 12)	2	
+list-divides-8-24-divides-carmichaellambda-8			
+3-pow-1-plus-carmichaellambda-17-mod-17	(((3 ^ (1 + (ArithmeticFunction.carmichael 17))) : ℤ) % 17)	3	
+divides-multiplicativeorder-4-9-carmichaellambda			
+carmichaellambda-1	(ArithmeticFunction.carmichael 1)	1	
+carmichaellambda-2	(ArithmeticFunction.carmichael 2)	1	
+carmichaellambda-3	(ArithmeticFunction.carmichael 3)	2	
+carmichaellambda-4	(ArithmeticFunction.carmichael 4)	2	
+carmichaellambda-5	(ArithmeticFunction.carmichael 5)	4	
+carmichaellambda-6	(ArithmeticFunction.carmichael 6)	2	
+divides-carmichaellambda-8-totient-8			
+carmichaellambda-7	(ArithmeticFunction.carmichael 7)	6	
+carmichaellambda-8	(ArithmeticFunction.carmichael 8)	2	
+carmichaellambda-9	(ArithmeticFunction.carmichael 9)	6	
+carmichaellambda-11	(ArithmeticFunction.carmichael 11)	10	
+carmichaellambda-13	(ArithmeticFunction.carmichael 13)	12	
+carmichaellambda-14	(ArithmeticFunction.carmichael 14)	6	
+carmichaellambda-15	(ArithmeticFunction.carmichael 15)	4	
+carmichaellambda-16	(ArithmeticFunction.carmichael 16)	4	
+carmichaellambda-17	(ArithmeticFunction.carmichael 17)	16	
+carmichaellambda-list-neg-2-neg-1-0-1-2	(ArithmeticFunction.carmichael [(-2), (-1), 0, 1, 2])	Application type mismatch: The argument	error
+list-lcm-carmichaellambda-list-3-8			
+carmichaellambda-0	(ArithmeticFunction.carmichael 0)	0	

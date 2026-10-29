@@ -1,0 +1,15 @@
+id	in	out	verdict
+iscomposite-4	(4 > 1 and not isprime(4))	True	
+iscomposite-13	(13 > 1 and not isprime(13))	False	
+iscomposite-of-a-negative-integer	(-49 > 1 and not isprime(-49))	False	
+a-negative-number-is-not-composite	(-168 > 1 and not isprime(-168))	False	
+iscomposite-1-plus-10-pow-3-000	((1 + (S(10)**3000)) > 1 and not isprime((1 + (S(10)**3000))))	True	
+iscomposite-list-1-2-3-4-5-6	[(1 > 1 and not isprime(1)), (2 > 1 and not isprime(2)), (3 > 1 and not isprime(3)), (4 > 1 and not isprime(4)), (5 > 1 and not isprime(5)), (6 > 1 and not isprime(6))]	[False, False, False, True, False, True]	
+iscomposite-5	(5 > 1 and not isprime(5))	False	
+iscomposite-3-plus-i	((3 + 1*I) > 1 and not isprime((3 + 1*I)))	TypeError: Invalid comparison of non-real 3 + I	error
+iscomposite-8	(8 > 1 and not isprime(8))	True	
+iscomposite-12	(12 > 1 and not isprime(12))	True	
+iscomposite-67	(67 > 1 and not isprime(67))	False	
+iscomposite-28	(28 > 1 and not isprime(28))	True	
+iscomposite-60	(60 > 1 and not isprime(60))	True	
+iscomposite-48-828-125	(48828125 > 1 and not isprime(48828125))	True	

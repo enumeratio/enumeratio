@@ -22,6 +22,11 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: ((Nat.Partition.distincts $1).card)
+    arity: 1
+    note: "The partitions of n whose parts are all distinct (Nat.Partition.distincts), counted by enumerating them: exponential in n, so a large n runs into the per-item time cap."
 ---
 
 - By Euler's theorem, $q(n)$ also counts the partitions of $n$ into odd parts — see [[IntegerPartitions]].

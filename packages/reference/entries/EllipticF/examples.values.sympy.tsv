@@ -1,0 +1,12 @@
+id	in	out	verdict
+ellipticf-list-list-1-0-list-0-1-0	[[elliptic_f(1, 0), elliptic_f(0, 0)], [elliptic_f(0, 0), elliptic_f(1, 0)]]	[[1, 0], [0, 1]]	
+matrixfunction-function-ellipticf-1-0-1-list	Matrix([[1, 0], [0, 1]]).analytic_func(elliptic_f(Symbol("_mf"), 0), Symbol("_mf")).applyfunc(simplify).tolist()	[[1, 0], [0, 1]]	
+n-ellipticf-12-over-5-3-50	N(elliptic_f(Rational(12, 5), 3), 30)	1.00107738045610623607965958638 - 1.92316618950462535318414440934*I	
+list-ellipticf-0-m-ellipticf-1-over-2-times-pi-m	[elliptic_f(0, Symbol("m")), elliptic_f((Rational(1, 2) * pi), Symbol("m"))]	[0, elliptic_k(m)]	disagree
+ellipticf-0-1	elliptic_f(0, 1)	0	
+ellipticf-0-0	elliptic_f(0, 0)	0	
+ellipticf-jacobiamplitude-0-0-0			
+ellipticf-jacobiamplitude-0-1-1			
+solve-ellipticf-z-m-pow-3-plus-ellipticf-z-m-eq			
+n-2-times-ellipticf-1-over-2-1-over-2	N((2 * elliptic_f(Rational(1, 2), Rational(1, 2))), 30)	1.02093427125600951267220818222	
+n-ellipticf-1-over-3-1-over-2-plus-ellipticf-1	N((elliptic_f(Rational(1, 3), Rational(1, 2)) + elliptic_f(Rational(1, 2), Rational(1, 2))), 30)	0.846894634165577754322134285461	

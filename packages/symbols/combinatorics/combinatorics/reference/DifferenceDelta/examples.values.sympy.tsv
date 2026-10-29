@@ -1,0 +1,29 @@
+id	in	out
+quadratic	difference_delta((S(Symbol("n"))**2), Symbol("n"))	-n**2 + (n + 1)**2
+linear	difference_delta(((3 * Symbol("n")) + 5), Symbol("n"))	3
+differencedelta-fallingfactorial-k-n-k	difference_delta(ff(Symbol("k"), Symbol("n")), Symbol("k"))	-FallingFactorial(k, n) + FallingFactorial(k + 1, n)
+shift-var-named-i		
+differencedelta-k-pow-3-k	difference_delta((S(Symbol("k"))**3), Symbol("k"))	-k**3 + (k + 1)**3
+differencedelta-fallingfactorial-k-3-k	difference_delta(ff(Symbol("k"), 3), Symbol("k"))	(k - 2)*(k - 1) + (k + 1)*(2*k - 2)
+differencedelta-k-plus-1-times-k-plus-3-pow-neg	difference_delta(((Symbol("k") + 1) * (S((Symbol("k") + 3))**-1)), Symbol("k"))	(k + 1)*(1/(k + 4) - 1/(k + 3)) + 1/(k + 4)
+differencedelta-fallingfactorial-k-neg-3-k	difference_delta(ff(Symbol("k"), -3), Symbol("k"))	((1/(k + 3) - 1/(k + 2))/(k + 3) + (1/(k + 4) - 1/(k + 3))/(k + 3))/(k + 2) + (1/(k + 2) - 1/(k + 1))/((k + 2)*(k + 3))
+differencedelta-zeta-2-k-k	difference_delta(zeta(2, Symbol("k")), Symbol("k"))	-zeta(2, k) + zeta(2, k + 1)
+differencedelta-a-pow-k-k	difference_delta((S(Symbol("a"))**Symbol("k")), Symbol("k"))	a**k*(a - 1)
+differencedelta-2-pow-k-k	difference_delta((S(2)**Symbol("k")), Symbol("k"))	2**k
+differencedelta-k-pow-2-plus-k-plus-1-times-2	difference_delta((((S(Symbol("k"))**2) + Symbol("k") + 1) * (S(2)**Symbol("k"))), Symbol("k"))	2**k*(k**2 + k + 1) + 2**(k + 1)*(-k**2 + (k + 1)**2 + 1)
+differencedelta-k-plus-1-times-k-plus-3-pow-ne-2	difference_delta((((Symbol("k") + 1) * (S((Symbol("k") + 3))**-1)) * (S(2)**Symbol("k"))), Symbol("k"))	2**k*(k + 1)/(k + 3) + 2**(k + 1)*((k + 1)*(1/(k + 4) - 1/(k + 3)) + 1/(k + 4))
+differencedelta-sin-a-times-k-plus-b-k	difference_delta(sin(((Symbol("a") * Symbol("k")) + Symbol("b"))), Symbol("k"))	-sin(a*k + b) + sin(a*(k + 1) + b)
+differencedelta-sinh-a-times-k-plus-b-k	difference_delta(sinh(((Symbol("a") * Symbol("k")) + Symbol("b"))), Symbol("k"))	-sinh(a*k + b) + sinh(a*(k + 1) + b)
+differencedelta-pochhammer-k-n-k	difference_delta(rf(Symbol("k"), Symbol("n")), Symbol("k"))	-RisingFactorial(k, n) + RisingFactorial(k + 1, n)
+differencedelta-k-factorial-k	difference_delta(factorial(Symbol("k")), Symbol("k"))	-factorial(k) + factorial(k + 1)
+differencedelta-binomial-k-plus-n-n-k	difference_delta(binomial((Symbol("k") + Symbol("n")), Symbol("n")), Symbol("k"))	-binomial(k + n, n) + binomial(k + n + 1, n)
+differencedelta-gamma-k-k	difference_delta(gamma(Symbol("k")), Symbol("k"))	-gamma(k) + gamma(k + 1)
+differencedelta-beta-k-n-k	difference_delta(beta(Symbol("k"), Symbol("n")), Symbol("k"))	-beta(k, n) + beta(k + 1, n)
+differencedelta-fallingfactorial-a-k-times	difference_delta((ff(Symbol("a"), Symbol("k")) * (S(ff(Symbol("b"), Symbol("k")))**-1)), Symbol("k"))	(-FallingFactorial(a, k) + FallingFactorial(a, k + 1))/FallingFactorial(b, k + 1) + (1/FallingFactorial(b, k + 1) - 1/FallingFactorial(b, k))*FallingFactorial(a, k)
+differencedelta-gammaregularized-k-z-k	difference_delta((uppergamma(Symbol("k"), Symbol("z")) / gamma(Symbol("k"))), Symbol("k"))	(1/gamma(k + 1) - 1/gamma(k))*uppergamma(k, z) + (-uppergamma(k, z) + uppergamma(k + 1, z))/gamma(k + 1)
+differencedelta-betaregularized-z-k-j-k	difference_delta(betainc_regularized(Symbol("k"), Symbol("j"), 0, Symbol("z")), Symbol("k"))	-betainc_regularized(k, j, 0, z) + betainc_regularized(k + 1, j, 0, z)
+differencedelta-betaregularized-z-k-j-j	difference_delta(betainc_regularized(Symbol("k"), Symbol("j"), 0, Symbol("z")), Symbol("j"))	-betainc_regularized(k, j, 0, z) + betainc_regularized(k, j + 1, 0, z)
+differencedelta-qfactorial-k-q-k		
+differencedelta-qpochhammer-5-q-k-k		
+differencedelta-qbinomial-k-m-q-k		
+differencedelta-qbinomial-n-k-q-k		

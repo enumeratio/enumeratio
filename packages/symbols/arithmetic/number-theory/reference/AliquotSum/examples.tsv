@@ -1,12 +1,12 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note	julia.kind	julia.note
-aliquotsum-12			[AliquotSum, 12]	16	$1+2+3+4+6=16$								
-aliquotsum-28			[AliquotSum, 28]	28	Perfect: its proper divisors sum back to 28								
-aliquotsum-13			[AliquotSum, 13]	1	A prime has only 1 as a proper divisor								
-aliquotsum-1			[AliquotSum, 1]	0	1 has no proper divisor								
-negative-n-the-sign-is-a-unit	Scope		[AliquotSum, -12]	16	Negative $n$: the sign is a unit, as in [[PrimeOmega]]								
-listable-over-a-list	Scope		[AliquotSum, [List, 6, 12, 13]]	[List, 6, 16, 1]	Listable over a list								
-large-integers-a-power-of-two	Scope		[AliquotSum, [Power, 2, 40]]	1099511627775	Large integers: $2^{40}-1$, the proper divisors of $2^{40}$								
-amicable-pair-220-and-284	Applications		[AliquotSum, 220]	284	Amicable pair: $s(220)=284$								
-amicable-pair-the-other-way	Applications		[AliquotSum, [AliquotSum, 220]]	220	and $s(284)=220$, so $s(s(220))=220$								
-aliquotsum-is-sigma-minus-n	Properties		[Equal, [AliquotSum, 360], [Subtract, [DivisorSigma, 1, 360], 360]]	True	$s(n)=\sigma_1(n)-n$. See [[DivisorSigma]]								
-zero-stays-unevaluated	Possible issues		[AliquotSum, 0]	[AliquotSum, 0]	Zero is outside the domain, so it stays unevaluated	undefined-form	Both decline: Wolfram's DivisorSigma[1, 0] stays as that call, the mapping's spelling-out of AliquotSum.	domain	Sage's sigma(0) raises: the factorization of 0 is not defined.	domain	SymPy's divisor_sigma() requires a positive integer.	undefined-form	Both decline: compute-engine leaves the call unevaluated, Julia raises an error (DomainError with 0: Argument must be pos).
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note	mathlib4.kind	mathlib4.note	julia.kind	julia.note
+aliquotsum-12			[AliquotSum, 12]	16	$1+2+3+4+6=16$										
+aliquotsum-28			[AliquotSum, 28]	28	Perfect: its proper divisors sum back to 28										
+aliquotsum-13			[AliquotSum, 13]	1	A prime has only 1 as a proper divisor										
+aliquotsum-1			[AliquotSum, 1]	0	1 has no proper divisor										
+negative-n-the-sign-is-a-unit	Scope		[AliquotSum, -12]	16	Negative $n$: the sign is a unit, as in [[PrimeOmega]]							domain	A negative argument is outside Mathlib's natural-number domain, so Nat.properDivisors does not typecheck; ours extends it and answers.		
+listable-over-a-list	Scope		[AliquotSum, [List, 6, 12, 13]]	[List, 6, 16, 1]	Listable over a list							threading	compute-engine's AliquotSum is Listable and threads over the list; Mathlib's Nat.properDivisors takes scalars only.		
+large-integers-a-power-of-two	Scope		[AliquotSum, [Power, 2, 40]]	1099511627775	Large integers: $2^{40}-1$, the proper divisors of $2^{40}$							resource	Nat.properDivisors filters the whole range 1..n-1, so n = 2^40 is far past the memory cap.		
+amicable-pair-220-and-284	Applications		[AliquotSum, 220]	284	Amicable pair: $s(220)=284$										
+amicable-pair-the-other-way	Applications		[AliquotSum, [AliquotSum, 220]]	220	and $s(284)=220$, so $s(s(220))=220$										
+aliquotsum-is-sigma-minus-n	Properties		[Equal, [AliquotSum, 360], [Subtract, [DivisorSigma, 1, 360], 360]]	True	$s(n)=\sigma_1(n)-n$. See [[DivisorSigma]]										
+zero-stays-unevaluated	Possible issues		[AliquotSum, 0]	[AliquotSum, 0]	Zero is outside the domain, so it stays unevaluated	undefined-form	Both decline: Wolfram's DivisorSigma[1, 0] stays as that call, the mapping's spelling-out of AliquotSum.	domain	Sage's sigma(0) raises: the factorization of 0 is not defined.	domain	SymPy's divisor_sigma() requires a positive integer.	domain	Ours leaves AliquotSum(0) unevaluated; Nat.properDivisors 0 is empty, so Mathlib's sum is 0.	undefined-form	Both decline: compute-engine leaves the call unevaluated, Julia raises an error (DomainError with 0: Argument must be pos).

@@ -1,0 +1,27 @@
+id	in	out	verdict
+bellnumber-0	(Nat.bell 0)	1	
+bellnumber-1	(Nat.bell 1)	1	
+bellnumber-3	(Nat.bell 3)	5	
+bellnumber-5	(Nat.bell 5)	52	
+bellnumber-10	(Nat.bell 10)	115975	
+threads-element-wise-over-a-list-as-wolfram-s	(Nat.bell [1, 2, 3, 4])	Application type mismatch: The argument	error
+exact-for-large-n	(Nat.bell 30)	TimeoutError: over 60 s	error
+the-two-argument-form-gives-the-bell-touchard			
+the-bell-polynomial-at-a-real-point-b-20-0-5			
+bellnumber-list-1-2-3-4-5-6	(Nat.bell [1, 2, 3, 4, 5, 6])	Application type mismatch: The argument	error
+the-number-of-ways-to-partition-a-4-element-set	(Nat.bell 4)	15	
+recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	(decide ((Nat.bell 5) = (((Nat.choose 4 0) * (Nat.bell 0)) + ((Nat.choose 4 1) * (Nat.bell 1)) + ((Nat.choose 4 2) * (Nat.bell 2)) + ((Nat.choose 4 3) * (Nat.bell 3)) + ((Nat.choose 4 4) * (Nat.bell 4)))))	true	
+the-bell-polynomial-at-1-is-the-bell-number-b-n			
+dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac			
+touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	(decide ((((Nat.bell 9) : ℤ) % 7) = ((((Nat.bell 2) + (Nat.bell 3)) : ℤ) % 7)))	true	
+exponentialgeneratingfunction-bellnumber-n-n-x			
+bellnumber-2	(Nat.bell 2)	2	
+bellnumber-6	(Nat.bell 6)	203	
+bellnumber-7	(Nat.bell 7)	877	
+bellnumber-8	(Nat.bell 8)	4140	
+bellnumber-9	(Nat.bell 9)	21147	
+bellnumber-1-0			
+bellnumber-2-0			
+a-negative-argument-is-left-unevaluated	(Nat.bell (-1))	failed to synthesize instance of type class	error
+a-zero-modulus-inside-a-congruence-check-is-nan	(decide ((((Nat.bell 9) : ℤ) % 23) = ((((Nat.bell 4) + (Nat.bell 5)) : ℤ) % 0)))	false	
+bellnumber-range-1-10	(Nat.bell ((List.range (Int.natAbs ((10 : ℤ) - 1) + 1)).map (fun (k : ℕ) => (((1 : ℤ) + Int.sign ((10 : ℤ) - 1) * k : ℤ) : ℚ))))	Application type mismatch: The argument	error

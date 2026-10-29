@@ -3,33 +3,33 @@ stirlings1-5-2	(Nat.stirlingFirst 5 2)	50	disagree
 stirlings1-4-2	(Nat.stirlingFirst 4 2)	11	
 s-n-n-is-always-1	(Nat.stirlingFirst 3 3)	1	
 s-n-0-is-0-for-n-0	(Nat.stirlingFirst 5 0)	0	
-stirlings1-20-10	(Nat.stirlingFirst 20 10)		
-threads-element-wise-over-a-list-as-wolfram-s	(Nat.stirlingFirst [2, 4, 6] 2)		
-exact-for-large-n	(Nat.stirlingFirst 50 2)		
-a-mid-sized-n-and-k-past-the-fast-paths	(Nat.stirlingFirst 40 14)		
+stirlings1-20-10	(Nat.stirlingFirst 20 10)	381922055502195	
+threads-element-wise-over-a-list-as-wolfram-s	(Nat.stirlingFirst [2, 4, 6] 2)	Application type mismatch: The argument	error
+exact-for-large-n	(Nat.stirlingFirst 50 2)	2724619372591264761651711494187624530726005154239846809600000000	
+a-mid-sized-n-and-k-past-the-fast-paths	(Nat.stirlingFirst 40 14)	TimeoutError: over 60 s	error
 the-number-of-permutations-of-5-elements-with	(Nat.stirlingFirst 5 3)	35	
 abs-stirlings1-n-range-1-n			
 the-unsigned-values-in-a-row-sum-to-n			
 the-signed-row-sum-vanishes-for-n-ge-2			
-s-n-n-1-binom-n-2	(decide ((Nat.stirlingFirst 6 5) = (-((Nat.choose 6 2)))))		
+s-n-n-1-binom-n-2	(decide ((Nat.stirlingFirst 6 5) = (-((Nat.choose 6 2)))))	failed to synthesize instance of type class	error
 the-generating-property-sum-k-s-n-k-x-k-x-x-1-x			
 n-stirlings1-100-11			
-stirlings1-0-1	(Nat.stirlingFirst 0 1)		
-stirlings1-1-0	(Nat.stirlingFirst 1 0)		
-stirlings1-1-1	(Nat.stirlingFirst 1 1)		
-stirlings1-1-2	(Nat.stirlingFirst 1 2)		
-stirlings1-2-0	(Nat.stirlingFirst 2 0)		
-stirlings1-2-1	(Nat.stirlingFirst 2 1)		
-stirlings1-2-2	(Nat.stirlingFirst 2 2)		
-stirlings1-2-3	(Nat.stirlingFirst 2 3)		
-stirlings1-3-0	(Nat.stirlingFirst 3 0)		
-stirlings1-3-1	(Nat.stirlingFirst 3 1)		
-stirlings1-3-2	(Nat.stirlingFirst 3 2)		
-stirlings1-3-4	(Nat.stirlingFirst 3 4)		
-stirlings1-4-0	(Nat.stirlingFirst 4 0)		
-stirlings1-4-1	(Nat.stirlingFirst 4 1)		
-stirlings1-4-3	(Nat.stirlingFirst 4 3)		
+stirlings1-0-1	(Nat.stirlingFirst 0 1)	0	
+stirlings1-1-0	(Nat.stirlingFirst 1 0)	0	
+stirlings1-1-1	(Nat.stirlingFirst 1 1)	1	
+stirlings1-1-2	(Nat.stirlingFirst 1 2)	0	
+stirlings1-2-0	(Nat.stirlingFirst 2 0)	0	
+stirlings1-2-1	(Nat.stirlingFirst 2 1)	1	disagree
+stirlings1-2-2	(Nat.stirlingFirst 2 2)	1	
+stirlings1-2-3	(Nat.stirlingFirst 2 3)	0	
+stirlings1-3-0	(Nat.stirlingFirst 3 0)	0	
+stirlings1-3-1	(Nat.stirlingFirst 3 1)	2	
+stirlings1-3-2	(Nat.stirlingFirst 3 2)	3	disagree
+stirlings1-3-4	(Nat.stirlingFirst 3 4)	0	
+stirlings1-4-0	(Nat.stirlingFirst 4 0)	0	
+stirlings1-4-1	(Nat.stirlingFirst 4 1)	6	disagree
+stirlings1-4-3	(Nat.stirlingFirst 4 3)	6	disagree
 the-empty-case-s-0-0-1-by-convention-distinct	(Nat.stirlingFirst 0 0)	1	
-k-n-is-0	(Nat.stirlingFirst 5 6)		
-a-negative-k-stays-symbolic	(Nat.stirlingFirst 4 (-1))		
+k-n-is-0	(Nat.stirlingFirst 5 6)	0	
+a-negative-k-stays-symbolic	(Nat.stirlingFirst 4 (-1))	failed to synthesize instance of type class	error
 s-n-1-1-n-1-n-1-so-s-10-1-9	(Nat.stirlingFirst 10 1)	362880	disagree

@@ -188,4 +188,13 @@ export const TREES_MAPS: readonly CombinatorialMap[] = [
       "The right-branch bijection to binary trees followed by the left-branch bijection back: the de Bruijn-Morselt automorphism of the ordered trees.",
     note: "FindStat's Mp00328. Chaotic in general: Shapiro shows its sixth power is the identity on the trees that correspond to compositions.",
   },
+  {
+    name: "TamariDyckPath",
+    from: "binary_tree",
+    to: "dyck_path",
+    composedOf: ["ReverseComplement", "DyckPath", "Mirror"],
+    summary:
+      "The Dyck path T(L) U T(R) D of a tree with subtrees L and R: the bijection compatible with the Tamari order.",
+    note: "FindStat's Mp00020; the inverse is TamariBinaryTree. DyckPath(BinaryTree) reads the other decomposition, U T(L) D T(R), so this is it after a left-right mirror and a reverse-complement.",
+  },
 ];

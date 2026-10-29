@@ -1,0 +1,12 @@
+id	in	out
+multiplicative-energy-1-5	(Finset.mulEnergy (List.toFinset ([1, 2, 3, 4, 5] : List ℚ)) (List.toFinset ([1, 2, 3, 4, 5] : List ℚ)))	49
+multiplicative-energy-two-sets	(Finset.mulEnergy (List.toFinset ([1, 3, 9] : List ℚ)) (List.toFinset ([1, 3] : List ℚ)))	10
+multiplicative-energy-singleton	(Finset.mulEnergy (List.toFinset ([0] : List ℚ)) (List.toFinset ([0] : List ℚ)))	1
+multiplicative-energy-empty	(Finset.mulEnergy (List.toFinset ([] : List ℚ)) (List.toFinset ([] : List ℚ)))	0
+multiplicative-energy-rationals	(Finset.mulEnergy (List.toFinset ([((1 : ℚ) / 2), 1, 2] : List ℚ)) (List.toFinset ([((1 : ℚ) / 2), 1, 2] : List ℚ)))	19
+multiplicative-energy-zero	(Finset.mulEnergy (List.toFinset ([0, 1, 2, 3] : List ℚ)) (List.toFinset ([0, 1, 2, 3] : List ℚ)))	64
+multiplicative-energy-progression	(Finset.mulEnergy (List.toFinset ([1, 2, 4, 8, 16] : List ℚ)) (List.toFinset ([1, 2, 4, 8, 16] : List ℚ)))	85
+multiplicative-energy-primes	(Finset.mulEnergy (List.toFinset ([2, 3, 5, 7] : List ℚ)) (List.toFinset ([2, 3, 5, 7] : List ℚ)))	28
+multiplicative-energy-units	(Finset.mulEnergy (List.toFinset ([(-1), 1] : List ℚ)) (List.toFinset ([(-1), 1] : List ℚ)))	8
+multiplicative-energy-symmetric	(Finset.mulEnergy (List.toFinset ([1, 3] : List ℚ)) (List.toFinset ([1, 3, 9] : List ℚ)))	10
+multiplicative-energy-1-8	(Finset.mulEnergy (List.toFinset (((List.range (Int.natAbs ((8 : ℤ) - 1) + 1)).map (fun (k : ℕ) => (((1 : ℤ) + Int.sign ((8 : ℤ) - 1) * k : ℤ) : ℚ))) : List ℚ)) (List.toFinset (((List.range (Int.natAbs ((8 : ℤ) - 1) + 1)).map (fun (k : ℕ) => (((1 : ℤ) + Int.sign ((8 : ℤ) - 1) * k : ℤ) : ℚ))) : List ℚ)))	160

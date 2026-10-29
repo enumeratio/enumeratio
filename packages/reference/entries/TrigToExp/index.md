@@ -28,4 +28,11 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: ($1).rewrite(exp)
+    arity: 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
 ---

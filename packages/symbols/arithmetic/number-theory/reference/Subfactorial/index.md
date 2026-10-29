@@ -57,6 +57,11 @@ bindings:
     checked:
       version: Nemo 0.56.1
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: (numDerangements $1)
+    arity: 1
+    note: Derangements.numDerangements, the same a(0) = 1, a(1) = 0 recurrence; natural numbers only, so a negative or non-integer n fails to typecheck rather than taking Wolfram's Gamma closed form.
 ---
 
 - Closed form $D_n = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!}$, so $D_n$ is n! divided by e and rounded to the nearest integer.

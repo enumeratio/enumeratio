@@ -28,6 +28,12 @@ seeAlso:
   - Span
 names:
   wolfram: Part
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: "(($1)[(if ($2 : ℤ) > 0 then (($2 : ℤ).toNat - 1) else ((($1).length : ℤ) + ($2 : ℤ)).toNat)]'(by decide +kernel))"
+    arity: 2
+    note: "One integer index into a list: 1-based, a negative one counting from the end. Index 0 (ours is the head), an out-of-range index (ours is NaN) and a span or index list fail to elaborate rather than defaulting."
 ---
 
 - Negative indices count from the end: $At(c, -1)$ is the last element. See [[Last]].

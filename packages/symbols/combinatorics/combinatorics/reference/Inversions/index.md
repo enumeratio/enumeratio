@@ -45,6 +45,11 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: "((fun (l : List ℕ) => (Finset.univ.filter (fun x : Fin l.length × Fin l.length => x.1 < x.2 ∧ l[x.2] < l[x.1])).card) $1)"
+    arity: 1
+    note: Pairs i < j with l[i] > l[j], counted over Fin pairs of the list; a permutation word and a plain list agree, a composition (which has its own inversions) does not
 ---
 
 - Ranges from $0$ (the identity) to $\binom{n}{2}$ (the reversal $n, n-1, \dots, 1$)

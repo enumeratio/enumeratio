@@ -40,7 +40,7 @@ functiondiscontinuities-exp-x-x
 functionconvexity-exp-x-x			
 n-exponentiale-pow-8-over-5-50	N((S(E)**Rational(8, 5)), 30)	4.95303242439511480365428635642	
 exponentiale-pow-9-over-2-times-i-times-pi	(S(E)**((0 + Rational(9, 2)*I) * pi))	I	
-exptotrig-exponentiale-pow-1-over-5-times-i			
+exptotrig-exponentiale-pow-1-over-5-times-i	((S(E)**((0 + Rational(1, 5)*I) * pi))).rewrite(cos)		
 assuming-n-in-integers-refine-exp-2-times-pi			
 assuming-n-in-integers-refine-exp-2-times-pi-2			
 exp-ln-0	exp(log(0))	nan	inconclusive
@@ -53,7 +53,7 @@ a-product-of-exponentials-should-combine-e-x-e-y	(exp(Symbol("x")) * exp(Symbol(
 combines-past-two-factors	(exp(Symbol("a")) * exp(Symbol("b")) * exp(Symbol("c")))	exp(a)*exp(b)*exp(c)	
 combines-past-extra-non-exponential-factors	(2 * exp(Symbol("x")) * exp(Symbol("y")) * Symbol("z"))	2*z*exp(x)*exp(y)	
 e-x-e-x-cancels-to-1	(exp(Symbol("x")) * exp((-Symbol("x"))))	1	
-euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig			
+euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig	(exp((I * Symbol("x")))).rewrite(cos)		
 exp-ln-of-a-negative-real-is-left-unevaluated	exp(log(-2))	-2	
 a-lone-exp-factor-is-untouched	(exp(Symbol("x")) * Symbol("y"))	y*exp(x)	
 same-base-non-e-powers-are-left-alone	((S(2)**Symbol("x")) * (S(2)**Symbol("y")))	2**x*2**y	

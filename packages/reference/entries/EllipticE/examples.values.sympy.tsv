@@ -1,0 +1,17 @@
+id	in	out	verdict
+series-elliptice-m-m-0-6	series(elliptic_e(Symbol("m")), Symbol("m"), 0, 6 + 1)	pi/2 - pi*m/8 - 3*pi*m**2/128 - 5*pi*m**3/512 - 175*pi*m**4/32768 - 441*pi*m**5/131072 - 4851*pi*m**6/2097152 + O(m**7)	
+normal-series-elliptice-x-x-positiveinfinity-2	(series(elliptic_e(Symbol("x")), Symbol("x"), oo, 2 + 1)).removeO()		
+n-elliptice-1-over-3-50	N(elliptic_e(Rational(1, 3)), 30)	1.43031525717221972392252841453	
+elliptice-list-list-1-0-list-0-1	[[elliptic_e(1), elliptic_e(0)], [elliptic_e(0), elliptic_e(1)]]	[[1, pi/2], [pi/2, 1]]	
+matrixfunction-elliptice-list-list-1-0-list-0-1	Matrix([[1, 0], [0, 1]]).analytic_func(elliptic_e(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist()	ValueError: Cannot evaluate the function because the derivative (elliptic_e(_mf) - elliptic_k(_mf))/(2*_mf) is n	error
+list-elliptice-0-elliptice-1	[elliptic_e(0), elliptic_e(1)]	[pi/2, 1]	
+list-elliptice-positiveinfinity-elliptice	[elliptic_e(oo), elliptic_e(zoo)]	[oo*I, zoo]	disagree
+n-elliptice-2-over-3-2-50	N(elliptic_e(Rational(2, 3), 2), 30)	0.560575729788691552433437180132	
+series-elliptice-m-m-0-3	series(elliptic_e(Symbol("m")), Symbol("m"), 0, 3 + 1)	pi/2 - pi*m/8 - 3*pi*m**2/128 - 5*pi*m**3/512 + O(m**4)	
+series-elliptice-m-m-1-1	series(elliptic_e(Symbol("m")), Symbol("m"), 1, 1 + 1)	zoo + O((m - 1)**2, (m, 1))	disagree
+elliptice-0-1	elliptic_e(0, 1)	0	
+elliptice-0-0	elliptic_e(0, 0)	0	
+elliptice-1	elliptic_e(1)	1	
+elliptice-0	elliptic_e(0)	pi/2	
+elliptice-1-plus-sqrt-2-minus-sqrt-2-times-1	elliptic_e((S((1 + sqrt(2) + (-sqrt((2 * (1 + sqrt(2)))))))**4))	elliptic_e((-sqrt(2 + 2*sqrt(2)) + 1 + sqrt(2))**4)	
+elliptice-1-minus-1-plus-sqrt-2-minus-sqrt-2	elliptic_e((1 + (-(S((1 + sqrt(2) + (-sqrt((2 * (1 + sqrt(2)))))))**4))))	elliptic_e(1 - (-sqrt(2 + 2*sqrt(2)) + 1 + sqrt(2))**4)	

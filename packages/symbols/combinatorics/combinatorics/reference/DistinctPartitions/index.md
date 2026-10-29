@@ -26,4 +26,10 @@ signatures:
     description: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, oeis, sage, wolfram; not yet written up here.
     library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<integer_partition>
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: "(((Nat.Partition.distincts ($1 : ℕ)).val.map (fun p => p.parts.sort (· ≥ ·))).sort (· ≥ ·))"
+    arity: 1
+    note: Nat.Partition.distincts, enumerated and ordered as IntegerPartitions
 ---

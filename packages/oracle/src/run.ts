@@ -44,13 +44,37 @@ export type Result =
 // run while that code holds the GIL. So a supervisor outside it polls the kernel's process
 // group, kills it past a byte limit -- or, given a stall limit, once no line has come for that
 // many seconds since the first -- and names the item it was on (the one after the last
-// printed); runIn resumes the batch after that. Arguments: bytes, stall seconds (0: none),
-// then the kernel's command line.
-const SUPERVISOR = `
+// printed, or the one a kernel announced it began); runIn resumes the batch after that. Arguments: bytes, stall seconds (0: none),
+// then the kernel's command line; a leading `--pty` runs it on a pseudo-terminal, for a kernel (Lean)
+// that block-buffers a pipe and would show no progress until it exits.
+export const SUPERVISOR = `
 import os, re, signal, subprocess, sys, threading, time
 limit = int(sys.argv[1])
 stall = int(sys.argv[2])
-kernel = subprocess.Popen(sys.argv[3:], stdout=subprocess.PIPE, text=True, start_new_session=True)
+argv = sys.argv[3:]
+if argv[0] == "--pty":
+    import pty
+    master, slave = pty.openpty()
+    kernel = subprocess.Popen(argv[1:], stdout=slave, stderr=subprocess.STDOUT, start_new_session=True)
+    os.close(slave)
+    class Lines:
+        def __iter__(self):
+            buf = b""
+            while True:
+                try:
+                    data = os.read(master, 65536)
+                except OSError:
+                    data = b""
+                if not data:
+                    break
+                buf += data
+                *done, buf = buf.split(b"\\n")
+                for line in done:
+                    yield line.decode(errors="replace").rstrip("\\r") + "\\n"
+    stream = Lines()
+else:
+    kernel = subprocess.Popen(argv, stdout=subprocess.PIPE, text=True, start_new_session=True)
+    stream = kernel.stdout
 killed = None
 progress = None
 def watch():
@@ -68,18 +92,21 @@ def watch():
         time.sleep(0.1)
 threading.Thread(target=watch, daemon=True).start()
 last = 0
-for line in kernel.stdout:
+for line in stream:
     progress = time.time()
-    done = re.match(r"<<(\\d+)", line)
+    done = re.match(r"<<(\\d+)(-?)", line)
     if done:
-        last = int(done.group(1))
+        # A "<<n->>" line says item n has begun: n - 1 are behind it, answered or not.
+        last = int(done.group(1)) - (1 if done.group(2) else 0)
     sys.stdout.write(line)
     sys.stdout.flush()
 kernel.wait()
 if killed:
     print("<<%d>>!!%s" % (last + 1, killed), flush=True)
+elif kernel.returncode in (137, -9):
+    # SIGKILL from outside: macOS reclaiming memory faster than the poll. Same as a poll kill.
+    print("<<%d>>!!MemoryError: over %d MiB" % (last + 1, limit // 2**20), flush=True)
 elif kernel.returncode != 0:
-    # Killed from outside (macOS reclaims memory faster than the poll) or crashed.
     print("<<%d>>!!KernelDied: exit %d" % (last + 1, kernel.returncode), flush=True)
 `;
 
@@ -310,35 +337,87 @@ export const juliaFlags = (project: string): string[] => [
 /** The Mathlib modules the `mathlib4` mapping rows reach. All of Mathlib would be simpler, but
  * it costs several GB resident, and the umbrella module is not always in the cache. */
 const LEAN_IMPORTS = [
+  "Mathlib.Combinatorics.Additive.Energy",
+  "Mathlib.Combinatorics.Derangements.Finite",
+  "Mathlib.Combinatorics.Enumerative.Bell",
   "Mathlib.Combinatorics.Enumerative.Catalan.Basic",
+  "Mathlib.Combinatorics.Enumerative.Composition",
+  "Mathlib.Combinatorics.Enumerative.Partition.Basic",
   "Mathlib.Combinatorics.Enumerative.Stirling",
+  "Mathlib.Data.Int.GCD",
+  "Mathlib.Data.List.Lex",
+  "Mathlib.Data.Multiset.Sort",
   "Mathlib.Data.Nat.Choose.Basic",
+  "Mathlib.Data.Nat.Choose.Multinomial",
   "Mathlib.Data.Nat.Digits.Defs",
   "Mathlib.Data.Nat.Factorial.Basic",
+  "Mathlib.Data.Nat.Factorial.DoubleFactorial",
+  "Mathlib.Data.Nat.Factors",
   "Mathlib.Data.Nat.Fib.Basic",
   "Mathlib.Data.Nat.Prime.Basic",
+  "Mathlib.Data.Nat.Squarefree",
   "Mathlib.Data.Nat.Totient",
   "Mathlib.Data.Rat.Defs",
+  "Mathlib.GroupTheory.Perm.Cycle.Type",
+  "Mathlib.NumberTheory.ArithmeticFunction.Carmichael",
+  "Mathlib.NumberTheory.ArithmeticFunction.Liouville",
+  "Mathlib.NumberTheory.ArithmeticFunction.Misc",
   "Mathlib.NumberTheory.ArithmeticFunction.Moebius",
+  "Mathlib.NumberTheory.Bernoulli",
+  "Mathlib.NumberTheory.Divisors",
+  "Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol",
   "Mathlib.NumberTheory.PrimeCounting",
 ];
 
+/** The Lean file for one batch: the imports, a `<<0>>` that starts the supervisor's clock once
+ * Mathlib has loaded, then per source a `<<n->>` begin line and its `#eval`. An item that fails
+ * to elaborate prints no `<<n>>`, so without the begin line a kill would land on the successor
+ * of the last item that answered, however many failed items sit before the real culprit.
+ * `header` is the line count before the first begin line; see `leanItemAt`. */
+export function leanBatchCode(sources: readonly string[]): { code: string; header: number } {
+  const imports = [...LEAN_IMPORTS.map((module) => `import ${module}`), "open Nat"];
+  const lines = sources.flatMap((source, i) => [
+    `#eval IO.println "<<${i + 1}->>"`,
+    `#eval IO.println ("<<${i + 1}>>" ++ toString (${source}))`,
+  ]);
+  const start = '#eval IO.println "<<0>>"';
+  return { code: [...imports, start, ...lines, ""].join("\n"), header: imports.length + 1 };
+}
+
+/** The 0-based item a Lean message at `line` (1-based) belongs to, given `leanBatchCode`'s `header`. */
+export const leanItemAt = (line: number, header: number): number => Math.floor((line - header - 1) / 2);
+
 /** Lean: one `#eval` per line of a file importing Mathlib, elaborated in the `lean/` Lake
- * project. Lean reports an error per command, by line, so a bad item costs only itself. */
-async function runLean(sources: readonly string[]): Promise<Result[]> {
-  const header = [...LEAN_IMPORTS.map((module) => `import ${module}`), "open Nat"];
-  const lines = sources.map((source, i) => `#eval IO.println ("<<${i + 1}>>" ++ toString (${source}))`);
+ * project. Lean reports an error per command, by line, so a bad item costs only itself. The
+ * supervisor (as for Julia) kills one that runs past the stall limit -- a naive
+ * `Nat.stirlingFirst 50 2` otherwise holds the whole scan -- and `runIn` resumes after the
+ * last answered item. */
+async function runLean(sources: readonly string[], itemSeconds: number): Promise<Result[]> {
+  const { code, header } = leanBatchCode(sources);
   const cap = memoryCapMb();
-  const run = await withFile("Batch.lean", [...header, ...lines, ""].join("\n"), (file) =>
-    transcript("lake", ["env", "lean", `--memory=${cap}`, "--threads=1", file], {
-      cwd: local("lean"),
-      memoryMb: cap,
-    }),
+  const run = await withFile("Batch.lean", code, (file) =>
+    transcript(
+      "python3",
+      [
+        "-c",
+        SUPERVISOR,
+        String(cap * 2 ** 20),
+        String(stallSeconds(itemSeconds)),
+        "--pty",
+        "lake",
+        "env",
+        "lean",
+        `--memory=${cap}`,
+        "--threads=1",
+        file,
+      ],
+      { cwd: local("lean"), memoryMb: cap },
+    ),
   );
   if (!("out" in run)) return failAll(sources.length, run.reason);
   const results = collect(run.out, sources.length);
   for (const match of run.out.matchAll(/:(\d+):\d+: error(?:\([^)]*\))?: (.*)/g)) {
-    const index = Number(match[1]) - header.length - 1;
+    const index = leanItemAt(Number(match[1]), header);
     if (index >= 0 && index < sources.length && !("value" in results[index]!)) {
       results[index] = { error: (match[2] as string).slice(0, 100) };
     }
@@ -468,13 +547,14 @@ const SYMPY_IMPORT = `import os as _os
 _os.environ["SYMPY_GROUND_TYPES"] = "python"
 from sympy import *`;
 
-// SymPy helpers: `stirling`, `digits` and `Permutation` live outside `from sympy import *`, and an identity is decided by
+// SymPy helpers: `stirling`, `digits`, `Permutation` and `crt` live outside `from sympy import *`, and an identity is decided by
 // simplifying the difference, then numerically — `bool(Eq(…))` refuses anything it can't
 // settle syntactically.
 export const SYMPY_PREAMBLE = `
 from sympy.functions.combinatorial.numbers import stirling
 from sympy.ntheory.digits import digits
 from sympy.combinatorics import Permutation
+from sympy.ntheory.modular import crt
 
 ${HELD_ALIKE}
 # How close a numeric identity must hold: 1e-20, loosened to the digits of the least precise float in it,
@@ -1905,7 +1985,7 @@ function runBatch(system: System, sources: readonly string[], itemSeconds: numbe
     case "julia":
       return runJulia(sources, "julia", "Nemo, Combinatorics", join(local("julia"), "preamble.jl"), itemSeconds);
     case "mathlib4":
-      return runLean(sources);
+      return runLean(sources, itemSeconds);
     case "rust":
       return runRust(sources);
     default:

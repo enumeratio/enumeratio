@@ -1,0 +1,14 @@
+id	in	out
+additive-energy-1-5	(Finset.addEnergy (List.toFinset ([1, 2, 3, 4, 5] : List ℚ)) (List.toFinset ([1, 2, 3, 4, 5] : List ℚ)))	85
+additive-energy-two-sets	(Finset.addEnergy (List.toFinset ([1, 2, 3] : List ℚ)) (List.toFinset ([1, 2] : List ℚ)))	10
+additive-energy-singleton	(Finset.addEnergy (List.toFinset ([7] : List ℚ)) (List.toFinset ([7] : List ℚ)))	1
+additive-energy-empty	(Finset.addEnergy (List.toFinset ([] : List ℚ)) (List.toFinset ([] : List ℚ)))	0
+additive-energy-set	(Finset.addEnergy (List.toFinset ((List.dedup ([1, 2, 3] : List ℚ)) : List ℚ)) (List.toFinset ((List.dedup ([1, 2, 3] : List ℚ)) : List ℚ)))	19
+additive-energy-duplicates	(Finset.addEnergy (List.toFinset ([1, 1, 2, 3] : List ℚ)) (List.toFinset ([1, 1, 2, 3] : List ℚ)))	19
+additive-energy-rationals	(Finset.addEnergy (List.toFinset ([((1 : ℚ) / 2), 1, ((3 : ℚ) / 2)] : List ℚ)) (List.toFinset ([((1 : ℚ) / 2), 1, ((3 : ℚ) / 2)] : List ℚ)))	19
+additive-energy-negatives	(Finset.addEnergy (List.toFinset ([(-2), (-1), 0, 1, 2] : List ℚ)) (List.toFinset ([(-2), (-1), 0, 1, 2] : List ℚ)))	85
+additive-energy-sidon	(Finset.addEnergy (List.toFinset ([1, 2, 5, 10, 16] : List ℚ)) (List.toFinset ([1, 2, 5, 10, 16] : List ℚ)))	45
+additive-energy-powers-of-two	(Finset.addEnergy (List.toFinset ([1, 2, 4, 8] : List ℚ)) (List.toFinset ([1, 2, 4, 8] : List ℚ)))	28
+additive-energy-progression	(Finset.addEnergy (List.toFinset ([3, 5, 7, 9] : List ℚ)) (List.toFinset ([3, 5, 7, 9] : List ℚ)))	44
+additive-energy-symmetric	(Finset.addEnergy (List.toFinset ([1, 2] : List ℚ)) (List.toFinset ([1, 2, 3] : List ℚ)))	10
+additive-energy-1-30	(Finset.addEnergy (List.toFinset (((List.range (Int.natAbs ((30 : ℤ) - 1) + 1)).map (fun (k : ℕ) => (((1 : ℤ) + Int.sign ((30 : ℤ) - 1) * k : ℤ) : ℚ))) : List ℚ)) (List.toFinset (((List.range (Int.natAbs ((30 : ℤ) - 1) + 1)).map (fun (k : ℕ) => (((1 : ℤ) + Int.sign ((30 : ℤ) - 1) * k : ℤ) : ℚ))) : List ℚ)))	18010

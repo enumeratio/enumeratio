@@ -53,6 +53,11 @@ bindings:
     arity: 1
     threadArg: 1
     note: Wolfram spells it BellB. Julia's bare bell(::Int) tries to fit an arbitrary-precision result into an Int64 past n≈25; ZZ keeps it exact.
+  - origin: mapped
+    form: mathlib4
+    template: (Nat.bell $1)
+    arity: 1
+    note: Nat.bell counts the partitions of an n-element set, B(0) = 1; natural n only.
 catalog:
   - system: oeis
     identity: A000110

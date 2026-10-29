@@ -8,6 +8,14 @@ signatures:
     description: f(n+1) - f(n), simplified
     library: enumeratio-combinatorics
     type: (any, symbol) -> any
+bindings:
+  - origin: mapped
+    form: sympy
+    template: difference_delta($1, $2)
+    arity: 2
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
 seeAlso:
   - DiscreteRatio
 names:

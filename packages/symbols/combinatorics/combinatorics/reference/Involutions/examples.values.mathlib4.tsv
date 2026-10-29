@@ -1,0 +1,3 @@
+id	in	out
+count-involutions-4	(List.length ((((Finset.univ : Finset (Equiv.Perm (Fin (4 : ℕ)))).filter (fun p => p * p = 1)).val.map (fun p => List.ofFn (fun i : Fin (4 : ℕ) => (p i).val + 1))).sort (· ≤ ·)))	10
+by-fixed-points		

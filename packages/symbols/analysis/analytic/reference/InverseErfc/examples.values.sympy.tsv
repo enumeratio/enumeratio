@@ -1,0 +1,19 @@
+id	in	out	verdict
+erfc-1-1-2-erf-1-1-2	erfcinv(0.5)	erfcinv(0.5)	inconclusive
+erfc-1-1-0	erfcinv(1)	0	
+argument-1-7	erfcinv(1.7)	erfcinv(1.7)	inconclusive
+deep-tail-0-001	erfcinv(0.001)	erfcinv(0.001)	inconclusive
+erfc-1-0-infty	erfcinv(0)	oo	
+erfc-1-2-infty	erfcinv(2)	-oo	
+arguments-in-1-2-give-negative-values	erfcinv(1.5)	erfcinv(1.5)	inconclusive
+listable	[erfcinv(0), erfcinv(1)]	[oo, 0]	
+n-inverseerfc-33-over-100-50	N(erfcinv(Rational(33, 100)), 30)	erfcinv(33/100)	inconclusive
+functionexpand-matrixfunction-inverseerfc-list	expand_func(Matrix([[0, Rational(1, 2)], [1, 0]]).analytic_func(erfcinv(Symbol("_mf")), Symbol("_mf")).applyfunc(simplify).tolist())	ValueError: Cannot evaluate the function because the function erfcinv(_mf) is not analytic at the given eigenval	error
+series-inverseerfc-x-x-1-8	series(erfcinv(Symbol("x")), Symbol("x"), 1, 8 + 1)	-sqrt(pi)*(x - 1)/2 - pi**(3/2)*(x - 1)**3/24 - 7*pi**(5/2)*(x - 1)**5/960 - 127*pi**(7/2)*(x - 1)**7/80640 + O((x - 1)**9, (x, 1))	
+sqrt-2-times-this-2-5758-is-the-two-sided-99	erfcinv(0.01)	erfcinv(0.01)	inconclusive
+erfc-erfc-1-x-x	erfc(erfcinv(Symbol("x")))	x	
+list-erfc-inverseerfc-z-inverseerfc-erfc-z	[erfc(erfcinv(Symbol("z"))), erfcinv(erfc(Symbol("z")))]	[z, erfcinv(erfc(z))]	
+isnumeric-inverseerfc-1-over-2			
+solve-inverseerfc-x-pow-2-plus-inverseerfc-x-eq			
+attributes-inverseerfc			
+deep-in-the-tail-it-keeps-full-precision-where	erfcinv(1e-10)	erfcinv(1.0e-10)	inconclusive

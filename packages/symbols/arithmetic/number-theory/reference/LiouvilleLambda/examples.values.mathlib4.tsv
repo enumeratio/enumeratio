@@ -1,0 +1,21 @@
+id	in	out	verdict
+omega-12-3	(ArithmeticFunction.liouville 12)	-1	
+liouvillelambda-10	(ArithmeticFunction.liouville 10)	1	
+liouvillelambda-1	(ArithmeticFunction.liouville 1)	1	
+liouvillelambda-8	(ArithmeticFunction.liouville 8)	-1	
+liouvillelambda-9	(ArithmeticFunction.liouville 9)	1	
+listable	(ArithmeticFunction.liouville ((List.range (Int.natAbs ((10 : ℤ) - 1) + 1)).map (fun (k : ℕ) => ((1 + Int.sign ((10 : ℤ) - 1) * k : ℤ) : ℚ))))	Application type mismatch: The argument	error
+liouvillelambda-1-plus-10-pow-30	(ArithmeticFunction.liouville (1 + (10 ^ 30)))	-1	
+liouvillelambda-list-1-2-3-4-5-6	(ArithmeticFunction.liouville [1, 2, 3, 4, 5, 6])	Application type mismatch: The argument	error
+lambda-n-1-omega-n-see-primeomega	(decide ((ArithmeticFunction.liouville 360) = ((-1) ^ (ArithmeticFunction.cardFactors 360))))	true	
+liouvillelambda-162-eq-liouvillelambda-6-times	(decide ((ArithmeticFunction.liouville 162) = ((ArithmeticFunction.liouville 6) * (ArithmeticFunction.liouville 27))))	true	
+liouvillelambda-60	(ArithmeticFunction.liouville 60)	1	
+liouvillelambda-30	(ArithmeticFunction.liouville 30)	-1	
+liouvillelambda-120	(ArithmeticFunction.liouville 120)	-1	
+liouvillelambda-25	(ArithmeticFunction.liouville 25)	1	
+liouvillelambda-2	(ArithmeticFunction.liouville 2)	-1	
+liouvillelambda-3	(ArithmeticFunction.liouville 3)	-1	
+liouvillelambda-4	(ArithmeticFunction.liouville 4)	1	
+liouvillelambda-6	(ArithmeticFunction.liouville 6)	1	
+divisorsum-64-function-liouvillelambda-1-1			
+divisorsum-7-function-liouvillelambda-1-1			

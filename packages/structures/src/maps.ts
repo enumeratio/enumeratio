@@ -78,12 +78,39 @@ export function evaluateDefinition(
   map: Pick<MapDeclaration, "body" | "guard">,
   contents: unknown,
 ): unknown {
-  const main = materialise(ce, ce.box(fill(map.body, contents) as never).evaluate());
+  // `fill` canonicalizes the body around the literal argument. A function parameter can't carry an empty
+  // list (see EMPTY_LIST) and canonicalizes a self-applied `recurse` body differently, so those fill.
+  let called: Expression;
+  if (hasEmptyList(contents) || recurses(map.body)) called = ce.box(fill(map.body, contents) as never);
+  else {
+    const argument = ce.box(contents as never);
+    called = ce.function("Apply", [functionOf(ce, map.body, argument.type.toString()), argument]);
+  }
+  const main = materialise(ce, called.evaluate());
   if (map.guard !== undefined) {
     const guard = fill(fill(map.guard, contents), main.json, "_image");
     if (ce.box(guard as never).evaluate().json !== "True") return undefined;
   }
   return main.json;
+}
+
+/** Whether a body applies a function to itself, as `recurse` builds (`["self", "self", …]`). */
+const recurses = (node: unknown): boolean => Array.isArray(node) && (node[0] === "self" || node.some(recurses));
+
+const functions = new WeakMap<ComputeEngine, Map<string, Map<unknown, Expression>>>();
+
+/** A definition's body as a function of `_raw`, boxed once per engine and argument type so a call skips
+ *  canonicalizing the body. `_raw` is typed as its argument: the body then canonicalizes as it does
+ *  filled, and an untyped parameter read as a scalar (`Element(_raw, Integers)`) would make CE map the
+ *  function over a list argument down to its leaves. */
+function functionOf(ce: ComputeEngine, body: unknown, type: string): Expression {
+  let perType = functions.get(ce);
+  if (perType === undefined) functions.set(ce, (perType = new Map()));
+  let perBody = perType.get(type);
+  if (perBody === undefined) perType.set(type, (perBody = new Map()));
+  let fn = perBody.get(body);
+  if (fn === undefined) perBody.set(body, (fn = ce.box(["Function", body, ["Typed", "_raw", type]] as never)));
+  return fn;
 }
 
 /** What `expression` evaluates to with each name in `bindings` replaced by its MathJSON value,
@@ -97,6 +124,63 @@ export function evaluateEpsil(
   let filled = expression;
   for (const [name, value] of Object.entries(bindings)) filled = fill(filled, value, name);
   return materialise(ce, ce.box(filled as never).evaluate()).json;
+}
+
+/** `evaluateEpsil` for many bindings of one definition: the definition is boxed once, as a
+ *  `Function` of the names, instead of filled and boxed per call, which makes compute-engine
+ *  canonicalize and type the whole body each time (most of an interpreted call). The answer is
+ *  not always `evaluateEpsil`'s (a `Fold` building a table from `_n` answers differently when
+ *  `_n` is a symbol at canonicalization), so a caller that must have `evaluateEpsil`'s answer
+ *  re-asks it when the two differ. */
+export function evaluateEpsilRepeatedly(
+  ce: ComputeEngine,
+  expression: unknown,
+  bindings: Readonly<Record<string, unknown>>,
+): unknown {
+  return materialise(ce, applyBound(ce, expression, bindings)).json;
+}
+
+const literalCalls = new WeakMap<object, boolean>();
+
+/** Whether `node` calls a function written out in place, `[["Function", …], argument…]` as
+ *  `recurse` does, or by `Apply`. Such a call threads over a list argument differently when the
+ *  argument is a bound symbol than when it is the value itself, so a definition with one is
+ *  filled rather than applied. */
+function callsFunctionLiteral(node: unknown): boolean {
+  if (!Array.isArray(node)) return false;
+  let found = literalCalls.get(node);
+  if (found === undefined) {
+    found = Array.isArray(node[0]) || node[0] === "Apply" || node.some(callsFunctionLiteral);
+    literalCalls.set(node, found);
+  }
+  return found;
+}
+
+/** Boxed `Function`s by engine, then definition, then parameter names. */
+const boxedFunctions = new WeakMap<ComputeEngine, WeakMap<object, Map<string, Expression>>>();
+
+/** `expression` evaluated with each name in `bindings` bound to its MathJSON value.
+ *
+ *  The definition is boxed once, as a `Function` of those names, and applied: filling the
+ *  values in and boxing the whole definition per call makes compute-engine canonicalize and
+ *  type the body again every time. A bare symbol or number has nothing to cache, and a body
+ *  that calls a function in place is filled in directly (see `callsFunctionLiteral`). */
+function applyBound(ce: ComputeEngine, expression: unknown, bindings: Readonly<Record<string, unknown>>): Expression {
+  const names = Object.keys(bindings);
+  if (typeof expression !== "object" || expression === null || names.length === 0 || callsFunctionLiteral(expression)) {
+    let filled = expression;
+    for (const name of names) filled = fill(filled, bindings[name], name);
+    return ce.box(filled as never).evaluate();
+  }
+  let byDefinition = boxedFunctions.get(ce);
+  if (byDefinition === undefined) boxedFunctions.set(ce, (byDefinition = new WeakMap()));
+  let byNames = byDefinition.get(expression);
+  if (byNames === undefined) byDefinition.set(expression, (byNames = new Map()));
+  const key = names.join(",");
+  let fn = byNames.get(key);
+  if (fn === undefined) byNames.set(key, (fn = ce.box(["Function", expression, ...names] as never)));
+  const values = names.map((name) => ce.box((isEmptyList(bindings[name]) ? EMPTY_LIST : bindings[name]) as never));
+  return ce.function("Apply", [fn, ...values]).evaluate();
 }
 
 /** Force a lazy result into a concrete List.
@@ -132,6 +216,9 @@ function materialise(ce: ComputeEngine, value: Expression): Expression {
 const EMPTY_LIST = ["Flatten", ["Take", ["List", ["EmptyListElement"]], 0]] as const;
 
 const isEmptyList = (value: unknown): boolean => Array.isArray(value) && value.length === 1 && value[0] === "List";
+
+const hasEmptyList = (value: unknown): boolean =>
+  Array.isArray(value) && (isEmptyList(value) || value.some(hasEmptyList));
 
 /** Replace `_raw` (or another placeholder) with the argument's contents, before boxing. */
 export function fill(node: unknown, contents: unknown, placeholder = "_raw"): unknown {

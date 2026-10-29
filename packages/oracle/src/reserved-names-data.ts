@@ -85,7 +85,7 @@ checkpdesol checksol classify_ode classify_pde closest_points cofactors collect 
 combsimp comp compose composite compositepi concrete conjugate construct_domain content
 continued_fraction continued_fraction_convergents continued_fraction_iterator
 continued_fraction_periodic continued_fraction_reduce convex_hull convolution cos cosh
-cosine_transform cot coth count_ops count_roots covering_product csc csch cse cxxcode
+cosine_transform cot coth count_ops count_roots covering_product crt csc csch cse cxxcode
 cycle_length cyclotomic_poly decompogen decompose default_sort_key deg degree degree_list denom
 derive_by_array det det_quick diag diagonalize_vector dict_merge diff difference_delta
 differentiate_finite digamma digits diophantine dirichlet_eta discrete discrete_log discriminant

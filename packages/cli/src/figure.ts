@@ -17,6 +17,7 @@ import {
 import {
   FIGURE_NOTATION,
   headOf,
+  lowerShow,
   PLOT_NOTATION,
   type PlotPoint,
   plainJson,
@@ -75,7 +76,10 @@ export function figureText(json: Json, options: FigureOptions = {}): string | un
     // Each entry that is a figure is a `GraphicsBox` by the figure rules; the rest is written as math.
     return drawBoxes(makeBoxes(plainJson(json) as never, notation), options);
   }
-  const box = makeBoxes(plainJson(json) as never, notation);
+  // A `Show` lowers by the one call the web element makes, so the terminal says why it can't draw one.
+  const lowered = head === "Show" ? lowerShow(plainJson(json)) : undefined;
+  if (typeof lowered === "string") return lowered;
+  const box = lowered?.box ?? makeBoxes(plainJson(json) as never, notation);
   // A raster filled by a producer (a `ComplexPlot`) has no cells to draw on character cells yet.
   const drawing = graphicsOf(box)?.box;
   if (drawing === undefined || optionsOfBox(drawing).Producer === "ComplexPlot") return undefined;

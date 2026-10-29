@@ -1,0 +1,12 @@
+id	in	out	verdict
+five-six-seven	(Nat.ascFactorial 5 3)	210	
+from-1-is-the-factorial	(Nat.ascFactorial 1 5)	120	
+at-risingfactorial-2-5i			
+a-symbolic-base			
+a-rational-base	(Nat.ascFactorial ((1 : ℚ) / 2) 3)	Type mismatch	error
+a-symbolic-order-is-pochhammer			
+complex-base-and-order			
+agrees-with-pochhammer	(decide ((Nat.ascFactorial 4 3) = (Nat.ascFactorial 4 3)))	true	
+negative-order	(Nat.ascFactorial 5 (-2))	failed to synthesize instance of type class	error
+a-zero-factor	(Nat.ascFactorial (-3) 4)	failed to synthesize instance of type class	error
+a-pole-of-gamma-a			

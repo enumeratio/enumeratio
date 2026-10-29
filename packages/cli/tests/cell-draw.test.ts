@@ -46,6 +46,9 @@ const CASES: Record<string, string> = {
   pie: "PieChart([1, 2, 3])",
   cells: "ArrayPlot([[1, 0, 1], [0, 1, 0]])",
   table: "ArrayPlot(MultiplicationTable(QuotientRing(Integers, 5)))",
+  lattice: "Show(LatticeTiles(QuadraticIntegers(-5)))",
+  ringRoot: "Show(LatticeTiles(AlgebraicIntegers(Sqrt(-5))))",
+  polytope: "Show(PolytopeFaces(Hypercube(3)))",
 };
 
 for (const [name, input] of Object.entries(CASES)) {
@@ -61,6 +64,10 @@ for (const [name, input] of Object.entries(CASES)) {
     if (!updating) expect(text).toBe(golden[name]);
   });
 }
+
+it("says why a Show can't be drawn, as the web element does", () => {
+  expect(drawn("Show(QuadraticIntegers(-5))")).toMatch(/^Show needs a layer/);
+});
 
 it("colors the marks with their rules' colors, and only when asked", () => {
   const plain = drawn(CASES.strands!);

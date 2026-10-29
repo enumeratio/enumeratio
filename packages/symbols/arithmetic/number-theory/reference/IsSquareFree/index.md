@@ -52,6 +52,20 @@ bindings:
     checked:
       version: primal 0.3.3
       on: 2026-10-16
+  - origin: mapped
+    form: sympy
+    template: (mobius(abs($1)) != 0 if $1 != 0 else False)
+    arity: 1
+    threadArgOnly:
+      - 1
+    checked:
+      version: 1.14.0
+      on: 2026-10-28
+  - origin: mapped
+    form: mathlib4
+    template: "(decide (Squarefree ($1 : ℕ)))"
+    arity: 1
+    note: Squarefree on the natural numbers, so Squarefree 0 is false and a negative n fails to typecheck.
 ---
 
 - An integer is squarefree if it is divisible by no perfect square other than 1.

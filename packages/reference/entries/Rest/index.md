@@ -9,4 +9,10 @@ signatures:
 names:
   wolframIdentity: true
 stub: engine
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: (List.tail $1)
+    arity: 1
+    note: The list without its head; the empty list stays empty, as ours does.
 ---

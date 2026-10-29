@@ -1,0 +1,4 @@
+id	in	out	verdict
+total-of-a-list	(List.sum [1, 2, 3])	6	
+total-of-a-matrix-is-columnwise	(List.sum [[1, 2], [3, 4]])	failed to synthesize instance of type class	error
+total-of-symbols			

@@ -1,0 +1,7 @@
+id	in	out
+the-one-line-word-312	((fun (l : List ℕ) => (Finset.univ.filter (fun x : Fin l.length × Fin l.length => x.1 < x.2 ∧ l[x.1] < l[x.2])).card) [3, 1, 2])	1
+the-one-line-word-312-as-a-plain-list	((fun (l : List ℕ) => (Finset.univ.filter (fun x : Fin l.length × Fin l.length => x.1 < x.2 ∧ l[x.1] < l[x.2])).card) [3, 1, 2])	1
+the-one-line-word-2413	((fun (l : List ℕ) => (Finset.univ.filter (fun x : Fin l.length × Fin l.length => x.1 < x.2 ∧ l[x.1] < l[x.2])).card) [2, 4, 1, 3])	3
+findstat-st000246-1		
+findstat-st000246-2		
+findstat-st000246-3		

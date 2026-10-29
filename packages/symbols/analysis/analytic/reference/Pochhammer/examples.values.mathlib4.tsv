@@ -1,0 +1,25 @@
+id	in	out	verdict
+5-6-7	(Nat.ascFactorial 5 3)	210	
+an-empty-product-is-1	(Nat.ascFactorial 2 0)	1	
+1-5-equals-5	(Nat.ascFactorial 1 5)	120	
+pochhammer-3-4	(Nat.ascFactorial 3 4)	360	
+10-11-12-13-14-15	(Nat.ascFactorial 10 6)	3603600	
+at-pochhammer-3-2			
+threads-element-wise-over-a-list-as-wolfram-s	(Nat.ascFactorial [2, 3, 4] 2)	Application type mismatch: The argument	error
+a-symbolic-base-with-integer-order-expands-to			
+a-negative-order-expands-to-the-reciprocal			
+real-base-and-order-evaluate-as-frac-gamma-a-n	(Nat.ascFactorial 2.4 8.5)	failed to synthesize instance of type class	error
+a-zero-base-gives-0-for-any-positive-order	(Nat.ascFactorial 0 1285)	0	
+a-rational-base-frac-12-cdot-frac-32-cdot-frac	(Nat.ascFactorial ((1 : ℚ) / 2) 3)	Type mismatch	error
+a-rational-order-evaluates-through-gamma-exactly	(Nat.ascFactorial ((3 : ℚ) / 2) ((1 : ℚ) / 2))	Type mismatch	error
+complex-base-and-order-evaluate-through-gamma			
+dividing-by-k-counts-multisets-binom-n-k-1-k	(((Nat.ascFactorial 5 3) : ℚ) / (Nat.factorial 3))	35	
+1-n-n-since-the-rising-factorial-from-1-just	(decide ((Nat.ascFactorial 1 5) = (Nat.factorial 5)))	true	
+negative-order-gives-the-reciprocal-a-n-frac-1-a	(Nat.ascFactorial 5 (-2))	failed to synthesize instance of type class	error
+order-0-is-the-empty-product-a-0-1			
+a-1-a			
+the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see			
+rising-and-falling-factorials-x-underline-n-1-n	(decide ((Nat.descFactorial 5 3) = ((-1) * (Nat.ascFactorial (-5) 3))))	failed to synthesize instance of type class	error
+if-a-is-a-non-positive-integer-with-a-n-the	(Nat.ascFactorial (-3) 4)	failed to synthesize instance of type class	error
+pochhammer-0-negative-1-is-exact	(Nat.ascFactorial 0 (-1))	failed to synthesize instance of type class	error
+pochhammer-0-negative-2-is-exact	(Nat.ascFactorial 0 (-2))	failed to synthesize instance of type class	error
