@@ -36,7 +36,7 @@ lcm-of-a-lazy-range-1-10-not-a-materialised-list
 reduceconditions-lcm-a-3-lt-3a-neg-10-lt-a-lt-10			
 the-smallest-number-divisible-by-each-of-1			
 lcm-10-15	(Int.lcm 10 15)	30	
-foldlist-lcm-1-range-2-10			
+foldlist-lcm-1-range-2-10	((((List.range (Int.natAbs ((10 : ℤ) - 2) + 1)).map (fun (k : ℕ) => (((2 : ℤ) + Int.sign ((10 : ℤ) - 2) * k : ℤ) : ℚ)))).scanl (fun (s₁ : ℤ) (s₂ : ℤ) => (Int.lcm s₁ s₂)) 1)	Application type mismatch: The argument	error
 ln-lcm-range-1-10			
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd	(decide (((Int.gcd 27 81) * (Int.lcm 27 81)) = (27 * 81)))	true	
 lcm-27-81	(Int.lcm 27 81)	81	

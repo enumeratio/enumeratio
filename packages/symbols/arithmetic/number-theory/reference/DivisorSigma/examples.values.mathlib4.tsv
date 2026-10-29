@@ -15,7 +15,7 @@ negative-n-stays-unevaluated	(ArithmeticFunction.sigma 1 (-12))	failed to synthe
 k-0-of-a-negative-n-stays-unevaluated	(ArithmeticFunction.sigma 0 (-12))	failed to synthesize instance of type class	error
 6-is-a-perfect-number-sigma-1-6-2-times-6	(ArithmeticFunction.sigma 1 6)	12	
 28-is-the-next-perfect-number-sigma-1-28-2-times	(ArithmeticFunction.sigma 1 28)	56	
-filter-range-1-30-function-divisorsigma-1-1-eq-2			
+filter-range-1-30-function-divisorsigma-1-1-eq-2	((((List.range (Int.natAbs ((30 : ℤ) - 1) + 1)).map (fun (k : ℕ) => (((1 : ℤ) + Int.sign ((30 : ℤ) - 1) * k : ℤ) : ℚ)))).filter (fun (s₁ : ℕ) => (decide ((ArithmeticFunction.sigma 1 s₁) = (2 * s₁)))))	Application type mismatch: The argument	error
 filter-range-1-30-function-divisorsigma-1-1-lt-2			
 filter-range-1-30-function-2-times-1-lt			
 nestlist-function-neg-1-plus-divisorsigma-1-1-1			

@@ -1,0 +1,18 @@
+id	in	out
+nest-f-x-3		
+repeated-squaring-2-2-2-2	(Nat.repeat (fun (s₁ : ℚ) => (s₁ ^ 2)) (3 : ℕ) 2)	256
+nest-f-x-4		
+nest-function-1-plus-1-pow-2-1-1-3	(Nat.repeat (fun (s₁ : ℚ) => ((s₁ + 1) ^ 2)) (3 : ℕ) 1)	676
+zero-applications-leave-x-alone		
+nest-function-2-times-1-1-10	(Nat.repeat (fun (s₁ : ℚ) => (2 * s₁)) (10 : ℕ) 1)	1024
+nest-sqrt-100-4		
+nest-function-1-plus-1-pow-2-1-x-5		
+catch-nest-function-throw-1-if-1-gt-10-pow-6		
+three-newton-steps-toward-sqrt-2	(Nat.repeat (fun (s₁ : ℚ) => (((s₁ + ((2 : ℚ) / s₁)) : ℚ) / 2)) (3 : ℕ) 1)	577/408
+nest-function-1-over-1-plus-1-1-x-5		
+nest-function-x-pow-1-1-x-6		
+nest-function-1-over-2-times-1-plus-2-times-1	(Nat.repeat (fun (s₁ : ℚ) => (((1 : ℚ) / 2) * (s₁ + (2 * ((1 : ℚ) / s₁))))) (5 : ℕ) 1)	886731088897/627013566048
+nest-function-dot-list-list-1-1-list-1-0-1-1		
+nest-function-floor-1-over-2-times-1-1-20-6		
+nest-function-list-1-1-1-x-3		
+nest-function-join-1-length-1-plus-reverse-1-1		

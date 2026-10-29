@@ -118,6 +118,43 @@ function fill(template: string, parts: readonly string[]): string {
   return template.replace(/\$(\d)/g, (_match, index: string) => parts[Number(index) - 1] ?? "");
 }
 
+/**
+ * mathlib4: heads that take a function, as `[operand count, which operand, the function's arity]`. A bare head
+ * there is eta-expanded to that arity; a `Function` is translated as it is.
+ */
+const LEAN_FUNCTION_OPERANDS: Readonly<Record<string, readonly [number, number, number]>> = {
+  Map: [2, 0, 1],
+  Filter: [2, 1, 1],
+  Nest: [3, 0, 1],
+  NestList: [3, 0, 1],
+  Fold: [3, 0, 2],
+  FoldList: [3, 0, 2],
+};
+
+/** The Lean type a mathlib4 template needs of operand `slot`, when it says: an ascription, a `let`, or an argument of `Nat.*`. */
+function leanSlotDemand(template: string, slot: number): "ℕ" | "ℤ" | undefined {
+  const ascribed =
+    new RegExp(`\\(\\$${slot} : (ℕ|ℤ)\\)`).exec(template) ?? new RegExp(`: (ℕ|ℤ) := \\$${slot}\\b`).exec(template);
+  if (ascribed !== null) return ascribed[1] as "ℕ" | "ℤ";
+  const at = template.indexOf(`$${slot}`);
+  if (at < 0) return undefined;
+  // The application it is an argument of: the nearest unclosed paren before it, and the name after that.
+  let depth = 0;
+  let open = at - 1;
+  for (; open >= 0; open--) {
+    if (template[open] === ")") depth++;
+    else if (template[open] === "(" && depth-- === 0) break;
+  }
+  const callee = /^\(([^\s()]+) /.exec(template.slice(Math.max(open, 0)))?.[1];
+  if (callee === undefined) return undefined;
+  if (/^(Nat\.|ArithmeticFunction\.)|^(bernoulli|catalan|numDerangements)$/.test(callee)) return "ℕ";
+  return callee.startsWith("Int.") ? "ℤ" : undefined;
+}
+
+/** The slot a Function body names without a parameter list: `_` and `_1` are the first, `_2` the second. */
+const slotNumber = (node: MathJSON): number | undefined =>
+  typeof node === "string" && /^_\d*$/.test(node) ? Number(node.slice(1) || 1) : undefined;
+
 /** Functions with no derivative in a complex variable: Sage would differentiate them as on the line. */
 const NON_HOLOMORPHIC = new Set([
   "Abs",
@@ -488,7 +525,135 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     return fill(template, parts);
   };
 
+  // mathlib4 function arguments. A binder is a ℚ unless a template it feeds asks for a ℕ or ℤ; the list a
+  // lambda maps is read afterwards, so a list of another type fails to elaborate rather than coerce.
+  const leanBinderTypes = (params: readonly string[], body: MathJSON, fallback: string): string[] => {
+    const wanted = new Map<string, string>();
+    const visit = (node: MathJSON, demand: string | undefined): void => {
+      if (typeof node === "string") {
+        if (demand !== undefined && params.includes(node) && wanted.get(node) !== "ℕ") wanted.set(node, demand);
+        return;
+      }
+      if (!isCall(node) || node[0] === "Function") return;
+      const [head, ...args] = node as [string, ...MathJSON[]];
+      const template = mappingFor(head, args.length, extra, system)?.emit[system];
+      args.forEach((arg, i) => visit(arg, (template && leanSlotDemand(template, i + 1)) || demand));
+    };
+    visit(body, undefined);
+    return params.map((param) => wanted.get(param) ?? fallback);
+  };
+
+  const leanLambda = (params: readonly string[], body: MathJSON, fallback: string): string | undefined => {
+    const types = leanBinderTypes(params, body, fallback);
+    // ℕ subtraction truncates at 0, where ours goes negative; ℕ has no negation to write.
+    if (types.includes("ℕ") && mentions(body, new Set(["Subtract", "Negate"]))) {
+      missing.push("function/natural-subtraction");
+      return undefined;
+    }
+    const fresh = params.filter((param) => !bound.has(param));
+    for (const param of fresh) bound.add(param);
+    try {
+      const source = walk(body);
+      return `(fun ${params.map((param, i) => `(${boundName(param)} : ${types[i]})`).join(" ")} => ${source})`;
+    } finally {
+      for (const param of fresh) bound.delete(param);
+    }
+  };
+
+  /** A function argument of `arity` arguments as a Lean lambda: a bare head eta-expanded, or a `Function`. */
+  const leanFunction = (node: MathJSON, arity: number, fallback = "ℚ"): string | undefined => {
+    const slot = (n: number): string => `s${String.fromCharCode(0x2080 + n)}`;
+    if (arity < 1 || arity > 9) return undefined;
+    if (typeof node === "string") {
+      if (/^'.*'$/s.test(node) || bound.has(node) || slotNumber(node) !== undefined) return undefined;
+      const params = Array.from({ length: arity }, (_, i) => slot(i + 1));
+      return leanLambda(params, [node, ...params], fallback);
+    }
+    if (!isCall(node) || node[0] !== "Function" || node.length < 2) return undefined;
+    let body = node[1] as MathJSON;
+    if (isCall(body) && body[0] === "Block") {
+      if (body.length !== 2) return undefined;
+      body = body[1] as MathJSON;
+    }
+    const named = node.slice(2);
+    // The slots a body names, nested Functions' own left alone; a listed `_1` is a slot too.
+    const slots = new Set<number>();
+    const scan = (n: MathJSON): void => {
+      const found = slotNumber(n);
+      if (found !== undefined) slots.add(found);
+      else if (isCall(n) && n[0] !== "Function") n.slice(1).forEach((child) => scan(child as MathJSON));
+    };
+    scan(body);
+    const params = named.length > 0 ? named : Array.from({ length: Math.max(0, ...slots) }, (_, i) => `_${i + 1}`);
+    if (params.length !== arity || !params.every((param) => typeof param === "string")) return undefined;
+    if (named.length === 0 && slots.size === 0) return undefined;
+    const rename = new Map<string, string>();
+    (params as string[]).forEach((param) => {
+      const number = slotNumber(param);
+      if (number === undefined) return;
+      rename.set(param, slot(number));
+      if (number === 1) rename.set("_", slot(1));
+    });
+    const substitute = (n: MathJSON): MathJSON =>
+      typeof n === "string"
+        ? (rename.get(n) ?? n)
+        : isCall(n) && n[0] !== "Function"
+          ? ([n[0], ...n.slice(1).map((child) => substitute(child as MathJSON))] as MathJSON)
+          : n;
+    return leanLambda(
+      (params as string[]).map((param) => rename.get(param) ?? param),
+      substitute(body),
+      fallback,
+    );
+  };
+
   const walkCall = (head: string, operands: readonly MathJSON[]): string => {
+    if (system === "mathlib4") {
+      // Operands that are functions are written as lambdas; a template then applies them to what it holds.
+      const spec = LEAN_FUNCTION_OPERANDS[head];
+      const template = mappingFor(head, operands.length, extra, system)?.emit[system];
+      if (spec !== undefined && operands.length === spec[0] && template !== undefined) {
+        const lambda = leanFunction(operands[spec[1]] as MathJSON, spec[2]);
+        if (lambda === undefined) {
+          missing.push(`${head}/function-argument`);
+          return "0";
+        }
+        return fill(
+          template,
+          operands.map((operand, i) => (i === spec[1] ? lambda : walk(operand as MathJSON))),
+        );
+      }
+      // `Sum(f, {k, a, b})` is `f` over the integers a through b, and `{k, b}` from 1; an empty range is the
+      // identity, as ours. The summand may arrive as a Function of the index.
+      const range = (head === "Sum" || head === "Product") && mappingFor(head, 3, extra, system)?.emit[system];
+      if (range) {
+        const iterator = operands[1] as MathJSON;
+        const index = isCall(iterator) && ["Limits", "Tuple"].includes(iterator[0] as string) ? iterator[1] : undefined;
+        const bounds = isCall(iterator) ? iterator.slice(2) : [];
+        const [from, to] = bounds.length === 1 ? [1, bounds[0]] : bounds;
+        let summand: MathJSON | undefined = operands[0] as MathJSON;
+        if (isCall(summand) && summand[0] === "Function") {
+          const [, inner, ...named] = summand;
+          const body =
+            isCall(inner as MathJSON) && (inner as MathJSON[])[0] === "Block" ? (inner as MathJSON[])[1] : inner;
+          summand = named.length === 1 && named[0] === index ? (body as MathJSON) : undefined;
+        }
+        if (
+          operands.length === 2 &&
+          typeof index === "string" &&
+          summand !== undefined &&
+          (bounds.length === 1 || bounds.length === 2) &&
+          to !== undefined &&
+          to !== "Nothing"
+        ) {
+          const lambda = leanLambda([index], summand, "ℤ");
+          if (lambda === undefined) return "0";
+          return fill(range, [lambda, walk(from === "Nothing" || from === undefined ? 1 : from), walk(to)]);
+        }
+        missing.push(`${head}/${operands.length}`);
+        return "0";
+      }
+    }
     const qualified = head === "MemberCall" ? qualifiedName(operands) : undefined;
     // The generic walk below would hand `toWolfram` an already-printed operand.
     if (wl && head === "BigO" && operands.length === 1) return bigO(operands[0]!, walk);

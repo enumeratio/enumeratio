@@ -16,6 +16,12 @@ seeAlso:
   - Accumulate
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: (($3).scanl $1 $2)
+    arity: 3
+    note: Every partial fold from the seed, one longer than the list. The seedless two-argument form is not bound.
 ---
 
 - The last element equals [[Fold]]($f$, $x_0$, $list$).

@@ -20,4 +20,10 @@ names:
   wolframIdentity: true
 attributes:
   - HoldAll
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: (($3).foldl $1 $2)
+    arity: 3
+    note: A left fold from the seed, as ours, so f(acc, element). The seedless two-argument form is not bound.
 ---

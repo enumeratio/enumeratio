@@ -134,6 +134,63 @@ test("a Power base is parenthesised, so a negative literal doesn't leak past una
   expect(emit(["Power", -1, 2], "mathlib4")).toEqual({ ok: true, source: "((-1) ^ 2)" });
 });
 
+test("mathlib4 writes a function argument as a lambda, or does not emit the row", () => {
+  const list = ["List", 1, 2, 3];
+  // Named parameters, slots, a Block body and a bare head all become binders; a ℚ unless the body needs more.
+  expect(emit(["Map", ["Function", ["Block", ["Power", "x", 2]], "x"], list], "mathlib4")).toEqual({
+    ok: true,
+    source: "(([1, 2, 3]).map (fun (x : ℚ) => (x ^ 2)))",
+  });
+  expect(emit(["Map", ["Function", ["Add", "_", 1]], list], "mathlib4")).toEqual({
+    ok: true,
+    source: "(([1, 2, 3]).map (fun (s₁ : ℚ) => (s₁ + 1)))",
+  });
+  expect(emit(["Map", "Factorial", list], "mathlib4")).toEqual({
+    ok: true,
+    source: "(([1, 2, 3]).map (fun (s₁ : ℕ) => (Nat.factorial s₁)))",
+  });
+  expect(emit(["Fold", ["Function", ["Add", ["Multiply", 10, "_1"], "_2"]], 0, list], "mathlib4")).toEqual({
+    ok: true,
+    source: "(([1, 2, 3]).foldl (fun (s₁ : ℚ) (s₂ : ℚ) => ((10 * s₁) + s₂)) 0)",
+  });
+  // A binder takes the type a template asks of it: ℤ under Mod's ascription, ℕ under Nat.* and ArithmeticFunction.*.
+  expect(emit(["Map", ["Function", ["Mod", "x", 3], "x"], list], "mathlib4")).toEqual({
+    ok: true,
+    source: "(([1, 2, 3]).map (fun (x : ℤ) => ((x : ℤ) % 3)))",
+  });
+  expect(emit(["Map", ["Function", ["DivisorSigma", 1, "x"], "x"], list], "mathlib4")).toEqual({
+    ok: true,
+    source: "(([1, 2, 3]).map (fun (x : ℕ) => (ArithmeticFunction.sigma 1 x)))",
+  });
+  // A natural binder would truncate a subtraction at 0.
+  expect(emit(["Map", ["Function", ["Subtract", ["Factorial", "x"], 1], "x"], list], "mathlib4")).toMatchObject({
+    ok: false,
+  });
+  // Not a function Lean can be given: an unbound head, a free name, a call, the wrong number of slots.
+  for (const f of ["f", "IsEven", ["Add", 1], ["Function", ["Add", "_1", 1], "_1", "_2"], ["Function", 5]])
+    expect(emit(["Map", f as never, list], "mathlib4").ok).toBe(false);
+});
+
+test("mathlib4 reads a Sum or Product iterator as a range over the integers", () => {
+  expect(emit(["Sum", ["Power", "k", 2], ["Limits", "k", "Nothing", 10]], "mathlib4")).toEqual({
+    ok: true,
+    source: "((Finset.Icc 1 10).sum (fun (k : ℤ) => (k ^ 2)))",
+  });
+  expect(emit(["Product", "k", ["Tuple", "k", 5, 3]], "mathlib4")).toEqual({
+    ok: true,
+    source: "((Finset.Icc 5 3).prod (fun (k : ℤ) => k))",
+  });
+  // A summand that needs a natural index is summed over ℕ.
+  expect(emit(["Sum", ["Binomial", 6, "k"], ["Tuple", "k", 0, 6]], "mathlib4")).toEqual({
+    ok: true,
+    source: "((Finset.Icc 0 6).sum (fun (k : ℕ) => (Nat.choose 6 k)))",
+  });
+  // An open bound, a second iterator and a list iterator (not one of ours) are not ranges.
+  expect(emit(["Sum", "k", ["Limits", "k", 1, "PositiveInfinity"]], "mathlib4").ok).toBe(false);
+  expect(emit(["Sum", "k", ["Tuple", "k", 1, 3], ["Tuple", "j", 1, 3]], "mathlib4").ok).toBe(false);
+  expect(emit(["Sum", "k", ["List", "k", 4]], "mathlib4").ok).toBe(false);
+});
+
 test("Max/Min flatten a (possibly nested) list argument, matching Wolfram — bare SymPy Max() raises on one", () => {
   expect(emit(["Min", ["List", 2, 1, 7, 2]], "sympy")).toEqual({
     ok: true,

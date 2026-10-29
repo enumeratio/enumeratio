@@ -13,6 +13,12 @@ seeAlso:
   - FixedPoint
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: "(Nat.repeat $1 ($3 : ℕ) $2)"
+    arity: 3
+    note: A negative or non-integer count fails to elaborate, where ours holds the call.
 ---
 
 - $f$ can be a [[Function]] literal or a plain symbol; an undeclared symbol stays an unevaluated call, the way $Nest(f, x, 3)$ shows below.

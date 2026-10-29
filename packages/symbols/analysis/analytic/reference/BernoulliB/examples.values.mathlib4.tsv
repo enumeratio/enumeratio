@@ -28,9 +28,9 @@ bernoullib-3-0
 bernoullib-2-1			
 bernoullib-3-1			
 bernoullib-0-1-over-6			
-sum-k-plus-3-times-binomial-3-k-times-bernoullib			
+sum-k-plus-3-times-binomial-3-k-times-bernoullib	((Finset.Icc 0 2).sum (fun (k : ℕ) => ((k + 3) * (Nat.choose 3 k) * (bernoulli (k + 2)))))	0	
 sum-1-over-k-times-1-over-neg-k-plus-3-times			
-sum-k-plus-3-times-binomial-4-k-times-bernoullib			
+sum-k-plus-3-times-binomial-4-k-times-bernoullib	((Finset.Icc 0 3).sum (fun (k : ℕ) => ((k + 3) * (Nat.choose 4 k) * (bernoulli (k + 2)))))	-1/2	
 sum-1-over-k-times-1-over-neg-k-plus-4-times			
 b-1-1-frac-12-is-the-other-convention-for-b-1			
 bernoulli-numbers-are-only-defined-for-n-ge-0-a	(bernoulli (-1))	failed to synthesize instance of type class	error

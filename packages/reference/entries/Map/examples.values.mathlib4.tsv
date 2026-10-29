@@ -1,0 +1,21 @@
+id	in	out
+map-square-over-1-2-3-4		
+map-a-lambda-adding-1-to-each-element	(([1, 2, 3]).map (fun (s₁ : ℚ) => (s₁ + 1)))	[2, 3, 4]
+map-add-over-two-collections-zips-them		
+map-function-x-pow-2-x-list-1-2-3-4	(([1, 2, 3, 4]).map (fun (x : ℚ) => (x ^ 2)))	[1, 4, 9, 16]
+map-f-list-a-b-c-d-k		
+map-f-list-list-a-b-list-c-d-k		
+map-f-list-list-a-b-list-c-d-k-list-2		
+apply-map-f-list-a-b-c-d		
+map-f-list-list-list-list-list-a		
+map-f-list-a-b-c		
+map-f-list-list-list-list-list-a-list-2		
+map-f-list-list-list-list-list-a-list-0-2		
+map-f-list-list-list-list-list-a-list-0		
+map-f-list-list-list-list-list-a-list-2-neg-3		
+map-function-1-plus-list-x-y-1-list-list-1-1		
+map-reverse-list-list-a-b-list-c-d-list-k-f		
+mapping-over-an-empty-collection-returns-empty		
+map-sqrt-list-1-2-3-4		
+map-f-list-x-y-z		
+map-f-list-list-a-b-list-c-list-list-d-list-0		

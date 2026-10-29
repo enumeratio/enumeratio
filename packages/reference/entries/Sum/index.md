@@ -34,6 +34,11 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-10-16
+  - origin: mapped
+    form: mathlib4
+    template: ((Finset.Icc $2 $3).sum $1)
+    arity: 3
+    note: The emitter reads the iterator Limits(k, a, b) or Tuple(k, a, b), from 1 when a is Nothing or left out, as the summand's lambda, a and b. Over ℤ, or ℕ where the summand needs one. An empty range is 0, as ours.
 stub: engine
 statOn:
   - Finset

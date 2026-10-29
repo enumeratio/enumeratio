@@ -1,0 +1,25 @@
+id	in	out
+nestlist-f-x-3		
+powers-of-2	((List.range ((5 : ℕ) + 1)).map (fun ξ => Nat.repeat (fun (s₁ : ℚ) => (2 * s₁)) ξ 1))	[1, 2, 4, 8, 16, 32]
+nestlist-f-x-4		
+nestlist-cos-1-10		
+nestlist-function-1-plus-1-pow-2-1-x-3		
+zero-steps-just-the-seed		
+nestlist-sqrt-100-4		
+3-is-a-primitive-root-mod-7-its-powers-visit	((List.range ((6 : ℕ) + 1)).map (fun ξ => Nat.repeat (fun (s₁ : ℤ) => (((3 * s₁) : ℤ) % 7)) ξ 1))	[1, 3, 2, 6, 4, 5, 1]
+newton-iterates-converging-to-sqrt-2	((List.range ((3 : ℕ) + 1)).map (fun ξ => Nat.repeat (fun (s₁ : ℚ) => (((s₁ + ((2 : ℚ) / s₁)) : ℚ) / 2)) ξ 1))	[1, 3/2, 17/12, 577/408]
+nestlist-function-2-times-1-1-1-10	((List.range ((10 : ℕ) + 1)).map (fun ξ => Nat.repeat (fun (s₁ : ℚ) => (2 * s₁)) ξ 1))	[1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
+nestlist-function-1-plus-1-1-0-10	((List.range ((10 : ℕ) + 1)).map (fun ξ => Nat.repeat (fun (s₁ : ℚ) => (s₁ + 1)) ξ 0))	[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+nestlist-function-1-pow-2-1-2-6	((List.range ((6 : ℕ) + 1)).map (fun ξ => Nat.repeat (fun (s₁ : ℚ) => (s₁ ^ 2)) ξ 2))	[2, 4, 16, 256, 65536, 4294967296, 18446744073709551616]
+nestlist-function-1-over-2-times-1-plus-2-times	((List.range ((5 : ℕ) + 1)).map (fun ξ => Nat.repeat (fun (s₁ : ℚ) => (((1 : ℚ) / 2) * (s₁ + (2 * ((1 : ℚ) / s₁))))) ξ 1))	[1, 3/2, 17/12, 577/408, 665857/470832, 886731088897/627013566048]
+nestlist-function-4-times-1-times-neg-1-plus-1-1	((List.range ((5 : ℕ) + 1)).map (fun ξ => Nat.repeat (fun (s₁ : ℚ) => (4 * s₁ * ((-(s₁)) + 1))) ξ ((1 : ℚ) / 3)))	[1/3, 8/9, 32/81, 6272/6561, 7250432/43046721, 1038154236987392/1853020188851841]
+nestlist-function-59-times-1-mod-101-1-1-15	((List.range ((15 : ℕ) + 1)).map (fun ξ => Nat.repeat (fun (s₁ : ℤ) => (((59 * s₁) : ℤ) % 101)) ξ 1))	[1, 59, 47, 46, 88, 41, 96, 8, 68, 73, 65, 98, 25, 61, 64, 39]
+nestlist-function-d-function-1-x-x-1-x-pow-n-3		
+nestlist-function-symbol-x-1-list-a-5		
+nestlist-function-1-over-1-plus-1-1-x-5		
+nestlist-function-1-over-2-times-1-if-iseven-1		
+nestlist-function-append-1-x-1-list-a-5		
+nestlist-rotateleft-list-a-b-c-d-4		
+nestlist-function-floor-1-over-2-times-1-plus-1		
+nestlist-function-x-pow-1-1-x-6		
+nestlist-function-1-pow-1-1-x-4		

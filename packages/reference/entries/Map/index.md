@@ -22,6 +22,12 @@ names:
   wolframIdentity: true
 attributes:
   - HoldAll
+bindings:
+  - origin: mapped
+    form: mathlib4
+    template: (($2).map $1)
+    arity: 2
+    note: One list, the function applied to each element as a ℚ (a ℕ or ℤ where its body needs one). A function whose body has no mathlib4 binding, or a list of another element type, is not emitted.
 ---
 
 - The mapping function is always the first argument, opposite `Fold`/`Scan`.
