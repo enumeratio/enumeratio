@@ -45,12 +45,36 @@ export type Result =
 // group, kills it past a byte limit -- or, given a stall limit, once no line has come for that
 // many seconds since the first -- and names the item it was on (the one after the last
 // printed); runIn resumes the batch after that. Arguments: bytes, stall seconds (0: none),
-// then the kernel's command line.
+// then the kernel's command line; a leading `--pty` runs it on a pseudo-terminal, for a kernel (Lean)
+// that block-buffers a pipe and would show no progress until it exits.
 const SUPERVISOR = `
 import os, re, signal, subprocess, sys, threading, time
 limit = int(sys.argv[1])
 stall = int(sys.argv[2])
-kernel = subprocess.Popen(sys.argv[3:], stdout=subprocess.PIPE, text=True, start_new_session=True)
+argv = sys.argv[3:]
+if argv[0] == "--pty":
+    import pty
+    master, slave = pty.openpty()
+    kernel = subprocess.Popen(argv[1:], stdout=slave, stderr=subprocess.STDOUT, start_new_session=True)
+    os.close(slave)
+    class Lines:
+        def __iter__(self):
+            buf = b""
+            while True:
+                try:
+                    data = os.read(master, 65536)
+                except OSError:
+                    data = b""
+                if not data:
+                    break
+                buf += data
+                *done, buf = buf.split(b"\\n")
+                for line in done:
+                    yield line.decode(errors="replace").rstrip("\\r") + "\\n"
+    stream = Lines()
+else:
+    kernel = subprocess.Popen(argv, stdout=subprocess.PIPE, text=True, start_new_session=True)
+    stream = kernel.stdout
 killed = None
 progress = None
 def watch():
@@ -68,7 +92,7 @@ def watch():
         time.sleep(0.1)
 threading.Thread(target=watch, daemon=True).start()
 last = 0
-for line in kernel.stdout:
+for line in stream:
     progress = time.time()
     done = re.match(r"<<(\\d+)", line)
     if done:
@@ -324,22 +348,47 @@ const LEAN_IMPORTS = [
   "Mathlib.NumberTheory.PrimeCounting",
 ];
 
-/** Lean: one `#eval` per line of a file importing Mathlib, elaborated in the `lean/` Lake
- * project. Lean reports an error per command, by line, so a bad item costs only itself. */
-async function runLean(sources: readonly string[]): Promise<Result[]> {
-  const header = [...LEAN_IMPORTS.map((module) => `import ${module}`), "open Nat"];
+/** The Lean file for one batch: the imports, a `<<0>>` that starts the supervisor's clock once
+ * Mathlib has loaded, then one `#eval` per source. `header` is the line count before source 1's
+ * line, which is how an error's line number maps back to its item. */
+export function leanBatchCode(sources: readonly string[]): { code: string; header: number } {
+  const imports = [...LEAN_IMPORTS.map((module) => `import ${module}`), "open Nat"];
   const lines = sources.map((source, i) => `#eval IO.println ("<<${i + 1}>>" ++ toString (${source}))`);
+  const start = '#eval IO.println "<<0>>"';
+  return { code: [...imports, start, ...lines, ""].join("\n"), header: imports.length + 1 };
+}
+
+/** Lean: one `#eval` per line of a file importing Mathlib, elaborated in the `lean/` Lake
+ * project. Lean reports an error per command, by line, so a bad item costs only itself. The
+ * supervisor (as for Julia) kills one that runs past the stall limit -- a naive
+ * `Nat.stirlingFirst 50 2` otherwise holds the whole scan -- and `runIn` resumes after the
+ * last answered item. */
+async function runLean(sources: readonly string[], itemSeconds: number): Promise<Result[]> {
+  const { code, header } = leanBatchCode(sources);
   const cap = memoryCapMb();
-  const run = await withFile("Batch.lean", [...header, ...lines, ""].join("\n"), (file) =>
-    transcript("lake", ["env", "lean", `--memory=${cap}`, "--threads=1", file], {
-      cwd: local("lean"),
-      memoryMb: cap,
-    }),
+  const run = await withFile("Batch.lean", code, (file) =>
+    transcript(
+      "python3",
+      [
+        "-c",
+        SUPERVISOR,
+        String(cap * 2 ** 20),
+        String(stallSeconds(itemSeconds)),
+        "--pty",
+        "lake",
+        "env",
+        "lean",
+        `--memory=${cap}`,
+        "--threads=1",
+        file,
+      ],
+      { cwd: local("lean"), memoryMb: cap },
+    ),
   );
   if (!("out" in run)) return failAll(sources.length, run.reason);
   const results = collect(run.out, sources.length);
   for (const match of run.out.matchAll(/:(\d+):\d+: error(?:\([^)]*\))?: (.*)/g)) {
-    const index = Number(match[1]) - header.length - 1;
+    const index = Number(match[1]) - header - 1;
     if (index >= 0 && index < sources.length && !("value" in results[index]!)) {
       results[index] = { error: (match[2] as string).slice(0, 100) };
     }
@@ -1907,7 +1956,7 @@ function runBatch(system: System, sources: readonly string[], itemSeconds: numbe
     case "julia":
       return runJulia(sources, "julia", "Nemo, Combinatorics", join(local("julia"), "preamble.jl"), itemSeconds);
     case "mathlib4":
-      return runLean(sources);
+      return runLean(sources, itemSeconds);
     case "rust":
       return runRust(sources);
     default:

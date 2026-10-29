@@ -1,40 +1,40 @@
-id	in	out
-stirling-5-2	(Nat.stirlingSecond 5 2)	15
-stirling-6-3	(Nat.stirlingSecond 6 3)	90
-stirling-20-10	(Nat.stirlingSecond 20 10)	
-stirling-0-3-against-a-sum-over-a-pole		
-exact-for-large-n	(Nat.stirlingSecond 50 2)	
-threads-element-wise-over-a-list-as-wolfram-s	(Nat.stirlingSecond [2, 4, 6] 2)	
-the-ways-to-split-10-distinct-items-among-3	(Nat.stirlingSecond 10 3)	
-stirling-n-range-1-n		
-sum-stirling-6-k-times-apply-derivative-f-k		
-one-block-means-one-partition-s-n-1-1	(Nat.stirlingSecond 5 1)	1
-singletons-only-s-n-n-1	(Nat.stirlingSecond 5 5)	1
-row-sums-give-the-bell-numbers		
-two-blocks-s-n-2-2-n-1-1	(decide ((Nat.stirlingSecond 10 2) = ((2 ^ 9) - 1)))	
-s-n-n-1-binom-n-2-one-block-is-a-pair	(decide ((Nat.stirlingSecond 6 5) = (Nat.choose 6 2)))	
-explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j		
-orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m		
-n-stirling-120-10		
-stirling-10-4	(Nat.stirlingSecond 10 4)	
-stirling-1-0	(Nat.stirlingSecond 1 0)	
-stirling-1-1	(Nat.stirlingSecond 1 1)	
-stirling-1-2	(Nat.stirlingSecond 1 2)	
-stirling-2-0	(Nat.stirlingSecond 2 0)	
-stirling-2-1	(Nat.stirlingSecond 2 1)	
-stirling-2-2	(Nat.stirlingSecond 2 2)	
-stirling-2-3	(Nat.stirlingSecond 2 3)	
-stirling-3-0	(Nat.stirlingSecond 3 0)	
-stirling-3-1	(Nat.stirlingSecond 3 1)	
-stirling-3-2	(Nat.stirlingSecond 3 2)	
-stirling-3-3	(Nat.stirlingSecond 3 3)	
-stirling-3-4	(Nat.stirlingSecond 3 4)	
-stirling-4-0	(Nat.stirlingSecond 4 0)	
-stirling-4-1	(Nat.stirlingSecond 4 1)	
-stirling-4-2	(Nat.stirlingSecond 4 2)	
-stirling-4-3	(Nat.stirlingSecond 4 3)	
-the-empty-set-has-one-partition-into-no-blocks	(Nat.stirlingSecond 0 0)	1
-no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	(Nat.stirlingSecond 5 0)	
-k-n-is-0	(Nat.stirlingSecond 3 5)	
-stirling-0-1-is-also-0	(Nat.stirlingSecond 0 1)	
-a-negative-k-stays-symbolic	(Nat.stirlingSecond 10 (-5))	
+id	in	out	verdict
+stirling-5-2	(Nat.stirlingSecond 5 2)	15	
+stirling-6-3	(Nat.stirlingSecond 6 3)	90	
+stirling-20-10	(Nat.stirlingSecond 20 10)	5917584964655	
+stirling-0-3-against-a-sum-over-a-pole			
+exact-for-large-n	(Nat.stirlingSecond 50 2)	562949953421311	
+threads-element-wise-over-a-list-as-wolfram-s	(Nat.stirlingSecond [2, 4, 6] 2)	Application type mismatch: The argument	error
+the-ways-to-split-10-distinct-items-among-3	(Nat.stirlingSecond 10 3)	9330	
+stirling-n-range-1-n			
+sum-stirling-6-k-times-apply-derivative-f-k			
+one-block-means-one-partition-s-n-1-1	(Nat.stirlingSecond 5 1)	1	
+singletons-only-s-n-n-1	(Nat.stirlingSecond 5 5)	1	
+row-sums-give-the-bell-numbers			
+two-blocks-s-n-2-2-n-1-1	(decide ((Nat.stirlingSecond 10 2) = ((2 ^ 9) - 1)))	true	
+s-n-n-1-binom-n-2-one-block-is-a-pair	(decide ((Nat.stirlingSecond 6 5) = (Nat.choose 6 2)))	true	
+explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j			
+orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m			
+n-stirling-120-10			
+stirling-10-4	(Nat.stirlingSecond 10 4)	34105	
+stirling-1-0	(Nat.stirlingSecond 1 0)	0	
+stirling-1-1	(Nat.stirlingSecond 1 1)	1	
+stirling-1-2	(Nat.stirlingSecond 1 2)	0	
+stirling-2-0	(Nat.stirlingSecond 2 0)	0	
+stirling-2-1	(Nat.stirlingSecond 2 1)	1	
+stirling-2-2	(Nat.stirlingSecond 2 2)	1	
+stirling-2-3	(Nat.stirlingSecond 2 3)	0	
+stirling-3-0	(Nat.stirlingSecond 3 0)	0	
+stirling-3-1	(Nat.stirlingSecond 3 1)	1	
+stirling-3-2	(Nat.stirlingSecond 3 2)	3	
+stirling-3-3	(Nat.stirlingSecond 3 3)	1	
+stirling-3-4	(Nat.stirlingSecond 3 4)	0	
+stirling-4-0	(Nat.stirlingSecond 4 0)	0	
+stirling-4-1	(Nat.stirlingSecond 4 1)	1	
+stirling-4-2	(Nat.stirlingSecond 4 2)	7	
+stirling-4-3	(Nat.stirlingSecond 4 3)	6	
+the-empty-set-has-one-partition-into-no-blocks	(Nat.stirlingSecond 0 0)	1	
+no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	(Nat.stirlingSecond 5 0)	0	
+k-n-is-0	(Nat.stirlingSecond 3 5)	0	
+stirling-0-1-is-also-0	(Nat.stirlingSecond 0 1)	0	
+a-negative-k-stays-symbolic	(Nat.stirlingSecond 10 (-5))	failed to synthesize instance of type class	error
