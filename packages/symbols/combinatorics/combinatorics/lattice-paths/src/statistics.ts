@@ -11,7 +11,7 @@ import {
   atLeast,
   atLeastValue,
   atMostValue,
-  bind as bindTyped,
+  bind,
   carried,
   fold,
   visiting,
@@ -36,7 +36,7 @@ import {
 const on = "DyckPath";
 /** `bind` with the value typed a list of integers: the compiler can index, count and sum over that, not the default `collection`. */
 const bindList = (name: string, value: MathJSON, body: MathJSON, type = "list<integer>"): MathJSON =>
-  bindTyped(name, value, body, type);
+  bind(name, value, body, type);
 const stat = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
   head,
   on,
