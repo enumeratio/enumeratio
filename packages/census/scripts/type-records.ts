@@ -6,6 +6,7 @@
 //
 //   vp node packages/census/scripts/type-records.ts
 
+import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -121,3 +122,10 @@ for (const [name, list] of [...contributions].toSorted(([a], [b]) => (a < b ? -1
 
 for (const { dir, entry } of touched) await writeEntry(dir, entry);
 console.log(`${contributions.size} heads contributed to; ${typed} typed rows; ${created} skeleton records`);
+
+// The manifest is built from these records and tests/manifest.test.ts reads its dist: rebuild it
+// here (dist-cache keys it on the records, so this is a no-op when nothing changed).
+execFileSync("node", ["tools/ci/dist-cache.ts", "build", "@enumeratio/manifest"], {
+  cwd: fileURLToPath(new URL("../../../", import.meta.url)),
+  stdio: "inherit",
+});
