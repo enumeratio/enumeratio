@@ -367,7 +367,7 @@ const config = defineConfig({
       ? [reviewModePlugin(webDir), referenceDataPlugin(dev), notationEntriesPlugin(), loaderWatchPlugin()]
       : [vendorExternals(), referenceDataPlugin(dev), notationEntriesPlugin(), includeWhole()]) as never,
   },
-  title: "enumeratio",
+  title: "notatio",
   description:
     "Mathematics you can compute, draw and check — every object with a home, every claim with a test, all live in your browser.",
   lang: "en-US",

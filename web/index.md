@@ -1,9 +1,9 @@
 ---
 layout: home
 hero:
-  name: enumeratio
-  text: Mathematics, enumerated
-  tagline: Mathematics you can compute, draw and check — every object with a home, every claim with a test, all live in your browser.
+  name: notatio
+  text: Write mathematics, see it work
+  tagline: A notebook for mathematics you can compute, draw and check, live in your browser, on top of enumeratio, a catalogue where every object has a home and every claim a test.
   actions:
     - theme: brand
       text: Open a worksheet
