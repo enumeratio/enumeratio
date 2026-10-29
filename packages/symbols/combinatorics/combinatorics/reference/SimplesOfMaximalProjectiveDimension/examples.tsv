@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-step-word-uuddud			[SimplesOfMaximalProjectiveDimension, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	1			the step word $UUDDUD$
+the-step-word-uduudd			[SimplesOfMaximalProjectiveDimension, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]	1			the step word $UDUUDD$
+findstat-st001006-1	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0]], "'SimplesOfMaximalProjectiveDimension'"]	1	1	FindStat St001006	FindStat's value for [1,0]
+findstat-st001006-2	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0]], "'SimplesOfMaximalProjectiveDimension'"]	1	1	FindStat St001006	FindStat's value for [1,0,1,0]
+findstat-st001006-3	Properties		[CombinatorialStat, [DyckPath, [List, 1, 1, 0, 0]], "'SimplesOfMaximalProjectiveDimension'"]	2	2	FindStat St001006	FindStat's value for [1,1,0,0]
