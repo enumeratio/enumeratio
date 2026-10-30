@@ -99,7 +99,7 @@ claims a lattice has to have claimed a partial order first.
   answers. It could also check our _laws_: a conformance whose law has a Mathlib theorem
   behind it is one we'd no longer have to sample.
 
-The design is written up on the wiki's [Structures](https://github.com/enumeratio/enumeratio/wiki/Structures) page.
+The design is written up on the wiki's [Structures](https://github.com/enumeratio/notatio/wiki/Structures) page.
 
 ## Reading
 

@@ -1,5 +1,5 @@
 // Does one package build and test from its dependencies' tarballs alone? The check a package must pass
-// before it can leave this repository (https://github.com/enumeratio/enumeratio/wiki/Speculative-Per-Package-Repos §5).
+// before it can leave this repository (https://github.com/enumeratio/notatio/wiki/Speculative-Per-Package-Repos §5).
 //
 //   node tools/split-check/run.ts <package> [--build] [--keep] [--scratch DIR] [--out DIR] [--only a,b]
 //

@@ -3,7 +3,7 @@ name: Tarballs
 # Do the packages work as published artifacts? Packs every package, installs only the tarballs into a scratch
 # app (no workspace links; `overrides` send every internal dependency to its tarball), then runs census's
 # tests and the site build from that install (tools/tarball-check). Phase 0 of the per-package repo split
-# (https://github.com/enumeratio/enumeratio/wiki/Speculative-Per-Package-Repos §5): when this is green, a split
+# (https://github.com/enumeratio/notatio/wiki/Speculative-Per-Package-Repos §5): when this is green, a split
 # holds nothing unknown except process.
 #
 # ADVISORY, never a required check, and `continue-on-error` until it is green: the report (report.md, a log per

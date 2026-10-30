@@ -5,7 +5,7 @@ monorepo behind [enumeratio.dev](https://enumeratio.dev), it is built on **enume
 catalogue of mathematical symbol definitions for the
 [Cortex compute-engine](https://cortexjs.io/compute-engine/), and on
 [Epsil](https://epsil.dev), the engine's language. Design notes, the roadmap and contributor
-notes live on the [wiki](https://github.com/enumeratio/enumeratio/wiki).
+notes live on the [wiki](https://github.com/enumeratio/notatio/wiki).
 
 enumeratio's base is enumerative combinatorics: collections (permutations, partitions, Dyck paths,
 tableaux and a few hundred more) as lazy indexed families with closed-form counts, ranking
@@ -16,12 +16,12 @@ What holds it together is structure. A head says what structure it needs (`Min` 
 order or a lattice, `Floor` ticks, `Basis` a finite-dimensional algebra), and a type
 provides that structure by conforming to the engine's protocols. So a head is written once
 and works on every type with enough structure, including one a user declares
-([Structures](https://github.com/enumeratio/enumeratio/wiki/Structures), after Mathlib's
+([Structures](https://github.com/enumeratio/notatio/wiki/Structures), after Mathlib's
 hierarchy). notatio, the interface, sits on top of that.
 
 Every symbol has a reference entry whose examples are tested, and are cross-checked against
 external systems (Wolfram, SageMath, SymPy, mpmath, the OEIS, FindStat, Fungrim, …) wherever
-a claim can be computed ([Examples as Data](https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data)).
+a claim can be computed ([Examples as Data](https://github.com/enumeratio/notatio/wiki/Examples-as-Data)).
 
 ## Layout
 
@@ -34,8 +34,8 @@ a claim can be computed ([Examples as Data](https://github.com/enumeratio/enumer
 | `tools/`               | CI tooling (`perf`)                                                                                                                                                                                                                                                                                |
 
 Each package's `package.json` `description` says what it holds;
-[Packages](https://github.com/enumeratio/enumeratio/wiki/Packages) and
-[Namespaces](https://github.com/enumeratio/enumeratio/wiki/Namespaces) describe how they
+[Packages](https://github.com/enumeratio/notatio/wiki/Packages) and
+[Namespaces](https://github.com/enumeratio/notatio/wiki/Namespaces) describe how they
 and the symbol family are organised.
 
 ## Development
@@ -59,11 +59,11 @@ pnpm -r --filter "./packages/**" run build
 
 ## More on the wiki
 
-- [Roadmap](https://github.com/enumeratio/enumeratio/wiki/Roadmap): what's next, by area,
+- [Roadmap](https://github.com/enumeratio/notatio/wiki/Roadmap): what's next, by area,
   and where to look for work.
-- [Contributing](https://github.com/enumeratio/enumeratio/wiki/Contributing): names, where a
+- [Contributing](https://github.com/enumeratio/notatio/wiki/Contributing): names, where a
   change goes, reference entries, tests, git and CI.
-- [Lanes](https://github.com/enumeratio/enumeratio/wiki/Lanes): how parallel work is
+- [Lanes](https://github.com/enumeratio/notatio/wiki/Lanes): how parallel work is
   coordinated and landed.
 - Design and speculative design: the rest of the wiki's sidebar.
 

@@ -1,4 +1,4 @@
-// Expressions written as markup in a page (https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup):
+// Expressions written as markup in a page (https://github.com/enumeratio/notatio/wiki/Speculative-Vdom-Markup):
 // `<Binomial>5 2</Binomial>`, `<PolyLog s="2">z</PolyLog>` or `<ToExpression value="…" />` in
 // prose is read at build, its named slots placed by the head's parameters, and shown as its
 // value: an evaluated `<notatio-out>`, inline in a sentence, or displayed when it has lines of

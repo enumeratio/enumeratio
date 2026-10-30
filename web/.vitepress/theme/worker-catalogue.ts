@@ -1,5 +1,5 @@
 // The host's library catalogue for its session kernels
-// (https://github.com/enumeratio/enumeratio/wiki/Speculative-Kernels-and-Front-Ends): each
+// (https://github.com/enumeratio/notatio/wiki/Speculative-Kernels-and-Front-Ends): each
 // library the site ships, and how to declare it, which a kernel reads to declare only what a
 // call needs. Imports are dynamic, so a worker loads a library's chunk when a call first
 // needs it.

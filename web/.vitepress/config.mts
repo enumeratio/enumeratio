@@ -67,7 +67,7 @@ for (const dir of packageDirs) {
   }
 }
 
-// `@enumeratio/combinatorics` keeps its `collections` area (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible)
+// `@enumeratio/combinatorics` keeps its `collections` area (https://github.com/enumeratio/notatio/wiki/Speculative-Combinatorics-Layering-and-Plausible)
 // under its own nested `<area>/src/index.ts` rather than a package-root `src/`, so the
 // generic dist->src rewrite above (which only swaps the `/dist/` segment) can't find it.
 // So are the other entries whose source isn't `src/<entry>.ts`; alias them by hand.
@@ -464,7 +464,7 @@ const config = defineConfig({
       "/explore/": exploreSidebar(),
       "/playground/": learnSidebar(),
     },
-    socialLinks: [{ icon: "github", link: "https://github.com/enumeratio/enumeratio" }],
+    socialLinks: [{ icon: "github", link: "https://github.com/enumeratio/notatio" }],
   },
 });
 

@@ -1,4 +1,4 @@
-// The published libraries the site reads (https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup §4.2),
+// The published libraries the site reads (https://github.com/enumeratio/notatio/wiki/Speculative-Vdom-Markup §4.2),
 // beside its own packages: a qualified name a page uses (`enumeratio.PolygonalNumber`) is
 // fetched, checked and declared by the kernel the first time a call names it, over jsDelivr.
 

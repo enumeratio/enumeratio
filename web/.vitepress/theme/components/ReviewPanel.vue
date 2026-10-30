@@ -273,7 +273,7 @@ onBeforeUnmount(() => {
         <p class="review-links">
           <a
             v-if="prNumber(store.selected.value)"
-            :href="`https://github.com/enumeratio/enumeratio/pull/${prNumber(store.selected.value)}`"
+            :href="`https://github.com/enumeratio/notatio/pull/${prNumber(store.selected.value)}`"
             target="_blank"
             rel="noreferrer"
             >PR {{ prField(store.selected.value, 0) }}</a

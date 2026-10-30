@@ -1,9 +1,9 @@
 // Fetches bench-data at runtime: the index plus per-run reports and plans
-// (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §7-8). `?data=<base url>` overrides the default branch raw URL,
+// (https://github.com/enumeratio/notatio/wiki/Benchmarking §7-8). `?data=<base url>` overrides the default branch raw URL,
 // for local fixtures and previews.
 import type { BenchIndex, BenchSystem, Plan, Report } from "./types.ts";
 
-export const DEFAULT_BASE = "https://raw.githubusercontent.com/enumeratio/enumeratio/bench-data/";
+export const DEFAULT_BASE = "https://raw.githubusercontent.com/enumeratio/notatio/bench-data/";
 
 export function baseUrlFrom(search: string): string {
   const params = new URLSearchParams(search);

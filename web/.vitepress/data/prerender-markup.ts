@@ -1,4 +1,4 @@
-// The build as a kernel, for a page's own cells and plots (https://github.com/enumeratio/enumeratio/wiki/Speculative-Kernels-and-Front-Ends §9):
+// The build as a kernel, for a page's own cells and plots (https://github.com/enumeratio/notatio/wiki/Speculative-Kernels-and-Front-Ends §9):
 // each element `prerender-markup.ts` marked is answered here, in page order, by the site's own
 // notebook kernel in Node, and its result written into the page's placeholder. A cell gets
 // its typeset rows and its answer (which it renders on load, asking no kernel); a plot, its

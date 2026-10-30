@@ -1,4 +1,4 @@
-// The build as a kernel, for a page's own markup (https://github.com/enumeratio/enumeratio/wiki/Speculative-Kernels-and-Front-Ends §9):
+// The build as a kernel, for a page's own markup (https://github.com/enumeratio/notatio/wiki/Speculative-Kernels-and-Front-Ends §9):
 // each `<notatio-cell>` and plot (`<graphics-box value="Plot(…)">`) a page writes gets a placeholder,
 // `<NotatioPrerendered>`, and what it asks for (its attributes, and the starting values of a
 // Manipulate around it) is recorded for the page. `data/prerender-markup.ts` answers it and

@@ -33,7 +33,7 @@ and on GitHub.
 - [**Playground**](/docs/components/overview) — every notatio component on its own page.
 
 How the packages fit together, and which side of the enumeratio/notatio line each sits on,
-is on the wiki's [Packages](https://github.com/enumeratio/enumeratio/wiki/Packages) page.
+is on the wiki's [Packages](https://github.com/enumeratio/notatio/wiki/Packages) page.
 
 <template v-for="group in data.groups" :key="group.name">
   <h2 :id="group.name">{{ heading[group.name] ?? group.name }}</h2>

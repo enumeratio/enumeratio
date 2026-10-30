@@ -77,7 +77,7 @@ function shortSha(sha: string): string {
   return sha.slice(0, 7);
 }
 function commitUrl(p: TimePoint): string {
-  return p.url ?? `https://github.com/enumeratio/enumeratio/commit/${p.sha}`;
+  return p.url ?? `https://github.com/enumeratio/notatio/commit/${p.sha}`;
 }
 </script>
 
