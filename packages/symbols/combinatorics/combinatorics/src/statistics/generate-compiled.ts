@@ -45,8 +45,9 @@ export function compiledDefinitionsFor(
     const code = compileTyped(ce, definition.expr, { [SUBJECT]: shape });
     if (code === undefined) continue;
     if (!subjects.has(definition.on)) subjects.set(definition.on, subjectsOf(ce, definition.on));
-    const parts = { expr: definition.expr, code: code.code, subjects: subjects.get(definition.on) };
-    const check = () => agrees(ce, definition, code.run, subjects.get(definition.on)!);
+    const checked = subjects.get(definition.on)!.filter((s) => weightOf(s) <= (definition.checkWeight ?? Infinity));
+    const parts = { expr: definition.expr, code: code.code, subjects: checked };
+    const check = () => agrees(ce, definition, code.run, checked);
     if (!verdicts.remember(parts, check, signatureOf(definition))) {
       disagreed.push(signatureOf(definition));
       continue;
@@ -58,6 +59,10 @@ export function compiledDefinitionsFor(
     disagreed: disagreed.toSorted(),
   };
 }
+
+/** The sum of the numbers in a subject. */
+const weightOf = (subject: unknown): number =>
+  typeof subject === "number" ? subject : Array.isArray(subject) ? subject.reduce((n, e) => n + weightOf(e), 0) : 0;
 
 /** Whether compiled code gives the interpreter's answer wherever it answers at all (where it
  *  can't answer exactly, the interpreter does at run time anyway). */

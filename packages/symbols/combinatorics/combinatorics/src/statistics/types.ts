@@ -37,6 +37,9 @@ export interface Definition {
   readonly alsoOnList?: boolean;
   /** The type of the answer when it is not a number, e.g. `list<integer>`. */
   readonly result?: string;
+  /** The largest total of a subject's entries the build's compile cross-check interprets: for a
+   *  definition whose interpreted cost grows steeply with the subject's size. */
+  readonly checkWeight?: number;
 }
 
 /** `head` at `carrier`, the key a signature-addressed lookup uses. */
