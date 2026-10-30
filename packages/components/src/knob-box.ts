@@ -116,6 +116,8 @@ export class NotatioKnob extends LitElement {
     complex: { type: Boolean, reflect: true },
     /** A `|`-separated list to scrub through instead of a numeric range. */
     choices: { type: String },
+    /** Every entry of `choices` names a symbol, and binds as that symbol rather than as its index. */
+    symbols: { type: Boolean },
     /** Pixels of travel per step — lower drags faster. */
     sensitivity: { type: Number },
     /** The drag direction of a one-axis knob: `x` (default, right raises) or `y` (up raises). */
@@ -148,6 +150,7 @@ export class NotatioKnob extends LitElement {
   declare step: number;
   declare complex: boolean;
   declare choices: string;
+  declare symbols: boolean;
   declare sensitivity: number;
   declare axis: "x" | "y";
   declare play: boolean;
@@ -218,6 +221,7 @@ export class NotatioKnob extends LitElement {
     this.step = Number.NaN;
     this.complex = false;
     this.choices = "";
+    this.symbols = false;
     this.sensitivity = DEFAULT_PIXELS_PER_STEP;
     this.axis = "x";
     this.play = false;
@@ -678,6 +682,8 @@ export class NotatioKnob extends LitElement {
 
   /** The bound value as MathJSON: the number, complex when it has an imaginary part. */
   get binding(): MathJsonExpression {
+    const entry = this.entry;
+    if (this.discrete && this.symbols && entry !== undefined && /^[A-Za-z_]\w*$/.test(entry)) return entry;
     return this.discrete ? this.bound : numberJson(this._re, this._im);
   }
 

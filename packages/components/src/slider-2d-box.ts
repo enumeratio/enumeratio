@@ -32,7 +32,8 @@ function pair(raw: string | number | undefined): [number, number] | undefined {
  * the same gears as a knob (Shift coarse, Alt fine, held arrows accelerate).
  *
  * Inside a scope the binding `_p` is the `List` `[x, y]` -- or, with `complex`, the
- * complex number `x + y i`, so a knob's two axes and a pad's are the same thing.
+ * complex number `x + y i`, so a knob's two axes and a pad's are the same thing; with
+ * `tuple`, the lattice point `Tuple(x, y)` (a ring's `a + bω`, with `step="1"` to stay on it).
  */
 export class NotatioSlider2D extends LitElement {
   static properties = {
@@ -48,6 +49,8 @@ export class NotatioSlider2D extends LitElement {
     step: { type: String },
     /** Bind a complex number `x + y i` rather than a list. */
     complex: { type: Boolean, reflect: true },
+    /** Bind the point `Tuple(x, y)`, the form a ring's lattice points take. */
+    tuple: { type: Boolean, reflect: true },
     /** Show the point's coordinates beside the pad. */
     readout: { type: Boolean, reflect: true },
     /** The pad's side, in CSS pixels. */
@@ -63,6 +66,7 @@ export class NotatioSlider2D extends LitElement {
   declare max: string;
   declare step: string;
   declare complex: boolean;
+  declare tuple: boolean;
   declare readout: boolean;
   declare size: number;
   declare _x: number;
@@ -80,6 +84,7 @@ export class NotatioSlider2D extends LitElement {
     this.max = "1,1";
     this.step = "";
     this.complex = false;
+    this.tuple = false;
     this.readout = false;
     this.size = 120;
     this._x = 0;
@@ -103,7 +108,8 @@ export class NotatioSlider2D extends LitElement {
   }
 
   get binding(): MathJsonExpression {
-    return this.complex ? numberJson(this._x, this._y) : (["List", this._x, this._y] as MathJsonExpression);
+    if (this.complex) return numberJson(this._x, this._y);
+    return [this.tuple ? "Tuple" : "List", this._x, this._y] as MathJsonExpression;
   }
 
   protected override willUpdate(changed: PropertyValues): void {

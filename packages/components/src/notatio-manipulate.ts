@@ -337,6 +337,7 @@ export class NotatioManipulate extends LitElement {
           max=${ifDefined(c.kind === "slider" ? c.max : undefined)}
           step=${ifDefined(c.kind === "slider" ? c.step : undefined)}
           choices=${ifDefined(c.kind === "choice" ? choiceEntries(c).join("|") : undefined)}
+          ?symbols=${c.kind === "choice" && c.symbol === true}
           axis=${ifDefined(o.axis)}
           sensitivity=${ifDefined(o.sensitivity)}
           interval=${ifDefined(o.interval)}

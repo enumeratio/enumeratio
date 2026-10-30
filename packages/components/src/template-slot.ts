@@ -1,5 +1,5 @@
 import { typeset } from "@enumeratio/formats/typeset";
-import { plainJson, pointWords, randomValue, type VariableSpec } from "@enumeratio/frontend/core";
+import { plainJson, POINT_REACH, pointWords, randomValue, type VariableSpec } from "@enumeratio/frontend/core";
 import { html, LitElement, nothing } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import "./knob-box.ts";
@@ -40,6 +40,13 @@ const SETTINGS = "Variables";
 /** Points of the complex plane: a 2D pad binds them, as a number. */
 const isPlane = (domain: VariableSpec["domain"]): domain is Extract<VariableSpec["domain"], { kind: "points" }> =>
   domain.kind === "points" && domain.ring === "ComplexNumbers";
+
+/** A ring's lattice point `(a, b)` as its two coordinates. */
+const latticeOf = (value: Json): [number, number] | undefined => {
+  if (!Array.isArray(value) || value[0] !== "Tuple" || value.length !== 3) return undefined;
+  const [a, b] = [Number(value[1]), Number(value[2])];
+  return Number.isFinite(a) && Number.isFinite(b) ? [a, b] : undefined;
+};
 
 /** A bare name: MathJSON for a symbol (a quoted `'a'` is a string, a number is not a name). */
 const isSymbolName = (v: Json): boolean => typeof v === "string" && /^[A-Za-z_]\w*$/.test(v);
@@ -193,6 +200,23 @@ export class TemplateSlot extends LitElement {
         size="56"
       ></slider-2d-box>`;
     }
+    // A ring's lattice point: an integer pad, binding `Tuple(a, b)` as its consumers read it.
+    const ring = spec.domain;
+    const lattice = ring.kind === "points" ? latticeOf(value) : undefined;
+    if (ring.kind === "points" && lattice) {
+      const lo = Math.min(ring.min ?? -POINT_REACH, ...lattice);
+      const hi = Math.max(ring.max ?? POINT_REACH, ...lattice);
+      return html`<slider-2d-box
+          name=${name}
+          tuple
+          .value=${lattice.join(",")}
+          min=${`${lo},${lo}`}
+          max=${`${hi},${hi}`}
+          step="1"
+          size="56"
+        ></slider-2d-box>
+        ${wordsOf(spec, value, this.#ringOf)}`;
+    }
     const kind =
       "stepper" in options || "knob" in options || "toggler" in options
         ? Object.keys(options).find((k) => k === "stepper" || k === "knob" || k === "toggler")
@@ -212,6 +236,15 @@ export class TemplateSlot extends LitElement {
           ?random=${"random" in options || domain.kind === "integers"}
         ></stepper-box>`;
       case "knob":
+        // A knob over bare names scrubs them and binds the symbol.
+        if (domain.kind === "choices" && domain.values.every((v) => isSymbolName(v))) {
+          return html`<knob-box
+            name=${name}
+            symbols
+            choices=${domain.values.join("|")}
+            .value=${typeof value === "string" ? value : ""}
+          ></knob-box>`;
+        }
         return html`<knob-box
           name=${name}
           .value=${typeof value === "number" ? String(value) : "0"}
