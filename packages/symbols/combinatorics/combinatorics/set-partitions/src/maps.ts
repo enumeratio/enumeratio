@@ -194,7 +194,7 @@ const rookLists = (body: MathJSON): MathJSON =>
 const fromTwoElements = (body: MathJSON): MathJSON => ["If", ["LessEqual", elements, 1], "_raw", rookLists(body)];
 
 /** The blocks of a list that labels each element with the least element of its block. */
-const blocksOfLeastLabels = (labels: MathJSON): MathJSON =>
+export const blocksOfLeastLabels = (labels: MathJSON): MathJSON =>
   bind(
     "ll",
     labels,
@@ -235,33 +235,8 @@ export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
     name: "Complement",
     from: "set_partition",
     to: "set_partition",
-    // Each element i becomes n + 1 - i. A block read from its end is ascending again, and the blocks are
-    // re-sorted (by least element) since the relabeling reverses their order.
-    body: bind(
-      "flipped",
-      forEach(
-        ["Range", 1, ["Length", "_raw"], 1],
-        forEach(
-          ["Range", 1, ["Length", at("i")], 1],
-          [
-            "Subtract",
-            ["Add", ["Length", ["Flatten", "_raw"]], 1],
-            at(["Subtract", ["Add", ["Length", at("i")], 1], "j"], at("i")),
-          ],
-          "j",
-        ),
-      ),
-      [
-        "Map",
-        [
-          "Function",
-          ["At", "flipped", ["IndexWhere", "flipped", ["Function", ["Equal", ["At", "b", 1], "m"], "b"]]],
-          "m",
-        ],
-        ["Sort", ["Map", ["Function", ["At", "b", 1], "b"], "flipped"]],
-      ],
-      "list<list<integer>>",
-    ),
+    // Each element v becomes n + 1 - v; the relabeling reverses the blocks' order, so they are re-sorted.
+    body: relabeled(["Subtract", ["Add", ["Length", ["Flatten", "_raw"]], 1], "v"]),
     summary: "Each element i replaced by n + 1 - i: the set partition seen from the other end.",
   },
   {

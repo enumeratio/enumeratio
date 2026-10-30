@@ -24,6 +24,7 @@ import { core, cycles, headUsage, tower } from "../src/statistics/core.ts";
  * `ReplaceAt` entered with the patience piles, which replace a pile rather than rebuild the list.
  * `Typed` entered with the Dyck-path rises, which bind a list once (`bind`) to filter it.
  * `Unique` entered with the distinct subtrees of the tree statistics.
+ * `IndexOf` entered with the set-partition arc chains, which look up the arc leaving an element.
  */
 const CORE = [
   "Abs",
@@ -40,6 +41,7 @@ const CORE = [
   "Greater",
   "GreaterEqual",
   "If",
+  "IndexOf",
   "Join",
   "LCM",
   "Last",

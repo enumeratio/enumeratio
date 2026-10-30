@@ -256,8 +256,14 @@ const demazureBody: MathJSON = [
       "dz_done",
       [
         "Fold",
-        ["Function", demazureStep, ["Typed", "dz_acc", "'list<integer>'"], "dz_step"],
-        appended("dz_key", twoN, "dz_key", twoN),
+        // The step's result and the start are typed lists, as the typed accumulator needs.
+        [
+          "Function",
+          bind("dz_next", demazureStep, "dz_next", typed),
+          ["Typed", "dz_acc", "'list<integer>'"],
+          "dz_step",
+        ],
+        bind("dz_start", appended("dz_key", twoN, "dz_key", twoN), "dz_start", typed),
         upTo(["Multiply", n, ["Subtract", twoN, 1]]),
       ],
       forEach(upTo(n), [

@@ -207,7 +207,7 @@ const pathRowmotionBody: MathJSON = bind(
 
 /** Mp00268, with the zeros' positions z_1 < z_2 < ... and b_k the ones between z_{k-1} and z_k: the stretches
  *  1^b_1, 0^b_2 01, 1^b_3, ... then the letter the next stretch would be, to the length n; read backwards. */
-const zerosToFlagZerosBody: MathJSON = bind(
+export const zerosToFlagZerosBody: MathJSON = bind(
   "zeros",
   ["Filter", positions, ["Function", ["Equal", at("p"), 0], "p"]],
   bind(
@@ -246,7 +246,7 @@ const zerosToFlagZerosBody: MathJSON = bind(
 
 /** Mp00269, the inverse: a 0 at position p exactly when the letter before p, counting from the right end, differs from
  *  the one after it, the word ending in a 1 that is not there. */
-const flagZerosToZerosBody: MathJSON = forEach(positions, [
+export const flagZerosToZerosBody: MathJSON = forEach(positions, [
   "If",
   ["Equal", ["If", ["Equal", "i", 1], 1, at(["Subtract", ["Add", n, 2], "i"])], at(["Subtract", ["Add", n, 1], "i"])],
   1,
