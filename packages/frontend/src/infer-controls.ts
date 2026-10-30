@@ -412,8 +412,8 @@ const numberOf = (node: Json): number | undefined =>
       ? Number((node as { num: string }).num)
       : undefined;
 
-/** How far a lifted integer runs by default: small, since a collection's cost grows with it. */
-const LIFT_SPAN = 12;
+/** A lifted integer runs to the literal or this, whichever is larger; only a type bound widens it (a collection's cost grows fast). */
+const LIFT_SPAN = 6;
 
 /**
  * `expr` with the literals at TYPED parameter positions of its first call of `signature.head`
