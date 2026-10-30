@@ -1,0 +1,122 @@
+{
+  "Inversions": [
+    {
+      "n": 1,
+      "low": 0,
+      "coefficients": [1]
+    },
+    {
+      "n": 2,
+      "low": 0,
+      "coefficients": [1, 1]
+    },
+    {
+      "n": 3,
+      "low": 0,
+      "coefficients": [1, 2, 2, 1]
+    },
+    {
+      "n": 4,
+      "low": 0,
+      "coefficients": [1, 3, 5, 6, 5, 3, 1]
+    },
+    {
+      "n": 5,
+      "low": 0,
+      "coefficients": [1, 4, 9, 15, 20, 22, 20, 15, 9, 4, 1]
+    }
+  ],
+  "MajorIndex": [
+    {
+      "n": 1,
+      "low": 0,
+      "coefficients": [1]
+    },
+    {
+      "n": 2,
+      "low": 0,
+      "coefficients": [1, 1]
+    },
+    {
+      "n": 3,
+      "low": 0,
+      "coefficients": [1, 2, 2, 1]
+    },
+    {
+      "n": 4,
+      "low": 0,
+      "coefficients": [1, 3, 5, 6, 5, 3, 1]
+    },
+    {
+      "n": 5,
+      "low": 0,
+      "coefficients": [1, 4, 9, 15, 20, 22, 20, 15, 9, 4, 1]
+    }
+  ],
+  "Descents": [
+    {
+      "n": 1,
+      "low": 0,
+      "coefficients": [1]
+    },
+    {
+      "n": 2,
+      "low": 0,
+      "coefficients": [1, 1]
+    },
+    {
+      "n": 3,
+      "low": 0,
+      "coefficients": [1, 4, 1]
+    },
+    {
+      "n": 4,
+      "low": 0,
+      "coefficients": [1, 11, 11, 1]
+    },
+    {
+      "n": 5,
+      "low": 0,
+      "coefficients": [1, 26, 66, 26, 1]
+    }
+  ],
+  "LargestPart": [
+    {
+      "n": 1,
+      "low": 1,
+      "coefficients": [1]
+    },
+    {
+      "n": 2,
+      "low": 1,
+      "coefficients": [1, 1]
+    },
+    {
+      "n": 3,
+      "low": 1,
+      "coefficients": [1, 1, 1]
+    },
+    {
+      "n": 4,
+      "low": 1,
+      "coefficients": [1, 2, 1, 1]
+    },
+    {
+      "n": 5,
+      "low": 1,
+      "coefficients": [1, 2, 2, 1, 1]
+    }
+  ],
+  "equidistribution": {
+    "same": [
+      ["Inversions", "MajorIndex", true, true],
+      ["Descents", "Excedances", true, true]
+    ],
+    "different": [["Inversions", "Descents", false, false]]
+  },
+  "declined": {
+    "n": 7,
+    "ok": false,
+    "reason": "a distribution is computed up to size 6; this is size 7"
+  }
+}

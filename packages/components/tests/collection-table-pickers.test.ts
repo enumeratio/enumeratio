@@ -48,7 +48,10 @@ function drawn(el: NotatioCollectionTable): unknown {
   const stepper = el.querySelector<HTMLInputElement>(".nct-size");
   return {
     title: el.querySelector(".nct-title")?.textContent,
-    menu: inputs(el, ".nct-menu input").map((box) => ({ name: box.parentElement?.textContent, checked: box.checked })),
+    menu: inputs(el, ".nct-menu input[type=checkbox]").map((box) => ({
+      name: box.parentElement?.textContent,
+      checked: box.checked,
+    })),
     stepper:
       stepper === null
         ? null
@@ -60,7 +63,7 @@ function drawn(el: NotatioCollectionTable): unknown {
 }
 
 async function toggle(el: NotatioCollectionTable, name: string, on: boolean): Promise<void> {
-  const box = inputs(el, ".nct-menu input").find((b) => b.parentElement?.textContent === name)!;
+  const box = inputs(el, ".nct-menu input[type=checkbox]").find((b) => b.parentElement?.textContent === name)!;
   box.checked = on;
   box.dispatchEvent(new Event("change"));
   await el.updateComplete;
