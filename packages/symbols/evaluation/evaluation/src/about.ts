@@ -11,8 +11,9 @@ import { describe, describeNow } from "@enumeratio/manifest";
 import { declareCompile } from "@enumeratio/engine";
 
 /** `describe`'s keys `About` doesn't carry: the example count (compute-engine's `examples` are
- *  the definition's own, a list) and the kind, which compute-engine settles for a declared name. */
-const NOT_CARRIED = new Set(["examples", "kind", "name"]);
+ *  the definition's own, a list), the kind, which compute-engine settles for a declared name, and
+ *  the parsed `parameters` (records, not expressions; `params` and `signature` already say it). */
+const NOT_CARRIED = new Set(["examples", "kind", "name", "parameters"]);
 
 /** The name `x` gives: a symbol, or `a.b` for `Field(a, "b")`. */
 export function nameGiven(x: Expression | undefined): string | undefined {
