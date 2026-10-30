@@ -60,6 +60,26 @@ test("the pane is off by default; a column's toggle opens it, and again closes i
   el.remove();
 });
 
+test("a column's toggle and remove buttons have accessible names", async () => {
+  const el = await table({}, []);
+  const names = [...el.querySelectorAll("button.nct-dist-toggle")].map((b) => [
+    b.getAttribute("aria-label"),
+    b.getAttribute("title"),
+  ]);
+  expect(names).toEqual([
+    ["Show distribution of Descents", "Show distribution of Descents"],
+    ["Show distribution of Inversions", "Show distribution of Inversions"],
+  ]);
+  const removes = [...el.querySelectorAll("button")]
+    .filter((b) => b.textContent?.trim() === "×")
+    .map((b) => [b.getAttribute("aria-label"), b.getAttribute("title")]);
+  expect(removes).toEqual([
+    ["Remove column Descents", "Remove column Descents"],
+    ["Remove column Inversions", "Remove column Inversions"],
+  ]);
+  el.remove();
+});
+
 test("`distribution` opens the pane on the first statistic column", async () => {
   const asked: string[] = [];
   const el = await table({ distribution: true }, asked);

@@ -7,6 +7,7 @@ import {
   type DistributionResult,
   distributionText,
   equidistributed,
+  exprAt,
   parseFor,
   readTally,
   triangleOf,
@@ -79,6 +80,64 @@ export async function tally(
   } catch (err) {
     return { ok: false, reason: err instanceof Error ? err.message : String(err) };
   }
+}
+
+export interface EquidistributionResult {
+  /** The statistics whose distribution equals the subject's at every size compared. */
+  readonly matches: readonly string[];
+  /** How many candidates were fully decided (matched, or rejected). */
+  readonly checked: number;
+  readonly total: number;
+  /** True when the time budget ran out before every candidate was decided. */
+  readonly stopped: boolean;
+}
+
+/**
+ * Which of `candidates` have the subject's distribution at every size the subject has a row for.
+ * A candidate is walked row by row and dropped at the first row that differs, so most cost one
+ * or two small tallies; the whole scan stops when `budgetMs` is spent. The subject needs at
+ * least `minRows` rows, else equal distributions at one or two sizes say nothing.
+ */
+export async function findEquidistributed(
+  template: string,
+  subject: Triangle,
+  candidates: readonly string[],
+  options: {
+    readonly maxSize?: number;
+    readonly minRows?: number;
+    readonly budgetMs?: number;
+    readonly progress?: (checked: number, total: number) => void;
+    readonly evaluate?: Evaluate;
+    readonly now?: () => number;
+  } = {},
+): Promise<EquidistributionResult> {
+  const { minRows = 3, budgetMs = 20_000, now = Date.now } = options;
+  const rows = subject.filter((r) => r.ok);
+  const total = candidates.length;
+  if (rows.length < minRows) return { matches: [], checked: 0, total, stopped: false };
+  const started = now();
+  const matches: string[] = [];
+  let checked = 0;
+  for (const candidate of candidates) {
+    if (now() - started > budgetMs) return { matches, checked, total, stopped: true };
+    let same = true;
+    for (const row of rows) {
+      const answer = await tally(
+        exprAt(template, row.n),
+        candidate,
+        { size: row.n, ...(options.maxSize && { maxSize: options.maxSize }) },
+        options.evaluate,
+      );
+      if (!equidistributed([row], [{ n: row.n, ...answer }])) {
+        same = false;
+        break;
+      }
+    }
+    if (same) matches.push(candidate);
+    checked++;
+    options.progress?.(checked, total);
+  }
+  return { matches, checked, total, stopped: false };
 }
 
 /**

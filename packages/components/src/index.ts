@@ -206,4 +206,6 @@ if (typeof customElements !== "undefined" && typeof document !== "undefined") de
 // Wolfram-named attributes -- is lowered into its own attributes as it arrives.
 import { watchStructures } from "./structure.ts";
 export { adoptStructure, adoptStructures, watchStructures } from "./structure.ts";
+// A statistic's distributions, for the reference pages (computed on demand, by the page's kernel or engine).
+export { distributionTriangle, findEquidistributed } from "./distribution-client.ts";
 watchStructures();

@@ -5,7 +5,7 @@
 
 import { splitColumns } from "./collection-table.ts";
 import { GLYPH_KINDS } from "./glyphs.ts";
-import { DEFAULT_COLUMNS } from "./table-state.ts";
+import { DEFAULT_COLUMNS, templateOfExpr } from "./table-state.ts";
 
 /** What of a collection's record the explorer reads. */
 export interface CollectionRecord {
@@ -175,4 +175,54 @@ export function catalogOf(
   for (const [carrier, list] of statistics)
     list.sort((a, b) => (used.get(`${carrier}\0${b.name}`) ?? 0) - (used.get(`${carrier}\0${a.name}`) ?? 0));
   return { glyphOf: (carrier) => glyphs.get(carrier), statisticsOn: (carrier) => statistics.get(carrier) ?? [] };
+}
+
+/** Where a statistic's distribution is tallied: a carrier's sized collection, as a call over `{size}`. */
+export interface DistributionSource {
+  readonly collection: string;
+  /** `Head({size})`: the collection's call with the size slot open. */
+  readonly template: string;
+  /** The largest size offered, from the record (else the explorer's default). */
+  readonly maxSize: number;
+}
+
+/** Carriers whose collection is not a record named for the carrier (`Permutations` is a type-space plural, not a head; `Tableaux` is not `Tableaus`). */
+const CARRIER_COLLECTIONS: Readonly<Record<string, string>> = {
+  Permutation: "SymmetricGroup",
+  StandardTableau: "StandardTableaux",
+};
+
+/**
+ * The collection a carrier's distributions are tallied over: the whole carrier at size `n`, as
+ * one open size slot. A record named for the carrier's plural (`DyckPaths`, `IntegerCompositions`)
+ * wins; else the shortest sized collection on it. `undefined` when the carrier has none (the
+ * number sequences). The size is spelled as the explorer spells it, so a page, the element and a
+ * test agree.
+ */
+export async function distributionSourceOf(
+  carrier: string,
+  records: readonly CollectionRecord[],
+  catalog: ExplorerCatalog,
+): Promise<DistributionSource | undefined> {
+  const forced = CARRIER_COLLECTIONS[carrier];
+  const plural = `${carrier}s`;
+  const rank = (name: string): number =>
+    name === forced ? 0 : name === plural ? 1 : name === `Integer${plural}` ? 2 : 3;
+  const candidates = records
+    .filter((r) => r.name === forced || (r.carrier === carrier && r.grades !== undefined))
+    .toSorted((a, b) => rank(a.name) - rank(b.name) || a.name.length - b.name.length || (a.name < b.name ? -1 : 1));
+  for (const record of candidates) {
+    const spec = await explorerOf(record, catalog);
+    const derived = spec?.template ?? (spec === undefined ? undefined : templateOfExpr(spec.expr));
+    const isForced = record.name === forced;
+    const template = isForced ? `${record.name}({size})` : derived;
+    // One size slot and nothing else: a distribution over sizes has no other parameter to pick.
+    if (template === undefined || (!isForced && template.includes(","))) continue;
+    return {
+      collection: record.name,
+      template,
+      maxSize: record.maxSize ?? spec?.size?.max ?? DEFAULT_MAX_SIZE,
+    };
+  }
+  return undefined;
 }

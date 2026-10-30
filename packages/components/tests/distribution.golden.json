@@ -118,5 +118,11 @@
     "n": 7,
     "ok": false,
     "reason": "a distribution is computed up to size 6; this is size 7"
+  },
+  "sameAs": {
+    "matches": ["MajorIndex", "Inversions"],
+    "checked": 4,
+    "total": 4,
+    "stopped": false
   }
 }

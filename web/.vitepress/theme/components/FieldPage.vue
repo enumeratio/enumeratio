@@ -1,12 +1,22 @@
 <script setup lang="ts">
 // One statistic on one carrier, or one map out of one: what it is, how it is called, and what
 // FindStat says of it. A name on two carriers is two pages (distinct implementations).
-import { computed } from "vue";
+import { computed, ref } from "vue";
+import { defaultRows, lastRowSvg, triangleLines, triangleSizes, type TriangleLine } from "@enumeratio/frontend/core";
+import type { Triangle } from "@enumeratio/frontend/core";
 import { getEntry, resolveHead } from "../../data/reference.ts";
 import { renderBlock, renderInline } from "../../prose.ts";
 import type { Field } from "../../data/carrier-fields.ts";
 
-const props = defineProps<{ field: Field; live?: unknown; siblings?: readonly Field[] }>();
+const props = defineProps<{
+  field: Field;
+  live?: unknown;
+  siblings?: readonly Field[];
+  /** Where the statistic's distributions are tallied (statistics only; absent when the carrier has no sized collection). */
+  distribution?: { collection: string; template: string; maxSize: number };
+  /** The other statistics on this carrier, for "same distribution as". */
+  carrierStatistics?: readonly string[];
+}>();
 
 const isStatistic = computed(() => props.field.kind === "statistic");
 const call = computed(() =>
@@ -18,6 +28,55 @@ const headHref = computed(() => (getEntry(props.field.name) ? `/reference/symbol
 const toJson = (expr: unknown): string => JSON.stringify(expr);
 const prose = (text: string): string => renderBlock(text);
 const inline = (text?: string): string => renderInline(text ?? "");
+
+// The distribution triangle and its equidistributed siblings: computed here, on demand, by the
+// page's engine. The components package is only ever imported inside these handlers (SSR-safe).
+const rows = ref(props.distribution ? defaultRows(props.distribution.maxSize) : 0);
+const triangle = ref<Triangle | undefined>();
+const lines = computed<TriangleLine[]>(() => (triangle.value ? triangleLines(triangle.value) : []));
+const chart = computed(() =>
+  triangle.value ? lastRowSvg(triangle.value, `${props.field.name}, size ${rows.value}`) : undefined,
+);
+const busy = ref<string | undefined>();
+const failure = ref<string | undefined>();
+const same = ref<{ matches: readonly string[]; checked: number; total: number; stopped: boolean } | undefined>();
+
+async function computeTriangle(): Promise<void> {
+  if (!props.distribution) return;
+  busy.value = "triangle";
+  failure.value = undefined;
+  same.value = undefined;
+  try {
+    const { distributionTriangle } = await import("@enumeratio/components");
+    triangle.value = await distributionTriangle(
+      props.distribution.template,
+      props.field.name,
+      triangleSizes(1, Math.min(rows.value, props.distribution.maxSize)),
+      { maxSize: props.distribution.maxSize, progress: (n) => (busy.value = `triangle, size ${n}`) },
+    );
+  } catch (err) {
+    failure.value = err instanceof Error ? err.message : String(err);
+  } finally {
+    busy.value = undefined;
+  }
+}
+
+async function findSame(): Promise<void> {
+  if (!props.distribution || !triangle.value) return;
+  busy.value = "same";
+  failure.value = undefined;
+  try {
+    const { findEquidistributed } = await import("@enumeratio/components");
+    same.value = await findEquidistributed(props.distribution.template, triangle.value, props.carrierStatistics ?? [], {
+      maxSize: props.distribution.maxSize,
+      progress: (checked, total) => (busy.value = `same ${checked}/${total}`),
+    });
+  } catch (err) {
+    failure.value = err instanceof Error ? err.message : String(err);
+  } finally {
+    busy.value = undefined;
+  }
+}
 </script>
 
 <template>
@@ -49,6 +108,73 @@ const inline = (text?: string): string => renderInline(text ?? "");
       <ClientOnly>
         <notatio-cell format="mathjson" :value="toJson(live)" :resolveHead.prop="resolveHead"></notatio-cell>
       </ClientOnly>
+    </section>
+
+    <section v-if="isStatistic && distribution" class="field-distribution">
+      <h2>Distribution</h2>
+      <p class="field-note">
+        Over <code>{{ distribution.collection }}</code> at each size, tallied here in your browser; sizes past
+        {{ distribution.maxSize }} are not offered.
+      </p>
+      <p>
+        <label>
+          Sizes 1 to
+          <input v-model.number="rows" type="number" min="1" :max="distribution.maxSize" :disabled="!!busy" />
+        </label>
+        <button type="button" :disabled="!!busy" @click="computeTriangle">
+          {{ triangle ? "Recompute" : "Compute the triangle" }}
+        </button>
+        <span v-if="busy" class="field-note"> working: {{ busy }}…</span>
+      </p>
+      <p v-if="failure" class="field-note">{{ failure }}</p>
+      <table v-if="lines.length" class="field-sample field-triangle">
+        <thead>
+          <tr>
+            <th>n</th>
+            <th>Coefficients</th>
+            <th>Generating polynomial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="line in lines" :key="line.n">
+            <td>{{ line.n }}</td>
+            <template v-if="'coefficients' in line">
+              <td>
+                <code>{{ line.coefficients.join(", ") }}</code>
+                <span v-if="line.low !== 0" class="field-note"> from q^{{ line.low }}</span>
+              </td>
+              <td>
+                <code>{{ line.polynomial }}</code>
+              </td>
+            </template>
+            <td v-else colspan="2" class="field-note">{{ line.reason }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="chart" class="field-chart" v-html="chart"></div>
+      <template v-if="triangle && lines.some((l) => 'coefficients' in l)">
+        <p>
+          <button type="button" :disabled="!!busy || !carrierStatistics?.length" @click="findSame">
+            Same distribution as…
+          </button>
+          <span class="field-note">
+            compared with the {{ carrierStatistics?.length ?? 0 }} other statistics on {{ field.carrier }}.</span
+          >
+        </p>
+        <p v-if="same">
+          <template v-if="same.matches.length">
+            Equidistributed with
+            <template v-for="(m, i) in same.matches" :key="m"
+              ><a :href="`/reference/statistic/${field.carrier}/${m}`">{{ m }}</a
+              ><span v-if="i < same.matches.length - 1">, </span></template
+            >.
+          </template>
+          <template v-else>No other statistic on {{ field.carrier }} has the same distribution.</template>
+          <span v-if="same.stopped" class="field-note">
+            Stopped after {{ same.checked }} of {{ same.total }}: the time budget ran out.</span
+          >
+        </p>
+      </template>
     </section>
 
     <section v-if="siblings?.length">
@@ -128,6 +254,18 @@ const inline = (text?: string): string => renderInline(text ?? "");
 .field-live,
 .field-findstat {
   margin-top: 1.5rem;
+}
+.field-distribution {
+  margin-top: 1.5rem;
+}
+.field-distribution input {
+  width: 4rem;
+}
+.field-triangle td {
+  vertical-align: top;
+}
+.field-chart {
+  max-width: 28rem;
 }
 .field-sample {
   display: table;
