@@ -87,8 +87,8 @@ export const parkingFunctions: EpsilFamily = {
   paramCount: 1,
   kind: "ints",
   params: [N],
-  // The completions are counted in doubles below 2^53, but interpreting them past it takes seconds a call.
-  declinePastDoubles: true,
+  // Interpreting the completions takes seconds a call past 2^53, from n = 15.
+  bigSamples: [[15]],
   epsil: {
     count: iff(less(N, 0), 0, iff(equal(N, 0), 1, ["Power", add(N, 1), sub(N, 1)])),
     // The state is [rank left, entries at most k for k = 1..n, the entries so far…]: at position i the

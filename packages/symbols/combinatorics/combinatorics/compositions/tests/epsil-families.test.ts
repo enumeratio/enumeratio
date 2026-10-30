@@ -250,15 +250,20 @@ for (const [head, reading] of Object.entries(RESTRICTIONS)) {
   });
 }
 
-// Past 2^53 these tables are out of the interpreter's reach, so every operation declines (unknown).
+// Past 2^53 these tables are out of the interpreter's reach; BigInt-compiled code answers instead.
 for (const [head, p] of [
   ["CarlitzCompositions", [120]],
   ["ZigzagCompositions", [100]],
   ["PartCountBoundedCompositions", [120, 120]],
 ] as const) {
-  test(`past 2^53 ${head} declines`, () => {
+  test(`past 2^53 ${head} answers from BigInt code`, () => {
     const kernel = epsilKernelOn(ce, byHead.get(head)!);
-    expect(() => kernel.count([...p])).toThrow(/past 2\^53/);
-    expect(() => kernel.unrank([...p], 0n)).toThrow(/past 2\^53/);
+    const total = kernel.count([...p]) as bigint;
+    expect(total > BigInt(Number.MAX_SAFE_INTEGER)).toBe(true);
+    for (const r of [0n, total / 2n, total - 1n]) {
+      const element = kernel.unrank([...p], r);
+      expect(kernel.valid(element, [...p])).toBe(true);
+      expect(kernel.rank(element, [...p])).toBe(r);
+    }
   });
 }

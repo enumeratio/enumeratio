@@ -100,8 +100,13 @@ test("the interpreter agrees with compiled code", () => {
   }
 });
 
-test("past 2^53 the count is exact and unrank and rank decline", () => {
+test("past 2^53 the count is exact and unrank and rank answer from BigInt code", () => {
   // 18^16 > 2^53, where the TS kernel's count was a rounded double.
   expect(kernel.count([17])).toBe(18n ** 16n);
-  expect(() => kernel.unrank([17], 0n)).toThrow(RangeError);
+  for (const r of [0n, 18n ** 16n / 3n, 18n ** 16n - 1n]) {
+    const word = kernel.unrank([17], r);
+    expect(kernel.valid(word, [17])).toBe(true);
+    expect(kernel.rank(word, [17])).toBe(r);
+  }
+  expect(kernel.unrank([17], 0n)).toEqual(Array(17).fill(1));
 });

@@ -308,14 +308,17 @@ test("at the last n whose count a double holds, compiled code answers exactly", 
   }
 });
 
-test("past 2^53 the stack walks decline, the count stays exact", () => {
+test("past 2^53 the stack walks answer from BigInt code, and the count stays exact", () => {
   expect(epsilKernelOn(ce, READINGS.BinaryTreeParentArrays.family).count([31])).toBe(catalans(31)[31]);
   expect(epsilKernelOn(ce, READINGS.NonCrossingTrees.family).count([23])).toBe(ternaryTrees(23));
   for (const [head, p] of [
     ["BinaryTreeParentArrays", [31]],
     ["NonCrossingTrees", [23]],
-  ] as const)
-    expect(() => epsilKernelOn(ce, READINGS[head].family).unrank([...p], 0n)).toThrow(RangeError);
+  ] as const) {
+    const kernel = epsilKernelOn(ce, READINGS[head].family);
+    const total = kernel.count([...p]) as bigint;
+    for (const r of [0n, total / 2n, total - 1n]) expect(kernel.rank(kernel.unrank([...p], r), [...p])).toBe(r);
+  }
 });
 
 test.skipIf(!DEEP)("past 2^53 LabeledTrees answers in exact integers", () => checkLabeledTrees(18));

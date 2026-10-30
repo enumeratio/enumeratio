@@ -26,7 +26,15 @@ const SHARDS = Number(process.env.FAMILY_SHARDS) || (process.env.CI ? 3 : 1);
  *  family counts one. Only the split reads this, so a stale entry costs balance, never correctness;
  *  the shards log their times, so rebalance when one runs well past the others. */
 const COST: Readonly<Record<string, number>> = {
+  ParkingFunctions: 230,
+  ZigzagCompositions: 120,
   BoxedPlanePartitions: 32,
+  NonCrossingTrees: 22,
+  CarlitzCompositions: 22,
+  NonCrossingPartitions: 16,
+  NonNestingPartitions: 16,
+  PartCountBoundedCompositions: 14,
+  BinaryTreeParentArrays: 8,
   GelfandTsetlin: 18,
   SemistandardTableaux: 14,
   SeparablePermutations: 13,
