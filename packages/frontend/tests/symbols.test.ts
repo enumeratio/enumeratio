@@ -50,6 +50,14 @@ const CORPUS = [
   // No tuples: the controls are inferred from the free symbols, or from a bare name.
   "Manipulate(Sin(a) * b)",
   "Manipulate(Plot(Sin(a * x), (x, 0, 10)), a, (b, 0, 1))",
+  // With no controls written, a bare body is drawn as the plot its axis letters imply.
+  "Manipulate(Sin(a * x))",
+  "Manipulate(Sin(a * x) * y + b)",
+  "Manipulate(z ^ 2 + c)",
+  // ...unless there is no unambiguous plot variable or no control to move it, or controls are written (a readout).
+  "Manipulate(Sin(a * x), (a, 1, 5))",
+  "Manipulate(Sin(x) * y)",
+  "Manipulate(Sin(a * t) + b)",
   'Image("data:image/png;base64,AAA")',
   "Sin(x) + 1",
   // A cell: the held input, its forms, and the value it should come to.

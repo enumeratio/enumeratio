@@ -1,0 +1,82 @@
+{
+  "real: one variable is a curve": {
+    "head": "Plot",
+    "variables": ["x"]
+  },
+  "real: any name, once typed, is an axis": {
+    "head": "Plot",
+    "variables": ["t"]
+  },
+  "real: untyped with letters off is real": {
+    "head": "Plot",
+    "variables": ["t"]
+  },
+  "real: two variables are a surface": {
+    "head": "Plot3D",
+    "variables": ["x", "y"]
+  },
+  "real: two variables as contours": {
+    "head": "ContourPlot",
+    "variables": ["x", "y"]
+  },
+  "real: two variables as shading": {
+    "head": "DensityPlot",
+    "variables": ["x", "y"]
+  },
+  "real: three variables have no plot": null,
+  "complex: a declared complex variable is a portrait": {
+    "head": "ComplexPlot",
+    "variables": ["w"]
+  },
+  "complex: z by letter": {
+    "head": "ComplexPlot",
+    "variables": ["z"]
+  },
+  "complex: z is real without the convention": {
+    "head": "Plot",
+    "variables": ["z"]
+  },
+  "complex: mixed with a real has no plot": null,
+  "integer: a declared integer is discrete": {
+    "head": "DiscretePlot",
+    "variables": ["k"]
+  },
+  "integer: n by letter": {
+    "head": "DiscretePlot",
+    "variables": ["n"]
+  },
+  "integer: two have no plot": null,
+  "letters: an unknown name is not an axis": null,
+  "letters: a declaration beats the letter": {
+    "head": "Plot",
+    "variables": ["z"]
+  },
+  "bound: controls are not axes": {
+    "head": "Plot",
+    "variables": ["x"]
+  },
+  "names: only the named ones are axes": {
+    "head": "Plot",
+    "variables": ["x"]
+  },
+  "hint: a typed hint wins": {
+    "head": "DiscretePlot",
+    "variables": ["m"]
+  },
+  "no free symbols": null,
+  "list: numbers are points": {
+    "head": "ListPlot",
+    "variables": []
+  },
+  "list: joined": {
+    "head": "ListLinePlot",
+    "variables": []
+  },
+  "list: pairs": {
+    "head": "ListPlot",
+    "variables": []
+  },
+  "list: symbolic entries have no plot": null,
+  "value: an equation has no plot": null,
+  "value: a string has no plot": null
+}

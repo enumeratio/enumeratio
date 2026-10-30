@@ -2,6 +2,7 @@ import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type ControlRange,
   DEFAULT_BOUND,
+  inferPlotOver,
   inferRange,
   integerBounds,
   letterType,
@@ -230,22 +231,28 @@ export const PROJECTION_VARS: Record<ProjectionKind, readonly string[]> = {
   curve3d: [],
 };
 
+/** The projection each plot the sheet draws names; the other plots have no pane here. */
+const PROJECTION_OF: Readonly<Record<string, ProjectionKind>> = {
+  Plot: "curve",
+  Plot3D: "surface",
+  ComplexPlot: "portrait",
+};
+
 /**
- * What a cell draws, from the variables it leaves free. `z` means the complex plane
- * and colours as a portrait; `x` alone is a curve; `x` and `y` together a surface.
- * Anything else -- no free variables, or free names that are not axes -- draws
- * nothing, which is how a binding cell stays off the screen without saying so.
+ * What a cell draws, from the variables it leaves free: `inferPlotOver`'s choice, with letter
+ * conventions on (a sheet has no declarations to read). So `z` is the complex plane and
+ * colors as a portrait, `x` alone is a curve, `x` and `y` together a surface. Anything else
+ * -- no free variables, names that are not axes, a plot with no pane here -- draws nothing,
+ * which is how a binding cell stays off the screen without saying so.
  *
  * This is only the default: a cell may name its own projection, since the inference
  * is a convention about letters and conventions are sometimes wrong.
  */
 export function inferProjection(free: readonly string[]): ProjectionKind {
-  const set = new Set(free);
-  if (set.size === 0) return "none";
-  if (set.has("z") && set.size === 1) return "portrait";
-  if (set.has("x") && set.has("y") && set.size === 2) return "surface";
-  if (set.has("x") && set.size === 1) return "curve";
-  return "none";
+  const choice = inferPlotOver(free, { letterConventions: true });
+  const kind = choice === undefined ? undefined : PROJECTION_OF[choice.head];
+  // The panes read fixed axes (`PROJECTION_VARS`): `y` alone is a real variable, but no curve.
+  return kind !== undefined && projectionFits(kind, free) ? kind : "none";
 }
 
 /** Is `kind` drawable given the variables the cell actually leaves free? */
