@@ -223,13 +223,35 @@ export function bigDisagreements(
   fibers: readonly (readonly number[])[] = family.bigSamples ?? [],
   extra = 1,
 ): Operation[] {
+  const verdicts = bigVerdicts(ce, family, runs, fibers, extra);
+  for (const { operation, kind } of verdicts)
+    if (kind === "decline") console.warn(`${family.head}: BigInt-compiled ${operation} declines on a sampled fiber`);
+  return verdicts.map(({ operation }) => operation);
+}
+
+/** Where BigInt-compiled code gives a wrong answer (`disagree`) or declines (`decline`, a throw the runtime
+ *  reads as handing over to the interpreter) on a sampled fiber; either keeps the operation off the BigInt path. */
+export function bigVerdicts(
+  ce: Engine,
+  family: EpsilFamily,
+  runs: Partial<Record<Operation, Run>>,
+  fibers: readonly (readonly number[])[] = family.bigSamples ?? [],
+  extra = 1,
+): { operation: Operation; kind: "disagree" | "decline" }[] {
   const wrong = new Set<Operation>();
+  const declined = new Set<Operation>();
+  const declines = Symbol("decline");
   const attempt = (operation: Operation, vars: Record<string, unknown>): unknown => {
     try {
       return fromBigint(runs[operation]!(toBigint(vars) as Record<string, unknown>));
     } catch {
-      return undefined;
+      declined.add(operation);
+      return declines;
     }
+  };
+  // A wrong answer counts only if there is one: a decline is recorded by `attempt`.
+  const differs = (operation: Operation, got: unknown, same: (got: unknown) => boolean): void => {
+    if (got !== declines && !same(got)) wrong.add(operation);
   };
   for (const sample of fibers) {
     const sequence = family.params.length === 0;
@@ -239,38 +261,44 @@ export function bigDisagreements(
     const entries = Array.isArray(table) ? table.slice(1).map((entry) => integerOf(entry)) : undefined;
     let bigTable: unknown[] | undefined;
     if (entries !== undefined && runs.tables !== undefined) {
-      bigTable = (attempt("tables", params) as unknown[] | undefined)?.map((x) => BigInt(x as bigint));
-      if (stringified(bigTable) !== stringified(entries)) wrong.add("tables");
+      const got = attempt("tables", params);
+      bigTable = got === declines ? undefined : (got as unknown[]).map((x) => BigInt(x as bigint));
+      differs("tables", got, () => stringified(bigTable) === stringified(entries));
     }
     const bind = table === undefined ? params : { ...params, _tables: table };
     const compiledBind = table === undefined ? params : { ...params, _tables: bigTable };
     // A fiber a double holds is the double path's to check.
     const total = sequence ? undefined : integerOf(evaluateEpsil(ce, family.epsil.count, bind));
     if (!sequence && (total === undefined || total <= BigInt(Number.MAX_SAFE_INTEGER))) continue;
-    if (!sequence && runs.count !== undefined && attempt("count", compiledBind) !== fromBigint(total))
-      wrong.add("count");
+    if (!sequence && runs.count !== undefined)
+      differs("count", attempt("count", compiledBind), (got) => got === fromBigint(total));
     for (const r of sequence ? [BigInt(sample[0]!)] : spreadRanks(total!, extra)) {
       const term = evaluateEpsil(ce, family.epsil.unrank, { ...bind, _r: elementJson(r) });
       // A scalar past 2^53 is a big integer in JSON, which `elementOf` doesn't read.
       const element = sequence && integerOf(term) !== undefined ? fromBigint(integerOf(term)) : elementOf(term);
-      if (
-        runs.unrank !== undefined &&
-        stringified(attempt("unrank", { ...compiledBind, _r: r })) !== stringified(element)
-      )
-        wrong.add("unrank");
+      if (runs.unrank !== undefined)
+        differs(
+          "unrank",
+          attempt("unrank", { ...compiledBind, _r: r }),
+          (got) => stringified(got) === stringified(element),
+        );
       if (runs.rank !== undefined) {
         const place = integerOf(evaluateEpsil(ce, family.epsil.rank, { ...bind, _x: elementJson(element) }));
         const got = attempt("rank", { ...compiledBind, _x: element });
-        if (place !== r || (typeof got === "number" ? BigInt(got) : got) !== place) wrong.add("rank");
+        if (place !== r) wrong.add("rank");
+        differs("rank", got, (g) => (typeof g === "number" ? BigInt(g) : g) === place);
       }
       if (runs.valid !== undefined)
         for (const candidate of [element, nearMiss(element)]) {
           const expected = evaluateEpsil(ce, family.epsil.valid, { ...bind, _x: elementJson(candidate) }) === "True";
-          if (attempt("valid", { ...compiledBind, _x: candidate }) !== expected) wrong.add("valid");
+          differs("valid", attempt("valid", { ...compiledBind, _x: candidate }), (got) => got === expected);
         }
     }
   }
-  return OPERATIONS.filter((operation) => wrong.has(operation));
+  return OPERATIONS.filter((operation) => wrong.has(operation) || declined.has(operation)).map((operation) => ({
+    operation,
+    kind: wrong.has(operation) ? ("disagree" as const) : ("decline" as const),
+  }));
 }
 
 /** The generated code of the family's operations that compile, and each one's runnable form; `big` likewise

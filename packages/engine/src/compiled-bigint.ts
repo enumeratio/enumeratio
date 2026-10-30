@@ -20,19 +20,23 @@ class BigIntTarget extends JavaScriptTarget {
   }
 }
 
-/** Divide and unit-step Range rewritten to our own functions, which the compiler would otherwise lower with
+/** Divide and literal-step Range rewritten to our own functions, which the compiler would otherwise lower with
  *  doubles: canonicalisation turns `x/2` into `half times x` before any target hook sees it, and the compiler
- *  counts a Range's elements in doubles beside a bigint start. */
+ *  counts a Range's elements in doubles beside a bigint start (and a stepped one counts a bigint bound as
+ *  infinite, then multiplies its double index by a bigint step). */
 function lowered(node: unknown): unknown {
   if (!Array.isArray(node)) return node;
   if (node[0] === "Divide") return ["BigDivide", ...node.slice(1).map(lowered)];
   if (node[0] === "Range" && node[3] === 1) return ["BigRange", lowered(node[1]), lowered(node[2])];
+  if (node[0] === "Range" && node.length === 4 && Number.isInteger(node[3]) && node[3] !== 0)
+    return ["BigRangeBy", lowered(node[1]), lowered(node[2]), node[3]];
   return node.map(lowered);
 }
 
 const FUNCTIONS = {
   BigDivide: "((a, b) => _SYS.bdiv(a, b))",
   BigRange: "((lo, hi) => _SYS.brange(lo, hi))",
+  BigRangeBy: "((lo, hi, step) => _SYS.brange(lo, hi, step))",
   // A length is an integer like any other here.
   Length: "((list) => BigInt(list.length))",
   Count: "((list) => BigInt(list.length))",
@@ -109,14 +113,19 @@ export function bigintRuntime(ce: ComputeEngine): unknown {
       // As the runtime's, for a bigint position (1-based, negative from the end).
       replaceAtInPlace,
       replaceAt: (list: unknown[], index: unknown, value: unknown) => replaceAtInPlace(list.slice(), index, value),
-      brange: (lo: bigint | number, hi: bigint | number) => {
+      brange: (lo: bigint | number, hi: bigint | number, step: bigint | number = 1n) => {
         // A list's length is a double, but an integer one; any other double is a real mixed in.
         for (const bound of [lo, hi])
           if (typeof bound !== "bigint" && !Number.isSafeInteger(bound)) throw new TypeError("a range over a double");
-        [lo, hi] = [BigInt(lo), BigInt(hi)];
-        if (hi - lo >= 4294967295n) throw new RangeError("Range: the element count exceeds the array limit");
+        [lo, hi, step] = [BigInt(lo), BigInt(hi), BigInt(step)];
+        if (step === 0n) throw new RangeError("Range: a zero step");
+        const up = step > 0n;
+        const span = up ? hi - lo : lo - hi;
+        if (span / (up ? step : -step) >= 4294967295n)
+          throw new RangeError("Range: the element count exceeds the array limit");
         const out: bigint[] = [];
-        for (let i = lo; i <= hi; i++) out.push(i);
+        if (up) for (let i = lo; i <= hi; i += step) out.push(i);
+        else for (let i = lo; i >= hi; i += step) out.push(i);
         return out;
       },
       binomial,
@@ -152,6 +161,7 @@ export function compileBigint(
   try {
     for (const [name, type] of Object.entries(types)) ce.declare(name, type);
     ce.declare("BigRange", { signature: "(integer, integer) -> list<integer>" } as never);
+    ce.declare("BigRangeBy", { signature: "(integer, integer, integer) -> list<integer>" } as never);
     const result = new BigIntTarget().compile(
       ce.box(lowered(expression) as never) as Expression,
       {

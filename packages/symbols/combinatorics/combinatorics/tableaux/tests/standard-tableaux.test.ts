@@ -174,8 +174,9 @@ test("a large tableau round-trips", () => {
   expect(shifted.rank(s, [30])).toBe(987654321n);
 });
 
-test("ShiftedStandardTableaux declines a count past 2^53", () => {
-  expect(() => shifted.count([40])).toThrow(RangeError);
+test("ShiftedStandardTableaux counts exactly past 2^53", () => {
+  // Thrall's shifted hook-length formula, summed over the strict partitions of 40.
+  expect(shifted.count([40])).toBe(103804204335692415040n);
 });
 
 test("the shapes' tables are built once per n, not per call", () => {
