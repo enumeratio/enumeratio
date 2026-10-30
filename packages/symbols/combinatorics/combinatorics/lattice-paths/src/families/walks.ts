@@ -60,6 +60,8 @@ export interface Walk {
   /** A count exact past 2^53, where the interpreter declines or takes seconds. */
   readonly fastCount?: FastKernel["count"];
   readonly fast?: FastKernel;
+  /** Fibers past 2^53 to check BigInt-compiled code on; opts the walk in (`EpsilFamily.bigSamples`). */
+  readonly bigSamples?: EpsilFamily["bigSamples"];
 }
 
 const flagAfter = (walk: Walk, reached: MathJSON, y: MathJSON, rise: -1 | 0 | 1): MathJSON =>
@@ -190,6 +192,7 @@ export const walkFamily = (walk: Walk): EpsilFamily => ({
   ...(walk.declinePastDoubles === undefined ? {} : { declinePastDoubles: true as const }),
   ...(walk.fast === undefined ? {} : { fast: walk.fast }),
   ...(walk.fastCount === undefined ? {} : { fastCount: walk.fastCount }),
+  ...(walk.bigSamples === undefined ? {} : { bigSamples: walk.bigSamples }),
   epsil: {
     count: walk.completions(walk.width, 0, walk.flag?.initial ?? 1),
     ...(walk.tables.length === 0

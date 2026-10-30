@@ -6,6 +6,7 @@
 import type { Engine } from "@enumeratio/engine";
 import { bareEngine } from "@enumeratio/engine/testing";
 import { compileTyped } from "@enumeratio/engine/compiled";
+import { compileBigint, fromBigint, toBigint } from "@enumeratio/engine/compiled-bigint";
 import { evaluateEpsil } from "@enumeratio/structures";
 import {
   elementJson,
@@ -29,6 +30,10 @@ export interface Entry {
   readonly hash: string;
   readonly code: Partial<Record<Operation, string>>;
   readonly interpreted: readonly Operation[];
+  /** The BigInt-compiled code of the operations that compile, for a family with `bigSamples`. */
+  readonly big: Partial<Record<Operation, string>>;
+  /** Operations whose BigInt code disagreed with the interpreter. */
+  readonly bigInterpreted: readonly Operation[];
 }
 
 type Run = (vars: Record<string, unknown>) => unknown;
@@ -180,21 +185,96 @@ export function disagreements(
   return OPERATIONS.filter((operation) => wrong.has(operation));
 }
 
-/** The generated code of the family's operations that compile, and each one's runnable form. */
+/** The operations compiled over BigInts: those that read no table, for a family that opted in. */
+const BIG_OPERATIONS = ["count", "unrank", "rank"] as const satisfies readonly Operation[];
+
+/** A deterministic spread of ranks of a fiber of `total` members: the ends, the middle, and `extra` between. */
+const spreadRanks = (total: bigint, extra: number): bigint[] => {
+  const ranks = new Set<bigint>([0n, 1n, total / 2n, total - 2n, total - 1n]);
+  for (let k = 1; k <= extra; k++) ranks.add((total * BigInt(2 * k + 1)) / BigInt(2 * extra + 3));
+  return [...ranks].filter((r) => r >= 0n && r < total);
+};
+
+const stringified = (value: unknown): string =>
+  JSON.stringify(value, (_key, x) => (typeof x === "bigint" ? `${x}n` : x));
+
+/**
+ * Whether each operation's BigInt-compiled code gives the interpreter's answers on the family's fibers
+ * past 2^53 (`bigSamples`, or `fibers`): the count, the element at each of `spreadRanks`, and the rank of
+ * that element (which is also the rank it came from). The interpreter takes tenths of a second a call
+ * here, so the build checks few ranks and the nightly sweep many.
+ */
+export function bigDisagreements(
+  ce: Engine,
+  family: EpsilFamily,
+  runs: Partial<Record<Operation, Run>>,
+  fibers: readonly (readonly number[])[] = family.bigSamples ?? [],
+  extra = 1,
+): Operation[] {
+  const wrong = new Set<Operation>();
+  const attempt = (operation: Operation, vars: Record<string, unknown>): unknown => {
+    try {
+      return fromBigint(runs[operation]!(toBigint(vars) as Record<string, unknown>));
+    } catch {
+      return undefined;
+    }
+  };
+  for (const p of fibers) {
+    const params = Object.fromEntries(family.params.map((name, i) => [name, p[i]]));
+    const total = integerOf(evaluateEpsil(ce, family.epsil.count, params));
+    // A fiber a double holds is the double path's to check.
+    if (total === undefined || total <= BigInt(Number.MAX_SAFE_INTEGER)) continue;
+    if (runs.count !== undefined && attempt("count", params) !== total) wrong.add("count");
+    for (const r of spreadRanks(total, extra)) {
+      const element = elementOf(evaluateEpsil(ce, family.epsil.unrank, { ...params, _r: elementJson(r) }));
+      if (runs.unrank !== undefined && stringified(attempt("unrank", { ...params, _r: r })) !== stringified(element))
+        wrong.add("unrank");
+      if (runs.rank !== undefined) {
+        const place = integerOf(evaluateEpsil(ce, family.epsil.rank, { ...params, _x: elementJson(element) }));
+        const got = attempt("rank", { ...params, _x: element });
+        if (place !== r || (typeof got === "number" ? BigInt(got) : got) !== place) wrong.add("rank");
+      }
+    }
+  }
+  return OPERATIONS.filter((operation) => wrong.has(operation));
+}
+
+/** The generated code of the family's operations that compile, and each one's runnable form; `big` likewise
+ *  over BigInts, for a family that opted in with `bigSamples`. */
 export function compileFamily(
   ce: Engine,
   family: EpsilFamily,
-): { code: Partial<Record<Operation, string>>; runs: Partial<Record<Operation, Run>> } {
+): {
+  code: Partial<Record<Operation, string>>;
+  runs: Partial<Record<Operation, Run>>;
+  big: Partial<Record<Operation, string>>;
+  bigRuns: Partial<Record<Operation, Run>>;
+} {
   const code: Partial<Record<Operation, string>> = {};
   const runs: Partial<Record<Operation, Run>> = {};
+  const big: Partial<Record<Operation, string>> = {};
+  const bigRuns: Partial<Record<Operation, Run>> = {};
   for (const operation of operationsOf(family)) {
     const types = operationTypes(family, operation);
     const compiled = types === undefined ? undefined : compileTyped(ce, family.epsil[operation], types);
-    if (compiled === undefined) continue;
-    code[operation] = compiled.code;
-    runs[operation] = compiled.run;
+    if (compiled !== undefined) {
+      code[operation] = compiled.code;
+      runs[operation] = compiled.run;
+    }
+    // An operation that reads a table is left to the double path and the interpreter.
+    if (
+      family.bigSamples === undefined ||
+      types === undefined ||
+      !(BIG_OPERATIONS as readonly Operation[]).includes(operation) ||
+      "_tables" in types
+    )
+      continue;
+    const bigCompiled = compileBigint(ce, family.epsil[operation], types);
+    if (bigCompiled === undefined) continue;
+    big[operation] = bigCompiled.code;
+    bigRuns[operation] = bigCompiled.run;
   }
-  return { code, runs };
+  return { code, runs, big, bigRuns };
 }
 
 /** Each Epsil family's head, hash and the generated code of the operations that compile. */
@@ -205,7 +285,7 @@ export function compiledFamilies(
   const ce = bareEngine();
   const out: Entry[] = [];
   for (const family of (allFamilies.filter(isEpsilFamily) as EpsilFamily[]).filter((f) => only(f.head))) {
-    const { code, runs } = compileFamily(ce, family);
+    const { code, runs, big, bigRuns } = compileFamily(ce, family);
     // disagreements reads a family only through these fields, and `early.unrank`/`early.rank`,
     // whose closures may reach any family source: a family with either keys on all of it.
     const { early } = family;
@@ -221,7 +301,16 @@ export function compiledFamilies(
       family.head,
     );
     for (const operation of interpreted) delete code[operation];
-    out.push({ head: family.head, hash: familyHash(family), code, interpreted });
+    const bigInterpreted =
+      family.bigSamples === undefined
+        ? []
+        : verdicts.remember(
+            { data, big, source: reachesSource ? familySourceHash() : undefined },
+            () => bigDisagreements(ce, family, bigRuns),
+            `${family.head} (BigInt)`,
+          );
+    for (const operation of bigInterpreted) delete big[operation];
+    out.push({ head: family.head, hash: familyHash(family), code, interpreted, big, bigInterpreted });
   }
   return out.toSorted((a, b) => (a.head < b.head ? -1 : a.head > b.head ? 1 : 0));
 }
@@ -236,6 +325,16 @@ export function renderEntry(e: Entry): string {
     ...OPERATIONS.flatMap((operation) =>
       e.code[operation] === undefined ? [] : [`    ${operation}: (_SYS, _) => ${e.code[operation]},`],
     ),
+    ...(Object.keys(e.big).length === 0
+      ? []
+      : [
+          "    big: {",
+          ...BIG_OPERATIONS.flatMap((operation) =>
+            e.big[operation] === undefined ? [] : [`      ${operation}: (_SYS, _) => ${e.big[operation]},`],
+          ),
+          "    },",
+        ]),
+    ...(e.bigInterpreted.length === 0 ? [] : [`    bigInterpreted: ${JSON.stringify(e.bigInterpreted)},`]),
     ...(e.interpreted.length === 0 ? [] : [`    interpreted: ${JSON.stringify(e.interpreted)},`]),
     "  },",
   ].join("\n");

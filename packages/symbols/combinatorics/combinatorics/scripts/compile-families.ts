@@ -56,6 +56,7 @@ interface Rendered {
   readonly text: string;
   readonly compiled: number;
   readonly interpreted: readonly string[];
+  readonly bigInterpreted: readonly string[];
 }
 
 interface Result {
@@ -80,6 +81,7 @@ if (process.argv[2] === "--shard") {
       text: renderEntry(e),
       compiled: Object.keys(e.code).length,
       interpreted: e.interpreted,
+      bigInterpreted: e.bigInterpreted,
     }));
   writeFileSync(out!, JSON.stringify({ entries, defined: definedOperations() } satisfies Result));
   verdicts.save();
@@ -138,4 +140,8 @@ ${entries.map((e) => e.text).join("\n")}
   console.log(`${operations} of ${results[0]!.defined} family operations compiled`);
   for (const e of entries.filter((entry) => entry.interpreted.length > 0))
     console.log(`${e.head}: compiled ${e.interpreted.join(", ")} disagreed with the interpreter; left interpreted`);
+  for (const e of entries.filter((entry) => entry.bigInterpreted.length > 0))
+    console.log(
+      `${e.head}: BigInt-compiled ${e.bigInterpreted.join(", ")} disagreed with the interpreter; left interpreted`,
+    );
 }
