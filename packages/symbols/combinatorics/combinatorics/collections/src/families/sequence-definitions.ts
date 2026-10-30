@@ -12,7 +12,7 @@
 
 import type { EpsilFamily } from "./epsil.ts";
 import { type FastReach, sequence, withDefinitions } from "./numeric-definitions.ts";
-import { and, at, equal, fold, iff, less, lets, mul, quotient, sub, add } from "./tables.ts";
+import { and, at, equal, floorLog2, fold, iff, less, lets, mul, quotient, sub, add } from "./tables.ts";
 import type { NumberKernel } from "./types.ts";
 
 type MathJSON = unknown;
@@ -44,6 +44,8 @@ interface Walk {
   /** The bits of the largest member whose membership and rank the scan answers in a second or two (measured):
    *  the scan takes about as many steps as the member has ranks, each on a number that size. */
   readonly maxBits: number;
+  /** Ranks whose terms are past 2^53, to check BigInt-compiled code on; opts the sequence in (`EpsilFamily.bigSamples`). */
+  readonly bigSamples?: EpsilFamily["bigSamples"];
 }
 
 /**
@@ -52,7 +54,7 @@ interface Walk {
  * early or repeat a term; the scan covers `perBit` ranks for each bit of `_x`, and stops at the first
  * term above it once the terms no longer decrease (`from`).
  */
-function walked({ head, seed, next, from = 0, perBit, maxBits }: Walk): EpsilFamily {
+function walked({ head, seed, next, from = 0, perBit, maxBits, bigSamples }: Walk): EpsilFamily {
   const [window, n] = ["wk_w", "wk_n"];
   const k = seed.length;
   const t = (j: number): MathJSON => at(window, j);
@@ -65,7 +67,7 @@ function walked({ head, seed, next, from = 0, perBit, maxBits }: Walk): EpsilFam
   // The window after `r` steps starts at the term of rank `r`.
   const term = (r: MathJSON): MathJSON => at(fold(slide(), window, n, ["List", ...seed], upTo(sub(r, 1))), 1);
   // A dozen ranks cover the first terms, which may be small for their rank.
-  const bound = add(floor(mul(perBit, log2(add("_x", 2)))), 12);
+  const bound = add(mul(perBit, add(floorLog2(add("_x", 2)), 1)), 12);
   // The window and the first rank whose term is `_x` (or -1): a step records the place before it moves on,
   // and holds still once past `_x`, so the terms stop growing.
   const found = at(window, k + 1);
@@ -80,6 +82,7 @@ function walked({ head, seed, next, from = 0, perBit, maxBits }: Walk): EpsilFam
     paramCount: 0,
     kind: "scalar",
     params: [],
+    ...(bigSamples === undefined ? {} : { bigSamples }),
     epsil: {
       count: INFINITY,
       unrank: term("_r"),
@@ -275,6 +278,8 @@ const families: readonly EpsilFamily[] = [
     seed: [1],
     perBit: 1,
     maxBits: 1500,
+    // Cat(31) is the first past 2^53.
+    bigSamples: [[31], [45]],
     next: (t, n) =>
       lets(
         [

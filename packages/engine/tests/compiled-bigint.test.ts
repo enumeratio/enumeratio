@@ -40,3 +40,31 @@ test("what mixes in a real declines with a TypeError", () => {
 test("results come back as numbers where a double holds them", () => {
   expect(fromBigint([1n, 2n ** 60n])).toEqual([1, 2n ** 60n]);
 });
+
+test("a power of two is exact, and floor(log2) by shifting needs no Log", () => {
+  expect(run(["Power", 2, "_k"], { _k: "integer" }, { _k: 100 })).toBe(2n ** 100n);
+  const shift = [
+    "Function",
+    [
+      "If",
+      ["GreaterEqual", ["At", "s", 1], ["Power", 2, "k"]],
+      [
+        "List",
+        ["Divide", ["Subtract", ["At", "s", 1], ["Mod", ["At", "s", 1], ["Power", 2, "k"]]], ["Power", 2, "k"]],
+        ["Add", ["At", "s", 2], "k"],
+      ],
+      "s",
+    ],
+    "s",
+    "k",
+  ];
+  const log2 = ["At", ["Fold", shift, ["List", "_x", 0], ["List", 64, 32, 16, 8, 4, 2, 1]], 2];
+  expect(run(log2, { _x: "integer" }, { _x: 2 ** 60 + 5 })).toBe(60n);
+});
+
+test("an equality of integers past 2^53 holds", () => {
+  const same = ["If", ["And", ["Equal", ["At", "_x", 1], "_n"], ["Less", ["At", "_x", 1], 2 ** 62]], 1, 0];
+  const types = { _x: "list<integer>", _n: "integer" };
+  expect(run(same, types, { _x: [2 ** 60], _n: 2 ** 60 })).toBe(1n);
+  expect(run(same, types, { _x: [2 ** 60], _n: 2 ** 61 })).toBe(0n);
+});

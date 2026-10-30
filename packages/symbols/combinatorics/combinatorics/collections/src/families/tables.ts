@@ -34,6 +34,19 @@ export const map = (body: MathJSON, variable: string, over: MathJSON): MathJSON 
 ];
 /** ⌊a / b⌋ for integers, exactly: compute-engine's `Floor` of a big rational rounds through a double. */
 export const quotient = (a: MathJSON, b: MathJSON): MathJSON => ["Divide", sub(a, ["Mod", a, b]), b];
+/** ⌊log₂ x⌋ for an integer 1 ≤ x < 2^16384, found by shifting the bits off in descending powers of two:
+ *  integer arithmetic only, so it compiles over BigInts, which a `Log` does not. */
+export const floorLog2 = (x: MathJSON): MathJSON => {
+  const [state, k] = ["fl_s", "fl_k"];
+  const power = ["Power", 2, k];
+  const step = iff(
+    ["GreaterEqual", at(state, 1), power],
+    ["List", quotient(at(state, 1), power), add(at(state, 2), k)],
+    state,
+  );
+  const shifts = Array.from({ length: 14 }, (_, i) => 2 ** (13 - i));
+  return lets([["fl_r", fold(step, state, k, ["List", x, 0], ["List", ...shifts]), "list<integer>"]], at("fl_r", 2));
+};
 export const len: MathJSON = ["Length", "_x"];
 /** C(n, k), 0 outside 0 ≤ k ≤ n: compiled `Binomial` is undefined there. */
 export const choose = (n: MathJSON, k: MathJSON): MathJSON => [
