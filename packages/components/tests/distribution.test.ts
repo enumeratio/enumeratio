@@ -126,24 +126,87 @@ test("a collection of unknown size is not walked", async () => {
   expect(result.ok).toBe(false);
 });
 
+const SCREENED = [1, 2, 3, 4, 5, 6];
+const SUBJECT = "SymmetricGroup({size})";
+const subjectTriangle = (): Promise<Triangle> =>
+  distributionTriangle(SUBJECT, "Inversions", SCREENED, { evaluate, maxSize: 6 });
+
+/** `evaluate` that remembers what it was asked. */
+const recording = (): { asked: string[]; evaluate: (text: string) => Promise<unknown> } => {
+  const asked: string[] = [];
+  return { asked, evaluate: async (text) => (asked.push(text), evaluate(text)) };
+};
+
 test("same distribution as: Inversions finds MajorIndex, and a statistic that cannot be tallied drops out", async () => {
   const subject = await triangle("SymmetricGroup({size})", "Inversions");
-  const candidates = ["Descents", "MajorIndex", "Excedances", "Inversions"];
+  const candidates = ["Descents", "MajorIndex", "Excedances", "Inversions", "NoSuchStatistic"];
   const found = await findEquidistributed("SymmetricGroup({size})", subject, candidates, { evaluate });
   check("sameAs", found);
   expect(found.matches).toEqual(["MajorIndex", "Inversions"]);
-  expect(found).toMatchObject({ checked: 4, total: 4, stopped: false });
+  expect(found).toMatchObject({ checked: 5, total: 5, stopped: false, unconfirmed: [] });
+});
+
+test("same distribution as: candidates are screened at small sizes, then the survivors confirmed", async () => {
+  const subject = await subjectTriangle();
+  const { asked, evaluate: watching } = recording();
+  const progress: [number, number, string][] = [];
+  const found = await findEquidistributed(SUBJECT, subject, ["Descents", "MajorIndex", "Excedances", "Inversions"], {
+    evaluate: watching,
+    maxSize: 6,
+    progress: (checked, total, phase) => progress.push([checked, total, phase]),
+  });
+  expect(found.matches).toEqual(["MajorIndex", "Inversions"]);
+  check("sameAsPhases", { found, progress });
+  // Descents and Excedances differ from Inversions by size 3: neither is tallied past the screen.
+  const past = asked.filter((text) => text.includes("SymmetricGroup(6)"));
+  expect(past.length).toBeGreaterThan(0);
+  expect(past.every((text) => !/Descents|Excedances/.test(text))).toBe(true);
+  // The collection's size comes from the subject's rows: no call asks for a count.
+  expect(asked.some((text) => text.startsWith("Count"))).toBe(false);
+});
+
+test("same distribution as: the screen is batched, and a statistic that fails does not sink its batch", async () => {
+  const subject = await subjectTriangle();
+  const { asked, evaluate: watching } = recording();
+  const found = await findEquidistributed(SUBJECT, subject, ["NoSuchStatistic", "MajorIndex", "Descents"], {
+    evaluate: watching,
+    maxSize: 6,
+  });
+  expect(found.matches).toEqual(["MajorIndex"]);
+  // One call screens all three; the survivor is then confirmed at the one size past the screen.
+  expect(asked.filter((text) => text.startsWith("List(List(")).length).toBe(1);
+  expect(asked.filter((text) => text.startsWith("Tally"))).toHaveLength(1);
 });
 
 test("same distribution as: a spent budget stops the scan and says so; a short subject compares nothing", async () => {
-  const subject = await triangle("SymmetricGroup({size})", "Inversions");
+  const subject = await subjectTriangle();
   let clock = 0;
-  const stopped = await findEquidistributed("SymmetricGroup({size})", subject, ["MajorIndex", "Descents"], {
+  const stopped = await findEquidistributed(SUBJECT, subject, ["MajorIndex", "Descents"], {
     evaluate,
     budgetMs: 5,
     now: () => (clock += 10),
   });
-  expect(stopped).toEqual({ matches: [], checked: 0, total: 2, stopped: true });
-  const short = await findEquidistributed("SymmetricGroup({size})", subject.slice(0, 2), ["MajorIndex"], { evaluate });
-  expect(short).toEqual({ matches: [], checked: 0, total: 1, stopped: false });
+  expect(stopped).toEqual({ matches: [], unconfirmed: [], checked: 0, total: 2, stopped: true });
+  const short = await findEquidistributed(SUBJECT, subject.slice(0, 2), ["MajorIndex"], { evaluate });
+  expect(short).toEqual({ matches: [], unconfirmed: [], checked: 0, total: 1, stopped: false });
+});
+
+test("same distribution as: a budget spent after the screen leaves its survivors unconfirmed", async () => {
+  const subject = await subjectTriangle();
+  let calls = 0;
+  const counting = async (text: string): Promise<unknown> => (calls++, evaluate(text));
+  // The clock is the number of calls: the screen is one, the first survivor's confirmation another.
+  const found = await findEquidistributed(SUBJECT, subject, ["MajorIndex", "Descents", "Inversions"], {
+    evaluate: counting,
+    maxSize: 6,
+    budgetMs: 1,
+    now: () => calls,
+  });
+  expect(found).toEqual({
+    matches: ["MajorIndex"],
+    unconfirmed: ["Inversions"],
+    checked: 2,
+    total: 3,
+    stopped: true,
+  });
 });

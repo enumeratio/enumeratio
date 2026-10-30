@@ -121,8 +121,23 @@
   },
   "sameAs": {
     "matches": ["MajorIndex", "Inversions"],
-    "checked": 4,
-    "total": 4,
+    "unconfirmed": [],
+    "checked": 5,
+    "total": 5,
     "stopped": false
+  },
+  "sameAsPhases": {
+    "found": {
+      "matches": ["MajorIndex", "Inversions"],
+      "unconfirmed": [],
+      "checked": 4,
+      "total": 4,
+      "stopped": false
+    },
+    "progress": [
+      [4, 4, "screen"],
+      [1, 2, "confirm"],
+      [2, 2, "confirm"]
+    ]
   }
 }

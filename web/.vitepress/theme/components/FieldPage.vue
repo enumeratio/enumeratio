@@ -39,7 +39,10 @@ const chart = computed(() =>
 );
 const busy = ref<string | undefined>();
 const failure = ref<string | undefined>();
-const same = ref<{ matches: readonly string[]; checked: number; total: number; stopped: boolean } | undefined>();
+const same = ref<
+  | { matches: readonly string[]; unconfirmed: readonly string[]; checked: number; total: number; stopped: boolean }
+  | undefined
+>();
 
 async function computeTriangle(): Promise<void> {
   if (!props.distribution) return;
@@ -69,7 +72,8 @@ async function findSame(): Promise<void> {
     const { findEquidistributed } = await import("@enumeratio/components");
     same.value = await findEquidistributed(props.distribution.template, triangle.value, props.carrierStatistics ?? [], {
       maxSize: props.distribution.maxSize,
-      progress: (checked, total) => (busy.value = `same ${checked}/${total}`),
+      progress: (checked, total, phase) =>
+        (busy.value = `same, ${phase === "screen" ? "screening" : "confirming"} ${checked}/${total}`),
     });
   } catch (err) {
     failure.value = err instanceof Error ? err.message : String(err);
@@ -169,7 +173,16 @@ async function findSame(): Promise<void> {
               ><span v-if="i < same.matches.length - 1">, </span></template
             >.
           </template>
-          <template v-else>No other statistic on {{ field.carrier }} has the same distribution.</template>
+          <template v-else-if="!same.unconfirmed.length"
+            >No other statistic on {{ field.carrier }} has the same distribution.</template
+          >
+          <template v-if="same.unconfirmed.length">
+            Equal at the small sizes, not checked further:
+            <template v-for="(m, i) in same.unconfirmed" :key="m"
+              ><a :href="`/reference/statistic/${field.carrier}/${m}`">{{ m }}</a
+              ><span v-if="i < same.unconfirmed.length - 1">, </span></template
+            >.
+          </template>
           <span v-if="same.stopped" class="field-note">
             Stopped after {{ same.checked }} of {{ same.total }}: the time budget ran out.</span
           >
