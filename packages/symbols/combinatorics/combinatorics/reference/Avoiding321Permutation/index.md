@@ -23,4 +23,4 @@ signatures:
 ---
 
 - Takes a `DyckPath` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
-- FindStat's Mp00024. It sends centered tunnels to fixed points and the semilength plus the height of the middle point to twice the longest increasing subsequence. Injective. Interpreted: inverse RSK has no compiled form yet.
+- FindStat's Mp00024. It sends centered tunnels to fixed points and the semilength plus the height of the middle point to twice the longest increasing subsequence. Injective.

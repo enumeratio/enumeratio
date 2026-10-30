@@ -120,7 +120,11 @@ export function buildFromDyck(path: string, length: MathJSON): MathJSON {
       iff(
         equal(at(path, "oj"), 1),
         put("os", [1, add(height, 1)], [add(height, 2), ["List"]]),
-        put("os", [1, sub(height, 1)], [height, ["Join", at("ot", height), ["List", at("ot", add(height, 1))]]]),
+        // The top cell typed, so the compiler can join onto it.
+        lets(
+          [["oc", at("ot", height), ANY]],
+          put("os", [1, sub(height, 1)], [height, ["Join", "oc", ["List", at("ot", add(height, 1))]]]),
+        ),
       ),
     ),
     "os",

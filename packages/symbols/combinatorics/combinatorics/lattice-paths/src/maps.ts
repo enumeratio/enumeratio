@@ -3,10 +3,8 @@
 // (`../../trees/src/maps.ts`) — the inverse direction of the bijection lives here because a
 // map's area is decided by its SOURCE carrier, not the module its body happens to share.
 
-import { at, bind, forEach, type CombinatorialMap, type MathJSON, positions } from "../../src/map-helpers.ts";
-import { buildFromDyck } from "../../collections/src/families/nested.ts";
-import { inversePromotionRows, promotionRows } from "../../tableaux/src/promotion.ts";
-import { dyckPathOf, mirrorOf, treeOfDyckPathBody, treeOfDyckPathGuard } from "../../trees/src/binary-tree.ts";
+import { at, bind, forEach, lets, type CombinatorialMap, type MathJSON, positions } from "../../src/map-helpers.ts";
+import { ANY, buildFromDyck } from "../../collections/src/families/nested.ts";
 
 /** The positions 1 .. 2n of `_raw` that hold `letter` (1 up, 0 down) and satisfy `also`. */
 const stepsWhere = (letter: number, also: MathJSON = true, from: MathJSON = 1): MathJSON => [
@@ -66,9 +64,186 @@ const positionsOf = (letter: number): MathJSON => [
 /** The two-row standard tableau of a Dyck path: the positions of its up steps, then those of its down steps. */
 export const twoRowTableau: MathJSON = ["List", positionsOf(1), positionsOf(0)];
 
-/** The Dyck path whose up steps are the entries of the first row of the tableau `table`. */
-const pathOfTwoRowTableau = (table: string): MathJSON =>
-  forEach(positions, ["If", ["Element", "p", at(1, table)], 1, 0], "p");
+/** The indices 1 .. n, none when n is 0: the stated step keeps the range from counting down. */
+const upTo = (n: MathJSON): MathJSON => ["Range", 1, n, 1];
+
+/** The Dyck path whose up steps are the entries of the list `first`. */
+const pathOfFirstRow = (first: MathJSON): MathJSON =>
+  bind(
+    "pt_first",
+    first,
+    forEach(
+      positions,
+      ["If", ["Greater", ["Count", ["Filter", "pt_first", ["Function", ["Equal", "r", "p"], "r"]]], 0], 1, 0],
+      "p",
+    ),
+    "list<integer>",
+  );
+
+// Promotion of the path's two-row tableau (n entries a row), on a flat state: the first row, then the second,
+// then the hole's row and column, each an integer, so the walk can compile (nested rows in a state can't).
+const holeIndex = (state: string, n: MathJSON): MathJSON => [
+  "Add",
+  ["Multiply", ["Subtract", at(["Add", ["Multiply", 2, n], 1], state), 1], n],
+  at(["Add", ["Multiply", 2, n], 2], state),
+];
+
+/** The state after the hole takes `value` in its cell and moves to (`row`, `column`). */
+const holeMoved = (state: string, n: MathJSON, value: MathJSON, row: MathJSON, column: MathJSON): MathJSON =>
+  forEach(upTo(["Add", ["Multiply", 2, n], 2]), [
+    "If",
+    ["Equal", "i", holeIndex(state, n)],
+    value,
+    [
+      "If",
+      ["Equal", "i", ["Add", ["Multiply", 2, n], 1]],
+      row,
+      ["If", ["Equal", "i", ["Add", ["Multiply", 2, n], 2]], column, at("i", state)],
+    ],
+  ]);
+
+/** Promotion's walk: the hole from the largest entry (second row, last column) pulls in the larger of the entry
+ *  to its left and the one above it, until it reaches the origin. The first row of the image tableau follows. */
+const promotedFirstRow: MathJSON = bind(
+  "pm_n",
+  ["Divide", ["Length", "_raw"], 2],
+  bind(
+    "pm_end",
+    [
+      "Fold",
+      [
+        "Function",
+        bind(
+          "pm_idx",
+          holeIndex("pm_s", "pm_n"),
+          bind(
+            "pm_left",
+            [
+              "If",
+              ["Greater", at(["Add", ["Multiply", 2, "pm_n"], 2], "pm_s"), 1],
+              at(["Subtract", "pm_idx", 1], "pm_s"),
+              0,
+            ],
+            bind(
+              "pm_up",
+              [
+                "If",
+                ["Greater", at(["Add", ["Multiply", 2, "pm_n"], 1], "pm_s"), 1],
+                at(["Subtract", "pm_idx", "pm_n"], "pm_s"),
+                0,
+              ],
+              [
+                "If",
+                ["And", ["Equal", "pm_left", 0], ["Equal", "pm_up", 0]],
+                "pm_s",
+                [
+                  "If",
+                  ["Greater", "pm_left", "pm_up"],
+                  holeMoved("pm_s", "pm_n", "pm_left", at(["Add", ["Multiply", 2, "pm_n"], 1], "pm_s"), [
+                    "Subtract",
+                    at(["Add", ["Multiply", 2, "pm_n"], 2], "pm_s"),
+                    1,
+                  ]),
+                  holeMoved(
+                    "pm_s",
+                    "pm_n",
+                    "pm_up",
+                    ["Subtract", at(["Add", ["Multiply", 2, "pm_n"], 1], "pm_s"), 1],
+                    at(["Add", ["Multiply", 2, "pm_n"], 2], "pm_s"),
+                  ),
+                ],
+              ],
+              "integer",
+            ),
+            "integer",
+          ),
+          "integer",
+        ),
+        "pm_s",
+        "pm_step",
+      ],
+      ["Join", positionsOf(1), positionsOf(0), ["List", 2, "pm_n"]],
+      upTo(["Length", "_raw"]),
+    ],
+    // The entries all go up by one and the origin takes 1.
+    forEach(upTo("pm_n"), ["If", ["Equal", "k", 1], 1, ["Add", at("k", "pm_end"), 1]], "k"),
+    "list<integer>",
+  ),
+  "integer",
+);
+
+/** Inverse promotion's walk: the hole from the origin pulls in the smaller of the entry to its right and the one
+ *  below it, until it can't; the entries all go down by one and the hole's cell takes the largest. */
+const inversePromotedFirstRow: MathJSON = bind(
+  "pm_n",
+  ["Divide", ["Length", "_raw"], 2],
+  bind(
+    "pm_end",
+    [
+      "Fold",
+      [
+        "Function",
+        bind(
+          "pm_idx",
+          holeIndex("pm_s", "pm_n"),
+          bind(
+            "pm_right",
+            [
+              "If",
+              ["Less", at(["Add", ["Multiply", 2, "pm_n"], 2], "pm_s"), "pm_n"],
+              at(["Add", "pm_idx", 1], "pm_s"),
+              ["Add", ["Length", "_raw"], 1],
+            ],
+            bind(
+              "pm_down",
+              [
+                "If",
+                ["Less", at(["Add", ["Multiply", 2, "pm_n"], 1], "pm_s"), 2],
+                at(["Add", "pm_idx", "pm_n"], "pm_s"),
+                ["Add", ["Length", "_raw"], 1],
+              ],
+              [
+                "If",
+                ["And", ["Greater", "pm_right", ["Length", "_raw"]], ["Greater", "pm_down", ["Length", "_raw"]]],
+                "pm_s",
+                [
+                  "If",
+                  ["Less", "pm_right", "pm_down"],
+                  holeMoved("pm_s", "pm_n", "pm_right", at(["Add", ["Multiply", 2, "pm_n"], 1], "pm_s"), [
+                    "Add",
+                    at(["Add", ["Multiply", 2, "pm_n"], 2], "pm_s"),
+                    1,
+                  ]),
+                  holeMoved(
+                    "pm_s",
+                    "pm_n",
+                    "pm_down",
+                    ["Add", at(["Add", ["Multiply", 2, "pm_n"], 1], "pm_s"), 1],
+                    at(["Add", ["Multiply", 2, "pm_n"], 2], "pm_s"),
+                  ),
+                ],
+              ],
+              "integer",
+            ),
+            "integer",
+          ),
+          "integer",
+        ),
+        "pm_s",
+        "pm_step",
+      ],
+      ["Join", positionsOf(1), positionsOf(0), ["List", 1, 1]],
+      upTo(["Length", "_raw"]),
+    ],
+    forEach(
+      upTo("pm_n"),
+      ["If", ["Equal", "k", holeIndex("pm_end", "pm_n")], ["Length", "_raw"], ["Subtract", at("k", "pm_end"), 1]],
+      "k",
+    ),
+    "list<integer>",
+  ),
+  "integer",
+);
 
 /** Mp00222, as Sage builds it: the peaks above height 1 as (position before the up step, height before it), between
  *  sentinels; between each pair of consecutive ones, the ups and downs that carry a valley across. */
@@ -149,9 +324,6 @@ const peaksToValleysBody: MathJSON = [
     "list<integer>",
   ),
 ];
-
-/** The indices 1 .. n, none when n is 0: the stated step keeps the range from counting down. */
-const upTo = (n: MathJSON): MathJSON => ["Range", 1, n, 1];
 
 /** The inverse zeta map's body: the area sequence folded in one entry at a time, each step wrapping a
  *  prefix of the path built so far, as in FindStat's Mp00032. The state is the path `out` and `zeros`,
@@ -413,6 +585,227 @@ const clockwiseBody: MathJSON = [
   ),
 ];
 
+/** Mp00101: split the path as U A D B at its first return and swap the pieces, recursively (U B' D A'), on flat
+ *  lists. A step's matching down closes its segment, whose end the parent hands down (the matched down before
+ *  the step's left child, the parent's own end for its right one); the image's U for the step is then at its
+ *  parent's slot plus one when it is a right child, and past the parent's U, its right subtree and its D when it
+ *  is a left one. The image has an up exactly at those slots. */
+const decompositionReverseBody: MathJSON = [
+  "If",
+  ["Equal", ["Length", "_raw"], 0],
+  ["List"],
+  lets(
+    [
+      // Height after k steps is at(k + 1).
+      [
+        "dr_h",
+        ["Join", ["List", 0], forEach(positions, ["Subtract", ["Multiply", 2, upsThrough("p")], "p"], "p")],
+        "list<integer>",
+      ],
+      // The down matching each up (0 for a down).
+      [
+        "dr_down",
+        forEach(
+          positions,
+          [
+            "If",
+            ["Equal", at("p"), 1],
+            [
+              "Min",
+              [
+                "Filter",
+                ["Range", 1, ["Length", "_raw"], 1],
+                [
+                  "Function",
+                  ["And", ["Greater", "q", "p"], ["Equal", at(["Add", "q", 1], "dr_h"), at("p", "dr_h")]],
+                  "q",
+                ],
+              ],
+            ],
+            0,
+          ],
+          "p",
+        ),
+        "list<integer>",
+      ],
+      // The up matching each down (0 for an up).
+      [
+        "dr_up",
+        forEach(
+          positions,
+          [
+            "If",
+            ["Equal", at("p"), 0],
+            [
+              "Max",
+              ["Filter", ["Range", 1, ["Length", "_raw"], 1], ["Function", ["Equal", at("q", "dr_down"), "p"], "q"]],
+            ],
+            0,
+          ],
+          "p",
+        ),
+        "list<integer>",
+      ],
+      // Where each up's segment ends.
+      [
+        "dr_end",
+        [
+          "Fold",
+          [
+            "Function",
+            [
+              "Join",
+              "acc",
+              [
+                "List",
+                [
+                  "If",
+                  ["Equal", at("p"), 0],
+                  0,
+                  [
+                    "If",
+                    ["Equal", "p", 1],
+                    ["Length", "_raw"],
+                    [
+                      "If",
+                      ["Equal", at(["Subtract", "p", 1]), 1],
+                      ["Subtract", at(["Subtract", "p", 1], "dr_down"), 1],
+                      at(at(["Subtract", "p", 1], "dr_up"), "acc"),
+                    ],
+                  ],
+                ],
+              ],
+            ],
+            "acc",
+            "p",
+          ],
+          ["List"],
+          positions,
+        ],
+        "list<integer>",
+      ],
+      // The slot of each up in the image (0 for a down).
+      [
+        "dr_slot",
+        [
+          "Fold",
+          [
+            "Function",
+            [
+              "Join",
+              "acc",
+              [
+                "List",
+                [
+                  "If",
+                  ["Equal", at("p"), 0],
+                  0,
+                  [
+                    "If",
+                    ["Equal", "p", 1],
+                    1,
+                    [
+                      "If",
+                      ["Equal", at(["Subtract", "p", 1]), 1],
+                      [
+                        "Add",
+                        at(["Subtract", "p", 1], "acc"),
+                        2,
+                        ["Subtract", at(["Subtract", "p", 1], "dr_end"), at(["Subtract", "p", 1], "dr_down")],
+                      ],
+                      ["Add", at(at(["Subtract", "p", 1], "dr_up"), "acc"), 1],
+                    ],
+                  ],
+                ],
+              ],
+            ],
+            "acc",
+            "p",
+          ],
+          ["List"],
+          positions,
+        ],
+        "list<integer>",
+      ],
+    ],
+    forEach(
+      positions,
+      ["If", ["Greater", ["Count", ["Filter", "dr_slot", ["Function", ["Equal", "s", "t"], "s"]]], 0], 1, 0],
+      "t",
+    ),
+  ),
+];
+
+/** Mp00012's inverse: the tree of the path from its preorder arity word. An up step is a node (2 children); a leaf
+ *  stands for each empty piece, after an up step that a down step follows and after a down step that is followed
+ *  by another or ends the path. The word is read from its end by a stack, so nothing recurses. */
+const binaryTreeBody: MathJSON = [
+  "If",
+  ["Equal", ["Length", "_raw"], 0],
+  0,
+  bind(
+    "bt_word",
+    [
+      "Flatten",
+      forEach(
+        positions,
+        [
+          "If",
+          ["Equal", at("p"), 1],
+          ["If", ["Equal", at(["Min", ["Add", "p", 1], ["Length", "_raw"]]), 0], ["List", 2, 0], ["List", 2]],
+          [
+            "If",
+            ["Or", ["Equal", "p", ["Length", "_raw"]], ["Equal", at(["Min", ["Add", "p", 1], ["Length", "_raw"]]), 0]],
+            ["List", 0],
+            ["List"],
+          ],
+        ],
+        "p",
+      ),
+    ],
+    // Read from the end, a node (2) takes the top two finished trees, the first on top. State: [height, the stack's
+    // cells from position 2].
+    bind(
+      "bt_end",
+      [
+        "Fold",
+        [
+          "Function",
+          // The accumulator is rebound typed: its cells are trees, not integers.
+          bind(
+            "bt_stack",
+            "bt_s",
+            bind(
+              "bt_height",
+              at(1, "bt_stack"),
+              [
+                "ReplaceAt",
+                ["ReplaceAt", "bt_stack", 1, ["Add", ["Subtract", "bt_height", ["At", "bt_word", "j"]], 1]],
+                ["Add", ["Subtract", "bt_height", ["At", "bt_word", "j"]], 2],
+                [
+                  "If",
+                  ["Equal", ["At", "bt_word", "j"], 0],
+                  0,
+                  ["List", ["At", "bt_stack", ["Add", "bt_height", 1]], ["At", "bt_stack", "bt_height"]],
+                ],
+              ],
+              "integer",
+            ),
+            ANY,
+          ),
+          "bt_s",
+          "j",
+        ],
+        ["Join", ["List", 0], forEach(["Range", 1, ["Length", "bt_word"], 1], 0, "z")],
+        ["Range", ["Length", "bt_word"], 1, -1],
+      ],
+      at(2, "bt_end"),
+      ANY,
+    ),
+    "list<integer>",
+  ),
+];
+
 export const LATTICE_PATHS_MAPS: readonly CombinatorialMap[] = [
   {
     name: "ReverseComplement",
@@ -613,8 +1006,8 @@ export const LATTICE_PATHS_MAPS: readonly CombinatorialMap[] = [
     convert: true,
     from: "dyck_path",
     to: "binary_tree",
-    body: treeOfDyckPathBody,
-    guard: treeOfDyckPathGuard,
+    body: binaryTreeBody,
+    guard: dyckGuard,
     summary: "A Dyck path U A D B, cut at its first return, as the binary tree [φ⁻¹(A), φ⁻¹(B)].",
   },
   {
@@ -641,7 +1034,7 @@ export const LATTICE_PATHS_MAPS: readonly CombinatorialMap[] = [
     to: "dyck_path",
     // The tree [A, B] of U A D B, mirrored, as a path again. (Not `composedOf`: a composition has no guard
     // to decline the grand paths other families draw.)
-    body: dyckPathOf(mirrorOf(treeOfDyckPathBody)),
+    body: decompositionReverseBody,
     guard: dyckGuard,
     summary: "Split a path as U A D B at its first return, and swap the pieces, recursively: U B' D A'.",
     note: "FindStat's Mp00101, an involution. It is the binary tree's left-right symmetry carried across the Dyck-path bijection.",
@@ -672,17 +1065,7 @@ export const LATTICE_PATHS_MAPS: readonly CombinatorialMap[] = [
     name: "Promotion",
     from: "dyck_path",
     to: "dyck_path",
-    body: [
-      "If",
-      ["Equal", ["Length", "_raw"], 0],
-      ["List"],
-      bind(
-        "pm_tab",
-        twoRowTableau,
-        bind("pm_image", promotionRows("pm_tab"), pathOfTwoRowTableau("pm_image"), "list<list<integer>>"),
-        "list<list<integer>>",
-      ),
-    ],
+    body: ["If", ["Equal", ["Length", "_raw"], 0], ["List"], pathOfFirstRow(promotedFirstRow)],
     guard: dyckGuard,
     summary: "Promotion of the Dyck path's two-row standard tableau, read back as a path.",
     note: "FindStat's Mp00142; the inverse is InversePromotion.",
@@ -691,17 +1074,7 @@ export const LATTICE_PATHS_MAPS: readonly CombinatorialMap[] = [
     name: "InversePromotion",
     from: "dyck_path",
     to: "dyck_path",
-    body: [
-      "If",
-      ["Equal", ["Length", "_raw"], 0],
-      ["List"],
-      bind(
-        "pm_tab",
-        twoRowTableau,
-        bind("pm_image", inversePromotionRows("pm_tab"), pathOfTwoRowTableau("pm_image"), "list<list<integer>>"),
-        "list<list<integer>>",
-      ),
-    ],
+    body: ["If", ["Equal", ["Length", "_raw"], 0], ["List"], pathOfFirstRow(inversePromotedFirstRow)],
     guard: dyckGuard,
     summary: "Inverse promotion of the Dyck path's two-row standard tableau, read back as a path.",
     note: "FindStat's Mp00143; the inverse is Promotion.",

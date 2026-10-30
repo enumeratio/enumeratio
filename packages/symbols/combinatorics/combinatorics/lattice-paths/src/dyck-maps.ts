@@ -3,15 +3,10 @@
 // path's 0/1 steps (1 up).
 
 import { at, bind, forEach, lets, type CombinatorialMap, type MathJSON } from "../../src/map-helpers.ts";
-import { rskPair } from "../../tableaux/src/tableau.ts";
 import { dyckGuard, upsThrough } from "./maps.ts";
 
 const steps: MathJSON = ["Length", "_raw"];
 const upTo = (k: MathJSON): MathJSON => ["Range", 1, k, 1];
-
-/** `expr` with the symbol `from` named `to`. */
-const renamed = (expr: MathJSON, from: string, to: string): MathJSON =>
-  Array.isArray(expr) ? expr.map((part) => renamed(part, from, to)) : expr === from ? to : expr;
 
 /**
  * The inverse Kreweras complement, with the path as a noncrossing partition (the down steps after the i-th up
@@ -104,10 +99,21 @@ const inverseKrewerasComplementBody: MathJSON = [
                 upTo("kc_m"),
                 bind(
                   "kc_cycle",
-                  [
-                    "Union",
+                  // The orbit of i under ρ, as the sorted list of its distinct elements.
+                  bind(
+                    "kc_orbit",
                     forEach(upTo("kc_m"), ["Fold", ["Function", at("a", "kc_rho"), "a", "b"], "i", upTo("k")], "k"),
-                  ],
+                    [
+                      "Filter",
+                      upTo("kc_m"),
+                      [
+                        "Function",
+                        ["Greater", ["Count", ["Filter", "kc_orbit", ["Function", ["Equal", "o", "j"], "o"]]], 0],
+                        "j",
+                      ],
+                    ],
+                    "list<integer>",
+                  ),
                   [
                     "Join",
                     ["List", 1],
@@ -118,7 +124,7 @@ const inverseKrewerasComplementBody: MathJSON = [
                       ["List"],
                     ],
                   ],
-                  "set<integer>",
+                  "list<integer>",
                 ),
                 "i",
               ),
@@ -196,29 +202,130 @@ const krattenthalerThen = (next: MathJSON): MathJSON => [
   ),
 ];
 
-const knuthKrattenthalerBody: MathJSON = krattenthalerThen(
-  bind(
-    "kk_pq",
-    renamed(rskPair, "_raw", "kk_pi"),
+// RSK of the 321-avoiding permutation `kk_pi` (length m) into two rows, on a flat state of integers: the
+// first row's m cells, the second's m, the second row of Q's m, then the three lengths. A third row never
+// opens, since the permutation has no decreasing subsequence of three.
+const rskCells = (m: MathJSON): MathJSON => ["Add", ["Multiply", 3, m], 3];
+
+/** The state after inserting the k-th entry of `kk_pi`: it replaces (or joins) the first row's next larger
+ *  entry, which drops to the second row and either replaces its next larger or joins it, and then Q grows. */
+const rskStep = (m: MathJSON): MathJSON =>
+  lets(
+    [
+      ["kk_x", at("k", "kk_pi"), "integer"],
+      ["kk_l1", at(["Add", ["Multiply", 3, m], 1], "kk_s"), "integer"],
+      ["kk_l2", at(["Add", ["Multiply", 3, m], 2], "kk_s"), "integer"],
+      ["kk_l3", at(["Add", ["Multiply", 3, m], 3], "kk_s"), "integer"],
+      [
+        "kk_j1",
+        ["Add", 1, ["Count", ["Filter", upTo("kk_l1"), ["Function", ["Less", at("c", "kk_s"), "kk_x"], "c"]]]],
+        "integer",
+      ],
+      ["kk_appended", ["Greater", "kk_j1", "kk_l1"], "boolean"],
+      ["kk_y", ["If", "kk_appended", 0, at("kk_j1", "kk_s")], "integer"],
+      [
+        "kk_j2",
+        [
+          "Add",
+          1,
+          ["Count", ["Filter", upTo("kk_l2"), ["Function", ["Less", at(["Add", m, "c"], "kk_s"), "kk_y"], "c"]]],
+        ],
+        "integer",
+      ],
+      // Whether the second row grew (and so Q's did).
+      ["kk_grew", ["And", ["Not", "kk_appended"], ["Greater", "kk_j2", "kk_l2"]], "boolean"],
+    ],
     forEach(
-      upTo(steps),
+      upTo(rskCells(m)),
       [
         "If",
+        ["LessEqual", "c", m],
+        ["If", ["Equal", "c", "kk_j1"], "kk_x", at("c", "kk_s")],
         [
-          "Or",
-          ["Element", "p", at(1, at(1, "kk_pq"))],
+          "If",
+          ["LessEqual", "c", ["Multiply", 2, m]],
+          ["If", ["And", ["Not", "kk_appended"], ["Equal", ["Subtract", "c", m], "kk_j2"]], "kk_y", at("c", "kk_s")],
           [
-            "And",
-            ["Greater", ["Length", at(2, "kk_pq")], 1],
-            ["Element", ["Subtract", ["Add", steps, 1], "p"], at(2, at(2, "kk_pq"))],
+            "If",
+            ["LessEqual", "c", ["Multiply", 3, m]],
+            [
+              "If",
+              ["And", "kk_grew", ["Equal", ["Subtract", "c", ["Multiply", 2, m]], ["Add", "kk_l3", 1]]],
+              "k",
+              at("c", "kk_s"),
+            ],
+            [
+              "If",
+              ["Equal", "c", ["Add", ["Multiply", 3, m], 1]],
+              ["If", "kk_appended", ["Add", "kk_l1", 1], "kk_l1"],
+              ["If", "kk_grew", ["Add", at("c", "kk_s"), 1], at("c", "kk_s")],
+            ],
           ],
         ],
-        1,
-        0,
       ],
-      "p",
+      "c",
     ),
-    "list<list<list<integer>>>",
+  );
+
+const knuthKrattenthalerBody: MathJSON = krattenthalerThen(
+  bind(
+    "kk_m",
+    ["Divide", steps, 2],
+    bind(
+      "kk_s",
+      ["Fold", ["Function", rskStep("kk_m"), "kk_s", "k"], forEach(upTo(rskCells("kk_m")), 0, "z"), upTo("kk_m")],
+      // Ups at the first row of P, and at 2m + 1 - q for q in the second row of Q once it has one.
+      forEach(
+        upTo(steps),
+        [
+          "If",
+          [
+            "Or",
+            [
+              "Greater",
+              [
+                "Count",
+                [
+                  "Filter",
+                  upTo(at(["Add", ["Multiply", 3, "kk_m"], 1], "kk_s")),
+                  ["Function", ["Equal", at("c", "kk_s"), "p"], "c"],
+                ],
+              ],
+              0,
+            ],
+            [
+              "And",
+              ["Greater", at(["Add", ["Multiply", 3, "kk_m"], 2], "kk_s"), 0],
+              [
+                "Greater",
+                [
+                  "Count",
+                  [
+                    "Filter",
+                    upTo(at(["Add", ["Multiply", 3, "kk_m"], 3], "kk_s")),
+                    [
+                      "Function",
+                      [
+                        "Equal",
+                        at(["Add", ["Multiply", 2, "kk_m"], "c"], "kk_s"),
+                        ["Subtract", ["Add", steps, 1], "p"],
+                      ],
+                      "c",
+                    ],
+                  ],
+                ],
+                0,
+              ],
+            ],
+          ],
+          1,
+          0,
+        ],
+        "p",
+      ),
+      "list<integer>",
+    ),
+    "integer",
   ),
 );
 
