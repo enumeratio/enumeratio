@@ -55,3 +55,4 @@ backend downstream — Vue, React, the plain elements — sees the same reduced 
 - [Components and Symbols](https://github.com/enumeratio/enumeratio/wiki/Components-and-Symbols) — the design
   behind the symbol/component map.
 - [Vdom](https://github.com/enumeratio/enumeratio/wiki/Vdom) — the AST-as-vdom design.
+- [Try it](docs/try-it.md) — the panel on symbol pages, and how a signature becomes controls.
