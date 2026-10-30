@@ -352,6 +352,12 @@ export interface ReferenceEntry {
    */
   readonly maxSize?: number;
   /**
+   * How the head is drawn over its numeric argument (the function view): `axis` names the
+   * parameter to plot over (default the last numeric one), `window` its range, `[min, max]`
+   * for a real or integer axis, `[reMin, reMax, imMin, imMax]` for a complex one.
+   */
+  readonly plot?: { readonly axis?: string; readonly window?: readonly number[] };
+  /**
    * The values an option may take, where the set is finite, by option key (`GridLines: [true,
    * false]`, `ScalingFunctions: [Linear, Log]`). Options are trailing rules, not positional
    * parameters, so the signature's types cannot say it. Booleans are `True`/`False`, strings

@@ -527,6 +527,7 @@ export function paramsOf(spec: ControlSpec): string | undefined {
 export interface SignatureParameter {
   readonly name?: string;
   readonly type: string;
+  readonly optional?: boolean;
   readonly variadic?: boolean;
 }
 
@@ -586,10 +587,58 @@ function unionMembers(type: string): string[] {
   return parts;
 }
 
+/** `type` without the parentheses that wrap all of it, as a parameter's `(complex | infinity)?` leaves them. */
+function unwrapped(type: string): string {
+  const t = type.trim();
+  if (!t.startsWith("(") || !t.endsWith(")")) return t;
+  let depth = 0;
+  for (let i = 0; i < t.length - 1; i++) {
+    if (t[i] === "(") depth++;
+    else if (t[i] === ")" && --depth === 0) return t;
+  }
+  return unwrapped(t.slice(1, -1));
+}
+
 /** The part of a (possibly union) type that a control can draw: the first member with a spec. */
 function controllable(type: string): string | undefined {
-  if (literalChoices(type) !== undefined) return type;
-  return unionMembers(type).find((m) => specOfType("_", m, undefined) !== undefined);
+  const t = unwrapped(type);
+  if (literalChoices(t) !== undefined) return t;
+  return unionMembers(t).find((m) => specOfType("_", m, undefined) !== undefined);
+}
+
+export { controllable as controllableType };
+
+export type NumericDomain = "integer" | "real" | "complex";
+
+const INFINITIES = new Set(["infinity", "signed_infinity", "+oo", "-oo"]);
+const DOMAIN_RANK: Readonly<Record<NumericDomain, number>> = { integer: 0, real: 1, complex: 2 };
+
+/**
+ * The domain a numeric type ranges over: the widest of its members (`complex | infinity` is
+ * complex), infinities aside. Undefined if any member is not a number, or none is.
+ */
+export function numericDomainOf(type: string): NumericDomain | undefined {
+  let domain: NumericDomain | undefined;
+  for (const member of unionMembers(unwrapped(type))) {
+    if (INFINITIES.has(member)) continue;
+    const { base } = splitType(member);
+    const d: NumericDomain | undefined = INTEGER_TYPES.has(base)
+      ? "integer"
+      : REAL_TYPES.has(base)
+        ? "real"
+        : COMPLEX_TYPES.has(base)
+          ? "complex"
+          : undefined;
+    if (d === undefined) return undefined;
+    if (domain === undefined || DOMAIN_RANK[d] > DOMAIN_RANK[domain]) domain = d;
+  }
+  return domain;
+}
+
+/** The ends a numeric type states (`real<0..1>`), of its first member; none where it states none. */
+export function typeBounds(type: string): { lo?: number; hi?: number } {
+  const { lo, hi } = splitType(unionMembers(unwrapped(type))[0] ?? "");
+  return { ...(lo === undefined ? {} : { lo }), ...(hi === undefined ? {} : { hi }) };
 }
 
 const numberOf = (node: Json): number | undefined =>

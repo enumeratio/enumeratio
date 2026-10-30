@@ -82,6 +82,12 @@ bindings:
       version: Nemo 0.56.1
       on: 2026-10-16
 summary: The Riemann zeta function $\zeta(s) = \sum_{n=1}^{\infty} n^{-s}$ for $\operatorname{Re}(s) > 1$, continued analytically elsewhere.
+plot:
+  window:
+    - -5
+    - 5
+    - -20
+    - 20
 signatures:
   - call: Zeta(s)
     description: the Riemann zeta function $\zeta(s)$.

@@ -3,6 +3,12 @@ name: Gamma
 domain: Special functions
 signature: Gamma(z)
 summary: The gamma function $\Gamma(z)$, extending the factorial to real and complex arguments; with two arguments, the upper incomplete gamma function.
+plot:
+  window:
+    - -5
+    - 5
+    - -3
+    - 3
 signatures:
   - call: Gamma(z)
     description: the gamma function $\Gamma(z)$.

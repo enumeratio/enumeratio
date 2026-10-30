@@ -110,6 +110,7 @@ function fromManifest(info: SymbolInfo): Description {
     ...(info.params === undefined ? {} : { params: info.params }),
     ...(parameters === undefined ? {} : { parameters }),
     ...(info.maxSize === undefined ? {} : { maxSize: info.maxSize }),
+    ...(info.plot === undefined ? {} : { plot: info.plot }),
     ...(info.optionValues === undefined ? {} : { optionValues: info.optionValues }),
     ...(info.attributes === undefined ? {} : { attributes: info.attributes }),
     documented: info.documented,
