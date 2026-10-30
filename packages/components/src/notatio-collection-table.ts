@@ -1,5 +1,6 @@
 import { describeCount } from "@enumeratio/boxes";
 import {
+  automaticStatistics,
   collectionText,
   columnLabel,
   columnList,
@@ -73,8 +74,8 @@ export class NotatioCollectionTable extends LitElement {
     glyph: { type: String },
     /**
      * The statistics the column menu offers, as head names; a property (the page knows them from
-     * the carrier's record, the runtime loads no manifest). A `columns` of `Automatic` is the
-     * first few of them.
+     * the carrier's record). A `columns` of `Automatic` is the first few of them; without the
+     * property, the carrier's own first few, from the build's carrier-statistics table.
      */
     statistics: { attribute: false },
     /** The collection with its size as `{size}`: `Derangements({size})`. With `size`, the stepper rewrites `expr` from it. */
@@ -221,7 +222,8 @@ export class NotatioCollectionTable extends LitElement {
   }
 
   #columns(): string[] {
-    return columnList(this.columns ?? "", this.statistics ?? []);
+    const offered = this.statistics?.length ? this.statistics : automaticStatistics(this.carrier ?? "", this.#expr());
+    return columnList(this.columns ?? "", offered);
   }
 
   #glyph(): string {
