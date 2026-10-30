@@ -1,0 +1,120 @@
+{
+  "explorers": {
+    "Inverse": {
+      "name": "Inverse",
+      "template": "SymmetricGroup({size})",
+      "maxSize": 7,
+      "start": 4,
+      "sourceGlyph": "permutation",
+      "targetGlyph": "permutation",
+      "selfMap": true
+    },
+    "LalanneKreweras": {
+      "name": "LalanneKreweras",
+      "template": "DyckPaths({size})",
+      "maxSize": 7,
+      "start": 4,
+      "sourceGlyph": "dyck",
+      "targetGlyph": "dyck",
+      "target": {
+        "template": "DyckPaths({size})",
+        "sizeOffset": 0
+      },
+      "selfMap": true
+    },
+    "PrimeDyckPath": {
+      "name": "PrimeDyckPath",
+      "template": "DyckPaths({size})",
+      "maxSize": 7,
+      "start": 4,
+      "sourceGlyph": "dyck",
+      "targetGlyph": "dyck",
+      "target": {
+        "template": "DyckPaths({size})",
+        "sizeOffset": 1
+      },
+      "selfMap": false
+    },
+    "BinaryTree": {
+      "name": "BinaryTree",
+      "template": "DyckPaths({size})",
+      "maxSize": 7,
+      "start": 4,
+      "sourceGlyph": "dyck",
+      "target": {
+        "template": "BinaryTrees({size})",
+        "sizeOffset": 0
+      },
+      "selfMap": false
+    },
+    "Frontier": null,
+    "Nowhere": null
+  },
+  "checks": {
+    "cycle": {
+      "count": 3,
+      "defined": 3,
+      "injective": true,
+      "selfMap": true,
+      "bijection": true,
+      "involution": false,
+      "order": "3"
+    },
+    "swap": {
+      "count": 3,
+      "defined": 3,
+      "injective": true,
+      "selfMap": true,
+      "bijection": true,
+      "involution": true,
+      "order": "2"
+    },
+    "identity": {
+      "count": 3,
+      "defined": 3,
+      "injective": true,
+      "selfMap": true,
+      "bijection": true,
+      "involution": true,
+      "order": "1"
+    },
+    "collapse": {
+      "count": 3,
+      "defined": 3,
+      "injective": false,
+      "selfMap": true,
+      "bijection": false,
+      "involution": false
+    },
+    "partial": {
+      "count": 3,
+      "defined": 2,
+      "injective": true,
+      "selfMap": false,
+      "bijection": false
+    },
+    "crossCarrier": {
+      "count": 3,
+      "defined": 3,
+      "injective": true,
+      "selfMap": false,
+      "bijection": true
+    },
+    "crossCarrierSmallerTarget": {
+      "count": 3,
+      "defined": 3,
+      "injective": true,
+      "selfMap": false,
+      "bijection": false
+    },
+    "lcm": {
+      "count": 5,
+      "defined": 5,
+      "injective": true,
+      "selfMap": true,
+      "bijection": true,
+      "involution": false,
+      "order": "6"
+    }
+  }
+}

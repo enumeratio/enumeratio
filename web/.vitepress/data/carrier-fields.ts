@@ -70,6 +70,8 @@ export interface Field {
   readonly carrier: string;
   /** A map's target carrier. */
   readonly to?: string;
+  /** The collection a graded map lands in, and its size relative to the source's. */
+  readonly graded?: { readonly to: string; readonly sizeOffset: number };
   readonly summary?: string;
   readonly note?: string;
   readonly laws: readonly string[];
@@ -151,6 +153,7 @@ const mapFields: Field[] = [
     name: m.name,
     carrier: carrierName(m.from),
     to: carrierName(m.to),
+    ...(m.graded !== undefined && { graded: { to: m.graded.to, sizeOffset: m.graded.sizeOffset ?? 0 } }),
     summary: m.summary,
     note: m.note,
     laws: (m.laws ?? []).map((law) => (typeof law === "string" ? law : Object.keys(law)[0]!)),

@@ -2,8 +2,20 @@
 // One statistic on one carrier, or one map out of one: what it is, how it is called, and what
 // FindStat says of it. A name on two carriers is two pages (distinct implementations).
 import { computed, ref } from "vue";
-import { defaultRows, lastRowSvg, triangleLines, triangleSizes, type TriangleLine } from "@enumeratio/frontend/core";
+import {
+  defaultRows,
+  glyphSvg,
+  lastRowSvg,
+  MAP_TABLE_ROWS,
+  mapBadges,
+  showJson,
+  triangleLines,
+  triangleSizes,
+  type MapRow,
+  type TriangleLine,
+} from "@enumeratio/frontend/core";
 import type { Triangle } from "@enumeratio/frontend/core";
+import type { MapExplorer } from "@enumeratio/frontend/explorer";
 import { getEntry, resolveHead } from "../../data/reference.ts";
 import { renderBlock, renderInline } from "../../prose.ts";
 import type { Field } from "../../data/carrier-fields.ts";
@@ -16,6 +28,8 @@ const props = defineProps<{
   distribution?: { collection: string; template: string; maxSize: number };
   /** The other statistics on this carrier, for "same distribution as". */
   carrierStatistics?: readonly string[];
+  /** Where a map is explored: its source collection, size bounds and glyphs (maps only; absent for a frontier map). */
+  mapExplorer?: MapExplorer;
 }>();
 
 const isStatistic = computed(() => props.field.kind === "statistic");
@@ -61,6 +75,74 @@ async function computeTriangle(): Promise<void> {
     failure.value = err instanceof Error ? err.message : String(err);
   } finally {
     busy.value = undefined;
+  }
+}
+
+// The map explorer: a table of elements and their images at one small size, and the map's
+// properties over the sizes up to a few. Both computed here, on demand, at sizes the caps allow.
+const mapSize = ref(props.mapExplorer?.start ?? 1);
+const mapSizes = ref(Math.min(props.mapExplorer?.maxSize ?? 1, 5));
+interface MapTableRow {
+  from: string;
+  to: string;
+  fromSvg?: string;
+  toSvg?: string;
+}
+const mapTable = ref<{ size: number; count: number; rows: MapTableRow[] } | undefined>();
+const mapRows = ref<MapRow[]>([]);
+const mapBusy = ref<string | undefined>();
+const mapFailure = ref<string | undefined>();
+const badges = computed(() => mapBadges(mapRows.value));
+
+async function showMapTable(): Promise<void> {
+  const explorer = props.mapExplorer;
+  if (!explorer) return;
+  mapBusy.value = "table";
+  mapFailure.value = undefined;
+  try {
+    const { mapAtSize } = await import("@enumeratio/components");
+    const answer = await mapAtSize(explorer, mapSize.value);
+    if (!answer.ok) {
+      mapTable.value = undefined;
+      mapFailure.value = answer.reason;
+      return;
+    }
+    mapTable.value = {
+      size: mapSize.value,
+      count: answer.elements.length,
+      rows: answer.elements.slice(0, MAP_TABLE_ROWS).map((element, i) => {
+        const image = answer.images[i];
+        const fromSvg = glyphSvg(explorer.sourceGlyph, element);
+        const toSvg = image === undefined ? undefined : glyphSvg(explorer.targetGlyph, image);
+        return {
+          from: showJson(element),
+          to: image === undefined ? "no image" : showJson(image),
+          ...(fromSvg !== undefined && { fromSvg }),
+          ...(toSvg !== undefined && { toSvg }),
+        };
+      }),
+    };
+  } catch (err) {
+    mapFailure.value = err instanceof Error ? err.message : String(err);
+  } finally {
+    mapBusy.value = undefined;
+  }
+}
+
+async function checkMapProperties(): Promise<void> {
+  const explorer = props.mapExplorer;
+  if (!explorer) return;
+  mapBusy.value = "properties";
+  mapFailure.value = undefined;
+  try {
+    const { mapProperties } = await import("@enumeratio/components");
+    mapRows.value = await mapProperties(explorer, triangleSizes(1, Math.min(mapSizes.value, explorer.maxSize)), {
+      progress: (n) => (mapBusy.value = `properties, size ${n}`),
+    });
+  } catch (err) {
+    mapFailure.value = err instanceof Error ? err.message : String(err);
+  } finally {
+    mapBusy.value = undefined;
   }
 }
 
@@ -112,6 +194,89 @@ async function findSame(): Promise<void> {
       <ClientOnly>
         <notatio-cell format="mathjson" :value="toJson(live)" :resolveHead.prop="resolveHead"></notatio-cell>
       </ClientOnly>
+    </section>
+
+    <section v-if="mapExplorer" class="field-explorer">
+      <h2>Explore</h2>
+      <p class="field-note">
+        Each element of <code>{{ field.carrier }}</code> at a size, and its image, applied in your browser; sizes past
+        {{ mapExplorer.maxSize }} are not offered.
+      </p>
+      <p>
+        <label>
+          Size
+          <input v-model.number="mapSize" type="number" min="1" :max="mapExplorer.maxSize" :disabled="!!mapBusy" />
+        </label>
+        <button type="button" :disabled="!!mapBusy" @click="showMapTable">Show the table</button>
+        <span v-if="mapBusy === 'table'" class="field-note"> working…</span>
+      </p>
+      <table v-if="mapTable" class="field-sample field-map-table">
+        <thead>
+          <tr>
+            <th>Element</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(row, i) in mapTable.rows" :key="i">
+            <td>
+              <span v-if="row.fromSvg" class="field-glyph" v-html="row.fromSvg"></span>
+              <code>{{ row.from }}</code>
+            </td>
+            <td>
+              <span v-if="row.toSvg" class="field-glyph" v-html="row.toSvg"></span>
+              <code>{{ row.to }}</code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p v-if="mapTable && mapTable.count > mapTable.rows.length" class="field-note">
+        The first {{ mapTable.rows.length }} of {{ mapTable.count }} elements at size {{ mapTable.size }}.
+      </p>
+
+      <h3>Properties</h3>
+      <p>
+        <label>
+          Sizes 1 to
+          <input v-model.number="mapSizes" type="number" min="1" :max="mapExplorer.maxSize" :disabled="!!mapBusy" />
+        </label>
+        <button type="button" :disabled="!!mapBusy" @click="checkMapProperties">
+          {{ mapRows.length ? "Check again" : "Check the properties" }}
+        </button>
+        <span v-if="mapBusy?.startsWith('properties')" class="field-note"> working: {{ mapBusy }}…</span>
+      </p>
+      <p v-if="mapFailure" class="field-note">{{ mapFailure }}</p>
+      <p v-if="badges.length">
+        <span v-for="b in badges" :key="b" class="field-chip">{{ b }}</span>
+        <span class="field-note">as computed on these sizes, not proved.</span>
+      </p>
+      <table v-if="mapRows.length" class="field-sample">
+        <thead>
+          <tr>
+            <th>n</th>
+            <th>Elements</th>
+            <th>Injective</th>
+            <th>Bijection</th>
+            <th v-if="mapExplorer.selfMap">Involution</th>
+            <th v-if="mapExplorer.selfMap">Order</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="row in mapRows" :key="row.n">
+            <td>{{ row.n }}</td>
+            <template v-if="row.ok">
+              <td>{{ row.check.count }}</td>
+              <td>{{ row.check.injective ? "yes" : "no" }}</td>
+              <td>{{ row.check.bijection === undefined ? "not decided" : row.check.bijection ? "yes" : "no" }}</td>
+              <td v-if="mapExplorer.selfMap">
+                {{ row.check.involution === undefined ? "–" : row.check.involution ? "yes" : "no" }}
+              </td>
+              <td v-if="mapExplorer.selfMap">{{ row.check.order ?? "–" }}</td>
+            </template>
+            <td v-else :colspan="mapExplorer.selfMap ? 5 : 3" class="field-note">{{ row.reason }}</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
     <section v-if="isStatistic && distribution" class="field-distribution">
@@ -268,11 +433,23 @@ async function findSame(): Promise<void> {
 .field-findstat {
   margin-top: 1.5rem;
 }
-.field-distribution {
+.field-distribution,
+.field-explorer {
   margin-top: 1.5rem;
 }
-.field-distribution input {
+.field-distribution input,
+.field-explorer input {
   width: 4rem;
+}
+.field-glyph {
+  display: inline-block;
+  max-width: 5rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+.field-glyph :deep(svg) {
+  max-width: 100%;
+  height: auto;
 }
 .field-triangle td {
   vertical-align: top;
