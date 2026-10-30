@@ -47,10 +47,6 @@ bindings:
     template: enumeratio_length($1)
     arity: 1
     note: Wolfram's Length of an atom (not a list) is 0, not an error, matching ours; a bare len() raises on a non-list, so it is guarded. A Sage symbolic expression (not a Python list) has no __len__ but counts its own terms via .operands() — a method, unlike sympy's .args tuple (Add(a,b,c,d).operands() has 4 elements; a bare variable's is empty, giving 0 like an atom).
-statOn:
-  - ContinuedFraction
-  - IntegerPartition
-  - LabeledTree
 ---
 
 - Works on any collection head, not just $List$ — e.g. $Set$.
