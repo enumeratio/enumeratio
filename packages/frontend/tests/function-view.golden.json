@@ -1,0 +1,5321 @@
+{
+  "AGM": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "AGM(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "AGM(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(AGM(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Abundance": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "Abundance(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "Abundance(n)"
+      }
+    ]
+  },
+  "AiryAi": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "AiryAi(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "AiryAi(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(AiryAi(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "AiryAiPrime": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "AiryAiPrime(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "AiryAiPrime(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(AiryAiPrime(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "AiryBi": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "AiryBi(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "AiryBi(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(AiryBi(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "AiryBiPrime": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "AiryBiPrime(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "AiryBiPrime(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(AiryBiPrime(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "AlgebraicNumberNorm": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "AlgebraicNumberNorm(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "AlgebraicNumberNorm(x)"
+      }
+    ]
+  },
+  "AlgebraicNumberTrace": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "AlgebraicNumberTrace(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "AlgebraicNumberTrace(x)"
+      }
+    ]
+  },
+  "AliquotSum": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "AliquotSum(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "AliquotSum(n)"
+      }
+    ]
+  },
+  "Antipode": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Antipode(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Antipode(x)"
+      }
+    ]
+  },
+  "AppellF1": {
+    "axis": {
+      "name": "z",
+      "position": 5
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "AppellF1(p1, p2, p3, p4, p5, z)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}; {{p2, 1}, -10, 10, 0.05, Slider}; {{p3, 1}, -10, 10, 0.05, Slider}; {{p4, 1}, -10, 10, 0.05, Slider}; {{p5, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "AppellF1(p1, p2, p3, p4, p5, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(AppellF1(p1, p2, p3, p4, p5, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Arctan2": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Arctan2(y, x)",
+    "params": "{{y, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Arctan2(y, x)"
+      }
+    ]
+  },
+  "Arg": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Arg(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Arg(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Arg(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Argument": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Argument(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Argument(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Argument(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Around": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Around(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Around(x)"
+      }
+    ]
+  },
+  "BarnesG": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "BarnesG(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "BarnesG(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(BarnesG(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "BellY": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "BellY(p1, n)",
+    "params": "{{p1, 1}, -10, 10, 1, Slider}",
+    "views": [],
+    "reason": "argument xs of type list has no control"
+  },
+  "BernoulliB": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "BernoulliB(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "BernoulliB(n)"
+      }
+    ]
+  },
+  "BernoulliPolynomial": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "BernoulliPolynomial(n, x)",
+    "params": "{{n, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "BernoulliPolynomial(n, x)"
+      }
+    ]
+  },
+  "BesselI": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "BesselI(order, z)",
+    "params": "{{order, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "BesselI(order, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(BesselI(order, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "BesselJ": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "BesselJ(order, z)",
+    "params": "{{order, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "BesselJ(order, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(BesselJ(order, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "BesselJZero": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "BesselJZero(nu, n)",
+    "params": "{{nu, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "BesselJZero(nu, n)"
+      }
+    ]
+  },
+  "BesselK": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "BesselK(order, z)",
+    "params": "{{order, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "BesselK(order, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(BesselK(order, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "BesselY": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "BesselY(order, z)",
+    "params": "{{order, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "BesselY(order, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(BesselY(order, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Beta": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Beta(a, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Beta(a, x)"
+      }
+    ]
+  },
+  "BetaRegularized": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "BetaRegularized(p1, a, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}; {{a, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "BetaRegularized(p1, a, x)"
+      }
+    ]
+  },
+  "Binomial": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Binomial(n, z)",
+    "params": "{{n, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Binomial(n, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Binomial(n, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "CarlsonRC": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "CarlsonRC(p1, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "CarlsonRC(p1, x)"
+      }
+    ]
+  },
+  "CarlsonRD": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "CarlsonRD(p1, p2, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}; {{p2, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "CarlsonRD(p1, p2, x)"
+      }
+    ]
+  },
+  "CarlsonRF": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "CarlsonRF(p1, p2, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}; {{p2, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "CarlsonRF(p1, p2, x)"
+      }
+    ]
+  },
+  "CarlsonRG": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "CarlsonRG(p1, p2, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}; {{p2, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "CarlsonRG(p1, p2, x)"
+      }
+    ]
+  },
+  "CarlsonRJ": {
+    "axis": {
+      "name": "x",
+      "position": 3
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "CarlsonRJ(p1, p2, p3, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}; {{p2, 1}, -10, 10, 0.05, Slider}; {{p3, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "CarlsonRJ(p1, p2, p3, x)"
+      }
+    ]
+  },
+  "CarmichaelLambda": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "CarmichaelLambda(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "CarmichaelLambda(n)"
+      }
+    ]
+  },
+  "CenteredInterval": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "CenteredInterval(c, x)",
+    "params": "{{c, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "CenteredInterval(c, x)"
+      }
+    ]
+  },
+  "CentralMoment": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "CentralMoment(n)",
+    "params": "",
+    "views": [],
+    "reason": "argument dist of type distribution has no control"
+  },
+  "CharacteristicFunction": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "CharacteristicFunction(x)",
+    "params": "",
+    "views": [],
+    "reason": "argument dist of type distribution has no control"
+  },
+  "ChebyshevT": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "ChebyshevT(n, x)",
+    "params": "{{n, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "ChebyshevT(n, x)"
+      }
+    ]
+  },
+  "ChebyshevU": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "ChebyshevU(n, x)",
+    "params": "{{n, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "ChebyshevU(n, x)"
+      }
+    ]
+  },
+  "Choose": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Choose(n, z)",
+    "params": "{{n, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Choose(n, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Choose(n, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "ClausenCl": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "ClausenCl(p1, x)",
+    "params": "{{p1, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "ClausenCl(p1, x)"
+      }
+    ]
+  },
+  "CliffordConjugate": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "CliffordConjugate(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "CliffordConjugate(x)"
+      }
+    ]
+  },
+  "Closed": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Closed(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Closed(x)"
+      }
+    ]
+  },
+  "Complex": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Complex(real, x)",
+    "params": "{{real, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Complex(real, x)"
+      }
+    ]
+  },
+  "Coproduct": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Coproduct(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Coproduct(x)"
+      }
+    ]
+  },
+  "CosIntegral": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "CosIntegral(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "CosIntegral(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(CosIntegral(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "CoshIntegral": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "CoshIntegral(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "CoshIntegral(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(CoshIntegral(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Counit": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Counit(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Counit(x)"
+      }
+    ]
+  },
+  "Csgn": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Csgn(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Csgn(x)"
+      }
+    ]
+  },
+  "CubeRoot": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "CubeRoot(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "CubeRoot(x)"
+      }
+    ]
+  },
+  "Cumulant": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "Cumulant(n)",
+    "params": "",
+    "views": [],
+    "reason": "argument dist of type distribution has no control"
+  },
+  "DMS": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "DMS(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "DMS(x)"
+      }
+    ]
+  },
+  "DedekindEta": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "DedekindEta(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "DedekindEta(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(DedekindEta(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "DedekindSum": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "DedekindSum(h, n)",
+    "params": "{{h, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "DedekindSum(h, n)"
+      }
+    ]
+  },
+  "Degrees": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Degrees(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Degrees(x)"
+      }
+    ]
+  },
+  "Digamma": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Digamma(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Digamma(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Digamma(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "DigammaFunctionZero": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "DigammaFunctionZero(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "DigammaFunctionZero(n)"
+      }
+    ]
+  },
+  "DigitSum": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "DigitSum(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "DigitSum(n)"
+      }
+    ]
+  },
+  "DiracDelta": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "DiracDelta(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "DiracDelta(x)"
+      }
+    ]
+  },
+  "DirichletBeta": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "DirichletBeta(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "DirichletBeta(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(DirichletBeta(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "DirichletCharacter": {
+    "axis": {
+      "name": "n",
+      "position": 2
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "DirichletCharacter(k, j, n)",
+    "params": "{{k, 1}, -10, 10, 1, Slider}; {{j, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "DirichletCharacter(k, j, n)"
+      }
+    ]
+  },
+  "DirichletEta": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "DirichletEta(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "DirichletEta(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(DirichletEta(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "DirichletL": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "DirichletL(k, j, x)",
+    "params": "{{k, 1}, -10, 10, 1, Slider}; {{j, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "DirichletL(k, j, x)"
+      }
+    ]
+  },
+  "DiscreteDelta": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "DiscreteDelta(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "DiscreteDelta(x)"
+      }
+    ]
+  },
+  "Divide": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Divide(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Divide(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Divide(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "DivisorSigma": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "DivisorSigma(k, x)",
+    "params": "{{k, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "DivisorSigma(k, x)"
+      }
+    ]
+  },
+  "DivisorSum": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "DivisorSum(n)",
+    "params": "",
+    "views": [],
+    "reason": "argument f of type function has no control"
+  },
+  "Dual": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Dual(x)",
+    "params": "",
+    "views": [],
+    "reason": "argument algebra of type clifford_algebra has no control"
+  },
+  "EisensteinE": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "EisensteinE(p1, z)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "EisensteinE(p1, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(EisensteinE(p1, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "EisensteinG": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "EisensteinG(k, x)",
+    "params": "{{k, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "EisensteinG(k, x)"
+      }
+    ]
+  },
+  "ElementMax": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "ElementMax(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "ElementMax(x)"
+      }
+    ]
+  },
+  "ElementMin": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "ElementMin(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "ElementMin(x)"
+      }
+    ]
+  },
+  "EllipticE": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "EllipticE(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "EllipticE(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(EllipticE(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "EllipticF": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "EllipticF(p1, z)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "EllipticF(p1, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(EllipticF(p1, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "EllipticK": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "EllipticK(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "EllipticK(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(EllipticK(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "EllipticPi": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "EllipticPi(p1, z)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "EllipticPi(p1, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(EllipticPi(p1, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "EllipticTheta": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "EllipticTheta(a, u, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}; {{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "EllipticTheta(a, u, x)"
+      }
+    ]
+  },
+  "EllipticThetaPrime": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "EllipticThetaPrime(a, u, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}; {{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "EllipticThetaPrime(a, u, x)"
+      }
+    ]
+  },
+  "Erf": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-3, 3],
+    "body": "Erf(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -3, 3}",
+        "body": "Erf(x)"
+      }
+    ]
+  },
+  "ErfInv": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "ErfInv(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "ErfInv(x)"
+      }
+    ]
+  },
+  "Erfc": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Erfc(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Erfc(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Erfc(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Erfi": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Erfi(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Erfi(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Erfi(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "EulerPhi": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "EulerPhi(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "EulerPhi(n)"
+      }
+    ]
+  },
+  "Eulerian": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "Eulerian(p1, n)",
+    "params": "{{p1, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "Eulerian(p1, n)"
+      }
+    ]
+  },
+  "EvaluateForm": {
+    "axis": {
+      "name": "n",
+      "position": 2
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "EvaluateForm(x, n)",
+    "params": "{{x, 1}, -10, 10, 1, Slider}",
+    "views": [],
+    "reason": "argument form of type expression<QuadraticForm> has no control"
+  },
+  "Exp": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Exp(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Exp(x)"
+      }
+    ]
+  },
+  "Exp2": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Exp2(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Exp2(x)"
+      }
+    ]
+  },
+  "ExpIntegralE": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "ExpIntegralE(n, x)",
+    "params": "{{n, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "ExpIntegralE(n, x)"
+      }
+    ]
+  },
+  "ExpIntegralEi": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "ExpIntegralEi(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "ExpIntegralEi(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(ExpIntegralEi(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Factorial": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Factorial(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Factorial(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Factorial(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "FactorialMoment": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "FactorialMoment(n)",
+    "params": "",
+    "views": [],
+    "reason": "argument dist of type distribution has no control"
+  },
+  "FactorialPower": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "FactorialPower(p1, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "FactorialPower(p1, x)"
+      }
+    ]
+  },
+  "FallingFactorial": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "FallingFactorial(p1, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "FallingFactorial(p1, x)"
+      }
+    ]
+  },
+  "FormClassNumber": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "FormClassNumber(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "FormClassNumber(n)"
+      }
+    ]
+  },
+  "FractionalPart": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "FractionalPart(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "FractionalPart(x)"
+      }
+    ]
+  },
+  "FresnelC": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "FresnelC(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "FresnelC(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(FresnelC(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "FresnelS": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "FresnelS(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "FresnelS(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(FresnelS(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Gamma": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-5, 5, -3, 3],
+    "body": "Gamma(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -5 - 3*I, 5 + 3*I}",
+        "body": "Gamma(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -5, 5}",
+        "body": "Re(Gamma(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "GammaLn": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "GammaLn(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "GammaLn(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(GammaLn(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "GammaRegularized": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "GammaRegularized(a, z)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "GammaRegularized(a, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(GammaRegularized(a, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Grade": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Grade(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Grade(x)"
+      }
+    ]
+  },
+  "GradeInvolution": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "GradeInvolution(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "GradeInvolution(x)"
+      }
+    ]
+  },
+  "GradePart": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "GradePart(x, n)",
+    "params": "{{x, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "GradePart(x, n)"
+      }
+    ]
+  },
+  "Gudermannian": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Gudermannian(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Gudermannian(x)"
+      }
+    ]
+  },
+  "HarmonicNumber": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "HarmonicNumber(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "HarmonicNumber(x)"
+      }
+    ]
+  },
+  "Haversine": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Haversine(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Haversine(x)"
+      }
+    ]
+  },
+  "Heaviside": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Heaviside(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Heaviside(x)"
+      }
+    ]
+  },
+  "HeavisideLambda": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "HeavisideLambda(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "HeavisideLambda(x)"
+      }
+    ]
+  },
+  "HeavisidePi": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "HeavisidePi(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "HeavisidePi(x)"
+      }
+    ]
+  },
+  "HeavisideTheta": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "HeavisideTheta(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "HeavisideTheta(x)"
+      }
+    ]
+  },
+  "HeckeIdentity": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "HeckeIdentity(n, x)",
+    "params": "{{n, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "HeckeIdentity(n, x)"
+      }
+    ]
+  },
+  "HeckeSpecialize": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "HeckeSpecialize(element, x)",
+    "params": "{{element, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "HeckeSpecialize(element, x)"
+      }
+    ]
+  },
+  "HeckeT": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "HeckeT(x)",
+    "params": "",
+    "views": [],
+    "reason": "argument permutation of type list<integer> has no control"
+  },
+  "HermiteH": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "HermiteH(n, x)",
+    "params": "{{n, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "HermiteH(n, x)"
+      }
+    ]
+  },
+  "HopfDegree": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "HopfDegree(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "HopfDegree(x)"
+      }
+    ]
+  },
+  "HopfTensor": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "HopfTensor(left, x)",
+    "params": "{{left, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "HopfTensor(left, x)"
+      }
+    ]
+  },
+  "HurwitzZeta": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "HurwitzZeta(s, z)",
+    "params": "{{s, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "HurwitzZeta(s, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(HurwitzZeta(s, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Hyperfactorial": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Hyperfactorial(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Hyperfactorial(x)"
+      }
+    ]
+  },
+  "Hypergeometric0F1": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Hypergeometric0F1(b, x)",
+    "params": "{{b, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Hypergeometric0F1(b, x)"
+      }
+    ]
+  },
+  "Hypergeometric0F1Regularized": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Hypergeometric0F1Regularized(b, x)",
+    "params": "{{b, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Hypergeometric0F1Regularized(b, x)"
+      }
+    ]
+  },
+  "Hypergeometric1F1": {
+    "axis": {
+      "name": "z",
+      "position": 2
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Hypergeometric1F1(p1, p2, z)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}; {{p2, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Hypergeometric1F1(p1, p2, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Hypergeometric1F1(p1, p2, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Hypergeometric1F1Regularized": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Hypergeometric1F1Regularized(a, b, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}; {{b, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Hypergeometric1F1Regularized(a, b, x)"
+      }
+    ]
+  },
+  "Hypergeometric2F1": {
+    "axis": {
+      "name": "z",
+      "position": 3
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Hypergeometric2F1(p1, p2, p3, z)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}; {{p2, 1}, -10, 10, 0.05, Slider}; {{p3, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Hypergeometric2F1(p1, p2, p3, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Hypergeometric2F1(p1, p2, p3, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Hypergeometric2F1Regularized": {
+    "axis": {
+      "name": "x",
+      "position": 3
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Hypergeometric2F1Regularized(a, b, c, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}; {{b, 1}, -10, 10, 0.05, Slider}; {{c, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Hypergeometric2F1Regularized(a, b, c, x)"
+      }
+    ]
+  },
+  "Hypergeometric3F2Regularized": {
+    "axis": {
+      "name": "x",
+      "position": 5
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Hypergeometric3F2Regularized(a1, a2, a3, b1, b2, x)",
+    "params": "{{a1, 1}, -10, 10, 0.05, Slider}; {{a2, 1}, -10, 10, 0.05, Slider}; {{a3, 1}, -10, 10, 0.05, Slider}; {{b1, 1}, -10, 10, 0.05, Slider}; {{b2, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Hypergeometric3F2Regularized(a1, a2, a3, b1, b2, x)"
+      }
+    ]
+  },
+  "HypergeometricPFQ": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "HypergeometricPFQ(x)",
+    "params": "",
+    "views": [],
+    "reason": "argument a of type list has no control"
+  },
+  "HypergeometricU": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "HypergeometricU(a, b, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}; {{b, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "HypergeometricU(a, b, x)"
+      }
+    ]
+  },
+  "HypergeometricUStar": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "HypergeometricUStar(a, b, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}; {{b, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "HypergeometricUStar(a, b, x)"
+      }
+    ]
+  },
+  "Im": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Im(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Im(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Im(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Imaginary": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Imaginary(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Imaginary(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Imaginary(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "InCompleteBasis": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "InCompleteBasis(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "InCompleteBasis(x)"
+      }
+    ]
+  },
+  "InDiagramBasis": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "InDiagramBasis(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "InDiagramBasis(x)"
+      }
+    ]
+  },
+  "InFundamentalBasis": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "InFundamentalBasis(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "InFundamentalBasis(x)"
+      }
+    ]
+  },
+  "InMonomialBasis": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "InMonomialBasis(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "InMonomialBasis(x)"
+      }
+    ]
+  },
+  "InOrbitBasis": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "InOrbitBasis(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "InOrbitBasis(x)"
+      }
+    ]
+  },
+  "InRibbonBasis": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "InRibbonBasis(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "InRibbonBasis(x)"
+      }
+    ]
+  },
+  "IncompleteEllipticE": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "IncompleteEllipticE(p1, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "IncompleteEllipticE(p1, x)"
+      }
+    ]
+  },
+  "IncompleteEllipticF": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "IncompleteEllipticF(p1, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "IncompleteEllipticF(p1, x)"
+      }
+    ]
+  },
+  "IncompleteEllipticPi": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "IncompleteEllipticPi(n, phi, x)",
+    "params": "{{n, 1}, -10, 10, 0.05, Slider}; {{phi, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "IncompleteEllipticPi(n, phi, x)"
+      }
+    ]
+  },
+  "IntegerExponent": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "IntegerExponent(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "IntegerExponent(x)"
+      }
+    ]
+  },
+  "IntegerLength": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "IntegerLength(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "IntegerLength(n)"
+      }
+    ]
+  },
+  "IntegerPart": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "IntegerPart(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "IntegerPart(x)"
+      }
+    ]
+  },
+  "IntegerReverse": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "IntegerReverse(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "IntegerReverse(n)"
+      }
+    ]
+  },
+  "IntegerSqrt": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "IntegerSqrt(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "IntegerSqrt(n)"
+      }
+    ]
+  },
+  "InterpolatingFunction": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "InterpolatingFunction(x)",
+    "params": "",
+    "views": [],
+    "reason": "argument p1 of type list<any> has no control"
+  },
+  "InverseBetaRegularized": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "InverseBetaRegularized(s, a, x)",
+    "params": "{{s, 1}, -10, 10, 0.05, Slider}; {{a, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "InverseBetaRegularized(s, a, x)"
+      }
+    ]
+  },
+  "InverseCDF": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "InverseCDF(x)",
+    "params": "",
+    "views": [],
+    "reason": "argument dist of type distribution has no control"
+  },
+  "InverseErfc": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "InverseErfc(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "InverseErfc(x)"
+      }
+    ]
+  },
+  "InverseGammaRegularized": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "InverseGammaRegularized(a, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "InverseGammaRegularized(a, x)"
+      }
+    ]
+  },
+  "InverseHaversine": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "InverseHaversine(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "InverseHaversine(x)"
+      }
+    ]
+  },
+  "JacobiAmplitude": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiAmplitude(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiAmplitude(u, x)"
+      }
+    ]
+  },
+  "JacobiCD": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiCD(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiCD(u, x)"
+      }
+    ]
+  },
+  "JacobiCN": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiCN(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiCN(u, x)"
+      }
+    ]
+  },
+  "JacobiCS": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiCS(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiCS(u, x)"
+      }
+    ]
+  },
+  "JacobiDC": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiDC(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiDC(u, x)"
+      }
+    ]
+  },
+  "JacobiDN": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiDN(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiDN(u, x)"
+      }
+    ]
+  },
+  "JacobiDS": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiDS(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiDS(u, x)"
+      }
+    ]
+  },
+  "JacobiNC": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiNC(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiNC(u, x)"
+      }
+    ]
+  },
+  "JacobiND": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiND(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiND(u, x)"
+      }
+    ]
+  },
+  "JacobiNS": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiNS(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiNS(u, x)"
+      }
+    ]
+  },
+  "JacobiSC": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiSC(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiSC(u, x)"
+      }
+    ]
+  },
+  "JacobiSD": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiSD(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiSD(u, x)"
+      }
+    ]
+  },
+  "JacobiSN": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiSN(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiSN(u, x)"
+      }
+    ]
+  },
+  "JacobiSymbol": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "JacobiSymbol(p1, n)",
+    "params": "{{p1, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "JacobiSymbol(p1, n)"
+      }
+    ]
+  },
+  "JacobiTheta": {
+    "axis": {
+      "name": "z",
+      "position": 2
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "JacobiTheta(p1, p2, z)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}; {{p2, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "JacobiTheta(p1, p2, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(JacobiTheta(p1, p2, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "JacobiZN": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "JacobiZN(u, x)",
+    "params": "{{u, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "JacobiZN(u, x)"
+      }
+    ]
+  },
+  "Julia": {
+    "axis": {
+      "name": "n",
+      "position": 2
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "Julia(p1, p2, n)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}; {{p2, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "Julia(p1, p2, n)"
+      }
+    ]
+  },
+  "KeiperLiLambda": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "KeiperLiLambda(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "KeiperLiLambda(n)"
+      }
+    ]
+  },
+  "KleinInvariantJ": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "KleinInvariantJ(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "KleinInvariantJ(x)"
+      }
+    ]
+  },
+  "KroneckerSymbol": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "KroneckerSymbol(a, n)",
+    "params": "{{a, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "KroneckerSymbol(a, n)"
+      }
+    ]
+  },
+  "LaguerreL": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "LaguerreL(n, x)",
+    "params": "{{n, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "LaguerreL(n, x)"
+      }
+    ]
+  },
+  "LambertW": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "LambertW(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "LambertW(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(LambertW(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Lb": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Lb(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Lb(x)"
+      }
+    ]
+  },
+  "LeftContraction": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "LeftContraction(a, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "LeftContraction(a, x)"
+      }
+    ]
+  },
+  "LegendrePolynomial": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "LegendrePolynomial(n, x)",
+    "params": "{{n, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "LegendrePolynomial(n, x)"
+      }
+    ]
+  },
+  "LegendreSymbol": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "LegendreSymbol(p1, n)",
+    "params": "{{p1, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "LegendreSymbol(p1, n)"
+      }
+    ]
+  },
+  "LerchPhi": {
+    "axis": {
+      "name": "z",
+      "position": 2
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "LerchPhi(p1, s, z)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}; {{s, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "LerchPhi(p1, s, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(LerchPhi(p1, s, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Lg": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Lg(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Lg(x)"
+      }
+    ]
+  },
+  "Limit": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Limit(x)",
+    "params": "",
+    "views": [],
+    "reason": "argument f of type function has no control"
+  },
+  "LiouvilleLambda": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "LiouvilleLambda(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "LiouvilleLambda(n)"
+      }
+    ]
+  },
+  "Ln": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Ln(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Ln(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Ln(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Log": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Log(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Log(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Log(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Log10": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Log10(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Log10(x)"
+      }
+    ]
+  },
+  "Log2": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Log2(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Log2(x)"
+      }
+    ]
+  },
+  "LogBarnesG": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "LogBarnesG(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "LogBarnesG(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(LogBarnesG(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "LogGamma": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "LogGamma(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "LogGamma(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(LogGamma(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "LogIntegral": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "LogIntegral(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "LogIntegral(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(LogIntegral(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Lucas": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "Lucas(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "Lucas(n)"
+      }
+    ]
+  },
+  "MahonianNumber": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "MahonianNumber(p1, n)",
+    "params": "{{p1, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "MahonianNumber(p1, n)"
+      }
+    ]
+  },
+  "Mandelbrot": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "Mandelbrot(c, n)",
+    "params": "{{c, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "Mandelbrot(c, n)"
+      }
+    ]
+  },
+  "MangoldtLambda": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "MangoldtLambda(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "MangoldtLambda(n)"
+      }
+    ]
+  },
+  "MeijerG": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "MeijerG(x)",
+    "params": "",
+    "views": [],
+    "reason": "argument p1 of type list has no control"
+  },
+  "MersennePrimeExponent": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "MersennePrimeExponent(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "MersennePrimeExponent(n)"
+      }
+    ]
+  },
+  "Mod": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Mod(a, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Mod(a, x)"
+      }
+    ]
+  },
+  "ModularInverse": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "ModularInverse(a, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "ModularInverse(a, x)"
+      }
+    ]
+  },
+  "ModularJ": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "ModularJ(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "ModularJ(x)"
+      }
+    ]
+  },
+  "ModularLambda": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "ModularLambda(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "ModularLambda(x)"
+      }
+    ]
+  },
+  "Moment": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "Moment(n)",
+    "params": "",
+    "views": [],
+    "reason": "argument dist of type distribution has no control"
+  },
+  "MomentGeneratingFunction": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "MomentGeneratingFunction(z)",
+    "params": "",
+    "views": [],
+    "reason": "argument dist of type distribution has no control"
+  },
+  "MultiZetaValue": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "MultiZetaValue(s1, n)",
+    "params": "{{s1, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "MultiZetaValue(s1, n)"
+      }
+    ]
+  },
+  "MultiplicativeOrder": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "MultiplicativeOrder(n)",
+    "params": "",
+    "views": [],
+    "reason": "argument a of type value has no control"
+  },
+  "NIntegrate": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "NIntegrate(lower, x)",
+    "params": "{{lower, 1}, -10, 10, 0.05, Slider}",
+    "views": [],
+    "reason": "argument f of type function has no control"
+  },
+  "NLimit": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "NLimit(x)",
+    "params": "",
+    "views": [],
+    "reason": "argument p1 of type function has no control"
+  },
+  "NPartition": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "NPartition(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "NPartition(n)"
+      }
+    ]
+  },
+  "Negate": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Negate(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Negate(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Negate(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "NextPrime": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "NextPrime(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "NextPrime(x)"
+      }
+    ]
+  },
+  "NorlundB": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "NorlundB(n, x)",
+    "params": "{{n, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "NorlundB(n, x)"
+      }
+    ]
+  },
+  "NthPrime": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "NthPrime(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "NthPrime(n)"
+      }
+    ]
+  },
+  "NumberFieldDiscriminant": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "NumberFieldDiscriminant(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "NumberFieldDiscriminant(x)"
+      }
+    ]
+  },
+  "Open": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Open(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Open(x)"
+      }
+    ]
+  },
+  "OrbitInventory": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "OrbitInventory(x, p3)",
+    "params": "{{p3, 1}, -10, 10, 0.05, Slider}",
+    "views": [],
+    "reason": "argument p2 of type list has no control"
+  },
+  "OverBar": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "OverBar(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "OverBar(x)"
+      }
+    ]
+  },
+  "PartitionMobius": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "PartitionMobius(p1, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "PartitionMobius(p1, x)"
+      }
+    ]
+  },
+  "PartitionsP": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "PartitionsP(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "PartitionsP(n)"
+      }
+    ]
+  },
+  "PartitionsQ": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "PartitionsQ(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "PartitionsQ(n)"
+      }
+    ]
+  },
+  "PascalBinomial": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "PascalBinomial(n, x)",
+    "params": "{{n, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "PascalBinomial(n, x)"
+      }
+    ]
+  },
+  "PerfectNumber": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "PerfectNumber(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "PerfectNumber(n)"
+      }
+    ]
+  },
+  "Pochhammer": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Pochhammer(a, z)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Pochhammer(a, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Pochhammer(a, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "PolyGamma": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "PolyGamma(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "PolyGamma(x)"
+      }
+    ]
+  },
+  "PolyLog": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "PolyLog(s, x)",
+    "params": "{{s, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "PolyLog(s, x)"
+      }
+    ]
+  },
+  "PolynomialRoot": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "PolynomialRoot(n)",
+    "params": "",
+    "views": [],
+    "reason": "argument p of type any has no control"
+  },
+  "Power": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Power(p1, z)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Power(p1, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Power(p1, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "PowerMod": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "PowerMod(a, b, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}; {{b, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "PowerMod(a, b, x)"
+      }
+    ]
+  },
+  "PreDecrement": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "PreDecrement(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "PreDecrement(x)"
+      }
+    ]
+  },
+  "PreIncrement": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "PreIncrement(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "PreIncrement(x)"
+      }
+    ]
+  },
+  "PrimeNumber": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "PrimeNumber(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "PrimeNumber(n)"
+      }
+    ]
+  },
+  "PrimePi": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "PrimePi(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "PrimePi(x)"
+      }
+    ]
+  },
+  "PrimeZetaP": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "PrimeZetaP(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "PrimeZetaP(x)"
+      }
+    ]
+  },
+  "PrimitiveRoot": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "PrimitiveRoot(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "PrimitiveRoot(n)"
+      }
+    ]
+  },
+  "QBinomial": {
+    "axis": {
+      "name": "z",
+      "position": 2
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "QBinomial(n, k, z)",
+    "params": "{{n, 1}, -10, 10, 0.05, Slider}; {{k, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "QBinomial(n, k, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(QBinomial(n, k, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "QFactorial": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "QFactorial(n, z)",
+    "params": "{{n, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "QFactorial(n, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(QFactorial(n, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "QPochhammer": {
+    "axis": {
+      "name": "n",
+      "position": 2
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "QPochhammer(a, q, n)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}; {{q, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "QPochhammer(a, q, n)"
+      }
+    ]
+  },
+  "QuiverCompose": {
+    "axis": {
+      "name": "x",
+      "position": 2
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "QuiverCompose(p, x)",
+    "params": "{{p, 1}, -10, 10, 0.05, Slider}",
+    "views": [],
+    "reason": "argument quiver of type expression<LinearQuiver> | expression<Quiver> | symbol has no control"
+  },
+  "QuiverPath": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "QuiverPath(n)",
+    "params": "",
+    "views": [],
+    "reason": "argument arrows of type list<integer> has no control"
+  },
+  "QuiverPathEnd": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "QuiverPathEnd(x)",
+    "params": "",
+    "views": [],
+    "reason": "argument quiver of type expression<LinearQuiver> | expression<Quiver> | symbol has no control"
+  },
+  "Quotient": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Quotient(m, x)",
+    "params": "{{m, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Quotient(m, x)"
+      }
+    ]
+  },
+  "Radical": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "Radical(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "Radical(n)"
+      }
+    ]
+  },
+  "RamanujanTau": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "RamanujanTau(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "RamanujanTau(n)"
+      }
+    ]
+  },
+  "Ramp": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Ramp(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Ramp(x)"
+      }
+    ]
+  },
+  "RandomPrime": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "RandomPrime(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "RandomPrime(n)"
+      }
+    ]
+  },
+  "RationalReconstruction": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "RationalReconstruction(a, n)",
+    "params": "{{a, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "RationalReconstruction(a, n)"
+      }
+    ]
+  },
+  "Re": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Re(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Re(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Re(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Real": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Real(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Real(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Real(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "RealAbs": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "RealAbs(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "RealAbs(x)"
+      }
+    ]
+  },
+  "RealSign": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "RealSign(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "RealSign(x)"
+      }
+    ]
+  },
+  "Reversion": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Reversion(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Reversion(x)"
+      }
+    ]
+  },
+  "RiemannSiegelTheta": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "RiemannSiegelTheta(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "RiemannSiegelTheta(x)"
+      }
+    ]
+  },
+  "RiemannSiegelZ": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "RiemannSiegelZ(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "RiemannSiegelZ(x)"
+      }
+    ]
+  },
+  "RiemannZetaZero": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "RiemannZetaZero(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "RiemannZetaZero(n)"
+      }
+    ]
+  },
+  "RightContraction": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "RightContraction(a, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "RightContraction(a, x)"
+      }
+    ]
+  },
+  "RisingFactorial": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "RisingFactorial(a, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "RisingFactorial(a, x)"
+      }
+    ]
+  },
+  "Root": {
+    "axis": {
+      "name": "z",
+      "position": 1
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Root(x, z)",
+    "params": "{{x, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Root(x, z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Root(x, x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Sandwich": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Sandwich(versor, x)",
+    "params": "{{versor, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Sandwich(versor, x)"
+      }
+    ]
+  },
+  "SawtoothWave": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "SawtoothWave(p1, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "SawtoothWave(p1, x)"
+      }
+    ]
+  },
+  "ScalarProduct": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "ScalarProduct(a, x)",
+    "params": "{{a, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "ScalarProduct(a, x)"
+      }
+    ]
+  },
+  "Series": {
+    "axis": {
+      "name": "x",
+      "position": 3
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Series(x)",
+    "params": "",
+    "views": [],
+    "reason": "argument p1 of type expression has no control"
+  },
+  "Sigma0": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "Sigma0(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "Sigma0(n)"
+      }
+    ]
+  },
+  "Sigma1": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "Sigma1(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "Sigma1(n)"
+      }
+    ]
+  },
+  "SigmaMinus1": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "SigmaMinus1(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "SigmaMinus1(n)"
+      }
+    ]
+  },
+  "SinIntegral": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "SinIntegral(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "SinIntegral(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(SinIntegral(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Sinc": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Sinc(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Sinc(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Sinc(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "SinhIntegral": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "SinhIntegral(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "SinhIntegral(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(SinhIntegral(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "SloaneA": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "SloaneA(n)",
+    "params": "",
+    "views": [],
+    "reason": "argument id of type string has no control"
+  },
+  "Sqrt": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Sqrt(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Sqrt(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Sqrt(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "Square": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Square(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Square(x)"
+      }
+    ]
+  },
+  "SquareFreePart": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "SquareFreePart(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "SquareFreePart(n)"
+      }
+    ]
+  },
+  "SquarePartRoot": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "SquarePartRoot(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "SquarePartRoot(n)"
+      }
+    ]
+  },
+  "SquareWave": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "SquareWave(p1, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "SquareWave(p1, x)"
+      }
+    ]
+  },
+  "SquaresR": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "SquaresR(d, n)",
+    "params": "{{d, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "SquaresR(d, n)"
+      }
+    ]
+  },
+  "StieltjesGamma": {
+    "axis": {
+      "name": "n",
+      "position": 0
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "StieltjesGamma(n)",
+    "params": "",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "StieltjesGamma(n)"
+      }
+    ]
+  },
+  "Stirling": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "Stirling(p1, n)",
+    "params": "{{p1, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "Stirling(p1, n)"
+      }
+    ]
+  },
+  "StirlingS1": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "StirlingS1(p1, n)",
+    "params": "{{p1, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "StirlingS1(p1, n)"
+      }
+    ]
+  },
+  "StirlingS2": {
+    "axis": {
+      "name": "n",
+      "position": 1
+    },
+    "axisDomain": "integer",
+    "window": [-10, 10],
+    "body": "StirlingS2(p1, n)",
+    "params": "{{p1, 1}, -10, 10, 1, Slider}",
+    "views": [
+      {
+        "head": "DiscretePlot",
+        "variable": "n",
+        "window": "{n, -10, 10}",
+        "body": "StirlingS2(p1, n)"
+      }
+    ]
+  },
+  "Surd": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Surd(p1, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Surd(p1, x)"
+      }
+    ]
+  },
+  "Totient": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Totient(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "Totient(x)"
+      }
+    ]
+  },
+  "TriangleWave": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "TriangleWave(p1, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "TriangleWave(p1, x)"
+      }
+    ]
+  },
+  "Trigamma": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-4, 4, -4, 4],
+    "body": "Trigamma(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -4 - 4*I, 4 + 4*I}",
+        "body": "Trigamma(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -4, 4}",
+        "body": "Re(Trigamma(x))",
+        "note": "real slice"
+      }
+    ]
+  },
+  "UnitBox": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "UnitBox(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "UnitBox(x)"
+      }
+    ]
+  },
+  "UnitTriangle": {
+    "axis": {
+      "name": "x",
+      "position": 0
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "UnitTriangle(x)",
+    "params": "",
+    "views": [
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -10, 10}",
+        "body": "UnitTriangle(x)"
+      }
+    ]
+  },
+  "Vee": {
+    "axis": {
+      "name": "x",
+      "position": 1
+    },
+    "axisDomain": "real",
+    "window": [-10, 10],
+    "body": "Vee(p1, x)",
+    "params": "{{p1, 1}, -10, 10, 0.05, Slider}",
+    "views": [],
+    "reason": "argument p3 of type clifford_algebra has no control"
+  },
+  "Zeta": {
+    "axis": {
+      "name": "z",
+      "position": 0
+    },
+    "axisDomain": "complex",
+    "window": [-5, 5, -20, 20],
+    "body": "Zeta(z)",
+    "params": "",
+    "views": [
+      {
+        "head": "ComplexPlot",
+        "variable": "z",
+        "window": "{z, -5 - 20*I, 5 + 20*I}",
+        "body": "Zeta(z)"
+      },
+      {
+        "head": "Plot",
+        "variable": "x",
+        "window": "{x, -5, 5}",
+        "body": "Re(Zeta(x))",
+        "note": "real slice"
+      }
+    ]
+  }
+}

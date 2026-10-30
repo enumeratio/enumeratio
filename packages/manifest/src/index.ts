@@ -9,6 +9,7 @@ export type {
   FindStatId,
   OptionValues,
   Overload,
+  PlotHints,
   Parameter,
   SymbolAttribute,
   SymbolInfo,

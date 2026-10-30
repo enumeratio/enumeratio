@@ -3,6 +3,10 @@ name: Erf
 domain: Special functions
 signature: Erf(z)
 summary: The Gauss error function $\operatorname{erf}(z) = \frac{2}{\sqrt\pi}\int_0^z e^{-t^2}\,dt$, the shape behind the normal distribution's CDF.
+plot:
+  window:
+    - -3
+    - 3
 signatures:
   - call: Erf(z)
     description: the Gauss error function $\operatorname{erf}(z)$.

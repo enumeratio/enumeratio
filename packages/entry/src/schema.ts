@@ -296,6 +296,14 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
       additionalProperties: false,
     },
     maxSize: { type: "integer", minimum: 0 },
+    plot: {
+      type: "object",
+      properties: {
+        axis: { type: "string" },
+        window: { type: "array", items: { type: "number" } },
+      },
+      additionalProperties: false,
+    },
     optionValues: {
       type: "object",
       additionalProperties: {

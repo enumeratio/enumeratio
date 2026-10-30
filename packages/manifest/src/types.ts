@@ -32,6 +32,12 @@ export interface Parameter {
 }
 
 /** An option's allowed values, by key: booleans are `True`/`False`, strings are strings. */
+/** A record's `plot:` field: the parameter to plot over, and its range (`[min, max]`, or `[reMin, reMax, imMin, imMax]` for a complex axis). */
+export interface PlotHints {
+  readonly axis?: string;
+  readonly window?: readonly number[];
+}
+
 export type OptionValues = Readonly<Record<string, readonly (string | number | boolean)[]>>;
 
 export interface SymbolInfo {
@@ -43,6 +49,8 @@ export interface SymbolInfo {
   readonly params?: readonly string[];
   /** The largest safe value of its size parameter (its first integer argument), where a record says. */
   readonly maxSize?: number;
+  /** How it is drawn over its numeric argument, where a record says (the function view's axis and window). */
+  readonly plot?: PlotHints;
   /** The values each option may take, where a record says the set is finite. */
   readonly optionValues?: OptionValues;
   readonly attributes?: readonly SymbolAttribute[];
@@ -90,6 +98,8 @@ export interface Description {
   readonly defaults?: Readonly<Record<string, unknown>>;
   /** The largest safe value of its size parameter (see `SymbolInfo`). */
   readonly maxSize?: number;
+  /** How it is drawn over its numeric argument (see `SymbolInfo`). */
+  readonly plot?: PlotHints;
   /** The values each option may take (see `SymbolInfo`). */
   readonly optionValues?: OptionValues;
   readonly attributes?: readonly string[];

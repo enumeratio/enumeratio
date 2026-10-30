@@ -54,6 +54,15 @@ test("a record's optionValues reach the head's info", () => {
   expect(assembleManifest([pkg], engine).symbols.Big!.optionValues).toEqual({ Grid: [true, false] });
 });
 
+test("a record's plot hints are the head's: the first package to give them wins", () => {
+  const pkg = (name: string, plot?: { axis?: string; window?: number[] }): PackageIndex => ({
+    package: name,
+    records: [{ record: { name: "Wave", summary: "Wave.", ...(plot === undefined ? {} : { plot }) }, examples: 0 }],
+  });
+  const { symbols } = assembleManifest([pkg("a"), pkg("b", { window: [0, 3] }), pkg("c", { axis: "x" })], engine);
+  expect(symbols.Wave!.plot).toEqual({ window: [0, 3] });
+});
+
 test("a record's maxSize is the head's: the smallest any package gives", () => {
   const pkg = (name: string, maxSize?: number): PackageIndex => ({
     package: name,

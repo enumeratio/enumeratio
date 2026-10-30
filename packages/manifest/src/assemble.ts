@@ -6,7 +6,15 @@
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { canonicalOrder } from "./canonical.ts";
-import type { DeclaredSymbol, FindStatId, OptionValues, Overload, SymbolAttribute, SymbolInfo } from "./types.ts";
+import type {
+  DeclaredSymbol,
+  FindStatId,
+  OptionValues,
+  Overload,
+  PlotHints,
+  SymbolAttribute,
+  SymbolInfo,
+} from "./types.ts";
 
 const ENGINE = "compute-engine";
 const cmp = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
@@ -30,6 +38,8 @@ export interface IndexedRecord {
   readonly attributes?: readonly SymbolAttribute[];
   /** The largest safe value of its size parameter, for interactive use. */
   readonly maxSize?: number;
+  /** How it is drawn over its numeric argument (`ReferenceEntry.plot`). */
+  readonly plot?: PlotHints;
   /** The finite values of its options, by key. */
   readonly optionValues?: OptionValues;
   readonly references?: readonly { readonly system: string; readonly identity: string; readonly on?: string }[];
@@ -92,6 +102,7 @@ export function assembleManifest(indexes: readonly PackageIndex[], engine: Engin
       params?: string[];
       attributes: Set<SymbolAttribute>;
       maxSize?: number;
+      plot?: PlotHints;
       optionValues?: Record<string, OptionValues[string]>;
       findstat: Map<string, FindStatId>;
     }
@@ -117,6 +128,8 @@ export function assembleManifest(indexes: readonly PackageIndex[], engine: Engin
     for (const attribute of record.attributes ?? []) info.attributes.add(attribute);
     // The tightest cap any package's record gives.
     if (record.maxSize !== undefined) info.maxSize = Math.min(info.maxSize ?? Infinity, record.maxSize);
+    // As with option values, the first package to say wins.
+    info.plot ??= record.plot;
     // The first package to state an option's values wins; a head's records agree in practice.
     for (const [key, values] of Object.entries(record.optionValues ?? {})) (info.optionValues ??= {})[key] ??= values;
     for (const row of [...(record.references ?? []), ...(record.catalog ?? [])])
@@ -154,6 +167,7 @@ export function assembleManifest(indexes: readonly PackageIndex[], engine: Engin
       overloads: canonicalOrder(info.overloads, engine.typing),
       ...(info.params !== undefined ? { params: info.params } : {}),
       ...(info.maxSize !== undefined ? { maxSize: info.maxSize } : {}),
+      ...(info.plot !== undefined ? { plot: info.plot } : {}),
       ...(info.optionValues !== undefined ? { optionValues: info.optionValues } : {}),
       ...(info.attributes.size > 0 ? { attributes: [...info.attributes].toSorted(cmp) } : {}),
       ...(info.findstat.size > 0
