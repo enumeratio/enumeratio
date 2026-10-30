@@ -9,6 +9,7 @@ import { declareCarrierElement, declareCarrierPlurals, declareStructures } from 
 import { expect, test } from "vite-plus/test";
 import { presentationOf } from "../src/presentation.ts";
 import { openRowSource } from "../src/row-source.ts";
+import { serializeExpression } from "@enumeratio/formats/expression";
 
 const ce = new ComputeEngine();
 declareCombinatorics(ce);
@@ -16,7 +17,10 @@ declareCarrierPlurals(ce, CARRIERS);
 declareCarrierElement(ce, CARRIERS);
 declareStructures(ce);
 
-const ctx = { opensAsTable: (value: unknown) => openRowSource(ce, { collection: value as never, columns: [] }).ok };
+const ctx = {
+  opensAsTable: (value: unknown) => openRowSource(ce, { collection: value as never, columns: [] }).ok,
+  serialize: (value: unknown) => serializeExpression(value as never, { libraryNames: "mathjson" }),
+};
 
 // The JSON an evaluated value has: a lazy collection stays its call.
 const VALUES: Record<string, unknown> = {
@@ -49,5 +53,5 @@ test("the view each value gets", () => {
 });
 
 test("a collection head the engine cannot open as a table is left as typeset", () => {
-  expect(presentationOf(["SymmetricGroup", 3], { opensAsTable: () => false })).toBeUndefined();
+  expect(presentationOf(["SymmetricGroup", 3], { ...ctx, opensAsTable: () => false })).toBeUndefined();
 });

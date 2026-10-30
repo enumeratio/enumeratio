@@ -2,7 +2,6 @@
 // of its typeset form. Pure -- the value and what the page can tell about it in, a view spec out --
 // so the cell, a test and a future host choose the same thing. Off by default; a caller asks.
 
-import { serializeExpression } from "@enumeratio/formats/expression";
 import { VALUE_FRAMES } from "./figure-frames.ts";
 import { inferPlot } from "./infer-controls.ts";
 import type { Json } from "./frame-json.ts";
@@ -16,6 +15,8 @@ export interface PresentationContext {
    * asked of the engine rather than read off the printed form.
    */
   opensAsTable(value: Json): boolean;
+  /** The value's call as notatio text, for the table's `expr` (passed in so `core` loads no engine). */
+  serialize(value: Json): string;
 }
 
 /** A view for a value. `figure` is the value's own frame (`VALUE_FRAMES`): drawn by the renderer as it is. */
@@ -56,7 +57,7 @@ export function presentationOf(value: Json, ctx: PresentationContext): Presentat
   if (LITERAL_COLLECTIONS.has(head) || !ctx.opensAsTable(value)) return undefined;
   return {
     kind: "collection",
-    expr: serializeExpression(value as never, { libraryNames: "mathjson" }),
+    expr: ctx.serialize(value),
     glyph: AUTOMATIC,
     columns: AUTOMATIC,
     pageSize: PRESENTED_PAGE_SIZE,

@@ -945,11 +945,13 @@ export class NotatioOut extends LitElement {
   /** The view `automaticPresentation` gives `json`; asks the page's engine only whether a table opens it. */
   async #present(json: unknown): Promise<Presentation | undefined> {
     try {
-      const [engine, { openRowSource }] = await Promise.all([
+      const [engine, { openRowSource }, { serializeExpression }] = await Promise.all([
         loadEngineFor(json),
         import("@enumeratio/frontend/row-source"),
+        import("@enumeratio/formats/expression"),
       ]);
       const presented = presentationOf(json, {
+        serialize: (value) => serializeExpression(value as never, { libraryNames: "mathjson" }),
         opensAsTable: (value) => {
           try {
             return openRowSource(engine, { collection: value as never, columns: [] }).ok;
