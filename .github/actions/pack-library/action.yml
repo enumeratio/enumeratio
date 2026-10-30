@@ -24,7 +24,7 @@ runs:
         version: 12.3.4
     - uses: actions/setup-node@v4
       with:
-        node-version: 24
+        node-version: 26.13.0
     - name: the system's tooling
       shell: bash
       working-directory: ${{ github.action_path }}/../../..
