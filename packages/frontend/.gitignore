@@ -1,4 +1,4 @@
 dist
 node_modules
-# Written by `build` (scripts/build-forms.ts); never committed.
+# Written by `build` (scripts/build-forms.ts, scripts/build-carrier-statistics.ts); never committed.
 generated/
