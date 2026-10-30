@@ -1655,6 +1655,10 @@ const NOVEL = [
   "CrossingNumber",
   "NestingNumber",
   "TopologicallyConnectedComponents",
+  "InjectivesOfProjectiveDimensionOneBelowMaximal",
+  "InjectivesOfEvenProjectiveDimension",
+  "ModulesOfMaximalProjectiveDimension",
+  "ModulesOfProjectiveDimensionAtMostOne",
 ];
 
 // What formats holds inert that is Wolfram's own (`Plot`, `Slider`, `Cell`): known elsewhere because

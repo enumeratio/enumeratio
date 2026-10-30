@@ -715,6 +715,19 @@ const overSimplesAndInjectives = (body: MathJSON): MathJSON =>
 const globalDimension: MathJSON = ["Max", "dims"];
 const simplesWhere = (test: (dimension: MathJSON) => MathJSON): MathJSON => count("dims", test("d"), "d");
 const injectivesWhere = (test: (dimension: MathJSON) => MathJSON): MathJSON => count("injectiveDims", test("d"), "d");
+/** Every indecomposable module is an interval (top v, length 1 .. the series' entry at v, floored at 1 so `Range` stays a list); count those whose projective dimension passes `test`. */
+const modulesWhere = (test: (dimension: MathJSON) => MathJSON): MathJSON =>
+  floored(
+    sumOver(
+      upTo(vertexCount),
+      count(
+        forEach(upTo(["Max", at("v", "series"), 1]), projectiveDimension(subtract("v", 1), "y"), "y"),
+        test("d"),
+        "d",
+      ),
+      "v",
+    ),
+  );
 
 export const DYCK_STATISTICS: readonly Definition[] = [
   stat("Height", "The greatest height the path reaches.", nonEmpty(["Max", profile])),
@@ -1571,5 +1584,25 @@ export const DYCK_STATISTICS: readonly Definition[] = [
     "InjectivesOfMaximalProjectiveDimension",
     "The indecomposable injective modules whose projective dimension is the global dimension.",
     overSimplesAndInjectives(injectivesWhere((d) => equals(d, globalDimension))),
+  ),
+  stat(
+    "InjectivesOfProjectiveDimensionOneBelowMaximal",
+    "The indecomposable injective modules whose projective dimension is one less than the global dimension.",
+    overSimplesAndInjectives(injectivesWhere((d) => equals(d, subtract(globalDimension, 1)))),
+  ),
+  stat(
+    "InjectivesOfEvenProjectiveDimension",
+    "The indecomposable injective modules of even projective dimension.",
+    overSimplesAndInjectives(injectivesWhere((d) => equals(["Mod", d, 2], 0))),
+  ),
+  stat(
+    "ModulesOfMaximalProjectiveDimension",
+    "The indecomposable modules whose projective dimension is the global dimension.",
+    overSimples(modulesWhere((d) => equals(d, globalDimension))),
+  ),
+  stat(
+    "ModulesOfProjectiveDimensionAtMostOne",
+    "The indecomposable modules of projective dimension at most one.",
+    overSimples(modulesWhere((d) => atMostValue(d, 1))),
   ),
 ];
