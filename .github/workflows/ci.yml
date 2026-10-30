@@ -46,7 +46,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 26.13.0
       - id: select
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

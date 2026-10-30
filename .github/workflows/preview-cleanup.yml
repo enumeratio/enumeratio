@@ -42,7 +42,7 @@ jobs:
           fetch-depth: 0 # the age sweep asks git which commits carry a tag
       - uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 26.13.0
       - name: Sweep closed PRs
         continue-on-error: true
         env:
