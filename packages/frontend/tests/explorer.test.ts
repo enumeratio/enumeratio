@@ -16,6 +16,7 @@ import { openRowSource } from "../src/row-source.ts";
 import { engineProbes } from "../src/explorer-engine.ts";
 import { GLYPH_KINDS } from "../src/glyphs.ts";
 import { exprAt, HEAD_GLYPHS, templateOfExpr } from "../src/table-state.ts";
+import { glyphTable } from "../scripts/glyph-table.ts";
 import { tryItOf, tryItOfExplorer, withExplorerSize } from "../src/try-it.ts";
 
 const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
@@ -123,9 +124,8 @@ test("a derived glyph draws the first row", async () => {
   expect(problems).toEqual([]);
 });
 
-test("the runtime's head-to-glyph table agrees with the carriers' records", () => {
-  for (const r of records.filter((r) => r.catalogCarrier && r.glyph !== undefined))
-    expect(HEAD_GLYPHS[r.name], r.name).toBe(r.glyph);
+test("the built head-to-glyph table is the carriers' records", () => {
+  expect(HEAD_GLYPHS).toEqual(glyphTable(records));
   for (const kind of Object.values(HEAD_GLYPHS)) expect(GLYPH_KINDS.has(kind), kind).toBe(true);
 });
 
