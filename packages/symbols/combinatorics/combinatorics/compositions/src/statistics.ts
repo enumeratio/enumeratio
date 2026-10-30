@@ -12,7 +12,7 @@ import {
   at,
   atLeastValue,
   atMostValue,
-  bind,
+  bind as bindTyped,
   count,
   equals,
   fold,
@@ -41,6 +41,9 @@ import {
 } from "../../src/statistics/vocabulary.ts";
 
 const on = "Composition";
+/** `bind` with the value typed a list of integers: the compiler can index, count and sum over that, not the default `collection`. */
+const bindList = (name: string, value: MathJSON, body: MathJSON, type = "list<integer>"): MathJSON =>
+  bindTyped(name, value, body, type);
 const stat = (head: string, summary: string, expr: MathJSON, note?: string): Definition => ({
   head,
   on,
@@ -48,6 +51,9 @@ const stat = (head: string, summary: string, expr: MathJSON, note?: string): Def
   expr,
   ...(note ? { note } : {}),
 });
+
+/** `sum` floored at 0, so the compiler types it real (it types a fold's sum complex otherwise); sums of counts are never negative. */
+const floored = (sum: MathJSON): MathJSON => ["Max", sum, 0];
 
 const k = length();
 /** `a` and `b` differ. */
@@ -188,32 +194,29 @@ const partialSum = (parts: MathJSON): MathJSON => [
  * composition's partial sums. By inclusion-exclusion over the descents kept, their number is n!
  * times the sum, over the coarsenings of the composition, of (-1)^(parts merged away) over the
  * product of the coarse parts' factorials. The list holds, for each cut so far (the empty cut
- * first), that sum over the coarsenings of what precedes it; the next cut closes a block from any
- * earlier cut, merging the parts between.
+ * first), n! times that sum over the coarsenings of what precedes it (so every entry is an
+ * integer, and the compiled code stays exact); the next cut closes a block from any earlier cut,
+ * merging the parts between.
  */
 const ribbonTableaux: MathJSON = nonEmpty(
   [
-    "Multiply",
-    ["Product", ["Range", 1, total]],
-    [
-      "Last",
-      fold(positions, list(1), [
-        "Join",
-        "a",
-        list([
-          "Sum",
-          forEach(
-            ["Range", 1, "b"],
-            [
-              "Divide",
-              ["Multiply", ["Power", -1, subtract("b", "j")], at("j", "a")],
-              ["Product", ["Range", 1, subtract(partialSum("b"), partialSum(subtract("j", 1)))]],
-            ],
-            "j",
-          ),
-        ]),
+    "Last",
+    fold(positions, list(["Product", ["Range", 1, total]]), [
+      "Join",
+      "a",
+      list([
+        "Sum",
+        forEach(
+          ["Range", 1, "b"],
+          [
+            "Divide",
+            ["Multiply", ["Power", -1, subtract("b", "j")], at("j", "a")],
+            ["Product", ["Range", 1, subtract(partialSum("b"), partialSum(subtract("j", 1)))]],
+          ],
+          "j",
+        ),
       ]),
-    ],
+    ]),
   ],
   1,
 );
@@ -257,13 +260,13 @@ const reflected = (i: MathJSON): MathJSON => subtract(add(total, 1), i);
  * vertices)/2 + (isolated vertices). With K components, C = K - P, and the index is 2K - P - 1.
  * K comes from propagating the least label along the edges, n times.
  */
-const seaweedIndex: MathJSON = bind(
+const seaweedIndex: MathJSON = bindList(
   "cuts",
   cutPoints,
-  bind(
+  bindList(
     "top",
     forEach(upTo(total), subtract(add(add(cutBefore("i"), min(where("cuts", atLeastValue("u", "i"), "u"))), 1), "i")),
-    bind(
+    bindList(
       "degrees",
       forEach(
         upTo(total),
@@ -274,7 +277,7 @@ const seaweedIndex: MathJSON = bind(
           0,
         ]),
       ),
-      bind(
+      bindList(
         "labels",
         fold(
           upTo(total),
@@ -299,14 +302,14 @@ const seaweedIndex: MathJSON = bind(
  * starts at 0 and rises by at most one a row, so the count carries, by area, the sequences so far.
  */
 const dyckPathsAboveBouncePath: MathJSON = nonEmpty(
-  bind(
+  bindList(
     "cuts",
     cutPoints,
-    bind("bounceAreas", forEach(upTo(total), subtract(subtract("i", 1), cutBefore("i"))), [
+    bindList("bounceAreas", forEach(upTo(total), subtract(subtract("i", 1), cutBefore("i"))), [
       "If",
       less(total, 2),
       1,
-      [
+      floored([
         "Sum",
         fold(
           ["Range", 2, total, 1],
@@ -322,7 +325,7 @@ const dyckPathsAboveBouncePath: MathJSON = nonEmpty(
             "h",
           ),
         ),
-      ],
+      ]),
     ]),
   ),
   1,
@@ -338,13 +341,13 @@ const dyckPathsAboveBouncePath: MathJSON = nonEmpty(
  * words on 1 .. n+1 that fall inside each block of c and rise (weakly) between blocks. The list
  * carries, for each last letter, the words so far.
  */
-const inverseDescentParkingFunctions: MathJSON = bind("cuts", cutPoints, [
+const inverseDescentParkingFunctions: MathJSON = bindList("cuts", cutPoints, [
   "If",
   less(total, 2),
   1,
   [
     "Divide",
-    [
+    floored([
       "Sum",
       fold(
         ["Range", 1, subtract(total, 1), 1],
@@ -366,7 +369,7 @@ const inverseDescentParkingFunctions: MathJSON = bind("cuts", cutPoints, [
           "w",
         ),
       ),
-    ],
+    ]),
     add(total, 1),
   ],
 ]);
@@ -382,7 +385,7 @@ const inverseDescentParkingFunctions: MathJSON = bind("cuts", cutPoints, [
  *   has exactly m cells left.
  */
 const standardCompositionTableaux: MathJSON = nonEmpty(
-  bind("radices", fold(x, list(1), ["Join", "a", list(["Multiply", ["Last", "a"], add("b", 1)])]), [
+  bindList("radices", fold(x, list(1), ["Join", "a", list(["Multiply", ["Last", "a"], add("b", 1)])]), [
     "If",
     equals(total, 0),
     1,
@@ -392,7 +395,7 @@ const standardCompositionTableaux: MathJSON = nonEmpty(
         "Join",
         "a",
         list(
-          bind(
+          bindList(
             "placed",
             forEach(
               positions,

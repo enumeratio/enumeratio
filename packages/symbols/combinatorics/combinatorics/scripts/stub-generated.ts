@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 const STUBS: Record<string, string> = {
   "../src/compiled-maps.generated.js": "COMPILED_MAPS",
   "../collections/src/families/compiled-families.generated.js": "COMPILED_FAMILIES",
+  "../compositions/src/statistics.compiled.generated.js": "COMPILED",
   "../lattice-paths/src/statistics.compiled.generated.js": "COMPILED",
   "../partitions/src/statistics.compiled.generated.js": "COMPILED",
   "../permutations/src/statistics.compiled.generated.js": "COMPILED",
