@@ -3,7 +3,8 @@ import { onMounted, ref, watch } from "vue";
 
 // A head's "Try it": the literals at its typed parameters in an example, as a Manipulate.
 // Built from the manifest's parameter types (`IntegerPartitions(8)` over `(integer, any?, any?)`
-// is an integer `n` starting at 8); a head with no typed literal in any example shows nothing.
+// is an integer `n` starting at 8); a head with no typed literal in any example falls back to the
+// derived explorer's sized call, and one with neither shows nothing.
 const props = defineProps<{
   name: string;
   /** The examples, as MathJSON, in page order; the first with a liftable literal is the panel's. */
@@ -12,6 +13,8 @@ const props = defineProps<{
   parameters: readonly { name?: string; type: string; variadic?: boolean }[];
   /** The record's cap on the size parameter. */
   maxSize?: number;
+  /** The derived explorer's sized call and stepper bounds: Try it's size control matches them, and stands in when no example lifts. */
+  explorer?: { template?: string; size?: { name?: string; min: number; max: number; start: number } };
   /** The record's finite option values, by key: an example's `Key -> value` rule becomes a control. */
   optionValues?: Record<string, (string | number | boolean)[]>;
 }>();
@@ -21,22 +24,22 @@ const panel = ref<{ params: string; value: string } | undefined>();
 async function build(): Promise<void> {
   panel.value = undefined;
   // Nothing to lift when every position is `any` and no option lists its values; skip loading the front end for it.
-  if (!props.parameters.some((p) => p.type !== "any") && props.optionValues === undefined) return;
+  const typed = props.parameters.some((p) => p.type !== "any") || props.optionValues !== undefined;
+  if (!typed && props.explorer?.template === undefined) return;
   // Browser only, and lazy: the front end brings the engine with it.
-  const { tryItOf } = await import("@enumeratio/frontend");
-  const signature = {
-    head: props.name,
-    parameters: props.parameters,
-    maxSize: props.maxSize,
-    options: props.optionValues,
-  };
-  for (const expr of props.examples) {
+  const { tryItOf, tryItOfExplorer, withExplorerSize } = await import("@enumeratio/frontend");
+  const signature = withExplorerSize(
+    { head: props.name, parameters: props.parameters, maxSize: props.maxSize, options: props.optionValues },
+    props.explorer,
+  );
+  for (const expr of typed ? props.examples : []) {
     const found = tryItOf(expr as Parameters<typeof tryItOf>[0], signature);
     if (found !== undefined) {
       panel.value = found;
       return;
     }
   }
+  panel.value = tryItOfExplorer(props.explorer);
 }
 
 onMounted(build);

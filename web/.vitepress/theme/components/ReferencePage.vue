@@ -33,7 +33,7 @@ const props = defineProps<{
     glyph?: string;
     pageSize: number;
     template?: string;
-    size?: { min: number; max: number; start: number };
+    size?: { name?: string; min: number; max: number; start: number };
     statistics: readonly string[];
   };
   /** The Epsil behind a statistic or family, printed as InputForm (data/definitions.ts). */
@@ -491,10 +491,11 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
     </section>
 
     <TryIt
-      v-if="parameters?.length"
+      v-if="parameters?.length || explorer?.template"
       :name="name"
       :examples="tryItExamples"
-      :parameters="parameters"
+      :parameters="parameters ?? []"
+      :explorer="explorer"
       :max-size="maxSize"
       :option-values="optionValues"
     />
