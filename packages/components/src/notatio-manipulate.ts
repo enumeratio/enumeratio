@@ -4,7 +4,8 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { applyTemplates, captureTemplates, type Template, takesBindings, whenTemplatesDefined } from "./bindings.ts";
 import { controlsTemplate, rawOf } from "./manipulate-ui.ts";
-import { ensureFor, loadBareEngine, loadMarkup } from "./mathlive.ts";
+import { ensureFor, loadMarkup } from "./mathlive.ts";
+import { inferenceScope } from "./transcript-scope.ts";
 import "./dynamic-box.ts";
 import "./knob-box.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
@@ -182,8 +183,9 @@ export class NotatioManipulate extends LitElement {
   // prose, whose readouts are templates like any other.
   async #capture(more = false): Promise<void> {
     this.#captured = true;
-    const engine = (this.#engine ??= await loadBareEngine());
-    this.#refine(engine);
+    const scope = await inferenceScope(this);
+    const engine = (this.#engine ??= scope.engine);
+    this.#refine(engine, scope.run);
     const names = new Set(this._controls.map((c) => c.name));
     const found = captureTemplates(this, names, engine, this.prose ? undefined : this.#host);
     // A template already applied no longer reads as one; keep it rather than lose it.
@@ -197,13 +199,14 @@ export class NotatioManipulate extends LitElement {
 
   // The controls named in `infer` came from a guess made without an engine (a real slider);
   // with one, a symbol declared `integer`, `boolean`, ... gets the control for its type.
-  #refine(engine: ComputeEngine): void {
+  // Inside a notebook the declarations are its scope's, so `n := 3` above types the slider.
+  #refine(engine: ComputeEngine, run: <T>(fn: () => T) => T): void {
     const names = this.infer
       .split(",")
       .map((n) => n.trim())
       .filter(Boolean);
     if (names.length === 0) return;
-    const params = inferControls(null, { engine, names }).flatMap((spec) => paramsOf(spec) ?? []);
+    const params = run(() => inferControls(null, { engine, names })).flatMap((spec) => paramsOf(spec) ?? []);
     const typed = parseControls(params.join("; "));
     this._controls = this._controls.map((c) =>
       names.includes(c.name) ? (typed.find((t) => t.name === c.name) ?? c) : c,

@@ -20,6 +20,7 @@ import "./domains.ts";
 import type { Template } from "./bindings.ts";
 import { CONTROL_TAGS, type ControlElement, controlSelector } from "./define.ts";
 import { ensureFor, loadBareEngine } from "./mathlive.ts";
+import { inferenceScope } from "./transcript-scope.ts";
 
 const log = debug("scope");
 
@@ -183,9 +184,11 @@ export class Scope {
       return;
     }
     if (automatic) {
-      const engine = (this.#engine ??= await loadBareEngine());
+      const scope = await inferenceScope(this.owner ?? this.root);
+      const engine = (this.#engine ??= scope.engine);
       // A point has no prose control yet; it stays a readout.
-      this.#declarations = inferControls(null, { engine, names, letterConventions: true })
+      this.#declarations = scope
+        .run(() => inferControls(null, { engine, names, letterConventions: true }))
         .filter((spec) => spec.domain.kind !== "points")
         .map(({ name, domain, start }) => ({ name, domain, start }));
       for (const spec of this.#declarations)
