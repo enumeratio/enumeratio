@@ -422,6 +422,13 @@ test("the built provenance data is what the engines say", () => {
   );
 });
 
+test("the coverage snapshot names no retired head", () => {
+  // A refresh rewrites every row from the current heads, so a row for a retired head is stale
+  // data that the next refresh drops as churn.
+  const names = new Set(entries.map((entry) => entry.name));
+  expect(Object.keys(coverage).filter((name) => !names.has(name))).toEqual([]);
+});
+
 test("the Wolfram rename column is reflected from the transpiler, not copied", () => {
   // `wolframAlias` is a RENAME (Stirling → StirlingS2). It is deliberately not the answer
   // to "does Wolfram have this" — `HurwitzZeta` needs no rename and Wolfram has it. That

@@ -24,7 +24,7 @@
 // at the cost of a much heavier dependency for no extra coverage. We call mpmath directly.
 
 import { writeFormatted } from "@enumeratio/entry/node";
-import { KernelKilled, runKernel, runWolframKernel } from "@enumeratio/utils/bounded";
+import { runKernel, runWolframKernel } from "@enumeratio/utils/bounded";
 import { referenceEntries } from "../src/node.ts";
 
 const names = referenceEntries().map((entry) => entry.name);
@@ -35,15 +35,9 @@ async function askWolfram(heads: readonly string[]): Promise<Set<string>> {
   // match instead of the real answer, which is exactly what it did the first time.
   const list = `{${heads.map((head) => `"${head}"`).join(", ")}}`;
   const code = `Print[StringRiffle[Select[${list}, Length[Names["System\`" <> #]] > 0 &], ","]]`;
-  try {
-    const out = await runWolframKernel(code, { timeoutMs: 120_000 });
-    return new Set(out.trim().split(",").filter(Boolean));
-  } catch (error) {
-    // A missing kernel leaves the column empty; a killed one must not pass for that.
-    if (error instanceof KernelKilled) throw error;
-    process.stderr.write(`wolframscript unavailable: ${String(error)}\n`);
-    return new Set();
-  }
+  // A missing or killed kernel throws: an empty column would overwrite the snapshot with a hole.
+  const out = await runWolframKernel(code, { timeoutMs: 120_000 });
+  return new Set(out.trim().split(",").filter(Boolean));
 }
 
 /** Which names SymPy and mpmath expose, under our spelling or its snake_case form. */
@@ -53,11 +47,7 @@ import json, sys
 names = json.loads(sys.stdin.read())
 out = {}
 for module in ("sympy", "mpmath"):
-    try:
-        m = __import__(module)
-    except ImportError:
-        out[module] = []
-        continue
+    m = __import__(module)
     found = []
     for name in names:
         snake = "".join("_" + c.lower() if c.isupper() and i else c.lower()
@@ -69,18 +59,9 @@ for module in ("sympy", "mpmath"):
     out[module] = found
 print(json.dumps(out))
 `;
-  try {
-    const out = await runKernel("python3", ["-c", program], {
-      input: JSON.stringify(heads),
-      timeoutMs: 120_000,
-    });
-    const parsed = JSON.parse(out) as { sympy: string[]; mpmath: string[] };
-    return { sympy: new Set(parsed.sympy), mpmath: new Set(parsed.mpmath) };
-  } catch (error) {
-    if (error instanceof KernelKilled) throw error;
-    process.stderr.write(`python3 unavailable: ${String(error)}\n`);
-    return { sympy: new Set(), mpmath: new Set() };
-  }
+  const out = await runKernel("python3", ["-c", program], { input: JSON.stringify(heads), timeoutMs: 120_000 });
+  const parsed = JSON.parse(out) as { sympy: string[]; mpmath: string[] };
+  return { sympy: new Set(parsed.sympy), mpmath: new Set(parsed.mpmath) };
 }
 
 const wolfram = await askWolfram(names);
