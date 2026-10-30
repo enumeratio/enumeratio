@@ -49,6 +49,7 @@
     "@enumeratio/config": "workspace:*",
     "@enumeratio/entry": "workspace:*",
     "@webgpu/types": "^0.1.60",
+    "happy-dom": "catalog:",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
