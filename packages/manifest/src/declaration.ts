@@ -28,7 +28,8 @@ export function declarationOf(definition: Declarable, body: unknown): Record<str
   const held = definition.attributes?.includes("HoldAll") === true;
   const defaults = definition.defaults ?? {};
   const params = Array.isArray(body) && body[0] === "Function" ? (body.slice(2) as unknown[]) : [];
-  if (!held && Object.keys(defaults).length === 0) return { signature: definition.signature, evaluate: body };
+  if (!held && Object.keys(defaults).length === 0)
+    return { signature: definition.signature, pure: true, evaluate: body };
   /** `json` with each parameter `values` has replaced, except where an inner `Function` rebinds it. */
   const substitute = (json: unknown, values: ReadonlyMap<unknown, unknown>): unknown => {
     if (typeof json === "string") return values.has(json) ? values.get(json) : json;
@@ -41,6 +42,7 @@ export function declarationOf(definition: Declarable, body: unknown): Record<str
   };
   return {
     signature: definition.signature,
+    pure: true,
     ...(held ? { lazy: true } : {}),
     evaluate: (
       ops: readonly { readonly json: unknown }[],

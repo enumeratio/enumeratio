@@ -20,6 +20,7 @@ import {
   type StagedLibrary,
 } from "@enumeratio/manifest";
 import { declareCatalog, ENUMERATIO } from "@enumeratio/catalog";
+import { installPurityDefault } from "@enumeratio/engine";
 import { declareGraphics } from "@enumeratio/formats";
 import { declareCompose, declareRestricted } from "@enumeratio/structures";
 import { OWN_ENGINE } from "../src/node.ts";
@@ -107,7 +108,11 @@ export const declaredEngine = ({ graphics = true }: { readonly graphics?: boolea
     libraries: NAMES,
     available: AVAILABLE,
     include: graphics ? EXTRAS : EXTRAS.filter((extra) => extra.name !== "graphics"),
-    engine: () => new ComputeEngine(),
+    engine: () => {
+      const ce = new ComputeEngine();
+      installPurityDefault(ce);
+      return ce;
+    },
   }).engine;
 
 /**

@@ -269,5 +269,6 @@ export {
   uniform01,
 } from "./random.ts";
 export { setEngineDefaults } from "./defaults.ts";
+export { IMPURE_HEADS, installPurityDefault } from "./purity.ts";
 export { normalizeInputForm, toInputForm } from "./inputform.ts";
 export { registerModularKernel, type ModularArity, type ModularKernel } from "./modular.ts";
