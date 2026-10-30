@@ -106,7 +106,7 @@ export class NotatioCollectionTable extends LitElement {
     distribution: { type: Boolean, reflect: true },
     /** The column the pane is for; empty for the first statistic column. */
     distributionStatistic: { type: String, attribute: "distribution-statistic", reflect: true },
-    /** How the pane asks for a tally: the page's kernel by default; a host or a test swaps it. */
+    /** Seam for the distribution tally: the page's kernel by default. Hosts and tests swap it; not for authors. */
     evaluate: { attribute: false },
     _status: { state: true },
     _distribution: { state: true },
