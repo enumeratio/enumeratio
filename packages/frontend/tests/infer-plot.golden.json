@@ -78,5 +78,26 @@
   },
   "list: symbolic entries have no plot": null,
   "value: an equation has no plot": null,
-  "value: a string has no plot": null
+  "value: a string has no plot": null,
+  "replot: an integer axis is points at the integers": {
+    "tag": "graphics-box",
+    "attributes": {
+      "value": "Plot(_a * x ^ 2, (x, 0, 20), PlotPoints -> 21, Mode -> \"points\")"
+    }
+  },
+  "replot: a complex axis is a portrait": {
+    "tag": "notatio-complex-plot",
+    "attributes": {
+      "value": "y ^ 2 + _c",
+      "var": "y"
+    }
+  },
+  "replot: a real axis beats the letter z": {
+    "tag": "graphics-box",
+    "attributes": {
+      "value": "Plot(sin(_a * z), (z, -5, 5))"
+    }
+  },
+  "replot: undeclared stays as lowered": null,
+  "replot: mixed domains keep the lowering's plot": null
 }

@@ -5,6 +5,7 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { applyTemplates, captureTemplates, type Template, takesBindings, whenTemplatesDefined } from "./bindings.ts";
 import { controlsTemplate, rawOf } from "./manipulate-ui.ts";
 import { ensureFor, loadMarkup } from "./mathlive.ts";
+import type { Rendering } from "@enumeratio/frontend/symbols";
 import { inferenceScope } from "./transcript-scope.ts";
 import "./dynamic-box.ts";
 import "./knob-box.ts";
@@ -25,6 +26,15 @@ import {
   type ProsePart,
 } from "@enumeratio/frontend/core";
 import { SliderPlayback } from "./sweep.ts";
+
+/** A lowered rendering as the element it names. */
+function elementOf(rendering: Rendering): HTMLElement {
+  const el = document.createElement(rendering.tag);
+  for (const [name, value] of Object.entries(rendering.attributes)) el.setAttribute(name, value);
+  if (rendering.text !== undefined) el.textContent = rendering.text;
+  for (const child of rendering.children ?? []) el.append(elementOf(child));
+  return el;
+}
 
 /**
  * `<Manipulate params="{a, 1, 5}">` -- a generic Wolfram-style
@@ -85,6 +95,10 @@ export class NotatioManipulate extends LitElement {
     params: { type: String },
     /** Names whose controls the engine's declarations (integer, boolean, ...) refine, once it is loaded. */
     infer: { type: String },
+    /** The body an inferred plot was drawn from, as Epsil; with `plot-axes`, it is drawn again once the engine's declarations are known. */
+    plotOf: { type: String, attribute: "plot-of" },
+    /** The symbols an inferred plot is drawn over. */
+    plotAxes: { type: String, attribute: "plot-axes" },
     /** `below` puts the control panel under the content instead of above it. */
     controls: { type: String },
     /** A sentence to render as the control panel, with `{k}` holes for the parameters. */
@@ -99,6 +113,8 @@ export class NotatioManipulate extends LitElement {
 
   declare params: string;
   declare infer: string;
+  declare plotOf: string | undefined;
+  declare plotAxes: string | undefined;
   /** Where the control panel sits: "above" (default) or "below" the content. */
   declare controls: string;
   declare prose: string;
@@ -186,6 +202,7 @@ export class NotatioManipulate extends LitElement {
     const scope = await inferenceScope(this);
     const engine = (this.#engine ??= scope.engine);
     this.#refine(engine, scope.run);
+    if (!more) await this.#replot(engine, scope.run);
     const names = new Set(this._controls.map((c) => c.name));
     const found = captureTemplates(this, names, engine, this.prose ? undefined : this.#host);
     // A template already applied no longer reads as one; keep it rather than lose it.
@@ -211,6 +228,20 @@ export class NotatioManipulate extends LitElement {
     this._controls = this._controls.map((c) =>
       names.includes(c.name) ? (typed.find((t) => t.name === c.name) ?? c) : c,
     );
+  }
+
+  // An inferred plot was chosen without declarations (`x` is real unless said otherwise); with an
+  // engine, an axis declared complex or integer is drawn as a portrait or as points instead.
+  // Explicit plots and written controls carry no `plot-of`, and are left alone.
+  async #replot(engine: ComputeEngine, run: <T>(fn: () => T) => T): Promise<void> {
+    if (!this.plotOf || !this.plotAxes) return;
+    const axes = this.plotAxes.split(",").filter(Boolean);
+    const { replotWithEngine } = await import("@enumeratio/frontend/symbols");
+    const names = new Set(this._controls.map((c) => c.name));
+    const rendering = run(() => replotWithEngine(this.plotOf!, axes, names, engine));
+    if (rendering === undefined) return;
+    const old = [...this.children].find((c) => c !== this.#host && c.hasAttribute("value"));
+    old?.replaceWith(elementOf(rendering));
   }
 
   // Fill each template's `_name` wildcards with the current control values and

@@ -141,6 +141,12 @@ function symbolOf(node: Json): string | undefined {
   return typeof sym === "string" ? sym : undefined;
 }
 
+/** A function node's head and operands, whether written `["F", …]` or `{ fn: ["F", …] }`. */
+function partsOf(node: unknown): unknown[] | undefined {
+  const fn = (node as { fn?: unknown[] } | null)?.fn;
+  return Array.isArray(node) ? node : Array.isArray(fn) ? fn : undefined;
+}
+
 /** The symbols `json` reads, in order of first appearance, minus those it binds itself. */
 export function freeSymbols(json: Json): string[] {
   const seen: string[] = [];
@@ -151,8 +157,7 @@ export function freeSymbols(json: Json): string[] {
       if (s !== undefined && isUnknownName(s) && !seen.includes(s)) seen.push(s);
       return;
     }
-    const fn = (node as { fn?: unknown[] } | null)?.fn;
-    const parts = Array.isArray(node) ? node : Array.isArray(fn) ? fn : undefined;
+    const parts = partsOf(node);
     if (parts === undefined) return;
     const head = typeof parts[0] === "string" ? parts[0] : undefined;
     const operands = head === undefined ? parts : parts.slice(1);
@@ -162,10 +167,12 @@ export function freeSymbols(json: Json): string[] {
         const s = symbolOf(p);
         if (s !== undefined) bound.add(s);
       }
+    // An iterator follows the body: `(k, 1, 3)`, or `(k, 3)` for Sum/Product/Table (a plot's pair is a point).
     if (head !== undefined && ITERATOR_HEADS.has(head))
-      for (const op of operands) {
-        const items = Array.isArray(op) && op[0] === "Tuple" ? op.slice(1) : undefined;
-        const s = items && items.length >= 3 ? symbolOf(items[0]) : undefined;
+      for (const op of operands.slice(1)) {
+        const tuple = partsOf(op);
+        const items = tuple?.[0] === "Tuple" ? tuple.slice(1) : undefined;
+        const s = items && items.length >= (PLOT_HEADS.has(head) ? 3 : 2) ? symbolOf(items[0]) : undefined;
         if (s !== undefined) bound.add(s);
       }
     for (const op of operands) walk(op);
