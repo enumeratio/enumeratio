@@ -27,7 +27,15 @@ const props = defineProps<{
   /** The statistics and maps of a carrier, or of a collection's carrier. */
   fields?: CarrierFieldsData;
   /** The enumeration the record implies (`explorerOf`, derived at build); a record's own `enumerate:` is already folded in. */
-  explorer?: { expr: string; columns: readonly string[]; glyph?: string; pageSize: number };
+  explorer?: {
+    expr: string;
+    columns: readonly string[];
+    glyph?: string;
+    pageSize: number;
+    template?: string;
+    size?: { min: number; max: number; start: number };
+    statistics: readonly string[];
+  };
   /** The Epsil behind a statistic or family, printed as InputForm (data/definitions.ts). */
   definitions?: readonly { label: string; source: string }[];
 }>();
@@ -115,9 +123,19 @@ const signatures = computed(() => {
 const enumeration = computed(() => {
   const spec = props.explorer;
   if (spec !== undefined)
-    return { expr: spec.expr, columns: spec.columns.join(", "), glyph: spec.glyph, pageSize: spec.pageSize };
+    return {
+      expr: spec.expr,
+      columns: spec.columns.join(", "),
+      glyph: spec.glyph,
+      pageSize: spec.pageSize,
+      template: spec.template,
+      size: spec.size,
+      statistics: spec.statistics,
+    };
   const own = entry.value?.enumerate;
-  return own === undefined ? undefined : { ...own, pageSize: own.pageSize ?? 10 };
+  return own === undefined
+    ? undefined
+    : { ...own, pageSize: own.pageSize ?? 10, template: undefined, size: undefined, statistics: [] };
 });
 
 // What "Try it" lifts its controls from: the examples that stand as written, then the enumeration.
@@ -463,6 +481,11 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
           :columns="enumeration.columns"
           :glyph="enumeration.glyph"
           :page-size="enumeration.pageSize"
+          :template="enumeration.template"
+          :size="enumeration.size?.start"
+          :size-min="enumeration.size?.min"
+          :size-max="enumeration.size?.max"
+          :statistics.prop="enumeration.statistics ?? []"
         ></notatio-collection-table>
       </ClientOnly>
     </section>

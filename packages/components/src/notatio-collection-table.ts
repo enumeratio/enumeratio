@@ -2,9 +2,12 @@ import { describeCount } from "@enumeratio/boxes";
 import {
   collectionText,
   columnLabel,
+  columnList,
   debug,
+  exprAt,
+  glyphKind,
   rowSourceExpression,
-  splitColumns,
+  templateOfExpr,
   type RowSourceSpec,
 } from "@enumeratio/frontend/core";
 import { html, LitElement, nothing } from "lit";
@@ -53,8 +56,22 @@ export class NotatioCollectionTable extends LitElement {
      * needed only when a story wants a different reading than the collection's own.
      */
     carrier: { type: String },
-    /** Draw each row as a glyph too: `permutation`, `subset`, `partition`, `dyck`, … */
+    /** Draw each row as a glyph too: `permutation`, `subset`, `partition`, `dyck`, … `Automatic` is the carrier's own. */
     glyph: { type: String },
+    /**
+     * The statistics the column menu offers, as head names; a property (the page knows them from
+     * the carrier's record, the runtime loads no manifest). A `columns` of `Automatic` is the
+     * first few of them.
+     */
+    statistics: { attribute: false },
+    /** The collection with its size as `{size}`: `Derangements({size})`. With `size`, the stepper rewrites `expr` from it. */
+    template: { type: String },
+    /** The size the stepper shows; the collection is `template` at it. With no `template`, `expr` must be `Head(k)` to be steppable. */
+    size: { type: Number, reflect: true },
+    /** The smallest size the stepper offers. */
+    sizeMin: { type: Number, attribute: "size-min" },
+    /** The largest size the stepper offers; 0 for no limit. */
+    sizeMax: { type: Number, attribute: "size-max" },
     /** Ground-set size for the `subset` glyph; taken from the collection's first argument when 0. */
     n: { type: Number },
     /** How many source rows a filter or sort scan covers before it pauses and offers to go on. */
@@ -79,6 +96,11 @@ export class NotatioCollectionTable extends LitElement {
   declare page: number;
   declare carrier: string;
   declare glyph: string;
+  declare statistics: readonly string[];
+  declare template: string;
+  declare size: number;
+  declare sizeMin: number;
+  declare sizeMax: number;
   declare n: number;
   declare scanLimit: number;
   declare readonly: boolean;
@@ -98,6 +120,11 @@ export class NotatioCollectionTable extends LitElement {
     this.page = 1;
     this.carrier = "";
     this.glyph = "";
+    this.statistics = [];
+    this.template = "";
+    this.size = 0;
+    this.sizeMin = 1;
+    this.sizeMax = 0;
     this.n = 0;
     this.scanLimit = 0;
     this.readonly = false;
@@ -118,14 +145,15 @@ export class NotatioCollectionTable extends LitElement {
 
   /** The source this table shows: the collection as the kernel reads it, and what to do to each row. */
   #spec(): RowSourceSpec {
+    const glyph = this.#glyph();
     return {
-      collection: collectionText(this.expr.trim()),
-      columns: splitColumns(this.columns ?? ""),
+      collection: collectionText(this.#expr()),
+      columns: this.#columns(),
       ...(this.filter.trim() && { filter: this.filter.trim() }),
       ...(this.sort.trim() && { sort: this.sort.trim() }),
       ...(this.descending && { descending: true }),
       ...(this.carrier && { carrier: this.carrier }),
-      ...(this.glyph && { glyph: this.glyph }),
+      ...(glyph && { glyph }),
       ...(this.n > 0 && { n: this.n }),
       ...(this.scanLimit > 0 && { scanBudget: this.scanLimit }),
     };
@@ -133,21 +161,41 @@ export class NotatioCollectionTable extends LitElement {
 
   /** The headings drawn before any row is known, so the viewport is its size from the first paint. */
   #headers(): string[] {
-    return [...(this.glyph ? [""] : []), "element", ...splitColumns(this.columns ?? "").map(columnLabel)];
+    return [...(this.#glyph() ? [""] : []), "element", ...this.#columns().map(columnLabel)];
   }
 
   /** The display column the sort is on (past the glyph and element columns), if any. */
   #sortedDisplayColumn(): number | undefined {
     const key = this.sort.trim();
-    const index = key === "" ? -1 : splitColumns(this.columns ?? "").indexOf(key);
-    return index < 0 ? undefined : index + (this.glyph ? 1 : 0) + 1;
+    const index = key === "" ? -1 : this.#columns().indexOf(key);
+    return index < 0 ? undefined : index + (this.#glyph() ? 1 : 0) + 1;
+  }
+
+  /** The size template: the given one, else `Head({size})` when `size` is set on `Head(k)`. */
+  #template(): string | undefined {
+    if (!(this.size > 0)) return undefined;
+    return this.template || templateOfExpr(this.expr);
+  }
+
+  /** The collection the table enumerates: the template at the stepper's size, else `expr`. */
+  #expr(): string {
+    const template = this.#template();
+    return template === undefined ? this.expr.trim() : exprAt(template, this.size);
+  }
+
+  #columns(): string[] {
+    return columnList(this.columns ?? "", this.statistics ?? []);
+  }
+
+  #glyph(): string {
+    return glyphKind(this.glyph ?? "", this.carrier ?? "", this.#expr());
   }
 
   // ---- interaction -----------------------------------------------------------------------
 
   #onSort(event: CustomEvent<{ column: number }>): void {
-    const stat = event.detail.column - (this.glyph ? 1 : 0) - 1;
-    const key = splitColumns(this.columns ?? "")[stat];
+    const stat = event.detail.column - (this.#glyph() ? 1 : 0) - 1;
+    const key = this.#columns()[stat];
     if (key === undefined) return;
     if (this.sort !== key) {
       this.sort = key;
@@ -163,16 +211,25 @@ export class NotatioCollectionTable extends LitElement {
   #addColumn(text: string): void {
     const t = text.trim();
     if (!t) return;
-    const existing = splitColumns(this.columns ?? "");
+    const existing = this.#columns();
     if (existing.includes(t)) return;
     this.columns = [...existing, t].join(", ");
   }
 
   #removeColumn(source: string): void {
-    this.columns = splitColumns(this.columns ?? "")
+    this.columns = this.#columns()
       .filter((c) => c !== source)
       .join(", ");
     if (this.sort === source) this.sort = "";
+  }
+
+  #setSize(text: string): void {
+    const n = Math.trunc(Number(text));
+    if (!Number.isFinite(n)) return;
+    const min = Math.max(0, this.sizeMin);
+    this.size = Math.max(min, this.sizeMax > 0 ? Math.min(n, this.sizeMax) : n);
+    this.page = 1;
+    this.scrollPosition = "";
   }
 
   #onEnter(apply: (value: string) => void) {
@@ -201,21 +258,59 @@ export class NotatioCollectionTable extends LitElement {
       }`;
   }
 
+  /** Every statistic on offer, checked when it heads a column; a click adds or removes it. */
+  #menu(cols: readonly string[]): unknown {
+    const offered = this.statistics ?? [];
+    if (offered.length === 0) return nothing;
+    return html`<details class="nct-menu">
+      <summary>statistics</summary>
+      <div class="nct-menu-list">
+        ${offered.map(
+          (name) =>
+            html`<label
+              ><input
+                type="checkbox"
+                .checked=${cols.includes(name)}
+                @change=${(e: Event) =>
+                  (e.target as HTMLInputElement).checked ? this.#addColumn(name) : this.#removeColumn(name)}
+              />${name}</label
+            >`,
+        )}
+      </div>
+    </details>`;
+  }
+
   #editors(): unknown {
     if (this.readonly) return nothing;
-    const cols = splitColumns(this.columns ?? "");
+    const cols = this.#columns();
     return html`<div class="nct-editors">
       <label class="nct-field">
         <span>collection</span>
         <input
           class="nct-input nct-expr"
           spellcheck="false"
-          .value=${this.expr}
+          .value=${this.#expr()}
           @keydown=${this.#onEnter((v) => {
             this.expr = v.trim();
+            // A retyped collection is its own: the stepper no longer knows where a size goes.
+            this.template = "";
+            this.size = 0;
             this.page = 1;
           })}
         />
+        ${
+          this.#template() === undefined
+            ? nothing
+            : html`<input
+                class="nct-input nct-size"
+                type="number"
+                aria-label="size"
+                min=${Math.max(0, this.sizeMin)}
+                max=${this.sizeMax > 0 ? this.sizeMax : nothing}
+                .value=${String(this.size)}
+                @change=${(e: Event) => this.#setSize((e.target as HTMLInputElement).value)}
+              />`
+        }
       </label>
       <label class="nct-field">
         <span>filter <code>_</code></span>
@@ -244,6 +339,7 @@ export class NotatioCollectionTable extends LitElement {
                 </button></span
               >`,
           )}
+          ${this.#menu(cols)}
           <input
             class="nct-input nct-add"
             spellcheck="false"
@@ -257,7 +353,7 @@ export class NotatioCollectionTable extends LitElement {
   }
 
   protected override render(): unknown {
-    const source = this.expr.trim();
+    const source = this.#expr();
     const start =
       this.scrollPosition !== ""
         ? this.scrollPosition
@@ -267,7 +363,7 @@ export class NotatioCollectionTable extends LitElement {
     if (source !== "") log("render", source);
     return html`<div class="nct">
       <div class="nct-head">
-        <code class="nct-title">${this.expr}</code>
+        <code class="nct-title">${source}</code>
         ${this.#summary()}
       </div>
       ${this.#editors()}
@@ -376,6 +472,24 @@ notatio-collection-table { display: block; margin: 0.75rem 0; width: 100%; }
 }
 .nct-chip button:hover { color: var(--vp-c-danger-1, #c0392b); }
 .nct-add { flex: 1 1 14rem; }
+.nct-size { flex: 0 0 4.5rem; }
+.nct-menu { position: relative; font-size: 0.78rem; }
+.nct-menu summary { cursor: pointer; color: var(--vp-c-text-3, #888); user-select: none; }
+.nct-menu-list {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  gap: 0.15rem;
+  max-height: 14rem;
+  overflow: auto;
+  margin-top: 0.2rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--vp-c-divider, #d4d4d8);
+  border-radius: 6px;
+  background: var(--vp-c-bg, #fff);
+  font-family: var(--notatio-mono, ui-monospace, monospace);
+}
+.nct-menu-list label { display: flex; gap: 0.4rem; align-items: center; white-space: nowrap; }
 `;
 
 if (!customElements.get("notatio-collection-table")) {

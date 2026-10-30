@@ -1,0 +1,477 @@
+{
+  "derived": {
+    "opened": {
+      "title": "Derangements(4)",
+      "menu": [
+        {
+          "name": "Descents",
+          "checked": true
+        },
+        {
+          "name": "Excedances",
+          "checked": false
+        },
+        {
+          "name": "Inversions",
+          "checked": true
+        },
+        {
+          "name": "MajorIndex",
+          "checked": false
+        },
+        {
+          "name": "Peaks",
+          "checked": false
+        },
+        {
+          "name": "Valleys",
+          "checked": false
+        }
+      ],
+      "stepper": {
+        "min": "1",
+        "max": "6",
+        "value": "4"
+      },
+      "columns": "Descents, Inversions",
+      "headers": ["element", "Descents", "Inversions"],
+      "collection": "{\"str\":\"Derangements(4)\"}"
+    },
+    "added": {
+      "title": "Derangements(4)",
+      "menu": [
+        {
+          "name": "Descents",
+          "checked": true
+        },
+        {
+          "name": "Excedances",
+          "checked": true
+        },
+        {
+          "name": "Inversions",
+          "checked": true
+        },
+        {
+          "name": "MajorIndex",
+          "checked": false
+        },
+        {
+          "name": "Peaks",
+          "checked": false
+        },
+        {
+          "name": "Valleys",
+          "checked": false
+        }
+      ],
+      "stepper": {
+        "min": "1",
+        "max": "6",
+        "value": "4"
+      },
+      "columns": "Descents, Inversions, Excedances",
+      "headers": ["element", "Descents", "Inversions", "Excedances"],
+      "collection": "{\"str\":\"Derangements(4)\"}"
+    },
+    "removed": {
+      "title": "Derangements(4)",
+      "menu": [
+        {
+          "name": "Descents",
+          "checked": false
+        },
+        {
+          "name": "Excedances",
+          "checked": true
+        },
+        {
+          "name": "Inversions",
+          "checked": true
+        },
+        {
+          "name": "MajorIndex",
+          "checked": false
+        },
+        {
+          "name": "Peaks",
+          "checked": false
+        },
+        {
+          "name": "Valleys",
+          "checked": false
+        }
+      ],
+      "stepper": {
+        "min": "1",
+        "max": "6",
+        "value": "4"
+      },
+      "columns": "Inversions, Excedances",
+      "headers": ["element", "Inversions", "Excedances"],
+      "collection": "{\"str\":\"Derangements(4)\"}"
+    },
+    "stepped": {
+      "title": "Derangements(5)",
+      "menu": [
+        {
+          "name": "Descents",
+          "checked": false
+        },
+        {
+          "name": "Excedances",
+          "checked": true
+        },
+        {
+          "name": "Inversions",
+          "checked": true
+        },
+        {
+          "name": "MajorIndex",
+          "checked": false
+        },
+        {
+          "name": "Peaks",
+          "checked": false
+        },
+        {
+          "name": "Valleys",
+          "checked": false
+        }
+      ],
+      "stepper": {
+        "min": "1",
+        "max": "6",
+        "value": "5"
+      },
+      "columns": "Inversions, Excedances",
+      "headers": ["element", "Inversions", "Excedances"],
+      "collection": "{\"str\":\"Derangements(5)\"}"
+    },
+    "clamped": {
+      "title": "Derangements(6)",
+      "menu": [
+        {
+          "name": "Descents",
+          "checked": false
+        },
+        {
+          "name": "Excedances",
+          "checked": true
+        },
+        {
+          "name": "Inversions",
+          "checked": true
+        },
+        {
+          "name": "MajorIndex",
+          "checked": false
+        },
+        {
+          "name": "Peaks",
+          "checked": false
+        },
+        {
+          "name": "Valleys",
+          "checked": false
+        }
+      ],
+      "stepper": {
+        "min": "1",
+        "max": "6",
+        "value": "6"
+      },
+      "columns": "Inversions, Excedances",
+      "headers": ["element", "Inversions", "Excedances"],
+      "collection": "{\"str\":\"Derangements(6)\"}"
+    },
+    "floored": {
+      "title": "Derangements(1)",
+      "menu": [
+        {
+          "name": "Descents",
+          "checked": false
+        },
+        {
+          "name": "Excedances",
+          "checked": true
+        },
+        {
+          "name": "Inversions",
+          "checked": true
+        },
+        {
+          "name": "MajorIndex",
+          "checked": false
+        },
+        {
+          "name": "Peaks",
+          "checked": false
+        },
+        {
+          "name": "Valleys",
+          "checked": false
+        }
+      ],
+      "stepper": {
+        "min": "1",
+        "max": "6",
+        "value": "1"
+      },
+      "columns": "Inversions, Excedances",
+      "headers": ["element", "Inversions", "Excedances"],
+      "collection": "{\"str\":\"Derangements(1)\"}"
+    }
+  },
+  "round-trip": {
+    "opened": {
+      "title": "Derangements(4)",
+      "menu": [
+        {
+          "name": "Descents",
+          "checked": true
+        },
+        {
+          "name": "Excedances",
+          "checked": false
+        },
+        {
+          "name": "Inversions",
+          "checked": false
+        },
+        {
+          "name": "MajorIndex",
+          "checked": false
+        },
+        {
+          "name": "Peaks",
+          "checked": false
+        },
+        {
+          "name": "Valleys",
+          "checked": false
+        }
+      ],
+      "stepper": null,
+      "columns": "Descents",
+      "headers": ["element", "Descents"],
+      "collection": "{\"str\":\"Derangements(4)\"}"
+    },
+    "typedAStatistic": {
+      "title": "Derangements(4)",
+      "menu": [
+        {
+          "name": "Descents",
+          "checked": true
+        },
+        {
+          "name": "Excedances",
+          "checked": false
+        },
+        {
+          "name": "Inversions",
+          "checked": false
+        },
+        {
+          "name": "MajorIndex",
+          "checked": false
+        },
+        {
+          "name": "Peaks",
+          "checked": true
+        },
+        {
+          "name": "Valleys",
+          "checked": false
+        }
+      ],
+      "stepper": null,
+      "columns": "Descents, Peaks",
+      "headers": ["element", "Descents", "Peaks"],
+      "collection": "{\"str\":\"Derangements(4)\"}"
+    },
+    "typedAnExpression": {
+      "title": "Derangements(4)",
+      "menu": [
+        {
+          "name": "Descents",
+          "checked": true
+        },
+        {
+          "name": "Excedances",
+          "checked": false
+        },
+        {
+          "name": "Inversions",
+          "checked": false
+        },
+        {
+          "name": "MajorIndex",
+          "checked": false
+        },
+        {
+          "name": "Peaks",
+          "checked": true
+        },
+        {
+          "name": "Valleys",
+          "checked": false
+        }
+      ],
+      "stepper": null,
+      "columns": "Descents, Peaks, Max(_) - Min(_)",
+      "headers": ["element", "Descents", "Peaks", "Max(_) - Min(_)"],
+      "collection": "{\"str\":\"Derangements(4)\"}"
+    },
+    "uncheckedIt": {
+      "title": "Derangements(4)",
+      "menu": [
+        {
+          "name": "Descents",
+          "checked": true
+        },
+        {
+          "name": "Excedances",
+          "checked": false
+        },
+        {
+          "name": "Inversions",
+          "checked": false
+        },
+        {
+          "name": "MajorIndex",
+          "checked": false
+        },
+        {
+          "name": "Peaks",
+          "checked": false
+        },
+        {
+          "name": "Valleys",
+          "checked": false
+        }
+      ],
+      "stepper": null,
+      "columns": "Descents, Max(_) - Min(_)",
+      "headers": ["element", "Descents", "Max(_) - Min(_)"],
+      "collection": "{\"str\":\"Derangements(4)\"}"
+    }
+  },
+  "explicit": {
+    "title": "SymmetricGroup(5)",
+    "menu": [
+      {
+        "name": "Descents",
+        "checked": true
+      },
+      {
+        "name": "Excedances",
+        "checked": false
+      },
+      {
+        "name": "Inversions",
+        "checked": false
+      },
+      {
+        "name": "MajorIndex",
+        "checked": false
+      },
+      {
+        "name": "Peaks",
+        "checked": false
+      },
+      {
+        "name": "Valleys",
+        "checked": false
+      }
+    ],
+    "stepper": null,
+    "columns": "Descents",
+    "headers": ["element", "Descents"],
+    "collection": "{\"str\":\"SymmetricGroup(5)\"}"
+  },
+  "options": {
+    "options": {
+      "title": "Permutations(5)",
+      "menu": [
+        {
+          "name": "Descents",
+          "checked": true
+        },
+        {
+          "name": "Excedances",
+          "checked": true
+        },
+        {
+          "name": "Inversions",
+          "checked": true
+        },
+        {
+          "name": "MajorIndex",
+          "checked": true
+        },
+        {
+          "name": "Peaks",
+          "checked": false
+        },
+        {
+          "name": "Valleys",
+          "checked": false
+        }
+      ],
+      "stepper": {
+        "min": "1",
+        "max": null,
+        "value": "5"
+      },
+      "columns": "Automatic",
+      "headers": ["", "element", "Descents", "Excedances", "Inversions", "MajorIndex"],
+      "collection": "{\"str\":\"Permutations(5)\"}"
+    },
+    "afterEditing": {
+      "title": "Permutations(5)",
+      "menu": [
+        {
+          "name": "Descents",
+          "checked": true
+        },
+        {
+          "name": "Excedances",
+          "checked": true
+        },
+        {
+          "name": "Inversions",
+          "checked": false
+        },
+        {
+          "name": "MajorIndex",
+          "checked": true
+        },
+        {
+          "name": "Peaks",
+          "checked": false
+        },
+        {
+          "name": "Valleys",
+          "checked": false
+        }
+      ],
+      "stepper": {
+        "min": "1",
+        "max": null,
+        "value": "5"
+      },
+      "columns": "Descents, Excedances, MajorIndex",
+      "headers": ["", "element", "Descents", "Excedances", "MajorIndex"],
+      "collection": "{\"str\":\"Permutations(5)\"}"
+    },
+    "notSteppable": {
+      "title": "NonNegativeIntegers",
+      "menu": [],
+      "stepper": null,
+      "columns": "",
+      "headers": ["element"],
+      "collection": "{\"str\":\"NonNegativeIntegers\"}"
+    }
+  }
+}

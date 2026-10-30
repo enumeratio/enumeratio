@@ -5,6 +5,7 @@
 
 import { splitColumns } from "./collection-table.ts";
 import { GLYPH_KINDS } from "./glyphs.ts";
+import { DEFAULT_COLUMNS } from "./table-state.ts";
 
 /** What of a collection's record the explorer reads. */
 export interface CollectionRecord {
@@ -39,6 +40,8 @@ export interface ExplorerCatalog {
   opens?(expr: string): boolean | Promise<boolean>;
   /** Whether a statistic evaluates on a row of the derived collection; probed likewise. */
   usable?(expr: string, statistic: string): boolean | Promise<boolean>;
+  /** Whether a statistic takes more than one value over the derived collection (a constant column says nothing). */
+  varies?(expr: string, statistic: string): boolean | Promise<boolean>;
 }
 
 export interface ExplorerSize {
@@ -68,8 +71,7 @@ export interface ExplorerSpec {
 export const START_SIZE = 4;
 /** The largest size offered when a record states no `maxSize`: an interim until records say. */
 export const DEFAULT_MAX_SIZE = 6;
-/** Columns a derived table opens with. */
-export const DEFAULT_COLUMNS = 4;
+export { DEFAULT_COLUMNS };
 /** The value a grade past the first (or a parameter) opens at. */
 const SECONDARY = 2;
 /** Elements of an unbounded collection a derived table takes. */
@@ -122,7 +124,8 @@ export async function explorerOf(
   if (explicit?.columns === undefined)
     for (const c of candidates) {
       if (columns.length === DEFAULT_COLUMNS) break;
-      if ((await catalog.usable?.(expr, c.name)) !== false) columns.push(c.name);
+      if ((await catalog.usable?.(expr, c.name)) !== false && (await catalog.varies?.(expr, c.name)) !== false)
+        columns.push(c.name);
     }
 
   const derivedGlyph = record.carrier === undefined ? undefined : catalog.glyphOf(record.carrier);
