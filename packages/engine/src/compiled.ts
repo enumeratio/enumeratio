@@ -5,6 +5,7 @@
 
 import { type Expression, type ComputeEngine, version } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
+import { FastTarget } from "./compiled-target.ts";
 
 export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 export type Js = number | boolean | readonly Js[];
@@ -96,7 +97,7 @@ export function compileTyped(
   ce.pushScope();
   try {
     for (const [name, type] of Object.entries(types)) ce.declare(name, type);
-    const result = new JavaScriptTarget().compile(ce.box(expression as never) as Expression) as {
+    const result = new FastTarget().compile(ce.box(expression as never) as Expression) as {
       success?: boolean;
       run?: Compilation["run"];
       code?: string;
