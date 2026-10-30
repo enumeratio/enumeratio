@@ -8,7 +8,7 @@ import {
   compiledDefinitionsFor,
   renderCompiled,
 } from "../src/statistics/generate-compiled.ts";
-import type { Definition } from "../src/statistics/types.ts";
+import { type Definition, signatureOf } from "../src/statistics/types.ts";
 import { smallElements } from "./samples.ts";
 import { sharded } from "./shards.ts";
 import { checkers } from "./verdicts.ts";
@@ -25,7 +25,7 @@ export async function compileArea(
   shape: string,
   output: string,
 ): Promise<void> {
-  const run = await sharded(script, step, checkers.statistics, (verdicts, mine) =>
+  const run = await sharded(script, step, checkers.statistics, definitions.map(signatureOf), (verdicts, mine) =>
     compiledDefinitionsFor(definitions, shape, smallElements, verdicts, mine),
   );
   if (run === undefined) return;

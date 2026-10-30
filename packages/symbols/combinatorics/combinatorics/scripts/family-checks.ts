@@ -218,6 +218,7 @@ export function compiledFamilies(
         source: reachesSource ? familySourceHash() : undefined,
       },
       () => disagreements(ce, family, runs),
+      family.head,
     );
     for (const operation of interpreted) delete code[operation];
     out.push({ head: family.head, hash: familyHash(family), code, interpreted });

@@ -124,6 +124,29 @@ export function hashInputs({
   return hash.digest("hex");
 }
 
+/** `hashInputs` in two: what the step's own code and config are (`code`, with the lockfile and
+ *  Node), and what it runs on (`engine`: the dists it imports, compute-engine's version). A memo
+ *  whose engine alone moved holds answers that are probably still right (see `verdictCache`). */
+export function hashParts({ dir, roots: own = [dir], skip = () => false, omitDists = [], imports }: StepInputs): {
+  code: string;
+  engine: string;
+} {
+  const code = createHash("sha256");
+  const engine = createHash("sha256");
+  const add = (hash: ReturnType<typeof createHash>, label: string, data: string | Buffer): void => {
+    hash.update(`${label}\0${data.length}\0`);
+    hash.update(data);
+  };
+  for (const root of own) for (const file of filesUnder(root, skip)) add(code, relative(dir, file), readFileSync(file));
+  for (const root of workspaceDists(dir, omitDists, imports))
+    for (const file of filesUnder(root, skip)) add(engine, relative(dir, file), readFileSync(file));
+  const lock = lockfileOf(dir);
+  add(code, "lockfile", lock === "" ? "" : readFileSync(lock));
+  add(code, "node", process.version);
+  add(engine, "compute-engine", engineVersion());
+  return { code: code.digest("hex"), engine: engine.digest("hex") };
+}
+
 /**
  * The directory tools/ci/dist-cache.ts keeps its tarballs in (`$DIST_CACHE_DIR`, else the
  * clone's shared git directory). A step's outputs are kept there too, under the hash of its
@@ -213,8 +236,19 @@ export async function cached(
 }
 
 export interface Verdicts {
-  /** `compute()`, or its answer from an earlier run on the same `parts`. */
-  remember<T>(parts: unknown, compute: () => T): T;
+  /** `compute()`, or its answer from an earlier run on the same `parts`. `label` names the item
+   *  (a definition's signature) for the sample and the cost record. */
+  remember<T>(parts: unknown, compute: () => T, label?: string): T;
+  /** Declares every item this step checks, so a run on a moved engine can sample them. */
+  plan(labels: readonly string[]): void;
+  /** What each label's last check took, in ms (kept across engine changes). */
+  costs(): Readonly<Record<string, number>>;
+  /** Whether a sampled re-check came out unlike the answer it was carried from. */
+  diverged(): boolean;
+  /** Runs `work`; on a divergence, re-checks everything and runs it again. */
+  settle<T>(work: () => T): T;
+  /** Re-check everything from here on (a divergence elsewhere, say). */
+  escalate(): void;
   /** Keeps this run's answers, and only those, for the next run. */
   save(): void;
   /** This run's answers and counts, for the process that saves them (a shard hands them up). */
@@ -226,15 +260,24 @@ export interface Verdicts {
 /** What one process learned, in a form that crosses a process boundary as JSON. */
 export interface VerdictShare {
   readonly answers: Record<string, unknown>;
+  readonly verified: Record<string, string>;
+  readonly costs: Record<string, number>;
   readonly hits: number;
   readonly misses: number;
+  readonly carried: number;
+  readonly diverged: boolean;
 }
 
 /** Every answer is computed, and none kept. */
 export const noVerdicts: Verdicts = {
   remember: (_parts, compute) => compute(),
+  plan() {},
+  costs: () => ({}),
+  diverged: () => false,
+  settle: (work) => work(),
+  escalate() {},
   save() {},
-  share: () => ({ answers: {}, hits: 0, misses: 0 }),
+  share: () => ({ answers: {}, verified: {}, costs: {}, hits: 0, misses: 0, carried: 0, diverged: false }),
   adopt() {},
 };
 
@@ -255,58 +298,168 @@ function verdictFile(dir: string, name: string): string {
   return cacheFile(dir, `${name}.verdicts.json`);
 }
 
+/** Whether to re-check everything: the nightly deep run, or RECHECK_ALL=1. */
+export const recheckAll = (): boolean => process.env.DEEP_TESTS === "1" || process.env.RECHECK_ALL === "1";
+
+/** The share of a step's items (at least `SAMPLE_MIN`) a run re-checks when only the engine
+ *  moved. A miscompile from an engine change shows on many definitions at once, so a tenth finds
+ *  it; the nightly run re-checks the rest. Engines differ in which tenth, so successive changes
+ *  cover more. */
+export const SAMPLE_FRACTION = 0.1;
+export const SAMPLE_MIN = 3;
+
+/** An answer a carry may stand in for: a pass, never a disagreement (which decides what the
+ *  generated file leaves interpreted, so is always re-checked). */
+const passed = (answer: unknown): boolean => answer === true || (Array.isArray(answer) && answer.length === 0);
+
+interface Memo {
+  code: string;
+  engine: string;
+  answers: Record<string, unknown>;
+  /** The engine (a prefix of its hash) each answer was last checked on; one not checked on the
+   *  current engine is carried. */
+  verified: Record<string, string>;
+  costs: Record<string, number>;
+}
+
+const tagOf = (engine: string): string => engine.slice(0, 12);
+
+/** A saved memo's answers under `code`, each with the engine it was checked on. */
+function readMemo(file: string, code: string): { memo: Partial<Memo>; usable: boolean } {
+  const memo = JSON.parse(readFileSync(file, "utf8")) as Partial<Memo>;
+  const usable = memo.code === code && memo.answers !== undefined && memo.engine !== undefined;
+  if (usable) {
+    memo.verified ??= {};
+    // An answer with no record of its engine was made on the one the memo names.
+    for (const key of Object.keys(memo.answers!)) memo.verified[key] ??= tagOf(memo.engine!);
+  }
+  return { memo, usable };
+}
+
 /**
  * A memo of checks that are slow and pure in `parts` (a generator comparing compiled code with
  * the interpreter, say) so an edit to one definition re-checks only that one. Answers are
- * trusted only while `inputs` (what the checks run on: the interpreter's code, the dists it
- * lives in) hash as they did when the answers were made.
+ * trusted while the step's code, the lockfile and Node (`hashParts`' `code`) are as they were
+ * when the answers were made, and:
+ *   - the engine (dists, compute-engine) is the same: reused;
+ *   - the engine moved: a deterministic sample of the step's items is re-checked and the other
+ *     passes are carried, marked as not checked on this engine. A sampled answer that comes out
+ *     differently is a divergence, and `settle` / the sharder re-check everything.
+ * A definition whose `parts` changed has no answer, so is always checked, and `recheckAll()`
+ * checks everything.
  */
 export function verdictCache(name: string, inputs: StepInputs): Verdicts {
   const file = verdictFile(inputs.dir, name);
-  const env = hashInputs(inputs);
-  let before: Record<string, unknown> = {};
-  // Why the whole file was set aside, if it was.
+  const { code, engine } = hashParts(inputs);
+  const tag = tagOf(engine);
+  let full = recheckAll();
+  const before: Memo = { code, engine, answers: {}, verified: {}, costs: {} };
+  // Why answers were set aside, if they were.
   let discarded = "";
   try {
-    const saved = JSON.parse(readFileSync(file, "utf8")) as { env: string; answers: Record<string, unknown> };
-    if (saved.env === env) before = saved.answers;
-    else discarded = `env changed (${saved.env.slice(0, 8)} -> ${env.slice(0, 8)})`;
+    const { memo, usable } = readMemo(file, code);
+    before.costs = memo.costs ?? {};
+    if (usable) Object.assign(before, { answers: memo.answers, verified: memo.verified });
+    else discarded = `code changed (${(memo.code ?? "none").slice(0, 8)} -> ${code.slice(0, 8)})`;
   } catch (error) {
     discarded = (error as NodeJS.ErrnoException).code === "ENOENT" ? `no memo at ${basename(file)}` : "memo unreadable";
   }
-  const kept: Record<string, unknown> = {};
+  let kept: Record<string, unknown> = {};
+  let verified: Record<string, string> = {};
+  let costs: Record<string, number> = {};
+  let sample = new Set<string>();
   let hits = 0;
   let misses = 0;
+  let carried = 0;
+  let diverged = false;
   return {
-    remember<T>(parts: unknown, compute: () => T): T {
-      const key = createHash("sha256").update(JSON.stringify(parts)).digest("hex");
-      if (key in before) hits++;
-      else misses++;
-      kept[key] = key in before ? before[key] : compute();
-      return kept[key] as T;
+    plan(labels) {
+      const ranked = labels
+        .map((label) => [createHash("sha256").update(`${engine}\0${label}`).digest("hex"), label] as const)
+        .toSorted((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0));
+      const n = Math.min(labels.length, Math.max(SAMPLE_MIN, Math.ceil(labels.length * SAMPLE_FRACTION)));
+      sample = new Set(ranked.slice(0, n).map(([, label]) => label));
     },
-    share: () => ({ answers: kept, hits, misses }),
+    costs: () => before.costs,
+    diverged: () => diverged,
+    escalate() {
+      full = true;
+      kept = {};
+      verified = {};
+      costs = {};
+      hits = misses = carried = 0;
+      diverged = false;
+    },
+    settle<T>(work: () => T): T {
+      const result = work();
+      if (!diverged || full) return result;
+      console.log(`verdicts ${name}: a sampled re-check differed; re-checking everything`);
+      this.escalate();
+      return work();
+    },
+    remember<T>(parts: unknown, compute: () => T, label?: string): T {
+      const key = createHash("sha256").update(JSON.stringify(parts)).digest("hex");
+      const have = !full && key in before.answers;
+      if (have && before.verified[key] === tag) {
+        hits++;
+        kept[key] = before.answers[key];
+        verified[key] = tag;
+        return kept[key] as T;
+      }
+      // Carry only an unchecked pass of a labelled item outside the sample; anything we are
+      // unsure of is checked.
+      if (have && passed(before.answers[key]) && label !== undefined && !sample.has(label)) {
+        hits++;
+        carried++;
+        kept[key] = before.answers[key];
+        verified[key] = before.verified[key]!;
+        return kept[key] as T;
+      }
+      misses++;
+      const started = Date.now();
+      const answer = compute();
+      if (label !== undefined) costs[label] = Date.now() - started;
+      if (have && JSON.stringify(answer) !== JSON.stringify(before.answers[key])) diverged = true;
+      kept[key] = answer;
+      verified[key] = tag;
+      return answer;
+    },
+    share: () => ({ answers: kept, verified, costs, hits, misses, carried, diverged }),
     adopt(share) {
       Object.assign(kept, share.answers);
+      Object.assign(verified, share.verified);
+      Object.assign(costs, share.costs);
       hits += share.hits;
       misses += share.misses;
+      carried += share.carried;
+      diverged ||= share.diverged;
     },
     save() {
-      // Answers an earlier run left under the same env stay: a key names the definition it
-      // checked, so a changed definition never matches one.
-      let merged = kept;
+      // Answers an earlier run left under the same code stay: a key names the definition it
+      // checked, so a changed definition never matches one. Their engine record stays too, so
+      // a carried answer is still marked unchecked.
+      let answers = kept;
+      let marks = verified;
+      let times = { ...before.costs, ...costs };
       try {
-        const saved = JSON.parse(readFileSync(file, "utf8")) as { env: string; answers: Record<string, unknown> };
-        if (saved.env === env) merged = pruned({ ...saved.answers, ...kept }, kept);
+        const { memo, usable } = readMemo(file, code);
+        if (usable) {
+          answers = pruned({ ...memo.answers, ...kept }, kept);
+          marks = { ...memo.verified, ...verified };
+        }
+        times = { ...memo.costs, ...times };
       } catch {
         // nothing to merge
       }
+      marks = Object.fromEntries(Object.entries(marks).filter(([k]) => k in answers));
       mkdirSync(dirname(file), { recursive: true });
       const tmp = `${file}.${process.pid}.tmp`;
-      writeFileSync(tmp, JSON.stringify({ env, answers: merged }));
+      writeFileSync(tmp, JSON.stringify({ code, engine, answers, verified: marks, costs: times }));
       renameSync(tmp, file);
       console.log(
-        `verdicts ${name}: ${hits} reused, ${misses} checked` +
+        `verdicts ${name}: ${hits} reused` +
+          (carried > 0 ? ` (${carried} carried, not checked on this engine)` : "") +
+          `, ${misses} checked` +
           (discarded === "" ? "" : `; memo discarded: ${discarded}`),
       );
     },

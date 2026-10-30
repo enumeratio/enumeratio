@@ -80,8 +80,10 @@ await Promise.all(
     for (let step = queue.shift(); step !== undefined; step = queue.shift()) {
       const [script, output] = step;
       try {
-        const ran = await cached(script, compileInputs, [at(output)], () => run(script));
-        if (!ran) console.log(`${script}: up to date`);
+        // RECHECK_ALL runs every step whatever its stamp says (the nightly cross-check).
+        if (process.env.RECHECK_ALL === "1") await run(script);
+        else if (!(await cached(script, compileInputs, [at(output)], () => run(script))))
+          console.log(`${script}: up to date`);
       } catch (error) {
         failures.push(error);
       }

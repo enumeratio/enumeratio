@@ -79,7 +79,7 @@ export function compiledMaps(verdicts: Verdicts = noVerdicts, mine: (key: string
     if (!samples.has(from.name)) samples.set(from.name, smallElements(ce, from.name));
     const subjects = samples.get(from.name)!;
     const parts = { body: map.body, guard: map.guard, code: body.code, guardCode: guard?.code, subjects };
-    if (!verdicts.remember(parts, () => agrees(ce, map, body.run, guard?.run, subjects))) {
+    if (!verdicts.remember(parts, () => agrees(ce, map, body.run, guard?.run, subjects), key)) {
       out.push({ key, hash });
       continue;
     }
@@ -113,7 +113,13 @@ ${body}
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const run = await sharded(import.meta.url, "compile-maps", checkers.maps, compiledMaps);
+  const run = await sharded(
+    import.meta.url,
+    "compile-maps",
+    checkers.maps,
+    MAPS.filter((m) => m.body !== undefined).map((m) => `${m.name}@${m.from}`),
+    compiledMaps,
+  );
   if (run === undefined) process.exit(0);
   const entries = run.results.flat().toSorted((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
   const target = fileURLToPath(new URL("../src/compiled-maps.generated.js", import.meta.url));

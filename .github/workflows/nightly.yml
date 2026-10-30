@@ -112,6 +112,24 @@ jobs:
       # π(x) by the combinatorial count against Lucy_Hedgehog, then 10^14 … 10^17 (minutes at the top).
       - run: pnpm --filter @enumeratio/residues exec vp test run tests/prime-count.test.ts
 
+  # The compile steps' interpreter cross-checks, every definition (a PR run re-checks only a sample
+  # when just the engine's dists moved). The generated files must come out as the build made them:
+  # one that differs means a carried verdict was stale.
+  deep-crosschecks:
+    name: deep compile cross-checks
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - working-directory: packages/symbols/combinatorics/combinatorics
+        run: |
+          outputs="src/compiled-maps.generated.js collections/src/families/compiled-families.generated.js lattice-paths/src/statistics.compiled.generated.js partitions/src/statistics.compiled.generated.js permutations/src/statistics.compiled.generated.js set-partitions/src/statistics.compiled.generated.js"
+          sha256sum $outputs > "$RUNNER_TEMP/before.sha"
+          RECHECK_ALL=1 BUILD_JOBS=3 node scripts/build-generated.ts
+          sha256sum --check "$RUNNER_TEMP/before.sha"
+
   # The review backlog's machine-checkable claims (`expect:` bullets exported to
   # packages/reference/review-claims.tsv), evaluated against the current engine. A claim that stops
   # holding fails the job and the nightly-fixup routine files it. Visual review items are not here.
