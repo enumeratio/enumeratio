@@ -34,7 +34,8 @@ async function until(done: () => boolean): Promise<void> {
   expect(done()).toBe(true);
 }
 
-const CONTROL = "slider-box, checkbox-box, stepper-box, knob-box, toggler-box, setter-bar-box, popup-menu-box";
+const CONTROL =
+  "slider-box, checkbox-box, stepper-box, knob-box, toggler-box, setter-bar-box, popup-menu-box, slider-2d-box";
 
 /** The controls under `root` as data: tag, name and the attributes that say how each is drawn. */
 function drawn(root: Element): unknown[] {
@@ -42,7 +43,7 @@ function drawn(root: Element): unknown[] {
     tag: el.localName,
     name: el.getAttribute("name"),
     ...Object.fromEntries(
-      ["min", "max", "step", "values"].flatMap((a) => (el.hasAttribute(a) ? [[a, el.getAttribute(a)]] : [])),
+      ["min", "max", "step", "values", "symbols"].flatMap((a) => (el.hasAttribute(a) ? [[a, el.getAttribute(a)]] : [])),
     ),
   }));
 }
@@ -73,6 +74,34 @@ test("Variables -> Automatic gives each hole of the prose the control its type c
   document.body.append(scope);
   await until(() => scope.querySelector("stepper-box, knob-box, toggler-box") !== null && drawn(scope).length === 3);
   check("automatic variables", drawn(scope));
+  scope.remove();
+});
+
+test("a symbol choice is a bar that binds the symbol", async () => {
+  const el = document.createElement("notatio-manipulate");
+  el.setAttribute("params", "{{o, Natural}, {Natural, ChineseRemainder, Adic}}");
+  el.innerHTML = '<dynamic-box value="_o"></dynamic-box>';
+  document.body.append(el);
+  await until(() => el.querySelector("setter-bar-box") !== null);
+  check("symbol choice", drawn(el));
+  const bar = el.querySelector("setter-bar-box") as unknown as HTMLElement & {
+    binding: unknown;
+    choose(i: number): void;
+  };
+  bar.choose(2);
+  expect(bar.binding).toBe("Adic");
+  el.remove();
+});
+
+test("a variable of the prose that is complex gets a 2D pad, bound as a number", async () => {
+  const scope = document.createElement("div");
+  scope.setAttribute("variables", "Automatic");
+  scope.innerHTML = '<template-slot name="z"></template-slot>';
+  document.body.append(scope);
+  await until(() => scope.querySelector("slider-2d-box") !== null);
+  check("complex hole", drawn(scope));
+  const pad = scope.querySelector("slider-2d-box") as HTMLElement & { binding: unknown };
+  expect(pad.binding).toBe(1);
   scope.remove();
 });
 

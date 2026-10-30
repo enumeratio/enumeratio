@@ -191,11 +191,17 @@ export function parseChoices(raw: string): Choice[] {
  * What a choice binds, as MathJSON: a number when it is one; a quoted value as that
  * string (a Toggler written as an expression over strings); `True`/`False` and any
  * labelled value as the symbol it names (the author separated a value from its label
- * precisely to bind the value); a bare word as its index, which is the only thing a
+ * precisely to bind the value); a bare word as its index (unless the list is `symbols`), which is the only thing a
  * word in prose can contribute to an expression.
  */
-export function choiceBinding(choice: Choice | undefined, index: number): number | string | { str: string } {
+export function choiceBinding(
+  choice: Choice | undefined,
+  index: number,
+  symbols = false,
+): number | string | { str: string } {
   if (choice === undefined) return index;
+  // `symbols`: every entry names a symbol (`Natural | Adic`), which is what it binds.
+  if (symbols && /^[A-Za-z_]\w*$/.test(choice.value)) return choice.value;
   const quoted = /^"(.*)"$/.exec(choice.value);
   if (quoted) return { str: quoted[1]! };
   const numeric = Number(choice.value);

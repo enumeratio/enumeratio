@@ -252,6 +252,9 @@ function literalChoices(type: string): Json[] | undefined {
   return values;
 }
 
+/** A bare name in a choice's values: MathJSON for a symbol (`'a'` is a string, `True` a boolean). */
+const isSymbolName = (v: Json): v is string => typeof v === "string" && /^[A-Za-z_]\w*$/.test(v);
+
 const labelOf = (v: Json): string => (typeof v === "string" ? v.replace(/^'(.*)'$/s, "$1") : String(v));
 
 function choicesSpec(name: string, values: readonly Json[], start?: Json): ControlSpec {
@@ -375,6 +378,10 @@ export function paramsOf(spec: ControlSpec): string | undefined {
     case "reals":
       return `{{${name}, ${epsilNumber(Number(start))}}, ${epsilNumber(domain.min)}, ${epsilNumber(domain.max)}, ${epsilNumber(domain.step)}${type}}`;
     case "choices": {
+      // Bare names are symbols (`Natural | Adic`): the list as they are, bound as the symbol.
+      if (domain.values.every(isSymbolName) && isSymbolName(start)) {
+        return `{{${name}, ${start}}, {${domain.values.join(", ")}}${type}}`;
+      }
       // Numbers as they are, strings quoted (they may be quoted already, `'a'`, in a type).
       const entries = domain.values.map((v) => (typeof v === "string" ? `"${labelOf(v)}"` : v));
       if (entries.some((v) => typeof v !== "string" && typeof v !== "number")) return undefined;
@@ -426,10 +433,10 @@ function ruleOf(node: Json): { name: string; value: Json } | undefined {
 const optionJson = (v: string | number | boolean): Json =>
   typeof v === "boolean" ? (v ? "True" : "False") : typeof v === "string" ? `'${v}'` : v;
 
-/** An option's value as written in an example, in `optionJson`'s spelling; undefined for anything else. */
+/** An option's value as written in an example, in `optionJson`'s spelling (a bare symbol stays bare); undefined for anything else. */
 function writtenValue(node: Json): string | number | undefined {
   const word = symbolOf(node);
-  if (word === "True" || word === "False") return word;
+  if (word !== undefined) return word;
   const str = (node as { str?: unknown } | null)?.str;
   if (typeof str === "string") return `'${str}'`;
   if (typeof node === "string" && /^'.*'$/s.test(node)) return node;
@@ -538,7 +545,9 @@ export function liftLiterals(expr: Json, signature: HeadSignature): { body: Json
           : undefined;
     if (rule === undefined || allowed === undefined || allowed.length < 2) return arg;
     const start = writtenValue(rule.value as Json);
-    const values = allowed.map(optionJson);
+    // An example that writes a symbol (`ElementOrder -> Adic`) is choosing among symbols, not strings.
+    const symbolic = isSymbolName(start) && start !== "True" && start !== "False";
+    const values = allowed.map((v) => (symbolic && typeof v === "string" ? v : optionJson(v)));
     if (start === undefined || !values.includes(start)) return arg;
     const name = rule.name.replace(/^./, (c) => c.toLowerCase());
     if (taken.has(name) || name in hints) return arg;

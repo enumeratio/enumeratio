@@ -18,6 +18,8 @@ export abstract class ChoiceControl extends LitElement {
     values: { type: String },
     /** The entry (or, for a multiple selection, the `|`-separated entries) selected at first. */
     value: { type: String },
+    /** Every entry names a symbol, and binds as that symbol rather than as its index. */
+    symbols: { type: Boolean },
     _selected: { state: true },
     _markup: { state: true },
   };
@@ -25,6 +27,7 @@ export abstract class ChoiceControl extends LitElement {
   declare name: string;
   declare values: string;
   declare value: string;
+  declare symbols: boolean;
   declare _selected: number[];
   declare _markup: string[];
 
@@ -39,6 +42,7 @@ export abstract class ChoiceControl extends LitElement {
     this.name = "";
     this.values = "";
     this.value = "";
+    this.symbols = false;
     this._selected = [];
     this._markup = [];
     ensureStyles();
@@ -63,13 +67,13 @@ export abstract class ChoiceControl extends LitElement {
 
   /** The bound value: one entry's, or a `List` of the selected entries' in list order. */
   get binding(): MathJsonExpression {
-    const of = (i: number): MathJsonExpression => choiceBinding(this.#choices[i], i);
+    const of = (i: number): MathJsonExpression => choiceBinding(this.#choices[i], i, this.symbols);
     if (!this.multiple) return this.index < 0 ? "Null" : of(this.index);
     return ["List", ...[...this._selected].toSorted((a, b) => a - b).map(of)] as MathJsonExpression;
   }
 
   protected override willUpdate(changed: PropertyValues): void {
-    if (changed.has("values") || changed.has("value")) {
+    if (changed.has("values") || changed.has("value") || changed.has("symbols")) {
       this.#choices = parseChoices(this.values);
       this._selected = this.#initial();
       void this.#typeset();

@@ -3,6 +3,11 @@ name: MultiplicationTable
 domain: Modular arithmetic
 signature: MultiplicationTable(R)
 summary: "The multiplication table of ℤ/n, R = QuotientRing(Integers, n): the matrix whose (i, j) entry is aᵢaⱼ, its rows and columns ℤ/n's elements in the order `ElementOrder` lists them."
+optionValues:
+  ElementOrder:
+    - Natural
+    - ChineseRemainder
+    - Adic
 signatures:
   - call: MultiplicationTable(R)
     description: the n × n matrix of products, as ResidueClass entries, for 2 ≤ n ≤ 64

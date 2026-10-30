@@ -18,7 +18,7 @@ import "./slider-2d-box.ts";
 import "./slider-box.ts";
 import "./toggler-box.ts";
 import type { LongPress } from "./popover.ts";
-import { choiceEntry, type Control, type ControlChange, formatValue } from "@enumeratio/frontend/core";
+import { choiceEntries, choiceEntry, type Control, type ControlChange, formatValue } from "@enumeratio/frontend/core";
 
 export interface ControlHandlers {
   /** Set a control's value from a raw input string. */
@@ -88,6 +88,7 @@ export function rawOf(c: Control, change: ControlChange): string {
     case "text":
       return typeof change.value === "string" ? change.value.replace(/^'(.*)'$/s, "$1") : JSON.stringify(change.value);
     case "choice":
+      if (c.symbol && typeof change.value === "string") return change.value;
       // A string entry binds as a string (`{str}`); a number as its `re`.
       return typeof change.value === "object" && change.value !== null && "str" in change.value
         ? String((change.value as { str: unknown }).str)
@@ -199,18 +200,40 @@ function valueControl(c: Exclude<Control, { kind: "slider" }>): TemplateResult {
 
 /** A list parameter as its control: a bar for a few entries, a menu for many. */
 function choiceControl(c: Extract<Control, { kind: "choice" }>): TemplateResult {
-  const values = c.choices.map(choiceEntry).join("|");
-  const value = choiceEntry(c.value);
+  const values = choiceEntries(c).join("|");
+  const value = c.symbol ? String(c.value) : choiceEntry(c.value);
+  const symbols = c.symbol === true;
   switch (tagFor(c)) {
     case "radio-button-bar-box":
-      return html`<radio-button-bar-box name=${c.name} values=${values} .value=${value}></radio-button-bar-box>`;
+      return html`<radio-button-bar-box
+        name=${c.name}
+        values=${values}
+        ?symbols=${symbols}
+        .value=${value}
+      ></radio-button-bar-box>`;
     case "popup-menu-box":
-      return html`<popup-menu-box name=${c.name} values=${values} .value=${value}></popup-menu-box>`;
+      return html`<popup-menu-box
+        name=${c.name}
+        values=${values}
+        ?symbols=${symbols}
+        .value=${value}
+      ></popup-menu-box>`;
     case "toggler-box":
-      return html`<toggler-box name=${c.name} values=${values} .value=${value}></toggler-box>`;
+      return html`<toggler-box name=${c.name} values=${values} ?symbols=${symbols} .value=${value}></toggler-box>`;
     case "list-picker-box":
-      return html`<list-picker-box name=${c.name} values=${values} .value=${value} single></list-picker-box>`;
+      return html`<list-picker-box
+        name=${c.name}
+        values=${values}
+        ?symbols=${symbols}
+        .value=${value}
+        single
+      ></list-picker-box>`;
     default:
-      return html`<setter-bar-box name=${c.name} values=${values} .value=${value}></setter-bar-box>`;
+      return html`<setter-bar-box
+        name=${c.name}
+        values=${values}
+        ?symbols=${symbols}
+        .value=${value}
+      ></setter-bar-box>`;
   }
 }

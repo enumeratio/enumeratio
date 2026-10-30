@@ -55,6 +55,8 @@ export class NotatioToggler extends LitElement {
     values: { type: String },
     /** The entry to start on: one of `values` (by value or label), or its index. */
     value: { type: String },
+    /** Every entry names a symbol, and binds as that symbol rather than as its index. */
+    symbols: { type: Boolean },
     /** Show a play/pause button beside the word. Space toggles playback regardless. */
     play: { type: Boolean, reflect: true },
     /** Cycle while scrolled into view; pause when scrolled out. */
@@ -73,6 +75,7 @@ export class NotatioToggler extends LitElement {
   declare name: string;
   declare values: string;
   declare value: string;
+  declare symbols: boolean;
   declare play: boolean;
   declare autoplay: boolean;
   declare interval: number;
@@ -160,7 +163,7 @@ export class NotatioToggler extends LitElement {
 
   /** The bound value as MathJSON: the entry's value, `True`/`False`, or the index. */
   get binding(): MathJsonExpression {
-    return choiceBinding(this.#choices[this._index], this._index);
+    return choiceBinding(this.#choices[this._index], this._index, this.symbols);
   }
 
   protected override willUpdate(changed: PropertyValues): void {

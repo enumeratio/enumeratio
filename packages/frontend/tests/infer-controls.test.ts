@@ -12,7 +12,7 @@ import {
   paramsOf,
 } from "../src/infer-controls.ts";
 import { tryItOf } from "../src/try-it.ts";
-import { parseControls } from "../src/manipulate.ts";
+import { choiceEntries, parseControls } from "../src/manipulate.ts";
 
 // What each expression's free symbols get as controls: golden JSON compared with
 // `toEqual` (AGENTS.md), regenerated with `UPDATE_INFER_CONTROLS=1 vp test` after an
@@ -161,6 +161,14 @@ const SIGNATURES: Record<string, { src: string; signature: HeadSignature }> = {
       options: { Mode: ["a", "b", "c", "d", "e", "f"] },
     },
   },
+  "options: symbols written bare are a setter bar over symbols": {
+    src: "AdditionTable(R, ElementOrder -> ChineseRemainder)",
+    signature: {
+      head: "AdditionTable",
+      parameters: [{ type: "any", variadic: true }],
+      options: { ElementOrder: ["Natural", "ChineseRemainder", "Adic"] },
+    },
+  },
   "options: a value the record does not list stays as written": {
     src: 'Foo(1, Mode -> "z")',
     signature: { head: "Foo", parameters: [{ type: "any", variadic: true }], options: { Mode: ["a", "b"] } },
@@ -227,6 +235,27 @@ test("a string enum is a params tuple over strings, read back as the same choice
   expect(parseControls(paramsOf(spec as never) as string)).toEqual([
     { kind: "choice", name: "m", value: "sin", choices: ["sin", "cos"], control: "SetterBar" },
   ]);
+});
+
+test("a symbol choice is a params tuple over bare names, read back as symbols", () => {
+  const params = "{{o, Natural}, {Natural, ChineseRemainder, Adic}, SetterBar}";
+  const [control] = parseControls(params);
+  expect(control).toEqual({
+    kind: "choice",
+    name: "o",
+    value: "Natural",
+    choices: ["Natural", "ChineseRemainder", "Adic"],
+    symbol: true,
+    control: "SetterBar",
+  });
+  expect(choiceEntries(control as never)).toEqual(["Natural", "ChineseRemainder", "Adic"]);
+  const [spec] = inferControls(null, {
+    names: ["o"],
+    hints: { o: { choices: ["Natural", "ChineseRemainder", "Adic"], start: "Adic" } },
+  });
+  expect(paramsOf(spec as never)).toBe("{{o, Adic}, {Natural, ChineseRemainder, Adic}, SetterBar}");
+  // Strings stay strings: quoted entries are not symbols.
+  expect(parseControls('{{m, "a"}, {"a", "b"}}')[0]).not.toHaveProperty("symbol");
 });
 
 afterAll(() => {
