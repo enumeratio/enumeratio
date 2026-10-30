@@ -10,6 +10,7 @@ import type { Engine } from "@enumeratio/engine";
 import { definitionHash, fromJs, type MathJSON, runtimeHelpers, toJs } from "@enumeratio/engine/compiled";
 import { COMPILED as PERMUTATIONS_COMPILED } from "../../permutations/src/statistics.compiled.generated.js";
 import { COMPILED as PARTITIONS_COMPILED } from "../../partitions/src/statistics.compiled.generated.js";
+import { COMPILED as COMPOSITIONS_COMPILED } from "../../compositions/src/statistics.compiled.generated.js";
 import { COMPILED as LATTICE_PATHS_COMPILED } from "../../lattice-paths/src/statistics.compiled.generated.js";
 import { COMPILED as SET_PARTITIONS_COMPILED } from "../../set-partitions/src/statistics.compiled.generated.js";
 import { type Definition, SUBJECT, signatureOf } from "./types.ts";
@@ -19,6 +20,7 @@ import { type Definition, SUBJECT, signatureOf } from "./types.ts";
 const COMPILED = {
   ...PERMUTATIONS_COMPILED,
   ...PARTITIONS_COMPILED,
+  ...COMPOSITIONS_COMPILED,
   ...LATTICE_PATHS_COMPILED,
   ...SET_PARTITIONS_COMPILED,
 };

@@ -15,6 +15,7 @@ import { interpretDefinition } from "../src/statistics/declare.ts";
 import { signatureOf } from "../src/statistics/types.ts";
 import { COMPILED as PERMUTATIONS_COMPILED } from "../permutations/src/statistics.compiled.generated.js";
 import { COMPILED as PARTITIONS_COMPILED } from "../partitions/src/statistics.compiled.generated.js";
+import { COMPILED as COMPOSITIONS_COMPILED } from "../compositions/src/statistics.compiled.generated.js";
 import { COMPILED as LATTICE_PATHS_COMPILED } from "../lattice-paths/src/statistics.compiled.generated.js";
 import { COMPILED as SET_PARTITIONS_COMPILED } from "../set-partitions/src/statistics.compiled.generated.js";
 
@@ -26,6 +27,7 @@ const list = (values: readonly unknown[]): unknown => ["List", ...values];
 const AREAS = [
   { name: "permutations", compiled: PERMUTATIONS_COMPILED },
   { name: "partitions", compiled: PARTITIONS_COMPILED },
+  { name: "compositions", compiled: COMPOSITIONS_COMPILED },
   { name: "lattice-paths", compiled: LATTICE_PATHS_COMPILED },
   { name: "set-partitions", compiled: SET_PARTITIONS_COMPILED },
 ] as const;
@@ -38,9 +40,13 @@ for (const area of AREAS) {
 
 /** Every signature ANY area's compiled table has an entry for. */
 const COMPILED_SIGNATURES = new Set(
-  [PERMUTATIONS_COMPILED, PARTITIONS_COMPILED, LATTICE_PATHS_COMPILED, SET_PARTITIONS_COMPILED].flatMap((table) =>
-    Object.keys(table),
-  ),
+  [
+    PERMUTATIONS_COMPILED,
+    PARTITIONS_COMPILED,
+    COMPOSITIONS_COMPILED,
+    LATTICE_PATHS_COMPILED,
+    SET_PARTITIONS_COMPILED,
+  ].flatMap((table) => Object.keys(table)),
 );
 
 function permutations(n: number): number[][] {
@@ -55,6 +61,12 @@ function partitions(n: number, max = n): number[][] {
   for (let first = Math.min(n, max); first >= 1; first--)
     for (const rest of partitions(n - first, first)) out.push([first, ...rest]);
   return out;
+}
+function compositions(n: number): number[][] {
+  if (n === 0) return [[]];
+  return Array.from({ length: n }, (_, i) => i + 1).flatMap((first) =>
+    compositions(n - first).map((rest) => [first, ...rest]),
+  );
 }
 function dyckPaths(n: number): number[][] {
   const out: number[][] = [];
@@ -80,6 +92,7 @@ const SUBJECTS: Record<string, unknown[]> = {
   // already hold every statistic to an independent reading up to 6.
   Permutation: [0, 1, 2, 3, 4].flatMap(permutations).map(list),
   IntegerPartition: [0, 1, 2, 3, 4, 5, 6, 7].flatMap((n) => partitions(n)).map(list),
+  Composition: [0, 1, 2, 3, 4, 5, 6].flatMap(compositions).map(list),
   DyckPath: [0, 1, 2, 3, 4].flatMap(dyckPaths).map(list),
   SetPartition: [0, 1, 2, 3, 4].flatMap(setPartitions).map((blocks) => list(blocks.map(list))),
 };
