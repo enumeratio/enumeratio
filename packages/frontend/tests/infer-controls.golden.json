@@ -38,7 +38,59 @@
   ],
   "bound variable of a sum is skipped": [
     {
-      "name": "k",
+      "name": "m",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "bound index of a sum is skipped, tuple form": [
+    {
+      "name": "x",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "bound indices of nested iterators are skipped": [
+    {
+      "name": "x",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "bound variable of a table, count form": [
+    {
+      "name": "x",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "a plot's body point is not an iterator": [
+    {
+      "name": "a",
       "domain": {
         "kind": "reals",
         "min": -10,
@@ -49,7 +101,7 @@
       "controlType": "Slider"
     },
     {
-      "name": "m",
+      "name": "b",
       "domain": {
         "kind": "reals",
         "min": -10,

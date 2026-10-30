@@ -375,7 +375,9 @@
       "tag": "notatio-manipulate",
       "attributes": {
         "params": "{{a, 1}, -10, 10, 0.05, Slider}",
-        "infer": "a"
+        "infer": "a",
+        "plot-of": "sin(a * x)",
+        "plot-axes": "x"
       },
       "children": [
         {
@@ -386,14 +388,16 @@
         }
       ]
     },
-    "markup": "<notatio-manipulate params=\"{{a, 1}, -10, 10, 0.05, Slider}\" infer=\"a\"><graphics-box value=\"Plot(sin(_a * x), (x, -5, 5))\"></graphics-box></notatio-manipulate>"
+    "markup": "<notatio-manipulate params=\"{{a, 1}, -10, 10, 0.05, Slider}\" infer=\"a\" plot-of=\"sin(a * x)\" plot-axes=\"x\"><graphics-box value=\"Plot(sin(_a * x), (x, -5, 5))\"></graphics-box></notatio-manipulate>"
   },
   "Manipulate(Sin(a * x) * y + b)": {
     "rendering": {
       "tag": "notatio-manipulate",
       "attributes": {
         "params": "{{a, 1}, -10, 10, 0.05, Slider}; {{b, 1}, -10, 10, 0.05, Slider}",
-        "infer": "a,b"
+        "infer": "a,b",
+        "plot-of": "sin(a * x) * y + b",
+        "plot-axes": "x,y"
       },
       "children": [
         {
@@ -404,14 +408,16 @@
         }
       ]
     },
-    "markup": "<notatio-manipulate params=\"{{a, 1}, -10, 10, 0.05, Slider}; {{b, 1}, -10, 10, 0.05, Slider}\" infer=\"a,b\"><graphics-3d-box value=\"Plot3D(sin(_a * x) * y + _b, (x, -5, 5), (y, -5, 5))\"></graphics-3d-box></notatio-manipulate>"
+    "markup": "<notatio-manipulate params=\"{{a, 1}, -10, 10, 0.05, Slider}; {{b, 1}, -10, 10, 0.05, Slider}\" infer=\"a,b\" plot-of=\"sin(a * x) * y + b\" plot-axes=\"x,y\"><graphics-3d-box value=\"Plot3D(sin(_a * x) * y + _b, (x, -5, 5), (y, -5, 5))\"></graphics-3d-box></notatio-manipulate>"
   },
   "Manipulate(z ^ 2 + c)": {
     "rendering": {
       "tag": "notatio-manipulate",
       "attributes": {
         "params": "{{c, 1}, -10, 10, 0.05, Slider}",
-        "infer": "c"
+        "infer": "c",
+        "plot-of": "z ^ 2 + c",
+        "plot-axes": "z"
       },
       "children": [
         {
@@ -423,7 +429,7 @@
         }
       ]
     },
-    "markup": "<notatio-manipulate params=\"{{c, 1}, -10, 10, 0.05, Slider}\" infer=\"c\"><notatio-complex-plot value=\"z ^ 2 + _c\" var=\"z\"></notatio-complex-plot></notatio-manipulate>"
+    "markup": "<notatio-manipulate params=\"{{c, 1}, -10, 10, 0.05, Slider}\" infer=\"c\" plot-of=\"z ^ 2 + c\" plot-axes=\"z\"><notatio-complex-plot value=\"z ^ 2 + _c\" var=\"z\"></notatio-complex-plot></notatio-manipulate>"
   },
   "Manipulate(Sin(a * x), (a, 1, 5))": {
     "rendering": {

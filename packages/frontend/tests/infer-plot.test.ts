@@ -1,9 +1,11 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { ComputeEngine } from "@cortex-js/compute-engine";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { afterAll, expect, test } from "vite-plus/test";
 import { inferPlot, type PlotContext } from "../src/infer-controls.ts";
 import { inferProjection } from "../src/reactive.ts";
+import { replotWithEngine } from "../src/symbols.ts";
 
 // The plot each expression is drawn as: golden JSON compared with `toEqual` (AGENTS.md),
 // regenerated with `UPDATE_INFER_PLOT=1 vp test` after an intended change. `null` is "no plot".
@@ -48,6 +50,28 @@ for (const [id, { src, ctx }] of Object.entries(CASES)) {
     const choice = inferPlot(json, ctx) ?? null;
     fresh[id] = choice;
     if (!updating) expect(choice).toEqual(golden[id]);
+  });
+}
+
+// A Manipulate's inferred plot chosen again with an engine's declarations: what it is drawn as
+// instead (`null` when the declarations change nothing). Same golden file, under `replot:`.
+const ce = new ComputeEngine();
+ce.declare("x", "integer");
+ce.declare("y", "complex");
+ce.declare("z", "real");
+const REPLOTS: Record<string, { src: string; axes: string[]; controls?: string[] }> = {
+  "an integer axis is points at the integers": { src: "a * x ^ 2", axes: ["x"], controls: ["a"] },
+  "a complex axis is a portrait": { src: "y ^ 2 + c", axes: ["y"], controls: ["c"] },
+  "a real axis beats the letter z": { src: "Sin(a * z)", axes: ["z"], controls: ["a"] },
+  "undeclared stays as lowered": { src: "Sin(a * w)", axes: ["w"], controls: ["a"] },
+  "mixed domains keep the lowering's plot": { src: "x * y", axes: ["x", "y"] },
+};
+
+for (const [id, { src, axes, controls }] of Object.entries(REPLOTS)) {
+  test(`replot: ${id}`, () => {
+    const result = replotWithEngine(src, axes, new Set(controls), ce) ?? null;
+    fresh[`replot: ${id}`] = result;
+    if (!updating) expect(result).toEqual(golden[`replot: ${id}`]);
   });
 }
 

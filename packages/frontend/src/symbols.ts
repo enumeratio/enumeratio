@@ -1,5 +1,12 @@
 import { chooseChartType } from "./chart.ts";
-import { freeSymbols, inferControls, inferPlot, paramsOf, type PlotChoice } from "./infer-controls.ts";
+import {
+  freeSymbols,
+  inferControls,
+  inferPlot,
+  type InferContext,
+  paramsOf,
+  type PlotChoice,
+} from "./infer-controls.ts";
 import { CHART_HEADS, PLOT_HEADS } from "./plot-lowering.ts";
 import { GRAPHICS_3D_HEADS } from "./graphics-3d-lowering.ts";
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
@@ -12,7 +19,7 @@ import {
   PROSE_HEADS,
   slot,
 } from "@enumeratio/boxes";
-import { optionsOf } from "@enumeratio/formats";
+import { optionsOf, withOptions } from "@enumeratio/formats";
 import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
 import { FRAME_HEIGHT, figureLayerOf, VALUE_FRAMES } from "./figure-frames.ts";
 import { renderBox } from "./box-render.ts";
@@ -307,6 +314,8 @@ function manipulateControls(ops: readonly Json[]): { name: string; params: strin
 const AXIS_NAMES: readonly string[] = ["x", "y", "z"];
 /** Half-width of the range a Manipulate's inferred plot covers. */
 const PLOT_BOUND = 5;
+/** The integers a Manipulate's inferred discrete plot covers: `0..DISCRETE_BOUND`. */
+const DISCRETE_BOUND = 20;
 
 type ManipulateControl = ReturnType<typeof manipulateControls>[number];
 
@@ -323,6 +332,13 @@ function plotCall(body: Json, choice: PlotChoice): Json | undefined {
       return [choice.head, body, axis(x!), axis(y!)] as unknown as Json;
     case "ComplexPlot":
       return ["ComplexPlot", body, x] as unknown as Json;
+    case "DiscretePlot":
+      // `DiscretePlot` draws only a literal list, so the samples are `Plot`'s, at the integers
+      // and as points: the same dots a `ListPlot` of a `Table` would give, with the slots live.
+      return withOptions("Plot", [body, ["Tuple", x, 0, DISCRETE_BOUND] as unknown as Json], {
+        PlotPoints: DISCRETE_BOUND + 1,
+        Mode: { str: "points" },
+      } as unknown as Record<string, Json>);
     default:
       return undefined;
   }
@@ -335,7 +351,12 @@ function plotCall(body: Json, choice: PlotChoice): Json | undefined {
  * symbol is a control, if any is. Else the body and controls are as written -- in
  * particular with controls written, as Wolfram reads them.
  */
-function manipulateParts(ops: readonly Json[]): { body: Json | undefined; controls: ManipulateControl[] } {
+function manipulateParts(ops: readonly Json[]): {
+  body: Json | undefined;
+  controls: ManipulateControl[];
+  /** Set when `body` is an inferred plot: what it was drawn from, for choosing again with an engine. */
+  inferred?: { readonly body: Json; readonly axes: readonly string[] };
+} {
   const body = ops[0];
   const controls = manipulateControls(ops);
   if (body === undefined || render(body, true)?.tag !== "dynamic-box") return { body, controls };
@@ -351,7 +372,29 @@ function manipulateParts(ops: readonly Json[]): { body: Json | undefined; contro
   });
   const choice = inferPlot(body, { names: axes, letterConventions: true });
   const plot = choice === undefined ? undefined : plotCall(body, choice);
-  return plot === undefined ? { body, controls } : { body: plot, controls: named };
+  return plot === undefined ? { body, controls } : { body: plot, controls: named, inferred: { body, axes } };
+}
+
+/**
+ * The plot a Manipulate's body is drawn as once an engine says what its axes are, when that is
+ * not the plot the lowering chose without one (an `x` declared complex is a portrait, an integer
+ * is discrete); undefined when it is the same. `source` is the body as Epsil, `axes` the symbols
+ * it is drawn over and `controls` the names its other symbols were given.
+ */
+export function replotWithEngine(
+  source: string,
+  axes: readonly string[],
+  controls: ReadonlySet<string>,
+  engine: InferContext["engine"],
+): Rendering | undefined {
+  const { json, errors } = parseExpression(source);
+  if (errors.length > 0) return undefined;
+  const body = plainJson(json as never) as Json;
+  const first = inferPlot(body, { names: axes, letterConventions: true });
+  const typed = inferPlot(body, { names: axes, letterConventions: true, engine });
+  if (typed === undefined || typed.head === first?.head) return undefined;
+  const plot = plotCall(body, typed);
+  return plot === undefined ? undefined : renderingOf(slotted(plot, controls), true);
 }
 
 /** The parameter a control tuple binds. */
@@ -843,12 +886,14 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     tag: "notatio-manipulate",
     prose: true,
     attributes: (ops): Record<string, string> => {
-      const { controls } = manipulateParts(ops);
+      const { controls, inferred: plot } = manipulateParts(ops);
       if (controls.length === 0) return {};
       const inferred = controls.filter((c) => c.inferred).map((c) => c.name);
       return {
         params: controls.map((c) => c.params).join("; "),
         ...(inferred.length > 0 && { infer: inferred.join(",") }),
+        // What the plot was inferred from: the element chooses again once it has an engine.
+        ...(plot && { "plot-of": epsil(plot.body), "plot-axes": plot.axes.join(",") }),
       };
     },
     children: (ops) => {

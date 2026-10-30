@@ -166,3 +166,51 @@ test("inside a notebook's module, its scope's declarations are the ones read", a
   module.remove();
   outside.remove();
 });
+
+/** The plot a Manipulate shows, as the tag and attributes of its direct child that is not the control panel. */
+const plotOf = (el: Element): unknown =>
+  [...el.children]
+    .filter((c) => c.hasAttribute("value"))
+    .map((c) => ({
+      tag: c.localName,
+      ...Object.fromEntries([...c.attributes].map((a) => [a.name, a.value])),
+    }));
+
+test("an inferred plot is chosen again from the engine's declarations of its axis", async () => {
+  const engine = await loadEngine();
+  engine.declare("lattice", "integer");
+  engine.declare("omega", "complex");
+  const cases: Record<string, { body: string; axis: string }> = {
+    "integer axis is points": { body: "_a * lattice ^ 2", axis: "lattice" },
+    "complex axis is a portrait": { body: "omega ^ 2 + _a", axis: "omega" },
+    "undeclared axis stays as lowered": { body: "_a * wander", axis: "wander" },
+  };
+  const drawnPlots: Record<string, unknown> = {};
+  for (const [id, { body, axis }] of Object.entries(cases)) {
+    const el = document.createElement("notatio-manipulate");
+    el.setAttribute("params", "{{a, 1}, -10, 10, 0.05, Slider}");
+    el.setAttribute("infer", "a");
+    el.setAttribute("plot-of", body.replaceAll("_a", "a"));
+    el.setAttribute("plot-axes", axis);
+    el.innerHTML = `<graphics-box value="Plot(${body}, (${axis}, -5, 5))"></graphics-box>`;
+    document.body.append(el);
+    await until(() => el.querySelector("slider-box") !== null);
+    await new Promise((r) => setTimeout(r, 200));
+    drawnPlots[id] = plotOf(el);
+    el.remove();
+  }
+  check("replotted by declaration", drawnPlots);
+});
+
+test("a Manipulate with no inferred plot is left as written", async () => {
+  const engine = await loadEngine();
+  engine.declare("stride", "integer");
+  const el = document.createElement("notatio-manipulate");
+  el.setAttribute("params", "{a, 1, 5}");
+  el.innerHTML = '<graphics-box value="Plot(_a * stride, (stride, 0, 10))"></graphics-box>';
+  document.body.append(el);
+  await until(() => el.querySelector("slider-box") !== null);
+  await new Promise((r) => setTimeout(r, 200));
+  expect(plotOf(el)).toEqual([{ tag: "graphics-box", value: "Plot(_a * stride, (stride, 0, 10))" }]);
+  el.remove();
+});

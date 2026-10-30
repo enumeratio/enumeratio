@@ -93,5 +93,26 @@
       "max": "10",
       "step": "0.05"
     }
-  ]
+  ],
+  "replotted by declaration": {
+    "integer axis is points": [
+      {
+        "tag": "graphics-box",
+        "value": "Plot(_a * lattice ^ 2, (lattice, 0, 20), PlotPoints -> 21, Mode -> \"points\")"
+      }
+    ],
+    "complex axis is a portrait": [
+      {
+        "tag": "notatio-complex-plot",
+        "value": "omega ^ 2 + _a",
+        "var": "omega"
+      }
+    ],
+    "undeclared axis stays as lowered": [
+      {
+        "tag": "graphics-box",
+        "value": "Plot(_a * wander, (wander, -5, 5))"
+      }
+    ]
+  }
 }
