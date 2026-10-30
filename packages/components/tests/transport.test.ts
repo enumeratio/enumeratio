@@ -10,10 +10,13 @@ import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combina
 import { parseExpression } from "@enumeratio/formats/expression";
 import { coefficients, type Triangle } from "@enumeratio/frontend/core";
 import { declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures";
-import { afterAll, expect, test } from "vite-plus/test";
+import { afterAll, expect, test, vi } from "vite-plus/test";
 import { distributionTriangle } from "../src/distribution-client.ts";
 import type { MapSource } from "../src/map-client.ts";
 import { findTransports, transportTriangle } from "../src/transport-client.ts";
+
+// These run the real engine over whole collections; a loaded CI runner is several times slower than a laptop.
+vi.setConfig({ testTimeout: 60_000 });
 
 const GOLDEN = join(import.meta.dirname, "transport.golden.json");
 const updating = process.env.UPDATE_TRANSPORT === "1";

@@ -43,6 +43,8 @@ pnpm --filter @enumeratio/entry build          # write schema/*.schema.json
 
 ## Next
 
+[Record fields for generated UI](docs/record-fields.md) covers `maxSize`, `optionValues` and `glyph`.
+
 [`reference`](../reference/README.md) is the loader and crosswalk built on these types; hand edits to a
 record are fine, and `packages/reference/scripts/format-records.ts` tidies them through this
 package's writer.

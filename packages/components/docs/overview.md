@@ -36,6 +36,8 @@ These are demos of the parts. To use the whole thing, open a [worksheet](/worksh
 - [Collection table](/reference/component/CollectionTable) — a scrolling table over a lazy collection (massive, unknown-sized or infinite), with statistics as columns; stories moved to its component reference page
 - [Worksheet](/docs/components/worksheet) — `<notatio-worksheet>`, named expressions whose knobs and plots fall out of the cells
 - [Manipulate](/docs/components/manipulate) — `<notatio-manipulate>`, Wolfram-style controls bound to named wildcards in any slotted content
+- [Controls from the expression](/docs/components/ui-generation) — a control per free symbol, typed by declarations, in `Manipulate`, prose and worksheets
+- [The collection explorer](/docs/components/collection-explorer) — the derived table on a collection head's page, its pickers and distributions
 - [Terminal](/docs/components/terminal) — `<notatio-terminal>`, the real CLI eval core in a browser terminal, as a session or one `notatio <expr>` at a time
 - [Polytope](/docs/polytope/polytope) — `PolytopeFaces`, a polytope's face poset in a `Show`, where every mark is a clickable face under an orbiting camera
 - [Tangle](/playground/inspirations/tangle) — `<dynamic-module-box>` and the inline controls (`<knob-box>`, `<toggler-box>`, `<dynamic-box>`, `<pane-selector-box>`): reactive prose
