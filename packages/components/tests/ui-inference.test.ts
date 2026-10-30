@@ -15,6 +15,7 @@ const updating = process.env.UPDATE_UI_INFERENCE === "1";
 const golden: Record<string, unknown> = updating ? {} : JSON.parse(readFileSync(GOLDEN, "utf8"));
 const fresh: Record<string, unknown> = {};
 
+// Cold import of the element graph can outlast the 10 s hook default on a loaded CI runner.
 beforeAll(async () => {
   await import("../src/notatio-manipulate.ts");
   await import("../src/template-slot.ts");
@@ -22,7 +23,7 @@ beforeAll(async () => {
   const engine = await loadEngine();
   engine.declare("count", "integer");
   engine.declare("flag", "boolean");
-});
+}, 60_000);
 
 afterAll(() => {
   if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);

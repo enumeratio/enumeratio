@@ -10,7 +10,13 @@ import { parseExpression } from "@enumeratio/formats/expression";
 import { coefficients, DISTRIBUTION_ROW_CAP, polynomial } from "@enumeratio/frontend/core";
 import { declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures";
 import { afterAll, expect, test } from "vite-plus/test";
-import { distributionTriangle, equidistributed, tally, type Triangle } from "../src/distribution-client.ts";
+import {
+  distributionTriangle,
+  equidistributed,
+  findEquidistributed,
+  tally,
+  type Triangle,
+} from "../src/distribution-client.ts";
 
 const GOLDEN = join(import.meta.dirname, "distribution.golden.json");
 const updating = process.env.UPDATE_DISTRIBUTION === "1";
@@ -118,4 +124,26 @@ test("a collection past the row cap declines without walking it", async () => {
 test("a collection of unknown size is not walked", async () => {
   const result = await tally("NonNegativeIntegers", "Inversions", {}, evaluate);
   expect(result.ok).toBe(false);
+});
+
+test("same distribution as: Inversions finds MajorIndex, and a statistic that cannot be tallied drops out", async () => {
+  const subject = await triangle("SymmetricGroup({size})", "Inversions");
+  const candidates = ["Descents", "MajorIndex", "Excedances", "Inversions"];
+  const found = await findEquidistributed("SymmetricGroup({size})", subject, candidates, { evaluate });
+  check("sameAs", found);
+  expect(found.matches).toEqual(["MajorIndex", "Inversions"]);
+  expect(found).toMatchObject({ checked: 4, total: 4, stopped: false });
+});
+
+test("same distribution as: a spent budget stops the scan and says so; a short subject compares nothing", async () => {
+  const subject = await triangle("SymmetricGroup({size})", "Inversions");
+  let clock = 0;
+  const stopped = await findEquidistributed("SymmetricGroup({size})", subject, ["MajorIndex", "Descents"], {
+    evaluate,
+    budgetMs: 5,
+    now: () => (clock += 10),
+  });
+  expect(stopped).toEqual({ matches: [], checked: 0, total: 2, stopped: true });
+  const short = await findEquidistributed("SymmetricGroup({size})", subject.slice(0, 2), ["MajorIndex"], { evaluate });
+  expect(short).toEqual({ matches: [], checked: 0, total: 1, stopped: false });
 });

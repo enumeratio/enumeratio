@@ -1,0 +1,289 @@
+{
+  "sources": {
+    "AffinePermutation": null,
+    "AlternatingSignMatrix": {
+      "collection": "AlternatingSignMatrices",
+      "template": "AlternatingSignMatrices({size})",
+      "maxSize": 6
+    },
+    "Arrangement": null,
+    "AscentSequence": null,
+    "BinaryTree": {
+      "collection": "BinaryTrees",
+      "template": "BinaryTrees({size})",
+      "maxSize": 6
+    },
+    "BinaryTreeParentArray": {
+      "collection": "BinaryTreeParentArrays",
+      "template": "BinaryTreeParentArrays({size})",
+      "maxSize": 6
+    },
+    "BinaryWord": {
+      "collection": "BinaryWords",
+      "template": "BinaryWords({size})",
+      "maxSize": 6
+    },
+    "Cardinal": null,
+    "CollatzTrajectory": null,
+    "ColoredMotzkinPath": null,
+    "ColoredPermutation": null,
+    "Composition": {
+      "collection": "IntegerCompositions",
+      "template": "IntegerCompositions({size})",
+      "maxSize": 6
+    },
+    "ContinuedFraction": null,
+    "CorePartition": null,
+    "CycleDecomposition": {
+      "collection": "PermutationsAsCycles",
+      "template": "PermutationsAsCycles({size})",
+      "maxSize": 6
+    },
+    "DecoratedPermutation": null,
+    "DelannoyPath": {
+      "collection": "DelannoyPaths",
+      "template": "DelannoyPaths({size})",
+      "maxSize": 6
+    },
+    "Dissection": null,
+    "DyckPath": {
+      "collection": "DyckPaths",
+      "template": "DyckPaths({size})",
+      "maxSize": 10
+    },
+    "EgyptianFraction": null,
+    "Endofunction": {
+      "collection": "Endofunctions",
+      "template": "Endofunctions({size})",
+      "maxSize": 6
+    },
+    "FactoradicNumeral": null,
+    "FiniteSetElement": null,
+    "Finset": {
+      "collection": "Subsets",
+      "template": "Subsets({size})",
+      "maxSize": 12
+    },
+    "FractionalNumber": null,
+    "FullKAryTree": null,
+    "GaussianFractional": null,
+    "GaussianInteger": null,
+    "GaussianRational": null,
+    "GelfandTsetlinPattern": null,
+    "GlyphKind": null,
+    "GoldbachPartition": null,
+    "HyperbinaryWord": null,
+    "HypernumeraryWord": null,
+    "IncreasingBinaryTree": {
+      "collection": "IncreasingBinaryTrees",
+      "template": "IncreasingBinaryTrees({size})",
+      "maxSize": 6
+    },
+    "IntegerFactorization": null,
+    "IntegerNumber": null,
+    "IntegerPartition": {
+      "collection": "IntegerPartitions",
+      "template": "IntegerPartitions({size})",
+      "maxSize": 30
+    },
+    "KDyckPath": null,
+    "KMotzkinPath": null,
+    "LabeledGraph": {
+      "collection": "LabeledGraphs",
+      "template": "LabeledGraphs({size})",
+      "maxSize": 6
+    },
+    "LabeledTree": {
+      "collection": "LabeledTrees",
+      "template": "LabeledTrees({size})",
+      "maxSize": 6
+    },
+    "LukasiewiczPath": {
+      "collection": "LukasiewiczPaths",
+      "template": "LukasiewiczPaths({size})",
+      "maxSize": 6
+    },
+    "ModularResidue": null,
+    "MotzkinPath": {
+      "collection": "MotzkinPaths",
+      "template": "MotzkinPaths({size})",
+      "maxSize": 6
+    },
+    "Multicomplex": null,
+    "MultiplicativePartition": null,
+    "Multiset": null,
+    "NonCrossingTree": {
+      "collection": "NonCrossingTrees",
+      "template": "NonCrossingTrees({size})",
+      "maxSize": 6
+    },
+    "Numeric": null,
+    "OmegaOrdinal": null,
+    "OrderedFactorization": null,
+    "OrderedTree": {
+      "collection": "OrderedTrees",
+      "template": "OrderedTrees({size})",
+      "maxSize": 6
+    },
+    "ParkingFunction": {
+      "collection": "ParkingFunctions",
+      "template": "ParkingFunctions({size})",
+      "maxSize": 6
+    },
+    "Permutation": {
+      "collection": "SymmetricGroup",
+      "template": "SymmetricGroup({size})",
+      "maxSize": 8
+    },
+    "PermutationInversion": {
+      "collection": "LehmerCodes",
+      "template": "LehmerCodes({size})",
+      "maxSize": 6
+    },
+    "PhylogeneticTree": {
+      "collection": "PhylogeneticTrees",
+      "template": "PhylogeneticTrees({size})",
+      "maxSize": 6
+    },
+    "PlanePartition": {
+      "collection": "PlanePartitions",
+      "template": "PlanePartitions({size})",
+      "maxSize": 6
+    },
+    "PlaneTree": null,
+    "PruferSequence": {
+      "collection": "PruferSequences",
+      "template": "PruferSequences({size})",
+      "maxSize": 6
+    },
+    "PythagoreanTriple": null,
+    "RationalDyckPath": null,
+    "RationalNumber": null,
+    "RookPlacement": null,
+    "RootedForest": {
+      "collection": "RootedForests",
+      "template": "RootedForests({size})",
+      "maxSize": 6
+    },
+    "RootedLabeledTree": {
+      "collection": "RecursiveTrees",
+      "template": "RecursiveTrees({size})",
+      "maxSize": 6
+    },
+    "RootedUnlabeledTree": {
+      "collection": "RootedUnlabeledTrees",
+      "template": "RootedUnlabeledTrees({size})",
+      "maxSize": 6
+    },
+    "SchroederPath": {
+      "collection": "SchroederPaths",
+      "template": "SchroederPaths({size})",
+      "maxSize": 6
+    },
+    "SemistandardTableau": null,
+    "SetComposition": {
+      "collection": "SetCompositions",
+      "template": "SetCompositions({size})",
+      "maxSize": 6
+    },
+    "SetPartition": {
+      "collection": "SetPartitions",
+      "template": "SetPartitions({size})",
+      "maxSize": 10
+    },
+    "ShiftedStandardTableau": {
+      "collection": "ShiftedStandardTableaux",
+      "template": "ShiftedStandardTableaux({size})",
+      "maxSize": 6
+    },
+    "SignedPermutation": {
+      "collection": "SignedPermutations",
+      "template": "SignedPermutations({size})",
+      "maxSize": 6
+    },
+    "SignedSetComposition": null,
+    "SignedSubset": null,
+    "Singleton": null,
+    "SkewPartition": {
+      "collection": "SkewPartitions",
+      "template": "SkewPartitions({size})",
+      "maxSize": 6
+    },
+    "SkewTableau": {
+      "collection": "SkewStandardTableaux",
+      "template": "SkewStandardTableaux({size})",
+      "maxSize": 6
+    },
+    "SquareDecomposition": null,
+    "StandardTableau": {
+      "collection": "StandardTableaux",
+      "template": "StandardTableaux({size})",
+      "maxSize": 6
+    },
+    "StandardTableauPair": {
+      "collection": "StandardTableauPairs",
+      "template": "StandardTableauPairs({size})",
+      "maxSize": 6
+    },
+    "StirlingPermutation": {
+      "collection": "StirlingPermutations",
+      "template": "StirlingPermutations({size})",
+      "maxSize": 6
+    },
+    "SubexcedantSeq": {
+      "collection": "SubexcedantSeqs",
+      "template": "SubexcedantSeqs({size})",
+      "maxSize": 6
+    },
+    "Surjection": {
+      "collection": "Surjections",
+      "template": "Surjections({size})",
+      "maxSize": 6
+    },
+    "TernaryGrayCode": {
+      "collection": "TernaryGrayCodes",
+      "template": "TernaryGrayCodes({size})",
+      "maxSize": 6
+    },
+    "Text": null,
+    "TotalPartition": null,
+    "Tournament": {
+      "collection": "Tournaments",
+      "template": "Tournaments({size})",
+      "maxSize": 6
+    },
+    "UnlabeledFreeTree": {
+      "collection": "UnlabeledFreeTrees",
+      "template": "UnlabeledFreeTrees({size})",
+      "maxSize": 6
+    },
+    "WeakComposition": null,
+    "Word": null
+  },
+  "lines": [
+    {
+      "n": 1,
+      "low": 0,
+      "coefficients": [1],
+      "polynomial": "1"
+    },
+    {
+      "n": 2,
+      "low": 0,
+      "coefficients": [1, 1],
+      "polynomial": "1 + q"
+    },
+    {
+      "n": 3,
+      "low": 1,
+      "coefficients": [4, 0, 2],
+      "polynomial": "4q + 2q^3"
+    },
+    {
+      "n": 4,
+      "reason": "a distribution is computed up to size 3; this is size 4"
+    }
+  ],
+  "chart": true,
+  "defaultRows": [8, 5, 1]
+}

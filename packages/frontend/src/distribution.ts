@@ -148,3 +148,33 @@ export function equidistributed(a: Triangle, b: Triangle): boolean {
   const common = [...left.keys()].filter((n) => right.has(n));
   return common.length > 0 && common.every((n) => sameCounts(left.get(n)!, right.get(n)!));
 }
+
+/** Rows a triangle opens with: enough to see the shape, few enough to tally at once. */
+export const TRIANGLE_DEFAULT_ROWS = 8;
+
+/** The rows a statistic's page asks for by default: the carrier's `maxSize`, held to a cheap few. */
+export const defaultRows = (maxSize: number): number => Math.max(1, Math.min(maxSize, TRIANGLE_DEFAULT_ROWS));
+
+/** One row of a triangle as a page lists it. */
+export type TriangleLine =
+  | { readonly n: number; readonly low: number; readonly coefficients: readonly number[]; readonly polynomial: string }
+  | { readonly n: number; readonly reason: string };
+
+/** A triangle's rows ready to list: coefficients (lowest value first), the polynomial, or why a row has none. */
+export const triangleLines = (t: Triangle): TriangleLine[] =>
+  t.map((row) =>
+    row.ok
+      ? {
+          n: row.n,
+          low: row.distribution.values[0] ?? 0,
+          coefficients: coefficients(row.distribution),
+          polynomial: polynomial(row.distribution),
+        }
+      : { n: row.n, reason: row.reason },
+  );
+
+/** The bar chart of a triangle's last row that has a distribution, or `undefined` when none does. */
+export function lastRowSvg(t: Triangle, title?: string): string | undefined {
+  const last = t.findLast((r) => r.ok);
+  return last?.ok ? distributionSvg(last.distribution, title) : undefined;
+}

@@ -8,9 +8,10 @@ import type { NotatioCollectionTable } from "../src/notatio-collection-table.ts"
 const STATISTICS = ["Descents", "Excedances", "Inversions", "MajorIndex", "Peaks", "Valleys"];
 const TALLY = ["Tuple", ["List", 0, 1, 2], ["List", 1, 4, 1]];
 
+// Cold import of the element graph can outlast the 10 s hook default on a loaded CI runner.
 beforeAll(async () => {
   await import("../src/notatio-collection-table.ts");
-});
+}, 60_000);
 
 /** A table whose kernel is `asked`'s log; its rows report `count` once, as a kernel would. */
 async function table(
@@ -57,6 +58,26 @@ test("the pane is off by default; a column's toggle opens it, and again closes i
   toggles(el)[1]!.click();
   await settle(el);
   expect(el.querySelector(".nct-dist")).toBeNull();
+  el.remove();
+});
+
+test("a column's toggle and remove buttons have accessible names", async () => {
+  const el = await table({}, []);
+  const names = [...el.querySelectorAll("button.nct-dist-toggle")].map((b) => [
+    b.getAttribute("aria-label"),
+    b.getAttribute("title"),
+  ]);
+  expect(names).toEqual([
+    ["Show distribution of Descents", "Show distribution of Descents"],
+    ["Show distribution of Inversions", "Show distribution of Inversions"],
+  ]);
+  const removes = [...el.querySelectorAll("button")]
+    .filter((b) => b.textContent?.trim() === "×")
+    .map((b) => [b.getAttribute("aria-label"), b.getAttribute("title")]);
+  expect(removes).toEqual([
+    ["Remove column Descents", "Remove column Descents"],
+    ["Remove column Inversions", "Remove column Inversions"],
+  ]);
   el.remove();
 });
 

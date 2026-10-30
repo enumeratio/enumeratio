@@ -467,7 +467,8 @@ export class NotatioCollectionTable extends LitElement {
                     ? html`<button
                         type="button"
                         class="nct-dist-toggle"
-                        aria-label="distribution of ${columnLabel(source)}"
+                        aria-label="Show distribution of ${columnLabel(source)}"
+                        title="Show distribution of ${columnLabel(source)}"
                         aria-pressed=${this.distribution && this.#distributionColumn() === source ? "true" : "false"}
                         @click=${(e: Event) => {
                           // Inside a <label>: keep the click from activating the label's first control too.
@@ -480,7 +481,8 @@ export class NotatioCollectionTable extends LitElement {
                     : nothing
                 }<button
                   type="button"
-                  aria-label="remove ${columnLabel(source)}"
+                  aria-label="Remove column ${columnLabel(source)}"
+                  title="Remove column ${columnLabel(source)}"
                   @click=${() => this.#removeColumn(source)}
                 >
                   ×

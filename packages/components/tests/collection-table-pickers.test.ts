@@ -16,9 +16,10 @@ const fresh: Record<string, unknown> = {};
 
 const STATISTICS = ["Descents", "Excedances", "Inversions", "MajorIndex", "Peaks", "Valleys"];
 
+// Cold import of the element graph can outlast the 10 s hook default on a loaded CI runner.
 beforeAll(async () => {
   await import("../src/notatio-collection-table.ts");
-});
+}, 60_000);
 
 afterAll(() => {
   if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
