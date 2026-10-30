@@ -68,6 +68,7 @@ export * from "./controls.ts";
 export * from "./primitives.ts";
 export * from "./engine.ts";
 export * from "./latex.ts";
+export * from "./presentation.ts";
 export * from "./environment.ts";
 export * from "./complex-plot.ts";
 export * from "./complex-plot-box.ts";
