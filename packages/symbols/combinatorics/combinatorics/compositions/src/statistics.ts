@@ -12,9 +12,10 @@ import {
   at,
   atLeastValue,
   atMostValue,
-  bind as bindTyped,
+  bindList,
   count,
   equals,
+  floored,
   fold,
   forEach,
   fallsAfter,
@@ -41,9 +42,6 @@ import {
 } from "../../src/statistics/vocabulary.ts";
 
 const on = "Composition";
-/** `bind` with the value typed a list of integers: the compiler can index, count and sum over that, not the default `collection`. */
-const bindList = (name: string, value: MathJSON, body: MathJSON, type = "list<integer>"): MathJSON =>
-  bindTyped(name, value, body, type);
 const stat = (head: string, summary: string, expr: MathJSON, note?: string): Definition => ({
   head,
   on,
@@ -51,9 +49,6 @@ const stat = (head: string, summary: string, expr: MathJSON, note?: string): Def
   expr,
   ...(note ? { note } : {}),
 });
-
-/** `sum` floored at 0, so the compiler types it real (it types a fold's sum complex otherwise); sums of counts are never negative. */
-const floored = (sum: MathJSON): MathJSON => ["Max", sum, 0];
 
 const k = length();
 /** `a` and `b` differ. */

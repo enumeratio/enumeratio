@@ -12,6 +12,8 @@ import {
   atLeastValue,
   atMostValue,
   bind,
+  bindList,
+  floored,
   carried,
   fold,
   visiting,
@@ -34,9 +36,6 @@ import {
 } from "../../src/statistics/vocabulary.ts";
 
 const on = "DyckPath";
-/** `bind` with the value typed a list of integers: the compiler can index, count and sum over that, not the default `collection`. */
-const bindList = (name: string, value: MathJSON, body: MathJSON, type = "list<integer>"): MathJSON =>
-  bind(name, value, body, type);
 const stat = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
   head,
   on,
@@ -334,9 +333,6 @@ const boxesBelowPeaks = (test: (coveringPeaks: MathJSON) => MathJSON): MathJSON 
     ),
   );
 
-/** `sum` floored at 0, so the compiler types it real (it types a fold's sum complex otherwise); sums of counts are never negative. */
-const floored = (sum: MathJSON): MathJSON => ["Max", sum, 0];
-
 /**
  * Dyck paths whose area sequence stays on one side of this path's. The area sequence starts at 0
  * and rises by at most 1, so one pass along this path's own sequence suffices: the carried list
@@ -582,17 +578,17 @@ const standardMonomialDegree: MathJSON = fold(
  * one run of downs) whose merger is still noncrossing: no other block has a member strictly
  * between the two and another outside them.
  */
-const mergeableSingletonPairs: MathJSON = bind(
+const mergeableSingletonPairs: MathJSON = bindList(
   "ups",
   where(positions, isUp("i")),
-  bind(
+  bindList(
     "h",
     profile,
-    bind(
+    bindList(
       "block",
       forEach(
         upTo(semilength),
-        bind(
+        bindList(
           "close",
           [
             "Min",
@@ -607,14 +603,14 @@ const mergeableSingletonPairs: MathJSON = bind(
         ),
         "j",
       ),
-      bind(
+      bindList(
         "low",
         forEach(
           upTo(semilength),
           ["Min", where(upTo(semilength), equals(at("l", "block"), at("k", "block")), "l")],
           "k",
         ),
-        bind(
+        bindList(
           "high",
           forEach(
             upTo(semilength),
@@ -659,10 +655,10 @@ const mergeableSingletonPairs: MathJSON = bind(
 // the right, each plus one, then 1. A module is (top vertex x, length y); it is projective when y is
 // the series' entry at x, and otherwise its syzygy is (x + y, entry - y). Vertices count from 0.
 const vertexCount: MathJSON = add(semilength, 1);
-const kupischSeries: MathJSON = bind(
+const kupischSeries: MathJSON = bindList(
   "h",
   profile,
-  bind("ups", where(positions, isUp("i")), [
+  bindList("ups", where(positions, isUp("i")), [
     "Join",
     forEach(upTo(semilength), add(at(at(subtract(add(semilength, 1), "t"), "ups"), "h"), 1), "t"),
     ["List", 1],
@@ -674,7 +670,7 @@ const projectiveDimension = (x0: MathJSON, y0: MathJSON): MathJSON => [
   fold(
     upTo(vertexCount),
     ["List", x0, y0, 0],
-    bind(
+    bindList(
       "entry",
       at(add(carried(1), 1), "series"),
       [
@@ -693,7 +689,7 @@ const simpleDimensions: MathJSON = forEach(upTo(vertexCount), projectiveDimensio
 /** The projective dimension of each indecomposable injective module, by socle: the longest module ending there. */
 const injectiveDimensions: MathJSON = forEach(
   upTo(vertexCount),
-  bind(
+  bindList(
     "top",
     [
       "Min",
@@ -706,11 +702,15 @@ const injectiveDimensions: MathJSON = forEach(
 );
 /** `body`, reading the simples' projective dimensions as `dims` and the series as `series`. */
 const overSimples = (body: MathJSON): MathJSON =>
-  nonEmpty(bind("series", kupischSeries, bind("dims", simpleDimensions, body)));
+  nonEmpty(bindList("series", kupischSeries, bindList("dims", simpleDimensions, body)));
 /** `body`, reading `dims` as for the simples and the injectives' as `injectiveDims`. */
 const overSimplesAndInjectives = (body: MathJSON): MathJSON =>
   nonEmpty(
-    bind("series", kupischSeries, bind("dims", simpleDimensions, bind("injectiveDims", injectiveDimensions, body))),
+    bindList(
+      "series",
+      kupischSeries,
+      bindList("dims", simpleDimensions, bindList("injectiveDims", injectiveDimensions, body)),
+    ),
   );
 const globalDimension: MathJSON = ["Max", "dims"];
 const simplesWhere = (test: (dimension: MathJSON) => MathJSON): MathJSON => count("dims", test("d"), "d");

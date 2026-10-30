@@ -9,30 +9,9 @@ import { COMPILED } from "../src/statistics.compiled.generated.js";
 const INTERPRETED = [
   // Compiled code and the interpreter part ways on words that are not Dyck paths (the rise lengths are undefined there), which the build's cross-check samples.
   "ParkingFunctionCount",
-  // The FindStat batch-3 heads still use untyped `bind`; typing them is a follow-up.
-  "FirstSimpleOfMaximalProjectiveDimension",
-  "FirstSimpleProjectiveDimension",
-  "HalfEvenSimpleProjectiveDimensionSum",
-  "InjectiveProjectiveDimensionSum",
+  // Compiled and interpreted agree on every Dyck path; they differ only on step words that are not Dyck paths (the empty `Min` of the matching downs, or of a block's members, is undefined there), which the build's cross-check samples.
   "InjectivesOfMaximalProjectiveDimension",
-  "InjectivesOfProjectiveDimensionAtMostOne",
-  "InjectivesOfProjectiveDimensionAtMostTwo",
-  "InjectivesOfProjectiveDimensionOne",
-  "LastSimpleOfMaximalProjectiveDimension",
-  "NakayamaGlobalDimension",
   "NoncrossingMergeableSingletonPairs",
-  "PeaksMinusNakayamaGlobalDimension",
-  "SimpleProjectiveDimensionProduct",
-  "SimpleProjectiveDimensionSum",
-  "SimplesOfEvenProjectiveDimension",
-  "SimplesOfMaximalEvenProjectiveDimension",
-  "SimplesOfMaximalProjectiveDimension",
-  "SimplesOfProjectiveDimensionAtMostFour",
-  "SimplesOfProjectiveDimensionAtMostThree",
-  "SimplesOfProjectiveDimensionAtMostTwo",
-  "SimplesOfProjectiveDimensionFour",
-  "SimplesOfProjectiveDimensionThree",
-  "SimplesOfProjectiveDimensionTwo",
 ];
 
 // The compiled file is built, and empty until the package's build has run.
