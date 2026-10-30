@@ -93,11 +93,11 @@ export class NotatioManipulate extends LitElement {
     /** Control tuples: `{a, min, max}`, `{a, min, max, step}`, `{ {a, init}, min, max}` or a
      * discrete `{k, {1, 2, 3}}`; separate several with `;` or `,`. */
     params: { type: String },
-    /** Names whose controls the engine's declarations (integer, boolean, ...) refine, once it is loaded. */
+    /** Comma-separated names whose controls are re-picked from the engine's declarations (integer, boolean, ...) once it loads. */
     infer: { type: String },
     /** The body an inferred plot was drawn from, as Epsil; with `plot-axes`, it is drawn again once the engine's declarations are known. */
     plotOf: { type: String, attribute: "plot-of" },
-    /** The symbols an inferred plot is drawn over. */
+    /** Comma-separated symbols an inferred plot is drawn over; pair with `plot-of`. */
     plotAxes: { type: String, attribute: "plot-axes" },
     /** `below` puts the control panel under the content instead of above it. */
     controls: { type: String },
