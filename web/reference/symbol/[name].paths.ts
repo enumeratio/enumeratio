@@ -6,12 +6,12 @@ import { fieldsOf } from "../../.vitepress/data/carrier-fields.ts";
 import { definitionsOf } from "../../.vitepress/data/definitions.ts";
 import { explorerProbes, prerenderExamples } from "../../.vitepress/data/prerender.ts";
 
-/** The table a collection's page shows: its `enumerate:` filled in from what the record implies (the statistics on offer stay out of the page data). */
+/** The table a collection's page shows: its `enumerate:` filled in from what the record implies (the statistics on offer as names only). */
 async function explorerFor(entry: ReferenceEntry, catalog: ExplorerCatalog) {
   const spec = entry.grades === undefined ? undefined : await explorerOf(entry, catalog);
   if (spec === undefined) return undefined;
-  const { candidates: _candidates, ...page } = spec;
-  return page;
+  const { candidates, ...page } = spec;
+  return { ...page, statistics: candidates.map((c) => c.name) };
 }
 
 /** Longest other-system output a page carries; a longer one (a million-element list) is cut. */

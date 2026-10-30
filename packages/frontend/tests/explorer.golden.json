@@ -21,7 +21,7 @@
   "AffinePermutations": null,
   "AllOnes": {
     "expr": "Take(AllOnes, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
     "statistics": 3
   },
@@ -35,7 +35,7 @@
       "start": 4
     },
     "glyph": "permutation",
-    "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
+    "columns": ["Inversions", "CycleCount", "FixedPoints", "Adjacencies"],
     "derived": true,
     "statistics": 274
   },
@@ -115,7 +115,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Denominator", "Numerator", "Runs"],
+    "columns": ["Descents", "Numerator", "Runs"],
     "derived": true,
     "statistics": 4
   },
@@ -128,7 +128,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Denominator", "Numerator", "Runs"],
+    "columns": ["Descents", "Numerator", "Runs"],
     "derived": true,
     "statistics": 4
   },
@@ -167,7 +167,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Denominator", "Numerator", "Runs"],
+    "columns": ["Descents", "Numerator", "Runs"],
     "derived": true,
     "statistics": 4
   },
@@ -180,7 +180,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Denominator", "Numerator", "Runs"],
+    "columns": ["Descents", "Numerator", "Runs"],
     "derived": true,
     "statistics": 4
   },
@@ -324,7 +324,7 @@
       "start": 4
     },
     "glyph": "permutation",
-    "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
+    "columns": ["Descents", "Inversions", "MajorIndex", "Ascents"],
     "derived": true,
     "statistics": 274
   },
@@ -359,7 +359,7 @@
       "start": 4
     },
     "glyph": "permutation",
-    "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
+    "columns": ["Descents", "Inversions", "CycleCount", "MajorIndex"],
     "derived": true,
     "statistics": 274
   },
@@ -374,7 +374,7 @@
       "start": 4
     },
     "glyph": "partition",
-    "columns": ["DistinctParts", "DurfeeSquare", "LargestPart", "Length"],
+    "columns": ["DistinctParts", "LargestPart", "Length", "AddableCells"],
     "derived": true,
     "statistics": 148
   },
@@ -415,7 +415,7 @@
       "start": 4
     },
     "glyph": "dyck",
-    "columns": ["Area", "Height", "Returns", "AdjointInvariantDescents"],
+    "columns": ["Area", "Returns", "AdjointInvariantDescents", "AreaAboveBouncePath"],
     "derived": true,
     "statistics": 128
   },
@@ -476,7 +476,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Denominator", "Numerator", "Runs"],
+    "columns": ["Descents", "Numerator", "Runs"],
     "derived": true,
     "statistics": 4
   },
@@ -589,7 +589,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Denominator", "Numerator", "Runs"],
+    "columns": ["Descents", "Numerator", "Runs"],
     "derived": true,
     "statistics": 4
   },
@@ -711,7 +711,7 @@
       "start": 4
     },
     "glyph": "permutation",
-    "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
+    "columns": ["Descents", "Inversions", "FixedPoints", "MajorIndex"],
     "derived": true,
     "statistics": 274
   },
@@ -725,7 +725,7 @@
       "start": 4
     },
     "glyph": "permutation",
-    "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
+    "columns": ["Inversions", "CycleCount", "FixedPoints", "MajorIndex"],
     "derived": true,
     "statistics": 274
   },
@@ -746,7 +746,7 @@
       "start": 4
     },
     "glyph": "permutation",
-    "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
+    "columns": ["Descents", "FixedPoints", "MajorIndex", "Ascents"],
     "derived": true,
     "statistics": 274
   },
@@ -759,7 +759,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Ascents", "Descents", "LongestRun"],
+    "columns": [],
     "derived": true,
     "statistics": 3
   },
@@ -788,7 +788,7 @@
       "start": 4
     },
     "glyph": "subset",
-    "columns": ["Sum", "Dimension", "Rank"],
+    "columns": ["Sum"],
     "derived": true,
     "statistics": 4
   },
@@ -834,7 +834,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Length"],
+    "columns": [],
     "derived": true,
     "statistics": 2
   },
@@ -848,7 +848,7 @@
       "start": 4
     },
     "glyph": "partition",
-    "columns": ["DistinctParts", "DurfeeSquare", "LargestPart", "Length"],
+    "columns": ["DistinctParts", "DurfeeSquare", "Length", "AddableCells"],
     "derived": true,
     "statistics": 148
   },
@@ -887,7 +887,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Denominator", "Numerator", "Runs"],
+    "columns": ["Descents", "Numerator", "Runs"],
     "derived": true,
     "statistics": 4
   },
@@ -919,7 +919,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Denominator", "Numerator", "Runs"],
+    "columns": ["Numerator"],
     "derived": true,
     "statistics": 4
   },
@@ -1002,7 +1002,7 @@
       "start": 4
     },
     "glyph": "set-partition",
-    "columns": ["Antisingletons", "BlockMajorIndex", "BlockSizeSpan", "Blocks"],
+    "columns": ["Antisingletons", "BlockMajorIndex", "BlocksAndAntisingletons", "BlocksWithEvenMinimum"],
     "derived": true,
     "statistics": 105
   },
@@ -1043,7 +1043,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents"],
+    "columns": [],
     "derived": true,
     "statistics": 1
   },
@@ -1057,7 +1057,7 @@
       "start": 4
     },
     "glyph": "set-partition",
-    "columns": ["Antisingletons", "BlockMajorIndex", "BlockSizeSpan", "Blocks"],
+    "columns": ["Antisingletons", "BlockMajorIndex", "BlocksAndAntisingletons", "BlocksWithEvenMinimum"],
     "derived": true,
     "statistics": 105
   },
@@ -1105,7 +1105,7 @@
       "start": 4
     },
     "glyph": "partition",
-    "columns": ["DistinctParts", "DurfeeSquare", "LargestPart", "Length"],
+    "columns": ["DistinctParts", "LargestPart", "Length", "AddableCells"],
     "derived": true,
     "statistics": 148
   },
@@ -1146,7 +1146,7 @@
       "start": 4
     },
     "glyph": "composition",
-    "columns": ["AbsoluteVariation", "AscentVariation", "Ascents", "AsymmetryDegree"],
+    "columns": ["AbsoluteVariation", "AscentVariation", "Ascents", "BargraphHalfPerimeter"],
     "derived": true,
     "statistics": 44
   },
@@ -1232,7 +1232,7 @@
       "start": 4
     },
     "glyph": "set-partition",
-    "columns": ["Antisingletons", "BlockMajorIndex", "BlockSizeSpan", "Blocks"],
+    "columns": ["Antisingletons", "BlockMajorIndex", "BlocksAndAntisingletons", "BlocksWithEvenMinimum"],
     "derived": true,
     "statistics": 105
   },
@@ -1472,7 +1472,12 @@
       "start": 4
     },
     "glyph": "composition",
-    "columns": ["AbsoluteVariation", "AscentVariation", "Ascents", "AsymmetryDegree"],
+    "columns": [
+      "BargraphHalfPerimeter",
+      "BargraphUpStepCount",
+      "CompositionMajorIndex",
+      "DyckPathsAboveBouncePathCount"
+    ],
     "derived": true,
     "statistics": 44
   },
@@ -1619,7 +1624,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents"],
+    "columns": [],
     "derived": true,
     "statistics": 4
   },
@@ -1640,7 +1645,7 @@
       "start": 4
     },
     "glyph": "set-partition",
-    "columns": ["Antisingletons", "BlockMajorIndex", "BlockSizeSpan", "Blocks"],
+    "columns": ["Antisingletons", "BlockMajorIndex", "BlockSizeSpan", "BlocksAndAntisingletons"],
     "derived": true,
     "statistics": 105
   },
@@ -1747,7 +1752,7 @@
       "start": 4
     },
     "glyph": "partition",
-    "columns": ["DistinctParts", "DurfeeSquare", "LargestPart", "Length"],
+    "columns": ["LargestPart", "Length", "AlladiWeight", "ArmOfFirstCell"],
     "derived": true,
     "statistics": 148
   },
@@ -1778,7 +1783,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "MajorIndex"],
+    "columns": [],
     "derived": true,
     "statistics": 2
   },
@@ -1847,7 +1852,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "MajorIndex"],
+    "columns": [],
     "derived": true,
     "statistics": 2
   },
@@ -1860,7 +1865,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "MajorIndex"],
+    "columns": [],
     "derived": true,
     "statistics": 2
   },
@@ -1873,7 +1878,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "MajorIndex"],
+    "columns": [],
     "derived": true,
     "statistics": 2
   },
@@ -1974,7 +1979,7 @@
       "start": 4
     },
     "glyph": "partition",
-    "columns": ["DistinctParts", "DurfeeSquare", "LargestPart", "Length"],
+    "columns": ["DistinctParts", "LargestPart", "Length", "AddableCells"],
     "derived": true,
     "statistics": 148
   },

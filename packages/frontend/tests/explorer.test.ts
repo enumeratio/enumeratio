@@ -15,6 +15,7 @@ import { catalogOf, DEFAULT_COLUMNS, explorerOf } from "../src/explorer.ts";
 import { openRowSource } from "../src/row-source.ts";
 import { engineProbes } from "../src/explorer-engine.ts";
 import { GLYPH_KINDS } from "../src/glyphs.ts";
+import { exprAt, HEAD_GLYPHS, templateOfExpr } from "../src/table-state.ts";
 
 const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
 // A head two packages document is one record: the first wins, as the site's loader has it.
@@ -119,4 +120,27 @@ test("a derived glyph draws the first row", async () => {
     if (batch?.rows[0]?.[0] === undefined || batch.rows[0][0] === "") problems.push(`${r.name}: ${spec.glyph}`);
   }
   expect(problems).toEqual([]);
+});
+
+test("the runtime's head-to-glyph table agrees with the carriers' records", () => {
+  for (const r of records.filter((r) => r.catalogCarrier && r.glyph !== undefined))
+    expect(HEAD_GLYPHS[r.name], r.name).toBe(r.glyph);
+  for (const kind of Object.values(HEAD_GLYPHS)) expect(GLYPH_KINDS.has(kind), kind).toBe(true);
+});
+
+test("a size stepper rewrites only a call with one integer", () => {
+  expect(templateOfExpr("Derangements(4)")).toBe("Derangements({size})");
+  expect(templateOfExpr("Permutations")).toBeUndefined();
+  expect(templateOfExpr("Subsets(4, 2)")).toBeUndefined();
+  expect(exprAt("Derangements({size})", 5)).toBe("Derangements(5)");
+});
+
+test("a derived column varies over the collection it opens on", async () => {
+  // FixedPoints is 0 on every derangement; Inversions is not.
+  expect(await catalog.varies("Derangements(4)", "FixedPoints")).toBe(false);
+  expect(await catalog.varies("Derangements(4)", "Inversions")).toBe(true);
+  for (const spec of specs.values()) {
+    if (spec?.derived !== true) continue;
+    for (const column of spec.columns) expect(await catalog.varies(spec.expr, column), spec.expr).toBe(true);
+  }
 });
