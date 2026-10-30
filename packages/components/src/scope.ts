@@ -11,6 +11,7 @@ import {
   type ControlChange,
   debug,
   inferControls,
+  numberJson,
   type VariableSpec,
   variablesOf,
   plainJson,
@@ -44,8 +45,12 @@ const idOf = (el: Element): number => {
 export const OWNERS = "dynamic-module-box, notatio-manipulate, [variables]";
 
 /** A number where the value is one (`-5` arrives as `Negate(5)`), else the value as read. */
-const seedOf = (json: unknown): MathJsonExpression => {
+const seedOf = (json: unknown, domain?: VariableSpec["domain"]): MathJsonExpression => {
   const plain = plainJson(json);
+  // A complex variable holds a number, as its pad binds one, not a lattice `Tuple`.
+  if (domain?.kind === "points" && domain.ring === "ComplexNumbers" && Array.isArray(plain) && plain[0] === "Tuple") {
+    return numberJson(Number(plain[1]), Number(plain[2]));
+  }
   if (Array.isArray(plain) && plain[0] === "Negate" && typeof plain[1] === "number") return -plain[1];
   return plain as MathJsonExpression;
 };
@@ -186,13 +191,11 @@ export class Scope {
     if (automatic) {
       const scope = await inferenceScope(this.owner ?? this.root);
       const engine = (this.#engine ??= scope.engine);
-      // A point has no prose control yet; it stays a readout.
       this.#declarations = scope
         .run(() => inferControls(null, { engine, names, letterConventions: true }))
-        .filter((spec) => spec.domain.kind !== "points")
         .map(({ name, domain, start }) => ({ name, domain, start }));
       for (const spec of this.#declarations)
-        if (!this.#values.has(spec.name)) this.#values.set(spec.name, seedOf(spec.start));
+        if (!this.#values.has(spec.name)) this.#values.set(spec.name, seedOf(spec.start, spec.domain));
       return;
     }
     const { parseExpression } = await import("@enumeratio/formats/expression");
@@ -200,7 +203,7 @@ export class Scope {
     if (errors.length > 0) log("variables don't parse: %s", errors.join("; "));
     this.#declarations = errors.length > 0 ? [] : await resolveNamedDomains(variablesOf(plainJson(json)));
     for (const spec of this.#declarations)
-      if (!this.#values.has(spec.name)) this.#values.set(spec.name, seedOf(spec.start));
+      if (!this.#values.has(spec.name)) this.#values.set(spec.name, seedOf(spec.start, spec.domain));
   }
 
   /**

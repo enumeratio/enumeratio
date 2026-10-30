@@ -12,7 +12,7 @@ import { openPlaybackMenu } from "./playback-menu.ts";
 import { LONG_PRESS_MS } from "./choice-menu.ts";
 import { ensureStyles } from "./styles.ts";
 import {
-  choiceEntry,
+  choiceEntries,
   clamp,
   type Control,
   CONTROL_EVENT,
@@ -240,7 +240,7 @@ export class NotatioManipulate extends LitElement {
             : c.kind === "text"
               ? engine.box({ str: c.value })
               : c.kind === "choice" && typeof c.value === "string"
-                ? engine.box({ str: c.value })
+                ? engine.box(c.symbol ? c.value : { str: c.value })
                 : c.kind === "point" && c.im !== 0
                   ? engine.box(["Complex", c.value, c.im])
                   : engine.number(c.value),
@@ -336,7 +336,7 @@ export class NotatioManipulate extends LitElement {
           min=${ifDefined(c.kind === "slider" ? c.min : undefined)}
           max=${ifDefined(c.kind === "slider" ? c.max : undefined)}
           step=${ifDefined(c.kind === "slider" ? c.step : undefined)}
-          choices=${ifDefined(c.kind === "choice" ? c.choices.map(choiceEntry).join("|") : undefined)}
+          choices=${ifDefined(c.kind === "choice" ? choiceEntries(c).join("|") : undefined)}
           axis=${ifDefined(o.axis)}
           sensitivity=${ifDefined(o.sensitivity)}
           interval=${ifDefined(o.interval)}

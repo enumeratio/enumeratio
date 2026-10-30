@@ -3,6 +3,11 @@ name: AdditionTable
 domain: Modular arithmetic
 signature: AdditionTable(R)
 summary: "The addition table of ℤ/n, R = QuotientRing(Integers, n): the matrix whose (i, j) entry is aᵢ + aⱼ, its rows and columns ℤ/n's elements in the order `ElementOrder` lists them."
+optionValues:
+  ElementOrder:
+    - Natural
+    - ChineseRemainder
+    - Adic
 signatures:
   - call: AdditionTable(R)
     description: the n × n matrix of sums, as ResidueClass entries, for 2 ≤ n ≤ 64

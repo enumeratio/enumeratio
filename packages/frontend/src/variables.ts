@@ -39,13 +39,24 @@ export type Domain =
 /** Rings whose lattice points a variable may range over, and the unit each writes its points with. */
 export const POINT_RINGS: Readonly<Record<string, string>> = { GaussianIntegers: "i", EisensteinIntegers: "ω" };
 
-/** A lattice point as its ring writes it: `−1 + i`, `2ω`, `3`; `(a, b)` for an unknown ring. */
+/**
+ * A lattice point as its ring writes it: `−1 + i`, `2ω`, `3`; `(a, b)` for an unknown ring. A
+ * `ComplexNumbers` point is a number or a `Complex`, as a pad binds it, shown to four places.
+ */
 export function pointWords(ring: Json, point: Json): string {
-  const coords = Array.isArray(point) && point[0] === "Tuple" ? point.slice(1) : undefined;
-  const [a, b] = (coords ?? []).map((c) => numberOf(c));
+  const complex = ring === "ComplexNumbers";
+  const coords =
+    Array.isArray(point) && (point[0] === "Tuple" || (complex && point[0] === "Complex")) ? point.slice(1) : undefined;
+  const [a, b] = (complex && typeof point === "number" ? [point, 0] : (coords ?? []).map((c) => numberOf(c))) as (
+    | number
+    | undefined
+  )[];
   if (a === undefined || b === undefined) return JSON.stringify(point);
-  const unit = typeof ring === "string" ? POINT_RINGS[ring] : undefined;
-  const signed = (x: number): string => (x < 0 ? `−${-x}` : String(x));
+  const unit = typeof ring === "string" ? (complex ? "i" : POINT_RINGS[ring]) : undefined;
+  const signed = (x: number): string => {
+    const shown = complex ? Number(x.toFixed(4)) : x;
+    return shown < 0 ? `−${-shown}` : String(shown);
+  };
   if (unit === undefined) return `(${signed(a)}, ${signed(b)})`;
   if (b === 0) return signed(a);
   const term = `${b === 1 ? "" : b === -1 ? "−" : signed(b)}${unit}`;

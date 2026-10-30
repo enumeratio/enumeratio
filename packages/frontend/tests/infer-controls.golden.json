@@ -830,6 +830,41 @@
       }
     ]
   },
+  "options: symbols written bare are a setter bar over symbols": {
+    "body": {
+      "fn": [
+        "AdditionTable",
+        {
+          "sym": "R",
+          "sourceOffsets": [14, 15]
+        },
+        {
+          "fn": [
+            "Rule",
+            {
+              "sym": "ElementOrder",
+              "sourceOffsets": [17, 29]
+            },
+            "elementOrder"
+          ],
+          "sourceOffsets": [17, 49]
+        }
+      ],
+      "sourceOffsets": [0, 50]
+    },
+    "specs": [
+      {
+        "name": "elementOrder",
+        "domain": {
+          "kind": "choices",
+          "values": ["Natural", "ChineseRemainder", "Adic"],
+          "labels": ["Natural", "ChineseRemainder", "Adic"]
+        },
+        "start": "ChineseRemainder",
+        "controlType": "SetterBar"
+      }
+    ]
+  },
   "options: a value the record does not list stays as written": {
     "body": {
       "fn": [

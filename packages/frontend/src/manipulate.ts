@@ -49,12 +49,17 @@ export interface SliderControl {
   control?: ControlType;
 }
 
-/** A choice over numbers, or over strings (`{m, {"a", "b"}}`) when any entry is quoted. */
+/**
+ * A choice over numbers, or over strings (`{m, {"a", "b"}}`) when any entry is quoted, or over
+ * symbols (`{o, {Natural, Adic}}`, `symbol` set) when every entry is a bare name: the choices
+ * are then the names, and the value substitutes as that symbol.
+ */
 export interface ChoiceControl {
   kind: "choice";
   name: string;
   value: number | string;
   choices: (number | string)[];
+  symbol?: true;
   control?: ControlType;
 }
 
@@ -107,9 +112,14 @@ function splitTop(s: string, sep: string): string[] {
 const num = (s: string): number => Number(s.trim());
 const quoted = (s: string): boolean => /^"[^"]*"$/.test(s.trim());
 const unquote = (s: string): string => s.trim().replace(/^"(.*)"$/s, "$1");
+const symbolic = (s: string): boolean => /^[A-Za-z_]\w*$/.test(s);
 
 /** A choice as an entry of a `values` attribute: strings quoted, so they read back as strings. */
 export const choiceEntry = (v: number | string): string => (typeof v === "string" ? `"${v}"` : String(v));
+
+/** A choice control's entries as a control's `values` attribute reads them; a symbol's name stays bare. */
+export const choiceEntries = (c: ChoiceControl): string[] =>
+  c.choices.map((v) => (c.symbol ? String(v) : choiceEntry(v)));
 
 /**
  * Read a number from an attribute that may have been written by Manipulate. Epsil
@@ -227,7 +237,8 @@ function splitControls(spec: string): string[] {
  *   `{a, 0, 5}`            slider a in [0,5], starts at min (Manipulate default)
  *   `{a, 0, 5, 0.5}`       + explicit step
  *   `{{a, 2}, 0, 5}`       + explicit initial value
- *   `{k, {2, 3, 5, 7}}`    a choice setter over a discrete list (`{m, {"a", "b"}}` over strings)
+ *   `{k, {2, 3, 5, 7}}`    a choice setter over a discrete list (`{m, {"a", "b"}}` over strings,
+ *                          `{o, {Natural, Adic}}` over symbols)
  *   `{b, Boolean}`         a checkbox; `{s, String}` a text field; `{z, Complex}` a pad
  *                          (each starts elsewhere as `{{b, True}, Boolean}`, `{{z, re, im}, Complex}`)
  * Malformed controls are skipped rather than throwing.
@@ -274,13 +285,23 @@ export function parseControls(spec: string): Control[] {
     // `{name, {choices...}}` -> a discrete choice setter.
     if (fields.length === 2 && fields[1].startsWith("{")) {
       const entries = splitTop(fields[1].slice(1, -1), ",");
+      const symbols = entries.length > 0 && entries.every(symbolic);
       const choices: (number | string)[] = entries.some(quoted)
         ? entries.map((e) => (quoted(e) ? unquote(e) : e))
-        : entries.map(num).filter(Number.isFinite);
+        : symbols
+          ? entries
+          : entries.map(num).filter(Number.isFinite);
       if (choices.length === 0) continue;
       const wanted = typeof choices[0] === "string" ? unquote(rawInit[0] ?? "") : init;
       const value = wanted !== undefined && choices.includes(wanted) ? wanted : choices[0];
-      controls.push({ kind: "choice", name, value, choices, ...(control && { control }) });
+      controls.push({
+        kind: "choice",
+        name,
+        value,
+        choices,
+        ...(symbols && { symbol: true as const }),
+        ...(control && { control }),
+      });
       continue;
     }
 

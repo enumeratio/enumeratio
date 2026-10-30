@@ -3,6 +3,7 @@ import { plainJson, pointWords, randomValue, type VariableSpec } from "@enumerat
 import { html, LitElement, nothing } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import "./knob-box.ts";
+import "./slider-2d-box.ts";
 import "./stepper-box.ts";
 import "./toggler-box.ts";
 import { type Scope, scopeOf } from "./scope.ts";
@@ -35,6 +36,13 @@ function texOf(spec: VariableSpec | undefined, value: Json, ringOf: (ring: Json)
 
 /** `{InputField(Variables)}`'s hole: the scope's variables as one editable, copyable sentence. */
 const SETTINGS = "Variables";
+
+/** Points of the complex plane: a 2D pad binds them, as a number. */
+const isPlane = (domain: VariableSpec["domain"]): domain is Extract<VariableSpec["domain"], { kind: "points" }> =>
+  domain.kind === "points" && domain.ring === "ComplexNumbers";
+
+/** A bare name: MathJSON for a symbol (a quoted `'a'` is a string, a number is not a name). */
+const isSymbolName = (v: Json): boolean => typeof v === "string" && /^[A-Za-z_]\w*$/.test(v);
 
 /** A toggler entry for a choice: `value -> label`, the value as Epsil spells it. */
 const entryOf = (value: Json, label: string): string =>
@@ -140,7 +148,7 @@ export class TemplateSlot extends LitElement {
   /** A die beside a control: a random value of the variable's domain. */
   #die(name: string): unknown {
     const spec = this.#spec(name);
-    if (!spec || spec.domain.kind === "integers") return nothing;
+    if (!spec || spec.domain.kind === "integers" || isPlane(spec.domain)) return nothing;
     return html`<button
       type="button"
       class="notatio-die"
@@ -166,6 +174,25 @@ export class TemplateSlot extends LitElement {
     if (spec === undefined) return html`<dynamic-box value=${`_${name}`}></dynamic-box>`;
     const value = this.#scope?.values.get(name);
     const domain = spec.domain;
+    // The complex plane: a pad, the variable's real and imaginary parts its two axes.
+    if (isPlane(domain)) {
+      const [lo, hi] = [domain.min ?? -2, domain.max ?? 2];
+      const z =
+        typeof value === "number"
+          ? [value, 0]
+          : Array.isArray(value) && value[0] === "Complex"
+            ? value.slice(1)
+            : [0, 0];
+      return html`<slider-2d-box
+        name=${name}
+        complex
+        .value=${`${z[0]},${z[1]}`}
+        min=${`${lo},${lo}`}
+        max=${`${hi},${hi}`}
+        step="0.05"
+        size="56"
+      ></slider-2d-box>`;
+    }
     const kind =
       "stepper" in options || "knob" in options || "toggler" in options
         ? Object.keys(options).find((k) => k === "stepper" || k === "knob" || k === "toggler")
@@ -195,8 +222,11 @@ export class TemplateSlot extends LitElement {
       case "toggler": {
         const values =
           domain.kind === "choices" ? domain.values.map((v, k) => entryOf(v, domain.labels[k]!)).join("|") : undefined;
+        // A choice over bare names binds the symbol, not its place in the list.
+        const symbols = domain.kind === "choices" && domain.values.every((v) => isSymbolName(v));
         return html`<toggler-box
           name=${name}
+          ?symbols=${symbols}
           values=${values ?? nothing}
           .value=${wordsOf(spec, value)}
         ></toggler-box>`;
