@@ -13,6 +13,7 @@ import { COMPILED as PARTITIONS_COMPILED } from "../../partitions/src/statistics
 import { COMPILED as COMPOSITIONS_COMPILED } from "../../compositions/src/statistics.compiled.generated.js";
 import { COMPILED as LATTICE_PATHS_COMPILED } from "../../lattice-paths/src/statistics.compiled.generated.js";
 import { COMPILED as SET_PARTITIONS_COMPILED } from "../../set-partitions/src/statistics.compiled.generated.js";
+import { COMPILED as TREES_COMPILED } from "../../trees/src/statistics.compiled.generated.js";
 import { type Definition, SUBJECT, signatureOf } from "./types.ts";
 
 /** Every area's compiled table, merged. Add a spread here when an area's kernel moves in;
@@ -23,6 +24,7 @@ const COMPILED = {
   ...COMPOSITIONS_COMPILED,
   ...LATTICE_PATHS_COMPILED,
   ...SET_PARTITIONS_COMPILED,
+  ...TREES_COMPILED,
 };
 
 /** The compiled form of `definition`, as a function of its subject's MathJSON, or undefined

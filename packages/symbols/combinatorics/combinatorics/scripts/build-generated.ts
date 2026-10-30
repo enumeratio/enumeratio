@@ -35,6 +35,7 @@ const compiles: ReadonlyArray<readonly [script: string, output: string]> = [
   ["lattice-paths/scripts/compile-definitions.ts", "lattice-paths/src/statistics.compiled.generated.js"],
   ["partitions/scripts/compile-definitions.ts", "partitions/src/statistics.compiled.generated.js"],
   ["permutations/scripts/compile-definitions.ts", "permutations/src/statistics.compiled.generated.js"],
+  ["trees/scripts/compile-definitions.ts", "trees/src/statistics.compiled.generated.js"],
   ["set-partitions/scripts/compile-definitions.ts", "set-partitions/src/statistics.compiled.generated.js"],
 ];
 
