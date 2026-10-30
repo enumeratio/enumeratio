@@ -59,6 +59,8 @@ export const dyckPaths = walkFamily({
   steps: [UP, { token: 0, rise: -1, width: 1 }],
   tables: [],
   completions: ballot,
+  // Catalan(n) first passes 2^53 at n = 31.
+  bigSamples: [[31], [34]],
 });
 /** Up (1), level (0), down (−1), length n: the Motzkin numbers. */
 const motzkinPaths = tableWalk(

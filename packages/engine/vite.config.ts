@@ -6,6 +6,7 @@ export default defineConfig({
     entry: {
       index: "src/index.ts",
       compiled: "src/compiled.ts",
+      "compiled-bigint": "src/compiled-bigint.ts",
       testing: "src/testing.ts",
       unstable: "src/unstable.ts",
       "unstable-latex-syntax": "src/unstable-latex-syntax.ts",

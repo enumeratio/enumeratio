@@ -17,6 +17,10 @@
       "types": "./dist/compiled.d.mts",
       "import": "./dist/compiled.mjs"
     },
+    "./compiled-bigint": {
+      "types": "./dist/compiled-bigint.d.mts",
+      "import": "./dist/compiled-bigint.mjs"
+    },
     "./testing": {
       "types": "./dist/testing.d.mts",
       "import": "./dist/testing.mjs"

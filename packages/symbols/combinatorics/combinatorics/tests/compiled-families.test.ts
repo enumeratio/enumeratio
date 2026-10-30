@@ -7,8 +7,9 @@ import { expect, test } from "vite-plus/test";
 import { COMPILED_FAMILIES } from "../collections/src/families/compiled-families.generated.js";
 import type { EpsilFamily } from "../collections/src/families/epsil.ts";
 import { allFamilies } from "../collections/src/families/index.ts";
+import { dyckPaths } from "../lattice-paths/src/families/core.ts";
 import { epsilEntries } from "../permutations/src/families/core.ts";
-import { compileFamily, deepHeads, disagreements, fibersOf } from "../scripts/family-checks.ts";
+import { bigDisagreements, compileFamily, deepHeads, disagreements, fibersOf } from "../scripts/family-checks.ts";
 
 test("the build compiled families", () => {
   expect(Object.keys(COMPILED_FAMILIES).length).toBeGreaterThan(0);
@@ -33,5 +34,26 @@ test.skipIf(process.env.DEEP_TESTS !== "1")(
       expect(fibers.length, head).toBeGreaterThan(0);
       expect(disagreements(ce, family, compileFamily(ce, family).runs, fibers), head).toEqual([]);
     }
+  },
+);
+
+test("BigInt-compiled code that disagrees with the interpreter is left interpreted", () => {
+  const wrong = { count: () => 0n, unrank: () => [1n], rank: () => 0n };
+  expect(bigDisagreements(bareEngine(), dyckPaths, wrong)).toEqual(["count", "unrank", "rank"]);
+});
+
+test("the build's BigInt-compiled DyckPaths agrees with the interpreter past 2^53", () => {
+  const ce = bareEngine();
+  expect(bigDisagreements(ce, dyckPaths, compileFamily(ce, dyckPaths).bigRuns)).toEqual([]);
+});
+
+// Wider than the build checks: more fibers, more ranks each.
+test.skipIf(process.env.DEEP_TESTS !== "1")(
+  "BigInt-compiled code agrees with the interpreter on a wide sweep past 2^53",
+  { timeout: 900_000 },
+  () => {
+    const ce = bareEngine();
+    const fibers = Array.from({ length: 12 }, (_, i) => [31 + i]);
+    expect(bigDisagreements(ce, dyckPaths, compileFamily(ce, dyckPaths).bigRuns, fibers, 12)).toEqual([]);
   },
 );

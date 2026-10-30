@@ -3,10 +3,18 @@
 // scripts/compile-families.ts, else compiled on first use) answers while the fiber's count is a
 // safe integer, since it computes in doubles; past that, where the compiler declines, or where
 // its code disagreed with the interpreter when generated, the interpreter answers with
-// compute-engine's exact integers.
+// compute-engine's exact integers. A family that opts in (`bigSamples`) has BigInt-compiled code
+// for the fibers past 2^53, tried before the interpreter.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { compileTyped, definitionHash, type GeneratedRun, runtimeHelpers } from "@enumeratio/engine/compiled";
+import {
+  bigintRuntime,
+  compileBigint,
+  fromBigint,
+  isBigintDecline,
+  toBigint,
+} from "@enumeratio/engine/compiled-bigint";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { COMPILED_FAMILIES } from "./compiled-families.generated.js";
 import { isWorkDecline } from "./work.ts";
@@ -65,6 +73,11 @@ export interface EpsilFamily extends FamilyShape {
   /** The interpreter's answers are reduced once more before they are read (`settled`): for a
    *  definition whose last fold step compute-engine leaves unreduced, which would read as no answer. */
   readonly settle?: true;
+  /** Opts in to BigInt-compiled count, unrank and rank, for fibers whose count is past 2^53 (where doubles
+   *  can't answer and the interpreter takes seconds). The fibers listed are ones past it that the build
+   *  checks the compiled code on against the interpreter. For definitions that are pure integer arithmetic;
+   *  one that mixes in a real (a Log bound) is left interpreted by the build's check. */
+  readonly bigSamples?: readonly (readonly number[])[];
   /** Answers settled before any table is built, for calls that would otherwise build one only to
    *  decline or to say no. Each is a necessary condition, written in plain JS. */
   readonly early?: {
@@ -97,6 +110,10 @@ export interface GeneratedFamily {
   readonly rank?: GeneratedRun;
   readonly valid?: GeneratedRun;
   readonly tables?: GeneratedRun;
+  /** The same operations compiled over BigInts (`compiled-bigint`), for a family with `bigSamples`. */
+  readonly big?: Partial<Record<Operation, GeneratedRun>>;
+  /** Operations whose BigInt code disagreed with the interpreter when generated: never compiled over BigInts. */
+  readonly bigInterpreted?: readonly Operation[];
   /** Operations whose compiled code disagreed with the interpreter when generated: they are
    *  interpreted, never compiled on first use. */
   readonly interpreted?: readonly Operation[];
@@ -145,7 +162,10 @@ const familyHashes = new WeakMap<EpsilFamily, string>();
 export const familyHash = (family: EpsilFamily): string => {
   let hash = familyHashes.get(family);
   if (hash === undefined)
-    familyHashes.set(family, (hash = definitionHash({ params: family.params, epsil: family.epsil })));
+    familyHashes.set(
+      family,
+      (hash = definitionHash({ params: family.params, epsil: family.epsil, bigSamples: family.bigSamples })),
+    );
   return hash;
 };
 
@@ -297,6 +317,7 @@ export function kernelOn(
     elementType: _,
     declinePastDoubles,
     settle,
+    bigSamples,
     early,
     fast: fastKernel,
     fastCount,
@@ -334,6 +355,35 @@ export function kernelOn(
       }
     }
     return runs.get(operation)!;
+  };
+  // BigInt-compiled code, for the fibers past 2^53; null where the family hasn't opted in, the operation reads a
+  // table, or its code is missing or disagreed with the interpreter.
+  const bigRuns = new Map<Operation, ((vars: Record<string, unknown>) => unknown) | null>();
+  const bigCompiled = (operation: Operation): ((vars: Record<string, unknown>) => unknown) | null => {
+    if (!bigRuns.has(operation)) {
+      const code = current?.big?.[operation];
+      const types = operationTypes(family, operation);
+      if (bigSamples === undefined || reads(operation) || current?.bigInterpreted?.includes(operation) === true)
+        bigRuns.set(operation, null);
+      else if (code !== undefined) {
+        const sys = bigintRuntime(ce);
+        bigRuns.set(operation, (vars) => code(sys, vars));
+      } else
+        bigRuns.set(operation, types === undefined ? null : (compileBigint(ce, epsil[operation], types)?.run ?? null));
+    }
+    return bigRuns.get(operation)!;
+  };
+  /** The operation over BigInts, as plain JS (see `fromBigint`); undefined where it declines, which leaves the question
+   *  to the interpreter. */
+  const attemptBig = (operation: Operation, p: number[], extra: Record<string, unknown>): unknown => {
+    const code = bigCompiled(operation);
+    if (code === null || !wellParamed(p)) return undefined;
+    try {
+      return fromBigint(code(toBigint({ ...bind(p), ...extra }) as Record<string, unknown>));
+    } catch (error) {
+      if (!isBigintDecline(error)) reportCompiled(operation, error);
+      return undefined;
+    }
   };
   const reportCompiled = (operation: Operation, error: unknown): void => {
     options.onCompiledError?.(operation, error);
@@ -455,6 +505,7 @@ export function kernelOn(
     const key = p.join(",");
     let total = counts.get(key);
     if (total === undefined) {
+      let big: unknown;
       const raw = quickTotal(p);
       // A fast count that is a double past 2^53, for a family that declines there: no need to run its table.
       const doubled = typeof raw === "number" && Number.isFinite(raw) && !Number.isSafeInteger(raw);
@@ -466,6 +517,8 @@ export function kernelOn(
       if (typeof fast === "bigint") total = fast;
       else if (fast === Number.POSITIVE_INFINITY) total = fast;
       else if (isInteger(fast)) total = BigInt(fast);
+      else if (typeof (big = attemptBig("count", p, {})) === "bigint") total = big as bigint;
+      else if (typeof big === "number" && Number.isSafeInteger(big)) total = BigInt(big);
       else if (declinePastDoubles === "count" && wellParamed(p)) return decline(p);
       else {
         const json = interpret("count", p, {});
@@ -594,7 +647,11 @@ export function kernelOn(
         }
         const fast = run("unrank", p, { _r: Number(r) });
         if (wellFormed(family.kind, fast)) return fast as Element;
-      } else if (declinePastDoubles) decline(p);
+      } else {
+        const big = typeof total === "bigint" ? attemptBig("unrank", p, { _r: r }) : undefined;
+        if (wellFormed(family.kind, big)) return big as Element;
+        if (declinePastDoubles) decline(p);
+      }
       const json = interpret("unrank", p, { _r: bigintJson(r) });
       return elementOf(json) ?? fail("unrank", p, json);
     },
@@ -660,7 +717,11 @@ export function kernelOn(
         }
         const fast = run("rank", p, { _x: element });
         if (isInteger(fast)) return BigInt(fast);
-      } else if (declinePastDoubles) decline(p);
+      } else {
+        const place = typeof known === "bigint" ? attemptBig("rank", p, { _x: element }) : undefined;
+        if (typeof place === "bigint" || isInteger(place)) return BigInt(place);
+        if (declinePastDoubles) decline(p);
+      }
       const json = interpret("rank", p, { _x: elementJson(element) });
       return integerOf(json) ?? fail("rank", p, json);
     },
