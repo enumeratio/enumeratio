@@ -28,8 +28,11 @@ import {
   type Environment,
   environmentNamed,
   highlightCode,
+  loadEngineFor,
   markupOf,
   pageEnvironment,
+  type Presentation,
+  presentationOf,
   type Transcript,
   typesetLeaf,
   watchPageEnvironment,
@@ -301,6 +304,12 @@ export class NotatioOut extends LitElement {
      */
     plot: { type: Boolean },
     /**
+     * `AutomaticPresentation -> True`: a collection value opens as a collection table, and a
+     * combinatorial element draws as its figure (`presentationOf`), rather than typesetting as a
+     * call. Off by default; any other value stays as typeset.
+     */
+    automaticPresentation: { type: Boolean, attribute: "automatic-presentation" },
+    /**
      * Read-only: set while the value is being evaluated or typeset (the engine loads
      * lazily, so the first one can take a moment). Styled as a pending state; a script
      * can wait for `:not([busy])`.
@@ -327,6 +336,7 @@ export class NotatioOut extends LitElement {
     _answered: { state: true },
     _markup: { state: true },
     _visual: { state: true },
+    _presented: { state: true },
     _traditional: { state: true },
     _tex: { state: true },
     _matrix: { state: true },
@@ -359,6 +369,7 @@ export class NotatioOut extends LitElement {
   declare label: string;
   declare env: string;
   declare elideAbove: number;
+  declare automaticPresentation: boolean;
   declare plot: boolean;
   declare labelMenu: boolean;
   declare busy: boolean;
@@ -375,6 +386,8 @@ export class NotatioOut extends LitElement {
    * import them, so a host that registers only `notatio-out` sees the typeset fallback.
    */
   declare _visual: string;
+  /** The view `automaticPresentation` chose for the value, if any. */
+  declare _presented: Presentation | undefined;
   declare _traditional: string;
   /** The TeXForm source: traditional notation, in commands a LaTeX document knows. */
   declare _tex: string;
@@ -414,6 +427,8 @@ export class NotatioOut extends LitElement {
     this.env = "";
     this.elideAbove = 0;
     this.plot = false;
+    this.automaticPresentation = false;
+    this._presented = undefined;
     this.labelMenu = false;
     this.busy = false;
     this._answered = false;
@@ -465,6 +480,7 @@ export class NotatioOut extends LitElement {
       changed.has("display") ||
       changed.has("expect") ||
       changed.has("elideAbove") ||
+      changed.has("automaticPresentation") ||
       changed.has("plot")
     ) {
       void this.#recompute();
@@ -698,6 +714,14 @@ export class NotatioOut extends LitElement {
       this.#value = json as MathJsonExpression | undefined;
       // A kernel says whether the value draws; a value from this page's engine is checked.
       this.#draws = display === undefined || display.draws;
+      this._presented = undefined;
+      if (this.automaticPresentation && json !== undefined) {
+        const presented = await this.#present(json);
+        if (run !== this.#runs) return;
+        this._presented = presented;
+        // A figure is the value's own picture, which a kernel's `draws` may not have said.
+        if (presented?.kind === "figure" || presented?.kind === "plot") this.#draws = true;
+      }
       // Without a kernel's display the page's engine writes the boxes (below); drawing waits for
       // them, so a layout's math doesn't flash in without the packages' notation first.
       this.#awaitingBoxes = display === undefined && json !== undefined;
@@ -755,6 +779,7 @@ export class NotatioOut extends LitElement {
       if (run !== this.#runs) return;
       this._markup = "";
       this._visual = "";
+      this._presented = undefined;
       this._latex = "";
       this._tex = "";
       this._json = "";
@@ -917,6 +942,32 @@ export class NotatioOut extends LitElement {
   #page: Environment = pageEnvironment();
   #unwatch = (): void => {};
 
+  /** The view `automaticPresentation` gives `json`; asks the page's engine only whether a table opens it. */
+  async #present(json: unknown): Promise<Presentation | undefined> {
+    try {
+      const [engine, { openRowSource }, { serializeExpression }] = await Promise.all([
+        loadEngineFor(json),
+        import("@enumeratio/frontend/row-source"),
+        import("@enumeratio/formats/expression"),
+      ]);
+      const presented = presentationOf(json, {
+        serialize: (value) => serializeExpression(value as never, { libraryNames: "mathjson" }),
+        opensAsTable: (value) => {
+          try {
+            return openRowSource(engine, { collection: value as never, columns: [] }).ok;
+          } catch {
+            return false;
+          }
+        },
+      });
+      if (presented?.kind === "collection") await defineEverything();
+      return presented;
+    } catch (err) {
+      log("present failed", err);
+      return undefined;
+    }
+  }
+
   /** Draws the value's picture; settles once it has, or at once when there is none to draw. */
   #visualize(): Promise<void> {
     const value = this.#value;
@@ -934,10 +985,13 @@ export class NotatioOut extends LitElement {
     // picture's elements are defined with it. Its math is typeset by the page's typesetter.
     const written = this.#written;
     const evaluated = this.evaluate;
+    const presented = this._presented;
+    // A plot presentation draws the value under its plot head.
+    const drawn = presented?.kind === "plot" ? ([presented.head, value] as MathJsonExpression) : value;
     return Promise.all([import("./visual.ts"), defineEverything(), loadMarkup()])
       .then(([{ visualMarkup }, , convert]) => {
         if (this.#value !== value) return;
-        this._visual = visualMarkup(value, env, {
+        this._visual = visualMarkup(drawn, env, {
           typeset: (tex) => cachedMarkup(convert, tex),
           evaluated,
           written,
@@ -1287,6 +1341,17 @@ export class NotatioOut extends LitElement {
       case "wolfram":
         return this.#code(this._wolfram, FORM_LANG.wolfram!);
       default:
+        if (this._presented?.kind === "collection") {
+          const { expr, glyph, columns, pageSize } = this._presented;
+          return html`<notatio-collection-table
+            readonly
+            pagination
+            expr=${expr}
+            glyph=${glyph}
+            columns=${columns}
+            page-size=${pageSize}
+          ></notatio-collection-table>`;
+        }
         // A head that draws is drawn: evaluation returned a picture, not a formula.
         return html`${unsafeHTML(this._visual || this._markup)}`;
     }

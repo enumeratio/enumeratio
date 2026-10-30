@@ -1,0 +1,51 @@
+{
+  "SymmetricGroup(3)": {
+    "kind": "collection",
+    "expr": "SymmetricGroup(3)",
+    "glyph": "Automatic",
+    "columns": "Automatic",
+    "pageSize": 10
+  },
+  "IntegerPartitions(6)": {
+    "kind": "collection",
+    "expr": "IntegerPartitions(6)",
+    "glyph": "Automatic",
+    "columns": "Automatic",
+    "pageSize": 10
+  },
+  "Subsets(4)": {
+    "kind": "collection",
+    "expr": "Subsets(4)",
+    "glyph": "Automatic",
+    "columns": "Automatic",
+    "pageSize": 10
+  },
+  "Permutation([3, 1, 2])": {
+    "kind": "figure",
+    "frame": "StrandDiagram"
+  },
+  "IntegerPartition([3, 2, 1])": {
+    "kind": "figure",
+    "frame": "CellDiagram"
+  },
+  "list of numbers": {
+    "kind": "plot",
+    "head": "ListPlot"
+  },
+  "list of pairs": {
+    "kind": "plot",
+    "head": "ListPlot"
+  },
+  "list of reals": {
+    "kind": "plot",
+    "head": "ListPlot"
+  },
+  "empty list": null,
+  "list of lists of different lengths": null,
+  "list of symbols": null,
+  "set": null,
+  "number": null,
+  "symbol": null,
+  "sum": null,
+  "undefined value": null
+}

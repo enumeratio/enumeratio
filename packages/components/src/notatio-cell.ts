@@ -173,6 +173,14 @@ export class NotatioCell extends LitElement {
     /** Forwarded to the Out: also report the substituted-but-unevaluated input. */
     plot: { type: Boolean },
     /**
+     * Forwarded to the Out: `AutomaticPresentation`, a collection value as a table. Off unless
+     * set; `automatic-presentation="false"` turns it off in a notebook that has it on.
+     */
+    automaticPresentation: {
+      attribute: "automatic-presentation",
+      converter: { fromAttribute: (value: string | null) => (value === null ? undefined : value !== "false") },
+    },
+    /**
      * Pin the `standard` editor to a binding, forwarded to `<In>`: the symbol
      * name and its `\coloneqq` become fixed chrome, and only the value can be edited. A
      * page *about* p keeps a p bound to something, whatever the reader types into it.
@@ -224,6 +232,7 @@ export class NotatioCell extends LitElement {
   declare planned: boolean;
   declare env: string;
   declare elideAbove: number;
+  declare automaticPresentation: boolean | undefined;
   declare plot: boolean;
   declare bind: string;
   declare domain: string;
@@ -271,6 +280,7 @@ export class NotatioCell extends LitElement {
     this.planned = false;
     this.env = "";
     this.elideAbove = 0;
+    this.automaticPresentation = undefined;
     this.plot = false;
     this.liveValue = undefined;
     this._liveJson = undefined;
@@ -734,6 +744,7 @@ export class NotatioCell extends LitElement {
       env=${this.env}
       elide-above=${this.elideAbove || 0}
       ?plot=${this.plot}
+      ?automatic-presentation=${this.automaticPresentation === true}
       .resolveHead=${this.resolveHead}
       .prerendered=${this.dirty ? undefined : this.prerendered}
       .provisional=${this.dirty ? undefined : this.provisional}

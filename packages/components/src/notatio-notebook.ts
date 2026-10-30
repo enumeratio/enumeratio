@@ -56,6 +56,8 @@ export class NotatioNotebook extends LitElement {
     inForm: { type: String, attribute: "in-form" },
     /** `Transient -> True`: keep nothing, so every visit opens from the seed. */
     transient: { type: Boolean },
+    /** `AutomaticPresentation -> True`: each cell's output picks a view for its value (a collection opens as a table). */
+    automaticPresentation: { type: Boolean, attribute: "automatic-presentation" },
     _cells: { state: true },
     _ready: { state: true },
     _generation: { state: true },
@@ -66,6 +68,7 @@ export class NotatioNotebook extends LitElement {
   declare seed: string;
   declare inForm: string;
   declare transient: boolean;
+  declare automaticPresentation: boolean;
   declare _cells: NbCell[];
   // Cells draw once the record is read, so a reader's notebook never flashes its seed.
   declare _ready: boolean;
@@ -93,6 +96,7 @@ export class NotatioNotebook extends LitElement {
     this.seed = "";
     this.inForm = "epsil";
     this.transient = false;
+    this.automaticPresentation = false;
     this._cells = [];
     this._ready = false;
     this._generation = 0;
@@ -360,6 +364,7 @@ export class NotatioNotebook extends LitElement {
                   .value=${cell.value}
                   .provisional=${cell.answer?.source === cell.value ? cell.answer.markup : undefined}
                   format=${this.#format}
+                  .automaticPresentation=${this.automaticPresentation || undefined}
                   @notatio-change=${(e: Event) => this.#onChange(cell.id, e)}
                 ></notatio-cell>
                 <button
