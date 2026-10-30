@@ -32,13 +32,26 @@ import {
 } from "../../src/statistics/vocabulary.ts";
 
 const on = "IntegerPartition";
-const stat = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
+const stat = (
+  head: string,
+  summary: string,
+  expr: Definition["expr"],
+  note?: string,
+  checkWeight?: number,
+): Definition => ({
   head,
   on,
   summary,
   expr,
   ...(note ? { note } : {}),
+  ...(checkWeight === undefined ? {} : { checkWeight }),
 });
+
+/** Interpreting these tables costs seconds per subject past a dozen cells (a 5 x 5 box takes over
+ *  a minute), while the compiled code takes milliseconds at any size. The compile cross-check
+ *  stops at 10 cells: every partition up to that size is still compared, among them repeated
+ *  parts, one row and one column. */
+const TABLE_CHECK_WEIGHT = 10;
 
 const here = at("i");
 const largest: MathJSON = ["Max", x];
@@ -1403,11 +1416,14 @@ export const PARTITION_STATISTICS: readonly Definition[] = [
       1,
     ),
     "FindStat's St001097 reads it as a coefficient of the formal group law for linear orders; its description gives the Smirnov words.",
+    TABLE_CHECK_WEIGHT,
   ),
   stat(
     "StandardTableauCountWithMajorIndexCongruentToOneModuloSize",
     "The standard Young tableaux whose major index leaves remainder 1 on division by the size of the shape (never, when the size is 1).",
     nonEmpty(tableauxWithMajorIndexRemainder(1)),
+    undefined,
+    TABLE_CHECK_WEIGHT,
   ),
   stat(
     "UpperCoverCountInDominanceOrder",
