@@ -8,9 +8,10 @@ import type { NotatioCollectionTable } from "../src/notatio-collection-table.ts"
 const STATISTICS = ["Descents", "Excedances", "Inversions", "MajorIndex", "Peaks", "Valleys"];
 const TALLY = ["Tuple", ["List", 0, 1, 2], ["List", 1, 4, 1]];
 
+// Cold import of the element graph can outlast the 10 s hook default on a loaded CI runner.
 beforeAll(async () => {
   await import("../src/notatio-collection-table.ts");
-});
+}, 60_000);
 
 /** A table whose kernel is `asked`'s log; its rows report `count` once, as a kernel would. */
 async function table(
