@@ -208,6 +208,7 @@ import { watchStructures } from "./structure.ts";
 export { adoptStructure, adoptStructures, watchStructures } from "./structure.ts";
 // A statistic's distributions, for the reference pages (computed on demand, by the page's kernel or engine).
 export { distributionTriangle, findEquidistributed } from "./distribution-client.ts";
+export { findTransports, transportTriangle } from "./transport-client.ts";
 // A map's table and properties at small sizes, likewise.
 export { mapAtSize, mapProperties } from "./map-client.ts";
 watchStructures();
