@@ -271,7 +271,7 @@ export function randomInteger(domain: Extract<Domain, { kind: "integers" }>, n: 
 }
 
 /** Reach of a ring point's coordinates a random draw takes when its declaration gives no `Range`. */
-const POINT_REACH = 4;
+export const POINT_REACH = 4;
 
 /**
  * A random value of a variable's domain, other than `current` where it can be: an integer it

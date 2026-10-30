@@ -53,6 +53,29 @@
       "step": "0.05"
     }
   ],
+  "symbol knob": [
+    {
+      "tag": "knob-box",
+      "name": "o",
+      "symbols": ""
+    }
+  ],
+  "lattice holes": [
+    {
+      "tag": "slider-2d-box",
+      "name": "g",
+      "min": "-4,-4",
+      "max": "4,4",
+      "step": "1"
+    },
+    {
+      "tag": "slider-2d-box",
+      "name": "e",
+      "min": "-4,-4",
+      "max": "4,4",
+      "step": "1"
+    }
+  ],
   "module scope declarations": [
     {
       "tag": "slider-box",

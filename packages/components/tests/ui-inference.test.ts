@@ -106,6 +106,41 @@ test("a variable of the prose that is complex gets a 2D pad, bound as a number",
   scope.remove();
 });
 
+test("a knob over symbol choices binds the symbol", async () => {
+  const scope = document.createElement("div");
+  scope.setAttribute("variables", "[_o -> [Natural, ChineseRemainder, Adic]]");
+  scope.innerHTML = '<template-slot name="o" knob></template-slot>';
+  document.body.append(scope);
+  await until(() => scope.querySelector("knob-box[symbols]") !== null);
+  check("symbol knob", drawn(scope));
+  const knob = scope.querySelector("knob-box") as unknown as HTMLElement & {
+    binding: unknown;
+    value: string;
+    updateComplete: Promise<unknown>;
+  };
+  expect(knob.binding).toBe("Natural");
+  knob.value = "Adic";
+  await knob.updateComplete;
+  expect(knob.binding).toBe("Adic");
+  scope.remove();
+});
+
+test("a ring's lattice point is an integer pad that binds the point as a Tuple", async () => {
+  const scope = document.createElement("div");
+  scope.setAttribute(
+    "variables",
+    "[_g -> Variable(GaussianIntegers, (-1, 1)), _e -> Variable(EisensteinIntegers, (2, -1))]",
+  );
+  scope.innerHTML = '<template-slot name="g"></template-slot> <template-slot name="e"></template-slot>';
+  document.body.append(scope);
+  await until(() => scope.querySelectorAll("slider-2d-box").length === 2);
+  check("lattice holes", drawn(scope));
+  const [g, e] = [...scope.querySelectorAll("slider-2d-box")] as unknown as { binding: unknown }[];
+  expect(g!.binding).toEqual(["Tuple", -1, 1]);
+  expect(e!.binding).toEqual(["Tuple", 2, -1]);
+  scope.remove();
+});
+
 test("inside a notebook's module, its scope's declarations are the ones read", async () => {
   const engine = await loadEngine();
   const module = document.createElement("dynamic-module-box") as HTMLElement & {
