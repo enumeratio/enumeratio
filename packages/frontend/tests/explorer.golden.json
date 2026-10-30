@@ -374,9 +374,9 @@
       "start": 4
     },
     "glyph": "partition",
-    "columns": ["DistinctParts", "LargestPart", "Length", "AddableCells"],
+    "columns": ["DistinctParts", "LargestPart", "PartCount", "AddableCells"],
     "derived": true,
-    "statistics": 148
+    "statistics": 147
   },
   "DoubleFactorialNumbers": {
     "expr": "Take(DoubleFactorialNumbers, 20)",
@@ -664,9 +664,9 @@
   "IntegerPartitions": {
     "expr": "IntegerPartitions(8)",
     "glyph": "partition",
-    "columns": ["Length", "LargestPart", "DistinctParts", "DurfeeSquare"],
+    "columns": ["PartCount", "LargestPart", "DistinctParts", "DurfeeSquare"],
     "derived": false,
-    "statistics": 148
+    "statistics": 147
   },
   "Involutions": {
     "expr": "Involutions(4)",
@@ -836,7 +836,7 @@
     },
     "columns": [],
     "derived": true,
-    "statistics": 2
+    "statistics": 1
   },
   "LargestPartPartitions": {
     "expr": "LargestPartPartitions(4, 2)",
@@ -848,9 +848,9 @@
       "start": 4
     },
     "glyph": "partition",
-    "columns": ["DistinctParts", "DurfeeSquare", "Length", "AddableCells"],
+    "columns": ["DistinctParts", "DurfeeSquare", "PartCount", "AddableCells"],
     "derived": true,
-    "statistics": 148
+    "statistics": 147
   },
   "LehmerCodes": {
     "expr": "LehmerCodes(4)",
@@ -1105,9 +1105,9 @@
       "start": 4
     },
     "glyph": "partition",
-    "columns": ["DistinctParts", "LargestPart", "Length", "AddableCells"],
+    "columns": ["DistinctParts", "LargestPart", "PartCount", "AddableCells"],
     "derived": true,
-    "statistics": 148
+    "statistics": 147
   },
   "OdiousNumbers": {
     "expr": "Take(OdiousNumbers, 20)",
@@ -1434,9 +1434,9 @@
       "start": 4
     },
     "glyph": "partition",
-    "columns": ["DistinctParts", "DurfeeSquare", "LargestPart", "Length"],
+    "columns": ["DistinctParts", "DurfeeSquare", "LargestPart", "PartCount"],
     "derived": true,
-    "statistics": 148
+    "statistics": 147
   },
   "PrimePowerNumbers": {
     "expr": "Take(PrimePowerNumbers, 20)",
@@ -1752,9 +1752,9 @@
       "start": 4
     },
     "glyph": "partition",
-    "columns": ["LargestPart", "Length", "AlladiWeight", "ArmOfFirstCell"],
+    "columns": ["LargestPart", "PartCount", "AlladiWeight", "ArmOfFirstCell"],
     "derived": true,
-    "statistics": 148
+    "statistics": 147
   },
   "SquarePyramidalNumbers": {
     "expr": "Take(SquarePyramidalNumbers, 20)",
@@ -1979,9 +1979,9 @@
       "start": 4
     },
     "glyph": "partition",
-    "columns": ["DistinctParts", "LargestPart", "Length", "AddableCells"],
+    "columns": ["DistinctParts", "LargestPart", "PartCount", "AddableCells"],
     "derived": true,
-    "statistics": 148
+    "statistics": 147
   },
   "TribonacciNumbers": {
     "expr": "Take(TribonacciNumbers, 20)",

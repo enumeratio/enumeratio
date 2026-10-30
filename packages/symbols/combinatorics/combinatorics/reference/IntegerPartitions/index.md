@@ -20,7 +20,7 @@ signatures:
     library: enumeratio-combinatorics
 enumerate:
   expr: IntegerPartitions(8)
-  columns: Length, LargestPart, DistinctParts, DurfeeSquare
+  columns: PartCount, LargestPart, DistinctParts, DurfeeSquare
   glyph: partition
 seeAlso:
   - Count
