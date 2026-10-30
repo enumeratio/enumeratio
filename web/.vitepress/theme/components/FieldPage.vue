@@ -30,6 +30,9 @@ const props = defineProps<{
   carrierStatistics?: readonly string[];
   /** Where a map is explored: its source collection, size bounds and glyphs (maps only; absent for a frontier map). */
   mapExplorer?: MapExplorer;
+  /** The statistics on a map's source and target carriers, for transport (maps only). */
+  sourceStatistics?: readonly string[];
+  targetStatistics?: readonly string[];
 }>();
 
 const isStatistic = computed(() => props.field.kind === "statistic");
@@ -143,6 +146,45 @@ async function checkMapProperties(): Promise<void> {
     mapFailure.value = err instanceof Error ? err.message : String(err);
   } finally {
     mapBusy.value = undefined;
+  }
+}
+
+// Transport: a target statistic S pulled back along the map (the distribution of S(map(x)) over the
+// source), and the source statistics that share it at the sizes computed.
+const transportStat = ref(props.targetStatistics?.[0] ?? "");
+const transportSizes = ref(Math.min(props.mapExplorer?.maxSize ?? 1, 5));
+const transportTriangle = ref<Triangle | undefined>();
+const transportLines = computed<TriangleLine[]>(() =>
+  transportTriangle.value ? triangleLines(transportTriangle.value) : [],
+);
+const transportBusy = ref<string | undefined>();
+const transportFailure = ref<string | undefined>();
+const transported = ref<typeof same.value>();
+
+async function findTransported(): Promise<void> {
+  const explorer = props.mapExplorer;
+  if (!explorer || !transportStat.value) return;
+  transportBusy.value = "distribution";
+  transportFailure.value = undefined;
+  transported.value = undefined;
+  transportTriangle.value = undefined;
+  try {
+    const { transportTriangle: triangleOf, findTransports } = await import("@enumeratio/components");
+    const subject = await triangleOf(
+      explorer,
+      transportStat.value,
+      triangleSizes(1, Math.min(transportSizes.value, explorer.maxSize)),
+      { progress: (n) => (transportBusy.value = `distribution, size ${n}`) },
+    );
+    transportTriangle.value = subject;
+    transported.value = await findTransports(explorer, subject, props.sourceStatistics ?? [], {
+      progress: (checked, total, phase) =>
+        (transportBusy.value = `${phase === "screen" ? "screening" : "confirming"} ${checked}/${total}`),
+    });
+  } catch (err) {
+    transportFailure.value = err instanceof Error ? err.message : String(err);
+  } finally {
+    transportBusy.value = undefined;
   }
 }
 
@@ -277,6 +319,79 @@ async function findSame(): Promise<void> {
           </tr>
         </tbody>
       </table>
+
+      <h3>Transport a statistic</h3>
+      <p class="field-note">
+        Pick a statistic on <code>{{ field.to }}</code
+        >. Its distribution over the images of <code>{{ field.carrier }}</code> at each size is computed, and compared
+        with the {{ sourceStatistics?.length ?? 0 }} statistics on <code>{{ field.carrier }}</code
+        >: those that share it are the ones the map sends it to, as far as the sizes computed show.
+      </p>
+      <p v-if="!targetStatistics?.length" class="field-note">No statistic is declared on {{ field.to }}.</p>
+      <p v-else>
+        <label>
+          Statistic
+          <select v-model="transportStat" :disabled="!!transportBusy">
+            <option v-for="s in targetStatistics" :key="s" :value="s">{{ s }}</option>
+          </select>
+        </label>
+        <label>
+          Sizes 1 to
+          <input
+            v-model.number="transportSizes"
+            type="number"
+            min="3"
+            :max="mapExplorer.maxSize"
+            :disabled="!!transportBusy"
+          />
+        </label>
+        <button type="button" :disabled="!!transportBusy || !sourceStatistics?.length" @click="findTransported">
+          Find where it goes
+        </button>
+        <span v-if="transportBusy" class="field-note"> working: {{ transportBusy }}…</span>
+      </p>
+      <p v-if="transportFailure" class="field-note">{{ transportFailure }}</p>
+      <table v-if="transportLines.length" class="field-sample field-triangle">
+        <thead>
+          <tr>
+            <th>n</th>
+            <th>Coefficients of {{ transportStat }} over the images</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="line in transportLines" :key="line.n">
+            <td>{{ line.n }}</td>
+            <td v-if="'coefficients' in line">
+              <code>{{ line.coefficients.join(", ") }}</code>
+              <span v-if="line.low !== 0" class="field-note"> from q^{{ line.low }}</span>
+            </td>
+            <td v-else class="field-note">{{ line.reason }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p v-if="transported">
+        <template v-if="transported.matches.length">
+          {{ transportStat }} of the image is equidistributed with
+          <template v-for="(m, i) in transported.matches" :key="m"
+            ><a :href="`/reference/statistic/${field.carrier}/${m}`">{{ m }}</a
+            ><span v-if="i < transported.matches.length - 1">, </span></template
+          >
+          on the sizes computed, not proved.
+        </template>
+        <template v-else-if="!transported.unconfirmed.length && !transported.stopped"
+          >No statistic on {{ field.carrier }} has that distribution on the sizes computed.</template
+        >
+        <template v-if="transported.unconfirmed.length">
+          Equal at the small sizes, not checked further:
+          <template v-for="(m, i) in transported.unconfirmed" :key="m"
+            ><a :href="`/reference/statistic/${field.carrier}/${m}`">{{ m }}</a
+            ><span v-if="i < transported.unconfirmed.length - 1">, </span></template
+          >.
+        </template>
+        <span v-if="transported.stopped" class="field-note">
+          Stopped after {{ transported.checked }} of {{ transported.total }}: the time budget ran out.</span
+        >
+      </p>
     </section>
 
     <section v-if="isStatistic && distribution" class="field-distribution">
