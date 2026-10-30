@@ -118,7 +118,9 @@ const nearMiss = (element: unknown): unknown =>
     ? element.length > 0
       ? [nearMiss(element[0]), ...element.slice(1)]
       : [1] // the empty element's neighbour: one entry
-    : Number(element) + 1;
+    : typeof element === "bigint"
+      ? element + 1n
+      : Number(element) + 1;
 
 /**
  * Whether each operation's compiled code gives the interpreter's answers over the sample: the
@@ -185,8 +187,16 @@ export function disagreements(
   return OPERATIONS.filter((operation) => wrong.has(operation));
 }
 
-/** The operations compiled over BigInts: those that read no table, for a family that opted in. */
-const BIG_OPERATIONS = ["count", "unrank", "rank"] as const satisfies readonly Operation[];
+/** The operations compiled over BigInts, for a family that opted in. */
+export const BIG_OPERATIONS = ["count", "unrank", "rank", "valid", "tables"] as const satisfies readonly Operation[];
+
+/** Whether the family's operation is compiled over BigInts: membership only for a family of scalars (whose elements
+ *  can be past 2^53), and no count for those, which have none. */
+export const bigOperation = (family: EpsilFamily, operation: Operation): boolean =>
+  family.bigSamples !== undefined &&
+  (BIG_OPERATIONS as readonly Operation[]).includes(operation) &&
+  (operation !== "valid" || family.kind === "scalar") &&
+  (operation !== "count" || family.kind !== "scalar");
 
 /** A deterministic spread of ranks of a fiber of `total` members: the ends, the middle, and `extra` between. */
 const spreadRanks = (total: bigint, extra: number): bigint[] => {
@@ -200,9 +210,11 @@ const stringified = (value: unknown): string =>
 
 /**
  * Whether each operation's BigInt-compiled code gives the interpreter's answers on the family's fibers
- * past 2^53 (`bigSamples`, or `fibers`): the count, the element at each of `spreadRanks`, and the rank of
- * that element (which is also the rank it came from). The interpreter takes tenths of a second a call
- * here, so the build checks few ranks and the nightly sweep many.
+ * past 2^53 (`bigSamples`, or `fibers`): the count, the table the others read, the element at each of
+ * `spreadRanks`, and the rank of that element (which is also the rank it came from). A fiber with no
+ * end (a sequence) is sampled by ranks instead, `[rank]`, whose term is past 2^53; its elements are
+ * checked for membership too, with a near miss. The interpreter takes tenths of a second a call here,
+ * so the build checks few ranks and the nightly sweep many.
  */
 export function bigDisagreements(
   ce: Engine,
@@ -219,21 +231,43 @@ export function bigDisagreements(
       return undefined;
     }
   };
-  for (const p of fibers) {
-    const params = Object.fromEntries(family.params.map((name, i) => [name, p[i]]));
-    const total = integerOf(evaluateEpsil(ce, family.epsil.count, params));
+  for (const sample of fibers) {
+    const sequence = family.params.length === 0;
+    const params = Object.fromEntries(family.params.map((name, i) => [name, sample[i]]));
+    // The table the other definitions read: the interpreter's to the interpreter, as bigints to compiled code.
+    const table = family.epsil.tables === undefined ? undefined : evaluateTables(ce, family.epsil.tables, params);
+    const entries = Array.isArray(table) ? table.slice(1).map((entry) => integerOf(entry)) : undefined;
+    let bigTable: unknown[] | undefined;
+    if (entries !== undefined && runs.tables !== undefined) {
+      bigTable = (attempt("tables", params) as unknown[] | undefined)?.map((x) => BigInt(x as bigint));
+      if (stringified(bigTable) !== stringified(entries)) wrong.add("tables");
+    }
+    const bind = table === undefined ? params : { ...params, _tables: table };
+    const compiledBind = table === undefined ? params : { ...params, _tables: bigTable };
     // A fiber a double holds is the double path's to check.
-    if (total === undefined || total <= BigInt(Number.MAX_SAFE_INTEGER)) continue;
-    if (runs.count !== undefined && attempt("count", params) !== total) wrong.add("count");
-    for (const r of spreadRanks(total, extra)) {
-      const element = elementOf(evaluateEpsil(ce, family.epsil.unrank, { ...params, _r: elementJson(r) }));
-      if (runs.unrank !== undefined && stringified(attempt("unrank", { ...params, _r: r })) !== stringified(element))
+    const total = sequence ? undefined : integerOf(evaluateEpsil(ce, family.epsil.count, bind));
+    if (!sequence && (total === undefined || total <= BigInt(Number.MAX_SAFE_INTEGER))) continue;
+    if (!sequence && runs.count !== undefined && attempt("count", compiledBind) !== fromBigint(total))
+      wrong.add("count");
+    for (const r of sequence ? [BigInt(sample[0]!)] : spreadRanks(total!, extra)) {
+      const term = evaluateEpsil(ce, family.epsil.unrank, { ...bind, _r: elementJson(r) });
+      // A scalar past 2^53 is a big integer in JSON, which `elementOf` doesn't read.
+      const element = sequence && integerOf(term) !== undefined ? fromBigint(integerOf(term)) : elementOf(term);
+      if (
+        runs.unrank !== undefined &&
+        stringified(attempt("unrank", { ...compiledBind, _r: r })) !== stringified(element)
+      )
         wrong.add("unrank");
       if (runs.rank !== undefined) {
-        const place = integerOf(evaluateEpsil(ce, family.epsil.rank, { ...params, _x: elementJson(element) }));
-        const got = attempt("rank", { ...params, _x: element });
+        const place = integerOf(evaluateEpsil(ce, family.epsil.rank, { ...bind, _x: elementJson(element) }));
+        const got = attempt("rank", { ...compiledBind, _x: element });
         if (place !== r || (typeof got === "number" ? BigInt(got) : got) !== place) wrong.add("rank");
       }
+      if (runs.valid !== undefined)
+        for (const candidate of [element, nearMiss(element)]) {
+          const expected = evaluateEpsil(ce, family.epsil.valid, { ...bind, _x: elementJson(candidate) }) === "True";
+          if (attempt("valid", { ...compiledBind, _x: candidate }) !== expected) wrong.add("valid");
+        }
     }
   }
   return OPERATIONS.filter((operation) => wrong.has(operation));
@@ -261,14 +295,7 @@ export function compileFamily(
       code[operation] = compiled.code;
       runs[operation] = compiled.run;
     }
-    // An operation that reads a table is left to the double path and the interpreter.
-    if (
-      family.bigSamples === undefined ||
-      types === undefined ||
-      !(BIG_OPERATIONS as readonly Operation[]).includes(operation) ||
-      "_tables" in types
-    )
-      continue;
+    if (types === undefined || !bigOperation(family, operation)) continue;
     const bigCompiled = compileBigint(ce, family.epsil[operation], types);
     if (bigCompiled === undefined) continue;
     big[operation] = bigCompiled.code;

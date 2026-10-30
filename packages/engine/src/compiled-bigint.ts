@@ -20,21 +20,19 @@ class BigIntTarget extends JavaScriptTarget {
   }
 }
 
-/** Divide and ranged Fold rewritten to our own functions, which the compiler would otherwise lower
- *  with doubles: canonicalisation turns `x/2` into `½·x` before any target hook sees it, and the
- *  compiler counts a Range-fold's loop in doubles beside a bigint start. */
+/** Divide and unit-step Range rewritten to our own functions, which the compiler would otherwise lower with
+ *  doubles: canonicalisation turns `x/2` into `half times x` before any target hook sees it, and the compiler
+ *  counts a Range's elements in doubles beside a bigint start. */
 function lowered(node: unknown): unknown {
   if (!Array.isArray(node)) return node;
   if (node[0] === "Divide") return ["BigDivide", ...node.slice(1).map(lowered)];
-  const range = node[3];
-  if (node[0] === "Fold" && Array.isArray(range) && range[0] === "Range" && range[3] === 1)
-    return ["BigFold", lowered(node[1]), lowered(node[2]), lowered(range[1]), lowered(range[2])];
+  if (node[0] === "Range" && node[3] === 1) return ["BigRange", lowered(node[1]), lowered(node[2])];
   return node.map(lowered);
 }
 
 const FUNCTIONS = {
   BigDivide: "((a, b) => _SYS.bdiv(a, b))",
-  BigFold: "((f, init, lo, hi) => { let acc = init; for (let i = lo; i <= hi; i++) acc = f(acc, i); return acc; })",
+  BigRange: "((lo, hi) => _SYS.brange(lo, hi))",
 };
 
 function binomial(n: bigint, k: bigint): bigint {
@@ -55,6 +53,9 @@ function at(list: unknown, index: bigint): unknown {
 // code is wrapped to read this instead of the global.
 const bigNumber = Object.assign((x: unknown) => Number(x), Number, {
   isInteger: (x: unknown) => typeof x === "bigint" || Number.isInteger(x),
+  isSafeInteger: (x: unknown) => typeof x === "bigint" || Number.isSafeInteger(x),
+  isFinite: (x: unknown) => typeof x === "bigint" || Number.isFinite(x),
+  isNaN: (x: unknown) => typeof x !== "bigint" && Number.isNaN(x),
 });
 
 const sysByEngine = new WeakMap<ComputeEngine, unknown>();
@@ -71,6 +72,25 @@ export function bigintRuntime(ce: ComputeEngine): unknown {
         return a / b;
       },
       floorMod: (a: bigint, b: bigint) => ((a % b) + b) % b,
+      pow: (a: bigint, b: bigint) => a ** b,
+      // As the runtime's, for a bigint position (1-based, negative from the end).
+      replaceAtInPlace: (list: unknown[], ...pairs: unknown[]) => {
+        for (let i = 0; i < pairs.length; i += 2) {
+          const index = Number(pairs[i]);
+          const at = index > 0 ? index - 1 : index + list.length;
+          if (!Number.isInteger(index) || index === 0 || at < 0 || at >= list.length)
+            throw new RangeError(`ReplaceAt: the index ${String(pairs[i])} is not a position of the list`);
+          list[at] = pairs[i + 1];
+        }
+        return list;
+      },
+      brange: (lo: bigint, hi: bigint) => {
+        if (typeof lo !== "bigint" || typeof hi !== "bigint") throw new TypeError("a range over a double");
+        if (hi - lo >= 4294967295n) throw new RangeError("Range: the element count exceeds the array limit");
+        const out: bigint[] = [];
+        for (let i = lo; i <= hi; i++) out.push(i);
+        return out;
+      },
       binomial,
       gcd: (a: bigint, b: bigint) => {
         [a, b] = [a < 0n ? -a : a, b < 0n ? -b : b];
@@ -103,13 +123,17 @@ export function compileBigint(
   ce.pushScope();
   try {
     for (const [name, type] of Object.entries(types)) ce.declare(name, type);
+    ce.declare("BigRange", { signature: "(integer, integer) -> list<integer>" } as never);
     const result = new BigIntTarget().compile(
       ce.box(lowered(expression) as never) as Expression,
       {
         functions: FUNCTIONS,
       } as never,
     ) as { success?: boolean; code?: string; preamble?: string };
-    const inner = selfContainedCode(result);
+    // Generated code guards an equality with `typeof x === 'number'`; here an integer is a bigint.
+    const inner = selfContainedCode(result)
+      ?.replaceAll("=== 'number'", "=== 'bigint'")
+      .replaceAll("!== 'number'", "!== 'bigint'");
     if (result.success !== true || inner === undefined) return undefined;
     const code = `(() => { const Number = _SYS.Number; return ${inner}; })()`;
     // oxlint-disable-next-line no-implied-eval -- the code is compute-engine's compiled output

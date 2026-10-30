@@ -9,7 +9,7 @@
 // All three are walks defined in Epsil (./walks.ts). Their TS kernels live in
 // tests/readings/ as the independent reading the agreement tests check against; Motzkin and
 // Schröder keep an exact count past 2^53 (`fastCount`).
-import type { FastKernel } from "../../../collections/src/families/epsil.ts";
+import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
 import { motzkinExact, schroederExact } from "../../../collections/src/families/exact-recurrences.ts";
 import { equal, iff, less, lets, mul, quotient, sub } from "../../../collections/src/families/tables.ts";
 import { completionsOf, completionsTable, type Step, walkFamily } from "./walks.ts";
@@ -26,11 +26,13 @@ const tableWalk = (
   cap: unknown,
   steps: readonly Step[],
   fastCount: FastKernel["count"],
+  bigSamples: EpsilFamily["bigSamples"],
 ) =>
   walkFamily({
     head,
     carrier,
     fastCount,
+    bigSamples,
     params: ["_n"],
     width,
     steps,
@@ -63,22 +65,26 @@ export const dyckPaths = walkFamily({
   bigSamples: [[31], [34]],
 });
 /** Up (1), level (0), down (−1), length n: the Motzkin numbers. */
-const motzkinPaths = tableWalk(
+export const motzkinPaths = tableWalk(
   "MotzkinPaths",
   "MotzkinPath",
   "_n",
   quotient("_n", 2),
   [UP, { token: 0, rise: 0, width: 1 }, DOWN],
   ([n]) => motzkinExact(n),
+  // M(n) first passes 2^53 at n = 39.
+  [[39], [44]],
 );
 /** Large Schröder paths of width 2n: up (1), a level step two wide (2), down (−1). */
-const schroederPaths = tableWalk(
+export const schroederPaths = tableWalk(
   "SchroederPaths",
   "SchroederPath",
   mul(2, "_n"),
   "_n",
   [UP, { token: 2, rise: 0, width: 2 }, DOWN],
   ([n]) => schroederExact(n),
+  // S(n) first passes 2^53 at n = 24.
+  [[24], [28]],
 );
 
 export const entries = [dyckPaths, motzkinPaths, schroederPaths];
