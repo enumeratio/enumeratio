@@ -55,6 +55,11 @@ export const bind = (name: string, value: MathJSON, body: MathJSON, type = "coll
   ["Function", body, ["Typed", name, `'${type}'`]],
   value,
 ];
+/** `bind` with the value typed a list of integers: the compiler can index, count and sum over that, not the default `collection`. */
+export const bindList = (name: string, value: MathJSON, body: MathJSON, type = "list<integer>"): MathJSON =>
+  bind(name, value, body, type);
+/** `sum` floored at 0, so the compiler types it real (it types a fold's sum complex otherwise); sums of counts are never negative. */
+export const floored = (sum: MathJSON): MathJSON => ["Max", sum, 0];
 /** The sum of `body` over `over`. */
 export const sumOver = (over: MathJSON, body: MathJSON, variable = "i"): MathJSON => [
   "Sum",
