@@ -16,6 +16,7 @@ import { openRowSource } from "../src/row-source.ts";
 import { engineProbes } from "../src/explorer-engine.ts";
 import { GLYPH_KINDS } from "../src/glyphs.ts";
 import { exprAt, HEAD_GLYPHS, templateOfExpr } from "../src/table-state.ts";
+import { tryItOf, tryItOfExplorer, withExplorerSize } from "../src/try-it.ts";
 
 const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
 // A head two packages document is one record: the first wins, as the site's loader has it.
@@ -143,4 +144,47 @@ test("a derived column varies over the collection it opens on", async () => {
     if (spec?.derived !== true) continue;
     for (const column of spec.columns) expect(await catalog.varies(spec.expr, column), spec.expr).toBe(true);
   }
+});
+
+// Try it's fallback panel for each derived explorer: golden JSON too.
+const TRY_IT_GOLDEN = fileURLToPath(new URL("./try-it-explorer.golden.json", import.meta.url));
+
+test("a derived explorer without a liftable example still gets a Try it, bounded as the stepper is", () => {
+  const record = byName.get("Derangements")!;
+  expect(record.enumerate).toBeUndefined();
+  const spec = specs.get("Derangements")!;
+  // No typed parameter, so no example lifts; the explorer's sized call stands in.
+  const bare = { head: "Derangements", parameters: [] };
+  for (const ex of record.examples) expect(tryItOf(ex.expr as never, bare)).toBeUndefined();
+  const { start, min, max } = spec.size!;
+  expect(tryItOfExplorer(spec)).toEqual({
+    params: `{{size, ${start}}, ${min}, ${max}, 1, Slider}`,
+    value: "Derangements(_size)",
+  });
+});
+
+test("Try it's panels follow the explorer's size for every derived explorer", () => {
+  const fresh: Record<string, unknown> = {};
+  for (const [name, spec] of specs) {
+    const panel = tryItOfExplorer(spec);
+    if (spec?.size === undefined) {
+      expect(panel, name).toBeUndefined();
+      continue;
+    }
+    const { min, max, start } = spec.size;
+    expect(panel?.params, name).toMatch(/, Slider\}$/);
+    expect(panel?.params.includes(`, ${start}}, ${min}, ${max}, 1,`), name).toBe(true);
+    fresh[name] = panel;
+  }
+  if (updating) writeFileSync(TRY_IT_GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
+  expect(fresh).toEqual(JSON.parse(readFileSync(TRY_IT_GOLDEN, "utf8")));
+});
+
+test("a lifted example's size control takes the stepper's bounds, start clamped into them", () => {
+  const spec = specs.get("Derangements")!;
+  const signature = withExplorerSize({ head: "Derangements", parameters: [{ name: "n", type: "integer" }] }, spec);
+  const { min, max } = spec.size!;
+  const paramsOf = (src: string) => tryItOf(parseExpression(src).json, signature)?.params;
+  expect(paramsOf("Derangements(3)")).toBe(`{{n, 3}, ${min}, ${max}, 1, Slider}`);
+  expect(paramsOf("Derangements(99)")).toBe(`{{n, ${max}}, ${min}, ${max}, 1, Slider}`);
 });

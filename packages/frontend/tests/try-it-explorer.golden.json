@@ -1,0 +1,366 @@
+{
+  "AlternatingPermutations": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "AlternatingPermutations(_size)"
+  },
+  "Arrangements": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "Arrangements(_size, 2)"
+  },
+  "BallotSequences": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "BallotSequences(_n)"
+  },
+  "BinaryNecklaces": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "BinaryNecklaces(_n)"
+  },
+  "BinaryPalindromes": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "BinaryPalindromes(_n)"
+  },
+  "BinaryTreeParentArrays": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "BinaryTreeParentArrays(_n)"
+  },
+  "BinaryTrees": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "BinaryTrees(_n)"
+  },
+  "BinaryWords": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "BinaryWords(_n)"
+  },
+  "BinaryWordsByWeight": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "BinaryWordsByWeight(_n, 2)"
+  },
+  "CarlitzCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "CarlitzCompositions(_n)"
+  },
+  "CompositionsIntoKParts": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "CompositionsIntoKParts(_n, 2)"
+  },
+  "ConnectedPermutations": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "ConnectedPermutations(_size)"
+  },
+  "CyclicPermutations": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "CyclicPermutations(_size)"
+  },
+  "DelannoyPaths": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "DelannoyPaths(_n)"
+  },
+  "Derangements": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "Derangements(_size)"
+  },
+  "DistinctPartitions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "DistinctPartitions(_n)"
+  },
+  "DyadicCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "DyadicCompositions(_n)"
+  },
+  "DyckPathsByHeight": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "DyckPathsByHeight(_n, 2)"
+  },
+  "Endofunctions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "Endofunctions(_n)"
+  },
+  "EvenPermutations": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "EvenPermutations(_size)"
+  },
+  "FibStrings": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "FibStrings(_n)"
+  },
+  "FibonacciCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "FibonacciCompositions(_n)"
+  },
+  "FinePaths": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "FinePaths(_n)"
+  },
+  "FullKAryTrees": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "FullKAryTrees(_n, 2)"
+  },
+  "GrandDyckPaths": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "GrandDyckPaths(_n)"
+  },
+  "GrayCodes": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "GrayCodes(_n)"
+  },
+  "IncreasingBinaryTrees": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "IncreasingBinaryTrees(_n)"
+  },
+  "IntegerCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "IntegerCompositions(_n)"
+  },
+  "Involutions": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "Involutions(_size)"
+  },
+  "KCyclePermutations": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "KCyclePermutations(_n, 2)"
+  },
+  "KDescentPermutations": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "KDescentPermutations(_n, 2)"
+  },
+  "KInversionPermutations": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "KInversionPermutations(_n, 2)"
+  },
+  "KLyndonWords": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "KLyndonWords(_size, 2)"
+  },
+  "KNecklaces": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "KNecklaces(_size, 2)"
+  },
+  "KSubsets": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "KSubsets(_n, 2)"
+  },
+  "LabeledGraphs": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "LabeledGraphs(_n)"
+  },
+  "LabeledGraphsByEdges": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "LabeledGraphsByEdges(_n, 2)"
+  },
+  "LabeledTrees": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "LabeledTrees(_n)"
+  },
+  "LargestPartPartitions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "LargestPartPartitions(_n, 2)"
+  },
+  "LehmerCodes": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "LehmerCodes(_size)"
+  },
+  "LucasStrings": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "LucasStrings(_n)"
+  },
+  "LukasiewiczPaths": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "LukasiewiczPaths(_n)"
+  },
+  "LyndonWords": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "LyndonWords(_n)"
+  },
+  "MotzkinPaths": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "MotzkinPaths(_n)"
+  },
+  "MotzkinPathsByPeaks": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "MotzkinPathsByPeaks(_n, 2)"
+  },
+  "Multisets": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "Multisets(_n, 2)"
+  },
+  "NonCrossingMatchings": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "NonCrossingMatchings(_n)"
+  },
+  "NonCrossingPartitions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "NonCrossingPartitions(_n)"
+  },
+  "NonDecreasingParkingFunctions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "NonDecreasingParkingFunctions(_n)"
+  },
+  "NonNestingMatchings": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "NonNestingMatchings(_n)"
+  },
+  "NonNestingPartitions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "NonNestingPartitions(_n)"
+  },
+  "OddCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "OddCompositions(_n)"
+  },
+  "OddPartitions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "OddPartitions(_n)"
+  },
+  "OrderedTrees": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "OrderedTrees(_n)"
+  },
+  "PalindromicCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "PalindromicCompositions(_n)"
+  },
+  "ParkingFunctions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "ParkingFunctions(_n)"
+  },
+  "PartCountBoundedCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "PartCountBoundedCompositions(_n, 2)"
+  },
+  "PartSizeBoundedCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "PartSizeBoundedCompositions(_n, 2)"
+  },
+  "PerfectMatchings": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "PerfectMatchings(_n)"
+  },
+  "PermutationsAsCycles": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "PermutationsAsCycles(_n)"
+  },
+  "PermutationsAvoiding123": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "PermutationsAvoiding123(_size)"
+  },
+  "PermutationsAvoiding132": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "PermutationsAvoiding132(_size)"
+  },
+  "PermutationsAvoiding213": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "PermutationsAvoiding213(_size)"
+  },
+  "PermutationsAvoiding231": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "PermutationsAvoiding231(_size)"
+  },
+  "PermutationsAvoiding312": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "PermutationsAvoiding312(_size)"
+  },
+  "PermutationsAvoiding321": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "PermutationsAvoiding321(_size)"
+  },
+  "PrimeCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "PrimeCompositions(_n)"
+  },
+  "PrimePartitions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "PrimePartitions(_n)"
+  },
+  "ProperCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "ProperCompositions(_n)"
+  },
+  "PruferSequences": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "PruferSequences(_n)"
+  },
+  "RecursiveTrees": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "RecursiveTrees(_n)"
+  },
+  "RestrictedGrowthStrings": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "RestrictedGrowthStrings(_n)"
+  },
+  "RiordanPaths": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "RiordanPaths(_n)"
+  },
+  "RootedForests": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "RootedForests(_n)"
+  },
+  "SchroederPaths": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "SchroederPaths(_n)"
+  },
+  "SetCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "SetCompositions(_n)"
+  },
+  "SetPartitionsIntoKBlocks": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "SetPartitionsIntoKBlocks(_n, 2)"
+  },
+  "SignedPermutations": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "SignedPermutations(_size)"
+  },
+  "SquarePartitions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "SquarePartitions(_n)"
+  },
+  "StandardTableaux": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "StandardTableaux(_size)"
+  },
+  "SubexcedantSeqs": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "SubexcedantSeqs(_n)"
+  },
+  "SytHookShape": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "SytHookShape(_size)"
+  },
+  "SytTwoColumn": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "SytTwoColumn(_size)"
+  },
+  "SytTwoRow": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "SytTwoRow(_size)"
+  },
+  "TetraCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "TetraCompositions(_n)"
+  },
+  "Tournaments": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "Tournaments(_n)"
+  },
+  "TriCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "TriCompositions(_n)"
+  },
+  "TriangularCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "TriangularCompositions(_n)"
+  },
+  "TriangularPartitions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "TriangularPartitions(_n)"
+  },
+  "Words": {
+    "params": "{{size, 4}, 1, 6, 1, Slider}",
+    "value": "Words(_size, 2)"
+  },
+  "ZigzagCompositions": {
+    "params": "{{n, 4}, 1, 6, 1, Slider}",
+    "value": "ZigzagCompositions(_n)"
+  }
+}

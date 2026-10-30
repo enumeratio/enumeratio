@@ -416,6 +416,11 @@ export interface HeadSignature {
   readonly parameters: readonly SignatureParameter[];
   /** The largest safe value of the first integer parameter (a record's `maxSize`): a type-like upper bound. */
   readonly maxSize?: number;
+  /**
+   * The explorer's size stepper (`explorerOf`'s `size`) and the argument position it moves: the
+   * parameter at `index` takes exactly these bounds, start clamped into them, in place of `maxSize`.
+   */
+  readonly size?: { readonly min: number; readonly max: number; readonly index: number };
   /** The finite values of the head's options, by key (a record's `optionValues`). */
   readonly options?: Readonly<Record<string, readonly (string | number | boolean)[]>>;
 }
@@ -518,7 +523,10 @@ export function liftLiterals(expr: Json, signature: HeadSignature): { body: Json
     const name = taken.has(written) || written in hints ? `p${i + 1}` : written;
     if (taken.has(name) || name in hints) return arg;
     // The record's cap bounds the size parameter, tighter than any type bound; else a small span.
+    const stepper = signature.size?.index === i ? signature.size : undefined;
+    if (stepper !== undefined) capped = true;
     const upper = (hi: number | undefined, from: number): number => {
+      if (stepper !== undefined) return stepper.max;
       const sized = !capped && signature.maxSize !== undefined;
       if (sized) capped = true;
       return sized ? Math.min(hi ?? Infinity, signature.maxSize as number) : (hi ?? Math.max(LIFT_SPAN, from));
@@ -528,7 +536,7 @@ export function liftLiterals(expr: Json, signature: HeadSignature): { body: Json
       start,
       // An integer runs over a small span from zero, or to the literal if that lies outside it.
       ...(typeof start === "number" && INTEGER_TYPES.has(bounds.base)
-        ? { min: bounds.lo ?? Math.min(0, start), max: upper(bounds.hi, start) }
+        ? { min: stepper?.min ?? bounds.lo ?? Math.min(0, start), max: upper(bounds.hi, start) }
         : {}),
     };
     return name;
