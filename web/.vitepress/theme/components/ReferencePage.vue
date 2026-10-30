@@ -23,6 +23,7 @@ const props = defineProps<{
   parameters?: readonly { name?: string; type: string; optional: boolean; variadic: boolean }[];
   /** The largest safe value of its size parameter, from its record. */
   maxSize?: number;
+  optionValues?: Record<string, (string | number | boolean)[]>;
   /** The statistics and maps of a carrier, or of a collection's carrier. */
   fields?: CarrierFieldsData;
   /** The Epsil behind a statistic or family, printed as InputForm (data/definitions.ts). */
@@ -461,6 +462,7 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       :examples="tryItExamples"
       :parameters="parameters"
       :max-size="maxSize"
+      :option-values="optionValues"
     />
 
     <p v-if="missingExample" class="ref-stub">

@@ -7,6 +7,7 @@ export type {
   DeclaredSymbol,
   Description,
   FindStatId,
+  OptionValues,
   Overload,
   Parameter,
   SymbolAttribute,

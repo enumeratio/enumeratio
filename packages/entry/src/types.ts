@@ -351,6 +351,14 @@ export interface ReferenceEntry {
    * A "Try it" slider stops here; a head without one is bounded by its type alone.
    */
   readonly maxSize?: number;
+  /**
+   * The values an option may take, where the set is finite, by option key (`GridLines: [true,
+   * false]`, `ScalingFunctions: [Linear, Log]`). Options are trailing rules, not positional
+   * parameters, so the signature's types cannot say it. Booleans are `True`/`False`, strings
+   * are strings, numbers numbers. A "Try it" lifts an example's rule for such an option into
+   * a choice or a checkbox.
+   */
+  readonly optionValues?: Readonly<Record<string, readonly (string | number | boolean)[]>>;
   readonly seeAlso?: readonly string[];
   /** All argument signatures the head accepts, each with a caption. */
   readonly signatures?: readonly ReferenceSignature[];

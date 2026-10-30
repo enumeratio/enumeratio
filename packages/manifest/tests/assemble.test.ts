@@ -46,6 +46,14 @@ test("the manifest is assembled from each library's index, overloads attributed 
   expect(notations).toEqual({ high: "@enumeratio/high/notation" });
 });
 
+test("a record's optionValues reach the head's info", () => {
+  const pkg: PackageIndex = {
+    package: "a",
+    records: [{ record: { name: "Big", summary: "Big.", optionValues: { Grid: [true, false] } }, examples: 0 }],
+  };
+  expect(assembleManifest([pkg], engine).symbols.Big!.optionValues).toEqual({ Grid: [true, false] });
+});
+
 test("a record's maxSize is the head's: the smallest any package gives", () => {
   const pkg = (name: string, maxSize?: number): PackageIndex => ({
     package: name,

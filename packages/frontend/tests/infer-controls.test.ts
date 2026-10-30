@@ -141,6 +141,34 @@ const SIGNATURES: Record<string, { src: string; signature: HeadSignature }> = {
       maxSize: 8,
     },
   },
+  "options: a boolean option is a checkbox starting at the example's value": {
+    src: "Plot(Sin(x), (x, 0, 6), GridLines -> True)",
+    signature: { head: "Plot", parameters: [{ type: "any", variadic: true }], options: { GridLines: [true, false] } },
+  },
+  "options: a few strings are a setter bar starting at the example's value": {
+    src: 'Plot(Exp(x), (x, 0, 5), ScalingFunctions -> "Log")',
+    signature: {
+      head: "Plot",
+      parameters: [{ type: "any", variadic: true }],
+      options: { ScalingFunctions: ["Linear", "Log", "Log10", "Log2", "Sqrt"] },
+    },
+  },
+  "options: past the bar's limit a popup menu": {
+    src: 'Foo(1, Mode -> "c")',
+    signature: {
+      head: "Foo",
+      parameters: [{ type: "any", variadic: true }],
+      options: { Mode: ["a", "b", "c", "d", "e", "f"] },
+    },
+  },
+  "options: a value the record does not list stays as written": {
+    src: 'Foo(1, Mode -> "z")',
+    signature: { head: "Foo", parameters: [{ type: "any", variadic: true }], options: { Mode: ["a", "b"] } },
+  },
+  "options: an option the record does not list stays as written": {
+    src: "Foo(1, Axes -> True)",
+    signature: { head: "Foo", parameters: [{ type: "any", variadic: true }], options: { Mode: ["a", "b"] } },
+  },
   "signature: no typed literal": {
     src: "Foo(Bar)",
     signature: { head: "Foo", parameters: [{ name: "n", type: "integer" }] },
@@ -184,6 +212,13 @@ test("a Try it panel: typed tuples and a body over slots", () => {
   expect(tryItOf(parseExpression("IntegerPartitions(8)").json, { head: "IntegerPartitions", parameters: [] })).toBe(
     undefined,
   );
+});
+
+test("an option's Try it: the rule's value is a slot", () => {
+  const signature = { head: "Plot", parameters: [], options: { GridLines: [true, false] } };
+  const found = tryItOf(parseExpression("Plot(Sin(x), (x, 0, 6), GridLines -> True)").json, signature);
+  expect(found?.params).toBe("{{gridLines, True}, Boolean, Checkbox}");
+  expect(found?.value).toContain("_gridLines");
 });
 
 test("a string enum is a params tuple over strings, read back as the same choices", () => {

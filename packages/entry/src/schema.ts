@@ -296,6 +296,13 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
       additionalProperties: false,
     },
     maxSize: { type: "integer", minimum: 0 },
+    optionValues: {
+      type: "object",
+      additionalProperties: {
+        type: "array",
+        items: { type: ["string", "number", "boolean"] },
+      },
+    },
     seeAlso: { type: "array", items: { type: "string" } },
     signatures: { type: "array", items: { $ref: "#/$defs/ReferenceSignature" } },
     details: { type: "array", items: { type: "string" } },
