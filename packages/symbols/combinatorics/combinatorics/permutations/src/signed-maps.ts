@@ -10,6 +10,7 @@ import {
   type MathJSON,
   positions,
 } from "../../src/map-helpers.ts";
+import { negativesIn, unsigned, withLengths } from "./cycle-flat.ts";
 
 const n: MathJSON = ["Length", "_raw"];
 const abs = (i: MathJSON = "i"): MathJSON => ["Abs", at(i)];
@@ -25,38 +26,9 @@ const withSigns = (signs: MathJSON): MathJSON =>
 /** The binary word of signs, 1 for a positive entry. */
 const positiveWord: MathJSON = ["BinaryWord", forEach(positions, ["If", ["Greater", at("i"), 0], 1, 0])];
 
-/** The cycle of the underlying permutation through i: the positions i reaches. */
-const orbit = (start: MathJSON): MathJSON => [
-  "Union",
-  forEach(positions, ["Fold", ["Function", ["Abs", ["At", "_raw", "a"]], "a", "b"], start, ["Range", 1, "k", 1]], "k"),
-];
-
 /** The lengths, largest first, of the cycles with an even (`parity` 0) or odd (1) number of negative entries. */
 const cycleLengthsOfParity = (parity: number): MathJSON =>
-  descending(
-    forEach(
-      [
-        "Filter",
-        positions,
-        [
-          "Function",
-          bind(
-            "orb",
-            orbit("c"),
-            [
-              "And",
-              ["Equal", "c", ["Min", "orb"]],
-              ["Equal", ["Mod", ["Count", ["Filter", "orb", ["Function", ["Less", at("o"), 0], "o"]]], 2], parity],
-            ],
-            "set<integer>",
-          ),
-          "c",
-        ],
-      ],
-      bind("orb", orbit("c"), ["Length", "orb"], "set<integer>"),
-      "c",
-    ),
-  );
+  withLengths(unsigned, "Min", (leader) => ["Equal", ["Mod", negativesIn(leader), 2], parity], descending("cy_lens"));
 
 /** The entry of the inverse signed permutation at the positive k: the position of ±k, signed as the entry there. */
 const inverseEntry = (k: MathJSON): MathJSON => {

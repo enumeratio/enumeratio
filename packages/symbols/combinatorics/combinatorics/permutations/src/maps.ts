@@ -43,10 +43,14 @@ import {
 import { foataInversionsToMajorBody, foataMajorToInversionsBody } from "./foata-bijection.ts";
 import { lehmerCode, majorCode, permutationOfLehmerCode, permutationOfMajorCode } from "./codes.ts";
 import {
-  cycleDecompositionBody,
-  permutationOfCycleDecompositionBody,
-  permutationOfCycleDecompositionGuard,
-} from "./cycle-decomposition.ts";
+  conjugacyClassRepresentative,
+  conjugateOfCycleType,
+  cycleDecompositionOf,
+  cycleWord,
+  plain,
+  withLengths,
+} from "./cycle-flat.ts";
+import { permutationOfCycleDecompositionBody, permutationOfCycleDecompositionGuard } from "./cycle-decomposition.ts";
 
 /** A fold over `1 .. n`, indexing rather than iterating a structure — the rule from
  *  tableau.ts, which is what makes these evaluate at all. */
@@ -61,148 +65,9 @@ const byIndex = (n: MathJSON, initial: MathJSON, step: MathJSON, accumulator: st
 const orbitLeast = (i: MathJSON): MathJSON =>
   byIndex(size, i, ["Min", ["List", "omin", iterate(i, "kk")]], "omin", "kk");
 
-/** The greatest element of i's orbit — the leader under Foata's convention, which writes
- *  each cycle starting at its largest element rather than its least. */
-const orbitMax = (i: MathJSON): MathJSON => ["Max", forEach(positions, iterate(i, "k"), "k")];
-
 /** How many cycle leaders are at most `bound` — the rank that labels i's block. */
 const leadersUpTo = (bound: MathJSON): MathJSON =>
   byIndex(bound, 0, ["Add", "lacc", ["If", ["Equal", "jj", orbitLeast("jj")], 1, 0]], "lacc", "jj");
-
-/** One entry per cycle, in position order (by increasing least element) — not sorted by
- *  length. Shared by CycleType (sorted descending, as the partition) and by
- *  ConjugateAfterCycleType (its conjugate). */
-const cycleLengths: MathJSON = [
-  "Map",
-  ["Function", ["Length", ["Union", forEach(positions, iterate("i", "k"), "k")]], "i"],
-  ["Filter", positions, ["Function", ["Equal", "i", ["Min", forEach(positions, iterate("i", "k"), "k")]], "i"]],
-];
-
-/** Count of cycle LEADERS (one check per position, `orbitLeast`-style — not a `Filter` over
- *  `cycleLengths` itself) whose cycle is at least `j` long. `cycleLengths` is a `Map`, which
- *  stays LAZY (see `materialise` below): fine for CycleType, which immediately feeds it to
- *  `descending`'s `Sort` (forces it once), but reading a `Map` result back out through a
- *  second `Filter` — as an earlier version of `conjugateOfCycleType` did — silently drops
- *  entries (caught by the exhaustive test: `[1, 3, 2]`'s conjugate came back one entry
- *  short). Walking positions with a plain `Range`-Fold and indexing `_raw` directly, the way
- *  every other map here does, sidesteps it entirely. */
-const cyclesAtLeast = (j: MathJSON): MathJSON =>
-  byIndex(
-    size,
-    0,
-    [
-      "Add",
-      "ccacc",
-      [
-        "If",
-        [
-          "And",
-          ["Equal", "cc", orbitLeast("cc")],
-          ["GreaterEqual", ["Length", ["Union", forEach(positions, iterate("cc", "ck"), "ck")]], j],
-        ],
-        1,
-        0,
-      ],
-    ],
-    "ccacc",
-    "cc",
-  );
-
-/** The conjugate of the cycle type: entry j counts the cycles of length >= j, for
- *  j = 1 .. the longest cycle — built by skipping the zero entries as they come up rather
- *  than computing the true bound (`Max(cycleLengths)`) and trimming after the fact, which
- *  needs a second read of `cycleLengths` in a different shape and hits the same lazy-`Map`
- *  problem `cyclesAtLeast` was written to avoid. */
-const conjugateOfCycleType: MathJSON = byIndex(
-  size,
-  ["List"],
-  ["If", ["Equal", cyclesAtLeast("q"), 0], "qacc", ["Join", "qacc", ["List", cyclesAtLeast("q")]]],
-  "qacc",
-  "q",
-);
-
-/** The cumulative sums of `list` — entry m is the sum of its first m entries — built as a
- *  list accumulator the way `descentPositions` and tableau.ts's recording tableau are (a
- *  `Join` onto the accumulator, indexed back with `At`). An earlier version summed the
- *  prefix afresh at every position instead, which put a fold inside a fold inside the map
- *  over positions; bound once with `bind`, this is read with a single `At`. */
-const cumulative = (list: MathJSON): MathJSON =>
-  byIndex(
-    ["Count", list],
-    ["List"],
-    [
-      "Join",
-      "cacc",
-      ["List", ["Add", ["If", ["Equal", "c", 1], 0, ["At", "cacc", ["Subtract", "c", 1]]], ["At", list, "c"]]],
-    ],
-    "cacc",
-    "c",
-  );
-
-/** Which block (1-indexed) position `p` falls into, given the blocks' cumulative `ends` —
- *  one more than the number of ends before it. A `Range`-fold with `At`, per the rule. */
-const blockIndexAt = (ends: MathJSON, p: MathJSON): MathJSON => [
-  "Add",
-  byIndex(["Count", ends], 0, ["Add", "bacc", ["If", ["Less", ["At", ends, "bi"], p], 1, 0]], "bacc", "bi"),
-  1,
-];
-/** Where block `blk` starts, given the cumulative `ends`. */
-const blockStart = (ends: MathJSON, blk: MathJSON): MathJSON => [
-  "If",
-  ["Equal", blk, 1],
-  1,
-  ["Add", ["At", ends, ["Subtract", blk, 1]], 1],
-];
-
-// ConjugacyClassRepresentative writes the canonical permutation for a cycle type: cycles in
-// DECREASING length order, filled with consecutive integers, each cycle (a a+1 … a+len-1)
-// written as the one-line word a+1, a+2, …, a+len-1, a — i.e. a cyclic left-shift of its
-// block. (FindStat does not pin down an ordering for this map; this is the convention we
-// picked and it is exercised end to end by the bijectivity test.)
-const conjugacyClassRepresentative: MathJSON = bind(
-  "ends",
-  cumulative(descending(cycleLengths)),
-  forEach(
-    positions,
-    bind("blk", blockIndexAt("ends", "i"), [
-      "If",
-      ["Less", "i", ["At", "ends", "blk"]],
-      ["Add", "i", 1],
-      blockStart("ends", "blk"),
-    ]),
-  ),
-  "list<integer>",
-);
-
-// Foata's (first) fundamental transformation: write the permutation in cycle notation with
-// each cycle rotated to start at its own maximum, order the cycles by increasing maximum,
-// and erase the parentheses. Blocks come from cycle lengths ordered by increasing cycle
-// MAXIMUM rather than decreasing length, and each block's value is read off the permutation
-// itself (via `iterate`) rather than renumbered.
-const foataWord: MathJSON = (() => {
-  const maximaAscending: MathJSON = ["Filter", positions, ["Function", ["Equal", "i", orbitMax("i")], "i"]];
-  const lengthsByLeader: MathJSON = [
-    "Map",
-    ["Function", ["Length", ["Union", forEach(positions, iterate("m", "k"), "k")]], "m"],
-    maximaAscending,
-  ];
-  const leader: MathJSON = ["At", "leaders", "blk"];
-  const offset: MathJSON = ["Subtract", "i", blockStart("ends", "blk")];
-  return bind(
-    "leaders",
-    maximaAscending,
-    bind(
-      "ends",
-      cumulative(lengthsByLeader),
-      forEach(
-        positions,
-        bind("blk", blockIndexAt("ends", "i"), ["If", ["Equal", offset, 0], leader, iterate(leader, offset)]),
-      ),
-      "list<integer>",
-    ),
-    "list<integer>",
-  );
-})();
 
 /** The descent positions. `Range(1, 0)` never evaluates, so n < 2 is stated rather than
  *  left to fall out. */
@@ -373,7 +238,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     // Sorted largest-first WITHOUT compute-engine's `Reverse`: this package declares a MAP
     // of that name over permutations, and a head can only mean one thing. Reading the sorted
     // list back to front by index says the same and shadows nothing.
-    body: descending(cycleLengths),
+    body: withLengths(plain(), "Min", () => true, descending("cy_lens")),
     kernel: cycleTypeKernel,
     summary: "The multiset of cycle lengths, as a partition.",
     note: "The first map here that CROSSES carriers — permutation in, integer partition out — which is the case the types exist for.",
@@ -502,7 +367,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     convert: true,
     from: "permutation",
     to: "cycle_decomposition",
-    body: cycleDecompositionBody,
+    body: cycleDecompositionOf(plain()),
     summary:
       "A permutation in cycle notation, fixed points kept: each cycle from its least point, cycles in order of those points.",
   },
@@ -604,7 +469,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     name: "ConjugateAfterCycleType",
     from: "permutation",
     to: "integer_partition",
-    body: conjugateOfCycleType,
+    body: withLengths(plain(), "Min", () => true, conjugateOfCycleType),
     summary: "The conjugate partition of the cycle type.",
     note: "Entry j is the count of cycles of length at least j — non-increasing in j by construction, so it comes out sorted without needing one.",
   },
@@ -612,7 +477,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     name: "ConjugacyClassRepresentative",
     from: "permutation",
     to: "permutation",
-    body: conjugacyClassRepresentative,
+    body: withLengths(plain(), "Min", () => true, conjugacyClassRepresentative),
     summary: "The canonical permutation with the same cycle type.",
     note: "FindStat does not fix an ordering for this map. Convention used here: cycles in decreasing length, filled with consecutive integers, each cycle (a a+1 … a+len-1) written as the one-line word a+1, …, a+len-1, a.",
   },
@@ -620,7 +485,13 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     name: "Foata",
     from: "permutation",
     to: "permutation",
-    body: foataWord,
+    // Each cycle starts at its maximum; the cycles ascend by maximum.
+    body: withLengths(
+      plain(),
+      "Max",
+      () => true,
+      cycleWord(plain(), (word) => word),
+    ),
     kernel: foataKernel,
     summary:
       "Foata's fundamental bijection: cycles rotated to their max, ordered by increasing max, parentheses erased.",

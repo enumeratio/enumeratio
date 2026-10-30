@@ -2,7 +2,7 @@
 // the inductive block construction: each new letter x goes on the end of the image so far, which is cut
 // into blocks, and every block is rotated one place right. The final block is always x alone, so the image of
 // a prefix is the first part of the image of the whole, and the inverse peels one letter off the end at a time.
-import { at, bind, forEach, type MathJSON } from "../../src/map-helpers.ts";
+import { at, bind, forEach, lets, type MathJSON } from "../../src/map-helpers.ts";
 
 const upTo = (n: MathJSON): MathJSON => ["Range", 1, n, 1];
 
@@ -69,72 +69,55 @@ export const foataMajorToInversionsBody: MathJSON = [
 ];
 
 /** Mp00175: peel the last letter x off, find the blocks of the rest (each starts with a letter at most x when the
- *  first letter is, above x otherwise), rotate each block back left, and go on with what is left. */
+ *  first letter is, above x otherwise), rotate each block back left, and go on with what is left. The word is
+ *  kept whole: its first j - 1 places are the part still to undo, the rest is the finished tail. */
 export const foataInversionsToMajorBody: MathJSON = [
   "If",
   ["Equal", ["Length", "_raw"], 0],
   ["List"],
-  bind(
-    "state",
+  [
+    "Fold",
     [
-      "Fold",
-      [
-        "Function",
-        bind(
-          "word",
-          at(1, "acc"),
-          bind(
-            "tail",
-            at(2, "acc"),
-            bind(
-              "x",
-              at("j", "word"),
-              bind(
-                "rest",
-                forEach(upTo(["Subtract", "j", 1]), at("k", "word"), "k"),
-                bind(
-                  "starts",
-                  forEach(
-                    upTo(["Subtract", "j", 1]),
-                    [
-                      "If",
-                      ["LessEqual", at(1, "rest"), "x"],
-                      ["LessEqual", at("k", "rest"), "x"],
-                      ["Greater", at("k", "rest"), "x"],
-                    ],
-                    "k",
-                  ),
-                  [
-                    "List",
-                    forEach(
-                      upTo(["Subtract", "j", 1]),
-                      [
-                        "If",
-                        ["Or", ["Equal", "p", ["Subtract", "j", 1]], at(["Add", "p", 1], "starts")],
-                        at(["Max", forEach(upTo("p"), ["If", at("q", "starts"), "q", 1], "q")], "rest"),
-                        at(["Add", "p", 1], "rest"),
-                      ],
-                      "p",
-                    ),
-                    ["Join", ["List", "x"], "tail"],
-                  ],
-                  "list<boolean>",
-                ),
-                "list<integer>",
-              ),
-              "integer",
+      "Function",
+      lets(
+        [
+          ["word", "acc", "list<integer>"],
+          ["x", at("j", "word")],
+          [
+            "starts",
+            forEach(
+              upTo(["Length", "_raw"]),
+              [
+                "If",
+                ["LessEqual", at(1, "word"), "x"],
+                ["LessEqual", at("k", "word"), "x"],
+                ["Greater", at("k", "word"), "x"],
+              ],
+              "k",
             ),
-            "list<integer>",
-          ),
-          "list<integer>",
+            "list<boolean>",
+          ],
+        ],
+        forEach(
+          upTo(["Length", "_raw"]),
+          [
+            "If",
+            ["GreaterEqual", "p", "j"],
+            at("p", "word"),
+            [
+              "If",
+              ["Or", ["Equal", "p", ["Subtract", "j", 1]], at(["Add", "p", 1], "starts")],
+              at(["Max", forEach(upTo("p"), ["If", at("q", "starts"), "q", 1], "q")], "word"),
+              at(["Add", "p", 1], "word"),
+            ],
+          ],
+          "p",
         ),
-        "acc",
-        "j",
-      ],
-      ["List", "_raw", ["List"]],
-      ["Range", ["Length", "_raw"], 2, -1],
+      ),
+      "acc",
+      "j",
     ],
-    ["Join", at(1, "state"), at(2, "state")],
-    "list<any>",
-  ),
+    "_raw",
+    ["Range", ["Length", "_raw"], 2, -1],
+  ],
 ];
