@@ -13,7 +13,7 @@ import { SUBJECT, signatureOf } from "./types.ts";
 
 /** A memo of the slow, pure cross-check (the build's own: see scripts/verdicts.ts). */
 export interface Verdicts {
-  remember<T>(parts: unknown, compute: () => T): T;
+  remember<T>(parts: unknown, compute: () => T, label?: string): T;
 }
 
 /** Every check runs. */
@@ -46,7 +46,8 @@ export function compiledDefinitionsFor(
     if (code === undefined) continue;
     if (!subjects.has(definition.on)) subjects.set(definition.on, subjectsOf(ce, definition.on));
     const parts = { expr: definition.expr, code: code.code, subjects: subjects.get(definition.on) };
-    if (!verdicts.remember(parts, () => agrees(ce, definition, code.run, subjects.get(definition.on)!))) {
+    const check = () => agrees(ce, definition, code.run, subjects.get(definition.on)!);
+    if (!verdicts.remember(parts, check, signatureOf(definition))) {
       disagreed.push(signatureOf(definition));
       continue;
     }

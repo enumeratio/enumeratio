@@ -1,8 +1,9 @@
 // The memo of the compile steps' interpreter cross-checks (their one slow part), shared by
 // the generators so an edit to one definition re-checks only that one. An answer is keyed by what
 // it checked (the definition, its compiled code, the subjects), and trusted while the code doing
-// the checking (`checkers`: a step's comparison, not its coordination) and the dists the
-// interpreter runs on are unchanged. Naming only the checkers keeps an edit to a driver, the
+// the checking (`checkers`: a step's comparison, not its coordination) is unchanged. When only
+// the dists the interpreter runs on moved, most answers are carried and a sample re-checked
+// (manifest's `verdictCache`). Naming only the checkers keeps an edit to a driver, the
 // shard split say, from re-running every check.
 
 import { createHash } from "node:crypto";
@@ -11,19 +12,34 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Verdicts } from "../src/statistics/generate-compiled.ts";
 
+/** The memo manifest keeps (its `Verdicts`): it also plans a step's items, hands its answers across
+ *  a process boundary (see shards.ts) and re-checks everything after a sampled divergence. */
+export type SharedVerdicts = Verdicts & {
+  plan(labels: readonly string[]): void;
+  costs(): Readonly<Record<string, number>>;
+  settle<T>(work: () => T): T;
+  escalate(): void;
+  save(): void;
+  share(): Share;
+  adopt(share: Share): void;
+};
+
 /** What one process learned (manifest's `VerdictShare`), for the process that saves the memo. */
 interface Share {
   answers: Record<string, unknown>;
+  verified: Record<string, string>;
+  costs: Record<string, number>;
   hits: number;
   misses: number;
+  carried: number;
+  diverged: boolean;
 }
-
-/** A memo that also hands its answers across a process boundary (see shards.ts). */
-export type SharedVerdicts = Verdicts & { save(): void; share(): Share; adopt(share: Share): void };
 
 // Imported by URL: a file outside the package in the program makes `vp pack` write its
 // declarations beside it.
-const { verdictCache } = (await import(new URL("../../../../manifest/scripts/stamp.ts", import.meta.url).href)) as {
+const { verdictCache, recheckAll } = (await import(
+  new URL("../../../../manifest/scripts/stamp.ts", import.meta.url).href
+)) as {
   verdictCache: (
     step: string,
     inputs: {
@@ -34,7 +50,10 @@ const { verdictCache } = (await import(new URL("../../../../manifest/scripts/sta
       imports?: string[];
     },
   ) => SharedVerdicts;
+  recheckAll: () => boolean;
 };
+
+export { recheckAll };
 
 const at = (path: string): string => fileURLToPath(new URL(`../${path}`, import.meta.url));
 

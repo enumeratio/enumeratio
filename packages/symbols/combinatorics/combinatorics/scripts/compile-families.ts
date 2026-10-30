@@ -71,12 +71,16 @@ if (process.argv[2] === "--shard") {
     Number(shards) === 1 ? "compile-families" : `compile-families-${shard}of${shards}`,
     checkers.families,
   );
-  const entries = compiledFamilies(verdicts, (head) => mine.get(head) === Number(shard)).map((e) => ({
-    head: e.head,
-    text: renderEntry(e),
-    compiled: Object.keys(e.code).length,
-    interpreted: e.interpreted,
-  }));
+  const takes = (head: string): boolean => mine.get(head) === Number(shard);
+  verdicts.plan(familyHeads().filter(takes));
+  const entries = verdicts
+    .settle(() => compiledFamilies(verdicts, takes))
+    .map((e) => ({
+      head: e.head,
+      text: renderEntry(e),
+      compiled: Object.keys(e.code).length,
+      interpreted: e.interpreted,
+    }));
   writeFileSync(out!, JSON.stringify({ entries, defined: definedOperations() } satisfies Result));
   verdicts.save();
 } else {
