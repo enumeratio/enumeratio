@@ -28,12 +28,12 @@ release. Add a tool name to select part of the graph. For example, run
 
 ## The wiki
 
-Design docs, the roadmap and contributor notes live on the [wiki](https://github.com/enumeratio/enumeratio/wiki); `design/` is gone
+Design docs, the roadmap and contributor notes live on the [wiki](https://github.com/enumeratio/notatio/wiki); `design/` is gone
 from the repo, and new design writing goes on the wiki. This file keeps the rules a change
 must follow, each short, with a link where the wiki explains it:
-[Contributing](https://github.com/enumeratio/enumeratio/wiki/Contributing) is the long form of this file (toolchain, names, reference
-entries, tests, git, code), [CI-and-Deployment](https://github.com/enumeratio/enumeratio/wiki/CI-and-Deployment) the workflows, and
-[Lanes](https://github.com/enumeratio/enumeratio/wiki/Lanes) parallel work across sessions. When a rule here changes, change it there
+[Contributing](https://github.com/enumeratio/notatio/wiki/Contributing) is the long form of this file (toolchain, names, reference
+entries, tests, git, code), [CI-and-Deployment](https://github.com/enumeratio/notatio/wiki/CI-and-Deployment) the workflows, and
+[Lanes](https://github.com/enumeratio/notatio/wiki/Lanes) parallel work across sessions. When a rule here changes, change it there
 too; when the wiki grows a rule an agent must follow, add its one line here.
 
 User-facing docs are not design docs: they ship with their package, as its `README.md` (the
@@ -61,11 +61,11 @@ so a page reads the same on GitHub and on the site.
   as", InputForm, the `*Form` heads). What an attribute or cell holds is an expression:
   MathJSON, written in Epsil (`$…$` LaTeX islands are Epsil's). `parseExpression` reports
   statements and effects; a cell may be one `:=` binding (`allow: ["Assign"]`). See
-  the wiki's [Syntax-and-Formats](https://github.com/enumeratio/enumeratio/wiki/Syntax-and-Formats).
+  the wiki's [Syntax-and-Formats](https://github.com/enumeratio/notatio/wiki/Syntax-and-Formats).
 - In the reference data, an example's retypeable text form (its InputForm) is keyed `epsil`,
   and `notatio` keys its component serialisation, the vdom as markup: FullForm written as
   JSX, framework-free (the wiki's
-  [Speculative-Vdom-Markup](https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup)).
+  [Speculative-Vdom-Markup](https://github.com/enumeratio/notatio/wiki/Speculative-Vdom-Markup)).
   There are no Vue or React wrappers; the elements are the component form.
 - On the web every box primitive is its own tag, the box head in kebab case (`RowBox` -> `row-box`,
   `Graphics3DBox` -> `graphics-3d-box`); `packages/frontend/src/box-tags.ts` is the one map. `notatio-`
@@ -73,7 +73,7 @@ so a page reads the same on GitHub and on the site.
 - Options are `Rule` (`Over -> R`); `parseExpression` normalizes a `->` in a call's arguments to `Rule`, and
   `KeyValuePair` stays the dictionary entry.
 - Package names have not all caught up, and the scope stays `@enumeratio/*`; do not rename them in passing — see the wiki's
-  [Component-Naming](https://github.com/enumeratio/enumeratio/wiki/Component-Naming) for how renames wait.
+  [Component-Naming](https://github.com/enumeratio/notatio/wiki/Component-Naming) for how renames wait.
 
 ## Upstream candidates
 
@@ -86,7 +86,7 @@ so a page reads the same on GitHub and on the site.
 - Asks go to compute-engine as `enumeratio`, an issue with its PR posted together, each draft
   signed off before posting; batch related asks. Post an issue alone first only when the work may
   be rejected or needs the maintainer's design call. The PR checklist is on the wiki's
-  [Contributing](https://github.com/enumeratio/enumeratio/wiki/Contributing#upstreaming-to-compute-engine).
+  [Contributing](https://github.com/enumeratio/notatio/wiki/Contributing#upstreaming-to-compute-engine).
 - `~/Playground/@enumeratio/compute-engine` is the local compute-engine branch: it holds only
   commits for PRs we've sent that aren't merged yet.
 - A patch's reference entries live in `packages/reference/entries/` and never go upstream. See
@@ -102,8 +102,8 @@ so a page reads the same on GitHub and on the site.
   `fullform`, `notatio`) are built, not committed; `examples.tsv` pins a few as
   `<form>.in`/`<form>.out` snapshots, and every `back`/`backOut` (a round trip that loses
   something). The format is on the wiki's
-  [Contributing](https://github.com/enumeratio/enumeratio/wiki/Contributing#where-a-change-goes) and
-  [Examples-as-Data](https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data).
+  [Contributing](https://github.com/enumeratio/notatio/wiki/Contributing#where-a-change-goes) and
+  [Examples-as-Data](https://github.com/enumeratio/notatio/wiki/Examples-as-Data).
 - Read and write records through `@enumeratio/entry/node` (`readHead`, `writeHead`,
   `updateHead`, `readEntries`, `writeEntries`), never by hand-parsing their files. Hand edits
   are fine; `node packages/reference/scripts/format-records.ts` tidies them. A TSV cell is
@@ -241,7 +241,7 @@ kernel, the network or hand curation stays committed.
   required checks. A lane fails when an answered row changes verdict, classification or input, not on
   a float's printed digits. Failures file rolling issues labelled `nightly-fixup`; the
   nightly-fixup routine opens fix PRs and never merges. Workflows, secrets and artifacts:
-  the wiki's [CI-and-Deployment](https://github.com/enumeratio/enumeratio/wiki/CI-and-Deployment).
+  the wiki's [CI-and-Deployment](https://github.com/enumeratio/notatio/wiki/CI-and-Deployment).
   The tarball check (`tarball.yml`, nightly only; `tools/tarball-check`) packs every package, installs only the
   tarballs into a scratch app, and runs census's tests and the site build (`SITE_FROM_PACKAGES=1`,
   no `srcAliases`) from it; run it locally with `node tools/tarball-check/run.ts`.

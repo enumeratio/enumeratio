@@ -82,7 +82,7 @@ const typeset = (i: number): boolean =>
 const entry = computed(() => (import.meta.env.DEV ? getEntry(props.name) : (props.entry ?? getEntry(props.name))));
 
 // Where this head is drawn, if it is -- symbols.ts's own head<->tag map
-// (https://github.com/enumeratio/enumeratio/wiki/Components-and-Symbols), not the record's `bindings` (a `component` binding is
+// (https://github.com/enumeratio/notatio/wiki/Components-and-Symbols), not the record's `bindings` (a `component` binding is
 // about an implementation origin, not this cross-link).
 const drawnAs = computed(() => components.find((c) => c.heads.includes(props.name))?.name);
 

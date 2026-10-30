@@ -14,7 +14,7 @@ plane. Cells are defined by name, so they can go in any order — drag one by it
 ::: warning Nothing here is saved yet
 This worksheet lives only as long as the tab. Keeping worksheets in your browser —
 offline, on your machine, with no account — is the next step; see
-the wiki's [Notebooks](https://github.com/enumeratio/enumeratio/wiki/Notebooks) page.
+the wiki's [Notebooks](https://github.com/enumeratio/notatio/wiki/Notebooks) page.
 :::
 
 <ClientOnly>

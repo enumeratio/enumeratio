@@ -2,7 +2,7 @@
 // (`/docs/<slug>/…`). A package's README.md is its landing page and `docs/**/*.md` its
 // further pages. The files stay where they are; links are rewritten here so the same
 // markdown reads right on GitHub and on the site. Design docs and the roadmap live on the
-// wiki (https://github.com/enumeratio/enumeratio/wiki), not here.
+// wiki (https://github.com/enumeratio/notatio/wiki), not here.
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, posix, relative, resolve } from "node:path";
@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const repoRoot = resolve(here, "../../..");
-const githubBlob = "https://github.com/enumeratio/enumeratio/blob/main/";
+const githubBlob = "https://github.com/enumeratio/notatio/blob/main/";
 // Package docs link the site absolutely, so the link also works on GitHub; served here, the
 // origin is dropped so it stays on whichever deployment is showing it.
 const siteOrigin = "https://enumeratio.dev";

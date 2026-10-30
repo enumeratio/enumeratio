@@ -2,7 +2,7 @@ name: Publish core
 
 # Publishes the core a library outside this repository builds on (tools/publish/prepare-core.ts's CORE) to
 # GitHub Packages as `next` prereleases, for the per-package repo split
-# (https://github.com/enumeratio/enumeratio/wiki/Speculative-Per-Package-Repos §5 step 2). Not npm: the
+# (https://github.com/enumeratio/notatio/wiki/Speculative-Per-Package-Repos §5 step 2). Not npm: the
 # packages stay `private` in the tree, and only this run makes them publishable, to GitHub's registry.
 #
 # Push a `core-v<version>` tag (core-v0.1.0-next.1), or dispatch with the version.

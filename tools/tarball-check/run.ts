@@ -1,5 +1,5 @@
 // Build and test from packed tarballs, with no workspace links: the check that the packages
-// work as published artifacts (https://github.com/enumeratio/enumeratio/wiki/Speculative-Per-Package-Repos §5, step 0).
+// work as published artifacts (https://github.com/enumeratio/notatio/wiki/Speculative-Per-Package-Repos §5, step 0).
 //
 //   node tools/tarball-check/run.ts [--out DIR] [--scratch DIR] [--only a,b] [--keep] [--probe-sources]
 //

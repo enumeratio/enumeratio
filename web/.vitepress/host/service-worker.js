@@ -1,4 +1,4 @@
-// The site's host (https://github.com/enumeratio/enumeratio/wiki/Speculative-Kernels-and-Front-Ends §4):
+// The site's host (https://github.com/enumeratio/notatio/wiki/Speculative-Kernels-and-Front-Ends §4):
 // a service worker that holds the configuration and serves the shared cache. On install it
 // caches every library chunk the kernel loads, the worker that runs it, and what cells and
 // plots load, so the kernel starts warm and the site works offline. Pages are cached as they're

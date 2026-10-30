@@ -1,4 +1,4 @@
-// The build as a kernel (https://github.com/enumeratio/enumeratio/wiki/Speculative-Kernels-and-Front-Ends §9):
+// The build as a kernel (https://github.com/enumeratio/notatio/wiki/Speculative-Kernels-and-Front-Ends §9):
 // one engine in Node, set up as the site's worker kernel is (its dictionary, every package's
 // notation, the libraries an expression names), that writes each reference example's answer
 // into its page. The answers are the recorded ones: the tests re-evaluate them, the build
