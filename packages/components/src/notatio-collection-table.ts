@@ -4,17 +4,30 @@ import {
   columnLabel,
   columnList,
   debug,
+  distributionSvg,
   exprAt,
   glyphKind,
+  polynomial,
   rowSourceExpression,
   templateOfExpr,
   type RowSourceSpec,
 } from "@enumeratio/frontend/core";
-import { html, LitElement, nothing } from "lit";
+import { html, LitElement, nothing, type PropertyValues } from "lit";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { type Evaluate, tally } from "./distribution-client.ts";
 import { ensureStyles } from "./styles.ts";
 import type { TableStatus } from "./table-view-box.ts";
 
 const log = debug("collection-table");
+
+/** A column that is a statistic head (`Descents`), the only kind with a distribution. */
+const STATISTIC_HEAD = /^[A-Za-z]\w*$/;
+
+/** What the distribution pane shows. */
+type DistributionState =
+  | { readonly status: "loading" }
+  | { readonly status: "declined"; readonly reason: string }
+  | { readonly status: "ready"; readonly svg: string; readonly polynomial: string };
 
 /**
  * `<CollectionTable expr="Subsets(4)">` -- the chrome around a `<table-view-box>`: the editors
@@ -84,7 +97,19 @@ export class NotatioCollectionTable extends LitElement {
     scrollPosition: { type: String, attribute: "scroll-position" },
     /** Rows of a pinned page (`MaxItems`). */
     maxItems: { type: Number, attribute: "max-items" },
+    /**
+     * Open the distribution pane: how often each value of a statistic occurs over the whole
+     * collection (`Distribution -> True`). Computed on demand by a tally that walks every element,
+     * so a collection past `size-max`, or too many elements, declines with a reason.
+     */
+    distribution: { type: Boolean, reflect: true },
+    /** The column the pane is for; empty for the first statistic column. */
+    distributionStatistic: { type: String, attribute: "distribution-statistic", reflect: true },
+    /** How the pane asks for a tally: the page's kernel by default; a host or a test swaps it. */
+    evaluate: { attribute: false },
     _status: { state: true },
+    _distribution: { state: true },
+    _menuFilter: { state: true },
   };
 
   declare expr: string;
@@ -107,7 +132,14 @@ export class NotatioCollectionTable extends LitElement {
   declare pagination: boolean;
   declare scrollPosition: string;
   declare maxItems: number;
+  declare distribution: boolean;
+  declare distributionStatistic: string;
+  declare evaluate: Evaluate | undefined;
   declare _status: TableStatus | undefined;
+  declare _distribution: DistributionState | undefined;
+  declare _menuFilter: string;
+  /** What the pane last asked for; a later answer to an earlier ask is dropped. */
+  #asked = "";
 
   constructor() {
     super();
@@ -132,6 +164,11 @@ export class NotatioCollectionTable extends LitElement {
     this.scrollPosition = "";
     this.maxItems = 0;
     this._status = undefined;
+    this.distribution = false;
+    this.distributionStatistic = "";
+    this.evaluate = undefined;
+    this._distribution = undefined;
+    this._menuFilter = "";
     ensureStyles();
     ensureTableStyles();
   }
@@ -241,6 +278,90 @@ export class NotatioCollectionTable extends LitElement {
     };
   }
 
+  // ---- the distribution pane -------------------------------------------------------------
+
+  /** The column the pane is for: the one named, else the first statistic head. */
+  #distributionColumn(): string | undefined {
+    const named = this.distributionStatistic.trim();
+    return named !== "" ? named : this.#columns().find((c) => STATISTIC_HEAD.test(c));
+  }
+
+  #toggleDistribution(column: string): void {
+    if (this.distribution && this.#distributionColumn() === column) this.distribution = false;
+    else {
+      this.distributionStatistic = column;
+      this.distribution = true;
+    }
+  }
+
+  /** Ask for the pane's tally when what it depends on has changed; the answer lands in `_distribution`. */
+  #refreshDistribution(): void {
+    if (!this.distribution) {
+      this.#asked = "";
+      if (this._distribution !== undefined) this._distribution = undefined;
+      return;
+    }
+    const column = this.#distributionColumn();
+    const decline = (reason: string): void => {
+      this.#asked = reason;
+      // Only on change: setting state in `updated` would otherwise re-render forever.
+      if (this._distribution?.status !== "declined" || this._distribution.reason !== reason)
+        this._distribution = { status: "declined", reason };
+    };
+    if (column === undefined) return decline("add a statistic column to see its distribution");
+    if (!STATISTIC_HEAD.test(column))
+      return decline(`${column} is an expression; a distribution is of a statistic head`);
+    const status = this._status;
+    if (status === undefined) return;
+    const collection = this.#expr();
+    // With a filter the count is of the matches, not the collection a tally walks.
+    const count = !this.filter.trim() && status.count.kind === "exact" ? status.count.n : undefined;
+    const key = [collection, column, count].join("\0");
+    if (key === this.#asked) return;
+    this.#asked = key;
+    this._distribution = { status: "loading" };
+    void tally(
+      collection,
+      column,
+      {
+        ...(this.#template() !== undefined && { size: this.size }),
+        ...(this.sizeMax > 0 && { maxSize: this.sizeMax }),
+        ...(count !== undefined && { count }),
+      },
+      this.evaluate,
+    ).then((result) => {
+      if (this.#asked !== key) return;
+      this._distribution = result.ok
+        ? {
+            status: "ready",
+            svg: distributionSvg(result.distribution),
+            polynomial: polynomial(result.distribution),
+          }
+        : { status: "declined", reason: result.reason };
+    });
+  }
+
+  protected override updated(_changed: PropertyValues): void {
+    this.#refreshDistribution();
+  }
+
+  #pane(): unknown {
+    if (!this.distribution) return nothing;
+    const state = this._distribution;
+    const column = this.#distributionColumn();
+    return html`<div class="nct-dist">
+      <div class="nct-dist-head">distribution of <code>${column ?? ""}</code> over the collection</div>
+      ${
+        state === undefined || state.status === "loading"
+          ? html`<span class="nct-count">counting…</span>`
+          : state.status === "declined"
+            ? html`<span class="nct-error nct-dist-reason">${state.reason}</span>`
+            : html`<div class="nct-dist-chart">${unsafeHTML(state.svg)}</div>
+                <code class="nct-dist-poly">${state.polynomial}</code>`
+      }
+    </div>`;
+  }
+
   // ---- render ----------------------------------------------------------------------------
 
   #summary(): unknown {
@@ -265,17 +386,28 @@ export class NotatioCollectionTable extends LitElement {
     return html`<details class="nct-menu">
       <summary>statistics</summary>
       <div class="nct-menu-list">
-        ${offered.map(
-          (name) =>
-            html`<label
-              ><input
-                type="checkbox"
-                .checked=${cols.includes(name)}
-                @change=${(e: Event) =>
-                  (e.target as HTMLInputElement).checked ? this.#addColumn(name) : this.#removeColumn(name)}
-              />${name}</label
-            >`,
-        )}
+        <input
+          class="nct-input nct-menu-filter"
+          type="search"
+          spellcheck="false"
+          aria-label="filter statistics"
+          placeholder="filter"
+          .value=${this._menuFilter}
+          @input=${(e: Event) => (this._menuFilter = (e.target as HTMLInputElement).value)}
+        />
+        ${offered
+          .filter((name) => name.toLowerCase().includes(this._menuFilter.trim().toLowerCase()))
+          .map(
+            (name) =>
+              html`<label
+                ><input
+                  type="checkbox"
+                  .checked=${cols.includes(name)}
+                  @change=${(e: Event) =>
+                    (e.target as HTMLInputElement).checked ? this.#addColumn(name) : this.#removeColumn(name)}
+                />${name}</label
+              >`,
+          )}
       </div>
     </details>`;
   }
@@ -330,7 +462,23 @@ export class NotatioCollectionTable extends LitElement {
           ${cols.map(
             (source) =>
               html`<span class="nct-chip"
-                >${columnLabel(source)}<button
+                >${columnLabel(source)}${
+                  STATISTIC_HEAD.test(source)
+                    ? html`<button
+                        type="button"
+                        class="nct-dist-toggle"
+                        aria-label="distribution of ${columnLabel(source)}"
+                        aria-pressed=${this.distribution && this.#distributionColumn() === source ? "true" : "false"}
+                        @click=${(e: Event) => {
+                          // Inside a <label>: keep the click from activating the label's first control too.
+                          e.preventDefault();
+                          this.#toggleDistribution(source);
+                        }}
+                      >
+                        ▥
+                      </button>`
+                    : nothing
+                }<button
                   type="button"
                   aria-label="remove ${columnLabel(source)}"
                   @click=${() => this.#removeColumn(source)}
@@ -385,6 +533,7 @@ export class NotatioCollectionTable extends LitElement {
               @table-sort=${(e: CustomEvent<{ column: number }>) => this.#onSort(e)}
             ></table-view-box>`
       }
+      ${this.#pane()}
     </div>`;
   }
 }
@@ -473,6 +622,11 @@ notatio-collection-table { display: block; margin: 0.75rem 0; width: 100%; }
 .nct-chip button:hover { color: var(--vp-c-danger-1, #c0392b); }
 .nct-add { flex: 1 1 14rem; }
 .nct-size { flex: 0 0 4.5rem; }
+.nct-dist-toggle[aria-pressed="true"] { color: var(--vp-c-brand-1, #3451b2); }
+.nct-dist { padding: 0.55rem 0.8rem; border-top: 1px solid var(--vp-c-divider, #e5e5e5); display: grid; gap: 0.35rem; }
+.nct-dist-head { color: var(--vp-c-text-3, #888); font-size: 0.78rem; }
+.nct-dist-chart { max-width: 26rem; }
+.nct-dist-poly { font-size: 0.78rem; overflow-wrap: anywhere; }
 .nct-menu { position: relative; font-size: 0.78rem; }
 .nct-menu summary { cursor: pointer; color: var(--vp-c-text-3, #888); user-select: none; }
 .nct-menu-list {
@@ -489,6 +643,7 @@ notatio-collection-table { display: block; margin: 0.75rem 0; width: 100%; }
   background: var(--vp-c-bg, #fff);
   font-family: var(--notatio-mono, ui-monospace, monospace);
 }
+.nct-menu-filter { flex: none; width: 100%; box-sizing: border-box; position: sticky; top: 0; }
 .nct-menu-list label { display: flex; gap: 0.4rem; align-items: center; white-space: nowrap; }
 `;
 
