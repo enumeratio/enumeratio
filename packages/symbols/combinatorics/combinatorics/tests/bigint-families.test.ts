@@ -8,6 +8,7 @@ import { COMPILED_FAMILIES } from "../collections/src/families/compiled-families
 import { allFamilies } from "../collections/src/families/index.ts";
 import { familyHash, isEpsilFamily, kernelOn, type EpsilFamily } from "../collections/src/families/epsil.ts";
 import { definitions } from "../collections/src/families/sequence-definitions.ts";
+import { shiftedStandardTableaux } from "../tableaux/src/families/standard-tableaux.ts";
 import { dyckPaths, motzkinPaths, schroederPaths } from "../lattice-paths/src/families/core.ts";
 
 const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
@@ -163,3 +164,41 @@ test.each(optedIn)(
   },
   120_000,
 );
+
+// Thrall's shifted hook-length formula, per strict partition: n!/∏λᵢ! · ∏ᵢ<ⱼ (λᵢ−λⱼ)/(λᵢ+λⱼ).
+const factorial = (n: number): bigint => (n < 2 ? 1n : BigInt(n) * factorial(n - 1));
+const strictPartitions = (n: number, max = n): number[][] =>
+  n === 0
+    ? [[]]
+    : Array.from({ length: Math.min(n, max) }, (_, i) => Math.min(n, max) - i).flatMap((p) =>
+        strictPartitions(n - p, p - 1).map((rest) => [p, ...rest]),
+      );
+const thrall = (lambda: number[]): bigint => {
+  let top = factorial(lambda.reduce((a, b) => a + b, 0));
+  let bottom = 1n;
+  for (const [i, a] of lambda.entries()) {
+    bottom *= factorial(a);
+    for (const b of lambda.slice(i + 1)) {
+      top *= BigInt(a - b);
+      bottom *= BigInt(a + b);
+    }
+  }
+  return top / bottom;
+};
+const shiftedTableaux = (n: number): bigint => strictPartitions(n).reduce((sum, lambda) => sum + thrall(lambda), 0n);
+
+test("ShiftedStandardTableaux counts past 2^53 as Thrall's formula does", () => {
+  const kernel = kernelOn(ce, shiftedStandardTableaux, COMPILED_FAMILIES);
+  expect(shiftedTableaux(34)).toBeGreaterThan(MAX_SAFE);
+  for (const n of [33, 34, 35]) expect(kernel.count([n]), `n=${n}`).toBe(shiftedTableaux(n));
+});
+
+test("the BigInt-compiled ShiftedStandardTableaux keeps its operations", () => {
+  const entry = (COMPILED_FAMILIES as unknown as Record<string, { big?: object; bigInterpreted?: string[] }>)[
+    "ShiftedStandardTableaux"
+  ];
+  // A build that stubbed the generated module has nothing to check.
+  if (entry === undefined) return;
+  expect(entry.bigInterpreted ?? []).toEqual([]);
+  expect(Object.keys(entry.big ?? {})).toEqual(expect.arrayContaining(["count", "unrank", "rank"]));
+});

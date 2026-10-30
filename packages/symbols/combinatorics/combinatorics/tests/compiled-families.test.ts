@@ -10,7 +10,14 @@ import { allFamilies } from "../collections/src/families/index.ts";
 import { definitions } from "../collections/src/families/sequence-definitions.ts";
 import { dyckPaths, motzkinPaths, schroederPaths } from "../lattice-paths/src/families/core.ts";
 import { epsilEntries } from "../permutations/src/families/core.ts";
-import { bigDisagreements, compileFamily, deepHeads, disagreements, fibersOf } from "../scripts/family-checks.ts";
+import {
+  bigDisagreements,
+  bigVerdicts,
+  compileFamily,
+  deepHeads,
+  disagreements,
+  fibersOf,
+} from "../scripts/family-checks.ts";
 
 test("the build compiled families", () => {
   expect(Object.keys(COMPILED_FAMILIES).length).toBeGreaterThan(0);
@@ -43,6 +50,16 @@ test("BigInt-compiled code that disagrees with the interpreter is left interpret
   expect(bigDisagreements(bareEngine(), dyckPaths, wrong)).toEqual(["count", "unrank", "rank"]);
 });
 
+test("a decline is reported apart from a wrong answer", () => {
+  const declines = () => {
+    throw new RangeError("inexact division");
+  };
+  expect(bigVerdicts(bareEngine(), dyckPaths, { count: declines, unrank: () => [1n] })).toEqual([
+    { operation: "count", kind: "decline" },
+    { operation: "unrank", kind: "disagree" },
+  ]);
+});
+
 // Each opted-in family, and the first param (or rank) past 2^53 its sweep starts from.
 const bigFamilies: readonly (readonly [EpsilFamily, number])[] = [
   [dyckPaths, 31],
@@ -69,6 +86,7 @@ const slowBigFamilies: readonly (readonly [head: string, first: readonly number[
   ["CarlitzCompositions", [68]],
   ["ZigzagCompositions", [82]],
   ["ParkingFunctions", [15]],
+  ["ShiftedStandardTableaux", [34]],
 ];
 const familyOf = (head: string): EpsilFamily => allFamilies.filter(isEpsilFamily).find((f) => f.head === head)!;
 

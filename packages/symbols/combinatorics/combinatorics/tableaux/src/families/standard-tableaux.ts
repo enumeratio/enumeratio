@@ -415,17 +415,21 @@ export const standardTableaux: EpsilFamily = cornerFamily({
 
 // ─── ShiftedStandardTableaux(n): the strict partitions of n, each cell right of the one above it
 // being larger as well as the one below.
-export const shiftedStandardTableaux: EpsilFamily = cornerFamily({
-  head: "ShiftedStandardTableaux",
-  carrier: "ShiftedStandardTableau",
-  shapes: distinctPartitions,
-  tableaux: shiftedHookLengths,
-  corner: corner(true),
-  rowFits: (row, above) => ["Less", length(row), length(above)],
-  columnFits: (above, row, k) =>
-    iff(["LessEqual", add(k, 1), length(above)], ["Less", at(above, add(k, 1)), at(row, k)], "True"),
-  declinePastDoubles: "count",
-});
+export const shiftedStandardTableaux: EpsilFamily = {
+  ...cornerFamily({
+    head: "ShiftedStandardTableaux",
+    carrier: "ShiftedStandardTableau",
+    shapes: distinctPartitions,
+    tableaux: shiftedHookLengths,
+    corner: corner(true),
+    rowFits: (row, above) => ["Less", length(row), length(above)],
+    columnFits: (above, row, k) =>
+      iff(["LessEqual", add(k, 1), length(above)], ["Less", at(above, add(k, 1)), at(row, k)], "True"),
+    declinePastDoubles: "count",
+  }),
+  // The first fiber past 2^53 (9.9e15 shifted tableaux of 34 cells).
+  bigSamples: [[34]],
+};
 
 /** The TS kernel in tableaux-trees.ts, which lists the tableaux in the same order. */
 export const standardTableauxFast: FastKernel = {

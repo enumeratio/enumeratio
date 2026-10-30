@@ -87,3 +87,12 @@ test("a list's length bounds a range, and ReplaceAt copies", () => {
   const replaced = ["ReplaceAt", "_x", 2, ["Add", ["At", "_x", 1], 2 ** 60]];
   expect(run(replaced, types, { _x: x })).toEqual([1n, 2n ** 60n + 1n, 3n]);
 });
+
+test("a stepped range counts and runs over bigints, down as well as up", () => {
+  const collect = (range: unknown) => ["Fold", ["Function", ["Join", "a", ["List", "i"]], "a", "i"], ["List"], range];
+  const types = { _n: "integer" };
+  expect(run(collect(["Range", "_n", 1, -1]), types, { _n: 4 })).toEqual([4n, 3n, 2n, 1n]);
+  expect(run(collect(["Range", 1, "_n", 2]), types, { _n: 6 })).toEqual([1n, 3n, 5n]);
+  // Too many elements to list declines rather than counting a bigint bound as infinite.
+  expect(() => run(collect(["Range", "_n", 1, -3]), types, { _n: 2 ** 60 })).toThrow(RangeError);
+});
