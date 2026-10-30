@@ -5,7 +5,8 @@
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { COMPILED_FAMILIES } from "../collections/src/families/compiled-families.generated.js";
-import { familyHash, kernelOn, type EpsilFamily } from "../collections/src/families/epsil.ts";
+import { allFamilies } from "../collections/src/families/index.ts";
+import { familyHash, isEpsilFamily, kernelOn, type EpsilFamily } from "../collections/src/families/epsil.ts";
 import { definitions } from "../collections/src/families/sequence-definitions.ts";
 import { dyckPaths, motzkinPaths, schroederPaths } from "../lattice-paths/src/families/core.ts";
 
@@ -118,3 +119,47 @@ test.each([
   }
   expect(tables).toEqual(["big"]);
 });
+
+// The families that declined past 2^53 and now answer from BigInt code: an independent count, rank undoing
+// unrank, and (where the interpreter takes seconds, not minutes, a call) unrank as the interpreter has it.
+const choose = (n: bigint, k: bigint): bigint => {
+  let c = 1n;
+  for (let i = 1n; i <= k; i++) c = (c * (n - k + i)) / i;
+  return c;
+};
+const optedIn: readonly (readonly [head: string, p: number[], count: (() => bigint) | undefined, oracle: boolean])[] = [
+  ["NonCrossingTrees", [23], () => choose(69n, 23n) / 47n, true],
+  ["BinaryTreeParentArrays", [31], () => catalan(31n), true],
+  ["NonCrossingPartitions", [31], () => catalan(31n), true],
+  ["NonNestingPartitions", [31], () => catalan(31n), true],
+  ["PartCountBoundedCompositions", [55, 55], () => 2n ** 54n, true],
+  // Counted by their TS kernels' exact classes.
+  ["CarlitzCompositions", [68], undefined, true],
+  ["ZigzagCompositions", [82], undefined, false],
+  ["ParkingFunctions", [15], () => 16n ** 14n, false],
+];
+const byHead = new Map(allFamilies.filter(isEpsilFamily).map((family) => [family.head, family]));
+
+test.each(optedIn)(
+  "%s answers past 2^53 from BigInt code",
+  (head, p, count, oracle) => {
+    const family = byHead.get(head)!;
+    expect(family.bigSamples).toBeDefined();
+    expect(family.declinePastDoubles).toBeUndefined();
+    const kernel = kernelOn(ce, { ...family, fast: undefined, fastCount: undefined } as EpsilFamily, COMPILED_FAMILIES);
+    const exact = family.fast?.count ?? family.fastCount;
+    const total = kernel.count(p) as bigint;
+    expect(total).toBe(count?.() ?? BigInt(exact!(p) as bigint));
+    expect(total > MAX_SAFE).toBe(true);
+    const interpreted = oracle
+      ? kernelOn(ce, { ...family, bigSamples: undefined, fast: undefined } as EpsilFamily, {})
+      : undefined;
+    for (const r of [0n, total / 3n, total - 1n]) {
+      const element = kernel.unrank(p, r);
+      expect(kernel.rank(element, p)).toBe(r);
+      expect(kernel.valid(element, p)).toBe(true);
+      if (interpreted !== undefined && r !== 0n) expect(element).toEqual(interpreted.unrank(p, r));
+    }
+  },
+  120_000,
+);

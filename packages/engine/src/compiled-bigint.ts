@@ -33,6 +33,9 @@ function lowered(node: unknown): unknown {
 const FUNCTIONS = {
   BigDivide: "((a, b) => _SYS.bdiv(a, b))",
   BigRange: "((lo, hi) => _SYS.brange(lo, hi))",
+  // A length is an integer like any other here.
+  Length: "((list) => BigInt(list.length))",
+  Count: "((list) => BigInt(list.length))",
 };
 
 function binomial(n: bigint, k: bigint): bigint {
@@ -58,6 +61,34 @@ const bigNumber = Object.assign((x: unknown) => Number(x), Number, {
   isNaN: (x: unknown) => typeof x !== "bigint" && Number.isNaN(x),
 });
 
+function replaceAtInPlace(list: unknown[], ...pairs: unknown[]): unknown[] {
+  for (let i = 0; i < pairs.length; i += 2) {
+    const index = Number(pairs[i]);
+    const at = index > 0 ? index - 1 : index + list.length;
+    if (!Number.isInteger(index) || index === 0 || at < 0 || at >= list.length)
+      throw new RangeError(`ReplaceAt: the index ${String(pairs[i])} is not a position of the list`);
+    list[at] = pairs[i + 1];
+  }
+  return list;
+}
+
+// Take and Drop round their count and Min and Max compare: a bigint as the integer it is, anything else as Math does.
+const bigMath = Object.assign(Object.create(Math), {
+  round: (x: unknown) => (typeof x === "bigint" ? x : Math.round(x as number)),
+  floor: (x: unknown) => (typeof x === "bigint" ? x : Math.floor(x as number)),
+  ceil: (x: unknown) => (typeof x === "bigint" ? x : Math.ceil(x as number)),
+  trunc: (x: unknown) => (typeof x === "bigint" ? x : Math.trunc(x as number)),
+  abs: (x: unknown) => (typeof x === "bigint" ? (x < 0n ? -x : x) : Math.abs(x as number)),
+  min: (...xs: unknown[]) =>
+    xs.length > 0 && xs.every((x) => typeof x === "bigint")
+      ? (xs as bigint[]).reduce((a, b) => (b < a ? b : a))
+      : Math.min(...(xs as number[])),
+  max: (...xs: unknown[]) =>
+    xs.length > 0 && xs.every((x) => typeof x === "bigint")
+      ? (xs as bigint[]).reduce((a, b) => (b > a ? b : a))
+      : Math.max(...(xs as number[])),
+});
+
 const sysByEngine = new WeakMap<ComputeEngine, unknown>();
 
 /** compute-engine's runtime helpers with the integer ones replaced by bigint versions. A division
@@ -67,6 +98,8 @@ export function bigintRuntime(ce: ComputeEngine): unknown {
   if (sys === undefined) {
     sys = Object.assign(Object.create(runtimeHelpers(ce) as object), {
       Number: bigNumber,
+      Math: bigMath,
+      slice: (list: unknown[], ...bounds: unknown[]) => list.slice(...bounds.map(Number)),
       bdiv: (a: bigint, b: bigint) => {
         if (a % b !== 0n) throw new RangeError("inexact division");
         return a / b;
@@ -74,18 +107,13 @@ export function bigintRuntime(ce: ComputeEngine): unknown {
       floorMod: (a: bigint, b: bigint) => ((a % b) + b) % b,
       pow: (a: bigint, b: bigint) => a ** b,
       // As the runtime's, for a bigint position (1-based, negative from the end).
-      replaceAtInPlace: (list: unknown[], ...pairs: unknown[]) => {
-        for (let i = 0; i < pairs.length; i += 2) {
-          const index = Number(pairs[i]);
-          const at = index > 0 ? index - 1 : index + list.length;
-          if (!Number.isInteger(index) || index === 0 || at < 0 || at >= list.length)
-            throw new RangeError(`ReplaceAt: the index ${String(pairs[i])} is not a position of the list`);
-          list[at] = pairs[i + 1];
-        }
-        return list;
-      },
-      brange: (lo: bigint, hi: bigint) => {
-        if (typeof lo !== "bigint" || typeof hi !== "bigint") throw new TypeError("a range over a double");
+      replaceAtInPlace,
+      replaceAt: (list: unknown[], index: unknown, value: unknown) => replaceAtInPlace(list.slice(), index, value),
+      brange: (lo: bigint | number, hi: bigint | number) => {
+        // A list's length is a double, but an integer one; any other double is a real mixed in.
+        for (const bound of [lo, hi])
+          if (typeof bound !== "bigint" && !Number.isSafeInteger(bound)) throw new TypeError("a range over a double");
+        [lo, hi] = [BigInt(lo), BigInt(hi)];
         if (hi - lo >= 4294967295n) throw new RangeError("Range: the element count exceeds the array limit");
         const out: bigint[] = [];
         for (let i = lo; i <= hi; i++) out.push(i);
@@ -133,9 +161,11 @@ export function compileBigint(
     // Generated code guards an equality with `typeof x === 'number'`; here an integer is a bigint.
     const inner = selfContainedCode(result)
       ?.replaceAll("=== 'number'", "=== 'bigint'")
-      .replaceAll("!== 'number'", "!== 'bigint'");
+      .replaceAll("!== 'number'", "!== 'bigint'")
+      // Take and Drop slice by a count, which is a bigint here.
+      .replaceAll("_a.slice(", "_SYS.slice(_a, ");
     if (result.success !== true || inner === undefined) return undefined;
-    const code = `(() => { const Number = _SYS.Number; return ${inner}; })()`;
+    const code = `(() => { const Number = _SYS.Number; const Math = _SYS.Math; return ${inner}; })()`;
     // oxlint-disable-next-line no-implied-eval -- the code is compute-engine's compiled output
     const fn = new Function("_SYS", "_", `return ${code}`) as (sys: unknown, vars: Record<string, unknown>) => unknown;
     return { run: (vars) => fn(bigintRuntime(ce), vars), code };

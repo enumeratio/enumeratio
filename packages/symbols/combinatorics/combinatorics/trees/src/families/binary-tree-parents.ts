@@ -201,8 +201,8 @@ const binaryTreeParentArrays: EpsilFamily = {
   kind: "ints",
   carrier: "BinaryTreeParentArray",
   params: ["_n"],
-  // Interpreting the stack walk takes seconds a call past 2^53, so unrank and rank decline there.
-  declinePastDoubles: true,
+  // The interpreter takes seconds a call past 2^53, from n = 31.
+  bigSamples: [[31]],
   epsil: {
     count: iff(less(N, 0), 0, C(N)),
     tables: catalanTable,

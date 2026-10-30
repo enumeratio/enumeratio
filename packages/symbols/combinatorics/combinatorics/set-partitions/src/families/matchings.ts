@@ -214,8 +214,8 @@ function tailPartitions(head: string, mode: TailMode, bad: Parameters<typeof noB
     paramCount: 1,
     kind: "blocks",
     params: ["_n"],
-    // Past doubles the table is minutes in the interpreter (the count, closed form, stays exact).
-    declinePastDoubles: true,
+    // Past doubles the table is minutes in the interpreter; the Catalan count is first past 2^53 at n = 31.
+    bigSamples: [[31]],
     epsil: {
       // f(n, 0) is the Catalan number, which DyckPaths counts in closed form.
       count: dyckPaths.epsil.count,

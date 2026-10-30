@@ -50,9 +50,9 @@ export const tetraCompositions = inSet("TetraCompositions", (p) => ["LessEqual",
 export const triangularCompositions = inSet("TriangularCompositions", partSets.triangular, true);
 export const primeCompositions = inSet("PrimeCompositions", partSets.prime, true);
 
-/** The walk's family, declining past 2^53: its table is wider than a hundred entries (n at 100,
- *  3n at 34), which the interpreter's exact integers can't finish. Unknown there, as the TS kernels left it. */
-const decliningWalk = (spec: PartWalk): EpsilFamily => ({ ...partWalk(spec), declinePastDoubles: "count" });
+/** The walk's family, answering past 2^53 from BigInt-compiled code: its table is wider than a hundred entries
+ *  (n at 100, 3n at 34), which the interpreter's exact integers can't finish. */
+const bigWalk = (spec: PartWalk & Pick<EpsilFamily, "bigSamples">): EpsilFamily => partWalk(spec);
 
 /** What Plausible reads: counting and indexing run a DP table, polynomial in n and k. */
 const boundedDeclared: Declared = {
@@ -77,8 +77,10 @@ export const partSizeBoundedCompositions: EpsilFamily = partWalk({
 
 /** At most k parts: the context is the parts still allowed (n parts at most are ever placed).
  *  The sum over the next part telescopes: S(m, j) = S(m − 1, j) + S(m − 1, j − 1), S(1, j) = 1. */
-export const partCountBoundedCompositions: EpsilFamily = decliningWalk({
+export const partCountBoundedCompositions: EpsilFamily = bigWalk({
   head: "PartCountBoundedCompositions",
+  // 2^(n − 1) at k = n: past 2^53 from n = 55.
+  bigSamples: [[55, 55]],
   carrier: "Composition",
   declared: boundedDeclared,
   paramCount: 2,
@@ -95,8 +97,10 @@ export const partCountBoundedCompositions: EpsilFamily = decliningWalk({
 
 /** No two equal parts side by side: the context is the part before (0 at the start). Every
  *  context but the start has the start's completions, less those of the part before it again. */
-export const carlitzCompositions: EpsilFamily = decliningWalk({
+export const carlitzCompositions: EpsilFamily = bigWalk({
   head: "CarlitzCompositions",
+  // First past 2^53 at n = 68.
+  bigSamples: [[68]],
   carrier: "Composition",
   paramCount: 1,
   params: [n],
@@ -127,8 +131,10 @@ const eithers = (c: MathJSON): MathJSON => and(["GreaterEqual", c, mul(2, n)], l
 /** The part before: 0 at the start. */
 const before = (c: MathJSON): MathJSON =>
   iff(rises(c), sub(n, c), iff(falls(c), add(sub(c, n), 1), iff(eithers(c), add(sub(c, mul(2, n)), 1), 0)));
-export const zigzagCompositions: EpsilFamily = decliningWalk({
+export const zigzagCompositions: EpsilFamily = bigWalk({
   head: "ZigzagCompositions",
+  // First past 2^53 at n = 82.
+  bigSamples: [[82]],
   carrier: "Composition",
   paramCount: 1,
   params: [n],

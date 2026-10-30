@@ -13,8 +13,8 @@ export const nonCrossingTrees: EpsilFamily = {
   kind: "ints",
   carrier: "NonCrossingTree",
   params: ["_n"],
-  // Interpreting the stack walk takes seconds a call past 2^53, so unrank and rank decline there.
-  declinePastDoubles: true,
+  // The interpreter takes seconds a call past 2^53, from n = 23.
+  bigSamples: [[23]],
   epsil: {
     count: word.count,
     tables: word.tables,

@@ -68,3 +68,22 @@ test("an equality of integers past 2^53 holds", () => {
   expect(run(same, types, { _x: [2 ** 60], _n: 2 ** 60 })).toBe(1n);
   expect(run(same, types, { _x: [2 ** 60], _n: 2 ** 61 })).toBe(0n);
 });
+
+test("Take, Drop, Min, Max and Length work on bigint counts", () => {
+  const types = { _x: "list<integer>", _n: "integer" };
+  const vars = { _x: [10, 20, 30, 2 ** 60], _n: 2 };
+  expect(run(["Take", "_x", "_n"], types, vars)).toEqual([10n, 20n]);
+  expect(run(["Drop", "_x", ["Add", "_n", 1]], types, vars)).toEqual([2n ** 60n]);
+  expect(run(["Max", "_n", ["At", "_x", 4]], types, vars)).toBe(2n ** 60n);
+  expect(run(["Min", "_n", ["At", "_x", 4]], types, vars)).toBe(2n);
+  expect(run(["Add", ["Length", "_x"], "_n"], types, vars)).toBe(6n);
+});
+
+test("a list's length bounds a range, and ReplaceAt copies", () => {
+  const types = { _x: "list<integer>" };
+  const sum = ["Fold", ["Function", ["Add", "a", ["At", "_x", "i"]], "a", "i"], 0, ["Range", 1, ["Length", "_x"], 1]];
+  expect(run(sum, types, { _x: [2 ** 60, 1, 2] })).toBe(2n ** 60n + 3n);
+  const x = [1n, 2n, 3n];
+  const replaced = ["ReplaceAt", "_x", 2, ["Add", ["At", "_x", 1], 2 ** 60]];
+  expect(run(replaced, types, { _x: x })).toEqual([1n, 2n ** 60n + 1n, 3n]);
+});
