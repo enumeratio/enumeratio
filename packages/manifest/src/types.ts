@@ -20,6 +20,17 @@ export interface Overload {
   readonly types?: readonly string[];
 }
 
+/** One parameter of a typed signature. */
+export interface Parameter {
+  /** Its name: the signature's own (`x: number`), else the record's, when it spells them. */
+  readonly name?: string;
+  /** Its compute-engine type, without the optional or repeat mark. */
+  readonly type: string;
+  readonly optional: boolean;
+  /** Repeats (`T*`, `T+`): any number of arguments of its type. */
+  readonly variadic: boolean;
+}
+
 export interface SymbolInfo {
   readonly name: string;
   /** The packages that document the head (hold its record), in path order. */
@@ -66,6 +77,8 @@ export interface Description {
   /** Every overload, most specific first, with the package that gives it. */
   readonly overloads?: readonly Overload[];
   readonly params?: readonly string[];
+  /** Each parameter of `signature`, with its type, in order. */
+  readonly parameters?: readonly Parameter[];
   /** Its optional parameters' defaults. */
   readonly defaults?: Readonly<Record<string, unknown>>;
   readonly attributes?: readonly string[];

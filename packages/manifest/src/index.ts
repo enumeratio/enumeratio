@@ -3,7 +3,15 @@ import { SYMBOLS } from "./generated/symbols.ts";
 import type { SymbolInfo } from "./types.ts";
 
 export { canonicalOrder } from "./canonical.ts";
-export type { DeclaredSymbol, Description, FindStatId, Overload, SymbolAttribute, SymbolInfo } from "./types.ts";
+export type {
+  DeclaredSymbol,
+  Description,
+  FindStatId,
+  Overload,
+  Parameter,
+  SymbolAttribute,
+  SymbolInfo,
+} from "./types.ts";
 export {
   type DescribeOptions,
   describe,
@@ -12,6 +20,7 @@ export {
   loadSummaries,
   matching,
   noteDescription,
+  parseParameters,
   winningOverload,
 } from "./describe.ts";
 

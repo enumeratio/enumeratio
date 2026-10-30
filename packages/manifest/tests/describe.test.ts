@@ -9,6 +9,7 @@ import {
   describedIn,
   describeNow,
   manifestRegistry,
+  parseParameters,
   pinOf,
 } from "../src/index.ts";
 
@@ -37,6 +38,33 @@ test("a head we know: its summary, page, every overload, and the one it is decla
   // The replacement chain ends at structures, whatever order the overloads are in.
   expect((await describe("Floor")).signature).toBe("(any, any?) -> any");
   expect(await describe("Pi")).toMatchObject({ kind: "constant", type: expect.stringMatching(/^real/) });
+});
+
+test("a head's parameters come back typed, in order, with what is optional", async () => {
+  const { parameters } = await describe("IntegerPartitions");
+  expect(parameters?.map((p) => [p.type, p.optional, p.variadic])).toEqual([
+    ["integer", false, false],
+    ["any", true, false],
+    ["any", true, false],
+  ]);
+  // A constant has no signature, so no parameters.
+  expect((await describe("Pi")).parameters).toBeUndefined();
+});
+
+test("parseParameters reads names, unions, nested types and repeats", () => {
+  expect(
+    parseParameters("(z: complex | infinity, branch: integer?, rest: list<tuple<integer, integer>>*) -> number"),
+  ).toEqual([
+    { name: "z", type: "complex | infinity", optional: false, variadic: false },
+    { name: "branch", type: "integer", optional: true, variadic: false },
+    { name: "rest", type: "list<tuple<integer, integer>>", optional: true, variadic: true },
+  ]);
+  // The record's names fill in where the type has none; a function-typed parameter is one.
+  expect(parseParameters("(integer, (number) -> number)", ["n", "f"])).toEqual([
+    { name: "n", type: "integer", optional: false, variadic: false },
+    { name: "f", type: "(number) -> number", optional: false, variadic: false },
+  ]);
+  expect(parseParameters("real")).toBeUndefined();
 });
 
 test("FindStat ids and the example count come with it", async () => {

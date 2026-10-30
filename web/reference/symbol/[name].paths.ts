@@ -46,6 +46,7 @@ export default {
           fields: fieldsOf(entry.name),
           definitions: definitionsOf(entry.name),
           overloads: describeNow(entry.name).overloads ?? [],
+          parameters: describeNow(entry.name).parameters ?? [],
         },
       });
     return pages;

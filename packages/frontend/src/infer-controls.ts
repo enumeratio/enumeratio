@@ -365,3 +365,128 @@ export function paramsOf(spec: ControlSpec): string | undefined {
       return undefined;
   }
 }
+
+// --- from a head's signature ---------------------------------------------------------
+
+/** One parameter of a head's typed signature (`@enumeratio/manifest`'s `Parameter`). */
+export interface SignatureParameter {
+  readonly name?: string;
+  readonly type: string;
+  readonly variadic?: boolean;
+}
+
+/** A head and its parameters' types: what turns the literals of a call into controls. */
+export interface HeadSignature {
+  readonly head: string;
+  readonly parameters: readonly SignatureParameter[];
+}
+
+/** The `|`-separated members of a type, leaving those inside `<>`, `()`, `[]`, `{}`. */
+function unionMembers(type: string): string[] {
+  const parts: string[] = [];
+  let depth = 0;
+  let from = 0;
+  for (let i = 0; i < type.length; i++) {
+    const c = type[i];
+    if ("<([{".includes(c)) depth++;
+    else if (">)]}".includes(c) && !(c === ">" && type[i - 1] === "-")) depth--;
+    else if (c === "|" && depth === 0) {
+      parts.push(type.slice(from, i).trim());
+      from = i + 1;
+    }
+  }
+  parts.push(type.slice(from).trim());
+  return parts;
+}
+
+/** The part of a (possibly union) type that a control can draw: the first member with a spec. */
+function controllable(type: string): string | undefined {
+  if (literalChoices(type) !== undefined) return type;
+  return unionMembers(type).find((m) => specOfType("_", m, undefined) !== undefined);
+}
+
+const numberOf = (node: Json): number | undefined =>
+  typeof node === "number"
+    ? node
+    : typeof (node as { num?: unknown } | null)?.num === "string"
+      ? Number((node as { num: string }).num)
+      : undefined;
+
+/** A lifted integer runs to the literal or this, whichever is larger; only a type bound widens it (a collection's cost grows fast). */
+const LIFT_SPAN = 6;
+
+/**
+ * `expr` with the literals at TYPED parameter positions of its first call of `signature.head`
+ * replaced by symbols, and a hint for each: its type, and the literal as its start. A position
+ * typed `any`, or of a type no control draws, stays as written.
+ */
+export function liftLiterals(expr: Json, signature: HeadSignature): { body: Json; hints: Record<string, ControlHint> } {
+  const hints: Record<string, ControlHint> = {};
+  const taken = new Set<string>();
+  const collect = (node: Json): void => {
+    if (typeof node === "string") taken.add(node);
+    else if (Array.isArray(node)) node.forEach(collect);
+    else if (node && typeof node === "object") {
+      const { sym, fn } = node as { sym?: unknown; fn?: unknown[] };
+      if (typeof sym === "string") taken.add(sym);
+      fn?.forEach(collect);
+    }
+  };
+  collect(expr);
+
+  const last = signature.parameters.at(-1);
+  const liftArg = (arg: Json, i: number): Json => {
+    const param = signature.parameters[i] ?? (last?.variadic ? last : undefined);
+    const type = param === undefined ? undefined : controllable(param.type);
+    if (param === undefined || type === undefined) return arg;
+    const word = symbolOf(arg);
+    const start = word === "True" || word === "False" ? word : numberOf(arg);
+    if (start === undefined) return arg;
+    const bounds = splitType(type);
+    const fits =
+      typeof start === "string"
+        ? bounds.base === "boolean"
+        : INTEGER_TYPES.has(bounds.base)
+          ? Number.isInteger(start)
+          : REAL_TYPES.has(bounds.base) || literalChoices(type) !== undefined;
+    if (!fits) return arg;
+    const written = param.name !== undefined && /^\p{Ll}\w*$/u.test(param.name) ? param.name : `p${i + 1}`;
+    const name = taken.has(written) || written in hints ? `p${i + 1}` : written;
+    if (taken.has(name) || name in hints) return arg;
+    hints[name] = {
+      type,
+      start,
+      // An integer runs over a small span from zero, or to the literal if that lies outside it.
+      ...(typeof start === "number" && INTEGER_TYPES.has(bounds.base)
+        ? { min: bounds.lo ?? Math.min(0, start), max: bounds.hi ?? Math.max(LIFT_SPAN, start) }
+        : {}),
+    };
+    return name;
+  };
+
+  let done = false;
+  const lift = (node: Json): Json => {
+    if (done) return node;
+    const fn = (node as { fn?: unknown[] } | null)?.fn;
+    const parts = Array.isArray(node) ? (node as Json[]) : Array.isArray(fn) ? (fn as Json[]) : undefined;
+    if (parts === undefined) return node;
+    const rebuilt = (next: Json[]): Json => (Array.isArray(node) ? next : { ...(node as object), fn: next });
+    if (parts[0] !== signature.head) return rebuilt(parts.map((p, i) => (i === 0 ? p : lift(p))));
+    done = true;
+    return rebuilt([parts[0], ...parts.slice(1).map(liftArg)]);
+  };
+  return { body: lift(expr), hints };
+}
+
+/**
+ * The controls for the typed arguments of a call: `IntegerPartitions(8)` with
+ * `(integer, any?, any?)` is `n`, an integer from 0 to 12 starting at 8. Typed positions only.
+ */
+export function inferFromSignature(
+  expr: Json,
+  signature: HeadSignature,
+  ctx: Omit<InferContext, "hints" | "names"> = {},
+): { body: Json; specs: ControlSpec[] } {
+  const { body, hints } = liftLiterals(expr, signature);
+  return { body, specs: inferControls(body, { ...ctx, hints, names: Object.keys(hints) }) };
+}

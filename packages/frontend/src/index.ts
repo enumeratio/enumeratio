@@ -12,6 +12,8 @@ export * from "./conventional-latex.ts";
 export * from "./source.ts";
 export * from "./plot-notation.ts";
 export * from "./symbols.ts";
+export * from "./infer-controls.ts";
+export * from "./try-it.ts";
 export { renderBox } from "./box-render.ts";
 export { type LayoutLeaves, layoutMarkup, layoutMarkupEverywhere } from "./layout-markup.ts";
 export * from "./tracked-symbols.ts";
