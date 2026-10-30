@@ -12,10 +12,14 @@ import {
   readTally,
   triangleOf,
   type Triangle,
+  type TriangleRow,
 } from "@enumeratio/frontend/core";
 import { pageKernel, WorkerUnavailableError } from "./kernel-client.ts";
 
 export { equidistributed, type Triangle };
+
+/** The time `findEquidistributed` spends before it stops. */
+export const DEFAULT_BUDGET_MS = 30_000;
 
 /** `text` (Epsil) evaluated, as MathJSON: by the page's kernel, else the page's engine. */
 export async function evaluateText(text: string): Promise<unknown> {
@@ -85,6 +89,8 @@ export async function tally(
 export interface EquidistributionResult {
   /** The statistics whose distribution equals the subject's at every size compared. */
   readonly matches: readonly string[];
+  /** Candidates that equal the subject at the small sizes, but whose larger rows were not reached. */
+  readonly unconfirmed: readonly string[];
   /** How many candidates were fully decided (matched, or rejected). */
   readonly checked: number;
   readonly total: number;
@@ -92,11 +98,68 @@ export interface EquidistributionResult {
   readonly stopped: boolean;
 }
 
+/** The scan's two phases: every candidate at the small sizes, then the survivors at the rest. */
+export type EquidistributionPhase = "screen" | "confirm";
+
+/** Sizes up to this are tallied for every candidate at once: `5! = 120` elements is a few milliseconds. */
+export const SCREEN_SIZE = 5;
+
+const sameAt = (row: TriangleRow, answer: DistributionResult): boolean =>
+  equidistributed([row], [{ n: row.n, ...answer }]);
+
+/** The tallies of `statistic` at `sizes`, as the Epsil that asks for all of them. */
+const tallyCalls = (template: string, statistic: string, sizes: readonly number[]): string =>
+  `List(${sizes.map((n) => distributionText(exprAt(template, n), statistic)).join(", ")})`;
+
+/** A `List` of `length` entries, or `undefined`. */
+const listOfLength = (json: unknown, length: number): unknown[] | undefined =>
+  Array.isArray(json) && json[0] === "List" && json.length === length + 1 ? json.slice(1) : undefined;
+
+/** Candidates per screening call: few enough that progress and the budget stay fine-grained. */
+export const SCREEN_BATCH = 25;
+
+/**
+ * Each of `statistics`' tallies at each of `sizes`, in one call. A statistic that cannot be
+ * tallied declines at every size, without the others noticing. If the call as a whole fails, the
+ * statistics are asked one by one.
+ */
+async function tallyBatch(
+  template: string,
+  statistics: readonly string[],
+  sizes: readonly number[],
+  evaluate: Evaluate,
+): Promise<DistributionResult[][]> {
+  const declined = (reason: string): DistributionResult[] => sizes.map(() => ({ ok: false, reason }));
+  const read = (entry: unknown): DistributionResult[] =>
+    listOfLength(entry, sizes.length)?.map(readTally) ?? declined("the statistic has no tally");
+  const one = async (statistic: string): Promise<DistributionResult[]> => {
+    try {
+      return read(await evaluate(tallyCalls(template, statistic, sizes)));
+    } catch (err) {
+      return declined(err instanceof Error ? err.message : String(err));
+    }
+  };
+  if (statistics.length > 1) {
+    try {
+      const json = await evaluate(`List(${statistics.map((s) => tallyCalls(template, s, sizes)).join(", ")})`);
+      const entries = listOfLength(json, statistics.length);
+      if (entries !== undefined) return entries.map(read);
+    } catch {
+      // fall through: one at a time tells the bad statistic from the good
+    }
+    return Promise.all(statistics.map(one));
+  }
+  return Promise.all(statistics.map(one));
+}
+
 /**
  * Which of `candidates` have the subject's distribution at every size the subject has a row for.
- * A candidate is walked row by row and dropped at the first row that differs, so most cost one
- * or two small tallies; the whole scan stops when `budgetMs` is spent. The subject needs at
- * least `minRows` rows, else equal distributions at one or two sizes say nothing.
+ * Two phases, each reported through `progress`: the candidates are tallied at the sizes up to
+ * `SCREEN_SIZE` a batch to a call, which drops nearly all of them for a few milliseconds each; the
+ * survivors are then walked row by row up to the subject's largest, dropped at the first that
+ * differs. The collection's size is known from the subject, so no tally asks for a count. The
+ * whole scan stops when `budgetMs` is spent; survivors not yet confirmed are `unconfirmed`. The
+ * subject needs at least `minRows` rows, else equal distributions at one or two sizes say nothing.
  */
 export async function findEquidistributed(
   template: string,
@@ -106,38 +169,62 @@ export async function findEquidistributed(
     readonly maxSize?: number;
     readonly minRows?: number;
     readonly budgetMs?: number;
-    readonly progress?: (checked: number, total: number) => void;
+    readonly progress?: (checked: number, total: number, phase: EquidistributionPhase) => void;
     readonly evaluate?: Evaluate;
     readonly now?: () => number;
   } = {},
 ): Promise<EquidistributionResult> {
-  const { minRows = 3, budgetMs = 20_000, now = Date.now } = options;
+  const { minRows = 3, budgetMs = DEFAULT_BUDGET_MS, now = Date.now, evaluate = evaluateText } = options;
   const rows = subject.filter((r) => r.ok);
   const total = candidates.length;
-  if (rows.length < minRows) return { matches: [], checked: 0, total, stopped: false };
+  if (rows.length < minRows) return { matches: [], unconfirmed: [], checked: 0, total, stopped: false };
   const started = now();
+  const spent = (): boolean => now() - started > budgetMs;
+  const small = rows.filter((r) => r.n <= SCREEN_SIZE);
+  const large = rows.filter((r) => r.n > SCREEN_SIZE);
+  const countOf = (row: TriangleRow): bigint =>
+    row.ok ? BigInt(row.distribution.counts.reduce((a, c) => a + c, 0)) : 0n;
+
+  let rejected = 0;
+  const survivors: string[] = [];
+  for (let i = 0; i < candidates.length; i += SCREEN_BATCH) {
+    if (spent()) return { matches: [], unconfirmed: [], checked: rejected, total, stopped: true };
+    const batch = candidates.slice(i, i + SCREEN_BATCH);
+    const answers = await tallyBatch(
+      template,
+      batch,
+      small.map((r) => r.n),
+      evaluate,
+    );
+    batch.forEach((candidate, j) => {
+      if (small.every((row, k) => sameAt(row, answers[j]![k]!))) survivors.push(candidate);
+      else rejected++;
+    });
+    options.progress?.(rejected + survivors.length, total, "screen");
+  }
+
   const matches: string[] = [];
-  let checked = 0;
-  for (const candidate of candidates) {
-    if (now() - started > budgetMs) return { matches, checked, total, stopped: true };
+  let done = 0;
+  for (const candidate of survivors) {
+    if (spent()) return { matches, unconfirmed: survivors.slice(done), checked: rejected + done, total, stopped: true };
     let same = true;
-    for (const row of rows) {
+    for (const row of large) {
       const answer = await tally(
         exprAt(template, row.n),
         candidate,
-        { size: row.n, ...(options.maxSize && { maxSize: options.maxSize }) },
-        options.evaluate,
+        { size: row.n, count: countOf(row), ...(options.maxSize && { maxSize: options.maxSize }) },
+        evaluate,
       );
-      if (!equidistributed([row], [{ n: row.n, ...answer }])) {
+      if (!sameAt(row, answer)) {
         same = false;
         break;
       }
     }
     if (same) matches.push(candidate);
-    checked++;
-    options.progress?.(checked, total);
+    done++;
+    options.progress?.(done, survivors.length, "confirm");
   }
-  return { matches, checked, total, stopped: false };
+  return { matches, unconfirmed: [], checked: total, total, stopped: false };
 }
 
 /**
