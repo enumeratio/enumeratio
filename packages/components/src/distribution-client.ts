@@ -45,7 +45,7 @@ export async function evaluateText(text: string): Promise<unknown> {
 export type Evaluate = (text: string) => Promise<unknown>;
 
 /** The element count of a collection, when the engine can say without walking it. */
-async function countOf(collection: string, evaluate: Evaluate): Promise<bigint | undefined> {
+export async function countOf(collection: string, evaluate: Evaluate): Promise<bigint | undefined> {
   try {
     const json = await evaluate(`Count(${collection})`);
     const n = typeof json === "number" ? json : (json as { num?: string } | null)?.num;

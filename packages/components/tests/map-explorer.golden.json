@@ -1,0 +1,330 @@
+{
+  "Inverse": {
+    "rows": [
+      {
+        "n": 1,
+        "count": 1,
+        "defined": 1,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "1"
+      },
+      {
+        "n": 2,
+        "count": 2,
+        "defined": 2,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "1"
+      },
+      {
+        "n": 3,
+        "count": 6,
+        "defined": 6,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "2"
+      },
+      {
+        "n": 4,
+        "count": 24,
+        "defined": 24,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "2"
+      },
+      {
+        "n": 5,
+        "count": 120,
+        "defined": 120,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "2"
+      }
+    ],
+    "badges": ["bijection on all 5 sizes", "involution on all 5 sizes", "order by size: 1, 1, 2, 2, 2"]
+  },
+  "Reverse": {
+    "rows": [
+      {
+        "n": 1,
+        "count": 1,
+        "defined": 1,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "1"
+      },
+      {
+        "n": 2,
+        "count": 2,
+        "defined": 2,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "2"
+      },
+      {
+        "n": 3,
+        "count": 6,
+        "defined": 6,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "2"
+      },
+      {
+        "n": 4,
+        "count": 24,
+        "defined": 24,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "2"
+      },
+      {
+        "n": 5,
+        "count": 120,
+        "defined": 120,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "2"
+      }
+    ],
+    "badges": ["bijection on all 5 sizes", "involution on all 5 sizes", "order by size: 1, 2, 2, 2, 2"]
+  },
+  "LalanneKreweras": {
+    "rows": [
+      {
+        "n": 1,
+        "count": 1,
+        "defined": 1,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "1"
+      },
+      {
+        "n": 2,
+        "count": 2,
+        "defined": 2,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "2"
+      },
+      {
+        "n": 3,
+        "count": 5,
+        "defined": 5,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "2"
+      },
+      {
+        "n": 4,
+        "count": 14,
+        "defined": 14,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "2"
+      },
+      {
+        "n": 5,
+        "count": 42,
+        "defined": 42,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "2"
+      }
+    ],
+    "badges": ["bijection on all 5 sizes", "involution on all 5 sizes", "order by size: 1, 2, 2, 2, 2"]
+  },
+  "Promotion": {
+    "rows": [
+      {
+        "n": 1,
+        "count": 1,
+        "defined": 1,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "1"
+      },
+      {
+        "n": 2,
+        "count": 2,
+        "defined": 2,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": true,
+        "order": "2"
+      },
+      {
+        "n": 3,
+        "count": 5,
+        "defined": 5,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": false,
+        "order": "6"
+      },
+      {
+        "n": 4,
+        "count": 14,
+        "defined": 14,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": false,
+        "order": "8"
+      },
+      {
+        "n": 5,
+        "count": 42,
+        "defined": 42,
+        "injective": true,
+        "selfMap": true,
+        "bijection": true,
+        "involution": false,
+        "order": "10"
+      }
+    ],
+    "badges": ["bijection on all 5 sizes", "order by size: 1, 2, 6, 8, 10"]
+  },
+  "BinaryTree": {
+    "rows": [
+      {
+        "n": 1,
+        "count": 1,
+        "defined": 1,
+        "injective": true,
+        "selfMap": false,
+        "bijection": true
+      },
+      {
+        "n": 2,
+        "count": 2,
+        "defined": 2,
+        "injective": true,
+        "selfMap": false,
+        "bijection": true
+      },
+      {
+        "n": 3,
+        "count": 5,
+        "defined": 5,
+        "injective": true,
+        "selfMap": false,
+        "bijection": true
+      },
+      {
+        "n": 4,
+        "count": 14,
+        "defined": 14,
+        "injective": true,
+        "selfMap": false,
+        "bijection": true
+      },
+      {
+        "n": 5,
+        "count": 42,
+        "defined": 42,
+        "injective": true,
+        "selfMap": false,
+        "bijection": true
+      }
+    ],
+    "badges": ["bijection on all 5 sizes"]
+  },
+  "BinarySearchTree": {
+    "rows": [
+      {
+        "n": 1,
+        "count": 1,
+        "defined": 1,
+        "injective": true,
+        "selfMap": false,
+        "bijection": true
+      },
+      {
+        "n": 2,
+        "count": 2,
+        "defined": 2,
+        "injective": true,
+        "selfMap": false,
+        "bijection": true
+      },
+      {
+        "n": 3,
+        "count": 6,
+        "defined": 6,
+        "injective": false,
+        "selfMap": false,
+        "bijection": false
+      },
+      {
+        "n": 4,
+        "count": 24,
+        "defined": 24,
+        "injective": false,
+        "selfMap": false,
+        "bijection": false
+      },
+      {
+        "n": 5,
+        "count": 120,
+        "defined": 120,
+        "injective": false,
+        "selfMap": false,
+        "bijection": false
+      }
+    ],
+    "badges": []
+  },
+  "table": {
+    "elements": [
+      ["Permutation", ["List", 1, 2, 3]],
+      ["Permutation", ["List", 1, 3, 2]],
+      ["Permutation", ["List", 2, 1, 3]],
+      ["Permutation", ["List", 2, 3, 1]],
+      ["Permutation", ["List", 3, 1, 2]],
+      ["Permutation", ["List", 3, 2, 1]]
+    ],
+    "images": [
+      ["Permutation", ["List", 1, 2, 3]],
+      ["Permutation", ["List", 1, 3, 2]],
+      ["Permutation", ["List", 2, 1, 3]],
+      ["Permutation", ["List", 3, 1, 2]],
+      ["Permutation", ["List", 2, 3, 1]],
+      ["Permutation", ["List", 3, 2, 1]]
+    ]
+  }
+}

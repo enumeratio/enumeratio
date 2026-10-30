@@ -5,6 +5,7 @@
 
 import { splitColumns } from "./collection-table.ts";
 import { GLYPH_KINDS } from "./glyphs.ts";
+import { MAP_MAX_SIZE } from "./map-explorer.ts";
 import { DEFAULT_COLUMNS, templateOfExpr } from "./table-state.ts";
 
 /** What of a collection's record the explorer reads. */
@@ -184,6 +185,63 @@ export interface DistributionSource {
   readonly template: string;
   /** The largest size offered, from the record (else the explorer's default). */
   readonly maxSize: number;
+}
+
+/** What the map explorer reads of a map: its carriers, and the collection it is declared graded onto. */
+export interface MapField {
+  readonly name: string;
+  readonly carrier: string;
+  readonly to?: string;
+  readonly frontier?: boolean;
+  readonly graded?: { readonly to: string; readonly sizeOffset: number };
+}
+
+/** Where a map is explored: the source carrier's sized collection, and what the images are drawn as. */
+export interface MapExplorer {
+  readonly name: string;
+  /** The source carrier's collection, as `Head({size})`. */
+  readonly template: string;
+  /** Largest size offered: the carrier's `maxSize`, held to what a browser maps. */
+  readonly maxSize: number;
+  /** The size the table opens at. */
+  readonly start: number;
+  readonly sourceGlyph?: string;
+  readonly targetGlyph?: string;
+  /** The target's collection as `Head({size})` and its size relative to the source's, when the map is graded. */
+  readonly target?: { readonly template: string; readonly sizeOffset: number };
+  /** Source and target are one carrier at one size, so the map can be applied again. */
+  readonly selfMap: boolean;
+}
+
+/** The explorer a map's page offers, or `undefined` for a frontier map or a carrier with no sized collection. */
+export async function mapExplorerOf(
+  field: MapField,
+  records: readonly CollectionRecord[],
+  catalog: ExplorerCatalog,
+): Promise<MapExplorer | undefined> {
+  if (field.frontier) return undefined;
+  const source = await distributionSourceOf(field.carrier, records, catalog);
+  if (source === undefined) return undefined;
+  const glyphOf = (carrier: string | undefined): string | undefined => {
+    const kind = carrier === undefined ? undefined : catalog.glyphOf(carrier);
+    return kind !== undefined && GLYPH_KINDS.has(kind) ? kind : undefined;
+  };
+  const sourceGlyph = glyphOf(field.carrier);
+  const targetGlyph = glyphOf(field.to);
+  const maxSize = Math.min(source.maxSize, MAP_MAX_SIZE);
+  return {
+    name: field.name,
+    template: source.template,
+    maxSize,
+    start: Math.min(START_SIZE, maxSize),
+    ...(sourceGlyph !== undefined && { sourceGlyph }),
+    ...(targetGlyph !== undefined && { targetGlyph }),
+    ...(field.graded !== undefined && {
+      target: { template: `${field.graded.to}({size})`, sizeOffset: field.graded.sizeOffset },
+    }),
+    // A map that changes size lands outside the collection it was applied to: no second application there.
+    selfMap: field.to === field.carrier && (field.graded?.sizeOffset ?? 0) === 0,
+  };
 }
 
 /** Carriers whose collection is not a record named for the carrier (`Permutations` is a type-space plural, not a head; `Tableaux` is not `Tableaus`). */

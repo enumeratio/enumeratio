@@ -11,6 +11,7 @@ export * from "./clock.ts";
 export * from "./collection-table.ts";
 export * from "./row-spec.ts";
 export * from "./distribution.ts";
+export * from "./map-explorer.ts";
 export * from "./table-state.ts";
 export * from "./table-view.ts";
 export * from "./contour.ts";
