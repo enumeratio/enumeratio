@@ -364,6 +364,119 @@ export function inferControls(expr: Json, ctx: InferContext = {}): ControlSpec[]
   return [...new Set(wanted)].filter((n) => !ctx.bound?.has(n)).map((n) => inferControl(n, ctx));
 }
 
+// --- plots --------------------------------------------------------------------------
+
+/** The plots an expression can be drawn as, in Wolfram's names. */
+export type PlotHead =
+  | "Plot"
+  | "Plot3D"
+  | "ContourPlot"
+  | "DensityPlot"
+  | "ComplexPlot"
+  | "DiscretePlot"
+  | "ListPlot"
+  | "ListLinePlot";
+
+/** A plot and the free symbols it is drawn over, in axis order (none for a list of data). */
+export interface PlotChoice {
+  readonly head: PlotHead;
+  readonly variables: readonly string[];
+}
+
+export interface PlotContext extends InferContext {
+  /** How two real variables are drawn: a surface (default), contour lines, or shading. */
+  readonly view?: "surface" | "contour" | "density";
+  /** Draw a list of data joined (`ListLinePlot`) rather than as points. */
+  readonly joined?: boolean;
+}
+
+/** What letter conventions read from a plot axis: `x`, `y` real, `z` complex, `n` integer. */
+const PLOT_LETTERS: Readonly<Record<string, string>> = { ...LETTER_TYPES, x: "real", y: "real" };
+
+type PlotDomain = "integer" | "real" | "complex";
+
+/**
+ * The domain a plot variable ranges over: a hint's or the engine's declared type, else its
+ * letter's (with letters on), else real. With letters on, a name the convention does not
+ * know has no domain: it is not an axis.
+ */
+function plotDomain(name: string, ctx: PlotContext): PlotDomain | undefined {
+  const type =
+    ctx.hints?.[name]?.type ?? declaredType(name, ctx) ?? (ctx.letterConventions ? PLOT_LETTERS[name] : "real");
+  if (type === undefined) return undefined;
+  const { base } = splitType(type);
+  if (INTEGER_TYPES.has(base)) return "integer";
+  if (REAL_TYPES.has(base)) return "real";
+  return COMPLEX_TYPES.has(base) ? "complex" : undefined;
+}
+
+/** The plot over `names` alone, from their domains: real 1 -> `Plot`, real 2 -> a surface, complex -> a portrait, integer -> `DiscretePlot`. */
+export function inferPlotOver(names: readonly string[], ctx: PlotContext = {}): PlotChoice | undefined {
+  const variables = [...new Set(names)];
+  const domains = variables.map((n) => plotDomain(n, ctx));
+  if (variables.length === 0 || domains.some((d) => d === undefined)) return undefined;
+  if (domains.every((d) => d === "real")) {
+    if (variables.length === 1) return { head: "Plot", variables };
+    if (variables.length !== 2) return undefined;
+    const head = ctx.view === "contour" ? "ContourPlot" : ctx.view === "density" ? "DensityPlot" : "Plot3D";
+    return { head, variables };
+  }
+  if (variables.length !== 1) return undefined;
+  return { head: domains[0] === "complex" ? "ComplexPlot" : "DiscretePlot", variables };
+}
+
+/** Heads whose value is not a number to draw: truth values, rules, equations. */
+const NOT_PLOTTABLE = new Set([
+  "Equal",
+  "NotEqual",
+  "Less",
+  "LessEqual",
+  "Greater",
+  "GreaterEqual",
+  "And",
+  "Or",
+  "Not",
+  "Rule",
+  "Element",
+  "String",
+  "Text",
+]);
+
+/** What an expression comes to, from its shape alone: a number, a list of numbers or pairs, or something with no plot. */
+function valueKind(expr: Json): "scalar" | "list" | "other" {
+  if (typeof expr === "string") return /^['"]/.test(expr) ? "other" : "scalar";
+  const parts = Array.isArray(expr) ? expr : (expr as { fn?: unknown[] } | null)?.fn;
+  if (!Array.isArray(parts)) return (expr as { str?: unknown } | null)?.str === undefined ? "scalar" : "other";
+  const head = typeof parts[0] === "string" ? parts[0] : undefined;
+  if (head !== undefined && NOT_PLOTTABLE.has(head)) return "other";
+  if (head !== "List" && head !== "Tuple") return "scalar";
+  const items = parts.slice(1) as Json[];
+  const pair = (p: Json): boolean => {
+    const inner = Array.isArray(p) ? p : (p as { fn?: unknown[] } | null)?.fn;
+    return (
+      Array.isArray(inner) &&
+      (inner[0] === "List" || inner[0] === "Tuple") &&
+      inner.slice(1).every((n) => numberOf(n) !== undefined)
+    );
+  };
+  return items.length > 0 && (items.every((n) => numberOf(n) !== undefined) || items.every(pair)) ? "list" : "other";
+}
+
+/**
+ * The plot `expr` is best drawn as, from its free symbols' domains and the kind of value: a
+ * list of numbers or pairs is `ListPlot` (`ListLinePlot` when `joined`); otherwise the symbols
+ * left after `ctx.bound` (or just `ctx.names`) are the axes, and `inferPlotOver` chooses.
+ * Undefined when nothing fits: no axis, too many, mixed domains, a value with no picture.
+ * Letter conventions are off unless asked for, as in `inferControls`.
+ */
+export function inferPlot(expr: Json, ctx: PlotContext = {}): PlotChoice | undefined {
+  const kind = valueKind(expr);
+  if (kind === "other") return undefined;
+  if (kind === "list") return { head: ctx.joined ? "ListLinePlot" : "ListPlot", variables: [] };
+  const names = (ctx.names ?? freeSymbols(expr)).filter((n) => !ctx.bound?.has(n));
+  return inferPlotOver(names, ctx);
+}
+
 // --- to Manipulate's tuples ----------------------------------------------------------
 
 const epsilNumber = (n: number): string => String(Number(n.toPrecision(12)));

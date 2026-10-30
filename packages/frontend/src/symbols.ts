@@ -1,5 +1,5 @@
 import { chooseChartType } from "./chart.ts";
-import { inferControls, paramsOf } from "./infer-controls.ts";
+import { freeSymbols, inferControls, inferPlot, paramsOf, type PlotChoice } from "./infer-controls.ts";
 import { CHART_HEADS, PLOT_HEADS } from "./plot-lowering.ts";
 import { GRAPHICS_3D_HEADS } from "./graphics-3d-lowering.ts";
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
@@ -301,6 +301,57 @@ function manipulateControls(ops: readonly Json[]): { name: string; params: strin
     const bare = symOf(op);
     return bare === undefined ? [] : inferred([bare]);
   });
+}
+
+/** The axis letters a bare Manipulate body is plotted over; every other free symbol is a control. */
+const AXIS_NAMES: readonly string[] = ["x", "y", "z"];
+/** Half-width of the range a Manipulate's inferred plot covers. */
+const PLOT_BOUND = 5;
+
+type ManipulateControl = ReturnType<typeof manipulateControls>[number];
+
+/** `choice` as the plot call it names, over `PLOT_BOUND` (a portrait takes its own extent). */
+function plotCall(body: Json, choice: PlotChoice): Json | undefined {
+  const [x, y] = choice.variables;
+  const axis = (v: string): Json => ["Tuple", v, -PLOT_BOUND, PLOT_BOUND] as unknown as Json;
+  switch (choice.head) {
+    case "Plot":
+      return ["Plot", body, axis(x!)] as unknown as Json;
+    case "Plot3D":
+    case "ContourPlot":
+    case "DensityPlot":
+      return [choice.head, body, axis(x!), axis(y!)] as unknown as Json;
+    case "ComplexPlot":
+      return ["ComplexPlot", body, x] as unknown as Json;
+    default:
+      return undefined;
+  }
+}
+
+/**
+ * A Manipulate's body and controls. A bare expression (one that would only read out as a
+ * value) with no controls written, whose plot variable is unambiguous, is drawn as
+ * `inferPlot`'s choice: the axis letters (`x`, `y`, `z`) are the axes and every other
+ * symbol is a control, if any is. Else the body and controls are as written -- in
+ * particular with controls written, as Wolfram reads them.
+ */
+function manipulateParts(ops: readonly Json[]): { body: Json | undefined; controls: ManipulateControl[] } {
+  const body = ops[0];
+  const controls = manipulateControls(ops);
+  if (body === undefined || render(body, true)?.tag !== "dynamic-box") return { body, controls };
+  // Written controls keep Wolfram's reading: the body reads out as a value.
+  if (ops.length > 1) return { body, controls };
+  const free = freeSymbols(body);
+  const axes = AXIS_NAMES.filter((a) => free.includes(a));
+  const rest = free.filter((n) => !axes.includes(n));
+  if (rest.length === 0) return { body, controls };
+  const named = inferControls(body, { names: rest }).flatMap((spec) => {
+    const params = paramsOf(spec);
+    return params === undefined ? [] : [{ name: spec.name, params, inferred: true as const }];
+  });
+  const choice = inferPlot(body, { names: axes, letterConventions: true });
+  const plot = choice === undefined ? undefined : plotCall(body, choice);
+  return plot === undefined ? { body, controls } : { body: plot, controls: named };
 }
 
 /** The parameter a control tuple binds. */
@@ -792,7 +843,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     tag: "notatio-manipulate",
     prose: true,
     attributes: (ops): Record<string, string> => {
-      const controls = manipulateControls(ops);
+      const { controls } = manipulateParts(ops);
       if (controls.length === 0) return {};
       const inferred = controls.filter((c) => c.inferred).map((c) => c.name);
       return {
@@ -801,8 +852,8 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       };
     },
     children: (ops) => {
-      const names = new Set(manipulateControls(ops).map((c) => c.name));
-      return ops[0] === undefined ? [] : [slotted(ops[0], names)];
+      const { body, controls } = manipulateParts(ops);
+      return body === undefined ? [] : [slotted(body, new Set(controls.map((c) => c.name)))];
     },
   },
   {
