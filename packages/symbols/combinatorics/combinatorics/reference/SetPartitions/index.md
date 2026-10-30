@@ -3,6 +3,7 @@ name: SetPartitions
 domain: Collections
 signature: SetPartitions(n)
 summary: The partitions of the set $\{1, …, n\}$ into non-empty blocks, a lazy indexed family.
+maxSize: 10
 signatures:
   - call: SetPartitions(n)
     description: every way to split $\{1, …, n\}$ into disjoint non-empty blocks.

@@ -10,6 +10,7 @@ import {
   CONTROL_EVENT,
   type ControlChange,
   debug,
+  inferControls,
   type VariableSpec,
   variablesOf,
   plainJson,
@@ -159,13 +160,36 @@ export class Scope {
     this.#apply();
   }
 
+  /** The variables the scope's own `<template-slot name>` holes name, in order of appearance. */
+  #holeNames(): string[] {
+    const names = [...this.root.querySelectorAll("template-slot[name]")]
+      .filter((el) => this.owns(el))
+      .map((el) => el.getAttribute("name") ?? "")
+      .filter((n) => n !== "" && n !== "Variables");
+    return [...new Set(names)];
+  }
+
   /** Read the owner's `variables` (when they changed) and seed each one not yet set. */
   async #declare(): Promise<void> {
     const text = this.owner?.getAttribute("variables") ?? "";
-    if (text === this.#declared) return;
-    this.#declared = text;
+    // `Variables -> Automatic`: one variable per hole the scope's prose names, typed from the engine.
+    const automatic = text.trim() === "Automatic";
+    const names = automatic ? this.#holeNames() : [];
+    const key = automatic ? `${text}:${names.join(",")}` : text;
+    if (key === this.#declared) return;
+    this.#declared = key;
     if (!text.trim()) {
       this.#declarations = [];
+      return;
+    }
+    if (automatic) {
+      const engine = (this.#engine ??= await loadBareEngine());
+      // A point has no prose control yet; it stays a readout.
+      this.#declarations = inferControls(null, { engine, names, letterConventions: true })
+        .filter((spec) => spec.domain.kind !== "points")
+        .map(({ name, domain, start }) => ({ name, domain, start }));
+      for (const spec of this.#declarations)
+        if (!this.#values.has(spec.name)) this.#values.set(spec.name, seedOf(spec.start));
       return;
     }
     const { parseExpression } = await import("@enumeratio/formats/expression");

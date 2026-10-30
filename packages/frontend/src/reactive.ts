@@ -1,5 +1,12 @@
 import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type ControlRange, DEFAULT_BOUND, inferRange, resolveRange } from "./infer-controls.ts";
+import {
+  type ControlRange,
+  DEFAULT_BOUND,
+  inferRange,
+  integerBounds,
+  letterType,
+  resolveRange,
+} from "./infer-controls.ts";
 
 export { type ControlRange, DEFAULT_BOUND, inferRange, resolveRange };
 
@@ -102,6 +109,8 @@ export interface WorksheetControl {
   value: number;
   /** The binding's other part, carried so a rewrite can keep it. */
   other: number;
+  /** Set when the axis moves by whole numbers only. */
+  integer?: true;
   min: number;
   max: number;
   step: number;
@@ -118,19 +127,30 @@ export function controlsFor(
   value: Expression,
   range?: ControlRange,
   integer = false,
+  /** What else says what the binding is: a declared `type`, and whether `n` means an integer. */
+  typed: { type?: string; letterConventions?: boolean } = {},
 ): WorksheetControl[] {
   if (name === undefined) return [];
   const re = value.re;
   const im = value.im;
   if (!Number.isFinite(re) || !Number.isFinite(im)) return [];
+  // The value sets the range; the type and the name's letter say whether it is whole and where it stops.
+  // Neither overrides what the author said (`integer`, an edited range), nor makes a fraction an integer.
+  const type = typed.type ?? (typed.letterConventions ? letterType(name) : undefined);
+  const bounds = type === undefined ? undefined : integerBounds(type);
+  if (bounds !== undefined && im === 0 && Number.isInteger(re)) {
+    integer = true;
+    range = { ...bounds, ...range };
+  }
   // An edited range applies to the whole binding, both parts of a complex one included:
   // the two sliders are two axes of one number, and separate sensitivities would be a
   // confusing thing to have to keep in your head.
   const span = (v: number) => resolveRange(v, range, integer);
-  if (im === 0) return [{ name, part: "real", value: re, other: 0, ...span(re) }];
+  const whole = integer ? ({ integer: true } as const) : {};
+  if (im === 0) return [{ name, part: "real", value: re, other: 0, ...whole, ...span(re) }];
   return [
-    { name, part: "re", value: re, other: im, ...span(re) },
-    { name, part: "im", value: im, other: re, ...span(im) },
+    { name, part: "re", value: re, other: im, ...whole, ...span(re) },
+    { name, part: "im", value: im, other: re, ...whole, ...span(im) },
   ];
 }
 

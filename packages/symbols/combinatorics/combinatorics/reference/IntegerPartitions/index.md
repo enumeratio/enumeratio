@@ -3,6 +3,7 @@ name: IntegerPartitions
 domain: Collections
 signature: IntegerPartitions(n)
 summary: The partitions of $n$ into positive parts, as a lazy indexed family.
+maxSize: 30
 signatures:
   - call: IntegerPartitions(n)
     description: every way to write $n$ as a sum of positive parts, order-insensitive.

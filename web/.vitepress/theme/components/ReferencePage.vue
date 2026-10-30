@@ -21,6 +21,8 @@ const props = defineProps<{
   overloads?: readonly Overload[];
   /** The typed parameters of the head's declared signature. */
   parameters?: readonly { name?: string; type: string; optional: boolean; variadic: boolean }[];
+  /** The largest safe value of its size parameter, from its record. */
+  maxSize?: number;
   /** The statistics and maps of a carrier, or of a collection's carrier. */
   fields?: CarrierFieldsData;
   /** The Epsil behind a statistic or family, printed as InputForm (data/definitions.ts). */
@@ -453,7 +455,13 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       </ClientOnly>
     </section>
 
-    <TryIt v-if="parameters?.length" :name="name" :examples="tryItExamples" :parameters="parameters" />
+    <TryIt
+      v-if="parameters?.length"
+      :name="name"
+      :examples="tryItExamples"
+      :parameters="parameters"
+      :max-size="maxSize"
+    />
 
     <p v-if="missingExample" class="ref-stub">
       No example here is called <code>{{ targeted }}</code

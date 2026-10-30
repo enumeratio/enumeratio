@@ -109,6 +109,7 @@ function fromManifest(info: SymbolInfo): Description {
     overloads: info.overloads,
     ...(info.params === undefined ? {} : { params: info.params }),
     ...(parameters === undefined ? {} : { parameters }),
+    ...(info.maxSize === undefined ? {} : { maxSize: info.maxSize }),
     ...(info.attributes === undefined ? {} : { attributes: info.attributes }),
     documented: info.documented,
     ...(info.findstat === undefined ? {} : { findstat: info.findstat }),

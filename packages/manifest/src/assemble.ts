@@ -28,6 +28,8 @@ export interface IndexedRecord {
   /** Its usage line, `SetMinus(a, b)`, which names the parameters. */
   readonly signature?: string;
   readonly attributes?: readonly SymbolAttribute[];
+  /** The largest safe value of its size parameter, for interactive use. */
+  readonly maxSize?: number;
   readonly references?: readonly { readonly system: string; readonly identity: string; readonly on?: string }[];
   readonly catalog?: readonly { readonly system: string; readonly identity: string; readonly on?: string }[];
   readonly signatures?: readonly IndexedSignature[];
@@ -87,6 +89,7 @@ export function assembleManifest(indexes: readonly PackageIndex[], engine: Engin
       overloads: Overload[];
       params?: string[];
       attributes: Set<SymbolAttribute>;
+      maxSize?: number;
       findstat: Map<string, FindStatId>;
     }
   >();
@@ -109,6 +112,8 @@ export function assembleManifest(indexes: readonly PackageIndex[], engine: Engin
     info.documented.push(pkg);
     info.params ??= paramsOf(record.signature);
     for (const attribute of record.attributes ?? []) info.attributes.add(attribute);
+    // The tightest cap any package's record gives.
+    if (record.maxSize !== undefined) info.maxSize = Math.min(info.maxSize ?? Infinity, record.maxSize);
     for (const row of [...(record.references ?? []), ...(record.catalog ?? [])])
       if (row.system === "findstat")
         info.findstat.set(`${row.identity}@${row.on ?? ""}`, {
@@ -143,6 +148,7 @@ export function assembleManifest(indexes: readonly PackageIndex[], engine: Engin
       documented: info.documented.toSorted(cmp),
       overloads: canonicalOrder(info.overloads, engine.typing),
       ...(info.params !== undefined ? { params: info.params } : {}),
+      ...(info.maxSize !== undefined ? { maxSize: info.maxSize } : {}),
       ...(info.attributes.size > 0 ? { attributes: [...info.attributes].toSorted(cmp) } : {}),
       ...(info.findstat.size > 0
         ? { findstat: [...info.findstat.keys()].toSorted(cmp).map((key) => info.findstat.get(key)!) }

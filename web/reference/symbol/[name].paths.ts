@@ -47,6 +47,7 @@ export default {
           definitions: definitionsOf(entry.name),
           overloads: describeNow(entry.name).overloads ?? [],
           parameters: describeNow(entry.name).parameters ?? [],
+          maxSize: describeNow(entry.name).maxSize,
         },
       });
     return pages;

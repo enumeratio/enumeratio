@@ -38,6 +38,8 @@ export interface SymbolInfo {
   readonly overloads: readonly Overload[];
   /** Parameter names, for a head of fixed arity whose record spells them. */
   readonly params?: readonly string[];
+  /** The largest safe value of its size parameter (its first integer argument), where a record says. */
+  readonly maxSize?: number;
   readonly attributes?: readonly SymbolAttribute[];
   /** FindStat's ids for it (`St000018`, `Mp00066`), each with the carrier it is on, when the
    *  record says. A statistic or map is also reached by these. */
@@ -81,6 +83,8 @@ export interface Description {
   readonly parameters?: readonly Parameter[];
   /** Its optional parameters' defaults. */
   readonly defaults?: Readonly<Record<string, unknown>>;
+  /** The largest safe value of its size parameter (see `SymbolInfo`). */
+  readonly maxSize?: number;
   readonly attributes?: readonly string[];
   /** The packages that document it. */
   readonly documented?: readonly string[];

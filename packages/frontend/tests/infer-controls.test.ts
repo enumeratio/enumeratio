@@ -126,6 +126,21 @@ const SIGNATURES: Record<string, { src: string; signature: HeadSignature }> = {
     src: "Length(IntegerPartitions(6))",
     signature: { head: "IntegerPartitions", parameters: [{ name: "n", type: "integer" }] },
   },
+  "signature: a record's cap bounds the size parameter": {
+    src: "SymmetricGroup(5)",
+    signature: { head: "SymmetricGroup", parameters: [{ name: "n", type: "integer<0..>" }], maxSize: 8 },
+  },
+  "signature: the cap tightens a type bound and applies to the first integer only": {
+    src: "Foo(4, 3)",
+    signature: {
+      head: "Foo",
+      parameters: [
+        { name: "n", type: "integer<0..20>" },
+        { name: "k", type: "integer" },
+      ],
+      maxSize: 8,
+    },
+  },
   "signature: no typed literal": {
     src: "Foo(Bar)",
     signature: { head: "Foo", parameters: [{ name: "n", type: "integer" }] },
@@ -171,6 +186,14 @@ test("a Try it panel: typed tuples and a body over slots", () => {
   );
 });
 
+test("a string enum is a params tuple over strings, read back as the same choices", () => {
+  const [spec] = inferControls(parseExpression("f(m)").json, { types: { m: "'sin' | 'cos'" } });
+  expect(paramsOf(spec as never)).toBe('{{m, "sin"}, {"sin", "cos"}, SetterBar}');
+  expect(parseControls(paramsOf(spec as never) as string)).toEqual([
+    { kind: "choice", name: "m", value: "sin", choices: ["sin", "cos"], control: "SetterBar" },
+  ]);
+});
+
 afterAll(() => {
   if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });
@@ -191,11 +214,6 @@ test("every spec reads back as a control of the same kind", () => {
   for (const [id, { src, ctx }] of Object.entries(CASES)) {
     for (const spec of inferControls(parseExpression(src).json, ctx)) {
       const params = paramsOf(spec);
-      // Manipulate's choice control is numeric: a list of strings has no tuple yet.
-      if (spec.domain.kind === "choices" && spec.domain.values.some((v) => typeof v !== "number")) {
-        expect(params, id).toBeUndefined();
-        continue;
-      }
       expect(params, id).toBeDefined();
       const [control] = parseControls(params as string);
       expect(control?.kind, id).toBe(kinds[spec.domain.kind as keyof typeof kinds]);

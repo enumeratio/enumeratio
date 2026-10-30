@@ -533,8 +533,13 @@ export class NotatioWorksheet extends LitElement {
         if (!value) continue;
         const setting = settingName(data.name);
         if (setting !== undefined) settings.set(setting, value);
-        controls.push(...controlsFor(data.name, value, cell.range, cell.integer));
-        if (cell.integer) this.#integerNames.add(data.name);
+        // A sheet reads `n` as an integer unless the cell says otherwise.
+        const made = controlsFor(data.name, value, cell.range, cell.integer, {
+          type: cell.domain,
+          letterConventions: true,
+        });
+        controls.push(...made);
+        if (made.some((c) => c.integer)) this.#integerNames.add(data.name);
         continue;
       }
       try {

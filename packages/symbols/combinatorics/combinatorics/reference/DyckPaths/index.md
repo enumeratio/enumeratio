@@ -3,6 +3,7 @@ name: DyckPaths
 domain: Collections
 signature: DyckPaths(n)
 summary: The Dyck paths of semilength $n$ — balanced up/down words — a lazy family of Catalan many.
+maxSize: 10
 signatures:
   - call: DyckPaths(n)
     description: the $C_n$ lattice paths of $n$ up- and $n$ down-steps that never dip below the axis.

@@ -3,6 +3,7 @@ name: Subsets
 domain: Collections
 signature: Subsets(n)
 summary: The power set of $\{1, …, n\}$ — every subset, as a lazy indexed family of $2^n$.
+maxSize: 12
 signatures:
   - call: Subsets(n)
     description: the $2^n$ subsets of $\{1, …, n\}$.

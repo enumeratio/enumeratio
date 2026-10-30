@@ -45,3 +45,13 @@ test("the manifest is assembled from each library's index, overloads attributed 
   expect(examples.get("low")).toEqual({ Twist: 2 });
   expect(notations).toEqual({ high: "@enumeratio/high/notation" });
 });
+
+test("a record's maxSize is the head's: the smallest any package gives", () => {
+  const pkg = (name: string, maxSize?: number): PackageIndex => ({
+    package: name,
+    records: [{ record: { name: "Big", summary: "Big.", ...(maxSize === undefined ? {} : { maxSize }) }, examples: 0 }],
+  });
+  const { symbols } = assembleManifest([pkg("a", 10), pkg("b", 6), pkg("c")], engine);
+  expect(symbols.Big!.maxSize).toBe(6);
+  expect(assembleManifest([pkg("a")], engine).symbols.Big).not.toHaveProperty("maxSize");
+});
