@@ -1,0 +1,421 @@
+{
+  "free symbol is a real": [
+    {
+      "name": "a",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    },
+    {
+      "name": "b",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "bound variable of a plot is skipped": [
+    {
+      "name": "a",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "bound variable of a sum is skipped": [
+    {
+      "name": "k",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    },
+    {
+      "name": "m",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "typed integer": [
+    {
+      "name": "offset",
+      "domain": {
+        "kind": "integers",
+        "min": -10,
+        "max": 10
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "positive integer clamps at 1": [
+    {
+      "name": "copies",
+      "domain": {
+        "kind": "integers",
+        "min": 1,
+        "max": 10
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "non-negative integer clamps at 0": [
+    {
+      "name": "depth",
+      "domain": {
+        "kind": "integers",
+        "min": 0,
+        "max": 10
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "non-positive integer clamps at 0 from above": [
+    {
+      "name": "deficit",
+      "domain": {
+        "kind": "integers",
+        "min": -10,
+        "max": 0
+      },
+      "start": 0,
+      "controlType": "Slider"
+    }
+  ],
+  "positive real stays off zero": [
+    {
+      "name": "height",
+      "domain": {
+        "kind": "reals",
+        "min": 0.05,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "declared real": [
+    {
+      "name": "gain",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "boolean": [
+    {
+      "name": "on",
+      "domain": {
+        "kind": "booleans"
+      },
+      "start": "False",
+      "controlType": "Checkbox"
+    }
+  ],
+  "string": [
+    {
+      "name": "label",
+      "domain": {
+        "kind": "any"
+      },
+      "start": "''",
+      "controlType": "InputField"
+    }
+  ],
+  "complex": [
+    {
+      "name": "w",
+      "domain": {
+        "kind": "points",
+        "ring": "ComplexNumbers",
+        "min": -2,
+        "max": 2
+      },
+      "start": ["Tuple", 1, 0],
+      "controlType": "Slider2D"
+    }
+  ],
+  "enum of five or fewer is a setter bar": [
+    {
+      "name": "c",
+      "domain": {
+        "kind": "choices",
+        "values": ["'a'", "'b'", "'c'"],
+        "labels": ["a", "b", "c"]
+      },
+      "start": "'a'",
+      "controlType": "SetterBar"
+    }
+  ],
+  "enum of more than five is a popup menu": [
+    {
+      "name": "c",
+      "domain": {
+        "kind": "choices",
+        "values": ["'a'", "'b'", "'c'", "'d'", "'e'", "'f'"],
+        "labels": ["a", "b", "c", "d", "e", "f"]
+      },
+      "start": "'a'",
+      "controlType": "PopupMenu"
+    }
+  ],
+  "numeric enum": [
+    {
+      "name": "c",
+      "domain": {
+        "kind": "choices",
+        "values": [2, 3, 5, 7],
+        "labels": ["2", "3", "5", "7"]
+      },
+      "start": 2,
+      "controlType": "SetterBar"
+    }
+  ],
+  "several symbols, in order of appearance": [
+    {
+      "name": "b",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    },
+    {
+      "name": "a",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    },
+    {
+      "name": "copies",
+      "domain": {
+        "kind": "integers",
+        "min": 1,
+        "max": 10
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "bound names are skipped": [
+    {
+      "name": "b",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "names restrict the symbols": [
+    {
+      "name": "b",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "hint range overrides the inferred one": [
+    {
+      "name": "a",
+      "domain": {
+        "kind": "reals",
+        "min": 0,
+        "max": 5,
+        "step": 0.5
+      },
+      "start": 2,
+      "controlType": "Slider"
+    }
+  ],
+  "hint type overrides the engine": [
+    {
+      "name": "gain",
+      "domain": {
+        "kind": "integers",
+        "min": -10,
+        "max": 10
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "hint choices": [
+    {
+      "name": "k",
+      "domain": {
+        "kind": "choices",
+        "values": [2, 3, 5, 7],
+        "labels": ["2", "3", "5", "7"]
+      },
+      "start": 5,
+      "controlType": "SetterBar"
+    }
+  ],
+  "control type, compatible": [
+    {
+      "name": "a",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Knob"
+    }
+  ],
+  "control type, incompatible with the domain": [
+    {
+      "name": "on",
+      "domain": {
+        "kind": "booleans"
+      },
+      "start": "False",
+      "controlType": "Checkbox"
+    }
+  ],
+  "control type on a menu": [
+    {
+      "name": "c",
+      "domain": {
+        "kind": "choices",
+        "values": ["'a'", "'b'"],
+        "labels": ["a", "b"]
+      },
+      "start": "'a'",
+      "controlType": "PopupMenu"
+    }
+  ],
+  "letter conventions off": [
+    {
+      "name": "n",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    },
+    {
+      "name": "z",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "letter conventions on": [
+    {
+      "name": "n",
+      "domain": {
+        "kind": "integers",
+        "min": -10,
+        "max": 10
+      },
+      "start": 1,
+      "controlType": "Slider"
+    },
+    {
+      "name": "z",
+      "domain": {
+        "kind": "points",
+        "ring": "ComplexNumbers",
+        "min": -2,
+        "max": 2
+      },
+      "start": ["Tuple", 1, 0],
+      "controlType": "Slider2D"
+    },
+    {
+      "name": "a",
+      "domain": {
+        "kind": "reals",
+        "min": -10,
+        "max": 10,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "the engine beats a letter": [
+    {
+      "name": "offset",
+      "domain": {
+        "kind": "integers",
+        "min": -10,
+        "max": 10
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ],
+  "a hint beats a letter": [
+    {
+      "name": "n",
+      "domain": {
+        "kind": "reals",
+        "min": 0,
+        "max": 1,
+        "step": 0.05
+      },
+      "start": 1,
+      "controlType": "Slider"
+    }
+  ]
+}

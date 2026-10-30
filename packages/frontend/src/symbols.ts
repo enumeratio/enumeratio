@@ -1,4 +1,5 @@
 import { chooseChartType } from "./chart.ts";
+import { inferControls, paramsOf } from "./infer-controls.ts";
 import { CHART_HEADS, PLOT_HEADS } from "./plot-lowering.ts";
 import { GRAPHICS_3D_HEADS } from "./graphics-3d-lowering.ts";
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
@@ -276,6 +277,29 @@ function controlOf(node: Json): string | undefined {
     return inner === undefined ? epsil(p) : `{${inner.map(epsil).join(", ")}}`;
   });
   return parts !== undefined && parts.length >= 2 ? `{${parts.join(", ")}}` : undefined;
+}
+
+/**
+ * A Manipulate's controls: each tuple operand as written, a bare symbol (`a`) inferred, and --
+ * with no operands at all -- one inferred for every free symbol of the body. Inference here
+ * has no engine, so it knows only the symbol: a real slider, unless the tuple says more.
+ */
+function manipulateControls(ops: readonly Json[]): { name: string; params: string }[] {
+  const body = ops[0];
+  if (body === undefined) return [];
+  const inferred = (names?: string[]): { name: string; params: string }[] =>
+    inferControls(body, { names }).flatMap((spec) => {
+      const params = paramsOf(spec);
+      return params === undefined ? [] : [{ name: spec.name, params }];
+    });
+  if (ops.length === 1) return inferred();
+  return ops.slice(1).flatMap((op) => {
+    const params = controlOf(op);
+    const name = controlName(op);
+    if (params !== undefined && name !== undefined) return [{ name, params }];
+    const bare = symOf(op);
+    return bare === undefined ? [] : inferred([bare]);
+  });
 }
 
 /** The parameter a control tuple binds. */
@@ -767,19 +791,11 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     tag: "notatio-manipulate",
     prose: true,
     attributes: (ops): Record<string, string> => {
-      const params = ops
-        .slice(1)
-        .map(controlOf)
-        .filter((c): c is string => c !== undefined);
+      const params = manipulateControls(ops).map((c) => c.params);
       return params.length ? { params: params.join("; ") } : {};
     },
     children: (ops) => {
-      const names = new Set(
-        ops
-          .slice(1)
-          .map(controlName)
-          .filter((n): n is string => n !== undefined),
-      );
+      const names = new Set(manipulateControls(ops).map((c) => c.name));
       return ops[0] === undefined ? [] : [slotted(ops[0], names)];
     },
   },

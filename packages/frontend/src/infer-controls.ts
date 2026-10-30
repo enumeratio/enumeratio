@@ -1,0 +1,367 @@
+// Controls from an expression: what a reader may move in it, and how. The free symbols of
+// an expression each get a `ControlSpec` -- a `Domain` (variables.ts's vocabulary: kind,
+// bounds, choices) with a starting value and the control that draws it -- from, in order
+// of precedence: an author's hint (a Manipulate tuple), the engine's declared type or
+// assumptions for the symbol, an optional letter convention (`n` is an integer), and
+// last a real in [-10, 10]. Pure: no DOM, no engine required.
+
+import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { ControlType } from "./manipulate.ts";
+import type { Domain } from "./variables.ts";
+
+type Json = unknown;
+
+// --- ranges -------------------------------------------------------------------------
+
+/** A 1-2-5 number at or above `x` — the granularity people choose by hand. */
+function niceCeiling(x: number): number {
+  if (!(x > 0)) return 1;
+  const decade = 10 ** Math.floor(Math.log10(x));
+  const norm = x / decade;
+  return (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10) * decade;
+}
+
+/** The default half-width of a slider: knobs start at ±10 unless the value needs more. */
+export const DEFAULT_BOUND = 10;
+
+/**
+ * The range a plain numeric binding gets, and the step to move it by.
+ *
+ * Symmetric about zero and ±10 by default, widening only far enough to contain a value
+ * that does not fit. The point is that it be *predictable*: the previous rule scaled
+ * with the value through powers of ten, so 2 got [0, 10] while 8 got [0, 100] and 0.5
+ * got [0, 1] — neighbouring values landing on wildly different ranges, and a positive
+ * value never able to reach a negative one. A knob whose sensitivity you cannot guess
+ * is a knob that runs away the moment you touch it.
+ *
+ * This is a starting point, not a claim about the model: the endpoints are editable,
+ * and `Auto` is still the eventual answer.
+ */
+export function inferRange(value: number, integer = false): { min: number; max: number; step: number } {
+  const bound = Math.abs(value) <= DEFAULT_BOUND ? DEFAULT_BOUND : niceCeiling(Math.abs(value));
+  // A whole-number axis steps by one; there is nothing between 3 and 4 to land on.
+  if (integer) return { min: -Math.round(bound), max: Math.round(bound), step: 1 };
+  // ~400 notches across the range, snapped to a 1-2-5 step so the readout stays clean.
+  return { min: -bound, max: bound, step: niceCeiling((2 * bound) / 400) };
+}
+
+/** An author's override of a control's range; any part may be left to the default. */
+export interface ControlRange {
+  min?: number;
+  max?: number;
+  step?: number;
+}
+
+/** The inferred range with an author's overrides applied, and kept usable. */
+export function resolveRange(
+  value: number,
+  range: ControlRange | undefined,
+  integer = false,
+): { min: number; max: number; step: number } {
+  const base = inferRange(value, integer);
+  const min = Number.isFinite(range?.min) ? (range?.min as number) : base.min;
+  const max = Number.isFinite(range?.max) ? (range?.max as number) : base.max;
+  // An inverted or empty range would leave a slider that cannot move.
+  const lo = Math.min(min, max);
+  const hi = Math.max(min, max);
+  if (!(hi > lo)) return base;
+  if (integer) return { min: Math.round(lo), max: Math.round(hi), step: 1 };
+  const step =
+    Number.isFinite(range?.step) && (range?.step as number) > 0
+      ? (range?.step as number)
+      : niceCeiling((hi - lo) / 400);
+  return { min: lo, max: hi, step };
+}
+
+// --- specs --------------------------------------------------------------------------
+
+/** One inferred control: the symbol it moves, what it may be, where it starts, how it is drawn. */
+export interface ControlSpec {
+  readonly name: string;
+  readonly domain: Domain;
+  /** MathJSON: a number, `True`/`False`, a quoted string, a `Tuple` point. */
+  readonly start: Json;
+  readonly controlType?: ControlType;
+}
+
+/** What an author says about one symbol; each part overrides the inferred one. */
+export interface ControlHint {
+  /** A compute-engine type (`integer`, `positive_real`, `boolean`, …). */
+  readonly type?: string;
+  readonly min?: number;
+  readonly max?: number;
+  readonly step?: number;
+  readonly start?: Json;
+  /** A discrete list to choose from; wins over `type`. */
+  readonly choices?: readonly Json[];
+  readonly controlType?: ControlType;
+}
+
+export interface InferContext {
+  /** Declared types and assumptions are read from here. */
+  readonly engine?: Pick<ComputeEngine, "box">;
+  /** Types by name, where there is no engine to ask; the engine's, if both say. */
+  readonly types?: Readonly<Record<string, string>>;
+  /** Names the scope already binds: no control for these. */
+  readonly bound?: ReadonlySet<string>;
+  readonly hints?: Readonly<Record<string, ControlHint>>;
+  /** Only these symbols (a bare name in a Manipulate); default every free symbol. */
+  readonly names?: readonly string[];
+  /** Guess from a symbol's letter when nothing else says: `n`, `m`, `k` integer, `z` complex. Off by default. */
+  readonly letterConventions?: boolean;
+}
+
+// --- free symbols -------------------------------------------------------------------
+
+/** Heads whose `(x, …)` tuples, or implicit `x`, bind a variable rather than read one. */
+const PLOT_HEADS = new Set([
+  "Plot",
+  "Plot3D",
+  "ContourPlot",
+  "DensityPlot",
+  "PolarPlot",
+  "VectorPlot",
+  "StreamPlot",
+  "ParametricPlot",
+  "ComplexPlot",
+  "ComplexPlot3D",
+]);
+const ITERATOR_HEADS = new Set([...PLOT_HEADS, "Sum", "Product", "Integrate", "Table", "Limit", "Manipulate"]);
+const FUNCTION_HEADS = new Set(["Function", "Lambda"]);
+/** The variables a plot reads when its range does not name them. */
+const PLOT_VARIABLES = ["x", "y", "t", "z"];
+/** Lowercase names that are constants, not unknowns. */
+const CONSTANTS = new Set(["i", "e"]);
+
+const isUnknownName = (s: string): boolean => /^\p{Ll}/u.test(s) && !CONSTANTS.has(s) && !s.startsWith("'");
+
+function symbolOf(node: Json): string | undefined {
+  if (typeof node === "string") return node;
+  const sym = (node as { sym?: unknown } | null)?.sym;
+  return typeof sym === "string" ? sym : undefined;
+}
+
+/** The symbols `json` reads, in order of first appearance, minus those it binds itself. */
+export function freeSymbols(json: Json): string[] {
+  const seen: string[] = [];
+  const bound = new Set<string>();
+  const walk = (node: Json): void => {
+    if (typeof node === "string" || (node && typeof node === "object" && "sym" in node)) {
+      const s = symbolOf(node);
+      if (s !== undefined && isUnknownName(s) && !seen.includes(s)) seen.push(s);
+      return;
+    }
+    const fn = (node as { fn?: unknown[] } | null)?.fn;
+    const parts = Array.isArray(node) ? node : Array.isArray(fn) ? fn : undefined;
+    if (parts === undefined) return;
+    const head = typeof parts[0] === "string" ? parts[0] : undefined;
+    const operands = head === undefined ? parts : parts.slice(1);
+    if (head !== undefined && PLOT_HEADS.has(head)) for (const v of PLOT_VARIABLES) bound.add(v);
+    if (head !== undefined && FUNCTION_HEADS.has(head))
+      for (const p of operands.slice(1)) {
+        const s = symbolOf(p);
+        if (s !== undefined) bound.add(s);
+      }
+    if (head !== undefined && ITERATOR_HEADS.has(head))
+      for (const op of operands) {
+        const items = Array.isArray(op) && op[0] === "Tuple" ? op.slice(1) : undefined;
+        const s = items && items.length >= 3 ? symbolOf(items[0]) : undefined;
+        if (s !== undefined) bound.add(s);
+      }
+    for (const op of operands) walk(op);
+  };
+  walk(json);
+  return seen.filter((s) => !bound.has(s));
+}
+
+// --- rules --------------------------------------------------------------------------
+
+const INTEGER_TYPES = new Set(["integer", "finite_integer"]);
+const REAL_TYPES = new Set(["real", "finite_real", "number", "finite_number", "rational", "finite_rational"]);
+
+/**
+ * A compute-engine type with the bounds an assumption gave it: `integer<1..>` after
+ * `n > 0`, `real<0<..>` (open at 0) after `w > 0`, `real<0..10>`.
+ */
+function splitType(type: string): { base: string; lo?: number; loOpen: boolean; hi?: number; hiOpen: boolean } {
+  const m = /^(\w+)<(.*)>$/s.exec(type.trim());
+  if (m === null) return { base: type.trim(), loOpen: false, hiOpen: false };
+  const [left = "", right = ""] = m[2].split("..");
+  const num = (t: string): number | undefined => (t.trim() === "" ? undefined : Number(t));
+  return {
+    base: m[1],
+    lo: num(left.replace("<", "")),
+    loOpen: left.includes("<"),
+    hi: num(right.replace("<", "")),
+    hiOpen: right.includes("<"),
+  };
+}
+const COMPLEX_TYPES = new Set(["complex", "finite_complex", "imaginary"]);
+/** Half-width of the box a complex number's pad covers. */
+const COMPLEX_BOUND = 2;
+
+/** The controls each kind of domain can sensibly be drawn by; a hint outside these is ignored. */
+const COMPATIBLE: Readonly<Record<Domain["kind"], readonly ControlType[]>> = {
+  integers: ["Slider", "VerticalSlider", "Animator", "Knob", "InputField"],
+  reals: ["Slider", "VerticalSlider", "Animator", "Knob", "InputField"],
+  choices: ["SetterBar", "RadioButtonBar", "PopupMenu", "ListPicker", "Toggler"],
+  booleans: ["Checkbox", "Toggler"],
+  points: ["Slider2D", "InputField"],
+  named: ["PopupMenu"],
+  any: ["InputField"],
+};
+
+/** How many choices a bar can show before a menu reads better -- Manipulate's own cut. */
+export const BAR_LIMIT = 5;
+
+const clampTo = (v: number, lo: number, hi: number): number => Math.max(lo, Math.min(hi, v));
+
+/** A finite union of literals -- `'a' | 'b'`, `1 | 2 | 3` -- as its values. */
+function literalChoices(type: string): Json[] | undefined {
+  const parts = type.split("|").map((p) => p.trim());
+  if (parts.length < 2) return undefined;
+  const values: Json[] = [];
+  for (const p of parts) {
+    if (/^'.*'$/s.test(p)) values.push(p);
+    else if (p !== "" && Number.isFinite(Number(p))) values.push(Number(p));
+    else return undefined;
+  }
+  return values;
+}
+
+const labelOf = (v: Json): string => (typeof v === "string" ? v.replace(/^'(.*)'$/s, "$1") : String(v));
+
+function choicesSpec(name: string, values: readonly Json[], start?: Json): ControlSpec {
+  return {
+    name,
+    domain: { kind: "choices", values, labels: values.map(labelOf) },
+    start: start !== undefined && values.some((v) => v === start) ? start : values[0],
+    controlType: values.length <= BAR_LIMIT ? "SetterBar" : "PopupMenu",
+  };
+}
+
+/** A slider's ends: the known ones, the other a usual span away from it (or the default). */
+function span(lo: number | undefined, hi: number | undefined, dflt: { min: number; max: number }): [number, number] {
+  // A one-sided bound keeps the default far end unless that leaves too little to move in.
+  const min = lo ?? (hi === undefined || hi > dflt.min / 2 ? dflt.min : hi - DEFAULT_BOUND);
+  const max = hi ?? (lo === undefined || lo < dflt.max / 2 ? dflt.max : lo + DEFAULT_BOUND);
+  return [min, max];
+}
+
+/** The spec a compute-engine type names, with an author's overrides applied; undefined for a type with no control. */
+function specOfType(name: string, type: string, hint: ControlHint | undefined): ControlSpec | undefined {
+  const choices = literalChoices(type);
+  if (choices !== undefined) return choicesSpec(name, choices, hint?.start);
+  const { base: kind, lo, loOpen, hi, hiOpen } = splitType(type);
+  if (INTEGER_TYPES.has(kind)) {
+    const dflt = inferRange(1, true);
+    const lowest = lo === undefined ? undefined : Math.ceil(lo) + (loOpen && Number.isInteger(lo) ? 1 : 0);
+    const highest = hi === undefined ? undefined : Math.floor(hi) - (hiOpen && Number.isInteger(hi) ? 1 : 0);
+    // One-sided bounds keep a slider's usual span, measured from the bound.
+    const [min, max] = span(hint?.min ?? lowest, hint?.max ?? highest, dflt).map(Math.round) as [number, number];
+    const start = typeof hint?.start === "number" ? hint.start : clampTo(1, min, max);
+    return { name, domain: { kind: "integers", min, max }, start: clampTo(start, min, max), controlType: "Slider" };
+  }
+  if (REAL_TYPES.has(kind)) {
+    const dflt = inferRange(1);
+    const step = hint?.step ?? dflt.step;
+    // An open bound stops one step in, so the slider never sits on the excluded value.
+    const lowest = lo === undefined ? undefined : lo + (loOpen ? step : 0);
+    const highest = hi === undefined ? undefined : hi - (hiOpen ? step : 0);
+    const [min, max] = span(hint?.min ?? lowest, hint?.max ?? highest, dflt);
+    const start = typeof hint?.start === "number" ? hint.start : clampTo(1, min, max);
+    return {
+      name,
+      domain: { kind: "reals", min, max, step },
+      start: clampTo(start, min, max),
+      controlType: "Slider",
+    };
+  }
+  if (COMPLEX_TYPES.has(type)) {
+    return {
+      name,
+      domain: { kind: "points", ring: "ComplexNumbers", min: -COMPLEX_BOUND, max: COMPLEX_BOUND },
+      start: hint?.start ?? ["Tuple", 1, 0],
+      controlType: "Slider2D",
+    };
+  }
+  if (type === "boolean") {
+    return { name, domain: { kind: "booleans" }, start: hint?.start ?? "False", controlType: "Checkbox" };
+  }
+  if (type === "string") {
+    return { name, domain: { kind: "any" }, start: hint?.start ?? "''", controlType: "InputField" };
+  }
+  return undefined;
+}
+
+const LETTER_TYPES: Readonly<Record<string, string>> = { n: "integer", m: "integer", k: "integer", z: "complex" };
+
+/** What the engine says a symbol's type is, if it says anything useful. */
+function declaredType(name: string, ctx: InferContext): string | undefined {
+  const asked = ctx.engine?.box(name).type?.toString();
+  const type = asked !== undefined && asked !== "unknown" && asked !== "any" ? asked : ctx.types?.[name];
+  return type === "unknown" || type === "any" ? undefined : type;
+}
+
+/** The control for one symbol. */
+export function inferControl(name: string, ctx: InferContext = {}): ControlSpec {
+  const hint = ctx.hints?.[name];
+  const spec =
+    (hint?.choices !== undefined && hint.choices.length > 0
+      ? choicesSpec(name, hint.choices, hint.start)
+      : undefined) ??
+    specOfHint(name, hint) ??
+    specOfType(name, hint?.type ?? declaredType(name, ctx) ?? "", hint) ??
+    (ctx.letterConventions && LETTER_TYPES[name] !== undefined
+      ? specOfType(name, LETTER_TYPES[name], hint)
+      : undefined) ??
+    (specOfType(name, "real", hint) as ControlSpec);
+  const wanted = hint?.controlType;
+  return wanted !== undefined && COMPATIBLE[spec.domain.kind].includes(wanted)
+    ? { ...spec, controlType: wanted }
+    : spec;
+}
+
+/** A hint that gives a range for a name with no type: numeric bounds make it a real (an integer when whole). */
+function specOfHint(name: string, hint: ControlHint | undefined): ControlSpec | undefined {
+  if (hint === undefined || hint.type !== undefined) return undefined;
+  if (hint.min === undefined && hint.max === undefined) return undefined;
+  return specOfType(name, "real", hint);
+}
+
+/** The controls `expr` (MathJSON) asks for: one per free symbol, or per name in `ctx.names`. */
+export function inferControls(expr: Json, ctx: InferContext = {}): ControlSpec[] {
+  const wanted = ctx.names ?? freeSymbols(expr);
+  return [...new Set(wanted)].filter((n) => !ctx.bound?.has(n)).map((n) => inferControl(n, ctx));
+}
+
+// --- to Manipulate's tuples ----------------------------------------------------------
+
+const epsilNumber = (n: number): string => String(Number(n.toPrecision(12)));
+
+/** A spec as the `params` tuple `parseControls` reads. */
+export function paramsOf(spec: ControlSpec): string | undefined {
+  const { name, domain, start, controlType } = spec;
+  const type = controlType === undefined ? "" : `, ${controlType}`;
+  switch (domain.kind) {
+    case "integers":
+      return `{{${name}, ${String(start)}}, ${domain.min}, ${domain.max}, 1${type}}`;
+    case "reals":
+      return `{{${name}, ${epsilNumber(Number(start))}}, ${epsilNumber(domain.min)}, ${epsilNumber(domain.max)}, ${epsilNumber(domain.step)}${type}}`;
+    case "choices": {
+      const values = domain.values.filter((v): v is number => typeof v === "number");
+      if (values.length !== domain.values.length) return undefined;
+      return `{{${name}, ${String(start)}}, {${values.join(", ")}}${type}}`;
+    }
+    case "booleans":
+      return `{{${name}, ${String(start)}}, Boolean${type}}`;
+    case "points": {
+      const [re, im] = Array.isArray(start) ? (start as Json[]).slice(1) : [0, 0];
+      return `{{${name}, ${String(re)}, ${String(im)}}, Complex${type}}`;
+    }
+    case "any":
+      return `{{${name}, ${typeof start === "string" ? start : "''"}}, String${type}}`;
+    default:
+      return undefined;
+  }
+}

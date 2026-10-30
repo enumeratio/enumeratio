@@ -115,6 +115,20 @@ same attribute and panel serve a worksheet's bindings.
 </notatio-manipulate>
 </Story>
 
+## Controls from the expression
+
+Written as an expression, a `Manipulate` need not list its controls: every free symbol
+of the body gets one (a bare `a` after the body names just that symbol), a real slider
+from −10 to 10 unless something says more. Declared types do say more — an integer
+steps by one, a boolean is a checkbox, a complex number a pad — through
+`inferControls`, which a host with an engine can call itself. In `params`, `{b, Boolean}`,
+`{s, String}` and `{z, Complex}` are the non-numeric tuples.
+
+<Story
+  title="No tuples: sliders for a and b">
+<notatio-out format="epsil" value='Manipulate(Plot(a * Sin(b * x), (x, -6.283, 6.283)))' />
+</Story>
+
 ## A sentence for a panel
 
 Wolfram's `Manipulate` puts the controls in a strip, and the reader has to hold

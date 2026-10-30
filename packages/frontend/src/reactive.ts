@@ -1,4 +1,7 @@
 import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
+import { type ControlRange, DEFAULT_BOUND, inferRange, resolveRange } from "./infer-controls.ts";
+
+export { type ControlRange, DEFAULT_BOUND, inferRange, resolveRange };
 
 // The dataflow core shared by `<notatio-notebook>` and `<notatio-worksheet>`: cells with
 // stable identity, evaluated top-to-bottom in a scope that is rebuilt from scratch on
@@ -104,38 +107,6 @@ export interface WorksheetControl {
   step: number;
 }
 
-/** A 1-2-5 number at or above `x` — the granularity people choose by hand. */
-function niceCeiling(x: number): number {
-  if (!(x > 0)) return 1;
-  const decade = 10 ** Math.floor(Math.log10(x));
-  const norm = x / decade;
-  return (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10) * decade;
-}
-
-/** The default half-width of a slider: knobs start at ±10 unless the value needs more. */
-export const DEFAULT_BOUND = 10;
-
-/**
- * The range a plain numeric binding gets, and the step to move it by.
- *
- * Symmetric about zero and ±10 by default, widening only far enough to contain a value
- * that does not fit. The point is that it be *predictable*: the previous rule scaled
- * with the value through powers of ten, so 2 got [0, 10] while 8 got [0, 100] and 0.5
- * got [0, 1] — neighbouring values landing on wildly different ranges, and a positive
- * value never able to reach a negative one. A knob whose sensitivity you cannot guess
- * is a knob that runs away the moment you touch it.
- *
- * This is a starting point, not a claim about the model: the endpoints are editable,
- * and `Auto` is still the eventual answer.
- */
-export function inferRange(value: number, integer = false): { min: number; max: number; step: number } {
-  const bound = Math.abs(value) <= DEFAULT_BOUND ? DEFAULT_BOUND : niceCeiling(Math.abs(value));
-  // A whole-number axis steps by one; there is nothing between 3 and 4 to land on.
-  if (integer) return { min: -Math.round(bound), max: Math.round(bound), step: 1 };
-  // ~400 notches across the range, snapped to a 1-2-5 step so the readout stays clean.
-  return { min: -bound, max: bound, step: niceCeiling((2 * bound) / 400) };
-}
-
 /**
  * The controls a cell contributes. A cell qualifies when it binds a *number*: a real
  * one is a single slider, and a complex one is two -- there is no reason a knob has to
@@ -161,34 +132,6 @@ export function controlsFor(
     { name, part: "re", value: re, other: im, ...span(re) },
     { name, part: "im", value: im, other: re, ...span(im) },
   ];
-}
-
-/** An author's override of a control's range; any part may be left to the default. */
-export interface ControlRange {
-  min?: number;
-  max?: number;
-  step?: number;
-}
-
-/** The inferred range with an author's overrides applied, and kept usable. */
-export function resolveRange(
-  value: number,
-  range: ControlRange | undefined,
-  integer = false,
-): { min: number; max: number; step: number } {
-  const base = inferRange(value, integer);
-  const min = Number.isFinite(range?.min) ? (range?.min as number) : base.min;
-  const max = Number.isFinite(range?.max) ? (range?.max as number) : base.max;
-  // An inverted or empty range would leave a slider that cannot move.
-  const lo = Math.min(min, max);
-  const hi = Math.max(min, max);
-  if (!(hi > lo)) return base;
-  if (integer) return { min: Math.round(lo), max: Math.round(hi), step: 1 };
-  const step =
-    Number.isFinite(range?.step) && (range?.step as number) > 0
-      ? (range?.step as number)
-      : niceCeiling((hi - lo) / 400);
-  return { min: lo, max: hi, step };
 }
 
 /**
