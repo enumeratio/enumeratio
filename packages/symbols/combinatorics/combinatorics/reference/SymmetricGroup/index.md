@@ -3,6 +3,7 @@ name: SymmetricGroup
 domain: Collections
 signature: SymmetricGroup(n)
 summary: The $n!$ permutations of $\{1, …, n\}$ as a lazy indexed family, in one-line form.
+maxSize: 8
 signatures:
   - call: SymmetricGroup(n)
     description: the $n!$ permutations of $\{1, …, n\}$.

@@ -283,14 +283,15 @@ function controlOf(node: Json): string | undefined {
  * A Manipulate's controls: each tuple operand as written, a bare symbol (`a`) inferred, and --
  * with no operands at all -- one inferred for every free symbol of the body. Inference here
  * has no engine, so it knows only the symbol: a real slider, unless the tuple says more.
+ * `inferred` marks those guesses, for the component to refine once it has an engine.
  */
-function manipulateControls(ops: readonly Json[]): { name: string; params: string }[] {
+function manipulateControls(ops: readonly Json[]): { name: string; params: string; inferred?: true }[] {
   const body = ops[0];
   if (body === undefined) return [];
-  const inferred = (names?: string[]): { name: string; params: string }[] =>
+  const inferred = (names?: string[]): { name: string; params: string; inferred: true }[] =>
     inferControls(body, { names }).flatMap((spec) => {
       const params = paramsOf(spec);
-      return params === undefined ? [] : [{ name: spec.name, params }];
+      return params === undefined ? [] : [{ name: spec.name, params, inferred: true as const }];
     });
   if (ops.length === 1) return inferred();
   return ops.slice(1).flatMap((op) => {
@@ -791,8 +792,13 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     tag: "notatio-manipulate",
     prose: true,
     attributes: (ops): Record<string, string> => {
-      const params = manipulateControls(ops).map((c) => c.params);
-      return params.length ? { params: params.join("; ") } : {};
+      const controls = manipulateControls(ops);
+      if (controls.length === 0) return {};
+      const inferred = controls.filter((c) => c.inferred).map((c) => c.name);
+      return {
+        params: controls.map((c) => c.params).join("; "),
+        ...(inferred.length > 0 && { infer: inferred.join(",") }),
+      };
     },
     children: (ops) => {
       const names = new Set(manipulateControls(ops).map((c) => c.name));

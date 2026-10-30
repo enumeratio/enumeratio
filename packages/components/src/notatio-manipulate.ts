@@ -11,11 +11,14 @@ import { openPlaybackMenu } from "./playback-menu.ts";
 import { LONG_PRESS_MS } from "./choice-menu.ts";
 import { ensureStyles } from "./styles.ts";
 import {
+  choiceEntry,
   clamp,
   type Control,
   CONTROL_EVENT,
   type ControlChange,
   type Loop,
+  inferControls,
+  paramsOf,
   parseControls,
   parseProse,
   type ProsePart,
@@ -79,6 +82,8 @@ export class NotatioManipulate extends LitElement {
     /** Control tuples: `{a, min, max}`, `{a, min, max, step}`, `{ {a, init}, min, max}` or a
      * discrete `{k, {1, 2, 3}}`; separate several with `;` or `,`. */
     params: { type: String },
+    /** Names whose controls the engine's declarations (integer, boolean, ...) refine, once it is loaded. */
+    infer: { type: String },
     /** `below` puts the control panel under the content instead of above it. */
     controls: { type: String },
     /** A sentence to render as the control panel, with `{k}` holes for the parameters. */
@@ -92,6 +97,7 @@ export class NotatioManipulate extends LitElement {
   };
 
   declare params: string;
+  declare infer: string;
   /** Where the control panel sits: "above" (default) or "below" the content. */
   declare controls: string;
   declare prose: string;
@@ -128,6 +134,7 @@ export class NotatioManipulate extends LitElement {
   constructor() {
     super();
     this.params = "";
+    this.infer = "";
     this.controls = "above";
     this.prose = "";
     this.loop = "";
@@ -176,6 +183,7 @@ export class NotatioManipulate extends LitElement {
   async #capture(more = false): Promise<void> {
     this.#captured = true;
     const engine = (this.#engine ??= await loadBareEngine());
+    this.#refine(engine);
     const names = new Set(this._controls.map((c) => c.name));
     const found = captureTemplates(this, names, engine, this.prose ? undefined : this.#host);
     // A template already applied no longer reads as one; keep it rather than lose it.
@@ -185,6 +193,21 @@ export class NotatioManipulate extends LitElement {
     await whenTemplatesDefined(this.#templates);
     // The libraries the templates name, before any is filled and evaluated.
     await ensureFor(engine, ["List", ...this.#templates.map((t) => t.json)]);
+  }
+
+  // The controls named in `infer` came from a guess made without an engine (a real slider);
+  // with one, a symbol declared `integer`, `boolean`, ... gets the control for its type.
+  #refine(engine: ComputeEngine): void {
+    const names = this.infer
+      .split(",")
+      .map((n) => n.trim())
+      .filter(Boolean);
+    if (names.length === 0) return;
+    const params = inferControls(null, { engine, names }).flatMap((spec) => paramsOf(spec) ?? []);
+    const typed = parseControls(params.join("; "));
+    this._controls = this._controls.map((c) =>
+      names.includes(c.name) ? (typed.find((t) => t.name === c.name) ?? c) : c,
+    );
   }
 
   // Fill each template's `_name` wildcards with the current control values and
@@ -197,7 +220,7 @@ export class NotatioManipulate extends LitElement {
     // Plots sample numbers: a checkbox is 1 or 0 to them, and a text parameter has no number.
     const bindings = Object.fromEntries(
       this._controls
-        .filter((c) => c.kind !== "text")
+        .filter((c) => c.kind !== "text" && !(c.kind === "choice" && typeof c.value === "string"))
         .map((c) => [`_${c.name}`, typeof c.value === "boolean" ? Number(c.value) : (c.value as number)]),
     );
     const bound = this.#templates.filter(takesBindings);
@@ -213,9 +236,11 @@ export class NotatioManipulate extends LitElement {
             ? engine.box(c.value ? "True" : "False")
             : c.kind === "text"
               ? engine.box({ str: c.value })
-              : c.kind === "point" && c.im !== 0
-                ? engine.box(["Complex", c.value, c.im])
-                : engine.number(c.value),
+              : c.kind === "choice" && typeof c.value === "string"
+                ? engine.box({ str: c.value })
+                : c.kind === "point" && c.im !== 0
+                  ? engine.box(["Complex", c.value, c.im])
+                  : engine.number(c.value),
         ]),
       ),
     );
@@ -233,6 +258,9 @@ export class NotatioManipulate extends LitElement {
       if (c.kind === "point") {
         const [re, im] = raw.split(",").map(Number);
         return Number.isFinite(re) && Number.isFinite(im) ? { ...c, value: re, im } : c;
+      }
+      if (c.kind === "choice" && c.choices.some((e) => typeof e === "string")) {
+        return c.choices.includes(raw) ? { ...c, value: raw } : c;
       }
       const v = Number(raw);
       if (!Number.isFinite(v)) return c;
@@ -305,7 +333,7 @@ export class NotatioManipulate extends LitElement {
           min=${ifDefined(c.kind === "slider" ? c.min : undefined)}
           max=${ifDefined(c.kind === "slider" ? c.max : undefined)}
           step=${ifDefined(c.kind === "slider" ? c.step : undefined)}
-          choices=${ifDefined(c.kind === "choice" ? c.choices.join("|") : undefined)}
+          choices=${ifDefined(c.kind === "choice" ? c.choices.map(choiceEntry).join("|") : undefined)}
           axis=${ifDefined(o.axis)}
           sensitivity=${ifDefined(o.sensitivity)}
           interval=${ifDefined(o.interval)}

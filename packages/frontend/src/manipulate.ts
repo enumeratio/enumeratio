@@ -49,11 +49,12 @@ export interface SliderControl {
   control?: ControlType;
 }
 
+/** A choice over numbers, or over strings (`{m, {"a", "b"}}`) when any entry is quoted. */
 export interface ChoiceControl {
   kind: "choice";
   name: string;
-  value: number;
-  choices: number[];
+  value: number | string;
+  choices: (number | string)[];
   control?: ControlType;
 }
 
@@ -104,6 +105,11 @@ function splitTop(s: string, sep: string): string[] {
 }
 
 const num = (s: string): number => Number(s.trim());
+const quoted = (s: string): boolean => /^"[^"]*"$/.test(s.trim());
+const unquote = (s: string): string => s.trim().replace(/^"(.*)"$/s, "$1");
+
+/** A choice as an entry of a `values` attribute: strings quoted, so they read back as strings. */
+export const choiceEntry = (v: number | string): string => (typeof v === "string" ? `"${v}"` : String(v));
 
 /**
  * Read a number from an attribute that may have been written by Manipulate. Epsil
@@ -221,7 +227,7 @@ function splitControls(spec: string): string[] {
  *   `{a, 0, 5}`            slider a in [0,5], starts at min (Manipulate default)
  *   `{a, 0, 5, 0.5}`       + explicit step
  *   `{{a, 2}, 0, 5}`       + explicit initial value
- *   `{k, {2, 3, 5, 7}}`    a choice setter over a discrete list
+ *   `{k, {2, 3, 5, 7}}`    a choice setter over a discrete list (`{m, {"a", "b"}}` over strings)
  *   `{b, Boolean}`         a checkbox; `{s, String}` a text field; `{z, Complex}` a pad
  *                          (each starts elsewhere as `{{b, True}, Boolean}`, `{{z, re, im}, Complex}`)
  * Malformed controls are skipped rather than throwing.
@@ -267,9 +273,13 @@ export function parseControls(spec: string): Control[] {
 
     // `{name, {choices...}}` -> a discrete choice setter.
     if (fields.length === 2 && fields[1].startsWith("{")) {
-      const choices = splitTop(fields[1].slice(1, -1), ",").map(num).filter(Number.isFinite);
+      const entries = splitTop(fields[1].slice(1, -1), ",");
+      const choices: (number | string)[] = entries.some(quoted)
+        ? entries.map((e) => (quoted(e) ? unquote(e) : e))
+        : entries.map(num).filter(Number.isFinite);
       if (choices.length === 0) continue;
-      const value = init !== undefined && choices.includes(init) ? init : choices[0];
+      const wanted = typeof choices[0] === "string" ? unquote(rawInit[0] ?? "") : init;
+      const value = wanted !== undefined && choices.includes(wanted) ? wanted : choices[0];
       controls.push({ kind: "choice", name, value, choices, ...(control && { control }) });
       continue;
     }

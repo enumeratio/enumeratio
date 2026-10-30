@@ -10,6 +10,8 @@ const props = defineProps<{
   examples: readonly unknown[];
   /** The head's typed parameters (the manifest's `Parameter`s). */
   parameters: readonly { name?: string; type: string; variadic?: boolean }[];
+  /** The record's cap on the size parameter. */
+  maxSize?: number;
 }>();
 
 const panel = ref<{ params: string; value: string } | undefined>();
@@ -20,7 +22,7 @@ async function build(): Promise<void> {
   if (!props.parameters.some((p) => p.type !== "any")) return;
   // Browser only, and lazy: the front end brings the engine with it.
   const { tryItOf } = await import("@enumeratio/frontend");
-  const signature = { head: props.name, parameters: props.parameters };
+  const signature = { head: props.name, parameters: props.parameters, maxSize: props.maxSize };
   for (const expr of props.examples) {
     const found = tryItOf(expr as Parameters<typeof tryItOf>[0], signature);
     if (found !== undefined) {

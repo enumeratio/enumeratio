@@ -132,6 +132,22 @@ test("moving one part of a complex binding keeps the other", () => {
   expect(bindingSource(im, -4)).toBe("w\\coloneqq 2 - 4i");
 });
 
+test("a type or a letter makes an integer binding whole, and bounds it, only where asked", () => {
+  const [n] = pass("n \\coloneq 3");
+  expect(controlsFor("n", n.value!)[0].step).toBe(0.05); // letter conventions are off by default
+  const [c] = controlsFor("n", n.value!, undefined, false, { letterConventions: true });
+  expect(c).toMatchObject({ integer: true, step: 1, min: -10, max: 10 });
+  const [k] = pass("k \\coloneq 1.5");
+  expect(controlsFor("k", k.value!, undefined, false, { letterConventions: true })[0].integer).toBeUndefined();
+  const [p] = pass("q \\coloneq 3");
+  expect(controlsFor("q", p.value!, undefined, false, { type: "positive_integer" })[0]).toMatchObject({
+    integer: true,
+    min: 1,
+  });
+  // An edited range still wins.
+  expect(controlsFor("q", p.value!, { min: 2 }, false, { type: "positive_integer" })[0].min).toBe(2);
+});
+
 test("a rewritten binding round-trips, and carries no float noise", () => {
   const [only] = pass("s \\coloneq 2");
   const [c] = controlsFor(only.result.name, only.value!);

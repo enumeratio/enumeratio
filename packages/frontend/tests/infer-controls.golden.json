@@ -633,6 +633,52 @@
       }
     ]
   },
+  "signature: a record's cap bounds the size parameter": {
+    "body": {
+      "fn": ["SymmetricGroup", "n"],
+      "sourceOffsets": [0, 17]
+    },
+    "specs": [
+      {
+        "name": "n",
+        "domain": {
+          "kind": "integers",
+          "min": 0,
+          "max": 8
+        },
+        "start": 5,
+        "controlType": "Slider"
+      }
+    ]
+  },
+  "signature: the cap tightens a type bound and applies to the first integer only": {
+    "body": {
+      "fn": ["Foo", "n", "k"],
+      "sourceOffsets": [0, 9]
+    },
+    "specs": [
+      {
+        "name": "n",
+        "domain": {
+          "kind": "integers",
+          "min": 0,
+          "max": 8
+        },
+        "start": 4,
+        "controlType": "Slider"
+      },
+      {
+        "name": "k",
+        "domain": {
+          "kind": "integers",
+          "min": 0,
+          "max": 6
+        },
+        "start": 3,
+        "controlType": "Slider"
+      }
+    ]
+  },
   "signature: no typed literal": {
     "body": {
       "fn": [

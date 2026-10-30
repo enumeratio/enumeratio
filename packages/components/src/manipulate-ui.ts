@@ -18,7 +18,7 @@ import "./slider-2d-box.ts";
 import "./slider-box.ts";
 import "./toggler-box.ts";
 import type { LongPress } from "./popover.ts";
-import { type Control, type ControlChange, formatValue } from "@enumeratio/frontend/core";
+import { choiceEntry, type Control, type ControlChange, formatValue } from "@enumeratio/frontend/core";
 
 export interface ControlHandlers {
   /** Set a control's value from a raw input string. */
@@ -87,6 +87,11 @@ export function rawOf(c: Control, change: ControlChange): string {
       return `${change.re},${change.im}`;
     case "text":
       return typeof change.value === "string" ? change.value.replace(/^'(.*)'$/s, "$1") : JSON.stringify(change.value);
+    case "choice":
+      // A string entry binds as a string (`{str}`); a number as its `re`.
+      return typeof change.value === "object" && change.value !== null && "str" in change.value
+        ? String((change.value as { str: unknown }).str)
+        : String(change.re);
     default:
       return String(change.re);
   }
@@ -194,8 +199,8 @@ function valueControl(c: Exclude<Control, { kind: "slider" }>): TemplateResult {
 
 /** A list parameter as its control: a bar for a few entries, a menu for many. */
 function choiceControl(c: Extract<Control, { kind: "choice" }>): TemplateResult {
-  const values = c.choices.join("|");
-  const value = String(c.value);
+  const values = c.choices.map(choiceEntry).join("|");
+  const value = choiceEntry(c.value);
   switch (tagFor(c)) {
     case "radio-button-bar-box":
       return html`<radio-button-bar-box name=${c.name} values=${values} .value=${value}></radio-button-bar-box>`;

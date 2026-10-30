@@ -179,13 +179,26 @@ export function freeSymbols(json: Json): string[] {
 const INTEGER_TYPES = new Set(["integer", "finite_integer"]);
 const REAL_TYPES = new Set(["real", "finite_real", "number", "finite_number", "rational", "finite_rational"]);
 
+/** The named sign subtypes, as the bounded types they abbreviate. */
+const SIGN_TYPES: Readonly<Record<string, string>> = {
+  positive_integer: "integer<1..>",
+  non_negative_integer: "integer<0..>",
+  negative_integer: "integer<..-1>",
+  non_positive_integer: "integer<..0>",
+  positive_real: "real<0<..>",
+  non_negative_real: "real<0..>",
+  negative_real: "real<..<0>",
+  non_positive_real: "real<..0>",
+};
+
 /**
  * A compute-engine type with the bounds an assumption gave it: `integer<1..>` after
  * `n > 0`, `real<0<..>` (open at 0) after `w > 0`, `real<0..10>`.
  */
 function splitType(type: string): { base: string; lo?: number; loOpen: boolean; hi?: number; hiOpen: boolean } {
-  const m = /^(\w+)<(.*)>$/s.exec(type.trim());
-  if (m === null) return { base: type.trim(), loOpen: false, hiOpen: false };
+  const named = SIGN_TYPES[type.trim()] ?? type.trim();
+  const m = /^(\w+)<(.*)>$/s.exec(named);
+  if (m === null) return { base: named, loOpen: false, hiOpen: false };
   const [left = "", right = ""] = m[2].split("..");
   const num = (t: string): number | undefined => (t.trim() === "" ? undefined : Number(t));
   return {
@@ -196,6 +209,16 @@ function splitType(type: string): { base: string; lo?: number; loOpen: boolean; 
     hiOpen: right.includes("<"),
   };
 }
+/** The whole-number ends a type gives an integer (`integer<1..>` is from 1); none where it gives no end. */
+export function integerBounds(type: string): { min?: number; max?: number } | undefined {
+  const { base, lo, loOpen, hi, hiOpen } = splitType(type);
+  if (!INTEGER_TYPES.has(base)) return undefined;
+  return {
+    ...(lo === undefined ? {} : { min: Math.ceil(lo) + (loOpen && Number.isInteger(lo) ? 1 : 0) }),
+    ...(hi === undefined ? {} : { max: Math.floor(hi) - (hiOpen && Number.isInteger(hi) ? 1 : 0) }),
+  };
+}
+
 const COMPLEX_TYPES = new Set(["complex", "finite_complex", "imaginary"]);
 /** Half-width of the box a complex number's pad covers. */
 const COMPLEX_BOUND = 2;
@@ -296,6 +319,9 @@ function specOfType(name: string, type: string, hint: ControlHint | undefined): 
 
 const LETTER_TYPES: Readonly<Record<string, string>> = { n: "integer", m: "integer", k: "integer", z: "complex" };
 
+/** The type a symbol's letter suggests (`n` is an integer), for a host that turns the convention on. */
+export const letterType = (name: string): string | undefined => LETTER_TYPES[name];
+
 /** What the engine says a symbol's type is, if it says anything useful. */
 function declaredType(name: string, ctx: InferContext): string | undefined {
   const asked = ctx.engine?.box(name).type?.toString();
@@ -349,9 +375,11 @@ export function paramsOf(spec: ControlSpec): string | undefined {
     case "reals":
       return `{{${name}, ${epsilNumber(Number(start))}}, ${epsilNumber(domain.min)}, ${epsilNumber(domain.max)}, ${epsilNumber(domain.step)}${type}}`;
     case "choices": {
-      const values = domain.values.filter((v): v is number => typeof v === "number");
-      if (values.length !== domain.values.length) return undefined;
-      return `{{${name}, ${String(start)}}, {${values.join(", ")}}${type}}`;
+      // Numbers as they are, strings quoted (they may be quoted already, `'a'`, in a type).
+      const entries = domain.values.map((v) => (typeof v === "string" ? `"${labelOf(v)}"` : v));
+      if (entries.some((v) => typeof v !== "string" && typeof v !== "number")) return undefined;
+      const first = typeof start === "string" ? `"${labelOf(start)}"` : String(start);
+      return `{{${name}, ${first}}, {${entries.join(", ")}}${type}}`;
     }
     case "booleans":
       return `{{${name}, ${String(start)}}, Boolean${type}}`;
@@ -379,6 +407,8 @@ export interface SignatureParameter {
 export interface HeadSignature {
   readonly head: string;
   readonly parameters: readonly SignatureParameter[];
+  /** The largest safe value of the first integer parameter (a record's `maxSize`): a type-like upper bound. */
+  readonly maxSize?: number;
 }
 
 /** The `|`-separated members of a type, leaving those inside `<>`, `()`, `[]`, `{}`. */
@@ -435,6 +465,8 @@ export function liftLiterals(expr: Json, signature: HeadSignature): { body: Json
   collect(expr);
 
   const last = signature.parameters.at(-1);
+  // The cap belongs to the size parameter: the first integer lifted.
+  let capped = false;
   const liftArg = (arg: Json, i: number): Json => {
     const param = signature.parameters[i] ?? (last?.variadic ? last : undefined);
     const type = param === undefined ? undefined : controllable(param.type);
@@ -453,12 +485,18 @@ export function liftLiterals(expr: Json, signature: HeadSignature): { body: Json
     const written = param.name !== undefined && /^\p{Ll}\w*$/u.test(param.name) ? param.name : `p${i + 1}`;
     const name = taken.has(written) || written in hints ? `p${i + 1}` : written;
     if (taken.has(name) || name in hints) return arg;
+    // The record's cap bounds the size parameter, tighter than any type bound; else a small span.
+    const upper = (hi: number | undefined, from: number): number => {
+      const sized = !capped && signature.maxSize !== undefined;
+      if (sized) capped = true;
+      return sized ? Math.min(hi ?? Infinity, signature.maxSize as number) : (hi ?? Math.max(LIFT_SPAN, from));
+    };
     hints[name] = {
       type,
       start,
       // An integer runs over a small span from zero, or to the literal if that lies outside it.
       ...(typeof start === "number" && INTEGER_TYPES.has(bounds.base)
-        ? { min: bounds.lo ?? Math.min(0, start), max: bounds.hi ?? Math.max(LIFT_SPAN, start) }
+        ? { min: bounds.lo ?? Math.min(0, start), max: upper(bounds.hi, start) }
         : {}),
     };
     return name;

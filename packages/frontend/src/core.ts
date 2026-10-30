@@ -22,6 +22,7 @@ export * from "./ipynb.ts";
 export * from "./heads.ts";
 export * from "./highlight.ts";
 export * from "./manipulate.ts";
+export * from "./infer-controls.ts";
 export * from "./orbit.ts";
 export * from "./gestures.ts";
 export * from "./graphics-rules.ts";

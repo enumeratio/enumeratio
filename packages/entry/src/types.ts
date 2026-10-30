@@ -345,6 +345,12 @@ export interface ReferenceEntry {
     readonly glyph?: string;
     readonly pageSize?: number;
   };
+  /**
+   * The largest value of this head's size parameter (its first integer argument) that is safe
+   * to offer interactively: past it the collection is too large to draw or count in a moment.
+   * A "Try it" slider stops here; a head without one is bounded by its type alone.
+   */
+  readonly maxSize?: number;
   readonly seeAlso?: readonly string[];
   /** All argument signatures the head accepts, each with a caption. */
   readonly signatures?: readonly ReferenceSignature[];
