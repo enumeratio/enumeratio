@@ -3212,6 +3212,30 @@ export const findstat: readonly FindStatMatch[] = [
     values: 625,
   },
   {
+    head: "InjectivesOfProjectiveDimensionOneBelowMaximal",
+    on: "DyckPath",
+    findstat: ["St001010"],
+    values: 196,
+  },
+  {
+    head: "InjectivesOfEvenProjectiveDimension",
+    on: "DyckPath",
+    findstat: ["St001872"],
+    values: 196,
+  },
+  {
+    head: "ModulesOfMaximalProjectiveDimension",
+    on: "DyckPath",
+    findstat: ["St001000"],
+    values: 64,
+  },
+  {
+    head: "ModulesOfProjectiveDimensionAtMostOne",
+    on: "DyckPath",
+    findstat: ["St001003"],
+    values: 64,
+  },
+  {
     head: "Blocks",
     on: "SetPartition",
     findstat: ["St000105"],

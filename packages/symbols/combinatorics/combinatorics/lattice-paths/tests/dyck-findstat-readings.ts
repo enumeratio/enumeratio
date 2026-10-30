@@ -361,7 +361,8 @@ const nakayama = (w: Word) => {
   const injective = modules
     .filter(([x, y]) => x === 0 || series[x - 1]! <= y)
     .map(([x, y]) => projectiveDimension(x, y));
-  return { simple, injective, global: Math.max(...simple) };
+  const all = modules.map(([x, y]) => projectiveDimension(x, y));
+  return { simple, injective, all, global: Math.max(...simple) };
 };
 const overNakayama =
   (body: (a: ReturnType<typeof nakayama>) => number) =>
@@ -401,6 +402,10 @@ export const DYCK_READINGS: Record<string, (w: Word) => number> = {
   InjectivesOfProjectiveDimensionOne: overNakayama((a) => countOf(a.injective, (d) => d === 1)),
   InjectivesOfProjectiveDimensionAtMostOne: overNakayama((a) => countOf(a.injective, (d) => d <= 1)),
   InjectivesOfProjectiveDimensionAtMostTwo: overNakayama((a) => countOf(a.injective, (d) => d <= 2)),
+  InjectivesOfProjectiveDimensionOneBelowMaximal: overNakayama((a) => countOf(a.injective, (d) => d === a.global - 1)),
+  InjectivesOfEvenProjectiveDimension: overNakayama((a) => countOf(a.injective, (d) => d % 2 === 0)),
+  ModulesOfMaximalProjectiveDimension: overNakayama((a) => countOf(a.all, (d) => d === a.global)),
+  ModulesOfProjectiveDimensionAtMostOne: overNakayama((a) => countOf(a.all, (d) => d <= 1)),
   InjectivesOfMaximalProjectiveDimension: overNakayama((a) => countOf(a.injective, (d) => d === a.global)),
   Area: areaOf,
   Bounce: bounceOf,

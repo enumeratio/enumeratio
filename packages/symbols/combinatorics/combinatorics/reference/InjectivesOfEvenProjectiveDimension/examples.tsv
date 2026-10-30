@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+the-step-word-uuddud			[InjectivesOfEvenProjectiveDimension, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	3			the step word $UUDDUD$
+the-step-word-uduudd			[InjectivesOfEvenProjectiveDimension, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]	3			the step word $UDUUDD$
+findstat-st001872-1	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0]], "'InjectivesOfEvenProjectiveDimension'"]	1	1	FindStat St001872	FindStat's value for [1,0]
+findstat-st001872-2	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0]], "'InjectivesOfEvenProjectiveDimension'"]	3	3	FindStat St001872	FindStat's value for [1,0,1,0]
+findstat-st001872-3	Properties		[CombinatorialStat, [DyckPath, [List, 1, 1, 0, 0]], "'InjectivesOfEvenProjectiveDimension'"]	1	1	FindStat St001872	FindStat's value for [1,1,0,0]
