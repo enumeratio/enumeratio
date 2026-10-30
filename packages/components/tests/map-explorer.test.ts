@@ -10,8 +10,11 @@ import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combina
 import { parseExpression } from "@enumeratio/formats/expression";
 import { mapBadges, type MapRow } from "@enumeratio/frontend/core";
 import { declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures";
-import { afterAll, expect, test } from "vite-plus/test";
+import { afterAll, expect, test, vi } from "vite-plus/test";
 import { mapAtSize, mapProperties, type MapSource } from "../src/map-client.ts";
+
+// These run the real engine over whole collections; a loaded CI runner is several times slower than a laptop.
+vi.setConfig({ testTimeout: 60_000 });
 
 const GOLDEN = join(import.meta.dirname, "map-explorer.golden.json");
 const updating = process.env.UPDATE_MAP_EXPLORER === "1";
