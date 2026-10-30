@@ -31,6 +31,9 @@ export interface Parameter {
   readonly variadic: boolean;
 }
 
+/** An option's allowed values, by key: booleans are `True`/`False`, strings are strings. */
+export type OptionValues = Readonly<Record<string, readonly (string | number | boolean)[]>>;
+
 export interface SymbolInfo {
   readonly name: string;
   /** The packages that document the head (hold its record), in path order. */
@@ -40,6 +43,8 @@ export interface SymbolInfo {
   readonly params?: readonly string[];
   /** The largest safe value of its size parameter (its first integer argument), where a record says. */
   readonly maxSize?: number;
+  /** The values each option may take, where a record says the set is finite. */
+  readonly optionValues?: OptionValues;
   readonly attributes?: readonly SymbolAttribute[];
   /** FindStat's ids for it (`St000018`, `Mp00066`), each with the carrier it is on, when the
    *  record says. A statistic or map is also reached by these. */
@@ -85,6 +90,8 @@ export interface Description {
   readonly defaults?: Readonly<Record<string, unknown>>;
   /** The largest safe value of its size parameter (see `SymbolInfo`). */
   readonly maxSize?: number;
+  /** The values each option may take (see `SymbolInfo`). */
+  readonly optionValues?: OptionValues;
   readonly attributes?: readonly string[];
   /** The packages that document it. */
   readonly documented?: readonly string[];

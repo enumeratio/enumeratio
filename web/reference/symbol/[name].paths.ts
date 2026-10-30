@@ -48,6 +48,7 @@ export default {
           overloads: describeNow(entry.name).overloads ?? [],
           parameters: describeNow(entry.name).parameters ?? [],
           maxSize: describeNow(entry.name).maxSize,
+          optionValues: describeNow(entry.name).optionValues,
         },
       });
     return pages;

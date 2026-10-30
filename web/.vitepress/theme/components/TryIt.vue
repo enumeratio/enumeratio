@@ -12,17 +12,24 @@ const props = defineProps<{
   parameters: readonly { name?: string; type: string; variadic?: boolean }[];
   /** The record's cap on the size parameter. */
   maxSize?: number;
+  /** The record's finite option values, by key: an example's `Key -> value` rule becomes a control. */
+  optionValues?: Record<string, (string | number | boolean)[]>;
 }>();
 
 const panel = ref<{ params: string; value: string } | undefined>();
 
 async function build(): Promise<void> {
   panel.value = undefined;
-  // Nothing to lift when every position is `any`; skip loading the front end for it.
-  if (!props.parameters.some((p) => p.type !== "any")) return;
+  // Nothing to lift when every position is `any` and no option lists its values; skip loading the front end for it.
+  if (!props.parameters.some((p) => p.type !== "any") && props.optionValues === undefined) return;
   // Browser only, and lazy: the front end brings the engine with it.
   const { tryItOf } = await import("@enumeratio/frontend");
-  const signature = { head: props.name, parameters: props.parameters, maxSize: props.maxSize };
+  const signature = {
+    head: props.name,
+    parameters: props.parameters,
+    maxSize: props.maxSize,
+    options: props.optionValues,
+  };
   for (const expr of props.examples) {
     const found = tryItOf(expr as Parameters<typeof tryItOf>[0], signature);
     if (found !== undefined) {

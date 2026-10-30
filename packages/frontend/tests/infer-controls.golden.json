@@ -679,6 +679,211 @@
       }
     ]
   },
+  "options: a boolean option is a checkbox starting at the example's value": {
+    "body": {
+      "fn": [
+        "Plot",
+        {
+          "fn": [
+            "Sin",
+            {
+              "sym": "x",
+              "sourceOffsets": [9, 10]
+            }
+          ],
+          "sourceOffsets": [5, 11]
+        },
+        {
+          "fn": [
+            "Tuple",
+            {
+              "sym": "x",
+              "sourceOffsets": [14, 15]
+            },
+            {
+              "num": "0",
+              "sourceOffsets": [17, 18]
+            },
+            {
+              "num": "6",
+              "sourceOffsets": [20, 21]
+            }
+          ],
+          "sourceOffsets": [13, 22]
+        },
+        {
+          "fn": [
+            "Rule",
+            {
+              "sym": "GridLines",
+              "sourceOffsets": [24, 33]
+            },
+            "gridLines"
+          ],
+          "sourceOffsets": [24, 41]
+        }
+      ],
+      "sourceOffsets": [0, 42]
+    },
+    "specs": [
+      {
+        "name": "gridLines",
+        "domain": {
+          "kind": "booleans"
+        },
+        "start": "True",
+        "controlType": "Checkbox"
+      }
+    ]
+  },
+  "options: a few strings are a setter bar starting at the example's value": {
+    "body": {
+      "fn": [
+        "Plot",
+        {
+          "fn": [
+            "Exp",
+            {
+              "sym": "x",
+              "sourceOffsets": [9, 10]
+            }
+          ],
+          "sourceOffsets": [5, 11]
+        },
+        {
+          "fn": [
+            "Tuple",
+            {
+              "sym": "x",
+              "sourceOffsets": [14, 15]
+            },
+            {
+              "num": "0",
+              "sourceOffsets": [17, 18]
+            },
+            {
+              "num": "5",
+              "sourceOffsets": [20, 21]
+            }
+          ],
+          "sourceOffsets": [13, 22]
+        },
+        {
+          "fn": [
+            "Rule",
+            {
+              "sym": "ScalingFunctions",
+              "sourceOffsets": [24, 40]
+            },
+            "scalingFunctions"
+          ],
+          "sourceOffsets": [24, 49]
+        }
+      ],
+      "sourceOffsets": [0, 50]
+    },
+    "specs": [
+      {
+        "name": "scalingFunctions",
+        "domain": {
+          "kind": "choices",
+          "values": ["'Linear'", "'Log'", "'Log10'", "'Log2'", "'Sqrt'"],
+          "labels": ["Linear", "Log", "Log10", "Log2", "Sqrt"]
+        },
+        "start": "'Log'",
+        "controlType": "SetterBar"
+      }
+    ]
+  },
+  "options: past the bar's limit a popup menu": {
+    "body": {
+      "fn": [
+        "Foo",
+        {
+          "num": "1",
+          "sourceOffsets": [4, 5]
+        },
+        {
+          "fn": [
+            "Rule",
+            {
+              "sym": "Mode",
+              "sourceOffsets": [7, 11]
+            },
+            "mode"
+          ],
+          "sourceOffsets": [7, 18]
+        }
+      ],
+      "sourceOffsets": [0, 19]
+    },
+    "specs": [
+      {
+        "name": "mode",
+        "domain": {
+          "kind": "choices",
+          "values": ["'a'", "'b'", "'c'", "'d'", "'e'", "'f'"],
+          "labels": ["a", "b", "c", "d", "e", "f"]
+        },
+        "start": "'c'",
+        "controlType": "PopupMenu"
+      }
+    ]
+  },
+  "options: a value the record does not list stays as written": {
+    "body": {
+      "fn": [
+        "Foo",
+        {
+          "num": "1",
+          "sourceOffsets": [4, 5]
+        },
+        {
+          "fn": [
+            "Rule",
+            {
+              "sym": "Mode",
+              "sourceOffsets": [7, 11]
+            },
+            {
+              "str": "z",
+              "sourceOffsets": [15, 18]
+            }
+          ],
+          "sourceOffsets": [7, 18]
+        }
+      ],
+      "sourceOffsets": [0, 19]
+    },
+    "specs": []
+  },
+  "options: an option the record does not list stays as written": {
+    "body": {
+      "fn": [
+        "Foo",
+        {
+          "num": "1",
+          "sourceOffsets": [4, 5]
+        },
+        {
+          "fn": [
+            "Rule",
+            {
+              "sym": "Axes",
+              "sourceOffsets": [7, 11]
+            },
+            {
+              "sym": "True",
+              "sourceOffsets": [15, 19]
+            }
+          ],
+          "sourceOffsets": [7, 19]
+        }
+      ],
+      "sourceOffsets": [0, 20]
+    },
+    "specs": []
+  },
   "signature: no typed literal": {
     "body": {
       "fn": [

@@ -409,6 +409,31 @@ export interface HeadSignature {
   readonly parameters: readonly SignatureParameter[];
   /** The largest safe value of the first integer parameter (a record's `maxSize`): a type-like upper bound. */
   readonly maxSize?: number;
+  /** The finite values of the head's options, by key (a record's `optionValues`). */
+  readonly options?: Readonly<Record<string, readonly (string | number | boolean)[]>>;
+}
+
+/** `Key -> value` as a `Rule`, `KeyValuePair` or the capitalised-key `Tuple` it canonicalises to (not `@enumeratio/engine`'s `ruleOf`: that would load the engine). */
+function ruleOf(node: Json): { name: string; value: Json } | undefined {
+  const parts = Array.isArray(node) ? node : (node as { fn?: unknown[] } | null)?.fn;
+  if (!Array.isArray(parts) || parts.length !== 3) return undefined;
+  if (parts[0] !== "Rule" && parts[0] !== "KeyValuePair" && parts[0] !== "Tuple") return undefined;
+  const name = symbolOf(parts[1]);
+  return name !== undefined && /^\p{Lu}/u.test(name) ? { name, value: parts[2] } : undefined;
+}
+
+/** An option value as MathJSON: `True`/`False`, a `'quoted'` string, a number. */
+const optionJson = (v: string | number | boolean): Json =>
+  typeof v === "boolean" ? (v ? "True" : "False") : typeof v === "string" ? `'${v}'` : v;
+
+/** An option's value as written in an example, in `optionJson`'s spelling; undefined for anything else. */
+function writtenValue(node: Json): string | number | undefined {
+  const word = symbolOf(node);
+  if (word === "True" || word === "False") return word;
+  const str = (node as { str?: unknown } | null)?.str;
+  if (typeof str === "string") return `'${str}'`;
+  if (typeof node === "string" && /^'.*'$/s.test(node)) return node;
+  return numberOf(node);
 }
 
 /** The `|`-separated members of a type, leaving those inside `<>`, `()`, `[]`, `{}`. */
@@ -502,6 +527,28 @@ export function liftLiterals(expr: Json, signature: HeadSignature): { body: Json
     return name;
   };
 
+  // `Key -> value` for an option whose values a record lists: the value becomes a control that starts there.
+  const liftOption = (arg: Json): Json => {
+    const rule = signature.options === undefined ? undefined : ruleOf(arg);
+    const allowed =
+      rule === undefined
+        ? undefined
+        : Object.hasOwn(signature.options!, rule.name)
+          ? signature.options![rule.name]
+          : undefined;
+    if (rule === undefined || allowed === undefined || allowed.length < 2) return arg;
+    const start = writtenValue(rule.value as Json);
+    const values = allowed.map(optionJson);
+    if (start === undefined || !values.includes(start)) return arg;
+    const name = rule.name.replace(/^./, (c) => c.toLowerCase());
+    if (taken.has(name) || name in hints) return arg;
+    const boolean = values.length === 2 && values.includes("True") && values.includes("False");
+    hints[name] = boolean ? { type: "boolean", start } : { choices: values, start };
+    const next = (Array.isArray(arg) ? [...arg] : [...(arg as { fn: unknown[] }).fn]) as Json[];
+    next[2] = name;
+    return Array.isArray(arg) ? next : { ...(arg as object), fn: next };
+  };
+
   let done = false;
   const lift = (node: Json): Json => {
     if (done) return node;
@@ -511,7 +558,7 @@ export function liftLiterals(expr: Json, signature: HeadSignature): { body: Json
     const rebuilt = (next: Json[]): Json => (Array.isArray(node) ? next : { ...(node as object), fn: next });
     if (parts[0] !== signature.head) return rebuilt(parts.map((p, i) => (i === 0 ? p : lift(p))));
     done = true;
-    return rebuilt([parts[0], ...parts.slice(1).map(liftArg)]);
+    return rebuilt([parts[0], ...parts.slice(1).map((arg, i) => liftOption(liftArg(arg, i)))]);
   };
   return { body: lift(expr), hints };
 }
