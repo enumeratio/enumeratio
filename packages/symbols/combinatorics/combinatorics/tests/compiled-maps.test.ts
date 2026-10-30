@@ -3,11 +3,13 @@
 // source carrier.
 
 import { bareEngine } from "@enumeratio/engine/testing";
+import { applyComposition } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
-import { CARRIERS } from "../src/carriers.ts";
+import { CARRIERS, declareCombinatoricsCarriers } from "../src/carriers.ts";
 import { COMPILED_MAPS } from "../src/compiled-maps.generated.js";
-import { fastDefinition } from "../src/compiled.ts";
-import { evaluateDefinition, MAPS } from "../src/maps.ts";
+import { composedDefinition, compositionHash, compositionSteps, fastDefinition, mapKey } from "../src/compiled.ts";
+import { declareMaps, evaluateDefinition, MAPS } from "../src/maps.ts";
+import { evaluateTable } from "../scripts/compile-maps.ts";
 import { allElements, smallElements } from "../scripts/samples.ts";
 
 // The interpreter is the slow side of the comparison: a small sample in the standard run, more
@@ -61,7 +63,7 @@ const CHUNK = 40;
 
 // Every map compiled ahead of time, run from its generated code, against the interpreter. A map
 // the generator left interpreted (its compiled code disagreed) has no code to run.
-for (const map of MAPS.filter((m) => COMPILED_MAPS[`${m.name}@${m.from}`]?.run !== undefined)) {
+for (const map of MAPS.filter((m) => m.composedOf === undefined && COMPILED_MAPS[mapKey(m)]?.run !== undefined)) {
   const from = carrierByType.get(map.from)!;
   const to = carrierByType.get(map.to)!;
   let fallbacks = 0;
@@ -88,5 +90,99 @@ for (const map of MAPS.filter((m) => COMPILED_MAPS[`${m.name}@${m.from}`]?.run !
   }
   test(`${map.name} from ${map.from}: the generated code answers`, () => {
     expect(fallbacks).toBeLessThan(subjects.length);
+  });
+}
+
+// A composition (`composedOf`) runs as one chain once every map it applies has compiled code, and
+// is interpreted while one has none.
+const compositions = MAPS.filter((m) => m.composedOf !== undefined);
+
+test("a composition is compiled exactly while all its steps are", () => {
+  expect(compositions.length).toBeGreaterThan(0);
+  for (const map of compositions) {
+    const steps = compositionSteps(MAPS, map);
+    expect(steps, `${mapKey(map)} resolves`).toBeDefined();
+    const compiled = steps!.every((step) => COMPILED_MAPS[mapKey(step)]?.run !== undefined);
+    expect(COMPILED_MAPS[mapKey(map)]?.run !== undefined, mapKey(map)).toBe(compiled);
+  }
+});
+
+test("a chain declines at a failed guard and at an image compiled code can't hand back exactly", () => {
+  const chain = (...steps: string[]) =>
+    evaluateTable([
+      { key: "Inc@x", hash: "", body: "_._raw.map((x) => x + 1)" },
+      { key: "Half@x", hash: "", body: "_._raw.map((x) => x / 2)" },
+      { key: "Odd@x", hash: "", body: "_._raw", guard: "_._raw[0] > 1 && _._image.length === _._raw.length" },
+      { key: "Chain@x", hash: "", steps },
+    ])["Chain@x"]!.run(null, { _raw: [1, 2] });
+  expect(chain("Inc@x")).toEqual([2, 3]);
+  expect(chain("Odd@x", "Inc@x")).toBeUndefined();
+  expect(chain("Inc@x", "Odd@x")).toEqual([2, 3]);
+  expect(chain("Half@x")).toBeUndefined();
+});
+
+test("compositions resolve through the carrier each step delivers, and are keyed on every step", () => {
+  const step = (name: string, from: string, to: string, body: unknown = [name]) => ({ name, from, to, body });
+  const a = step("A", "x", "y");
+  const b = step("B", "y", "z");
+  const inner = { ...step("AB", "x", "z"), body: undefined, composedOf: ["B", "A"] };
+  const outer = { ...step("Outer", "x", "w"), body: undefined, composedOf: ["C", "AB"] };
+  const c = step("C", "z", "w");
+  const maps = [a, b, c, inner, outer];
+  expect(compositionSteps(maps, inner)).toEqual([a, b]);
+  // A composed step stands for its own steps.
+  expect(compositionSteps(maps, outer)).toEqual([a, b, c]);
+  // A step on the wrong carrier, a missing step, or a chain ending elsewhere has no steps.
+  expect(compositionSteps([a, c, outer], outer)).toBeUndefined();
+  expect(compositionSteps(maps, { ...inner, to: "y" })).toBeUndefined();
+  expect(compositionSteps([a, step("B", "q", "z"), inner], inner)).toBeUndefined();
+  // Editing any step, or the order, changes the hash.
+  const hash = compositionHash([a, b, c]);
+  expect(compositionHash([a, { ...b, body: ["B2"] }, c])).not.toBe(hash);
+  expect(compositionHash([a, { ...b, guard: ["True"] }, c])).not.toBe(hash);
+  expect(compositionHash([b, a, c])).not.toBe(hash);
+});
+
+const heads = bareEngine();
+declareCombinatoricsCarriers(heads);
+declareMaps(heads, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
+
+// The chain against the interpreter applying the same maps' definitions, and the declared head (which
+// runs the chain) against its steps applied head by head.
+for (const map of compositions.filter((m) => COMPILED_MAPS[mapKey(m)]?.run !== undefined)) {
+  const steps = compositionSteps(MAPS, map)!;
+  const from = carrierByType.get(map.from)!;
+  const chain = composedDefinition({ ce, steps, generated: COMPILED_MAPS[mapKey(map)] })!;
+  const subjects = subjectsOf(from.name);
+  let declined = 0;
+  const interpret = (contents: unknown): unknown => {
+    let value = contents;
+    for (const step of steps) {
+      value = evaluateDefinition(ce, step, value);
+      if (value === undefined) return undefined;
+    }
+    return value;
+  };
+  const title = `${map.name} from ${map.from}: the compiled composition`;
+  for (let start = 0; start < subjects.length; start += CHUNK) {
+    const part = subjects.length > CHUNK ? ` (${start / CHUNK + 1})` : "";
+    test(`${title} agrees with the interpreter${part}`, () => {
+      for (const contents of subjects.slice(start, start + CHUNK)) {
+        const answer = chain(contents);
+        if (answer === undefined) declined++;
+        else expect(answer, JSON.stringify(contents)).toEqual(interpret(contents));
+      }
+    });
+    test(`${title} agrees with its steps as heads${part}`, () => {
+      for (const contents of subjects.slice(start, start + CHUNK)) {
+        const subject = heads.box([from.name, contents] as never);
+        expect(heads.box([map.name, subject.json] as never).evaluate().json, JSON.stringify(contents)).toEqual(
+          applyComposition(heads, map.composedOf!, subject).json,
+        );
+      }
+    });
+  }
+  test(`${title} answers`, () => {
+    expect(declined).toBeLessThan(subjects.length);
   });
 }
