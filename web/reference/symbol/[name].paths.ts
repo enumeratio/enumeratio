@@ -1,3 +1,4 @@
+import { carrierSlotOf } from "@enumeratio/frontend/core";
 import { catalogOf, type ExplorerCatalog, explorerOf } from "@enumeratio/frontend/explorer";
 import { describeNow } from "@enumeratio/manifest";
 import type { ReferenceEntry } from "@enumeratio/reference";
@@ -13,6 +14,8 @@ async function explorerFor(entry: ReferenceEntry, catalog: ExplorerCatalog) {
   const { candidates, ...page } = spec;
   return { ...page, statistics: candidates.map((c) => c.name) };
 }
+
+const carrierNames = new Set(entries.filter((e) => e.catalogCarrier).map((e) => e.name));
 
 /** Longest other-system output a page carries; a longer one (a million-element list) is cut. */
 const MAX_OUTPUT_CHARS = 2000;
@@ -47,7 +50,8 @@ export default {
   async paths() {
     const catalog = { ...catalogOf(entries), ...(await explorerProbes()) };
     const pages = [];
-    for (const entry of entries)
+    for (const entry of entries) {
+      const parameters = describeNow(entry.name).parameters ?? [];
       pages.push({
         params: {
           name: entry.name,
@@ -57,11 +61,13 @@ export default {
           explorer: await explorerFor(entry, catalog),
           definitions: definitionsOf(entry.name),
           overloads: describeNow(entry.name).overloads ?? [],
-          parameters: describeNow(entry.name).parameters ?? [],
+          parameters,
+          carrierSlot: await carrierSlotOf(parameters, carrierNames, entries, catalog),
           maxSize: describeNow(entry.name).maxSize,
           optionValues: describeNow(entry.name).optionValues,
         },
       });
+    }
     return pages;
   },
 };

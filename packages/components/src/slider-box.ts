@@ -48,6 +48,8 @@ export class NotatioSlider extends LitElement {
     step: { type: Number },
     /** `x` (default) lies flat; `y` stands the slider up. */
     axis: { type: String, reflect: true },
+    /** What assistive technology reads as the value, when the number is not the whole story (`aria-valuetext`). */
+    valuetext: { type: String },
     /** Show the value beside the track. */
     readout: { type: Boolean, reflect: true },
     /** Show a play/pause button. Space on the focused thumb toggles playback regardless. */
@@ -70,6 +72,7 @@ export class NotatioSlider extends LitElement {
   declare max: number;
   declare step: number;
   declare axis: "x" | "y";
+  declare valuetext: string;
   declare readout: boolean;
   declare play: boolean;
   declare autoplay: boolean;
@@ -109,6 +112,7 @@ export class NotatioSlider extends LitElement {
     this.max = Number.NaN;
     this.step = Number.NaN;
     this.axis = "x";
+    this.valuetext = "";
     this.readout = false;
     this.play = false;
     this.autoplay = false;
@@ -231,7 +235,7 @@ export class NotatioSlider extends LitElement {
         step=${step}
         .value=${String(this._value)}
         aria-label=${this.name || "value"}
-        aria-valuetext=${numberLatex(this._value, step)}
+        aria-valuetext=${this.valuetext || numberLatex(this._value, step)}
         @input=${this.#onInput}
         @keydown=${this.#onKeyDown}
         @keyup=${this.#onKeyUp}

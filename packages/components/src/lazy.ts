@@ -51,6 +51,7 @@ const ELEMENTS: Readonly<Record<string, () => Promise<unknown>>> = {
   "input-field-box": () => import("./input-field-box.ts"),
   "notatio-terminal": () => import("./notatio-terminal.ts"),
   "notatio-collection-table": () => import("./notatio-collection-table.ts"),
+  "notatio-element-picker": () => import("./notatio-element-picker.ts"),
   "table-view-box": () => import("./table-view-box.ts"),
   "notatio-test-result-object": () => import("./notatio-test-result-object.ts"),
 };

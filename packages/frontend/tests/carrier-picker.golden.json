@@ -1,0 +1,625 @@
+{
+  "AffinePermutation": {
+    "carrier": "AffinePermutation",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "AlternatingSignMatrix": {
+    "carrier": "AlternatingSignMatrix",
+    "collection": "AlternatingSignMatrices",
+    "template": "AlternatingSignMatrices({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "Arrangement": {
+    "carrier": "Arrangement",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "AscentSequence": {
+    "carrier": "AscentSequence",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "BinaryTree": {
+    "carrier": "BinaryTree",
+    "collection": "BinaryTrees",
+    "template": "BinaryTrees({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "BinaryTreeParentArray": {
+    "carrier": "BinaryTreeParentArray",
+    "collection": "BinaryTreeParentArrays",
+    "template": "BinaryTreeParentArrays({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "BinaryWord": {
+    "carrier": "BinaryWord",
+    "collection": "BinaryWords",
+    "template": "BinaryWords({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "Cardinal": {
+    "carrier": "Cardinal",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "CollatzTrajectory": {
+    "carrier": "CollatzTrajectory",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "ColoredMotzkinPath": {
+    "carrier": "ColoredMotzkinPath",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "ColoredPermutation": {
+    "carrier": "ColoredPermutation",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "Composition": {
+    "carrier": "Composition",
+    "collection": "IntegerCompositions",
+    "template": "IntegerCompositions({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    },
+    "glyph": "composition"
+  },
+  "ContinuedFraction": {
+    "carrier": "ContinuedFraction",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "CorePartition": {
+    "carrier": "CorePartition",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "CycleDecomposition": {
+    "carrier": "CycleDecomposition",
+    "collection": "PermutationsAsCycles",
+    "template": "PermutationsAsCycles({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "DecoratedPermutation": {
+    "carrier": "DecoratedPermutation",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "DelannoyPath": {
+    "carrier": "DelannoyPath",
+    "collection": "DelannoyPaths",
+    "template": "DelannoyPaths({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "Dissection": {
+    "carrier": "Dissection",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "DyckPath": {
+    "carrier": "DyckPath",
+    "collection": "DyckPaths",
+    "template": "DyckPaths({size})",
+    "size": {
+      "min": 1,
+      "max": 10,
+      "start": 4
+    },
+    "glyph": "dyck"
+  },
+  "EgyptianFraction": {
+    "carrier": "EgyptianFraction",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "Endofunction": {
+    "carrier": "Endofunction",
+    "collection": "Endofunctions",
+    "template": "Endofunctions({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "FactoradicNumeral": {
+    "carrier": "FactoradicNumeral",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "FiniteSetElement": {
+    "carrier": "FiniteSetElement",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "Finset": {
+    "carrier": "Finset",
+    "collection": "Subsets",
+    "template": "Subsets({size})",
+    "size": {
+      "min": 1,
+      "max": 12,
+      "start": 4
+    },
+    "glyph": "subset"
+  },
+  "FractionalNumber": {
+    "carrier": "FractionalNumber",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "FullKAryTree": {
+    "carrier": "FullKAryTree",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "GaussianFractional": {
+    "carrier": "GaussianFractional",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "GaussianInteger": {
+    "carrier": "GaussianInteger",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "GaussianRational": {
+    "carrier": "GaussianRational",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "GelfandTsetlinPattern": {
+    "carrier": "GelfandTsetlinPattern",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "GlyphKind": {
+    "carrier": "GlyphKind",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "GoldbachPartition": {
+    "carrier": "GoldbachPartition",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "HyperbinaryWord": {
+    "carrier": "HyperbinaryWord",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "HypernumeraryWord": {
+    "carrier": "HypernumeraryWord",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "IncreasingBinaryTree": {
+    "carrier": "IncreasingBinaryTree",
+    "collection": "IncreasingBinaryTrees",
+    "template": "IncreasingBinaryTrees({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "IntegerFactorization": {
+    "carrier": "IntegerFactorization",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "IntegerNumber": {
+    "carrier": "IntegerNumber",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "IntegerPartition": {
+    "carrier": "IntegerPartition",
+    "collection": "IntegerPartitions",
+    "template": "IntegerPartitions({size})",
+    "size": {
+      "min": 1,
+      "max": 30,
+      "start": 4
+    },
+    "glyph": "partition"
+  },
+  "KDyckPath": {
+    "carrier": "KDyckPath",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "KMotzkinPath": {
+    "carrier": "KMotzkinPath",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "LabeledGraph": {
+    "carrier": "LabeledGraph",
+    "collection": "LabeledGraphs",
+    "template": "LabeledGraphs({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "LabeledTree": {
+    "carrier": "LabeledTree",
+    "collection": "LabeledTrees",
+    "template": "LabeledTrees({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "LukasiewiczPath": {
+    "carrier": "LukasiewiczPath",
+    "collection": "LukasiewiczPaths",
+    "template": "LukasiewiczPaths({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "ModularResidue": {
+    "carrier": "ModularResidue",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "MotzkinPath": {
+    "carrier": "MotzkinPath",
+    "collection": "MotzkinPaths",
+    "template": "MotzkinPaths({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "Multicomplex": {
+    "carrier": "Multicomplex",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "MultiplicativePartition": {
+    "carrier": "MultiplicativePartition",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "Multiset": {
+    "carrier": "Multiset",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "NonCrossingTree": {
+    "carrier": "NonCrossingTree",
+    "collection": "NonCrossingTrees",
+    "template": "NonCrossingTrees({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    },
+    "glyph": "tree"
+  },
+  "Numeric": {
+    "carrier": "Numeric",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "OmegaOrdinal": {
+    "carrier": "OmegaOrdinal",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "OrderedFactorization": {
+    "carrier": "OrderedFactorization",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "OrderedTree": {
+    "carrier": "OrderedTree",
+    "collection": "OrderedTrees",
+    "template": "OrderedTrees({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "ParkingFunction": {
+    "carrier": "ParkingFunction",
+    "collection": "ParkingFunctions",
+    "template": "ParkingFunctions({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "Permutation": {
+    "carrier": "Permutation",
+    "collection": "SymmetricGroup",
+    "template": "SymmetricGroup({size})",
+    "size": {
+      "min": 1,
+      "max": 8,
+      "start": 4
+    },
+    "glyph": "permutation"
+  },
+  "PermutationInversion": {
+    "carrier": "PermutationInversion",
+    "collection": "LehmerCodes",
+    "template": "LehmerCodes({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "PhylogeneticTree": {
+    "carrier": "PhylogeneticTree",
+    "collection": "PhylogeneticTrees",
+    "template": "PhylogeneticTrees({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "PlanePartition": {
+    "carrier": "PlanePartition",
+    "collection": "PlanePartitions",
+    "template": "PlanePartitions({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "PlaneTree": {
+    "carrier": "PlaneTree",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "PruferSequence": {
+    "carrier": "PruferSequence",
+    "collection": "PruferSequences",
+    "template": "PruferSequences({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "PythagoreanTriple": {
+    "carrier": "PythagoreanTriple",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "RationalDyckPath": {
+    "carrier": "RationalDyckPath",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "RationalNumber": {
+    "carrier": "RationalNumber",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "RookPlacement": {
+    "carrier": "RookPlacement",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "RootedForest": {
+    "carrier": "RootedForest",
+    "collection": "RootedForests",
+    "template": "RootedForests({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "RootedLabeledTree": {
+    "carrier": "RootedLabeledTree",
+    "collection": "RecursiveTrees",
+    "template": "RecursiveTrees({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "RootedUnlabeledTree": {
+    "carrier": "RootedUnlabeledTree",
+    "collection": "RootedUnlabeledTrees",
+    "template": "RootedUnlabeledTrees({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "SchroederPath": {
+    "carrier": "SchroederPath",
+    "collection": "SchroederPaths",
+    "template": "SchroederPaths({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "SemistandardTableau": {
+    "carrier": "SemistandardTableau",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "SetComposition": {
+    "carrier": "SetComposition",
+    "collection": "SetCompositions",
+    "template": "SetCompositions({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "SetPartition": {
+    "carrier": "SetPartition",
+    "collection": "SetPartitions",
+    "template": "SetPartitions({size})",
+    "size": {
+      "min": 1,
+      "max": 10,
+      "start": 4
+    },
+    "glyph": "set-partition"
+  },
+  "ShiftedStandardTableau": {
+    "carrier": "ShiftedStandardTableau",
+    "collection": "ShiftedStandardTableaux",
+    "template": "ShiftedStandardTableaux({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "SignedPermutation": {
+    "carrier": "SignedPermutation",
+    "collection": "SignedPermutations",
+    "template": "SignedPermutations({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "SignedSetComposition": {
+    "carrier": "SignedSetComposition",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "SignedSubset": {
+    "carrier": "SignedSubset",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "Singleton": {
+    "carrier": "Singleton",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "SkewPartition": {
+    "carrier": "SkewPartition",
+    "collection": "SkewPartitions",
+    "template": "SkewPartitions({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "SkewTableau": {
+    "carrier": "SkewTableau",
+    "collection": "SkewStandardTableaux",
+    "template": "SkewStandardTableaux({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "SquareDecomposition": {
+    "carrier": "SquareDecomposition",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "StandardTableau": {
+    "carrier": "StandardTableau",
+    "collection": "StandardTableaux",
+    "template": "StandardTableaux({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "StandardTableauPair": {
+    "carrier": "StandardTableauPair",
+    "collection": "StandardTableauPairs",
+    "template": "StandardTableauPairs({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "StirlingPermutation": {
+    "carrier": "StirlingPermutation",
+    "collection": "StirlingPermutations",
+    "template": "StirlingPermutations({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "SubexcedantSeq": {
+    "carrier": "SubexcedantSeq",
+    "collection": "SubexcedantSeqs",
+    "template": "SubexcedantSeqs({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "Surjection": {
+    "carrier": "Surjection",
+    "collection": "Surjections",
+    "template": "Surjections({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "TernaryGrayCode": {
+    "carrier": "TernaryGrayCode",
+    "collection": "TernaryGrayCodes",
+    "template": "TernaryGrayCodes({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "Text": {
+    "carrier": "Text",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "TotalPartition": {
+    "carrier": "TotalPartition",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "Tournament": {
+    "carrier": "Tournament",
+    "collection": "Tournaments",
+    "template": "Tournaments({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "UnlabeledFreeTree": {
+    "carrier": "UnlabeledFreeTree",
+    "collection": "UnlabeledFreeTrees",
+    "template": "UnlabeledFreeTrees({size})",
+    "size": {
+      "min": 1,
+      "max": 6,
+      "start": 4
+    }
+  },
+  "WeakComposition": {
+    "carrier": "WeakComposition",
+    "reason": "no collection of sized elements on this carrier"
+  },
+  "Word": {
+    "carrier": "Word",
+    "reason": "no collection of sized elements on this carrier"
+  }
+}

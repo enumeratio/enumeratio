@@ -28,6 +28,8 @@ const props = defineProps<{
   distribution?: { collection: string; template: string; maxSize: number };
   /** The other statistics on this carrier, for "same distribution as". */
   carrierStatistics?: readonly string[];
+  /** Where a statistic's carrier has its elements picked from: collection template, size bounds, glyph. A map's comes from `mapExplorer`. */
+  picker?: { carrier: string; template: string; size: { min: number; max: number; start: number }; glyph?: string };
   /** Where a map is explored: its source collection, size bounds and glyphs (maps only; absent for a frontier map). */
   mapExplorer?: MapExplorer;
   /** The statistics on a map's source and target carriers, for transport (maps only). */
@@ -45,6 +47,26 @@ const headHref = computed(() => (getEntry(props.field.name) ? `/reference/symbol
 const toJson = (expr: unknown): string => JSON.stringify(expr);
 const prose = (text: string): string => renderBlock(text);
 const inline = (text?: string): string => renderInline(text ?? "");
+
+// The live cell starts on FindStat's sample; picking another element of the carrier replaces it.
+const pickerSpec = computed(() => {
+  if (props.picker) return props.picker;
+  const explorer = props.mapExplorer;
+  if (!explorer) return undefined;
+  const { template, maxSize, start, sourceGlyph } = explorer;
+  return {
+    carrier: props.field.carrier,
+    template,
+    size: { min: 1, max: maxSize, start },
+    ...(sourceGlyph !== undefined && { glyph: sourceGlyph }),
+  };
+});
+const picked = ref<unknown>();
+const shown = computed(() => picked.value ?? props.live);
+function onPick(event: Event): void {
+  const { element } = (event as CustomEvent<{ element: unknown }>).detail;
+  picked.value = [isStatistic.value ? "CombinatorialStat" : "CombinatorialMap", element, `'${props.field.name}'`];
+}
 
 // The distribution triangle and its equidistributed siblings: computed here, on demand, by the
 // page's engine. The components package is only ever imported inside these handlers (SSR-safe).
@@ -231,10 +253,28 @@ async function findSame(): Promise<void> {
       >. <a v-if="headHref" :href="headHref">The head's page</a><span v-if="headHref"> has its examples.</span>
     </p>
 
-    <section v-if="live" class="field-live">
+    <section v-if="live || pickerSpec" class="field-live">
       <h2>Live</h2>
       <ClientOnly>
-        <notatio-cell format="mathjson" :value="toJson(live)" :resolveHead.prop="resolveHead"></notatio-cell>
+        <notatio-cell
+          v-if="shown"
+          :key="toJson(shown)"
+          format="mathjson"
+          :value="toJson(shown)"
+          :resolveHead.prop="resolveHead"
+        ></notatio-cell>
+        <template v-if="pickerSpec">
+          <p class="field-note">Pick another element of {{ field.carrier }}: its size, then its place in the list.</p>
+          <notatio-element-picker
+            :template="pickerSpec.template"
+            :carrier="field.carrier"
+            :glyph="pickerSpec.glyph"
+            :size="pickerSpec.size.start"
+            :size-min="pickerSpec.size.min"
+            :size-max="pickerSpec.size.max"
+            @notatio-element-pick="onPick"
+          ></notatio-element-picker>
+        </template>
       </ClientOnly>
     </section>
 
