@@ -3,6 +3,7 @@
 // tests read the same functions.
 
 import { splitColumns } from "./collection-table.ts";
+import glyphs from "../generated/head-glyphs.json" with { type: "json" };
 
 /** What `Columns -> Automatic` and `Glyph -> Automatic` are written as. */
 export const AUTOMATIC = "Automatic";
@@ -10,27 +11,8 @@ export const AUTOMATIC = "Automatic";
 /** Columns a derived table opens with. */
 export const DEFAULT_COLUMNS = 4;
 
-/**
- * The glyph kind of a carrier, or of the collection heads over it. A mirror of the carriers'
- * `glyph:` record field for the runtime, which loads no manifest; a test holds the two together.
- */
-export const HEAD_GLYPHS: Readonly<Record<string, string>> = {
-  Permutation: "permutation",
-  Permutations: "permutation",
-  SymmetricGroup: "permutation",
-  IntegerPartition: "partition",
-  IntegerPartitions: "partition",
-  Composition: "composition",
-  Compositions: "composition",
-  Finset: "subset",
-  Subsets: "subset",
-  DyckPath: "dyck",
-  DyckPaths: "dyck",
-  NonCrossingTree: "tree",
-  NonCrossingTrees: "tree",
-  SetPartition: "set-partition",
-  SetPartitions: "set-partition",
-};
+/** The glyph kind of a carrier, or of the collection heads over it, from the carriers' `glyph:` records. */
+export const HEAD_GLYPHS: Readonly<Record<string, string>> = glyphs;
 
 const HEAD = /^\s*([A-Za-z]\w*)/;
 const SIZED_CALL = /^\s*([A-Za-z]\w*)\s*\(\s*\d+\s*\)\s*$/;
