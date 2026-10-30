@@ -13,6 +13,7 @@ import { setEngineDefaults } from "@enumeratio/engine";
 import { registerTeXMacros } from "@enumeratio/formats/tex";
 import { typeset as typesetTeX } from "@enumeratio/formats/typeset";
 import { displayLatexSyntax } from "@enumeratio/frontend/display";
+import { engineProbes } from "@enumeratio/frontend/explorer-engine";
 import { outMarkup, type Prerendered, prerender } from "@enumeratio/frontend/prerender";
 import { createResolver, NOTATIONS } from "@enumeratio/manifest";
 import type { ReferenceEntry } from "@enumeratio/reference";
@@ -73,6 +74,12 @@ function buildKernel(): NonNullable<typeof kernel> {
     return { ce, ensure: (json) => resolver.ensure(ce, json) };
   })();
   return kernel;
+}
+
+/** The probes a collection explorer is derived with: the site's own engine, declared as the page's kernel is. */
+export async function explorerProbes() {
+  const { ce, ensure } = await buildKernel();
+  return engineProbes(ce, ensure);
 }
 
 /**

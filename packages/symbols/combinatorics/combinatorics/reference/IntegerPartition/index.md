@@ -10,6 +10,7 @@ references:
     identity: Partition
 stub: carrier
 catalogCarrier: true
+glyph: partition
 signatures:
   - call: IntegerPartition(list)
     description: The singular-inhabitant constructor for an integer partition, as its parts.

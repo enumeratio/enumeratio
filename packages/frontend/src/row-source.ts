@@ -40,7 +40,7 @@ import {
 } from "./collection-table.ts";
 import { debug } from "./debug.ts";
 import { type RowSourceSpec } from "./row-spec.ts";
-import { type GlyphKind, renderGlyph } from "./glyphs.ts";
+import { type GlyphKind, GLYPH_KINDS, renderGlyph } from "./glyphs.ts";
 import { headOf, numOf, opsOf, strOf, symOf } from "./symbols.ts";
 
 type Json = MathJsonExpression;
@@ -138,20 +138,6 @@ export function openRowSource(ce: ComputeEngine, spec: RowSourceSpec): OpenedRow
     return { ok: false, error: error instanceof Error ? error.message : String(error) };
   }
 }
-
-const GLYPH_KINDS = new Set<GlyphKind>([
-  "permutation",
-  "partition",
-  "tableau",
-  "composition",
-  "subset",
-  "dyck",
-  "tree",
-  "binary-tree",
-  "set-partition",
-  "lattice",
-  "diagram",
-]);
 
 export class CollectionRows implements RowSource {
   readonly random: boolean;

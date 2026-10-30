@@ -26,6 +26,8 @@ const props = defineProps<{
   optionValues?: Record<string, (string | number | boolean)[]>;
   /** The statistics and maps of a carrier, or of a collection's carrier. */
   fields?: CarrierFieldsData;
+  /** The enumeration the record implies (`explorerOf`, derived at build); a record's own `enumerate:` is already folded in. */
+  explorer?: { expr: string; columns: readonly string[]; glyph?: string; pageSize: number };
   /** The Epsil behind a statistic or family, printed as InputForm (data/definitions.ts). */
   definitions?: readonly { label: string; source: string }[];
 }>();
@@ -107,6 +109,15 @@ const signatures = computed(() => {
       byCall.set(sig.call, sig);
   }
   return [...byCall.values()];
+});
+
+// The table on a collection's page: the build's derived explorer, else the record's own `enumerate:`.
+const enumeration = computed(() => {
+  const spec = props.explorer;
+  if (spec !== undefined)
+    return { expr: spec.expr, columns: spec.columns.join(", "), glyph: spec.glyph, pageSize: spec.pageSize };
+  const own = entry.value?.enumerate;
+  return own === undefined ? undefined : { ...own, pageSize: own.pageSize ?? 10 };
 });
 
 // What "Try it" lifts its controls from: the examples that stand as written, then the enumeration.
@@ -444,14 +455,14 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
 
     <CarrierFields v-if="fields" :fields="fields" />
 
-    <section v-if="entry.enumerate" id="enumeration">
+    <section v-if="enumeration" id="enumeration">
       <h2>Enumeration</h2>
       <ClientOnly>
         <notatio-collection-table
-          :expr="entry.enumerate.expr"
-          :columns="entry.enumerate.columns"
-          :glyph="entry.enumerate.glyph"
-          :page-size="entry.enumerate.pageSize ?? 10"
+          :expr="enumeration.expr"
+          :columns="enumeration.columns"
+          :glyph="enumeration.glyph"
+          :page-size="enumeration.pageSize"
         ></notatio-collection-table>
       </ClientOnly>
     </section>

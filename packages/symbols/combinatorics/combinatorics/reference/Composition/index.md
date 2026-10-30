@@ -9,6 +9,7 @@ references:
   - system: mathworld
     identity: Composition
 catalogCarrier: true
+glyph: composition
 signatures:
   - call: Composition(list)
     description: The singular-inhabitant constructor for a composition of an integer, as its parts.

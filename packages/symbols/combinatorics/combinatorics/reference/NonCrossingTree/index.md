@@ -4,6 +4,7 @@ domain: Combinatorics
 signature: NonCrossingTree(...)
 summary: Catalogued in the enumeratio database; not yet written up here.
 catalogCarrier: true
+glyph: tree
 stub: carrier
 signatures:
   - call: NonCrossingTree(...)

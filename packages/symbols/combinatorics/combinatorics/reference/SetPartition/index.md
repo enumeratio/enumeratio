@@ -9,6 +9,7 @@ references:
   - system: mathworld
     identity: SetPartition
 catalogCarrier: true
+glyph: set-partition
 signatures:
   - call: SetPartition(list)
     description: The singular-inhabitant constructor for a partition of a set, as its blocks.

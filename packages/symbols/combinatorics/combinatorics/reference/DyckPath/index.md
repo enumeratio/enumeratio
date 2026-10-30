@@ -9,6 +9,7 @@ references:
   - system: mathworld
     identity: DyckPath
 catalogCarrier: true
+glyph: dyck
 signatures:
   - call: DyckPath(list)
     description: The singular-inhabitant constructor for a Dyck path, as its up/down steps.
