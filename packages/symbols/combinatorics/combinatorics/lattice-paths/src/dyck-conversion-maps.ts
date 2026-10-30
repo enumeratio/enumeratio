@@ -3,7 +3,6 @@
 // (1 up).
 
 import { at, forEach, lets, type CombinatorialMap, type MathJSON } from "../../src/map-helpers.ts";
-import { inverseRsk } from "../../tableaux/src/families/rsk-pairs.ts";
 import { krattenthalerPermutationBody } from "./dyck-maps.ts";
 import { areaSequence, dyckGuard, twoRowTableau, upsThrough } from "./maps.ts";
 
@@ -140,56 +139,87 @@ const avoiding132Body: MathJSON = [
 ];
 
 /** Mp00024: the permutation whose RSK pair is the two-row tableaux of the first half of the path (ups on top) and
- *  of the last half read backwards (downs on top), as inverse RSK. */
+ *  of the last half read backwards (downs on top), as inverse RSK. The walk's state is flat integers: P's first
+ *  row (n cells), its second (n), their two lengths, then the word. The entry k of Q, from n down, is in its
+ *  second row when the step k from the end is an up: that row's last cell goes back up into the first row,
+ *  replacing the largest cell below it, which is the word's entry. Otherwise the first row's last cell is. */
 const avoiding321Body: MathJSON = [
   "If",
   isEmpty,
   ["List"],
   lets(
     [
+      ["rk_n", semilength, "integer"],
+      ["rk_up", ["Filter", upTo(semilength), ["Function", ["Equal", at("p"), 1], "p"]], "list<integer>"],
+      ["rk_down", ["Filter", upTo(semilength), ["Function", ["Equal", at("p"), 0], "p"]], "list<integer>"],
       [
-        "rk_p",
+        "rk_end",
         [
-          "Join",
-          ["List", ["Filter", upTo(semilength), ["Function", ["Equal", at("p"), 1], "p"]]],
+          "Fold",
           [
-            "If",
-            ["Greater", ["Count", ["Filter", upTo(semilength), ["Function", ["Equal", at("p"), 0], "p"]]], 0],
-            ["List", ["Filter", upTo(semilength), ["Function", ["Equal", at("p"), 0], "p"]]],
-            ["List"],
-          ],
-        ],
-        "list<list<integer>>",
-      ],
-      [
-        "rk_q",
-        [
-          "Join",
-          [
-            "List",
-            ["Filter", upTo(semilength), ["Function", ["Equal", at(["Subtract", ["Add", steps, 1], "k"]), 0], "k"]],
-          ],
-          [
-            "If",
-            [
-              "Greater",
+            "Function",
+            lets(
               [
-                "Count",
-                ["Filter", upTo(semilength), ["Function", ["Equal", at(["Subtract", ["Add", steps, 1], "k"]), 1], "k"]],
+                ["rk_k", ["Subtract", ["Add", "rk_n", 1], "r"], "integer"],
+                ["rk_l1", at(["Add", ["Multiply", 2, "rk_n"], 1], "rk_s"), "integer"],
+                ["rk_l2", at(["Add", ["Multiply", 2, "rk_n"], 2], "rk_s"), "integer"],
+                ["rk_low", ["Equal", at(["Subtract", ["Add", steps, 1], "rk_k"]), 1], "boolean"],
+                ["rk_carried", at(["Add", "rk_n", "rk_l2"], "rk_s"), "integer"],
+                [
+                  "rk_pos",
+                  ["Count", ["Filter", upTo("rk_l1"), ["Function", ["Less", at("c", "rk_s"), "rk_carried"], "c"]]],
+                  "integer",
+                ],
               ],
-              0,
-            ],
-            [
-              "List",
-              ["Filter", upTo(semilength), ["Function", ["Equal", at(["Subtract", ["Add", steps, 1], "k"]), 1], "k"]],
-            ],
-            ["List"],
+              forEach(
+                upTo(["Add", ["Multiply", 3, "rk_n"], 2]),
+                [
+                  "If",
+                  ["LessEqual", "c", "rk_n"],
+                  ["If", ["And", "rk_low", ["Equal", "c", "rk_pos"]], "rk_carried", at("c", "rk_s")],
+                  [
+                    "If",
+                    ["LessEqual", "c", ["Multiply", 2, "rk_n"]],
+                    at("c", "rk_s"),
+                    [
+                      "If",
+                      ["Equal", "c", ["Add", ["Multiply", 2, "rk_n"], 1]],
+                      ["If", "rk_low", "rk_l1", ["Subtract", "rk_l1", 1]],
+                      [
+                        "If",
+                        ["Equal", "c", ["Add", ["Multiply", 2, "rk_n"], 2]],
+                        ["If", "rk_low", ["Subtract", "rk_l2", 1], "rk_l2"],
+                        [
+                          "If",
+                          ["Equal", ["Subtract", "c", ["Add", ["Multiply", 2, "rk_n"], 2]], "rk_k"],
+                          ["If", "rk_low", at("rk_pos", "rk_s"), at("rk_l1", "rk_s")],
+                          at("c", "rk_s"),
+                        ],
+                      ],
+                    ],
+                  ],
+                ],
+                "c",
+              ),
+            ),
+            "rk_s",
+            "r",
           ],
+          [
+            "Join",
+            "rk_up",
+            zeros(["Subtract", "rk_n", ["Length", "rk_up"]]),
+            "rk_down",
+            zeros(["Subtract", "rk_n", ["Length", "rk_down"]]),
+            ["List", ["Length", "rk_up"], ["Length", "rk_down"]],
+            zeros("rk_n"),
+          ],
+          upTo("rk_n"),
         ],
-        "list<list<integer>>",
+        "list<integer>",
       ],
     ],
-    inverseRsk("rk_p", "rk_q", semilength) as MathJSON,
+    forEach(upTo("rk_n"), at(["Add", ["Multiply", 2, "rk_n"], 2, "j"], "rk_end"), "j"),
   ),
 ];
 
@@ -454,55 +484,101 @@ const cutOutBody: MathJSON = lets(
 /** Mp00033: the positions of the ups, then those of the downs. */
 const twoRowBody: MathJSON = ["If", isEmpty, ["List"], twoRowTableau];
 
-/** Mp00023, one peeling of Stump's bijection on the area sequence `area` (a bound name of length n >= 2): the touch
- *  points, as the lists of positions whose entries rotate together, and the pending touches. */
-const peeledCycles = (area: string): MathJSON =>
-  lets(
-    [
-      [
-        "pl_scan",
-        [
-          "Fold",
-          [
-            "Function",
-            lets(
-              [
-                ["pl_touches", at(1, "acc"), "list<integer>"],
-                ["pl_cycles", at(2, "acc"), "list<list<integer>>"],
-                ["pl_next", at(["Add", "k", 1], area), "integer"],
-                ["pl_with", ["Join", at(1, "acc"), ["List", "k"]], "list<integer>"],
-              ],
-              [
-                "If",
-                ["Equal", "pl_next", 0],
-                [
-                  "If",
-                  ["Greater", ["Length", "pl_with"], 1],
-                  ["Tuple", ["List"], ["Join", "pl_cycles", ["List", "pl_with"]]],
-                  [
-                    "If",
-                    ["Equal", at("k", area), 0],
-                    ["Tuple", ["List"], "pl_cycles"],
-                    ["Tuple", "pl_with", "pl_cycles"],
-                  ],
-                ],
-                ["If", ["Equal", "pl_next", 1], ["Tuple", "pl_with", "pl_cycles"], "acc"],
-              ],
-            ),
-            "acc",
-            "k",
-          ],
-          ["Tuple", ["List"], ["List"]],
-          ["Range", 1, ["Subtract", ["Length", area], 1], 1],
-        ],
-      ],
-    ],
-    // The last position closes a cycle when its entry is positive and a touch is pending.
+// Mp00023 on flat integer lists. The walk's state is the area sequence (n cells), then the permutation (n cells).
+// A peeling's state is, for the positions 1 .. n, whether each is a pending touch (n cells), the cycle it closed
+// into (n cells, 0 for none), then how many cycles have closed.
+
+const ncCells: MathJSON = ["Add", ["Multiply", 2, semilength], 1];
+const pendingAt = (state: string, j: MathJSON): MathJSON => at(j, state);
+const closedAt = (state: string): MathJSON => at(ncCells, state);
+const pendingNow = (state: string, upto: MathJSON): MathJSON => [
+  "Count",
+  ["Filter", upTo(upto), ["Function", ["Equal", pendingAt(state, "t"), 1], "t"]],
+];
+
+/** The peeling state `st` with the cycle `close` (a boolean) closed over its pending touches and position `last`,
+ *  and `pending` (a boolean per position, evaluated at j) as the new pending flags. */
+const peeled = (st: string, close: MathJSON, last: MathJSON, pending: MathJSON): MathJSON =>
+  forEach(
+    upTo(ncCells),
     [
       "If",
-      ["And", ["Greater", at(["Length", area], area), 0], ["Greater", ["Length", at(1, "pl_scan")], 0]],
-      ["Join", at(2, "pl_scan"), ["List", ["Join", at(1, "pl_scan"), ["List", ["Length", area]]]]],
-      at(2, "pl_scan"),
+      ["LessEqual", "j", semilength],
+      pending,
+      [
+        "If",
+        ["LessEqual", "j", ["Multiply", 2, semilength]],
+        [
+          "If",
+          [
+            "And",
+            close,
+            [
+              "Or",
+              ["Equal", pendingAt(st, ["Subtract", "j", semilength]), 1],
+              ["Equal", ["Subtract", "j", semilength], last],
+            ],
+          ],
+          ["Add", closedAt(st), 1],
+          at("j", st),
+        ],
+        ["If", close, ["Add", closedAt(st), 1], closedAt(st)],
+      ],
+    ],
+    "j",
+  );
+
+/** Position k of the area sequence `area` (a bound list): a touch is a position whose successor's entry is 0 or
+ *  1. A run of touches closes into a cycle at a 0 when it has two or more; a lone touch with entry 0 is dropped,
+ *  and one above 0 waits for the next. */
+const peelStep = (area: string): MathJSON =>
+  lets(
+    [
+      ["nc_next", at(["Add", "k", 1], area), "integer"],
+      ["nc_run", ["Add", 1, pendingNow("nc_sc", ["Subtract", "k", 1])], "integer"],
+    ],
+    peeled("nc_sc", ["And", ["Equal", "nc_next", 0], ["Greater", "nc_run", 1]], "k", [
+      "If",
+      ["And", ["Equal", "nc_next", 0], ["Or", ["Greater", "nc_run", 1], ["Equal", at("k", area), 0]]],
+      0,
+      ["If", ["And", ["LessEqual", "nc_next", 1], ["Equal", "j", "k"]], 1, pendingAt("nc_sc", "j")],
+    ]),
+  );
+
+/** The last position closes whatever is pending when its entry is above 0. */
+const peelEnd = (area: string): MathJSON =>
+  peeled(
+    "nc_scan",
+    ["And", ["Greater", at(semilength, area), 0], ["Greater", pendingNow("nc_scan", semilength), 0]],
+    semilength,
+    pendingAt("nc_scan", "j"),
+  );
+
+/** The position after `q` in its cycle of `nc_ids`, wrapping to the first; `q` itself when it is in none. */
+const nextInCycle = (q: MathJSON): MathJSON =>
+  lets(
+    [
+      ["nc_id", at(q, "nc_ids"), "integer"],
+      [
+        "nc_later",
+        [
+          "Filter",
+          upTo(semilength),
+          ["Function", ["And", ["Greater", "t", q], ["Equal", at("t", "nc_ids"), "nc_id"]], "t"],
+        ],
+        "list<integer>",
+      ],
+    ],
+    [
+      "If",
+      ["Equal", "nc_id", 0],
+      q,
+      [
+        "If",
+        ["Greater", ["Length", "nc_later"], 0],
+        ["Min", "nc_later"],
+        ["Min", ["Filter", upTo(semilength), ["Function", ["Equal", at("t", "nc_ids"), "nc_id"], "t"]]],
+      ],
     ],
   );
 
@@ -516,67 +592,66 @@ const noncrossingPermutationBody: MathJSON = [
     "If",
     ["Equal", steps, 2],
     ["List", 1],
-    at(2, [
-      "Fold",
+    lets(
       [
-        "Function",
-        lets(
+        [
+          "nc_end",
           [
-            ["nc_area", at(1, "acc"), "list<integer>"],
-            ["nc_pi", at(2, "acc"), "list<integer>"],
-            ["nc_cycles", peeledCycles("nc_area"), "list<list<integer>>"],
-          ],
-          [
-            "If",
-            ["Equal", ["Length", "nc_cycles"], 0],
-            "acc",
+            "Fold",
             [
-              "Tuple",
-              forEach(
-                upTo(semilength),
-                ["If", ["Equal", "j", semilength], 0, ["Max", ["Subtract", at(["Add", "j", 1], "nc_area"), 2], 0]],
-                "j",
-              ),
-              [
-                "Fold",
+              "Function",
+              lets(
                 [
-                  "Function",
+                  ["nc_area", forEach(upTo(semilength), at("j", "nc_acc"), "j"), "list<integer>"],
+                  [
+                    "nc_scan",
+                    [
+                      "Fold",
+                      ["Function", peelStep("nc_area"), "nc_sc", "k"],
+                      zeros(ncCells),
+                      upTo(["Subtract", semilength, 1]),
+                    ],
+                    "list<integer>",
+                  ],
+                  ["nc_peeled", peelEnd("nc_area"), "list<integer>"],
+                  [
+                    "nc_ids",
+                    forEach(upTo(semilength), at(["Add", semilength, "j"], "nc_peeled"), "j"),
+                    "list<integer>",
+                  ],
+                ],
+                [
+                  "If",
+                  ["Equal", closedAt("nc_peeled"), 0],
+                  "nc_acc",
                   forEach(
-                    upTo(semilength),
+                    upTo(["Multiply", 2, semilength]),
                     [
                       "If",
-                      ["Element", "j", at("c", "nc_cycles")],
-                      at(
-                        at(
-                          [
-                            "If",
-                            ["Equal", ["IndexOf", at("c", "nc_cycles"), "j"], ["Length", at("c", "nc_cycles")]],
-                            1,
-                            ["Add", ["IndexOf", at("c", "nc_cycles"), "j"], 1],
-                          ],
-                          at("c", "nc_cycles"),
-                        ),
-                        "ring",
-                      ),
-                      at("j", "ring"),
+                      ["LessEqual", "j", semilength],
+                      [
+                        "If",
+                        ["Equal", "j", semilength],
+                        0,
+                        ["Max", ["Subtract", at(["Add", "j", 1], "nc_area"), 2], 0],
+                      ],
+                      at(["Add", semilength, nextInCycle(["Subtract", "j", semilength])], "nc_acc"),
                     ],
                     "j",
                   ),
-                  "ring",
-                  "c",
                 ],
-                "nc_pi",
-                upTo(["Length", "nc_cycles"]),
-              ],
+              ),
+              "nc_acc",
+              "r",
             ],
+            ["Join", areaSequence, upTo(semilength)],
+            upTo(semilength),
           ],
-        ),
-        "acc",
-        "r",
+          "list<integer>",
+        ],
       ],
-      ["Tuple", areaSequence, upTo(semilength)],
-      upTo(semilength),
-    ]),
+      forEach(upTo(semilength), at(["Add", semilength, "j"], "nc_end"), "j"),
+    ),
   ],
 ];
 
@@ -735,7 +810,7 @@ export const DYCK_CONVERSION_MAPS: readonly CombinatorialMap[] = [
     guard: dyckGuard,
     summary:
       "The 321-avoiding permutation whose RSK pair is the pair of two-row tableaux read off the first and last halves of the path.",
-    note: "FindStat's Mp00024. It sends centered tunnels to fixed points and the semilength plus the height of the middle point to twice the longest increasing subsequence. Injective. Interpreted: inverse RSK has no compiled form yet.",
+    note: "FindStat's Mp00024. It sends centered tunnels to fixed points and the semilength plus the height of the middle point to twice the longest increasing subsequence. Injective.",
   },
   {
     name: "Avoiding312Permutation",
