@@ -2,7 +2,8 @@
 // its size and converts back. Wolfram's `Cycles` drops fixed points and so doesn't. The
 // conversions are defined in Epsil; tests/map-definitions.test.ts checks them against the
 // collections' own (`PermutationsAsCycles`).
-import { bind, type MathJSON as Expression } from "../../src/map-helpers.ts";
+import { bind, lets, type MathJSON as Expression } from "../../src/map-helpers.ts";
+import { cycleWord, plain, withLengths } from "./cycle-flat.ts";
 import { recurse, self } from "../../src/recursion.ts";
 
 type MathJSON = unknown;
@@ -28,8 +29,6 @@ export const decomposition = (p: MathJSON): MathJSON => [
   ["List"],
   ["Range", 1, ["Length", p], 1],
 ];
-
-export const cycleDecompositionBody: MathJSON = decomposition("_raw");
 
 /** Where `i` goes: the point after it in its cycle, wrapping round; `otherwise` when none holds it. */
 const successor = (cycles: MathJSON, i: MathJSON, otherwise: MathJSON = 0): MathJSON => [
@@ -62,19 +61,69 @@ export const permutationOfCycleDecompositionBody: MathJSON = [
   ["Range", 1, ["Length", ["Flatten", "_raw"]], 1],
 ];
 
+/** Whether `a` and `b`, lists of equal length `count`, agree at every position. */
+const agree = (a: string, b: string, count: MathJSON): MathJSON => [
+  "Equal",
+  [
+    "Count",
+    ["Filter", ["Range", 1, count, 1], ["Function", ["NotEqual", ["At", a, "ag_i"], ["At", b, "ag_i"]], "ag_i"]],
+  ],
+  0,
+];
+
 /** Only a canonical decomposition converts: the permutation must give it back. A repeated or
- *  missing point leaves a 0 in the image, which `cycleThrough` would follow forever, so the
- *  image has to be a permutation before it is decomposed. */
+ *  missing point leaves a 0 in the image, which would be followed forever, so the image has to be a
+ *  permutation before it is decomposed. The decomposition is compared with `_raw` as flat lists:
+ *  its points in order, then its cycle lengths. */
 export const permutationOfCycleDecompositionGuard: MathJSON = [
   "If",
   ["Equal", ["Length", "_image"], 0],
   "True",
-  [
-    "If",
-    ["Equal", ["Sort", "_image"], ["Range", 1, ["Length", "_image"], 1]],
-    ["Equal", decomposition("_image"), "_raw"],
-    "False",
-  ],
+  bind(
+    "cg_sorted",
+    ["Sort", "_image"],
+    [
+      "If",
+      [
+        "Equal",
+        [
+          "Count",
+          [
+            "Filter",
+            ["Range", 1, ["Length", "_image"], 1],
+            ["Function", ["Equal", ["At", "cg_sorted", "cg_i"], "cg_i"], "cg_i"],
+          ],
+        ],
+        ["Length", "_image"],
+      ],
+      withLengths(
+        plain("_image"),
+        "Min",
+        () => true,
+        cycleWord(plain("_image"), (word) =>
+          lets(
+            [
+              ["cg_word", word, "list<integer>"],
+              ["cg_flat", ["Flatten", "_raw"], "list<integer>"],
+              [
+                "cg_lens",
+                ["Map", ["Function", ["Length", ["At", "_raw", "cg_c"]], "cg_c"], ["Range", 1, ["Length", "_raw"], 1]],
+                "list<integer>",
+              ],
+            ],
+            [
+              "And",
+              ["Equal", ["Length", "cg_lens"], ["Length", "cy_lens"]],
+              agree("cg_word", "cg_flat", "cy_n"),
+              agree("cg_lens", "cy_lens", ["Length", "cy_lens"]),
+            ] as Expression,
+          ),
+        ),
+      ),
+      "False",
+    ],
+    "list<integer>",
+  ),
 ];
 
 /** The canonical decomposition of the permutation of 1..`_n` that the disjoint cycles `_raw`
