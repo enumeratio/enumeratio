@@ -1,10 +1,9 @@
 // Combinatorial maps whose `from` carrier is a tableaux carrier (conventions as in
 // `permutations/src/maps.ts`).
 
-import { at, bind, forEach, type CombinatorialMap, type MathJSON } from "../../src/map-helpers.ts";
+import { at, bind, forEach, lets, type CombinatorialMap, type MathJSON } from "../../src/map-helpers.ts";
 import { inverseRsk } from "./families/rsk-pairs.ts";
-import { evacuationRows, inversePromotionRows, promotionRows } from "./promotion.ts";
-import { afterInserting } from "./tableau.ts";
+import { evacuation, insertionRows, inversePromotion, promotion } from "./flat.ts";
 
 /** The rows of one tableau of the pair: a pair's contents are two `StandardTableau(rows)`, and
  *  `At` doesn't see through the constructor, but a lambda argument does. */
@@ -71,11 +70,10 @@ const compositionCutWhere = (cut: MathJSON): MathJSON => [
 
 const upTo = (count: MathJSON): MathJSON => ["Range", 1, count, 1];
 const entryOf = (list: MathJSON, index: MathJSON): MathJSON => ["At", list, index];
-/** The position of v in `list`. */
+/** The position of v in `list`, which holds it once (`IndexWhere` may be Nothing, which a `Map` body can't compile). */
 const positionOf = (list: MathJSON, v: MathJSON): MathJSON => [
-  "IndexWhere",
-  list,
-  ["Function", ["Equal", "z", v], "z"],
+  "Min",
+  ["Filter", upTo(["Length", list]), ["Function", ["Equal", entryOf(list, "z"), v], "z"]],
 ];
 /** `list` with the entries at positions a and b exchanged. */
 const exchanged = (list: MathJSON, a: MathJSON, b: MathJSON): MathJSON =>
@@ -202,24 +200,37 @@ const rowDescentsToColumnDescents: MathJSON = [
     bind(
       "ra_row",
       ["Flatten", forEach(upTo(["Length", "_raw"]), forEach(upTo(["Length", at("r")]), "r", "c"), "r")],
-      bind(
-        "ra_end",
+      lets(
         [
-          "Fold",
-          ["Function", tableauAction, "ra_acc", "ra_step"],
-          appended(upTo(cells), ["Flatten", "_raw"]),
-          upTo(["Multiply", cells, cells]),
+          // Indexing a list not typed a list of integers may give Nothing, which a `Map` body can't compile.
+          ["ra_natural", forEach(upTo(cells), "c", "c"), "list<integer>"],
+          ["ra_flat", ["Flatten", "_raw"], "list<integer>"],
+          [
+            "ra_end",
+            [
+              "Fold",
+              ["Function", bind("ra_acc", "ra_state", tableauAction, "list<integer>"), "ra_state", "ra_step"],
+              appended("ra_natural", "ra_flat"),
+              upTo(["Multiply", cells, cells]),
+            ],
+            "list<integer>",
+          ],
         ],
+        // T's cell in reading order c is entry cells + c of the state, and the cells of row r are consecutive.
         forEach(
           upTo(["Length", "_raw"]),
           forEach(
-            ["Filter", upTo(cells), ["Function", ["Equal", entryOf("ra_row", "c"), "r"], "c"]],
-            entryOf("ra_end", ["Add", "c", cells]),
+            upTo(["Length", at("r")]),
+            entryOf("ra_end", [
+              "Add",
+              cells,
+              ["Count", ["Filter", upTo(cells), ["Function", ["Less", entryOf("ra_row", "z"), "r"], "z"]]],
+              "c",
+            ]),
             "c",
           ),
           "r",
         ),
-        "list<integer>",
       ),
       "list<integer>",
     ),
@@ -319,7 +330,7 @@ export const TABLEAUX_MAPS: readonly CombinatorialMap[] = [
     name: "Evacuation",
     from: "standard_tableau",
     to: "standard_tableau",
-    body: bind("ev_t", "_raw", evacuationRows("ev_t"), "list<list<integer>>"),
+    body: evacuation("ev", "_raw"),
     guard: tableauGuard,
     summary:
       "Schützenberger's evacuation (involution): remove the entry 1, slide the rest in, and give the cell that empties the largest label, until nothing is left.",
@@ -329,7 +340,7 @@ export const TABLEAUX_MAPS: readonly CombinatorialMap[] = [
     name: "TableauPromotion",
     from: "standard_tableau",
     to: "standard_tableau",
-    body: bind("pm_t", "_raw", promotionRows("pm_t"), "list<list<integer>>"),
+    body: promotion("_raw"),
     guard: tableauGuard,
     summary:
       "Promotion: replace the largest entry by a hole, slide it to the corner at the origin, and add one to every entry.",
@@ -339,7 +350,7 @@ export const TABLEAUX_MAPS: readonly CombinatorialMap[] = [
     name: "InverseTableauPromotion",
     from: "standard_tableau",
     to: "standard_tableau",
-    body: bind("pm_t", "_raw", inversePromotionRows("pm_t"), "list<list<integer>>"),
+    body: inversePromotion("_raw"),
     guard: tableauGuard,
     summary:
       "Inverse promotion: replace the entry 1 by n + 1, slide it out to the rim, and subtract one from every entry.",
@@ -355,19 +366,14 @@ export const TABLEAUX_MAPS: readonly CombinatorialMap[] = [
       "If",
       ["Equal", cells, 0],
       ["List"],
-      bind(
-        "cb_word",
-        [
-          "Flatten",
-          forEach(
-            ["Range", 1, ["Length", "_raw"], 1],
-            at(["If", ["Equal", "r", 1], 1, ["Subtract", ["Add", ["Length", "_raw"], 2], "r"]]),
-            "r",
-          ),
-        ],
-        ["Fold", ["Function", afterInserting("a", "b"), "a", "b"], ["List"], "cb_word"],
-        "list<integer>",
-      ),
+      insertionRows("cb", [
+        "Flatten",
+        forEach(
+          ["Range", 1, ["Length", "_raw"], 1],
+          at(["If", ["Equal", "r", 1], 1, ["Subtract", ["Add", ["Length", "_raw"], 2], "r"]]),
+          "r",
+        ),
+      ]),
     ],
     guard: tableauGuard,
     summary: "Remove the first row and column-insert its entries back into the rest, largest first.",

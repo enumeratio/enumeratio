@@ -29,7 +29,12 @@ test("the build compiled maps", () => {
 
 // Maps whose Epsil the compiler can't take, left to the interpreter on purpose: each is pinned here with its
 // reason, so one that starts to compile (or is dropped) shows up as a failure rather than going unnoticed.
-const INTERPRETED: Readonly<Record<string, string>> = {};
+const INTERPRETED: Readonly<Record<string, string>> = {
+  "Rsk@permutation":
+    "its image is a pair of constructed tableaux (StandardTableau(rows)), which compiled code can't make",
+  "ToPermutation@standard_tableau_pair":
+    "its argument is a pair of constructed tableaux, which the compiled path's toJs doesn't read",
+};
 
 test("the pinned maps are declared and not compiled", () => {
   for (const key of Object.keys(INTERPRETED)) {
