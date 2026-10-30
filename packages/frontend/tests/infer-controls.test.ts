@@ -3,7 +3,15 @@ import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { afterAll, expect, test } from "vite-plus/test";
-import { freeSymbols, inferControls, type InferContext, paramsOf } from "../src/infer-controls.ts";
+import {
+  freeSymbols,
+  type HeadSignature,
+  inferControls,
+  inferFromSignature,
+  type InferContext,
+  paramsOf,
+} from "../src/infer-controls.ts";
+import { tryItOf } from "../src/try-it.ts";
 import { parseControls } from "../src/manipulate.ts";
 
 // What each expression's free symbols get as controls: golden JSON compared with
@@ -63,6 +71,67 @@ const CASES: Record<string, { src: string; ctx?: InferContext }> = {
   "a hint beats a letter": { src: "n", ctx: { letterConventions: true, hints: { n: { min: 0, max: 1 } } } },
 };
 
+// A head's typed signature lifts the literals at its TYPED positions of a call into controls.
+const SIGNATURES: Record<string, { src: string; signature: HeadSignature }> = {
+  "signature: typed count, any positions stay": {
+    src: "IntegerPartitions(8)",
+    signature: {
+      head: "IntegerPartitions",
+      parameters: [
+        { name: "n", type: "integer" },
+        { name: "k", type: "any" },
+        { name: "parts", type: "any" },
+      ],
+    },
+  },
+  "signature: any is not lifted": {
+    src: "IntegerPartitions(8, 3)",
+    signature: { head: "IntegerPartitions", parameters: [{ type: "any" }, { type: "any" }] },
+  },
+  "signature: unnamed parameters get p<i>": {
+    src: "Binomial(10, 3)",
+    signature: { head: "Binomial", parameters: [{ type: "integer" }, { type: "integer" }] },
+  },
+  "signature: a literal past the span stretches it": {
+    src: "Fibonacci(30)",
+    signature: { head: "Fibonacci", parameters: [{ name: "n", type: "integer" }] },
+  },
+  "signature: real, and a boolean": {
+    src: "Scaled(2.5, True)",
+    signature: {
+      head: "Scaled",
+      parameters: [
+        { name: "x", type: "real" },
+        { name: "flag", type: "boolean" },
+      ],
+    },
+  },
+  "signature: union takes its controllable member": {
+    src: "Zeta(2)",
+    signature: { head: "Zeta", parameters: [{ name: "s", type: "infinity | real" }] },
+  },
+  "signature: a complex parameter is not lifted from a real literal": {
+    src: "Zeta(2)",
+    signature: { head: "Zeta", parameters: [{ name: "s", type: "complex | infinity" }] },
+  },
+  "signature: a non-integer literal does not fit an integer": {
+    src: "Fibonacci(2.5)",
+    signature: { head: "Fibonacci", parameters: [{ name: "n", type: "integer" }] },
+  },
+  "signature: variadic repeats its type": {
+    src: "Gcd(12, 18, 24)",
+    signature: { head: "Gcd", parameters: [{ name: "n", type: "integer", variadic: true }] },
+  },
+  "signature: the first call of the head, inside another": {
+    src: "Length(IntegerPartitions(6))",
+    signature: { head: "IntegerPartitions", parameters: [{ name: "n", type: "integer" }] },
+  },
+  "signature: no typed literal": {
+    src: "Foo(Bar)",
+    signature: { head: "Foo", parameters: [{ name: "n", type: "integer" }] },
+  },
+};
+
 const GOLDEN = fileURLToPath(new URL("./infer-controls.golden.json", import.meta.url));
 const updating = process.env.UPDATE_INFER_CONTROLS === "1";
 const golden: Record<string, unknown> = updating ? {} : JSON.parse(readFileSync(GOLDEN, "utf8"));
@@ -79,6 +148,28 @@ for (const [id, { src, ctx }] of Object.entries(CASES)) {
     if (!updating) expect(specs).toEqual(golden[id]);
   });
 }
+
+for (const [id, { src, signature }] of Object.entries(SIGNATURES)) {
+  test(`infers: ${id}`, () => {
+    const { json, errors } = parseExpression(src);
+    expect(errors).toEqual([]);
+    const lifted = inferFromSignature(json, signature);
+    fresh[id] = lifted;
+    expect(JSON.parse(JSON.stringify(lifted))).toEqual(lifted);
+    if (!updating) expect(lifted).toEqual(golden[id]);
+  });
+}
+
+test("a Try it panel: typed tuples and a body over slots", () => {
+  const signature = { head: "IntegerPartitions", parameters: [{ name: "n", type: "integer" }] };
+  expect(tryItOf(parseExpression("IntegerPartitions(8)").json, signature)).toEqual({
+    params: "{{n, 8}, 0, 12, 1, Slider}",
+    value: "IntegerPartitions(_n)",
+  });
+  expect(tryItOf(parseExpression("IntegerPartitions(8)").json, { head: "IntegerPartitions", parameters: [] })).toBe(
+    undefined,
+  );
+});
 
 afterAll(() => {
   if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);

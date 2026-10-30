@@ -11,6 +11,7 @@ import AboutPanel from "./AboutPanel.vue";
 import CarrierFields from "./CarrierFields.vue";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
+import TryIt from "./TryIt.vue";
 
 const props = defineProps<{
   name: string;
@@ -18,6 +19,8 @@ const props = defineProps<{
   prerendered?: readonly (Prerendered | null | undefined)[];
   /** The manifest's typed call forms, each with the package that declares it. */
   overloads?: readonly Overload[];
+  /** The typed parameters of the head's declared signature. */
+  parameters?: readonly { name?: string; type: string; optional: boolean; variadic: boolean }[];
   /** The statistics and maps of a carrier, or of a collection's carrier. */
   fields?: CarrierFieldsData;
   /** The Epsil behind a statistic or family, printed as InputForm (data/definitions.ts). */
@@ -102,6 +105,14 @@ const signatures = computed(() => {
   }
   return [...byCall.values()];
 });
+
+// What "Try it" lifts its controls from: the examples that stand as written, then the enumeration.
+const tryItExamples = computed((): unknown[] => [
+  ...(entry.value?.examples ?? [])
+    .filter((ex) => ex.role !== "test" && ex.role !== "aspirational")
+    .map((ex) => ex.expr),
+  ...(entry.value?.enumerate ? [entry.value.enumerate.expr] : []),
+]);
 
 // notatio-out takes the MathJSON expression as a JSON string.
 const toJson = (expr: unknown): string => JSON.stringify(expr);
@@ -441,6 +452,8 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
         ></notatio-collection-table>
       </ClientOnly>
     </section>
+
+    <TryIt v-if="parameters?.length" :name="name" :examples="tryItExamples" :parameters="parameters" />
 
     <p v-if="missingExample" class="ref-stub">
       No example here is called <code>{{ targeted }}</code

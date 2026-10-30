@@ -163,7 +163,11 @@
         "min": -2,
         "max": 2
       },
-      "start": ["Tuple", 1, 0],
+      "start": [
+        "Tuple",
+        1,
+        0
+      ],
       "controlType": "Slider2D"
     }
   ],
@@ -172,8 +176,16 @@
       "name": "c",
       "domain": {
         "kind": "choices",
-        "values": ["'a'", "'b'", "'c'"],
-        "labels": ["a", "b", "c"]
+        "values": [
+          "'a'",
+          "'b'",
+          "'c'"
+        ],
+        "labels": [
+          "a",
+          "b",
+          "c"
+        ]
       },
       "start": "'a'",
       "controlType": "SetterBar"
@@ -184,8 +196,22 @@
       "name": "c",
       "domain": {
         "kind": "choices",
-        "values": ["'a'", "'b'", "'c'", "'d'", "'e'", "'f'"],
-        "labels": ["a", "b", "c", "d", "e", "f"]
+        "values": [
+          "'a'",
+          "'b'",
+          "'c'",
+          "'d'",
+          "'e'",
+          "'f'"
+        ],
+        "labels": [
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f"
+        ]
       },
       "start": "'a'",
       "controlType": "PopupMenu"
@@ -196,8 +222,18 @@
       "name": "c",
       "domain": {
         "kind": "choices",
-        "values": [2, 3, 5, 7],
-        "labels": ["2", "3", "5", "7"]
+        "values": [
+          2,
+          3,
+          5,
+          7
+        ],
+        "labels": [
+          "2",
+          "3",
+          "5",
+          "7"
+        ]
       },
       "start": 2,
       "controlType": "SetterBar"
@@ -293,8 +329,18 @@
       "name": "k",
       "domain": {
         "kind": "choices",
-        "values": [2, 3, 5, 7],
-        "labels": ["2", "3", "5", "7"]
+        "values": [
+          2,
+          3,
+          5,
+          7
+        ],
+        "labels": [
+          "2",
+          "3",
+          "5",
+          "7"
+        ]
       },
       "start": 5,
       "controlType": "SetterBar"
@@ -328,8 +374,14 @@
       "name": "c",
       "domain": {
         "kind": "choices",
-        "values": ["'a'", "'b'"],
-        "labels": ["a", "b"]
+        "values": [
+          "'a'",
+          "'b'"
+        ],
+        "labels": [
+          "a",
+          "b"
+        ]
       },
       "start": "'a'",
       "controlType": "PopupMenu"
@@ -378,7 +430,11 @@
         "min": -2,
         "max": 2
       },
-      "start": ["Tuple", 1, 0],
+      "start": [
+        "Tuple",
+        1,
+        0
+      ],
       "controlType": "Slider2D"
     },
     {
@@ -417,5 +473,309 @@
       "start": 1,
       "controlType": "Slider"
     }
-  ]
+  ],
+  "signature: typed count, any positions stay": {
+    "body": {
+      "fn": [
+        "IntegerPartitions",
+        "n"
+      ],
+      "sourceOffsets": [
+        0,
+        20
+      ]
+    },
+    "specs": [
+      {
+        "name": "n",
+        "domain": {
+          "kind": "integers",
+          "min": 0,
+          "max": 12
+        },
+        "start": 8,
+        "controlType": "Slider"
+      }
+    ]
+  },
+  "signature: any is not lifted": {
+    "body": {
+      "fn": [
+        "IntegerPartitions",
+        {
+          "num": "8",
+          "sourceOffsets": [
+            18,
+            19
+          ]
+        },
+        {
+          "num": "3",
+          "sourceOffsets": [
+            21,
+            22
+          ]
+        }
+      ],
+      "sourceOffsets": [
+        0,
+        23
+      ]
+    },
+    "specs": []
+  },
+  "signature: unnamed parameters get p<i>": {
+    "body": {
+      "fn": [
+        "Binomial",
+        "p1",
+        "p2"
+      ],
+      "sourceOffsets": [
+        0,
+        15
+      ]
+    },
+    "specs": [
+      {
+        "name": "p1",
+        "domain": {
+          "kind": "integers",
+          "min": 0,
+          "max": 12
+        },
+        "start": 10,
+        "controlType": "Slider"
+      },
+      {
+        "name": "p2",
+        "domain": {
+          "kind": "integers",
+          "min": 0,
+          "max": 12
+        },
+        "start": 3,
+        "controlType": "Slider"
+      }
+    ]
+  },
+  "signature: a literal past the span stretches it": {
+    "body": {
+      "fn": [
+        "Fibonacci",
+        "n"
+      ],
+      "sourceOffsets": [
+        0,
+        13
+      ]
+    },
+    "specs": [
+      {
+        "name": "n",
+        "domain": {
+          "kind": "integers",
+          "min": 0,
+          "max": 30
+        },
+        "start": 30,
+        "controlType": "Slider"
+      }
+    ]
+  },
+  "signature: real, and a boolean": {
+    "body": {
+      "fn": [
+        "Scaled",
+        "x",
+        "flag"
+      ],
+      "sourceOffsets": [
+        0,
+        17
+      ]
+    },
+    "specs": [
+      {
+        "name": "x",
+        "domain": {
+          "kind": "reals",
+          "min": -10,
+          "max": 10,
+          "step": 0.05
+        },
+        "start": 2.5,
+        "controlType": "Slider"
+      },
+      {
+        "name": "flag",
+        "domain": {
+          "kind": "booleans"
+        },
+        "start": "True",
+        "controlType": "Checkbox"
+      }
+    ]
+  },
+  "signature: union takes its controllable member": {
+    "body": {
+      "fn": [
+        "Zeta",
+        "s"
+      ],
+      "sourceOffsets": [
+        0,
+        7
+      ]
+    },
+    "specs": [
+      {
+        "name": "s",
+        "domain": {
+          "kind": "reals",
+          "min": -10,
+          "max": 10,
+          "step": 0.05
+        },
+        "start": 2,
+        "controlType": "Slider"
+      }
+    ]
+  },
+  "signature: a complex parameter is not lifted from a real literal": {
+    "body": {
+      "fn": [
+        "Zeta",
+        {
+          "num": "2",
+          "sourceOffsets": [
+            5,
+            6
+          ]
+        }
+      ],
+      "sourceOffsets": [
+        0,
+        7
+      ]
+    },
+    "specs": []
+  },
+  "signature: a non-integer literal does not fit an integer": {
+    "body": {
+      "fn": [
+        "Fibonacci",
+        {
+          "num": "2.5",
+          "sourceOffsets": [
+            10,
+            13
+          ]
+        }
+      ],
+      "sourceOffsets": [
+        0,
+        14
+      ]
+    },
+    "specs": []
+  },
+  "signature: variadic repeats its type": {
+    "body": {
+      "fn": [
+        "Gcd",
+        "n",
+        "p2",
+        "p3"
+      ],
+      "sourceOffsets": [
+        0,
+        15
+      ]
+    },
+    "specs": [
+      {
+        "name": "n",
+        "domain": {
+          "kind": "integers",
+          "min": 0,
+          "max": 12
+        },
+        "start": 12,
+        "controlType": "Slider"
+      },
+      {
+        "name": "p2",
+        "domain": {
+          "kind": "integers",
+          "min": 0,
+          "max": 18
+        },
+        "start": 18,
+        "controlType": "Slider"
+      },
+      {
+        "name": "p3",
+        "domain": {
+          "kind": "integers",
+          "min": 0,
+          "max": 24
+        },
+        "start": 24,
+        "controlType": "Slider"
+      }
+    ]
+  },
+  "signature: the first call of the head, inside another": {
+    "body": {
+      "fn": [
+        "Length",
+        {
+          "fn": [
+            "IntegerPartitions",
+            "n"
+          ],
+          "sourceOffsets": [
+            7,
+            27
+          ]
+        }
+      ],
+      "sourceOffsets": [
+        0,
+        28
+      ]
+    },
+    "specs": [
+      {
+        "name": "n",
+        "domain": {
+          "kind": "integers",
+          "min": 0,
+          "max": 12
+        },
+        "start": 6,
+        "controlType": "Slider"
+      }
+    ]
+  },
+  "signature: no typed literal": {
+    "body": {
+      "fn": [
+        "Foo",
+        {
+          "sym": "Bar",
+          "sourceOffsets": [
+            4,
+            7
+          ]
+        }
+      ],
+      "sourceOffsets": [
+        0,
+        8
+      ]
+    },
+    "specs": []
+  }
 }

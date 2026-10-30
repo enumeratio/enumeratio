@@ -6,7 +6,7 @@
 import { PACKAGE_MODULES, type PackageModule } from "./generated/package-modules.ts";
 import { SYMBOLS } from "./generated/symbols.ts";
 import type { Registry } from "./registry.ts";
-import type { Description, Overload, SymbolInfo } from "./types.ts";
+import type { Description, Overload, Parameter, SymbolInfo } from "./types.ts";
 
 const ENGINE = "compute-engine";
 const SITE = "https://enumeratio.dev/reference/symbol/";
@@ -42,11 +42,60 @@ export function winningOverload(overloads: readonly Overload[]): Overload | unde
 
 const isSignature = (type: string | undefined): boolean => type?.startsWith("(") === true;
 
+/** `text` cut at its top-level commas: those inside `<>`, `()`, `[]`, `{}` stay. */
+function splitTopLevel(text: string): string[] {
+  const parts: string[] = [];
+  let depth = 0;
+  let from = 0;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i]!;
+    if ("<([{".includes(c)) depth++;
+    // The `>` of `->` closes nothing.
+    else if (">)]}".includes(c) && !(c === ">" && text[i - 1] === "-")) depth--;
+    else if (c === "," && depth === 0) {
+      parts.push(text.slice(from, i));
+      from = i + 1;
+    }
+  }
+  parts.push(text.slice(from));
+  return parts.map((p) => p.trim()).filter((p) => p !== "");
+}
+
+/**
+ * The parameters of a function type, `(x: integer, any?, list<integer>*) -> any`: each one's
+ * name (the type's own, else `names`' by position), type, and whether it is optional or
+ * repeats. Undefined for a type that is not a function type.
+ */
+export function parseParameters(type: string, names: readonly string[] = []): Parameter[] | undefined {
+  if (!type.startsWith("(")) return undefined;
+  let depth = 0;
+  let close = -1;
+  for (let i = 0; i < type.length && close < 0; i++) {
+    if (type[i] === "(") depth++;
+    else if (type[i] === ")" && --depth === 0) close = i;
+  }
+  if (close < 0) return undefined;
+  return splitTopLevel(type.slice(1, close)).map((raw, i) => {
+    const named = /^(\w+)\s*:\s*(.*)$/s.exec(raw);
+    const written = (named?.[2] ?? raw).trim();
+    const variadic = /[*+]$/.test(written);
+    const optional = variadic ? written.endsWith("*") : written.endsWith("?");
+    const name = named?.[1] ?? names[i];
+    return {
+      ...(name === undefined ? {} : { name }),
+      type: written.replace(/[?*+]$/, "").trim(),
+      optional,
+      variadic,
+    };
+  });
+}
+
 /** What the manifest alone says of `info`, with the summary and count where already loaded. */
 function fromManifest(info: SymbolInfo): Description {
   const winner = winningOverload(info.overloads);
   const type = winner?.type;
   const constant = info.overloads.every((o) => o.package === ENGINE) && !isSignature(type);
+  const parameters = isSignature(type) ? parseParameters(type!, info.params) : undefined;
   const pkg = info.documented[0];
   const module = pkg === undefined ? undefined : loaded.get(pkg);
   const summary = module?.SUMMARIES[info.name];
@@ -59,6 +108,7 @@ function fromManifest(info: SymbolInfo): Description {
     ...(isSignature(type) ? { signature: type } : type === undefined ? {} : { type }),
     overloads: info.overloads,
     ...(info.params === undefined ? {} : { params: info.params }),
+    ...(parameters === undefined ? {} : { parameters }),
     ...(info.attributes === undefined ? {} : { attributes: info.attributes }),
     documented: info.documented,
     ...(info.findstat === undefined ? {} : { findstat: info.findstat }),

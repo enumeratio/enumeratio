@@ -257,7 +257,7 @@ const discreteScheme = (value: Json): Record<string, string> => {
 };
 
 /** `name` -> `_name` throughout, so a Manipulate body reads its parameters as slots. */
-function slotted(node: Json, names: ReadonlySet<string>): Json {
+export function slotted(node: Json, names: ReadonlySet<string>): Json {
   const sym = symOf(node);
   if (sym !== undefined && names.has(sym)) {
     return typeof node === "string" ? `_${sym}` : ({ ...(node as object), sym: `_${sym}` } as Json);
