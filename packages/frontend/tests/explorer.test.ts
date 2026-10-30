@@ -1,0 +1,122 @@
+// The explorer each collection record implies: golden JSON compared with `toEqual` (AGENTS.md),
+// regenerated with `UPDATE_EXPLORER=1 vp test` after an intended change.
+
+import { readFileSync, writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { ComputeEngine } from "@cortex-js/compute-engine";
+import { CARRIERS, declareCombinatorics } from "@enumeratio/combinatorics";
+import { readEntries, recordDirs } from "@enumeratio/entry/node";
+import { declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures";
+import type { ReferenceEntry } from "@enumeratio/entry";
+import { expect, test } from "vite-plus/test";
+import { parseExpression } from "@enumeratio/formats/expression";
+import { splitColumns } from "../src/collection-table.ts";
+import { catalogOf, DEFAULT_COLUMNS, explorerOf } from "../src/explorer.ts";
+import { openRowSource } from "../src/row-source.ts";
+import { engineProbes } from "../src/explorer-engine.ts";
+import { GLYPH_KINDS } from "../src/glyphs.ts";
+
+const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
+// A head two packages document is one record: the first wins, as the site's loader has it.
+const byName = new Map<string, ReferenceEntry>();
+for (const { dir } of recordDirs(PACKAGES))
+  for (const e of readEntries(dir)) if (!byName.has(e.name)) byName.set(e.name, e);
+const records = [...byName.values()];
+const ce = new ComputeEngine();
+declareCombinatorics(ce);
+declareCarrierPlurals(ce, CARRIERS);
+declareCarrierElement(ce, CARRIERS);
+declareStructures(ce);
+// Probed as the site's build probes: an expression that does not open, or a statistic that does
+// not answer on the first row, is left out.
+const catalog = { ...catalogOf(records), ...engineProbes(ce) };
+const collections = records.filter((r) => r.grades !== undefined).toSorted((a, b) => (a.name < b.name ? -1 : 1));
+
+const specs = new Map(await Promise.all(collections.map(async (r) => [r.name, await explorerOf(r, catalog)] as const)));
+
+const GOLDEN = fileURLToPath(new URL("./explorer.golden.json", import.meta.url));
+const updating = process.env.UPDATE_EXPLORER === "1";
+
+test("the explorer of each collection record", () => {
+  const fresh = Object.fromEntries(
+    collections.map((r) => {
+      const spec = specs.get(r.name);
+      return [
+        r.name,
+        spec === undefined
+          ? null
+          : {
+              expr: spec.expr,
+              ...(spec.template !== undefined && { template: spec.template }),
+              ...(spec.size !== undefined && { size: spec.size }),
+              ...(spec.glyph !== undefined && { glyph: spec.glyph }),
+              columns: spec.columns,
+              derived: spec.derived,
+              statistics: spec.candidates.length,
+            },
+      ];
+    }),
+  );
+  if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
+  expect(fresh).toEqual(JSON.parse(readFileSync(GOLDEN, "utf8")));
+});
+
+test("every glyph a carrier record or an explorer names is a glyph kind", () => {
+  for (const r of records.filter((r) => r.catalogCarrier && r.glyph !== undefined))
+    expect(GLYPH_KINDS.has(r.glyph!), `${r.name}: ${r.glyph}`).toBe(true);
+  for (const [name, spec] of specs)
+    if (spec?.glyph !== undefined) expect(GLYPH_KINDS.has(spec.glyph), `${name}: ${spec.glyph}`).toBe(true);
+});
+
+test("the size never goes past the record's maxSize", () => {
+  for (const r of collections) {
+    const size = specs.get(r.name)?.size;
+    if (size === undefined) continue;
+    expect(size.min, r.name).toBeLessThanOrEqual(size.start);
+    expect(size.start, r.name).toBeLessThanOrEqual(size.max);
+    if (r.maxSize !== undefined) expect(size.max, r.name).toBeLessThanOrEqual(r.maxSize);
+  }
+});
+
+test("a derived table's columns are statistics on its carrier, few", () => {
+  for (const r of collections) {
+    const spec = specs.get(r.name);
+    if (spec === undefined || r.enumerate?.columns !== undefined) continue;
+    expect(spec.columns.length, r.name).toBeLessThanOrEqual(DEFAULT_COLUMNS);
+    const names = new Set(spec.candidates.map((c) => c.name));
+    for (const c of spec.columns) expect(names.has(c), `${r.name}: ${c}`).toBe(true);
+  }
+});
+
+test("an explicit enumerate: wins, field by field", () => {
+  const explicit = collections.filter((r) => r.enumerate !== undefined);
+  expect(explicit.length).toBeGreaterThan(0);
+  for (const r of explicit) {
+    const spec = specs.get(r.name)!;
+    const e = r.enumerate!;
+    expect(spec.expr, r.name).toBe(e.expr);
+    expect(spec.size, r.name).toBeUndefined();
+    if (e.columns !== undefined) expect(spec.columns, r.name).toEqual(splitColumns(e.columns));
+    if (e.glyph !== undefined) expect(spec.glyph, r.name).toBe(e.glyph);
+    expect(spec.pageSize, r.name).toBe(e.pageSize ?? 10);
+  }
+});
+
+test("a record without enumerate: gains its table where its call can be told", () => {
+  const derived = collections.filter((r) => r.enumerate === undefined);
+  const gained = derived.filter((r) => specs.get(r.name) !== undefined);
+  expect(gained.length).toBeGreaterThan(derived.length / 2);
+});
+
+test("a derived glyph draws the first row", async () => {
+  const problems: string[] = [];
+  for (const r of collections.filter((r) => r.enumerate === undefined)) {
+    const spec = specs.get(r.name);
+    if (spec?.glyph === undefined) continue;
+    const { json } = parseExpression(spec.expr);
+    const opened = openRowSource(ce, { collection: json, columns: [], glyph: spec.glyph });
+    const batch = opened.ok ? await opened.source.rows([1n, 2n], [0, 1]) : undefined;
+    if (batch?.rows[0]?.[0] === undefined || batch.rows[0][0] === "") problems.push(`${r.name}: ${spec.glyph}`);
+  }
+  expect(problems).toEqual([]);
+});

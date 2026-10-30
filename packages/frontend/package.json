@@ -16,6 +16,8 @@
     "./core": "./dist/core.mjs",
     "./declare-carriers": "./dist/declare-carriers.mjs",
     "./display": "./dist/display.mjs",
+    "./explorer": "./dist/explorer.mjs",
+    "./explorer-engine": "./dist/explorer-engine.mjs",
     "./kernel-host": "./dist/kernel-host.mjs",
     "./plot-compile": "./dist/plot-compile.mjs",
     "./prerender": "./dist/prerender.mjs",
@@ -27,7 +29,7 @@
     "./declares.json": "./dist/declares.json"
   },
   "scripts": {
-    "build": "vp pack src/index.ts src/core.ts src/symbols.ts src/vdom.ts src/reflect.ts src/conventional-latex.ts src/declare-carriers.ts src/display.ts src/kernel-host.ts src/plot-compile.ts src/prerender.ts src/box-tags.ts src/row-source.ts && node scripts/build-forms.ts && enumeratio-collect-declares .",
+    "build": "vp pack src/index.ts src/core.ts src/symbols.ts src/vdom.ts src/reflect.ts src/conventional-latex.ts src/declare-carriers.ts src/display.ts src/explorer.ts src/explorer-engine.ts src/kernel-host.ts src/plot-compile.ts src/prerender.ts src/box-tags.ts src/row-source.ts && node scripts/build-forms.ts && enumeratio-collect-declares .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"

@@ -1,9 +1,18 @@
+import { catalogOf, type ExplorerCatalog, explorerOf } from "@enumeratio/frontend/explorer";
 import { describeNow } from "@enumeratio/manifest";
 import type { ReferenceEntry } from "@enumeratio/reference";
 import { entries } from "../../.vitepress/data/reference-node.ts";
 import { fieldsOf } from "../../.vitepress/data/carrier-fields.ts";
 import { definitionsOf } from "../../.vitepress/data/definitions.ts";
-import { prerenderExamples } from "../../.vitepress/data/prerender.ts";
+import { explorerProbes, prerenderExamples } from "../../.vitepress/data/prerender.ts";
+
+/** The table a collection's page shows: its `enumerate:` filled in from what the record implies (the statistics on offer stay out of the page data). */
+async function explorerFor(entry: ReferenceEntry, catalog: ExplorerCatalog) {
+  const spec = entry.grades === undefined ? undefined : await explorerOf(entry, catalog);
+  if (spec === undefined) return undefined;
+  const { candidates: _candidates, ...page } = spec;
+  return page;
+}
 
 /** Longest other-system output a page carries; a longer one (a million-element list) is cut. */
 const MAX_OUTPUT_CHARS = 2000;
@@ -36,6 +45,7 @@ function clampOutputs(entry: ReferenceEntry): ReferenceEntry {
 // `overloads` are the manifest's typed call forms with the package behind each.
 export default {
   async paths() {
+    const catalog = { ...catalogOf(entries), ...(await explorerProbes()) };
     const pages = [];
     for (const entry of entries)
       pages.push({
@@ -44,6 +54,7 @@ export default {
           entry: clampOutputs(entry),
           prerendered: await prerenderExamples(entry),
           fields: fieldsOf(entry.name),
+          explorer: await explorerFor(entry, catalog),
           definitions: definitionsOf(entry.name),
           overloads: describeNow(entry.name).overloads ?? [],
           parameters: describeNow(entry.name).parameters ?? [],

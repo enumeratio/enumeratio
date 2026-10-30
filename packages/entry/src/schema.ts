@@ -327,6 +327,7 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     grades: { type: "array", items: { $ref: "#/$defs/CatalogGrade" } },
     unbounded: { type: "boolean" },
     catalogCarrier: { const: true },
+    glyph: { type: "string" },
     statOn: { type: "array", items: { type: "string" } },
     mapOn: { type: "array", items: { type: "string" } },
     names: { $ref: "#/$defs/ReferenceNames" },

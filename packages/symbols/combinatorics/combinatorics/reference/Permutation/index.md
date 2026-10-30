@@ -10,6 +10,7 @@ references:
     identity: Permutation
 stub: carrier
 catalogCarrier: true
+glyph: permutation
 signatures:
   - call: Permutation(list)
     description: The singular-inhabitant constructor for a permutation, as a one-line word.

@@ -417,6 +417,8 @@ export interface ReferenceEntry {
   readonly grades?: readonly CatalogGrade[];
   readonly unbounded?: boolean;
   readonly catalogCarrier?: true;
+  /** On a carrier record: the glyph kind (`GLYPH_KINDS`) that draws one of its elements in a table. */
+  readonly glyph?: string;
   readonly statOn?: readonly string[];
   readonly mapOn?: readonly string[];
   /** This head's own vocabulary in other systems -- Fungrim, the DLMF, Wikidata, the catalog. */

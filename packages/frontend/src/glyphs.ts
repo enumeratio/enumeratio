@@ -351,6 +351,21 @@ export type GlyphKind =
   | "lattice"
   | "diagram";
 
+/** Every kind `renderGlyph` draws; what a row source or a carrier record may name. */
+export const GLYPH_KINDS: ReadonlySet<string> = new Set<GlyphKind>([
+  "permutation",
+  "partition",
+  "tableau",
+  "composition",
+  "subset",
+  "dyck",
+  "tree",
+  "binary-tree",
+  "set-partition",
+  "lattice",
+  "diagram",
+]);
+
 /** Dispatch a glyph `kind` to its renderer over an integer-list `value`. */
 export function renderGlyph(kind: GlyphKind, value: number[], opts?: { n?: number }): string {
   switch (kind) {
