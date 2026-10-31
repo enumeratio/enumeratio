@@ -13,6 +13,7 @@ import {
   atLeastValue,
   atMostValue,
   bind,
+  bindList,
   count,
   equals,
   fold,
@@ -144,9 +145,11 @@ const blockIndices: MathJSON = ["Range", 1, ["Length", "_x"], 1];
 /** For each element e, the right end of the arc leaving it, or 0 if none does. */
 const arcEndFrom: MathJSON = forEach(
   groundSet,
-  sumOver(allArcs, ["If", equals(at("i", lefts), "e"), at("i", rights), 0], "i"),
+  ["If", ["Contains", "arcLefts", "e"], at(["IndexOf", "arcLefts", "e"], "arcRights"), 0],
   "e",
 );
+/** `body` with the arcs' ends bound as lists of integers, as `arcEndFrom` reads them. */
+const withArcLists = (body: MathJSON): MathJSON => bindList("arcLefts", lefts, bindList("arcRights", rights, body));
 /**
  * The longest chain of arcs under `follows`, where `valid` says which arcs may take part. Arcs
  * are taken by their left end e in turn; the carried list holds, at entry e + 1, the longest
@@ -189,28 +192,32 @@ const longestArcChain = (
 const arcEnd = (e: MathJSON): MathJSON => at(e, "ends");
 /** Arcs that nest: the earlier one starts first and ends last. */
 const nestingNumber: MathJSON = hasArc(
-  bind(
-    "ends",
-    arcEndFrom,
-    longestArcChain(
-      (e) => greater(arcEnd(e), 0),
-      (earlier, e) => greater(arcEnd(earlier), arcEnd(e)),
+  withArcLists(
+    bindList(
+      "ends",
+      arcEndFrom,
+      longestArcChain(
+        (e) => greater(arcEnd(e), 0),
+        (earlier, e) => greater(arcEnd(earlier), arcEnd(e)),
+      ),
     ),
   ),
 );
 /** Arcs that cross all at once: some point m has them all start at or before m and end after it. */
 const crossingNumber: MathJSON = hasArc(
-  bind(
-    "ends",
-    arcEndFrom,
-    max(
-      forEach(
-        ["Range", 1, subtract(groundSize, 1), 1],
-        longestArcChain(
-          (e) => and(atMostValue(e, "m"), greater(arcEnd(e), "m")),
-          (earlier, e) => less(arcEnd(earlier), arcEnd(e)),
+  withArcLists(
+    bindList(
+      "ends",
+      arcEndFrom,
+      max(
+        forEach(
+          ["Range", 1, subtract(groundSize, 1), 1],
+          longestArcChain(
+            (e) => and(atMostValue(e, "m"), greater(arcEnd(e), "m")),
+            (earlier, e) => less(arcEnd(earlier), arcEnd(e)),
+          ),
+          "m",
         ),
-        "m",
       ),
     ),
   ),
@@ -224,63 +231,75 @@ const arcComponents: MathJSON = [
   "If",
   less(arcCount, 1),
   ["Length", "_x"],
-  bind(
+  bindList(
     "owner",
     forEach(groundSet, ["Min", ["Filter", blockIndices, ["Function", ["Contains", at("k", "_x"), "e"], "k"]]], "e"),
-    bind(
+    bindList(
       "arcOwner",
       forEach(allArcs, at(at("i", lefts), "owner"), "i"),
       bind(
         "crossing",
         forEach(allArcs, forEach(allArcs, ["If", isCrossing("i", "j"), 1, 0], "j"), "i"),
-        bind(
+        bindList(
           "labels",
-          fold(
-            blockIndices,
-            blockIndices,
-            bind(
-              "reach",
-              forEach(
-                allArcs,
-                min(
+          // The fold's accumulator is typed, so its start and each pass's result are bound as lists of integers.
+          bindList("start", blockIndices, [
+            "Fold",
+            [
+              "Function",
+              bindList(
+                "pass",
+                bindList(
+                  "reach",
                   forEach(
-                    ["Range", 0, arcCount, 1],
-                    [
-                      "If",
-                      equals("j", 0),
-                      add(["Length", "_x"], 1),
-                      [
-                        "If",
-                        equals(at("j", at("i", "crossing")), 1),
-                        at(at("j", "arcOwner"), "a"),
-                        add(["Length", "_x"], 1),
-                      ],
-                    ],
-                    "j",
-                  ),
-                ),
-                "i",
-              ),
-              forEach(
-                blockIndices,
-                min(
-                  forEach(
-                    ["Range", 0, arcCount, 1],
-                    [
-                      "If",
-                      equals("i", 0),
-                      at("c", "a"),
-                      ["If", equals(at("i", "arcOwner"), "c"), at("i", "reach"), add(["Length", "_x"], 1)],
-                    ],
+                    allArcs,
+                    min(
+                      forEach(
+                        ["Range", 0, arcCount, 1],
+                        [
+                          "If",
+                          equals("j", 0),
+                          add(["Length", "_x"], 1),
+                          [
+                            "If",
+                            equals(at("j", at("i", "crossing")), 1),
+                            at(at("j", "arcOwner"), "a"),
+                            add(["Length", "_x"], 1),
+                          ],
+                        ],
+                        "j",
+                      ),
+                    ),
                     "i",
                   ),
+                  forEach(
+                    blockIndices,
+                    min(
+                      forEach(
+                        ["Range", 0, arcCount, 1],
+                        [
+                          "If",
+                          equals("i", 0),
+                          at("c", "a"),
+                          ["If", equals(at("i", "arcOwner"), "c"), at("i", "reach"), add(["Length", "_x"], 1)],
+                        ],
+                        "i",
+                      ),
+                    ),
+                    "c",
+                  ),
                 ),
-                "c",
+                "pass",
               ),
-            ),
-          ),
+              ["Typed", "a", "'list<integer>'"],
+              "b",
+            ],
+            "start",
+            blockIndices,
+          ]),
           count(blockIndices, equals(at("c", "labels"), "c"), "c"),
         ),
+        "list<list<integer>>",
       ),
     ),
   ),
@@ -492,8 +511,9 @@ const depthIndex: MathJSON = [
         "k",
       ),
     ),
-    // The arcs over each element, summed over elements, is the elements under each arc, summed over arcs.
-    sumOver(allArcs, subtract(subtract(at("k", rights), at("k", lefts)), 1), "k"),
+    // The arcs over each element, summed over elements, is the elements under each arc, summed over arcs: a block's
+    // arcs together span its last element less its first, and each arc has one element that is an end.
+    subtract(["Sum", ["Map", ["Function", blockSpan("b"), "b"], "_x"]], arcCount),
   ),
 ];
 
@@ -516,34 +536,53 @@ const ascentTopsAfterSmaller: MathJSON = [
 
 /** Blocks s < t whose i-th arcs interlace, each block's arcs closed off by an arc to n + 1. */
 const interlacingNumber: MathJSON = (() => {
-  /** The j-th element of block s, with n + 1 appended. */
-  const elementOf = (s: MathJSON, j: MathJSON): MathJSON => [
+  // The blocks are bound where they are read: a loop variable used inside a nested lambda loses its type.
+  /** The j-th element of `block`, with n + 1 appended. */
+  const elementOf = (block: MathJSON, j: MathJSON): MathJSON => [
     "If",
-    greater(j, ["Length", at(s)]),
-    add(n, 1),
-    ["At", at(s), j],
+    greater(j, ["Length", block]),
+    add("il_n", 1),
+    ["At", block, j],
   ];
   const [sa, sb, ta, tb] = [
-    elementOf("s", "i"),
-    elementOf("s", add("i", 1)),
-    elementOf("t", "i"),
-    elementOf("t", add("i", 1)),
+    elementOf("il_s", "i"),
+    elementOf("il_s", add("i", 1)),
+    elementOf("il_t", "i"),
+    elementOf("il_t", add("i", 1)),
   ];
   return [
     "If",
     less(blockCount, 2),
     0,
-    sumOver(
-      ["Range", 1, subtract(blockCount, 1)],
+    bind(
+      "il_n",
+      n,
       sumOver(
-        ["Range", add("s", 1), blockCount],
-        count(
-          ["Range", 1, ["Min", ["Length", at("s")], ["Length", at("t")]]],
-          or(and(less(sa, ta), and(less(ta, sb), less(sb, tb))), and(less(ta, sa), and(less(sa, tb), less(tb, sb)))),
+        ["Range", 1, subtract(blockCount, 1)],
+        bind(
+          "il_s",
+          at("s"),
+          sumOver(
+            ["Range", add("s", 1), blockCount],
+            bind(
+              "il_t",
+              at("t"),
+              count(
+                ["Range", 1, ["Min", ["Length", "il_s"], ["Length", "il_t"]]],
+                or(
+                  and(less(sa, ta), and(less(ta, sb), less(sb, tb))),
+                  and(less(ta, sa), and(less(sa, tb), less(tb, sb))),
+                ),
+              ),
+              "list<integer>",
+            ),
+            "t",
+          ),
+          "list<integer>",
         ),
-        "t",
+        "s",
       ),
-      "s",
+      "integer",
     ),
   ];
 })();

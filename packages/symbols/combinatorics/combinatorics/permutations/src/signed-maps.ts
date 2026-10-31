@@ -11,20 +11,28 @@ import {
   positions,
 } from "../../src/map-helpers.ts";
 import { negativesIn, unsigned, withLengths } from "./cycle-flat.ts";
+import { flagZerosToZerosBody, zerosToFlagZerosBody } from "../../words/src/maps.ts";
 
 const n: MathJSON = ["Length", "_raw"];
 const abs = (i: MathJSON = "i"): MathJSON => ["Abs", at(i)];
 
-/** The contents of a carrier value `word` (a binary word): `At` doesn't see through the
- *  constructor, but a lambda argument does. */
-const contentsOf = (word: MathJSON): MathJSON => ["Apply", ["Function", ["At", "bw", 1], "bw"], word];
+/** `expr` with every `from` symbol renamed `to`. */
+const rename = (expr: MathJSON, from: string, to: string): MathJSON =>
+  expr === from ? to : Array.isArray(expr) ? (expr as readonly MathJSON[]).map((x) => rename(x, from, to)) : expr;
 
 /** Each entry of `_raw` given the sign `sign(i)` (1 positive, 0 negative) and keeping its size. */
 const withSigns = (signs: MathJSON): MathJSON =>
   forEach(positions, ["If", ["Equal", at("i", signs), 1], abs(), ["Negate", abs()]]);
 
-/** The binary word of signs, 1 for a positive entry. */
-const positiveWord: MathJSON = ["BinaryWord", forEach(positions, ["If", ["Greater", at("i"), 0], 1, 0])];
+/** The signs rearranged by the binary-word map whose body is `wordMap`, a positive entry being a 1; the underlying
+ *  permutation stays. */
+const resigned = (wordMap: MathJSON): MathJSON =>
+  bind(
+    "sg_word",
+    forEach(positions, ["If", ["Greater", at("i"), 0], 1, 0]),
+    bind("sg_signs", rename(wordMap, "_raw", "sg_word"), withSigns("sg_signs"), "list<integer>"),
+    "list<integer>",
+  );
 
 /** The lengths, largest first, of the cycles with an even (`parity` 0) or odd (1) number of negative entries. */
 const cycleLengthsOfParity = (parity: number): MathJSON =>
@@ -129,7 +137,7 @@ export const SIGNED_PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     from: "signed_permutation",
     to: "signed_permutation",
     // The underlying permutation stays; ZerosToFlagZeros acts on the signs, a positive entry being a 1.
-    body: withSigns(contentsOf(["ZerosToFlagZeros", positiveWord])),
+    body: resigned(zerosToFlagZerosBody),
     summary: "The signs rearranged so the flag negatives of the image count the negatives of the original.",
     note: "FindStat's Mp00270: ZerosToFlagZeros on the sign word, the underlying permutation kept.",
   },
@@ -137,7 +145,7 @@ export const SIGNED_PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     name: "FlagNegativesToNegatives",
     from: "signed_permutation",
     to: "signed_permutation",
-    body: withSigns(contentsOf(["FlagZerosToZeros", positiveWord])),
+    body: resigned(flagZerosToZerosBody),
     summary: "The signs rearranged so the negatives of the image count the flag negatives of the original.",
     note: "FindStat's Mp00271, the inverse of NegativesToFlagNegatives.",
   },

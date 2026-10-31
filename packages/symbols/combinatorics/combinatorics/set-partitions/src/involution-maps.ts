@@ -1,22 +1,17 @@
 // Involutions of set partitions found by FindStat, each written as the definition in its source.
 
-import { at, bind, forEach, type CombinatorialMap, type MathJSON } from "../../src/map-helpers.ts";
+import { at, bind, forEach, lets, type CombinatorialMap, type MathJSON } from "../../src/map-helpers.ts";
+import { blocksOfLeastLabels } from "./maps.ts";
 
 const upTo = (k: MathJSON): MathJSON => ["Range", 1, k, 1];
-const rows = "list<any>";
 
-/** The blocks `blocks` (a list of lists) ordered by their least elements. */
-const byLeastElement = (blocks: MathJSON): MathJSON => [
-  "Map",
-  ["Function", ["At", blocks, ["IndexWhere", blocks, ["Function", ["Equal", ["At", "b", 1], "m"], "b"]]], "m"],
-  ["Sort", ["Map", ["Function", ["At", "b", 1], "b"], blocks]],
-];
-
-export const kzOpen: MathJSON = at(1, "kz_state");
+const kzEntry = (index: MathJSON): MathJSON => at(index, "kz_s");
+/** The stack's length: the state is the n block labels, then the stack of open blocks' labels, the top last. */
+const kzStackLength: MathJSON = ["Subtract", ["Length", "kz_s"], "kz_n"];
 /** Where in the stack the block that i joins sits: gamma places from the top. */
-export const kzSlot: MathJSON = [
+const kzSlot: MathJSON = [
   "Subtract",
-  ["Length", kzOpen],
+  kzStackLength,
   [
     "Count",
     [
@@ -35,53 +30,56 @@ export const kzSlot: MathJSON = [
     ],
   ],
 ];
-export const kzJoined: MathJSON = [
-  "If",
-  ["Greater", at("i", "kz_pred"), 0],
-  ["Join", at(kzSlot, kzOpen), ["List", "i"]],
-  ["List", "i"],
-];
-export const kzRest: MathJSON = [
-  "If",
-  ["Greater", at("i", "kz_pred"), 0],
+const kzJoins: MathJSON = ["Greater", at("i", "kz_pred"), 0];
+
+/** One element i: it takes the label of the block it joins (or opens its own, labeled i); that block leaves the stack and,
+ *  when an arc goes on from i, returns to the top. */
+const kzStep: MathJSON = lets(
   [
-    "Map",
-    ["Function", at("q", kzOpen), "q"],
-    ["Filter", upTo(["Length", kzOpen]), ["Function", ["NotEqual", "q", kzSlot], "q"]],
+    ["kz_slot", ["If", kzJoins, kzSlot, 0], "integer"],
+    ["kz_label", ["If", kzJoins, kzEntry(["Add", "kz_n", "kz_slot"]), "i"], "integer"],
+    ["kz_kept", ["Subtract", kzStackLength, ["If", kzJoins, 1, 0]], "integer"],
+    ["kz_total", ["Add", "kz_n", "kz_kept", ["If", ["Greater", at("i", "kz_succ"), 0], 1, 0]], "integer"],
   ],
-  kzOpen,
-];
+  forEach(
+    upTo("kz_total"),
+    [
+      "If",
+      ["LessEqual", "q", "kz_n"],
+      ["If", ["Equal", "q", "i"], "kz_label", kzEntry("q")],
+      [
+        "If",
+        ["LessEqual", "q", ["Add", "kz_n", "kz_kept"]],
+        kzEntry([
+          "If",
+          ["And", ["Greater", "kz_slot", 0], ["GreaterEqual", ["Subtract", "q", "kz_n"], "kz_slot"]],
+          ["Add", "q", 1],
+          "q",
+        ]),
+        "kz_label",
+      ],
+    ],
+    "q",
+  ),
+);
 
 /**
  * Kasraoui-Zeng. An arc joins consecutive elements of a block. Sweeping 1 .. n with a stack of open blocks, an
  * element closing an arc joins the block gamma places from the top of the stack, gamma being one more than the
  * arcs that start earlier and end later (arcs that nest over it); an element opening an arc then puts its block back
  * on the stack, and any other finishes its block. The image has the arcs' nestings and crossings exchanged.
+ * The sweep carries each element's block, labeled by its least element, and the stack of open blocks' labels.
  */
 export const kasraouiZengBody: MathJSON = bind(
   "kz_n",
   ["Length", ["Flatten", "_raw"]],
-  bind(
-    // The element before x in its block, or 0.
-    "kz_pred",
-    forEach(
-      upTo("kz_n"),
-      bind(
-        "kz_block",
-        at(["IndexWhere", "_raw", ["Function", ["Element", "x", "b"], "b"]]),
-        [
-          "If",
-          ["Equal", ["IndexOf", "kz_block", "x"], 1],
-          0,
-          at(["Subtract", ["IndexOf", "kz_block", "x"], 1], "kz_block"),
-        ],
-        "list<integer>",
-      ),
-      "x",
-    ),
+  [
+    "If",
+    ["LessEqual", "kz_n", 1],
+    "_raw",
     bind(
-      // The element after x in its block, or 0.
-      "kz_succ",
+      // The element before x in its block, or 0.
+      "kz_pred",
       forEach(
         upTo("kz_n"),
         bind(
@@ -89,57 +87,89 @@ export const kasraouiZengBody: MathJSON = bind(
           at(["IndexWhere", "_raw", ["Function", ["Element", "x", "b"], "b"]]),
           [
             "If",
-            ["Equal", ["IndexOf", "kz_block", "x"], ["Length", "kz_block"]],
+            ["Equal", ["IndexOf", "kz_block", "x"], 1],
             0,
-            at(["Add", ["IndexOf", "kz_block", "x"], 1], "kz_block"),
+            at(["Subtract", ["IndexOf", "kz_block", "x"], 1], "kz_block"),
           ],
           "list<integer>",
         ),
         "x",
       ),
       bind(
-        "kz_done",
-        at(2, [
-          "Fold",
-          [
-            "Function",
+        // The element after x in its block, or 0.
+        "kz_succ",
+        forEach(
+          upTo("kz_n"),
+          bind(
+            "kz_block",
+            at(["IndexWhere", "_raw", ["Function", ["Element", "x", "b"], "b"]]),
             [
               "If",
-              ["Greater", at("i", "kz_succ"), 0],
-              ["List", ["Join", kzRest, ["List", kzJoined]], at(2, "kz_state")],
-              ["List", kzRest, ["Join", at(2, "kz_state"), ["List", kzJoined]]],
+              ["Equal", ["IndexOf", "kz_block", "x"], ["Length", "kz_block"]],
+              0,
+              at(["Add", ["IndexOf", "kz_block", "x"], 1], "kz_block"),
             ],
-            "kz_state",
-            "i",
-          ],
-          ["List", ["List"], ["List"]],
-          upTo("kz_n"),
-        ]),
-        byLeastElement("kz_done"),
-        rows,
+            "list<integer>",
+          ),
+          "x",
+        ),
+        bind(
+          "kz_done",
+          ["Fold", ["Function", kzStep, "kz_s", "i"], forEach(upTo("kz_n"), 0, "z"), upTo("kz_n")],
+          blocksOfLeastLabels(forEach(upTo("kz_n"), at("e", "kz_done"), "e")),
+          "list<integer>",
+        ),
+        "list<integer>",
       ),
       "list<integer>",
     ),
-    "list<integer>",
-  ),
+  ],
   "integer",
 );
 
-/** The list of `item` for each `variable` in `over`, built whole (a `Map` stays lazy and does not bind as a list). */
-const built = (over: MathJSON, item: MathJSON, variable: string): MathJSON => [
-  "Fold",
-  ["Function", ["Join", "bt_acc", ["List", item]], "bt_acc", variable],
-  ["List"],
-  over,
-];
 const last = (block: MathJSON): MathJSON => ["At", block, ["Length", block]];
-/** The blocks of `list` after the first `k`. */
-const dropped = (list: MathJSON, k: MathJSON): MathJSON =>
+const blockAt = (k: MathJSON): MathJSON => at(k, "_raw");
+/** The index in `_raw` of the block with the k-th least largest element. */
+const byRank = (k: MathJSON): MathJSON => at(k, "cs_order");
+const sizeAt = (k: MathJSON): MathJSON => ["Length", blockAt(byRank(k))];
+/** The number of leading blocks of p that are singletons `stays` accepts, given a block's least element. */
+const leadLength = (stays: (least: MathJSON) => MathJSON): MathJSON => [
+  "Subtract",
+  [
+    "Min",
+    [
+      "Filter",
+      upTo("cs_m"),
+      ["Function", ["Not", ["And", ["Equal", sizeAt("k"), 1], stays(at(1, blockAt(byRank("k"))))]], "k"],
+    ],
+  ],
+  1,
+];
+const smallerThanX = (e: MathJSON): MathJSON => ["And", ["Greater", e, 1], ["Less", e, "cs_x"]];
+
+/** The blocks of the elements 1 .. n that `labels` puts together, ordered by least element. */
+const groupedBy = (labels: MathJSON): MathJSON =>
   bind(
-    "cs_kept",
-    list,
-    built(["Filter", upTo(["Length", "cs_kept"]), ["Function", ["Greater", "j", k], "j"]], at("j", "cs_kept"), "j"),
-    rows,
+    "cs_lab",
+    labels,
+    [
+      "Map",
+      ["Function", ["Filter", upTo("cs_n"), ["Function", ["Equal", at("q", "cs_lab"), at("g", "cs_lab")], "q"]], "g"],
+      [
+        "Filter",
+        upTo("cs_n"),
+        [
+          "Function",
+          [
+            "Equal",
+            ["Count", ["Filter", upTo("g"), ["Function", ["Equal", at("q", "cs_lab"), at("g", "cs_lab")], "q"]]],
+            1,
+          ],
+          "g",
+        ],
+      ],
+    ],
+    "list<integer>",
   );
 
 /**
@@ -148,138 +178,135 @@ const dropped = (list: MathJSON, k: MathJSON): MathJSON =>
  * element and y = min(r, s), the partition is fixed when b is a singleton or x = y. Below that, the
  * leading singletons of p below s (or all of them, when r < s) join b, and s is split off as a singleton when r > s;
  * above it, the elements of b below x become singletons and, when the first block of p is the singleton x, it joins b.
+ * Each element carries a label for its block in the image: its block's rank in p, or the negated element for a new singleton.
  */
-/** The blocks of p with the block of 1 replaced by `replacement`. */
-const withReplaced = (replacement: MathJSON): MathJSON =>
-  bind(
-    "cs_w",
-    built(upTo("cs_n"), ["If", ["Equal", at("k", "cs_p"), "cs_b"], replacement, at("k", "cs_p")], "k"),
-    "cs_w",
-    rows,
-  );
-const isLeadSingleton = (k: MathJSON): MathJSON => ["Equal", ["Length", at(k, "cs_p")], 1];
-/** Whether the block k of p is no longer one of the leading singletons that `stays` accepts. */
-const leadEnds = (stays: MathJSON): MathJSON => [
-  "Subtract",
-  ["Min", ["Filter", upTo("cs_n"), ["Function", ["Not", ["And", isLeadSingleton("k"), stays]], "k"]]],
-  1,
-];
-const lead: MathJSON = [
-  "Flatten",
-  ["Map", ["Function", at("k", "cs_p"), "k"], ["Filter", upTo("cs_n"), ["Function", ["LessEqual", "k", "cs_i"], "k"]]],
-];
-const smallerThanX = (e: MathJSON): MathJSON => ["And", ["Greater", e, 1], ["Less", e, "cs_x"]];
-
-const callanSwitchBody: MathJSON = [
-  "If",
-  ["Equal", ["Length", "_raw"], 0],
-  ["List"],
-  bind(
-    "cs_p",
-    [
-      "Map",
-      ["Function", at(["IndexWhere", "_raw", ["Function", ["Equal", last("b"), "m"], "b"]]), "m"],
-      ["Sort", ["Map", ["Function", last("b"), "b"], "_raw"]],
-    ],
+const callanSwitchBody: MathJSON = bind(
+  "cs_m",
+  ["Length", "_raw"],
+  [
+    "If",
+    ["Equal", "cs_m", 0],
+    ["List"],
     bind(
-      "cs_b",
-      at(1),
-      [
-        "If",
-        ["Equal", ["Length", "cs_b"], 1],
-        "_raw",
+      "cs_n",
+      ["Length", ["Flatten", "_raw"]],
+      bind(
+        "cs_last",
+        forEach(upTo("cs_m"), last(blockAt("j")), "j"),
         bind(
-          "cs_s",
-          at(2, "cs_b"),
+          // The rank in p of each block of `_raw`, and the block that has each rank.
+          "cs_rank",
+          forEach(
+            upTo("cs_m"),
+            ["Add", 1, ["Count", ["Filter", "cs_last", ["Function", ["Less", "k", at("j", "cs_last")], "k"]]]],
+            "j",
+          ),
           bind(
-            "cs_r",
-            [
-              "Min",
-              [
-                "Map",
-                ["Function", last("b"), "b"],
-                ["Filter", "cs_p", ["Function", ["Greater", ["Length", "b"], 1], "b"]],
-              ],
-            ],
+            "cs_order",
+            forEach(upTo("cs_m"), ["IndexWhere", "cs_rank", ["Function", ["Equal", "v", "k"], "v"]], "k"),
             bind(
-              "cs_x",
-              last(at(1, "cs_p")),
+              "cs_blk",
+              forEach(upTo("cs_n"), ["IndexWhere", "_raw", ["Function", ["Element", "e", "b"], "b"]], "e"),
               bind(
-                "cs_n",
-                ["Length", "cs_p"],
-                [
-                  "If",
-                  ["Equal", "cs_x", ["Min", "cs_r", "cs_s"]],
-                  "_raw",
-                  bind(
-                    "cs_out",
-                    [
-                      "If",
-                      ["Less", "cs_x", ["Min", "cs_r", "cs_s"]],
+                // The rank in p of the block of each element.
+                "cs_p",
+                forEach(upTo("cs_n"), at(at("e", "cs_blk"), "cs_rank"), "e"),
+                bind(
+                  "cs_b",
+                  at(1),
+                  [
+                    "If",
+                    ["Equal", ["Length", "cs_b"], 1],
+                    "_raw",
+                    bind(
+                      "cs_s",
+                      at(2, "cs_b"),
                       bind(
-                        "cs_i",
-                        leadEnds(["Or", ["LessEqual", "cs_r", "cs_s"], ["Less", at(1, at("k", "cs_p")), "cs_s"]]),
+                        "cs_r",
                         [
-                          "If",
-                          ["Greater", "cs_r", "cs_s"],
-                          [
-                            "Join",
-                            dropped(
-                              withReplaced([
-                                "Join",
-                                ["Filter", "cs_b", ["Function", ["NotEqual", "e", "cs_s"], "e"]],
-                                lead,
-                              ]),
-                              "cs_i",
-                            ),
-                            ["List", ["List", "cs_s"]],
-                          ],
-                          dropped(withReplaced(["Join", "cs_b", lead]), "cs_i"),
+                          "Min",
+                          forEach(
+                            ["Filter", upTo("cs_m"), ["Function", ["Greater", ["Length", blockAt("k")], 1], "k"]],
+                            at("k", "cs_last"),
+                            "k",
+                          ),
                         ],
-                        "integer",
-                      ),
-                      bind(
-                        "cs_m",
-                        built(["Filter", "cs_b", ["Function", smallerThanX("e"), "e"]], ["List", "e"], "e"),
                         bind(
-                          "cs_rest",
+                          "cs_x",
+                          at(byRank(1), "cs_last"),
                           [
                             "If",
-                            isLeadSingleton(1),
-                            dropped(
-                              withReplaced([
-                                "Join",
-                                ["Filter", "cs_b", ["Function", ["Not", smallerThanX("e")], "e"]],
-                                ["List", "cs_x"],
-                              ]),
-                              1,
-                            ),
-                            withReplaced(["Filter", "cs_b", ["Function", ["Not", smallerThanX("e")], "e"]]),
+                            ["Equal", "cs_x", ["Min", "cs_r", "cs_s"]],
+                            "_raw",
+                            [
+                              "If",
+                              ["Less", "cs_x", ["Min", "cs_r", "cs_s"]],
+                              bind(
+                                // The leading blocks of p, which join b.
+                                "cs_i",
+                                leadLength((least) => ["Or", ["LessEqual", "cs_r", "cs_s"], ["Less", least, "cs_s"]]),
+                                groupedBy(
+                                  forEach(
+                                    upTo("cs_n"),
+                                    [
+                                      "If",
+                                      ["LessEqual", at("e", "cs_p"), "cs_i"],
+                                      at(1, "cs_rank"),
+                                      [
+                                        "If",
+                                        ["And", ["Greater", "cs_r", "cs_s"], ["Equal", "e", "cs_s"]],
+                                        ["Negate", "e"],
+                                        at("e", "cs_p"),
+                                      ],
+                                    ],
+                                    "e",
+                                  ),
+                                ),
+                                "integer",
+                              ),
+                              groupedBy(
+                                forEach(
+                                  upTo("cs_n"),
+                                  [
+                                    "If",
+                                    ["And", ["Equal", at("e", "cs_blk"), 1], smallerThanX("e")],
+                                    ["Negate", "e"],
+                                    [
+                                      "If",
+                                      ["And", ["Equal", sizeAt(1), 1], ["Equal", "e", "cs_x"]],
+                                      at(1, "cs_rank"),
+                                      at("e", "cs_p"),
+                                    ],
+                                  ],
+                                  "e",
+                                ),
+                              ),
+                            ],
                           ],
-                          ["Join", "cs_m", "cs_rest"],
-                          rows,
+                          "integer",
                         ),
-                        rows,
+                        "integer",
                       ),
-                    ],
-                    bind("cs_sorted", built("cs_out", ["Sort", "b"], "b"), byLeastElement("cs_sorted"), rows),
-                    rows,
-                  ),
-                ],
-                "integer",
+                      "integer",
+                    ),
+                  ],
+                  "list<integer>",
+                ),
+                "list<integer>",
               ),
-              "integer",
+              "list<integer>",
             ),
-            "integer",
+            "list<integer>",
           ),
-          "integer",
+          "list<integer>",
         ),
-      ],
-      "list<integer>",
+        "list<integer>",
+      ),
+      "integer",
     ),
-    rows,
-  ),
-];
+  ],
+  "integer",
+);
 
 export const SET_PARTITION_INVOLUTION_MAPS: readonly CombinatorialMap[] = [
   {
