@@ -4,9 +4,14 @@
 // `BinarySearchTreeParentArray` builds; see bst.ts), and as a Dyck path. The conversions are
 // defined in Epsil, by recursion (recursion.ts); tests/map-definitions.test.ts checks them
 // against an independent TypeScript reading.
+import { buildFromWord, put, zeros } from "../../collections/src/families/nested.ts";
+import { add, at, equal, fold, iff, lets, map, mul, sub, upTo } from "../../collections/src/families/tables.ts";
 import { isLeaf, recurse, self } from "../../src/recursion.ts";
 
 type MathJSON = unknown;
+
+const take = (list: MathJSON, count: MathJSON): MathJSON => ["Take", list, count];
+const drop = (list: MathJSON, count: MathJSON): MathJSON => ["Drop", list, count];
 
 const left = (tree: MathJSON): MathJSON => ["At", tree, 1];
 const right = (tree: MathJSON): MathJSON => ["At", tree, 2];
@@ -118,23 +123,120 @@ const parentArrayExpression = (tree: MathJSON): MathJSON =>
 
 export const parentArrayBody: MathJSON = parentArrayExpression("_raw");
 
-/** The child of `v` in `parents` on the side `side` picks (`Less` for left, `Greater` for right), or 0. */
-const childOf = (parents: MathJSON, v: MathJSON, side: string): MathJSON => [
-  "Fold",
-  ["Function", ["If", ["And", ["Equal", ["At", parents, "c"], v], [side, "c", v]], "c", "found"], "found", "c"],
-  0,
-  ["Range", 1, ["Length", parents], 1],
-];
+const parentCount: MathJSON = ["Length", "_raw"];
 
-/** The tree an in-order parent array describes, built down from its root. */
-export const treeOfParentArrayBody: MathJSON = recurse(
-  ["If", ["Equal", "v", 0], 0, ["List", self(childOf("_raw", "v", "Less")), self(childOf("_raw", "v", "Greater"))]],
-  ["v"],
-  childOf("_raw", 0, "Greater"),
+/** The child of `v` in the array on the side `side` picks (`Less` for left, `Greater` for right), or 0. */
+const childOf = (v: MathJSON, side: string): MathJSON =>
+  fold(
+    ["If", ["And", ["Equal", at("_raw", "pc"), v], [side, "pc", v]], "pc", "pf"],
+    "pf",
+    "pc",
+    0,
+    upTo(1, parentCount),
+  );
+
+/** `body` with the left and right child of every node, and the root, bound from the flat array; the tree is walked
+ *  through them by an explicit stack, so nothing recurses. */
+const withChildren = (body: MathJSON): MathJSON =>
+  lets(
+    [
+      ["pl", map(childOf("pk", "Less"), "pk", upTo(1, parentCount)), "list<integer>"],
+      ["pr", map(childOf("pk", "Greater"), "pk", upTo(1, parentCount)), "list<integer>"],
+      ["proot", childOf(0, "Greater"), "integer"],
+    ],
+    body,
+  );
+
+/** The tree an in-order parent array describes, built from its preorder arity word: a stack walk from the root
+ *  writes the word (a node 2, a missing child 0), and the word is read back from its end into the tree. State:
+ *  [height, words written, the word's slots, the stack's cells]. */
+export const treeOfParentArrayBody: MathJSON = withChildren(
+  lets(
+    [["plen", add(mul(2, parentCount), 1), "integer"]],
+    lets(
+      [
+        [
+          "pword",
+          take(
+            drop(
+              fold(
+                lets(
+                  [
+                    ["pw", "ps", "list<integer>"],
+                    ["pid", at("pw", add("plen", 2, at("pw", 1))), "integer"],
+                  ],
+                  iff(
+                    equal("pid", 0),
+                    put("pw", [1, sub(at("pw", 1), 1)], [2, add(at("pw", 2), 1)], [add(at("pw", 2), 3), 0]),
+                    put(
+                      "pw",
+                      [1, add(at("pw", 1), 1)],
+                      [2, add(at("pw", 2), 1)],
+                      [add(at("pw", 2), 3), 2],
+                      [add("plen", 2, at("pw", 1)), at("pr", "pid")],
+                      [add("plen", 3, at("pw", 1)), at("pl", "pid")],
+                    ),
+                  ),
+                ),
+                "ps",
+                "pj",
+                ["Join", ["List", 1, 0], zeros("plen"), ["List", "proot"], zeros(add(parentCount, 2))],
+                upTo(1, "plen"),
+              ),
+              2,
+            ),
+            "plen",
+          ),
+          "list<integer>",
+        ],
+      ],
+      buildFromWord("pword", "plen", 0),
+    ),
+  ),
 );
 
-/** Only an array that is some tree's in-order parent array converts. */
-export const treeOfParentArrayGuard: MathJSON = ["Equal", parentArrayExpression("_image"), "_raw"];
+/** Only an array that is some tree's in-order parent array converts: walked in order from the root through the
+ *  children it names, every node comes up once and as the next number. A node a second child or a cycle leaves out
+ *  isn't reached; a second root isn't either. State: [height, nodes visited, out of order, the node to open, the
+ *  stack's cells]. */
+export const treeOfParentArrayGuard: MathJSON = withChildren(
+  lets(
+    [
+      [
+        "pwalk",
+        fold(
+          lets(
+            [["iw", "is", "list<integer>"]],
+            iff(
+              ["Not", equal(at("iw", 4), 0)],
+              put("iw", [1, add(at("iw", 1), 1)], [4, at("pl", at("iw", 4))], [add(at("iw", 1), 5), at("iw", 4)]),
+              iff(
+                ["Greater", at("iw", 1), 0],
+                lets(
+                  [["ix", at("iw", add(at("iw", 1), 4)), "integer"]],
+                  put(
+                    "iw",
+                    [1, sub(at("iw", 1), 1)],
+                    [2, add(at("iw", 2), 1)],
+                    [3, iff(equal("ix", add(at("iw", 2), 1)), at("iw", 3), 1)],
+                    [4, at("pr", "ix")],
+                  ),
+                ),
+                "iw",
+              ),
+            ),
+          ),
+          "is",
+          "ij",
+          ["Join", ["List", 0, 0, 0, "proot"], zeros(add(parentCount, 1))],
+          upTo(1, mul(2, parentCount)),
+        ),
+        "list<integer>",
+      ],
+    ],
+    ["And", equal(at("pwalk", 2), parentCount), equal(at("pwalk", 3), 0)],
+  ),
+);
 
 /** Only a Dyck path converts: the tree must give back the word. */
 export const treeOfDyckPathGuard: MathJSON = [

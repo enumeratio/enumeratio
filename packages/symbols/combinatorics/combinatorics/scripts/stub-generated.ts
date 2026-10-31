@@ -14,6 +14,7 @@ const STUBS: Record<string, string> = {
   "../lattice-paths/src/statistics.compiled.generated.js": "COMPILED",
   "../partitions/src/statistics.compiled.generated.js": "COMPILED",
   "../permutations/src/statistics.compiled.generated.js": "COMPILED",
+  "../trees/src/statistics.compiled.generated.js": "COMPILED",
   "../set-partitions/src/statistics.compiled.generated.js": "COMPILED",
 };
 

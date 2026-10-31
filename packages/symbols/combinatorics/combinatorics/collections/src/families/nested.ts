@@ -48,7 +48,14 @@ export function buildFromWord(word: string, length: MathJSON, leaf: MathJSON): M
             equal("ba", 0),
             leaf,
             // The i-th child is i cells below the top; cells start at position 2.
-            map(at("bt", sub(add(height, 2), "bi")), "bi", upTo(1, "ba")),
+            // Joined cell by cell onto a typed list: a Map over cells that are trees may yield Nothing.
+            fold(
+              lets([["bc", "bl", ANY]], ["Join", "bc", ["List", at("bt", sub(add(height, 2), "bi"))]]),
+              "bl",
+              "bi",
+              ["List"],
+              upTo(1, "ba"),
+            ),
           ),
         ],
       ),

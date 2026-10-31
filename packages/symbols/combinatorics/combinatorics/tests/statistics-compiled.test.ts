@@ -18,6 +18,7 @@ import { COMPILED as PARTITIONS_COMPILED } from "../partitions/src/statistics.co
 import { COMPILED as COMPOSITIONS_COMPILED } from "../compositions/src/statistics.compiled.generated.js";
 import { COMPILED as LATTICE_PATHS_COMPILED } from "../lattice-paths/src/statistics.compiled.generated.js";
 import { COMPILED as SET_PARTITIONS_COMPILED } from "../set-partitions/src/statistics.compiled.generated.js";
+import { COMPILED as TREES_COMPILED } from "../trees/src/statistics.compiled.generated.js";
 
 const DEEP = process.env.DEEP_TESTS === "1";
 const ce = bareEngine();
@@ -30,6 +31,7 @@ const AREAS = [
   { name: "compositions", compiled: COMPOSITIONS_COMPILED },
   { name: "lattice-paths", compiled: LATTICE_PATHS_COMPILED },
   { name: "set-partitions", compiled: SET_PARTITIONS_COMPILED },
+  { name: "trees", compiled: TREES_COMPILED },
 ] as const;
 
 for (const area of AREAS) {
@@ -46,6 +48,7 @@ const COMPILED_SIGNATURES = new Set(
     COMPOSITIONS_COMPILED,
     LATTICE_PATHS_COMPILED,
     SET_PARTITIONS_COMPILED,
+    TREES_COMPILED,
   ].flatMap((table) => Object.keys(table)),
 );
 
@@ -86,6 +89,24 @@ function setPartitions(n: number): number[][][] {
   ]);
 }
 
+/** The binary trees of n nodes: 0 (empty) or [left, right]. */
+function binaryTrees(n: number): unknown[] {
+  if (n === 0) return [0];
+  return Array.from({ length: n }, (_, k) => k).flatMap((k) =>
+    binaryTrees(k).flatMap((l) => binaryTrees(n - 1 - k).map((r) => list([l, r]))),
+  );
+}
+/** The ordered trees of n vertices: the list of the children's trees. */
+function orderedTrees(n: number): unknown[] {
+  const forests = (m: number): unknown[][] =>
+    m === 0
+      ? [[]]
+      : Array.from({ length: m }, (_, i) => i + 1).flatMap((first) =>
+          orderedTrees(first).flatMap((tree) => forests(m - first).map((rest) => [tree, ...rest])),
+        );
+  return forests(n - 1).map(list);
+}
+
 /** Small subjects of each carrier, as MathJSON contents. */
 const SUBJECTS: Record<string, unknown[]> = {
   // Up to 4: the cubic statistics are slow to interpret, and the exhaustive sweeps elsewhere
@@ -94,6 +115,8 @@ const SUBJECTS: Record<string, unknown[]> = {
   IntegerPartition: [0, 1, 2, 3, 4, 5, 6, 7].flatMap((n) => partitions(n)).map(list),
   Composition: [0, 1, 2, 3, 4, 5, 6].flatMap(compositions).map(list),
   DyckPath: [0, 1, 2, 3, 4].flatMap(dyckPaths).map(list),
+  BinaryTree: [0, 1, 2, 3, 4, 5].flatMap(binaryTrees),
+  OrderedTree: [1, 2, 3, 4, 5, 6].flatMap(orderedTrees),
   SetPartition: [0, 1, 2, 3, 4].flatMap(setPartitions).map((blocks) => list(blocks.map(list))),
 };
 
