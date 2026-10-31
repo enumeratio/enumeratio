@@ -74,6 +74,8 @@ jobs:
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run lattice-paths/tests/dyck-findstat
       # FindStat maps against their independent readings, over the larger objects (Demazure product, tableau actions).
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run findstat/tests/map-findstat.test.ts
+      # Our statistic distributions against FindStat's, per size, for every adopted statistic the pairs cover.
+      - run: pnpm --filter @enumeratio/combinatorics exec vp test run findstat/tests/distribution-crosscheck.test.ts
       # Tree statistics over the larger trees.
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run trees/tests/tree-statistics
       # Composition statistics over the larger compositions.
