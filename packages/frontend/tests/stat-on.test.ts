@@ -56,11 +56,20 @@ async function answers(collection: string, carrier: string, statistic: string): 
       collection: json,
       columns: [`CombinatorialStat(${carrier}(_), "${statistic}")`],
     });
-    if (!opened.ok) return false;
-    const batch = await opened.source.rows([1n, 2n], [0, opened.source.columns.length]);
-    const cell = batch.rows[0]?.at(-1);
-    const text = cell === undefined ? "" : toText(cell);
-    return text !== "" && text !== "⚠" && !text.startsWith("CombinatorialStat");
+    if (opened.ok) {
+      const batch = await opened.source.rows([1n, 2n], [0, opened.source.columns.length]);
+      const cell = batch.rows[0]?.at(-1);
+      const text = cell === undefined ? "" : toText(cell);
+      if (text !== "" && text !== "⚠" && !text.startsWith("CombinatorialStat")) return true;
+    }
+  } catch {
+    // Fall through to the collection form.
+  }
+  // A carrier that packs parameters ahead of its elements (a subset of 1..n) has no bare row to
+  // wrap; its statistic's page asks the collection itself.
+  try {
+    const value = ce.box(["At", ["CombinatorialStat", json, `'${statistic}'`], 2] as never).evaluate().json;
+    return !Array.isArray(value) || !["At", "CombinatorialStat", "Error"].includes(String(value[0]));
   } catch {
     return false;
   }

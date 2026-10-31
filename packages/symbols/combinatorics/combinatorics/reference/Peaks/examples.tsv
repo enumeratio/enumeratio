@@ -5,6 +5,8 @@ the-lone-peak-at-position-2			[Peaks, [List, 1, 3, 2, 4]]	1			the lone peak at p
 the-one-line-word-312			[Peaks, [Permutation, [List, 3, 1, 2]]]	0			the one-line word $312$
 the-one-line-word-312-as-a-plain-list			[Peaks, [List, 3, 1, 2]]	0			the one-line word $312$, as a plain list
 the-one-line-word-2413			[Peaks, [Permutation, [List, 2, 4, 1, 3]]]	1			the one-line word $2413$
+the-motzkin-path-uluddl			[CombinatorialStat, [MotzkinPath, [List, 1, 0, 1, -1, -1, 0]], "'Peaks'"]	1			the Motzkin path $ULUDDL$
+the-schroeder-path-uuddudl-2			[CombinatorialStat, [SchroederPath, [List, 1, 1, -1, -1, 1, -1, 2]], "'Peaks'"]	2			the Schroeder path $UUDDUDL^2$
 findstat-st000023-1	Properties		[CombinatorialStat, [Permutation, [List, 1]], "'Peaks'"]	0	0	FindStat St000023	FindStat's value for [1]
 findstat-st000023-2	Properties		[CombinatorialStat, [Permutation, [List, 1, 2]], "'Peaks'"]	0	0	FindStat St000023	FindStat's value for [1,2]
 findstat-st000023-3	Properties		[CombinatorialStat, [Permutation, [List, 2, 1]], "'Peaks'"]	0	0	FindStat St000023	FindStat's value for [2,1]

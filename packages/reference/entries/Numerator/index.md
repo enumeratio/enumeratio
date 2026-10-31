@@ -24,7 +24,6 @@ signatures:
     type: (number, any*) -> nothing | number
     overrides: compute-engine
 statOn:
-  - BinaryWord
   - RationalNumber
 stub: engine
 bindings:

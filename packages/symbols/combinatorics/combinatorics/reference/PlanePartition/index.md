@@ -9,5 +9,5 @@ signatures:
   - call: PlanePartition(...)
     description: Catalogued in the enumeratio database; not yet written up here.
     library: enumeratio-combinatorics
-    type: (tuple<list<integer>, list<integer>>) -> plane_partition
+    type: (list<list<integer>>) -> plane_partition
 ---

@@ -10,10 +10,8 @@ catalog:
     on: DyckPath
 statOn:
   - ColoredMotzkinPath
-  - DelannoyPath
   - DyckPath
   - KDyckPath
-  - MotzkinPath
 signatures:
   - call: Returns(path)
     description: Points where the path comes back to height 0.

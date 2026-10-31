@@ -6,6 +6,11 @@ summary: Trace of a matrix or pair of tensor axes.
 signatures:
   - call: "Trace(list<number> | number, axis1: integer?, axis2: integer?) -> list<number> | number"
     description: as compute-engine declares it
+  - call: "Trace(list<number> | number, axis1: integer?, axis2: integer?) -> list<number> | number"
+    description: Trace of a matrix or pair of tensor axes.
+    library: enumeratio-combinatorics
+    type: "((plane_partition) -> number) & ((number | tensor, axis1: integer?, axis2: integer?) -> number | tensor)"
+    overrides: compute-engine
 catalog:
   - system: findstat
     identity: St001919

@@ -1,4 +1,7 @@
 id	in	out
 sum-k-pow-2-k-nothing-10	summation((S(Symbol("k"))**2), (Symbol("k"), 1, 10))	385
 sum-k-pow-neg-6-k-1-positiveinfinity	summation((S(Symbol("k"))**-6), (Symbol("k"), 1, oo))	pi**6/945
+sum-of-a-subset		
+sum-of-a-lehmer-code		
+sum-of-a-subexcedant-sequence		
 sum-k-pow-neg-2-k-1-positiveinfinity	summation((S(Symbol("k"))**-2), (Symbol("k"), 1, oo))	pi**2/6

@@ -1,6 +1,7 @@
 id	in	out	tex.in	tex.out	verdict
 trace-of-a-matrix	Tr[List[List[1, 2], List[3, 4]]]	5	\text{Tr}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right)\right]	5	
 trace-list-list-1-2-3-list-4-5-6-list-7-8-9	Tr[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]	15	\text{Tr}\left[\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\  7 & 8 & 9 \\ \end{array} \right)\right]	15	
+trace-of-a-plane-partition					
 trace-list-list-a-b-list-c-d	Tr[List[List[a, b], List[c, d]]]	a + d	\text{Tr}\left[\left( \begin{array}{cc}  a & b \\  c & d \\ \end{array} \right)\right]	a+d	
 trace-array-a-list-4-3-2	Tr[Array[a, List[4, 3, 2]]]	a[1, 1, 1] + a[2, 2, 2]	\text{Tr}[\text{Array}[a,\{4,3,2\}]]	a(1,1,1)+a(2,2,2)	
 trace-list-list-1-2-3-list-4-5-6-list-7-8-9-f	Tr[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]], f]	f[1, 5, 9]	\text{Tr}\left[\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\  7 & 8 & 9 \\ \end{array} \right),f\right]	f(1,5,9)	disagree

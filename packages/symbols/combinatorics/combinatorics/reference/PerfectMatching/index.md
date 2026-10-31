@@ -9,5 +9,5 @@ signatures:
   - call: PerfectMatching(...)
     description: Catalogued in the enumeratio database; not yet written up here.
     library: enumeratio-combinatorics
-    type: (list<integer>) -> perfect_matching
+    type: (list<list<integer>>) -> perfect_matching
 ---

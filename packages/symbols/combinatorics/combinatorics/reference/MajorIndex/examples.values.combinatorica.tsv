@@ -5,6 +5,7 @@ no-descents	Index[List[1, 2, 3]]	0	\text{Index}(\{1,2,3\})	0
 the-one-line-word-312	Index[List[3, 1, 2]]	1	\text{Index}(\{3,1,2\})	1
 the-one-line-word-312-as-a-plain-list	Index[List[3, 1, 2]]	1	\text{Index}(\{3,1,2\})	1
 the-one-line-word-2413	Index[List[2, 4, 1, 3]]	2	\text{Index}(\{2,4,1,3\})	2
+the-standard-tableau-with-rows-13-24				
 findstat-st000004-1				
 findstat-st000004-2				
 findstat-st000004-3				

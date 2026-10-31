@@ -6,7 +6,5 @@ summary: Dimension of an object
 signatures:
   - call: Dimension(value) -> integer
     description: as compute-engine declares it
-statOn:
-  - Finset
 stub: engine
 ---

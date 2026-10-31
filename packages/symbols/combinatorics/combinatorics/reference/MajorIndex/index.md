@@ -42,7 +42,7 @@ signatures:
   - call: MajorIndex(p)
     description: the major index of a one-line permutation $p$
     library: enumeratio-combinatorics
-    type: (composition | dyck_path | list | permutation) -> integer | number
+    type: (composition | dyck_path | list | permutation | standard_tableau) -> integer | number
 seeAlso:
   - Inversions
   - Descents

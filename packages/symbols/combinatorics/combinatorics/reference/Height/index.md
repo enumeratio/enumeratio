@@ -19,7 +19,6 @@ catalog:
 statOn:
   - BinaryTree
   - ColoredMotzkinPath
-  - DelannoyPath
   - DyckPath
   - KDyckPath
   - KMotzkinPath
@@ -31,15 +30,15 @@ signatures:
   - call: Height(path)
     description: The greatest height the Dyck path reaches.
     library: enumeratio-combinatorics
-    type: (binary_tree | dyck_path | ordered_tree) -> number
+    type: (binary_tree | dyck_path | motzkin_path | ordered_tree | schroeder_path) -> number
   - call: Height(binaryTree)
     description: The most nodes on a path from the root, so a single node has height 1 and the empty tree 0 (St000050).
     library: enumeratio-combinatorics
-    type: (binary_tree | dyck_path | ordered_tree) -> number
+    type: (binary_tree | dyck_path | motzkin_path | ordered_tree | schroeder_path) -> number
   - call: Height(orderedTree)
     description: The most edges on a path from the root, so a single vertex has height 0 (St000166).
     library: enumeratio-combinatorics
-    type: (binary_tree | dyck_path | ordered_tree) -> number
+    type: (binary_tree | dyck_path | motzkin_path | ordered_tree | schroeder_path) -> number
 ---
 
 - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

@@ -13,8 +13,6 @@ seeAlso:
   - UpTo
 names:
   wolframIdentity: true
-statOn:
-  - Finset
 ---
 
 - Never reduces by itself: it is a part specification other heads read, the way $Range$ describes a sequence of numbers. [[At]] is the only head here that reads one.

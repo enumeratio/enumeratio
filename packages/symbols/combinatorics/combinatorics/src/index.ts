@@ -40,6 +40,9 @@ import { declareSetPartitions } from "../set-partitions/src/declare.ts";
 import { declareTableaux } from "../tableaux/src/declare.ts";
 import { declareTrees } from "../trees/src/declare.ts";
 import { declareWords } from "../words/src/declare.ts";
+import { CARRIER_STATISTICS } from "./statistics/carriers.ts";
+import { declareStatistics } from "./statistics/declare.ts";
+import { declareSharedStatistics } from "./statistics/share.ts";
 import { CARRIERS } from "./carriers.ts";
 import { declareMaps } from "./maps.ts";
 
@@ -111,6 +114,9 @@ export function declareCombinatorics(ce: Engine): void {
   // The carrier-less families — permutations' own fast statistic kernels already ran inside
   // `declarePermutations`, above (step 6b).
   declareCollections(ce);
+  // Statistics no area lists, then those a carrier shares with another whose contents read alike.
+  declareStatistics(ce, CARRIER_STATISTICS);
+  declareSharedStatistics(ce);
 }
 
 /**
