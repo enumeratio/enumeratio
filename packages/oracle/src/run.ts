@@ -1683,6 +1683,11 @@ const MPMATH_PREAMBLE = `from mpmath import *
 mp.dps = 30
 ${PY_VALUE}
 ${PY_BROADCAST}
+def enumeratio_pow(a, b):
+    if isinstance(a, int) and isinstance(b, int) and b < 0:
+        return mpmathify(a) ** b
+    return a ** b
+
 def enumeratio_round(x, d):
     if isinstance(x, list):
         return [enumeratio_round(e, d) for e in x]

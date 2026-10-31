@@ -13,11 +13,11 @@ reim-z
 reim-2z		
 reim-w-plus-z		
 reim-list-a-list-b-c		
-reim-exponentiale-pow-2-over-3-times-i-times-pi	[re(((e)**(mpc(0, (mpf(2)/3)) * pi))), im(((e)**(mpc(0, (mpf(2)/3)) * pi)))]	[mpf('-0.499999999999999999999999999999901'), mpf('0.866025403784438646763723170753017')]
+reim-exponentiale-pow-2-over-3-times-i-times-pi	[re(enumeratio_pow(e, (mpc(0, (mpf(2)/3)) * pi))), im(enumeratio_pow(e, (mpc(0, (mpf(2)/3)) * pi)))]	[mpf('-0.499999999999999999999999999999901'), mpf('0.866025403784438646763723170753017')]
 rank-reim-mat		
 reim-2x-plus-i		
 shape-reim-mat		
-reim-5-times-exponentiale-pow-3-over-4-times-i	[re((5 * ((e)**(mpc(0, (mpf(3)/4)) * pi)))), im((5 * ((e)**(mpc(0, (mpf(3)/4)) * pi))))]	[mpf('-3.53553390593273762200422181052452'), mpf('3.53553390593273762200422181052452')]
+reim-5-times-exponentiale-pow-3-over-4-times-i	[re((5 * enumeratio_pow(e, (mpc(0, (mpf(3)/4)) * pi)))), im((5 * enumeratio_pow(e, (mpc(0, (mpf(3)/4)) * pi))))]	[mpf('-3.53553390593273762200422181052452'), mpf('3.53553390593273762200422181052452')]
 reim-i	[re(mpc(0, 1)), im(mpc(0, 1))]	[mpf('0.0'), mpf('1.0')]
 reim-list-i-neg-i-0	[[re(mpc(0, 1)), im(mpc(0, 1))], [re(mpc(0, -1)), im(mpc(0, -1))], [re(0), im(0)]]	[[mpf('0.0'), mpf('1.0')], [mpf('0.0'), mpf('-1.0')], [mpf('0.0'), mpf('0.0')]]
 replaceall-reim-z-rule-z-list-imaginaryunit-neg		

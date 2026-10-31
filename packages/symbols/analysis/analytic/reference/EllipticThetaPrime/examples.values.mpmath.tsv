@@ -30,4 +30,4 @@ theta1-prime-0-q-matches-the-classical	(jtheta(1, 0.3, 0.2, 1))	1.17800737108732
 a-complex-argument-u	(jtheta(3, mpc(0.3, 0.1), 0.2, 1))	(-0.47368280767693821090775935886 - 0.134840072893700918825620962106j)	
 q-1-is-declined-the-series-diverges	(jtheta(3, 0.3, 1, 1))	ValueError: abs(q) > THETA_Q_LIM = 1.000000	error
 symbolic-arguments-are-left-unevaluated-rather			
-u-1e30-declines-rather-than-answering-wrong	(jtheta(1, ((10)**30), (mpmathify(1) / pi), 1))	-1.06316185403308149866289662661	inconclusive
+u-1e30-declines-rather-than-answering-wrong	(jtheta(1, enumeratio_pow(10, 30), (mpmathify(1) / pi), 1))	-1.06316185403308149866289662661	inconclusive

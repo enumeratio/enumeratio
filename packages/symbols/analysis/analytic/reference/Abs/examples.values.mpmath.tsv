@@ -30,7 +30,7 @@ the-gap-between-two-temperatures-70-and-95	fabs((70 - 95))	25.0
 the-distance-between-the-points-1-i-and-4-5i-of	fabs((mpc(1, 1) - mpc(4, 5)))	5.0	
 even-function-x-x	almosteq(fabs(-8), fabs(8), 1e-20)	True	
 triangle-inequality-a-b-le-a-b	(fabs((3 + -8)) <= (fabs(3) + fabs(-8)))	True	
-z-2-z-bar-z	almosteq(((fabs(mpc(3, 4)))**2), (mpc(3, 4) * conj(mpc(3, 4))), 1e-20)	True	
+z-2-z-bar-z	almosteq(enumeratio_pow(fabs(mpc(3, 4)), 2), (mpc(3, 4) * conj(mpc(3, 4))), 1e-20)	True	
 multiplicative-ab-a-b	almosteq(fabs((mpc(1, 2) * mpc(3, -1))), (fabs(mpc(1, 2)) * fabs(mpc(3, -1))), 1e-20)	True	
 abs-1	fabs(1)		
 abs-neg-1	fabs(-1)		
@@ -47,6 +47,6 @@ abs-neg-1-plus-neg-sqrt-3-times-i	fabs((-1 + mpc(0, (-sqrt(3)))))
 abs-1-plus-neg-sqrt-3-times-i	fabs((1 + mpc(0, (-sqrt(3)))))		
 abs-sqrt-3-minus-i	fabs((sqrt(3) + mpc(0, -1)))		
 abs-2	fabs(2)		
-abs-1-over-2-pow-2	((fabs((mpf(1)/2)))**2)		
-abs-2-pow-2	((fabs(2))**2)		
+abs-1-over-2-pow-2	enumeratio_pow(fabs((mpf(1)/2)), 2)		
+abs-2-pow-2	enumeratio_pow(fabs(2), 2)		
 doesn-t-factor-constants-out-of-a-symbolic			

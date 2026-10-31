@@ -12,7 +12,7 @@ n-hypergeometric0f1-1-neg-2-50	enumeratio_n(lambda: (hyp0f1(1, -2)), 50)	-0.1965
 matrixfunction-function-hypergeometric0f1-1-over			
 series-hypergeometric0f1-a-x-x-0-3			
 n-neg-1-over-4-times-hypergeometric0f1-1-over-2	((((mpf(-1)/4) * hyp0f1((mpf(1)/2), (mpf(1)/2))) + ((mpf(1)/4) * hyp0f1((mpf(-1)/2), (mpf(1)/2))) + ((mpf(1)/2) * hyp0f1((mpf(3)/2), (mpf(1)/2)))))	0.0	
-n-neg-1-over-4-times-hypergeometric0f1-1-over-3	((((mpf(-1)/4) * ((hyp0f1((mpf(1)/2), (mpf(1)/2)))**2)) + ((mpf(1)/2) * ((hyp0f1((mpf(3)/2), (mpf(1)/2)))**2))))	-0.25	
+n-neg-1-over-4-times-hypergeometric0f1-1-over-3	((((mpf(-1)/4) * enumeratio_pow(hyp0f1((mpf(1)/2), (mpf(1)/2)), 2)) + ((mpf(1)/2) * enumeratio_pow(hyp0f1((mpf(3)/2), (mpf(1)/2)), 2))))	-0.25	
 n-2-times-hypergeometric0f1-3-over-2-2-plus-neg	(((2 * hyp0f1((mpf(3)/2), 2)) + ((mpf(-1)/4) * hyp0f1((mpf(1)/2), 2)) + ((mpf(1)/4) * hyp0f1((mpf(-1)/2), 2))))	-3.94430452610505902705864282641e-31	
-n-2-times-hypergeometric0f1-3-over-2-2-pow-2	(((2 * ((hyp0f1((mpf(3)/2), 2))**2)) + ((mpf(-1)/4) * ((hyp0f1((mpf(1)/2), 2))**2))))	-0.250000000000000000000000000003	
+n-2-times-hypergeometric0f1-3-over-2-2-pow-2	(((2 * enumeratio_pow(hyp0f1((mpf(3)/2), 2), 2)) + ((mpf(-1)/4) * enumeratio_pow(hyp0f1((mpf(1)/2), 2), 2))))	-0.250000000000000000000000000003	
 b-0-is-a-pole-stays-symbolic	hyp0f1(0, 0.5)	ZeroDivisionError: pole in hypergeometric series	error

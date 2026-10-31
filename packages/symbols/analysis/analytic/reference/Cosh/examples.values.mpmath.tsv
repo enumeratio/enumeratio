@@ -23,7 +23,7 @@ cosh-1-over-5-times-i-times-pi	cosh((mpc(0, (mpf(1)/5)) * pi))	(0.80901699437494
 cosh-1-over-24-times-i-times-pi	cosh((mpc(0, (mpf(1)/24)) * pi))	(0.991444861373810411144557526929 + 0.0j)
 matrixfunction-function-cosh-1-1-list-list-1		
 even-function-cosh-x-cosh-x	almosteq(cosh((-1)), cosh(1), 1e-20)	True
-hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	almosteq((((cosh(1))**2) - ((sinh(1))**2)), 1, 1e-20)	True
+hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	almosteq((enumeratio_pow(cosh(1), 2) - enumeratio_pow(sinh(1), 2)), 1, 1e-20)	True
 the-definition-cosh-x-frac-e-x-e-x-2		
 cosh-2-x-sinh-2-x-should-simplify-to-1		
 cosh-1-over-12-times-i-times-pi	cosh((mpc(0, (mpf(1)/12)) * pi))	(0.965925826289068286749743199729 + 0.0j)
@@ -33,7 +33,7 @@ cosh-1-over-8-times-i-times-pi	cosh((mpc(0, (mpf(1)/8)) * pi))	(0.92387953251128
 cosh-1-over-7-times-i-times-pi	cosh((mpc(0, (mpf(1)/7)) * pi))	(0.900968867902419126236102319507 + 0.0j)
 cosh-1-over-6-times-i-times-pi	cosh((mpc(0, (mpf(1)/6)) * pi))	(0.866025403784438646763723170753 + 0.0j)
 cosh-2-over-9-times-i-times-pi	cosh((mpc(0, (mpf(2)/9)) * pi))	(0.766044443118978035202392650555 + 0.0j)
-n-sinh-1-over-2-plus-cosh-1-over-2-pow-2	((((sinh((mpf(1)/2)) + cosh((mpf(1)/2))))**2))	2.71828182845904523536028747135
-n-neg-sinh-1-over-2-plus-cosh-1-over-2-pow-2	(((((-sinh((mpf(1)/2))) + cosh((mpf(1)/2))))**2))	0.367879441171442321595523770161
-n-neg-2-times-cosh-1-times-cosh-1-over-2-pow-2	(((-2 * cosh(1) * ((cosh((mpf(1)/2)))**2)) + (2 * ((cosh((mpf(1)/2)))**2)) + ((cosh(1))**2)))	1.0
-n-cosh-1-over-2-plus-1-over-2-times-i-times-pi	(((cosh(((mpf(1)/2) + (mpc(0, (mpf(1)/2)) * pi))))**2))	(-0.271540317407621889238952810379 + 9.96385830668815376149492298655e-32j)
+n-sinh-1-over-2-plus-cosh-1-over-2-pow-2	(enumeratio_pow((sinh((mpf(1)/2)) + cosh((mpf(1)/2))), 2))	2.71828182845904523536028747135
+n-neg-sinh-1-over-2-plus-cosh-1-over-2-pow-2	(enumeratio_pow(((-sinh((mpf(1)/2))) + cosh((mpf(1)/2))), 2))	0.367879441171442321595523770161
+n-neg-2-times-cosh-1-times-cosh-1-over-2-pow-2	(((-2 * cosh(1) * enumeratio_pow(cosh((mpf(1)/2)), 2)) + (2 * enumeratio_pow(cosh((mpf(1)/2)), 2)) + enumeratio_pow(cosh(1), 2)))	1.0
+n-cosh-1-over-2-plus-1-over-2-times-i-times-pi	(enumeratio_pow(cosh(((mpf(1)/2) + (mpc(0, (mpf(1)/2)) * pi))), 2))	(-0.271540317407621889238952810379 + 9.96385830668815376149492298655e-32j)

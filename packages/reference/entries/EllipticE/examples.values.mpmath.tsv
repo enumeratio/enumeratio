@@ -13,5 +13,5 @@ elliptice-0-1	ellipe(0, 1)	0.0
 elliptice-0-0	ellipe(0, 0)	0.0
 elliptice-1	ellipe(1)	1.0
 elliptice-0	ellipe(0)	1.57079632679489661923132169164
-elliptice-1-plus-sqrt-2-minus-sqrt-2-times-1	ellipe((((1 + sqrt(2) + (-sqrt((2 * (1 + sqrt(2)))))))**4))	1.56992768564486037900789151686
-elliptice-1-minus-1-plus-sqrt-2-minus-sqrt-2	ellipe((1 + (-(((1 + sqrt(2) + (-sqrt((2 * (1 + sqrt(2)))))))**4))))	1.00436266925705018792386967065
+elliptice-1-plus-sqrt-2-minus-sqrt-2-times-1	ellipe(enumeratio_pow((1 + sqrt(2) + (-sqrt((2 * (1 + sqrt(2)))))), 4))	1.56992768564486037900789151686
+elliptice-1-minus-1-plus-sqrt-2-minus-sqrt-2	ellipe((1 + (-enumeratio_pow((1 + sqrt(2) + (-sqrt((2 * (1 + sqrt(2)))))), 4))))	1.00436266925705018792386967065

@@ -7,7 +7,7 @@ sech-0	sech(0)	1.0
 d-sech-x-x		
 matrixfunction-function-sech-1-1-list-list-1		
 functionmeromorphic-sech-x-x		
-n-2-minus-sech-1-over-2-pow-2-times-sech-1	(((2 + (-((sech((mpf(1)/2)))**2))) * sech(1)))	0.786447732965927410149698934344
-n-2-times-sech-1-times-sech-1-over-2-pow-2-plus	(((2 * sech(1) * ((sech((mpf(1)/2)))**2)) + (((-2 * ((sech((mpf(1)/2)))**2)) + ((sech((mpf(1)/2)))**4)) * ((sech(1))**2)) + (-((sech((mpf(1)/2)))**4))))	9.86076131526264756764660706603e-32
-n-sech-1-over-2-plus-1-over-2-times-i-times-pi	(((sech(((mpf(1)/2) + (mpc(0, (mpf(1)/2)) * pi))))**2))	(-3.68269437683116927578165409087 - 1.35132216489605668956707355933e-30j)
-n-2-minus-sech-2-pow-2-times-sech-4	(((2 + (-((sech(2))**2))) * sech(4)))	0.0706508248531644656862476558611
+n-2-minus-sech-1-over-2-pow-2-times-sech-1	(((2 + (-enumeratio_pow(sech((mpf(1)/2)), 2))) * sech(1)))	0.786447732965927410149698934344
+n-2-times-sech-1-times-sech-1-over-2-pow-2-plus	(((2 * sech(1) * enumeratio_pow(sech((mpf(1)/2)), 2)) + (((-2 * enumeratio_pow(sech((mpf(1)/2)), 2)) + enumeratio_pow(sech((mpf(1)/2)), 4)) * enumeratio_pow(sech(1), 2)) + (-enumeratio_pow(sech((mpf(1)/2)), 4))))	9.86076131526264756764660706603e-32
+n-sech-1-over-2-plus-1-over-2-times-i-times-pi	(enumeratio_pow(sech(((mpf(1)/2) + (mpc(0, (mpf(1)/2)) * pi))), 2))	(-3.68269437683116927578165409087 - 1.35132216489605668956707355933e-30j)
+n-2-minus-sech-2-pow-2-times-sech-4	(((2 + (-enumeratio_pow(sech(2), 2))) * sech(4)))	0.0706508248531644656862476558611

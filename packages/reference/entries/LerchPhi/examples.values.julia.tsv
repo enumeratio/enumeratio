@@ -261,6 +261,7 @@ n-lerchphi-1p5-2-plus-i-2	(enumeratio_lerch(enumeratio_decimal("1.5"), enumerati
 n-lerchphi-1p5-2-plus-i-0p5	(enumeratio_lerch(enumeratio_decimal("1.5"), enumeratio_complex(2, 1), enumeratio_decimal("0.5")))	no continuation past |z| = 1 for this a	error
 n-lerchphi-1p5-2-plus-i-5-over-2	(enumeratio_lerch(enumeratio_decimal("1.5"), enumeratio_complex(2, 1), (5 // 2)))	no continuation past |z| = 1 for this a	error
 n-lerchphi-1p5-2-plus-i-neg-2p5	(enumeratio_lerch(enumeratio_decimal("1.5"), enumeratio_complex(2, 1), enumeratio_decimal("-2.5")))	no continuation past |z| = 1 for this a	error
+n-lerchphi-neg-1p5e6-neg-15-5-over-2	(enumeratio_lerch(-1500000, -15, (5 // 2)))	no continuation past |z| = 1 for this a	error
 n-lerchphi-neg-1p5-2-1	(enumeratio_lerch(enumeratio_decimal("-1.5"), 2, 1))	0.7649204402503805027199844225751947528102966519903172794812267456977115964994014	
 n-lerchphi-neg-1p5-2-2	(enumeratio_lerch(enumeratio_decimal("-1.5"), 2, 2))	0.1567197064997463315200103849498701647931355653397884803458488362015256023337281	
 n-lerchphi-neg-1p5-2-0p5	(enumeratio_lerch(enumeratio_decimal("-1.5"), 2, enumeratio_decimal("0.5")))	no continuation past |z| = 1 for this a	error

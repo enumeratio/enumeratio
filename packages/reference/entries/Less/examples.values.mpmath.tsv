@@ -1,8 +1,8 @@
 id	in	out
 2-over-17-lt-1-over-5-lt-1-over-10-times-pi		
 3-over-2-lt-5-over-3	((mpf(3)/2) < (mpf(5)/3))	True
-1-lt-1-plus-128-times-10-pow-neg-16	(1 < (1 + (128 * ((10)**-16))))	True
-1-lt-1-plus-256-times-10-pow-neg-16	(1 < (1 + (256 * ((10)**-16))))	True
-pi-pow-exponentiale-lt-exponentiale-pow-pi	(((pi)**e) < ((e)**pi))	True
+1-lt-1-plus-128-times-10-pow-neg-16	(1 < (1 + (128 * enumeratio_pow(10, -16))))	True
+1-lt-1-plus-256-times-10-pow-neg-16	(1 < (1 + (256 * enumeratio_pow(10, -16))))	True
+pi-pow-exponentiale-lt-exponentiale-pow-pi	(enumeratio_pow(pi, e) < enumeratio_pow(e, pi))	True
 refine-sqrt-x-pow-2-x-lt-0		
 integrate-boole-1-lt-x-pow-2-plus-y-pow-2-lt-2		

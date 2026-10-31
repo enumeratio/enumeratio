@@ -26,10 +26,10 @@ n-binomial-7-over-3-1-over-5-20	enumeratio_n(lambda: (binomial((mpf(7)/3), (mpf(
 binomial-n-4			
 matrixfunction-function-binomial-1-2-1-list-list			
 the-number-of-distinct-5-card-hands-dealt-from-a	binomial(52, 5)	2598960.0	
-the-probability-of-exactly-3-heads-in-10-fair	(mpmathify(binomial(10, 3)) / ((2)**10))	0.1171875	
+the-probability-of-exactly-3-heads-in-10-fair	(mpmathify(binomial(10, 3)) / enumeratio_pow(2, 10))	0.1171875	
 symmetry-binom-n-k-binom-n-n-k	almosteq(binomial(10, 3), binomial(10, 7), 1e-20)	True	
 pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n	almosteq((binomial(9, 2) + binomial(9, 3)), binomial(10, 3), 1e-20)	True	
-row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4	almosteq((binomial(4, 0) + binomial(4, 1) + binomial(4, 2) + binomial(4, 3) + binomial(4, 4)), ((2)**4), 1e-20)	True	
+row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4	almosteq((binomial(4, 0) + binomial(4, 1) + binomial(4, 2) + binomial(4, 3) + binomial(4, 4)), enumeratio_pow(2, 4), 1e-20)	True	
 sum-of-squares-along-a-row-sum-k-binom-n-k-2			
 vandermonde-s-identity-sum-k-binom-m-k-binom-n-r			
 the-alternating-row-sum-vanishes-sum-k-1-k-binom			

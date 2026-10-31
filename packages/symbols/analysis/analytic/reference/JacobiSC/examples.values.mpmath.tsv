@@ -6,9 +6,9 @@ series-jacobisc-u-m-u-0-5
 series-jacobisc-z-m-m-0-2			
 u-0-is-0-for-any-m			
 n-jacobisc-sqrt-2-over-4-times-i-neg-1	(ellipfun('sc', mpc(0, (mpmathify(sqrt(2)) / 4)), m=-1))	(0.0 + 0.332870852168694459527360349282j)	
-n-jacobisc-1-over-2-times-1-plus-sqrt-2-over-2-1	(ellipfun('sc', ((mpf(1)/2) * (1 + (mpmathify(sqrt(2)) / 2))), m=((((1 + (-(mpmathify(sqrt(2)) / 2))))**2) * (((1 + (mpmathify(sqrt(2)) / 2)))**-2))))	1.14044382950628500964856955655	
+n-jacobisc-1-over-2-times-1-plus-sqrt-2-over-2-1	(ellipfun('sc', ((mpf(1)/2) * (1 + (mpmathify(sqrt(2)) / 2))), m=(enumeratio_pow((1 + (-(mpmathify(sqrt(2)) / 2))), 2) * enumeratio_pow((1 + (mpmathify(sqrt(2)) / 2)), -2))))	1.14044382950628500964856955655	
 n-jacobisc-sqrt-2-times-i-neg-1	(ellipfun('sc', mpc(0, sqrt(2)), m=-1))	(0.0 + 0.703332475251434351202684814829j)	
-n-jacobisc-2-times-1-plus-sqrt-2-over-2-1-minus	(ellipfun('sc', (2 * (1 + (mpmathify(sqrt(2)) / 2))), m=((((1 + (-(mpmathify(sqrt(2)) / 2))))**2) * (((1 + (mpmathify(sqrt(2)) / 2)))**-2))))	0.254314476338384897019034796759	
+n-jacobisc-2-times-1-plus-sqrt-2-over-2-1-minus	(ellipfun('sc', (2 * (1 + (mpmathify(sqrt(2)) / 2))), m=(enumeratio_pow((1 + (-(mpmathify(sqrt(2)) / 2))), 2) * enumeratio_pow((1 + (mpmathify(sqrt(2)) / 2)), -2))))	0.254314476338384897019034796759	
 symbolic-arguments-are-left-unevaluated-rather			
 m-1-at-a-shared-pole-of-sn-and-cn	(ellipfun('sc', ((mpf(1)/2) * mpc(0,1) * pi), m=1))	(0.0 + 1.0j)	
-u-1e16-declines-rather-than-answering-wrong	(ellipfun('sc', ((10)**16), m=(mpf(1)/4)))	-7.95279020460493107746514362499	inconclusive
+u-1e16-declines-rather-than-answering-wrong	(ellipfun('sc', enumeratio_pow(10, 16), m=(mpf(1)/4)))	-7.95279020460493107746514362499	inconclusive

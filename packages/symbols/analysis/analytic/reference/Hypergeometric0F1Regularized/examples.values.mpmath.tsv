@@ -19,6 +19,6 @@ n-hypergeometric0f1regularized-0-0-2	enumeratio_n(lambda: (enumeratio_hyperreg([
 n-hypergeometric0f1regularized-0-neg-48-50	enumeratio_n(lambda: (enumeratio_hyperreg([], [0], -48)), 50)	-0.75356407978144308380327864211537660841009027837078	
 n-hypergeometric0f1regularized-4-0-25	enumeratio_n(lambda: (enumeratio_hyperreg([], [4], 0)), 25)	0.1666666666666666666666667	
 matrixfunction-function			
-n-neg-1-over-2-times	((((mpf(-1)/2) * ((enumeratio_hyperreg([], [(mpf(3)/2)], (mpf(1)/2)))**2)) + ((enumeratio_hyperreg([], [(mpf(1)/2)], (mpf(1)/2)))**2)))	0.318309886183790671537767526745	
-n-neg-2-times-hypergeometric0f1regularized-3	(((-2 * ((enumeratio_hyperreg([], [(mpf(3)/2)], 2))**2)) + ((enumeratio_hyperreg([], [(mpf(1)/2)], 2))**2)))	0.318309886183790671537767526742	
+n-neg-1-over-2-times	((((mpf(-1)/2) * enumeratio_pow(enumeratio_hyperreg([], [(mpf(3)/2)], (mpf(1)/2)), 2)) + enumeratio_pow(enumeratio_hyperreg([], [(mpf(1)/2)], (mpf(1)/2)), 2)))	0.318309886183790671537767526745	
+n-neg-2-times-hypergeometric0f1regularized-3	(((-2 * enumeratio_pow(enumeratio_hyperreg([], [(mpf(3)/2)], 2), 2)) + enumeratio_pow(enumeratio_hyperreg([], [(mpf(1)/2)], 2), 2)))	0.318309886183790671537767526742	
 exact-arguments-stay-unevaluated-n-gives-the	enumeratio_hyperreg([], [-1], 2)	3.71503556045843821754119637531	inconclusive

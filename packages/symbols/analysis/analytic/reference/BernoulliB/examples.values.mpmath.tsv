@@ -12,7 +12,7 @@ the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac
 the-bernoulli-polynomial-at-a-rational-point-b-2	bernpoly(2, (mpf(1)/2))	-0.0833333333333333333333333333333	
 with-a-second-argument-the-bernoulli-polynomial			
 threads-element-wise-over-a-list-as-wolfram-s	[bernoulli(1), bernoulli(2), bernoulli(3)]	[mpf('-0.5'), mpf('0.166666666666666666666666666666658'), mpf('0.0')]	
-faulhaber-s-formula-recovers-sum-k-0-4-k-2-30	(mpmathify(((binomial(3, 0) * bernoulli(0) * ((5)**3)) + (binomial(3, 1) * bernoulli(1) * ((5)**2)) + (binomial(3, 2) * bernoulli(2) * ((5)**1)))) / 3)	30.0	
+faulhaber-s-formula-recovers-sum-k-0-4-k-2-30	(mpmathify(((binomial(3, 0) * bernoulli(0) * enumeratio_pow(5, 3)) + (binomial(3, 1) * bernoulli(1) * enumeratio_pow(5, 2)) + (binomial(3, 2) * bernoulli(2) * enumeratio_pow(5, 1)))) / 3)	30.0	
 von-staudt-clausen-the-denominator-of-b-2n-is			
 zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see	almosteq(zeta(-3), (-(mpmathify(bernoulli(4)) / 4)), 1e-20)	True	
 the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here	((binomial(5, 0) * bernoulli(0)) + (binomial(5, 1) * bernoulli(1)) + (binomial(5, 2) * bernoulli(2)) + (binomial(5, 3) * bernoulli(3)) + (binomial(5, 4) * bernoulli(4)))	-1.23259516440783094595582588325e-31	

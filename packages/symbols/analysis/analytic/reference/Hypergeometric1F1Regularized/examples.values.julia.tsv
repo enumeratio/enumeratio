@@ -8,6 +8,7 @@ a-2-b-neg-2-at-0-4	enumeratio_ball(hypergeometric_1f1_regularized, 2, -2, enumer
 a-complex-argument-at-b-2	(enumeratio_ball(hypergeometric_1f1_regularized, 1, 2, enumeratio_complex(enumeratio_decimal("0.5"), enumeratio_decimal("0.5"))))	(1.237328119797784069894845843099864966485095290314265971448979552963336930496678+0.3435500466294457537916792909960464828794248492235261216596773901562416903345865j)
 a-complex-argument-at-a-nonpositive-integer-b	(enumeratio_ball(hypergeometric_1f1_regularized, 1, -1, enumeratio_complex(enumeratio_decimal("0.3"), enumeratio_decimal("-0.4"))))	(-0.2131895076621400828458702305075238713150109646976428302177631114708851715777332-0.261596366272892112276342596729054749500299612596454947004007259460505295887791j)
 simplify-normal-series		
+n-hypergeometric1f1regularized-1-0-neg-1	(enumeratio_ball(hypergeometric_1f1_regularized, -1, 0, -1))	1.0
 n-hypergeometric1f1regularized-1-0-0	(enumeratio_ball(hypergeometric_1f1_regularized, -1, 0, 0))	0.0
 n-hypergeometric1f1regularized-2-neg-4-2-50	enumeratio_nshow(enumeratio_ball(hypergeometric_1f1_regularized, 2, -4, 2), 50)	1.8915983613262464581709894299072020001741607860613e+03
 n-hypergeometric1f1regularized-1-0-1-30	enumeratio_nshow(enumeratio_ball(hypergeometric_1f1_regularized, 1, 0, 1), 30)	2.71828182845904523536028747135e+00

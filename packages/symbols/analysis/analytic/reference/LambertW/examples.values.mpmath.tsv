@@ -6,7 +6,7 @@ branch-1-at-neg-1	(lambertw(-1, 1))	(-2.06227772959828388497848672001 + 7.588631
 branch-5-at-10	(lambertw(10, 5))	(-1.09287958299090413212213851588 + 29.8084832490946943464683823013j)
 branch-3-at-a-complex-argument	(lambertw(mpc(1, 2), 3))	(-2.107207506626455309227547103 + 18.2710854311368702348915956181j)
 the-branch-point-1-e	lambertw((-(mpmathify(1) / e)))	-0.999999999999999701721040753804
-2e-2-w-e-w-at-w-2	lambertw((2 * ((e)**2)))	2.0
+2e-2-w-e-w-at-w-2	lambertw((2 * enumeratio_pow(e, 2)))	2.0
 ln-2-cdot-e-ln-2-frac-ln-2-2	lambertw((-(mpmathify(log(2)) / 2)))	-0.693147180559945309417232121458
 a-branch-other-than-0-or-1-checked-against-n	(lambertw(-0.14, -3))	(-4.64527917427885927457162185157 - 13.8127453252188161630578598574j)
 the-branch-k-1-written-in-compute-engine-s-z-k	(lambertw(1, 1))	(-1.53391331979357450791974108207 + 4.37518515306189838547090656485j)

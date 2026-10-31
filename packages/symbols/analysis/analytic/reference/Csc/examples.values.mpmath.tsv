@@ -4,11 +4,11 @@ csc-pi-over-4	csc((mpmathify(pi) / 4))	1.41421356237309504880168872421
 csc-pi-over-2	csc((mpmathify(pi) / 2))	1.0	
 csc-60-circ-frac-2-sqrt-3-3-exactly			
 a-machine-precision-argument-evaluates	csc(1.2)	1.07291637770989724722931986264	
-a-huge-24-40-argument	(csc(((24)**40)))	2.49948040351611424574540349574	
-a-huge-10-100-argument	(csc(((10)**100)))	-2.68545681760634800202383438551	
-a-huge-3-200-argument	(csc(((3)**200)))	-1.06526709477390217658231720513	
-a-huge-neg-7-60-argument	(csc((-((7)**60))))	2.73881358675581820616788336515	
-a-huge-10-80-plus-1-over-3-argument	(csc((mpmathify((((10)**80) + 1)) / 3)))	-5.45142176678059424177629412895	disagree
+a-huge-24-40-argument	(csc(enumeratio_pow(24, 40)))	2.49948040351611424574540349574	
+a-huge-10-100-argument	(csc(enumeratio_pow(10, 100)))	-2.68545681760634800202383438551	
+a-huge-3-200-argument	(csc(enumeratio_pow(3, 200)))	-1.06526709477390217658231720513	
+a-huge-neg-7-60-argument	(csc((-enumeratio_pow(7, 60))))	2.73881358675581820616788336515	
+a-huge-10-80-plus-1-over-3-argument	(csc((mpmathify((enumeratio_pow(10, 80) + 1)) / 3)))	-5.45142176678059424177629412895	disagree
 csc-5-under-n	(csc(5))	-1.04283521277140581978311985591	
 series-csc-x-x-0-10			
 series-csc-x-x-pi-5			
@@ -32,9 +32,9 @@ functionmeromorphic-csc-x-x
 reciprocal-of-sin-csc-x-frac-1-sin-x	almosteq(csc((mpmathify(pi) / 6)), (mpmathify(1) / sin((mpmathify(pi) / 6))), 1e-20)	True	
 csc-1-over-8-times-pi	csc(((mpf(1)/8) * pi))	2.61312592975275305571328634685	
 csc-3-over-10-times-pi	csc(((mpf(3)/10) * pi))	1.23606797749978969640917366873	
-neg-2-times-neg-2-plus-2-times-csc-1-over-2-pow	((-2 * (-2 + (2 * ((csc((mpf(1)/2)))**2))) * ((csc(1))**2) * ((csc((mpf(1)/2)))**4)) + ((csc((mpf(1)/2)))**8))	1.00974195868289511092701256356e-28	
-n-4-times-neg-1-plus-csc-1-over-2-pow-2-times	((4 * (-1 + ((csc((mpf(1)/2)))**2)) * ((csc(1))**2)))	18.9284625738935580106428544233	
-n-csc-1-over-2-plus-1-over-2-times-pi-pow-2	(((csc(((mpf(1)/2) + ((mpf(1)/2) * pi))))**2))	1.29844641040952483688376649885	
-n-4-times-neg-1-plus-csc-2-pow-2-times-csc-4-pow	((4 * (-1 + ((csc(2))**2)) * ((csc(4))**2)))	1.46277035971197344609670179082	
+neg-2-times-neg-2-plus-2-times-csc-1-over-2-pow	((-2 * (-2 + (2 * enumeratio_pow(csc((mpf(1)/2)), 2))) * enumeratio_pow(csc(1), 2) * enumeratio_pow(csc((mpf(1)/2)), 4)) + enumeratio_pow(csc((mpf(1)/2)), 8))	1.00974195868289511092701256356e-28	
+n-4-times-neg-1-plus-csc-1-over-2-pow-2-times	((4 * (-1 + enumeratio_pow(csc((mpf(1)/2)), 2)) * enumeratio_pow(csc(1), 2)))	18.9284625738935580106428544233	
+n-csc-1-over-2-plus-1-over-2-times-pi-pow-2	(enumeratio_pow(csc(((mpf(1)/2) + ((mpf(1)/2) * pi))), 2))	1.29844641040952483688376649885	
+n-4-times-neg-1-plus-csc-2-pow-2-times-csc-4-pow	((4 * (-1 + enumeratio_pow(csc(2), 2)) * enumeratio_pow(csc(4), 2)))	1.46277035971197344609670179082	
 a-pole-sin-0-0	csc(0)	ZeroDivisionError: 	error
 csc-complexinfinity-is-indeterminate-for-the			

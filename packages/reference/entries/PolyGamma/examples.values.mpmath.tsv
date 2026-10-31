@@ -67,7 +67,7 @@ trigamma-at-1-is-pi-squared-over-6	psi(1, 1)	1.64493406684822643647241516665
 trigamma-at-2-is-pi-squared-over-6-minus-1	psi(1, 2)	0.644934066848226436472415166646	
 digamma-of-0-7			
 psi-1-i-0-46300-0-79423-i-complex-argument-from	(psi(1, mpc(1, 1)))	(0.463000096622763786298326518184 - 0.794233542759318865583013617157j)	
-psi-1-2-pi-2-2	almosteq(psi(1, (mpf(1)/2)), (mpmathify(((pi)**2)) / 2), 1e-20)	True	
+psi-1-2-pi-2-2	almosteq(psi(1, (mpf(1)/2)), (mpmathify(enumeratio_pow(pi, 2)) / 2), 1e-20)	True	
 recurrence-at-m-1-z-1-psi-z-psi-z-1-z-2	almosteq((psi(1, 1) - psi(1, 2)), 1, 1e-20)	True	
 psi-0-1-gamma-polygamma-0-z-routes-through	psi(0, 1)	-0.577215664901532860606512090082	
 psi-1-2-gamma-2-ln-2	psi(0, (mpf(1)/2))	-1.963510026021423479440976333	

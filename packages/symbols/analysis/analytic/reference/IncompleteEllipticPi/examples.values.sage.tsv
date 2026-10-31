@@ -12,6 +12,7 @@ pi-0-5-0-4-0-3i-0-6-0-1i	enumeratio_n(elliptic_pi(0.5, (RealField(200)("0.4") + 
 pi-0-2-2-0-5i-0-3	enumeratio_n(elliptic_pi(RealField(200)("0.2"), (2 + 0.5*I), RealField(200)("0.3")))	2.61592830148849 + 0.701563176993067*I	
 pi-1-17-0-45i-10-59477796076938-0-45i-1-17-0-45i	enumeratio_n(elliptic_pi((RealField(200)("1.17") + RealField(200)("0.45")*I), (RealField(200)("10.59477796076938") + RealField(200)("0.45")*I), (RealField(200)("1.17") + RealField(200)("0.45")*I)))	-0.103480823340680 + 15.1133814653099*I	
 pi-1-17-0-45i-5-113185307179586-0-45i-1-17-0-45i	enumeratio_n(elliptic_pi((RealField(200)("1.17") + RealField(200)("0.45")*I), (RealField(200)("-5.113185307179586") + RealField(200)("0.45")*I), (RealField(200)("1.17") + RealField(200)("0.45")*I)))	0.640677318606681 - 8.27777819461497*I	
+pi-500000-neg-1-891-0-7-0-2i-past-the-pole	enumeratio_n(elliptic_pi(500000, RealField(200)("-1.891"), (RealField(200)("0.7") + RealField(200)("0.2")*I)))		
 pi-14-0-4-0-past-the-pole	enumeratio_n(elliptic_pi(14, RealField(200)("0.4"), 0))	0.217927834849349 - 0.435660515351499*I	inconclusive
 pi-2-135-1-9-0-3-past-the-pole	enumeratio_n(elliptic_pi(RealField(200)("2.135"), RealField(200)("1.9"), RealField(200)("0.3")))	TimeoutError: over 60 s	error
 a-complex-amplitude-phi-where-native-ellipticpi	enumeratio_n(elliptic_pi(RealField(200)("0.2"), (RealField(200)("1.2") + 0.5*I), RealField(200)("0.3")))	1.32141537611712 + 0.718665718875180*I	

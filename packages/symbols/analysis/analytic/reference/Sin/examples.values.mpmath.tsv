@@ -7,10 +7,10 @@ sin-pi-over-2	sin((mpmathify(pi) / 2))	1.0
 sin-pi	sin(pi)	1.69568553207377992879174029388e-31	
 degrees-d-converts-to-radians-so-sin-60-circ-is			
 a-machine-precision-argument-evaluates	sin(1.2)	0.932039085967226333578217548636	
-a-huge-10-100-argument	(sin(((10)**100)))		
-a-huge-3-200-argument	(sin(((3)**200)))		
-a-huge-neg-7-60-argument	(sin((-((7)**60))))		
-a-huge-10-80-plus-1-over-3-argument	(sin((mpmathify((((10)**80) + 1)) / 3)))	-0.183438384109942494888411618277	disagree
+a-huge-10-100-argument	(sin(enumeratio_pow(10, 100)))		
+a-huge-3-200-argument	(sin(enumeratio_pow(3, 200)))		
+a-huge-neg-7-60-argument	(sin((-enumeratio_pow(7, 60))))		
+a-huge-10-80-plus-1-over-3-argument	(sin((mpmathify((enumeratio_pow(10, 80) + 1)) / 3)))	-0.183438384109942494888411618277	disagree
 sin-1-under-n	(sin(1))		
 n-of-an-exact-argument-gives-an-arbitrary	(sin((mpf(6)/5)))	0.932039085967226349670134435495	
 evaluates-at-a-complex-argument	sin(mpc(2.5, 1))	(0.923490776043173240823036301218 - 0.941504933270867276025389023751j)	
@@ -47,7 +47,7 @@ int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers
 taylor-series-about-0-only-odd-powers-appear			
 the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1			
 to-30-significant-digits-every-one-correctly	enumeratio_n(lambda: (sin(1)), 30)	0.841470984807896506652502321630	
-a-huge-24-40-argument-reduces-exactly-mod-2-pi	(sin(((24)**40)))	0.400083152719766047070941915848	
+a-huge-24-40-argument-reduces-exactly-mod-2-pi	(sin(enumeratio_pow(24, 40)))	0.400083152719766047070941915848	
 n-sin-6-over-5-50	enumeratio_n(lambda: (sin((mpf(6)/5))), 50)	0.93203908596722634967013443549482599541507058820873	
 functiondomain-sin-x-x			
 functionrange-sin-x-x-y			
@@ -62,7 +62,7 @@ assuming-m-in-integers-refine-sin-pi-times-m
 assuming-m-in-integers-fullsimplify-sin-pi-times			
 threads-element-wise-over-a-list	[sin(0), sin((mpmathify(pi) / 2)), sin(pi)]	[mpf('0.0'), mpf('1.0'), mpf('1.69568553207377992879174029387737e-31')]	
 degrees-d-converts-a-degree-measure-to-radians			
-pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	(((sin((mpmathify(pi) / 6)))**2) + ((cos((mpmathify(pi) / 6)))**2))	1.0	
+pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	(enumeratio_pow(sin((mpmathify(pi) / 6)), 2) + enumeratio_pow(cos((mpmathify(pi) / 6)), 2))	1.0	
 odd-function-sin-x-sin-x	almosteq(sin((-(mpmathify(pi) / 6))), (-sin((mpmathify(pi) / 6))), 1e-20)	True	
 period-2-pi-adding-a-full-turn-doesn-t-change	sin(((mpmathify(pi) / 6) + (2 * pi)))	0.5	
 double-angle-formula-via-trigexpand			
@@ -75,22 +75,22 @@ the-same-through-fullsimplify
 sin-3-over-10-times-pi	sin(((mpf(3)/10) * pi))		
 integrate-sin-t-pow-2-t-0-positiveinfinity			
 integrate-sin-t-pow-2-t-0-1-over-2-times-pi			
-neg-2-times-neg-2-times-sin-1-over-2-pow-4-plus	((-2 * ((-2 * ((sin((mpf(1)/2)))**4)) + (2 * ((sin((mpf(1)/2)))**2))) * ((sin(1))**2)) + ((sin(1))**4))		
-n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2	(((((mpc(0, 1) * sin((mpf(1)/2))) + cos((mpf(1)/2))))**2))		
+neg-2-times-neg-2-times-sin-1-over-2-pow-4-plus	((-2 * ((-2 * enumeratio_pow(sin((mpf(1)/2)), 4)) + (2 * enumeratio_pow(sin((mpf(1)/2)), 2))) * enumeratio_pow(sin(1), 2)) + enumeratio_pow(sin(1), 4))		
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2	(enumeratio_pow(((mpc(0, 1) * sin((mpf(1)/2))) + cos((mpf(1)/2))), 2))		
 integrate-sin-t-pow-3-t-0-1-over-2-times-pi			
-n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2	(((((mpc(0, 1) * sin((mpf(1)/2))) + cos((mpf(1)/2))))**2))		
-n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow	(((((mpc(0, -1) * sin((mpf(1)/2))) + cos((mpf(1)/2))))**2))		
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2	(enumeratio_pow(((mpc(0, 1) * sin((mpf(1)/2))) + cos((mpf(1)/2))), 2))		
+n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow	(enumeratio_pow(((mpc(0, -1) * sin((mpf(1)/2))) + cos((mpf(1)/2))), 2))		
 n-integrate-1-over-t-times-sin-t-t-0			
 n-integrate-1-over-sqrt-t-times-sin-t-t-0			
 n-integrate-1-over-t-times-sin-1-over-2-times-t			
-n-sin-1-pow-2	(((sin(1))**2))		
-n-sin-1-over-2-plus-1-over-2-times-pi-pow-2	(((sin(((mpf(1)/2) + ((mpf(1)/2) * pi))))**2))		
+n-sin-1-pow-2	(enumeratio_pow(sin(1), 2))		
+n-sin-1-over-2-plus-1-over-2-times-pi-pow-2	(enumeratio_pow(sin(((mpf(1)/2) + ((mpf(1)/2) * pi))), 2))		
 1-radian-isn-t-a-recognized-special-angle-so	sin(1)	0.84147098480789650665250232163	
 sin-2-a-generic-argument-stays-symbolic	sin(2)	0.909297426825681695396019865912	
 sin-x-plus-y-stays-symbolic			
 pi-15-has-a-radical-form-but-like-wolfram-s	sin((mpmathify(pi) / 15))	0.207911690817759337101742284405	
-a-huge-exact-argument-is-reduced-modulo-2-pi	(sin(((10)**20)))	-0.645251285265780844205811711313	
-an-even-huger-argument-11-38	(sin(((11)**38)))	0.867534193184863032081750429728	
+a-huge-exact-argument-is-reduced-modulo-2-pi	(sin(enumeratio_pow(10, 20)))	-0.645251285265780844205811711313	
+an-even-huger-argument-11-38	(sin(enumeratio_pow(11, 38)))	0.867534193184863032081750429728	
 sin-complexinfinity-is-indeterminate-off-the			
 the-special-angle-table-reaches-past-30-45-60	sin((mpmathify(pi) / 5))	0.587785252292473129168705954639	
 functionexpand-gives-the-nested-radical-form			

@@ -3,6 +3,6 @@ j-i-1	(kleinj(mpc(0, 1)))	(1.0 + 0.0j)
 j-2i-66-3-1728-1331-8	(kleinj(mpc(0, 2)))	(166.375 + 0.0j)	
 j-1-2i-modular-invariance-with-2i	(kleinj(mpc(1, 2)))	(166.375 + 0.0j)	
 exact-at-the-elliptic-point-i	kleinj(mpc(0, 1))	(1.0 + 0.0j)	
-tau-1e22-declines-rather-than-answering-wrong	(kleinj((mpc(0,1) + (pi * ((10)**22)))))	(-0.0194053018039291028223556961802 - 0.0683260175070580437788584374552j)	disagree
-tau-1e22-mpmath-true-value	(kleinj((mpc(0,1) + (pi * ((10)**22)))))		
+tau-1e22-declines-rather-than-answering-wrong	(kleinj((mpc(0,1) + (pi * enumeratio_pow(10, 22)))))	(-0.0194053018039291028223556961802 - 0.0683260175070580437788584374552j)	disagree
+tau-1e22-mpmath-true-value	(kleinj((mpc(0,1) + (pi * enumeratio_pow(10, 22)))))		
 heegner-number-163-j-bigl-frac-1-i-sqrt-163-2	(kleinj(((mpf(1)/2) * (1 + mpc(0, sqrt(163))))))	(-151931373056000.0 + 2.59973660844541388675772353757e-20j)	

@@ -6,7 +6,7 @@ sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	almosteq((sqrt(2) + sqrt(3)), s
 x-eq-x			
 3-eq-3-eq-3			
 list-1-2-eq-list-1-2	almosteq([1, 2], [1, 2], 1e-20)	TypeError: cannot create mpf from [1, 2]	error
-n-pi-20-eq-pi-times-1-plus-256-times-10-pow-neg	enumeratio_at(lambda: (almosteq(enumeratio_nround(lambda: (pi), 20), (pi * (1 + (256 * ((10)**-20)))), 1e-20)), 20)	False	disagree
+n-pi-20-eq-pi-times-1-plus-256-times-10-pow-neg	enumeratio_at(lambda: (almosteq(enumeratio_nround(lambda: (pi), 20), (pi * (1 + (256 * enumeratio_pow(10, -20)))), 1e-20)), 20)	False	disagree
 list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5			
 solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0			
 fullsimplify-p-q-eq-q-p			

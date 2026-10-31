@@ -30,5 +30,5 @@ q-0-leaves-the-constant-term	jtheta(3, 0.5, 0)	1.0
 theta1-0-q-is-0-for-any-q-an-odd	(jtheta(1, 0, 0.5))	2.32487905450153152483035002528e-35	
 q-1-is-declined-the-series-diverges	(jtheta(3, 0.3, 1))	ValueError: abs(q) > THETA_Q_LIM = 1.000000	error
 symbolic-arguments-are-left-unevaluated-rather			
-u-1e30-declines-rather-than-answering-wrong	(jtheta(1, ((10)**30), (mpf(1)/2)))	-0.0503373446859382879424538688059	inconclusive
-u-1e30-mpmath-true-value	(jtheta(1, ((10)**30), (mpf(1)/2)))		
+u-1e30-declines-rather-than-answering-wrong	(jtheta(1, enumeratio_pow(10, 30), (mpf(1)/2)))	-0.0503373446859382879424538688059	inconclusive
+u-1e30-mpmath-true-value	(jtheta(1, enumeratio_pow(10, 30), (mpf(1)/2)))		

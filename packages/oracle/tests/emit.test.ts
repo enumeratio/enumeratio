@@ -123,10 +123,11 @@ test("threadArg rebuilds a List's nesting as Julia list literals too", () => {
 // binds tighter than unary minus, so `-1**2` reads as `-(1**2)` — not the `(-1)**2` we meant.
 test("a Power base is parenthesised, so a negative literal doesn't leak past unary minus", () => {
   expect(emit(["Power", -1, 2], "sympy")).toEqual({ ok: true, source: "(S(-1)**2)" });
-  expect(emit(["Power", -1, 2], "mpmath")).toEqual({ ok: true, source: "((-1)**2)" });
+  expect(emit(["Power", -1, 2], "mpmath")).toEqual({ ok: true, source: "enumeratio_pow(-1, 2)" });
   expect(emit(["Power", -1, 2], "sage")).toEqual({ ok: true, source: "((-1)^2)" });
   // A positive base picks up the same (harmless) parens, for one template regardless of sign.
-  expect(emit(["Power", 2, 10], "mpmath")).toEqual({ ok: true, source: "((2)**10)" });
+  expect(emit(["Power", 2, 10], "mpmath")).toEqual({ ok: true, source: "enumeratio_pow(2, 10)" });
+  expect(emit(["Power", 2, 10], "sage")).toEqual({ ok: true, source: "((2)^10)" });
   // S() keeps a negative exponent exact in SymPy rather than a float.
   expect(emit(["Power", 2, -1], "sympy")).toEqual({ ok: true, source: "(S(2)**-1)" });
   // Julia passes the base as a call argument; Lean's negative-literal special case parenthesises it.

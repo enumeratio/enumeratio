@@ -17,7 +17,7 @@ n-subfactorial-1-over-3-50	enumeratio_n(lambda: ((gammainc(((mpf(1)/3)) + 1, -1)
 fullsimplify-normal-series-subfactorial-x-x-2			
 fullsimplify-normal-series-subfactorial-x-x-x0-2			
 the-hat-check-problem-the-number-of-ways-6	(gammainc((6) + 1, -1) / e)	265.0	
-recurrence-d-n-n-d-n-1-1-n	almosteq((gammainc((4) + 1, -1) / e), ((4 * (gammainc((3) + 1, -1) / e)) + ((-1)**4)), 1e-20)	True	
+recurrence-d-n-n-d-n-1-1-n	almosteq((gammainc((4) + 1, -1) / e), ((4 * (gammainc((3) + 1, -1) / e)) + enumeratio_pow(-1, 4)), 1e-20)	True	
 d-n-is-frac-n-e-rounded-to-the-nearest-integer	almosteq((gammainc((10) + 1, -1) / e), nint((mpmathify(factorial(10)) / e)), 1e-20)	True	
 two-term-recurrence-d-n-1-n-d-n-d-n-1	almosteq((gammainc((6) + 1, -1) / e), (5 * ((gammainc((5) + 1, -1) / e) + (gammainc((4) + 1, -1) / e))), 1e-20)	True	
 exponentialgeneratingfunction-subfactorial-n-n-x			
