@@ -29,28 +29,36 @@ export const isEpsilFamily = (family: AnyFamily): family is EpsilFamily => "epsi
 
 const FAMILY_OPERATIONS = ["count", "unrank", "rank", "valid", "tables"] as const;
 
-const byHead = new Map<string, HeadDefinition[]>();
-const add = (head: string, definition: HeadDefinition): void => {
+const add = (byHead: Map<string, HeadDefinition[]>, head: string, definition: HeadDefinition): void => {
   byHead.set(head, [...(byHead.get(head) ?? []), definition]);
 };
 
-for (const { head, on, expr } of ALL_STATISTICS) add(head, { label: `on ${on}, over _x`, source: print(expr) });
+// Printed on first use: printing every statistic takes seconds, which `vitepress preview` never needs.
+let memo: Map<string, HeadDefinition[]> | undefined;
+function definitions(): Map<string, HeadDefinition[]> {
+  if (memo !== undefined) return memo;
+  const byHead = new Map<string, HeadDefinition[]>();
+  for (const { head, on, expr } of ALL_STATISTICS)
+    add(byHead, head, { label: `on ${on}, over _x`, source: print(expr) });
 
-for (const family of allFamilies.filter(isEpsilFamily))
-  for (const operation of FAMILY_OPERATIONS) {
-    const expr = family.epsil[operation];
-    if (expr === undefined) continue;
-    const over =
-      operation === "unrank"
-        ? [...family.params, "_r"]
-        : operation === "count" || operation === "tables"
-          ? family.params
-          : [...family.params, "_x"];
-    add(family.head, { label: `${operation}(${over.join(", ")})`, source: print(expr) });
-  }
+  for (const family of allFamilies.filter(isEpsilFamily))
+    for (const operation of FAMILY_OPERATIONS) {
+      const expr = family.epsil[operation];
+      if (expr === undefined) continue;
+      const over =
+        operation === "unrank"
+          ? [...family.params, "_r"]
+          : operation === "count" || operation === "tables"
+            ? family.params
+            : [...family.params, "_x"];
+      add(byHead, family.head, { label: `${operation}(${over.join(", ")})`, source: print(expr) });
+    }
+  memo = byHead;
+  return byHead;
+}
 
 /** A head's definitions, in source order; empty for a head with none. */
-export const definitionsOf = (head: string): readonly HeadDefinition[] => byHead.get(head) ?? [];
+export const definitionsOf = (head: string): readonly HeadDefinition[] => definitions().get(head) ?? [];
 
 /** Every head with a definition, for the test that sweeps them all. */
-export const definedHeads = (): string[] => [...byHead.keys()];
+export const definedHeads = (): string[] => [...definitions().keys()];

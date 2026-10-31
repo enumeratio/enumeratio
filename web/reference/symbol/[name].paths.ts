@@ -6,11 +6,12 @@ import { entries } from "../../.vitepress/data/reference-node.ts";
 import { fieldsOf } from "../../.vitepress/data/carrier-fields.ts";
 import { definitionsOf } from "../../.vitepress/data/definitions.ts";
 import { functionViewFor } from "../../.vitepress/data/function-view.ts";
-import { explorerProbes, prerenderExamples } from "../../.vitepress/data/prerender.ts";
+import { explorerProbes, PREVIEW, prerenderExamples } from "../../.vitepress/data/prerender.ts";
 
 /** The table a collection's page shows: its `enumerate:` filled in from what the record implies (the statistics on offer as names only). */
 async function explorerFor(entry: ReferenceEntry, catalog: ExplorerCatalog) {
-  const spec = entry.grades === undefined ? undefined : await explorerOf(entry, catalog);
+  // The explorer's rows are page data; `vitepress preview` serves built pages and needs none.
+  const spec = entry.grades === undefined || PREVIEW ? undefined : await explorerOf(entry, catalog);
   if (spec === undefined) return undefined;
   const { candidates, ...page } = spec;
   return { ...page, statistics: candidates.map((c) => c.name) };
@@ -60,7 +61,7 @@ export default {
           prerendered: await prerenderExamples(entry),
           fields: fieldsOf(entry.name),
           explorer: await explorerFor(entry, catalog),
-          definitions: definitionsOf(entry.name),
+          definitions: PREVIEW ? [] : definitionsOf(entry.name),
           overloads: describeNow(entry.name).overloads ?? [],
           parameters,
           carrierSlot: await carrierSlotOf(parameters, carrierNames, entries, catalog),
