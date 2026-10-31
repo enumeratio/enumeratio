@@ -21,6 +21,11 @@ const props = defineProps<{
   overloads?: readonly Overload[];
   /** The typed parameters of the head's declared signature. */
   parameters?: readonly { name?: string; type: string; optional: boolean; variadic: boolean }[];
+  /** The parameter Try it picks a carrier element for (`carrierSlotOf`, derived at build). */
+  carrierSlot?: {
+    index: number;
+    picker: { carrier: string; template: string; size: { min: number; max: number; start: number }; glyph?: string };
+  };
   /** The largest safe value of its size parameter, from its record. */
   maxSize?: number;
   optionValues?: Record<string, (string | number | boolean)[]>;
@@ -496,6 +501,7 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       :examples="tryItExamples"
       :parameters="parameters ?? []"
       :explorer="explorer"
+      :carrier-slot="carrierSlot"
       :max-size="maxSize"
       :option-values="optionValues"
     />

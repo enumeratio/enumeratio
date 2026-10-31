@@ -1,3 +1,4 @@
+import { type CarrierPicker, hasPicker, pickerOf } from "@enumeratio/frontend/core";
 import { catalogOf, type DistributionSource, distributionSourceOf } from "@enumeratio/frontend/explorer";
 import { entries } from "../../../.vitepress/data/reference-node.ts";
 import { liveExpression, siblingsOf, statisticPages } from "../../../.vitepress/data/carrier-fields.ts";
@@ -8,6 +9,17 @@ const sources = new Map<string, Promise<DistributionSource | undefined>>();
 const sourceOf = (carrier: string): Promise<DistributionSource | undefined> => {
   if (!sources.has(carrier)) sources.set(carrier, distributionSourceOf(carrier, entries, catalog));
   return sources.get(carrier)!;
+};
+
+const pickers = new Map<string, Promise<CarrierPicker | undefined>>();
+/** Where a carrier's elements are picked from, once per carrier. */
+const pickerFor = (carrier: string): Promise<CarrierPicker | undefined> => {
+  if (!pickers.has(carrier))
+    pickers.set(
+      carrier,
+      pickerOf(carrier, entries, catalog).then((p) => (hasPicker(p) ? p : undefined)),
+    );
+  return pickers.get(carrier)!;
 };
 
 // One page per statistic and carrier: a name on two carriers is two implementations. Names only
@@ -27,6 +39,7 @@ export default {
           live: liveExpression(field),
           siblings: siblingsOf(field),
           distribution,
+          picker: await pickerFor(field.carrier),
           carrierStatistics: distribution
             ? all.filter((f) => f.carrier === field.carrier && f.name !== field.name).map((f) => f.name)
             : undefined,

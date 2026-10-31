@@ -1,0 +1,76 @@
+{
+  "opened": {
+    "group": "Pick a Permutation",
+    "size": {
+      "label": "size",
+      "now": "3"
+    },
+    "rank": {
+      "label": "rank",
+      "min": "1",
+      "max": "6",
+      "now": "1",
+      "text": "1 of 6"
+    },
+    "count": "of 6",
+    "glyph": false,
+    "glyphLabel": null,
+    "value": null
+  },
+  "steps": {
+    "rank4": {
+      "group": "Pick a Permutation",
+      "size": {
+        "label": "size",
+        "now": "3"
+      },
+      "rank": {
+        "label": "rank",
+        "min": "1",
+        "max": "6",
+        "now": "4",
+        "text": "Permutation([2, 3, 1])"
+      },
+      "count": "of 6",
+      "glyph": true,
+      "glyphLabel": "Permutation, Permutation([2, 3, 1])",
+      "value": "Permutation([2, 3, 1])"
+    },
+    "size4": {
+      "group": "Pick a Permutation",
+      "size": {
+        "label": "size",
+        "now": "4"
+      },
+      "rank": {
+        "label": "rank",
+        "min": "1",
+        "max": "24",
+        "now": "4",
+        "text": "Permutation([1, 3, 4, 2])"
+      },
+      "count": "of 24",
+      "glyph": true,
+      "glyphLabel": "Permutation, Permutation([1, 3, 4, 2])",
+      "value": "Permutation([1, 3, 4, 2])"
+    },
+    "clamped": {
+      "group": "Pick a Permutation",
+      "size": {
+        "label": "size",
+        "now": "3"
+      },
+      "rank": {
+        "label": "rank",
+        "min": "1",
+        "max": "6",
+        "now": "6",
+        "text": "Permutation([3, 2, 1])"
+      },
+      "count": "of 6",
+      "glyph": true,
+      "glyphLabel": "Permutation, Permutation([3, 2, 1])",
+      "value": "Permutation([3, 2, 1])"
+    }
+  }
+}

@@ -1507,6 +1507,14 @@ graphics-box {
 .stepper-box:focus-visible { box-shadow: 0 0 0 2px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 40%, transparent); border-radius: 3px; }
 .stepper-box-value { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--vp-c-brand-1, #3451b2); }
 
+/* --- Element picker: a size, a rank, and the element they name ------------------------- */
+.element-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.25rem; margin: 0.75rem 0; }
+.element-picker label { display: inline-flex; align-items: center; gap: 0.4rem; }
+.element-picker .slider-box-track { width: 12rem; max-width: 100%; }
+.element-picker-count { color: var(--vp-c-text-2, #666); font-size: 0.9em; }
+.element-picker-glyph svg { vertical-align: middle; max-height: 3.5rem; }
+.element-picker-value { overflow-wrap: anywhere; }
+
 /* --- Reactive prose, after Tangle ------------------------------------------------
    The controls sit INSIDE a sentence, so everything here is inline and must not
    disturb the line: no padding that changes the leading, no border that reserves

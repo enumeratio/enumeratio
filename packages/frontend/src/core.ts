@@ -6,6 +6,7 @@
 
 export * from "./assert.ts";
 export { BOX_LAYOUT_CSS } from "./box-styles.ts";
+export * from "./carrier-picker.ts";
 export * from "./carrier-statistics.ts";
 export * from "./chart.ts";
 export * from "./clock.ts";
