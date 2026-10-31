@@ -12,4 +12,4 @@ n-jacobicd-sqrt-2-times-i-2	(ellipfun('cd', mpc(0, sqrt(2)), m=2))	(0.7108610477
 n-jacobicd-2-times-1-plus-sqrt-2-over-2-1-minus	(ellipfun('cd', (2 * (1 + (mpmathify(sqrt(2)) / 2))), m=(enumeratio_pow((1 + (-(mpmathify(sqrt(2)) / 2))), 2) * enumeratio_pow((1 + (mpmathify(sqrt(2)) / 2)), -2))))	-0.970018357823858777827475156468	
 symbolic-arguments-are-left-unevaluated-rather			
 u-1e16-declines-rather-than-answering-wrong	(ellipfun('cd', enumeratio_pow(10, 16), m=(mpf(2)/7)))	0.224047523574504120662423282415	inconclusive
-u-1e16-mpmath-true-value	(ellipfun('cd', enumeratio_pow(10, 16), m=(mpf(2)/7)))	0.224047523574504120662423282415	
+u-1e16-mpmath-true-value	(ellipfun('cd', enumeratio_pow(10, 16), m=(mpf(2)/7)))		
