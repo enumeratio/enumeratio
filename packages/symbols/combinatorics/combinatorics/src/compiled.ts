@@ -52,7 +52,11 @@ export const mapKey = (map: Pick<StepMap, "name" | "from">): string => `${map.na
  * the map of that name on the carrier the step before delivers, and a composed step is replaced by its
  * own steps. `undefined` when a step has no such map or no body, or the chain doesn't end at `to`.
  */
-export function compositionSteps<M extends StepMap>(maps: readonly M[], map: M, seen: readonly M[] = []): M[] | undefined {
+export function compositionSteps<M extends StepMap>(
+  maps: readonly M[],
+  map: M,
+  seen: readonly M[] = [],
+): M[] | undefined {
   if (map.composedOf === undefined || seen.includes(map)) return undefined;
   const out: M[] = [];
   let carrier = map.from;
@@ -85,7 +89,8 @@ export function composedDefinition(options: {
   generated?: GeneratedMap;
 }): ((contents: unknown) => MathJSON | undefined) | undefined {
   const { ce, steps, generated } = options;
-  if (steps === undefined || generated?.run === undefined || generated.hash !== compositionHash(steps)) return undefined;
+  if (steps === undefined || generated?.run === undefined || generated.hash !== compositionHash(steps))
+    return undefined;
   const run = generated.run;
   let sys: unknown;
   return (contents) => {
