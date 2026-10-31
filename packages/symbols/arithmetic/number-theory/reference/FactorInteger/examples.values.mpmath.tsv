@@ -35,7 +35,7 @@ a-negative-real-composite
 19-3-mod-4-factors-as-itself		
 2-ramifies-as-i-1-i-2		
 4-factors-through-the-ramified-prime		
-multiplying-the-p-e-factors-back-together	almosteq((((2)**3) * ((3)**2) * 5), 360, 1e-20)	True
+multiplying-the-p-e-factors-back-together	almosteq((enumeratio_pow(2, 3) * enumeratio_pow(3, 2) * 5), 360, 1e-20)	True
 compute-engine-returns-the-trivial-factor-1-1		
 0-is-represented-as-0-1		
 negative-numbers-carry-an-explicit-1-unit-factor		

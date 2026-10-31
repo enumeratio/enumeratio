@@ -35,7 +35,7 @@ sinh-1-over-8-times-i-times-pi	sinh((mpc(0, (mpf(1)/8)) * pi))	(0.0 + 0.38268343
 sinh-1-over-7-times-i-times-pi	sinh((mpc(0, (mpf(1)/7)) * pi))	(0.0 + 0.433883739117558120475768332848j)
 sinh-1-over-6-times-i-times-pi	sinh((mpc(0, (mpf(1)/6)) * pi))	(0.0 + 0.5j)
 sinh-2-over-9-times-i-times-pi	sinh((mpc(0, (mpf(2)/9)) * pi))	(0.0 + 0.642787609686539326322643409907j)
-neg-2-times-2-times-sinh-1-over-2-pow-2-plus-2	((-2 * ((2 * ((sinh((mpf(1)/2)))**2)) + (2 * ((sinh((mpf(1)/2)))**4))) * ((sinh(1))**2)) + ((sinh(1))**4))	1.97215226305252951352932141321e-31
-n-sinh-1-over-2-plus-cosh-1-over-2-pow-2	((((sinh((mpf(1)/2)) + cosh((mpf(1)/2))))**2))	2.71828182845904523536028747135
-n-neg-sinh-1-over-2-plus-cosh-1-over-2-pow-2	(((((-sinh((mpf(1)/2))) + cosh((mpf(1)/2))))**2))	0.367879441171442321595523770161
-n-sinh-1-pow-2	(((sinh(1))**2))	1.38109784554181572978110673889
+neg-2-times-2-times-sinh-1-over-2-pow-2-plus-2	((-2 * ((2 * enumeratio_pow(sinh((mpf(1)/2)), 2)) + (2 * enumeratio_pow(sinh((mpf(1)/2)), 4))) * enumeratio_pow(sinh(1), 2)) + enumeratio_pow(sinh(1), 4))	1.97215226305252951352932141321e-31
+n-sinh-1-over-2-plus-cosh-1-over-2-pow-2	(enumeratio_pow((sinh((mpf(1)/2)) + cosh((mpf(1)/2))), 2))	2.71828182845904523536028747135
+n-neg-sinh-1-over-2-plus-cosh-1-over-2-pow-2	(enumeratio_pow(((-sinh((mpf(1)/2))) + cosh((mpf(1)/2))), 2))	0.367879441171442321595523770161
+n-sinh-1-pow-2	(enumeratio_pow(sinh(1), 2))	1.38109784554181572978110673889

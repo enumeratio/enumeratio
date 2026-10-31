@@ -15,7 +15,7 @@ rationals-are-reduced-exactly	((mpf(5)/2) % 2)	0.5
 3p14-mod-2	(3.14 % 2)	1.1400000000000001	
 an-exact-irrational-reduces-exactly-to-2-sqrt-7	(sqrt(28) % 3)	2.29150262212918118100323150728	
 a-symbolic-constant-reduces-exactly-to-pi-2	(pi % 2)	1.14159265358979323846264338328	
-a-10-001-digit-dividend	(((10)**10000) % 10007)	6333	
+a-10-001-digit-dividend	(enumeratio_pow(10, 10000) % 10007)	6333	
 threads-over-a-list-of-moduli	[(10 % 3), (10 % 4), (10 % 7)]	[1, 2, 3]	
 a-gaussian-integer-5-3i-2-2-2i	(mpc(5, 3) % 2)	TypeError: unsupported operand type(s) for %: 'mpc' and 'int'	error
 1-i-divides-5-3i-1-i-4-i	(mpc(5, 3) % mpc(1, 1))	TypeError: unsupported operand type(s) for %: 'mpc' and 'mpc'	error

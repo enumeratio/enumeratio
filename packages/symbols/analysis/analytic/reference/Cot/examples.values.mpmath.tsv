@@ -4,11 +4,11 @@ cot-pi-over-4	cot((mpmathify(pi) / 4))	1.0
 cot-pi-over-3	cot((mpmathify(pi) / 3))	0.577350269189625764509148780502	
 cot-60-circ-frac-sqrt-3-3-exactly			
 a-machine-precision-argument-evaluates	cot(1.2)	0.38877956936820496275550107086	
-a-huge-24-40-argument	(cot(((24)**40)))	2.29072091001088067842489372819	
-a-huge-10-100-argument	(cot(((10)**100)))	2.49232387927982069486640543726	
-a-huge-3-200-argument	(cot(((3)**200)))	0.367143001033697879173282719963	
-a-huge-neg-7-60-argument	(cot((-((7)**60))))	-2.54972544855289659474408289918	
-a-huge-10-80-plus-1-over-3-argument	(cot((mpmathify((((10)**80) + 1)) / 3)))	-5.35891773395797293952961004078	disagree
+a-huge-24-40-argument	(cot(enumeratio_pow(24, 40)))	2.29072091001088067842489372819	
+a-huge-10-100-argument	(cot(enumeratio_pow(10, 100)))	2.49232387927982069486640543726	
+a-huge-3-200-argument	(cot(enumeratio_pow(3, 200)))	0.367143001033697879173282719963	
+a-huge-neg-7-60-argument	(cot((-enumeratio_pow(7, 60))))	-2.54972544855289659474408289918	
+a-huge-10-80-plus-1-over-3-argument	(cot((mpmathify((enumeratio_pow(10, 80) + 1)) / 3)))	-5.35891773395797293952961004078	disagree
 cot-7-under-n	(cot(7))	1.1475154224051356850571278336	
 series-cot-x-x-0-10			
 series-cot-x-x-neg-pi-5			
@@ -30,7 +30,7 @@ assuming-m-in-integers-refine-cot-pi-times-1
 assuming-m-in-integers-fullsimplify-refine-cot			
 functionmeromorphic-cot-x-x			
 reciprocal-of-tan-cot-x-frac-1-tan-x	almosteq(cot((mpmathify(pi) / 4)), (mpmathify(1) / tan((mpmathify(pi) / 4))), 1e-20)	True	
-pythagorean-identity-1-cot-2-x-csc-2-x	almosteq((1 + ((cot((mpmathify(pi) / 6)))**2)), ((csc((mpmathify(pi) / 6)))**2), 1e-20)	True	
+pythagorean-identity-1-cot-2-x-csc-2-x	almosteq((1 + enumeratio_pow(cot((mpmathify(pi) / 6)), 2)), enumeratio_pow(csc((mpmathify(pi) / 6)), 2), 1e-20)	True	
 cot-1-over-10-times-pi	cot(((mpf(1)/10) * pi))	3.07768353717525340257029057604	
 cot-3-over-10-times-pi	cot(((mpf(3)/10) * pi))	0.726542528005360885895466757481	
 cot-3-over-8-times-pi	cot(((mpf(3)/8) * pi))	0.41421356237309504880168872421	

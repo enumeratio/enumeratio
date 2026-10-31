@@ -26,12 +26,12 @@ sqrt-neg-1	sqrt(-1)	(0.0 + 1.0j)
 sqrt-neg-12-over-5	sqrt((mpf(-12)/5))	(0.0 + 1.54919333848296675407170615991j)	
 the-pythagorean-hypotenuse-of-a-3-4-5-triangle	sqrt(((3)**2 + (4)**2))	5.0	
 sqrt-x-2-x-for-a-perfect-square-see-square	almosteq((sqrt(16))**2, 16, 1e-20)	True	
-sqrt-x-x-1-2	almosteq(sqrt(16), ((16)**(mpf(1)/2)), 1e-20)	True	
+sqrt-x-x-1-2	almosteq(sqrt(16), enumeratio_pow(16, (mpf(1)/2)), 1e-20)	True	
 sqrt-x-2-x-for-every-x			
 negative-but-not-a-perfect-square-stays-symbolic	sqrt(-2)	(0.0 + 1.41421356237309504880168872421j)	
 a-negative-rational-still-evaluates-exactly-when	sqrt((mpf(-4)/9))	(0.0 + 0.666666666666666666666666666667j)	
 sqrt-x-2-is-not-simplified-to-x-which-would-be			
-at-x-1-sqrt-x-2-1-not-1	sqrt(((-1)**2))	1.0	
+at-x-1-sqrt-x-2-1-not-1	sqrt(enumeratio_pow(-1, 2))	1.0	
 sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b	(sqrt(-1) * sqrt(-1))	(-1.0 + 0.0j)	
 while-sqrt-1-1-1	sqrt((-1 * -1))	1.0	
 sqrt-36-negative	sqrt(-36)	(0.0 + 6.0j)	

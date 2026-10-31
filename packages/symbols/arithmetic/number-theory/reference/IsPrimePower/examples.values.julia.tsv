@@ -3,6 +3,9 @@ id	in	out
 12-2-2-cdot-3-has-two-distinct-primes	first(is_prime_power_with_data(ZZ(12)))	false
 a-prime-is-its-own-first-power	first(is_prime_power_with_data(ZZ(7)))	true
 isprimepower-6	first(is_prime_power_with_data(ZZ(6)))	false
+isprimepower-neg-2-is-false	first(is_prime_power_with_data(ZZ(-2)))	false
+isprimepower-neg-4-is-false	first(is_prime_power_with_data(ZZ(-4)))	false
+isprimepower-neg-43-is-false	first(is_prime_power_with_data(ZZ(-43)))	false
 isprime-of-a-negative-prime	is_prime(ZZ(-5))	false
 listable	Any[first(is_prime_power_with_data(ZZ(2))), first(is_prime_power_with_data(ZZ(4))), first(is_prime_power_with_data(ZZ(6))), first(is_prime_power_with_data(ZZ(9))), first(is_prime_power_with_data(ZZ(10))), first(is_prime_power_with_data(ZZ(16)))]	[true, true, false, true, false, true]
 large-integers	first(is_prime_power_with_data(ZZ(enumeratio_pow(3, 40))))	true

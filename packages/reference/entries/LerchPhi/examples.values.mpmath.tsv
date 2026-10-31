@@ -261,6 +261,7 @@ n-lerchphi-1p5-2-plus-i-2	(lerchphi(1.5, mpc(2, 1), 2))	(-0.04744621797176854564
 n-lerchphi-1p5-2-plus-i-0p5	(lerchphi(1.5, mpc(2, 1), 0.5))	(3.38304838977882808399606598338 + 1.74798348435333795398915212916j)	
 n-lerchphi-1p5-2-plus-i-5-over-2	(lerchphi(1.5, mpc(2, 1), (mpf(5)/2)))	(-0.13623106961632306413219291604 - 0.242176661225908466259648622068j)	
 n-lerchphi-1p5-2-plus-i-neg-2p5	(lerchphi(1.5, mpc(2, 1), -2.5))	(188.054525807321666081868524233 + 129.950947308879212828101046121j)	
+n-lerchphi-neg-1p5e6-neg-15-5-over-2	(lerchphi(-1500000, -15, (mpf(5)/2)))	(0.0731134809924837251879994118229 + 0.0608790038264015225091838838916j)	inconclusive
 n-lerchphi-neg-1p5-2-1	(lerchphi(-1.5, 2, 1))	0.764920440250380502719984422575	
 n-lerchphi-neg-1p5-2-2	(lerchphi(-1.5, 2, 2))	0.15671970649974633152001038495	
 n-lerchphi-neg-1p5-2-0p5	(lerchphi(-1.5, 2, 0.5))	3.54500455887493687800668168144	
@@ -393,7 +394,7 @@ uncertainty-in-z
 to-30-significant-digits-not-yet-the-requested	enumeratio_n(lambda: (lerchphi((mpf(1)/2), 2, (mpf(1)/3))), 30)	9.34347465937593951855554965804	
 past-z-1-it-is-continued-on-the-cut-real-z-1-it	(lerchphi(2.809, 2, 2))	(-0.0565877019732228976485379048983 - 0.411220377971662588357397032992j)	
 phi-1-3-1-zeta-3-apery-s-constant	almosteq(lerchphi(1, 3, 1), zeta(3), 1e-20)	True	
-phi-1-2-1-eta-2-pi-2-12-the-alternating-rim-via	almosteq(lerchphi(-1, 2, 1), (mpmathify(((pi)**2)) / 12), 1e-20)	True	
+phi-1-2-1-eta-2-pi-2-12-the-alternating-rim-via	almosteq(lerchphi(-1, 2, 1), (mpmathify(enumeratio_pow(pi, 2)) / 12), 1e-20)	True	
 phi-1-2-2-1-2-li-2-1-2	(lerchphi((mpf(1)/2), 2, 1))	1.16448105293002501180531264032	
 certified-digits-phi-1-2-1-2-1-3	enumeratio_n(lambda: (lerchphi((mpf(1)/2), (mpf(1)/2), (mpf(1)/3))), 40)	2.452417145481526111742144156526818292226	
 phi-1-4-1-zeta-4-pi-4-90	lerchphi(1, 4, 1)	1.08232323371113819151600369654	

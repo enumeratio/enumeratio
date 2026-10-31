@@ -33,7 +33,7 @@ tanh-1-over-8-times-i-times-pi	tanh((mpc(0, (mpf(1)/8)) * pi))	(0.0 + 0.41421356
 tanh-1-over-7-times-i-times-pi	tanh((mpc(0, (mpf(1)/7)) * pi))	(0.0 + 0.481574618807528644332162353057j)
 tanh-1-over-6-times-i-times-pi	tanh((mpc(0, (mpf(1)/6)) * pi))	(0.0 + 0.577350269189625764509148780502j)
 tanh-2-over-9-times-i-times-pi	tanh((mpc(0, (mpf(2)/9)) * pi))	(0.0 + 0.839099631177280011763127298123j)
-n-1-plus-tanh-1-over-2-pow-2-times-tanh-1	(((1 + ((tanh((mpf(1)/2)))**2)) * tanh(1)))	0.924234314520019517004636967287
+n-1-plus-tanh-1-over-2-pow-2-times-tanh-1	(((1 + enumeratio_pow(tanh((mpf(1)/2)), 2)) * tanh(1)))	0.924234314520019517004636967287
 n-tanh-1-over-2-plus-1-over-2-times-i-times-pi	(tanh(((mpf(1)/2) + (mpc(0, (mpf(1)/2)) * pi))))	(2.16395341373865284877000401022 + 3.1223457869210393382351074492e-31j)
-n-1-plus-tanh-2-pow-2-times-tanh-4	(((1 + ((tanh(2))**2)) * tanh(4)))	1.9280551601516337678928274482
+n-1-plus-tanh-2-pow-2-times-tanh-4	(((1 + enumeratio_pow(tanh(2), 2)) * tanh(4)))	1.9280551601516337678928274482
 n-tanh-2-plus-1-over-2-times-i-times-pi	(tanh((2 + (mpc(0, (mpf(1)/2)) * pi))))	(1.03731472072754809587780976477 + 6.4454558489095975491675651396e-33j)

@@ -3,7 +3,7 @@ re-of-3-plus-4i-is-3	re(mpc(3, 4))	3.0
 re-of-a-real-number-is-itself	re(5)	5.0
 re-of-pi-is-pi-a-real-symbolic-constant	re(pi)	3.14159265358979323846264338328
 real-2-plus-3i	re(mpc(2, 3))	2.0
-real-2-times-exponentiale-pow-1-over-3-times-i	re((2 * ((e)**(mpc(0, (mpf(1)/3)) * pi))))	1.0
+real-2-times-exponentiale-pow-1-over-3-times-i	re((2 * enumeratio_pow(e, (mpc(0, (mpf(1)/3)) * pi))))	1.0
 real-3-over-2-plus-4-over-5-times-i	re(mpc((mpf(3)/2), (mpf(4)/5)))	1.5
 n-real-exponentiale-plus-i-times-pi-25	enumeratio_n(lambda: (re((e + (mpc(0, 1) * pi)))), 25)	2.718281828459045235360287
 real-41-over-25-minus-2i	re(mpc((mpf(41)/25), -2))	1.64

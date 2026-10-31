@@ -11,8 +11,8 @@ negative-odd-integers-follow-the-recurrence	fac2(-3)	-1.0
 real-arguments-use-the-analytic-continuation-2-1	fac2(2.5)	2.40706945611604386979773053862	
 the-number-of-ways-to-pair-up-10-people-into-5	fac2(9)	945.0	
 splits-an-ordinary-factorial-into-even-and-odd	almosteq(factorial(8), (fac2(8) * fac2(7)), 1e-20)	True	
-even-double-factorials-2n-2-n-n	almosteq(fac2(10), (((2)**5) * factorial(5)), 1e-20)	True	
-odd-double-factorials-2n-1-frac-2n-2-n-n	almosteq(fac2(9), (mpmathify(factorial(10)) / (((2)**5) * factorial(5))), 1e-20)	True	
+even-double-factorials-2n-2-n-n	almosteq(fac2(10), (enumeratio_pow(2, 5) * factorial(5)), 1e-20)	True	
+odd-double-factorials-2n-1-frac-2n-2-n-n	almosteq(fac2(9), (mpmathify(factorial(10)) / (enumeratio_pow(2, 5) * factorial(5))), 1e-20)	True	
 negative-even-arguments-hit-a-pole-in-the	fac2(-2)	ValueError: gamma function pole	error
 15-2-027-025-already-past-two-million-despite	fac2(15)	2027025.0	
 factorial2-of-negative-infinity-is-indeterminate	fac2(-inf)	nan	

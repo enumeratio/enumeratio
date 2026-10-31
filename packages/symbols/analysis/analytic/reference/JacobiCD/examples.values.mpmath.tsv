@@ -7,9 +7,9 @@ series-jacobicd-u-m-u-0-5
 series-jacobicd-z-m-m-0-2			
 u-0-is-1-for-any-m			
 n-jacobicd-sqrt-2-over-4-times-i-2	(ellipfun('cd', mpc(0, (mpmathify(sqrt(2)) / 4)), m=2))	(0.942972425777385687299450860906 - 4.11891752247066512804329017229e-35j)	
-n-jacobicd-1-over-2-times-1-plus-sqrt-2-over-2-1	(ellipfun('cd', ((mpf(1)/2) * (1 + (mpmathify(sqrt(2)) / 2))), m=((((1 + (-(mpmathify(sqrt(2)) / 2))))**2) * (((1 + (mpmathify(sqrt(2)) / 2)))**-2))))	0.664848107974773613391420358058	
+n-jacobicd-1-over-2-times-1-plus-sqrt-2-over-2-1	(ellipfun('cd', ((mpf(1)/2) * (1 + (mpmathify(sqrt(2)) / 2))), m=(enumeratio_pow((1 + (-(mpmathify(sqrt(2)) / 2))), 2) * enumeratio_pow((1 + (mpmathify(sqrt(2)) / 2)), -2))))	0.664848107974773613391420358058	
 n-jacobicd-sqrt-2-times-i-2	(ellipfun('cd', mpc(0, sqrt(2)), m=2))	(0.710861047784087326885967881663 - 4.79532327595953601693768022172e-35j)	
-n-jacobicd-2-times-1-plus-sqrt-2-over-2-1-minus	(ellipfun('cd', (2 * (1 + (mpmathify(sqrt(2)) / 2))), m=((((1 + (-(mpmathify(sqrt(2)) / 2))))**2) * (((1 + (mpmathify(sqrt(2)) / 2)))**-2))))	-0.970018357823858777827475156468	
+n-jacobicd-2-times-1-plus-sqrt-2-over-2-1-minus	(ellipfun('cd', (2 * (1 + (mpmathify(sqrt(2)) / 2))), m=(enumeratio_pow((1 + (-(mpmathify(sqrt(2)) / 2))), 2) * enumeratio_pow((1 + (mpmathify(sqrt(2)) / 2)), -2))))	-0.970018357823858777827475156468	
 symbolic-arguments-are-left-unevaluated-rather			
-u-1e16-declines-rather-than-answering-wrong	(ellipfun('cd', ((10)**16), m=(mpf(2)/7)))	0.224047523574504120662423282415	inconclusive
-u-1e16-mpmath-true-value	(ellipfun('cd', ((10)**16), m=(mpf(2)/7)))		
+u-1e16-declines-rather-than-answering-wrong	(ellipfun('cd', enumeratio_pow(10, 16), m=(mpf(2)/7)))	0.224047523574504120662423282415	inconclusive
+u-1e16-mpmath-true-value	(ellipfun('cd', enumeratio_pow(10, 16), m=(mpf(2)/7)))		

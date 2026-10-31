@@ -1,10 +1,10 @@
 id	in	out	verdict
 0-lt-1	(0 < 1)	True	
-2-plus-0-times-0-pow-neg-16-lt-1	((2 + (0 * ((0)**-16))) < 1)	ZeroDivisionError: 0.0 cannot be raised to a negative power	error
-neg-2-minus-0-pow-0-lt-1	((-2 + (-1 * ((0)**0))) < 1)	True	disagree
+2-plus-0-times-0-pow-neg-16-lt-1	((2 + (0 * enumeratio_pow(0, -16))) < 1)	ZeroDivisionError: 	error
+neg-2-minus-0-pow-0-lt-1	((-2 + (-1 * enumeratio_pow(0, 0))) < 1)	True	disagree
 4-over-3-lt-3-over-2	((mpf(4)/3) < (mpf(3)/2))	True	
-1-minus-128-times-10-pow-neg-16-lt-1	((1 + (-128 * ((10)**-16))) < 1)	True	
-1-minus-256-times-10-pow-neg-16-lt-1	((1 + (-256 * ((10)**-16))) < 1)	True	
-pi-pow-exponentiale-lt-exponentiale-pow-pi	(((pi)**e) < ((e)**pi))	True	
+1-minus-128-times-10-pow-neg-16-lt-1	((1 + (-128 * enumeratio_pow(10, -16))) < 1)	True	
+1-minus-256-times-10-pow-neg-16-lt-1	((1 + (-256 * enumeratio_pow(10, -16))) < 1)	True	
+pi-pow-exponentiale-lt-exponentiale-pow-pi	(enumeratio_pow(pi, e) < enumeratio_pow(e, pi))	True	
 refine-sqrt-x-pow-2-x-gt-0			
 integrate-boole-1-lt-x-pow-2-plus-y-pow-2-lt-2			

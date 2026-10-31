@@ -26,5 +26,5 @@ image-over-2p2-to-2p9
 image-over-neg-1p9-to-neg-1p1		
 g-vanishes-at-the-nonpositive-integers	barnesg(0)	0.0
 all-of-them	barnesg(-3)	0.0
-the-hyperfactorial-h-n-gamma-n-1-n-g-n-1-here	(mpmathify(((gamma(6))**5)) / barnesg(6))	86400000.0
+the-hyperfactorial-h-n-gamma-n-1-n-g-n-1-here	(mpmathify(enumeratio_pow(gamma(6), 5)) / barnesg(6))	86400000.0
 an-exact-non-integer-argument-stays-symbolic	barnesg((mpf(5)/2))	0.947573901083825776884152986353

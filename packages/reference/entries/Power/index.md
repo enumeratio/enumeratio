@@ -61,8 +61,9 @@ bindings:
     arity: 2
   - origin: mapped
     form: mpmath
-    template: (($1)**$2)
+    template: enumeratio_pow($1, $2)
     arity: 2
+    note: Python's int ** negative int is a double (10**-29 makes 1 + 256*10**-29 equal 1); the helper keeps it at working precision.
   - origin: mapped
     form: sage
     template: (($1)^$2)

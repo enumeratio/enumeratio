@@ -2,7 +2,7 @@ id	in	out
 log2-8	log(8, 2)	3.0
 log2-1	log(1, 2)	0.0
 log2-1-024	log(1024, 2)	10.0
-log2-2-pow-10	log(((2)**10), 2)	10.0
+log2-2-pow-10	log(enumeratio_pow(2, 10), 2)	10.0
 a-machine-precision-argument-evaluates	log(1.4142, 2)	0.499986164421874156073973120569
 series-log-x-plus-1-2-x-0-5		
 an-exact-negative-power-of-2-folds-too-log-2	log((mpf(1)/8), 2)	-3.0

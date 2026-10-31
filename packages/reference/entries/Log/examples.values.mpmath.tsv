@@ -14,6 +14,6 @@ derivative-in-base-3-frac-1-x-ln-3
 log-2-frac-18-3-an-exact-negative-power-of-the	log((mpf(1)/8), 2)	-3.0	
 confirms-the-default-base-is-10	almosteq(log(100, 10), log(100, 10), 1e-20)	True	
 product-rule-log-b-xy-log-b-x-log-b-y	almosteq(log((8 * 4), 2), (log(8, 2) + log(4, 2)), 1e-20)	True	
-power-rule-log-b-x-k-k-log-b-x	almosteq(log(((2)**5), 2), (5 * log(2, 2)), 1e-20)	True	
+power-rule-log-b-x-k-k-log-b-x	almosteq(log(enumeratio_pow(2, 5), 2), (5 * log(2, 2)), 1e-20)	True	
 log-10-0-infty	log(0, 10)	-inf	
 a-negative-argument-stays-symbolic-with-the	log(-5, 10)	(0.698970004336018804786261105275 + 1.36437635384184134748578362543j)	

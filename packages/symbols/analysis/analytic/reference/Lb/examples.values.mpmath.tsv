@@ -3,7 +3,7 @@ lb-8	log(8, 2)	3.0
 lb-1	log(1, 2)	0.0
 lb-1-024	log(1024, 2)	10.0
 a-machine-precision-argument-evaluates	log(1.4142, 2)	0.499986164421874156073973120569
-lb-2-pow-10	log(((2)**10), 2)	10.0
+lb-2-pow-10	log(enumeratio_pow(2, 10), 2)	10.0
 same-exact-negative-power-fold-as-log2-lb-frac	log((mpf(1)/8), 2)	-3.0
 lb-0	log(0, 2)	-inf
 threads-element-wise-over-a-list	[log(1, 2), log(2, 2), log(4, 2), log(8, 2)]	[mpf('0.0'), mpf('1.0'), mpf('2.0'), mpf('3.0')]

@@ -3,6 +3,9 @@ id	in	out	verdict
 12-2-2-cdot-3-has-two-distinct-primes	is_prime_power(n(12))	false	
 a-prime-is-its-own-first-power	is_prime_power(n(7))	true	
 isprimepower-6	is_prime_power(n(6))	false	
+isprimepower-neg-2-is-false	is_prime_power(n(-2))	panic: a non-negative integer: the crate's parameter is unsigned	error
+isprimepower-neg-4-is-false	is_prime_power(n(-4))	panic: a non-negative integer: the crate's parameter is unsigned	error
+isprimepower-neg-43-is-false	is_prime_power(n(-43))	panic: a non-negative integer: the crate's parameter is unsigned	error
 isprime-of-a-negative-prime	is_prime(n(-5))	panic: a non-negative integer: the crate's parameter is unsigned	error
 listable	list(vec![is_prime_power(n(2)), is_prime_power(n(4)), is_prime_power(n(6)), is_prime_power(n(9)), is_prime_power(n(10)), is_prime_power(n(16))])	[true, true, false, true, false, true]	
 large-integers	is_prime_power(power(n(3), n(40)))	true	

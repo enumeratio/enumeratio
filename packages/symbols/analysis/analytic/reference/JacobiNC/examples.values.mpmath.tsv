@@ -18,7 +18,7 @@ jacobinc-1-over-2-times-pi-0	ellipfun('nc', ((mpf(1)/2) * pi), m=0)	1.1794639761
 jacobinc-0-1	ellipfun('nc', 0, m=1)	1.0	
 jacobinc-1-over-2-times-i-times-pi-1	ellipfun('nc', (mpc(0, (mpf(1)/2)) * pi), m=1)	(8.47842766036889964395870146939e-32 + 0.0j)	
 n-jacobinc-sqrt-2-over-4-times-i-2	(ellipfun('nc', mpc(0, (mpmathify(sqrt(2)) / 4)), m=2))	(0.93562268712481237275488098323 + 2.37752955729173538082136326634e-35j)	
-n-jacobinc-1-over-2-times-1-plus-sqrt-2-over-2-1	(ellipfun('nc', ((mpf(1)/2) * (1 + (mpmathify(sqrt(2)) / 2))), m=((((1 + (-(mpmathify(sqrt(2)) / 2))))**2) * (((1 + (mpmathify(sqrt(2)) / 2)))**-2))))	1.51677688809493681287723601292	
+n-jacobinc-1-over-2-times-1-plus-sqrt-2-over-2-1	(ellipfun('nc', ((mpf(1)/2) * (1 + (mpmathify(sqrt(2)) / 2))), m=(enumeratio_pow((1 + (-(mpmathify(sqrt(2)) / 2))), 2) * enumeratio_pow((1 + (mpmathify(sqrt(2)) / 2)), -2))))	1.51677688809493681287723601292	
 n-jacobinc-sqrt-2-times-i-2	(ellipfun('nc', mpc(0, sqrt(2)), m=2))	(-0.145153002614798216434560148681 - 8.36690453833105530124351722489e-35j)	
-n-jacobinc-2-times-1-plus-sqrt-2-over-2-1-minus	(ellipfun('nc', (2 * (1 + (mpmathify(sqrt(2)) / 2))), m=((((1 + (-(mpmathify(sqrt(2)) / 2))))**2) * (((1 + (mpmathify(sqrt(2)) / 2)))**-2))))	-1.03183131028054529164230259237	
+n-jacobinc-2-times-1-plus-sqrt-2-over-2-1-minus	(ellipfun('nc', (2 * (1 + (mpmathify(sqrt(2)) / 2))), m=(enumeratio_pow((1 + (-(mpmathify(sqrt(2)) / 2))), 2) * enumeratio_pow((1 + (mpmathify(sqrt(2)) / 2)), -2))))	-1.03183131028054529164230259237	
 symbolic-arguments-are-left-unevaluated-rather			

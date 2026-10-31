@@ -11,7 +11,7 @@ sum-stirling-6-k-times-apply-derivative-f-k
 one-block-means-one-partition-s-n-1-1	stirling2(5, 1)	1.0	
 singletons-only-s-n-n-1	stirling2(5, 5)	1.0	
 row-sums-give-the-bell-numbers			
-two-blocks-s-n-2-2-n-1-1	almosteq(stirling2(10, 2), (((2)**9) - 1), 1e-20)	True	
+two-blocks-s-n-2-2-n-1-1	almosteq(stirling2(10, 2), (enumeratio_pow(2, 9) - 1), 1e-20)	True	
 s-n-n-1-binom-n-2-one-block-is-a-pair	almosteq(stirling2(6, 5), binomial(6, 2), 1e-20)	True	
 explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j			
 orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m			

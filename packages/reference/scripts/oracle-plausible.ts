@@ -26,6 +26,7 @@ import {
   interpretSymbolicAgreement,
   isSymbolicSystem,
   type MathJSON,
+  notNumeric,
   runIn,
   symbolicAgreementSource,
   type System,
@@ -346,7 +347,12 @@ const POLE =
 const RESOURCE = /TimeoutError|MemoryError|KernelDied|killed|\$Aborted/;
 /** The other system refusing an argument outside its function's domain. */
 const DOMAIN =
-  /DomainError|non-?negative|must be positive|positive integer|not an integer|an integer, not|zero modulus|expected|expecting|MethodError|AssertionError|cannot create mpf/i;
+  /DomainError|non-?negative|must be positive|positive integer|not an integer|an integer, not|zero modulus|expected|expecting|MethodError|AssertionError|cannot create mpf|cannot be less than/i;
+
+/** The other system declining to order a complex number: mpmath's `<=` raises two ways, SymPy's names the value. */
+const ORDERING = /no ordering relation|non-real|cannot unpack non-iterable mpc/i;
+const isOrderCall = (expr: MathJSON): boolean =>
+  Array.isArray(expr) && ["Less", "LessEqual", "Greater", "GreaterEqual"].includes(expr[0] as string);
 
 /** Whether `ours` is a list of numbers and booleans that `theirs` prints with the booleans as 0 and 1. */
 function boolsAsInts(ours: MathJSON, theirs: string): boolean {
@@ -411,6 +417,18 @@ function autoKind(
   if (result.error === undefined && Array.isArray(sample) && sample[0] === "N" && sample.length === 3) {
     if (roundsTo(sample[2] as MathJSON, ours, theirs)) return "convention";
   }
+  // mpmath's hypergeometric sum cannot reach its target where the exact answer is 0 (a polynomial at a root); ours is an
+  // exact 0. Any other answer of ours is left for triage.
+  if (system === "mpmath" && result.error !== undefined && /hypsum\(\) failed to converge/.test(theirs) && ours === 0)
+    return "precision";
+  // mpmath and SymPy refuse to order a complex number (`√-2` beside a real), where ours answers False.
+  if (result.error !== undefined && ORDERING.test(theirs) && isOrderCall(sample)) return "domain";
+  // Julia's Arb balls report a pole anywhere in an array as one error for the whole array;
+  // ours holds the pole at its element.
+  if (system === "julia" && result.error !== undefined && /ball not finite/.test(theirs) && hasNonAnswer(ours))
+    return "undefined-form";
+  // The Julia LerchPhi mapping declines past |z| = 1 where it has no continuation; ours answers.
+  if (system === "julia" && result.error !== undefined && /no continuation past/.test(theirs)) return "emit";
   // Unevaluated: the sample itself, or for `N(f(…))` the inner call.
   const inner = Array.isArray(sample) && sample[0] === "N" ? sample[1] : sample;
   const oursDeclines =
@@ -559,7 +577,23 @@ for (const system of systems) {
   process.stderr.write(`${system}: ${sources.length} samples — running…\n`);
   const budget = laneMinutes(system, laneOverride);
   budgets.set(system, budget);
-  const results = await runIn(system, sources, { deadline: Date.now() + budget * 60_000 });
+  const deadline = Date.now() + budget * 60_000;
+  const results = await runIn(system, sources, { deadline });
+  // An answer that isn't a number to sample (a held call, a function) is judged as any other row is, as the scan does.
+  const unsampled = runnable.flatMap((_row, i) =>
+    symbolicMode[i] && notNumeric((results[i] as { value?: string }).value ?? "") ? [i] : [],
+  );
+  if (unsampled.length > 0) {
+    const plain = await runIn(
+      system,
+      unsampled.map((i) => (runnable[i]!.out as { source: string }).source),
+      { deadline },
+    );
+    for (const [at, i] of unsampled.entries()) {
+      results[i] = plain[at] as (typeof results)[number];
+      symbolicMode[i] = false;
+    }
+  }
   let agree = 0;
   let inherited = 0;
   let automatic = 0;
