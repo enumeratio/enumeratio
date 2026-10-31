@@ -1,5 +1,5 @@
-// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import { BigDecimal, ComputeEngine } from "@enumeratio/engine/unstable";
+import { BigDecimal } from "@enumeratio/engine";
+import { ComputeEngine } from "@enumeratio/engine/unstable";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
 import { hypergeometric3F2RegularizedBig } from "../src/hypergeometric-big.ts";

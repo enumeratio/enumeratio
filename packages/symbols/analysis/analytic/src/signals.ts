@@ -1,10 +1,8 @@
-// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
 import { type Expression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
-import { declareCompile, bigRationalAt, operandsOf } from "@enumeratio/engine";
+import { BigDecimal, declareCompile, bigRationalAt, operandsOf } from "@enumeratio/engine";
 import type { Json } from "@enumeratio/ce-patches";
 import type { BoxInput, EvalOptions, NativeEval } from "@enumeratio/ce-patches";
 import { bigRealOperand, bigResult, exceedsDoublePrecision, isFiniteNum } from "@enumeratio/ce-patches";
-import { BigDecimal } from "@enumeratio/engine/unstable";
 
 // The Wolfram signal / piecewise-waveform family: UnitBox, UnitTriangle, HeavisideTheta,
 // HeavisideLambda, HeavisidePi, Ramp, SawtoothWave, TriangleWave, SquareWave, Rescale,

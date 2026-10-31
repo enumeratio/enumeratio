@@ -80,8 +80,8 @@ function sliceDistributionOf(ce: Engine, proc: Expr, t: Expr): Expr | undefined 
 }
 
 function declareSliceDistribution(ce: Engine): void {
-  // `proc(t)`. compute-engine's `Apply` would read the compound callee as a lambda over its free
-  // symbols (cortex-js/compute-engine#426) and drop the `t`.
+  // `proc(t)`. compute-engine#426 is fixed, but its `Apply` still does not evaluate a compound callee
+  // at `t`; the wrapper evaluates the slice distribution.
   wrapOperator(
     ce,
     ["Apply"],

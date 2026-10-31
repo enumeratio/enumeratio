@@ -1,4 +1,3 @@
-// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
 import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   atDigits,
@@ -10,7 +9,7 @@ import {
   wantsNumber,
   logGammaReal,
 } from "@enumeratio/ce-patches";
-import { BigDecimal } from "@enumeratio/engine/unstable";
+import { BigDecimal } from "@enumeratio/engine";
 import { inverseGamma } from "./hypergeometric-big.ts";
 
 // InverseGammaRegularized(a, s) and InverseBetaRegularized(s, a, b): neither has a closed

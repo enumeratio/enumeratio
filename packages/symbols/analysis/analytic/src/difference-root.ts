@@ -372,8 +372,8 @@ const reducedRoot = (callee: Expression): Expression | undefined => {
 };
 
 // `DifferenceRootReduce(f(n), n)(20)`: the reduction is `Apply(Root(fn), n)`, a function of its free
-// variable. compute-engine holds a call on a callee it cannot type (cortex-js/compute-engine#426),
-// so the call to `Root(fn)` at the argument is made here.
+// variable. compute-engine#426 is fixed, but it still does not evaluate a call on that callee, so
+// `Root(fn)` is applied to the argument here.
 function attachReducedRootApply(ce: ComputeEngine): void {
   wrapOperator(
     ce,
