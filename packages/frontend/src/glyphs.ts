@@ -1,6 +1,8 @@
 // Page-space SVG glyphs for combinatorial collection elements: a permutation
 // draws as its matrix, a partition as a Ferrers diagram, a composition as a
 // divided bar, a subset as a row of cells, a Dyck path as a mountain range.
+// A value is a flat integer list, or nested (tableau rows, set-composition blocks,
+// tree children) for the kinds that need it.
 // Each is a pure `(element) -> svg string` function -- the geometry can then be
 // injected anywhere. Colours are CSS custom properties (--notatio-accent /
 // -border / -fg), so a glyph inherits the surrounding surface's theme.
@@ -44,6 +46,32 @@ export function permutationSvg(image: number[], unit = 22): string {
 }
 
 /**
+ * Signed permutation matrix: the permutation grid of `|image[i]|`, a filled dot
+ * where the entry is positive and a ring with a bar through it where it is
+ * negative (one-line notation, e.g. `[2,-1,3]`).
+ */
+export function signedPermutationSvg(image: number[], unit = 22): string {
+  const n = Math.max(1, image.length);
+  const side = n2(n * unit + 2);
+  let grid = "";
+  for (let r = 0; r < n; r++)
+    for (let c = 0; c < n; c++)
+      grid += `<rect x="${n2(c * unit)}" y="${n2(r * unit)}" width="${unit}" height="${unit}" fill="none" stroke="${BORDER}" stroke-width="1" opacity="0.4"/>`;
+  let dots = "";
+  image.forEach((value, i) => {
+    const cx = (Math.abs(value) - 0.5) * unit;
+    const cy = (i + 0.5) * unit;
+    const r = unit * 0.32;
+    dots +=
+      value < 0
+        ? `<circle cx="${n2(cx)}" cy="${n2(cy)}" r="${n2(r)}" fill="none" stroke="${ACCENT}" stroke-width="2"/>` +
+          `<line x1="${n2(cx - r * 0.6)}" y1="${n2(cy)}" x2="${n2(cx + r * 0.6)}" y2="${n2(cy)}" stroke="${ACCENT}" stroke-width="2" stroke-linecap="round"/>`
+        : `<circle cx="${n2(cx)}" cy="${n2(cy)}" r="${n2(r)}" fill="${ACCENT}"/>`;
+  });
+  return svg(`-1 -1 ${side} ${side}`, "signed permutation matrix", grid + dots);
+}
+
+/**
  * Ferrers (Young) diagram: left-aligned rows of unit boxes, row `i` holding
  * `parts[i]` boxes (parts stored non-increasing, e.g. `[3,1]`).
  */
@@ -61,27 +89,30 @@ export function ferrersSvg(parts: number[], unit = 18): string {
 }
 
 /**
- * Young tableau: a Ferrers shape whose cells carry entries. Given just the
- * partition `parts`, the cells are numbered `1…n` in reading order (row by row)
- * -- the "superstandard" filling, which is always a valid standard Young tableau
- * (rows increase left-to-right, columns increase top-to-bottom).
+ * Young tableau: a Ferrers shape whose cells carry entries, English convention.
+ * Given the rows (`[[1,2],[3]]`) it draws that filling. Given just the partition
+ * `parts` (`[2,1]`), the cells are numbered `1…n` in reading order (row by row)
+ * -- the "superstandard" filling, always a valid standard Young tableau.
  */
-export function tableauSvg(parts: number[], unit = 20): string {
-  const rows = Math.max(1, parts.length);
-  const cols = Math.max(1, parts[0] ?? 0);
+export function tableauSvg(shape: number[] | number[][], unit = 20): string {
+  let entry = 1;
+  const rowsOf: number[][] = (shape as unknown[]).every(Array.isArray)
+    ? (shape as number[][])
+    : (shape as number[]).map((part) => Array.from({ length: part }, () => entry++));
+  const rows = Math.max(1, rowsOf.length);
+  const cols = Math.max(1, ...rowsOf.map((r) => r.length));
   const w = n2(cols * unit + 2);
   const h = n2(rows * unit + 2);
+  const wide = rowsOf.some((r) => r.some((v) => String(v).length > 2));
   let body = "";
-  let entry = 1;
-  parts.forEach((part, i) => {
-    for (let j = 0; j < part; j++) {
+  rowsOf.forEach((row, i) => {
+    row.forEach((value, j) => {
       const x = j * unit;
       const y = i * unit;
       body +=
         `<rect x="${n2(x)}" y="${n2(y)}" width="${unit}" height="${unit}" rx="1.5" fill="${ACCENT_FILL}" stroke="${ACCENT}" stroke-width="1"/>` +
-        `<text x="${n2(x + unit / 2)}" y="${n2(y + unit / 2)}" text-anchor="middle" dominant-baseline="central" font-size="${n2(unit * 0.5)}" font-family="ui-monospace, monospace" fill="${FG}">${entry}</text>`;
-      entry++;
-    }
+        `<text x="${n2(x + unit / 2)}" y="${n2(y + unit / 2)}" text-anchor="middle" dominant-baseline="central" font-size="${n2(unit * (wide ? 0.38 : 0.5))}" font-family="ui-monospace, monospace" fill="${FG}">${value}</text>`;
+    });
   });
   return svg(`-1 -1 ${w} ${h}`, "Young tableau", body);
 }
@@ -224,13 +255,36 @@ export function treeSvg(word: number[], opts: { binary?: boolean } = {}, unit = 
 }
 
 /**
+ * Rounded pills, one per block of elements, left to right. `arrows` puts a small
+ * triangle in each gap, so the order of the blocks reads as part of the picture.
+ */
+function pillsSvg(blocks: readonly (readonly number[])[], label: string, arrows: boolean, unit = 22): string {
+  const gap = arrows ? 14 : 8;
+  if (blocks.length === 0) return svg("-1 -1 24 24", label, "");
+  const h = n2(unit + 2);
+  let x = 0;
+  let body = "";
+  blocks.forEach((els, b) => {
+    const pillW = els.length * unit;
+    body += `<rect x="${n2(x)}" y="0" width="${n2(pillW)}" height="${n2(unit)}" rx="${n2(unit / 2)}" fill="${ACCENT_FILL}" stroke="${ACCENT}" stroke-width="1"/>`;
+    els.forEach((el, k) => {
+      body += `<text x="${n2(x + (k + 0.5) * unit)}" y="${n2(unit / 2)}" text-anchor="middle" dominant-baseline="central" font-size="${n2(unit * 0.45)}" font-family="ui-monospace, monospace" fill="${FG}">${el}</text>`;
+    });
+    x += pillW;
+    if (arrows && b < blocks.length - 1)
+      body += `<polygon points="${n2(x + 4)},${n2(unit / 2 - 4)} ${n2(x + 4)},${n2(unit / 2 + 4)} ${n2(x + gap - 4)},${n2(unit / 2)}" fill="${BORDER}"/>`;
+    x += gap;
+  });
+  return svg(`-1 -1 ${n2(x - gap + 2)} ${h}`, label, body);
+}
+
+/**
  * Set partition from a restricted-growth string: `rgs[i]` is the block id of
  * element `i+1`, with `rgs[0] = 0` and `rgs[i] <= 1 + max(rgs[0..i-1])` (the
  * canonical encoding). Each block draws as a rounded pill of its elements, in
  * first-appearance order -- e.g. `[0,0,1,0,2]` is `{1,2,4} {3} {5}`.
  */
 export function setPartitionSvg(rgs: number[], unit = 22): string {
-  const gap = 8;
   const order: number[] = [];
   const blocks = new Map<number, number[]>();
   rgs.forEach((b, i) => {
@@ -240,20 +294,40 @@ export function setPartitionSvg(rgs: number[], unit = 22): string {
     }
     blocks.get(b)?.push(i + 1);
   });
-  if (order.length === 0) return svg("-1 -1 24 24", "set partition", "");
-  const h = n2(unit + 2);
-  let x = 0;
-  let body = "";
-  for (const b of order) {
-    const els = blocks.get(b) ?? [];
-    const pillW = els.length * unit;
-    body += `<rect x="${n2(x)}" y="0" width="${n2(pillW)}" height="${n2(unit)}" rx="${n2(unit / 2)}" fill="${ACCENT_FILL}" stroke="${ACCENT}" stroke-width="1"/>`;
-    els.forEach((el, k) => {
-      body += `<text x="${n2(x + (k + 0.5) * unit)}" y="${n2(unit / 2)}" text-anchor="middle" dominant-baseline="central" font-size="${n2(unit * 0.45)}" font-family="ui-monospace, monospace" fill="${FG}">${el}</text>`;
-    });
-    x += pillW + gap;
-  }
-  return svg(`-1 -1 ${n2(x - gap + 2)} ${h}`, "set partition", body);
+  return pillsSvg(
+    order.map((b) => blocks.get(b) ?? []),
+    "set partition",
+    false,
+    unit,
+  );
+}
+
+/**
+ * Set composition: the blocks of an ordered set partition, in order, as pills
+ * with an arrow between consecutive ones -- e.g. `[[3],[1,2]]` is `{3} → {1,2}`.
+ */
+export function setCompositionSvg(blocks: number[][], unit = 22): string {
+  return pillsSvg(blocks, "set composition", true, unit);
+}
+
+/** A nested tree value: a list is a node holding its children, anything else a leaf. */
+export type NestedTree = number | readonly NestedTree[];
+
+/**
+ * Tree from nested lists -- a binary or k-ary tree (a leaf `0`, a node the list of its
+ * children) or an ordered tree (a leaf `[]`) -- drawn as `treeSvg` draws the same tree's
+ * preorder child-count word.
+ */
+export function nestedTreeSvg(tree: NestedTree, unit = 20, r = 5): string {
+  const counts: number[] = [];
+  const walk = (t: NestedTree): void => {
+    if (Array.isArray(t)) {
+      counts.push(t.length);
+      t.forEach(walk);
+    } else counts.push(0);
+  };
+  walk(tree);
+  return treeSvg(counts, {}, unit, r);
 }
 
 /**
@@ -306,13 +380,14 @@ export function diagramSvg(rgs: number[], unit = 26): string {
 }
 
 /**
- * Lattice path: a monotone staircase of unit steps east (`0`) and north (`1`)
- * from the bottom-left corner, on the grid it spans -- e.g. `[0,1,1,0]` walks
- * E, N, N, E across a 2×2 grid. Counts `C(a+b, a)` for `a` easts and `b` norths.
+ * Lattice path: a monotone staircase of unit steps from the bottom-left corner,
+ * on the grid it spans -- east (`0`), north (`1`), or diagonal north-east (`2`,
+ * the Delannoy step), e.g. `[0,1,1,0]` walks E, N, N, E across a 2×2 grid.
+ * Counts `C(a+b, a)` for `a` easts and `b` norths when there are no diagonals.
  */
 export function latticePathSvg(steps: number[], unit = 20): string {
-  const a = steps.filter((s) => s === 0).length; // east steps -> width
-  const b = steps.length - a; // north steps -> height
+  const a = steps.filter((s) => s === 0 || s === 2).length; // east + diagonal -> width
+  const b = steps.filter((s) => s !== 0).length; // north + diagonal -> height
   const cols = Math.max(1, a);
   const rows = Math.max(1, b);
   const w = n2(cols * unit + 2);
@@ -329,13 +404,61 @@ export function latticePathSvg(steps: number[], unit = 20): string {
   let gx = 0;
   let gy = 0;
   for (const s of steps) {
-    if (s === 0) gx++;
-    else gy++;
+    if (s === 0 || s === 2) gx++;
+    if (s !== 0) gy++;
     pts.push([gx, gy]);
   }
   const coords = pts.map(([x, y]) => `${n2(px(x))},${n2(py(y))}`).join(" ");
   const path = `<polyline points="${coords}" fill="none" stroke="${ACCENT}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
   return svg(`-1 -1 ${w} ${h}`, "lattice path", grid + path);
+}
+
+/**
+ * A walk from the origin: each token of `steps` moves `move(token)` = (dx, dy),
+ * drawn as a polyline over a baseline at height 0. The picture is as tall as the
+ * path's range, so a path that dips below the axis (a Łukasiewicz path's last
+ * step lands on -1) still fits.
+ */
+function walkSvg(
+  steps: number[],
+  label: string,
+  move: (token: number) => { dx: number; dy: number },
+  unit = 16,
+): string {
+  const pts: Array<[number, number]> = [[0, 0]];
+  let x = 0;
+  let y = 0;
+  for (const s of steps) {
+    const { dx, dy } = move(s);
+    x += dx;
+    y += dy;
+    pts.push([x, y]);
+  }
+  const top = Math.max(0, ...pts.map((p) => p[1]));
+  const bottom = Math.min(0, ...pts.map((p) => p[1]));
+  const width = Math.max(1, x);
+  const height = Math.max(1, top - bottom);
+  const w = n2(width * unit + 2);
+  const h = n2(height * unit + 2);
+  const coords = pts.map(([px, py]) => `${n2(px * unit)},${n2((top - py) * unit)}`).join(" ");
+  const baseline = `<line x1="0" y1="${n2(top * unit)}" x2="${n2(width * unit)}" y2="${n2(top * unit)}" stroke="${BORDER}" stroke-width="1" opacity="0.4"/>`;
+  const path = `<polyline points="${coords}" fill="none" stroke="${ACCENT}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  return svg(`-1 -1 ${w} ${h}`, label, baseline + path);
+}
+
+/** Motzkin path: up (`1`), level (`0`) and down (`-1`) steps that never dip below the axis. */
+export function motzkinSvg(steps: number[], unit = 16): string {
+  return walkSvg(steps, "Motzkin path", (s) => ({ dx: 1, dy: s }), unit);
+}
+
+/** Schröder path: up (`1`), down (`-1`), and a level step two wide (`2`). */
+export function schroederSvg(steps: number[], unit = 16): string {
+  return walkSvg(steps, "Schröder path", (s) => ({ dx: s === 2 ? 2 : 1, dy: s === 2 ? 0 : s }), unit);
+}
+
+/** Łukasiewicz path: each entry is the rise of one step (children less one, `>= -1`). */
+export function lukasiewiczSvg(steps: number[], unit = 16): string {
+  return walkSvg(steps, "Łukasiewicz path", (s) => ({ dx: 1, dy: s }), unit);
 }
 
 export type GlyphKind =
@@ -349,7 +472,13 @@ export type GlyphKind =
   | "binary-tree"
   | "set-partition"
   | "lattice"
-  | "diagram";
+  | "diagram"
+  | "motzkin"
+  | "schroeder"
+  | "lukasiewicz"
+  | "nested-tree"
+  | "signed-permutation"
+  | "set-composition";
 
 /** Every kind `renderGlyph` draws; what a row source or a carrier record may name. */
 export const GLYPH_KINDS: ReadonlySet<string> = new Set<GlyphKind>([
@@ -364,33 +493,55 @@ export const GLYPH_KINDS: ReadonlySet<string> = new Set<GlyphKind>([
   "set-partition",
   "lattice",
   "diagram",
+  "motzkin",
+  "schroeder",
+  "lukasiewicz",
+  "nested-tree",
+  "signed-permutation",
+  "set-composition",
 ]);
 
-/** Dispatch a glyph `kind` to its renderer over an integer-list `value`. */
-export function renderGlyph(kind: GlyphKind, value: number[], opts?: { n?: number }): string {
+/** What a glyph draws: a flat integer list, or the nested lists a tableau, set composition or tree is. */
+export type GlyphValue = number[] | number[][] | NestedTree;
+
+/** Dispatch a glyph `kind` to its renderer over its `value` (the shape each kind reads is on its function). */
+export function renderGlyph(kind: GlyphKind, value: GlyphValue, opts?: { n?: number }): string {
+  const ints = value as number[];
   switch (kind) {
     case "permutation":
-      return permutationSvg(value);
+      return permutationSvg(ints);
     case "partition":
-      return ferrersSvg(value);
+      return ferrersSvg(ints);
     case "tableau":
-      return tableauSvg(value);
+      return tableauSvg(value as number[] | number[][]);
     case "composition":
-      return compositionSvg(value);
+      return compositionSvg(ints);
     case "subset":
-      return subsetSvg(value, opts?.n);
+      return subsetSvg(ints, opts?.n);
     case "dyck":
-      return dyckSvg(value);
+      return dyckSvg(ints);
     case "tree":
-      return treeSvg(value);
+      return treeSvg(ints);
     case "binary-tree":
-      return treeSvg(value, { binary: true });
+      return treeSvg(ints, { binary: true });
     case "set-partition":
-      return setPartitionSvg(value);
+      return setPartitionSvg(ints);
     case "lattice":
-      return latticePathSvg(value);
+      return latticePathSvg(ints);
     case "diagram":
-      return diagramSvg(value);
+      return diagramSvg(ints);
+    case "motzkin":
+      return motzkinSvg(ints);
+    case "schroeder":
+      return schroederSvg(ints);
+    case "lukasiewicz":
+      return lukasiewiczSvg(ints);
+    case "nested-tree":
+      return nestedTreeSvg(value as NestedTree);
+    case "signed-permutation":
+      return signedPermutationSvg(ints);
+    case "set-composition":
+      return setCompositionSvg(value as number[][]);
     default:
       throw new Error("unreachable: GlyphKind is exhaustive above");
   }

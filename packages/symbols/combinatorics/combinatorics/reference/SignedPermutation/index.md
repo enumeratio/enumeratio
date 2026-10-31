@@ -4,6 +4,7 @@ domain: Combinatorics
 signature: SignedPermutation(...)
 summary: Catalogued in the enumeratio database; not yet written up here.
 catalogCarrier: true
+glyph: signed-permutation
 stub: carrier
 signatures:
   - call: SignedPermutation(...)

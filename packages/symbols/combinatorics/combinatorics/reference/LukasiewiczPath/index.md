@@ -4,6 +4,7 @@ domain: Combinatorics
 signature: LukasiewiczPath(...)
 summary: Catalogued in the enumeratio database; not yet written up here.
 catalogCarrier: true
+glyph: lukasiewicz
 stub: carrier
 signatures:
   - call: LukasiewiczPath(...)

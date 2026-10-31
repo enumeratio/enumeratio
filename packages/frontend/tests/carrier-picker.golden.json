@@ -29,7 +29,8 @@
       "min": 1,
       "max": 6,
       "start": 4
-    }
+    },
+    "glyph": "nested-tree"
   },
   "BinaryTreeParentArray": {
     "carrier": "BinaryTreeParentArray",
@@ -108,7 +109,8 @@
       "min": 1,
       "max": 6,
       "start": 4
-    }
+    },
+    "glyph": "lattice"
   },
   "Dissection": {
     "carrier": "Dissection",
@@ -263,7 +265,8 @@
       "min": 1,
       "max": 6,
       "start": 4
-    }
+    },
+    "glyph": "lukasiewicz"
   },
   "ModularResidue": {
     "carrier": "ModularResidue",
@@ -277,7 +280,8 @@
       "min": 1,
       "max": 6,
       "start": 4
-    }
+    },
+    "glyph": "motzkin"
   },
   "Multicomplex": {
     "carrier": "Multicomplex",
@@ -322,7 +326,8 @@
       "min": 1,
       "max": 6,
       "start": 4
-    }
+    },
+    "glyph": "nested-tree"
   },
   "ParkingFunction": {
     "carrier": "ParkingFunction",
@@ -443,7 +448,8 @@
       "min": 1,
       "max": 6,
       "start": 4
-    }
+    },
+    "glyph": "schroeder"
   },
   "SemistandardTableau": {
     "carrier": "SemistandardTableau",
@@ -457,7 +463,8 @@
       "min": 1,
       "max": 6,
       "start": 4
-    }
+    },
+    "glyph": "set-composition"
   },
   "SetPartition": {
     "carrier": "SetPartition",
@@ -488,7 +495,8 @@
       "min": 1,
       "max": 6,
       "start": 4
-    }
+    },
+    "glyph": "signed-permutation"
   },
   "SignedSetComposition": {
     "carrier": "SignedSetComposition",
@@ -534,7 +542,8 @@
       "min": 1,
       "max": 6,
       "start": 4
-    }
+    },
+    "glyph": "tableau"
   },
   "StandardTableauPair": {
     "carrier": "StandardTableauPair",

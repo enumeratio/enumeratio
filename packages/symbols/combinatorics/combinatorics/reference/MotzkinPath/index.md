@@ -4,6 +4,7 @@ domain: Combinatorics
 signature: MotzkinPath(...)
 summary: Catalogued in the enumeratio database; not yet written up here.
 catalogCarrier: true
+glyph: motzkin
 stub: carrier
 signatures:
   - call: MotzkinPath(...)

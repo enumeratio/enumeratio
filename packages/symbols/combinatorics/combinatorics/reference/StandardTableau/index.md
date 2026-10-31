@@ -10,6 +10,7 @@ references:
     identity: YoungTableau
 stub: carrier
 catalogCarrier: true
+glyph: tableau
 signatures:
   - call: StandardTableau(list)
     description: The singular-inhabitant constructor for a standard Young tableau, as its rows.
