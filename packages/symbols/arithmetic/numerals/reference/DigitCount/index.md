@@ -20,6 +20,8 @@ seeAlso:
   - DigitSum
 names:
   wolframIdentity: true
+statOn:
+  - Numeric
 ---
 
 - Equivalent to tallying [[IntegerDigits]](n, base) bucket by bucket.

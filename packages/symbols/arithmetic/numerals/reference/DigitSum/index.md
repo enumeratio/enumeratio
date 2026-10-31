@@ -24,6 +24,8 @@ references:
     identity: Sum digits of an integer
 names:
   wolframIdentity: true
+statOn:
+  - Numeric
 bindings:
   - origin: mapped
     form: sage

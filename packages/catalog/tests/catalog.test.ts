@@ -99,5 +99,5 @@ test("most stat names are single-carrier inheritance, not overloading", () => {
   const multi = STATS.filter((s) => s.on.length > 1);
   expect(STATS.length - multi.length).toBeGreaterThan(multi.length * 2);
   expect(STATS.find((s) => s.name === "Descents")?.on).toContain("Permutation");
-  expect(STATS.find((s) => s.name === "DivisorSum")?.on).toEqual(["IntegerFactorization"]);
+  expect(STATS.find((s) => s.name === "DivisorSum")?.on).toEqual(["IntegerFactorization", "Numeric"]);
 });

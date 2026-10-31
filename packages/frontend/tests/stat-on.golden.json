@@ -1,5 +1,5 @@
 {
-  "unanswered": [],
+  "unanswered": ["DigitCount on Numeric", "DigitSum on Numeric", "DivisorSum on Numeric"],
   "untested": [
     "Area on PythagoreanTriple",
     "Ascents on AscentSequence",
