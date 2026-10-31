@@ -1,4 +1,3 @@
-// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
 import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   atDigits,
@@ -10,7 +9,7 @@ import {
   asDouble,
   wantsNumber,
 } from "@enumeratio/ce-patches";
-import { BigDecimal } from "@enumeratio/engine/unstable";
+import { BigDecimal } from "@enumeratio/engine";
 
 // ExpIntegralE(n, z) = E_n(z) = ∫₁^∞ e^{−zt}/tⁿ dt, built on this package's own generalized
 // incomplete Gamma (`Gamma(s, z₀)`, already extended for complex operands): the standard

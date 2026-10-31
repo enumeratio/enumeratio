@@ -1,5 +1,5 @@
-// unstable: BigDecimal and the engine, the classes compute-engine's boxed numbers are; no /numerics subpath yet
-import { BigDecimal, ComputeEngine } from "@enumeratio/engine/unstable";
+import { BigDecimal } from "@enumeratio/engine";
+import { ComputeEngine } from "@enumeratio/engine/unstable";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
 import { MAX_TERMS, remainderCoefficients, truncationError } from "../src/riemann-siegel-asymptotic.ts";

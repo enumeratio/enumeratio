@@ -1,7 +1,6 @@
-// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import { BigDecimal } from "@enumeratio/engine/unstable";
 import { registerNotation } from "@enumeratio/boxes";
 import {
+  BigDecimal,
   bigIntegerAt,
   bigRationalAt,
   type Engine,

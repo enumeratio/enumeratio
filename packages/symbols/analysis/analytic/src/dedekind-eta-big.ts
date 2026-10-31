@@ -1,6 +1,4 @@
-import { type Engine, type Expr, wrapOperator } from "@enumeratio/engine";
-// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import { BigDecimal } from "@enumeratio/engine/unstable";
+import { type Engine, type Expr, wrapOperator, BigDecimal } from "@enumeratio/engine";
 import {
   type BigCx,
   atDigits,

@@ -1,5 +1,4 @@
-// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import { BigDecimal } from "@enumeratio/engine/unstable";
+import { BigDecimal } from "@enumeratio/engine";
 import { bernoulliRational, bigCx, bigRound, type BigCx } from "@enumeratio/ce-patches";
 
 // The Riemann–Siegel formula with Gabcke's remainder, continued to complex t, in BigDecimal.

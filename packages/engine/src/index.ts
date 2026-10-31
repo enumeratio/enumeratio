@@ -197,6 +197,7 @@ export function wrapOperator(
 }
 
 export {
+  BigDecimal,
   box,
   type CompileHandler,
   type Engine,

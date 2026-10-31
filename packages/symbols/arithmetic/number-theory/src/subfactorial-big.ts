@@ -1,7 +1,5 @@
-// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import type { Engine, Expr } from "@enumeratio/engine";
+import { BigDecimal, type Engine, type Expr } from "@enumeratio/engine";
 import { atDigits } from "@enumeratio/ce-patches";
-import { BigDecimal } from "@enumeratio/engine/unstable";
 
 // Subfactorial(n) = Γ(n+1, −1)/e at a real, non-integer n, to any number of digits. With a = n+1,
 //   Γ(a, −1) = Γ(a) − γ(a, −1),   γ(a, −1) = e^{iπa} Σ_{k≥0} 1/(k! (a+k))

@@ -1,5 +1,4 @@
-// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import { BigDecimal } from "@enumeratio/engine/unstable";
+import { BigDecimal } from "@enumeratio/engine";
 import {
   atDigits,
   bernoulliRational,

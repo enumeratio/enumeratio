@@ -1,7 +1,5 @@
-// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import { BigDecimal, type Expression, type ComputeEngine } from "@enumeratio/engine/unstable";
 import { isRealInt } from "@enumeratio/ce-patches";
-import { operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { BigDecimal, type Engine, type Expr, operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { airyBig, airyPrimeBig, besselKYBig } from "./special-big.ts";
 
 // FunctionRange for the oscillating special functions on the reals: AiryAi, AiryBi and BesselY of
@@ -144,9 +142,9 @@ function extremes(curve: Curve): { min?: number; max?: number } | undefined {
 }
 
 /** `FunctionRange(f, x, y)` for the special functions above, as a numeric condition in `y`. */
-export function specialFunctionRange(ce: ComputeEngine, f: Expression, x: string, y: string): Expression | undefined {
+export function specialFunctionRange(ce: Engine, f: Expr, x: string, y: string): Expr | undefined {
   const args = operandsOf(f);
-  const ofX = (e: Expression | undefined): boolean => e !== undefined && symbolNameOf(e) === x;
+  const ofX = (e: Expr | undefined): boolean => e !== undefined && symbolNameOf(e) === x;
   let curve: Curve | undefined;
   if ((f.operator === "AiryAi" || f.operator === "AiryBi") && args.length === 1 && ofX(args[0])) {
     curve = airyCurve(f.operator === "AiryAi" ? "Ai" : "Bi");
