@@ -13,9 +13,7 @@ catalog:
     url: https://www.findstat.org/St001295
     on: DyckPath
 statOn:
-  - DelannoyPath
   - DyckPath
-  - MotzkinPath
   - PythagoreanTriple
 signatures:
   - call: Area(path)

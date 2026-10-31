@@ -7,7 +7,7 @@ signatures:
   - call: Peaks(p)
     description: the peak count of a one-line permutation $p$
     library: enumeratio-combinatorics
-    type: (composition | dyck_path | list | permutation) -> integer | number
+    type: (composition | dyck_path | list | motzkin_path | permutation | schroeder_path) -> integer | number
 seeAlso:
   - Valleys
   - Descents
@@ -32,7 +32,6 @@ catalog:
 statOn:
   - ColoredMotzkinPath
   - Composition
-  - DelannoyPath
   - DyckPath
   - KDyckPath
   - KMotzkinPath
@@ -54,3 +53,5 @@ bindings:
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
 - Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence.
 - A separate definition exists for `DyckPath` (Occurrences of an up step immediately followed by a down step.) but is not the one declared: one head, one owner.
+- A separate definition exists for `MotzkinPath` (Occurrences of an up step immediately followed by a down step.) but is not the one declared: one head, one owner.
+- A separate definition exists for `SchroederPath` (Occurrences of an up step immediately followed by a down step.) but is not the one declared: one head, one owner.

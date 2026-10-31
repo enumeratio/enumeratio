@@ -10,7 +10,7 @@ signatures:
   - call: PartsEqualOne(partition)
     description: Parts equal to 1.
     library: enumeratio-combinatorics
-    type: (integer_partition) -> number
+    type: (composition | integer_partition) -> number
 catalog:
   - system: findstat
     identity: St000475

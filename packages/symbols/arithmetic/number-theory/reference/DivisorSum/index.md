@@ -20,7 +20,6 @@ names:
   wolframIdentity: true
 statOn:
   - IntegerFactorization
-  - Numeric
 ---
 
 - $f$ and $\mathrm{cond}$ are `Function` literals over the divisor.

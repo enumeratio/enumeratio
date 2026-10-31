@@ -8,7 +8,8 @@
 // `omitHeads` excludes them here so this generator never touches that folder.
 //
 // `Height` is also defined on binary and ordered trees (trees' own kernel), so its record is
-// hand-written (`curatedHeads`): this generator only merges in `details`/`examples`.
+// hand-written (`curatedHeads`): this generator only merges in `details`/`examples`. `Hills` is
+// also defined on Schroeder paths, with its examples written by hand, so it is curated too.
 
 import { fileURLToPath } from "node:url";
 import type { GeneratedEntries } from "@enumeratio/entry/node";
@@ -31,7 +32,7 @@ export const generated: { standard: GeneratedEntries; curated: GeneratedEntries 
   frontier: LATTICE_PATHS_FRONTIER,
   samples: SAMPLES,
   declareArea: declareLatticePaths,
-  curatedHeads: ["Height"],
+  curatedHeads: ["Height", "Hills"],
   dir: REFERENCE_DIR,
   omitHeads: ["MajorIndex", "Peaks", "Valleys"],
 });

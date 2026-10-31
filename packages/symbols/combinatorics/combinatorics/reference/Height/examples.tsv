@@ -5,6 +5,8 @@ a-single-binary-node			[Height, [BinaryTree, [List, 0, 0]]]	1			a single node, c
 the-binary-tree			[Height, [BinaryTree, [List, [List, 0, 0], [List, [List, 0, 0], 0]]]]	3			the binary tree $[[.,.],[[.,.],.]]$
 a-single-vertex			[Height, [OrderedTree, [List]]]	0			a single vertex, counted in edges
 the-ordered-tree			[Height, [OrderedTree, [List, [List], [List, [List]], [List]]]]	2			the ordered tree $[[],[[]],[]]$
+the-motzkin-path-uluddl			[CombinatorialStat, [MotzkinPath, [List, 1, 0, 1, -1, -1, 0]], "'Height'"]	2			the Motzkin path $ULUDDL$
+the-schroeder-path-uuddudl-2			[CombinatorialStat, [SchroederPath, [List, 1, 1, -1, -1, 1, -1, 2]], "'Height'"]	2			the Schroeder path $UUDDUDL^2$, whose double level step does not rise
 findstat-st000013-1	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0]], "'Height'"]	1	1	FindStat St000013	FindStat's value for [1,0]
 findstat-st000013-2	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0]], "'Height'"]	1	1	FindStat St000013	FindStat's value for [1,0,1,0]
 findstat-st000013-3	Properties		[CombinatorialStat, [DyckPath, [List, 1, 1, 0, 0]], "'Height'"]	2	2	FindStat St000013	FindStat's value for [1,1,0,0]

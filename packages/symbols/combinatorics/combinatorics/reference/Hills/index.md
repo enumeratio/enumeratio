@@ -10,7 +10,7 @@ signatures:
   - call: Hills(path)
     description: Peaks at height 1 — an up step from the axis immediately followed by a down step.
     library: enumeratio-combinatorics
-    type: (dyck_path) -> number
+    type: (dyck_path | schroeder_path) -> number
 catalog:
   - system: findstat
     identity: St000674

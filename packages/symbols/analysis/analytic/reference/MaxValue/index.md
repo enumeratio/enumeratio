@@ -17,8 +17,6 @@ seeAlso:
   - Minimize
 names:
   wolframIdentity: true
-statOn:
-  - Arrangement
 attributes:
   - HoldAll
 ---

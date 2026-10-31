@@ -2,7 +2,9 @@
 // generic driver in `../../src/statistics/generate-entries.ts`). `scripts/collect-entries.ts`
 // writes them into `../../reference/`; `tests/statistics-generated.test.ts` checks they're
 // current. `ConjugacyClassSize` is also defined on `Permutation`, where its record is curated, so
-// `omitHeads` keeps this generator out of that folder.
+// `omitHeads` keeps this generator out of that folder. `LargestPart` and `PartsEqualOne` are also
+// defined on other carriers (plane partitions, compositions), whose examples are written by hand
+// into the record, so they are `curatedHeads`.
 
 import { fileURLToPath } from "node:url";
 import type { GeneratedEntries } from "@enumeratio/entry/node";
@@ -25,5 +27,7 @@ export const generated: { standard: GeneratedEntries; curated: GeneratedEntries 
   frontier: PARTITIONS_FRONTIER,
   samples: SAMPLES,
   declareArea: declarePartitions,
+  curatedHeads: ["LargestPart", "PartsEqualOne"],
+  dir: REFERENCE_DIR,
   omitHeads: ["ConjugacyClassSize"],
 });

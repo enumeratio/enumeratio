@@ -22,7 +22,7 @@ export const TABLEAUX_CARRIERS: readonly Carrier[] = [
   {
     name: "PlanePartition",
     type: "plane_partition",
-    shape: "tuple<list<integer>, list<integer>>",
+    shape: "list<list<integer>>",
     id: "plane_partition",
     plural: "PlanePartitions",
   },

@@ -21,7 +21,7 @@ signatures:
   - call: Leaves(tree)
     description: The number of leaves, the vertices with no children.
     library: enumeratio-combinatorics
-    type: (binary_tree | ordered_tree) -> number
+    type: (binary_tree | labeled_tree | ordered_tree) -> number
 ---
 
 - Defined over `BinaryTree` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.

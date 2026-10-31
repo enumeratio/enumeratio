@@ -37,7 +37,7 @@ export const SET_PARTITIONS_CARRIERS: readonly Carrier[] = [
   {
     name: "PerfectMatching",
     type: "perfect_matching",
-    shape: "list<integer>",
+    shape: "list<list<integer>>",
     id: "perfect_matching",
     plural: "PerfectMatchings",
   },

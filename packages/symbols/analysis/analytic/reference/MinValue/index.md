@@ -17,8 +17,6 @@ seeAlso:
   - Maximize
 names:
   wolframIdentity: true
-statOn:
-  - Arrangement
 attributes:
   - HoldAll
 ---

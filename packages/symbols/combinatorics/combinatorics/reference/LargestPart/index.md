@@ -26,7 +26,7 @@ signatures:
   - call: LargestPart(partition)
     description: The largest part.
     library: enumeratio-combinatorics
-    type: (composition | integer_partition) -> number
+    type: (composition | integer_partition | plane_partition) -> number
 bindings:
   - origin: mapped
     form: sage

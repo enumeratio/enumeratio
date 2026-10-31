@@ -31,8 +31,6 @@ statOn:
   - Composition
   - Permutation
   - PermutationCycles
-  - PermutationInversion
-  - SignedPermutation
 bindings:
   - origin: mapped
     form: combinatorica

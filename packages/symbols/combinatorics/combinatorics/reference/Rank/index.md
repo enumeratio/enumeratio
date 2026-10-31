@@ -13,8 +13,6 @@ signatures:
     overrides: compute-engine
 names:
   wolfram: ArrayDepth
-statOn:
-  - Finset
 ---
 
 - Tensor rank in the array sense — Wolfram's `ArrayDepth`, NumPy's `ndim`.

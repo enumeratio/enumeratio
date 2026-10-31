@@ -1,4 +1,7 @@
 id	in	out
 sum-k-pow-2-k-nothing-10	sum(((SR.var("k"))^2), SR.var("k"), 1, 10)	385
 sum-k-pow-neg-6-k-1-positiveinfinity	sum(((SR.var("k"))^-6), SR.var("k"), 1, oo)	1/945*pi^6
+sum-of-a-subset		
+sum-of-a-lehmer-code		
+sum-of-a-subexcedant-sequence		
 sum-k-pow-neg-2-k-1-positiveinfinity	sum(((SR.var("k"))^-2), SR.var("k"), 1, oo)	1/6*pi^2

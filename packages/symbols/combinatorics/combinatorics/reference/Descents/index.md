@@ -7,7 +7,7 @@ signatures:
   - call: Descents(p)
     description: the descent count of a one-line permutation $p$
     library: enumeratio-combinatorics
-    type: (list | permutation) -> integer
+    type: (composition | list | permutation | signed_permutation | standard_tableau) -> integer | number
 seeAlso:
   - Ascents
   - MajorIndex
@@ -39,7 +39,6 @@ statOn:
   - DecoratedPermutation
   - ParkingFunction
   - Permutation
-  - SetComposition
   - SignedPermutation
   - StandardTableau
   - Surjection

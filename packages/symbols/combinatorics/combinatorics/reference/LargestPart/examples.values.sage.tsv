@@ -1,6 +1,8 @@
 id	in	out
 the-partition-4-2-1-of-7	enumeratio_stat("IntegerPartition", [4, 2, 1], "LargestPart")	4
 the-partition-3-3-1-of-7	enumeratio_stat("IntegerPartition", [3, 3, 1], "LargestPart")	3
+the-plane-partition-with-rows-32-21-1		
+the-weak-composition-0-2-1		
 findstat-st000147-1	enumeratio_stat("IntegerPartition", [1], "LargestPart")	1
 findstat-st000147-2	enumeratio_stat("IntegerPartition", [2], "LargestPart")	2
 findstat-st000147-3	enumeratio_stat("IntegerPartition", [3], "LargestPart")	3
