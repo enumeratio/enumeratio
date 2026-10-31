@@ -1,6 +1,7 @@
 // StandardTableauPairs in Epsil: RSK is a bijection from the permutations of n, so a pair is the
 // RSK of the permutation of its rank, and its rank that of the permutation inverse RSK reads
-// back. The element is nested (no compiled type), so the definitions are interpreted.
+// back. The element is nested; unrank builds it from flat RSK state, and the other operations read it
+// nested, so they are interpreted.
 
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {
@@ -19,7 +20,7 @@ import {
   upTo,
 } from "../../../collections/src/families/tables.ts";
 import { symmetricGroup } from "../../../permutations/src/families/core.ts";
-import { rskPair } from "../tableau.ts";
+import { rskPairRows } from "../flat.ts";
 import { standardTableaux } from "./standard-tableaux.ts";
 
 type MathJSON = unknown;
@@ -167,7 +168,7 @@ export const standardTableauPairs: EpsilFamily = {
   settle: true,
   epsil: {
     count: ["Factorial", n],
-    unrank: lets([["rk_raw", symmetricGroup.epsil.unrank, "list<integer>"]], renamed(rskPair, "_raw", "rk_raw")),
+    unrank: lets([["rk_raw", symmetricGroup.epsil.unrank, "list<integer>"]], rskPairRows("rk_rsk", "rk_raw")),
     rank: lets(
       [
         [

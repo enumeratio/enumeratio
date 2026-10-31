@@ -26,4 +26,4 @@ laws:
 ---
 
 - Takes a `Permutation` and returns a `StandardTableau` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
-- Records WHERE each insertion landed. The insertion logic is untouched — comparing row lengths before and after says which row grew, which is less work than instrumenting the bumping to report it.
+- Records WHERE each insertion landed: the row the bumped entries end in gets k in its new cell.

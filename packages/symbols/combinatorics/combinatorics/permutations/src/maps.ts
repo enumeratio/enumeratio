@@ -24,14 +24,15 @@ import {
 } from "../../src/map-helpers.ts";
 import { bstParents } from "../../trees/src/bst.ts";
 import { fromPermutationTree } from "../../trees/src/increasing-binary-tree.ts";
-import { cactusEvacuationBody, cactusEvacuationKernel } from "../../tableaux/src/promotion.ts";
 import {
-  insertionReadingWord,
+  cactusEvacuation,
   insertionRows,
   insertionShape,
+  readingWord,
   recordingRows,
-  rskRows,
-} from "../../tableaux/src/tableau.ts";
+} from "../../tableaux/src/flat.ts";
+import { cactusEvacuationKernel } from "../../tableaux/src/promotion.ts";
+import { rskRows } from "../../tableaux/src/tableau.ts";
 import { rskInsertionKernel, rskRecordingKernel, rskShapeKernel } from "../../tableaux/src/rsk-kernels.ts";
 import {
   cycleTypeKernel,
@@ -300,7 +301,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     name: "RskInsertion",
     from: "permutation",
     to: "standard_tableau",
-    body: insertionRows,
+    body: insertionRows("rs", "_raw"),
     kernel: rskInsertionKernel,
     summary: "The insertion tableau of the RSK correspondence.",
     note: "Row insertion with bumping, as a fold over the word whose accumulator is the growing tableau, emitted as its rows. See tableau.ts for the indexing rule that makes it evaluate at all.",
@@ -309,7 +310,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     name: "RskShape",
     from: "permutation",
     to: "integer_partition",
-    body: insertionShape,
+    body: insertionShape("rs", "_raw"),
     kernel: rskShapeKernel,
     summary: "The common shape of the RSK tableaux: the row lengths, as a partition of n.",
     note: "By Schensted, its first part is the longest increasing subsequence and its first COLUMN is the longest decreasing one — two statistics readable off this map.",
@@ -318,10 +319,10 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     name: "RskRecording",
     from: "permutation",
     to: "standard_tableau",
-    body: recordingRows,
+    body: recordingRows("rs", "_raw"),
     kernel: rskRecordingKernel,
     summary: "The recording tableau of the RSK correspondence, as its rows.",
-    note: "Records WHERE each insertion landed. The insertion logic is untouched — comparing row lengths before and after says which row grew, which is less work than instrumenting the bumping to report it.",
+    note: "Records WHERE each insertion landed: the row the bumped entries end in gets k in its new cell.",
   },
   {
     name: "Rsk",
@@ -453,7 +454,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     name: "KnuthClassRepresentative",
     from: "permutation",
     to: "permutation",
-    body: insertionReadingWord,
+    body: readingWord("rs", "_raw"),
     summary: "The row reading word of σ's RSK insertion tableau — the canonical word of its Knuth (plactic) class.",
     note: "Two permutations are Knuth-equivalent exactly when they share an insertion tableau (Schensted), so reading that tableau back out — bottom row to top, left to right — picks one fixed representative per class. Idempotent: the representative's own insertion tableau is the same P, so applying this again changes nothing.",
   },
@@ -678,7 +679,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     name: "CactusEvacuation",
     from: "permutation",
     to: "permutation",
-    body: cactusEvacuationBody,
+    body: cactusEvacuation,
     kernel: cactusEvacuationKernel,
     summary: "The permutation with the same insertion tableau and the evacuation of the recording tableau.",
     note: "FindStat's Mp00126, an involution: RSK, evacuate the recording tableau, RSK backwards.",
