@@ -21,6 +21,8 @@ import { CATALOGUE } from "../theme/worker-catalogue.ts";
 
 export type { Prerendered };
 
+export const PREVIEW = process.argv.includes("preview");
+
 // The typeset HTML is the bulk of an answer (tenfold its data), so it isn't page data: each
 // page's goes in a file here, which `fillPrerendered` writes into the page's HTML, and the
 // page reads it back from the DOM before it hydrates.
@@ -78,6 +80,7 @@ function buildKernel(): NonNullable<typeof kernel> {
 
 /** The probes a collection explorer is derived with: the site's own engine, declared as the page's kernel is. */
 export async function explorerProbes() {
+  if (PREVIEW) return {};
   const { ce, ensure } = await buildKernel();
   return engineProbes(ce, ensure);
 }
@@ -89,6 +92,9 @@ export async function explorerProbes() {
 export async function prerenderExamples(entry: ReferenceEntry): Promise<(Prerendered | undefined)[]> {
   const examples = entry.examples ?? [];
   if (examples.length === 0) return [];
+  // `vitepress preview` resolves every route's params to serve the built site, and answers nothing:
+  // evaluating each example there takes minutes, past the hydration check's server timeout.
+  if (PREVIEW) return examples.map(() => undefined);
   const answers = await answer(entry);
   const parts: Record<string, string> = {};
   answers.forEach((a, i) => {
