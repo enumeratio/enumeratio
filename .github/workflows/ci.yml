@@ -80,7 +80,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.warm != 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 90 # a cold build (a compute-engine bump, or an edit to a package combinatorics' compile steps load, voids its verdicts) is the slow case
+    timeout-minutes: 150 # a cold build (a compute-engine bump, or an edit to a package combinatorics' compile steps load, voids its verdicts) is the slow case; combinatorics alone takes about 90 minutes cold
     permissions:
       contents: read
       actions: write # to prune the older cache entries
