@@ -5,6 +5,7 @@ import type { ReferenceEntry } from "@enumeratio/reference";
 import { entries } from "../../.vitepress/data/reference-node.ts";
 import { fieldsOf } from "../../.vitepress/data/carrier-fields.ts";
 import { definitionsOf } from "../../.vitepress/data/definitions.ts";
+import { functionViewFor } from "../../.vitepress/data/function-view.ts";
 import { explorerProbes, prerenderExamples } from "../../.vitepress/data/prerender.ts";
 
 /** The table a collection's page shows: its `enumerate:` filled in from what the record implies (the statistics on offer as names only). */
@@ -65,6 +66,7 @@ export default {
           carrierSlot: await carrierSlotOf(parameters, carrierNames, entries, catalog),
           maxSize: describeNow(entry.name).maxSize,
           optionValues: describeNow(entry.name).optionValues,
+          functionView: functionViewFor(entry.name),
         },
       });
     }

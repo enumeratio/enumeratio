@@ -1,0 +1,58 @@
+{
+  "Gamma": {
+    "panels": [
+      {
+        "label": "ComplexPlot",
+        "aria": "Plot of Gamma(z) over the complex plane",
+        "params": "",
+        "value": "ComplexPlot(Gamma(z), {z, -5 - 3*I, 5 + 3*I})"
+      },
+      {
+        "label": "real slice",
+        "aria": "Plot of Re(Gamma(x)) over the real line",
+        "params": "",
+        "value": "Plot(Re(Gamma(x)), {x, -5, 5})"
+      }
+    ]
+  },
+  "Erf": {
+    "panels": [
+      {
+        "label": "Plot",
+        "aria": "Plot of Erf(x) over the real line",
+        "params": "",
+        "value": "Plot(Erf(x), {x, -3, 3})"
+      }
+    ]
+  },
+  "Abundance": {
+    "panels": [
+      {
+        "label": "DiscretePlot",
+        "aria": "Plot of Abundance(n) over the integers",
+        "params": "",
+        "value": "DiscretePlot(Abundance(n), {n, -10, 10})"
+      }
+    ]
+  },
+  "Binomial": {
+    "panels": [
+      {
+        "label": "ComplexPlot",
+        "aria": "Plot of Binomial(n, z) over the complex plane",
+        "params": "{{n, 1}, -10, 10, 0.05, Slider}",
+        "value": "ComplexPlot(Binomial(_n, z), {z, -4 - 4*I, 4 + 4*I})"
+      },
+      {
+        "label": "real slice",
+        "aria": "Plot of Re(Binomial(n, x)) over the real line",
+        "params": "{{n, 1}, -10, 10, 0.05, Slider}",
+        "value": "Plot(Re(Binomial(_n, x)), {x, -4, 4})"
+      }
+    ]
+  },
+  "Moment": {
+    "panels": [],
+    "reason": "argument dist of type distribution has no control"
+  }
+}
