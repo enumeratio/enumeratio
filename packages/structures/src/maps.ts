@@ -253,23 +253,25 @@ export function declareMaps<M extends MapDeclaration>(
     if (wrap === undefined) throw new Error(`no constructor for ${map.to}`);
     // The definition as it runs: whatever the host builds (compiled, memoized), or the
     // interpreter directly.
+    // A composition has no body to interpret: the host may supply a compiled form of the whole chain.
     const definition =
       map.body === undefined
-        ? undefined
+        ? map.composedOf === undefined
+          ? undefined
+          : definitionFor?.(map)
         : (definitionFor?.(map) ?? ((contents) => evaluateDefinition(ce, map, contents)));
 
     const handle = (subject: Expression): Expression | undefined => {
       // A subject of another carrier is not this map's: a head with a case per carrier falls back to the
       // first case it was declared with when the right one declines (a guard), and that must not answer.
       if (carrierNames.has(subject.operator) && subject.operator !== constructorFor[map.from]) return undefined;
-      // A composed map applies its steps right to left, each through its own declared head —
-      // so every intermediate value is a properly constructed carrier and the composition is
-      // type-checked at each step rather than only at the ends.
-      if (map.composedOf !== undefined) return applyComposition(ce, map.composedOf, subject);
       const contents = operandsOf(subject)[0];
-      if (contents === undefined) return undefined;
-      const image = definition?.(contents.json);
-      if (image === undefined) return undefined;
+      const image = contents === undefined ? undefined : definition?.(contents.json);
+      // A composed map without a compiled form (or when it declines) applies its steps right to left,
+      // each through its own declared head: every intermediate value is a properly constructed carrier
+      // and the composition is type-checked at each step rather than only at the ends.
+      if (map.composedOf !== undefined && image === undefined) return applyComposition(ce, map.composedOf, subject);
+      if (contents === undefined || image === undefined) return undefined;
       const main = ce.box(image as never);
       // Materialised the same way `body` is (`evaluateDefinition`'s own `materialise` call) --
       // an extra argument can be just as lazy (DescentSet/PeakSet's Filter-over-Range), and a

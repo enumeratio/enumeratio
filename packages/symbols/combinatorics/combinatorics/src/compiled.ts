@@ -34,6 +34,77 @@ export interface GeneratedMap {
   readonly interpreted?: true;
 }
 
+/** The parts of a map that its composition is resolved and hashed by. */
+export interface StepMap {
+  readonly name: string;
+  readonly from: string;
+  readonly to: string;
+  readonly body?: unknown;
+  readonly guard?: unknown;
+  readonly composedOf?: readonly string[];
+}
+
+/** The key a map is compiled under. */
+export const mapKey = (map: Pick<StepMap, "name" | "from">): string => `${map.name}@${map.from}`;
+
+/**
+ * The maps a composition applies, in order of application: each step of `composedOf`, right to left, is
+ * the map of that name on the carrier the step before delivers, and a composed step is replaced by its
+ * own steps. `undefined` when a step has no such map or no body, or the chain doesn't end at `to`.
+ */
+export function compositionSteps<M extends StepMap>(
+  maps: readonly M[],
+  map: M,
+  seen: readonly M[] = [],
+): M[] | undefined {
+  if (map.composedOf === undefined || seen.includes(map)) return undefined;
+  const out: M[] = [];
+  let carrier = map.from;
+  for (const name of map.composedOf.toReversed()) {
+    const step = maps.find((m) => m.name === name && m.from === carrier);
+    if (step === undefined) return undefined;
+    const inner =
+      step.composedOf !== undefined
+        ? compositionSteps(maps, step, [...seen, map])
+        : step.body === undefined
+          ? undefined
+          : [step];
+    if (inner === undefined) return undefined;
+    out.push(...inner);
+    carrier = step.to;
+  }
+  return carrier === map.to ? out : undefined;
+}
+
+/** A composition's hash: its steps' definitions, so a change to any step voids what was compiled. */
+export const compositionHash = (steps: readonly StepMap[]): string =>
+  definitionHash(steps.map((step) => [mapKey(step), step.to, definitionHash({ body: step.body, guard: step.guard })]));
+
+/** A composition's generated chain as a function of its argument's contents, or `undefined` while the
+ *  chain has no compiled form for these steps (none generated, a step interpreted, or a step edited
+ *  since). `undefined` from the function declines to the steps themselves. */
+export function composedDefinition(options: {
+  ce: Engine;
+  steps: readonly StepMap[] | undefined;
+  generated?: GeneratedMap;
+}): ((contents: unknown) => MathJSON | undefined) | undefined {
+  const { ce, steps, generated } = options;
+  if (steps === undefined || generated?.run === undefined || generated.hash !== compositionHash(steps))
+    return undefined;
+  const run = generated.run;
+  let sys: unknown;
+  return (contents) => {
+    const raw = toJs(contents);
+    if (raw === undefined) return undefined;
+    try {
+      sys ??= runtimeHelpers(ce);
+      return fromJs(run(sys, { _raw: raw }));
+    } catch {
+      return undefined;
+    }
+  };
+}
+
 /** One map's definition as a function of its argument's contents: compiled where it compiles,
  *  interpreted otherwise. A pure definition's answers are cached across engines (`pureResult`);
  *  `cache: false` computes afresh, as a test comparing the two paths must. `undefined` declines

@@ -11,7 +11,7 @@ export function writeGenerated(target: string, text: string): void {
   const tmp = join(dirname(target), `tmp-${process.pid}-${basename(target)}`);
   try {
     writeFileSync(tmp, text);
-    execFileSync("vp", ["fmt", tmp], { stdio: "ignore" });
+    execFileSync("pnpm", ["exec", "vp", "fmt", tmp], { stdio: "ignore" });
     renameSync(tmp, target);
   } finally {
     rmSync(tmp, { force: true });

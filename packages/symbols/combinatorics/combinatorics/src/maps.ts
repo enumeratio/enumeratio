@@ -17,7 +17,7 @@ import { symbolInfo } from "@enumeratio/manifest";
 import { declareMaps as declareMapsGeneric, evaluateDefinition, type Law } from "@enumeratio/structures";
 import { CARRIERS } from "./carriers.ts";
 import { COMPILED_MAPS } from "./compiled-maps.generated.js";
-import { fastDefinition } from "./compiled.ts";
+import { composedDefinition, compositionSteps, fastDefinition, mapKey } from "./compiled.ts";
 import type { CombinatorialMap } from "./map-helpers.ts";
 import { MAP_LAWS } from "./maps-laws.generated.ts";
 import { COMPOSITIONS_MAPS } from "../compositions/src/maps.ts";
@@ -75,19 +75,22 @@ export function declareMaps(
   declareMapsGeneric(ce, constructorFor, maps, {
     package: "combinatorics",
     // Compiled where compute-engine's compiler takes it, memoized; the interpreter otherwise.
-    definitionFor: (map) =>
-      map.body === undefined
-        ? undefined
-        : fastDefinition({
-            ce,
-            body: map.body,
-            guard: map.guard,
-            from: shapeOf.get(map.from),
-            to: shapeOf.get(map.to),
-            interpret: (contents) => evaluateDefinition(ce, map, contents),
-            generated: COMPILED_MAPS[`${map.name}@${map.from}`],
-            kernel: map.kernel,
-          }),
+    definitionFor: (map) => {
+      // A composition runs as one chain where every step has compiled code, else through its steps.
+      if (map.composedOf !== undefined)
+        return composedDefinition({ ce, steps: compositionSteps(maps, map), generated: COMPILED_MAPS[mapKey(map)] });
+      if (map.body === undefined) return undefined;
+      return fastDefinition({
+        ce,
+        body: map.body,
+        guard: map.guard,
+        from: shapeOf.get(map.from),
+        to: shapeOf.get(map.to),
+        interpret: (contents) => evaluateDefinition(ce, map, contents),
+        generated: COMPILED_MAPS[mapKey(map)],
+        kernel: map.kernel,
+      });
+    },
     // FindStat's map ids (`Mp00066`), as the map's record states them.
     findstatFor: (map, from) => [
       ...(map.findstat ?? []),
