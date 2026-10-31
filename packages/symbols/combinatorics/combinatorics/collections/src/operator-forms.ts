@@ -9,10 +9,8 @@ import {
   wrapOperator,
 } from "@enumeratio/engine";
 
-// Wolfram's operator forms: `Map[f][xs]` is `Map[f, xs]`. Calling `Map(f)` on `xs` reaches
-// compute-engine's `Apply`, which reads a compound callee as a lambda over its free symbols
-// (cortex-js/compute-engine#426): it binds `f` to `xs` (`Map(xs)`), or with none free
-// (`Filter(IsEven)`) drops `xs`.
+// Wolfram's operator forms: `Map[f][xs]` is `Map[f, xs]`. compute-engine boxes `Map(f)` with its
+// collection `missing`, so `Map(f)(xs)` evaluates to that error unless `Map(f)` is a valid call.
 
 /** The heads with an operator form, and whether the argument it is applied to comes before the
  *  held operand (`Select[crit][xs]` is `Select[xs, crit]`, our `Filter(xs, crit)`) or after. */
@@ -39,8 +37,10 @@ export function declareOperatorForms(ce: Engine): void {
       1,
     );
   }
-  // A sum, product or power is no function, so `(f + g)[x]` stays a call, as in Wolfram. A slot
-  // (`_1`) in the callee makes it a pure function body, which compute-engine's `Apply` reads.
+  // A sum, product or power is no function, so `(f + g)[x]` stays a call, as in Wolfram;
+  // compute-engine reads it as a function of its free symbols (`(f + 1)(2)` is 3,
+  // cortex-js/compute-engine#426). A slot (`_1`) in the callee makes it a pure function body,
+  // which compute-engine's `Apply` reads.
   wrapOperator(
     ce,
     ["Apply"],

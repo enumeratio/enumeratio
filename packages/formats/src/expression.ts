@@ -118,24 +118,6 @@ export function collectWildcards(json: MathJsonExpression): string[] {
 }
 
 /**
- * Put back the digits each decimal literal was typed with. compute-engine's `parseEpsil`
- * works a short decimal out in doubles, so `0.3` reads as `0.30000000000000004` and prints
- * back that way; a long one it keeps as written. Every literal carries the span it came
- * from, and that text (less its `_` separators) is the value the author meant. A span that
- * doesn't read as the same number -- a node from a `$…$` island, say -- is left alone.
- */
-function exactDecimals(json: MathJsonExpression, src: string): void {
-  walk(json, (n) => {
-    const node = n as { num?: unknown; sourceOffsets?: [number, number] };
-    if (typeof node?.num !== "string" || !Array.isArray(node.sourceOffsets)) return;
-    const written = src.slice(...node.sourceOffsets).replaceAll("_", "");
-    if (!/^-?(\d+\.?\d*|\.\d+)(e[+-]?\d+)?$/i.test(written)) return;
-    const [typed, parsed] = [Number(written), Number(node.num)];
-    if (typed === parsed || Math.abs(typed - parsed) <= Math.abs(parsed) * 1e-15) node.num = written;
-  });
-}
-
-/**
  * Resolve the keys of rules (`isPrime -> Teal`, `isIrreducible && !isPrime -> Teal`) as
  * `resolveLibraryNames` resolves everything else: it leaves a rule's key as written, so a name
  * Epsil spells in lowercase (`isPrime`, how `IsPrime` prints) would read back as another name.
@@ -173,7 +155,6 @@ export function parseExpression(src: string, options?: ParseExpressionOptions): 
   const [json, diagnostics] = parseEpsil(src, undefined, options);
   resolveLibraryNames(json, src, options?.ce ?? libraryEngine());
   resolveRuleKeys(json, src, options?.ce ?? libraryEngine());
-  exactDecimals(json, src);
   rulesInCalls(json);
   const found: ExpressionDiagnostic[] = diagnostics
     .filter((d) => d.severity === "error")
