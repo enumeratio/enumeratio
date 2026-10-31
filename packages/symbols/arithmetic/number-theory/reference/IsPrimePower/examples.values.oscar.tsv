@@ -3,6 +3,9 @@ id	in	out
 12-2-2-cdot-3-has-two-distinct-primes		
 a-prime-is-its-own-first-power		
 isprimepower-6		
+isprimepower-neg-2-is-false		
+isprimepower-neg-4-is-false		
+isprimepower-neg-43-is-false		
 isprime-of-a-negative-prime	is_prime(ZZ(-5))	false
 listable		
 large-integers		

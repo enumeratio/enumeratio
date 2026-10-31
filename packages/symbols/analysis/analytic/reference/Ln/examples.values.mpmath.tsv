@@ -46,14 +46,14 @@ series-ln-x-x-neg-2-3
 inverse-of-exp-ln-e-x-x	almosteq(log(exp(5)), 5, 1e-20)	True	
 product-rule-ln-ab-ln-a-ln-b	almosteq((log(2) + log(3)), log(6), 1e-20)	True	
 powerexpand-splits-a-logarithm-of-a-product			
-n-ln-2-pow-2	(enumeratio_pow(log(2), 2))		
-n-ln-2-pow-3	(enumeratio_pow(log(2), 3))		
-n-ln-2-pow-4	(enumeratio_pow(log(2), 4))		
-n-ln-2-pow-5	(enumeratio_pow(log(2), 5))		
-n-ln-2-pow-2-2	(enumeratio_pow(log(2), 2))		
-n-ln-2-pow-3-2	(enumeratio_pow(log(2), 3))		
-n-ln-2-pow-4-2	(enumeratio_pow(log(2), 4))		
-n-ln-2-pow-5-2	(enumeratio_pow(log(2), 5))		
+n-ln-2-pow-2	(enumeratio_pow(log(2), 2))	0.480453013918201424667102526327	
+n-ln-2-pow-3	(enumeratio_pow(log(2), 3))	0.333024651988929479718853582612	
+n-ln-2-pow-4	(enumeratio_pow(log(2), 4))	0.230835098583083451887497717768	
+n-ln-2-pow-5	(enumeratio_pow(log(2), 5))	0.160002697757141321080946663856	
+n-ln-2-pow-2-2	(enumeratio_pow(log(2), 2))	0.480453013918201424667102526327	
+n-ln-2-pow-3-2	(enumeratio_pow(log(2), 3))	0.333024651988929479718853582612	
+n-ln-2-pow-4-2	(enumeratio_pow(log(2), 4))	0.230835098583083451887497717768	
+n-ln-2-pow-5-2	(enumeratio_pow(log(2), 5))	0.160002697757141321080946663856	
 n-integrate-1-over-t-minus-1-times-ln-t-pow-2-t			
 n-integrate-exponentiale-pow-neg-t-times-ln-t			
 n-integrate-1-over-neg-x-times-y-plus-1-times-ln			

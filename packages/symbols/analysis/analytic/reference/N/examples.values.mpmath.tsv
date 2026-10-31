@@ -31,7 +31,7 @@ n-1-minus-goldenratio-plus-1-over-goldenratio-20	enumeratio_n(lambda: ((1 + (-ph
 n-1-minus-goldenratio-plus-1-over-goldenratio	enumeratio_n(lambda: ((1 + (-phi) + (mpmathify(1) / phi))), [inf, 20])	9.86076131526264756764660706603e-32	
 n-exponentiale-pow-100-list-positiveinfinity-neg	enumeratio_n(lambda: (enumeratio_pow(e, 100)), [inf, -10])	2.68811714181613544841262555159e+43	
 n-10-000-000-000-times-neg-exponentiale-pow-999	enumeratio_n(lambda: ((10000000000 * ((-enumeratio_pow(e, (mpf(999999999999)/10000000000))) + enumeratio_pow(e, 100)))), [inf, 20])	2.68811714168172959120817279258e+43	
-n-exponentiale-pow-sin-1-000	(enumeratio_pow(e, sin(1000)))		
+n-exponentiale-pow-sin-1-000	(enumeratio_pow(e, sin(1000)))	2.28617368581217110222589085453	
 n-exponentiale-pow-sin-1-000-47	enumeratio_n(lambda: (enumeratio_pow(e, sin(1000))), 47)	2.2861736858121711022258908545330612218712785120	
 n-accuracy-goal-resolves-the-cancellation	enumeratio_n(lambda: ((1 + (-sqrt((1 + (-enumeratio_pow(e, -1000))))))), [20, inf])		
 an-exact-tie-rounds-to-the-even-digit-0-125	enumeratio_n(lambda: ((mpf(1)/8)), 2)	0.13	disagree
