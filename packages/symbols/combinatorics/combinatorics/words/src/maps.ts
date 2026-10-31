@@ -16,10 +16,6 @@ import {
   sortedRuns,
 } from "../../src/map-helpers.ts";
 import { foataInversionsToMajorBody, foataMajorToInversionsBody } from "../../permutations/src/foata-bijection.ts";
-import {
-  foataInversionsToMajorWordKernel,
-  foataMajorToInversionsWordKernel,
-} from "../../permutations/src/map-kernels.ts";
 
 /** The composition of m + 1 a cut word of length m describes: the parts between the cuts. */
 const compositionOfCutWord = (word: MathJSON): MathJSON =>
@@ -451,7 +447,6 @@ export const WORDS_MAPS: readonly CombinatorialMap[] = [
     from: "binary_word",
     to: "binary_word",
     body: foataMajorToInversionsBody,
-    kernel: foataMajorToInversionsWordKernel,
     summary:
       "Foata's bijection on words: each letter is put on the end of the image so far, which is cut into blocks, and every block is rotated one place right.",
     note: "FindStat's Mp00096. With repeated letters an equal letter counts as the smaller, so it is the permutation map through standardization; it sends the major index to the number of inversions.",
@@ -461,7 +456,6 @@ export const WORDS_MAPS: readonly CombinatorialMap[] = [
     from: "binary_word",
     to: "binary_word",
     body: foataInversionsToMajorBody,
-    kernel: foataInversionsToMajorWordKernel,
     summary: "The inverse of Foata's bijection on words: peel off the last letter, rotate the blocks of the rest back.",
     note: "FindStat's Mp00316.",
   },

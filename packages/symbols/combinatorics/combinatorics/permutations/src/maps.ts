@@ -34,13 +34,6 @@ import {
 import { cactusEvacuationKernel } from "../../tableaux/src/promotion.ts";
 import { rskRows } from "../../tableaux/src/tableau.ts";
 import { rskInsertionKernel, rskRecordingKernel, rskShapeKernel } from "../../tableaux/src/rsk-kernels.ts";
-import {
-  cycleTypeKernel,
-  foataInversionsToMajorKernel,
-  foataKernel,
-  foataMajorToInversionsKernel,
-  inverseFoataKernel,
-} from "./map-kernels.ts";
 import { foataInversionsToMajorBody, foataMajorToInversionsBody } from "./foata-bijection.ts";
 import { lehmerCode, majorCode, permutationOfLehmerCode, permutationOfMajorCode } from "./codes.ts";
 import {
@@ -240,7 +233,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     // of that name over permutations, and a head can only mean one thing. Reading the sorted
     // list back to front by index says the same and shadows nothing.
     body: withLengths(plain(), "Min", () => true, descending("cy_lens")),
-    kernel: cycleTypeKernel,
     summary: "The multiset of cycle lengths, as a partition.",
     note: "The first map here that CROSSES carriers — permutation in, integer partition out — which is the case the types exist for.",
   },
@@ -493,7 +485,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
       () => true,
       cycleWord(plain(), (word) => word),
     ),
-    kernel: foataKernel,
     summary:
       "Foata's fundamental bijection: cycles rotated to their max, ordered by increasing max, parentheses erased.",
     note: "The first fundamental transformation — it sends a permutation with k cycles to one with k left-to-right maxima. (The catalog's title also names maj → inv, which is the SECOND fundamental transformation's property; this map is the first.)",
@@ -521,7 +512,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
         ),
       ),
     ),
-    kernel: inverseFoataKernel,
     summary:
       "The permutation whose cycles are the stretches of the word between successive left-to-right maxima, each read as a cycle.",
     note: "FindStat's Mp00086, the inverse of Foata: a word's left-to-right maxima open its cycles.",
@@ -660,7 +650,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     from: "permutation",
     to: "permutation",
     body: foataMajorToInversionsBody,
-    kernel: foataMajorToInversionsKernel,
     summary:
       "Foata's bijection: each letter is put on the end of the image so far, which is cut into blocks, and every block is rotated one place right.",
     note: "FindStat's Mp00067, Sage's foata_bijection. It sends the major index to the number of inversions; the inverse is FoataInversionsToMajor. Not the cycle-based Foata, which is FindStat's first fundamental transformation.",
@@ -670,7 +659,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     from: "permutation",
     to: "permutation",
     body: foataInversionsToMajorBody,
-    kernel: foataInversionsToMajorKernel,
     summary:
       "The inverse of Foata's major-to-inversions bijection: peel off the last letter, rotate the blocks of the rest back.",
     note: "FindStat's Mp00175, Sage's foata_bijection_inverse. It sends the number of inversions to the major index.",

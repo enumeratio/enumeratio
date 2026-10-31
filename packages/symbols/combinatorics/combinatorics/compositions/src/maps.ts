@@ -15,10 +15,6 @@ import {
   runLengths,
 } from "../../src/map-helpers.ts";
 import { foataInversionsToMajorBody, foataMajorToInversionsBody } from "../../permutations/src/foata-bijection.ts";
-import {
-  foataInversionsToMajorWordKernel,
-  foataMajorToInversionsWordKernel,
-} from "../../permutations/src/map-kernels.ts";
 
 /** A composition's partial sums, folded into a list. */
 const partialSums = (parts: MathJSON): MathJSON => [
@@ -170,7 +166,6 @@ export const COMPOSITIONS_MAPS: readonly CombinatorialMap[] = [
     from: "composition",
     to: "composition",
     body: foataMajorToInversionsBody,
-    kernel: foataMajorToInversionsWordKernel,
     summary:
       "Foata's bijection on the word of parts: each part is put on the end of the image so far, which is cut into blocks, and every block is rotated one place right.",
     note: "FindStat's Mp00314. An equal part counts as the smaller; it sends the major index to the number of inversions.",
@@ -180,7 +175,6 @@ export const COMPOSITIONS_MAPS: readonly CombinatorialMap[] = [
     from: "composition",
     to: "composition",
     body: foataInversionsToMajorBody,
-    kernel: foataInversionsToMajorWordKernel,
     summary:
       "The inverse of Foata's bijection on compositions: peel off the last part, rotate the blocks of the rest back.",
     note: "FindStat's Mp00315.",
