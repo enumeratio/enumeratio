@@ -1,29 +1,29 @@
 {
   "AbundantNumbers": {
     "expr": "Take(AbundantNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "AchillesNumbers": {
     "expr": "Take(AchillesNumbers, 15)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "AdjacentTranspositionInvolutions": {
     "expr": "AdjacentTranspositionInvolutions(4)",
     "glyph": "permutation",
     "columns": ["Descents", "Inversions"],
     "derived": false,
-    "statistics": 274
+    "statistics": 273
   },
   "AffinePermutations": null,
   "AllOnes": {
     "expr": "Take(AllOnes, 20)",
     "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "AlternatingPermutations": {
     "expr": "AlternatingPermutations(4)",
@@ -37,7 +37,7 @@
     "glyph": "permutation",
     "columns": ["Inversions", "CycleCount", "FixedPoints", "Adjacencies"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "AlternatingSignMatrices": {
     "expr": "AlternatingSignMatrices(4)",
@@ -48,9 +48,9 @@
   "AmicableNumbers": null,
   "ArithmeticNumbers": {
     "expr": "Take(ArithmeticNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "Arrangements": {
     "expr": "Arrangements(4, 2)",
@@ -63,15 +63,15 @@
     },
     "columns": ["Ascents", "Descents", "Inversions", "LeftToRightMaxima"],
     "derived": true,
-    "statistics": 6
+    "statistics": 4
   },
   "AscentSequences": null,
   "Associahedron": null,
   "AutomorphicNumbers": {
     "expr": "Take(AutomorphicNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "BallotSequences": {
     "expr": "BallotSequences(4)",
@@ -92,19 +92,19 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions"],
     "derived": false,
-    "statistics": 274
+    "statistics": 273
   },
   "BellNumbers": {
     "expr": "Take(BellNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "BinaryBracelets": {
     "expr": "BinaryBracelets(6)",
     "columns": ["Descents", "Ascents"],
     "derived": false,
-    "statistics": 4
+    "statistics": 2
   },
   "BinaryNecklaces": {
     "expr": "BinaryNecklaces(4)",
@@ -115,9 +115,9 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Numerator", "Runs"],
+    "columns": ["Descents", "Runs"],
     "derived": true,
-    "statistics": 4
+    "statistics": 2
   },
   "BinaryPalindromes": {
     "expr": "BinaryPalindromes(4)",
@@ -128,9 +128,9 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Numerator", "Runs"],
+    "columns": ["Descents", "Runs"],
     "derived": true,
-    "statistics": 4
+    "statistics": 2
   },
   "BinaryTreeParentArrays": {
     "expr": "BinaryTreeParentArrays(4)",
@@ -168,9 +168,9 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Numerator", "Runs"],
+    "columns": ["Descents", "Runs"],
     "derived": true,
-    "statistics": 4
+    "statistics": 2
   },
   "BinaryWordsByWeight": {
     "expr": "BinaryWordsByWeight(4, 2)",
@@ -181,9 +181,9 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Numerator", "Runs"],
+    "columns": ["Descents", "Runs"],
     "derived": true,
-    "statistics": 4
+    "statistics": 2
   },
   "BooleanAlgebra": null,
   "BooleanPermutations": {
@@ -191,7 +191,7 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions"],
     "derived": false,
-    "statistics": 274
+    "statistics": 273
   },
   "BoundedPartPartitions": null,
   "BoxConfinedPartitions": null,
@@ -219,53 +219,53 @@
   },
   "CarmichaelNumbers": {
     "expr": "Take(CarmichaelNumbers, 10)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "Carriers": null,
   "CatalanNumbers": {
     "expr": "Take(CatalanNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "CenteredHexagonalNumbers": {
     "expr": "Take(CenteredHexagonalNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "CenteredSquareNumbers": {
     "expr": "Take(CenteredSquareNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "CenteredTriangularNumbers": {
     "expr": "Take(CenteredTriangularNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "CentralDelannoyNumbers": {
     "expr": "Take(CentralDelannoyNumbers, 15)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "CircularPrimes": {
     "expr": "Take(CircularPrimes, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "CograssmannianPermutations": {
     "expr": "CograssmannianPermutations(4)",
     "glyph": "permutation",
     "columns": ["Ascents", "Inversions"],
     "derived": false,
-    "statistics": 274
+    "statistics": 273
   },
   "CollatzTrajectories": null,
   "Collections": null,
@@ -297,23 +297,23 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "ContinuedFractions": null,
   "CorePartitions": null,
   "CousinPrimes": {
     "expr": "Take(CousinPrimes, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "CrossPolytope": null,
   "CubeFreeNumbers": null,
   "CubeNumbers": {
     "expr": "Take(CubeNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "CyclicPermutations": {
     "expr": "CyclicPermutations(4)",
@@ -327,15 +327,15 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions", "MajorIndex", "Ascents"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "Cyclohedron": null,
   "DecoratedPermutations": null,
   "DeficientNumbers": {
     "expr": "Take(DeficientNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "DelannoyPaths": {
     "expr": "DelannoyPaths(4)",
@@ -347,9 +347,9 @@
       "start": 4
     },
     "glyph": "lattice",
-    "columns": ["Peaks"],
+    "columns": [],
     "derived": true,
-    "statistics": 4
+    "statistics": 0
   },
   "Derangements": {
     "expr": "Derangements(4)",
@@ -363,7 +363,7 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions", "CycleCount", "MajorIndex"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "Dissections": null,
   "DistinctPartitions": {
@@ -382,9 +382,9 @@
   },
   "DoubleFactorialNumbers": {
     "expr": "Take(DoubleFactorialNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "DyadicCompositions": {
     "expr": "DyadicCompositions(4)",
@@ -424,9 +424,9 @@
   "EgyptianFractions": null,
   "EmirpPrimes": {
     "expr": "Take(EmirpPrimes, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "Endofunctions": {
     "expr": "Endofunctions(4)",
@@ -453,20 +453,20 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "EvilNumbers": {
     "expr": "Take(EvilNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "FactoradicNumerals": null,
   "FactorialNumbers": {
     "expr": "Take(FactorialNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "FareySequences": null,
   "FibStrings": {
@@ -478,9 +478,9 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Numerator", "Runs"],
+    "columns": ["Descents", "Runs"],
     "derived": true,
-    "statistics": 4
+    "statistics": 2
   },
   "FibonacciCompositions": {
     "expr": "FibonacciCompositions(4)",
@@ -498,15 +498,15 @@
   },
   "FibonacciNumbers": {
     "expr": "Take(FibonacciNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "FibonacciPrimes": {
     "expr": "Take(FibonacciPrimes, 11)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "FinePaths": {
     "expr": "FinePaths(4)",
@@ -527,9 +527,9 @@
   "FractionalNumbers": null,
   "FubiniNumbers": {
     "expr": "Take(FubiniNumbers, 15)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "FullKAryTrees": {
     "expr": "FullKAryTrees(4, 2)",
@@ -556,9 +556,9 @@
   },
   "GiugaNumbers": {
     "expr": "Take(GiugaNumbers, 4)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "Glyphs": null,
   "GoldbachPartitions": null,
@@ -581,7 +581,7 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions"],
     "derived": false,
-    "statistics": 274
+    "statistics": 273
   },
   "GrayCodes": {
     "expr": "GrayCodes(4)",
@@ -592,47 +592,47 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Numerator", "Runs"],
+    "columns": ["Descents", "Runs"],
     "derived": true,
-    "statistics": 4
+    "statistics": 2
   },
   "HappyNumbers": {
     "expr": "Take(HappyNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "HarshadNumbers": {
     "expr": "Take(HarshadNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "HeptagonalNumbers": {
     "expr": "Take(HeptagonalNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "HexagonalNumbers": {
     "expr": "Take(HexagonalNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "HighlyCompositeNumbers": {
     "expr": "Take(HighlyCompositeNumbers, 15)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "HyperbinaryRepresentations": null,
   "Hypernumerary": null,
   "IdonealNumbers": {
     "expr": "Take(IdonealNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "IncreasingBinaryTrees": {
     "expr": "IncreasingBinaryTrees(4)",
@@ -683,19 +683,19 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "JacobsthalNumbers": {
     "expr": "Take(JacobsthalNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "KAlmostPrimes": {
     "expr": "Take(KAlmostPrimes(3), 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "KBracelets": {
     "expr": "KBracelets(4, 3)",
@@ -716,7 +716,7 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions", "FixedPoints", "MajorIndex"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "KDescentPermutations": {
     "expr": "KDescentPermutations(4, 2)",
@@ -730,14 +730,14 @@
     "glyph": "permutation",
     "columns": ["Inversions", "CycleCount", "FixedPoints", "MajorIndex"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "KDyckPaths": null,
   "KFreeIntegers": {
     "expr": "Take(KFreeIntegers(3), 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "KInversionPermutations": {
     "expr": "KInversionPermutations(4, 2)",
@@ -751,7 +751,7 @@
     "glyph": "permutation",
     "columns": ["Descents", "FixedPoints", "MajorIndex", "Ascents"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "KLyndonWords": {
     "expr": "KLyndonWords(4, 2)",
@@ -793,13 +793,13 @@
     "glyph": "subset",
     "columns": ["Sum"],
     "derived": true,
-    "statistics": 4
+    "statistics": 1
   },
   "KaprekarNumbers": {
     "expr": "Take(KaprekarNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "LabeledForests": null,
   "LabeledGraphs": {
@@ -837,7 +837,7 @@
       "max": 6,
       "start": 4
     },
-    "columns": [],
+    "columns": ["Leaves"],
     "derived": true,
     "statistics": 1
   },
@@ -864,22 +864,22 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Inversions", "Sum"],
+    "columns": ["Sum"],
     "derived": true,
-    "statistics": 2
+    "statistics": 1
   },
   "LittleSchroderNumbers": {
     "expr": "Take(LittleSchroderNumbers, 15)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "LittleSchroderTriangle": null,
   "LucasNumbers": {
     "expr": "Take(LucasNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "LucasStrings": {
     "expr": "LucasStrings(4)",
@@ -890,15 +890,15 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Descents", "Numerator", "Runs"],
+    "columns": ["Descents", "Runs"],
     "derived": true,
-    "statistics": 4
+    "statistics": 2
   },
   "LuckyNumbers": {
     "expr": "Take(LuckyNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "LukasiewiczPaths": {
     "expr": "LukasiewiczPaths(4)",
@@ -923,22 +923,22 @@
       "max": 6,
       "start": 4
     },
-    "columns": ["Numerator"],
+    "columns": [],
     "derived": true,
-    "statistics": 4
+    "statistics": 2
   },
   "MersennePrimes": {
     "expr": "Take(MersennePrimes, 8)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "ModularResidues": null,
   "MotzkinNumbers": {
     "expr": "Take(MotzkinNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "MotzkinPaths": {
     "expr": "MotzkinPaths(4)",
@@ -950,9 +950,9 @@
       "start": 4
     },
     "glyph": "motzkin",
-    "columns": ["Peaks"],
+    "columns": ["Height", "Peaks"],
     "derived": true,
-    "statistics": 4
+    "statistics": 2
   },
   "MotzkinPathsByPeaks": {
     "expr": "MotzkinPathsByPeaks(4, 2)",
@@ -964,9 +964,9 @@
       "start": 4
     },
     "glyph": "motzkin",
-    "columns": ["Peaks"],
+    "columns": ["Height", "Peaks"],
     "derived": true,
-    "statistics": 4
+    "statistics": 2
   },
   "MulticomplexNumbers": null,
   "MultiplicativePartitions": null,
@@ -986,9 +986,9 @@
   "NarayanaNumbers": null,
   "NarcissisticNumbers": {
     "expr": "Take(NarcissisticNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "NaturalNumbers": null,
   "NonCrossingCycleSupportPermutations": {
@@ -996,7 +996,7 @@
     "glyph": "permutation",
     "columns": ["CycleCount", "FixedPoints"],
     "derived": false,
-    "statistics": 274
+    "statistics": 273
   },
   "NonCrossingMatchings": {
     "expr": "NonCrossingMatchings(4)",
@@ -1031,7 +1031,7 @@
     "glyph": "permutation",
     "columns": ["CycleCount", "FixedPoints"],
     "derived": false,
-    "statistics": 274
+    "statistics": 273
   },
   "NonCrossingTrees": {
     "expr": "NonCrossingTrees(3)",
@@ -1083,9 +1083,9 @@
   },
   "OctagonalNumbers": {
     "expr": "Take(OctagonalNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "OddCompositions": {
     "expr": "OddCompositions(4)",
@@ -1117,9 +1117,9 @@
   },
   "OdiousNumbers": {
     "expr": "Take(OdiousNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "OmegaOrdinals": null,
   "OrderedFactorizations": null,
@@ -1139,9 +1139,9 @@
   },
   "PadovanSequence": {
     "expr": "Take(PadovanSequence, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PalindromicCompositions": {
     "expr": "PalindromicCompositions(4)",
@@ -1159,9 +1159,9 @@
   },
   "PalindromicPrimes": {
     "expr": "Take(PalindromicPrimes, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "ParkingFunctions": {
     "expr": "ParkingFunctions(4)",
@@ -1207,27 +1207,27 @@
   "PartitionAlgebra": null,
   "PartitionNumbers": {
     "expr": "Take(PartitionNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PellNumbers": {
     "expr": "Take(PellNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PentagonalNumbers": {
     "expr": "Take(PentagonalNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PentatopeNumbers": {
     "expr": "Take(PentatopeNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PerfectMatchings": {
     "expr": "PerfectMatchings(4)",
@@ -1245,15 +1245,15 @@
   },
   "PerfectNumbers": {
     "expr": "Take(PerfectNumbers, 7)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PerfectPowerNumbers": {
     "expr": "Take(PerfectPowerNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "Permutahedron": null,
   "Permutations": null,
@@ -1282,7 +1282,7 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "PermutationsAvoiding132": {
     "expr": "PermutationsAvoiding132(4)",
@@ -1296,7 +1296,7 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "PermutationsAvoiding213": {
     "expr": "PermutationsAvoiding213(4)",
@@ -1310,7 +1310,7 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "PermutationsAvoiding231": {
     "expr": "PermutationsAvoiding231(4)",
@@ -1324,7 +1324,7 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "PermutationsAvoiding312": {
     "expr": "PermutationsAvoiding312(4)",
@@ -1338,7 +1338,7 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "PermutationsAvoiding321": {
     "expr": "PermutationsAvoiding321(4)",
@@ -1352,19 +1352,19 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions", "CycleCount", "FixedPoints"],
     "derived": true,
-    "statistics": 274
+    "statistics": 273
   },
   "PerniciousNumbers": {
     "expr": "Take(PerniciousNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PerrinSequence": {
     "expr": "Take(PerrinSequence, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PhylogeneticTrees": {
     "expr": "PhylogeneticTrees(5)",
@@ -1381,28 +1381,28 @@
   "PlaneTrees": null,
   "PolygonalNumbers": {
     "expr": "Take(PolygonalNumbers(5), 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PowerSet": null,
   "PowerfulNumbers": {
     "expr": "Take(PowerfulNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PowersOfTwo": {
     "expr": "Take(PowersOfTwo, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PracticalNumbers": {
     "expr": "Take(PracticalNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PrimeCompositions": {
     "expr": "PrimeCompositions(4)",
@@ -1421,15 +1421,15 @@
   "PrimeGaps": null,
   "PrimeNumbers": {
     "expr": "Take(PrimeNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PrimePairs": {
     "expr": "Take(PrimePairs(4), 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PrimePartitions": {
     "expr": "PrimePartitions(4)",
@@ -1447,27 +1447,27 @@
   },
   "PrimePowerNumbers": {
     "expr": "Take(PrimePowerNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PrimitiveBinaryStrings": {
     "expr": "PrimitiveBinaryStrings(6)",
     "columns": ["Descents", "Ascents"],
     "derived": false,
-    "statistics": 4
+    "statistics": 2
   },
   "PrimorialNumbers": {
     "expr": "Take(PrimorialNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "PronicNumbers": {
     "expr": "Take(PronicNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "ProperCompositions": {
     "expr": "ProperCompositions(4)",
@@ -1541,9 +1541,9 @@
       "start": 4
     },
     "glyph": "motzkin",
-    "columns": ["Peaks"],
+    "columns": ["Height", "Peaks"],
     "derived": true,
-    "statistics": 4
+    "statistics": 2
   },
   "RookPlacements": null,
   "RootedForests": {
@@ -1567,21 +1567,21 @@
   },
   "RoughNumbers": {
     "expr": "Take(RoughNumbers(7), 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "SafePrimes": {
     "expr": "Take(SafePrimes, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "SchroederNumbers": {
     "expr": "Take(SchroederNumbers, 15)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "SchroederPaths": {
     "expr": "SchroederPaths(4)",
@@ -1593,7 +1593,7 @@
       "start": 4
     },
     "glyph": "schroeder",
-    "columns": ["Peaks"],
+    "columns": ["Height", "Hills", "Peaks"],
     "derived": true,
     "statistics": 3
   },
@@ -1601,15 +1601,15 @@
   "SelfConjugatePartitions": null,
   "SemiperfectNumbers": {
     "expr": "Take(SemiperfectNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "SemiprimeNumbers": {
     "expr": "Take(SemiprimeNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "SemistandardTableaux": {
     "expr": "SemistandardTableaux(4, 3)",
@@ -1623,7 +1623,7 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions"],
     "derived": false,
-    "statistics": 274
+    "statistics": 273
   },
   "SetCompositions": {
     "expr": "SetCompositions(4)",
@@ -1637,7 +1637,7 @@
     "glyph": "set-composition",
     "columns": [],
     "derived": true,
-    "statistics": 4
+    "statistics": 3
   },
   "SetPartitions": {
     "expr": "SetPartitions(4)",
@@ -1662,9 +1662,9 @@
   },
   "SexyPrimes": {
     "expr": "Take(SexyPrimes, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "ShiftedStandardTableaux": {
     "expr": "ShiftedStandardTableaux(6)",
@@ -1682,9 +1682,9 @@
       "start": 4
     },
     "glyph": "signed-permutation",
-    "columns": ["Descents", "Inversions"],
+    "columns": ["Descents"],
     "derived": true,
-    "statistics": 3
+    "statistics": 2
   },
   "SignedSetCompositions": null,
   "SignedSubsets": null,
@@ -1693,7 +1693,7 @@
     "glyph": "permutation",
     "columns": ["Descents", "Inversions"],
     "derived": false,
-    "statistics": 274
+    "statistics": 273
   },
   "Simplex": null,
   "SingletonSpecies": null,
@@ -1711,48 +1711,48 @@
   },
   "SmithNumbers": {
     "expr": "Take(SmithNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "SmoothNumbers": {
     "expr": "Take(SmoothNumbers(7), 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "SmoothPermutations": {
     "expr": "SmoothPermutations(4)",
     "glyph": "permutation",
     "columns": ["Descents", "Inversions"],
     "derived": false,
-    "statistics": 274
+    "statistics": 273
   },
   "SophieGermainPrimes": {
     "expr": "Take(SophieGermainPrimes, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "SparseSubsets": null,
   "SphenicNumbers": {
     "expr": "Take(SphenicNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "SquareDecompositions": null,
   "SquareFreeNumbers": {
     "expr": "Take(SquareFreeNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "SquareNumbers": {
     "expr": "Take(SquareNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "SquarePartitions": {
     "expr": "SquarePartitions(4)",
@@ -1770,15 +1770,15 @@
   },
   "SquarePyramidalNumbers": {
     "expr": "Take(SquarePyramidalNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "SquarefreeSemiprimes": {
     "expr": "Take(SquarefreeSemiprimes, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "StandardTableauPairs": {
     "expr": "StandardTableauPairs(4)",
@@ -1802,17 +1802,17 @@
   },
   "StarNumbers": {
     "expr": "Take(StarNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "StepCompositions": null,
   "SternBrocotPaths": null,
   "SternDiatomicSequence": {
     "expr": "Take(SternDiatomicSequence, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "StirlingPermutations": {
     "expr": "StirlingPermutations(4)",
@@ -1838,14 +1838,14 @@
     "glyph": "subset",
     "columns": ["Length", "Sum"],
     "derived": false,
-    "statistics": 4
+    "statistics": 1
   },
   "SumsOfTwoSquares": null,
   "SuperabundantNumbers": {
     "expr": "Take(SuperabundantNumbers, 15)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "Surjections": null,
   "SurjectionsOntoK": null,
@@ -1854,7 +1854,7 @@
     "glyph": "permutation",
     "columns": ["Descents", "MajorIndex", "Inversions", "CycleCount", "FixedPoints"],
     "derived": false,
-    "statistics": 274
+    "statistics": 273
   },
   "SytHookShape": {
     "expr": "SytHookShape(4)",
@@ -1920,15 +1920,15 @@
   },
   "TetrahedralNumbers": {
     "expr": "Take(TetrahedralNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "ThueMorseNumbers": {
     "expr": "Take(ThueMorseNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "TotalPartitions": null,
   "Tournaments": {
@@ -1963,7 +1963,7 @@
     "expr": "TriStrings(6)",
     "columns": ["Descents", "Ascents"],
     "derived": false,
-    "statistics": 4
+    "statistics": 2
   },
   "TriangularCompositions": {
     "expr": "TriangularCompositions(4)",
@@ -1981,9 +1981,9 @@
   },
   "TriangularNumbers": {
     "expr": "Take(TriangularNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "TriangularPartitions": {
     "expr": "TriangularPartitions(4)",
@@ -2001,15 +2001,15 @@
   },
   "TribonacciNumbers": {
     "expr": "Take(TribonacciNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "TwinPrimes": {
     "expr": "Take(TwinPrimes, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "UnlabeledFreeTrees": {
     "expr": "UnlabeledFreeTrees(7)",
@@ -2019,24 +2019,24 @@
   },
   "UntouchableNumbers": {
     "expr": "Take(UntouchableNumbers, 15)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "VexillaryPermutations": {
     "expr": "VexillaryPermutations(4)",
     "glyph": "permutation",
     "columns": ["Descents", "MajorIndex"],
     "derived": false,
-    "statistics": 274
+    "statistics": 273
   },
   "Weak3Compositions": null,
   "WeakCompositionsIntoKParts": null,
   "WeirdNumbers": {
     "expr": "Take(WeirdNumbers, 20)",
-    "columns": ["DigitCount", "DigitSum", "DivisorSum"],
+    "columns": [],
     "derived": false,
-    "statistics": 3
+    "statistics": 0
   },
   "Words": {
     "expr": "Words(4, 2)",
