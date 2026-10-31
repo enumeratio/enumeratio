@@ -128,6 +128,21 @@ fn clgamma(z0: vec2f) -> vec2f {
   return cmul(z - vec2f(0.5, 0.0), clog(z)) - z + vec2f(0.9189385, 0.0) + ser - shift;
 }
 
+// Γ(z) for any z. Re(z) < ½ goes through the reflection Γ(z)Γ(1−z) = π / sin(πz), all in
+// logs so neither the poles' neighbors nor Γ(1−z) overflow mid-way; the result is clamped
+// to e^80, so a pole reads as a huge value (white) rather than NaN. clgamma (shift +
+// Stirling) stands in for Lanczos: it is already here and holds ~1e-6 in f32.
+fn cgamma(z: vec2f) -> vec2f {
+  if (z.y == 0.0 && z.x <= 0.0 && z.x == floor(z.x)) { return vec2f(1e30, 0.0); }
+  var lg: vec2f;
+  if (z.x < 0.5) {
+    lg = vec2f(1.1447299, 0.0) - clogSin(3.1415927 * z) - clgamma(vec2f(1.0 - z.x, -z.y));
+  } else {
+    lg = clgamma(z);
+  }
+  return cexp(vec2f(min(lg.x, 80.0), lg.y));
+}
+
 // ζ(s, a) via Euler–Maclaurin.
 fn hurwitzEM(s: vec2f, a: vec2f) -> vec2f {
   var em = array<f32, 9>(
