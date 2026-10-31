@@ -23,7 +23,7 @@ export type CompileHandler = NonNullable<HeadDefinition["compile"]>;
 /** compute-engine's type language (`"integer"`, `"(number) -> number"`, ...). */
 export type Type = CeType;
 
-export { isNumber, isSymbol } from "@cortex-js/compute-engine";
+export { BigDecimal, isNumber, isSymbol } from "@cortex-js/compute-engine";
 
 /** Box MathJSON. Typed over `Json` so a call site builds its array literal as `Json`, not `as never`. */
 export const box = (ce: Engine, json: Json): Expr => ce.box(json);

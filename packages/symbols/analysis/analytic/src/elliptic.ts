@@ -1,7 +1,5 @@
-// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
 import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
-import { wrapOperator } from "@enumeratio/engine";
-import type { BigDecimal } from "@enumeratio/engine/unstable";
+import { type BigDecimal, wrapOperator } from "@enumeratio/engine";
 import {
   type EvalOptions,
   bigRealOperand,

@@ -1,4 +1,3 @@
-// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
 import type { Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
@@ -19,7 +18,7 @@ import {
   scale,
   sub,
 } from "@enumeratio/ce-patches";
-import type { BigDecimal } from "@enumeratio/engine/unstable";
+import type { BigDecimal } from "@enumeratio/engine";
 import { carlsonRCBig, carlsonRDBig, carlsonRFBig, carlsonRGBig, carlsonRJBig } from "./carlson-big.ts";
 
 // Carlson symmetric elliptic integrals RF, RD, RJ, RC, RG (Carlson 1995, "Numerical

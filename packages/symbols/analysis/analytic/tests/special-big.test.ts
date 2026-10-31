@@ -1,5 +1,6 @@
-// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
-import { BigDecimal, ComputeEngine } from "@enumeratio/engine/unstable";
+import { BigDecimal } from "@enumeratio/engine";
+// unstable: a bare engine to declare the analytic library against
+import { ComputeEngine } from "@enumeratio/engine/unstable";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
 import { airyBig, besselKYBig, expIntegralEiBig, logIntegralBig } from "../src/special-big.ts";

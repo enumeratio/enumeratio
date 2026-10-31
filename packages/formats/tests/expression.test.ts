@@ -73,7 +73,7 @@ test("a Cell's input may be one := binding; nowhere else", () => {
 });
 
 test("a decimal reads as the digits it was typed with", () => {
-  // compute-engine's own `parseEpsil` reads `0.3` as 0.30000000000000004.
+  // Epsil literals keep their typed digits (0.3 is not 0.30000000000000004).
   for (const [src, value] of [
     ["0.3", 0.3],
     ["-0.3", -0.3],
@@ -86,6 +86,11 @@ test("a decimal reads as the digits it was typed with", () => {
   ] as const) {
     expect(ce.box(parseExpression(src).json).re, src).toBe(value);
   }
+  // The literal itself keeps its digits (no double round-trip), long ones included.
+  const num = (src: string) => (parseExpression(src).json as { num?: string }).num;
+  expect(num("2.675")).toBe("2.675");
+  expect(num("0.1234567890123456789")).toBe("0.1234567890123456789");
+  expect(num("1_000.25")).toBe("1000.25");
 });
 
 test("a diagnostic carries the span it is about", () => {
