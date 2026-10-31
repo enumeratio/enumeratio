@@ -417,8 +417,9 @@ function autoKind(
   if (result.error === undefined && Array.isArray(sample) && sample[0] === "N" && sample.length === 3) {
     if (roundsTo(sample[2] as MathJSON, ours, theirs)) return "convention";
   }
-  // mpmath's hypergeometric sum cannot reach its target where the exact answer is 0 (a polynomial at a root); ours is exact.
-  if (system === "mpmath" && result.error !== undefined && /hypsum\(\) failed to converge/.test(theirs))
+  // mpmath's hypergeometric sum cannot reach its target where the exact answer is 0 (a polynomial at a root); ours is an
+  // exact 0. Any other answer of ours is left for triage.
+  if (system === "mpmath" && result.error !== undefined && /hypsum\(\) failed to converge/.test(theirs) && ours === 0)
     return "precision";
   // mpmath and SymPy refuse to order a complex number (`√-2` beside a real), where ours answers False.
   if (result.error !== undefined && ORDERING.test(theirs) && isOrderCall(sample)) return "domain";
