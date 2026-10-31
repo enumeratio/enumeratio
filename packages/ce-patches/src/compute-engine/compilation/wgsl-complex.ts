@@ -108,6 +108,7 @@ const UNARY: Record<string, string> = {
   Cos: "ccos",
   Sinh: "csinh",
   Cosh: "ccosh",
+  Gamma: "cgamma",
   Negate: "cneg",
   Conjugate: "cconj",
 };
@@ -218,6 +219,10 @@ class Emitter {
         const v = sub(0);
         return `cmul(${v}, ${v})`;
       }
+      case "Factorial":
+        // n! = Γ(n + 1)
+        if (args.length === 1) return `cgamma((${sub(0)} + vec2f(1.0, 0.0)))`;
+        break;
       case "Zeta":
         // One-argument Riemann zeta is ζ(s, 1); two-argument is the generalized one.
         if (args.length === 1) return `hurwitz(${sub(0)}, vec2f(1.0, 0.0))`;
