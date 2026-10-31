@@ -6,7 +6,13 @@ import {
   permutationSvg,
   renderGlyph,
   latticePathSvg,
+  lukasiewiczSvg,
+  motzkinSvg,
+  nestedTreeSvg,
+  schroederSvg,
+  setCompositionSvg,
   setPartitionSvg,
+  signedPermutationSvg,
   subsetSvg,
   tableauSvg,
   treeLayout,
@@ -132,4 +138,67 @@ test("lattice path: grid sized to the step counts, one polyline", () => {
   expect(pts.endsWith("40,0")).toBe(true); // ends top-right
   // 3 vertical + 3 horizontal grid lines for a 2x2 grid.
   expect(count(s, "line")).toBe(6);
+});
+
+test("tableau from rows draws the real filling, not the reading order", () => {
+  const s = tableauSvg([[1, 3], [2]]);
+  expect(count(s, "rect")).toBe(3);
+  const entries = [...s.matchAll(/>(\d+)<\/text>/g)].map((m) => m[1]);
+  expect(entries).toEqual(["1", "3", "2"]);
+  // A semistandard filling repeats entries.
+  expect([...tableauSvg([[1, 1], [2]]).matchAll(/>(\d+)<\/text>/g)].map((m) => m[1])).toEqual(["1", "1", "2"]);
+  expect(renderGlyph("tableau", [[1, 3], [2]])).toBe(tableauSvg([[1, 3], [2]]));
+});
+
+test("a diagonal lattice step moves east and north at once", () => {
+  const s = latticePathSvg([2, 0, 1]); // D, E, N on a 2x2 grid
+  expect(viewBox(s)).toBe("-1 -1 42 42");
+  const pts = s.match(/<polyline points="([^"]+)"/)?.[1] ?? "";
+  expect(pts).toBe("0,40 20,20 40,20 40,0");
+});
+
+test("Motzkin path: level steps stay flat, the path peaks where it climbs", () => {
+  const s = motzkinSvg([1, 0, -1]);
+  expect(viewBox(s)).toBe("-1 -1 50 18"); // 3 wide, height 1
+  const pts = s.match(/<polyline points="([^"]+)"/)?.[1] ?? "";
+  expect(pts).toBe("0,16 16,0 32,0 48,16");
+});
+
+test("Schroeder path: a level step is two wide", () => {
+  const s = schroederSvg([1, 2, -1]);
+  expect(viewBox(s)).toBe("-1 -1 66 18"); // width 1 + 2 + 1
+  const pts = s.match(/<polyline points="([^"]+)"/)?.[1] ?? "";
+  expect(pts).toBe("0,16 16,0 48,0 64,16");
+});
+
+test("Lukasiewicz path: a step rises by its entry and the walk may end below the axis", () => {
+  const s = lukasiewiczSvg([1, -1, -1]); // two children, then two leaves: ends at -1
+  expect(viewBox(s)).toBe("-1 -1 50 34"); // range -1..1
+  const pts = s.match(/<polyline points="([^"]+)"/)?.[1] ?? "";
+  expect(pts).toBe("0,16 16,0 32,16 48,32");
+});
+
+test("nested tree: one node per list or leaf, ordered trees and binary trees alike", () => {
+  const binary = nestedTreeSvg([0, [0, 0]]); // root, a leaf, a cherry
+  expect(count(binary, "circle")).toBe(5);
+  expect(count(binary, "line")).toBe(4);
+  expect(binary).toBe(treeSvg([2, 0, 2, 0, 0]));
+  const ordered = nestedTreeSvg([[], [[]]]); // [] is a leaf
+  expect(count(ordered, "circle")).toBe(4);
+  expect(renderGlyph("nested-tree", [0, 0])).toBe(treeSvg([2, 0, 0]));
+});
+
+test("signed permutation: a bar through the ring where the entry is negative", () => {
+  const s = signedPermutationSvg([2, -1]);
+  expect(count(s, "circle")).toBe(2);
+  expect(count(s, "line")).toBe(1); // only the negative entry's bar
+  expect(s).toContain('cx="11" cy="33"'); // -1 sits in column 1, row 2
+});
+
+test("set composition: pills in order, an arrow between neighbors", () => {
+  const s = setCompositionSvg([[3], [1, 2]]);
+  expect(count(s, "rect")).toBe(2);
+  expect(count(s, "polygon")).toBe(1);
+  expect(s.indexOf(">3<")).toBeLessThan(s.indexOf(">1<"));
+  expect(renderGlyph("set-composition", [[1], [2]])).toBe(setCompositionSvg([[1], [2]]));
 });

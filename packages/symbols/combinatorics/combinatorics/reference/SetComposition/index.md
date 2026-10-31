@@ -7,6 +7,7 @@ references:
   - system: wikipedia
     identity: Weak ordering
 catalogCarrier: true
+glyph: set-composition
 signatures:
   - call: SetComposition(list)
     description: The singular-inhabitant constructor for a composition of a set, as its ordered blocks.

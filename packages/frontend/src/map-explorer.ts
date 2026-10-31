@@ -3,7 +3,7 @@
 // engine-free: a host asks its engine for the collection and for the map over it, and reads the
 // answers here. Computed on demand and capped, never stored.
 
-import { blockLists, blocksToRgs, flatInts } from "./collection-table.ts";
+import { glyphValue } from "./collection-table.ts";
 import { type GlyphKind, GLYPH_KINDS, renderGlyph } from "./glyphs.ts";
 
 /** The largest size a map is explored at, whatever the carrier's `maxSize` says: every element is mapped. */
@@ -67,15 +67,10 @@ export function showJson(value: Json): string {
 /** A value drawn as the glyph `kind` names, or `undefined` when there is no glyph or the value does not fit it. */
 export function glyphSvg(kind: string | undefined, value: Json): string | undefined {
   if (kind === undefined || !GLYPH_KINDS.has(kind)) return undefined;
-  const json = value as never;
-  let ints = flatInts(json);
-  if (!ints && (kind === "set-partition" || kind === "diagram")) {
-    const blocks = blockLists(json);
-    if (blocks) ints = blocksToRgs(blocks);
-  }
-  if (!ints) return undefined;
+  const glyph = glyphValue(kind, value as never);
+  if (!glyph) return undefined;
   try {
-    return renderGlyph(kind as GlyphKind, ints);
+    return renderGlyph(kind as GlyphKind, glyph);
   } catch {
     return undefined;
   }

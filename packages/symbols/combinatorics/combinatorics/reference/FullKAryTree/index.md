@@ -6,6 +6,7 @@ summary: Catalogued in the enumeratio database; not yet written up here.
 formerly:
   - KAryTree
 catalogCarrier: true
+glyph: nested-tree
 stub: carrier
 signatures:
   - call: FullKAryTree(...)

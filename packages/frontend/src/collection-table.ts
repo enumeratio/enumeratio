@@ -4,6 +4,7 @@
 
 import type { BoxedType, ComputeEngine, Type } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
+import type { GlyphValue, NestedTree } from "./glyphs.ts";
 
 /** The row placeholder in a column or filter expression: `Descents(_)`, `Length(_) == 2`. */
 export const ROW = "_";
@@ -223,7 +224,7 @@ export function compareCells(a: CellValue, b: CellValue): number {
 /** A flat integer list from a `["List", …]` MathJSON, or from a carrier value wrapping one
  *  (`["Permutation", ["List", …]]`), or undefined for anything else. */
 export function flatInts(json: MathJsonExpression): number[] | undefined {
-  if (Array.isArray(json) && json.length === 2 && Array.isArray(json[1]) && json[1][0] === "List")
+  if (Array.isArray(json) && json[0] !== "List" && json.length === 2 && Array.isArray(json[1]) && json[1][0] === "List")
     return flatInts(json[1] as unknown as MathJsonExpression);
   if (!Array.isArray(json) || json[0] !== "List") return undefined;
   const items: unknown[] = (json as readonly unknown[]).slice(1);
@@ -236,6 +237,49 @@ export function blockLists(json: MathJsonExpression): number[][] | undefined {
   const items: unknown[] = (json as readonly unknown[]).slice(1);
   const blocks = items.map((b) => flatInts(b as MathJsonExpression));
   return blocks.every((b) => b !== undefined) ? (blocks as number[][]) : undefined;
+}
+
+/** A tree of nested lists: a `["List", …]` is a node holding its children, an integer a leaf. A
+ *  carrier value wrapping one (`["BinaryTree", …]`) is read through; undefined for anything else. */
+export function nestedTree(json: MathJsonExpression): NestedTree | undefined {
+  if (typeof json === "number") return Number.isInteger(json) ? json : undefined;
+  if (!Array.isArray(json)) return undefined;
+  if (json[0] !== "List") return json.length === 2 ? nestedTree(json[1] as MathJsonExpression) : undefined;
+  const children = (json as readonly unknown[]).slice(1).map((c) => nestedTree(c as MathJsonExpression));
+  return children.every((c) => c !== undefined) ? (children as NestedTree[]) : undefined;
+}
+
+/** A list of integer lists (tableau rows, ordered set-partition blocks), or undefined. */
+export function listOfLists(json: MathJsonExpression): number[][] | undefined {
+  if (Array.isArray(json) && json[0] !== "List" && json.length === 2 && Array.isArray(json[1]) && json[1][0] === "List")
+    return listOfLists(json[1] as unknown as MathJsonExpression);
+  return blockLists(json);
+}
+
+/**
+ * What an element's JSON is to the glyph `kind` that draws it: the shape each kind reads (the integer
+ * list most take; rows for `tableau`, blocks for `set-composition`, nested lists for `nested-tree`;
+ * `set-partition` and `diagram` take the restricted-growth string, converted from blocks when
+ * the element is a block list). `undefined` when the element is not that shape.
+ */
+export function glyphValue(kind: string, json: MathJsonExpression): GlyphValue | undefined {
+  switch (kind) {
+    case "nested-tree":
+      return nestedTree(json);
+    case "set-composition":
+      return listOfLists(json);
+    case "tableau":
+      return listOfLists(json) ?? flatInts(json);
+    case "set-partition":
+    case "diagram": {
+      const ints = flatInts(json);
+      if (ints) return ints;
+      const blocks = blockLists(json);
+      return blocks ? blocksToRgs(blocks) : undefined;
+    }
+    default:
+      return flatInts(json);
+  }
 }
 
 /** Set-partition blocks `{1,2,4} {3} {5}` → the restricted-growth string `[0,0,1,0,2]`. */

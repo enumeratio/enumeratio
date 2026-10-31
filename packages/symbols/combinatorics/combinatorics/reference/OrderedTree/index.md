@@ -4,6 +4,7 @@ domain: Combinatorics
 signature: OrderedTree(...)
 summary: Catalogued in the enumeratio database; not yet written up here.
 catalogCarrier: true
+glyph: nested-tree
 stub: carrier
 signatures:
   - call: OrderedTree(...)

@@ -3,6 +3,7 @@ name: BinaryTree
 domain: Collections
 signature: BinaryTree(tree)
 catalogCarrier: true
+glyph: nested-tree
 summary: "The singular-inhabitant constructor for a binary tree, nested: a leaf is 0, a node [left, right]."
 references:
   - system: wikipedia

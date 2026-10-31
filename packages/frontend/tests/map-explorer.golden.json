@@ -41,6 +41,7 @@
       "maxSize": 7,
       "start": 4,
       "sourceGlyph": "dyck",
+      "targetGlyph": "nested-tree",
       "target": {
         "template": "BinaryTrees({size})",
         "sizeOffset": 0

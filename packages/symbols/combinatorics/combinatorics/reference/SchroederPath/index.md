@@ -4,6 +4,7 @@ domain: Combinatorics
 signature: SchroederPath(...)
 summary: Catalogued in the enumeratio database; not yet written up here.
 catalogCarrier: true
+glyph: schroeder
 stub: carrier
 signatures:
   - call: SchroederPath(...)

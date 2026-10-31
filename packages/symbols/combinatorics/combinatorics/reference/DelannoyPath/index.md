@@ -4,6 +4,7 @@ domain: Combinatorics
 signature: DelannoyPath(...)
 summary: Catalogued in the enumeratio database; not yet written up here.
 catalogCarrier: true
+glyph: lattice
 stub: carrier
 signatures:
   - call: DelannoyPath(...)

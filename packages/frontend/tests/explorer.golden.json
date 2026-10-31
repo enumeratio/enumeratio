@@ -154,6 +154,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "nested-tree",
     "columns": ["BinaryNodes", "BoundaryNodes", "CollessIndex", "DistinctSubtrees"],
     "derived": true,
     "statistics": 33
@@ -345,6 +346,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "lattice",
     "columns": ["Peaks"],
     "derived": true,
     "statistics": 4
@@ -538,6 +540,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "nested-tree",
     "columns": [],
     "derived": true,
     "statistics": 0
@@ -906,6 +909,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "lukasiewicz",
     "columns": [],
     "derived": true,
     "statistics": 0
@@ -945,6 +949,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "motzkin",
     "columns": ["Peaks"],
     "derived": true,
     "statistics": 4
@@ -958,6 +963,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "motzkin",
     "columns": ["Peaks"],
     "derived": true,
     "statistics": 4
@@ -1126,6 +1132,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "nested-tree",
     "columns": ["AutomorphismGroupSize", "BoundaryLength", "BoundaryLengthBeyondTrunk", "Breadth"],
     "derived": true,
     "statistics": 22
@@ -1533,6 +1540,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "motzkin",
     "columns": ["Peaks"],
     "derived": true,
     "statistics": 4
@@ -1584,6 +1592,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "schroeder",
     "columns": ["Peaks"],
     "derived": true,
     "statistics": 3
@@ -1604,6 +1613,7 @@
   },
   "SemistandardTableaux": {
     "expr": "SemistandardTableaux(4, 3)",
+    "glyph": "tableau",
     "columns": ["Length"],
     "derived": false,
     "statistics": 0
@@ -1624,6 +1634,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "set-composition",
     "columns": [],
     "derived": true,
     "statistics": 4
@@ -1670,6 +1681,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "signed-permutation",
     "columns": ["Descents", "Inversions"],
     "derived": true,
     "statistics": 3
@@ -1783,6 +1795,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "tableau",
     "columns": [],
     "derived": true,
     "statistics": 2
@@ -1852,6 +1865,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "tableau",
     "columns": [],
     "derived": true,
     "statistics": 2
@@ -1865,6 +1879,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "tableau",
     "columns": [],
     "derived": true,
     "statistics": 2
@@ -1878,6 +1893,7 @@
       "max": 6,
       "start": 4
     },
+    "glyph": "tableau",
     "columns": [],
     "derived": true,
     "statistics": 2

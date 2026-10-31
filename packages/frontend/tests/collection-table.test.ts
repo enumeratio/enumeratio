@@ -8,6 +8,7 @@ import {
   compareCells,
   flatInts,
   formatCount,
+  glyphValue,
   pageCount,
   splitColumns,
   substituteRow,
@@ -113,4 +114,22 @@ test("a carrier's body drops its leading params, so statistics read the elements
   expect(carrierBody(packed, 1)).toEqual(["List", 1, 3]);
   expect(carrierBody(packed, 0)).toEqual(packed);
   expect(carrierBody(["List", 2, 1] as unknown as MathJsonExpression, 1)).toEqual(["List", 2, 1]);
+});
+
+test("glyphValue reads the shape each glyph kind takes", () => {
+  const rows = ["List", ["List", 1, 3], ["List", 2]];
+  expect(glyphValue("tableau", rows as never)).toEqual([[1, 3], [2]]);
+  expect(glyphValue("tableau", ["List", 2, 1])).toEqual([2, 1]); // a bare shape still draws
+  expect(glyphValue("tableau", ["StandardTableau", rows] as never)).toEqual([[1, 3], [2]]);
+  expect(glyphValue("set-composition", rows as never)).toEqual([[1, 3], [2]]);
+  expect(glyphValue("set-composition", ["List", 1, 2])).toBeUndefined();
+  // One block is a list holding one list, not a carrier wrapper around a flat list.
+  expect(glyphValue("set-composition", ["List", ["List", 1, 2]] as never)).toEqual([[1, 2]]);
+  expect(flatInts(["List", ["List", 1, 2]] as never)).toBeUndefined();
+  expect(glyphValue("nested-tree", ["List", 0, ["List", 0, 0]])).toEqual([0, [0, 0]]);
+  expect(glyphValue("nested-tree", ["List", ["List"], ["List"]] as never)).toEqual([[], []]);
+  expect(glyphValue("nested-tree", ["BinaryTree", 0] as never)).toBe(0);
+  expect(glyphValue("nested-tree", "x" as never)).toBeUndefined();
+  expect(glyphValue("signed-permutation", ["List", 2, -1])).toEqual([2, -1]);
+  expect(glyphValue("set-partition", ["List", ["List", 1, 3], ["List", 2]] as never)).toEqual([0, 1, 0]);
 });

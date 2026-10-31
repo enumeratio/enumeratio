@@ -26,14 +26,12 @@ import { parseExpression } from "@enumeratio/formats/expression";
 import { normalizeInputForm } from "@enumeratio/formats/inputform";
 import { allCarrierParams, carrierTypeForName } from "@enumeratio/structures";
 import {
-  blockLists,
-  blocksToRgs,
   carrierBody,
   type CellValue,
   columnLabel,
   columnSource,
   compareCells,
-  flatInts,
+  glyphValue,
   substituteRow,
   substituteRowPerHead,
   wantsCarrier,
@@ -474,14 +472,10 @@ export class CollectionRows implements RowSource {
   #glyph(json: Json): string {
     const kind = this.#spec.glyph as GlyphKind;
     if (!GLYPH_KINDS.has(kind)) return "";
-    let ints = flatInts(json);
-    if (!ints && (kind === "set-partition" || kind === "diagram")) {
-      const blocks = blockLists(json);
-      if (blocks) ints = blocksToRgs(blocks);
-    }
-    if (!ints) return "";
+    const value = glyphValue(kind, json as never);
+    if (!value) return "";
     try {
-      return renderGlyph(kind, ints, { n: kind === "subset" ? this.#groundSize() : undefined });
+      return renderGlyph(kind, value, { n: kind === "subset" ? this.#groundSize() : undefined });
     } catch {
       return "";
     }
