@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { FunctionView as FunctionViewData } from "@enumeratio/frontend/function-view";
 import type { Prerendered } from "@enumeratio/frontend/prerender";
 import type { CarrierFields as CarrierFieldsData } from "../../data/carrier-fields.ts";
 import { crosswalkFor, type ReferenceEntry, type ResolvedReference } from "@enumeratio/reference";
@@ -11,6 +12,7 @@ import AboutPanel from "./AboutPanel.vue";
 import CarrierFields from "./CarrierFields.vue";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
+import FunctionView from "./FunctionView.vue";
 import TryIt from "./TryIt.vue";
 
 const props = defineProps<{
@@ -29,6 +31,8 @@ const props = defineProps<{
   /** The largest safe value of its size parameter, from its record. */
   maxSize?: number;
   optionValues?: Record<string, (string | number | boolean)[]>;
+  /** The plot the head is drawn as over a numeric argument (`functionViewOf`, derived at build). */
+  functionView?: FunctionViewData;
   /** The statistics and maps of a carrier, or of a collection's carrier. */
   fields?: CarrierFieldsData;
   /** The enumeration the record implies (`explorerOf`, derived at build); a record's own `enumerate:` is already folded in. */
@@ -505,6 +509,8 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       :max-size="maxSize"
       :option-values="optionValues"
     />
+
+    <FunctionView :name="name" :view="functionView" />
 
     <p v-if="missingExample" class="ref-stub">
       No example here is called <code>{{ targeted }}</code

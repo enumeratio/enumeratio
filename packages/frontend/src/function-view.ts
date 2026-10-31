@@ -223,3 +223,53 @@ export function functionViewOf(
     ? { ...base, views: [slice], reason: `the complex plot cannot lower ${signature.head}` }
     : { ...base, views: [main, slice] };
 }
+
+/** One drawn plot of a function view, as a page lays it out. */
+export interface FunctionViewPanel {
+  /** The plot head, or its note (`real slice`) when that says more. */
+  readonly label: string;
+  /** What a screen reader hears for the plot: `Plot of Gamma(z) over the complex plane`. */
+  readonly aria: string;
+  /** `<notatio-manipulate params>`: the controls for the other arguments. */
+  readonly params: string;
+  /** The plot as Epsil over the control slots (`_n`), for a `<dynamic-box value>`. */
+  readonly value: string;
+}
+
+const AXIS_PHRASE: Readonly<Record<NumericDomain, string>> = {
+  real: "the real line",
+  complex: "the complex plane",
+  integer: "the integers",
+};
+
+/** The control names of a view: the body's arguments other than the axis symbol. */
+function controlNames(view: FunctionView): string[] {
+  const args = /^[^(]+\((.*)\)$/s.exec(view.body)?.[1]?.split(",") ?? [];
+  return args.map((a) => a.trim()).filter((a) => a !== "" && a !== view.axis.name);
+}
+
+/** The plots of a view as panels, each over the same controls; none when the view has no plot. */
+export function viewPanels(view: FunctionView): FunctionViewPanel[] {
+  const names = controlNames(view);
+  const slot = (source: string): string =>
+    names.length === 0 ? source : source.replace(new RegExp(`\\b(${names.join("|")})\\b`, "g"), "_$1");
+  return view.views.map((plot) => {
+    const domain = plot.note === undefined ? view.axisDomain : "real";
+    return {
+      label: plot.note ?? plot.head,
+      aria: `Plot of ${plot.body} over ${AXIS_PHRASE[domain]}`,
+      params: view.params,
+      value: `${plot.head}(${slot(plot.body)}, ${plot.window})`,
+    };
+  });
+}
+
+/** What a page's Plot section shows: the plots, and the reason when it has one; undefined (no section) for a head with nothing to say. */
+export function plotSectionOf(
+  view: FunctionView | undefined,
+): { readonly panels: FunctionViewPanel[]; readonly reason?: string } | undefined {
+  if (view === undefined) return undefined;
+  const panels = viewPanels(view);
+  if (panels.length === 0 && view.reason === undefined) return undefined;
+  return { panels, ...(view.reason === undefined ? {} : { reason: view.reason }) };
+}
