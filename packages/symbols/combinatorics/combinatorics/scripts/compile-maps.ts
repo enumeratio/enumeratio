@@ -210,6 +210,7 @@ export type Generated = Record<string, { run: (sys: unknown, vars: Record<string
 
 /** The generated entries, executable. */
 export function evaluateTable(entries: readonly Entry[]): Generated {
+  // oxlint-disable-next-line no-implied-eval -- the code is compute-engine's compiled output
   return new Function(`${COMPOSED}\nconst COMPILED_MAPS = ${table(entries)};\nreturn COMPILED_MAPS;`)() as Generated;
 }
 
