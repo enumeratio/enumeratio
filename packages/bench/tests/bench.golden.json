@@ -1444,7 +1444,7 @@
           },
           "mpmath": {
             "sources": [
-              "[sin(((22)**41)), sin(((30)**57)), sin(((24)**37)), sin(((15)**58)), sin(((21)**37)), sin(((15)**60)), sin(((11)**59)), sin(((14)**37)), sin(((27)**53)), sin(((28)**58)), sin(((18)**58)), sin(((25)**38)), sin(((26)**52)), sin(((23)**58)), sin(((13)**51)), sin(((18)**60))]"
+              "[sin(enumeratio_pow(22, 41)), sin(enumeratio_pow(30, 57)), sin(enumeratio_pow(24, 37)), sin(enumeratio_pow(15, 58)), sin(enumeratio_pow(21, 37)), sin(enumeratio_pow(15, 60)), sin(enumeratio_pow(11, 59)), sin(enumeratio_pow(14, 37)), sin(enumeratio_pow(27, 53)), sin(enumeratio_pow(28, 58)), sin(enumeratio_pow(18, 58)), sin(enumeratio_pow(25, 38)), sin(enumeratio_pow(26, 52)), sin(enumeratio_pow(23, 58)), sin(enumeratio_pow(13, 51)), sin(enumeratio_pow(18, 60))]"
             ]
           },
           "sage": {
@@ -1628,7 +1628,7 @@
           },
           "mpmath": {
             "sources": [
-              "[cos(((10)**104)), cos(((10)**88)), cos(((10)**140)), cos(((10)**133)), cos(((10)**116)), cos(((10)**79)), cos(((10)**76)), cos(((10)**135)), cos(((10)**102)), cos(((10)**80)), cos(((10)**79)), cos(((10)**140)), cos(((10)**63)), cos(((10)**136)), cos(((10)**73)), cos(((10)**79))]"
+              "[cos(enumeratio_pow(10, 104)), cos(enumeratio_pow(10, 88)), cos(enumeratio_pow(10, 140)), cos(enumeratio_pow(10, 133)), cos(enumeratio_pow(10, 116)), cos(enumeratio_pow(10, 79)), cos(enumeratio_pow(10, 76)), cos(enumeratio_pow(10, 135)), cos(enumeratio_pow(10, 102)), cos(enumeratio_pow(10, 80)), cos(enumeratio_pow(10, 79)), cos(enumeratio_pow(10, 140)), cos(enumeratio_pow(10, 63)), cos(enumeratio_pow(10, 136)), cos(enumeratio_pow(10, 73)), cos(enumeratio_pow(10, 79))]"
             ]
           },
           "sage": {
