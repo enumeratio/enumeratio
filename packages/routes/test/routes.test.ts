@@ -22,6 +22,7 @@ import {
   identityParameters,
   isPoint,
   kinds,
+  kthExpression,
   listHead,
   matchTemplate,
   measuredBindings,
@@ -105,7 +106,27 @@ describe('the route file', () => {
     expect(() => parseRouteFile(`${head}\n${cells({ parameters: '?' })}`)).toThrow(/parameter/);
     expect(() => parseRouteFile(`${head}\n${cells({ measures: 'nobinding' })}`)).toThrow(/measure/);
     expect(() => parseRouteFile(`${head}\n${cells({ expression: 'Foo(' })}`)).toThrow(/expression/);
+    expect(() => parseRouteFile(`${head}\n${cells({ kth: 'Foo(' })}`)).toThrow(/expression/);
+    expect(() => parseRouteFile(`${head}\n${cells({ kth: '7' })}`)).toThrow(/k-th/);
+    expect(() => parseRouteFile(`${head}\n${cells({ kth: 'NthPrime(n)' })}`)).toThrow(/k-th/);
+    expect(() => parseRouteFile(`${head}\n${cells({ kth: 'Pi' })}`)).toThrow(/k-th/);
     expect(parseRouteFile(`${head}\n${cells()}`).rows).toHaveLength(1);
+  });
+
+  test('a row’s k-th member is read, and written for a rank', () => {
+    const [row] = parseRouteFile(`${columns.join('\t')}\n${cells({ kth: 'Subtract(k, 1)' })}`).rows;
+    expect(row?.kth).toEqual(parseTemplate('Subtract(k, 1)'));
+    expect(row && kthExpression(row, 7)).toBe('Subtract(7, 1)');
+    expect(headsIn(row as RouteRow)).toEqual(['Subtract']);
+    const [none] = parseRouteFile(`${columns.join('\t')}\n${cells()}`).rows;
+    expect(none?.kth).toBeUndefined();
+    expect(none && kthExpression(none, 7)).toBeUndefined();
+  });
+
+  test('the rows that state a k-th member are Natural and Prime', () => {
+    expect(rows.filter((r) => r.kth).map((r) => r.name)).toEqual(['Natural', 'Prime']);
+    expect(kthExpression(rowOf('Natural'), 7)).toBe('Subtract(7, 1)');
+    expect(kthExpression(rowOf('Prime'), 4)).toBe('NthPrime(4)');
   });
 
   test('a row is read from the columns, in order', () => {
@@ -668,7 +689,7 @@ describe('measuredBindings', () => {
     expect(headsIn(rowOf('Subset')).toSorted()).toEqual(
       ['Finset', 'KSubsets', 'Length', 'Subsets', 'Tuple'].toSorted(),
     );
-    expect(headsIn(rowOf('Natural'))).toEqual(['NonNegativeIntegers']);
+    expect(headsIn(rowOf('Natural')).toSorted()).toEqual(['NonNegativeIntegers', 'Subtract']);
     expect(parametersIn(rowOf('Subset'), parseTemplate('KSubsets(n, k)'))).toEqual([
       word('Subset', 0),
       word('Subset', 1),

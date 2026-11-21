@@ -1,9 +1,10 @@
 # promise: not started
 # The promise of permanence (docs/site-map.md §6) starts when the site is announced. Until then any row below, whatever its status, may be renamed or removed.
-# columns: name, kind, status, within, expression, element, value, parameters, measures, aliases, plural, show, oeis, findstat, requested_by, date
+# columns: name, kind, status, within, expression, kth, element, value, parameters, measures, aliases, plural, show, oeis, findstat, requested_by, date
 # kind: collection | subcollection. status: proposed | reserved | stub | live.
 # name: PascalCase, singular, the noun for one member (PerfectNumber; the adjective alone, Perfect, is an alias). within: the collection a subcollection sits inside.
 # expression: the Epsil behind the collection, its plural head, with the parameters as its variables; where different sets of parameters can be bound, one form for each, separated by ` | `.
+# kth: the k-th member of the collection in its default order, in Epsil over k (k = 1 is the first member), for a collection that is a set and so is not indexed by the engine (Natural is k - 1). The pages use it when the collection's own At declines. Written with no parameters; a head here is checked against the pinned notatio.
 # element: the constructor of one element, in Epsil, over x (the value written in the address) and any parameter an element cannot be written without.
 # value: how an element is written in an address: integer | ordered | parts | digits | unordered | blocks (site map §2.5). show: the properties a page leads with, comma-separated.
 # Every head named in expression, element and show is checked against the pinned notatio by a test.
@@ -11,112 +12,112 @@
 # measures: for a parameter that an element determines, `word=Epsil over x`, `|`-separated: how the kernel places an element in its collection when the address binds nothing.
 # aliases and the plural exception: comma-separated; the default plural is a trailing s.
 # oeis and findstat: the outside identifier of the collection (its count, or its triangle), when one is known.
-name	kind	status	within	expression	element	value	parameters	measures	aliases	plural	show	oeis	findstat	requested_by	date
-Natural	collection	live		NonNegativeIntegers	x	integer	-		NaturalNumber		Factorization,FactorInteger,Divisors,IntegerDigits	A000027		site map	2026-11-20
-Prime	subcollection	live	Natural	PrimeNumbers	x	integer	-		PrimeNumber		Factorization,FactorInteger,Divisors,IntegerDigits	A000040		site map	2026-11-20
-Permutation	collection	live		Permutations(size)	Permutation(x)	ordered	size*	size=Length(x)			Inversions,Descents,CycleType,Inverse	A000142		site map	2026-11-20
-DyckPath	collection	live		DyckPaths(semilength)	DyckPath(x)	digits	semilength*	semilength=Quotient(Length(x), 2)	DyckWord		Area,Bounce,Peaks	A000108		site map	2026-11-20
-SetPartition	collection	live		SetPartitions(size, blocks) | SetPartitions(size)	SetPartition(x)	blocks	size*|blocks	size=Length(Flatten(x))|blocks=Length(x)			Blocks	A000110		site map	2026-11-20
-IntegerPartition	collection	live		IntegerPartitions(size, [parts]) | IntegerPartitions(size)	IntegerPartition(x)	parts	size*|parts	size=Sum(x)|parts=Length(x)			PartCount,LargestPart	A000041		site map	2026-11-20
-Subset	collection	live		KSubsets(n, k) | Subsets(n)	Finset(Tuple(n, x))	unordered	n*|k	k=Length(x)	KSubset			A007318		site map	2026-11-20
-Integer	collection	proposed												site map	2026-11-20
-Rational	collection	proposed												site map	2026-11-20
-Fraction	collection	proposed												site map	2026-11-20
-GaussianInteger	collection	proposed												site map	2026-11-20
-GaussianRational	collection	proposed												site map	2026-11-20
-QuadraticInteger	collection	proposed					d							site map	2026-11-20
-AlgebraicInteger	collection	proposed												site map	2026-11-20
-Residue	collection	proposed					modulus							site map	2026-11-20
-AdicInteger	collection	proposed					p							site map	2026-11-20
-ProfiniteInteger	collection	proposed												site map	2026-11-20
-Adele	collection	proposed												site map	2026-11-20
-ContinuedFraction	collection	proposed												site map	2026-11-20
-EgyptianFraction	collection	proposed												site map	2026-11-20
-Quaternion	collection	proposed												site map	2026-11-20
-Multicomplex	collection	proposed												site map	2026-11-20
-EisensteinInteger	collection	proposed												site map	2026-11-20
-Ordinal	collection	proposed												site map	2026-11-20
-Cardinal	collection	proposed												site map	2026-11-20
-Float	collection	proposed												site map	2026-11-20
-IntegerFactorization	collection	proposed												site map	2026-11-20
-PrimePower	subcollection	proposed	Natural											site map	2026-11-20
-Semiprime	subcollection	proposed	Natural											site map	2026-11-20
-SquarefreeNumber	subcollection	proposed	Natural						Squarefree					site map	2026-11-20
-Square	subcollection	proposed	Natural											site map	2026-11-20
-KFreeNumber	subcollection	proposed	Natural				k		KFree					site map	2026-11-20
-PowerfulNumber	subcollection	proposed	Natural						Powerful					site map	2026-11-20
-SphenicNumber	subcollection	proposed	Natural						Sphenic					site map	2026-11-20
-SmoothNumber	subcollection	proposed	Natural				bound		Smooth					site map	2026-11-20
-RoughNumber	subcollection	proposed	Natural				bound		Rough					site map	2026-11-20
-PrimePair	collection	proposed					gap							site map	2026-11-20
-TwinPrime	subcollection	proposed	Natural											site map	2026-11-20
-PerfectNumber	subcollection	proposed	Natural						Perfect					site map	2026-11-20
-AbundantNumber	subcollection	proposed	Natural						Abundant					site map	2026-11-20
-CarmichaelNumber	subcollection	proposed	Natural						Carmichael					site map	2026-11-20
-HarshadNumber	subcollection	proposed	Natural						Harshad					site map	2026-11-20
-KaprekarNumber	subcollection	proposed	Natural						Kaprekar					site map	2026-11-20
-FibonacciNumber	subcollection	proposed	Natural						Fibonacci					site map	2026-11-20
-CatalanNumber	subcollection	proposed	Natural						Catalan					site map	2026-11-20
-PolygonalNumber	subcollection	proposed	Natural				sides		Polygonal					site map	2026-11-20
-PositionalNumeral	collection	proposed					base							site map	2026-11-20
-Word	collection	proposed					length*|alphabet							site map	2026-11-20
-Arrangement	collection	proposed												site map	2026-11-20
-Multiset	collection	proposed												site map	2026-11-20
-SignedSubset	collection	proposed												site map	2026-11-20
-Derangement	subcollection	proposed	Permutation											site map	2026-11-20
-Involution	subcollection	proposed	Permutation											site map	2026-11-20
-BaxterPermutation	subcollection	proposed	Permutation											site map	2026-11-20
-PermutationAvoiding	subcollection	proposed	Permutation				pattern							site map	2026-11-20
-SignedPermutation	collection	proposed												site map	2026-11-20
-ColoredPermutation	collection	proposed												site map	2026-11-20
-AffinePermutation	collection	proposed												site map	2026-11-20
-Endofunction	collection	proposed												site map	2026-11-20
-Surjection	collection	proposed												site map	2026-11-20
-ParkingFunction	collection	proposed												site map	2026-11-20
-IntegerComposition	collection	proposed												site map	2026-11-20
-SetComposition	collection	proposed												site map	2026-11-20
-PerfectMatching	collection	proposed												site map	2026-11-20
-BinaryWord	collection	proposed												site map	2026-11-20
-Necklace	collection	proposed												site map	2026-11-20
-LyndonWord	collection	proposed												site map	2026-11-20
-GrayCode	collection	proposed												site map	2026-11-20
-MotzkinPath	collection	proposed												site map	2026-11-20
-SchroederPath	collection	proposed												site map	2026-11-20
-DelannoyPath	collection	proposed												site map	2026-11-20
-BinaryTree	collection	proposed												site map	2026-11-20
-OrderedTree	collection	proposed												site map	2026-11-20
-LabeledTree	collection	proposed												site map	2026-11-20
-RootedForest	collection	proposed												site map	2026-11-20
-LabeledGraph	collection	proposed					vertices*							site map	2026-11-20
-Tournament	collection	proposed												site map	2026-11-20
-Poset	collection	proposed												site map	2026-11-20
-StandardTableau	collection	proposed												site map	2026-11-20
-SemistandardTableau	collection	proposed												site map	2026-11-20
-GelfandTsetlinPattern	collection	proposed												site map	2026-11-20
-AlternatingSignMatrix	collection	proposed												site map	2026-11-20
-RookPlacement	collection	proposed												site map	2026-11-20
-CartanType	collection	proposed												site map	2026-11-20
-Permutahedron	collection	proposed					n*|dimension			Permutahedra				site map	2026-11-20
-Associahedron	collection	proposed								Associahedra				site map	2026-11-20
-Cyclohedron	collection	proposed								Cyclohedra				site map	2026-11-20
-Simplex	collection	proposed								Simplices				site map	2026-11-20
-CrossPolytope	collection	proposed												site map	2026-11-20
-Hypercube	collection	proposed												site map	2026-11-20
-Knot	collection	proposed					crossings*							site map	2026-11-20
-TorusKnot	collection	proposed					p|q							site map	2026-11-20
-PretzelKnot	collection	proposed												site map	2026-11-20
-TwistKnot	collection	proposed												site map	2026-11-20
-Link	collection	proposed												site map	2026-11-20
-Braid	collection	proposed					strands*							site map	2026-11-20
-SymmetricGroup	collection	proposed					n*							site map	2026-11-20
-CyclicGroup	collection	proposed												site map	2026-11-20
-DihedralGroup	collection	proposed												site map	2026-11-20
-AlternatingGroup	collection	proposed												site map	2026-11-20
-BraidGroup	collection	proposed												site map	2026-11-20
-ModularGroup	collection	proposed												site map	2026-11-20
-PartitionAlgebra	collection	proposed												site map	2026-11-20
-BrauerAlgebra	collection	proposed												site map	2026-11-20
-TemperleyLiebAlgebra	collection	proposed												site map	2026-11-20
-HeckeAlgebra	collection	proposed												site map	2026-11-20
-IncidenceAlgebra	collection	proposed												site map	2026-11-20
-PathAlgebra	collection	proposed												site map	2026-11-20
+name	kind	status	within	expression	kth	element	value	parameters	measures	aliases	plural	show	oeis	findstat	requested_by	date
+Natural	collection	live		NonNegativeIntegers	Subtract(k, 1)	x	integer	-		NaturalNumber		Factorization,FactorInteger,Divisors,IntegerDigits	A000027		site map	2026-11-20
+Prime	subcollection	live	Natural	PrimeNumbers	NthPrime(k)	x	integer	-		PrimeNumber		Factorization,FactorInteger,Divisors,IntegerDigits	A000040		site map	2026-11-20
+Permutation	collection	live		Permutations(size)		Permutation(x)	ordered	size*	size=Length(x)			Inversions,Descents,CycleType,Inverse	A000142		site map	2026-11-20
+DyckPath	collection	live		DyckPaths(semilength)		DyckPath(x)	digits	semilength*	semilength=Quotient(Length(x), 2)	DyckWord		Area,Bounce,Peaks	A000108		site map	2026-11-20
+SetPartition	collection	live		SetPartitions(size, blocks) | SetPartitions(size)		SetPartition(x)	blocks	size*|blocks	size=Length(Flatten(x))|blocks=Length(x)			Blocks	A000110		site map	2026-11-20
+IntegerPartition	collection	live		IntegerPartitions(size, [parts]) | IntegerPartitions(size)		IntegerPartition(x)	parts	size*|parts	size=Sum(x)|parts=Length(x)			PartCount,LargestPart	A000041		site map	2026-11-20
+Subset	collection	live		KSubsets(n, k) | Subsets(n)		Finset(Tuple(n, x))	unordered	n*|k	k=Length(x)	KSubset			A007318		site map	2026-11-20
+Integer	collection	proposed													site map	2026-11-20
+Rational	collection	proposed													site map	2026-11-20
+Fraction	collection	proposed													site map	2026-11-20
+GaussianInteger	collection	proposed													site map	2026-11-20
+GaussianRational	collection	proposed													site map	2026-11-20
+QuadraticInteger	collection	proposed						d							site map	2026-11-20
+AlgebraicInteger	collection	proposed													site map	2026-11-20
+Residue	collection	proposed						modulus							site map	2026-11-20
+AdicInteger	collection	proposed						p							site map	2026-11-20
+ProfiniteInteger	collection	proposed													site map	2026-11-20
+Adele	collection	proposed													site map	2026-11-20
+ContinuedFraction	collection	proposed													site map	2026-11-20
+EgyptianFraction	collection	proposed													site map	2026-11-20
+Quaternion	collection	proposed													site map	2026-11-20
+Multicomplex	collection	proposed													site map	2026-11-20
+EisensteinInteger	collection	proposed													site map	2026-11-20
+Ordinal	collection	proposed													site map	2026-11-20
+Cardinal	collection	proposed													site map	2026-11-20
+Float	collection	proposed													site map	2026-11-20
+IntegerFactorization	collection	proposed													site map	2026-11-20
+PrimePower	subcollection	proposed	Natural												site map	2026-11-20
+Semiprime	subcollection	proposed	Natural												site map	2026-11-20
+SquarefreeNumber	subcollection	proposed	Natural							Squarefree					site map	2026-11-20
+Square	subcollection	proposed	Natural												site map	2026-11-20
+KFreeNumber	subcollection	proposed	Natural					k		KFree					site map	2026-11-20
+PowerfulNumber	subcollection	proposed	Natural							Powerful					site map	2026-11-20
+SphenicNumber	subcollection	proposed	Natural							Sphenic					site map	2026-11-20
+SmoothNumber	subcollection	proposed	Natural					bound		Smooth					site map	2026-11-20
+RoughNumber	subcollection	proposed	Natural					bound		Rough					site map	2026-11-20
+PrimePair	collection	proposed						gap							site map	2026-11-20
+TwinPrime	subcollection	proposed	Natural												site map	2026-11-20
+PerfectNumber	subcollection	proposed	Natural							Perfect					site map	2026-11-20
+AbundantNumber	subcollection	proposed	Natural							Abundant					site map	2026-11-20
+CarmichaelNumber	subcollection	proposed	Natural							Carmichael					site map	2026-11-20
+HarshadNumber	subcollection	proposed	Natural							Harshad					site map	2026-11-20
+KaprekarNumber	subcollection	proposed	Natural							Kaprekar					site map	2026-11-20
+FibonacciNumber	subcollection	proposed	Natural							Fibonacci					site map	2026-11-20
+CatalanNumber	subcollection	proposed	Natural							Catalan					site map	2026-11-20
+PolygonalNumber	subcollection	proposed	Natural					sides		Polygonal					site map	2026-11-20
+PositionalNumeral	collection	proposed						base							site map	2026-11-20
+Word	collection	proposed						length*|alphabet							site map	2026-11-20
+Arrangement	collection	proposed													site map	2026-11-20
+Multiset	collection	proposed													site map	2026-11-20
+SignedSubset	collection	proposed													site map	2026-11-20
+Derangement	subcollection	proposed	Permutation												site map	2026-11-20
+Involution	subcollection	proposed	Permutation												site map	2026-11-20
+BaxterPermutation	subcollection	proposed	Permutation												site map	2026-11-20
+PermutationAvoiding	subcollection	proposed	Permutation					pattern							site map	2026-11-20
+SignedPermutation	collection	proposed													site map	2026-11-20
+ColoredPermutation	collection	proposed													site map	2026-11-20
+AffinePermutation	collection	proposed													site map	2026-11-20
+Endofunction	collection	proposed													site map	2026-11-20
+Surjection	collection	proposed													site map	2026-11-20
+ParkingFunction	collection	proposed													site map	2026-11-20
+IntegerComposition	collection	proposed													site map	2026-11-20
+SetComposition	collection	proposed													site map	2026-11-20
+PerfectMatching	collection	proposed													site map	2026-11-20
+BinaryWord	collection	proposed													site map	2026-11-20
+Necklace	collection	proposed													site map	2026-11-20
+LyndonWord	collection	proposed													site map	2026-11-20
+GrayCode	collection	proposed													site map	2026-11-20
+MotzkinPath	collection	proposed													site map	2026-11-20
+SchroederPath	collection	proposed													site map	2026-11-20
+DelannoyPath	collection	proposed													site map	2026-11-20
+BinaryTree	collection	proposed													site map	2026-11-20
+OrderedTree	collection	proposed													site map	2026-11-20
+LabeledTree	collection	proposed													site map	2026-11-20
+RootedForest	collection	proposed													site map	2026-11-20
+LabeledGraph	collection	proposed						vertices*							site map	2026-11-20
+Tournament	collection	proposed													site map	2026-11-20
+Poset	collection	proposed													site map	2026-11-20
+StandardTableau	collection	proposed													site map	2026-11-20
+SemistandardTableau	collection	proposed													site map	2026-11-20
+GelfandTsetlinPattern	collection	proposed													site map	2026-11-20
+AlternatingSignMatrix	collection	proposed													site map	2026-11-20
+RookPlacement	collection	proposed													site map	2026-11-20
+CartanType	collection	proposed													site map	2026-11-20
+Permutahedron	collection	proposed						n*|dimension			Permutahedra				site map	2026-11-20
+Associahedron	collection	proposed									Associahedra				site map	2026-11-20
+Cyclohedron	collection	proposed									Cyclohedra				site map	2026-11-20
+Simplex	collection	proposed									Simplices				site map	2026-11-20
+CrossPolytope	collection	proposed													site map	2026-11-20
+Hypercube	collection	proposed													site map	2026-11-20
+Knot	collection	proposed						crossings*							site map	2026-11-20
+TorusKnot	collection	proposed						p|q							site map	2026-11-20
+PretzelKnot	collection	proposed													site map	2026-11-20
+TwistKnot	collection	proposed													site map	2026-11-20
+Link	collection	proposed													site map	2026-11-20
+Braid	collection	proposed						strands*							site map	2026-11-20
+SymmetricGroup	collection	proposed						n*							site map	2026-11-20
+CyclicGroup	collection	proposed													site map	2026-11-20
+DihedralGroup	collection	proposed													site map	2026-11-20
+AlternatingGroup	collection	proposed													site map	2026-11-20
+BraidGroup	collection	proposed													site map	2026-11-20
+ModularGroup	collection	proposed													site map	2026-11-20
+PartitionAlgebra	collection	proposed													site map	2026-11-20
+BrauerAlgebra	collection	proposed													site map	2026-11-20
+TemperleyLiebAlgebra	collection	proposed													site map	2026-11-20
+HeckeAlgebra	collection	proposed													site map	2026-11-20
+IncidenceAlgebra	collection	proposed													site map	2026-11-20
+PathAlgebra	collection	proposed													site map	2026-11-20

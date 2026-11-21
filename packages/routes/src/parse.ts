@@ -38,6 +38,7 @@ export const columns = [
   'status',
   'within',
   'expression',
+  'kth',
   'element',
   'value',
   'parameters',
@@ -62,6 +63,8 @@ const listSeparator = ',';
 const alternativeSeparator = ' | ';
 /** In an element's constructor: where the element's own value goes. */
 export const valueVariable = 'x';
+/** In a row's k-th member: the position, counted from 1. */
+export const rankVariable = 'k';
 
 export interface RouteRow {
   name: string;
@@ -77,6 +80,11 @@ export interface RouteRow {
   expressions: Template[];
   /** The cell as written. */
   expression?: string;
+  /**
+   * The k-th member in the default order (k from 1), over `k` alone: for a collection
+   * that is a set, whose order is the catalogue's statement and not the engine's.
+   */
+  kth?: Template;
   /** The constructor of one element, over `x` (its value) and any parameter it needs. */
   element?: Template;
   /** How an element's value is written in an address. */
@@ -183,6 +191,17 @@ export function parseRouteFile(text: string): RouteFile {
     };
     if (cell.within) row.within = cell.within;
     if (cell.expression) row.expression = cell.expression;
+    if (cell.kth) {
+      const kth = parseTemplate(cell.kth);
+      if (kth.kind === 'integer')
+        throw new Error(`${where}: the k-th member must use ${rankVariable}`);
+      const stray = [...namesOf(kth)].filter((n) => n !== rankVariable && !/^[A-Z]/.test(n));
+      if (stray.length > 0 || !namesOf(kth).has(rankVariable))
+        throw new Error(
+          `${where}: the k-th member is over ${rankVariable} alone (it names ${[...namesOf(kth)].join(', ')})`,
+        );
+      row.kth = kth;
+    }
     if (cell.element) row.element = parseTemplate(cell.element);
     if (cell.value) row.value = cell.value as ValueShape;
     const declared = parseParameters(cell.parameters, where);
@@ -257,6 +276,11 @@ export function identityParameters(row: RouteRow): string[] {
   return row.element ? parametersIn(row, row.element) : [];
 }
 
+/** The Epsil for the k-th member of a row's collection, when the row states one. */
+export function kthExpression(row: RouteRow, rank: number): string | undefined {
+  return row.kth && writeTemplate(row.kth, new Map([[rankVariable, String(rank)]]));
+}
+
 /** The Epsil for one element, from its value written in Epsil and the parameters bound. */
 export function elementExpression(
   row: RouteRow,
@@ -303,6 +327,7 @@ export function headsIn(row: RouteRow): string[] {
     if (form.kind === 'name') heads.add(form.name);
   }
   if (row.element) headsOf(row.element, heads);
+  if (row.kth) headsOf(row.kth, heads);
   for (const measure of row.measures.values()) headsOf(measure, heads);
   return [...heads];
 }
