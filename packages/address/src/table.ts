@@ -64,6 +64,30 @@ export const words = {
 export const valueExtras: readonly string[] = ['+', '(', ')', "'", '*', '~'];
 
 /**
+ * Every character a path segment may hold raw besides letters and digits (RFC 3986's
+ * unreserved marks, sub-delimiters, `:` and `@`): `/input/` writes these raw, and encodes the rest.
+ */
+export const pathExtras: readonly string[] = [
+  '-',
+  '.',
+  '_',
+  '~',
+  '!',
+  '$',
+  '&',
+  "'",
+  '(',
+  ')',
+  '*',
+  '+',
+  ',',
+  ';',
+  '=',
+  ':',
+  '@',
+];
+
+/**
  * Segments a browser collapses as dot segments. A piece equal to one of these
  * is never written raw, and a value equal to one is refused when read (§2.2).
  */

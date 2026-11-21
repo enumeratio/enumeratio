@@ -1,5 +1,13 @@
 import { beforeAll, describe, expect, test } from 'vite-plus/test';
-import { type RawAnswer, answerOf, headOf, operandsOf, plain, sameJson } from '../src/index.ts';
+import {
+  type RawAnswer,
+  answerOf,
+  oneLine,
+  headOf,
+  operandsOf,
+  plain,
+  sameJson,
+} from '../src/index.ts';
 import { createNodeKernel } from '../src/node.ts';
 
 describe('plain: MathJSON without its bookkeeping', () => {
@@ -191,5 +199,23 @@ describe('the kernel in Node', () => {
     const answer = await ask('Count(DyckPaths(4))');
     expect(answer.status).toBe('value');
     expect(answer.json).toBe(14);
+  });
+});
+
+describe('a list prints as [1, 2, 3] through one formatter', () => {
+  test('a list the kernel broke over lines, with its trailing comma', () => {
+    expect(oneLine('[\n  1,\n  2,\n  360,\n]')).toBe('[1, 2, 360]');
+    expect(oneLine('[\n  (2, 3),\n  (5, 1),\n]')).toBe('[(2, 3), (5, 1)]');
+  });
+  test('a nested list, and a line that is already one line', () => {
+    expect(oneLine('[\n  [\n    1,\n  ],\n  [\n    2,\n  ],\n]')).toBe('[[1], [2]]');
+    expect(oneLine('[1, 2, 3]')).toBe('[1, 2, 3]');
+  });
+  test('an answer carries its epsil on one line', () => {
+    const answer = answerOf('Divisors(6)', {
+      value: ['List', 1, 2, 3, 6],
+      boxes: { text: { inputform: '[\n  1,\n  2,\n  3,\n  6,\n]' } },
+    } as RawAnswer);
+    expect(answer.epsil).toBe('[1, 2, 3, 6]');
   });
 });

@@ -15,6 +15,9 @@ export interface StartOptions {
 
 export type Win = Window & typeof globalThis;
 
+/** How long the kernel waits for a frame before it starts anyway, in milliseconds. */
+const paintWait = 100;
+
 type Navigation = 'initial' | 'push' | 'pop';
 
 /** Path and query as the browser holds them: the one normalization every comparison goes through. */
@@ -74,10 +77,17 @@ export function start(win: Win, options: StartOptions = {}): () => void {
 
   /** Fills in the computed parts of the page just drawn, one after another, once the shell has painted. */
   async function compute(page: Page, turn: number): Promise<void> {
-    if (!options.loadEnv || (!page.sections && !page.moveTo)) return;
+    if (!options.loadEnv || (!page.sections && !page.moveTo && !page.nonMember)) return;
+    // After the first paint, but never waiting on one: a hidden tab fires no animation frame.
     await new Promise<void>((done) => {
-      if (typeof win.requestAnimationFrame === 'function') win.requestAnimationFrame(() => done());
-      else win.setTimeout(done, 0);
+      let finished = false;
+      const finish = (): void => {
+        if (finished) return;
+        finished = true;
+        done();
+      };
+      if (typeof win.requestAnimationFrame === 'function') win.requestAnimationFrame(finish);
+      win.setTimeout(finish, paintWait);
     });
     env ??= options.loadEnv();
     const kernel = await env;
@@ -89,6 +99,22 @@ export function start(win: Win, options: StartOptions = {}): () => void {
         show('initial');
         return;
       }
+    }
+    if (page.nonMember && (await page.nonMember(kernel))) {
+      if (turn !== drawn) return;
+      // No canonical form for a non-member: the same as an unreadable address.
+      setHeadElement(doc, 'link[rel="canonical"]', () => doc.createElement('link'), false);
+      setHeadElement(
+        doc,
+        'meta[name="robots"]',
+        () => {
+          const el = doc.createElement('meta');
+          el.setAttribute('name', 'robots');
+          el.setAttribute('content', 'noindex');
+          return el;
+        },
+        true,
+      );
     }
     for (const section of page.sections ?? []) {
       let body: string;

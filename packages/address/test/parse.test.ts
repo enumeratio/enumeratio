@@ -288,6 +288,24 @@ describe('reporting', () => {
   });
 });
 
+describe('/input writes what a segment may hold raw', () => {
+  test('raw marks are canonical, the rest are encoded', () => {
+    const raw = read(path('input', '1+1'));
+    expect(raw.address.expression).toBe('1+1');
+    expect(raw.canonical).toBe(true);
+    const moved = read(path('input', '1%2B1'));
+    expect(moved.canonical).toBe(false);
+    expect(moved.canonicalPath).toBe(path('input', '1+1'));
+    const mixed = read(path('input', encodeURIComponent('Area(P) = [1, 2]')));
+    expect(mixed.canonicalPath).toBe(path('input', 'Area(P)%20=%20%5B1,%202%5D'));
+  });
+  test('a slash stays encoded', () => {
+    const r = read(path('input', 'a%2Fb'));
+    expect(r.address.expression).toBe('a/b');
+    expect(r.canonical).toBe(true);
+  });
+});
+
 const percent = (mark: string) => `%${mark.charCodeAt(0).toString(16).toUpperCase()}`;
 const codes = (p: string, q = '') => read(p, q).problems.map((x) => x.code);
 

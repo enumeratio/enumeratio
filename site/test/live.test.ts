@@ -22,7 +22,7 @@ import {
 } from '../../packages/address/test/build.ts';
 import { siteOrigin } from '../src/config.ts';
 import { collectionAddress, firstSizes, sortLimit, windowSize } from '../src/live.ts';
-import { type Computed, compute, valueOf } from './harness.ts';
+import { type Computed, askKernel, compute, valueOf } from './harness.ts';
 
 const deep = process.env.DEEP_TESTS === '1';
 
@@ -55,6 +55,11 @@ const strip = (html: string): string =>
     .trim();
 const sectionText = (c: Computed, id: string): string => strip(c.sections.get(id) ?? '');
 const answerTo = (c: Computed, epsil: string) => c.asked.find((a) => a.asked === epsil);
+/** The asks that applied the catalogue's statistic or map of this name. */
+const asksOf = (c: Computed, name: string) =>
+  c.asked.filter(
+    (a) => /^Combinatorial(Stat|Map)\(/.test(a.asked) && a.asked.endsWith(`, "${name}")`),
+  );
 const asksStarting = (c: Computed, prefix: string) =>
   c.asked.filter((a) => a.asked.startsWith(prefix));
 
@@ -99,6 +104,33 @@ const valueCell = (c: Computed): string | undefined =>
   /<p class="value">(.*?)<\/p>/s.exec(c.sections.get('value') ?? '')?.[1];
 
 // ---------------------------------------------------------------- a collection
+
+describe('unbound parameters are said once, with the picker', () => {
+  test('KSubset;n=5 says k is unbound, lists every subset and offers the picker', async () => {
+    const c = await page(inCollection(segment('KSubset', [0, 5])));
+    const html = c.page.body.value;
+    expect(strip(html)).toContain(`${word('KSubset', 1)} is unbound`);
+    expect(strip(html)).not.toContain(`${word('KSubset', 0)} is unbound`);
+    expect(html).toContain('data-picker="KSubset"');
+    expect(valueOf(c, 'Count(KSubsets(5, 0))')).toBeUndefined();
+  });
+  test('a collection with nothing bound names every parameter; one fully bound names none', async () => {
+    const none = strip((await page(inCollection('SetPartition'))).page.body.value);
+    expect(none.replaceAll(' ,', ',')).toContain(
+      `${word('SetPartition', 0)}, ${word('SetPartition', 1)} are unbound`,
+    );
+    const all = strip(
+      (await page(inCollection(segment('SetPartition', [0, 4], [1, 2])))).page.body.value,
+    );
+    expect(all).not.toContain('unbound');
+  });
+  test('a list prints on one line', async () => {
+    const c = await page(inCollection('Natural', '360'));
+    const text = strip(c.html);
+    expect(text).toContain('[1, 2, 3, 4, 5, 6, 8, 9, 10, 12');
+    expect(text).not.toMatch(/\[ |, \]/);
+  });
+});
 
 describe('a collection, unbound: the counts for the first sizes', () => {
   const cases: [string, (n: number) => string, number[]][] = [
@@ -161,16 +193,16 @@ describe('a collection, bound: the member table', () => {
     expect(asksStarting(c, 'At(DyckPaths(3), ').length).toBe(5);
     // notatio's reference: Area of the step word UUDDUD is 1 (the-step-word-uuddud), of UDUUDD 1.
     expect(valueOf(c, 'At(DyckPaths(3), 3)')).toBe('DyckPath([1, 1, 0, 0, 1, 0])');
-    expect(valueOf(c, 'Area(DyckPath([1, 1, 0, 0, 1, 0]))')).toBe('1');
+    expect(valueOf(c, 'CombinatorialStat(DyckPath([1, 1, 0, 0, 1, 0]), "Area")')).toBe('1');
     expect(valueOf(c, 'At(DyckPaths(3), 4)')).toBe('DyckPath([1, 0, 1, 1, 0, 0])');
-    expect(valueOf(c, 'Area(DyckPath([1, 0, 1, 1, 0, 0]))')).toBe('1');
-    expect(valueOf(c, 'Area(DyckPath([1, 1, 1, 0, 0, 0]))')).toBe('3');
-    expect(valueOf(c, 'Peaks(DyckPath([1, 0, 1, 0, 1, 0]))')).toBe('3');
+    expect(valueOf(c, 'CombinatorialStat(DyckPath([1, 0, 1, 1, 0, 0]), "Area")')).toBe('1');
+    expect(valueOf(c, 'CombinatorialStat(DyckPath([1, 1, 1, 0, 0, 0]), "Area")')).toBe('3');
+    expect(valueOf(c, 'CombinatorialStat(DyckPath([1, 0, 1, 0, 1, 0]), "Peaks")')).toBe('3');
     // Every column the row leads with, for every member.
     const columns = rowByName.get('DyckPath')?.show ?? [];
     expect(columns.length).toBeGreaterThan(0);
     for (const name of columns) {
-      expect(asksStarting(c, `${name}(`).length, name).toBe(5);
+      expect(asksOf(c, name).length, name).toBe(5);
     }
     const members = c.sections.get('members') ?? '';
     for (const name of columns) expect(members).toContain(`>${name}</a>`);
@@ -182,9 +214,9 @@ describe('a collection, bound: the member table', () => {
 
   test('?show= changes the columns, and their order', async () => {
     const c = await page(inCollection(dyckThree), query([queryWords.show, list('Peaks', 'Area')]));
-    expect(asksStarting(c, 'Peaks(').length).toBe(5);
-    expect(asksStarting(c, 'Area(').length).toBe(5);
-    expect(asksStarting(c, 'Bounce(').length).toBe(0);
+    expect(asksOf(c, 'Peaks').length).toBe(5);
+    expect(asksOf(c, 'Area').length).toBe(5);
+    expect(asksOf(c, 'Bounce').length).toBe(0);
     const members = c.sections.get('members') ?? '';
     expect(members.indexOf('>Peaks</a>')).toBeGreaterThan(-1);
     expect(members.indexOf('>Peaks</a>')).toBeLessThan(members.indexOf('>Area</a>'));
@@ -301,7 +333,9 @@ describe('a collection, bound: the member table', () => {
     );
     // The inversions of [1, 2, 3, 4, 8, 6, 5, 7]: (8,6), (8,5), (8,7), (6,5).
     expect(valueOf(c, 'At(Permutations(8), 21)')).toBe('Permutation([1, 2, 3, 4, 8, 6, 5, 7])');
-    expect(valueOf(c, 'Inversions(Permutation([1, 2, 3, 4, 8, 6, 5, 7]))')).toBe('4');
+    expect(
+      valueOf(c, 'CombinatorialStat(Permutation([1, 2, 3, 4, 8, 6, 5, 7]), "Inversions")'),
+    ).toBe('4');
     const members = c.sections.get('members') ?? '';
     expect(sectionText(c, 'members')).toContain(
       `Members ${from} to ${from + windowSize - 1} of 40320`,
@@ -345,14 +379,18 @@ describe('an element by value', () => {
     expect(c.page.replaceWith).toBeUndefined();
     const member = 'Element(Permutation([2, 1, 4, 3]), Permutations(Length([2, 1, 4, 3])))';
     expect(valueOf(c, member)).toBe('True');
-    expect(valueOf(c, 'Inversions(Permutation([2, 1, 4, 3]))')).toBe('2');
-    expect(valueOf(c, 'CycleType(Permutation([2, 1, 4, 3]))')).toBe('IntegerPartition([2, 2])');
-    expect(valueOf(c, 'Inverse(Permutation([2, 1, 4, 3]))')).toBe('Permutation([2, 1, 4, 3])');
+    expect(valueOf(c, 'CombinatorialStat(Permutation([2, 1, 4, 3]), "Inversions")')).toBe('2');
+    expect(valueOf(c, 'CombinatorialMap(Permutation([2, 1, 4, 3]), "CycleType")')).toBe(
+      'IntegerPartition([2, 2])',
+    );
+    expect(valueOf(c, 'CombinatorialMap(Permutation([2, 1, 4, 3]), "Inverse")')).toBe(
+      'Permutation([2, 1, 4, 3])',
+    );
     // One ask for membership, shared by every section.
     expect(asked(c).filter((e) => e === member)).toHaveLength(1);
     // Every property the row leads with was asked.
     for (const name of rowByName.get('Permutation')?.show ?? []) {
-      expect(asksStarting(c, `${name}(`).length, name).toBe(1);
+      expect(asksOf(c, name).length, name).toBe(1);
     }
     expect(sectionText(c, 'membership')).toContain('true');
   });
@@ -363,9 +401,9 @@ describe('an element by value', () => {
     expect(valueOf(c, `IndexOf(DyckPaths(4), ${dyckEpsil})`)).toBe('7');
     expect(valueOf(c, 'At(DyckPaths(4), 6)')).toBe('DyckPath([1, 1, 0, 1, 0, 1, 0, 0])');
     expect(valueOf(c, 'At(DyckPaths(4), 8)')).toBe('DyckPath([1, 1, 0, 0, 1, 1, 0, 0])');
-    expect(valueOf(c, `Area(${dyckEpsil})`)).toBe('2');
-    expect(valueOf(c, `Bounce(${dyckEpsil})`)).toBe('4');
-    expect(valueOf(c, `Peaks(${dyckEpsil})`)).toBe('3');
+    expect(valueOf(c, `CombinatorialStat(${dyckEpsil}, "Area")`)).toBe('2');
+    expect(valueOf(c, `CombinatorialStat(${dyckEpsil}, "Bounce")`)).toBe('4');
+    expect(valueOf(c, `CombinatorialStat(${dyckEpsil}, "Peaks")`)).toBe('3');
     const where = c.sections.get('membership') ?? '';
     expect(strip(where)).toContain('Rank 7');
     // Its rank address, and its neighbors, inside this collection.
@@ -394,6 +432,11 @@ describe('an element by value', () => {
     expect(sectionText(c, 'membership')).toContain('view of an element of the unrestricted');
   });
 
+  test('a member is not flagged as a non-member', async () => {
+    const c = await page(inCollection('Prime', '17'));
+    expect(c.nonMember).toBe(false);
+  });
+
   test('Prime/17 is a view of Natural/17: membership in the primes, and its own canonical link', async () => {
     const c = await page(inCollection('Prime', '17'));
     expect(c.page.canonical).toBe(canonicalOf('Natural', [], '17'));
@@ -406,7 +449,7 @@ describe('an element by value', () => {
     const forbidden = ['FactorInteger(', 'Divisors(', 'IntegerDigits(', 'Factorization('];
     const c = await page(inCollection('Prime', '18'));
     expect(valueOf(c, 'Element(18, PrimeNumbers)')).toBe('False');
-    expect(c.page.canonical).toBe(canonicalOf('Natural', [], '18'));
+    expect(c.nonMember).toBe(true);
     for (const prefix of forbidden) expect(asksStarting(c, prefix), prefix).toEqual([]);
     expect(sectionText(c, 'membership')).toContain('not an element');
     expect(sectionText(c, 'properties')).toContain('not an element');
@@ -420,7 +463,7 @@ describe('an element by value', () => {
         'Element(DyckPath([0, 1, 0, 1]), DyckPaths(Quotient(Length([0, 1, 0, 1]), 2)))',
       ),
     ).toBe('False');
-    expect(asksStarting(path0101, 'Area(')).toEqual([]);
+    expect(asksOf(path0101, 'Area')).toEqual([]);
     expect(sectionText(path0101, 'properties')).toContain('not an element');
 
     const repeated = await page(inCollection('Permutation', ordered(1, 1, 2)));
@@ -428,7 +471,7 @@ describe('an element by value', () => {
       valueOf(repeated, 'Element(Permutation([1, 1, 2]), Permutations(Length([1, 1, 2])))'),
     ).toBe('False');
     for (const name of rowByName.get('Permutation')?.show ?? []) {
-      expect(asksStarting(repeated, `${name}(`), name).toEqual([]);
+      expect(asksOf(repeated, name), name).toEqual([]);
     }
     expect(sectionText(repeated, 'properties')).toContain('not an element');
   });
@@ -436,7 +479,7 @@ describe('an element by value', () => {
   test('an element of the wrong sub-collection says so', async () => {
     const c = await page(inCollection(segment('DyckPath', [0, 3]), dyck));
     expect(valueOf(c, 'Element(' + dyckEpsil + ', DyckPaths(3))')).toBe('False');
-    expect(asksStarting(c, 'Area(')).toEqual([]);
+    expect(asksOf(c, 'Area')).toEqual([]);
     expect(sectionText(c, 'membership')).toContain('not an element');
   });
 
@@ -459,19 +502,19 @@ describe('an element by value', () => {
         'Element(SetPartition([[1, 3], [2], [4]]), SetPartitions(Length(Flatten([[1, 3], [2], [4]])), Length([[1, 3], [2], [4]])))',
       ),
     ).toBe('True');
-    expect(valueOf(sp, 'Blocks(SetPartition([[1, 3], [2], [4]]))')).toBe('3');
+    expect(valueOf(sp, 'CombinatorialStat(SetPartition([[1, 3], [2], [4]]), "Blocks")')).toBe('3');
 
     const ip = await page(inCollection('IntegerPartition', ordered(4, 2, 1)));
-    expect(valueOf(ip, 'PartCount(IntegerPartition([4, 2, 1]))')).toBe('3');
-    expect(valueOf(ip, 'LargestPart(IntegerPartition([4, 2, 1]))')).toBe('4');
+    expect(valueOf(ip, 'CombinatorialStat(IntegerPartition([4, 2, 1]), "PartCount")')).toBe('3');
+    expect(valueOf(ip, 'CombinatorialStat(IntegerPartition([4, 2, 1]), "LargestPart")')).toBe('4');
     expect(ip.page.replaceWith).toBeUndefined();
   });
 
   test('an integer partition’s short form is refused: 421 is one part, and is canonical', async () => {
     const c = await page(inCollection('IntegerPartition', '421'));
     expect(c.page.replaceWith).toBeUndefined();
-    expect(valueOf(c, 'PartCount(IntegerPartition([421]))')).toBe('1');
-    expect(valueOf(c, 'LargestPart(IntegerPartition([421]))')).toBe('421');
+    expect(valueOf(c, 'CombinatorialStat(IntegerPartition([421]), "PartCount")')).toBe('1');
+    expect(valueOf(c, 'CombinatorialStat(IntegerPartition([421]), "LargestPart")')).toBe('421');
     expect(asked(c).some((e) => e.includes('[4, 2, 1]'))).toBe(false);
   });
 
@@ -482,7 +525,10 @@ describe('an element by value', () => {
       const c = await page(inCollection('Permutation', spelled));
       expect(c.page.replaceWith, spelled).toBe(canonical);
       expect(c.page.canonical, spelled).toBe(siteOrigin + canonical);
-      expect(valueOf(c, 'Inversions(Permutation([2, 1, 4, 3]))'), spelled).toBe('2');
+      expect(
+        valueOf(c, 'CombinatorialStat(Permutation([2, 1, 4, 3]), "Inversions")'),
+        spelled,
+      ).toBe('2');
     }
     const already = await page(canonical);
     expect(already.page.replaceWith).toBeUndefined();
@@ -566,8 +612,12 @@ describe('a property chain', () => {
 
   test('through a map: the value, the Epsil, the link back, the result’s own address', async () => {
     const c = await page(`${element}${marks.segment}Inverse${marks.segment}CycleType`);
-    expect(valueOf(c, 'Inverse(Permutation([3, 1, 4, 2]))')).toBe('Permutation([2, 4, 1, 3])');
-    expect(valueOf(c, 'CycleType(Permutation([2, 4, 1, 3]))')).toBe('IntegerPartition([4])');
+    expect(valueOf(c, 'CombinatorialMap(Permutation([3, 1, 4, 2]), "Inverse")')).toBe(
+      'Permutation([2, 4, 1, 3])',
+    );
+    expect(valueOf(c, 'CombinatorialMap(Permutation([2, 4, 1, 3]), "CycleType")')).toBe(
+      'IntegerPartition([4])',
+    );
     // The whole chain, as Epsil, in the lead; the link back to the element.
     expect(c.page.body.value).toContain('CycleType(Inverse(Permutation([3, 1, 4, 2])))');
     expect(c.page.body.value).toContain(`href="${element}"`);
@@ -582,7 +632,9 @@ describe('a property chain', () => {
 
   test('a map alone links to the element it gives', async () => {
     const c = await page(`${element}${marks.segment}Inverse`);
-    expect(valueOf(c, 'Inverse(Permutation([3, 1, 4, 2]))')).toBe('Permutation([2, 4, 1, 3])');
+    expect(valueOf(c, 'CombinatorialMap(Permutation([3, 1, 4, 2]), "Inverse")')).toBe(
+      'Permutation([2, 4, 1, 3])',
+    );
     expect(c.sections.get('value')).toContain(
       `href="${inCollection('Permutation', ordered(2, 4, 1, 3))}"`,
     );
@@ -591,14 +643,14 @@ describe('a property chain', () => {
   test('a statistic: a number, the fact as a resource', async () => {
     // notatio's reference: Inversions of the one-line word 2413 (the-one-line-word-2413).
     const c = await page(inCollection('Permutation', ordered(2, 4, 1, 3), 'Inversions'));
-    expect(valueOf(c, 'Inversions(Permutation([2, 4, 1, 3]))')).toBe('3');
+    expect(valueOf(c, 'CombinatorialStat(Permutation([2, 4, 1, 3]), "Inversions")')).toBe('3');
     expect(strip(valueCell(c) ?? '')).toBe('3');
     expect(c.page.body.value).toContain('Inversions(Permutation([2, 4, 1, 3]))');
   });
 
   test('a statistic of a Dyck path, inside a bound collection', async () => {
     const c = await page(inCollection(segment('DyckPath', [0, 4]), dyck, 'Area'));
-    expect(valueOf(c, `Area(${dyckEpsil})`)).toBe('2');
+    expect(valueOf(c, `CombinatorialStat(${dyckEpsil}, "Area")`)).toBe('2');
     expect(valueOf(c, 'Element(' + dyckEpsil + ', DyckPaths(4))')).toBe('True');
     expect(c.page.canonical).toBe(canonicalOf('DyckPath', [], dyck) + `${marks.segment}Area`);
   });
@@ -606,7 +658,7 @@ describe('a property chain', () => {
   test('a part, indexed from 1 by the next segment', async () => {
     // notatio's reference: Blocks of {1,3} | {2} is 2 (the-partition-1-3-mid-2).
     const two = await page(inCollection('SetPartition', blocks(unordered(1, 3), 2), 'Blocks'));
-    expect(valueOf(two, 'Blocks(SetPartition([[1, 3], [2]]))')).toBe('2');
+    expect(valueOf(two, 'CombinatorialStat(SetPartition([[1, 3], [2]]), "Blocks")')).toBe('2');
   });
 
   test('an index step: FactorInteger/2 of 360', async () => {
@@ -666,7 +718,7 @@ describe('a decline says so: never an empty value, never a zero', () => {
 
   test('SetPartition/…/Blocks/2: Blocks is a count, so there is no second block', async () => {
     const c = await page(inCollection('SetPartition', setPartition, 'Blocks', '2'));
-    expect(valueOf(c, 'Blocks(SetPartition([[1, 3], [2], [4]]))')).toBe('3');
+    expect(valueOf(c, 'CombinatorialStat(SetPartition([[1, 3], [2], [4]]), "Blocks")')).toBe('3');
     expect(answerTo(c, 'At(3, 2)')?.status).toBe('declined');
     const value = c.sections.get('value') ?? '';
     expectDeclined(value);
@@ -748,7 +800,9 @@ describe('/stat', () => {
     expect(c.page.replaceWith).toBe(target);
     expect(c.asked).toEqual([]);
     const there = await page(target);
-    expect(valueOf(there, 'Inversions(Permutation([1, 3, 2, 5, 4]))')).toBe('2');
+    expect(valueOf(there, 'CombinatorialStat(Permutation([1, 3, 2, 5, 4]), "Inversions")')).toBe(
+      '2',
+    );
   });
 
   test('an unknown statistic is not found and not indexed', async () => {
@@ -771,8 +825,12 @@ describe('/map', () => {
     const c = await page(inMap('Inverse', segment('Permutation', [0, 3])));
     expect(valueOf(c, 'Count(Permutations(3))')).toBe('6');
     expect(valueOf(c, 'At(Permutations(3), 4)')).toBe('Permutation([2, 3, 1])');
-    expect(valueOf(c, 'Inverse(Permutation([2, 3, 1]))')).toBe('Permutation([3, 1, 2])');
-    expect(valueOf(c, 'Inverse(Permutation([3, 1, 2]))')).toBe('Permutation([2, 3, 1])');
+    expect(valueOf(c, 'CombinatorialMap(Permutation([2, 3, 1]), "Inverse")')).toBe(
+      'Permutation([3, 1, 2])',
+    );
+    expect(valueOf(c, 'CombinatorialMap(Permutation([3, 1, 2]), "Inverse")')).toBe(
+      'Permutation([2, 3, 1])',
+    );
     const images = c.sections.get('images') ?? '';
     expect(images).toContain(`href="${inCollection('Permutation', ordered(3, 1, 2))}"`);
     expect(images).toContain(`href="${inCollection('Permutation', ordered(2, 3, 1))}"`);
@@ -935,4 +993,117 @@ describe('nothing written in an address becomes part of an asked expression', ()
       await none(inCollection(seg('KSubset', [word('KSubset', 0), piece]), unordered(1, 3)));
     }
   });
+});
+
+// ---------------------------------------------------------------- a property's name is the catalogue's
+
+describe('a property named in the catalogue is asked by its catalogue name first', () => {
+  test('/collection/KSubset;n=5/1,3/Sum is the statistic, not the subset back', async () => {
+    const c = await page(inCollection(segment('KSubset', [0, 5]), unordered(1, 3), 'Sum'));
+    expect(valueOf(c, 'CombinatorialStat(Finset(Tuple(5, [1, 3])), "Sum")')).toBe('4');
+    expect(asksStarting(c, 'Sum(')).toEqual([]);
+    expect(valueCell(c)).toContain('4');
+  });
+
+  test('a head the catalogue does not record is applied bare', async () => {
+    const c = await page(inCollection('Natural', '360', 'FactorInteger'));
+    expect(asksStarting(c, 'CombinatorialStat(')).toEqual([]);
+    expect(answerTo(c, 'FactorInteger(360)')?.status).toBe('value');
+  });
+});
+
+describe('the two routes to a catalogued name agree, or the head declines', () => {
+  // One element of each carrier, and the collection a window of more is taken from.
+  const samples: Record<string, { element: string; window?: string }> = {
+    Permutation: { element: 'Permutation([2, 4, 1, 3])', window: 'Permutations(4)' },
+    DyckPath: { element: 'DyckPath([1, 1, 0, 1, 0, 0, 1, 0])', window: 'DyckPaths(4)' },
+    SetPartition: {
+      element: 'SetPartition([[1, 3], [2], [4]])',
+      window: 'SetPartitions(4)',
+    },
+    IntegerPartition: { element: 'IntegerPartition([4, 2, 1])', window: 'IntegerPartitions(7)' },
+    Finset: { element: 'Finset(Tuple(5, [1, 3]))', window: 'KSubsets(5, 2)' },
+  };
+  const carriers = Object.keys(names.carriers);
+
+  test('every carrier has a sample here', () => {
+    expect(carriers.filter((c) => !(c in samples))).toEqual([]);
+  });
+
+  /** Where the head answers, the catalogue's name on the same element gives the same answer. */
+  async function disagreements(
+    carrier: string,
+    x: string,
+    from: number,
+    to: number,
+  ): Promise<string[]> {
+    const found: string[] = [];
+    const entry = names.carriers[carrier];
+    const heads = [
+      ...(entry?.statistics ?? []).map((n) => [n, 'CombinatorialStat'] as const),
+      ...(entry?.maps ?? []).map((n) => [n, 'CombinatorialMap'] as const),
+    ].slice(from, to);
+    for (const [head, kind] of heads) {
+      const direct = await askKernel(`${head}(${x})`);
+      if (direct.status !== 'value') continue;
+      const named = await askKernel(`${kind}(${x}, "${head}")`);
+      if (named.status !== 'value' || named.epsil !== direct.epsil) {
+        found.push(
+          `${carrier} ${head}(${x}): ${direct.epsil} direct, ${named.epsil ?? named.status} by name`,
+        );
+      }
+    }
+    return found;
+  }
+
+  // A disagreement is a finding for notatio, not worked around here: the page asks the catalogue
+  // first, so it shows the catalogue's answer. Known pairs, each with notatio's open item:
+  // `Finset Sum`: notatio's `Sum` hands a k-subset back unchanged (notatio BL-523).
+  const known = new Set<string>(['Finset Sum']);
+  const unknown = (found: string[]) => found.filter((f) => !known.has(f.split('(')[0] ?? f));
+
+  // An exception outlives its bug only by mistake: once notatio fixes the pair, this fails and the
+  // entry above goes.
+  test('each known disagreement still disagrees', async () => {
+    for (const pair of known) {
+      const [carrier = '', head = ''] = pair.split(' ');
+      const entry = names.carriers[carrier];
+      const kind = entry?.statistics.includes(head) ? 'CombinatorialStat' : 'CombinatorialMap';
+      const x = samples[carrier]?.element ?? '';
+      const direct = await askKernel(`${head}(${x})`);
+      const named = await askKernel(`${kind}(${x}, "${head}")`);
+      expect(
+        direct.status === 'value' && named.status === 'value' && direct.epsil !== named.epsil,
+        pair,
+      ).toBe(true);
+    }
+  });
+  for (const carrier of Object.keys(samples)) {
+    test(`${carrier}: the first few names on one element`, async () => {
+      expect(unknown(await disagreements(carrier, samples[carrier]?.element ?? '', 0, 6))).toEqual(
+        [],
+      );
+    });
+  }
+
+  // The full case: every name on its own, so that each test fits its time, on the sample and on the
+  // first two members of its collection.
+  for (const carrier of Object.keys(samples)) {
+    const entry = names.carriers[carrier];
+    const total = (entry?.statistics.length ?? 0) + (entry?.maps.length ?? 0);
+    for (let at = 0; at < total; at++) {
+      for (const which of [0, 1, 2]) {
+        test.runIf(deep)(`${carrier}: name ${at}, element ${which}`, async () => {
+          const sample = samples[carrier];
+          if (sample === undefined) return;
+          const member =
+            which === 0 ? undefined : await askKernel(`At(${sample.window}, ${which})`);
+          const x =
+            which === 0 ? sample.element : member?.status === 'value' ? member.epsil : undefined;
+          if (x === undefined) return;
+          expect(unknown(await disagreements(carrier, x, at, at + 1))).toEqual([]);
+        });
+      }
+    }
+  }
 });

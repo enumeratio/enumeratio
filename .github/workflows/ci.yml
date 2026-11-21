@@ -37,11 +37,11 @@ jobs:
           repository: enumeratio/notatio
           ref: ${{ steps.pin.outputs.sha }}
           path: .notatio
-      # notatio builds with its own Node version.
+      # notatio builds under the Node it asks for, which `.node-version` names for the whole workflow.
       - if: steps.tarballs.outputs.cache-hit != 'true'
         uses: actions/setup-node@v4
         with:
-          node-version: 26
+          node-version-file: .node-version
       - if: steps.tarballs.outputs.cache-hit != 'true'
         env:
           NOTATIO_DIR: .notatio

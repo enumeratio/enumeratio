@@ -259,6 +259,50 @@ describe('the router', () => {
       expect(document.getElementById('section-definition')?.textContent).toContain('About');
     });
 
+    test('a non-member loses its canonical link and asks not to be indexed once the kernel says so', async () => {
+      const element = path('collection', 'Prime', '18');
+      const { env } = fakeEnv((e) =>
+        e.startsWith('Element(') ? value(e, 'False', 'False') : declined(e),
+      );
+      go(element);
+      stop = start(win, { loadEnv: async () => env });
+      expect(document.head.querySelector('link[rel="canonical"]')).not.toBeNull();
+      await vi.waitFor(() =>
+        expect(document.head.querySelector('meta[name="robots"]')).not.toBeNull(),
+      );
+      expect(document.head.querySelector('link[rel="canonical"]')).toBeNull();
+      expect(document.head.querySelector('meta[name="robots"]')?.getAttribute('content')).toBe(
+        'noindex',
+      );
+    });
+
+    test('a hidden tab never fires an animation frame, and the kernel still starts and fills the page', async () => {
+      const frame = vi.spyOn(win, 'requestAnimationFrame').mockImplementation(() => 0);
+      try {
+        const { env } = fakeEnv((e) => value(e, 77, '77'));
+        const loadEnv = vi.fn(async () => env);
+        go(path('collection', 'DyckPath'));
+        stop = start(win, { loadEnv });
+        expect(frame).toHaveBeenCalled();
+        await vi.waitFor(() => expect(app().querySelector('.pending')).toBeNull());
+        expect(loadEnv).toHaveBeenCalledTimes(1);
+        expect(document.getElementById('section-counts')?.textContent).toContain('77');
+      } finally {
+        frame.mockRestore();
+      }
+    });
+
+    test('a member keeps its canonical link', async () => {
+      const { env } = fakeEnv((e) =>
+        e.startsWith('Element(') ? value(e, 'True', 'True') : declined(e),
+      );
+      go(path('collection', 'Prime', '17'));
+      stop = start(win, { loadEnv: async () => env });
+      await vi.waitFor(() => expect(app().querySelector('.pending')).toBeNull());
+      expect(document.head.querySelector('link[rel="canonical"]')).not.toBeNull();
+      expect(document.head.querySelector('meta[name="robots"]')).toBeNull();
+    });
+
     test('a section that cannot be computed says so, and the other sections still fill', async () => {
       const { env } = fakeEnv((e) => declined(e));
       go(path('collection', 'DyckPath'));

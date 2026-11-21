@@ -57,6 +57,8 @@ export interface Live {
   found: boolean;
   /** The object's own address, when this page is a view of it (§2.2). Path only. */
   object?: Address;
+  /** Resolves true when the kernel finds the element is not a member of the collection it is addressed in: no canonical form then. */
+  nonMember?: (env: Env) => Promise<boolean>;
   /** Where the address moves at once (§3: a statistic's value lives under its element). */
   replaceWith?: Address;
   /** Where the address moves once the kernel has answered (a rank moves to its value). */
@@ -205,7 +207,7 @@ export function chainExpression(element: string, chain: readonly Step[]): string
   return epsil;
 }
 
-/** notatio's own way to apply a recorded statistic or map by name, for a head that does not answer directly. */
+/** notatio's own way to apply a recorded statistic or map by name. */
 function byName(operand: string, step: Step): string | undefined {
   if (step.kind !== 'property' || step.parameters.length > 0) return undefined;
   if (allStatistics.includes(step.name)) return `CombinatorialStat(${operand}, "${step.name}")`;
@@ -213,16 +215,19 @@ function byName(operand: string, step: Step): string | undefined {
   return undefined;
 }
 
-/** Applies one step to a value. The answer carries the expression that was asked. */
+/**
+ * Applies one step to a value. A property's name means the catalogue's statistic or map of that
+ * name on the carrier: that is asked first, and the bare head only when the catalogue records
+ * none (`FactorInteger`, `IntegerDigits`). The answer carries the expression that was asked.
+ */
 export async function applyStep(env: Env, operand: string, step: Step): Promise<Answer> {
-  const direct = stepExpression(operand, step);
-  if (!direct.ok) return { asked: formatStep(step), status: 'declined', reason: direct.reason };
-  const answer = await env.ask(direct.epsil);
-  if (answer.status === 'value') return answer;
   const named = byName(operand, step);
-  if (named === undefined) return answer;
-  const again = await env.ask(named);
-  return again.status === 'value' ? again : answer;
+  if (named === undefined) {
+    const direct = stepExpression(operand, step);
+    if (!direct.ok) return { asked: formatStep(step), status: 'declined', reason: direct.reason };
+    return env.ask(direct.epsil);
+  }
+  return env.ask(named);
 }
 
 interface Placed {
@@ -498,7 +503,12 @@ function pickerLead(row: RouteRow, bound: readonly Binding[]): Safe {
   if (parameters.length === 0) return h`<p class="note">No parameters.</p>`;
   const size = sizeParameter(row);
   const have = new Map(bound.map((b) => [b.word, b.value]));
-  return h`<form class="picker" data-picker="${row.name}">
+  const unbound = parameters.filter((p) => !have.has(p.word));
+  const unboundLine =
+    unbound.length === 0
+      ? ''
+      : h`<p class="note">${unbound.map((p, i) => h`${i > 0 ? ', ' : ''}${code(p.word)}`)} ${unbound.length > 1 ? 'are' : 'is'} unbound, so every value of ${unbound.length > 1 ? 'them' : 'it'} is included: set ${unbound.length > 1 ? 'them' : 'it'} below.</p>`;
+  return h`${unboundLine}<form class="picker" data-picker="${row.name}">
     ${parameters.map(
       (p) =>
         h`<label>${code(p.word)} <input name="${p.word}" inputmode="numeric" pattern="-?[0-9]*" size="4" value="${have.get(p.word) ?? ''}"></label> `,
@@ -833,6 +843,7 @@ function elementPage(row: RouteRow, address: Address): Live {
       object: plan.object,
       lead: h`<p>${whole === undefined ? h`This chain is ${notComputed()}` : h`Computed as ${epsilOf(whole)}`}, on the element ${a(element)}.</p>`,
       sections: [chainSection(row, plan, address, membership)],
+      nonMember: async (env) => refused(await membership(env)),
     };
   }
   return {
@@ -845,6 +856,7 @@ function elementPage(row: RouteRow, address: Address): Live {
       membershipSection(placed, plan, viewed, membership),
       propertiesSection(row, plan, address, membership),
     ],
+    nonMember: async (env) => refused(await membership(env)),
   };
 }
 
