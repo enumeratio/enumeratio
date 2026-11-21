@@ -1,4 +1,17 @@
-import { renderPage } from './pages.ts';
+import type { Env } from './live.ts';
+import { pickerTarget } from './live.ts';
+import { type Page, renderPage, sectionId } from './pages.ts';
+
+export interface StartOptions {
+  /**
+   * Loads what the computed parts of a page ask (the kernel), the first time a
+   * page needs it and after that page's shell is drawn. Without it the
+   * computed parts stay as they were drawn.
+   */
+  loadEnv?: () => Promise<Env>;
+  /** Called with each computed part once it is drawn, for what is added to it afterwards (figures). */
+  decorate?: (drawn: HTMLElement) => void;
+}
 
 export type Win = Window & typeof globalThis;
 
@@ -48,13 +61,52 @@ function scrollToHash(win: Win): boolean {
  * Draws the page for the window's location, and takes over internal link clicks and back/forward.
  * Returns a function that undoes the listeners.
  */
-export function start(win: Win): () => void {
+export function start(win: Win, options: StartOptions = {}): () => void {
   const doc = win.document;
   const app = doc.getElementById('app');
   if (!app) throw new Error('no #app element');
   // Back and forward restore the scroll position themselves.
   win.history.scrollRestoration = 'auto';
   let shown = '';
+  /** Counts the pages drawn, so an answer that arrives after the reader has moved on is dropped. */
+  let drawn = 0;
+  let env: Promise<Env> | undefined;
+
+  /** Fills in the computed parts of the page just drawn, one after another, once the shell has painted. */
+  async function compute(page: Page, turn: number): Promise<void> {
+    if (!options.loadEnv || (!page.sections && !page.moveTo)) return;
+    await new Promise<void>((done) => {
+      if (typeof win.requestAnimationFrame === 'function') win.requestAnimationFrame(() => done());
+      else win.setTimeout(done, 0);
+    });
+    env ??= options.loadEnv();
+    const kernel = await env;
+    if (page.moveTo) {
+      const to = await page.moveTo(kernel);
+      if (turn !== drawn) return;
+      if (to !== undefined && normalized(to, win.location.href) !== shown) {
+        win.history.replaceState(win.history.state, '', new URL(to, win.location.href).href);
+        show('initial');
+        return;
+      }
+    }
+    for (const section of page.sections ?? []) {
+      let body: string;
+      try {
+        body = (await section.run(kernel)).value;
+      } catch (error) {
+        body = '<p class="notice"><span class="declined">not computed</span></p>';
+        console.error(error);
+      }
+      if (turn !== drawn) return;
+      const target = doc.getElementById(sectionId(section.id))?.querySelector('.pending');
+      if (target) {
+        target.outerHTML = `<div class="computed">${body}</div>`;
+        const filled = doc.getElementById(sectionId(section.id));
+        if (filled) options.decorate?.(filled);
+      }
+    }
+  }
 
   /** Reads the location, moves a non-canonical address to its canonical one once, and draws. */
   function show(how: Navigation): void {
@@ -95,6 +147,8 @@ export function start(win: Win): () => void {
       page.noindex,
     );
     (app as HTMLElement).innerHTML = page.body.value;
+    drawn += 1;
+    void compute(page, drawn).catch((error: unknown) => console.error(error));
     if (how === 'pop') return;
     if (!scrollToHash(win) && how === 'push') win.scrollTo(0, 0);
   }
@@ -122,10 +176,26 @@ export function start(win: Win): () => void {
     show('pop');
   };
 
+  /** A parameter picker: its form leads to the collection with the filled-in values bound. */
+  const onSubmit = (event: Event): void => {
+    const form = event.target as HTMLFormElement | null;
+    const name = form?.getAttribute?.('data-picker');
+    if (!form || name === null || name === undefined) return;
+    event.preventDefault();
+    const values = new Map<string, string>();
+    for (const input of form.querySelectorAll('input')) values.set(input.name, input.value);
+    const to = pickerTarget(name, values);
+    if (to === undefined || to === win.location.pathname + win.location.search) return;
+    win.history.pushState(null, '', to);
+    show('push');
+  };
+
+  doc.addEventListener('submit', onSubmit);
   doc.addEventListener('click', onClick);
   win.addEventListener('popstate', onPop);
   show('initial');
   return () => {
+    doc.removeEventListener('submit', onSubmit);
     doc.removeEventListener('click', onClick);
     win.removeEventListener('popstate', onPop);
   };

@@ -1,6 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { areas, formatAddress, marks } from '@enumeratio/address';
+import { notatioData } from '@enumeratio/kernel/data-plugin';
 import type { Plugin } from 'vite-plus';
 import { escapeHtml } from './src/html.ts';
 
@@ -53,6 +54,8 @@ export function prerenderPlugin(): Plugin {
       const server = await createServer({
         root,
         configFile: false,
+        // The pages read notatio's names through this plugin's virtual module.
+        plugins: [notatioData()],
         logLevel: 'silent',
         server: { middlewareMode: true },
         appType: 'custom',

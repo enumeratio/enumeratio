@@ -1,7 +1,10 @@
 // @vitest-environment happy-dom
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vite-plus/test';
 import { areas } from '@enumeratio/address';
-import { path, query } from '../../packages/address/test/build.ts';
+import type { Answer } from '@enumeratio/kernel';
+import { rowByName } from '@enumeratio/routes';
+import { path, query, rank, seg } from '../../packages/address/test/build.ts';
+import { type Env, pickerTarget } from '../src/live.ts';
 import { areaLink, renderPage } from '../src/pages.ts';
 import { start } from '../src/router.ts';
 
@@ -207,6 +210,216 @@ describe('the router', () => {
     expect(canonical()?.getAttribute('href')).toBe(renderPage(about, '').canonical);
     expect(robots()).toBeNull();
     expect(document.title).toBe(renderPage(about, '').title);
+  });
+
+  describe('computed sections', () => {
+    const param = (name: string, index: number): string =>
+      rowByName.get(name)?.parameters?.[index]?.word ?? '';
+    const dyckSizeFour = seg('DyckPath', [param('DyckPath', 0), 4]);
+    // A Dyck path's word runs its digits together (the digits shape).
+    const word = [1, 1, 0, 1, 0, 0, 1, 0];
+    const dyckJson = ['DyckPath', ['List', ...word]];
+
+    /** A kernel that answers every request the same, canned way, and records what it was asked. */
+    function fakeEnv(answer: (epsil: string) => Answer, gate?: Promise<void>) {
+      const asked: string[] = [];
+      const described: string[] = [];
+      const env: Env = {
+        ask: async (epsil) => {
+          asked.push(epsil);
+          await gate;
+          return answer(epsil);
+        },
+        describe: async (name) => {
+          described.push(name);
+          await gate;
+          return `About ${name}.`;
+        },
+      };
+      return { env, asked, described };
+    }
+    const value = (asked: string, json: unknown, epsil: string): Answer => ({
+      asked,
+      status: 'value',
+      json,
+      epsil,
+    });
+    const declined = (asked: string): Answer => ({ asked, status: 'declined', reason: 'canned' });
+
+    test('the router fills a computed section: the placeholder is replaced by the answer', async () => {
+      const { env, asked } = fakeEnv((e) => value(e, 77, '77'));
+      go(path('collection', 'DyckPath'));
+      stop = start(win, { loadEnv: async () => env });
+      expect(app().querySelectorAll('.pending').length).toBeGreaterThan(0);
+      await vi.waitFor(() => expect(app().querySelector('.pending')).toBeNull());
+      expect(app().querySelectorAll('.computed').length).toBeGreaterThan(0);
+      expect(asked.length).toBeGreaterThan(0);
+      const counts = document.getElementById('section-counts');
+      expect(counts?.textContent).toContain('77');
+      expect(document.getElementById('section-definition')?.textContent).toContain('About');
+    });
+
+    test('a section that cannot be computed says so, and the other sections still fill', async () => {
+      const { env } = fakeEnv((e) => declined(e));
+      go(path('collection', 'DyckPath'));
+      stop = start(win, { loadEnv: async () => env });
+      await vi.waitFor(() => expect(app().querySelector('.pending')).toBeNull());
+      expect(document.getElementById('section-counts')?.textContent).toContain('not computed');
+    });
+
+    test('the kernel is not loaded for a page that computes nothing', async () => {
+      const loadEnv = vi.fn(async () => fakeEnv((e) => declined(e)).env);
+      begin(atlas);
+      stop();
+      stop = start(win, { loadEnv });
+      await new Promise((done) => setTimeout(done, 20));
+      expect(loadEnv).not.toHaveBeenCalled();
+    });
+
+    test('an answer that arrives after the reader navigated away is dropped', async () => {
+      let release = () => {};
+      const gate = new Promise<void>((done) => {
+        release = done;
+      });
+      const { env, described } = fakeEnv((e) => value(e, 77, '77'), gate);
+      go(path('collection', 'DyckPath'));
+      stop = start(win, { loadEnv: async () => env });
+      document.addEventListener('click', observe);
+      await vi.waitFor(() => expect(described.length).toBeGreaterThan(0));
+      // The kernel is still working on the first page when the reader leaves it for a page
+      // that has sections with the same ids: a late answer would land in them if it were kept.
+      click(anchor(path('collection', 'Permutation')));
+      expect(headings()).toBe('Permutation');
+      release();
+      await vi.waitFor(() => expect(app().querySelector('.pending')).toBeNull());
+      const definition = document.getElementById('section-definition')?.textContent ?? '';
+      expect(definition).toContain('Permutations');
+      expect(definition).not.toContain('DyckPaths');
+      expect(app().textContent).not.toContain('DyckPaths');
+    });
+
+    test('an answer that arrives after the reader left for a page without sections is dropped', async () => {
+      let release = () => {};
+      const gate = new Promise<void>((done) => {
+        release = done;
+      });
+      const { env, described } = fakeEnv((e) => value(e, 77, '77'), gate);
+      go(path('collection', 'DyckPath'));
+      stop = start(win, { loadEnv: async () => env });
+      document.addEventListener('click', observe);
+      await vi.waitFor(() => expect(described.length).toBeGreaterThan(0));
+      click(anchor(atlas));
+      release();
+      await new Promise((done) => setTimeout(done, 50));
+      expect(headings()).toBe('Atlas');
+      expect(app().querySelector('.computed')).toBeNull();
+    });
+
+    test('a rank address moves once to its value address and redraws', async () => {
+      const { env, asked } = fakeEnv((e) =>
+        e.startsWith('At(')
+          ? value(e, dyckJson, 'DyckPath([1, 1, 0, 1, 0, 0, 1, 0])')
+          : declined(e),
+      );
+      const rankAddress = path('collection', dyckSizeFour, rank(7));
+      go(rankAddress);
+      const replace = vi.spyOn(win.history, 'replaceState');
+      const push = vi.spyOn(win.history, 'pushState');
+      stop = start(win, { loadEnv: async () => env });
+      const target = path('collection', dyckSizeFour, word.join(''));
+      await vi.waitFor(() => expect(win.location.pathname).toBe(target));
+      await vi.waitFor(() => expect(app().querySelector('.pending')).toBeNull());
+      expect(replace).toHaveBeenCalledTimes(1);
+      expect(push).not.toHaveBeenCalled();
+      expect(headings()).toBe(target);
+      // The page that was drawn is the value's: it asked after the element, not only for the rank.
+      expect(asked.some((e) => e.startsWith('Element('))).toBe(true);
+      expect(document.title).toBe(renderPage(target, '').title);
+    });
+
+    test('a rank beyond the collection does not move', async () => {
+      const { env } = fakeEnv((e) => declined(e));
+      const rankAddress = path('collection', dyckSizeFour, rank(9999));
+      go(rankAddress);
+      const replace = vi.spyOn(win.history, 'replaceState');
+      stop = start(win, { loadEnv: async () => env });
+      await vi.waitFor(() => expect(app().querySelector('.pending')).toBeNull());
+      expect(replace).not.toHaveBeenCalled();
+      expect(win.location.pathname).toBe(rankAddress);
+    });
+  });
+
+  describe('the parameter picker', () => {
+    const param = (name: string, index: number): string =>
+      rowByName.get(name)?.parameters?.[index]?.word ?? '';
+
+    function submit(form: HTMLFormElement): void {
+      form.dispatchEvent(new win.Event('submit', { bubbles: true, cancelable: true }));
+    }
+    const picker = (name: string): HTMLFormElement =>
+      document.querySelector(`form[data-picker="${name}"]`) as HTMLFormElement;
+    const fill = (form: HTMLFormElement, word: string, value: string): void => {
+      (form.querySelector(`input[name="${word}"]`) as HTMLInputElement).value = value;
+    };
+
+    test('a submitted form pushes the address of the collection with the values bound', () => {
+      begin(path('collection', 'Permutation'));
+      const push = vi.spyOn(win.history, 'pushState');
+      const form = picker('Permutation');
+      expect(form).not.toBeNull();
+      fill(form, param('Permutation', 0), '4');
+      submit(form);
+      const target = path('collection', seg('Permutation', [param('Permutation', 0), 4]));
+      expect(push).toHaveBeenCalledTimes(1);
+      expect(win.location.pathname).toBe(target);
+      expect(headings()).toBe(`${seg('Permutation', [param('Permutation', 0), 4])}`);
+      expect(pickerTarget('Permutation', new Map([[param('Permutation', 0), '4']]))).toBe(target);
+    });
+
+    test('two parameters are both bound, in the declared order', () => {
+      begin(path('collection', 'SetPartition'));
+      const form = picker('SetPartition');
+      // Filled in the other order on purpose.
+      fill(form, param('SetPartition', 1), '2');
+      fill(form, param('SetPartition', 0), '4');
+      submit(form);
+      expect(win.location.pathname).toBe(
+        path(
+          'collection',
+          seg('SetPartition', [param('SetPartition', 0), 4], [param('SetPartition', 1), 2]),
+        ),
+      );
+    });
+
+    test('a value that is not a point is not bound, and a submit that changes nothing pushes nothing', () => {
+      begin(path('collection', 'Permutation'));
+      const push = vi.spyOn(win.history, 'pushState');
+      const form = picker('Permutation');
+      fill(form, param('Permutation', 0), '4)');
+      submit(form);
+      // Nothing valid was entered: the address is the unbound collection's, which is where it is.
+      expect(push).not.toHaveBeenCalled();
+      expect(win.location.pathname).toBe(path('collection', 'Permutation'));
+      expect(pickerTarget('Permutation', new Map([[param('Permutation', 0), '4)']]))).toBe(
+        path('collection', 'Permutation'),
+      );
+      expect(pickerTarget('Permutation', new Map([[param('Permutation', 0), ' 5 ']]))).toBe(
+        path('collection', seg('Permutation', [param('Permutation', 0), 5])),
+      );
+    });
+
+    test('a form that is not a picker is left alone', () => {
+      begin(atlas);
+      const form = document.createElement('form');
+      app().append(form);
+      const event = new win.Event('submit', { bubbles: true, cancelable: true });
+      form.dispatchEvent(event);
+      expect(event.defaultPrevented).toBe(false);
+    });
+
+    test('a picker for a collection that is none leads nowhere', () => {
+      expect(pickerTarget('Nonesuch', new Map())).toBeUndefined();
+    });
   });
 
   test('a deep address replaces anything drawn into the shell before the script ran', () => {

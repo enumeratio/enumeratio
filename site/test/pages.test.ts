@@ -14,11 +14,16 @@ import {
 } from '../../packages/address/test/build.ts';
 import { siteOrigin } from '../src/config.ts';
 import { tryThese } from '../src/examples.ts';
-import { renderPage } from '../src/pages.ts';
+import { renderPage, sectionId } from '../src/pages.ts';
 
 const page = (p: string, q = '') => renderPage(p, q);
 const text = (p: string, q = '') => page(p, q).body.value;
 const explain = queryWords.explain;
+/** A parameter's word, as the route file declares it. */
+const param = (name: string, index: number): string =>
+  rowByName.get(name)?.parameters?.[index]?.word ?? '';
+/** The ?explain view's query string, as the page links to it. */
+const explained = marks.query + explain;
 
 describe('the pages', () => {
   const fixed = [path(), path('atlas'), path('about'), path('contribute')];
@@ -85,12 +90,35 @@ describe('the pages', () => {
     expect(body).not.toContain(`href="${path('collection', 'Integer')}"`);
   });
 
-  test('a live collection says not yet computed and shows how it was read', () => {
-    const r = page(path('collection', seg('SetPartition', ['size', 4], ['blocks', 2])));
+  test('a live collection has computed sections, and the reading of its address is behind ?explain', () => {
+    const address = path(
+      'collection',
+      seg('SetPartition', [param('SetPartition', 0), 4], [param('SetPartition', 1), 2]),
+    );
+    const r = page(address);
     expect(r.found).toBe(true);
-    expect(r.body.value).toContain('Not yet computed');
-    expect(r.body.value).toContain('How the address was read');
-    expect(r.body.value).toContain('blocks');
+    expect(r.body.value).not.toContain('Not yet computed');
+    // The sections are drawn later, one placeholder each, and the page says what they are.
+    const ids = (r.sections ?? []).map((s) => s.id);
+    expect(ids).toContain('definition');
+    expect(ids).toContain('members');
+    for (const id of ids) expect(r.body.value).toContain(`id="${sectionId(id)}"`);
+    expect(r.body.value).toContain('Computing');
+    // The reading is a view of its own, linked from the page.
+    expect(r.body.value).toContain(`href="${address}${explained}"`);
+    expect(r.body.value).not.toContain('How the address was read</h2>');
+    const view = page(address, explained);
+    expect(view.found).toBe(true);
+    expect(view.sections).toBeUndefined();
+    expect(view.body.value).toContain('How the address was read');
+    expect(view.body.value).toContain(param('SetPartition', 1));
+  });
+
+  test('every live collection has computed sections', () => {
+    for (const row of rows.filter((r) => r.status === 'live')) {
+      const r = page(path('collection', row.name));
+      expect((r.sections ?? []).length, row.name).toBeGreaterThan(0);
+    }
   });
 
   test('a proposed route and a name that is none are not found', () => {
@@ -100,28 +128,47 @@ describe('the pages', () => {
   });
 
   test('a non-canonical address moves to its canonical one, and the canonical link is the object', () => {
-    const moved = page(path('collections', 'dyck-path'), query(['order_by', 'Area']));
-    expect(moved.replaceWith).toBe(path('collection', 'DyckPath') + query(['order_by', 'Area']));
+    const moved = page(path('collections', 'dyck-path'), query([queryWords.orderBy, 'Area']));
+    expect(moved.replaceWith).toBe(
+      path('collection', 'DyckPath') + query([queryWords.orderBy, 'Area']),
+    );
     // the view (the query) is not part of the object
     expect(moved.canonical).toBe(siteOrigin + path('collection', 'DyckPath'));
     const sized = page(path('collection', bare('DyckPath', 4)));
-    expect(sized.replaceWith).toBe(path('collection', seg('DyckPath', ['semilength', 4])));
+    expect(sized.replaceWith).toBe(path('collection', seg('DyckPath', [param('DyckPath', 0), 4])));
     expect(sized.canonical).toBe(siteOrigin + sized.replaceWith);
   });
 
   test('every collection address of the grammar is read: rank, notation, chain, sub-collection', () => {
-    const rankPage = text(path('collection', seg('DyckPath', ['semilength', 4]), rank(7, 'lex')));
+    // The reading of an address is its ?explain view.
+    const rankPage = text(
+      path('collection', seg('DyckPath', [param('DyckPath', 0), 4]), rank(7, 'lex')),
+      explained,
+    );
     expect(rankPage).toContain('by rank');
     const chainPage = text(
       path('collection', 'SetPartition', blocks(unordered(1, 3), 2, 4), 'Blocks', '2'),
+      explained,
     );
     expect(chainPage).toContain('index');
     expect(chainPage).toContain('Blocks');
     // an element seen in a sub-collection names its object's address in the unrestricted one
-    const view = text(path('collection', 'Prime', '17'));
-    expect(view).toContain(`href="${path('collection', 'Natural', '17')}"`);
-    const bound = text(path('collection', seg('Permutation', ['size', 4]), ordered(2, 1, 4, 3)));
-    expect(bound).toContain(`href="${path('collection', 'Permutation', ordered(2, 1, 4, 3))}"`);
+    const viewed = text(path('collection', 'Prime', '17'), explained);
+    expect(viewed).toContain(`href="${path('collection', 'Natural', '17')}"`);
+    expect(page(path('collection', 'Prime', '17')).canonical).toBe(
+      siteOrigin + path('collection', 'Natural', '17'),
+    );
+    const bound = path(
+      'collection',
+      seg('Permutation', [param('Permutation', 0), 4]),
+      ordered(2, 1, 4, 3),
+    );
+    expect(text(bound, explained)).toContain(
+      `href="${path('collection', 'Permutation', ordered(2, 1, 4, 3))}"`,
+    );
+    expect(page(bound).canonical).toBe(
+      siteOrigin + path('collection', 'Permutation', ordered(2, 1, 4, 3)),
+    );
   });
 
   test('?explain shows the reading of any path, the home page included', () => {
@@ -150,7 +197,7 @@ describe('the pages', () => {
       page(path('input', piece), query(['x', piece])),
       page(path('collection', piece)),
       page(path('collection', 'Prime', piece)),
-      page(path('collection', 'DyckPath', piece, 'Area'), query(['show', piece])),
+      page(path('collection', 'DyckPath', piece, 'Area'), query([queryWords.show, piece])),
       page(path('stat', piece)),
       page(path('nonesuch', piece), query([piece, piece])),
     ]);

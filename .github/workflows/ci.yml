@@ -15,19 +15,51 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # Long only when the notatio pin has moved: that run builds notatio once, and the next ones
+    # restore its packed packages from the cache.
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
+      # notatio is a dependency without a registry: its packages are packed from the commit in
+      # notatio.pin and installed from vendor/notatio (tools/notatio). The tarballs are cached
+      # on the pin and on the scripts that make them.
+      - id: pin
+        run: echo "sha=$(cat notatio.pin)" >> "$GITHUB_OUTPUT"
+      - id: tarballs
+        uses: actions/cache@v4
+        with:
+          path: vendor/notatio/tarballs
+          key: notatio-tarballs-${{ steps.pin.outputs.sha }}-${{ hashFiles('tools/notatio/*.ts') }}
+      - if: steps.tarballs.outputs.cache-hit != 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: enumeratio/notatio
+          ref: ${{ steps.pin.outputs.sha }}
+          path: .notatio
+      # notatio builds with its own Node version.
+      - if: steps.tarballs.outputs.cache-hit != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26
+      - if: steps.tarballs.outputs.cache-hit != 'true'
+        env:
+          NOTATIO_DIR: .notatio
+        run: |
+          node tools/notatio/pack.ts
+          rm -rf .notatio
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
           cache: pnpm
+      - run: node tools/notatio/unpack.ts
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec vp check
       - run: pnpm exec tsc -p tsconfig.json
       - run: pnpm exec vp test run
       - run: pnpm --filter @enumeratio/site build
+      # The worker as the build bundled it answers, through notatio's own session client.
+      - run: node site/check-built-worker.ts
       - uses: actions/upload-artifact@v4
         with:
           name: site
