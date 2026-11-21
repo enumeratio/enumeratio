@@ -17,6 +17,7 @@ import {
   queryWords,
   shapes,
 } from '@enumeratio/address';
+import { type Answer, plain, sameJson } from '@enumeratio/kernel';
 import { isServed, rowByName, rows } from '@enumeratio/routes';
 import names from 'virtual:notatio-names';
 import {
@@ -30,7 +31,16 @@ import {
 } from '../../packages/address/test/build.ts';
 import { siteOrigin } from '../src/config.ts';
 import { collectionAddress, firstSizes, sortLimit, windowSize } from '../src/live.ts';
-import { type Computed, askKernel, compute, valueOf } from './harness.ts';
+import { escapeHtml } from '../src/html.ts';
+import {
+  type Computed,
+  askKernelText,
+  compute,
+  isTo,
+  jsonOf,
+  printJson,
+  valueOf,
+} from './harness.ts';
 
 const deep = process.env.DEEP_TESTS === '1';
 
@@ -62,14 +72,33 @@ const strip = (html: string): string =>
     .replaceAll(/\s+/g, ' ')
     .trim();
 const sectionText = (c: Computed, id: string): string => strip(c.sections.get(id) ?? '');
-const answerTo = (c: Computed, epsil: string) => c.asked.find((a) => a.asked === epsil);
+const answerTo = (c: Computed, epsil: string) => c.asked.find((a) => isTo(a, epsil));
 /** The asks that applied the catalogue's statistic or map of this name. */
 const asksOf = (c: Computed, name: string) =>
-  c.asked.filter(
-    (a) => /^Combinatorial(Stat|Map)\(/.test(a.asked) && a.asked.endsWith(`, "${name}")`),
-  );
-const asksStarting = (c: Computed, prefix: string) =>
-  c.asked.filter((a) => a.asked.startsWith(prefix));
+  c.asked.filter((a) => {
+    const question = a.question;
+    return (
+      Array.isArray(question) &&
+      (question[0] === 'CombinatorialStat' || question[0] === 'CombinatorialMap') &&
+      question[2] === `'${name}'`
+    );
+  });
+/**
+ * The asks that began with this head, and, when the prefix names the first operand, with that
+ * operand (`At(DyckPaths(3), `): read as Epsil by notatio's parser, compared as MathJSON.
+ */
+const asksStarting = (c: Computed, prefix: string) => {
+  const open = prefix.indexOf('(');
+  const head = open < 0 ? prefix : prefix.slice(0, open);
+  const rest = open < 0 ? '' : prefix.slice(open + 1).replace(/,\s*$/, '');
+  return c.asked.filter((a) => {
+    const question = a.question;
+    if (!Array.isArray(question) || question[0] !== head) return false;
+    return rest === '' || sameJson(plain(question[1]), jsonOf(rest));
+  });
+};
+/** What a list of answers asked, as MathJSON. */
+const questions = (list: Answer[]): unknown[] => list.map((a) => plain(a.question));
 
 /** A parameter's word, as the route file declares it. */
 function word(name: string, index: number): string {
@@ -155,7 +184,7 @@ describe('a collection, unbound: the counts for the first sizes', () => {
     expect(c.page.found).toBe(true);
     expect(c.page.replaceWith).toBeUndefined();
     // Exactly the counts of the first sizes were asked, and no member.
-    expect(c.asked.map((a) => a.asked)).toEqual(expected.map((_, n) => `Count(${expression(n)})`));
+    expect(questions(c.asked)).toEqual(expected.map((_, n) => jsonOf(`Count(${expression(n)})`)));
     for (const [n, count] of expected.entries()) {
       const answer = answerTo(c, `Count(${expression(n)})`);
       expect(answer?.status, `${name} ${n}`).toBe('value');
@@ -270,7 +299,7 @@ describe('a collection, bound: the member table', () => {
       inCollection(segment('Permutation', [0, 8])),
       query([queryWords.orderBy, 'Inversions']),
     );
-    expect(c.asked.map((a) => a.asked)).toEqual(['Count(Permutations(8))']);
+    expect(questions(c.asked)).toEqual([jsonOf('Count(Permutations(8))')]);
     expect(sectionText(c, 'members')).toContain(`the limit is ${sortLimit}`);
     expectDeclined(c.sections.get('members') ?? '');
   });
@@ -343,8 +372,8 @@ describe('a collection, bound: the member table', () => {
     const at = asksStarting(c, 'At(');
     expect(at.length).toBeGreaterThan(0);
     expect(at.length).toBeLessThanOrEqual(windowSize);
-    expect(at.map((a) => a.asked)).toEqual(
-      Array.from({ length: windowSize }, (_, i) => `At(Permutations(8), ${i + 1})`),
+    expect(questions(at)).toEqual(
+      Array.from({ length: windowSize }, (_, i) => jsonOf(`At(Permutations(8), ${i + 1})`)),
     );
     // notatio: the first permutation is the identity.
     expect(valueOf(c, 'At(Permutations(8), 1)')).toBe('Permutation([1, 2, 3, 4, 5, 6, 7, 8])');
@@ -360,8 +389,8 @@ describe('a collection, bound: the member table', () => {
       query([queryWords.show, 'Inversions'], [queryWords.from, String(from)]),
     );
     const at = asksStarting(c, 'At(');
-    expect(at.map((a) => a.asked)).toEqual(
-      Array.from({ length: windowSize }, (_, i) => `At(Permutations(8), ${from + i})`),
+    expect(questions(at)).toEqual(
+      Array.from({ length: windowSize }, (_, i) => jsonOf(`At(Permutations(8), ${from + i})`)),
     );
     // The inversions of [1, 2, 3, 4, 8, 6, 5, 7]: (8,6), (8,5), (8,7), (6,5).
     expect(valueOf(c, 'At(Permutations(8), 21)')).toBe('Permutation([1, 2, 3, 4, 8, 6, 5, 7])');
@@ -420,7 +449,7 @@ describe('an element by value', () => {
       'Permutation([2, 1, 4, 3])',
     );
     // One ask for membership, shared by every section.
-    expect(asked(c).filter((e) => e === member)).toHaveLength(1);
+    expect(c.asked.filter((a) => isTo(a, member))).toHaveLength(1);
     // Every property the row leads with was asked.
     for (const name of rowByName.get('Permutation')?.show ?? []) {
       expect(asksOf(c, name).length, name).toBe(1);
@@ -611,6 +640,15 @@ describe('an element by rank', () => {
     expect(asksStarting(c, 'At(')).toEqual([]);
   });
 
+  test('a rank in Natural shows the step as notatio’s printer writes it: 7 - 1', async () => {
+    const c = await page(inCollection('Natural', rank(7)));
+    expect(c.asked.map((a) => a.asked)).toContain('7 - 1');
+    expect(c.sections.get('rank')).toContain('<code class="epsil">7 - 1</code>');
+    // No infix logic of the site's own: the page sent MathJSON, and the printer wrote the text.
+    expect(c.asked.map((a) => a.question)).toContainEqual(['Subtract', 7, 1]);
+    expect(await printJson(['Subtract', 7, 1])).toBe('7 - 1');
+  });
+
   test('a rank in Prime moves to the value: @4 is 7', async () => {
     const c = await page(inCollection('Prime', rank(4)));
     expect(c.movedTo).toBe(inCollection('Prime', '7'));
@@ -661,9 +699,9 @@ describe('a property chain', () => {
     expect(valueOf(c, 'CombinatorialMap(Permutation([2, 4, 1, 3]), "CycleType")')).toBe(
       'IntegerPartition([4])',
     );
-    // The whole chain, as Epsil, in the lead; the link back to the element.
-    expect(c.page.body.value).toContain('CycleType(Inverse(Permutation([3, 1, 4, 2])))');
-    expect(c.page.body.value).toContain(`href="${element}"`);
+    // The whole chain, as Epsil, which notatio's printer wrote; the link back to the element.
+    expect(c.sections.get('value')).toContain('CycleType(Inverse(Permutation([3, 1, 4, 2])))');
+    expect(c.sections.get('value')).toContain(`href="${element}"`);
     const value = c.sections.get('value') ?? '';
     // The map's result links to its own address, and the chain goes on from it.
     expect(value).toContain(`href="${inCollection('Permutation', ordered(2, 4, 1, 3))}"`);
@@ -688,7 +726,7 @@ describe('a property chain', () => {
     const c = await page(inCollection('Permutation', ordered(2, 4, 1, 3), 'Inversions'));
     expect(valueOf(c, 'CombinatorialStat(Permutation([2, 4, 1, 3]), "Inversions")')).toBe('3');
     expect(strip(valueCell(c) ?? '')).toBe('3');
-    expect(c.page.body.value).toContain('Inversions(Permutation([2, 4, 1, 3]))');
+    expect(c.sections.get('value')).toContain('Inversions(Permutation([2, 4, 1, 3]))');
   });
 
   test('a statistic of a Dyck path, inside a bound collection', async () => {
@@ -709,7 +747,7 @@ describe('a property chain', () => {
     expect(valueOf(c, 'FactorInteger(360)')).toBe('[(2, 3), (3, 2), (5, 1)]');
     expect(valueOf(c, 'At([(2, 3), (3, 2), (5, 1)], 2)')).toBe('(3, 2)');
     expect(strip(valueCell(c) ?? '')).toContain('(3, 2)');
-    expect(c.page.body.value).toContain('At(FactorInteger(360), 2)');
+    expect(c.sections.get('value')).toContain('FactorInteger(360)[2]');
   });
 
   test('a property with a parameter: IntegerDigits;base=60 of 3811', async () => {
@@ -806,6 +844,48 @@ describe('a statistic and a map link to notatio’s reference page, one per carr
 });
 
 // ---------------------------------------------------------------- statistics
+
+describe('the Epsil a page shows is notatio’s printer’s, for the MathJSON the page sent', () => {
+  const addresses = [
+    inCollection('Natural', rank(7)),
+    inCollection('Prime', rank(4)),
+    inCollection(segment('Permutation', [0, 4])),
+    inCollection('Permutation', ordered(2, 4, 1, 3), 'Inverse', 'CycleType'),
+    inCollection('Natural', '360', 'FactorInteger', '2'),
+    inCollection(segment('Subset', [0, 5]), unordered(1, 3)),
+  ];
+
+  test.each(addresses)('%s', async (address) => {
+    const c = await page(address);
+    expect(c.asked.length).toBeGreaterThan(0);
+    const printed = new Set<string>();
+    for (const a of c.asked) {
+      expect(a.question, a.asked).toBeDefined();
+      expect(a.asked).toBe(await printJson(a.question));
+      printed.add(escapeHtml(a.asked));
+    }
+    for (const p of c.printed) {
+      expect(p.text).toBe(await printJson(p.json));
+      printed.add(escapeHtml(p.text));
+    }
+    // Every expression a section shows (the definition's own text apart) is one the printer wrote
+    // for something the page asked or had printed.
+    for (const [id, html] of c.sections) {
+      if (id === 'definition') continue;
+      for (const [, shownText] of html.matchAll(/<code class="epsil">([^<]*)<\/code>/g)) {
+        expect(printed.has(shownText ?? ''), `${id}: ${shownText}`).toBe(true);
+      }
+    }
+  });
+
+  test('a definition shows the element’s template as the printer writes it', async () => {
+    const c = await page(inCollection('Permutation'));
+    const row = rowByName.get('Permutation');
+    expect(row?.element).toBeDefined();
+    const template = c.sections.get('definition') ?? '';
+    expect(template).toContain('<code class="epsil">Permutation(');
+  });
+});
 
 describe('/stat', () => {
   test('a statistic as a concept: found, the collections it is on, its FindStat identity', async () => {
@@ -1106,9 +1186,9 @@ describe('the two routes to a catalogued name agree, or the head declines', () =
       ...(entry?.maps ?? []).map((n) => [n, 'CombinatorialMap'] as const),
     ].slice(from, to);
     for (const [head, kind] of heads) {
-      const direct = await askKernel(`${head}(${x})`);
+      const direct = await askKernelText(`${head}(${x})`);
       if (direct.status !== 'value') continue;
-      const named = await askKernel(`${kind}(${x}, "${head}")`);
+      const named = await askKernelText(`${kind}(${x}, "${head}")`);
       if (named.status !== 'value' || named.epsil !== direct.epsil) {
         found.push(
           `${carrier} ${head}(${x}): ${direct.epsil} direct, ${named.epsil ?? named.status} by name`,
@@ -1132,8 +1212,8 @@ describe('the two routes to a catalogued name agree, or the head declines', () =
       const entry = names.carriers[carrier];
       const kind = entry?.statistics.includes(head) ? 'CombinatorialStat' : 'CombinatorialMap';
       const x = samples[carrier]?.element ?? '';
-      const direct = await askKernel(`${head}(${x})`);
-      const named = await askKernel(`${kind}(${x}, "${head}")`);
+      const direct = await askKernelText(`${head}(${x})`);
+      const named = await askKernelText(`${kind}(${x}, "${head}")`);
       expect(
         direct.status === 'value' && named.status === 'value' && direct.epsil !== named.epsil,
         pair,
@@ -1159,7 +1239,7 @@ describe('the two routes to a catalogued name agree, or the head declines', () =
           const sample = samples[carrier];
           if (sample === undefined) return;
           const member =
-            which === 0 ? undefined : await askKernel(`At(${sample.window}, ${which})`);
+            which === 0 ? undefined : await askKernelText(`At(${sample.window}, ${which})`);
           const x =
             which === 0 ? sample.element : member?.status === 'value' ? member.epsil : undefined;
           if (x === undefined) return;

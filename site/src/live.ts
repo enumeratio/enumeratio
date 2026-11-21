@@ -2,8 +2,9 @@
  * The computed pages (site map §7). For an address, `live` says, without a
  * kernel, what the page is made of: a lead that is drawn at once, and sections
  * that each ask the kernel for what they show. Every expression asked is built
- * here from the address, the route row and the table of marks, and is Epsil:
- * the mathematics is the kernel's.
+ * here from the address, the route row and the table of marks, and is MathJSON:
+ * the mathematics is the kernel's, and so is the Epsil shown beside an answer
+ * (notatio's printer writes it, in the worker).
  */
 import {
   type Address,
@@ -19,7 +20,8 @@ import {
   queryWords,
 } from '@enumeratio/address';
 import { itemsFromJson, itemsToJson } from '@enumeratio/codecs';
-import type { Answer, Ask, Json } from '@enumeratio/kernel';
+import type { Answer, Ask, AskText, Json, Print } from '@enumeratio/kernel';
+import { integerJson } from '@enumeratio/kernel/cell';
 import {
   collectionExpression,
   collectionHead,
@@ -54,7 +56,12 @@ import {
 } from './reading.ts';
 
 export interface Env {
+  /** Evaluates MathJSON; the answer carries the Epsil that notatio's printer wrote for it. */
   ask: Ask;
+  /** Evaluates what a visitor typed. */
+  askText: AskText;
+  /** MathJSON as Epsil, by notatio's printer (in the worker, on the page). */
+  print: Print;
   /** A sentence for a head, from notatio's records. */
   describe: (name: string) => Promise<string | undefined>;
   /**
@@ -205,15 +212,15 @@ const safeName = /^[A-Za-z][A-Za-z0-9]*$/;
 
 // ---------------------------------------------------------------- expressions
 
-/** The Epsil a step applies to what the chain has reached, or why it cannot be written. */
+/** The MathJSON a step applies to what the chain has reached, or why it cannot be built. */
 export function stepExpression(
-  operand: string,
+  operand: Json,
   step: Step,
-): { ok: true; epsil: string } | { ok: false; reason: string } {
-  if (step.kind === 'index') return { ok: true, epsil: `At(${operand}, ${step.index})` };
+): { ok: true; json: Json } | { ok: false; reason: string } {
+  if (step.kind === 'index') return { ok: true, json: ['At', operand, step.index] };
   if (!safeName.test(step.name)) return { ok: false, reason: `“${step.name}” is not a name.` };
   const declared = names.parameters[step.name] ?? [];
-  const args: string[] = [];
+  const args: Json[] = [];
   const given = new Map(step.parameters.map((p) => [p.word, p.value]));
   for (const word of given.keys()) {
     if (!declared.includes(word)) {
@@ -230,27 +237,32 @@ export function stepExpression(
       return { ok: false, reason: `${step.name} needs “${word}” before the parameters after it.` };
     }
     if (!isPoint(value)) return { ok: false, reason: `“${value}” is not a point value.` };
-    args.push(value);
+    args.push(integerJson(value));
   }
-  return { ok: true, epsil: `${step.name}(${[operand, ...args].join(', ')})` };
+  return { ok: true, json: [step.name, operand, ...args] };
 }
 
-/** The whole chain as one expression, read left to right: `At(Blocks(x), 2)`. */
-export function chainExpression(element: string, chain: readonly Step[]): string | undefined {
-  let epsil = element;
+/** The whole chain as one expression, read left to right: `['At', ['Blocks', x], 2]`. */
+export function chainExpression(element: Json, chain: readonly Step[]): Json | undefined {
+  let json = element;
   for (const step of chain) {
-    const next = stepExpression(epsil, step);
+    const next = stepExpression(json, step);
     if (!next.ok) return undefined;
-    epsil = next.epsil;
+    json = next.json;
   }
-  return epsil;
+  return json;
 }
+
+/** A string in MathJSON. */
+const stringJson = (value: string): Json => `'${value}'`;
 
 /** notatio's own way to apply a recorded statistic or map by name. */
-function byName(operand: string, step: Step): string | undefined {
+function byName(operand: Json, step: Step): Json | undefined {
   if (step.kind !== 'property' || step.parameters.length > 0) return undefined;
-  if (allStatistics.includes(step.name)) return `CombinatorialStat(${operand}, "${step.name}")`;
-  if (allMaps.includes(step.name)) return `CombinatorialMap(${operand}, "${step.name}")`;
+  if (allStatistics.includes(step.name)) {
+    return ['CombinatorialStat', operand, stringJson(step.name)];
+  }
+  if (allMaps.includes(step.name)) return ['CombinatorialMap', operand, stringJson(step.name)];
   return undefined;
 }
 
@@ -259,12 +271,12 @@ function byName(operand: string, step: Step): string | undefined {
  * name on the carrier: that is asked first, and the bare head only when the catalogue records
  * none (`FactorInteger`, `IntegerDigits`). The answer carries the expression that was asked.
  */
-export async function applyStep(env: Env, operand: string, step: Step): Promise<Answer> {
+export async function applyStep(env: Env, operand: Json, step: Step): Promise<Answer> {
   const named = byName(operand, step);
   if (named === undefined) {
     const direct = stepExpression(operand, step);
     if (!direct.ok) return { asked: formatStep(step), status: 'declined', reason: direct.reason };
-    return env.ask(direct.epsil);
+    return env.ask(direct.json);
   }
   return env.ask(named);
 }
@@ -273,8 +285,8 @@ interface Placed {
   row: RouteRow;
   /** The parameters bound in the address. */
   bound: Binding[];
-  /** The collection as addressed, in Epsil, when its parameters determine one. */
-  collection?: string;
+  /** The collection as addressed, in MathJSON, when its parameters determine one. */
+  collection?: Json;
   /** Why there is no expression for the collection. */
   missing: string[];
 }
@@ -284,15 +296,15 @@ function place(row: RouteRow, bound: readonly Binding[]): Placed {
   if (bad) return { row, bound: [...bound], missing: [bad.word] };
   const expressed = collectionExpression(row, givenOf(bound));
   return expressed.ok
-    ? { row, bound: [...bound], collection: expressed.epsil, missing: [] }
+    ? { row, bound: [...bound], collection: expressed.json, missing: [] }
     : { row, bound: [...bound], missing: expressed.missing };
 }
 
 interface ElementPlan {
-  /** The element in Epsil. */
-  epsil: string;
+  /** The element, in MathJSON. */
+  element: Json;
   /** The collection the element is tested against: what the address binds, and what the element itself determines. */
-  home?: string;
+  home?: Json;
   /** The object's own address: its unrestricted collection, with only what it cannot be written without. */
   object: Address;
 }
@@ -309,8 +321,8 @@ function planElement(placed: Placed, address: Address): ElementPlan | { missing:
   const identity = identityParameters(row);
   const value = address.element?.kind === 'value' ? address.element.value : '';
   return {
-    epsil: expressed.epsil,
-    ...(home.ok ? { home: home.epsil } : {}),
+    element: expressed.json,
+    ...(home.ok ? { home: home.json } : {}),
     object: {
       ...collectionAddress(
         unrestrictedCollection(row.name),
@@ -339,7 +351,7 @@ function countsSection(row: RouteRow, bound: readonly Binding[]): Section | unde
       for (let n = 0; n < firstSizes; n++) {
         const expressed = collectionExpression(row, givenOf(at(n)));
         if (!expressed.ok) continue;
-        const answer = await ask(`Count(${expressed.epsil})`);
+        const answer = await ask(['Count', expressed.json]);
         cells.push(
           h`<tr><td>${a(collectionAddress(row.name, sorted(row, at(n))), String(n))}</td><td>${shown(answer)}</td></tr>`,
         );
@@ -362,7 +374,11 @@ const countOf = (answer: Answer): number | undefined =>
     : undefined;
 
 /** The answer to a question a page did not need to ask: it says why, and is a decline. */
-const unasked = (asked: string, reason: string): Answer => ({ asked, status: 'declined', reason });
+const unasked = async (env: Env, question: Json, reason: string): Promise<Answer> => ({
+  asked: await env.print(question),
+  status: 'declined',
+  reason,
+});
 
 const indexedByAsk = new WeakMap<Ask, Map<string, Promise<boolean>>>();
 
@@ -372,12 +388,13 @@ const indexedByAsk = new WeakMap<Ask, Map<string, Promise<boolean>>>();
  * error, and the engine logs a compilation fallback for it. A type the kernel will not tell is
  * not indexed.
  */
-function isIndexed(env: Env, collection: string): Promise<boolean> {
+function isIndexed(env: Env, collection: Json): Promise<boolean> {
   let byCollection = indexedByAsk.get(env.ask);
   if (!byCollection) indexedByAsk.set(env.ask, (byCollection = new Map()));
-  let found = byCollection.get(collection);
+  const key = JSON.stringify(collection);
+  let found = byCollection.get(key);
   if (!found) {
-    found = env.ask(`Type(${collection})`).then((answer) => {
+    found = env.ask(['Type', collection]).then((answer) => {
       const type =
         Array.isArray(answer.json) && answer.json[0] === 'TypeFrom' ? answer.json[1] : '';
       return (
@@ -386,7 +403,7 @@ function isIndexed(env: Env, collection: string): Promise<boolean> {
         /\b(indexed_collection|list)\b/.test(type)
       );
     });
-    byCollection.set(collection, found);
+    byCollection.set(key, found);
   }
   return found;
 }
@@ -397,20 +414,15 @@ function isIndexed(env: Env, collection: string): Promise<boolean> {
  * collection's own `At` is never asked. For a row without one, `At` is asked when the
  * collection's type is indexed. The answer carries the expression that was asked.
  */
-async function elementAt(
-  env: Env,
-  row: RouteRow,
-  collection: string,
-  rank: number,
-): Promise<Answer> {
+async function elementAt(env: Env, row: RouteRow, collection: Json, rank: number): Promise<Answer> {
   const kth = kthExpression(row, rank);
-  const asked = kth ?? `At(${collection}, ${rank})`;
-  if (rank < 1) return unasked(asked, 'Ranks count from 1.');
+  const question = kth ?? ['At', collection, rank];
+  if (rank < 1) return unasked(env, question, 'Ranks count from 1.');
   if (kth !== undefined) return env.ask(kth);
   if (!(await isIndexed(env, collection))) {
-    return unasked(asked, 'The kernel does not index this collection.');
+    return unasked(env, question, 'The kernel does not index this collection.');
   }
-  return env.ask(asked);
+  return env.ask(question);
 }
 
 /**
@@ -421,11 +433,11 @@ async function elementAt(
 async function rankOf(
   env: Env,
   row: RouteRow,
-  collection: string,
-  element: string,
+  collection: Json,
+  element: Json,
 ): Promise<{ rank: number | undefined; reason?: string }> {
   if (row.kth === undefined) {
-    const asked = `IndexOf(${collection}, ${element})`;
+    const asked = ['IndexOf', collection, element];
     if (!(await isIndexed(env, collection))) {
       return { rank: undefined, reason: 'The kernel does not index this collection.' };
     }
@@ -459,16 +471,16 @@ function membersSection(placed: Placed, address: Address): Section | undefined {
     id: 'members',
     title: 'Members',
     run: async (env) => {
-      const count = await env.ask(`Count(${collection})`);
+      const count = await env.ask(['Count', collection]);
       const total = countOf(count);
-      const head = h`<p>${epsilOf(`Count(${collection})`)} is ${shown(count)}.</p>`;
+      const head = h`<p>${epsilOf(count.asked)} is ${shown(count)}.</p>`;
       const row$ = async (rank: number): Promise<{ element: Answer; cells: Answer[] }> => {
         const element = await elementAt(env, row, collection, rank);
         const cells: Answer[] = [];
         for (const name of columns) {
           cells.push(
-            element.status === 'value' && element.epsil !== undefined
-              ? await applyStep(env, element.epsil, property(name))
+            element.status === 'value'
+              ? await applyStep(env, element.json, property(name))
               : { asked: name, status: 'declined', reason: 'There is no element to apply it to.' },
           );
         }
@@ -543,7 +555,7 @@ function groupSection(placed: Placed, address: Address): Section | undefined {
           if (!expressed.ok) {
             return h`<p class="notice">Grouping by ${code(by)} also needs ${expressed.missing.map((m) => code(m))} bound. ${notComputed()}</p>`;
           }
-          const answer = await ask(`Count(${expressed.epsil})`);
+          const answer = await ask(['Count', expressed.json]);
           const n = countOf(answer);
           if (n === 0 && seen) break;
           if (n !== 0) seen = seen || n !== undefined;
@@ -568,13 +580,14 @@ function groupSection(placed: Placed, address: Address): Section | undefined {
 }
 
 /** The distribution of a statistic over a collection: `Tally(CombinatorialStat(collection, "Name"))`. */
-function distributionSection(collection: string, statistic: string, title: string): Section {
-  const epsil = `Tally(CombinatorialStat(${collection}, "${statistic}"))`;
+function distributionSection(collection: Json, statistic: string, title: string): Section {
+  const question = ['Tally', ['CombinatorialStat', collection, stringJson(statistic)]];
   return {
     id: 'groups',
     title,
     run: async ({ ask }) => {
-      const answer = await ask(epsil);
+      const answer = await ask(question);
+      const epsil = answer.asked;
       const parts = Array.isArray(answer.json) ? answer.json : [];
       const values = itemsFromJson(parts[1]);
       const counts = itemsFromJson(parts[2]);
@@ -678,18 +691,18 @@ function definitionSection(row: RouteRow): Section {
     run: async (env) => {
       const name = collectionHead(row);
       const sentence = name === undefined ? undefined : await env.describe(name);
+      const template = row.element ? elementTemplate(row) : undefined;
       return h`${sentence ? sentenceParagraph(env, sentence) : h`<p class="note">notatio records no sentence for this collection.</p>`}
-      <p>In Epsil: ${epsilOf(row.expression ?? '')}; one element is ${row.element ? epsilOf(templateText(row)) : notComputed()}.</p>`;
+      <p>In Epsil: ${epsilOf(row.expression ?? '')}; one element is ${template === undefined ? notComputed() : epsilOf(await env.print(template))}.</p>`;
     },
   };
 }
 
-const templateText = (row: RouteRow): string => elementExpressionText(row) ?? '';
-
-function elementExpressionText(row: RouteRow): string | undefined {
+/** One element of the row over its parameters and `x`, as MathJSON: the template the kernel prints. */
+function elementTemplate(row: RouteRow): Json | undefined {
   const all = (row.parameters ?? []).map((p) => ({ word: p.word, json: p.word }));
   const expressed = elementExpression(row, all, valueVariable);
-  return expressed.ok ? expressed.epsil : undefined;
+  return expressed.ok ? expressed.json : undefined;
 }
 
 function collectionPage(row: RouteRow, address: Address): Live {
@@ -734,8 +747,10 @@ function membershipOf(placed: Placed, plan: ElementPlan): Membership {
   let asked: Promise<{ epsil: string; answer: Answer }> | undefined;
   return async (env) => {
     if (home === undefined) return undefined;
-    const epsil = `Element(${plan.epsil}, ${home})`;
-    asked ??= env.ask(epsil).then((answer) => ({ epsil, answer }));
+    asked ??= env.ask(['Element', plan.element, home]).then((answer) => ({
+      epsil: answer.asked,
+      answer,
+    }));
     return asked;
   };
 }
@@ -778,9 +793,10 @@ function membershipSection(
         (placed.bound.length > 0 || row.kth !== undefined) &&
         !refused(found)
       ) {
-        const { rank: n, reason } = await rankOf(env, row, collection, plan.epsil);
+        const { rank: n, reason } = await rankOf(env, row, collection, plan.element);
+        const printed = await env.print(collection);
         if (n === undefined || n < 1) {
-          parts.push(h`<p>Its rank in ${epsilOf(collection)} is ${notComputed(reason)}.</p>`);
+          parts.push(h`<p>Its rank in ${epsilOf(printed)} is ${notComputed(reason)}.</p>`);
         } else {
           const neighbour = async (at: number): Promise<Safe> => {
             if (at < 1) return h`<span class="none">none (it is the first)</span>`;
@@ -790,7 +806,7 @@ function membershipSection(
             return own ? a(own) : shown(answer);
           };
           parts.push(
-            h`<p>Rank ${n} in ${epsilOf(collection)} (${a({ ...collectionAddress(row.name, placed.bound), element: { kind: 'rank', rank: n } })}). Before it: ${await neighbour(n - 1)}. After it: ${await neighbour(n + 1)}.</p>`,
+            h`<p>Rank ${n} in ${epsilOf(printed)} (${a({ ...collectionAddress(row.name, placed.bound), element: { kind: 'rank', rank: n } })}). Before it: ${await neighbour(n - 1)}. After it: ${await neighbour(n + 1)}.</p>`,
           );
         }
       }
@@ -827,7 +843,7 @@ function propertiesSection(
       const lines: Safe[] = [];
       for (const name of list) {
         const step = property(name);
-        const answer = await applyStep(env, plan.epsil, step);
+        const answer = await applyStep(env, plan.element, step);
         const own = { ...address, chain: [step], query: [] };
         lines.push(
           h`<tr id="${name}"><td>${a(own, name)}</td><td>${shown(answer)}</td><td>${epsilOf(answer.asked)}</td></tr>`,
@@ -841,12 +857,11 @@ function propertiesSection(
 /** `?show=all`: every statistic and map notatio records for the element. */
 export const showAll = 'all';
 
-function elementLead(row: RouteRow, plan: ElementPlan, address: Address): Safe {
+function elementLead(row: RouteRow, address: Address): Safe {
   const statistics = statisticsOf(row);
   const maps = mapsOf(row);
   const under = (name: string): Safe => a({ ...address, chain: [property(name)], query: [] }, name);
-  return h`<p>In Epsil: ${epsilOf(plan.epsil)}</p>
-  ${
+  return h`${
     statistics.length + maps.length === 0
       ? ''
       : h`<details><summary>${statistics.length} statistics, ${maps.length} maps</summary>
@@ -860,8 +875,9 @@ function figureSection(plan: ElementPlan): Section {
     id: 'element',
     title: 'The element',
     run: async ({ ask }) => {
-      const answer = await ask(plan.epsil, { holds: true });
-      return h`<p>${answer.status === 'value' ? h`<span class="figure" data-figure="${JSON.stringify(answer.json)}"></span>${code(textOf(answer) ?? '')}` : notComputed(answer.reason)}</p>`;
+      const answer = await ask(plan.element, { holds: true });
+      return h`<p>In Epsil: ${epsilOf(answer.asked)}</p>
+      <p>${answer.status === 'value' ? h`<span class="figure" data-figure="${JSON.stringify(answer.json)}"></span>${code(textOf(answer) ?? '')}` : notComputed(answer.reason)}</p>`;
     },
   };
 }
@@ -880,7 +896,7 @@ function chainSection(
         return notAnElement(row, address.collection?.parameters ?? []);
       }
       const lines: Safe[] = [];
-      let operand: string | undefined = plan.epsil;
+      let operand: Json | undefined = plan.element;
       let last: Answer | undefined;
       for (const [i, step] of address.chain.entries()) {
         const answer: Answer =
@@ -895,11 +911,13 @@ function chainSection(
         lines.push(
           h`<tr><td>${a(here, formatStep(step))}</td><td>${shown(answer)}</td><td>${epsilOf(answer.asked)}</td></tr>`,
         );
-        operand = answer.status === 'value' ? answer.epsil : undefined;
+        operand = answer.status === 'value' ? answer.json : undefined;
         last = answer;
       }
       const own = last?.status === 'value' ? addressOfJson(last.json) : undefined;
-      return h`<p class="value">${last ? shown(last) : notComputed()}</p>
+      const whole = chainExpression(plan.element, address.chain);
+      return h`<p>${whole === undefined ? h`This chain is ${notComputed()}` : h`Computed as ${epsilOf(await env.print(whole))}`}, on the element ${a({ ...address, chain: [], query: [] })}.</p>
+      <p class="value">${last ? shown(last) : notComputed()}</p>
       ${own ? h`<p>The result is an object with its own address, ${a(own)}; the chain continues through it.</p>` : ''}
       <table><thead><tr><th>step</th><th>value</th><th>Epsil</th></tr></thead><tbody>${lines}</tbody></table>`;
     },
@@ -920,7 +938,7 @@ function elementPage(row: RouteRow, address: Address): Live {
       lead:
         collection === undefined || named
           ? h`<p class="notice">${named ? h`notatio offers each collection in one order; the order ${code(el.order ?? '')} is ${notComputed()}.` : h`A rank needs a collection the kernel can list: bind its parameters. ${notComputed()}`}</p>`
-          : h`<p>The element at rank ${el.rank} of ${epsilOf(collection)}. A rank address moves to the value’s address.</p>`,
+          : h`<p>The element at rank ${el.rank} of this collection. A rank address moves to the value’s address.</p>`,
       sections: [],
       ...(collection === undefined || named
         ? {}
@@ -966,13 +984,11 @@ function elementPage(row: RouteRow, address: Address): Live {
   const viewed = link(plan.object) !== link({ ...address, query: [] });
   const membership = membershipOf(placed, plan);
   if (address.chain.length > 0) {
-    const whole = chainExpression(plan.epsil, address.chain);
-    const element = { ...address, chain: [], query: [] };
     return {
       title,
       found: true,
       object: plan.object,
-      lead: h`<p>${whole === undefined ? h`This chain is ${notComputed()}` : h`Computed as ${epsilOf(whole)}`}, on the element ${a(element)}.</p>`,
+      lead: h``,
       sections: [chainSection(row, plan, address, membership)],
       nonMember: async (env) => refused(await membership(env)),
     };
@@ -981,7 +997,7 @@ function elementPage(row: RouteRow, address: Address): Live {
     title,
     found: true,
     object: plan.object,
-    lead: elementLead(row, plan, address),
+    lead: elementLead(row, address),
     sections: [
       figureSection(plan),
       membershipSection(placed, plan, viewed, membership),
@@ -1097,18 +1113,18 @@ function conceptPage(area: string, address: Address): Live | undefined {
         id: 'images',
         title: 'Images',
         run: async (env) => {
-          const total = countOf(await env.ask(`Count(${collection})`));
+          const total = countOf(await env.ask(['Count', collection]));
           const last = Math.min(total ?? windowSize, windowSize);
           const lines: Safe[] = [];
           for (let rank = 1; rank <= last; rank++) {
             const element = await elementAt(env, row, collection, rank);
             const image =
-              element.status === 'value' && element.epsil !== undefined
-                ? await applyStep(env, element.epsil, property(subject))
+              element.status === 'value'
+                ? await applyStep(env, element.json, property(subject))
                 : element;
             lines.push(h`<tr><td>${shown(element)}</td><td>${shown(image)}</td></tr>`);
           }
-          return h`<p class="note">The first ${last}${total === undefined ? '' : ` of ${total}`} members of ${epsilOf(collection)}.</p>
+          return h`<p class="note">The first ${last}${total === undefined ? '' : ` of ${total}`} members of ${epsilOf(await env.print(collection))}.</p>
           <table><thead><tr><th>element</th><th>${code(subject)}</th></tr></thead><tbody>${lines}</tbody></table>`;
         },
       });
@@ -1140,9 +1156,9 @@ function inputPage(address: Address): Live {
       {
         id: 'value',
         title: 'Result',
-        run: async ({ ask }) => {
-          // A constructor stands as written: that is a value when it is a catalogued element, a decline otherwise.
-          const answer = await ask(expression);
+        run: async ({ askText }) => {
+          // What the visitor typed goes to notatio's parser as text. A constructor stands as written: that is a value when it is a catalogued element, a decline otherwise.
+          const answer = await askText(expression);
           if (answer.status === 'error') {
             return h`<p class="notice">The kernel could not read or evaluate this: ${answer.reason ?? ''} ${notComputed()}</p>`;
           }

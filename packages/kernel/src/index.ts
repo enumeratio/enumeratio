@@ -10,8 +10,13 @@ export type Json = unknown;
 export const askTimeMs = 5000;
 
 export interface Answer {
-  /** The Epsil text that was asked. */
+  /**
+   * The Epsil that was asked: written by notatio's printer in the kernel, from the MathJSON the
+   * page sent (or, for what a visitor typed, the text as typed). Nothing here writes Epsil.
+   */
   asked: string;
+  /** The MathJSON the page sent, as it sent it; absent for what a visitor typed. */
+  question?: Json;
   /**
    * `value`: the kernel answered. `declined`: it left the expression as it was
    * asked, or ran out of time; a page says "not computed" and never shows an
@@ -29,8 +34,25 @@ export interface Answer {
   reason?: string;
 }
 
-/** Evaluates Epsil text. Never rejects: a failure is an answer with a status. */
-export type Ask = (epsil: string, options?: AskOptions) => Promise<Answer>;
+/** Evaluates MathJSON. Never rejects: a failure is an answer with a status. */
+export type Ask = (json: Json, options?: AskOptions) => Promise<Answer>;
+
+/** Evaluates the text a visitor typed (Epsil, read by notatio's parser). Never rejects. */
+export type AskText = (text: string, options?: AskOptions) => Promise<Answer>;
+
+/** MathJSON as Epsil, written by notatio's own InputForm printer, as one line. Never rejects. */
+export type Print = (json: Json) => Promise<string>;
+
+/** What a page has of its kernel. */
+export interface Kernel {
+  ask: Ask;
+  askText: AskText;
+  print: Print;
+}
+
+/** A printer's reply as text: one line, or the MathJSON itself when the printer declined. */
+export const printedAs = (json: Json, written: string | undefined): string =>
+  written === undefined ? JSON.stringify(json) : oneLine(written);
 
 export interface AskOptions {
   /** The expression is expected to stand as written (an element's constructor): not a decline. */

@@ -19,7 +19,7 @@ async function searchRow(name: string, target: number) {
   if (!row) throw new Error(`no row ${name}`);
   const started = Date.now();
   const found = await searchRank(async (k) => {
-    const answer = await askKernel(kthExpression(row, k) as string);
+    const answer = await askKernel(kthExpression(row, k));
     return typeof answer.json === 'number' ? answer.json : undefined;
   }, target);
   return { ...found, ms: Date.now() - started };
@@ -27,8 +27,8 @@ async function searchRow(name: string, target: number) {
 
 beforeAll(async () => {
   // The libraries load on the first request that names one of their heads: setup, not a test.
-  await askKernel('NthPrime(1)');
-  await askKernel('Element(2, PrimeNumbers)');
+  await askKernel(['NthPrime', 1]);
+  await askKernel(['Element', 2, 'PrimeNumbers']);
 });
 
 describe('the bounded rank search, with members it is given', () => {

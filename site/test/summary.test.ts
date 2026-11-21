@@ -14,8 +14,20 @@ const definitionOf = async (name: string, env: Partial<Env>): Promise<string> =>
   const page = renderPage(path(areas.collection, name), '');
   const section = page.sections?.find((s) => s.id === 'definition');
   if (!section) throw new Error('no definition section');
-  const ask: Env['ask'] = async (epsil) => ({ asked: epsil, status: 'declined', reason: 'none' });
-  return (await section.run({ ask, describe: async (n) => descriptions[n], ...env })).value;
+  const ask: Env['ask'] = async (json) => ({
+    asked: JSON.stringify(json),
+    status: 'declined',
+    reason: 'none',
+  });
+  const askText: Env['askText'] = async (text) => ({
+    asked: text,
+    status: 'declined',
+    reason: 'none',
+  });
+  const print: Env['print'] = async (json) => JSON.stringify(json);
+  return (
+    await section.run({ ask, askText, print, describe: async (n) => descriptions[n], ...env })
+  ).value;
 };
 
 test('SetPartition: the definition is KaTeX markup and has no $', async () => {

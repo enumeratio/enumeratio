@@ -56,28 +56,48 @@ function createWorker(): WorkerLike {
   return like;
 }
 
-const expected: [string, string][] = [
-  ['Area(DyckPath([1, 1, 0, 1, 0, 0, 1, 0]))', '2'],
-  ['CycleType(Inverse(Permutation([3, 1, 4, 2])))', '["IntegerPartition",["List",4]]'],
-  ['Count(KSubsets(5, 2))', '10'],
-  ['FactorInteger(360)', '["List",["Tuple",2,3],["Tuple",3,2],["Tuple",5,1]]'],
-  ['Factorization(360)', '["Factorization",["Tuple",["List",2,3,5],["List",3,2,1]]]'],
+// What the page sends (MathJSON), what the worker's printer writes for it, and the known value.
+const expected: [unknown, string, string][] = [
+  [
+    ['Area', ['DyckPath', ['List', 1, 1, 0, 1, 0, 0, 1, 0]]],
+    'Area(DyckPath([1, 1, 0, 1, 0, 0, 1, 0]))',
+    '2',
+  ],
+  [
+    ['CycleType', ['Inverse', ['Permutation', ['List', 3, 1, 4, 2]]]],
+    'CycleType(Inverse(Permutation([3, 1, 4, 2])))',
+    '["IntegerPartition",["List",4]]',
+  ],
+  [['Count', ['KSubsets', 5, 2]], 'Count(KSubsets(5, 2))', '10'],
+  [
+    ['FactorInteger', 360],
+    'FactorInteger(360)',
+    '["List",["Tuple",2,3],["Tuple",3,2],["Tuple",5,1]]',
+  ],
+  [
+    ['Factorization', 360],
+    'Factorization(360)',
+    '["Factorization",["Tuple",["List",2,3,5],["List",3,2,1]]]',
+  ],
+  [['Subtract', 7, 1], '7 - 1', '6'],
 ];
 
 const session = openSession({ createWorker, spawnTimeoutMs: 60000 });
 let bad = 0;
 try {
-  for (const [text, want] of expected) {
+  for (const [json, text, want] of expected) {
     const started = Date.now();
-    const answer = await session.evaluate(undefined, {
-      source: { text, format: 'epsil' },
-      timeMs: 30000,
-    });
+    const written = await session.evaluate(json, { write: 'epsil' });
+    const answer = await session.evaluate(json, { timeMs: 30000 });
     const got = JSON.stringify(answer.value);
-    const ok = got === want && answer.error === undefined;
+    const ok =
+      got === want &&
+      answer.error === undefined &&
+      written.error === undefined &&
+      written.written === text;
     if (!ok) bad++;
     console.log(
-      `${ok ? 'ok  ' : 'FAIL'} ${text} -> ${got}${answer.error ? ` (${answer.error})` : ''} (${Date.now() - started} ms)`,
+      `${ok ? 'ok  ' : 'FAIL'} ${text} (printed ${JSON.stringify(written.written)}) -> ${got}${answer.error ? ` (${answer.error})` : ''} (${Date.now() - started} ms)`,
     );
   }
 } finally {
