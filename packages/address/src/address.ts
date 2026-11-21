@@ -15,6 +15,7 @@ import {
   marks,
   namedAreas,
   nameSeparators,
+  pathExtras,
   readAlsoAs,
   shapes,
   valueExtras,
@@ -165,7 +166,13 @@ export function encodePiece(text: string): string {
   return encodeWith(text, valueSafe);
 }
 
-const noSafe: ReadonlySet<string> = new Set();
+const pathSafe: ReadonlySet<string> = new Set(pathExtras);
+
+/** An expression: every character a segment may hold raw, the rest encoded. */
+function encodeExpression(text: string): string {
+  if (dotSegments.includes(text)) return [...text].map(percent).join('');
+  return encodeWith(text, pathSafe);
+}
 
 function encodeQueryPiece(text: string): string {
   return encodeWith(text, new Set([marks.queryList, marks.ordered, marks.negative, marks.decimal]));
@@ -227,7 +234,7 @@ export function formatPath(address: Address): string {
   if (address.collection) parts.push(formatSegment(address.collection));
   if (address.element) parts.push(formatElement(address.element));
   for (const step of address.chain) parts.push(formatStep(step));
-  if (address.expression !== undefined) parts.push(encodeWith(address.expression, noSafe));
+  if (address.expression !== undefined) parts.push(encodeExpression(address.expression));
   for (const r of address.rest ?? []) parts.push(encodePiece(r));
   return marks.segment + parts.join(marks.segment);
 }
