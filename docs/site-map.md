@@ -1,6 +1,6 @@
 # enumeratio.dev: the site map
 
-> **Draft 3.2, 2026-11-21.** A first pass is being built from this draft (§9). The structure of an address (what each position means) is settled enough to build on; the exact characters (separators, parameter words) are provisional and are expected to change as the site is used. Nothing is promised permanent until the site is announced (§6).
+> **Draft 3.3, 2026-11-21.** A first pass is being built from this draft (§9). The structure of an address (what each position means) is settled enough to build on; the exact characters (separators, parameter words) are provisional and are expected to change as the site is used. Nothing is promised permanent until the site is announced (§6).
 >
 > Decided (2026-11-20): a new repository (`enumeratio/enumeratio`); a clean slate at enumeratio.dev; every implementation in Epsil on compute-engine, drawn with notatio; the earlier codebases are mined, not revived; no npm publishing yet; a parameter is written with the collection's own word, with `n` read as an alias for its size.
 
@@ -41,6 +41,7 @@ Every prefix is a page: `/collection`, `/collection/DyckPath`, `/collection/Dyck
 - **`n` is read everywhere** as an alias for a collection's size parameter, and a bare value binds it: `DyckPath;n=4` and `DyckPath;4` redirect to `DyckPath;semilength=4`.
 - **A bound parameter is a restriction like any other.** Parameters are not only sizes: `PrimePair;gap=2`, `PolygonalNumber;sides=5`, `Residue;modulus=12`, `QuadraticInteger;d=-5`.
 - **Canonical order** is the declared order of the parameters; any order is read.
+- **A parameter's value** is written by the same rules as an element (§2.5). The first pass reads integers only.
 - **Only point values go in the path.** A range or a grouped parameter is a view over many sub-collections, so it is query string: `/collection/KSubset;n=5?group_by=k` is a row of Pascal's triangle. (The archived project reached the same split.)
 - This is the matrix-parameter form (RFC 3986 §3.3 leaves `;` and `=` to the scheme for exactly this), and it is where the archived explorer ended up. `~` and `_` were tried before it.
 
@@ -55,11 +56,11 @@ Always position 3, always one segment, one of two forms:
 
 A value may carry the name of its notation in front, `cycle:(1_2)(3_4)`, when it is not written in the collection's default notation. The names of notations and orders are lowercase words. A notation-prefixed value is read and moved to the value in the default notation, which is the one canonical spelling; showing an element in another notation is a view (`?as=cycle`). A value itself never contains `:`, never begins with `@`, and is never `.` or `..`.
 
-**An element's canonical address is in its unrestricted collection.** `/collection/DyckPath/11010010` is the object. `/collection/DyckPath;semilength=4/11010010` is the same object seen inside a sub-collection: it resolves only if the element belongs there, shows it in that context (its rank there, its neighbours), and names the first as canonical. The same holds for a named sub-collection: `/collection/TwinPrime/17` and `/collection/Prime/17` are views of `/collection/Natural/17`. A rank address redirects to the value address.
+**An element's canonical address is in its unrestricted collection.** A parameter the element can be measured for (its size, its number of blocks) is never part of that address; a parameter the element cannot be written without (the `n` a subset is taken from, a residue's modulus, a numeral's base) always is: `/collection/KSubset;n=5/1,3`, and `;k=2` is a view of it. `/collection/DyckPath/11010010` is the object. `/collection/DyckPath;semilength=4/11010010` is the same object seen inside a sub-collection: it resolves only if the element belongs there, shows it in that context (its rank there, its neighbours), and names the first as canonical. The same holds for a named sub-collection: `/collection/TwinPrime/17` and `/collection/Prime/17` are views of `/collection/Natural/17`. A rank address redirects to the value address. A value that is not a member has no canonical address (§5).
 
 ### 2.3 Properties and substructure
 
-After the element, each segment is a property applied to what the path has reached so far. A property is anything the collection declares on its elements:
+After the element, each segment is a property applied to what the path has reached so far. A property's name means the statistic or map the catalogue records under that name for the collection; only when there is none is it a head applied to the element. A property is anything the collection declares on its elements:
 
 | Kind | Example | Result |
 | --- | --- | --- |
@@ -79,7 +80,7 @@ After the element, each segment is a property applied to what the path has reach
 
 ### 2.4 The query string
 
-Only the view: which properties a page shows and in what order (`?show=Area,Bounce,Peaks`), which notation or figure (`?as=cycle`), sorting, filtering and grouping of a collection's table (`?order_by=Area&where=Peaks>2&group_by=Height`), the window into a large collection. Each kind of object has its own defaults (a natural number leads with its factorization, a knot with its diagram and its prime decomposition, a permutation with its one-line form and cycles); the query string is how a reader changes them, and a configured view is a shareable URL.
+Only the view: which properties a page shows and in what order (`?show=Area,Bounce,Peaks`), which notation or figure (`?as=cycle`), sorting, filtering and grouping of a collection's table (`?order_by=Area&where=Peaks>2&group_by=Height`), the window into a large collection (`?from=41`). Each kind of object has its own defaults (a natural number leads with its factorization, a knot with its diagram and its prime decomposition, a permutation with its one-line form and cycles); the query string is how a reader changes them, and a configured view is a shareable URL.
 
 ### 2.5 Writing an element
 
@@ -96,7 +97,9 @@ One set of separators for every collection, each with one meaning (the precursor
 | `/` inside a value | never | a fraction is `22_7` under `Rational`, or its own notation |
 
 - **`_` for ordered items, where the precursor used `'`.** An apostrophe is legal in a URL, but phones and word processors turn it into a curly quote, shells and code need it escaped, and some linkifiers stop at it. `_` needs no escaping and a double click selects the whole address. `'` is still read.
-- **Short form.** Where every item is a single digit, the items may be run together: `2143` for `2_1_4_3`. It is read only for collections where it cannot be mistaken for something else (a permutation, a word over digits), never where a multi-digit item is possible on its own (an integer partition: is `421` three parts or one?). The separated form is canonical.
+- **Short form.** Where every item is a single digit, the items may be run together: `2143` for `2_1_4_3`. It is read only for collections where it cannot be mistaken for something else (a permutation), never where a multi-digit item is possible on its own: under `IntegerPartition`, `421` is the one part 421. The separated form is canonical.
+- **A word over a fixed alphabet of single characters** (a Dyck path, a binary word) is written run together, and that is its canonical form: `11010010`.
+- **Members where order does not matter are written sorted** (members ascending, blocks by least member); any order is read.
 - `;` is left to parameters. Continued fractions and matrices, which are traditionally written with it, use `!`.
 
 ## 3. Areas
@@ -154,7 +157,8 @@ Names (positions 1, 2 and each property) are normalized this way. An element's v
 - A bare value is told from a name by its shape: `Name(4)`, `Name;4`, or `_` and digits at the end of a name. Where the collection has no size parameter it is an error, not a guess.
 - The canonical form writes letters, digits and the marks of §2.5 as they are and percent-encodes everything else. A trailing slash, an empty segment or an encoded mark is read and moved to the canonical form.
 - A page's canonical link is its path alone: the query string is a view of the same object.
-- An address that cannot be read (an unknown area, a rank of 0, a value its collection refuses) has no canonical form: its page says what was wrong, carries no canonical link, and asks not to be indexed.
+- `/input/` writes every character a path segment may hold as it is (`/input/1+1`), and encodes only the rest.
+- An address that cannot be read (an unknown area, a rank of 0, a value its collection refuses or that is not a member: `/collection/Prime/18`) has no canonical form: its page says what was wrong, carries no canonical link, and asks not to be indexed.
 
 In the first pass the page itself moves a reader to the canonical address and states it in the page's canonical link. Redirects answered by the server (a permanent redirect for a name, a real not-found for an address that is none) follow.
 
@@ -190,6 +194,8 @@ One file in the repository lists every route. Each row: the name, its kind (a co
 4. **Sequences in their own right.** `/sequence/` is only OEIS aliases. A sequence that is not the member list or the count of any collection has no home yet.
 5. **Short form** (§2.5). Read where unambiguous, never canonical.
 6. **Which word each collection's parameters get.** The first pass chooses for its own collections; the rest are chosen as their rows are written.
+7. **The empty element** (the empty permutation, the partition of 0, the empty subset) has no spelling yet. A lean: the separator alone, `_` for an ordered value and `,` for an unordered one. The first pass shows it and gives it no link.
+8. **A plural noun as a property** (`Blocks`, `Peaks`, `Descents`): the things, or their number? Substructure addressing (`Blocks/2`) needs the things, with the number under its own name (`BlockCount`). The catalogue's names do not all follow this yet.
 
 ## 9. The first pass
 
