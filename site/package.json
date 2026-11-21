@@ -1,0 +1,14 @@
+{
+  "name": "@enumeratio/site",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vp build",
+    "dev": "vp dev"
+  },
+  "dependencies": {
+    "@enumeratio/address": "workspace:*",
+    "@enumeratio/routes": "workspace:*"
+  }
+}
