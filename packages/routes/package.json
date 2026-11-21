@@ -1,0 +1,13 @@
+{
+  "name": "@enumeratio/routes",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The route file (routes/*.tsv) and the one module that reads it.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@enumeratio/address": "workspace:*"
+  }
+}
