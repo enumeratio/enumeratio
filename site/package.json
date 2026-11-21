@@ -8,7 +8,12 @@
     "dev": "vp dev"
   },
   "dependencies": {
+    "@cortex-js/compute-engine": "^0.187.1",
     "@enumeratio/address": "workspace:*",
-    "@enumeratio/routes": "workspace:*"
+    "@enumeratio/codecs": "workspace:*",
+    "@enumeratio/kernel": "workspace:*",
+    "@enumeratio/routes": "workspace:*",
+    "@notatio/evaluation": "0.0.0",
+    "@notatio/frontend": "0.0.0"
   }
 }

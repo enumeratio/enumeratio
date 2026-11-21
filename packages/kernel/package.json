@@ -1,0 +1,29 @@
+{
+  "name": "@enumeratio/kernel",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The kernel behind the pages: notatio's libraries as one catalogue, shared by the page's worker and by the tests in Node.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./catalogue": "./src/catalogue.ts",
+    "./node": "./src/node.ts",
+    "./data-plugin": "./src/data-plugin.ts"
+  },
+  "dependencies": {
+    "@cortex-js/compute-engine": "^0.187.1",
+    "@enumeratio/routes": "workspace:*",
+    "@notatio/boxes": "0.0.0",
+    "@notatio/catalog": "0.0.0",
+    "@notatio/combinatorics": "0.0.0",
+    "@notatio/engine": "0.0.0",
+    "@notatio/evaluation": "0.0.0",
+    "@notatio/formats": "0.0.0",
+    "@notatio/frontend": "0.0.0",
+    "@notatio/manifest": "0.0.0",
+    "@notatio/number-theory": "0.0.0",
+    "@notatio/numerals": "0.0.0",
+    "@notatio/residues": "0.0.0",
+    "@notatio/structures": "0.0.0"
+  }
+}

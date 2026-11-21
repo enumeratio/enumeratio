@@ -25,4 +25,5 @@ export const catalog: Catalog = {
     c('KSubset', [p('n', true), p('k')]),
     c('Simplex', [], { pluralException: 'Simplices' }),
   ],
+  subjects: ['Area', 'DyckArea', 'Inverse', 'Inversions'],
 };

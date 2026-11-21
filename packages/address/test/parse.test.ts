@@ -1,5 +1,14 @@
 import { describe, expect, test } from 'vite-plus/test';
-import { formatAddress, marks, nameKey, parseAddress, pluralOf, readAlsoAs } from '../src/index.ts';
+import {
+  areas,
+  dotSegments,
+  formatAddress,
+  marks,
+  nameKey,
+  parseAddress,
+  pluralOf,
+  readAlsoAs,
+} from '../src/index.ts';
 import { bare, blocks, notation, ordered, path, query, rank, seg, unordered } from './build.ts';
 import { catalog } from './fixtures.ts';
 
@@ -25,7 +34,6 @@ describe('canonical inputs are fixed points: format(parse(x)) = x', () => {
     path('collection', 'Permutation', ordered(1, -3, 2)),
     path('collection', 'DyckPath', rank(7)),
     path('collection', 'DyckPath', rank(7, 'lex')),
-    path('collection', 'Permutation', notation('cycle', '(1_2)(3_4)')),
     path('collection', 'Natural', '3811', seg('Numeral', ['base', 60])),
     path('collection', 'Natural', '360', 'Factorization'),
     path('collection', 'Prime', '17'),
@@ -124,7 +132,7 @@ describe('every row of the site map §5 table', () => {
     // reader (codecs, PR 2); this layer must neither change nor reject them.
     const apostrophe = readAlsoAs.ordered[0];
     for (const spelled of [
-      ordered(2, 1, 4, 3).replaceAll('_', apostrophe),
+      ordered(2, 1, 4, 3).replaceAll(marks.ordered, apostrophe),
       unordered(2, 1, 4, 3),
       `[${unordered(2, 1, 4, 3)}]`,
       '2143',
@@ -138,7 +146,9 @@ describe('every row of the site map §5 table', () => {
   test('Permutation element: a collection reader plugs in and the change is reported', () => {
     // A stand-in reader for the mechanism only; the real one is PR 2's codec.
     const standIn = (_c: string, raw: string) =>
-      /^\d{2,}$/.test(raw) ? [...raw].join('_') : raw.replace(/[[\]]/g, '').replaceAll(',', '_');
+      /^\d{2,}$/.test(raw)
+        ? [...raw].join(marks.ordered)
+        : raw.replace(/[[\]]/g, '').replaceAll(marks.unordered, marks.ordered);
     for (const spelled of ['2143', '[2,1,4,3]', '2,1,4,3']) {
       const r = parseAddress(path('collection', 'Permutation', encodeURIComponent(spelled)), '', {
         catalog,
@@ -152,6 +162,57 @@ describe('every row of the site map §5 table', () => {
       readElement: () => null,
     });
     expect(refused.problems.map((p) => p.code)).toEqual(['unreadable-element']);
+    expect(refused.canonical).toBe(false);
+    expect(refused.canonicalPath).toBeUndefined();
+  });
+
+  test('a notation-prefixed value: the reader gets (collection, value, notation) and the prefix is dropped', () => {
+    const cycles = notation('cycle', `(${ordered(1, 2)})(${ordered(3, 4)})`);
+    const seen: [string, string, string | undefined][] = [];
+    const readElement = (c: string, raw: string, n?: string) => {
+      seen.push([c, raw, n]);
+      return n === 'cycle' ? ordered(2, 1, 4, 3) : undefined;
+    };
+    const r = parseAddress(path('collection', 'Permutation', cycles), '', { catalog, readElement });
+    expect(seen).toEqual([['Permutation', `(${ordered(1, 2)})(${ordered(3, 4)})`, 'cycle']]);
+    expect(r.address.element).toEqual({ kind: 'value', value: ordered(2, 1, 4, 3) });
+    expect(r.canonical).toBe(false);
+    expect(r.problems).toEqual([]);
+    expect(r.canonicalPath).toBe(path('collection', 'Permutation', ordered(2, 1, 4, 3)));
+  });
+
+  test('a notation-prefixed value no reader converted is kept, read and never canonical', () => {
+    const cycles = path(
+      'collection',
+      'Permutation',
+      notation('cycle', `(${ordered(1, 2)})(${ordered(3, 4)})`),
+    );
+    for (const options of [
+      { catalog },
+      { catalog, readElement: () => undefined },
+      {},
+      { readElement: () => undefined },
+    ]) {
+      const r = parseAddress(cycles, '', options);
+      expect(r.problems).toEqual([]);
+      expect(r.canonical).toBe(false);
+      expect(r.canonicalPath).toBe(cycles);
+      expect(r.address.element).toEqual({
+        kind: 'value',
+        notation: 'cycle',
+        value: `(${ordered(1, 2)})(${ordered(3, 4)})`,
+      });
+      expect(formatAddress(r.address)).toBe(cycles);
+    }
+  });
+
+  test('a reader that returns null for a prefixed value refuses it', () => {
+    const r = parseAddress(path('collection', 'Permutation', notation('cycle', '(1)')), '', {
+      catalog,
+      readElement: () => null,
+    });
+    expect(r.problems.map((p) => p.code)).toEqual(['unreadable-element']);
+    expect(r.canonicalPath).toBeUndefined();
   });
 
   test('/stat/St000012, /map/Mp00023, /sequence/A000108 : an outside identifier', () => {
@@ -224,5 +285,153 @@ describe('reporting', () => {
     const r = read(path('input', encodeURIComponent('Divide(1/2)')));
     expect(r.address.expression).toBe('Divide(1/2)');
     expect(r.canonical).toBe(true);
+  });
+});
+
+const percent = (mark: string) => `%${mark.charCodeAt(0).toString(16).toUpperCase()}`;
+const codes = (p: string, q = '') => read(p, q).problems.map((x) => x.code);
+
+describe('problems mean no canonical form', () => {
+  const broken = [
+    ['a rank of 0', path('collection', 'DyckPath', rank(0))],
+    ['an index of 0', path('collection', 'DyckPath', '1', 'Area', '0')],
+    ['an unknown area', path('nonesuch', 'x')],
+    ['an extra segment', path('atlas', 'x')],
+    ['an unknown collection', path('collection', 'Nonesuch')],
+    ['an unknown parameter', path('collection', seg('DyckPath', ['height', 3]))],
+  ] as const;
+  test.each(broken)('%s', (_what, p) => {
+    const r = read(p);
+    expect(r.problems.length).toBeGreaterThan(0);
+    expect(r.canonical).toBe(false);
+    expect(r.canonicalPath).toBeUndefined();
+  });
+
+  test('a fine address still has one', () => {
+    expect(read(path('collection', 'DyckPath')).canonicalPath).toBe(path('collection', 'DyckPath'));
+  });
+});
+
+describe('what a value may not be (§2.2)', () => {
+  const dots = dotSegments;
+
+  test('a value led by the rank sigil', () => {
+    expect(codes(path('collection', 'Permutation', `${marks.rank}x1`))).toEqual(['bad-rank']);
+    const prefixed = read(path('collection', 'Permutation', notation('cycle', `${marks.rank}3`)));
+    expect(prefixed.problems.map((x) => x.code)).toEqual(['bad-value']);
+    expect(prefixed.canonicalPath).toBeUndefined();
+  });
+
+  test('a value carrying the notation mark', () => {
+    const twice = notation('cycle', notation('a', 'b'));
+    const r = read(path('collection', 'Permutation', twice));
+    expect(r.problems.map((x) => x.code)).toEqual(['bad-value']);
+    expect(r.canonical).toBe(false);
+    expect(r.canonicalPath).toBeUndefined();
+    expect(codes(path('collection', 'Permutation', `1${marks.notation}2`))).toEqual(['bad-value']);
+  });
+
+  test('dot segments, as element, as collection, as property', () => {
+    for (const dot of dots) {
+      expect(codes(path('collection', 'Permutation', dot))).toEqual(['bad-value']);
+      expect(codes(path('collection', 'Permutation', notation('cycle', dot)))).toEqual([
+        'bad-value',
+      ]);
+      expect(codes(path('collection', dot))).toContain('bad-value');
+      expect(codes(path('collection', 'Permutation', '1', dot))).toEqual(['bad-value']);
+      const encoded = [...dot].map((d) => percent(d)).join('');
+      expect(codes(path('collection', 'Permutation', '1', encoded))).toEqual(['bad-value']);
+      expect(codes(path('collection', 'Permutation', encoded))).toEqual(['bad-value']);
+    }
+  });
+
+  test('the encoder never writes them raw', () => {
+    const value = (v: string, n?: string) =>
+      formatAddress({
+        area: areas.collection,
+        collection: { name: 'Permutation', parameters: [] },
+        element:
+          n === undefined ? { kind: 'value', value: v } : { kind: 'value', notation: n, value: v },
+        chain: [],
+        query: [],
+      });
+    for (const dot of dots) {
+      expect(value(dot)).toBe(
+        path('collection', 'Permutation', [...dot].map((d) => percent(d)).join('')),
+      );
+    }
+    expect(value(`${marks.rank}3`)).toBe(
+      path('collection', 'Permutation', `${percent(marks.rank)}3`),
+    );
+    expect(value(`1${marks.notation}2`)).toBe(
+      path('collection', 'Permutation', `1${percent(marks.notation)}2`),
+    );
+    // A sigil that is not the first character is raw.
+    expect(value(`1${marks.rank}2`)).toBe(path('collection', 'Permutation', `1${marks.rank}2`));
+    // Dots inside a value are the decimal point.
+    expect(value('3.25')).toBe(path('collection', 'Permutation', '3.25'));
+  });
+
+  test('an encoded mark is read and moved to the canonical form', () => {
+    for (const mark of [
+      marks.unordered,
+      marks.ordered,
+      marks.block,
+      marks.negative,
+      marks.decimal,
+    ]) {
+      const r = read(path('collection', 'Permutation', `1${percent(mark)}2`));
+      expect(r.problems).toEqual([]);
+      expect(r.canonical).toBe(false);
+      expect(r.canonicalPath).toBe(path('collection', 'Permutation', `1${mark}2`));
+    }
+    // An encoded prefix is a prefix.
+    const r = read(path('collection', 'Permutation', `cycle${percent(marks.notation)}(1)`));
+    expect(r.address.element).toEqual({ kind: 'value', notation: 'cycle', value: '(1)' });
+    expect(r.canonical).toBe(false);
+  });
+});
+
+describe('indexes', () => {
+  test('an encoded digit is an index, and the address moves to the plain one', () => {
+    const r = read(path('collection', 'SetPartition', '1', 'Blocks', '%32'));
+    expect(r.address.chain[1]).toEqual({ kind: 'index', index: 2 });
+    expect(r.canonical).toBe(false);
+    expect(r.canonicalPath).toBe(path('collection', 'SetPartition', '1', 'Blocks', '2'));
+  });
+
+  test('index 0 and a negative index are refused', () => {
+    expect(codes(path('collection', 'DyckPath', '1', 'Blocks', '0'))).toEqual(['bad-index']);
+    const negative = `${marks.negative}1`;
+    expect(codes(path('collection', 'DyckPath', '1', 'Blocks', negative))).toEqual(['bad-index']);
+    expect(codes(path('collection', 'DyckPath', '1', 'Blocks', `%2D1`))).toEqual(['bad-index']);
+    expect(
+      read(path('collection', 'DyckPath', '1', 'Blocks', negative)).canonicalPath,
+    ).toBeUndefined();
+  });
+});
+
+describe('statistic and map subjects', () => {
+  test('a spelling resolves by nameKey to the declared name', () => {
+    for (const spelled of ['area', 'AREA']) {
+      const r = read(path('stat', spelled));
+      expect(r.address.subject).toBe('Area');
+      expect(r.canonicalPath).toBe(path('stat', 'Area'));
+      expect(r.canonical).toBe(false);
+    }
+    const r = read(path('stat', 'dyck_area', seg('DyckPath', ['semilength', 4])));
+    expect(r.address.subject).toBe('DyckArea');
+    expect(read(path('map', 'inverse')).canonicalPath).toBe(path('map', 'Inverse'));
+  });
+
+  test('an unknown subject is kept as written', () => {
+    const r = read(path('stat', 'Zebra'));
+    expect(r.address.subject).toBe('Zebra');
+    expect(r.canonical).toBe(true);
+  });
+
+  test('without declared subjects every subject is kept as written', () => {
+    const r = parseAddress(path('stat', 'area'), '', { catalog: { collections: [] } });
+    expect(r.address.subject).toBe('area');
   });
 });

@@ -1,6 +1,6 @@
 # enumeratio.dev: the site map
 
-> **Draft 3, 2026-11-20.** A first pass is being built from this draft (§9). The structure of an address (what each position means) is settled enough to build on; the exact characters (separators, parameter words) are provisional and are expected to change as the site is used. Nothing is promised permanent until the site is announced (§6).
+> **Draft 3.2, 2026-11-21.** A first pass is being built from this draft (§9). The structure of an address (what each position means) is settled enough to build on; the exact characters (separators, parameter words) are provisional and are expected to change as the site is used. Nothing is promised permanent until the site is announced (§6).
 >
 > Decided (2026-11-20): a new repository (`enumeratio/enumeratio`); a clean slate at enumeratio.dev; every implementation in Epsil on compute-engine, drawn with notatio; the earlier codebases are mined, not revived; no npm publishing yet; a parameter is written with the collection's own word, with `n` read as an alias for its size.
 
@@ -13,7 +13,7 @@ Earlier work this draws on: the precursor project (its route map, its address te
 1. **Every path is read the same way.** Position decides meaning, and no level is ever skipped because of what came before. This was the main lesson of the earlier projects.
 2. **A path names an object; the query string configures the view of it; a fragment points into the page.** Two URLs with the same path are the same object. Nothing that changes *which* object is meant ever goes in the query string or the fragment.
 3. **One canonical spelling**, and liberal reading: other spellings resolve and redirect to it (§5).
-4. **Names are the code's names.** A collection, a statistic, a map or a property is written in PascalCase exactly as its head is written in Epsil, singular. The first segment of a path is a lowercase word.
+4. **Names are the code's names.** A collection, a statistic, a map or a property is written in PascalCase exactly as its head is written in Epsil, singular. A collection's name is the noun for one member: `Prime`, `Derangement`, `PerfectNumber` (an adjective alone, `Perfect`, is an alias). The first segment of a path is a lowercase word.
 5. **Published means permanent** (§6).
 
 ## 2. Grammar
@@ -53,7 +53,7 @@ Always position 3, always one segment, one of two forms:
 - **By value**: the element written in its canonical form. `11010010`, `2_1_4_3`, `1,3`, `5040`, `3+2i`, `3_1`.
 - **By rank**: `@7` is the element at position 7 in the collection's default order, `@lex:7` in a named order. The collection segment says which collection the rank is in, so a rank address is only as stable as the parameters bound there.
 
-A value may carry the name of its notation in front, `cycle:(1_2)(3_4)`, when it is not written in the collection's default notation.
+A value may carry the name of its notation in front, `cycle:(1_2)(3_4)`, when it is not written in the collection's default notation. The names of notations and orders are lowercase words. A notation-prefixed value is read and moved to the value in the default notation, which is the one canonical spelling; showing an element in another notation is a view (`?as=cycle`). A value itself never contains `:`, never begins with `@`, and is never `.` or `..`.
 
 **An element's canonical address is in its unrestricted collection.** `/collection/DyckPath/11010010` is the object. `/collection/DyckPath;semilength=4/11010010` is the same object seen inside a sub-collection: it resolves only if the element belongs there, shows it in that context (its rank there, its neighbours), and names the first as canonical. The same holds for a named sub-collection: `/collection/TwinPrime/17` and `/collection/Prime/17` are views of `/collection/Natural/17`. A rank address redirects to the value address.
 
@@ -104,9 +104,9 @@ One set of separators for every collection, each with one meaning (the precursor
 | Path | What it is |
 | --- | --- |
 | `/collection/…` | Every object (§2). Numbers, numerals, structures, sequences as sets, knots, polytopes, groups and algebras are all collections. |
-| `/stat/<Name>` | A statistic as a concept: its definition, the collections it is defined on, its FindStat identity. `/stat/Area/DyckPath;semilength=4` narrows it to a collection: its distribution there. `/stat/St000012` redirects to the name. |
+| `/stat/<Name>` | A statistic as a concept: its definition, the collections it is defined on, its FindStat identity. `/stat/Area/DyckPath;semilength=4` narrows it to a collection: its distribution there. After the name the path is read as in §2 (collection, element, properties). `/stat/St000012` redirects to the name. |
 | `/map/<Name>` | A map as a concept: source, target, what it preserves. `/map/Mp00023` redirects. |
-| `/sequence/<A-number>` | An OEIS number, redirecting to the collection or statistic that realizes it. |
+| `/sequence/<A-number>` | An OEIS number (one segment, written `A000108`), redirecting to the collection or statistic that realizes it. |
 | `/input/<expression>` | Evaluates an Epsil expression. If the result is a catalogued object the page says so and links to its address; it does not redirect. |
 | `/atlas` | The whole route space, generated from the route file (§6), with each route's status. |
 | `/about`, `/contribute` | What the site is; how to suggest or reserve a route. |
@@ -121,7 +121,7 @@ There are no areas by discipline. If an area is ever added it is one more lowerc
 
 **Numbers.** `Natural`, `Integer`, `Rational`, `Fraction`, `GaussianInteger`, `GaussianRational`, `QuadraticInteger;d=`, `AlgebraicInteger`, `Residue;modulus=`, `AdicInteger;p=`, `ProfiniteInteger`, `Adele`, `ContinuedFraction`, `EgyptianFraction`, `Quaternion`, `Multicomplex` ●; `EisensteinInteger` ○; `Ordinal`, `Cardinal`, `Float` ◐.
 
-**Numbers by what they are made of.** `Natural/360/Factorization` leads to `IntegerFactorization`, where a number is its primes and their exponents. The named sets of integers are then conditions on the exponents, and each is a sub-collection of `Natural` whose page states that condition: `Prime` (one exponent, equal to 1), `PrimePower` (one exponent), `Semiprime`, `Squarefree` (exponents 0 or 1), `Square` (all even), `KFree;k=`, `Powerful`, `Sphenic`, `Smooth;bound=`, `Rough;bound=`; a `Rational` is the same with integer exponents. `TwinPrime` is `PrimePair;gap=2`. About 60 more by divisors, digits and recurrences (`Perfect`, `Abundant`, `Carmichael`, `Harshad`, `Kaprekar`, `Fibonacci`, `Catalan`, `Polygonal;sides=`, …) ●.
+**Numbers by what they are made of.** `Natural/360/Factorization` leads to `IntegerFactorization`, where a number is its primes and their exponents. The named sets of integers are then conditions on the exponents, and each is a sub-collection of `Natural` whose page states that condition: `Prime` (one exponent, equal to 1), `PrimePower` (one exponent), `Semiprime`, `SquarefreeNumber` (exponents 0 or 1), `Square` (all even), `KFreeNumber;k=`, `PowerfulNumber`, `SphenicNumber`, `SmoothNumber;bound=`, `RoughNumber;bound=`; a `Rational` is the same with integer exponents. `TwinPrime` is `PrimePair;gap=2`. About 60 more by divisors, digits and recurrences (`PerfectNumber`, `AbundantNumber`, `CarmichaelNumber`, `HarshadNumber`, `KaprekarNumber`, `FibonacciNumber`, `CatalanNumber`, `PolygonalNumber;sides=`, …) ●.
 
 **Numerals.** A numeral is reached two ways. As a property of a number: `Natural/3811/Numeral;base=60`. As an object in its own right, a string of digits: `PositionalNumeral;base=60/1_3_31`. Systems: positional, balanced, bijective, negative base, mixed radix (`;radices=2,3,5`), factorial, primorial, residue (`;moduli=3,5,7`), Zeckendorf, Ostrowski, combinatorial, Roman, hypernumerary, adic ●; complex bases, Witt ◐.
 
@@ -151,11 +151,16 @@ One function reduces a name to a key (drop `-` and `_`, lowercase), and one tabl
 
 Names (positions 1, 2 and each property) are normalized this way. An element's value is read by its collection, since case and punctuation can carry meaning there.
 
+- A bare value is told from a name by its shape: `Name(4)`, `Name;4`, or `_` and digits at the end of a name. Where the collection has no size parameter it is an error, not a guess.
+- The canonical form writes letters, digits and the marks of §2.5 as they are and percent-encodes everything else. A trailing slash, an empty segment or an encoded mark is read and moved to the canonical form.
+- A page's canonical link is its path alone: the query string is a view of the same object.
+- An address that cannot be read (an unknown area, a rank of 0, a value its collection refuses) has no canonical form: its page says what was wrong, carries no canonical link, and asks not to be indexed.
+
 In the first pass the page itself moves a reader to the canonical address and states it in the page's canonical link. Redirects answered by the server (a permanent redirect for a name, a real not-found for an address that is none) follow.
 
 ## 6. The route file and the promise
 
-One file in the repository lists every route. Each row: the pattern, what it is, the Epsil expression behind it, its parameters and their aliases, its aliases and outside identifiers, a status, who asked for it and when.
+One file in the repository lists every route. Each row: the name, its kind (a collection, or a sub-collection and the collection it sits within), the Epsil expression behind it and the constructor of one element, its parameters and their aliases, its aliases, its plural where the default rule is wrong, outside identifiers, a status, who asked for it and when.
 
 | Status | Meaning | Promise |
 | --- | --- | --- |

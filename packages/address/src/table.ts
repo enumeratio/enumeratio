@@ -37,6 +37,44 @@ export const marks = {
   queryBinding: '=',
   /** Between the values of a list-valued query key: `?show=Area,Peaks`. */
   queryList: ',',
+  /** Stands for a space in a query string (form encoding): read, never written. */
+  querySpace: '+',
+} as const;
+
+/**
+ * What `nameKey` drops from a name before comparing it (site map §5). Its own
+ * entry, so that changing a number mark never changes how names are read.
+ */
+export const nameSeparators: readonly string[] = ['-', '_'];
+
+/** Grammar words that are not marks. */
+export const words = {
+  /** The default plural rule (§5): a trailing `s`. */
+  plural: 's',
+  /** Read everywhere as an alias for a collection's size parameter (§2.1). */
+  sizeAlias: 'n',
+} as const;
+
+/**
+ * Characters a name, a value or a parameter value may carry raw besides letters,
+ * digits and the marks it may hold (`,` `_` `!` `-` `.`, and the rank sigil
+ * after the first character). Everything else, the notation mark included, is
+ * percent-encoded.
+ */
+export const valueExtras: readonly string[] = ['+', '(', ')', "'", '*', '~'];
+
+/**
+ * Segments a browser collapses as dot segments. A piece equal to one of these
+ * is never written raw, and a value equal to one is refused when read (§2.2).
+ */
+export const dotSegments: readonly string[] = ['.', '..'];
+
+/** The shapes of the words the grammar recognizes. */
+export const shapes = {
+  /** A notation or an order named in front of a value (`cycle`, `lex`), as regular-expression source. */
+  notationName: '[A-Za-z][A-Za-z0-9]*',
+  /** An OEIS number (§3): the letter, then this many digits. */
+  sequenceNumber: { prefix: 'A', digits: 6 },
 } as const;
 
 /**
@@ -44,11 +82,16 @@ export const marks = {
  * reported as a change to the canonical form.
  */
 export const readAlsoAs = {
-  /** The precursor's apostrophe for ordered items. */
+  /**
+   * The precursor's apostrophe for ordered items. The address layer keeps an
+   * element's spelling opaque: converting these is each collection's reader's
+   * job (the codecs package imports this entry), and that is what uses it.
+   */
   ordered: ["'"],
   /** Written with the size in the collection segment: `DyckPath(4)`, `DyckPath_4`. */
   bareOpen: '(',
   bareClose: ')',
+  /** Joins a name to a bare value: `DyckPath_4`. */
   bareJoin: '_',
 } as const;
 
@@ -66,7 +109,11 @@ export const areas = {
 
 export type Area = (typeof areas)[keyof typeof areas];
 
-/** Areas whose path is `/<area>/<Name>[/<Collection>[/<element>[/<Property>...]]]`. */
+/**
+ * Areas whose second segment is a subject (a name or an outside number). For
+ * `stat` and `map` the path continues `[/<Collection>[/<element>[/<Property>...]]]`;
+ * `sequence` takes the one number.
+ */
 export const namedAreas: readonly Area[] = [areas.stat, areas.map, areas.sequence];
 
 /** Areas that take no further segments. */
@@ -79,6 +126,8 @@ export const queryWords = {
   where: 'where',
   groupBy: 'group_by',
   as: 'as',
+  /** The rank a table's window starts at, in a large collection. */
+  from: 'from',
   /** The grammar made visible: how the address was read. */
   explain: 'explain',
 } as const;

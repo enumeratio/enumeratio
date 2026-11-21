@@ -1,13 +1,20 @@
-import { marks } from './table.ts';
+import { nameSeparators, words } from './table.ts';
 
-/** What a name is reduced to for comparison (§5): drop `-` and `_`, lowercase. */
+/** Escapes a table entry for use inside a regular expression. */
+export function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/** What a name is reduced to for comparison (§5): drop the name separators, lowercase. */
 export function nameKey(name: string): string {
-  return name.replaceAll(marks.negative, '').replaceAll(marks.ordered, '').toLowerCase();
+  let key = name;
+  for (const separator of nameSeparators) key = key.replaceAll(separator, '');
+  return key.toLowerCase();
 }
 
 /** The default plural rule (§5): a trailing `s`. */
 export function defaultPlural(name: string): string {
-  return `${name}s`;
+  return `${name}${words.plural}`;
 }
 
 /** The plural of a name: its recorded exception when it has one, else the default rule. */
@@ -38,10 +45,16 @@ export interface CollectionSpec {
 
 export interface Catalog {
   collections: readonly CollectionSpec[];
+  /**
+   * Declared statistic and map names. A `/stat/` or `/map/` subject is read by
+   * `nameKey` to the declared name when exactly one matches; an unknown subject
+   * is kept as written.
+   */
+  subjects?: readonly string[];
 }
 
 /** The word that `n` is read as: the key of `n`. */
-export const sizeAliasKey = nameKey('n');
+export const sizeAliasKey = nameKey(words.sizeAlias);
 
 export interface Lookup {
   /** key -> collection, over names, aliases and plurals. Ambiguous keys are in `conflicts`. */

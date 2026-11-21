@@ -8,12 +8,11 @@ import {
   formatPath,
   formatSegment,
   formatStep,
+  leafAreas,
   marks,
-  parseAddress,
   queryWords,
 } from '@enumeratio/address';
 import {
-  catalog,
   promiseStarted,
   rowByName,
   rows,
@@ -25,20 +24,43 @@ import {
 import { repositoryUrl, routeFilePath, siteOrigin } from './config.ts';
 import { tryThese } from './examples.ts';
 import { type Safe, code, h } from './html.ts';
+import { type Env, type Section, live } from './live.ts';
+import { readAddress } from './reading.ts';
 
 export interface Page {
   title: string;
-  /** The absolute canonical URL: the path only, since the query is the view, not the object. */
-  canonical: string;
+  /**
+   * The absolute canonical URL: the path only, since the query is the view, not the object.
+   * Absent when the address has problems: an address that cannot be read has no canonical form.
+   */
+  canonical?: string;
+  /** True when the page asks not to be indexed: the address has problems, or names nothing. */
+  noindex: boolean;
   body: Safe;
   /** Present when the address was not canonical: where the page should move to (path and query). */
   replaceWith?: string;
   /** False for an address that names nothing. */
   found: boolean;
+  /**
+   * The parts of the page the kernel computes, each drawn into the element
+   * with its id once its `run` resolves. Absent on a page that needs no kernel.
+   */
+  sections?: Section[];
+  /** Where the page moves once the kernel has answered (a rank address moves to its value). */
+  moveTo?: (env: Env) => Promise<string | undefined>;
 }
+
+/** The id of the element a section is drawn into. */
+export const sectionId = (id: string): string => `section-${id}`;
 
 const siteName = 'enumeratio';
 const link = (address: Address) => formatAddress(address);
+
+/** The address of an area's own page (or of the root, for the empty area), from the table. */
+export const areaLink = (area: string): string => formatAddress({ area, chain: [], query: [] });
+const atlasLink = areaLink(areas.atlas);
+const aboutLink = areaLink(areas.about);
+const contributeLink = areaLink(areas.contribute);
 
 // ---------------------------------------------------------------- the placeholder's look and words
 
@@ -48,8 +70,8 @@ export function homeBody(): Safe {
   <p class="etymology">Latin <i>ēnumerātiō</i>, from <i>ēnumerāre</i>, “to count out”: <i>ē-</i>, “out”, and <i>numerāre</i>, “to count”, from <i>numerus</i>, “number”. Numeration is writing a number down; enumeration is counting and listing the things numbers count. Both come from the same root, and this site is about both.</p>
   <p>enumeratio is a home for mathematical objects, each at an address meant to last: the kinds of numbers and the ways of writing them, integer sequences, permutations, partitions, paths, trees and the other structures of combinatorics, the statistics on them and the maps between them, the polytopes whose faces they label, knots.</p>
   <p class="motto">One object, one page, one address.</p>
-  <p>The site is being rebuilt. The <a href="/atlas">atlas</a> lists what is planned and what is under way; <a href="/about">about</a> says what the site is, and <a href="/contribute">contribute</a> says how to propose a route.</p>
-  <p>Some addresses to try (their pages say “not yet computed” for now):</p>
+  <p>The site is being rebuilt. The <a href="${atlasLink}">atlas</a> lists what is planned and what is under way; <a href="${aboutLink}">about</a> says what the site is, and <a href="${contributeLink}">contribute</a> says how to propose a route. To compute with these objects today, use <a href="https://notatio.app">notatio</a>.</p>
+  <p>Some addresses to try:</p>
   <ul class="plain">
     ${tryThese.map(
       ({ what, address }) =>
@@ -65,7 +87,7 @@ function aboutBody(): Safe {
   return h`<main class="wide">
   <h1>About</h1>
   <p>enumeratio.dev is the home of individual mathematical objects: one address per object, meant to last. It is about the mathematics, and is agnostic about what computes it.</p>
-  <p>An address is read the same way everywhere. Its first segment is an area (${code(areas.collection)}, ${code(areas.stat)}, ${code(areas.map)}, ${code(areas.sequence)}, ${code(areas.input)}); then comes a collection, with any parameters bound inside its segment; then one element of it, by value or by rank; then a chain of properties. The <a href="/atlas">atlas</a> lists every route and its status. The specification is the <a href="${repositoryUrl}/blob/main/docs/site-map.md">site map</a>.</p>
+  <p>An address is read the same way everywhere. Its first segment is an area (${code(areas.collection)}, ${code(areas.stat)}, ${code(areas.map)}, ${code(areas.sequence)}, ${code(areas.input)}); then comes a collection, with any parameters bound inside its segment; then one element of it, by value or by rank; then a chain of properties. The <a href="${atlasLink}">atlas</a> lists every route and its status. The specification is the <a href="${repositoryUrl}/blob/main/docs/site-map.md">site map</a>.</p>
   <p>The characters of the grammar are provisional and will change as the site is used. Nothing here is promised permanent until the site is announced.</p>
   <p>Objects are computed in the page. The engine behind them is part of <a href="https://notatio.app">notatio</a>, a notebook for mathematics.</p>
 </main>`;
@@ -77,7 +99,7 @@ function contributeBody(): Safe {
   <p>To propose a route, or to reserve one, add a row to the route file and open a pull request. There is no other form yet.</p>
   <ul>
     <li>The route file is ${code(routeFilePath)} in the <a href="${repositoryUrl}">repository</a>. One row is one collection; its columns are described at the top of the file.</li>
-    <li>A <strong>proposed</strong> row gives the name (PascalCase, singular, as the head is written in Epsil), the parameters it would take, and who asks for it and when. It appears in the <a href="/atlas">atlas</a> and is not served.</li>
+    <li>A <strong>proposed</strong> row gives the name (PascalCase, singular, as the head is written in Epsil), the parameters it would take, and who asks for it and when. It appears in the <a href="${atlasLink}">atlas</a> and is not served.</li>
     <li>A <strong>reserved</strong> row holds a name for a stated object, by a named person, until a date. It serves a short page saying so. A reservation lapses after a year unless it is renewed or has become a stub.</li>
     <li>A <strong>stub</strong> or <strong>live</strong> row needs the Epsil expression behind it and its declared parameters; a collection’s row covers every sub-collection, element and property under it.</li>
   </ul>
@@ -107,7 +129,7 @@ function atlasRow(row: RouteRow): Safe {
   });
   return h`<tr>
     <td>${served ? h`<a href="${href}">${row.name}</a>` : row.name}</td>
-    <td>${row.status}${served && row.status === 'live' ? h` <span class="note">(not yet computed)</span>` : ''}</td>
+    <td>${row.status}</td>
     <td>${row.kind}${row.within ? h` of <span>${row.within}</span>` : ''}</td>
     <td>${parametersCell(row)}</td>
     <td>${row.oeis ?? ''}</td>
@@ -240,6 +262,11 @@ function elementRows(address: Address): Safe {
   return h`${parts}`;
 }
 
+/** The canonical form, or undefined when the address has problems (it has none then). */
+function canonicalOf(read: ParseResult): string | undefined {
+  return read.problems.length === 0 ? read.canonicalPath : undefined;
+}
+
 function readingTable(read: ParseResult, asked: string): Safe {
   const { address } = read;
   const parts: Safe[] = [];
@@ -273,10 +300,14 @@ function readingTable(read: ParseResult, asked: string): Safe {
   );
   parts.push(
     h`<tr><th>Written</th><td>${code(asked)}</td></tr>
-      <tr><th>Canonical</th><td>${code(read.canonicalPath)} ${
-        read.canonical
-          ? h`<span class="note">(as written)</span>`
-          : h`<span class="note">(moved here)</span>`
+      <tr><th>Canonical</th><td>${
+        canonicalOf(read) === undefined
+          ? h`<span class="none">none: the address could not be read</span>`
+          : h`${code(canonicalOf(read) ?? '')} ${
+              read.canonical
+                ? h`<span class="note">(as written)</span>`
+                : h`<span class="note">(moved here)</span>`
+            }`
       }</td></tr>`,
   );
   return h`<table class="reading"><tbody>${parts}</tbody></table>`;
@@ -295,7 +326,7 @@ function verdict(read: ParseResult): { found: boolean; text: Safe } {
   if (address.area === areas.collection && !address.collection) {
     return {
       found: true,
-      text: h`<p>Every collection is listed in the <a href="/atlas">atlas</a>. Not yet computed.</p>`,
+      text: h`<p>Every collection is listed in the <a href="${atlasLink}">atlas</a>.</p>`,
     };
   }
   if (address.collection) {
@@ -303,7 +334,7 @@ function verdict(read: ParseResult): { found: boolean; text: Safe } {
     if (!row) {
       return {
         found: false,
-        text: h`<p class="notice">No route is called ${code(address.collection.name)}. The <a href="/atlas">atlas</a> lists the routes there are; <a href="/contribute">contribute</a> says how to propose one.</p>`,
+        text: h`<p class="notice">No route is called ${code(address.collection.name)}. The <a href="${atlasLink}">atlas</a> lists the routes there are; <a href="${contributeLink}">contribute</a> says how to propose one.</p>`,
       };
     }
     if (row.status === 'proposed') {
@@ -319,25 +350,29 @@ function verdict(read: ParseResult): { found: boolean; text: Safe } {
       };
     }
   }
-  return {
-    found: true,
-    text: h`<p class="notice"><strong>Not yet computed.</strong> This address is read and has a place in the site; its page is computed in a later pass.</p>`,
-  };
+  const shell = address.area === '' || (leafAreas as readonly string[]).includes(address.area);
+  if (read.problems.length === 0 && !shell && !live(read)) {
+    return {
+      found: false,
+      text: h`<p class="notice">This address is read, and names nothing the site serves. The <a href="${atlasLink}">atlas</a> lists what there is.</p>`,
+    };
+  }
+  return { found: true, text: h`` };
 }
 
 function addressBody(read: ParseResult, asked: string): { body: Safe; found: boolean } {
   const v = verdict(read);
   const body = h`<main class="wide">
-  <h1>${code(read.canonicalPath)}</h1>
+  <h1>${code(canonicalOf(read) ?? asked)}</h1>
   ${v.text}
   <h2>How the address was read</h2>
   ${readingTable(read, asked)}
   ${
     read.problems.length === 0
       ? ''
-      : h`<h2>Problems</h2><ul>${read.problems.map((p) => h`<li>${p.message}</li>`)}</ul>`
+      : h`<h2>What was wrong</h2><ul>${read.problems.map((p) => h`<li>${p.message}</li>`)}</ul>`
   }
-  <p class="note">This is the grammar made visible. It is the whole page for now; later it stays available behind ${code(marks.query + queryWords.explain)}.</p>
+  <p class="note">This is the grammar made visible: every address shows it behind ${code(marks.query + queryWords.explain)}.</p>
 </main>`;
   return { body, found: v.found };
 }
@@ -346,25 +381,60 @@ function addressBody(read: ParseResult, asked: string): { body: Safe; found: boo
 
 /** Everything the router needs for one location. Pure: no DOM, so tests can run it in Node. */
 export function renderPage(pathname: string, search: string): Page {
-  const read = parseAddress(pathname, search, { catalog });
+  const read = readAddress(pathname, search);
   const asked = pathname + search;
-  const canonical = siteOrigin + formatPath(read.address);
-  const replaceWith = read.canonical ? undefined : read.canonicalPath;
+  const readable = read.problems.length === 0;
+  const canonicalPath = canonicalOf(read);
+  // Problems mean no canonical form: no canonical link and no move.
+  const canonical = readable ? siteOrigin + formatPath(read.address) : undefined;
+  const replaceWith = readable && !read.canonical ? canonicalPath : undefined;
   const page = (title: string, body: Safe, found = true): Page => ({
     title: title === '' ? siteName : `${title} | ${siteName}`,
-    canonical,
     body,
     found,
+    noindex: !readable || !found,
+    ...(canonical === undefined ? {} : { canonical }),
     ...(replaceWith === undefined ? {} : { replaceWith }),
   });
   const { area } = read.address;
   const explain = read.address.query.some(([key]) => key === queryWords.explain);
-  if (!explain && read.problems.length === 0) {
+  if (!explain && readable) {
     if (area === '') return page('', homeBody());
     if (area === areas.atlas) return page('Atlas', atlasBody());
     if (area === areas.about) return page('About', aboutBody());
     if (area === areas.contribute) return page('Contribute', contributeBody());
   }
+  const computed = !explain && readable ? live(read) : undefined;
+  if (computed) {
+    const moved = computed.replaceWith ? formatAddress(computed.replaceWith) : replaceWith;
+    const object = computed.object ? siteOrigin + formatPath(computed.object) : canonical;
+    const explained = formatAddress({
+      ...read.address,
+      query: [...read.address.query, [queryWords.explain, '']],
+    });
+    const body = h`<main class="wide">
+  <h1>${code(computed.title)}</h1>
+  ${computed.lead}
+  ${computed.sections.map(
+    (s) =>
+      h`<section id="${sectionId(s.id)}"><h2>${s.title}</h2><div class="pending" aria-busy="true">Computing…</div></section>`,
+  )}
+  <p class="note"><a href="${explained}">How this address was read</a></p>
+</main>`;
+    const moveTo = computed.moveTo;
+    return {
+      title: `${computed.title} | ${siteName}`,
+      body,
+      found: computed.found,
+      noindex: !computed.found,
+      ...(object === undefined ? {} : { canonical: object }),
+      ...(moved === undefined ? {} : { replaceWith: moved }),
+      ...(computed.sections.length > 0 ? { sections: computed.sections } : {}),
+      ...(moveTo === undefined
+        ? {}
+        : { moveTo: async (env: Env) => moveTo(env).then((to) => to && formatAddress(to)) }),
+    };
+  }
   const { body, found } = addressBody(read, asked);
-  return page(read.canonicalPath, body, found);
+  return page(canonicalPath ?? asked, body, found);
 }

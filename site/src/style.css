@@ -116,3 +116,45 @@ ol {
   margin: 0;
   padding-left: 1.2rem;
 }
+.pending,
+.declined {
+  color: var(--muted);
+  font-style: italic;
+}
+.value {
+  font-size: 1.5rem;
+}
+.figure svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 0.75rem;
+  color: var(--ink);
+  --notatio-fg: var(--ink);
+  --notatio-border: var(--rule);
+  --notatio-accent: var(--link);
+}
+table.groups {
+  width: auto;
+}
+table.groups td,
+table.groups th {
+  padding-right: 2rem;
+}
+.picker label {
+  margin-right: 0.75rem;
+}
+.picker input,
+.picker button {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--rule);
+  padding: 0.1rem 0.4rem;
+}
+details {
+  margin-bottom: 0.75rem;
+}
+summary {
+  cursor: pointer;
+}
