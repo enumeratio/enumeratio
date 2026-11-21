@@ -61,6 +61,7 @@ const expected: [string, string][] = [
   ['CycleType(Inverse(Permutation([3, 1, 4, 2])))', '["IntegerPartition",["List",4]]'],
   ['Count(KSubsets(5, 2))', '10'],
   ['FactorInteger(360)', '["List",["Tuple",2,3],["Tuple",3,2],["Tuple",5,1]]'],
+  ['Factorization(360)', '["Factorization",["Tuple",["List",2,3,5],["List",3,2,1]]]'],
 ];
 
 const session = openSession({ createWorker, spawnTimeoutMs: 60000 });

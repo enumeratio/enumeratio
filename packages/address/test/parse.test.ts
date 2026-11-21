@@ -28,13 +28,13 @@ describe('canonical inputs are fixed points: format(parse(x)) = x', () => {
     path('collection', seg('SetPartition', ['size', 4], ['blocks', 2])),
     path('collection', seg('SetPartition', ['blocks', 2])),
     path('collection', 'SetPartition', blocks(unordered(1, 3), 2, 4), 'Blocks', '2'),
-    path('collection', seg('KSubset', ['n', 5], ['k', 2])),
+    path('collection', seg('Subset', ['n', 5], ['k', 2])),
     path('collection', 'Permutation', ordered(2, 1, 4, 3)),
     path('collection', 'Permutation', ordered(3, 1, 4, 2), 'Inverse', 'CycleType'),
     path('collection', 'Permutation', ordered(1, -3, 2)),
     path('collection', 'DyckPath', rank(7)),
     path('collection', 'DyckPath', rank(7, 'lex')),
-    path('collection', 'Natural', '3811', seg('Numeral', ['base', 60])),
+    path('collection', 'Natural', '3811', seg('IntegerDigits', ['base', 60])),
     path('collection', 'Natural', '360', 'Factorization'),
     path('collection', 'Prime', '17'),
     path('stat', 'Area'),
@@ -54,7 +54,7 @@ describe('canonical inputs are fixed points: format(parse(x)) = x', () => {
 
   test('a query is part of the address and keeps its order', () => {
     const q = query(['group_by', 'k']).slice(1);
-    const r = read(path('collection', seg('KSubset', ['n', 5])), q);
+    const r = read(path('collection', seg('Subset', ['n', 5])), q);
     expect(r.canonical).toBe(true);
     expect(r.address.query).toEqual([['group_by', 'k']]);
     const two = query(['show', unordered('Area', 'Peaks')], ['order_by', 'Area']).slice(1);
@@ -97,6 +97,13 @@ describe('every row of the site map §5 table', () => {
     to(path('collection', 'Prime'))(path('collection', 'prime-numbers'));
   });
 
+  test('KSubset is an alias of Subset: it redirects, with its parameters', () => {
+    to(path('collection', 'Subset'))(path('collection', 'KSubset'));
+    to(path('collection', seg('Subset', ['n', 5], ['k', 2])))(
+      path('collection', seg('KSubset', ['n', 5], ['k', 2])),
+    );
+  });
+
   test('a recorded plural exception replaces the default rule', () => {
     to(path('collection', 'Simplex'))(path('collection', 'Simplices'));
     expect(read(path('collection', 'Simplexs')).problems.map((x) => x.code)).toEqual([
@@ -115,10 +122,10 @@ describe('every row of the site map §5 table', () => {
     check(path('collection', seg('dyck-path', ['SemiLength', 4])));
   });
 
-  test('KSubset: the word is the letter, and n is the same word', () => {
-    const check = to(path('collection', seg('KSubset', ['n', 5], ['k', 2])));
-    check(path('collection', seg('KSubset', ['k', 2], ['n', 5])));
-    to(path('collection', seg('KSubset', ['n', 5])))(path('collection', bare('KSubset', 5)));
+  test('Subset: the word is the letter, and n is the same word', () => {
+    const check = to(path('collection', seg('Subset', ['n', 5], ['k', 2])));
+    check(path('collection', seg('Subset', ['k', 2], ['n', 5])));
+    to(path('collection', seg('Subset', ['n', 5])))(path('collection', bare('Subset', 5)));
   });
 
   test('canonical order is the declared order; any order is read', () => {

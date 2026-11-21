@@ -8,10 +8,10 @@ function sizeWord(name: string): string {
   return word;
 }
 
-/** The word of KSubset's second parameter (the subset size k), from its route row. */
+/** The word of Subset's second parameter (the subset size k), from its route row. */
 const kWord = (() => {
-  const word = rowByName.get('KSubset')?.parameters?.[1]?.word;
-  if (word === undefined) throw new Error('KSubset has no second parameter in the route file');
+  const word = rowByName.get('Subset')?.parameters?.[1]?.word;
+  if (word === undefined) throw new Error('Subset has no second parameter in the route file');
   return word;
 })();
 
@@ -64,8 +64,8 @@ export const tryThese: { what: string; address: Address }[] = [
   {
     what: 'a row of Pascal’s triangle',
     address: inCollection(
-      'KSubset',
-      [{ word: sizeWord('KSubset'), value: '5' }],
+      'Subset',
+      [{ word: sizeWord('Subset'), value: '5' }],
       undefined,
       [],
       [[queryWords.groupBy, kWord]],

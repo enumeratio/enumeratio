@@ -25,10 +25,10 @@ describe('every address written in docs/site-map.md', () => {
     const named = [
       path('atlas'),
       path('collection', 'DyckPath', '11010010', 'Area'),
-      path('collection', seg('KSubset', ['n', 5])) + query([queryWords.groupBy, 'k']),
+      path('collection', seg('Subset', ['n', 5])) + query([queryWords.groupBy, 'k']),
       path('stat', 'Area', seg('DyckPath', ['semilength', 4])),
       path('collection', 'SetPartition', blocks(unordered(1, 3), 2, 4), 'Blocks', '2'),
-      path('collection', 'Natural', '3811', seg('Numeral', ['base', 60])),
+      path('collection', 'Natural', '3811', seg('IntegerDigits', ['base', 60])),
     ];
     for (const expected of named) expect(addresses).toContain(expected);
   });

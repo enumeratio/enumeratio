@@ -22,7 +22,7 @@ export const catalog: Catalog = {
     c('DyckPath', [p('semilength', true)]),
     c('SetPartition', [p('size', true), p('blocks')]),
     c('IntegerPartition', [p('size', true), p('parts')]),
-    c('KSubset', [p('n', true), p('k')]),
+    c('Subset', [p('n', true), p('k')], { aliases: ['KSubset'] }),
     c('Simplex', [], { pluralException: 'Simplices' }),
   ],
   subjects: ['Area', 'DyckArea', 'Inverse', 'Inversions'],

@@ -169,9 +169,10 @@ describe('the kernel in Node', () => {
     await ask('FactorInteger(6)');
   });
 
-  test('Factorization(360) is left unevaluated: a decline', async () => {
+  test('Factorization(360) is a value: the bases and the exponents', async () => {
     const answer = await ask('Factorization(360)');
-    expect(answer.status).toBe('declined');
+    expect(answer.status).toBe('value');
+    expect(answer.json).toEqual(['Factorization', ['Tuple', ['List', 2, 3, 5], ['List', 3, 2, 1]]]);
   });
 
   test('FactorInteger(360) is a value', async () => {
