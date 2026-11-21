@@ -27,6 +27,7 @@ import {
   identityParameters,
   isPoint,
   isServed,
+  kthExpression,
   measuredBindings,
   readElementJson,
   rowByName,
@@ -165,6 +166,22 @@ export function addressOfJson(json: Json): Address | undefined {
     return collectionAddress(row.name, read.parameters, written);
   }
   return undefined;
+}
+
+/**
+ * The address of an answer inside the collection it was listed in. An integer is a value, not a
+ * place to go (see above), but in a collection whose elements are integers it is the element.
+ */
+function addressWithin(row: RouteRow, bound: readonly Binding[], json: Json): Address | undefined {
+  const own = addressOfJson(json);
+  if (own) return { ...own, collection: { name: row.name, parameters: sorted(row, bound) } };
+  return row.value === 'integer' && isInteger(json)
+    ? collectionAddress(
+        row.name,
+        sorted(row, bound),
+        typeof json === 'number' ? String(json) : String((json as { num: unknown }).num),
+      )
+    : undefined;
 }
 
 /** A value on the page: the text, linked to its own address when it is a catalogued element. A decline says so. */
@@ -337,8 +354,60 @@ const countOf = (answer: Answer): number | undefined =>
     ? answer.json
     : undefined;
 
-async function elementAt(env: Env, collection: string, rank: number): Promise<Answer> {
-  return env.ask(`At(${collection}, ${rank})`);
+/**
+ * The member at a rank (from 1) in the collection's default order: the collection's own `At`,
+ * and where that declines, the row's k-th member (a set is not indexed by the engine; the
+ * order is the route file's statement). The answer carries the expression that was asked.
+ */
+async function elementAt(
+  env: Env,
+  row: RouteRow,
+  collection: string,
+  rank: number,
+): Promise<Answer> {
+  const own = await env.ask(`At(${collection}, ${rank})`);
+  if (own.status === 'value' || rank < 1) return own;
+  const kth = kthExpression(row, rank);
+  return kth === undefined ? own : env.ask(kth);
+}
+
+/** How many times the rank search doubles before it gives up: members up to 2^40. */
+const rankSearchLimit = 40;
+
+/**
+ * The rank of an element: the collection's own `IndexOf`, and where that declines and the row
+ * has a k-th member, a search over it. The members increase (a test holds each row to it), so
+ * the rank is found by doubling and then halving. Undefined when it is not a member.
+ */
+async function rankOf(
+  env: Env,
+  row: RouteRow,
+  collection: string,
+  element: string,
+): Promise<{ rank: number | undefined; asked: Answer }> {
+  const asked = await env.ask(`IndexOf(${collection}, ${element})`);
+  const direct = countOf(asked);
+  if (direct !== undefined || row.kth === undefined) return { rank: direct, asked };
+  const target = countOf(await env.ask(element));
+  if (target === undefined) return { rank: undefined, asked };
+  const at = async (k: number): Promise<number | undefined> =>
+    countOf(await elementAt(env, row, collection, k));
+  let high = 1;
+  let found = await at(high);
+  for (let i = 0; i < rankSearchLimit && found !== undefined && found < target; i++) {
+    high *= 2;
+    found = await at(high);
+  }
+  if (found === undefined || found < target) return { rank: undefined, asked };
+  let low = Math.floor(high / 2) + 1;
+  while (low < high) {
+    const middle = Math.floor((low + high) / 2);
+    const value = await at(middle);
+    if (value === undefined) return { rank: undefined, asked };
+    if (value < target) low = middle + 1;
+    else high = middle;
+  }
+  return (await at(low)) === target ? { rank: low, asked } : { rank: undefined, asked };
 }
 
 function membersSection(placed: Placed, address: Address): Section | undefined {
@@ -355,7 +424,7 @@ function membersSection(placed: Placed, address: Address): Section | undefined {
       const total = countOf(count);
       const head = h`<p>${epsilOf(`Count(${collection})`)} is ${shown(count)}.</p>`;
       const row$ = async (rank: number): Promise<{ element: Answer; cells: Answer[] }> => {
-        const element = await elementAt(env, collection, rank);
+        const element = await elementAt(env, row, collection, rank);
         const cells: Answer[] = [];
         for (const name of columns) {
           cells.push(
@@ -401,10 +470,8 @@ function membersSection(placed: Placed, address: Address): Section | undefined {
         note = h`<p class="note">Members ${from} to ${last}${total === undefined ? '' : ` of ${total}`}, in the collection’s own order. ${from > 1 ? window(Math.max(1, from - windowSize), 'Earlier') : ''} ${more ? window(last + 1, 'Later') : ''}</p>`;
       }
       const body = listed.map(({ rank, element, cells }) => {
-        const own = element.status === 'value' ? addressOfJson(element.json) : undefined;
-        const here = own
-          ? { ...own, collection: { name: row.name, parameters: sorted(row, placed.bound) } }
-          : undefined;
+        const here =
+          element.status === 'value' ? addressWithin(row, placed.bound, element.json) : undefined;
         return h`<tr><td>${rank}</td><td>${here ? a(here, textOf(element)) : shown(element)}</td>${cells.map((c) => h`<td>${shown(c)}</td>`)}</tr>`;
       });
       return h`${head}${note}<table><thead><tr><th>rank</th><th>member</th>${columns.map(
@@ -669,20 +736,21 @@ function membershipSection(
           h`<p>This is a view of an element of the unrestricted collection: the object’s own address is ${a(plan.object)}.</p>`,
         );
       }
-      if (collection !== undefined && placed.bound.length > 0 && !refused(found)) {
-        const rank = await env.ask(`IndexOf(${collection}, ${plan.epsil})`);
-        const n = countOf(rank);
+      if (
+        collection !== undefined &&
+        (placed.bound.length > 0 || row.kth !== undefined) &&
+        !refused(found)
+      ) {
+        const { rank: n, asked: rank } = await rankOf(env, row, collection, plan.epsil);
         if (n === undefined || n < 1) {
           parts.push(h`<p>Its rank in ${epsilOf(collection)} is ${notComputed(rank.reason)}.</p>`);
         } else {
           const neighbour = async (at: number): Promise<Safe> => {
             if (at < 1) return h`<span class="none">none (it is the first)</span>`;
-            const answer = await elementAt(env, collection, at);
+            const answer = await elementAt(env, row, collection, at);
             if (answer.status !== 'value') return h`<span class="none">none</span>`;
-            const own = addressOfJson(answer.json);
-            return own
-              ? a({ ...own, collection: { name: row.name, parameters: placed.bound } })
-              : shown(answer);
+            const own = addressWithin(row, placed.bound, answer.json);
+            return own ? a(own) : shown(answer);
           };
           parts.push(
             h`<p>Rank ${n} in ${epsilOf(collection)} (${a({ ...collectionAddress(row.name, placed.bound), element: { kind: 'rank', rank: n } })}). Before it: ${await neighbour(n - 1)}. After it: ${await neighbour(n + 1)}.</p>`,
@@ -821,12 +889,12 @@ function elementPage(row: RouteRow, address: Address): Live {
         ? {}
         : {
             moveTo: async (env: Env) => {
-              const answer = await elementAt(env, collection, el.rank);
-              const own = answer.status === 'value' ? addressOfJson(answer.json) : undefined;
+              const answer = await elementAt(env, row, collection, el.rank);
+              const own =
+                answer.status === 'value' ? addressWithin(row, bound, answer.json) : undefined;
               return own
                 ? {
                     ...own,
-                    collection: { name: row.name, parameters: bound },
                     chain: address.chain,
                     query: address.query,
                   }
@@ -837,8 +905,8 @@ function elementPage(row: RouteRow, address: Address): Live {
                 id: 'rank',
                 title: 'Rank',
                 run: async (env: Env) => {
-                  const answer = await elementAt(env, collection, el.rank);
-                  return h`<p>${epsilOf(`At(${collection}, ${el.rank})`)} is ${shown(answer)}.</p>`;
+                  const answer = await elementAt(env, row, collection, el.rank);
+                  return h`<p>${epsilOf(answer.asked)} is ${shown(answer)}.</p>`;
                 },
               },
             ],
@@ -996,7 +1064,7 @@ function conceptPage(area: string, address: Address): Live | undefined {
           const last = Math.min(total ?? windowSize, windowSize);
           const lines: Safe[] = [];
           for (let rank = 1; rank <= last; rank++) {
-            const element = await elementAt(env, collection, rank);
+            const element = await elementAt(env, row, collection, rank);
             const image =
               element.status === 'value' && element.epsil !== undefined
                 ? await applyStep(env, element.epsil, property(subject))

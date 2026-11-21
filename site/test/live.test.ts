@@ -175,12 +175,15 @@ describe('a collection, unbound: the counts for the first sizes', () => {
     }
   });
 
-  test('Natural has no size to count; the kernel counts it as infinite but gives no member list: it says so', async () => {
-    const c = await page(inCollection('Natural'));
+  test('Natural has no size to count; the engine does not index a set, so its members come from the row’s k-th member', async () => {
+    const c = await page(inCollection('Natural'), query([queryWords.show, '']));
     expect(c.sections.has('counts')).toBe(false);
     expect(valueOf(c, 'Count(NonNegativeIntegers)')).toBe('PositiveInfinity');
-    expectDeclined(c.sections.get('members') ?? '');
+    expect(answerTo(c, 'At(NonNegativeIntegers, 1)')?.status).not.toBe('value');
+    expect(valueOf(c, 'Subtract(1, 1)')).toBe('0');
+    expect(valueOf(c, 'Subtract(7, 1)')).toBe('6');
     expect(asksStarting(c, 'At(').length).toBeLessThanOrEqual(windowSize);
+    expect(strip(c.sections.get('members') ?? '')).toContain('Members 1 to 20');
   });
 
   test('Prime lists its first members, one window of them', async () => {
@@ -577,6 +580,17 @@ describe('an element by rank', () => {
     expect(c.movedTo).toBe(inCollection(dyckFour, dyck));
     expect(valueOf(c, 'At(DyckPaths(4), 7)')).toBe(dyckEpsil);
     expect(c.page.replaceWith).toBeUndefined();
+  });
+
+  test('a rank in Natural moves to the value: @7 is 6, by the row’s k-th member', async () => {
+    const c = await page(inCollection('Natural', rank(7)));
+    expect(c.movedTo).toBe(inCollection('Natural', '6'));
+    expect(valueOf(c, 'Subtract(7, 1)')).toBe('6');
+  });
+
+  test('a rank in Prime moves to the value: @4 is 7', async () => {
+    const c = await page(inCollection('Prime', rank(4)));
+    expect(c.movedTo).toBe(inCollection('Prime', '7'));
   });
 
   test('a rank beyond the count does not move, and shows a decline', async () => {

@@ -52,7 +52,7 @@ Every prefix is a page: `/collection`, `/collection/DyckPath`, `/collection/Dyck
 Always position 3, always one segment, one of two forms:
 
 - **By value**: the element written in its canonical form. `11010010`, `2_1_4_3`, `1,3`, `5040`, `3+2i`, `3_1`.
-- **By rank**: `@7` is the element at position 7 in the collection's default order, `@lex:7` in a named order. The collection segment says which collection the rank is in, so a rank address is only as stable as the parameters bound there.
+- **By rank**: `@7` is the element at position 7 in the collection's default order, `@lex:7` in a named order. The collection segment says which collection the rank is in, so a rank address is only as stable as the parameters bound there. Ranks count from 1: `/collection/Natural/@7` moves to `/collection/Natural/6`, and `/collection/Prime/@4` to `/collection/Prime/7`. A collection that is a set (`NonNegativeIntegers`) is not indexed by the engine, and the order a set is listed in is the catalogue's statement: the route file says it in the row's k-th member column, an Epsil expression over `k` (`Natural` is `Subtract(k, 1)`, `Prime` is `NthPrime(k)`), and the pages use it when the collection's own `At` declines. Without one, a rank on such a collection is "not computed".
 
 A value may carry the name of its notation in front, `cycle:(1_2)(3_4)`, when it is not written in the collection's default notation. The names of notations and orders are lowercase words. A notation-prefixed value is read and moved to the value in the default notation, which is the one canonical spelling; showing an element in another notation is a view (`?as=cycle`). A value itself never contains `:`, never begins with `@`, and is never `.` or `..`.
 
@@ -164,7 +164,7 @@ In the first pass the page itself moves a reader to the canonical address and st
 
 ## 6. The route file and the promise
 
-One file in the repository lists every route. Each row: the name, its kind (a collection, or a sub-collection and the collection it sits within), the Epsil expression behind it and the constructor of one element, its parameters and their aliases, its aliases, its plural where the default rule is wrong, outside identifiers, a status, who asked for it and when.
+One file in the repository lists every route. Each row: the name, its kind (a collection, or a sub-collection and the collection it sits within), the Epsil expression behind it, its k-th member in the default order where the collection is a set the engine does not index, the constructor of one element, its parameters and their aliases, its aliases, its plural where the default rule is wrong, outside identifiers, a status, who asked for it and when.
 
 | Status | Meaning | Promise |
 | --- | --- | --- |

@@ -34,6 +34,8 @@ describe('canonical inputs are fixed points: format(parse(x)) = x', () => {
     path('collection', 'Permutation', ordered(1, -3, 2)),
     path('collection', 'DyckPath', rank(7)),
     path('collection', 'DyckPath', rank(7, 'lex')),
+    path('collection', 'Natural', rank(7)),
+    path('collection', 'Prime', rank(4)),
     path('collection', 'Natural', '3811', seg('IntegerDigits', ['base', 60])),
     path('collection', 'Natural', '360', 'Factorization'),
     path('collection', 'Prime', '17'),
