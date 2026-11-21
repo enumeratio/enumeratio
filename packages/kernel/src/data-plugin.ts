@@ -12,8 +12,10 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { catalogResources } from '@notatio/catalog';
 import { symbolInfo } from '@notatio/manifest';
-import { headsIn, isServed, parseRouteFile } from '@enumeratio/routes/parse';
+import { isServed, parseRouteFile } from '@enumeratio/routes/parse';
 import type { Plugin } from 'vite-plus';
+import { elementHeadOf, headsOfRow } from './cell.ts';
+import { cellsFilePath, parseCell, writeRouteCells } from './parse-cells.ts';
 
 export interface CarrierNames {
   statistics: string[];
@@ -46,9 +48,9 @@ export function collectNotatioData(): { names: NotatioNames; descriptions: Notat
     if (found?.description !== undefined) descriptions[name] = found.description;
   };
   for (const row of rows) {
-    for (const head of headsIn(row)) describe(head);
+    for (const head of headsOfRow(row, parseCell)) describe(head);
     for (const name of row.show) mentioned.add(name);
-    const carrier = row.element?.kind === 'call' ? row.element.head : undefined;
+    const carrier = elementHeadOf(row, parseCell);
     if (carrier === undefined || names.carriers[carrier] !== undefined) continue;
     if (!resources.some((r) => r.kind === 'carrier' && r.name === carrier)) continue;
     const on = (kind: string): string[] =>
@@ -77,12 +79,18 @@ export function collectNotatioData(): { names: NotatioNames; descriptions: Notat
 const modules = {
   'virtual:notatio-names': 'names',
   'virtual:notatio-descriptions': 'descriptions',
+  'virtual:route-cells': 'cells',
 } as const;
 
 export function notatioData(): Plugin {
   let data: ReturnType<typeof collectNotatioData> | undefined;
   return {
     name: 'enumeratio-notatio-data',
+    // The route file's cells, parsed by notatio's parser into `build/route-cells.json` (build
+    // output, gitignored): before anything is loaded, so the file is never stale.
+    buildStart() {
+      writeRouteCells();
+    },
     resolveId(id) {
       return id in modules ? `\0${id}` : undefined;
     },
@@ -90,6 +98,7 @@ export function notatioData(): Plugin {
       if (!id.startsWith('\0')) return undefined;
       const which = modules[id.slice(1) as keyof typeof modules];
       if (which === undefined) return undefined;
+      if (which === 'cells') return `export default ${readFileSync(cellsFilePath, 'utf8')};`;
       data ??= collectNotatioData();
       return `export default ${JSON.stringify(data[which])};`;
     },

@@ -13,7 +13,7 @@
 # aliases and the plural exception: comma-separated; the default plural is a trailing s.
 # oeis and findstat: the outside identifier of the collection (its count, or its triangle), when one is known.
 name	kind	status	within	expression	kth	element	value	parameters	measures	aliases	plural	show	oeis	findstat	requested_by	date
-Natural	collection	live		NonNegativeIntegers	Subtract(k, 1)	x	integer	-		NaturalNumber		Factorization,FactorInteger,Divisors,IntegerDigits	A000027		site map	2026-11-20
+Natural	collection	live		NonNegativeIntegers	k - 1	x	integer	-		NaturalNumber		Factorization,FactorInteger,Divisors,IntegerDigits	A000027		site map	2026-11-20
 Prime	subcollection	live	Natural	PrimeNumbers	NthPrime(k)	x	integer	-		PrimeNumber		Factorization,FactorInteger,Divisors,IntegerDigits	A000040		site map	2026-11-20
 Permutation	collection	live		Permutations(size)		Permutation(x)	ordered	size*	size=Length(x)			Inversions,Descents,CycleType,Inverse	A000142		site map	2026-11-20
 DyckPath	collection	live		DyckPaths(semilength)		DyckPath(x)	digits	semilength*	semilength=Quotient(Length(x), 2)	DyckWord		Area,Bounce,Peaks	A000108		site map	2026-11-20

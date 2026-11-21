@@ -2,7 +2,8 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { beforeAll, describe, expect, test } from 'vite-plus/test';
-import { collectionExpression, kthExpression, rows } from '@enumeratio/routes';
+import { rows } from '@enumeratio/routes';
+import { collectionExpression, kthExpression } from '../src/expressions.ts';
 import { createNodeKernel } from '../src/node.ts';
 
 /**

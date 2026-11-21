@@ -175,22 +175,43 @@ describe('a collection, unbound: the counts for the first sizes', () => {
     }
   });
 
-  test('Natural has no size to count; the engine does not index a set, so its members come from the row’s k-th member', async () => {
+  test('Natural has no size to count; its members come from the row’s k-th member, and At is never asked', async () => {
     const c = await page(inCollection('Natural'), query([queryWords.show, '']));
     expect(c.sections.has('counts')).toBe(false);
     expect(valueOf(c, 'Count(NonNegativeIntegers)')).toBe('PositiveInfinity');
-    expect(answerTo(c, 'At(NonNegativeIntegers, 1)')?.status).not.toBe('value');
     expect(valueOf(c, 'Subtract(1, 1)')).toBe('0');
     expect(valueOf(c, 'Subtract(7, 1)')).toBe('6');
-    expect(asksStarting(c, 'At(').length).toBeLessThanOrEqual(windowSize);
+    // A row that states its k-th member is the catalogue stating the order: no At, no IndexOf, no Type.
+    expect(asksStarting(c, 'At(')).toEqual([]);
+    expect(asksStarting(c, 'IndexOf(')).toEqual([]);
+    expect(asksStarting(c, 'Type(')).toEqual([]);
     expect(strip(c.sections.get('members') ?? '')).toContain('Members 1 to 20');
   });
 
-  test('Prime lists its first members, one window of them', async () => {
+  test('a Natural page’s kernel session logs no compilation fallback of our own question', async () => {
+    // Asked of a set, At is our own incompatible-type error, and the engine logs a fallback for it.
+    const warned: string[] = [];
+    const original = console.warn;
+    console.warn = (...args: unknown[]) => {
+      warned.push(args.map(String).join(' '));
+    };
+    try {
+      // The members, and a rank, with no property asked: the page's own questions only.
+      await compute(inCollection('Natural'), query([queryWords.show, '']));
+      await compute(inCollection('Natural', rank(7)), query([queryWords.show, '']));
+      await compute(inCollection('Natural', '360'), query([queryWords.show, '']));
+    } finally {
+      console.warn = original;
+    }
+    expect(warned.filter((w) => w.includes('Compilation fallback'))).toEqual([]);
+  });
+
+  test('Prime lists its first members from the row’s k-th member, one window of them', async () => {
     const c = await page(inCollection('Prime'), query([queryWords.show, '']));
-    expect(valueOf(c, 'At(PrimeNumbers, 1)')).toBe('2');
-    expect(valueOf(c, 'At(PrimeNumbers, 4)')).toBe('7');
-    expect(asksStarting(c, 'At(').length).toBeLessThanOrEqual(windowSize);
+    expect(valueOf(c, 'NthPrime(1)')).toBe('2');
+    expect(valueOf(c, 'NthPrime(4)')).toBe('7');
+    expect(asksStarting(c, 'NthPrime(').length).toBe(windowSize);
+    expect(asksStarting(c, 'At(')).toEqual([]);
     expect(c.page.body.value).toContain(addressOf('Natural', []));
   });
 });
@@ -356,14 +377,15 @@ describe('a collection, bound: the member table', () => {
   });
 
   if (deep) {
-    test('DEEP: every collection of every first size lists at most one window', async () => {
-      for (const name of ['Permutation', 'DyckPath', 'SetPartition', 'IntegerPartition']) {
-        for (const n of [4, 5, 6, 7, 8, 9]) {
+    // One test for each collection and size, so a failure names the size.
+    for (const name of ['Permutation', 'DyckPath', 'SetPartition', 'IntegerPartition']) {
+      for (const n of [4, 5, 6, 7, 8, 9]) {
+        test(`DEEP: ${name} at size ${n} lists at most one window`, async () => {
           const c = await page(inCollection(segment(name, [0, n])));
           expect(asksStarting(c, 'At(').length, `${name} ${n}`).toBeLessThanOrEqual(windowSize);
-        }
+        });
       }
-    });
+    }
 
     test('DEEP: a window near the end of a very large collection', async () => {
       const c = await page(
@@ -586,6 +608,7 @@ describe('an element by rank', () => {
     const c = await page(inCollection('Natural', rank(7)));
     expect(c.movedTo).toBe(inCollection('Natural', '6'));
     expect(valueOf(c, 'Subtract(7, 1)')).toBe('6');
+    expect(asksStarting(c, 'At(')).toEqual([]);
   });
 
   test('a rank in Prime moves to the value: @4 is 7', async () => {

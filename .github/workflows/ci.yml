@@ -60,6 +60,8 @@ jobs:
       - run: pnpm --filter @enumeratio/site build
       # The worker as the build bundled it answers, through notatio's own session client.
       - run: node site/check-built-worker.ts
+      # The entry chunk and what it imports statically hold no compute-engine, and stay in budget.
+      - run: node site/check-built-entry.ts
       - uses: actions/upload-artifact@v4
         with:
           name: site

@@ -6,6 +6,7 @@
     "check": "vp check",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vp test run",
+    "test:deep": "DEEP_TESTS=1 vp test run",
     "build": "pnpm --filter @enumeratio/site build"
   },
   "devDependencies": {

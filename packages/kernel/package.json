@@ -7,11 +7,18 @@
   "exports": {
     ".": "./src/index.ts",
     "./catalogue": "./src/catalogue.ts",
+    "./cell": "./src/cell.ts",
+    "./expressions": "./src/expressions.ts",
+    "./parse-cells": "./src/parse-cells.ts",
     "./node": "./src/node.ts",
     "./data-plugin": "./src/data-plugin.ts"
   },
+  "scripts": {
+    "build": "node src/build-cells.ts"
+  },
   "dependencies": {
     "@cortex-js/compute-engine": "^0.187.1",
+    "@enumeratio/address": "workspace:*",
     "@enumeratio/routes": "workspace:*",
     "@notatio/boxes": "0.0.0",
     "@notatio/catalog": "0.0.0",

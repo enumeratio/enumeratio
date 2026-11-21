@@ -8,7 +8,6 @@ import collectionTsv from '../../../routes/collection.tsv?raw';
 import { type RouteFile, type RouteRow, catalogOf, parseRouteFile } from './parse.ts';
 
 export * from './parse.ts';
-export * from './template.ts';
 
 export const routeFile: RouteFile = parseRouteFile(collectionTsv);
 export const rows: readonly RouteRow[] = routeFile.rows;

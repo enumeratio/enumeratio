@@ -1,16 +1,16 @@
 import { beforeAll, describe, expect, test } from 'vite-plus/test';
 import { type Binding, marks } from '@enumeratio/address';
 import { plain, sameJson } from '@enumeratio/kernel';
-import { createNodeKernel } from '@enumeratio/kernel/node';
 import {
-  type RouteRow,
   collectionExpression,
   elementExpression,
+  givenOf,
   measuredBindings,
   readElementJson,
-  rowByName,
-} from '@enumeratio/routes';
-import { codecs, itemsFromJson, itemsToEpsil } from '../src/index.ts';
+} from '@enumeratio/kernel/expressions';
+import { createNodeKernel } from '@enumeratio/kernel/node';
+import { type RouteRow, rowByName } from '@enumeratio/routes';
+import { codecs, itemsFromJson, itemsToJson } from '../src/index.ts';
 
 /**
  * The codec and the kernel against each other, over every element of the small collections:
@@ -34,6 +34,18 @@ beforeAll(async () => {
 });
 
 const deep = process.env.DEEP_TESTS === '1';
+
+/**
+ * The timeout, in milliseconds, of one collection at one size under `DEEP_TESTS=1` (the standard
+ * run keeps the default timeout and its small sizes). The case that needs it is Permutation at
+ * size 6: its 720 elements take about 6.3 s on the development machine (up to 7.3 s), and a
+ * continuous-integration runner is about six times slower, so about 40 s. This leaves room above
+ * that for one more size at that rate, and no single test grows with the budget: each test is one
+ * collection at one size.
+ */
+const deepTimeoutMs = 60_000;
+const sweepOptions = deep ? { timeout: deepTimeoutMs } : {};
+
 const sizes = deep ? [1, 2, 3, 4, 5, 6] : [1, 2, 3];
 const subsetSizes = deep ? [1, 2, 3, 4, 5, 6, 7] : [1, 2, 3, 4];
 
@@ -89,7 +101,7 @@ interface Sweep {
 async function sweep(row: RouteRow, bound: Binding[]): Promise<Sweep> {
   const codec = codecs[row.value as keyof typeof codecs];
   const where = `${row.name} ${JSON.stringify(bound)}`;
-  const collection = collectionExpression(row, bound);
+  const collection = collectionExpression(row, givenOf(bound));
   if (!collection.ok) throw new Error(`${where}: no expression`);
   const count = await ask(`Count(${collection.epsil})`);
   expect(count.status, where).toBe('value');
@@ -116,7 +128,7 @@ async function sweep(row: RouteRow, bound: Binding[]): Promise<Sweep> {
     expect(back, `${where}: ${s} is read`).not.toBeNull();
     if (back === null) continue;
     expect(codec.write(back), `${where}: write(read(${s}))`).toBe(s);
-    const expressed = elementExpression(row, read.parameters, itemsToEpsil(back));
+    const expressed = elementExpression(row, givenOf(read.parameters), itemsToJson(back));
     expect(expressed.ok, `${where}: ${s} has an expression`).toBe(true);
     if (!expressed.ok) continue;
     const again = await ask(expressed.epsil, { holds: true });
@@ -132,19 +144,22 @@ async function sweep(row: RouteRow, bound: Binding[]): Promise<Sweep> {
 describe('every element of the small collections is written and read back', () => {
   const live = ['Permutation', 'DyckPath', 'SetPartition', 'IntegerPartition', 'Subset'];
 
-  test.each(live)('%s', async (name) => {
+  // One test for each collection and size, so a failure names the size.
+  for (const name of live) {
     const mine = cases().filter((c) => c.row.name === name);
-    expect(mine.length).toBeGreaterThan(0);
+    test(`${name} has cases`, () => {
+      expect(mine.length).toBeGreaterThan(0);
+    });
     for (const { row, bound } of mine) {
-      const result = await sweep(row, bound);
-      expect(
-        result.skipped,
-        `${name} ${JSON.stringify(bound)}: only the empty element is skipped`,
-      ).toBe(0);
-      // Distinct elements get distinct strings.
-      expect(result.spellings.size, `${name} ${JSON.stringify(bound)}`).toBe(result.elements);
+      const label = bound.map((b) => `${b.word}=${b.value}`).join(', ');
+      test(`${name}, ${label}`, sweepOptions, async () => {
+        const result = await sweep(row, bound);
+        expect(result.skipped, `${name} ${label}: only the empty element is skipped`).toBe(0);
+        // Distinct elements get distinct strings.
+        expect(result.spellings.size, `${name} ${label}`).toBe(result.elements);
+      });
     }
-  });
+  }
 
   test('the empty element is the only one without a spelling', async () => {
     // Size 0: each collection has exactly one element, the empty one, which no codec writes.
@@ -166,10 +181,10 @@ describe('membership is the kernel’s, not the codec’s', () => {
     const items = codec.read(raw);
     expect(items, `${name}: ${raw} is read`).not.toBeNull();
     if (items === null) return undefined;
-    const value = itemsToEpsil(items);
-    const element = elementExpression(row, bound, value);
+    const value = itemsToJson(items);
+    const element = elementExpression(row, givenOf(bound), value);
     if (!element.ok) throw new Error(`no element expression for ${name}`);
-    const home = collectionExpression(row, measuredBindings(row, bound, value));
+    const home = collectionExpression(row, measuredBindings(row, givenOf(bound), value));
     if (!home.ok) throw new Error(`no collection expression for ${name}`);
     const answer = await ask(`Element(${element.epsil}, ${home.epsil})`);
     expect(answer.status, `${name} ${raw}`).toBe('value');

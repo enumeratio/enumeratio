@@ -18,24 +18,31 @@ import {
   notatioReference,
   queryWords,
 } from '@enumeratio/address';
-import { itemsFromJson, itemsToEpsil } from '@enumeratio/codecs';
+import { itemsFromJson, itemsToJson } from '@enumeratio/codecs';
 import type { Answer, Ask, Json } from '@enumeratio/kernel';
 import {
-  type RouteRow,
   collectionExpression,
+  collectionHead,
   elementExpression,
+  elementHead,
+  givenOf,
   identityParameters,
-  isPoint,
-  isServed,
   kthExpression,
   measuredBindings,
   readElementJson,
+} from '@enumeratio/kernel/expressions';
+import {
+  type RouteRow,
+  isPoint,
+  isServed,
   rowByName,
   rows,
   unrestrictedCollection,
+  valueVariable,
 } from '@enumeratio/routes';
 import names from 'virtual:notatio-names';
 import { Safe, code, h } from './html.ts';
+import { searchRank } from './rank-search.ts';
 import {
   allMaps,
   allStatistics,
@@ -157,7 +164,7 @@ export function textOf(answer: Answer): string | undefined {
 export function addressOfJson(json: Json): Address | undefined {
   if (isInteger(json)) return undefined; // a number is a value here, not a place to go
   for (const row of rows) {
-    if (!isServed(row) || row.kind !== 'collection' || row.element?.kind !== 'call') continue;
+    if (!isServed(row) || row.kind !== 'collection' || elementHead(row) === undefined) continue;
     const read = readElementJson(row, json);
     if (!read) continue;
     const items = itemsFromJson(read.value);
@@ -275,7 +282,7 @@ interface Placed {
 function place(row: RouteRow, bound: readonly Binding[]): Placed {
   const bad = bound.find((b) => !isPoint(b.value));
   if (bad) return { row, bound: [...bound], missing: [bad.word] };
-  const expressed = collectionExpression(row, bound);
+  const expressed = collectionExpression(row, givenOf(bound));
   return expressed.ok
     ? { row, bound: [...bound], collection: expressed.epsil, missing: [] }
     : { row, bound: [...bound], missing: expressed.missing };
@@ -294,10 +301,10 @@ function planElement(placed: Placed, address: Address): ElementPlan | { missing:
   const { row, bound } = placed;
   const items = itemsOf(row, address);
   if (items === undefined) return { missing: [] };
-  const valueEpsil = itemsToEpsil(items);
-  const expressed = elementExpression(row, bound, valueEpsil);
+  const elementValue = itemsToJson(items);
+  const expressed = elementExpression(row, givenOf(bound), elementValue);
   if (!expressed.ok) return { missing: expressed.missing };
-  const full = measuredBindings(row, bound, valueEpsil);
+  const full = measuredBindings(row, givenOf(bound), elementValue);
   const home = collectionExpression(row, full);
   const identity = identityParameters(row);
   const value = address.element?.kind === 'value' ? address.element.value : '';
@@ -323,14 +330,14 @@ function countsSection(row: RouteRow, bound: readonly Binding[]): Section | unde
   const size = sizeParameter(row);
   if (!size || bound.some((b) => b.word === size.word)) return undefined;
   const at = (n: number): Binding[] => [...bound, { word: size.word, value: String(n) }];
-  if (!collectionExpression(row, at(0)).ok) return undefined;
+  if (!collectionExpression(row, givenOf(at(0))).ok) return undefined;
   return {
     id: 'counts',
     title: 'Counts',
     run: async ({ ask }) => {
       const cells: Safe[] = [];
       for (let n = 0; n < firstSizes; n++) {
-        const expressed = collectionExpression(row, at(n));
+        const expressed = collectionExpression(row, givenOf(at(n)));
         if (!expressed.ok) continue;
         const answer = await ask(`Count(${expressed.epsil})`);
         cells.push(
@@ -354,10 +361,41 @@ const countOf = (answer: Answer): number | undefined =>
     ? answer.json
     : undefined;
 
+/** The answer to a question a page did not need to ask: it says why, and is a decline. */
+const unasked = (asked: string, reason: string): Answer => ({ asked, status: 'declined', reason });
+
+const indexedByAsk = new WeakMap<Ask, Map<string, Promise<boolean>>>();
+
 /**
- * The member at a rank (from 1) in the collection's default order: the collection's own `At`,
- * and where that declines, the row's k-th member (a set is not indexed by the engine; the
- * order is the route file's statement). The answer carries the expression that was asked.
+ * Is the collection's type an indexed one? `At` and `IndexOf` are asked of such a collection
+ * only: asked of a set (`NonNegativeIntegers`) they are the page's own `incompatible-type`
+ * error, and the engine logs a compilation fallback for it. A type the kernel will not tell is
+ * not indexed.
+ */
+function isIndexed(env: Env, collection: string): Promise<boolean> {
+  let byCollection = indexedByAsk.get(env.ask);
+  if (!byCollection) indexedByAsk.set(env.ask, (byCollection = new Map()));
+  let found = byCollection.get(collection);
+  if (!found) {
+    found = env.ask(`Type(${collection})`).then((answer) => {
+      const type =
+        Array.isArray(answer.json) && answer.json[0] === 'TypeFrom' ? answer.json[1] : '';
+      return (
+        answer.status === 'value' &&
+        typeof type === 'string' &&
+        /\b(indexed_collection|list)\b/.test(type)
+      );
+    });
+    byCollection.set(collection, found);
+  }
+  return found;
+}
+
+/**
+ * The member at a rank (from 1) in the collection's default order. A row that states its k-th
+ * member is the catalogue stating the order, so that expression is the question, and the
+ * collection's own `At` is never asked. For a row without one, `At` is asked when the
+ * collection's type is indexed. The answer carries the expression that was asked.
  */
 async function elementAt(
   env: Env,
@@ -365,49 +403,50 @@ async function elementAt(
   collection: string,
   rank: number,
 ): Promise<Answer> {
-  const own = await env.ask(`At(${collection}, ${rank})`);
-  if (own.status === 'value' || rank < 1) return own;
   const kth = kthExpression(row, rank);
-  return kth === undefined ? own : env.ask(kth);
+  const asked = kth ?? `At(${collection}, ${rank})`;
+  if (rank < 1) return unasked(asked, 'Ranks count from 1.');
+  if (kth !== undefined) return env.ask(kth);
+  if (!(await isIndexed(env, collection))) {
+    return unasked(asked, 'The kernel does not index this collection.');
+  }
+  return env.ask(asked);
 }
 
-/** How many times the rank search doubles before it gives up: members up to 2^40. */
-const rankSearchLimit = 40;
-
 /**
- * The rank of an element: the collection's own `IndexOf`, and where that declines and the row
- * has a k-th member, a search over it. The members increase (a test holds each row to it), so
- * the rank is found by doubling and then halving. Undefined when it is not a member.
+ * The rank of an element. A row that states its k-th member has the rank found by `searchRank`
+ * over those members (bounded: past its caps the rank is "not computed"); otherwise it is the
+ * collection's own `IndexOf`, when its type is indexed.
  */
 async function rankOf(
   env: Env,
   row: RouteRow,
   collection: string,
   element: string,
-): Promise<{ rank: number | undefined; asked: Answer }> {
-  const asked = await env.ask(`IndexOf(${collection}, ${element})`);
-  const direct = countOf(asked);
-  if (direct !== undefined || row.kth === undefined) return { rank: direct, asked };
-  const target = countOf(await env.ask(element));
-  if (target === undefined) return { rank: undefined, asked };
-  const at = async (k: number): Promise<number | undefined> =>
-    countOf(await elementAt(env, row, collection, k));
-  let high = 1;
-  let found = await at(high);
-  for (let i = 0; i < rankSearchLimit && found !== undefined && found < target; i++) {
-    high *= 2;
-    found = await at(high);
+): Promise<{ rank: number | undefined; reason?: string }> {
+  if (row.kth === undefined) {
+    const asked = `IndexOf(${collection}, ${element})`;
+    if (!(await isIndexed(env, collection))) {
+      return { rank: undefined, reason: 'The kernel does not index this collection.' };
+    }
+    const answer = await env.ask(asked);
+    const rank = countOf(answer);
+    return rank === undefined
+      ? { rank, ...(answer.reason ? { reason: answer.reason } : {}) }
+      : { rank };
   }
-  if (found === undefined || found < target) return { rank: undefined, asked };
-  let low = Math.floor(high / 2) + 1;
-  while (low < high) {
-    const middle = Math.floor((low + high) / 2);
-    const value = await at(middle);
-    if (value === undefined) return { rank: undefined, asked };
-    if (value < target) low = middle + 1;
-    else high = middle;
+  const target = await env.ask(element);
+  const wanted = countOf(target);
+  if (wanted === undefined) {
+    return { rank: undefined, ...(target.reason ? { reason: target.reason } : {}) };
   }
-  return (await at(low)) === target ? { rank: low, asked } : { rank: undefined, asked };
+  const found = await searchRank(
+    async (k) => countOf(await elementAt(env, row, collection, k)),
+    wanted,
+  );
+  return found.rank === undefined
+    ? { rank: undefined, reason: found.reason ?? '' }
+    : { rank: found.rank };
 }
 
 function membersSection(placed: Placed, address: Address): Section | undefined {
@@ -500,7 +539,7 @@ function groupSection(placed: Placed, address: Address): Section | undefined {
         let seen = false;
         for (let value = 0; value <= groupLimit; value++) {
           const at = sorted(row, [...bound, { word: by, value: String(value) }]);
-          const expressed = collectionExpression(row, at);
+          const expressed = collectionExpression(row, givenOf(at));
           if (!expressed.ok) {
             return h`<p class="notice">Grouping by ${code(by)} also needs ${expressed.missing.map((m) => code(m))} bound. ${notComputed()}</p>`;
           }
@@ -637,9 +676,7 @@ function definitionSection(row: RouteRow): Section {
     id: 'definition',
     title: 'Definition',
     run: async (env) => {
-      const head = row.expressions[0];
-      const name =
-        head?.kind === 'call' ? head.head : head?.kind === 'name' ? head.name : undefined;
+      const name = collectionHead(row);
       const sentence = name === undefined ? undefined : await env.describe(name);
       return h`${sentence ? sentenceParagraph(env, sentence) : h`<p class="note">notatio records no sentence for this collection.</p>`}
       <p>In Epsil: ${epsilOf(row.expression ?? '')}; one element is ${row.element ? epsilOf(templateText(row)) : notComputed()}.</p>`;
@@ -650,8 +687,8 @@ function definitionSection(row: RouteRow): Section {
 const templateText = (row: RouteRow): string => elementExpressionText(row) ?? '';
 
 function elementExpressionText(row: RouteRow): string | undefined {
-  const all = (row.parameters ?? []).map((p) => ({ word: p.word, value: p.word }));
-  const expressed = elementExpression(row, all, 'x');
+  const all = (row.parameters ?? []).map((p) => ({ word: p.word, json: p.word }));
+  const expressed = elementExpression(row, all, valueVariable);
   return expressed.ok ? expressed.epsil : undefined;
 }
 
@@ -741,9 +778,9 @@ function membershipSection(
         (placed.bound.length > 0 || row.kth !== undefined) &&
         !refused(found)
       ) {
-        const { rank: n, asked: rank } = await rankOf(env, row, collection, plan.epsil);
+        const { rank: n, reason } = await rankOf(env, row, collection, plan.epsil);
         if (n === undefined || n < 1) {
-          parts.push(h`<p>Its rank in ${epsilOf(collection)} is ${notComputed(rank.reason)}.</p>`);
+          parts.push(h`<p>Its rank in ${epsilOf(collection)} is ${notComputed(reason)}.</p>`);
         } else {
           const neighbour = async (at: number): Promise<Safe> => {
             if (at < 1) return h`<span class="none">none (it is the first)</span>`;
