@@ -5,7 +5,8 @@
   "description": "The route file (routes/*.tsv) and the one module that reads it.",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./parse": "./src/parse.ts"
   },
   "dependencies": {
     "@enumeratio/address": "workspace:*"

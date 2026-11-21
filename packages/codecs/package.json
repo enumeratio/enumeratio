@@ -1,0 +1,17 @@
+{
+  "name": "@enumeratio/codecs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "How an element is written in an address: one reader and one writer for each shape of value, built on the table of marks.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@enumeratio/address": "workspace:*"
+  },
+  "devDependencies": {
+    "@enumeratio/kernel": "workspace:*",
+    "@enumeratio/routes": "workspace:*"
+  }
+}

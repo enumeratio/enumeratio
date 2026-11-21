@@ -1,3 +1,47 @@
 packages:
   - packages/*
   - site
+
+# notatio overrides: begin (written by tools/notatio/unpack.ts --write-overrides)
+overrides:
+  '@notatio/adeles': file:./vendor/notatio/packages/notatio-adeles
+  '@notatio/analytic': file:./vendor/notatio/packages/notatio-analytic
+  '@notatio/bench': file:./vendor/notatio/packages/notatio-bench
+  '@notatio/boxes': file:./vendor/notatio/packages/notatio-boxes
+  '@notatio/braid': file:./vendor/notatio/packages/notatio-braid
+  '@notatio/catalog': file:./vendor/notatio/packages/notatio-catalog
+  '@notatio/ce-patches': file:./vendor/notatio/packages/notatio-ce-patches
+  '@notatio/census': file:./vendor/notatio/packages/notatio-census
+  '@notatio/cli': file:./vendor/notatio/packages/notatio-cli
+  '@notatio/combinatorics': file:./vendor/notatio/packages/notatio-combinatorics
+  '@notatio/complex-numerals': file:./vendor/notatio/packages/notatio-complex-numerals
+  '@notatio/components': file:./vendor/notatio/packages/notatio-components
+  '@notatio/config': file:./vendor/notatio/packages/notatio-config
+  '@notatio/diagram': file:./vendor/notatio/packages/notatio-diagram
+  '@notatio/engine': file:./vendor/notatio/packages/notatio-engine
+  '@notatio/entry': file:./vendor/notatio/packages/notatio-entry
+  '@notatio/evaluation': file:./vendor/notatio/packages/notatio-evaluation
+  '@notatio/formats': file:./vendor/notatio/packages/notatio-formats
+  '@notatio/frontend': file:./vendor/notatio/packages/notatio-frontend
+  '@notatio/geometric': file:./vendor/notatio/packages/notatio-geometric
+  '@notatio/groupalgebra': file:./vendor/notatio/packages/notatio-groupalgebra
+  '@notatio/hecke': file:./vendor/notatio/packages/notatio-hecke
+  '@notatio/hopf': file:./vendor/notatio/packages/notatio-hopf
+  '@notatio/hypercomplex': file:./vendor/notatio/packages/notatio-hypercomplex
+  '@notatio/incidence': file:./vendor/notatio/packages/notatio-incidence
+  '@notatio/manifest': file:./vendor/notatio/packages/notatio-manifest
+  '@notatio/modular': file:./vendor/notatio/packages/notatio-modular
+  '@notatio/number-theory': file:./vendor/notatio/packages/notatio-number-theory
+  '@notatio/numerals': file:./vendor/notatio/packages/notatio-numerals
+  '@notatio/oracle': file:./vendor/notatio/packages/notatio-oracle
+  '@notatio/plausible': file:./vendor/notatio/packages/notatio-plausible
+  '@notatio/polytope': file:./vendor/notatio/packages/notatio-polytope
+  '@notatio/quiver': file:./vendor/notatio/packages/notatio-quiver
+  '@notatio/raster': file:./vendor/notatio/packages/notatio-raster
+  '@notatio/reference': file:./vendor/notatio/packages/notatio-reference
+  '@notatio/residues': file:./vendor/notatio/packages/notatio-residues
+  '@notatio/statistics': file:./vendor/notatio/packages/notatio-statistics
+  '@notatio/structures': file:./vendor/notatio/packages/notatio-structures
+  '@notatio/utils': file:./vendor/notatio/packages/notatio-utils
+  '@notatio/wolfram': file:./vendor/notatio/packages/notatio-wolfram
+# notatio overrides: end
