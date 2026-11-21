@@ -76,7 +76,7 @@ const firstPass = [
   'DyckPath',
   'SetPartition',
   'IntegerPartition',
-  'KSubset',
+  'Subset',
 ];
 
 describe('the route file', () => {
@@ -282,7 +282,6 @@ describe('the route file and docs/site-map.md agree', () => {
     'Genus',
     'BraidWord',
     'Label',
-    'Numeral',
   ]);
 
   test('every name §4 lists is a row', () => {
@@ -301,7 +300,7 @@ describe('the route file and docs/site-map.md agree', () => {
     let checked = 0;
     for (const span of exampleCollectionPaths()) {
       const head = /^[A-Z][A-Za-z]*/.exec(span)?.[0] ?? '';
-      if (!findCollection(catalog, head)) continue; // `Numeral;base=60`: a property
+      if (!findCollection(catalog, head)) continue; // `IntegerDigits;base=60`: a property
       const read = parseAddress(`${marks.segment}collection${marks.segment}${span}`, '', {
         catalog,
       });
@@ -326,6 +325,12 @@ describe('renamed rows', () => {
     ] as const) {
       expect(findCollection(catalog, alias)?.name, alias).toBe(name);
     }
+  });
+
+  test('KSubset is an alias of Subset, the one collection with n and k', () => {
+    expect(rowOf('Subset').aliases).toEqual(['KSubset']);
+    expect(findCollection(catalog, 'KSubset')?.name).toBe('Subset');
+    expect(rows.filter((r) => r.name === 'Subset')).toHaveLength(1);
   });
 
   test('Prime, Semiprime and Natural are unchanged', () => {
@@ -459,7 +464,7 @@ describe('collectionExpression', () => {
   test('a collection with no parameters is its symbol', () => {
     expect(collectionExpression(rowOf('Natural'), [])).toEqual({
       ok: true,
-      epsil: 'NaturalNumbers',
+      epsil: 'NonNegativeIntegers',
     });
     expect(collectionExpression(rowOf('Prime'), [])).toEqual({ ok: true, epsil: 'PrimeNumbers' });
   });
@@ -496,12 +501,12 @@ describe('collectionExpression', () => {
       ok: true,
       epsil: 'IntegerPartitions(7, [3])',
     });
-    const subsets = rowOf('KSubset');
-    expect(collectionExpression(subsets, bind('KSubset', [0, 5], [1, 2]))).toEqual({
+    const subsets = rowOf('Subset');
+    expect(collectionExpression(subsets, bind('Subset', [0, 5], [1, 2]))).toEqual({
       ok: true,
       epsil: 'KSubsets(5, 2)',
     });
-    expect(collectionExpression(subsets, bind('KSubset', [0, 5]))).toEqual({
+    expect(collectionExpression(subsets, bind('Subset', [0, 5]))).toEqual({
       ok: true,
       epsil: 'Subsets(5)',
     });
@@ -516,16 +521,16 @@ describe('collectionExpression', () => {
       ok: false,
       missing: [word('SetPartition', 0)],
     });
-    expect(collectionExpression(rowOf('KSubset'), bind('KSubset', [1, 2]))).toEqual({
+    expect(collectionExpression(rowOf('Subset'), bind('Subset', [1, 2]))).toEqual({
       ok: false,
-      missing: [word('KSubset', 0)],
+      missing: [word('Subset', 0)],
     });
   });
 
   test('a parameter no form uses is not guessed at', () => {
     const result = collectionExpression(rowOf('Permutation'), [{ word: 'nonesuch', value: '3' }]);
     expect(result.ok).toBe(false);
-    const extra = collectionExpression(rowOf('Natural'), bind('KSubset', [0, 3]));
+    const extra = collectionExpression(rowOf('Natural'), bind('Subset', [0, 3]));
     expect(extra.ok).toBe(false);
   });
 
@@ -555,20 +560,20 @@ describe('elementExpression', () => {
   });
 
   test('a parameter an element cannot be written without is needed, and others are not', () => {
-    const subsets = rowOf('KSubset');
-    expect(identityParameters(subsets)).toEqual([word('KSubset', 0)]);
-    expect(elementExpression(subsets, bind('KSubset', [0, 5]), '[1, 3]')).toEqual({
+    const subsets = rowOf('Subset');
+    expect(identityParameters(subsets)).toEqual([word('Subset', 0)]);
+    expect(elementExpression(subsets, bind('Subset', [0, 5]), '[1, 3]')).toEqual({
       ok: true,
       epsil: 'Finset(Tuple(5, [1, 3]))',
     });
     // k is bound in the address but is not part of the element.
-    expect(elementExpression(subsets, bind('KSubset', [0, 5], [1, 2]), '[1, 3]')).toEqual({
+    expect(elementExpression(subsets, bind('Subset', [0, 5], [1, 2]), '[1, 3]')).toEqual({
       ok: true,
       epsil: 'Finset(Tuple(5, [1, 3]))',
     });
-    expect(elementExpression(subsets, bind('KSubset', [1, 2]), '[1, 3]')).toEqual({
+    expect(elementExpression(subsets, bind('Subset', [1, 2]), '[1, 3]')).toEqual({
       ok: false,
-      missing: [word('KSubset', 0)],
+      missing: [word('Subset', 0)],
     });
     expect(identityParameters(rowOf('Permutation'))).toEqual([]);
   });
@@ -596,9 +601,9 @@ describe('readElementJson', () => {
   });
 
   test('the parameters the constructor carries are read back', () => {
-    expect(readElementJson(rowOf('KSubset'), ['Finset', ['Tuple', 5, list(1, 3)]])).toEqual({
+    expect(readElementJson(rowOf('Subset'), ['Finset', ['Tuple', 5, list(1, 3)]])).toEqual({
       value: list(1, 3),
-      parameters: bind('KSubset', [0, 5]),
+      parameters: bind('Subset', [0, 5]),
     });
   });
 
@@ -606,10 +611,10 @@ describe('readElementJson', () => {
     expect(readElementJson(rowOf('Permutation'), ['DyckPath', list(1, 0)])).toBeUndefined();
     expect(readElementJson(rowOf('Permutation'), 5)).toBeUndefined();
     expect(
-      readElementJson(rowOf('KSubset'), ['Finset', ['Tuple', 'five', list(1, 3)]]),
+      readElementJson(rowOf('Subset'), ['Finset', ['Tuple', 'five', list(1, 3)]]),
     ).toBeUndefined();
     expect(
-      readElementJson(rowOf('KSubset'), ['Finset', ['Tuple', 2.5, list(1, 3)]]),
+      readElementJson(rowOf('Subset'), ['Finset', ['Tuple', 2.5, list(1, 3)]]),
     ).toBeUndefined();
     expect(readElementJson(rowOf('Integer'), 5)).toBeUndefined();
   });
@@ -620,9 +625,9 @@ describe('readElementJson', () => {
 
   test('what elementExpression writes is read back by readElementJson', () => {
     const json = ['Finset', ['Tuple', 5, list(1, 3)]];
-    const read = readElementJson(rowOf('KSubset'), json);
+    const read = readElementJson(rowOf('Subset'), json);
     expect(read?.value).toEqual(list(1, 3));
-    expect(read?.parameters).toEqual(bind('KSubset', [0, 5]));
+    expect(read?.parameters).toEqual(bind('Subset', [0, 5]));
   });
 });
 
@@ -643,8 +648,8 @@ describe('measuredBindings', () => {
     expect(measuredBindings(rowOf('Permutation'), bind('Permutation', [0, 4]), '[3, 1]')).toEqual(
       bind('Permutation', [0, 4]),
     );
-    expect(measuredBindings(rowOf('KSubset'), bind('KSubset', [0, 5]), '[1, 3]')).toEqual(
-      bind('KSubset', [0, 5], [1, 'Length([1, 3])']),
+    expect(measuredBindings(rowOf('Subset'), bind('Subset', [0, 5]), '[1, 3]')).toEqual(
+      bind('Subset', [0, 5], [1, 'Length([1, 3])']),
     );
   });
 
@@ -660,13 +665,13 @@ describe('measuredBindings', () => {
   });
 
   test('heads and parameters are read from a row’s templates', () => {
-    expect(headsIn(rowOf('KSubset')).toSorted()).toEqual(
+    expect(headsIn(rowOf('Subset')).toSorted()).toEqual(
       ['Finset', 'KSubsets', 'Length', 'Subsets', 'Tuple'].toSorted(),
     );
-    expect(headsIn(rowOf('Natural'))).toEqual(['NaturalNumbers']);
-    expect(parametersIn(rowOf('KSubset'), parseTemplate('KSubsets(n, k)'))).toEqual([
-      word('KSubset', 0),
-      word('KSubset', 1),
+    expect(headsIn(rowOf('Natural'))).toEqual(['NonNegativeIntegers']);
+    expect(parametersIn(rowOf('Subset'), parseTemplate('KSubsets(n, k)'))).toEqual([
+      word('Subset', 0),
+      word('Subset', 1),
     ]);
   });
 });

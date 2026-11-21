@@ -44,7 +44,7 @@ export function exampleAddresses(): string[] {
 /**
  * A relative collection address written in a table or a list: it begins with a
  * name and carries parameters or a further segment (`Natural/360/Factorization`,
- * `SetPartition;size=4;blocks=2`, `Numeral;base=60`). Templates with an empty
+ * `SetPartition;size=4;blocks=2`, `IntegerDigits;base=60`). Templates with an empty
  * value (`QuadraticInteger;d=`) are not examples and are left out.
  */
 export function exampleCollectionPaths(): string[] {

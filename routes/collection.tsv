@@ -12,13 +12,13 @@
 # aliases and the plural exception: comma-separated; the default plural is a trailing s.
 # oeis and findstat: the outside identifier of the collection (its count, or its triangle), when one is known.
 name	kind	status	within	expression	element	value	parameters	measures	aliases	plural	show	oeis	findstat	requested_by	date
-Natural	collection	live		NaturalNumbers	x	integer	-		NaturalNumber		Factorization,FactorInteger,Divisors,IntegerDigits	A000027		site map	2026-11-20
+Natural	collection	live		NonNegativeIntegers	x	integer	-		NaturalNumber		Factorization,FactorInteger,Divisors,IntegerDigits	A000027		site map	2026-11-20
 Prime	subcollection	live	Natural	PrimeNumbers	x	integer	-		PrimeNumber		Factorization,FactorInteger,Divisors,IntegerDigits	A000040		site map	2026-11-20
 Permutation	collection	live		Permutations(size)	Permutation(x)	ordered	size*	size=Length(x)			Inversions,Descents,CycleType,Inverse	A000142		site map	2026-11-20
 DyckPath	collection	live		DyckPaths(semilength)	DyckPath(x)	digits	semilength*	semilength=Quotient(Length(x), 2)	DyckWord		Area,Bounce,Peaks	A000108		site map	2026-11-20
 SetPartition	collection	live		SetPartitions(size, blocks) | SetPartitions(size)	SetPartition(x)	blocks	size*|blocks	size=Length(Flatten(x))|blocks=Length(x)			Blocks	A000110		site map	2026-11-20
 IntegerPartition	collection	live		IntegerPartitions(size, [parts]) | IntegerPartitions(size)	IntegerPartition(x)	parts	size*|parts	size=Sum(x)|parts=Length(x)			PartCount,LargestPart	A000041		site map	2026-11-20
-KSubset	collection	live		KSubsets(n, k) | Subsets(n)	Finset(Tuple(n, x))	unordered	n*|k	k=Length(x)				A007318		site map	2026-11-20
+Subset	collection	live		KSubsets(n, k) | Subsets(n)	Finset(Tuple(n, x))	unordered	n*|k	k=Length(x)	KSubset			A007318		site map	2026-11-20
 Integer	collection	proposed												site map	2026-11-20
 Rational	collection	proposed												site map	2026-11-20
 Fraction	collection	proposed												site map	2026-11-20
@@ -61,7 +61,6 @@ PolygonalNumber	subcollection	proposed	Natural				sides		Polygonal					site map	
 PositionalNumeral	collection	proposed					base							site map	2026-11-20
 Word	collection	proposed					length*|alphabet							site map	2026-11-20
 Arrangement	collection	proposed												site map	2026-11-20
-Subset	collection	proposed												site map	2026-11-20
 Multiset	collection	proposed												site map	2026-11-20
 SignedSubset	collection	proposed												site map	2026-11-20
 Derangement	subcollection	proposed	Permutation											site map	2026-11-20

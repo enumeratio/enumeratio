@@ -10,6 +10,7 @@ import {
   formatStep,
   leafAreas,
   marks,
+  notatioReference,
   queryWords,
 } from '@enumeratio/address';
 import {
@@ -72,7 +73,7 @@ export function homeBody(): Safe {
   <p class="etymology">Latin <i>ēnumerātiō</i>, from <i>ēnumerāre</i>, “to count out”: <i>ē-</i>, “out”, and <i>numerāre</i>, “to count”, from <i>numerus</i>, “number”. Numeration is writing a number down; enumeration is counting and listing the things numbers count. Both come from the same root, and this site is about both.</p>
   <p>enumeratio is a home for mathematical objects, each at an address meant to last: the kinds of numbers and the ways of writing them, integer sequences, permutations, partitions, paths, trees and the other structures of combinatorics, the statistics on them and the maps between them, the polytopes whose faces they label, knots.</p>
   <p class="motto">One object, one page, one address.</p>
-  <p>The site is being rebuilt. The <a href="${atlasLink}">atlas</a> lists what is planned and what is under way; <a href="${aboutLink}">about</a> says what the site is, and <a href="${contributeLink}">contribute</a> says how to propose a route. To compute with these objects today, use <a href="https://notatio.app">notatio</a>.</p>
+  <p>The site is being rebuilt. The <a href="${atlasLink}">atlas</a> lists what is planned and what is under way; <a href="${aboutLink}">about</a> says what the site is, and <a href="${contributeLink}">contribute</a> says how to propose a route. To compute with these objects today, use <a href="${notatioReference.origin}">notatio</a>.</p>
   <p>Some addresses to try:</p>
   <ul class="plain">
     ${tryThese.map(
@@ -91,7 +92,7 @@ function aboutBody(): Safe {
   <p>enumeratio.dev is the home of individual mathematical objects: one address per object, meant to last. It is about the mathematics, and is agnostic about what computes it.</p>
   <p>An address is read the same way everywhere. Its first segment is an area (${code(areas.collection)}, ${code(areas.stat)}, ${code(areas.map)}, ${code(areas.sequence)}, ${code(areas.input)}); then comes a collection, with any parameters bound inside its segment; then one element of it, by value or by rank; then a chain of properties. The <a href="${atlasLink}">atlas</a> lists every route and its status. The specification is the <a href="${repositoryUrl}/blob/main/docs/site-map.md">site map</a>.</p>
   <p>The characters of the grammar are provisional and will change as the site is used. Nothing here is promised permanent until the site is announced.</p>
-  <p>Objects are computed in the page. The engine behind them is part of <a href="https://notatio.app">notatio</a>, a notebook for mathematics.</p>
+  <p>Objects are computed in the page. The engine behind them is part of <a href="${notatioReference.origin}">notatio</a>, a notebook for mathematics.</p>
 </main>`;
 }
 

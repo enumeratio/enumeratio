@@ -8,7 +8,15 @@
  * was evaluated to answer for the other heads.
  */
 import { beforeAll, describe, expect, test } from 'vite-plus/test';
-import { areas, formatAddress, formatPath, marks, queryWords, shapes } from '@enumeratio/address';
+import {
+  areas,
+  formatAddress,
+  formatPath,
+  marks,
+  notatioReference,
+  queryWords,
+  shapes,
+} from '@enumeratio/address';
 import { isServed, rowByName, rows } from '@enumeratio/routes';
 import names from 'virtual:notatio-names';
 import {
@@ -106,12 +114,12 @@ const valueCell = (c: Computed): string | undefined =>
 // ---------------------------------------------------------------- a collection
 
 describe('unbound parameters are said once, with the picker', () => {
-  test('KSubset;n=5 says k is unbound, lists every subset and offers the picker', async () => {
-    const c = await page(inCollection(segment('KSubset', [0, 5])));
+  test('Subset;n=5 says k is unbound, lists every subset and offers the picker', async () => {
+    const c = await page(inCollection(segment('Subset', [0, 5])));
     const html = c.page.body.value;
-    expect(strip(html)).toContain(`${word('KSubset', 1)} is unbound`);
-    expect(strip(html)).not.toContain(`${word('KSubset', 0)} is unbound`);
-    expect(html).toContain('data-picker="KSubset"');
+    expect(strip(html)).toContain(`${word('Subset', 1)} is unbound`);
+    expect(strip(html)).not.toContain(`${word('Subset', 0)} is unbound`);
+    expect(html).toContain('data-picker="Subset"');
     expect(valueOf(c, 'Count(KSubsets(5, 0))')).toBeUndefined();
   });
   test('a collection with nothing bound names every parameter; one fully bound names none', async () => {
@@ -138,7 +146,7 @@ describe('a collection, unbound: the counts for the first sizes', () => {
     ['DyckPath', (n) => `DyckPaths(${n})`, [1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862]],
     ['SetPartition', (n) => `SetPartitions(${n})`, [1, 1, 2, 5, 15, 52, 203, 877, 4140, 21147]],
     ['IntegerPartition', (n) => `IntegerPartitions(${n})`, [1, 1, 2, 3, 5, 7, 11, 15, 22, 30]],
-    ['KSubset', (n) => `Subsets(${n})`, [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]],
+    ['Subset', (n) => `Subsets(${n})`, [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]],
   ];
 
   test.each(cases)('%s', async (name, expression, expected) => {
@@ -167,10 +175,10 @@ describe('a collection, unbound: the counts for the first sizes', () => {
     }
   });
 
-  test('Natural has no size to count, and no member list the kernel can give: it says so', async () => {
+  test('Natural has no size to count; the kernel counts it as infinite but gives no member list: it says so', async () => {
     const c = await page(inCollection('Natural'));
     expect(c.sections.has('counts')).toBe(false);
-    expect(answerTo(c, 'Count(NaturalNumbers)')?.status).toBe('declined');
+    expect(valueOf(c, 'Count(NonNegativeIntegers)')).toBe('PositiveInfinity');
     expectDeclined(c.sections.get('members') ?? '');
     expect(asksStarting(c, 'At(').length).toBeLessThanOrEqual(windowSize);
   });
@@ -245,8 +253,8 @@ describe('a collection, bound: the member table', () => {
 
   test('?group_by=<parameter> draws a row of Pascal’s triangle', async () => {
     const c = await page(
-      inCollection(segment('KSubset', [0, 5])),
-      query([queryWords.groupBy, word('KSubset', 1)]),
+      inCollection(segment('Subset', [0, 5])),
+      query([queryWords.groupBy, word('Subset', 1)]),
     );
     const row = [1, 5, 10, 10, 5, 1];
     for (const [k, count] of row.entries()) {
@@ -263,7 +271,7 @@ describe('a collection, bound: the member table', () => {
     // Each cell links to its own sub-collection: n bound, k bound.
     for (const [k, m] of cells.entries()) {
       expect(m[1]).toBe(
-        addressOf('KSubset', [
+        addressOf('Subset', [
           [0, 5],
           [1, k],
         ]),
@@ -483,15 +491,13 @@ describe('an element by value', () => {
     expect(sectionText(c, 'membership')).toContain('not an element');
   });
 
-  test('a collection the kernel cannot decide membership in: the page says so and goes on', async () => {
+  test('Natural: the kernel decides membership in NonNegativeIntegers, and the page goes on', async () => {
     const c = await page(inCollection('Natural', '360'));
-    expect(answerTo(c, 'Element(360, NaturalNumbers)')?.status).toBe('declined');
-    expect(sectionText(c, 'membership')).toContain('does not decide');
+    expect(valueOf(c, 'Element(360, NonNegativeIntegers)')).toBe('True');
+    expect(sectionText(c, 'membership')).toContain('true');
     expect(valueOf(c, 'FactorInteger(360)')).toBe('[(2, 3), (3, 2), (5, 1)]');
     expect(valueOf(c, 'IntegerDigits(360)')).toBe('[3, 6, 0]');
-    // Factorization is left unevaluated by the kernel: a decline, not an empty cell.
-    expect(answerTo(c, 'Factorization(360)')?.status).toBe('declined');
-    expectDeclined(c.sections.get('properties') ?? '');
+    expect(valueOf(c, 'Factorization(360)')).toBe('Factorization(([2, 3, 5], [3, 2, 1]))');
   });
 
   test('a set partition and an integer partition', async () => {
@@ -535,8 +541,8 @@ describe('an element by value', () => {
   });
 
   test('a subset: n is kept in the object’s address, k is dropped', async () => {
-    const c = await page(inCollection(segment('KSubset', [0, 5], [1, 2]), unordered(1, 3)));
-    expect(c.page.canonical).toBe(canonicalOf('KSubset', [[0, 5]], unordered(1, 3)));
+    const c = await page(inCollection(segment('Subset', [0, 5], [1, 2]), unordered(1, 3)));
+    expect(c.page.canonical).toBe(canonicalOf('Subset', [[0, 5]], unordered(1, 3)));
     expect(valueOf(c, 'Element(Finset(Tuple(5, [1, 3])), KSubsets(5, 2))')).toBe('True');
     // notatio: the second 2-subset of 1..5 in order.
     expect(valueOf(c, 'IndexOf(KSubsets(5, 2), Finset(Tuple(5, [1, 3])))')).toBe('2');
@@ -545,18 +551,18 @@ describe('an element by value', () => {
   });
 
   test('a subset with only n bound: its size is the kernel’s to measure', async () => {
-    const c = await page(inCollection(segment('KSubset', [0, 5]), unordered(1, 3)));
-    expect(c.page.canonical).toBe(canonicalOf('KSubset', [[0, 5]], unordered(1, 3)));
+    const c = await page(inCollection(segment('Subset', [0, 5]), unordered(1, 3)));
+    expect(c.page.canonical).toBe(canonicalOf('Subset', [[0, 5]], unordered(1, 3)));
     expect(valueOf(c, 'Element(Finset(Tuple(5, [1, 3])), KSubsets(5, Length([1, 3])))')).toBe(
       'True',
     );
   });
 
   test('a subset without n cannot be written: the page says so and asks the kernel nothing', async () => {
-    const c = await page(inCollection('KSubset', unordered(1, 3)));
+    const c = await page(inCollection('Subset', unordered(1, 3)));
     expect(c.asked).toEqual([]);
     expect(c.page.sections ?? []).toEqual([]);
-    expect(c.page.body.value).toContain(`<code>${word('KSubset', 0)}</code>`);
+    expect(c.page.body.value).toContain(`<code>${word('Subset', 0)}</code>`);
     expectDeclined(c.page.body.value);
   });
 });
@@ -705,12 +711,10 @@ describe('a property chain', () => {
 // ---------------------------------------------------------------- the declines
 
 describe('a decline says so: never an empty value, never a zero', () => {
-  test('Natural/360/Factorization: the kernel leaves it unevaluated', async () => {
+  test('Natural/360/Factorization computes: the bases and the exponents', async () => {
     const c = await page(inCollection('Natural', '360', 'Factorization'));
-    expect(answerTo(c, 'Factorization(360)')?.status).toBe('declined');
-    const value = c.sections.get('value') ?? '';
-    expectDeclined(value);
-    expect(strip(valueCell(c) ?? '')).toBe('not computed');
+    expect(valueOf(c, 'Factorization(360)')).toBe('Factorization(([2, 3, 5], [3, 2, 1]))');
+    expect(c.sections.get('value')).not.toContain('class="declined"');
     // FactorInteger is the kernel's value for what the map names.
     const integer = await page(inCollection('Natural', '360', 'FactorInteger'));
     expect(valueOf(integer, 'FactorInteger(360)')).toBe('[(2, 3), (3, 2), (5, 1)]');
@@ -726,11 +730,11 @@ describe('a decline says so: never an empty value, never a zero', () => {
     expect(strip(valueCell(c) ?? '')).not.toBe('0');
   });
 
-  test('Natural/3811/Numeral;base=60: not computed', async () => {
+  test('Natural/3811/IntegerDigits;base=60 is the head’s own name, and computes', async () => {
     const base = names.parameters.IntegerDigits?.[0] as string;
-    const c = await page(inCollection('Natural', '3811', seg('Numeral', [base, 60])));
-    expectDeclined(c.sections.get('value') ?? '');
-    expect(strip(valueCell(c) ?? '')).toBe('not computed');
+    const c = await page(inCollection('Natural', '3811', seg('IntegerDigits', [base, 60])));
+    expect(valueOf(c, 'IntegerDigits(3811, 60)')).toBe('[1, 3, 31]');
+    expect(c.sections.get('value')).not.toContain('class="declined"');
     expect(c.page.found).toBe(true);
   });
 
@@ -738,6 +742,29 @@ describe('a decline says so: never an empty value, never a zero', () => {
     const c = await page(inCollection('SetPartition', setPartition, 'Blocks', '2', 'Blocks'));
     expect(asksStarting(c, 'Blocks(3')).toEqual([]);
     expectDeclined(c.sections.get('value') ?? '');
+  });
+});
+
+// ---------------------------------------------------------------- notatio's reference pages
+
+const referenceOf = (shape: string, carrier: string, name: string): string =>
+  notatioReference.origin + shape.replace('{carrier}', carrier).replace('{name}', name);
+
+describe('a statistic and a map link to notatio’s reference page, one per carrier', () => {
+  test('/stat/Area: the page and its DyckPath section', async () => {
+    const url = referenceOf(notatioReference.statistic, 'DyckPath', 'Area');
+    const unbound = await page(inStat('Area'));
+    expect(unbound.page.body.value).toContain(`href="${url}"`);
+    const bound = await page(inStat('Area', segment('DyckPath', [0, 4])));
+    expect(bound.sections.get('reference')).toContain(`href="${url}"`);
+  });
+
+  test('/map/Inverse: the page and its Permutation section', async () => {
+    const url = referenceOf(notatioReference.map, 'Permutation', 'Inverse');
+    const unbound = await page(inMap('Inverse'));
+    expect(unbound.page.body.value).toContain(`href="${url}"`);
+    const bound = await page(inMap('Inverse', segment('Permutation', [0, 3])));
+    expect(bound.sections.get('reference')).toContain(`href="${url}"`);
   });
 });
 
@@ -919,10 +946,10 @@ describe('/input', () => {
 
   // Suspected bug in site/src/live.ts inputPage (line 959): it asks with `holds: true`, so an
   // expression the kernel leaves unevaluated is reported as a value.
-  //   /input/Factorization(360) shows <code>Factorization(360)</code> as the result, with no
+  //   /input/Subsets(3) shows <code>Subsets(3)</code> as the result, with no
   //   "not computed"; expected a decline (AGENTS.md: a decline is shown as a decline).
   test('a declined expression says so', async () => {
-    const c = await page(input('Factorization(360)'));
+    const c = await page(input('Subsets(3)'));
     expectDeclined(c.sections.get('value') ?? '');
   });
 });
@@ -945,9 +972,7 @@ describe('nothing written in an address becomes part of an asked expression', ()
       await none(inCollection(seg('DyckPath', [word('DyckPath', 0), piece]), rank(7)));
       await none(inStat('Area', seg('DyckPath', [word('DyckPath', 0), piece])));
       await none(inMap('Inverse', seg('Permutation', [word('Permutation', 0), piece])));
-      await none(
-        inCollection(seg('KSubset', [word('KSubset', 0), 5], [word('KSubset', 1), piece])),
-      );
+      await none(inCollection(seg('Subset', [word('Subset', 0), 5], [word('Subset', 1), piece])));
     }
   });
 
@@ -990,7 +1015,7 @@ describe('nothing written in an address becomes part of an asked expression', ()
 
   test('a parameter an element cannot be written without, that is not a point, never reaches the Epsil', async () => {
     for (const piece of pieces) {
-      await none(inCollection(seg('KSubset', [word('KSubset', 0), piece]), unordered(1, 3)));
+      await none(inCollection(seg('Subset', [word('Subset', 0), piece]), unordered(1, 3)));
     }
   });
 });
@@ -998,8 +1023,8 @@ describe('nothing written in an address becomes part of an asked expression', ()
 // ---------------------------------------------------------------- a property's name is the catalogue's
 
 describe('a property named in the catalogue is asked by its catalogue name first', () => {
-  test('/collection/KSubset;n=5/1,3/Sum is the statistic, not the subset back', async () => {
-    const c = await page(inCollection(segment('KSubset', [0, 5]), unordered(1, 3), 'Sum'));
+  test('/collection/Subset;n=5/1,3/Sum is the statistic, not the subset back', async () => {
+    const c = await page(inCollection(segment('Subset', [0, 5]), unordered(1, 3), 'Sum'));
     expect(valueOf(c, 'CombinatorialStat(Finset(Tuple(5, [1, 3])), "Sum")')).toBe('4');
     expect(asksStarting(c, 'Sum(')).toEqual([]);
     expect(valueCell(c)).toContain('4');

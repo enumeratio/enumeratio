@@ -1,6 +1,6 @@
 # enumeratio.dev: the site map
 
-> **Draft 3.3, 2026-11-21.** A first pass is being built from this draft (§9). The structure of an address (what each position means) is settled enough to build on; the exact characters (separators, parameter words) are provisional and are expected to change as the site is used. Nothing is promised permanent until the site is announced (§6).
+> **Draft 3.4, 2026-11-21.** A first pass is being built from this draft (§9). The structure of an address (what each position means) is settled enough to build on; the exact characters (separators, parameter words) are provisional and are expected to change as the site is used. Nothing is promised permanent until the site is announced (§6).
 >
 > Decided (2026-11-20): a new repository (`enumeratio/enumeratio`); a clean slate at enumeratio.dev; every implementation in Epsil on compute-engine, drawn with notatio; the earlier codebases are mined, not revived; no npm publishing yet; a parameter is written with the collection's own word, with `n` read as an alias for its size.
 
@@ -28,7 +28,7 @@ Earlier work this draws on: the precursor project (its route map, its address te
 | 1 | The area: a lowercase word from a short closed list (§3). | `collection`, `stat`, `map` |
 | 2 | A collection, with any parameters bound inside the segment. | `DyckPath`, `DyckPath;semilength=4`, `SetPartition;size=4;blocks=2` |
 | 3 | One element of it, by value or by rank. | `11010010`, `@7`, `@lex:7` |
-| 4… | A chain of properties, each applied to the result of the one before. | `Area`, `Blocks/2`, `Numeral;base=60` |
+| 4… | A chain of properties, each applied to the result of the one before. | `Area`, `Blocks/2`, `IntegerDigits;base=60` |
 
 Every prefix is a page: `/collection`, `/collection/DyckPath`, `/collection/DyckPath;semilength=4`, `/collection/DyckPath/11010010`, `/collection/DyckPath/11010010/Area`.
 
@@ -37,15 +37,15 @@ Every prefix is a page: `/collection`, `/collection/DyckPath`, `/collection/Dyck
 `Name` then zero or more `;parameter=value`.
 
 - **Named, not positional.** `SetPartition;size=4;blocks=2`, not `SetPartition_4,2`. A name is self-describing; any subset of the parameters can be bound (`;blocks=2` alone is every set partition into two blocks); and a collection can gain a parameter later without changing the meaning of any existing URL. Positional forms cannot do the last two, and the last one matters most for permanence.
-- **The parameter's name is the collection's own word**: `DyckPath;semilength=4`, `Permutation;size=4`, `LabeledGraph;vertices=5`, `Word;length=3;alphabet=2`. Where the literature's own word is a letter, the letter is the word (`KSubset;n=5;k=2`, `TorusKnot;p=2;q=3`).
+- **The parameter's name is the collection's own word**: `DyckPath;semilength=4`, `Permutation;size=4`, `LabeledGraph;vertices=5`, `Word;length=3;alphabet=2`. Where the literature's own word is a letter, the letter is the word (`Subset;n=5;k=2`, `TorusKnot;p=2;q=3`).
 - **`n` is read everywhere** as an alias for a collection's size parameter, and a bare value binds it: `DyckPath;n=4` and `DyckPath;4` redirect to `DyckPath;semilength=4`.
 - **A bound parameter is a restriction like any other.** Parameters are not only sizes: `PrimePair;gap=2`, `PolygonalNumber;sides=5`, `Residue;modulus=12`, `QuadraticInteger;d=-5`.
 - **Canonical order** is the declared order of the parameters; any order is read.
 - **A parameter's value** is written by the same rules as an element (§2.5). The first pass reads integers only.
-- **Only point values go in the path.** A range or a grouped parameter is a view over many sub-collections, so it is query string: `/collection/KSubset;n=5?group_by=k` is a row of Pascal's triangle. (The archived project reached the same split.)
+- **Only point values go in the path.** A range or a grouped parameter is a view over many sub-collections, so it is query string: `/collection/Subset;n=5?group_by=k` is a row of Pascal's triangle. (The archived project reached the same split.)
 - This is the matrix-parameter form (RFC 3986 §3.3 leaves `;` and `=` to the scheme for exactly this), and it is where the archived explorer ended up. `~` and `_` were tried before it.
 
-**A restriction as a parameter, or as a name** (provisional; no firm rule is agreed). A restriction is a parameter when its condition takes a value and each value gives a different collection (`PermutationAvoiding;pattern=231`, `PrimePair;gap=2`). It is a name when the literature has a noun for it (`Derangement`, `Involution`, `Prime`). Where both hold at one point (`TwinPrime` is `PrimePair;gap=2`), the noun is the address and the parametric point redirects to it.
+**A restriction as a parameter, or as a name** (provisional; no firm rule is agreed). A restriction is a parameter when its condition takes a value and each value gives a different collection (`PermutationAvoiding;pattern=231`, `PrimePair;gap=2`). It is a name when the literature has a noun for it (`Derangement`, `Involution`, `Prime`). Where both hold at one point (`TwinPrime` is `PrimePair;gap=2`), the noun is the address and the parametric point redirects to it. A name that only says a parameter exists is not a collection of its own: `KSubset` is `Subset`, read with its `k`, and redirects there.
 
 ### 2.2 The element segment
 
@@ -56,7 +56,7 @@ Always position 3, always one segment, one of two forms:
 
 A value may carry the name of its notation in front, `cycle:(1_2)(3_4)`, when it is not written in the collection's default notation. The names of notations and orders are lowercase words. A notation-prefixed value is read and moved to the value in the default notation, which is the one canonical spelling; showing an element in another notation is a view (`?as=cycle`). A value itself never contains `:`, never begins with `@`, and is never `.` or `..`.
 
-**An element's canonical address is in its unrestricted collection.** A parameter the element can be measured for (its size, its number of blocks) is never part of that address; a parameter the element cannot be written without (the `n` a subset is taken from, a residue's modulus, a numeral's base) always is: `/collection/KSubset;n=5/1,3`, and `;k=2` is a view of it. `/collection/DyckPath/11010010` is the object. `/collection/DyckPath;semilength=4/11010010` is the same object seen inside a sub-collection: it resolves only if the element belongs there, shows it in that context (its rank there, its neighbours), and names the first as canonical. The same holds for a named sub-collection: `/collection/TwinPrime/17` and `/collection/Prime/17` are views of `/collection/Natural/17`. A rank address redirects to the value address. A value that is not a member has no canonical address (§5).
+**An element's canonical address is in its unrestricted collection.** A parameter the element can be measured for (its size, its number of blocks) is never part of that address; a parameter the element cannot be written without (the `n` a subset is taken from, a residue's modulus, a numeral's base) always is: `/collection/Subset;n=5/1,3`, and `;k=2` is a view of it. `/collection/DyckPath/11010010` is the object. `/collection/DyckPath;semilength=4/11010010` is the same object seen inside a sub-collection: it resolves only if the element belongs there, shows it in that context (its rank there, its neighbours), and names the first as canonical. The same holds for a named sub-collection: `/collection/TwinPrime/17` and `/collection/Prime/17` are views of `/collection/Natural/17`. A rank address redirects to the value address. A value that is not a member has no canonical address (§5).
 
 ### 2.3 Properties and substructure
 
@@ -68,10 +68,10 @@ After the element, each segment is a property applied to what the path has reach
 | a part | `/collection/SetPartition/1,3!2!4/Blocks` | the blocks, in order |
 | an index into a result | `/collection/SetPartition/1,3!2!4/Blocks/2` | the second block |
 | a map | `/collection/Permutation/3_1_4_2/Inverse` | an element of another collection; the page shows it and links to its own address |
-| a representation | `/collection/Natural/3811/Numeral;base=60` | 3811 written in base 60 |
+| a representation | `/collection/Natural/3811/IntegerDigits;base=60` | the digits of 3811 in base 60 |
 | a derived object | `/collection/Natural/360/Factorization` | 2³·3²·5 as an element of `IntegerFactorization` |
 
-- A property takes parameters the same way a collection does: `Numeral;base=60`.
+- A property takes parameters the same way a collection does: `IntegerDigits;base=60`.
 - An integer segment after a list-valued result indexes it, from 1.
 - A chain can continue through a map: `…/Permutation/3_1_4_2/Inverse/CycleType`. This is how one reads through a map into another collection.
 - This is `At(Blocks(x), 2)` and `CycleType(Inverse(x))` in Epsil, read left to right.
@@ -122,13 +122,13 @@ There are no areas by discipline. If an area is ever added it is one more lowerc
 
 ● data exists in notatio today · ◐ only in the earlier projects · ○ new.
 
-**Numbers.** `Natural`, `Integer`, `Rational`, `Fraction`, `GaussianInteger`, `GaussianRational`, `QuadraticInteger;d=`, `AlgebraicInteger`, `Residue;modulus=`, `AdicInteger;p=`, `ProfiniteInteger`, `Adele`, `ContinuedFraction`, `EgyptianFraction`, `Quaternion`, `Multicomplex` ●; `EisensteinInteger` ○; `Ordinal`, `Cardinal`, `Float` ◐.
+**Numbers.** `Natural` (from 0), `Integer`, `Rational`, `Fraction`, `GaussianInteger`, `GaussianRational`, `QuadraticInteger;d=`, `AlgebraicInteger`, `Residue;modulus=`, `AdicInteger;p=`, `ProfiniteInteger`, `Adele`, `ContinuedFraction`, `EgyptianFraction`, `Quaternion`, `Multicomplex` ●; `EisensteinInteger` ○; `Ordinal`, `Cardinal`, `Float` ◐.
 
 **Numbers by what they are made of.** `Natural/360/Factorization` leads to `IntegerFactorization`, where a number is its primes and their exponents. The named sets of integers are then conditions on the exponents, and each is a sub-collection of `Natural` whose page states that condition: `Prime` (one exponent, equal to 1), `PrimePower` (one exponent), `Semiprime`, `SquarefreeNumber` (exponents 0 or 1), `Square` (all even), `KFreeNumber;k=`, `PowerfulNumber`, `SphenicNumber`, `SmoothNumber;bound=`, `RoughNumber;bound=`; a `Rational` is the same with integer exponents. `TwinPrime` is `PrimePair;gap=2`. About 60 more by divisors, digits and recurrences (`PerfectNumber`, `AbundantNumber`, `CarmichaelNumber`, `HarshadNumber`, `KaprekarNumber`, `FibonacciNumber`, `CatalanNumber`, `PolygonalNumber;sides=`, …) ●.
 
-**Numerals.** A numeral is reached two ways. As a property of a number: `Natural/3811/Numeral;base=60`. As an object in its own right, a string of digits: `PositionalNumeral;base=60/1_3_31`. Systems: positional, balanced, bijective, negative base, mixed radix (`;radices=2,3,5`), factorial, primorial, residue (`;moduli=3,5,7`), Zeckendorf, Ostrowski, combinatorial, Roman, hypernumerary, adic ●; complex bases, Witt ◐.
+**Numerals.** A numeral is reached two ways. As a property of a number: `Natural/3811/IntegerDigits;base=60`. As an object in its own right, a string of digits: `PositionalNumeral;base=60/1_3_31`. Systems: positional, balanced, bijective, negative base, mixed radix (`;radices=2,3,5`), factorial, primorial, residue (`;moduli=3,5,7`), Zeckendorf, Ostrowski, combinatorial, Roman, hypernumerary, adic ●; complex bases, Witt ◐.
 
-**Combinatorial structures** ● (74 object types): `Word`, `Arrangement`, `Subset`, `KSubset`, `Multiset`, `SignedSubset`; `Permutation` and its kin (`Derangement`, `Involution`, `BaxterPermutation`, `PermutationAvoiding;pattern=231`, `SignedPermutation`, `ColoredPermutation`, `AffinePermutation`, …); `Endofunction`, `Surjection`, `ParkingFunction`; `IntegerPartition` and kin; `IntegerComposition` and kin; `SetPartition`, `SetComposition`, `PerfectMatching`; `BinaryWord`, `Necklace`, `LyndonWord`, `GrayCode`; `DyckPath`, `MotzkinPath`, `SchroederPath`, `DelannoyPath`; `BinaryTree`, `OrderedTree`, `LabeledTree`, `RootedForest`; `LabeledGraph`, `Tournament`, `Poset`; `StandardTableau`, `SemistandardTableau`, `GelfandTsetlinPattern`, `AlternatingSignMatrix`, `RookPlacement`; `CartanType`.
+**Combinatorial structures** ● (74 object types): `Word`, `Arrangement`, `Subset`, `Multiset`, `SignedSubset`; `Permutation` and its kin (`Derangement`, `Involution`, `BaxterPermutation`, `PermutationAvoiding;pattern=231`, `SignedPermutation`, `ColoredPermutation`, `AffinePermutation`, …); `Endofunction`, `Surjection`, `ParkingFunction`; `IntegerPartition` and kin; `IntegerComposition` and kin; `SetPartition`, `SetComposition`, `PerfectMatching`; `BinaryWord`, `Necklace`, `LyndonWord`, `GrayCode`; `DyckPath`, `MotzkinPath`, `SchroederPath`, `DelannoyPath`; `BinaryTree`, `OrderedTree`, `LabeledTree`, `RootedForest`; `LabeledGraph`, `Tournament`, `Poset`; `StandardTableau`, `SemistandardTableau`, `GelfandTsetlinPattern`, `AlternatingSignMatrix`, `RookPlacement`; `CartanType`.
 
 **Polytopes** ◐. A polytope is the collection of its faces: `Permutahedron;n=4` is the truncated octahedron, `Permutahedron;n=4;dimension=2` its 14 polygons, and a face's address is the structure that labels it, `Permutahedron;n=4/1,3!2!4`. `Associahedron`, `Cyclohedron`, `Simplex`, `CrossPolytope`, `Hypercube`. The property `Label` takes a face to that structure's own page (a set composition, a dissection, a subset, a signed subset). Which projection is drawn is a view.
 
@@ -136,7 +136,7 @@ There are no areas by discipline. If an area is ever added it is one more lowerc
 
 **Groups and algebras** ●. `SymmetricGroup;n=4` is a collection whose elements are permutations, so its element addresses are views of `Permutation` elements. `CyclicGroup`, `DihedralGroup`, `AlternatingGroup`, `BraidGroup`, `ModularGroup`; `PartitionAlgebra`, `BrauerAlgebra`, `TemperleyLiebAlgebra`, `HeckeAlgebra`, `IncidenceAlgebra`, `PathAlgebra`.
 
-**Tables of numbers** ◐. Not a separate kind: a number triangle is a collection with two parameters viewed with one of them grouped (`KSubset;n=5?group_by=k`), and its entry is a count (`/collection/KSubset;n=5;k=2` has 10 members).
+**Tables of numbers** ◐. Not a separate kind: a number triangle is a collection with two parameters viewed with one of them grouped (`Subset;n=5?group_by=k`), and its entry is a count (`/collection/Subset;n=5;k=2` has 10 members).
 
 ## 5. Reading other spellings
 
@@ -203,11 +203,11 @@ Enough to follow every kind of address in §2 end to end, over a few collections
 
 | Collection | What it exercises |
 | --- | --- |
-| `Natural`, with `Prime` inside it | numbers; a named sub-collection; `Factorization`; `Numeral;base=` |
+| `Natural`, with `Prime` inside it | numbers; a named sub-collection; `Factorization`; `IntegerDigits;base=` |
 | `Permutation` | ordered items, the short form, maps (`Inverse`) and chains through them |
 | `DyckPath` | a size the collection has its own word for; statistics; rank addresses |
 | `SetPartition` | blocks, two parameters, substructure (`Blocks/2`) |
 | `IntegerPartition` | a value where the short form is refused |
-| `KSubset` | unordered members; two letter-named parameters; a grouped view (a row of Pascal's triangle) |
+| `Subset` | unordered members; two letter-named parameters, one of them part of an element's address; a grouped view (a row of Pascal's triangle) |
 
 Everything else in §4 is listed in the atlas as `proposed`. Also in the first pass: `/stat/<Name>` and `/map/<Name>` for the statistics and maps of those collections, `/sequence/` for their OEIS numbers, `/input/`, `/atlas`, `/about`, `/contribute`.

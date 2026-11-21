@@ -60,7 +60,7 @@ function cases(): { row: RouteRow; bound: Binding[] }[] {
     const row = rowOf(name);
     for (const n of sizes) out.push({ row, bound: [{ word: sizeWord(row), value: String(n) }] });
   }
-  const subset = rowOf('KSubset');
+  const subset = rowOf('Subset');
   for (const n of subsetSizes) {
     for (let k = 1; k <= n; k++) {
       out.push({
@@ -130,7 +130,7 @@ async function sweep(row: RouteRow, bound: Binding[]): Promise<Sweep> {
 }
 
 describe('every element of the small collections is written and read back', () => {
-  const live = ['Permutation', 'DyckPath', 'SetPartition', 'IntegerPartition', 'KSubset'];
+  const live = ['Permutation', 'DyckPath', 'SetPartition', 'IntegerPartition', 'Subset'];
 
   test.each(live)('%s', async (name) => {
     const mine = cases().filter((c) => c.row.name === name);
@@ -199,10 +199,10 @@ describe('membership is the kernel’s, not the codec’s', () => {
   });
 
   test('a subset with a member beyond n is read and is no subset of 1..n', async () => {
-    const row = rowOf('KSubset');
+    const row = rowOf('Subset');
     const n: Binding = { word: sizeWord(row), value: '3' };
     expect(codecs.unordered.read([1, 5].join(marks.unordered))).toEqual(['1', '5']);
-    expect(await member('KSubset', [1, 5].join(marks.unordered), [n])).toBe('False');
-    expect(await member('KSubset', [1, 3].join(marks.unordered), [n])).toBe('True');
+    expect(await member('Subset', [1, 5].join(marks.unordered), [n])).toBe('False');
+    expect(await member('Subset', [1, 3].join(marks.unordered), [n])).toBe('True');
   });
 });
