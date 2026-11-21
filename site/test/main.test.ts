@@ -276,6 +276,22 @@ describe('the router', () => {
       );
     });
 
+    test('a hidden tab never fires an animation frame, and the kernel still starts and fills the page', async () => {
+      const frame = vi.spyOn(win, 'requestAnimationFrame').mockImplementation(() => 0);
+      try {
+        const { env } = fakeEnv((e) => value(e, 77, '77'));
+        const loadEnv = vi.fn(async () => env);
+        go(path('collection', 'DyckPath'));
+        stop = start(win, { loadEnv });
+        expect(frame).toHaveBeenCalled();
+        await vi.waitFor(() => expect(app().querySelector('.pending')).toBeNull());
+        expect(loadEnv).toHaveBeenCalledTimes(1);
+        expect(document.getElementById('section-counts')?.textContent).toContain('77');
+      } finally {
+        frame.mockRestore();
+      }
+    });
+
     test('a member keeps its canonical link', async () => {
       const { env } = fakeEnv((e) =>
         e.startsWith('Element(') ? value(e, 'True', 'True') : declined(e),
