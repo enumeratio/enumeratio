@@ -361,9 +361,11 @@ describe('the router', () => {
 
     test('a rank address moves once to its value address and redraws', async () => {
       const { env, asked } = fakeEnv((e) =>
-        e.startsWith('At(')
-          ? value(e, dyckJson, 'DyckPath([1, 1, 0, 1, 0, 0, 1, 0])')
-          : declined(e),
+        e.startsWith('Type(')
+          ? value(e, ['TypeFrom', 'indexed_collection<dyck_path>'], e)
+          : e.startsWith('At(')
+            ? value(e, dyckJson, 'DyckPath([1, 1, 0, 1, 0, 0, 1, 0])')
+            : declined(e),
       );
       const rankAddress = path('collection', dyckSizeFour, rank(7));
       go(rankAddress);

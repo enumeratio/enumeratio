@@ -175,22 +175,43 @@ describe('a collection, unbound: the counts for the first sizes', () => {
     }
   });
 
-  test('Natural has no size to count; the engine does not index a set, so its members come from the row’s k-th member', async () => {
+  test('Natural has no size to count; its members come from the row’s k-th member, and At is never asked', async () => {
     const c = await page(inCollection('Natural'), query([queryWords.show, '']));
     expect(c.sections.has('counts')).toBe(false);
     expect(valueOf(c, 'Count(NonNegativeIntegers)')).toBe('PositiveInfinity');
-    expect(answerTo(c, 'At(NonNegativeIntegers, 1)')?.status).not.toBe('value');
-    expect(valueOf(c, 'Subtract(1, 1)')).toBe('0');
-    expect(valueOf(c, 'Subtract(7, 1)')).toBe('6');
-    expect(asksStarting(c, 'At(').length).toBeLessThanOrEqual(windowSize);
+    expect(valueOf(c, '1 - 1')).toBe('0');
+    expect(valueOf(c, '7 - 1')).toBe('6');
+    // A row that states its k-th member is the catalogue stating the order: no At, no IndexOf, no Type.
+    expect(asksStarting(c, 'At(')).toEqual([]);
+    expect(asksStarting(c, 'IndexOf(')).toEqual([]);
+    expect(asksStarting(c, 'Type(')).toEqual([]);
     expect(strip(c.sections.get('members') ?? '')).toContain('Members 1 to 20');
   });
 
-  test('Prime lists its first members, one window of them', async () => {
+  test('a Natural page’s kernel session logs no compilation fallback of our own question', async () => {
+    // Asked of a set, At is our own incompatible-type error, and the engine logs a fallback for it.
+    const warned: string[] = [];
+    const original = console.warn;
+    console.warn = (...args: unknown[]) => {
+      warned.push(args.map(String).join(' '));
+    };
+    try {
+      // The members, and a rank, with no property asked: the page's own questions only.
+      await compute(inCollection('Natural'), query([queryWords.show, '']));
+      await compute(inCollection('Natural', rank(7)), query([queryWords.show, '']));
+      await compute(inCollection('Natural', '360'), query([queryWords.show, '']));
+    } finally {
+      console.warn = original;
+    }
+    expect(warned.filter((w) => w.includes('Compilation fallback'))).toEqual([]);
+  });
+
+  test('Prime lists its first members from the row’s k-th member, one window of them', async () => {
     const c = await page(inCollection('Prime'), query([queryWords.show, '']));
-    expect(valueOf(c, 'At(PrimeNumbers, 1)')).toBe('2');
-    expect(valueOf(c, 'At(PrimeNumbers, 4)')).toBe('7');
-    expect(asksStarting(c, 'At(').length).toBeLessThanOrEqual(windowSize);
+    expect(valueOf(c, 'NthPrime(1)')).toBe('2');
+    expect(valueOf(c, 'NthPrime(4)')).toBe('7');
+    expect(asksStarting(c, 'NthPrime(').length).toBe(windowSize);
+    expect(asksStarting(c, 'At(')).toEqual([]);
     expect(c.page.body.value).toContain(addressOf('Natural', []));
   });
 });
@@ -356,14 +377,15 @@ describe('a collection, bound: the member table', () => {
   });
 
   if (deep) {
-    test('DEEP: every collection of every first size lists at most one window', async () => {
-      for (const name of ['Permutation', 'DyckPath', 'SetPartition', 'IntegerPartition']) {
-        for (const n of [4, 5, 6, 7, 8, 9]) {
+    // One test for each collection and size, so a failure names the size.
+    for (const name of ['Permutation', 'DyckPath', 'SetPartition', 'IntegerPartition']) {
+      for (const n of [4, 5, 6, 7, 8, 9]) {
+        test(`DEEP: ${name} at size ${n} lists at most one window`, async () => {
           const c = await page(inCollection(segment(name, [0, n])));
           expect(asksStarting(c, 'At(').length, `${name} ${n}`).toBeLessThanOrEqual(windowSize);
-        }
+        });
       }
-    });
+    }
 
     test('DEEP: a window near the end of a very large collection', async () => {
       const c = await page(
@@ -546,9 +568,9 @@ describe('an element by value', () => {
   test('a subset: n is kept in the object’s address, k is dropped', async () => {
     const c = await page(inCollection(segment('Subset', [0, 5], [1, 2]), unordered(1, 3)));
     expect(c.page.canonical).toBe(canonicalOf('Subset', [[0, 5]], unordered(1, 3)));
-    expect(valueOf(c, 'Element(Finset(Tuple(5, [1, 3])), KSubsets(5, 2))')).toBe('True');
+    expect(valueOf(c, 'Element(Finset((5, [1, 3])), KSubsets(5, 2))')).toBe('True');
     // notatio: the second 2-subset of 1..5 in order.
-    expect(valueOf(c, 'IndexOf(KSubsets(5, 2), Finset(Tuple(5, [1, 3])))')).toBe('2');
+    expect(valueOf(c, 'IndexOf(KSubsets(5, 2), Finset((5, [1, 3])))')).toBe('2');
     expect(valueOf(c, 'At(KSubsets(5, 2), 1)')).toBe('Finset((5, [1, 2]))');
     expect(valueOf(c, 'At(KSubsets(5, 2), 3)')).toBe('Finset((5, [1, 4]))');
   });
@@ -556,9 +578,7 @@ describe('an element by value', () => {
   test('a subset with only n bound: its size is the kernel’s to measure', async () => {
     const c = await page(inCollection(segment('Subset', [0, 5]), unordered(1, 3)));
     expect(c.page.canonical).toBe(canonicalOf('Subset', [[0, 5]], unordered(1, 3)));
-    expect(valueOf(c, 'Element(Finset(Tuple(5, [1, 3])), KSubsets(5, Length([1, 3])))')).toBe(
-      'True',
-    );
+    expect(valueOf(c, 'Element(Finset((5, [1, 3])), KSubsets(5, Length([1, 3])))')).toBe('True');
   });
 
   test('a subset without n cannot be written: the page says so and asks the kernel nothing', async () => {
@@ -585,7 +605,8 @@ describe('an element by rank', () => {
   test('a rank in Natural moves to the value: @7 is 6, by the row’s k-th member', async () => {
     const c = await page(inCollection('Natural', rank(7)));
     expect(c.movedTo).toBe(inCollection('Natural', '6'));
-    expect(valueOf(c, 'Subtract(7, 1)')).toBe('6');
+    expect(valueOf(c, '7 - 1')).toBe('6');
+    expect(asksStarting(c, 'At(')).toEqual([]);
   });
 
   test('a rank in Prime moves to the value: @4 is 7', async () => {
@@ -1039,7 +1060,7 @@ describe('nothing written in an address becomes part of an asked expression', ()
 describe('a property named in the catalogue is asked by its catalogue name first', () => {
   test('/collection/Subset;n=5/1,3/Sum is the statistic, not the subset back', async () => {
     const c = await page(inCollection(segment('Subset', [0, 5]), unordered(1, 3), 'Sum'));
-    expect(valueOf(c, 'CombinatorialStat(Finset(Tuple(5, [1, 3])), "Sum")')).toBe('4');
+    expect(valueOf(c, 'CombinatorialStat(Finset((5, [1, 3])), "Sum")')).toBe('4');
     expect(asksStarting(c, 'Sum(')).toEqual([]);
     expect(valueCell(c)).toContain('4');
   });
@@ -1061,7 +1082,7 @@ describe('the two routes to a catalogued name agree, or the head declines', () =
       window: 'SetPartitions(4)',
     },
     IntegerPartition: { element: 'IntegerPartition([4, 2, 1])', window: 'IntegerPartitions(7)' },
-    Finset: { element: 'Finset(Tuple(5, [1, 3]))', window: 'KSubsets(5, 2)' },
+    Finset: { element: 'Finset((5, [1, 3]))', window: 'KSubsets(5, 2)' },
   };
   const carriers = Object.keys(names.carriers);
 

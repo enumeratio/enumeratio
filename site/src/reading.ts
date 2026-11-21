@@ -12,12 +12,13 @@ import {
   parseAddress,
 } from '@enumeratio/address';
 import { type Codec, type Items, codecs } from '@enumeratio/codecs';
+import { elementHead } from '@enumeratio/kernel/expressions';
 import { type RouteRow, isServed, rowByName, rows, specOf } from '@enumeratio/routes';
 import names from 'virtual:notatio-names';
 
 /** The carrier of a row: the head that constructs one of its elements, when notatio records it. */
 export function carrierOf(row: RouteRow): string | undefined {
-  const head = row.element?.kind === 'call' ? row.element.head : undefined;
+  const head = elementHead(row);
   return head !== undefined && names.carriers[head] !== undefined ? head : undefined;
 }
 

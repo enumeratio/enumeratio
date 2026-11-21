@@ -1,0 +1,60 @@
+name: deep
+
+# The deep set (DEEP_TESTS=1): the full cases that the standard run keeps small. Weekly, and on
+# request; a failure is a failed run, which the repository's notifications report.
+on:
+  schedule:
+    - cron: '17 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deep
+  cancel-in-progress: false
+
+jobs:
+  deep:
+    runs-on: ubuntu-latest
+    # The deep tests are long (each declares its own timeout), and the run builds notatio when the
+    # pin has moved since the cache was written.
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      # The same notatio as the CI workflow: packed from the commit in notatio.pin and cached on
+      # the pin and on the scripts that make the tarballs.
+      - id: pin
+        run: echo "sha=$(cat notatio.pin)" >> "$GITHUB_OUTPUT"
+      - id: tarballs
+        uses: actions/cache@v4
+        with:
+          path: vendor/notatio/tarballs
+          key: notatio-tarballs-${{ steps.pin.outputs.sha }}-${{ hashFiles('tools/notatio/*.ts') }}
+      - if: steps.tarballs.outputs.cache-hit != 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: enumeratio/notatio
+          ref: ${{ steps.pin.outputs.sha }}
+          path: .notatio
+      - if: steps.tarballs.outputs.cache-hit != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - if: steps.tarballs.outputs.cache-hit != 'true'
+        env:
+          NOTATIO_DIR: .notatio
+        run: |
+          node tools/notatio/pack.ts
+          rm -rf .notatio
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: node tools/notatio/unpack.ts
+      - run: pnpm install --frozen-lockfile
+      # The package script sets DEEP_TESTS=1 and runs the whole test set.
+      - run: pnpm run test:deep
+      - if: failure()
+        run: echo "::error title=Deep tests failed::The weekly deep set (DEEP_TESTS=1) failed; the run's log names the test and its size."

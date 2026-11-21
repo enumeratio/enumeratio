@@ -12,8 +12,9 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { catalogResources } from '@notatio/catalog';
 import { symbolInfo } from '@notatio/manifest';
-import { headsIn, isServed, parseRouteFile } from '@enumeratio/routes/parse';
+import { isServed, parseRouteFile } from '@enumeratio/routes/parse';
 import type { Plugin } from 'vite-plus';
+import { elementHead, headsIn } from './expressions.ts';
 
 export interface CarrierNames {
   statistics: string[];
@@ -48,7 +49,7 @@ export function collectNotatioData(): { names: NotatioNames; descriptions: Notat
   for (const row of rows) {
     for (const head of headsIn(row)) describe(head);
     for (const name of row.show) mentioned.add(name);
-    const carrier = row.element?.kind === 'call' ? row.element.head : undefined;
+    const carrier = elementHead(row);
     if (carrier === undefined || names.carriers[carrier] !== undefined) continue;
     if (!resources.some((r) => r.kind === 'carrier' && r.name === carrier)) continue;
     const on = (kind: string): string[] =>

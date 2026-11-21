@@ -7,11 +7,13 @@
   "exports": {
     ".": "./src/index.ts",
     "./catalogue": "./src/catalogue.ts",
+    "./expressions": "./src/expressions.ts",
     "./node": "./src/node.ts",
     "./data-plugin": "./src/data-plugin.ts"
   },
   "dependencies": {
     "@cortex-js/compute-engine": "^0.187.1",
+    "@enumeratio/address": "workspace:*",
     "@enumeratio/routes": "workspace:*",
     "@notatio/boxes": "0.0.0",
     "@notatio/catalog": "0.0.0",

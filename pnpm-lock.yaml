@@ -247,6 +247,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.187.1
         version: 0.187.1
+      '@enumeratio/address':
+        specifier: workspace:*
+        version: link:../address
       '@enumeratio/routes':
         specifier: workspace:*
         version: link:../routes

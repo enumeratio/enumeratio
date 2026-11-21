@@ -1,8 +1,9 @@
 import { symbolInfo } from '@notatio/manifest';
 import { describe, expect, test } from 'vite-plus/test';
-import { headsIn, rows, valueShapes } from '@enumeratio/routes';
+import { rows, valueShapes } from '@enumeratio/routes';
 import { codecs } from '../../codecs/src/index.ts';
 import { collectNotatioData } from '../src/data-plugin.ts';
+import { elementHead, headsIn } from '../src/expressions.ts';
 
 /**
  * What the route file names is checked against the pinned notatio. A name that is in the
@@ -80,7 +81,7 @@ describe('what the pages know of notatio comes from notatio', () => {
 
   test('every carrier a live row constructs with is a carrier of notatio', () => {
     for (const row of rows.filter((r) => r.status === 'live')) {
-      const head = row.element?.kind === 'call' ? row.element.head : undefined;
+      const head = elementHead(row);
       if (head === undefined) continue;
       expect(names.carriers[head], `${row.name}: ${head}`).toBeDefined();
     }
