@@ -1230,21 +1230,30 @@ describe('the two routes to a catalogued name agree, or the head declines', () =
 
   // The full case: every name on its own, so that each test fits its time, on the sample and on the
   // first two members of its collection.
+  // These run only under `DEEP_TESTS=1` and carry the same declared deep timeout as the codecs
+  // sweep (`deepTimeoutMs` in packages/codecs/test/kernel.test.ts). The case that needs it is
+  // `IntegerPartition: name 165, element 1` (`SingletonRefinementCount`, 2 to 4 s here, once 5.07 s
+  // against the 5 s default). The standard run has no such tests.
+  const deepTimeoutMs = 60_000;
   for (const carrier of Object.keys(samples)) {
     const entry = names.carriers[carrier];
     const total = (entry?.statistics.length ?? 0) + (entry?.maps.length ?? 0);
     for (let at = 0; at < total; at++) {
       for (const which of [0, 1, 2]) {
-        test.runIf(deep)(`${carrier}: name ${at}, element ${which}`, async () => {
-          const sample = samples[carrier];
-          if (sample === undefined) return;
-          const member =
-            which === 0 ? undefined : await askKernelText(`At(${sample.window}, ${which})`);
-          const x =
-            which === 0 ? sample.element : member?.status === 'value' ? member.epsil : undefined;
-          if (x === undefined) return;
-          expect(unknown(await disagreements(carrier, x, at, at + 1))).toEqual([]);
-        });
+        test.runIf(deep)(
+          `${carrier}: name ${at}, element ${which}`,
+          { timeout: deepTimeoutMs },
+          async () => {
+            const sample = samples[carrier];
+            if (sample === undefined) return;
+            const member =
+              which === 0 ? undefined : await askKernelText(`At(${sample.window}, ${which})`);
+            const x =
+              which === 0 ? sample.element : member?.status === 'value' ? member.epsil : undefined;
+            if (x === undefined) return;
+            expect(unknown(await disagreements(carrier, x, at, at + 1))).toEqual([]);
+          },
+        );
       }
     }
   }
