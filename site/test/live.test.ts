@@ -1056,11 +1056,28 @@ describe('the two routes to a catalogued name agree, or the head declines', () =
     return found;
   }
 
-  // A disagreement is a finding for notatio, listed in the hand-back and not worked around here:
-  // the page asks the catalogue first, so it shows the catalogue's answer.
-  // Known pairs that disagree, each a finding in the hand-back (notatio's to fix, not worked around here).
+  // A disagreement is a finding for notatio, not worked around here: the page asks the catalogue
+  // first, so it shows the catalogue's answer. Known pairs, each with notatio's open item:
+  // `Finset Sum`: notatio's `Sum` hands a k-subset back unchanged (notatio BL-523).
   const known = new Set<string>(['Finset Sum']);
   const unknown = (found: string[]) => found.filter((f) => !known.has(f.split('(')[0] ?? f));
+
+  // An exception outlives its bug only by mistake: once notatio fixes the pair, this fails and the
+  // entry above goes.
+  test('each known disagreement still disagrees', async () => {
+    for (const pair of known) {
+      const [carrier = '', head = ''] = pair.split(' ');
+      const entry = names.carriers[carrier];
+      const kind = entry?.statistics.includes(head) ? 'CombinatorialStat' : 'CombinatorialMap';
+      const x = samples[carrier]?.element ?? '';
+      const direct = await askKernel(`${head}(${x})`);
+      const named = await askKernel(`${kind}(${x}, "${head}")`);
+      expect(
+        direct.status === 'value' && named.status === 'value' && direct.epsil !== named.epsil,
+        pair,
+      ).toBe(true);
+    }
+  });
   for (const carrier of Object.keys(samples)) {
     test(`${carrier}: the first few names on one element`, async () => {
       expect(unknown(await disagreements(carrier, samples[carrier]?.element ?? '', 0, 6))).toEqual(
