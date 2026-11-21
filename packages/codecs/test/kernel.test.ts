@@ -4,12 +4,13 @@ import { plain, sameJson } from '@enumeratio/kernel';
 import {
   collectionExpression,
   elementExpression,
+  givenOf,
   measuredBindings,
   readElementJson,
 } from '@enumeratio/kernel/expressions';
 import { createNodeKernel } from '@enumeratio/kernel/node';
 import { type RouteRow, rowByName } from '@enumeratio/routes';
-import { codecs, itemsFromJson, itemsToEpsil } from '../src/index.ts';
+import { codecs, itemsFromJson, itemsToJson } from '../src/index.ts';
 
 /**
  * The codec and the kernel against each other, over every element of the small collections:
@@ -100,7 +101,7 @@ interface Sweep {
 async function sweep(row: RouteRow, bound: Binding[]): Promise<Sweep> {
   const codec = codecs[row.value as keyof typeof codecs];
   const where = `${row.name} ${JSON.stringify(bound)}`;
-  const collection = collectionExpression(row, bound);
+  const collection = collectionExpression(row, givenOf(bound));
   if (!collection.ok) throw new Error(`${where}: no expression`);
   const count = await ask(`Count(${collection.epsil})`);
   expect(count.status, where).toBe('value');
@@ -127,7 +128,7 @@ async function sweep(row: RouteRow, bound: Binding[]): Promise<Sweep> {
     expect(back, `${where}: ${s} is read`).not.toBeNull();
     if (back === null) continue;
     expect(codec.write(back), `${where}: write(read(${s}))`).toBe(s);
-    const expressed = elementExpression(row, read.parameters, itemsToEpsil(back));
+    const expressed = elementExpression(row, givenOf(read.parameters), itemsToJson(back));
     expect(expressed.ok, `${where}: ${s} has an expression`).toBe(true);
     if (!expressed.ok) continue;
     const again = await ask(expressed.epsil, { holds: true });
@@ -180,10 +181,10 @@ describe('membership is the kernel’s, not the codec’s', () => {
     const items = codec.read(raw);
     expect(items, `${name}: ${raw} is read`).not.toBeNull();
     if (items === null) return undefined;
-    const value = itemsToEpsil(items);
-    const element = elementExpression(row, bound, value);
+    const value = itemsToJson(items);
+    const element = elementExpression(row, givenOf(bound), value);
     if (!element.ok) throw new Error(`no element expression for ${name}`);
-    const home = collectionExpression(row, measuredBindings(row, bound, value));
+    const home = collectionExpression(row, measuredBindings(row, givenOf(bound), value));
     if (!home.ok) throw new Error(`no collection expression for ${name}`);
     const answer = await ask(`Element(${element.epsil}, ${home.epsil})`);
     expect(answer.status, `${name} ${raw}`).toBe('value');

@@ -1,18 +1,20 @@
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, test } from 'vite-plus/test';
 import { type RouteRow, columns, parseRouteFile, rowByName, rows } from '@enumeratio/routes';
 import { rankVariable, valueVariable } from '@enumeratio/routes/parse';
 import {
-  type Cell,
   cellTexts,
-  fill,
   headsOfRow,
-  isAtomic,
+  integerJson,
   substituteJson,
   symbolsIn,
+  writeEpsil,
 } from '../src/cell.ts';
 import {
   collectionExpression,
   elementExpression,
+  givenOf,
   headsIn,
   identityParameters,
   kthExpression,
@@ -22,7 +24,7 @@ import {
   readElementJson,
 } from '../src/expressions.ts';
 import type { Json } from '../src/index.ts';
-import { cellTable, parseCell } from '../src/parse-cells.ts';
+import { cellTable, cellsFilePath, parseCell, writeRouteCells } from '../src/parse-cells.ts';
 
 /** MathJSON's head for a list. */
 const listHead = 'List';
@@ -38,8 +40,13 @@ const word = (name: string, index: number): string => {
   if (!found) throw new Error(`${name} has no parameter ${index}`);
   return found.word;
 };
-const bind = (name: string, ...values: [number, string | number][]) =>
+/** What an address binds, as the page reads it. */
+const strings = (name: string, ...values: [number, string | number][]) =>
   values.map(([index, value]) => ({ word: word(name, index), value: String(value) }));
+/** The same, as values (MathJSON): an integer, or an expression given. */
+const bind = (name: string, ...values: [number, number | Json][]) =>
+  values.map(([index, json]) => ({ word: word(name, index), json }));
+const list = (...items: Json[]): Json => [listHead, ...items];
 
 const allCells = rows.flatMap((row) => cellTexts(row).map((text) => ({ row, text })));
 
@@ -73,38 +80,59 @@ describe('the route file’s expressions are Epsil, read by notatio’s parser a
     expect(() => parseCell(text)).toThrow(/cannot read/);
   });
 
-  test('each symbol’s place in the text is where the parser found it', () => {
+  test('the build output holds to the text: every cell has an entry, and re-parsing the cell gives it', () => {
+    // The route file's text is the source; the file is written by the package's build.
+    const written = writeRouteCells();
+    expect(written).toBe(cellsFilePath);
+    const built = JSON.parse(readFileSync(cellsFilePath, 'utf8')) as Record<string, unknown>;
     for (const { row, text } of allCells) {
-      const cell = readCell(text);
-      for (const [start, end, name] of cell.slots) {
-        expect(text.slice(start, end), `${row.name}: ${text}`).toBe(name);
-      }
-      // Every variable of the expression has a place.
-      expect(new Set(cell.slots.map((s) => s[2])), `${row.name}: ${text}`).toEqual(
-        symbolsIn(cell.json),
-      );
+      expect(built, `${row.name}: ${text}`).toHaveProperty([text]);
+      expect(built[text], `${row.name}: ${text}`).toEqual(parseCell(text));
+    }
+    // Nothing is in the output that is not a cell of the route file.
+    expect(Object.keys(built).toSorted()).toEqual(
+      [...new Set(allCells.map((c) => c.text))].toSorted(),
+    );
+  });
+
+  test('the build output is gitignored and not committed', () => {
+    const ignore = readFileSync(
+      fileURLToPath(new URL('../../../.gitignore', import.meta.url)),
+      'utf8',
+    );
+    expect(ignore.split('\n')).toContain('packages/kernel/build');
+  });
+
+  test('a parameter goes into the MathJSON by replacing its symbol, and what is written reads back the same', () => {
+    const values = new Map<string, Json>([
+      ['k', 12],
+      ['x', list(3, 1, 2)],
+      ['n', 5],
+      ['size', 4],
+      ['blocks', 2],
+      ['parts', 3],
+      ['semilength', 4],
+      ['x2', ['Negate', 3]],
+    ]);
+    for (const { row, text } of allCells) {
+      const { json } = readCell(text);
+      const replaced = substituteJson(json, values);
+      expect(symbolsIn(replaced).has('k'), `${row.name}: ${text}`).toBe(false);
+      const written = writeEpsil(replaced);
+      expect(parseCell(written).json, `${row.name}: ${text} -> ${written}`).toEqual(replaced);
     }
   });
 
-  test('filling the text with values is the same as substituting them in the parsed expression', () => {
-    const values = new Map([
-      ['k', '12'],
-      ['x', '[3, 1, 2]'],
-      ['n', '5'],
-      ['size', '4'],
-      ['blocks', '2'],
-      ['parts', '3'],
-      ['semilength', '4'],
-    ]);
-    for (const { row, text } of allCells) {
-      const cell: Cell = readCell(text);
-      const filled = fill(text, cell, values);
-      const asJson = substituteJson(
-        cell.json,
-        new Map([...values].map(([name, value]) => [name, parseCell(value).json] as const)),
-      );
-      expect(parseCell(filled).json, `${row.name}: ${text} -> ${filled}`).toEqual(asJson);
-    }
+  test('writeEpsil writes a call, a list, a symbol and an integer, and nothing else', () => {
+    expect(writeEpsil(['Subtract', 7, 1])).toBe('Subtract(7, 1)');
+    expect(writeEpsil(['Finset', ['Tuple', 5, list(1, 3)]])).toBe('Finset(Tuple(5, [1, 3]))');
+    expect(writeEpsil(list())).toBe('[]');
+    expect(writeEpsil(['Subtract', -3, 1])).toBe('Subtract(-3, 1)');
+    expect(writeEpsil(integerJson('123456789012345678901234567890'))).toBe(
+      '123456789012345678901234567890',
+    );
+    expect(() => writeEpsil({ other: 1 })).toThrow(/cannot write/);
+    expect(() => writeEpsil(2.5)).toThrow(/cannot write/);
   });
 
   test('every head a live row names is read at build, and the rows’ heads agree with the parser', () => {
@@ -163,7 +191,7 @@ describe('the route file’s expressions are Epsil, read by notatio’s parser a
         .join('\t')}`,
     ).rows;
     expect(row?.kth).toBe('k - 1');
-    expect(row && kthExpression(row, 7)).toBe('7 - 1');
+    expect(row && kthExpression(row, 7)).toBe('Subtract(7, 1)');
     expect(headsIn(row as RouteRow)).toEqual(['Subtract']);
     const [none] = parseRouteFile(
       `${columns.join('\t')}\n${columns
@@ -176,21 +204,17 @@ describe('the route file’s expressions are Epsil, read by notatio’s parser a
   test('the rows that state a k-th member are Natural and Prime', () => {
     expect(rows.filter((r) => r.kth).map((r) => r.name)).toEqual(['Natural', 'Prime']);
     expect(rowOf('Natural').kth).toBe('k - 1');
-    expect(kthExpression(rowOf('Natural'), 7)).toBe('7 - 1');
+    expect(kthExpression(rowOf('Natural'), 7)).toBe('Subtract(7, 1)');
     expect(kthExpression(rowOf('Prime'), 4)).toBe('NthPrime(4)');
   });
 
-  test('a cell is its own text with the values in place, and a value that is not one operand is bracketed', () => {
-    expect(kthExpression(rowOf('Natural'), 1_000_000_000)).toBe('1000000000 - 1');
-    expect(kthExpression(rowOf('Natural'), -3)).toBe('(-3) - 1');
-    expect(elementExpression(rowOf('Permutation'), [], '[3, 1, 2]')).toEqual({
+  test('an integer goes in as digits, a negative one as itself, and an element value as a list', () => {
+    expect(kthExpression(rowOf('Natural'), 1_000_000_000)).toBe('Subtract(1000000000, 1)');
+    expect(kthExpression(rowOf('Natural'), -3)).toBe('Subtract(-3, 1)');
+    expect(elementExpression(rowOf('Permutation'), [], list(3, 1, 2))).toEqual({
       ok: true,
       epsil: 'Permutation([3, 1, 2])',
     });
-    for (const atomic of ['7', 'x', '[1, 2]', 'Length([1, 2])'])
-      expect(isAtomic(atomic), atomic).toBe(true);
-    for (const compound of ['-3', '1 + 2', 'f(a) + g(b)', '[1] + [2]', 'a b'])
-      expect(isAtomic(compound), compound).toBe(false);
   });
 });
 
@@ -262,7 +286,7 @@ describe('collectionExpression', () => {
   });
 
   test('a parameter no form uses is not guessed at', () => {
-    const result = collectionExpression(rowOf('Permutation'), [{ word: 'nonesuch', value: '3' }]);
+    const result = collectionExpression(rowOf('Permutation'), [{ word: 'nonesuch', json: 3 }]);
     expect(result.ok).toBe(false);
     const extra = collectionExpression(rowOf('Natural'), bind('Subset', [0, 3]));
     expect(extra.ok).toBe(false);
@@ -275,12 +299,12 @@ describe('collectionExpression', () => {
 
 describe('elementExpression', () => {
   test('the value goes where x is', () => {
-    expect(elementExpression(rowOf('Permutation'), [], '[3, 1, 4, 2]')).toEqual({
+    expect(elementExpression(rowOf('Permutation'), [], list(3, 1, 4, 2))).toEqual({
       ok: true,
       epsil: 'Permutation([3, 1, 4, 2])',
     });
-    expect(elementExpression(rowOf('Natural'), [], '360')).toEqual({ ok: true, epsil: '360' });
-    expect(elementExpression(rowOf('SetPartition'), [], '[[1, 3], [2]]')).toEqual({
+    expect(elementExpression(rowOf('Natural'), [], 360)).toEqual({ ok: true, epsil: '360' });
+    expect(elementExpression(rowOf('SetPartition'), [], list(list(1, 3), list(2)))).toEqual({
       ok: true,
       epsil: 'SetPartition([[1, 3], [2]])',
     });
@@ -289,16 +313,16 @@ describe('elementExpression', () => {
   test('a parameter an element cannot be written without is needed, and others are not', () => {
     const subsets = rowOf('Subset');
     expect(identityParameters(subsets)).toEqual([word('Subset', 0)]);
-    expect(elementExpression(subsets, bind('Subset', [0, 5]), '[1, 3]')).toEqual({
+    expect(elementExpression(subsets, bind('Subset', [0, 5]), list(1, 3))).toEqual({
       ok: true,
       epsil: 'Finset(Tuple(5, [1, 3]))',
     });
     // k is bound in the address but is not part of the element.
-    expect(elementExpression(subsets, bind('Subset', [0, 5], [1, 2]), '[1, 3]')).toEqual({
+    expect(elementExpression(subsets, bind('Subset', [0, 5], [1, 2]), list(1, 3))).toEqual({
       ok: true,
       epsil: 'Finset(Tuple(5, [1, 3]))',
     });
-    expect(elementExpression(subsets, bind('Subset', [1, 2]), '[1, 3]')).toEqual({
+    expect(elementExpression(subsets, bind('Subset', [1, 2]), list(1, 3))).toEqual({
       ok: false,
       missing: [word('Subset', 0)],
     });
@@ -306,14 +330,12 @@ describe('elementExpression', () => {
   });
 
   test('a row with no element constructor has none to give', () => {
-    expect(elementExpression(rowOf('Integer'), [], '3')).toEqual({ ok: false, missing: [] });
+    expect(elementExpression(rowOf('Integer'), [], 3)).toEqual({ ok: false, missing: [] });
     expect(identityParameters(rowOf('Integer'))).toEqual([]);
   });
 });
 
 describe('readElementJson', () => {
-  const list = (...items: Json[]): Json => [listHead, ...items];
-
   test('a constructor’s answer is its value', () => {
     expect(readElementJson(rowOf('Permutation'), ['Permutation', list(3, 1, 4, 2)])).toEqual({
       value: list(3, 1, 4, 2),
@@ -330,7 +352,7 @@ describe('readElementJson', () => {
   test('the parameters the constructor carries are read back', () => {
     expect(readElementJson(rowOf('Subset'), ['Finset', ['Tuple', 5, list(1, 3)]])).toEqual({
       value: list(1, 3),
-      parameters: bind('Subset', [0, 5]),
+      parameters: strings('Subset', [0, 5]),
     });
   });
 
@@ -354,40 +376,48 @@ describe('readElementJson', () => {
     const json = ['Finset', ['Tuple', 5, list(1, 3)]];
     const read = readElementJson(rowOf('Subset'), json);
     expect(read?.value).toEqual(list(1, 3));
-    expect(read?.parameters).toEqual(bind('Subset', [0, 5]));
+    expect(read?.parameters).toEqual(strings('Subset', [0, 5]));
   });
 });
 
 describe('measuredBindings', () => {
-  test('what the address binds is kept, and what an element determines is added as Epsil over it', () => {
-    expect(measuredBindings(rowOf('Permutation'), [], '[3, 1, 4, 2]')).toEqual(
-      bind('Permutation', [0, 'Length([3, 1, 4, 2])']),
+  test('what the address binds is kept, and what an element determines is added as an expression over it', () => {
+    expect(measuredBindings(rowOf('Permutation'), [], list(3, 1, 4, 2))).toEqual(
+      bind('Permutation', [0, ['Length', list(3, 1, 4, 2)]]),
     );
-    expect(measuredBindings(rowOf('DyckPath'), [], '[1, 0]')).toEqual(
-      bind('DyckPath', [0, 'Quotient(Length([1, 0]), 2)']),
+    expect(measuredBindings(rowOf('DyckPath'), [], list(1, 0))).toEqual(
+      bind('DyckPath', [0, ['Quotient', ['Length', list(1, 0)], 2]]),
     );
-    expect(measuredBindings(rowOf('SetPartition'), [], '[[1], [2]]')).toEqual(
-      bind('SetPartition', [0, 'Length(Flatten([[1], [2]]))'], [1, 'Length([[1], [2]])']),
+    expect(measuredBindings(rowOf('SetPartition'), [], list(list(1), list(2)))).toEqual(
+      bind(
+        'SetPartition',
+        [0, ['Length', ['Flatten', list(list(1), list(2))]]],
+        [1, ['Length', list(list(1), list(2))]],
+      ),
     );
   });
 
   test('a parameter the address binds is never replaced by a measure', () => {
-    expect(measuredBindings(rowOf('Permutation'), bind('Permutation', [0, 4]), '[3, 1]')).toEqual(
+    expect(measuredBindings(rowOf('Permutation'), bind('Permutation', [0, 4]), list(3, 1))).toEqual(
       bind('Permutation', [0, 4]),
     );
-    expect(measuredBindings(rowOf('Subset'), bind('Subset', [0, 5]), '[1, 3]')).toEqual(
-      bind('Subset', [0, 5], [1, 'Length([1, 3])']),
+    expect(measuredBindings(rowOf('Subset'), bind('Subset', [0, 5]), list(1, 3))).toEqual(
+      bind('Subset', [0, 5], [1, ['Length', list(1, 3)]]),
     );
   });
 
+  test('what an address binds, read from its text, is the integer', () => {
+    expect(givenOf(strings('Subset', [0, 5], [1, 2]))).toEqual(bind('Subset', [0, 5], [1, 2]));
+  });
+
   test('a collection whose elements determine nothing keeps what is bound', () => {
-    expect(measuredBindings(rowOf('Natural'), [], '360')).toEqual([]);
+    expect(measuredBindings(rowOf('Natural'), [], 360)).toEqual([]);
   });
 
   test('with the measures added, a collection whose address binds nothing has an expression', () => {
     for (const name of ['Permutation', 'DyckPath', 'SetPartition', 'IntegerPartition']) {
       const row = rowOf(name);
-      expect(collectionExpression(row, measuredBindings(row, [], '[1]')).ok, name).toBe(true);
+      expect(collectionExpression(row, measuredBindings(row, [], list(1))).ok, name).toBe(true);
     }
   });
 

@@ -1,7 +1,9 @@
 /**
- * An Epsil cell of the route file, as the build reads it: its MathJSON, and where in its text each
- * symbol stands. Notatio's parser reads each cell once, at build time (`parse-cells.ts`, Node
- * only); a page works from this record and never loads the parser or the engine behind it.
+ * An Epsil cell of the route file, as the build reads it: its MathJSON. Notatio's parser reads each
+ * cell once, at build (`parse-cells.ts`, Node only), and writes the result beside the route file's
+ * text as build output; a page works from that and never loads the parser or the engine behind it.
+ * A page puts a parameter into a cell by replacing the symbol in the MathJSON, never by editing the
+ * cell's text, and writes the result as Epsil with `writeEpsil`.
  *
  * Pure: nothing here imports an engine, so the page's first paint can use it.
  */
@@ -11,8 +13,6 @@ import { type Json, headOf, operandsOf } from './index.ts';
 export interface Cell {
   /** Plain MathJSON: a symbol is a string, a call an array, a number a number (or `{ num }` past 2^53). */
   json: Json;
-  /** Every symbol in the cell's text, as `[start, end, name]`, in order. */
-  slots: [number, number, string][];
 }
 
 /** The text of every Epsil cell a row has: its expression forms, k-th member, element and measures. */
@@ -25,7 +25,7 @@ export function cellTexts(row: RouteRow): string[] {
   ];
 }
 
-/** Reads one cell's text: the build's parser, or a table the build made. */
+/** Reads one cell's text: the build's parser, or the table the build made. */
 export type ReadCell = (text: string) => Cell;
 
 export const isSymbol = (json: Json): json is string =>
@@ -53,41 +53,34 @@ export function substituteJson(json: Json, bound: ReadonlyMap<string, Json>): Js
   return [json[0], ...operandsOf(json).map((operand) => substituteJson(operand, bound))];
 }
 
-/**
- * Is the text one operand as it stands: digits, a name, or a call or list from its first bracket
- * to its last? A value bound into an expression that is not is put in parentheses.
- */
-export function isAtomic(text: string): boolean {
-  if (/^\d+$/.test(text) || /^[A-Za-z][A-Za-z0-9]*$/.test(text)) return true;
-  const open = /^[A-Za-z0-9]*([([])/.exec(text);
-  if (!open) return false;
-  let depth = 0;
-  for (const [i, char] of [...text].entries()) {
-    if (char === '(' || char === '[') depth++;
-    else if (char === ')' || char === ']') {
-      depth--;
-      // The first bracket closes before the end: `f(a) + g(b)` is not one operand.
-      if (depth === 0 && i < text.length - 1) return false;
-    }
-  }
-  return depth === 0 && /[)\]]$/.test(text);
+/** An integer written in digits, as MathJSON: a number, or `{ num }` where a number cannot hold it. */
+export function integerJson(digits: string): Json {
+  const n = Number(digits);
+  return Number.isSafeInteger(n) ? n : { num: digits };
 }
 
+/** MathJSON's head for a list. */
+export const listHead = 'List';
+
 /**
- * The cell's text with each variable replaced by the Epsil bound to it, and the rest as
- * written: `k - 1` with `k` as `7` is `7 - 1`. A bound value that is not one operand is put in
- * parentheses, so `-3` goes in as `(-3)`.
+ * MathJSON as Epsil: a call `Head(a, b)`, a list `[a, b]`, a symbol, an integer in digits. The
+ * shapes a route cell has are all there is, and anything else is an error. A test parses what this
+ * writes with notatio's parser and gets the same MathJSON back.
  */
-export function fill(text: string, cell: Cell, bound: ReadonlyMap<string, string>): string {
-  let out = '';
-  let at = 0;
-  for (const [start, end, name] of cell.slots) {
-    const value = bound.get(name);
-    if (value === undefined) continue;
-    out += text.slice(at, start) + (isAtomic(value) ? value : `(${value})`);
-    at = end;
+export function writeEpsil(json: Json): string {
+  if (typeof json === 'number' && Number.isInteger(json)) return String(json);
+  if (typeof json === 'string') {
+    return json.startsWith("'") ? JSON.stringify(json.slice(1, -1)) : json;
   }
-  return out + text.slice(at);
+  if (json !== null && typeof json === 'object' && !Array.isArray(json) && 'num' in json) {
+    const num = String((json as { num: unknown }).num);
+    if (/^-?\d+$/.test(num)) return num;
+  }
+  if (Array.isArray(json) && typeof json[0] === 'string') {
+    const parts = operandsOf(json).map(writeEpsil).join(', ');
+    return json[0] === listHead ? `[${parts}]` : `${json[0]}(${parts})`;
+  }
+  throw new Error(`cannot write as Epsil: ${JSON.stringify(json)}`);
 }
 
 /** Reads an integer as the kernel writes it. */

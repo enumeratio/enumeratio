@@ -3,14 +3,24 @@
  * it, and recognize an answer as an element of a row (the same expression, read the other way).
  * Each cell was read once, at build, by notatio's own parser with the row's parameters, `k` and
  * `x` as free symbols (`parse-cells.ts`, through `virtual:route-cells`); this module works from
- * that record and imports neither the parser nor the engine, so a page can use it before any
- * kernel has loaded. Epsil is the only text syntax read or written: a filled cell is the cell's
- * own text with the values in place of the symbols.
+ * that MathJSON and imports neither the parser nor the engine, so a page can use it before any
+ * kernel has loaded. A parameter goes into an expression by replacing its symbol in the MathJSON,
+ * and the result is written as Epsil (`writeEpsil`).
  */
 import type { Binding } from '@enumeratio/address';
 import { type RouteRow, rankVariable, valueVariable } from '@enumeratio/routes/parse';
 import cells from 'virtual:route-cells';
-import { type Cell, elementHeadOf, fill, headsOfRow, isSymbol, match, symbolsIn } from './cell.ts';
+import {
+  type Cell,
+  elementHeadOf,
+  headsOfRow,
+  integerJson,
+  isSymbol,
+  match,
+  substituteJson,
+  symbolsIn,
+  writeEpsil,
+} from './cell.ts';
 import { type Json, headOf } from './index.ts';
 
 /** One cell, as the build read it. Throws for a text that is not a cell of the route file. */
@@ -20,9 +30,23 @@ export function readCell(text: string): Cell {
   return found;
 }
 
-/** `fill`, with the Epsil bound to each name given as text. */
-const bind = (text: string, bound: ReadonlyMap<string, string>): string =>
-  fill(text, readCell(text), bound);
+/** A parameter's value, as MathJSON: what the address binds, or an expression over an element. */
+export interface Given {
+  word: string;
+  json: Json;
+}
+
+/** What an address binds (integers, written in digits), as values. */
+export const givenOf = (bound: readonly Binding[]): Given[] =>
+  bound.map((b) => ({ word: b.word, json: integerJson(b.value) }));
+
+/** The cell's MathJSON with these values in place of the symbols, written as Epsil. */
+function bind(text: string, values: ReadonlyMap<string, Json>): string {
+  return writeEpsil(substituteJson(readCell(text).json, values));
+}
+
+const valuesOf = (bound: readonly Given[]): Map<string, Json> =>
+  new Map(bound.map((g) => [g.word, g.json]));
 
 const wordsOf = (row: RouteRow): Set<string> => new Set((row.parameters ?? []).map((p) => p.word));
 
@@ -41,8 +65,8 @@ export type Expressed =
  * The Epsil for a collection with these parameters bound: the form of the
  * row's expression whose parameters are exactly the bound ones.
  */
-export function collectionExpression(row: RouteRow, bound: readonly Binding[]): Expressed {
-  const have = new Map(bound.map((b) => [b.word, b.value]));
+export function collectionExpression(row: RouteRow, bound: readonly Given[]): Expressed {
+  const have = valuesOf(bound);
   let nearest: string[] | undefined;
   for (const form of row.expressions) {
     const needs = parametersIn(row, form);
@@ -69,7 +93,7 @@ export function identityParameters(row: RouteRow): string[] {
  * collection's own `At` or `IndexOf`.
  */
 export function kthExpression(row: RouteRow, rank: number): string | undefined {
-  return row.kth === undefined ? undefined : bind(row.kth, new Map([[rankVariable, String(rank)]]));
+  return row.kth === undefined ? undefined : bind(row.kth, new Map([[rankVariable, rank]]));
 }
 
 /** The head that constructs one element of the row (`DyckPath`, `Finset`), when it is a call. */
@@ -83,17 +107,13 @@ export function collectionHead(row: RouteRow): string | undefined {
   return isSymbol(json) ? json : headOf(json);
 }
 
-/** The Epsil for one element, from its value written in Epsil and the parameters bound. */
-export function elementExpression(
-  row: RouteRow,
-  bound: readonly Binding[],
-  valueEpsil: string,
-): Expressed {
+/** The Epsil for one element, from its value (MathJSON) and the parameters bound. */
+export function elementExpression(row: RouteRow, bound: readonly Given[], value: Json): Expressed {
   if (!row.element) return { ok: false, missing: [] };
-  const have = new Map(bound.map((b) => [b.word, b.value]));
+  const have = valuesOf(bound);
   const missing = identityParameters(row).filter((w) => !have.has(w));
   if (missing.length > 0) return { ok: false, missing };
-  return { ok: true, epsil: bind(row.element, new Map([...have, [valueVariable, valueEpsil]])) };
+  return { ok: true, epsil: bind(row.element, new Map([...have, [valueVariable, value]])) };
 }
 
 /**
@@ -122,19 +142,19 @@ export const headsIn = (row: RouteRow): string[] => headsOfRow(row, readCell);
 
 /**
  * What the address binds, and beside it every parameter the element itself
- * determines, as Epsil over the element's value: what places an element in its
+ * determines, as an expression over the element's value: what places an element in its
  * collection.
  */
-export function measuredBindings(
-  row: RouteRow,
-  bound: readonly Binding[],
-  valueEpsil: string,
-): Binding[] {
+export function measuredBindings(row: RouteRow, bound: readonly Given[], value: Json): Given[] {
   const have = new Set(bound.map((b) => b.word));
-  const value = new Map([[valueVariable, valueEpsil]]);
   const out = [...bound];
   for (const [word, measure] of row.measures) {
-    if (!have.has(word)) out.push({ word, value: bind(measure, value) });
+    if (!have.has(word)) {
+      out.push({
+        word,
+        json: substituteJson(readCell(measure).json, new Map([[valueVariable, value]])),
+      });
+    }
   }
   return out;
 }

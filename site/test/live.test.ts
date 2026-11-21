@@ -179,8 +179,8 @@ describe('a collection, unbound: the counts for the first sizes', () => {
     const c = await page(inCollection('Natural'), query([queryWords.show, '']));
     expect(c.sections.has('counts')).toBe(false);
     expect(valueOf(c, 'Count(NonNegativeIntegers)')).toBe('PositiveInfinity');
-    expect(valueOf(c, '1 - 1')).toBe('0');
-    expect(valueOf(c, '7 - 1')).toBe('6');
+    expect(valueOf(c, 'Subtract(1, 1)')).toBe('0');
+    expect(valueOf(c, 'Subtract(7, 1)')).toBe('6');
     // A row that states its k-th member is the catalogue stating the order: no At, no IndexOf, no Type.
     expect(asksStarting(c, 'At(')).toEqual([]);
     expect(asksStarting(c, 'IndexOf(')).toEqual([]);
@@ -607,7 +607,7 @@ describe('an element by rank', () => {
   test('a rank in Natural moves to the value: @7 is 6, by the row’s k-th member', async () => {
     const c = await page(inCollection('Natural', rank(7)));
     expect(c.movedTo).toBe(inCollection('Natural', '6'));
-    expect(valueOf(c, '7 - 1')).toBe('6');
+    expect(valueOf(c, 'Subtract(7, 1)')).toBe('6');
     expect(asksStarting(c, 'At(')).toEqual([]);
   });
 

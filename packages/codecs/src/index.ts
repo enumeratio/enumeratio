@@ -231,6 +231,15 @@ export function itemsToEpsil(items: Items): string {
 /** MathJSON's head for a list. */
 const listHead = 'List';
 
+/** The value as MathJSON: an integer (a number, or `{ num }` past 2^53), or a `List` of values. */
+export function itemsToJson(items: Items): unknown {
+  if (isInteger(items)) {
+    const n = Number(items);
+    return Number.isSafeInteger(n) ? n : { num: items };
+  }
+  return [listHead, ...items.map(itemsToJson)];
+}
+
 /** Reads a value from MathJSON: an integer, or a `List` of values. Undefined for anything else. */
 export function itemsFromJson(json: unknown): Items | undefined {
   if (typeof json === 'number') return Number.isInteger(json) ? String(json) : undefined;

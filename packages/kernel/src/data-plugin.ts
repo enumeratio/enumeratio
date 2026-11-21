@@ -14,8 +14,8 @@ import { catalogResources } from '@notatio/catalog';
 import { symbolInfo } from '@notatio/manifest';
 import { isServed, parseRouteFile } from '@enumeratio/routes/parse';
 import type { Plugin } from 'vite-plus';
-import { type Cell, elementHeadOf, headsOfRow } from './cell.ts';
-import { cellTable, parseCell } from './parse-cells.ts';
+import { elementHeadOf, headsOfRow } from './cell.ts';
+import { cellsFilePath, parseCell, writeRouteCells } from './parse-cells.ts';
 
 export interface CarrierNames {
   statistics: string[];
@@ -82,18 +82,15 @@ const modules = {
   'virtual:route-cells': 'cells',
 } as const;
 
-/**
- * Every Epsil cell of the route file, parsed once by notatio's parser: its MathJSON and the place
- * of each symbol in its text. The page reads this and imports no parser (`expressions.ts`).
- */
-export function collectRouteCells(): Record<string, Cell> {
-  return cellTable(parseRouteFile(readFileSync(routeFile, 'utf8')).rows);
-}
-
 export function notatioData(): Plugin {
   let data: ReturnType<typeof collectNotatioData> | undefined;
   return {
     name: 'enumeratio-notatio-data',
+    // The route file's cells, parsed by notatio's parser into `build/route-cells.json` (build
+    // output, gitignored): before anything is loaded, so the file is never stale.
+    buildStart() {
+      writeRouteCells();
+    },
     resolveId(id) {
       return id in modules ? `\0${id}` : undefined;
     },
@@ -101,7 +98,7 @@ export function notatioData(): Plugin {
       if (!id.startsWith('\0')) return undefined;
       const which = modules[id.slice(1) as keyof typeof modules];
       if (which === undefined) return undefined;
-      if (which === 'cells') return `export default ${JSON.stringify(collectRouteCells())};`;
+      if (which === 'cells') return `export default ${readFileSync(cellsFilePath, 'utf8')};`;
       data ??= collectNotatioData();
       return `export default ${JSON.stringify(data[which])};`;
     },

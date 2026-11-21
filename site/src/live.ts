@@ -18,13 +18,14 @@ import {
   notatioReference,
   queryWords,
 } from '@enumeratio/address';
-import { itemsFromJson, itemsToEpsil } from '@enumeratio/codecs';
+import { itemsFromJson, itemsToJson } from '@enumeratio/codecs';
 import type { Answer, Ask, Json } from '@enumeratio/kernel';
 import {
   collectionExpression,
   collectionHead,
   elementExpression,
   elementHead,
+  givenOf,
   identityParameters,
   kthExpression,
   measuredBindings,
@@ -37,6 +38,7 @@ import {
   rowByName,
   rows,
   unrestrictedCollection,
+  valueVariable,
 } from '@enumeratio/routes';
 import names from 'virtual:notatio-names';
 import { Safe, code, h } from './html.ts';
@@ -280,7 +282,7 @@ interface Placed {
 function place(row: RouteRow, bound: readonly Binding[]): Placed {
   const bad = bound.find((b) => !isPoint(b.value));
   if (bad) return { row, bound: [...bound], missing: [bad.word] };
-  const expressed = collectionExpression(row, bound);
+  const expressed = collectionExpression(row, givenOf(bound));
   return expressed.ok
     ? { row, bound: [...bound], collection: expressed.epsil, missing: [] }
     : { row, bound: [...bound], missing: expressed.missing };
@@ -299,10 +301,10 @@ function planElement(placed: Placed, address: Address): ElementPlan | { missing:
   const { row, bound } = placed;
   const items = itemsOf(row, address);
   if (items === undefined) return { missing: [] };
-  const valueEpsil = itemsToEpsil(items);
-  const expressed = elementExpression(row, bound, valueEpsil);
+  const elementValue = itemsToJson(items);
+  const expressed = elementExpression(row, givenOf(bound), elementValue);
   if (!expressed.ok) return { missing: expressed.missing };
-  const full = measuredBindings(row, bound, valueEpsil);
+  const full = measuredBindings(row, givenOf(bound), elementValue);
   const home = collectionExpression(row, full);
   const identity = identityParameters(row);
   const value = address.element?.kind === 'value' ? address.element.value : '';
@@ -328,14 +330,14 @@ function countsSection(row: RouteRow, bound: readonly Binding[]): Section | unde
   const size = sizeParameter(row);
   if (!size || bound.some((b) => b.word === size.word)) return undefined;
   const at = (n: number): Binding[] => [...bound, { word: size.word, value: String(n) }];
-  if (!collectionExpression(row, at(0)).ok) return undefined;
+  if (!collectionExpression(row, givenOf(at(0))).ok) return undefined;
   return {
     id: 'counts',
     title: 'Counts',
     run: async ({ ask }) => {
       const cells: Safe[] = [];
       for (let n = 0; n < firstSizes; n++) {
-        const expressed = collectionExpression(row, at(n));
+        const expressed = collectionExpression(row, givenOf(at(n)));
         if (!expressed.ok) continue;
         const answer = await ask(`Count(${expressed.epsil})`);
         cells.push(
@@ -537,7 +539,7 @@ function groupSection(placed: Placed, address: Address): Section | undefined {
         let seen = false;
         for (let value = 0; value <= groupLimit; value++) {
           const at = sorted(row, [...bound, { word: by, value: String(value) }]);
-          const expressed = collectionExpression(row, at);
+          const expressed = collectionExpression(row, givenOf(at));
           if (!expressed.ok) {
             return h`<p class="notice">Grouping by ${code(by)} also needs ${expressed.missing.map((m) => code(m))} bound. ${notComputed()}</p>`;
           }
@@ -685,8 +687,8 @@ function definitionSection(row: RouteRow): Section {
 const templateText = (row: RouteRow): string => elementExpressionText(row) ?? '';
 
 function elementExpressionText(row: RouteRow): string | undefined {
-  const all = (row.parameters ?? []).map((p) => ({ word: p.word, value: p.word }));
-  const expressed = elementExpression(row, all, 'x');
+  const all = (row.parameters ?? []).map((p) => ({ word: p.word, json: p.word }));
+  const expressed = elementExpression(row, all, valueVariable);
   return expressed.ok ? expressed.epsil : undefined;
 }
 

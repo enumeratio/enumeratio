@@ -3,3 +3,5 @@ dist
 *.tsbuildinfo
 .vite
 vendor
+# build output of the kernel package: the route file's cells as MathJSON
+packages/kernel/build
