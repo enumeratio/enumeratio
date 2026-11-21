@@ -568,9 +568,9 @@ describe('an element by value', () => {
   test('a subset: n is kept in the object’s address, k is dropped', async () => {
     const c = await page(inCollection(segment('Subset', [0, 5], [1, 2]), unordered(1, 3)));
     expect(c.page.canonical).toBe(canonicalOf('Subset', [[0, 5]], unordered(1, 3)));
-    expect(valueOf(c, 'Element(Finset((5, [1, 3])), KSubsets(5, 2))')).toBe('True');
+    expect(valueOf(c, 'Element(Finset(Tuple(5, [1, 3])), KSubsets(5, 2))')).toBe('True');
     // notatio: the second 2-subset of 1..5 in order.
-    expect(valueOf(c, 'IndexOf(KSubsets(5, 2), Finset((5, [1, 3])))')).toBe('2');
+    expect(valueOf(c, 'IndexOf(KSubsets(5, 2), Finset(Tuple(5, [1, 3])))')).toBe('2');
     expect(valueOf(c, 'At(KSubsets(5, 2), 1)')).toBe('Finset((5, [1, 2]))');
     expect(valueOf(c, 'At(KSubsets(5, 2), 3)')).toBe('Finset((5, [1, 4]))');
   });
@@ -578,7 +578,9 @@ describe('an element by value', () => {
   test('a subset with only n bound: its size is the kernel’s to measure', async () => {
     const c = await page(inCollection(segment('Subset', [0, 5]), unordered(1, 3)));
     expect(c.page.canonical).toBe(canonicalOf('Subset', [[0, 5]], unordered(1, 3)));
-    expect(valueOf(c, 'Element(Finset((5, [1, 3])), KSubsets(5, Length([1, 3])))')).toBe('True');
+    expect(valueOf(c, 'Element(Finset(Tuple(5, [1, 3])), KSubsets(5, Length([1, 3])))')).toBe(
+      'True',
+    );
   });
 
   test('a subset without n cannot be written: the page says so and asks the kernel nothing', async () => {
@@ -1060,7 +1062,7 @@ describe('nothing written in an address becomes part of an asked expression', ()
 describe('a property named in the catalogue is asked by its catalogue name first', () => {
   test('/collection/Subset;n=5/1,3/Sum is the statistic, not the subset back', async () => {
     const c = await page(inCollection(segment('Subset', [0, 5]), unordered(1, 3), 'Sum'));
-    expect(valueOf(c, 'CombinatorialStat(Finset((5, [1, 3])), "Sum")')).toBe('4');
+    expect(valueOf(c, 'CombinatorialStat(Finset(Tuple(5, [1, 3])), "Sum")')).toBe('4');
     expect(asksStarting(c, 'Sum(')).toEqual([]);
     expect(valueCell(c)).toContain('4');
   });
@@ -1082,7 +1084,7 @@ describe('the two routes to a catalogued name agree, or the head declines', () =
       window: 'SetPartitions(4)',
     },
     IntegerPartition: { element: 'IntegerPartition([4, 2, 1])', window: 'IntegerPartitions(7)' },
-    Finset: { element: 'Finset((5, [1, 3]))', window: 'KSubsets(5, 2)' },
+    Finset: { element: 'Finset(Tuple(5, [1, 3]))', window: 'KSubsets(5, 2)' },
   };
   const carriers = Object.keys(names.carriers);
 

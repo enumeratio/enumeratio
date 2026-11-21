@@ -14,7 +14,8 @@ import { catalogResources } from '@notatio/catalog';
 import { symbolInfo } from '@notatio/manifest';
 import { isServed, parseRouteFile } from '@enumeratio/routes/parse';
 import type { Plugin } from 'vite-plus';
-import { elementHead, headsIn } from './expressions.ts';
+import { type Cell, elementHeadOf, headsOfRow } from './cell.ts';
+import { cellTable, parseCell } from './parse-cells.ts';
 
 export interface CarrierNames {
   statistics: string[];
@@ -47,9 +48,9 @@ export function collectNotatioData(): { names: NotatioNames; descriptions: Notat
     if (found?.description !== undefined) descriptions[name] = found.description;
   };
   for (const row of rows) {
-    for (const head of headsIn(row)) describe(head);
+    for (const head of headsOfRow(row, parseCell)) describe(head);
     for (const name of row.show) mentioned.add(name);
-    const carrier = elementHead(row);
+    const carrier = elementHeadOf(row, parseCell);
     if (carrier === undefined || names.carriers[carrier] !== undefined) continue;
     if (!resources.some((r) => r.kind === 'carrier' && r.name === carrier)) continue;
     const on = (kind: string): string[] =>
@@ -78,7 +79,16 @@ export function collectNotatioData(): { names: NotatioNames; descriptions: Notat
 const modules = {
   'virtual:notatio-names': 'names',
   'virtual:notatio-descriptions': 'descriptions',
+  'virtual:route-cells': 'cells',
 } as const;
+
+/**
+ * Every Epsil cell of the route file, parsed once by notatio's parser: its MathJSON and the place
+ * of each symbol in its text. The page reads this and imports no parser (`expressions.ts`).
+ */
+export function collectRouteCells(): Record<string, Cell> {
+  return cellTable(parseRouteFile(readFileSync(routeFile, 'utf8')).rows);
+}
 
 export function notatioData(): Plugin {
   let data: ReturnType<typeof collectNotatioData> | undefined;
@@ -91,6 +101,7 @@ export function notatioData(): Plugin {
       if (!id.startsWith('\0')) return undefined;
       const which = modules[id.slice(1) as keyof typeof modules];
       if (which === undefined) return undefined;
+      if (which === 'cells') return `export default ${JSON.stringify(collectRouteCells())};`;
       data ??= collectNotatioData();
       return `export default ${JSON.stringify(data[which])};`;
     },

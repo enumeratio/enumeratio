@@ -7,7 +7,9 @@
   "exports": {
     ".": "./src/index.ts",
     "./catalogue": "./src/catalogue.ts",
+    "./cell": "./src/cell.ts",
     "./expressions": "./src/expressions.ts",
+    "./parse-cells": "./src/parse-cells.ts",
     "./node": "./src/node.ts",
     "./data-plugin": "./src/data-plugin.ts"
   },

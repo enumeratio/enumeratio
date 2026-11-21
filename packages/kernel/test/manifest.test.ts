@@ -3,7 +3,8 @@ import { describe, expect, test } from 'vite-plus/test';
 import { rows, valueShapes } from '@enumeratio/routes';
 import { codecs } from '../../codecs/src/index.ts';
 import { collectNotatioData } from '../src/data-plugin.ts';
-import { elementHead, headsIn } from '../src/expressions.ts';
+import { elementHeadOf, headsOfRow } from '../src/cell.ts';
+import { parseCell } from '../src/parse-cells.ts';
 
 /**
  * What the route file names is checked against the pinned notatio. A name that is in the
@@ -23,7 +24,7 @@ describe('the route file against the pinned notatio manifest', () => {
   test('every head named in an expression, element, measure or show cell is in the manifest', () => {
     const missing: string[] = [];
     for (const row of served) {
-      const named = new Set([...headsIn(row), ...row.show]);
+      const named = new Set([...headsOfRow(row, parseCell), ...row.show]);
       for (const name of named) {
         if (name in knownAbsent) continue;
         if (symbolInfo(name) === undefined) missing.push(`${row.name}: ${name}`);
@@ -81,7 +82,7 @@ describe('what the pages know of notatio comes from notatio', () => {
 
   test('every carrier a live row constructs with is a carrier of notatio', () => {
     for (const row of rows.filter((r) => r.status === 'live')) {
-      const head = elementHead(row);
+      const head = elementHeadOf(row, parseCell);
       if (head === undefined) continue;
       expect(names.carriers[head], `${row.name}: ${head}`).toBeDefined();
     }

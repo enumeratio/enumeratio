@@ -7,3 +7,8 @@ declare module 'virtual:notatio-descriptions' {
   const descriptions: import('@enumeratio/kernel/data-plugin').NotatioDescriptions;
   export default descriptions;
 }
+
+declare module 'virtual:route-cells' {
+  const cells: Record<string, import('@enumeratio/kernel/cell').Cell>;
+  export default cells;
+}

@@ -1,86 +1,35 @@
 /**
- * The Epsil behind a route row, read by notatio's own parser. The route file keeps its expression
- * cells as text (`packages/routes`); this module reads each one with `parseExpression`, the
- * parameters, `k` and `x` being free symbols, and does with the result what a page needs:
- * put the parameters and an element's value into it, write it back as Epsil, and recognize an
- * answer as an element of a row (the same expression, read the other way). Epsil is the only text
- * syntax read or written here.
- *
- * Pure: no engine, so a page may call it before any kernel has loaded.
+ * The Epsil behind a route row, as a page uses it: put the parameters and an element's value into
+ * it, and recognize an answer as an element of a row (the same expression, read the other way).
+ * Each cell was read once, at build, by notatio's own parser with the row's parameters, `k` and
+ * `x` as free symbols (`parse-cells.ts`, through `virtual:route-cells`); this module works from
+ * that record and imports neither the parser nor the engine, so a page can use it before any
+ * kernel has loaded. Epsil is the only text syntax read or written: a filled cell is the cell's
+ * own text with the values in place of the symbols.
  */
 import type { Binding } from '@enumeratio/address';
 import { type RouteRow, rankVariable, valueVariable } from '@enumeratio/routes/parse';
-import { parseExpression, serializeExpression } from '@notatio/formats/expression';
-import { type Json, headOf, operandsOf, plain } from './index.ts';
+import cells from 'virtual:route-cells';
+import { type Cell, elementHeadOf, fill, headsOfRow, isSymbol, match, symbolsIn } from './cell.ts';
+import { type Json, headOf } from './index.ts';
 
-const parsed = new Map<string, Json>();
-
-/**
- * One Epsil cell as plain MathJSON (a symbol is a string, a call an array, a string literal
- * `'…'`). Throws when notatio's parser reports an error: a route file's cell is the repository's own,
- * and a test reads every one.
- */
-export function readCell(text: string): Json {
-  let found = parsed.get(text);
-  if (found === undefined) {
-    const result = parseExpression(text);
-    if (result.errors.length > 0) {
-      throw new Error(`cannot read the Epsil “${text}”: ${result.errors.join('; ')}`);
-    }
-    found = plain(result.json);
-    parsed.set(text, found);
-  }
+/** One cell, as the build read it. Throws for a text that is not a cell of the route file. */
+export function readCell(text: string): Cell {
+  const found = cells[text];
+  if (found === undefined) throw new Error(`“${text}” is not a cell of the route file`);
   return found;
 }
 
-/** A number written with digit separators (`1_000_000`): Epsil reads it, but a page asks and shows it in plain digits. */
-const separated = /(?<![\w'"])\d{1,3}(?:_\d{3})+(?![\w'"])/g;
-
-/**
- * An expression as Epsil. A library name stays as it is declared (`NonNegativeIntegers`), and an
- * integer is written in plain digits.
- */
-export const writeCell = (json: Json): string =>
-  serializeExpression(json as never, { libraryNames: 'mathjson' }).replaceAll(separated, (n) =>
-    n.replaceAll('_', ''),
-  );
-
-const isSymbol = (json: Json): json is string => typeof json === 'string' && !json.startsWith("'");
-
-/** Every symbol an expression names, apart from the heads it calls: its variables. */
-export function symbolsIn(json: Json, into = new Set<string>()): Set<string> {
-  if (isSymbol(json)) into.add(json);
-  else for (const operand of operandsOf(json)) symbolsIn(operand, into);
-  return into;
-}
-
-/** Every head an expression calls. */
-export function headsOfJson(json: Json, into = new Set<string>()): Set<string> {
-  const head = headOf(json);
-  if (head !== undefined) into.add(head);
-  for (const operand of operandsOf(json)) headsOfJson(operand, into);
-  return into;
-}
-
-/** The expression with each variable replaced by the expression bound to it. */
-function substitute(json: Json, bound: ReadonlyMap<string, Json>): Json {
-  if (isSymbol(json)) return bound.has(json) ? bound.get(json) : json;
-  if (!Array.isArray(json)) return json;
-  return [json[0], ...operandsOf(json).map((operand) => substitute(operand, bound))];
-}
-
-/** A cell with each variable replaced by the text bound to it, written as Epsil. */
-function bind(cell: string, texts: ReadonlyMap<string, string>): string {
-  const bound = new Map([...texts].map(([word, text]) => [word, readCell(text)] as const));
-  return writeCell(substitute(readCell(cell), bound));
-}
+/** `fill`, with the Epsil bound to each name given as text. */
+const bind = (text: string, bound: ReadonlyMap<string, string>): string =>
+  fill(text, readCell(text), bound);
 
 const wordsOf = (row: RouteRow): Set<string> => new Set((row.parameters ?? []).map((p) => p.word));
 
 /** The parameters an expression names. */
-export function parametersIn(row: RouteRow, cell: string): string[] {
+export function parametersIn(row: RouteRow, text: string): string[] {
   const words = wordsOf(row);
-  return [...symbolsIn(readCell(cell))].filter((name) => words.has(name));
+  return [...symbolsIn(readCell(text).json)].filter((name) => words.has(name));
 }
 
 export type Expressed =
@@ -124,15 +73,13 @@ export function kthExpression(row: RouteRow, rank: number): string | undefined {
 }
 
 /** The head that constructs one element of the row (`DyckPath`, `Finset`), when it is a call. */
-export function elementHead(row: RouteRow): string | undefined {
-  return row.element === undefined ? undefined : headOf(readCell(row.element));
-}
+export const elementHead = (row: RouteRow): string | undefined => elementHeadOf(row, readCell);
 
 /** The name a row's collection is built with (`PrimeNumbers`, `Permutations`), from its first form. */
 export function collectionHead(row: RouteRow): string | undefined {
   const form = row.expressions[0];
   if (form === undefined) return undefined;
-  const json = readCell(form);
+  const { json } = readCell(form);
   return isSymbol(json) ? json : headOf(json);
 }
 
@@ -149,44 +96,6 @@ export function elementExpression(
   return { ok: true, epsil: bind(row.element, new Map([...have, [valueVariable, valueEpsil]])) };
 }
 
-const integerOf = (json: Json): string | undefined => {
-  if (typeof json === 'number' && Number.isInteger(json)) return String(json);
-  if (typeof json === 'bigint') return String(json);
-  if (json !== null && typeof json === 'object' && 'num' in json) {
-    const num = String((json as { num: unknown }).num);
-    return /^-?\d+$/.test(num) ? num : undefined;
-  }
-  return undefined;
-};
-
-/** Reads an answer against an expression: the value each variable stands for, or undefined when it is not of this shape. */
-function match(
-  template: Json,
-  json: Json,
-  variables: ReadonlySet<string>,
-  into = new Map<string, Json>(),
-): Map<string, Json> | undefined {
-  if (isSymbol(template)) {
-    if (variables.has(template)) {
-      into.set(template, json);
-      return into;
-    }
-    return json === template ? into : undefined;
-  }
-  if (!Array.isArray(template)) {
-    const wanted = integerOf(template);
-    return wanted !== undefined && integerOf(json) === wanted ? into : undefined;
-  }
-  const parts = operandsOf(template);
-  if (!Array.isArray(json) || json[0] !== template[0] || json.length !== parts.length + 1) {
-    return undefined;
-  }
-  for (const [i, part] of parts.entries()) {
-    if (!match(part, json[i + 1], variables, into)) return undefined;
-  }
-  return into;
-}
-
 /**
  * Reads an answer as an element of this row: its value (MathJSON) and the
  * parameters its constructor carries. Undefined when it is not one.
@@ -197,7 +106,7 @@ export function readElementJson(
 ): { value: Json; parameters: Binding[] } | undefined {
   if (!row.element) return undefined;
   const identity = identityParameters(row);
-  const found = match(readCell(row.element), json, new Set([valueVariable, ...identity]));
+  const found = match(readCell(row.element).json, json, new Set([valueVariable, ...identity]));
   if (!found || !found.has(valueVariable)) return undefined;
   const parameters: Binding[] = [];
   for (const word of identity) {
@@ -209,18 +118,7 @@ export function readElementJson(
 }
 
 /** Every head a row's expressions and constructor call, and every symbol a collection is named by. */
-export function headsIn(row: RouteRow): string[] {
-  const heads = new Set<string>();
-  for (const form of row.expressions) {
-    const json = readCell(form);
-    headsOfJson(json, heads);
-    // A collection with no parameters is a bare symbol: `PrimeNumbers`.
-    if (isSymbol(json)) heads.add(json);
-  }
-  const cells = [row.element, row.kth, ...row.measures.values()];
-  for (const cell of cells) if (cell !== undefined) headsOfJson(readCell(cell), heads);
-  return [...heads];
-}
+export const headsIn = (row: RouteRow): string[] => headsOfRow(row, readCell);
 
 /**
  * What the address binds, and beside it every parameter the element itself
