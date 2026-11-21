@@ -126,6 +126,8 @@ export const queryWords = {
   where: 'where',
   groupBy: 'group_by',
   as: 'as',
+  /** The rank a table's window starts at, in a large collection. */
+  from: 'from',
   /** The grammar made visible: how the address was read. */
   explain: 'explain',
 } as const;
