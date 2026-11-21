@@ -5,10 +5,12 @@ import {
   type Element,
   type Step,
   areas,
+  dotSegments,
   formatAddress,
   marks,
   parseAddress,
   queryWords,
+  shapes,
 } from '../src/index.ts';
 import { catalog } from './fixtures.ts';
 
@@ -58,7 +60,9 @@ function make(rand: () => number) {
       return rand() < 0.5 ? { kind: 'rank', rank } : { kind: 'rank', order: lowerWord(), rank };
     }
     // A value may not begin with the rank sigil, and has at least one character.
-    const value = str(valueChars, 1, 12);
+    // ...is never a dot segment, and does not contain the notation mark.
+    let value = str(valueChars, 1, 12);
+    if (dotSegments.includes(value)) value = lowerWord();
     return rand() < 0.3
       ? { kind: 'value', notation: lowerWord(), value }
       : { kind: 'value', value };
@@ -134,7 +138,14 @@ function generate(g: Gen, withCatalog: boolean): Address {
       return a;
     }
     case areas.sequence:
-      return { area: pickArea, subject: `A${g.str('0123456789', 6, 6)}`, chain: [], query };
+      return {
+        area: pickArea,
+        subject:
+          shapes.sequenceNumber.prefix +
+          g.str(digits, shapes.sequenceNumber.digits, shapes.sequenceNumber.digits),
+        chain: [],
+        query,
+      };
     case areas.input:
       return {
         area: pickArea,
@@ -158,11 +169,51 @@ for (const withCatalog of [false, true]) {
       const read = parseAddress(path, q.join(marks.query), options);
       expect(read.problems, written).toEqual([]);
       expect(read.address, written).toEqual(address);
-      expect(read.canonical, written).toBe(true);
+      // A notation-prefixed value is read, never canonical, but it still round-trips.
+      const prefixed = address.element?.kind === 'value' && address.element.notation !== undefined;
+      expect(read.canonical, written).toBe(!prefixed);
+      expect(read.canonicalPath, written).toBe(written);
       expect(formatAddress(read.address), written).toBe(written);
     }
   });
 }
+
+/** Adversarial values: what a value may not be is never written raw, and is refused when read. */
+test(`adversarial values are never written raw and are refused when read (${budget} cases)`, () => {
+  const g = make(mulberry32(23));
+  const refusals: ((value: string) => string)[] = [
+    // Led by the rank sigil (a letter follows, so it cannot be read as a rank).
+    (v) => `${marks.rank}x${v}`,
+    // Carries the notation mark (twice, so that no reading takes one as a prefix).
+    (v) => [v, v, v].join(marks.notation),
+    () => dotSegments[g.int(dotSegments.length)] as string,
+  ];
+  for (let i = 0; i < budget; i++) {
+    const base = g.str(valueChars, 1, 8);
+    const value = (g.pick(refusals) as (v: string) => string)(base);
+    const prefix = g.int(2) === 0 ? undefined : g.pick(['cycle', 'lex']);
+    const element: Element =
+      prefix === undefined ? { kind: 'value', value } : { kind: 'value', notation: prefix, value };
+    const address: Address = {
+      area: areas.collection,
+      collection: { name: 'X', parameters: [] },
+      element,
+      chain: [],
+      query: [],
+    };
+    const written = formatAddress(address);
+    const piece = (written.split(marks.segment)[3] ?? '').slice(
+      prefix === undefined ? 0 : prefix.length + marks.notation.length,
+    );
+    expect(piece.includes(marks.notation), written).toBe(false);
+    expect(piece.startsWith(marks.rank), written).toBe(false);
+    expect(dotSegments.includes(piece), written).toBe(false);
+    const read = parseAddress(written);
+    expect(read.problems.length, written).toBeGreaterThan(0);
+    expect(read.canonical, written).toBe(false);
+    expect(read.canonicalPath, written).toBeUndefined();
+  }
+});
 
 test('the root and the leaf areas', () => {
   for (const area of [areas.atlas, areas.about, areas.contribute]) {

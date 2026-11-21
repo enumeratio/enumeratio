@@ -2,11 +2,23 @@ import {
   type Catalog,
   type CollectionSpec,
   defaultPlural,
+  escapeRegExp,
   findCollection,
   findParameter,
   nameKey,
 } from './names.ts';
-import { type Area, areas, leafAreas, marks, readAlsoAs } from './table.ts';
+import {
+  type Area,
+  areas,
+  dotSegments,
+  leafAreas,
+  marks,
+  namedAreas,
+  nameSeparators,
+  readAlsoAs,
+  shapes,
+  valueExtras,
+} from './table.ts';
 
 /** `word=value`, the value opaque at this layer. */
 export interface Binding {
@@ -20,6 +32,12 @@ export interface Segment {
   parameters: Binding[];
 }
 
+/**
+ * An element by value or by rank. A value never contains the notation mark,
+ * never begins with the rank sigil and is never a dot segment (§2.2). A
+ * `notation` is present only when the prefix was not converted by a collection
+ * reader; such an address is read, never canonical.
+ */
 export type Element =
   | { kind: 'value'; notation?: string; value: string }
   | { kind: 'rank'; order?: string; rank: number };
@@ -54,6 +72,7 @@ export interface Problem {
     | 'bare-value'
     | 'bad-rank'
     | 'bad-index'
+    | 'bad-value'
     | 'bad-encoding'
     | 'unreadable-element'
     | 'extra-segment'
@@ -66,42 +85,56 @@ export interface Problem {
 export interface ParseOptions {
   catalog?: Catalog;
   /**
-   * A collection's reader for an element written some other way (PR 2 supplies
-   * the codecs). Returns the canonical value, `null` to refuse the spelling,
-   * or `undefined` when the collection has no reader (the value is kept).
+   * A collection's reader for an element written some other way (the codecs
+   * supply it). It receives the value and the notation named in front of it, if
+   * any, and returns the value in the collection's default notation (the prefix
+   * is then dropped), `null` to refuse the spelling (`unreadable-element`), or
+   * `undefined` when it does not read it (the value, and any prefix, are kept).
    */
-  readElement?: (collection: string, raw: string) => string | null | undefined;
+  readElement?: (collection: string, raw: string, notation?: string) => string | null | undefined;
   /** Resolves an outside identifier (`St000012`, `Mp00023`) to a name. */
   resolveSubject?: (area: string, raw: string) => string | undefined;
 }
 
 export interface ParseResult {
   address: Address;
-  /** True when the input was already the canonical spelling, byte for byte. */
+  /**
+   * True when the input was already the canonical spelling, byte for byte.
+   * Never true with problems, and never true for a notation-prefixed element
+   * (it is read, not canonical, even when no reader exists to convert it).
+   */
   canonical: boolean;
-  /** The canonical path and query: equal to the input when `canonical`. */
-  canonicalPath: string;
+  /**
+   * The canonical path and query: equal to the input when `canonical`.
+   * `undefined` when there are problems: such an address has no canonical form.
+   * With a notation prefix no reader converted, it is the address as formatted,
+   * prefix kept.
+   */
+  canonicalPath: string | undefined;
   problems: Problem[];
 }
 
 // ---------------------------------------------------------------- encoding
 
 const alnum = /^[A-Za-z0-9]$/;
+// Never the notation mark: it is encoded everywhere inside a value. The rank
+// sigil is raw except as the first character (see `encodePiece`).
 const valueSafe = new Set<string>([
   marks.unordered,
   marks.ordered,
   marks.block,
   marks.negative,
   marks.decimal,
-  marks.notation,
   marks.rank,
-  '+',
-  '(',
-  ')',
-  "'",
-  '*',
-  '~',
+  ...valueExtras,
 ]);
+
+/** One character as percent-encoding, including ASCII that `encodeURIComponent` leaves raw. */
+function percent(ch: string): string {
+  const code = ch.codePointAt(0) as number;
+  if (code >= 128) return encodeURIComponent(ch);
+  return `%${code.toString(16).toUpperCase().padStart(2, '0')}`;
+}
 
 function encodeWith(text: string, safe: ReadonlySet<string>): string {
   let out = '';
@@ -118,8 +151,17 @@ function encodeWith(text: string, safe: ReadonlySet<string>): string {
   return out;
 }
 
-/** Encodes one piece of a segment: a name, a parameter value, an element. */
+/**
+ * Encodes one piece of a segment: a name, a parameter value, an element. The
+ * notation mark is always encoded; the rank sigil is encoded as the first
+ * character; a piece that is a dot segment is encoded in full. (A browser
+ * collapses `%2E` too, so such an address is still refused when read; it is
+ * never written raw.)
+ */
 export function encodePiece(text: string): string {
+  if (dotSegments.includes(text)) return [...text].map(percent).join('');
+  const [first = ''] = text;
+  if (first === marks.rank) return percent(first) + encodeWith(text.slice(first.length), valueSafe);
   return encodeWith(text, valueSafe);
 }
 
@@ -203,6 +245,22 @@ interface RawBinding {
   value: string;
 }
 
+/**
+ * `Name_4`: digits at the end of a name, joined by the bare join. The character
+ * before the join must be none of a digit or a name separator, so that `A1_2`
+ * and `A-_2` stay names.
+ */
+function splitBareJoin(name: string): { name: string; value: string } | undefined {
+  const digits = /\d+$/.exec(name);
+  if (!digits) return undefined;
+  const head = name.slice(0, digits.index);
+  if (!head.endsWith(readAlsoAs.bareJoin)) return undefined;
+  const stem = name.slice(0, digits.index - readAlsoAs.bareJoin.length);
+  const last = stem.at(-1);
+  if (last === undefined || /\d/.test(last) || nameSeparators.includes(last)) return undefined;
+  return { name: stem, value: digits[0] };
+}
+
 /** Splits `Name;a=1;b=2`, `Name;4`, `Name(4)`, `Name_4` (before name resolution). */
 function splitSegment(raw: string, problems: Problem[], bareForms: boolean) {
   const [headRaw = '', ...rest] = raw.split(marks.parameter);
@@ -210,13 +268,15 @@ function splitSegment(raw: string, problems: Problem[], bareForms: boolean) {
   const bindings: RawBinding[] = [];
   if (bareForms) {
     const open = name.endsWith(readAlsoAs.bareClose) ? name.lastIndexOf(readAlsoAs.bareOpen) : -1;
-    const join = /^(.*[^\d_-])_(\d+)$/.exec(name);
+    const join = splitBareJoin(name);
     if (open > 0) {
-      bindings.push({ value: name.slice(open + 1, -1) });
+      bindings.push({
+        value: name.slice(open + readAlsoAs.bareOpen.length, -readAlsoAs.bareClose.length),
+      });
       name = name.slice(0, open);
     } else if (join) {
-      bindings.push({ value: join[2] as string });
-      name = join[1] as string;
+      bindings.push({ value: join.value });
+      name = join.name;
     }
   }
   for (const part of rest) {
@@ -238,6 +298,7 @@ function readCollection(
   problems: Problem[],
 ): { segment: Segment; spec?: CollectionSpec } {
   const { name, bindings } = splitSegment(raw, problems, true);
+  refuseDotSegment(name, raw, problems);
   const catalog = options.catalog;
   if (!catalog) {
     const parameters: Binding[] = [];
@@ -298,6 +359,39 @@ function readCollection(
   return { segment: { name: spec.name, parameters: [...parameters, ...unknown] }, spec };
 }
 
+/** Reports a segment that is a dot segment (a browser would collapse it). Returns true when it is one. */
+function refuseDotSegment(text: string, raw: string, problems: Problem[]): boolean {
+  if (!dotSegments.includes(text)) return false;
+  problems.push({
+    code: 'bad-value',
+    message: `“${text}” is a dot segment, which a browser collapses; it names nothing.`,
+    at: raw,
+  });
+  return true;
+}
+
+/** Reports what a value may not be (§2.2). Returns true when the value is acceptable. */
+function checkValue(value: string, raw: string, problems: Problem[]): boolean {
+  let ok = !refuseDotSegment(value, raw, problems);
+  if (value.includes(marks.notation)) {
+    ok = false;
+    problems.push({
+      code: 'bad-value',
+      message: `A value never contains “${marks.notation}”: “${value}”.`,
+      at: raw,
+    });
+  }
+  if (value.startsWith(marks.rank)) {
+    ok = false;
+    problems.push({
+      code: 'bad-value',
+      message: `A value never begins with “${marks.rank}”: “${value}”.`,
+      at: raw,
+    });
+  }
+  return ok;
+}
+
 function readElement(
   raw: string,
   spec: CollectionSpec | undefined,
@@ -309,7 +403,7 @@ function readElement(
   const sigil = escapeRegExp(marks.rank);
   const sep = escapeRegExp(marks.notation);
   if (text.startsWith(marks.rank)) {
-    const m = new RegExp(`^${sigil}(?:([A-Za-z][A-Za-z0-9]*)${sep})?(\\d+)$`).exec(text);
+    const m = new RegExp(`^${sigil}(?:(${shapes.notationName})${sep})?(\\d+)$`).exec(text);
     const rank = m ? Number(m[2]) : 0;
     if (m && rank >= 1 && Number.isSafeInteger(rank)) {
       return m[1] === undefined
@@ -323,39 +417,59 @@ function readElement(
     });
     return { kind: 'value', value: text };
   }
-  const m = new RegExp(`^([A-Za-z][A-Za-z0-9]*)${sep}(.+)$`, 's').exec(text);
+  const m = new RegExp(`^(${shapes.notationName})${sep}(.+)$`, 's').exec(text);
   let notation: string | undefined;
   let value = text;
   if (m) {
     notation = nameKey(m[1] as string);
     value = m[2] as string;
   }
-  if (options.readElement && (spec || !options.catalog)) {
-    const read = options.readElement(collectionName, value);
+  // A notation-prefixed value is read, never canonical (§2.2): the collection's
+  // reader gives the value in its default notation and the prefix is dropped.
+  // With no reader, or a reader that returns `undefined`, the prefix is kept so
+  // that nothing is lost and the address formats back to what was read; the
+  // result is then not canonical (see `parseAddress`). A reader that returns
+  // `null` refuses the value: `unreadable-element`.
+  if (checkValue(value, raw, problems) && options.readElement && (spec || !options.catalog)) {
+    const read = options.readElement(collectionName, value, notation);
     if (read === null) {
       problems.push({
         code: 'unreadable-element',
         message: `${collectionName} cannot read “${value}” as one of its elements.`,
         at: raw,
       });
-    } else if (read !== undefined) value = read;
+    } else if (read !== undefined) {
+      value = read;
+      notation = undefined;
+    }
   }
   return notation === undefined ? { kind: 'value', value } : { kind: 'value', notation, value };
 }
 
 function readStep(raw: string, spec: CollectionSpec | undefined, problems: Problem[]): Step {
-  if (/^\d+$/.test(raw)) {
-    const index = Number(raw);
+  // The index test runs on the decoded segment: an encoded digit is an index.
+  // (A decoding that fails is not an index; `splitSegment` reports it.)
+  let decoded: string | undefined;
+  try {
+    decoded = decodeURIComponent(raw);
+  } catch {
+    decoded = undefined;
+  }
+  if (decoded !== undefined && new RegExp(`^${escapeRegExp(marks.negative)}?\\d+$`).test(decoded)) {
+    const index = decoded.startsWith(marks.negative)
+      ? -Number(decoded.slice(marks.negative.length))
+      : Number(decoded);
     if (index < 1 || !Number.isSafeInteger(index)) {
       problems.push({
         code: 'bad-index',
-        message: `An index counts from 1, not “${raw}”.`,
+        message: `An index counts from 1, not “${decoded}”.`,
         at: raw,
       });
     }
     return { kind: 'index', index };
   }
   const { name, bindings } = splitSegment(raw, problems, false);
+  refuseDotSegment(name, raw, problems);
   const parameters: Binding[] = [];
   for (const b of bindings) {
     if (b.word === undefined) {
@@ -381,15 +495,11 @@ function readQuery(query: string): [string, string][] {
     const k = eq < 0 ? pair : pair.slice(0, eq);
     const v = eq < 0 ? '' : pair.slice(eq + 1);
     out.push([
-      decodePiece(k.replaceAll('+', ' '), ignored),
-      decodePiece(v.replaceAll('+', ' '), ignored),
+      decodePiece(k.replaceAll(marks.querySpace, ' '), ignored),
+      decodePiece(v.replaceAll(marks.querySpace, ' '), ignored),
     ]);
   }
   return out;
-}
-
-function escapeRegExp(s: string): string {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function readArea(raw: string): Area | undefined {
@@ -400,7 +510,10 @@ function readArea(raw: string): Area | undefined {
   return undefined;
 }
 
-const sequenceNumber = /^a\d{6}$/i;
+const sequenceNumber = new RegExp(
+  `^${escapeRegExp(shapes.sequenceNumber.prefix)}\\d{${shapes.sequenceNumber.digits}}$`,
+  'i',
+);
 
 /**
  * Reads a path and query liberally (§5) into an Address, and says whether the
@@ -428,8 +541,24 @@ export function parseAddress(path: string, query = '', options: ParseOptions = {
   }
   const askedPath = path.startsWith(marks.segment) ? path : marks.segment + path;
   const askedQuery = query.startsWith(marks.query) ? query.slice(1) : query;
-  const canonical = askedPath === formatPath(address) && askedQuery === formatQuery(address.query);
-  return { address, canonical, canonicalPath: formatAddress(address), problems };
+  const same = askedPath === formatPath(address) && askedQuery === formatQuery(address.query);
+  // A notation prefix that no reader converted is kept, so the address formats
+  // back to what was read, but it is read, never canonical (§2.2).
+  const prefixed = address.element?.kind === 'value' && address.element.notation !== undefined;
+  // An address with problems has no canonical form.
+  return {
+    address,
+    canonical: problems.length === 0 && same && !prefixed,
+    canonicalPath: problems.length === 0 ? formatAddress(address) : undefined,
+    problems,
+  };
+}
+
+/** A statistic or map subject, read by `nameKey` to its declared name when exactly one matches. */
+function declaredSubject(catalog: Catalog | undefined, subject: string): string {
+  const key = nameKey(subject);
+  const matches = new Set((catalog?.subjects ?? []).filter((s) => nameKey(s) === key));
+  return matches.size === 1 ? ([...matches][0] as string) : subject;
 }
 
 function readBody(
@@ -458,7 +587,7 @@ function readBody(
     return;
   }
   let collectionRaw: string | undefined;
-  if (area === areas.collection) {
+  if (!namedAreas.includes(area)) {
     [collectionRaw, ...rest] = rest;
   } else {
     const [subjectRaw, ...tail] = rest;
@@ -467,8 +596,10 @@ function readBody(
       return;
     }
     let subject = decodePiece(subjectRaw, problems);
+    refuseDotSegment(subject, subjectRaw, problems);
     if (area === areas.sequence && sequenceNumber.test(subject)) subject = subject.toUpperCase();
     subject = options.resolveSubject?.(area, subject) ?? subject;
+    if (area !== areas.sequence) subject = declaredSubject(options.catalog, subject);
     address.subject = subject;
     if (area === areas.sequence) {
       if (tail.length > 0) {

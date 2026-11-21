@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { areas, marks } from '../src/index.ts';
+import { areas, escapeRegExp, marks, valueExtras, words } from '../src/index.ts';
 
 const siteMap = fileURLToPath(new URL('../../../docs/site-map.md', import.meta.url));
 
@@ -24,7 +24,7 @@ export function codeSpans(text: string): { span: string; section: string }[] {
 const placeholder = /[…<>]/;
 const areaWords = [
   ...Object.values(areas),
-  ...Object.values(areas).map((a) => a + 's'),
+  ...Object.values(areas).map((a) => a + words.plural),
   ...Object.values(areas).map((a) => a[0]?.toUpperCase() + a.slice(1)),
 ];
 
@@ -50,7 +50,7 @@ export function exampleAddresses(): string[] {
 export function exampleCollectionPaths(): string[] {
   const found = new Set<string>();
   const shape = new RegExp(
-    `^[A-Z][A-Za-z]*(?:${escape(marks.parameter)}[a-z]+${escape(marks.binding)}[^\\s${escape(marks.parameter)}${escape(marks.segment)}]+)*(?:${escape(marks.segment)}\\S+)*$`,
+    `^[A-Z][A-Za-z]*(?:${escapeRegExp(marks.parameter)}[a-z]+${escapeRegExp(marks.binding)}[^\\s${escapeClass(marks.parameter)}${escapeClass(marks.segment)}]+)*(?:${escapeRegExp(marks.segment)}\\S+)*$`,
   );
   for (const { span } of codeSpans(siteMapText)) {
     if (placeholder.test(span) || span.includes(' ') || span.startsWith(marks.segment)) continue;
@@ -70,14 +70,24 @@ export function exampleQueries(): string[] {
   return [...found];
 }
 
-function escape(s: string): string {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+/** Escapes a table entry for use inside a regular-expression character class. */
+function escapeClass(s: string): string {
+  return s.replace(/[\]\\^-]/g, '\\$&');
 }
 
 /** Elements written in the document's sections on elements (§2.2 and §2.5). */
 export function exampleElements(): string[] {
   const found = new Set<string>();
-  const element = /^[@\w,!.+()\-:]+$/;
+  const chars = [
+    marks.rank,
+    marks.unordered,
+    marks.block,
+    marks.decimal,
+    marks.negative,
+    marks.notation,
+    ...valueExtras,
+  ];
+  const element = new RegExp(`^[\\w${chars.map(escapeClass).join('')}]+$`);
   for (const { span, section } of codeSpans(siteMapText)) {
     if (section !== '2.2' && section !== '2.5') continue;
     if (placeholder.test(span) || !element.test(span)) continue;
