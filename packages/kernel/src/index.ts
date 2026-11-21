@@ -102,6 +102,20 @@ interface DisplayText {
 }
 
 /**
+ * Epsil as one line. The kernel breaks a long list over several lines with a trailing comma
+ * (`[\n  1,\n  2,\n]`); every list prints as `[1, 2, 3]` through this one function.
+ */
+export function oneLine(text: string): string {
+  if (!text.includes('\n')) return text;
+  return text
+    .replaceAll(/\s*\n\s*/g, ' ')
+    .replaceAll(/([[({])\s+/g, '$1')
+    .replaceAll(/,?\s+([\])}])/g, '$1')
+    .replaceAll(/,([\])}])/g, '$1')
+    .trim();
+}
+
+/**
  * Reads a kernel's reply. An answer equal to its own input was left
  * unevaluated: that is a decline, unless the caller says the expression is
  * expected to stand as written (`holds`: an element's constructor does).
@@ -109,7 +123,8 @@ interface DisplayText {
 export function answerOf(asked: string, raw: RawAnswer, holds = false): Answer {
   if (raw.error !== undefined) return { asked, status: 'error', reason: raw.error };
   const json = raw.value;
-  const epsil = (raw.boxes as DisplayText | undefined)?.text?.inputform;
+  const shownForm = (raw.boxes as DisplayText | undefined)?.text?.inputform;
+  const epsil = shownForm === undefined ? undefined : oneLine(shownForm);
   const base = {
     asked,
     json,
