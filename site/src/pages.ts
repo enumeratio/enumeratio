@@ -46,6 +46,8 @@ export interface Page {
    * with its id once its `run` resolves. Absent on a page that needs no kernel.
    */
   sections?: Section[];
+  /** Resolves true once the kernel has found the element is not a member: the page then drops its canonical link and asks not to be indexed. */
+  nonMember?: (env: Env) => Promise<boolean>;
   /** Where the page moves once the kernel has answered (a rank address moves to its value). */
   moveTo?: (env: Env) => Promise<string | undefined>;
 }
@@ -430,6 +432,7 @@ export function renderPage(pathname: string, search: string): Page {
       ...(object === undefined ? {} : { canonical: object }),
       ...(moved === undefined ? {} : { replaceWith: moved }),
       ...(computed.sections.length > 0 ? { sections: computed.sections } : {}),
+      ...(computed.nonMember === undefined ? {} : { nonMember: computed.nonMember }),
       ...(moveTo === undefined
         ? {}
         : { moveTo: async (env: Env) => moveTo(env).then((to) => to && formatAddress(to)) }),

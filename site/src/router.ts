@@ -74,7 +74,7 @@ export function start(win: Win, options: StartOptions = {}): () => void {
 
   /** Fills in the computed parts of the page just drawn, one after another, once the shell has painted. */
   async function compute(page: Page, turn: number): Promise<void> {
-    if (!options.loadEnv || (!page.sections && !page.moveTo)) return;
+    if (!options.loadEnv || (!page.sections && !page.moveTo && !page.nonMember)) return;
     await new Promise<void>((done) => {
       if (typeof win.requestAnimationFrame === 'function') win.requestAnimationFrame(() => done());
       else win.setTimeout(done, 0);
@@ -89,6 +89,22 @@ export function start(win: Win, options: StartOptions = {}): () => void {
         show('initial');
         return;
       }
+    }
+    if (page.nonMember && (await page.nonMember(kernel))) {
+      if (turn !== drawn) return;
+      // No canonical form for a non-member: the same as an unreadable address.
+      setHeadElement(doc, 'link[rel="canonical"]', () => doc.createElement('link'), false);
+      setHeadElement(
+        doc,
+        'meta[name="robots"]',
+        () => {
+          const el = doc.createElement('meta');
+          el.setAttribute('name', 'robots');
+          el.setAttribute('content', 'noindex');
+          return el;
+        },
+        true,
+      );
     }
     for (const section of page.sections ?? []) {
       let body: string;
