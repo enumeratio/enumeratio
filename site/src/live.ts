@@ -33,13 +33,19 @@ import {
   unrestrictedCollection,
 } from '@enumeratio/routes';
 import names from 'virtual:notatio-names';
-import { type Safe, code, h } from './html.ts';
+import { Safe, code, h } from './html.ts';
 import { allMaps, allStatistics, codecOf, itemsOf, mapsOf, statisticsOf } from './reading.ts';
 
 export interface Env {
   ask: Ask;
   /** A sentence for a head, from notatio's records. */
   describe: (name: string) => Promise<string | undefined>;
+  /**
+   * Typesets a sentence's `$…$` islands to HTML (notatio's `renderSummary`, which also escapes the
+   * text). Where it is given (Node), a sentence is drawn typeset at once; where it is not (the
+   * page), the sentence is drawn as plain text and marked, and the script typesets it when it arrives.
+   */
+  typeset?: (sentence: string) => string;
 }
 
 export interface Section {
@@ -539,16 +545,27 @@ export function pickerTarget(
   return link(collectionAddress(row.name, bound));
 }
 
+/** The attribute that marks a sentence the page typesets once the mathematics chunk has loaded. */
+export const summaryAttribute = 'data-summary';
+
+/** A notatio record's sentence as a paragraph: typeset when `env` can, else plain text, marked when it has mathematics. */
+function sentenceParagraph(env: Env, sentence: string): Safe {
+  if (env.typeset) return new Safe(`<p>${env.typeset(sentence)}</p>`);
+  return sentence.includes('$')
+    ? h`<p ${new Safe(summaryAttribute)}>${sentence}</p>`
+    : h`<p>${sentence}</p>`;
+}
+
 function definitionSection(row: RouteRow): Section {
   return {
     id: 'definition',
     title: 'Definition',
-    run: async ({ describe }) => {
+    run: async (env) => {
       const head = row.expressions[0];
       const name =
         head?.kind === 'call' ? head.head : head?.kind === 'name' ? head.name : undefined;
-      const sentence = name === undefined ? undefined : await describe(name);
-      return h`${sentence ? h`<p>${sentence}</p>` : h`<p class="note">notatio records no sentence for this collection.</p>`}
+      const sentence = name === undefined ? undefined : await env.describe(name);
+      return h`${sentence ? sentenceParagraph(env, sentence) : h`<p class="note">notatio records no sentence for this collection.</p>`}
       <p>In Epsil: ${epsilOf(row.expression ?? '')}; one element is ${row.element ? epsilOf(templateText(row)) : notComputed()}.</p>`;
     },
   };
@@ -907,10 +924,10 @@ function conceptPage(area: string, address: Address): Live | undefined {
     {
       id: 'definition',
       title: 'Definition',
-      run: async ({ describe }) => {
-        const sentence = await describe(subject);
+      run: async (env) => {
+        const sentence = await env.describe(subject);
         return sentence
-          ? h`<p>${sentence}</p>`
+          ? sentenceParagraph(env, sentence)
           : h`<p class="note">notatio records no sentence for ${code(subject)}.</p>`;
       },
     },
