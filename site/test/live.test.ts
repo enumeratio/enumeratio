@@ -105,6 +105,33 @@ const valueCell = (c: Computed): string | undefined =>
 
 // ---------------------------------------------------------------- a collection
 
+describe('unbound parameters are said once, with the picker', () => {
+  test('KSubset;n=5 says k is unbound, lists every subset and offers the picker', async () => {
+    const c = await page(inCollection(segment('KSubset', [0, 5])));
+    const html = c.page.body.value;
+    expect(strip(html)).toContain(`${word('KSubset', 1)} is unbound`);
+    expect(strip(html)).not.toContain(`${word('KSubset', 0)} is unbound`);
+    expect(html).toContain('data-picker="KSubset"');
+    expect(valueOf(c, 'Count(KSubsets(5, 0))')).toBeUndefined();
+  });
+  test('a collection with nothing bound names every parameter; one fully bound names none', async () => {
+    const none = strip((await page(inCollection('SetPartition'))).page.body.value);
+    expect(none.replaceAll(' ,', ',')).toContain(
+      `${word('SetPartition', 0)}, ${word('SetPartition', 1)} are unbound`,
+    );
+    const all = strip(
+      (await page(inCollection(segment('SetPartition', [0, 4], [1, 2])))).page.body.value,
+    );
+    expect(all).not.toContain('unbound');
+  });
+  test('a list prints on one line', async () => {
+    const c = await page(inCollection('Natural', '360'));
+    const text = strip(c.html);
+    expect(text).toContain('[1, 2, 3, 4, 5, 6, 8, 9, 10, 12');
+    expect(text).not.toMatch(/\[ |, \]/);
+  });
+});
+
 describe('a collection, unbound: the counts for the first sizes', () => {
   const cases: [string, (n: number) => string, number[]][] = [
     ['Permutation', (n) => `Permutations(${n})`, [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880]],

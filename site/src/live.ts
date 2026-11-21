@@ -503,7 +503,12 @@ function pickerLead(row: RouteRow, bound: readonly Binding[]): Safe {
   if (parameters.length === 0) return h`<p class="note">No parameters.</p>`;
   const size = sizeParameter(row);
   const have = new Map(bound.map((b) => [b.word, b.value]));
-  return h`<form class="picker" data-picker="${row.name}">
+  const unbound = parameters.filter((p) => !have.has(p.word));
+  const unboundLine =
+    unbound.length === 0
+      ? ''
+      : h`<p class="note">${unbound.map((p, i) => h`${i > 0 ? ', ' : ''}${code(p.word)}`)} ${unbound.length > 1 ? 'are' : 'is'} unbound, so every value of ${unbound.length > 1 ? 'them' : 'it'} is included: set ${unbound.length > 1 ? 'them' : 'it'} below.</p>`;
+  return h`${unboundLine}<form class="picker" data-picker="${row.name}">
     ${parameters.map(
       (p) =>
         h`<label>${code(p.word)} <input name="${p.word}" inputmode="numeric" pattern="-?[0-9]*" size="4" value="${have.get(p.word) ?? ''}"></label> `,
