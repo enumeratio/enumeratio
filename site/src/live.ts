@@ -15,6 +15,7 @@ import {
   formatSegment,
   formatStep,
   marks,
+  notatioReference,
   queryWords,
 } from '@enumeratio/address';
 import { itemsFromJson, itemsToEpsil } from '@enumeratio/codecs';
@@ -34,7 +35,15 @@ import {
 } from '@enumeratio/routes';
 import names from 'virtual:notatio-names';
 import { Safe, code, h } from './html.ts';
-import { allMaps, allStatistics, codecOf, itemsOf, mapsOf, statisticsOf } from './reading.ts';
+import {
+  allMaps,
+  allStatistics,
+  carrierOf,
+  codecOf,
+  itemsOf,
+  mapsOf,
+  statisticsOf,
+} from './reading.ts';
 
 export interface Env {
   ask: Ask;
@@ -882,6 +891,21 @@ function elementPage(row: RouteRow, address: Address): Live {
 const findstatUrl = (id: string): string =>
   `https://www.findstat.org/${id.startsWith('Mp') ? 'MapsDatabase' : 'StatisticsDatabase'}/${id}`;
 
+/** The reference page on notatio.app of a statistic or a map on a carrier, from the table's one entry. */
+export function referenceUrl(area: string, carrier: string, name: string): string {
+  const shape = area === areas.stat ? notatioReference.statistic : notatioReference.map;
+  return (
+    notatioReference.origin +
+    shape
+      .replace('{carrier}', encodeURIComponent(carrier))
+      .replace('{name}', encodeURIComponent(name))
+  );
+}
+
+function referenceLink(area: string, carrier: string, name: string): Safe {
+  return h`<a class="reference" href="${referenceUrl(area, carrier, name)}">${name} on ${carrier}, in notatio’s reference</a>`;
+}
+
 function conceptPage(area: string, address: Address): Live | undefined {
   const subject = address.subject ?? '';
   const isStat = area === areas.stat;
@@ -909,8 +933,10 @@ function conceptPage(area: string, address: Address): Live | undefined {
       },
     };
   }
+  const carriers = [...new Set(on.flatMap((r) => carrierOf(r) ?? []))];
   const lead = h`
     <p>A ${isStat ? 'statistic' : 'map'}, written ${code(subject)} in Epsil.</p>
+    <p>Reference: ${carriers.map((c, i) => h`${i > 0 ? ', ' : ''}${referenceLink(area, c, subject)}`)}.</p>
     <p>Defined on: ${on.map(
       (r, i) =>
         h`${i > 0 ? ', ' : ''}${a(subjectAddress(area, subject, { collection: { name: r.name, parameters: [] } }), r.name)}`,
@@ -934,6 +960,14 @@ function conceptPage(area: string, address: Address): Live | undefined {
   ];
   if (row && address.collection) {
     const placed = place(row, address.collection.parameters);
+    const carrier = carrierOf(row);
+    if (carrier !== undefined && on.includes(row)) {
+      sections.push({
+        id: 'reference',
+        title: carrier,
+        run: async () => h`<p>${referenceLink(area, carrier, subject)}.</p>`,
+      });
+    }
     if (!on.includes(row)) {
       return {
         title,

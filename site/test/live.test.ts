@@ -8,7 +8,15 @@
  * was evaluated to answer for the other heads.
  */
 import { beforeAll, describe, expect, test } from 'vite-plus/test';
-import { areas, formatAddress, formatPath, marks, queryWords, shapes } from '@enumeratio/address';
+import {
+  areas,
+  formatAddress,
+  formatPath,
+  marks,
+  notatioReference,
+  queryWords,
+  shapes,
+} from '@enumeratio/address';
 import { isServed, rowByName, rows } from '@enumeratio/routes';
 import names from 'virtual:notatio-names';
 import {
@@ -734,6 +742,29 @@ describe('a decline says so: never an empty value, never a zero', () => {
     const c = await page(inCollection('SetPartition', setPartition, 'Blocks', '2', 'Blocks'));
     expect(asksStarting(c, 'Blocks(3')).toEqual([]);
     expectDeclined(c.sections.get('value') ?? '');
+  });
+});
+
+// ---------------------------------------------------------------- notatio's reference pages
+
+const referenceOf = (shape: string, carrier: string, name: string): string =>
+  notatioReference.origin + shape.replace('{carrier}', carrier).replace('{name}', name);
+
+describe('a statistic and a map link to notatio’s reference page, one per carrier', () => {
+  test('/stat/Area: the page and its DyckPath section', async () => {
+    const url = referenceOf(notatioReference.statistic, 'DyckPath', 'Area');
+    const unbound = await page(inStat('Area'));
+    expect(unbound.page.body.value).toContain(`href="${url}"`);
+    const bound = await page(inStat('Area', segment('DyckPath', [0, 4])));
+    expect(bound.sections.get('reference')).toContain(`href="${url}"`);
+  });
+
+  test('/map/Inverse: the page and its Permutation section', async () => {
+    const url = referenceOf(notatioReference.map, 'Permutation', 'Inverse');
+    const unbound = await page(inMap('Inverse'));
+    expect(unbound.page.body.value).toContain(`href="${url}"`);
+    const bound = await page(inMap('Inverse', segment('Permutation', [0, 3])));
+    expect(bound.sections.get('reference')).toContain(`href="${url}"`);
   });
 });
 

@@ -143,6 +143,17 @@ export const namedAreas: readonly Area[] = [areas.stat, areas.map, areas.sequenc
 /** Areas that take no further segments. */
 export const leafAreas: readonly Area[] = [areas.atlas, areas.about, areas.contribute];
 
+/**
+ * Where notatio keeps the reference pages of a statistic and a map (the concept
+ * pages here link to them). `{carrier}` and `{name}` are filled in, encoded, by
+ * the page; nothing else writes the origin or the paths.
+ */
+export const notatioReference = {
+  origin: 'https://notatio.app',
+  statistic: '/reference/statistic/{carrier}/{name}',
+  map: '/reference/map/{carrier}/{name}',
+} as const;
+
 /** Words of the query string that the pages read (§2.4). */
 export const queryWords = {
   show: 'show',
