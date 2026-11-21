@@ -1,0 +1,72 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec vp check
+      - run: pnpm exec tsc -p tsconfig.json
+      - run: pnpm exec vp test run
+      - run: pnpm --filter @enumeratio/site build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: site/dist
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      # The job skips itself, step by step, when there is no token (forks, and until it is set).
+      - id: token
+        run: |
+          if [ -n "$CLOUDFLARE_API_TOKEN" ]; then echo "present=true" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.token.outputs.present == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: site-dist
+      # A preview for each pull request. Never from a branch called main: that name is production's.
+      - name: Deploy a preview
+        if: >-
+          steps.token.outputs.present == 'true'
+          && github.event_name == 'pull_request'
+          && github.head_ref != 'main'
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: npx --yes wrangler@4 pages deploy site-dist --project-name=enumeratio --branch="$HEAD_REF"
+      # Production, from main, only when the repository variable DEPLOY_PRODUCTION is true.
+      # It stays unset until notatio has stopped deploying to this project: two
+      # repositories must never both deploy production there.
+      - name: Deploy production
+        if: >-
+          steps.token.outputs.present == 'true'
+          && github.event_name == 'push'
+          && github.ref == 'refs/heads/main'
+          && vars.DEPLOY_PRODUCTION == 'true'
+        run: npx --yes wrangler@4 pages deploy site-dist --project-name=enumeratio --branch=main

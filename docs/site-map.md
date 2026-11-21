@@ -1,8 +1,8 @@
 # enumeratio.dev: the site map
 
-> **Draft 2, 2026-11-20.** Nothing here is built; the map is iterated before anything is. Changes from draft 1 follow its review: singular PascalCase names, one `/collection/` area, parameters inside the collection's own segment, an element's address always in the same position, rank addresses behind `@`, properties and substructure as a path after the element, `/input/` in place of expression redirects.
+> **Draft 3, 2026-11-20.** A first pass is being built from this draft (§9). The structure of an address (what each position means) is settled enough to build on; the exact characters (separators, parameter words) are provisional and are expected to change as the site is used. Nothing is promised permanent until the site is announced (§6).
 >
-> Decided (2026-11-20): a new repository (`enumeratio/enumeratio`); a clean slate at enumeratio.dev; every implementation in Epsil on compute-engine, drawn with notatio; the earlier codebases are mined, not revived; no npm publishing yet.
+> Decided (2026-11-20): a new repository (`enumeratio/enumeratio`); a clean slate at enumeratio.dev; every implementation in Epsil on compute-engine, drawn with notatio; the earlier codebases are mined, not revived; no npm publishing yet; a parameter is written with the collection's own word, with `n` read as an alias for its size.
 
 enumeratio.dev is the home of individual mathematical objects: one address per object, meant to last. It is about the mathematics and is agnostic about what computes it. notatio.app is the notebook over compute-engine and Epsil.
 
@@ -26,21 +26,25 @@ Earlier work this draws on: the precursor project (its route map, its address te
 | Position | What it is | Examples |
 | --- | --- | --- |
 | 1 | The area: a lowercase word from a short closed list (§3). | `collection`, `stat`, `map` |
-| 2 | A collection, with any parameters bound inside the segment. | `DyckPath`, `DyckPath;n=4`, `SetPartition;n=4;blocks=2` |
+| 2 | A collection, with any parameters bound inside the segment. | `DyckPath`, `DyckPath;semilength=4`, `SetPartition;size=4;blocks=2` |
 | 3 | One element of it, by value or by rank. | `11010010`, `@7`, `@lex:7` |
 | 4… | A chain of properties, each applied to the result of the one before. | `Area`, `Blocks/2`, `Numeral;base=60` |
 
-Every prefix is a page: `/collection`, `/collection/DyckPath`, `/collection/DyckPath;n=4`, `/collection/DyckPath/11010010`, `/collection/DyckPath/11010010/Area`.
+Every prefix is a page: `/collection`, `/collection/DyckPath`, `/collection/DyckPath;semilength=4`, `/collection/DyckPath/11010010`, `/collection/DyckPath/11010010/Area`.
 
 ### 2.1 The collection segment
 
-`Name` then zero or more `;parameter=value`, the parameter names being the collection's declared ones.
+`Name` then zero or more `;parameter=value`.
 
-- **Named, not positional.** `SetPartition;n=4;blocks=2`, not `SetPartition_4,2`. A name is self-describing; any subset of the parameters can be bound (`;blocks=2` alone is every set partition into two blocks); and a collection can gain a parameter later without changing the meaning of any existing URL. Positional forms cannot do the last two, and the last one matters most for permanence.
-- **A bound parameter is a restriction like any other.** `DyckPath;n=4` is the sub-collection of size 4. Parameters are not only grades: `PrimePair;gap=2`, `PolygonalNumber;sides=5`, `Residue;modulus=12`, `QuadraticInteger;d=-5`, `TorusKnot;p=2;q=3`.
+- **Named, not positional.** `SetPartition;size=4;blocks=2`, not `SetPartition_4,2`. A name is self-describing; any subset of the parameters can be bound (`;blocks=2` alone is every set partition into two blocks); and a collection can gain a parameter later without changing the meaning of any existing URL. Positional forms cannot do the last two, and the last one matters most for permanence.
+- **The parameter's name is the collection's own word**: `DyckPath;semilength=4`, `Permutation;size=4`, `LabeledGraph;vertices=5`, `Word;length=3;alphabet=2`. Where the literature's own word is a letter, the letter is the word (`KSubset;n=5;k=2`, `TorusKnot;p=2;q=3`).
+- **`n` is read everywhere** as an alias for a collection's size parameter, and a bare value binds it: `DyckPath;n=4` and `DyckPath;4` redirect to `DyckPath;semilength=4`.
+- **A bound parameter is a restriction like any other.** Parameters are not only sizes: `PrimePair;gap=2`, `PolygonalNumber;sides=5`, `Residue;modulus=12`, `QuadraticInteger;d=-5`.
 - **Canonical order** is the declared order of the parameters; any order is read.
 - **Only point values go in the path.** A range or a grouped parameter is a view over many sub-collections, so it is query string: `/collection/KSubset;n=5?group_by=k` is a row of Pascal's triangle. (The archived project reached the same split.)
 - This is the matrix-parameter form (RFC 3986 §3.3 leaves `;` and `=` to the scheme for exactly this), and it is where the archived explorer ended up. `~` and `_` were tried before it.
+
+**A restriction as a parameter, or as a name** (provisional; no firm rule is agreed). A restriction is a parameter when its condition takes a value and each value gives a different collection (`PermutationAvoiding;pattern=231`, `PrimePair;gap=2`). It is a name when the literature has a noun for it (`Derangement`, `Involution`, `Prime`). Where both hold at one point (`TwinPrime` is `PrimePair;gap=2`), the noun is the address and the parametric point redirects to it.
 
 ### 2.2 The element segment
 
@@ -51,7 +55,7 @@ Always position 3, always one segment, one of two forms:
 
 A value may carry the name of its notation in front, `cycle:(1_2)(3_4)`, when it is not written in the collection's default notation.
 
-**An element's canonical address is in its unrestricted collection.** `/collection/DyckPath/11010010` is the object. `/collection/DyckPath;n=4/11010010` is the same object seen inside a sub-collection: it resolves only if the element belongs there, shows it in that context (its rank there, its neighbours), and names the first as canonical. The same holds for a named sub-collection: `/collection/TwinPrime/17` and `/collection/Prime/17` are views of `/collection/Natural/17`. A rank address redirects to the value address.
+**An element's canonical address is in its unrestricted collection.** `/collection/DyckPath/11010010` is the object. `/collection/DyckPath;semilength=4/11010010` is the same object seen inside a sub-collection: it resolves only if the element belongs there, shows it in that context (its rank there, its neighbours), and names the first as canonical. The same holds for a named sub-collection: `/collection/TwinPrime/17` and `/collection/Prime/17` are views of `/collection/Natural/17`. A rank address redirects to the value address.
 
 ### 2.3 Properties and substructure
 
@@ -79,7 +83,7 @@ Only the view: which properties a page shows and in what order (`?show=Area,Boun
 
 ### 2.5 Writing an element
 
-One set of separators for every collection, each with one meaning (the precursor's convention, with one change):
+One set of separators for every collection, each with one meaning (the precursor's convention, with one change). The characters are provisional; what must hold is that each has one meaning everywhere.
 
 | Mark | Meaning | Example |
 | --- | --- | --- |
@@ -91,7 +95,7 @@ One set of separators for every collection, each with one meaning (the precursor
 | `:` | names a notation or an order | `cycle:…`, `@lex:7` |
 | `/` inside a value | never | a fraction is `22_7` under `Rational`, or its own notation |
 
-- **The change: `_` for ordered items where the precursor used `'`.** An apostrophe is legal in a URL, but phones and word processors turn it into a curly quote, shells and code need it escaped, and some linkifiers stop at it. For an address meant to be pasted and cited, that is too fragile. `'` is still read.
+- **`_` for ordered items, where the precursor used `'`.** An apostrophe is legal in a URL, but phones and word processors turn it into a curly quote, shells and code need it escaped, and some linkifiers stop at it. `_` needs no escaping and a double click selects the whole address. `'` is still read.
 - **Short form.** Where every item is a single digit, the items may be run together: `2143` for `2_1_4_3`. It is read only for collections where it cannot be mistaken for something else (a permutation, a word over digits), never where a multi-digit item is possible on its own (an integer partition: is `421` three parts or one?). The separated form is canonical.
 - `;` is left to parameters. Continued fractions and matrices, which are traditionally written with it, use `!`.
 
@@ -100,7 +104,7 @@ One set of separators for every collection, each with one meaning (the precursor
 | Path | What it is |
 | --- | --- |
 | `/collection/…` | Every object (§2). Numbers, numerals, structures, sequences as sets, knots, polytopes, groups and algebras are all collections. |
-| `/stat/<Name>` | A statistic as a concept: its definition, the collections it is defined on, its FindStat identity. `/stat/Area/DyckPath;n=4` narrows it to a collection: its distribution there. `/stat/St000012` redirects to the name. |
+| `/stat/<Name>` | A statistic as a concept: its definition, the collections it is defined on, its FindStat identity. `/stat/Area/DyckPath;semilength=4` narrows it to a collection: its distribution there. `/stat/St000012` redirects to the name. |
 | `/map/<Name>` | A map as a concept: source, target, what it preserves. `/map/Mp00023` redirects. |
 | `/sequence/<A-number>` | An OEIS number, redirecting to the collection or statistic that realizes it. |
 | `/input/<expression>` | Evaluates an Epsil expression. If the result is a catalogued object the page says so and links to its address; it does not redirect. |
@@ -129,7 +133,7 @@ There are no areas by discipline. If an area is ever added it is one more lowerc
 
 **Groups and algebras** ●. `SymmetricGroup;n=4` is a collection whose elements are permutations, so its element addresses are views of `Permutation` elements. `CyclicGroup`, `DihedralGroup`, `AlternatingGroup`, `BraidGroup`, `ModularGroup`; `PartitionAlgebra`, `BrauerAlgebra`, `TemperleyLiebAlgebra`, `HeckeAlgebra`, `IncidenceAlgebra`, `PathAlgebra`.
 
-**Tables of numbers** ◐. Not a separate kind: a number triangle is a collection with two parameters viewed with one of them grouped (`KSubset;n=5?group_by=k`), and its entry is a count (`/collection/KSubset;n=5;k=2/…` has 10 members).
+**Tables of numbers** ◐. Not a separate kind: a number triangle is a collection with two parameters viewed with one of them grouped (`KSubset;n=5?group_by=k`), and its entry is a count (`/collection/KSubset;n=5;k=2` has 10 members).
 
 ## 5. Reading other spellings
 
@@ -141,15 +145,17 @@ One function reduces a name to a key (drop `-` and `_`, lowercase), and one tabl
 | `/collection/dyck-path`, `dyck_path`, `dyckpath` | `/collection/DyckPath` | the key |
 | `/collection/DyckPaths`, `dyck-paths` | `/collection/DyckPath` | plural: a default rule (a trailing `s`), with the exceptions listed on the collection's own record |
 | `/collection/TwinPrimes`, an old name after a rename | the current name | alias on the record |
-| `/collection/DyckPath;4`, `DyckPath_4`, `DyckPath(4)` | `/collection/DyckPath;n=4` | a bare value binds the first parameter |
+| `/collection/DyckPath;n=4`, `DyckPath;4`, `DyckPath_4`, `DyckPath(4)` | `/collection/DyckPath;semilength=4` | `n` and a bare value bind the size parameter |
 | `/collection/Permutation/2'1'4'3`, `2,1,4,3`, `[2,1,4,3]`, `2143` | `…/2_1_4_3` | the collection's reader accepts the usual ways of writing an element |
 | `/stat/St000012`, `/map/Mp00023`, `/sequence/A000108` | the named page | an outside identifier |
 
 Names (positions 1, 2 and each property) are normalized this way. An element's value is read by its collection, since case and punctuation can carry meaning there.
 
+In the first pass the page itself moves a reader to the canonical address and states it in the page's canonical link. Redirects answered by the server (a permanent redirect for a name, a real not-found for an address that is none) follow.
+
 ## 6. The route file and the promise
 
-One file in the repository lists every route. Each row: the pattern, what it is, the Epsil expression behind it, its aliases and outside identifiers, a status, who asked for it and when.
+One file in the repository lists every route. Each row: the pattern, what it is, the Epsil expression behind it, its parameters and their aliases, its aliases and outside identifiers, a status, who asked for it and when.
 
 | Status | Meaning | Promise |
 | --- | --- | --- |
@@ -158,9 +164,9 @@ One file in the repository lists every route. Each row: the pattern, what it is,
 | **stub** | Serves the definition and links, without live content. | permanent |
 | **live** | The full page. | permanent |
 
+- **The promise starts when the site is announced.** Until then the route file says so, the atlas says so on its page, and a `stub` or `live` row may still be renamed. From that date a row that has been `stub` or `live` is never deleted, and a test fails the build when one neither resolves nor redirects. That test is the whole of what "permanent" means mechanically.
 - A reservation lapses after a year unless it is renewed or has become a stub; a lapsed row stays in the file, marked, so the history of a name is never lost.
 - Suggesting or reserving a route is adding a row: a pull request, or an issue form that writes one.
-- A row that has been `stub` or `live` is never deleted. A test fails the build when one neither resolves nor redirects. That test is the whole of what "permanent" means mechanically.
 - A collection's row covers every sub-collection, element and property under it.
 
 ## 7. Pages
@@ -169,14 +175,28 @@ One file in the repository lists every route. Each row: the pattern, what it is,
 - **An element**: its figures and notations, the value of every statistic, its image under every map with a link, its neighbours in each order. What is shown first depends on the kind of object, and the query string changes it.
 - **A property value**: the value, how it was computed, and the element it belongs to.
 - **Computation happens in the page.** The site loads notatio's kernel, so an object renders and recomputes where it is. A link out to a notatio.app notebook is an extra, not the mechanism.
-- Small sizes are built ahead of time; everything else is computed on arrival, so every valid address resolves even though there are infinitely many.
+- Small sizes are built ahead of time; everything else is computed on arrival, so every valid address resolves even though there are infinitely many. (The first pass computes everything on arrival.)
 
-## 8. Still open
+## 8. Open, and how the first pass treats it
 
-1. **`_` or `'` for ordered items** (§2.5). The draft argues for `_`; `'` is what the precursor used.
-2. **Parameter names.** `n` everywhere for the main size, or the collection's own word (`semilength`, `vertices`)? The draft assumes the short declared name, `n`, with the long word as an alias.
-3. **Where a restriction is a parameter and where it is a name.** `PermutationAvoiding;pattern=231` and `PrimePair;gap=2` read well as parameters; `Derangement` and `Involution` are names. A rule is needed for which a new one becomes.
-4. **Family-level facts with no element** (the counting sequence of `DyckPath`, its generating function). The draft gives them no path of their own: they are on the collection's page. If they need addresses, position 3 needs a word for "no element", and that is a cost to rule 1.
-5. **Sequences in their own right.** `/sequence/` is only OEIS aliases here. A sequence that is not the member list or the count of any collection has no home yet.
-6. **Short form** (§2.5): worth having, or one more thing to get wrong?
-7. **The first slice to build**, once the map is agreed.
+1. **Separators** (§2.5). `_` for ordered items is the working choice; all of the characters stay provisional.
+2. **The rule for a restriction as a parameter or a name** (§2.1). The first pass follows the provisional rule there.
+3. **Family-level facts with no element** (the counting sequence of `DyckPath`, its generating function). They are on the collection's page and have no path of their own. If they ever need addresses, position 3 needs a word for "no element", and that is a cost to rule 1.
+4. **Sequences in their own right.** `/sequence/` is only OEIS aliases. A sequence that is not the member list or the count of any collection has no home yet.
+5. **Short form** (§2.5). Read where unambiguous, never canonical.
+6. **Which word each collection's parameters get.** The first pass chooses for its own collections; the rest are chosen as their rows are written.
+
+## 9. The first pass
+
+Enough to follow every kind of address in §2 end to end, over a few collections that between them use every part of the grammar:
+
+| Collection | What it exercises |
+| --- | --- |
+| `Natural`, with `Prime` inside it | numbers; a named sub-collection; `Factorization`; `Numeral;base=` |
+| `Permutation` | ordered items, the short form, maps (`Inverse`) and chains through them |
+| `DyckPath` | a size the collection has its own word for; statistics; rank addresses |
+| `SetPartition` | blocks, two parameters, substructure (`Blocks/2`) |
+| `IntegerPartition` | a value where the short form is refused |
+| `KSubset` | unordered members; two letter-named parameters; a grouped view (a row of Pascal's triangle) |
+
+Everything else in §4 is listed in the atlas as `proposed`. Also in the first pass: `/stat/<Name>` and `/map/<Name>` for the statistics and maps of those collections, `/sequence/` for their OEIS numbers, `/input/`, `/atlas`, `/about`, `/contribute`.
