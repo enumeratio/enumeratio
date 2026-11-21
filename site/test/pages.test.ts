@@ -1,3 +1,4 @@
+import { Window } from 'happy-dom';
 import { describe, expect, test } from 'vite-plus/test';
 import { formatPath, marks, parseAddress, queryWords } from '@enumeratio/address';
 import { catalog, rowByName, rows } from '@enumeratio/routes';
@@ -44,10 +45,34 @@ describe('the pages', () => {
     }
   });
 
-  test('only /about names notatio', () => {
-    expect(text(path('about'))).toContain('href="https://notatio.app"');
-    for (const p of [path(), path('atlas'), path('contribute'), path('collection', 'DyckPath')]) {
+  test('only the home page and /about link to notatio.app', () => {
+    for (const p of [path(), path('about')]) {
+      expect(text(p), p).toContain('href="https://notatio.app"');
+    }
+    for (const p of [path('atlas'), path('contribute'), path('collection', 'DyckPath')]) {
       expect(text(p).toLowerCase(), p).not.toContain('notatio');
+    }
+  });
+
+  test('an address with a problem has no canonical form, is not indexed, and says what was wrong', () => {
+    for (const r of [page(path('nonesuch')), page(path('collection', 'DyckPath', rank(0)))]) {
+      expect(r.canonical).toBeUndefined();
+      expect(r.replaceWith).toBeUndefined();
+      expect(r.noindex).toBe(true);
+      expect(r.body.value).toContain('What was wrong');
+    }
+  });
+
+  test('a readable address that names nothing is not indexed but keeps its canonical link', () => {
+    const r = page(path('collection', 'Integer'));
+    expect(r.found).toBe(false);
+    expect(r.noindex).toBe(true);
+    expect(r.canonical).toBe(siteOrigin + path('collection', 'Integer'));
+  });
+
+  test('a served page is indexed', () => {
+    for (const p of [path(), path('atlas'), path('collection', 'DyckPath')]) {
+      expect(page(p).noindex, p).toBe(false);
     }
   });
 
@@ -116,6 +141,44 @@ describe('the pages', () => {
     ]) {
       expect(r.body.value).not.toContain('<script>');
     }
+  });
+
+  test('no attribute can be broken out of, and no element gains a handler', () => {
+    const nasty = '"\'><b onmouseover=alert(1)>javascript:alert(1)';
+    const pieces = [nasty, encodeURIComponent(nasty), 'javascript:alert(1)', '" onmouseover="x'];
+    const pages = pieces.flatMap((piece) => [
+      page(path('input', piece), query(['x', piece])),
+      page(path('collection', piece)),
+      page(path('collection', 'Prime', piece)),
+      page(path('collection', 'DyckPath', piece, 'Area'), query(['show', piece])),
+      page(path('stat', piece)),
+      page(path('nonesuch', piece), query([piece, piece])),
+    ]);
+    const window = new Window();
+    for (const r of pages) {
+      for (const [, value] of r.body.value.matchAll(/href="([^"]*)"/g)) {
+        expect(value, r.title).not.toMatch(/["'<>]/);
+        expect(value, r.title).not.toMatch(/^\s*javascript:/i);
+      }
+      window.document.body.innerHTML = r.body.value;
+      for (const el of window.document.body.querySelectorAll('*')) {
+        for (const attribute of el.getAttributeNames()) {
+          expect(attribute, `${r.title} <${el.tagName}>`).not.toMatch(/^on/i);
+        }
+        expect(el.tagName).not.toBe('SCRIPT');
+      }
+    }
+  });
+
+  test('a hostile path is plain text in the title', () => {
+    const hostile = '</title><script>alert(1)</script>';
+    const r = page(path('nonesuch', hostile));
+    expect(r.title).toContain(hostile);
+    const window = new Window();
+    window.document.title = r.title;
+    expect(window.document.title).toBe(r.title);
+    expect(window.document.head.querySelector('script')).toBeNull();
+    expect(r.body.value).not.toContain('<script>');
   });
 
   test('the marks shown to a reader are the table’s', () => {

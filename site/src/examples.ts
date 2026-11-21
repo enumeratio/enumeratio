@@ -8,6 +8,13 @@ function sizeWord(name: string): string {
   return word;
 }
 
+/** The word of KSubset's second parameter (the subset size k), from its route row. */
+const kWord = (() => {
+  const word = rowByName.get('KSubset')?.parameters?.[1]?.word;
+  if (word === undefined) throw new Error('KSubset has no second parameter in the route file');
+  return word;
+})();
+
 const ordered = (...items: (string | number)[]) => items.join(marks.ordered);
 const unordered = (...items: (string | number)[]) => items.join(marks.unordered);
 const blocks = (...items: (string | number)[]) => items.join(marks.block);
@@ -61,7 +68,7 @@ export const tryThese: { what: string; address: Address }[] = [
       [{ word: sizeWord('KSubset'), value: '5' }],
       undefined,
       [],
-      [[queryWords.groupBy, 'k']],
+      [[queryWords.groupBy, kWord]],
     ),
   },
 ];
