@@ -1,0 +1,10 @@
+{
+  "name": "@enumeratio/address",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The address grammar of enumeratio.dev: parse, format, name keys, the table of marks. Pure TypeScript, no dependencies.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
