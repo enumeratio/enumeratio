@@ -1,5 +1,6 @@
 import type { Answer, Ask } from '@enumeratio/kernel';
 import { createNodeKernel } from '@enumeratio/kernel/node';
+import { renderSummary } from '@notatio/formats/typeset';
 import descriptions from 'virtual:notatio-descriptions';
 import type { Env } from '../src/live.ts';
 import { type Page, renderPage } from '../src/pages.ts';
@@ -33,7 +34,7 @@ export async function compute(pathname: string, search = ''): Promise<Computed> 
     asked.push(answer);
     return answer;
   };
-  const env: Env = { ask, describe: async (name) => descriptions[name] };
+  const env: Env = { ask, describe: async (name) => descriptions[name], typeset: renderSummary };
   const movedTo = await page.moveTo?.(env);
   const nonMember = (await page.nonMember?.(env)) ?? false;
   const sections = new Map<string, string>();

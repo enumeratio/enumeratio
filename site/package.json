@@ -14,6 +14,8 @@
     "@enumeratio/kernel": "workspace:*",
     "@enumeratio/routes": "workspace:*",
     "@notatio/evaluation": "0.0.0",
-    "@notatio/frontend": "0.0.0"
+    "@notatio/formats": "0.0.0",
+    "@notatio/frontend": "0.0.0",
+    "katex": "0.16.47"
   }
 }
