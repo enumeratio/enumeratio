@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { beforeAll, describe, expect, test } from 'vite-plus/test';
 import { rows } from '@enumeratio/routes';
 import { collectionExpression, kthExpression } from '../src/expressions.ts';
+import type { Json } from '../src/index.ts';
 import { createNodeKernel } from '../src/node.ts';
 
 /**
@@ -12,7 +13,7 @@ import { createNodeKernel } from '../src/node.ts';
  * against notatio's own records, read from the installed package.
  */
 const deep = process.env.DEEP_TESTS === '1';
-const kernel = createNodeKernel();
+const { ask: kernel } = createNodeKernel();
 const stating = rows.filter((r) => r.kth !== undefined);
 
 /** How many first members are checked: a few in the standard case, more under DEEP_TESTS. */
@@ -37,8 +38,8 @@ function referenceExpected(pkg: string, head: string, id: string): string {
 
 beforeAll(async () => {
   // The kernel loads its libraries on the first request: that is setup, not any one test.
-  await kernel('NthPrime(1)');
-  await kernel('Element(2, PrimeNumbers)');
+  await kernel(['NthPrime', 1]);
+  await kernel(['Element', 2, 'PrimeNumbers']);
 });
 
 describe('a row’s k-th member', () => {
@@ -48,15 +49,15 @@ describe('a row’s k-th member', () => {
 
   for (const row of stating) {
     describe(row.name, () => {
-      const collection = (): string => {
+      const collection = (): Json => {
         const expressed = collectionExpression(row, []);
         if (!expressed.ok) throw new Error(`${row.name} has no collection expression`);
-        return expressed.epsil;
+        return expressed.json;
       };
       const members = async (): Promise<number[]> => {
         const out: number[] = [];
         for (let k = 1; k <= count; k++) {
-          const answer = await kernel(kthExpression(row, k) as string);
+          const answer = await kernel(kthExpression(row, k));
           expect(answer.status, `${row.name} member ${k}`).toBe('value');
           out.push(integerOf(answer.json));
         }
@@ -65,7 +66,7 @@ describe('a row’s k-th member', () => {
 
       test('each of the first members is an element of the collection', async () => {
         for (const [i, member] of (await members()).entries()) {
-          const answer = await kernel(`Element(${member}, ${collection()})`);
+          const answer = await kernel(['Element', member, collection()]);
           expect(answer.json, `member ${i + 1} = ${member}`).toBe('True');
         }
       });
@@ -77,7 +78,7 @@ describe('a row’s k-th member', () => {
           const before = listed[i - 1] as number;
           expect(member, `member ${i + 1}`).toBeGreaterThan(before);
           for (let between = before + 1; between < member; between++) {
-            const answer = await kernel(`Element(${between}, ${collection()})`);
+            const answer = await kernel(['Element', between, collection()]);
             expect(answer.json, `${between} lies between members ${i} and ${i + 1}`).toBe('False');
           }
         }
@@ -88,7 +89,7 @@ describe('a row’s k-th member', () => {
   test('Natural is exactly 0, 1, 2, …', async () => {
     const row = stating.find((r) => r.name === 'Natural');
     for (let k = 1; k <= count; k++) {
-      const answer = await kernel(kthExpression(row as never, k) as string);
+      const answer = await kernel(kthExpression(row as never, k));
       expect(answer.json).toBe(k - 1);
     }
   });
@@ -108,7 +109,7 @@ describe('a row’s k-th member', () => {
     expect(expected.length).toBe(25);
     const wanted = deep ? expected : expected.slice(0, 8);
     for (const [i, prime] of wanted.entries()) {
-      const answer = await kernel(kthExpression(row as never, i + 1) as string);
+      const answer = await kernel(kthExpression(row as never, i + 1));
       expect(answer.json, `prime ${i + 1}`).toBe(prime);
     }
   });

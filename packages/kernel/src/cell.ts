@@ -3,7 +3,8 @@
  * cell once, at build (`parse-cells.ts`, Node only), and writes the result beside the route file's
  * text as build output; a page works from that and never loads the parser or the engine behind it.
  * A page puts a parameter into a cell by replacing the symbol in the MathJSON, never by editing the
- * cell's text, and writes the result as Epsil with `writeEpsil`.
+ * cell's text, and sends the result to the kernel as MathJSON. Epsil text is written by notatio's
+ * printer in the kernel, and by nothing here.
  *
  * Pure: nothing here imports an engine, so the page's first paint can use it.
  */
@@ -57,30 +58,6 @@ export function substituteJson(json: Json, bound: ReadonlyMap<string, Json>): Js
 export function integerJson(digits: string): Json {
   const n = Number(digits);
   return Number.isSafeInteger(n) ? n : { num: digits };
-}
-
-/** MathJSON's head for a list. */
-export const listHead = 'List';
-
-/**
- * MathJSON as Epsil: a call `Head(a, b)`, a list `[a, b]`, a symbol, an integer in digits. The
- * shapes a route cell has are all there is, and anything else is an error. A test parses what this
- * writes with notatio's parser and gets the same MathJSON back.
- */
-export function writeEpsil(json: Json): string {
-  if (typeof json === 'number' && Number.isInteger(json)) return String(json);
-  if (typeof json === 'string') {
-    return json.startsWith("'") ? JSON.stringify(json.slice(1, -1)) : json;
-  }
-  if (json !== null && typeof json === 'object' && !Array.isArray(json) && 'num' in json) {
-    const num = String((json as { num: unknown }).num);
-    if (/^-?\d+$/.test(num)) return num;
-  }
-  if (Array.isArray(json) && typeof json[0] === 'string') {
-    const parts = operandsOf(json).map(writeEpsil).join(', ');
-    return json[0] === listHead ? `[${parts}]` : `${json[0]}(${parts})`;
-  }
-  throw new Error(`cannot write as Epsil: ${JSON.stringify(json)}`);
 }
 
 /** Reads an integer as the kernel writes it. */

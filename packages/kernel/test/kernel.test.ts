@@ -162,7 +162,8 @@ describe('answerOf', () => {
 
 describe('the kernel in Node', () => {
   // One kernel for the file; its first request loads the libraries.
-  const ask = createNodeKernel();
+  const kernel = createNodeKernel();
+  const { askText: ask, print } = kernel;
   beforeAll(async () => {
     await ask('1');
     await ask('Count(DyckPaths(2))');
@@ -180,6 +181,16 @@ describe('the kernel in Node', () => {
     expect(answer.status).toBe('value');
     expect(answer.json).toEqual(['List', ['Tuple', 2, 3], ['Tuple', 3, 2], ['Tuple', 5, 1]]);
     expect(answer.epsil).toBe('[(2, 3), (3, 2), (5, 1)]');
+  });
+
+  test('MathJSON is asked as it is, and printed by notatio’s printer', async () => {
+    const question = ['Count', ['DyckPaths', 4]];
+    expect(await print(['Subtract', 7, 1])).toBe('7 - 1');
+    const answer = await kernel.ask(question);
+    expect(answer.status).toBe('value');
+    expect(answer.json).toBe(14);
+    expect(answer.asked).toBe(await print(question));
+    expect(answer.asked).toBe('Count(DyckPaths(4))');
   });
 
   test('a syntax error is an error', async () => {

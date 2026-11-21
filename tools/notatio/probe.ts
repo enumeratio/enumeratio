@@ -10,7 +10,7 @@ import { createNodeKernel } from '../../packages/kernel/src/node.ts';
 
 const file = process.argv[2];
 if (!file) throw new Error('usage: probe.ts <file>');
-const ask = createNodeKernel();
+const { askText: ask } = createNodeKernel();
 for (const line of readFileSync(file, 'utf8').split('\n')) {
   const text = line.trim();
   if (text === '' || text.startsWith('#')) continue;

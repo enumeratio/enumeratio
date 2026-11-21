@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vite-plus/test';
 import { areas } from '@enumeratio/address';
-import type { Answer } from '@enumeratio/kernel';
+import { type Answer, headOf } from '@enumeratio/kernel';
 import { rowByName } from '@enumeratio/routes';
 import { path, query, rank, seg } from '../../packages/address/test/build.ts';
 import { type Env, pickerTarget } from '../src/live.ts';
@@ -220,16 +220,23 @@ describe('the router', () => {
     const word = [1, 1, 0, 1, 0, 0, 1, 0];
     const dyckJson = ['DyckPath', ['List', ...word]];
 
-    /** A kernel that answers every request the same, canned way, and records what it was asked. */
-    function fakeEnv(answer: (epsil: string) => Answer, gate?: Promise<void>) {
+    /** A kernel that answers every request the same, canned way, and records the head of what it was asked. */
+    function fakeEnv(answer: (head: string) => Answer, gate?: Promise<void>) {
       const asked: string[] = [];
       const described: string[] = [];
       const env: Env = {
-        ask: async (epsil) => {
-          asked.push(epsil);
+        ask: async (json) => {
+          const head = headOf(json) ?? String(json);
+          asked.push(head);
           await gate;
-          return answer(epsil);
+          return answer(head);
         },
+        askText: async (text) => {
+          asked.push(text);
+          await gate;
+          return answer(text);
+        },
+        print: async (json) => JSON.stringify(json),
         describe: async (name) => {
           described.push(name);
           await gate;
@@ -261,9 +268,7 @@ describe('the router', () => {
 
     test('a non-member loses its canonical link and asks not to be indexed once the kernel says so', async () => {
       const element = path('collection', 'Prime', '18');
-      const { env } = fakeEnv((e) =>
-        e.startsWith('Element(') ? value(e, 'False', 'False') : declined(e),
-      );
+      const { env } = fakeEnv((e) => (e === 'Element' ? value(e, 'False', 'False') : declined(e)));
       go(element);
       stop = start(win, { loadEnv: async () => env });
       expect(document.head.querySelector('link[rel="canonical"]')).not.toBeNull();
@@ -293,9 +298,7 @@ describe('the router', () => {
     });
 
     test('a member keeps its canonical link', async () => {
-      const { env } = fakeEnv((e) =>
-        e.startsWith('Element(') ? value(e, 'True', 'True') : declined(e),
-      );
+      const { env } = fakeEnv((e) => (e === 'Element' ? value(e, 'True', 'True') : declined(e)));
       go(path('collection', 'Prime', '17'));
       stop = start(win, { loadEnv: async () => env });
       await vi.waitFor(() => expect(app().querySelector('.pending')).toBeNull());
@@ -361,9 +364,9 @@ describe('the router', () => {
 
     test('a rank address moves once to its value address and redraws', async () => {
       const { env, asked } = fakeEnv((e) =>
-        e.startsWith('Type(')
+        e === 'Type'
           ? value(e, ['TypeFrom', 'indexed_collection<dyck_path>'], e)
-          : e.startsWith('At(')
+          : e === 'At'
             ? value(e, dyckJson, 'DyckPath([1, 1, 0, 1, 0, 0, 1, 0])')
             : declined(e),
       );
@@ -379,7 +382,7 @@ describe('the router', () => {
       expect(push).not.toHaveBeenCalled();
       expect(headings()).toBe(target);
       // The page that was drawn is the value's: it asked after the element, not only for the rank.
-      expect(asked.some((e) => e.startsWith('Element('))).toBe(true);
+      expect(asked.includes('Element')).toBe(true);
       expect(document.title).toBe(renderPage(target, '').title);
     });
 

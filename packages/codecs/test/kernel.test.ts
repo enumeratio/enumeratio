@@ -17,7 +17,7 @@ import { codecs, itemsFromJson, itemsToJson } from '../src/index.ts';
  * what the kernel enumerates is written and read back to the same element. One kernel for
  * the file (its first request loads the libraries).
  */
-const ask = createNodeKernel();
+const { ask, askText } = createNodeKernel();
 
 // The libraries load on the first request that names one of their heads: setup, not a test.
 beforeAll(async () => {
@@ -29,7 +29,7 @@ beforeAll(async () => {
     'Count(KSubsets(2, 1))',
     'Element(Finset(Tuple(2, [1])), KSubsets(2, 1))',
   ]) {
-    await ask(epsil);
+    await askText(epsil);
   }
 });
 
@@ -103,12 +103,12 @@ async function sweep(row: RouteRow, bound: Binding[]): Promise<Sweep> {
   const where = `${row.name} ${JSON.stringify(bound)}`;
   const collection = collectionExpression(row, givenOf(bound));
   if (!collection.ok) throw new Error(`${where}: no expression`);
-  const count = await ask(`Count(${collection.epsil})`);
+  const count = await ask(['Count', collection.json]);
   expect(count.status, where).toBe('value');
   const total = countOf(count.json);
   const out: Sweep = { elements: total, skipped: 0, spellings: new Set() };
   for (let i = 1; i <= total; i++) {
-    const at = await ask(`At(${collection.epsil}, ${i})`);
+    const at = await ask(['At', collection.json, i]);
     expect(at.status, `${where} At ${i}`).toBe('value');
     const read = readElementJson(row, at.json);
     expect(read, `${where} #${i} is an element of the row`).toBeDefined();
@@ -131,8 +131,8 @@ async function sweep(row: RouteRow, bound: Binding[]): Promise<Sweep> {
     const expressed = elementExpression(row, givenOf(read.parameters), itemsToJson(back));
     expect(expressed.ok, `${where}: ${s} has an expression`).toBe(true);
     if (!expressed.ok) continue;
-    const again = await ask(expressed.epsil, { holds: true });
-    expect(again.status, `${where}: ${expressed.epsil}`).toBe('value');
+    const again = await ask(expressed.json, { holds: true });
+    expect(again.status, `${where}: ${again.asked}`).toBe('value');
     expect(
       sameJson(plain(again.json), plain(at.json)),
       `${where}: read(write(x)) is x for ${s}: ${JSON.stringify(again.json)} against ${JSON.stringify(at.json)}`,
@@ -186,7 +186,7 @@ describe('membership is the kernel’s, not the codec’s', () => {
     if (!element.ok) throw new Error(`no element expression for ${name}`);
     const home = collectionExpression(row, measuredBindings(row, givenOf(bound), value));
     if (!home.ok) throw new Error(`no collection expression for ${name}`);
-    const answer = await ask(`Element(${element.epsil}, ${home.epsil})`);
+    const answer = await ask(['Element', element.json, home.json]);
     expect(answer.status, `${name} ${raw}`).toBe('value');
     return answer.json;
   }

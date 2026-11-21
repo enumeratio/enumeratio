@@ -3,14 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, test } from 'vite-plus/test';
 import { type RouteRow, columns, parseRouteFile, rowByName, rows } from '@enumeratio/routes';
 import { rankVariable, valueVariable } from '@enumeratio/routes/parse';
-import {
-  cellTexts,
-  headsOfRow,
-  integerJson,
-  substituteJson,
-  symbolsIn,
-  writeEpsil,
-} from '../src/cell.ts';
+import { cellTexts, headsOfRow, integerJson, substituteJson, symbolsIn } from '../src/cell.ts';
 import {
   collectionExpression,
   elementExpression,
@@ -47,6 +40,8 @@ const strings = (name: string, ...values: [number, string | number][]) =>
 const bind = (name: string, ...values: [number, number | Json][]) =>
   values.map(([index, json]) => ({ word: word(name, index), json }));
 const list = (...items: Json[]): Json => [listHead, ...items];
+/** What notatio's parser reads a text as: the MathJSON an expectation is. */
+const read = (text: string): Json => parseCell(text).json;
 
 const allCells = rows.flatMap((row) => cellTexts(row).map((text) => ({ row, text })));
 
@@ -103,7 +98,7 @@ describe('the route file’s expressions are Epsil, read by notatio’s parser a
     expect(ignore.split('\n')).toContain('packages/kernel/build');
   });
 
-  test('a parameter goes into the MathJSON by replacing its symbol, and what is written reads back the same', () => {
+  test('a parameter goes into the MathJSON by replacing its symbol', () => {
     const values = new Map<string, Json>([
       ['k', 12],
       ['x', list(3, 1, 2)],
@@ -118,21 +113,15 @@ describe('the route file’s expressions are Epsil, read by notatio’s parser a
       const { json } = readCell(text);
       const replaced = substituteJson(json, values);
       expect(symbolsIn(replaced).has('k'), `${row.name}: ${text}`).toBe(false);
-      const written = writeEpsil(replaced);
-      expect(parseCell(written).json, `${row.name}: ${text} -> ${written}`).toEqual(replaced);
     }
   });
 
-  test('writeEpsil writes a call, a list, a symbol and an integer, and nothing else', () => {
-    expect(writeEpsil(['Subtract', 7, 1])).toBe('Subtract(7, 1)');
-    expect(writeEpsil(['Finset', ['Tuple', 5, list(1, 3)]])).toBe('Finset(Tuple(5, [1, 3]))');
-    expect(writeEpsil(list())).toBe('[]');
-    expect(writeEpsil(['Subtract', -3, 1])).toBe('Subtract(-3, 1)');
-    expect(writeEpsil(integerJson('123456789012345678901234567890'))).toBe(
-      '123456789012345678901234567890',
-    );
-    expect(() => writeEpsil({ other: 1 })).toThrow(/cannot write/);
-    expect(() => writeEpsil(2.5)).toThrow(/cannot write/);
+  test('an integer in digits is a number, or { num } where a number cannot hold it', () => {
+    expect(integerJson('7')).toBe(7);
+    expect(integerJson('-3')).toBe(-3);
+    expect(integerJson('123456789012345678901234567890')).toEqual({
+      num: '123456789012345678901234567890',
+    });
   });
 
   test('every head a live row names is read at build, and the rows’ heads agree with the parser', () => {
@@ -191,7 +180,7 @@ describe('the route file’s expressions are Epsil, read by notatio’s parser a
         .join('\t')}`,
     ).rows;
     expect(row?.kth).toBe('k - 1');
-    expect(row && kthExpression(row, 7)).toBe('Subtract(7, 1)');
+    expect(row && kthExpression(row, 7)).toEqual(read('Subtract(7, 1)'));
     expect(headsIn(row as RouteRow)).toEqual(['Subtract']);
     const [none] = parseRouteFile(
       `${columns.join('\t')}\n${columns
@@ -204,16 +193,16 @@ describe('the route file’s expressions are Epsil, read by notatio’s parser a
   test('the rows that state a k-th member are Natural and Prime', () => {
     expect(rows.filter((r) => r.kth).map((r) => r.name)).toEqual(['Natural', 'Prime']);
     expect(rowOf('Natural').kth).toBe('k - 1');
-    expect(kthExpression(rowOf('Natural'), 7)).toBe('Subtract(7, 1)');
-    expect(kthExpression(rowOf('Prime'), 4)).toBe('NthPrime(4)');
+    expect(kthExpression(rowOf('Natural'), 7)).toEqual(read('Subtract(7, 1)'));
+    expect(kthExpression(rowOf('Prime'), 4)).toEqual(read('NthPrime(4)'));
   });
 
   test('an integer goes in as digits, a negative one as itself, and an element value as a list', () => {
-    expect(kthExpression(rowOf('Natural'), 1_000_000_000)).toBe('Subtract(1000000000, 1)');
-    expect(kthExpression(rowOf('Natural'), -3)).toBe('Subtract(-3, 1)');
+    expect(kthExpression(rowOf('Natural'), 1_000_000_000)).toEqual(read('Subtract(1000000000, 1)'));
+    expect(kthExpression(rowOf('Natural'), -3)).toEqual(read('Subtract(-3, 1)'));
     expect(elementExpression(rowOf('Permutation'), [], list(3, 1, 2))).toEqual({
       ok: true,
-      epsil: 'Permutation([3, 1, 2])',
+      json: read('Permutation([3, 1, 2])'),
     });
   });
 });
@@ -222,19 +211,22 @@ describe('collectionExpression', () => {
   test('a collection with no parameters is its symbol', () => {
     expect(collectionExpression(rowOf('Natural'), [])).toEqual({
       ok: true,
-      epsil: 'NonNegativeIntegers',
+      json: read('NonNegativeIntegers'),
     });
-    expect(collectionExpression(rowOf('Prime'), [])).toEqual({ ok: true, epsil: 'PrimeNumbers' });
+    expect(collectionExpression(rowOf('Prime'), [])).toEqual({
+      ok: true,
+      json: read('PrimeNumbers'),
+    });
   });
 
   test('the parameters bound go where the row says', () => {
     expect(collectionExpression(rowOf('Permutation'), bind('Permutation', [0, 4]))).toEqual({
       ok: true,
-      epsil: 'Permutations(4)',
+      json: read('Permutations(4)'),
     });
     expect(collectionExpression(rowOf('DyckPath'), bind('DyckPath', [0, 4]))).toEqual({
       ok: true,
-      epsil: 'DyckPaths(4)',
+      json: read('DyckPaths(4)'),
     });
   });
 
@@ -242,31 +234,31 @@ describe('collectionExpression', () => {
     const sets = rowOf('SetPartition');
     expect(collectionExpression(sets, bind('SetPartition', [0, 4]))).toEqual({
       ok: true,
-      epsil: 'SetPartitions(4)',
+      json: read('SetPartitions(4)'),
     });
     expect(collectionExpression(sets, bind('SetPartition', [0, 4], [1, 2]))).toEqual({
       ok: true,
-      epsil: 'SetPartitions(4, 2)',
+      json: read('SetPartitions(4, 2)'),
     });
     // The order of the bindings is the address's, not the form's.
     expect(collectionExpression(sets, bind('SetPartition', [1, 2], [0, 4]))).toEqual({
       ok: true,
-      epsil: 'SetPartitions(4, 2)',
+      json: read('SetPartitions(4, 2)'),
     });
     expect(
       collectionExpression(rowOf('IntegerPartition'), bind('IntegerPartition', [0, 7], [1, 3])),
     ).toEqual({
       ok: true,
-      epsil: 'IntegerPartitions(7, [3])',
+      json: read('IntegerPartitions(7, [3])'),
     });
     const subsets = rowOf('Subset');
     expect(collectionExpression(subsets, bind('Subset', [0, 5], [1, 2]))).toEqual({
       ok: true,
-      epsil: 'KSubsets(5, 2)',
+      json: read('KSubsets(5, 2)'),
     });
     expect(collectionExpression(subsets, bind('Subset', [0, 5]))).toEqual({
       ok: true,
-      epsil: 'Subsets(5)',
+      json: read('Subsets(5)'),
     });
   });
 
@@ -301,12 +293,12 @@ describe('elementExpression', () => {
   test('the value goes where x is', () => {
     expect(elementExpression(rowOf('Permutation'), [], list(3, 1, 4, 2))).toEqual({
       ok: true,
-      epsil: 'Permutation([3, 1, 4, 2])',
+      json: read('Permutation([3, 1, 4, 2])'),
     });
-    expect(elementExpression(rowOf('Natural'), [], 360)).toEqual({ ok: true, epsil: '360' });
+    expect(elementExpression(rowOf('Natural'), [], 360)).toEqual({ ok: true, json: read('360') });
     expect(elementExpression(rowOf('SetPartition'), [], list(list(1, 3), list(2)))).toEqual({
       ok: true,
-      epsil: 'SetPartition([[1, 3], [2]])',
+      json: read('SetPartition([[1, 3], [2]])'),
     });
   });
 
@@ -315,12 +307,12 @@ describe('elementExpression', () => {
     expect(identityParameters(subsets)).toEqual([word('Subset', 0)]);
     expect(elementExpression(subsets, bind('Subset', [0, 5]), list(1, 3))).toEqual({
       ok: true,
-      epsil: 'Finset(Tuple(5, [1, 3]))',
+      json: read('Finset(Tuple(5, [1, 3]))'),
     });
     // k is bound in the address but is not part of the element.
     expect(elementExpression(subsets, bind('Subset', [0, 5], [1, 2]), list(1, 3))).toEqual({
       ok: true,
-      epsil: 'Finset(Tuple(5, [1, 3]))',
+      json: read('Finset(Tuple(5, [1, 3]))'),
     });
     expect(elementExpression(subsets, bind('Subset', [1, 2]), list(1, 3))).toEqual({
       ok: false,

@@ -5,7 +5,8 @@
  * `x` as free symbols (`parse-cells.ts`, through `virtual:route-cells`); this module works from
  * that MathJSON and imports neither the parser nor the engine, so a page can use it before any
  * kernel has loaded. A parameter goes into an expression by replacing its symbol in the MathJSON,
- * and the result is written as Epsil (`writeEpsil`).
+ * and the result is MathJSON, which the page sends to the kernel as it is. Epsil text is written
+ * by notatio's printer in the kernel, and by nothing here.
  */
 import type { Binding } from '@enumeratio/address';
 import { type RouteRow, rankVariable, valueVariable } from '@enumeratio/routes/parse';
@@ -19,7 +20,6 @@ import {
   match,
   substituteJson,
   symbolsIn,
-  writeEpsil,
 } from './cell.ts';
 import { type Json, headOf } from './index.ts';
 
@@ -40,9 +40,9 @@ export interface Given {
 export const givenOf = (bound: readonly Binding[]): Given[] =>
   bound.map((b) => ({ word: b.word, json: integerJson(b.value) }));
 
-/** The cell's MathJSON with these values in place of the symbols, written as Epsil. */
-function bind(text: string, values: ReadonlyMap<string, Json>): string {
-  return writeEpsil(substituteJson(readCell(text).json, values));
+/** The cell's MathJSON with these values in place of the symbols. */
+function bind(text: string, values: ReadonlyMap<string, Json>): Json {
+  return substituteJson(readCell(text).json, values);
 }
 
 const valuesOf = (bound: readonly Given[]): Map<string, Json> =>
@@ -57,12 +57,12 @@ export function parametersIn(row: RouteRow, text: string): string[] {
 }
 
 export type Expressed =
-  | { ok: true; epsil: string }
+  | { ok: true; json: Json }
   /** No form of the expression binds exactly these parameters: these would also have to be bound. */
   | { ok: false; missing: string[] };
 
 /**
- * The Epsil for a collection with these parameters bound: the form of the
+ * The MathJSON for a collection with these parameters bound: the form of the
  * row's expression whose parameters are exactly the bound ones.
  */
 export function collectionExpression(row: RouteRow, bound: readonly Given[]): Expressed {
@@ -73,7 +73,7 @@ export function collectionExpression(row: RouteRow, bound: readonly Given[]): Ex
     const missing = needs.filter((w) => !have.has(w));
     const unused = [...have.keys()].filter((w) => !needs.includes(w));
     if (missing.length === 0 && unused.length === 0) {
-      return { ok: true, epsil: bind(form, have) };
+      return { ok: true, json: bind(form, have) };
     }
     if (unused.length === 0 && (nearest === undefined || missing.length < nearest.length)) {
       nearest = missing;
@@ -88,11 +88,11 @@ export function identityParameters(row: RouteRow): string[] {
 }
 
 /**
- * The Epsil for the k-th member of a row's collection, when the row states one. A row that states
+ * The MathJSON for the k-th member of a row's collection, when the row states one. A row that states
  * its k-th member is the catalogue stating the order: a page uses this and never asks the
  * collection's own `At` or `IndexOf`.
  */
-export function kthExpression(row: RouteRow, rank: number): string | undefined {
+export function kthExpression(row: RouteRow, rank: number): Json | undefined {
   return row.kth === undefined ? undefined : bind(row.kth, new Map([[rankVariable, rank]]));
 }
 
@@ -107,13 +107,13 @@ export function collectionHead(row: RouteRow): string | undefined {
   return isSymbol(json) ? json : headOf(json);
 }
 
-/** The Epsil for one element, from its value (MathJSON) and the parameters bound. */
+/** The MathJSON for one element, from its value (MathJSON) and the parameters bound. */
 export function elementExpression(row: RouteRow, bound: readonly Given[], value: Json): Expressed {
   if (!row.element) return { ok: false, missing: [] };
   const have = valuesOf(bound);
   const missing = identityParameters(row).filter((w) => !have.has(w));
   if (missing.length > 0) return { ok: false, missing };
-  return { ok: true, epsil: bind(row.element, new Map([...have, [valueVariable, value]])) };
+  return { ok: true, json: bind(row.element, new Map([...have, [valueVariable, value]])) };
 }
 
 /**
